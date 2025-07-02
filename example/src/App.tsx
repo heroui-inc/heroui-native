@@ -6,7 +6,7 @@ const result = multiply(3, 7);
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text style={styles.text}>Result: {result}</Text>
     </View>
   );
 }
@@ -16,5 +16,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
   },
 });

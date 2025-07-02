@@ -1,6 +1,5 @@
 const path = require('path');
 const { getDefaultConfig } = require('@expo/metro-config');
-const { withMetroConfig } = require('react-native-monorepo-config');
 
 const root = path.resolve(__dirname, '..');
 
@@ -10,11 +9,13 @@ const root = path.resolve(__dirname, '..');
  *
  * @type {import('metro-config').MetroConfig}
  */
-const config = withMetroConfig(getDefaultConfig(__dirname), {
-  root,
-  dirname: __dirname,
-});
+module.exports = async () => {
+  const { withMetroConfig } = await import('react-native-monorepo-config');
+  const config = withMetroConfig(getDefaultConfig(__dirname), {
+    root,
+    dirname: __dirname,
+  });
 
-config.resolver.unstable_enablePackageExports = true;
-
-module.exports = config;
+  config.resolver.unstable_enablePackageExports = true;
+  return config;
+};

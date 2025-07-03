@@ -1,12 +1,13 @@
-import { Text, View, StyleSheet } from 'react-native';
-import { multiply } from 'heroui-native';
-
-const result = multiply(3, 7);
+import { View, StyleSheet } from 'react-native';
+import { Switch } from 'heroui-native';
+import React from 'react';
 
 export default function App() {
+  const [value, setValue] = React.useState(false);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Result: {result}</Text>
+      <Switch value={value} onValueChange={setValue} />
     </View>
   );
 }
@@ -16,10 +17,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
   },
 });

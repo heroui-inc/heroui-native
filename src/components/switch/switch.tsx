@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
 import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
   Animated,
   Easing,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import type { SwitchProps } from './types';
 

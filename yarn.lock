@@ -7468,6 +7468,7 @@ __metadata:
     eslint-plugin-prettier: ^5.2.3
     jest: ^29.7.0
     prettier: ^3.0.3
+    prettier-plugin-organize-imports: ^4.1.0
     react: 19.0.0
     react-native: 0.79.4
     react-native-builder-bob: ^0.40.12
@@ -11202,6 +11203,20 @@ __metadata:
   dependencies:
     fast-diff: ^1.1.2
   checksum: 00ce8011cf6430158d27f9c92cfea0a7699405633f7f1d4a45f07e21bf78e99895911cbcdc3853db3a824201a7c745bd49bfea8abd5fb9883e765a90f74f8392
+  languageName: node
+  linkType: hard
+
+"prettier-plugin-organize-imports@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "prettier-plugin-organize-imports@npm:4.1.0"
+  peerDependencies:
+    prettier: ">=2.0"
+    typescript: ">=2.9"
+    vue-tsc: ^2.1.0
+  peerDependenciesMeta:
+    vue-tsc:
+      optional: true
+  checksum: 43c917959170fa3e30e41f9b3bd314a31462ae34e5568b4dba6b1c8b8da758adf900fdf4999333ab2b60b3d1af541f9521396a5e19df03ab5400a50edc9a75f6
   languageName: node
   linkType: hard
 

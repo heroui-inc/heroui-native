@@ -43,7 +43,9 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "hero ui",
+    "hero ui native"
   ],
   "repository": {
     "type": "git",

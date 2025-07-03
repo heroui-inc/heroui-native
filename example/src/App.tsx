@@ -1,21 +1,12 @@
-import { View, StyleSheet } from 'react-native';
-import { Switch } from 'heroui-native';
-import React from 'react';
+import { View, Text } from 'react-native';
+import '../global.css';
 
 export default function App() {
-  const [value, setValue] = React.useState(false);
-
   return (
-    <View style={styles.container}>
-      <Switch value={value} onValueChange={setValue} />
+    <View className="flex-1 items-center justify-center bg-black">
+      <Text className="text-xl font-bold text-blue-500">
+        Welcome to Nativewind!
+      </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

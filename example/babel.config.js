@@ -13,6 +13,18 @@ module.exports = function (api) {
         ['babel-preset-expo', { jsxImportSource: 'nativewind' }],
         'nativewind/babel',
       ],
+      plugins: [
+        [
+          'module-resolver',
+          {
+            extensions: ['.tsx', '.ts', '.js', '.json'],
+            alias: {
+              // For development, we want to alias the library to the source
+              [pkg.name]: path.join(__dirname, '..', pkg.source),
+            },
+          },
+        ],
+      ],
     },
     { root, pkg }
   );

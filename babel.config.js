@@ -9,6 +9,17 @@ module.exports = {
         ],
         'nativewind/babel',
       ],
+      plugins: [
+        [
+          'module-resolver',
+          {
+            extensions: ['.tsx', '.ts', '.js', '.json'],
+            alias: {
+              '@': './src',
+            },
+          },
+        ],
+      ],
     },
     {
       include: /\/node_modules\//,

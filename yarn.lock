@@ -5016,6 +5016,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clsx@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "clsx@npm:2.1.1"
+  checksum: acd3e1ab9d8a433ecb3cc2f6a05ab95fe50b4a3cfc5ba47abb6cbf3754585fcb87b84e90c822a1f256c4198e3b41c7f6c391577ffc8678ad587fc0976b24fd57
+  languageName: node
+  linkType: hard
+
 "co@npm:^4.6.0":
   version: 4.6.0
   resolution: "co@npm:4.6.0"
@@ -7745,6 +7752,7 @@ __metadata:
     "@types/jest": ^29.5.5
     "@types/react": ^19.0.12
     babel-plugin-module-resolver: ^5.0.2
+    clsx: ^2.1.1
     commitlint: ^19.6.1
     del-cli: ^5.1.0
     eslint: ^9.22.0
@@ -7760,6 +7768,7 @@ __metadata:
     react-native-reanimated: ~3.17.4
     react-native-safe-area-context: 5.4.0
     release-it: ^17.10.0
+    tailwind-merge: ^3.3.1
     typescript: ^5.8.3
   peerDependencies:
     nativewind: ">=4.0"
@@ -13504,6 +13513,13 @@ __metadata:
   dependencies:
     "@pkgr/core": ^0.2.4
   checksum: dd7193736e0b5eb209192e280649b98b539537bf23bef20c8a2b24cd12ccde47bcf4e77773ff9cb66c35960d2cb41e28c05e0b19124488abbfb6423258b56275
+  languageName: node
+  linkType: hard
+
+"tailwind-merge@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "tailwind-merge@npm:3.3.1"
+  checksum: ace3675227d86f1def95b25b7f6793268a6ab2f340b43ef64ad25646588d2b1d87714cd60db6947bfdb5bb85be3bb6ce1802021620c541ef7a9c3faa05915f2b
   languageName: node
   linkType: hard
 

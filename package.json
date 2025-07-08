@@ -73,6 +73,7 @@
     "@types/jest": "^29.5.5",
     "@types/react": "^19.0.12",
     "babel-plugin-module-resolver": "^5.0.2",
+    "clsx": "^2.1.1",
     "commitlint": "^19.6.1",
     "del-cli": "^5.1.0",
     "eslint": "^9.22.0",
@@ -88,6 +89,7 @@
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "release-it": "^17.10.0",
+    "tailwind-merge": "^3.3.1",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {

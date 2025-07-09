@@ -29,7 +29,7 @@ function SwitchNative({
 }) {
   const { colorScheme } = useColorScheme();
 
-  const translateX = useDerivedValue(() => (props.checked ? 18 : 0));
+  const translateX = useDerivedValue(() => (props.isSelected ? 18 : 0));
 
   const animatedRootStyle = useAnimatedStyle(() => {
     return {
@@ -58,7 +58,7 @@ function SwitchNative({
       <SwitchPrimitives.Root
         className={cn(
           'flex-row h-8 w-[46px] shrink-0 items-center rounded-full border-2 border-transparent',
-          props.checked ? 'bg-blue-300' : 'bg-red-400',
+          props.isSelected ? 'bg-blue-300' : 'bg-red-400',
           className
         )}
         {...props}

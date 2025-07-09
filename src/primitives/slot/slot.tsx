@@ -11,7 +11,7 @@ import {
 import type { AnyProps, ImageSlotProps } from './types';
 import { composeRefs, isTextChildren, mergeProps } from './utils';
 
-// ==========================================================================
+// --------------------------------------------------------------------------
 
 const Pressable = React.forwardRef<
   React.ComponentRef<typeof RNPressable>,
@@ -37,7 +37,7 @@ const Pressable = React.forwardRef<
 
 Pressable.displayName = 'SlotPressable';
 
-// ==========================================================================
+// --------------------------------------------------------------------------
 
 const View = React.forwardRef<React.ComponentRef<typeof RNView>, RNViewProps>(
   (props, forwardedRef) => {
@@ -62,7 +62,7 @@ const View = React.forwardRef<React.ComponentRef<typeof RNView>, RNViewProps>(
 
 View.displayName = 'SlotView';
 
-// ==========================================================================
+// --------------------------------------------------------------------------
 
 const Text = React.forwardRef<React.ComponentRef<typeof RNText>, RNTextProps>(
   (props, forwardedRef) => {
@@ -87,7 +87,7 @@ const Text = React.forwardRef<React.ComponentRef<typeof RNText>, RNTextProps>(
 
 Text.displayName = 'SlotText';
 
-// ==========================================================================
+// --------------------------------------------------------------------------
 
 const Image = React.forwardRef<
   React.ComponentRef<typeof RNImage>,

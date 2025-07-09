@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Pressable, View, type GestureResponderEvent } from 'react-native';
 import * as Slot from '../slot';
-import type { RootProps, RootRef, ThumbProps, ThumbRef } from './types';
+import type { RootProps, RootRef, ThumbProps, ThumbRef } from './switch.types';
 
 const Root = React.forwardRef<RootRef, RootProps>(
   (
     {
       asChild,
-      checked,
-      onCheckedChange,
-      disabled,
+      isSelected,
+      onSelectedChange,
+      isDisabled,
       'onPress': onPressProp,
       'aria-valuetext': ariaValueText,
       ...props
@@ -17,40 +17,46 @@ const Root = React.forwardRef<RootRef, RootProps>(
     ref
   ) => {
     function onPress(ev: GestureResponderEvent) {
-      if (disabled) return;
-      onCheckedChange(!checked);
+      if (isDisabled) return;
+      onSelectedChange(!isSelected);
       onPressProp?.(ev);
     }
 
     const Component = asChild ? Slot.Pressable : Pressable;
+
     return (
       <Component
         ref={ref}
-        aria-disabled={disabled}
+        aria-disabled={isDisabled}
         role="switch"
-        aria-checked={checked}
-        aria-valuetext={(ariaValueText ?? checked) ? 'on' : 'off'}
+        aria-checked={isSelected}
+        aria-valuetext={(ariaValueText ?? isSelected) ? 'on' : 'off'}
         onPress={onPress}
         accessibilityState={{
-          checked,
-          disabled,
+          checked: isSelected,
+          disabled: isDisabled,
         }}
-        disabled={disabled}
+        disabled={isDisabled}
         {...props}
       />
     );
   }
 );
 
-Root.displayName = 'RootNativeSwitch';
+Root.displayName = 'HeroUI.RootNativeSwitch';
+
+// --------------------------------------------------------------------------
 
 const Thumb = React.forwardRef<ThumbRef, ThumbProps>(
   ({ asChild, ...props }, ref) => {
     const Component = asChild ? Slot.View : View;
+
     return <Component ref={ref} role="presentation" {...props} />;
   }
 );
 
-Thumb.displayName = 'ThumbNativeSwitch';
+Thumb.displayName = 'HeroUI.ThumbNativeSwitch';
+
+// --------------------------------------------------------------------------
 
 export { Root, Thumb };

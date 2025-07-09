@@ -7,7 +7,7 @@ export default function App() {
 
   return (
     <View className="flex-1 items-center justify-center bg-stone-50">
-      <Text className="text-xl font-bold text-blue-400 mb-6">
+      <Text className="text-xl font-bold text-blue-600 mb-6">
         Welcome to HeroUI Native!
       </Text>
       <Switch

@@ -1,6 +1,7 @@
 // import { useColorScheme } from '@/helpers/hooks/use-color-scheme';
 import { cn } from '@/helpers/utils';
 import * as SwitchPrimitives from '@/primitives/switch';
+import { Check, X } from 'lucide-react-native';
 import { StyleSheet } from 'react-native';
 import Animated, {
   interpolateColor,
@@ -8,6 +9,7 @@ import Animated, {
   useDerivedValue,
   withSpring,
   withTiming,
+  ZoomIn,
 } from 'react-native-reanimated';
 import { dimensions as defaultDimensions } from './switch.constants';
 import type { SwitchProps } from './switch.types';
@@ -22,7 +24,14 @@ const AnimatedSwitchPrimitivesThumb = Animated.createAnimatedComponent(
 );
 
 function Switch(props: SwitchProps) {
-  const { isSelected, disabled, size = 'md', colors, dimensions } = props;
+  const {
+    isSelected,
+    disabled,
+    isReadOnly,
+    size = 'md',
+    colors,
+    dimensions,
+  } = props;
 
   // const { colorScheme } = useColorScheme();
 
@@ -71,7 +80,11 @@ function Switch(props: SwitchProps) {
 
   return (
     <AnimatedSwitchPrimitivesRoot
-      className={cn('shadow-sm', disabled && 'opacity-50')}
+      className={cn(
+        'shadow-sm',
+        disabled && 'opacity-50',
+        isReadOnly && 'pointer-events-none'
+      )}
       style={[
         styles.switchRoot,
         rSwitchRootStyle,
@@ -86,7 +99,7 @@ function Switch(props: SwitchProps) {
       {...props}
     >
       <AnimatedSwitchPrimitivesThumb
-        className="shadow-sm"
+        className="shadow-sm items-center justify-center"
         style={[
           rThumbStyle,
           {
@@ -95,7 +108,17 @@ function Switch(props: SwitchProps) {
             borderRadius: switchThumbSize / 2,
           },
         ]}
-      />
+      >
+        {isSelected ? (
+          <Animated.View key="check" entering={ZoomIn}>
+            <Check size={12} color="#0A0A0A" strokeWidth={4} />
+          </Animated.View>
+        ) : (
+          <Animated.View key="x" entering={ZoomIn}>
+            <X size={14} color="#FAFAFA" strokeWidth={3} />
+          </Animated.View>
+        )}
+      </AnimatedSwitchPrimitivesThumb>
     </AnimatedSwitchPrimitivesRoot>
   );
 }

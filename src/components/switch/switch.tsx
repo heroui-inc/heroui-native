@@ -1,73 +1,75 @@
-import { useColorScheme } from '@/helpers/hooks/use-color-scheme';
+// import { useColorScheme } from '@/helpers/hooks/use-color-scheme';
 import { cn } from '@/helpers/utils';
 import * as SwitchPrimitives from '@/primitives/switch';
-import * as React from 'react';
 import { Platform } from 'react-native';
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useDerivedValue,
-  withTiming,
+  withSpring,
 } from 'react-native-reanimated';
+import type { SwitchProps } from './switch.types';
+import { getSwitchDimensions } from './switch.utils';
 
-const RGB_COLORS = {
-  light: {
-    primary: 'rgb(24, 24, 27)',
-    input: 'rgb(228, 228, 231)',
-  },
-  dark: {
-    primary: 'rgb(250, 250, 250)',
-    input: 'rgb(39, 39, 42)',
-  },
-} as const;
+function SwitchNative(props: SwitchProps) {
+  const { isSelected, size = 'md' } = props;
 
-function SwitchNative({
-  className,
-  ...props
-}: SwitchPrimitives.RootProps & {
-  ref?: React.RefObject<SwitchPrimitives.RootRef>;
-}) {
-  const { colorScheme } = useColorScheme();
+  // const { colorScheme } = useColorScheme();
 
-  const translateX = useDerivedValue(() => (props.isSelected ? 18 : 0));
+  const dimension = getSwitchDimensions(size);
+
+  const translateX = useDerivedValue(() =>
+    withSpring(isSelected ? dimension.switchMaxTranslateX : 0, {
+      damping: 25,
+      stiffness: 300,
+    })
+  );
 
   const animatedRootStyle = useAnimatedStyle(() => {
     return {
       backgroundColor: interpolateColor(
         translateX.value,
         [0, 18],
-        [RGB_COLORS[colorScheme].input, RGB_COLORS[colorScheme].primary]
+        ['#93c5fd', '#4f46e5']
       ),
     };
   });
 
-  const animatedThumbStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: withTiming(translateX.value, { duration: 200 }) },
-    ],
+  const rThumbContainerStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.get() }],
   }));
 
   return (
     <Animated.View
-      style={animatedRootStyle}
-      className={cn(
-        'h-8 w-[46px] rounded-full',
-        props.disabled && 'opacity-50'
-      )}
+      style={[
+        animatedRootStyle,
+        {
+          width: dimension.switchWidth,
+          height: dimension.switchHeight,
+          borderRadius: dimension.switchHeight / 2,
+        },
+      ]}
+      className={cn('', props.disabled && 'opacity-50')}
     >
       <SwitchPrimitives.Root
-        className={cn(
-          'flex-row h-8 w-[46px] shrink-0 items-center rounded-full border-2 border-transparent',
-          props.isSelected ? 'bg-blue-300' : 'bg-red-400',
-          className
-        )}
+        className={cn('', props.className)}
+        style={{
+          width: dimension.switchWidth,
+          height: dimension.switchHeight,
+          borderRadius: dimension.switchHeight / 2,
+          paddingHorizontal: dimension.switchHorizontalPadding,
+          paddingVertical: dimension.switchVerticalPadding,
+        }}
         {...props}
       >
-        <Animated.View style={animatedThumbStyle}>
+        <Animated.View style={rThumbContainerStyle}>
           <SwitchPrimitives.Thumb
-            className={
-              'h-7 w-7 rounded-full bg-background shadow-md shadow-foreground/25 ring-0 bg-white'
-            }
+            className={'shadow-md shadow-foreground/25 bg-white'}
+            style={{
+              width: dimension.switchThumbSize,
+              height: dimension.switchThumbSize,
+              borderRadius: dimension.switchThumbSize / 2,
+            }}
           />
         </Animated.View>
       </SwitchPrimitives.Root>

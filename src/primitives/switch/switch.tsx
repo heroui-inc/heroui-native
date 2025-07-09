@@ -43,7 +43,7 @@ const Root = React.forwardRef<RootRef, RootProps>(
   }
 );
 
-Root.displayName = 'HeroUI.RootNativeSwitch';
+Root.displayName = 'HeroUI.Primitives.Switch.Root';
 
 // --------------------------------------------------------------------------
 
@@ -55,7 +55,7 @@ const Thumb = React.forwardRef<ThumbRef, ThumbProps>(
   }
 );
 
-Thumb.displayName = 'HeroUI.ThumbNativeSwitch';
+Thumb.displayName = 'HeroUI.Primitives.Switch.Thumb';
 
 // --------------------------------------------------------------------------
 

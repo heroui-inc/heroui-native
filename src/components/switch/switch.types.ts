@@ -35,6 +35,7 @@ interface SwitchThumbIconProps {
   /**
    * The current size variant of the switch
    * @type {'sm' | 'md' | 'lg' | undefined}
+   * @default "md"
    */
   size?: 'sm' | 'md' | 'lg';
 
@@ -171,4 +172,49 @@ interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
   onPress?: () => void;
 }
 
-export type { SwitchProps, SwitchThumbIconProps };
+/**
+ * Base dimensions for switch component sizing
+ * Contains the fundamental measurements used across all switch variants
+ */
+type BaseDimensions = {
+  /** Width of the switch track */
+  switchWidth: number;
+  /** Size (width/height) of the switch thumb */
+  switchThumbSize: number;
+  /** Horizontal padding inside the switch track */
+  switchHorizontalPadding: number;
+  /** Vertical padding inside the switch track */
+  switchVerticalPadding: number;
+};
+
+/**
+ * Complete dimensions interface for switch component
+ * Extends BaseDimensions with calculated height and animation values
+ */
+interface Dimensions extends BaseDimensions {
+  /** Calculated height of the switch track */
+  switchHeight: number;
+  /** Maximum translation distance for thumb animation */
+  switchMaxTranslateX: number;
+}
+
+/**
+ * Map of base dimensions for each switch size variant
+ * Provides size-specific measurements for sm, md, and lg variants
+ */
+type BaseDimensionsMap = {
+  /** Small switch variant dimensions */
+  sm: BaseDimensions;
+  /** Medium switch variant dimensions */
+  md: BaseDimensions;
+  /** Large switch variant dimensions */
+  lg: BaseDimensions;
+};
+
+export type {
+  BaseDimensions,
+  BaseDimensionsMap,
+  Dimensions,
+  SwitchProps,
+  SwitchThumbIconProps,
+};

@@ -10,7 +10,11 @@ export default function App() {
       <Text className="text-xl font-bold text-blue-400 mb-6">
         Welcome to HeroUI Native!
       </Text>
-      <Switch isSelected={isSelected} onSelectedChange={setSelected} />
+      <Switch
+        isSelected={isSelected}
+        onSelectedChange={setSelected}
+        size="lg"
+      />
     </View>
   );
 }

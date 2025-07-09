@@ -1,84 +1,111 @@
 // import { useColorScheme } from '@/helpers/hooks/use-color-scheme';
 import { cn } from '@/helpers/utils';
 import * as SwitchPrimitives from '@/primitives/switch';
-import { Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useDerivedValue,
   withSpring,
+  withTiming,
 } from 'react-native-reanimated';
+import { dimensions as defaultDimensions } from './switch.constants';
 import type { SwitchProps } from './switch.types';
 import { getSwitchDimensions } from './switch.utils';
 
-function SwitchNative(props: SwitchProps) {
-  const { isSelected, size = 'md' } = props;
+const AnimatedSwitchPrimitivesRoot = Animated.createAnimatedComponent(
+  SwitchPrimitives.Root
+);
+
+const AnimatedSwitchPrimitivesThumb = Animated.createAnimatedComponent(
+  SwitchPrimitives.Thumb
+);
+
+function Switch(props: SwitchProps) {
+  const { isSelected, disabled, size = 'md', colors, dimensions } = props;
 
   // const { colorScheme } = useColorScheme();
 
-  const dimension = getSwitchDimensions(size);
+  const switchDimensions = getSwitchDimensions(
+    dimensions ?? defaultDimensions[size]
+  );
+  const {
+    switchWidth,
+    switchHeight,
+    switchBorderWidth,
+    switchThumbSize,
+    switchPadding,
+    switchThumbMaxTranslateX,
+  } = switchDimensions;
 
-  const translateX = useDerivedValue(() =>
-    withSpring(isSelected ? dimension.switchMaxTranslateX : 0, {
+  const thumbTranslateX = useDerivedValue(() =>
+    withSpring(isSelected ? switchThumbMaxTranslateX : 0, {
       damping: 25,
       stiffness: 300,
     })
   );
 
-  const animatedRootStyle = useAnimatedStyle(() => {
+  const rSwitchRootStyle = useAnimatedStyle(() => {
     return {
       backgroundColor: interpolateColor(
-        translateX.value,
-        [0, 18],
-        ['#93c5fd', '#4f46e5']
+        thumbTranslateX.get(),
+        [0, switchThumbMaxTranslateX],
+        [colors?.trackDefault ?? '#FAFAFA', colors?.trackSelected ?? '#0A0A0A']
       ),
+      borderColor: isSelected
+        ? withTiming(colors?.switchBorderSelected ?? '#0A0A0A', {
+            duration: 200,
+          })
+        : (colors?.switchBorderDefault ?? 'rgba(0, 0, 0, 0.1)'),
     };
   });
 
-  const rThumbContainerStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: translateX.get() }],
+  const rThumbStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      thumbTranslateX.get(),
+      [0, switchThumbMaxTranslateX],
+      [colors?.thumbDefault ?? '#D4D4D4', colors?.thumbSelected ?? '#FFFFFF']
+    ),
+    transform: [{ translateX: thumbTranslateX.get() }],
   }));
 
   return (
-    <Animated.View
+    <AnimatedSwitchPrimitivesRoot
+      className={cn('shadow-sm', disabled && 'opacity-50')}
       style={[
-        animatedRootStyle,
+        styles.switchRoot,
+        rSwitchRootStyle,
         {
-          width: dimension.switchWidth,
-          height: dimension.switchHeight,
-          borderRadius: dimension.switchHeight / 2,
+          width: switchWidth,
+          height: switchHeight,
+          padding: switchPadding,
+          borderWidth: switchBorderWidth,
+          borderRadius: switchHeight / 2,
         },
       ]}
-      className={cn('', props.disabled && 'opacity-50')}
+      {...props}
     >
-      <SwitchPrimitives.Root
-        className={cn('', props.className)}
-        style={{
-          width: dimension.switchWidth,
-          height: dimension.switchHeight,
-          borderRadius: dimension.switchHeight / 2,
-          paddingHorizontal: dimension.switchHorizontalPadding,
-          paddingVertical: dimension.switchVerticalPadding,
-        }}
-        {...props}
-      >
-        <Animated.View style={rThumbContainerStyle}>
-          <SwitchPrimitives.Thumb
-            className={'shadow-md shadow-foreground/25 bg-white'}
-            style={{
-              width: dimension.switchThumbSize,
-              height: dimension.switchThumbSize,
-              borderRadius: dimension.switchThumbSize / 2,
-            }}
-          />
-        </Animated.View>
-      </SwitchPrimitives.Root>
-    </Animated.View>
+      <AnimatedSwitchPrimitivesThumb
+        className="shadow-sm"
+        style={[
+          rThumbStyle,
+          {
+            width: switchThumbSize,
+            height: switchThumbSize,
+            borderRadius: switchThumbSize / 2,
+          },
+        ]}
+      />
+    </AnimatedSwitchPrimitivesRoot>
   );
 }
 
-const Switch = Platform.select({
-  default: SwitchNative,
+const styles = StyleSheet.create({
+  switchRoot: {
+    borderCurve: 'continuous',
+  },
 });
 
-export { Switch };
+Switch.displayName = 'HeroUI.Switch';
+
+export default Switch;

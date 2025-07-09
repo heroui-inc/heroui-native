@@ -28,7 +28,7 @@ interface RootProps extends SlottablePressableProps {
    * @type {boolean | undefined}
    * @default false
    */
-  isDisabled?: boolean;
+  disabled?: boolean;
 }
 
 /**

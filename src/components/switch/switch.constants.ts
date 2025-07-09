@@ -3,20 +3,20 @@ import type { BaseDimensionsMap } from './switch.types';
 export const dimensions: BaseDimensionsMap = {
   sm: {
     switchWidth: 32,
-    switchThumbSize: 16,
-    switchHorizontalPadding: 2,
-    switchVerticalPadding: 2,
+    switchHeight: 20,
+    switchBorderWidth: 0.5,
+    switchThumbSize: 14,
   },
   md: {
     switchWidth: 40,
-    switchThumbSize: 20,
-    switchHorizontalPadding: 2,
-    switchVerticalPadding: 2,
+    switchHeight: 25,
+    switchBorderWidth: 0.5,
+    switchThumbSize: 18,
   },
   lg: {
     switchWidth: 48,
-    switchThumbSize: 24,
-    switchHorizontalPadding: 3,
-    switchVerticalPadding: 3,
+    switchHeight: 30,
+    switchBorderWidth: 0.5,
+    switchThumbSize: 22,
   },
 };

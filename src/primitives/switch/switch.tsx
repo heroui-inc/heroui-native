@@ -9,7 +9,7 @@ const Root = React.forwardRef<RootRef, RootProps>(
       asChild,
       isSelected,
       onSelectedChange,
-      isDisabled,
+      disabled,
       'onPress': onPressProp,
       'aria-valuetext': ariaValueText,
       ...props
@@ -17,7 +17,7 @@ const Root = React.forwardRef<RootRef, RootProps>(
     ref
   ) => {
     function onPress(ev: GestureResponderEvent) {
-      if (isDisabled) return;
+      if (disabled) return;
       onSelectedChange(!isSelected);
       onPressProp?.(ev);
     }
@@ -27,16 +27,16 @@ const Root = React.forwardRef<RootRef, RootProps>(
     return (
       <Component
         ref={ref}
-        aria-disabled={isDisabled}
+        aria-disabled={disabled}
         role="switch"
         aria-checked={isSelected}
         aria-valuetext={(ariaValueText ?? isSelected) ? 'on' : 'off'}
         onPress={onPress}
         accessibilityState={{
           checked: isSelected,
-          disabled: isDisabled,
+          disabled,
         }}
-        disabled={isDisabled}
+        disabled={disabled}
         {...props}
       />
     );
@@ -44,8 +44,6 @@ const Root = React.forwardRef<RootRef, RootProps>(
 );
 
 Root.displayName = 'HeroUI.Primitives.Switch.Root';
-
-// --------------------------------------------------------------------------
 
 const Thumb = React.forwardRef<ThumbRef, ThumbProps>(
   ({ asChild, ...props }, ref) => {
@@ -56,7 +54,5 @@ const Thumb = React.forwardRef<ThumbRef, ThumbProps>(
 );
 
 Thumb.displayName = 'HeroUI.Primitives.Switch.Thumb';
-
-// --------------------------------------------------------------------------
 
 export { Root, Thumb };

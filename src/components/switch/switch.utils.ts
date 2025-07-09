@@ -1,40 +1,40 @@
-import { dimensions } from './switch.constants';
-import type { Dimensions } from './switch.types';
+import type { BaseDimensions, Dimensions } from './switch.types';
 
-export const getSwitchDimensions = (size?: 'sm' | 'md' | 'lg'): Dimensions => {
-  switch (size) {
-    case 'sm':
-      return {
-        ...dimensions.sm,
-        switchHeight:
-          dimensions.sm.switchThumbSize +
-          dimensions.sm.switchVerticalPadding * 2,
-        switchMaxTranslateX:
-          dimensions.sm.switchWidth -
-          dimensions.sm.switchThumbSize -
-          dimensions.sm.switchVerticalPadding * 2,
-      };
-    case 'lg':
-      return {
-        ...dimensions.lg,
-        switchHeight:
-          dimensions.lg.switchThumbSize +
-          dimensions.lg.switchVerticalPadding * 2,
-        switchMaxTranslateX:
-          dimensions.lg.switchWidth -
-          dimensions.lg.switchThumbSize -
-          dimensions.lg.switchVerticalPadding * 2,
-      };
-    default:
-      return {
-        ...dimensions.md,
-        switchHeight:
-          dimensions.md.switchThumbSize +
-          dimensions.md.switchVerticalPadding * 2,
-        switchMaxTranslateX:
-          dimensions.md.switchWidth -
-          dimensions.md.switchThumbSize -
-          dimensions.md.switchVerticalPadding * 2,
-      };
-  }
+const getSwitchPadding = (
+  switchHeight: number,
+  thumbSize: number,
+  switchBorderWidth: number
+) => {
+  return (switchHeight - thumbSize) / 2 - switchBorderWidth;
+};
+
+const getSwitchThumbMaxTranslateX = (
+  switchWidth: number,
+  thumbSize: number,
+  switchPadding: number,
+  switchBorderWidth: number
+) => {
+  return switchWidth - thumbSize - switchPadding * 2 - switchBorderWidth * 2;
+};
+
+export const getSwitchDimensions = (dimensions: BaseDimensions): Dimensions => {
+  const { switchWidth, switchHeight, switchBorderWidth, switchThumbSize } =
+    dimensions;
+
+  const switchPadding = getSwitchPadding(
+    switchHeight,
+    switchThumbSize,
+    switchBorderWidth
+  );
+
+  return {
+    ...dimensions,
+    switchPadding,
+    switchThumbMaxTranslateX: getSwitchThumbMaxTranslateX(
+      switchWidth,
+      switchThumbSize,
+      switchPadding,
+      switchBorderWidth
+    ),
+  };
 };

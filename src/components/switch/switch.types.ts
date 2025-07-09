@@ -26,13 +26,6 @@ interface SwitchThumbIconProps {
   isSelected: boolean;
 
   /**
-   * Whether the switch is disabled
-   * @type {boolean | undefined}
-   * @default false
-   */
-  isDisabled?: boolean;
-
-  /**
    * The current size variant of the switch
    * @type {'sm' | 'md' | 'lg' | undefined}
    * @default "md"
@@ -41,15 +34,9 @@ interface SwitchThumbIconProps {
 
   /**
    * The current color variant of the switch
-   * @type {'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | undefined}
+   * @type {'default' | 'success' | 'warning' | 'danger' | undefined}
    */
-  color?:
-    | 'default'
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'danger';
+  color?: 'default' | 'success' | 'warning' | 'danger';
 
   /**
    * Additional className for styling the thumb icon
@@ -94,16 +81,26 @@ interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
 
   /**
    * The color theme variant of the switch
-   * @type {'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | undefined}
+   * @type {'default' | 'success' | 'warning' | 'danger' | undefined}
    * @default "primary"
    */
-  color?:
-    | 'default'
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'danger';
+  color?: 'default' | 'success' | 'warning' | 'danger';
+
+  /**
+   * Custom colors for the switch component
+   * @type {{ switchBorderDefault?: string; switchBorderSelected?: string; trackDefault?: string; trackSelected?: string; thumbDefault?: string; thumbSelected?: string; } | undefined}
+   * @default undefined
+   */
+  colors?: {
+    switchBorderDefault?: string;
+    switchBorderSelected?: string;
+    trackDefault?: string;
+    trackSelected?: string;
+    thumbDefault?: string;
+    thumbSelected?: string;
+  };
+
+  dimensions?: BaseDimensions;
 
   /**
    * The icon to be displayed inside the thumb, can be a component or render function
@@ -115,20 +112,6 @@ interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
     | ((props: SwitchThumbIconProps) => React.ReactNode);
 
   /**
-   * Content to be displayed at the start (left) side of the switch
-   * @type {React.ReactNode | undefined}
-   * @default undefined
-   */
-  startContent?: React.ReactNode;
-
-  /**
-   * Content to be displayed at the end (right) side of the switch
-   * @type {React.ReactNode | undefined}
-   * @default undefined
-   */
-  endContent?: React.ReactNode;
-
-  /**
    * Custom class names for different parts of the switch using slot-based styling
    * @type {object | undefined}
    * @default undefined
@@ -136,18 +119,10 @@ interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
   classNames?: {
     /** Base wrapper element class name */
     base?: string;
-    /** Switch wrapper element class name */
-    wrapper?: string;
     /** Thumb (toggle) element class name */
     thumb?: string;
     /** Thumb icon element class name */
     thumbIcon?: string;
-    /** Label text element class name */
-    label?: string;
-    /** Start content element class name */
-    startContent?: string;
-    /** End content element class name */
-    endContent?: string;
   };
 
   /**
@@ -179,12 +154,12 @@ interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
 type BaseDimensions = {
   /** Width of the switch track */
   switchWidth: number;
+  /** Height of the switch track */
+  switchHeight: number;
+  /** Border width of the switch track */
+  switchBorderWidth: number;
   /** Size (width/height) of the switch thumb */
   switchThumbSize: number;
-  /** Horizontal padding inside the switch track */
-  switchHorizontalPadding: number;
-  /** Vertical padding inside the switch track */
-  switchVerticalPadding: number;
 };
 
 /**
@@ -192,10 +167,10 @@ type BaseDimensions = {
  * Extends BaseDimensions with calculated height and animation values
  */
 interface Dimensions extends BaseDimensions {
-  /** Calculated height of the switch track */
-  switchHeight: number;
+  /** Calculated padding of the switch track */
+  switchPadding: number;
   /** Maximum translation distance for thumb animation */
-  switchMaxTranslateX: number;
+  switchThumbMaxTranslateX: number;
 }
 
 /**

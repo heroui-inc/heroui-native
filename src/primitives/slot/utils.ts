@@ -1,8 +1,6 @@
 import { StyleSheet, type PressableStateCallbackType } from 'react-native';
 import type { AnyProps, Style } from './types';
 
-// ==========================================================================
-
 export function isTextChildren(
   children:
     | React.ReactNode
@@ -23,8 +21,6 @@ export function composeRefs<T>(...refs: (React.Ref<T> | undefined)[]) {
       }
     });
 }
-
-// ==========================================================================
 
 export function mergeProps(slotProps: AnyProps, childProps: AnyProps) {
   // all child props should override
@@ -60,8 +56,6 @@ export function mergeProps(slotProps: AnyProps, childProps: AnyProps) {
 
   return { ...slotProps, ...overrideProps };
 }
-
-// ==========================================================================
 
 function combineStyles(slotStyle?: Style, childValue?: Style) {
   if (typeof slotStyle === 'function' && typeof childValue === 'function') {

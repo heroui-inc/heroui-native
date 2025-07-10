@@ -5,11 +5,11 @@ import Animated, {
   Easing,
   useAnimatedStyle,
   useSharedValue,
-  withDelay,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
 import type {
+  SwitchContentProps,
   SwitchContextValue,
   SwitchProps,
   SwitchThumbProps,
@@ -22,6 +22,9 @@ const AnimatedSwitchPrimitivesRoot = Animated.createAnimatedComponent(
 const AnimatedSwitchPrimitivesThumb = Animated.createAnimatedComponent(
   SwitchPrimitives.Thumb
 );
+
+const DURATION = 200;
+const EASING = Easing.out(Easing.ease);
 
 export const [SwitchProvider, useSwitchContext] =
   createContext<SwitchContextValue>({
@@ -56,12 +59,19 @@ function Switch(props: SwitchProps) {
           ? (colors?.selectedBackground ?? '#0A0A0A')
           : (colors?.defaultBackground ?? '#FAFAFA'),
         {
-          easing: Easing.out(Easing.ease),
+          duration: DURATION,
+          easing: EASING,
         }
       ),
-      borderColor: isSelected
-        ? withDelay(300, withTiming(colors?.selectedBorder ?? '#0A0A0A'))
-        : (colors?.defaultBorder ?? 'rgba(0, 0, 0, 0.1)'),
+      borderColor: withTiming(
+        isSelected
+          ? (colors?.selectedBorder ?? '#0A0A0A')
+          : (colors?.defaultBorder ?? 'rgba(0, 0, 0, 0.1)'),
+        {
+          duration: DURATION,
+          easing: EASING,
+        }
+      ),
     };
   });
 
@@ -75,7 +85,7 @@ function Switch(props: SwitchProps) {
     <SwitchProvider value={contextValue}>
       <AnimatedSwitchPrimitivesRoot
         className={cn(
-          'p-[3px] shadow-sm border-[0.5px] rounded-full',
+          'shadow-sm border-[0.5px] rounded-full',
           isDisabled && (classNames?.containerDisabled || 'opacity-50'),
           isReadOnly && 'pointer-events-none',
           classNames?.container,
@@ -95,17 +105,29 @@ function Switch(props: SwitchProps) {
         disabled={isDisabled}
         {...restProps}
       >
+        {/* 
+          This container is useful when you want to animate start or end content entering 
+          and you want it to be hidden outside of switch right by the switch border.
+          The overflow-hidden ensures content stays within the switch boundaries.
+        */}
         <View
           className={cn(
-            'w-full h-full justify-center',
-            classNames?.contentContainer
+            'flex-1 px-[3.5px] overflow-hidden',
+            classNames?.contentPaddingContainer
           )}
-          onLayout={(e) => {
-            contentContainerWidth.set(e.nativeEvent.layout.width);
-            contentContainerHeight.set(e.nativeEvent.layout.height);
-          }}
         >
-          {children}
+          <View
+            className={cn(
+              'flex-1 justify-center',
+              classNames?.contentContainer
+            )}
+            onLayout={(e) => {
+              contentContainerWidth.set(e.nativeEvent.layout.width);
+              contentContainerHeight.set(e.nativeEvent.layout.height);
+            }}
+          >
+            {children}
+          </View>
         </View>
       </AnimatedSwitchPrimitivesRoot>
     </SwitchProvider>
@@ -145,16 +167,20 @@ function SwitchThumb(props: SwitchThumbProps) {
     }
 
     return {
-      left: withSpring(isSelected ? contentContainerWidth.get() - width : 0, {
-        damping: 25,
-        stiffness: 300,
-      }),
+      left: withSpring(
+        isSelected ? contentContainerWidth.get() - width + 0.5 : -0.5,
+        {
+          damping: 25,
+          stiffness: 300,
+        }
+      ),
       backgroundColor: withTiming(
         isSelected
           ? (colors?.selectedBackground ?? '#FFFFFF')
           : (colors?.defaultBackground ?? '#D4D4D4'),
         {
-          easing: Easing.out(Easing.ease),
+          duration: DURATION,
+          easing: EASING,
         }
       ),
     };
@@ -179,8 +205,26 @@ function SwitchThumb(props: SwitchThumbProps) {
   );
 }
 
+// ----------------------------------------------------------------------------------
+
+function SwitchStartContent(props: SwitchContentProps) {
+  const { children, className } = props;
+
+  return <View className={cn('absolute left-0', className)}>{children}</View>;
+}
+
+// ----------------------------------------------------------------------------------
+
+function SwitchEndContent(props: SwitchContentProps) {
+  const { children, className } = props;
+
+  return <View className={cn('absolute right-0', className)}>{children}</View>;
+}
+
 Switch.displayName = 'HeroUI.Switch';
 SwitchThumb.displayName = 'HeroUI.SwitchThumb';
+SwitchStartContent.displayName = 'HeroUI.SwitchStartContent';
+SwitchEndContent.displayName = 'HeroUI.SwitchEndContent';
 
 export default Switch;
-export { SwitchThumb };
+export { SwitchEndContent, SwitchStartContent, SwitchThumb };

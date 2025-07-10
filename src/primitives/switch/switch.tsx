@@ -3,6 +3,8 @@ import { Pressable, View, type GestureResponderEvent } from 'react-native';
 import * as Slot from '../slot';
 import type { RootProps, RootRef, ThumbProps, ThumbRef } from './switch.types';
 
+// ----------------------------------------------------------------------------------
+
 const Root = React.forwardRef<RootRef, RootProps>(
   (
     {
@@ -44,6 +46,8 @@ const Root = React.forwardRef<RootRef, RootProps>(
 );
 
 Root.displayName = 'HeroUI.Primitives.Switch.Root';
+
+// ----------------------------------------------------------------------------------
 
 const Thumb = React.forwardRef<ThumbRef, ThumbProps>(
   ({ asChild, ...props }, ref) => {

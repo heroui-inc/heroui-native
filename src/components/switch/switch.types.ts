@@ -26,6 +26,7 @@ interface SwitchProps
   classNames?: {
     container?: string;
     containerDisabled?: string;
+    contentPaddingContainer?: string;
     contentContainer?: string;
   };
   disableAnimation?: boolean;
@@ -42,9 +43,19 @@ interface SwitchThumbProps extends SwitchPrimitivesTypes.ThumbProps {
   className?: string;
 }
 
+type SwitchContentProps = {
+  children?: React.ReactNode;
+  className?: string;
+};
+
 interface SwitchContextValue extends Pick<SwitchProps, 'isSelected'> {
   contentContainerWidth: SharedValue<number>;
   contentContainerHeight: SharedValue<number>;
 }
 
-export type { SwitchContextValue, SwitchProps, SwitchThumbProps };
+export type {
+  SwitchContentProps,
+  SwitchContextValue,
+  SwitchProps,
+  SwitchThumbProps,
+};

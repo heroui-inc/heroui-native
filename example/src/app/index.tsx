@@ -22,14 +22,9 @@ export default function App() {
   const [custom1, setCustom1] = React.useState(true);
 
   return (
-    <View className="flex-1 items-center justify-center bg-stone-50">
-      <Text className="text-xl font-bold text-blue-600 mb-6">
-        Welcome to HeroUI Native!
-      </Text>
+    <View className="flex-1 items-center justify-center bg-white">
       {/* BASE */}
-      <Switch isSelected={base} onSelectedChange={setBase} className="mb-6">
-        <SwitchThumb />
-      </Switch>
+      <Switch isSelected={base} onSelectedChange={setBase} className="mb-6" />
       {/* ICON */}
       <Switch
         width={40}

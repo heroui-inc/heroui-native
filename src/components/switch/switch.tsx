@@ -31,7 +31,7 @@ export const [SwitchProvider, useSwitchContext] =
     name: 'SwitchContext',
   });
 
-// ----------------------------------------------------------------------------------
+// --------------------------------------------------
 
 function Switch(props: SwitchProps) {
   const {
@@ -128,7 +128,7 @@ function Switch(props: SwitchProps) {
               contentContainerHeight.set(e.nativeEvent.layout.height);
             }}
           >
-            {children}
+            {children ?? <SwitchThumb />}
           </View>
         </View>
       </AnimatedSwitchPrimitivesRoot>
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// ----------------------------------------------------------------------------------
+// --------------------------------------------------
 
 function SwitchThumb(props: SwitchThumbProps) {
   const {
@@ -219,7 +219,7 @@ function SwitchThumb(props: SwitchThumbProps) {
   );
 }
 
-// ----------------------------------------------------------------------------------
+// --------------------------------------------------
 
 function SwitchStartContent(props: SwitchContentProps) {
   const { children, className } = props;
@@ -227,7 +227,7 @@ function SwitchStartContent(props: SwitchContentProps) {
   return <View className={cn('absolute left-0', className)}>{children}</View>;
 }
 
-// ----------------------------------------------------------------------------------
+// --------------------------------------------------
 
 function SwitchEndContent(props: SwitchContentProps) {
   const { children, className } = props;

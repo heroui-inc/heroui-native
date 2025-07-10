@@ -1,5 +1,11 @@
+import type { TimingConfig } from '@/helpers/types';
 import * as SwitchPrimitivesTypes from '@/primitives/switch/switch.types';
-import type { SharedValue } from 'react-native-reanimated';
+import type {
+  BaseAnimationBuilder,
+  LayoutAnimationFunction,
+  SharedValue,
+} from 'react-native-reanimated';
+import type { SpringConfig } from 'react-native-reanimated/lib/typescript/animation/springUtils';
 
 interface SwitchProps
   extends Omit<
@@ -29,7 +35,14 @@ interface SwitchProps
     contentPaddingContainer?: string;
     contentContainer?: string;
   };
+  layout?:
+    | BaseAnimationBuilder
+    | LayoutAnimationFunction
+    | typeof BaseAnimationBuilder
+    | undefined;
+  containerAnimatedStyle?: Record<string, string>;
   disableAnimation?: boolean;
+  animatedStylesConfig?: TimingConfig;
 }
 
 interface SwitchThumbProps extends SwitchPrimitivesTypes.ThumbProps {
@@ -41,6 +54,8 @@ interface SwitchThumbProps extends SwitchPrimitivesTypes.ThumbProps {
     selectedBackground?: string;
   };
   className?: string;
+  animatedMotionConfig?: SpringConfig;
+  animatedStylesConfig?: TimingConfig;
 }
 
 type SwitchContentProps = {

@@ -46,11 +46,18 @@ function Switch(props: SwitchProps) {
     className,
     classNames,
     style,
+    layout,
+    animatedStylesConfig,
     ...restProps
   } = props;
 
   const contentContainerWidth = useSharedValue(0);
   const contentContainerHeight = useSharedValue(0);
+
+  const timingConfig = animatedStylesConfig ?? {
+    duration: DURATION,
+    easing: EASING,
+  };
 
   const rContainerStyle = useAnimatedStyle(() => {
     return {
@@ -58,19 +65,13 @@ function Switch(props: SwitchProps) {
         isSelected
           ? (colors?.selectedBackground ?? '#0A0A0A')
           : (colors?.defaultBackground ?? '#FAFAFA'),
-        {
-          duration: DURATION,
-          easing: EASING,
-        }
+        timingConfig
       ),
       borderColor: withTiming(
         isSelected
           ? (colors?.selectedBorder ?? '#0A0A0A')
           : (colors?.defaultBorder ?? 'rgba(0, 0, 0, 0.1)'),
-        {
-          duration: DURATION,
-          easing: EASING,
-        }
+        timingConfig
       ),
     };
   });
@@ -84,6 +85,7 @@ function Switch(props: SwitchProps) {
   return (
     <SwitchProvider value={contextValue}>
       <AnimatedSwitchPrimitivesRoot
+        layout={layout}
         className={cn(
           'shadow-sm border-[0.5px] rounded-full',
           isDisabled && (classNames?.containerDisabled || 'opacity-50'),
@@ -143,9 +145,27 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------------------
 
 function SwitchThumb(props: SwitchThumbProps) {
-  const { children, className, width = 18, height, colors } = props;
+  const {
+    children,
+    className,
+    width = 18,
+    height,
+    colors,
+    animatedMotionConfig,
+    animatedStylesConfig,
+  } = props;
 
   const { isSelected, contentContainerWidth } = useSwitchContext();
+
+  const springConfig = animatedMotionConfig ?? {
+    damping: 25,
+    stiffness: 300,
+  };
+
+  const timingConfig = animatedStylesConfig ?? {
+    duration: DURATION,
+    easing: EASING,
+  };
 
   const rContainerStyle = useAnimatedStyle(() => {
     const isMounted = contentContainerWidth.get() > 0;
@@ -169,19 +189,13 @@ function SwitchThumb(props: SwitchThumbProps) {
     return {
       left: withSpring(
         isSelected ? contentContainerWidth.get() - width + 0.5 : -0.5,
-        {
-          damping: 25,
-          stiffness: 300,
-        }
+        springConfig
       ),
       backgroundColor: withTiming(
         isSelected
           ? (colors?.selectedBackground ?? '#FFFFFF')
           : (colors?.defaultBackground ?? '#D4D4D4'),
-        {
-          duration: DURATION,
-          easing: EASING,
-        }
+        timingConfig
       ),
     };
   });

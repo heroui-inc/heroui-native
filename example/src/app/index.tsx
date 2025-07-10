@@ -7,12 +7,18 @@ import { Switch, SwitchThumb } from 'heroui-native';
 import { Check, Moon, Sun, X } from 'lucide-react-native';
 import * as React from 'react';
 import { Text, View } from 'react-native';
-import Animated, { ZoomIn } from 'react-native-reanimated';
+import Animated, {
+  Easing,
+  FadeInLeft,
+  FadeInRight,
+  ZoomIn,
+} from 'react-native-reanimated';
 
 export default function App() {
   const [base, setBase] = React.useState(true);
   const [icon, setIcon] = React.useState(true);
-  const [content, setContent] = React.useState(true);
+  const [contentIcon, setContentIcon] = React.useState(true);
+  const [contentText, setContentText] = React.useState(true);
   const [custom1, setCustom1] = React.useState(true);
 
   return (
@@ -44,12 +50,12 @@ export default function App() {
           )}
         </SwitchThumb>
       </Switch>
-      {/* TWO */}
+      {/* CONTENT ICON */}
       <Switch
         width={56}
         height={32}
-        isSelected={content}
-        onSelectedChange={setContent}
+        isSelected={contentIcon}
+        onSelectedChange={setContentIcon}
         className="mb-7"
         classNames={{
           contentPaddingContainer: 'px-1.5',
@@ -69,16 +75,55 @@ export default function App() {
           }}
         />
         <SwitchStartContent className="left-0.5">
-          {content && (
+          {contentIcon && (
             <Animated.View key="sun" entering={ZoomIn}>
               <Sun size={16} color="#854d0e" strokeWidth={3} />
             </Animated.View>
           )}
         </SwitchStartContent>
         <SwitchEndContent className="right-0.5">
-          {!content && (
+          {!contentIcon && (
             <Animated.View key="moon" entering={ZoomIn}>
               <Moon size={16} color="#dbeafe" />
+            </Animated.View>
+          )}
+        </SwitchEndContent>
+      </Switch>
+      {/* CONTENT TEXT */}
+      <Switch
+        width={60}
+        height={32}
+        isSelected={contentText}
+        onSelectedChange={setContentText}
+        className="mb-7"
+        classNames={{
+          contentPaddingContainer: 'px-1.5',
+        }}
+        colors={{
+          defaultBackground: '#71717a',
+          selectedBackground: '#16a34a',
+          defaultBorder: '#71717a',
+          selectedBorder: '#16a34a',
+        }}
+      >
+        <SwitchThumb width={22} />
+        <SwitchStartContent className="left-1">
+          {contentText && (
+            <Animated.View
+              key="sun"
+              entering={FadeInRight.easing(Easing.out(Easing.ease))}
+            >
+              <Text className="text-xs font-bold text-white">ON</Text>
+            </Animated.View>
+          )}
+        </SwitchStartContent>
+        <SwitchEndContent className="right-0.5">
+          {!contentText && (
+            <Animated.View
+              key="moon"
+              entering={FadeInLeft.easing(Easing.out(Easing.ease))}
+            >
+              <Text className="text-xs font-bold text-zinc-200">OFF</Text>
             </Animated.View>
           )}
         </SwitchEndContent>

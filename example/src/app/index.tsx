@@ -1,9 +1,16 @@
-import { Switch } from 'heroui-native';
+import { Switch, SwitchThumb } from 'heroui-native';
+import { Check, Minus, Plus, X } from 'lucide-react-native';
 import * as React from 'react';
 import { Text, View } from 'react-native';
+import Animated, {
+  FadeInDown,
+  FadeInUp,
+  ZoomIn,
+} from 'react-native-reanimated';
 
 export default function App() {
-  const [isSelected, setSelected] = React.useState(false);
+  const [one, setOne] = React.useState(true);
+  const [two, setTwo] = React.useState(true);
 
   return (
     <View className="flex-1 items-center justify-center bg-stone-50">
@@ -11,24 +18,38 @@ export default function App() {
         Welcome to HeroUI Native!
       </Text>
       <Switch
-        isSelected={isSelected}
-        onSelectedChange={setSelected}
-        size="lg"
-        colors={{
-          switchBorderDefault: '#a3e635',
-          switchBorderSelected: '#65a30d',
-          trackDefault: '#a3e635',
-          trackSelected: '#65a30d',
-          thumbDefault: '#f7fee7',
-          thumbSelected: '#f7fee7',
-        }}
-        dimensions={{
-          switchWidth: 120,
-          switchHeight: 40,
-          switchBorderWidth: 0.5,
-          switchThumbSize: 24,
-        }}
-      />
+        width={40}
+        height={25}
+        isSelected={one}
+        onSelectedChange={setOne}
+        className="mb-6"
+      >
+        <SwitchThumb>
+          {one ? (
+            <Animated.View key="check" entering={ZoomIn}>
+              <Check size={12} color="#0A0A0A" strokeWidth={4} />
+            </Animated.View>
+          ) : (
+            <Animated.View key="x" entering={ZoomIn}>
+              <X size={14} color="#FAFAFA" strokeWidth={3} />
+            </Animated.View>
+          )}
+        </SwitchThumb>
+      </Switch>
+
+      <Switch isSelected={two} onSelectedChange={setTwo}>
+        <SwitchThumb>
+          {two ? (
+            <Animated.View key="check" entering={FadeInUp}>
+              <Plus size={12} color="#0A0A0A" strokeWidth={3.5} />
+            </Animated.View>
+          ) : (
+            <Animated.View key="x" entering={FadeInDown}>
+              <Minus size={14} color="#FAFAFA" strokeWidth={3} />
+            </Animated.View>
+          )}
+        </SwitchThumb>
+      </Switch>
     </View>
   );
 }

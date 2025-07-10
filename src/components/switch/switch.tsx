@@ -1,19 +1,19 @@
-// import { useColorScheme } from '@/helpers/hooks/use-color-scheme';
-import { cn } from '@/helpers/utils';
+import { cn, createContext } from '@/helpers/utils';
 import * as SwitchPrimitives from '@/primitives/switch';
-import { Check, X } from 'lucide-react-native';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, {
-  interpolateColor,
+  Easing,
   useAnimatedStyle,
-  useDerivedValue,
+  useSharedValue,
+  withDelay,
   withSpring,
   withTiming,
-  ZoomIn,
 } from 'react-native-reanimated';
-import { dimensions as defaultDimensions } from './switch.constants';
-import type { SwitchProps } from './switch.types';
-import { getSwitchDimensions } from './switch.utils';
+import type {
+  SwitchContextValue,
+  SwitchProps,
+  SwitchThumbProps,
+} from './switch.types';
 
 const AnimatedSwitchPrimitivesRoot = Animated.createAnimatedComponent(
   SwitchPrimitives.Root
@@ -23,103 +23,92 @@ const AnimatedSwitchPrimitivesThumb = Animated.createAnimatedComponent(
   SwitchPrimitives.Thumb
 );
 
+export const [SwitchProvider, useSwitchContext] =
+  createContext<SwitchContextValue>({
+    name: 'SwitchContext',
+  });
+
+// ----------------------------------------------------------------------------------
+
 function Switch(props: SwitchProps) {
   const {
-    isSelected,
-    disabled,
+    children,
+    width = 40,
+    height = 25,
     isReadOnly,
-    size = 'md',
+    isDisabled,
+    isSelected,
+    onSelectedChange,
     colors,
-    dimensions,
+    className,
+    classNames,
+    style,
+    ...restProps
   } = props;
 
-  // const { colorScheme } = useColorScheme();
+  const contentContainerWidth = useSharedValue(0);
+  const contentContainerHeight = useSharedValue(0);
 
-  const switchDimensions = getSwitchDimensions(
-    dimensions ?? defaultDimensions[size]
-  );
-  const {
-    switchWidth,
-    switchHeight,
-    switchBorderWidth,
-    switchThumbSize,
-    switchPadding,
-    switchThumbMaxTranslateX,
-  } = switchDimensions;
-
-  const thumbTranslateX = useDerivedValue(() =>
-    withSpring(isSelected ? switchThumbMaxTranslateX : 0, {
-      damping: 25,
-      stiffness: 300,
-    })
-  );
-
-  const rSwitchRootStyle = useAnimatedStyle(() => {
+  const rContainerStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: interpolateColor(
-        thumbTranslateX.get(),
-        [0, switchThumbMaxTranslateX],
-        [colors?.trackDefault ?? '#FAFAFA', colors?.trackSelected ?? '#0A0A0A']
+      backgroundColor: withTiming(
+        isSelected
+          ? (colors?.selectedBackground ?? '#0A0A0A')
+          : (colors?.defaultBackground ?? '#FAFAFA'),
+        {
+          easing: Easing.out(Easing.ease),
+        }
       ),
       borderColor: isSelected
-        ? withTiming(colors?.switchBorderSelected ?? '#0A0A0A', {
-            duration: 200,
-          })
-        : (colors?.switchBorderDefault ?? 'rgba(0, 0, 0, 0.1)'),
+        ? withDelay(300, withTiming(colors?.selectedBorder ?? '#0A0A0A'))
+        : (colors?.defaultBorder ?? 'rgba(0, 0, 0, 0.1)'),
     };
   });
 
-  const rThumbStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(
-      thumbTranslateX.get(),
-      [0, switchThumbMaxTranslateX],
-      [colors?.thumbDefault ?? '#D4D4D4', colors?.thumbSelected ?? '#FFFFFF']
-    ),
-    transform: [{ translateX: thumbTranslateX.get() }],
-  }));
+  const contextValue: SwitchContextValue = {
+    isSelected,
+    contentContainerWidth,
+    contentContainerHeight,
+  };
 
   return (
-    <AnimatedSwitchPrimitivesRoot
-      className={cn(
-        'shadow-sm',
-        disabled && 'opacity-50',
-        isReadOnly && 'pointer-events-none'
-      )}
-      style={[
-        styles.switchRoot,
-        rSwitchRootStyle,
-        {
-          width: switchWidth,
-          height: switchHeight,
-          padding: switchPadding,
-          borderWidth: switchBorderWidth,
-          borderRadius: switchHeight / 2,
-        },
-      ]}
-      {...props}
-    >
-      <AnimatedSwitchPrimitivesThumb
-        className="shadow-sm items-center justify-center"
-        style={[
-          rThumbStyle,
-          {
-            width: switchThumbSize,
-            height: switchThumbSize,
-            borderRadius: switchThumbSize / 2,
-          },
-        ]}
-      >
-        {isSelected ? (
-          <Animated.View key="check" entering={ZoomIn}>
-            <Check size={12} color="#0A0A0A" strokeWidth={4} />
-          </Animated.View>
-        ) : (
-          <Animated.View key="x" entering={ZoomIn}>
-            <X size={14} color="#FAFAFA" strokeWidth={3} />
-          </Animated.View>
+    <SwitchProvider value={contextValue}>
+      <AnimatedSwitchPrimitivesRoot
+        className={cn(
+          'p-[3px] shadow-sm border-[0.5px] rounded-full',
+          isDisabled && (classNames?.containerDisabled || 'opacity-50'),
+          isReadOnly && 'pointer-events-none',
+          classNames?.container,
+          className
         )}
-      </AnimatedSwitchPrimitivesThumb>
-    </AnimatedSwitchPrimitivesRoot>
+        style={[
+          {
+            width,
+            height,
+          },
+          styles.switchRoot,
+          rContainerStyle,
+          style,
+        ]}
+        checked={isSelected}
+        onCheckedChange={onSelectedChange}
+        disabled={isDisabled}
+        {...restProps}
+      >
+        <View
+          className={cn(
+            'w-full h-full justify-center',
+            classNames?.contentContainer
+          )}
+          onLayout={(e) => {
+            contentContainerWidth.set(e.nativeEvent.layout.width);
+            contentContainerHeight.set(e.nativeEvent.layout.height);
+          }}
+        >
+          {children}
+        </View>
+      </AnimatedSwitchPrimitivesRoot>
+    </SwitchProvider>
   );
 }
 
@@ -129,6 +118,69 @@ const styles = StyleSheet.create({
   },
 });
 
+// ----------------------------------------------------------------------------------
+
+function SwitchThumb(props: SwitchThumbProps) {
+  const { children, className, width = 18, height, colors } = props;
+
+  const { isSelected, contentContainerWidth } = useSwitchContext();
+
+  const rContainerStyle = useAnimatedStyle(() => {
+    const isMounted = contentContainerWidth.get() > 0;
+
+    // This is done to prevent the thumb from moving from the default position to the right
+    // when the component is mounted with `isSelected` set to `true`,
+    // and the user hasn't touched the switch yet.
+    if (!isMounted) {
+      if (isSelected) {
+        return {
+          right: 0,
+          backgroundColor: colors?.selectedBackground ?? '#FFFFFF',
+        };
+      }
+      return {
+        left: 0,
+        backgroundColor: colors?.defaultBackground ?? '#D4D4D4',
+      };
+    }
+
+    return {
+      left: withSpring(isSelected ? contentContainerWidth.get() - width : 0, {
+        damping: 25,
+        stiffness: 300,
+      }),
+      backgroundColor: withTiming(
+        isSelected
+          ? (colors?.selectedBackground ?? '#FFFFFF')
+          : (colors?.defaultBackground ?? '#D4D4D4'),
+        {
+          easing: Easing.out(Easing.ease),
+        }
+      ),
+    };
+  });
+
+  return (
+    <AnimatedSwitchPrimitivesThumb
+      className={cn(
+        'absolute items-center justify-center rounded-full overflow-hidden',
+        className
+      )}
+      style={[
+        {
+          width,
+          height: height ?? width,
+        },
+        rContainerStyle,
+      ]}
+    >
+      {children}
+    </AnimatedSwitchPrimitivesThumb>
+  );
+}
+
 Switch.displayName = 'HeroUI.Switch';
+SwitchThumb.displayName = 'HeroUI.SwitchThumb';
 
 export default Switch;
+export { SwitchThumb };

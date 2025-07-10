@@ -14,14 +14,14 @@ interface RootProps extends SlottablePressableProps {
    * Whether the switch is currently selected/checked
    * @type {boolean}
    */
-  isSelected: boolean;
+  checked: boolean;
 
   /**
    * Callback function fired when the switch selection state changes
-   * @param {boolean} isSelected - The new selection state
-   * @type {(isSelected: boolean) => void}
+   * @param {boolean} checked - The new selection state
+   * @type {(checked: boolean) => void}
    */
-  onSelectedChange: (isSelected: boolean) => void;
+  onCheckedChange: (checked: boolean) => void;
 
   /**
    * Whether the switch is disabled and cannot be interacted with

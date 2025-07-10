@@ -1,2 +1,2 @@
-export { default as Switch } from './switch';
+export { default as Switch, SwitchThumb } from './switch';
 export * from './switch.types';

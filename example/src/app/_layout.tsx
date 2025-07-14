@@ -1,6 +1,11 @@
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
+import { ThemeProvider } from 'heroui-native';
 import '../../global.css';
 
 export default function Layout() {
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <ThemeProvider defaultTheme="system">
+      <Slot />
+    </ThemeProvider>
+  );
 }

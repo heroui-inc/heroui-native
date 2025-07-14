@@ -1,11 +1,12 @@
+import { cn } from '@/helpers/utils';
 import {
+  Switch,
   SwitchEndContent,
   SwitchStartContent,
-} from '@/components/switch/switch';
-import { cn } from '@/helpers/utils';
-import { Switch, SwitchThumb } from 'heroui-native';
+  SwitchThumb,
+} from 'heroui-native';
 import { Check, Moon, Sun, X } from 'lucide-react-native';
-import * as React from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
 import Animated, {
   Easing,
@@ -14,7 +15,7 @@ import Animated, {
   ZoomIn,
 } from 'react-native-reanimated';
 
-export default function App() {
+export default function SwitchScreen() {
   const [base, setBase] = React.useState(true);
   const [icon, setIcon] = React.useState(true);
   const [contentIcon, setContentIcon] = React.useState(true);
@@ -22,7 +23,7 @@ export default function App() {
   const [custom1, setCustom1] = React.useState(true);
 
   return (
-    <View className="flex-1 items-center justify-center bg-white">
+    <View className="flex-1 items-center justify-center bg-background">
       {/* BASE */}
       <Switch isSelected={base} onSelectedChange={setBase} className="mb-6" />
       {/* ICON */}

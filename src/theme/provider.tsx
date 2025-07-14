@@ -1,5 +1,12 @@
 import { colorScheme } from 'nativewind';
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { View } from 'react-native';
 import { colors as colorConstants } from './colors';
 import { themes } from './themes';
@@ -24,11 +31,14 @@ export const ThemeProvider = ({
   const [currentTheme, setCurrentTheme] = useState<ColorScheme>('light');
   const [colors, setColors] = useState<ColorVariables>(colorConstants.light);
 
-  const setTheme = (theme: ColorScheme) => {
-    setCurrentTheme(theme);
-    colorScheme.set(theme);
-    setColors(colorConstants[theme]);
-  };
+  const setTheme = useCallback(
+    (theme: ColorScheme) => {
+      setCurrentTheme(theme);
+      colorScheme.set(theme);
+      setColors(colorConstants[theme]);
+    },
+    [setCurrentTheme, setColors]
+  );
 
   useEffect(() => {
     if (defaultTheme === 'system') {
@@ -37,17 +47,25 @@ export const ThemeProvider = ({
     } else {
       setTheme(defaultTheme);
     }
-  }, [defaultTheme]);
+  }, [defaultTheme, setTheme]);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-  };
+  }, [currentTheme, setTheme]);
+
+  const value = useMemo(
+    () => ({
+      theme: currentTheme,
+      colors,
+      toggleTheme,
+      setTheme,
+    }),
+    [currentTheme, colors, toggleTheme, setTheme]
+  );
 
   return (
-    <ThemeContext.Provider
-      value={{ theme: currentTheme, colors, toggleTheme, setTheme }}
-    >
+    <ThemeContext.Provider value={value}>
       <View style={themes[currentTheme]} className="flex-1">
         {children}
       </View>

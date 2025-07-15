@@ -1,6 +1,7 @@
 import { cn, createContext } from '@/helpers/utils';
 import * as SwitchPrimitives from '@/primitives/switch';
 import { useTheme } from '@/theme';
+import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   Easing,
@@ -10,6 +11,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import type {
+  SwitchColor,
   SwitchContentProps,
   SwitchContextValue,
   SwitchProps,
@@ -39,6 +41,7 @@ function Switch(props: SwitchProps) {
   const {
     children,
     size = 'md',
+    color = 'default',
     isReadOnly,
     isDisabled,
     isSelected,
@@ -54,6 +57,20 @@ function Switch(props: SwitchProps) {
 
   const { colors: themeColors } = useTheme();
 
+  const backgroundColorMap: Record<SwitchColor, string> = {
+    default: themeColors.accent,
+    success: themeColors.success,
+    warning: themeColors.warning,
+    danger: themeColors.danger,
+  };
+
+  const borderColorMap: Record<SwitchColor, string> = {
+    default: themeColors.accent,
+    success: themeColors.success,
+    warning: themeColors.warning,
+    danger: themeColors.danger,
+  };
+
   const contentContainerWidth = useSharedValue(0);
   const contentContainerHeight = useSharedValue(0);
 
@@ -66,25 +83,28 @@ function Switch(props: SwitchProps) {
     return {
       backgroundColor: withTiming(
         isSelected
-          ? (colors?.selectedBackground ?? themeColors.accent)
+          ? (colors?.selectedBackground ?? backgroundColorMap[color])
           : (colors?.defaultBackground ?? themeColors.base),
         timingConfig
       ),
       borderColor: withTiming(
         isSelected
-          ? (colors?.selectedBorder ?? themeColors.accent)
+          ? (colors?.selectedBorder ?? borderColorMap[color])
           : (colors?.defaultBorder ?? 'rgba(0, 0, 0, 0.1)'),
         timingConfig
       ),
     };
   });
 
-  const contextValue: SwitchContextValue = {
-    size,
-    isSelected,
-    contentContainerWidth,
-    contentContainerHeight,
-  };
+  const contextValue = useMemo(
+    () => ({
+      size,
+      isSelected,
+      contentContainerWidth,
+      contentContainerHeight,
+    }),
+    [size, isSelected, contentContainerWidth, contentContainerHeight]
+  );
 
   return (
     <SwitchProvider value={contextValue}>
@@ -177,13 +197,13 @@ function SwitchThumb(props: SwitchThumbProps) {
 
   const { colors: themeColors } = useTheme();
 
-  const defaultWidth: Record<SwitchSize, number> = {
+  const widthMap: Record<SwitchSize, number> = {
     sm: 14,
     md: 18,
     lg: 21,
   };
 
-  const computedWidth = width ?? defaultWidth[size];
+  const computedWidth = width ?? widthMap[size];
 
   const springConfig = animatedMotionConfig ?? {
     damping: 25,

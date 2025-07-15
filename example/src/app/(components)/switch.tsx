@@ -18,6 +18,9 @@ export default function SwitchScreen() {
   const [sm, setSm] = React.useState(true);
   const [md, setMd] = React.useState(true);
   const [lg, setLg] = React.useState(true);
+  const [success, setSuccess] = React.useState(true);
+  const [warning, setWarning] = React.useState(true);
+  const [danger, setDanger] = React.useState(true);
   const [icon, setIcon] = React.useState(true);
   const [contentIcon, setContentIcon] = React.useState(true);
   const [contentText, setContentText] = React.useState(true);
@@ -45,6 +48,30 @@ export default function SwitchScreen() {
         isSelected={lg}
         onSelectedChange={setLg}
         size="lg"
+        className="mb-6"
+      />
+
+      <Switch
+        isSelected={success}
+        onSelectedChange={setSuccess}
+        size="lg"
+        color="success"
+        className="mb-6"
+      />
+
+      <Switch
+        isSelected={warning}
+        onSelectedChange={setWarning}
+        size="lg"
+        color="warning"
+        className="mb-6"
+      />
+
+      <Switch
+        isSelected={danger}
+        onSelectedChange={setDanger}
+        size="lg"
+        color="danger"
         className="mb-6"
       />
 

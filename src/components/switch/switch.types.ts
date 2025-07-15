@@ -10,6 +10,8 @@ import type { SpringConfig } from 'react-native-reanimated/lib/typescript/animat
 /** Switch size variants */
 type SwitchSize = 'sm' | 'md' | 'lg';
 
+type SwitchColor = 'default' | 'success' | 'warning' | 'danger';
+
 interface SwitchProps
   extends Omit<
     SwitchPrimitivesTypes.RootProps,
@@ -30,8 +32,8 @@ interface SwitchProps
   size?: SwitchSize;
 
   // Optional style props
-  /** Color theme of the switch @default 'base' */
-  color?: 'base' | 'success' | 'warning' | 'danger';
+  /** Color theme of the switch @default 'default' */
+  color?: SwitchColor;
   /** Custom colors for different states */
   colors?: {
     defaultBorder?: string;
@@ -124,6 +126,7 @@ interface SwitchContextValue extends Pick<SwitchProps, 'isSelected'> {
 }
 
 export type {
+  SwitchColor,
   SwitchContentProps,
   SwitchContextValue,
   SwitchProps,

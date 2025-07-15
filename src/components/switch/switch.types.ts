@@ -7,6 +7,9 @@ import type {
 } from 'react-native-reanimated';
 import type { SpringConfig } from 'react-native-reanimated/lib/typescript/animation/springUtils';
 
+/** Switch size variants */
+type SwitchSize = 'sm' | 'md' | 'lg';
+
 interface SwitchProps
   extends Omit<
     SwitchPrimitivesTypes.RootProps,
@@ -24,7 +27,7 @@ interface SwitchProps
   /** Height of the switch component */
   height?: number;
   /** Size variant of the switch @default 'md' */
-  size?: 'sm' | 'md' | 'lg';
+  size?: SwitchSize;
 
   // Optional style props
   /** Color theme of the switch @default 'base' */
@@ -115,6 +118,7 @@ type SwitchContentProps = {
 };
 
 interface SwitchContextValue extends Pick<SwitchProps, 'isSelected'> {
+  size: SwitchSize;
   contentContainerWidth: SharedValue<number>;
   contentContainerHeight: SharedValue<number>;
 }
@@ -123,5 +127,6 @@ export type {
   SwitchContentProps,
   SwitchContextValue,
   SwitchProps,
+  SwitchSize,
   SwitchThumbProps,
 };

@@ -13,6 +13,7 @@ import type {
   SwitchContentProps,
   SwitchContextValue,
   SwitchProps,
+  SwitchSize,
   SwitchThumbProps,
 } from './switch.types';
 
@@ -37,8 +38,7 @@ export const [SwitchProvider, useSwitchContext] =
 function Switch(props: SwitchProps) {
   const {
     children,
-    width = 40,
-    height = 25,
+    size = 'md',
     isReadOnly,
     isDisabled,
     isSelected,
@@ -62,7 +62,7 @@ function Switch(props: SwitchProps) {
     easing: EASING,
   };
 
-  const rContainerStyle = useAnimatedStyle(() => {
+  const containerAnimatedStyle = useAnimatedStyle(() => {
     return {
       backgroundColor: withTiming(
         isSelected
@@ -80,6 +80,7 @@ function Switch(props: SwitchProps) {
   });
 
   const contextValue: SwitchContextValue = {
+    size,
     isSelected,
     contentContainerWidth,
     contentContainerHeight,
@@ -90,19 +91,25 @@ function Switch(props: SwitchProps) {
       <AnimatedSwitchPrimitivesRoot
         layout={layout}
         className={cn(
+          // Default base styles
           'shadow-sm border-[0.5px] rounded-full',
+          // Size variants
+          size === 'sm' && 'w-[32px] h-[20px]',
+          size === 'md' && 'w-[40px] h-[25px]',
+          size === 'lg' && 'w-[48px] h-[30px]',
+          // State variants
           isDisabled && (classNames?.containerDisabled || 'opacity-disabled'),
           isReadOnly && 'pointer-events-none',
+          // Outer custom styles
           classNames?.container,
           className
         )}
         style={[
-          {
-            width,
-            height,
-          },
+          // Default styles
           styles.switchRoot,
-          rContainerStyle,
+          // Animated styles
+          containerAnimatedStyle,
+          // Outer custom styles
           style,
         ]}
         checked={isSelected}
@@ -117,13 +124,21 @@ function Switch(props: SwitchProps) {
         */}
         <View
           className={cn(
-            'flex-1 px-[3.5px] overflow-hidden',
+            // Default styles
+            'flex-1  overflow-hidden',
+            // Size variants
+            size === 'sm' && 'px-[3px]',
+            size === 'md' && 'px-[3.5px]',
+            size === 'lg' && 'px-[4.5px]',
+            // Outer custom styles
             classNames?.contentPaddingContainer
           )}
         >
           <View
             className={cn(
+              // Default styles
               'flex-1 justify-center',
+              // Outer custom styles
               classNames?.contentContainer
             )}
             onLayout={(e) => {
@@ -151,16 +166,24 @@ function SwitchThumb(props: SwitchThumbProps) {
   const {
     children,
     className,
-    width = 18,
+    width,
     height,
     colors,
     animatedMotionConfig,
     animatedStylesConfig,
   } = props;
 
+  const { size, isSelected, contentContainerWidth } = useSwitchContext();
+
   const { colors: themeColors } = useTheme();
 
-  const { isSelected, contentContainerWidth } = useSwitchContext();
+  const defaultWidth: Record<SwitchSize, number> = {
+    sm: 14,
+    md: 18,
+    lg: 21,
+  };
+
+  const computedWidth = width ?? defaultWidth[size];
 
   const springConfig = animatedMotionConfig ?? {
     damping: 25,
@@ -173,7 +196,7 @@ function SwitchThumb(props: SwitchThumbProps) {
     easing: EASING,
   };
 
-  const rContainerStyle = useAnimatedStyle(() => {
+  const containerAnimatedStyle = useAnimatedStyle(() => {
     const isMounted = contentContainerWidth.get() > 0;
 
     // This is done to prevent the thumb from moving from the default position to the right
@@ -194,7 +217,7 @@ function SwitchThumb(props: SwitchThumbProps) {
 
     return {
       left: withSpring(
-        isSelected ? contentContainerWidth.get() - width + 0.5 : -0.5,
+        isSelected ? contentContainerWidth.get() - computedWidth + 0.5 : -0.5,
         springConfig
       ),
       backgroundColor: withTiming(
@@ -209,15 +232,19 @@ function SwitchThumb(props: SwitchThumbProps) {
   return (
     <AnimatedSwitchPrimitivesThumb
       className={cn(
+        // Default styles
         'absolute items-center justify-center rounded-full overflow-hidden',
+        // Outer custom styles
         className
       )}
       style={[
+        // Default styles
         {
-          width,
-          height: height ?? width,
+          width: computedWidth,
+          height: height ?? computedWidth,
         },
-        rContainerStyle,
+        // Animated styles
+        containerAnimatedStyle,
       ]}
     >
       {children}
@@ -230,7 +257,18 @@ function SwitchThumb(props: SwitchThumbProps) {
 function SwitchStartContent(props: SwitchContentProps) {
   const { children, className } = props;
 
-  return <View className={cn('absolute left-0', className)}>{children}</View>;
+  return (
+    <View
+      className={cn(
+        // Default styles
+        'absolute left-0',
+        // Outer custom styles
+        className
+      )}
+    >
+      {children}
+    </View>
+  );
 }
 
 // --------------------------------------------------
@@ -238,7 +276,18 @@ function SwitchStartContent(props: SwitchContentProps) {
 function SwitchEndContent(props: SwitchContentProps) {
   const { children, className } = props;
 
-  return <View className={cn('absolute right-0', className)}>{children}</View>;
+  return (
+    <View
+      className={cn(
+        // Default styles
+        'absolute right-0',
+        // Outer custom styles
+        className
+      )}
+    >
+      {children}
+    </View>
+  );
 }
 
 Switch.displayName = 'HeroUI.Switch';

@@ -15,7 +15,9 @@ import Animated, {
 } from 'react-native-reanimated';
 
 export default function SwitchScreen() {
-  const [base, setBase] = React.useState(true);
+  const [sm, setSm] = React.useState(true);
+  const [md, setMd] = React.useState(true);
+  const [lg, setLg] = React.useState(true);
   const [icon, setIcon] = React.useState(true);
   const [contentIcon, setContentIcon] = React.useState(true);
   const [contentText, setContentText] = React.useState(true);
@@ -25,16 +27,28 @@ export default function SwitchScreen() {
 
   return (
     <View className="flex-1 items-center justify-center bg-background">
-      {/* BASE */}
-      <Switch isSelected={base} onSelectedChange={setBase} className="mb-6" />
-      {/* ICON */}
       <Switch
-        width={40}
-        height={25}
-        isSelected={icon}
-        onSelectedChange={setIcon}
+        isSelected={sm}
+        onSelectedChange={setSm}
+        size="sm"
         className="mb-6"
-      >
+      />
+
+      <Switch
+        isSelected={md}
+        onSelectedChange={setMd}
+        size="md"
+        className="mb-6"
+      />
+
+      <Switch
+        isSelected={lg}
+        onSelectedChange={setLg}
+        size="lg"
+        className="mb-6"
+      />
+
+      <Switch isSelected={icon} onSelectedChange={setIcon} className="mb-6">
         <SwitchThumb>
           {icon ? (
             <Animated.View key="check" entering={ZoomIn}>
@@ -47,13 +61,11 @@ export default function SwitchScreen() {
           )}
         </SwitchThumb>
       </Switch>
-      {/* CONTENT ICON */}
+
       <Switch
-        width={56}
-        height={32}
         isSelected={contentIcon}
         onSelectedChange={setContentIcon}
-        className="mb-7"
+        className="w-[56px] h-[32px] mb-7"
         classNames={{
           contentPaddingContainer: 'px-1.5',
         }}
@@ -97,13 +109,11 @@ export default function SwitchScreen() {
           )}
         </SwitchEndContent>
       </Switch>
-      {/* CONTENT TEXT */}
+
       <Switch
-        width={60}
-        height={32}
         isSelected={contentText}
         onSelectedChange={setContentText}
-        className="mb-7"
+        className="w-[60px] h-[32px] mb-7"
         classNames={{
           contentPaddingContainer: 'px-1.5',
         }}
@@ -144,13 +154,12 @@ export default function SwitchScreen() {
           )}
         </SwitchEndContent>
       </Switch>
-      {/* CUSTOM 1 */}
+
       <Switch
-        width={40}
-        height={8}
         isSelected={custom1}
         onSelectedChange={setCustom1}
         classNames={{
+          container: 'w-[40px] h-[8px]',
           contentPaddingContainer: 'p-0 overflow-visible',
         }}
         colors={{

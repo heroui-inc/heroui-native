@@ -310,10 +310,10 @@ function SwitchEndContent(props: SwitchContentProps) {
   );
 }
 
-Switch.displayName = 'HeroUI.Switch';
-SwitchThumb.displayName = 'HeroUI.SwitchThumb';
-SwitchStartContent.displayName = 'HeroUI.SwitchStartContent';
-SwitchEndContent.displayName = 'HeroUI.SwitchEndContent';
+Switch.displayName = 'HeroUINative.Switch.Root';
+SwitchThumb.displayName = 'HeroUINative.Switch.Thumb';
+SwitchStartContent.displayName = 'HeroUINative.Switch.StartContent';
+SwitchEndContent.displayName = 'HeroUINative.Switch.EndContent';
 
 export default Switch;
 export { SwitchEndContent, SwitchStartContent, SwitchThumb };

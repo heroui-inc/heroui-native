@@ -35,7 +35,7 @@ const Pressable = React.forwardRef<
   });
 });
 
-Pressable.displayName = 'SlotPressable';
+Pressable.displayName = 'HeroUINative.Primitive.Slot.Pressable';
 
 // --------------------------------------------------
 
@@ -60,7 +60,7 @@ const View = React.forwardRef<React.ComponentRef<typeof RNView>, RNViewProps>(
   }
 );
 
-View.displayName = 'SlotView';
+View.displayName = 'HeroUINative.Primitive.Slot.View';
 
 // --------------------------------------------------
 
@@ -85,7 +85,7 @@ const Text = React.forwardRef<React.ComponentRef<typeof RNText>, RNTextProps>(
   }
 );
 
-Text.displayName = 'SlotText';
+Text.displayName = 'HeroUINative.Primitive.Slot.Text';
 
 // --------------------------------------------------
 
@@ -111,6 +111,6 @@ const Image = React.forwardRef<
   });
 });
 
-Image.displayName = 'SlotImage';
+Image.displayName = 'HeroUINative.Primitive.Slot.Image';
 
 export { Image, Pressable, Text, View };

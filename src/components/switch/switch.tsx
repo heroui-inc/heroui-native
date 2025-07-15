@@ -1,5 +1,6 @@
 import { cn, createContext } from '@/helpers/utils';
 import * as SwitchPrimitives from '@/primitives/switch';
+import { useTheme } from '@/theme';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   Easing,
@@ -23,8 +24,8 @@ const AnimatedSwitchPrimitivesThumb = Animated.createAnimatedComponent(
   SwitchPrimitives.Thumb
 );
 
-const DURATION = 200;
-const EASING = Easing.out(Easing.ease);
+const DURATION = 175;
+const EASING = Easing.bezier(0.25, 0.1, 0.25, 1);
 
 export const [SwitchProvider, useSwitchContext] =
   createContext<SwitchContextValue>({
@@ -51,6 +52,8 @@ function Switch(props: SwitchProps) {
     ...restProps
   } = props;
 
+  const { colors: themeColors } = useTheme();
+
   const contentContainerWidth = useSharedValue(0);
   const contentContainerHeight = useSharedValue(0);
 
@@ -63,13 +66,13 @@ function Switch(props: SwitchProps) {
     return {
       backgroundColor: withTiming(
         isSelected
-          ? (colors?.selectedBackground ?? '#0A0A0A')
-          : (colors?.defaultBackground ?? '#FAFAFA'),
+          ? (colors?.selectedBackground ?? themeColors.accent)
+          : (colors?.defaultBackground ?? themeColors.base),
         timingConfig
       ),
       borderColor: withTiming(
         isSelected
-          ? (colors?.selectedBorder ?? '#0A0A0A')
+          ? (colors?.selectedBorder ?? themeColors.accent)
           : (colors?.defaultBorder ?? 'rgba(0, 0, 0, 0.1)'),
         timingConfig
       ),
@@ -155,11 +158,14 @@ function SwitchThumb(props: SwitchThumbProps) {
     animatedStylesConfig,
   } = props;
 
+  const { colors: themeColors } = useTheme();
+
   const { isSelected, contentContainerWidth } = useSwitchContext();
 
   const springConfig = animatedMotionConfig ?? {
     damping: 25,
-    stiffness: 300,
+    stiffness: 400,
+    mass: 1,
   };
 
   const timingConfig = animatedStylesConfig ?? {
@@ -193,8 +199,8 @@ function SwitchThumb(props: SwitchThumbProps) {
       ),
       backgroundColor: withTiming(
         isSelected
-          ? (colors?.selectedBackground ?? '#FFFFFF')
-          : (colors?.defaultBackground ?? '#D4D4D4'),
+          ? (colors?.selectedBackground ?? themeColors.background)
+          : (colors?.defaultBackground ?? themeColors.mutedForeground),
         timingConfig
       ),
     };

@@ -132,9 +132,9 @@ function Switch(props: SwitchProps) {
           // Outer custom styles
           style,
         ]}
-        checked={isSelected}
-        onCheckedChange={onSelectedChange}
-        disabled={isDisabled}
+        isSelected={isSelected}
+        onSelectedChange={onSelectedChange}
+        isDisabled={isDisabled}
         {...restProps}
       >
         {/* 

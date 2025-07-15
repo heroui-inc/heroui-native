@@ -9,9 +9,9 @@ const Root = React.forwardRef<RootRef, RootProps>(
   (
     {
       asChild,
-      checked,
-      onCheckedChange,
-      disabled,
+      isSelected,
+      onSelectedChange,
+      isDisabled,
       'onPress': onPressProp,
       'aria-valuetext': ariaValueText,
       ...props
@@ -19,8 +19,8 @@ const Root = React.forwardRef<RootRef, RootProps>(
     ref
   ) => {
     function onPress(ev: GestureResponderEvent) {
-      if (disabled) return;
-      onCheckedChange(!checked);
+      if (isDisabled) return;
+      onSelectedChange(!isSelected);
       onPressProp?.(ev);
     }
 
@@ -29,16 +29,16 @@ const Root = React.forwardRef<RootRef, RootProps>(
     return (
       <Component
         ref={ref}
-        aria-disabled={disabled}
+        aria-disabled={isDisabled}
         role="switch"
-        aria-checked={checked}
-        aria-valuetext={(ariaValueText ?? checked) ? 'on' : 'off'}
+        aria-checked={isSelected}
+        aria-valuetext={(ariaValueText ?? isSelected) ? 'on' : 'off'}
         onPress={onPress}
         accessibilityState={{
-          checked,
-          disabled,
+          checked: isSelected,
+          disabled: isDisabled,
         }}
-        disabled={disabled}
+        disabled={isDisabled}
         {...props}
       />
     );

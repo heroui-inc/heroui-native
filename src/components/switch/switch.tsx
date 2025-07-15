@@ -88,7 +88,7 @@ function Switch(props: SwitchProps) {
         layout={layout}
         className={cn(
           'shadow-sm border-[0.5px] rounded-full',
-          isDisabled && (classNames?.containerDisabled || 'opacity-50'),
+          isDisabled && (classNames?.containerDisabled || 'opacity-disabled'),
           isReadOnly && 'pointer-events-none',
           classNames?.container,
           className

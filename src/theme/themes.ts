@@ -2,14 +2,13 @@ import { vars } from 'nativewind';
 import type { ColorScheme, ColorVariablesCSS } from './types';
 
 const nonColorsVars = {
-  /* Layout */
-  '--border-width': '1px',
-  '--disabled-opacity': '0.5',
-
   /* Radius */
   '--radius': '12px',
   '--radius-panel': '8px',
   '--radius-panel-inner': 'calc(var(--radius-panel) * 0.5)',
+
+  /* Misc */
+  '--opacity-disabled': '0.5',
 };
 
 export const themes: Record<ColorScheme, Record<string, string>> = {

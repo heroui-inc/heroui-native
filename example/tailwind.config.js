@@ -52,6 +52,7 @@ module.exports = {
         border: 'hsl(var(--border) / 0.1)',
         link: 'hsl(var(--link))',
       },
+      /* Layout */
       borderRadius: {
         'xs': 'calc(var(--radius) * 0.25)',
         'sm': 'calc(var(--radius) * 0.5)',
@@ -61,6 +62,10 @@ module.exports = {
         '2xl': 'calc(var(--radius) * 2)',
         '3xl': 'calc(var(--radius) * 3)',
         '4xl': 'calc(var(--radius) * 4)',
+      },
+      /* Misc */
+      opacity: {
+        disabled: 'var(--opacity-disabled)',
       },
     },
   },

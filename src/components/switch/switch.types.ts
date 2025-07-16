@@ -41,12 +41,11 @@ interface SwitchProps
     defaultBackground?: string;
     selectedBackground?: string;
   };
-  /** CSS class name for the root element */
+  /** NativeWind class name for the root element */
   className?: string;
-  /** CSS class names for different parts of the component */
+  /** NativeWind class names for different parts of the component */
   classNames?: {
     container?: string;
-    containerDisabled?: string;
     contentPaddingContainer?: string;
     contentContainer?: string;
   };

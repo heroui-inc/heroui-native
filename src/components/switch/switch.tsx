@@ -1,4 +1,4 @@
-import { cn, createContext } from '@/helpers/utils';
+import { createContext } from '@/helpers/utils';
 import * as SwitchPrimitives from '@/primitives/switch';
 import { useTheme } from '@/theme';
 import { useMemo } from 'react';
@@ -10,6 +10,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import switchStyles from './switch.styles';
 import type {
   SwitchColor,
   SwitchContentProps,
@@ -56,6 +57,14 @@ function Switch(props: SwitchProps) {
   } = props;
 
   const { colors: themeColors } = useTheme();
+
+  const { base, contentPaddingContainer, contentContainer } = switchStyles.root(
+    {
+      size,
+      isDisabled,
+      isReadOnly,
+    }
+  );
 
   const backgroundColorMap: Record<SwitchColor, string> = {
     default: themeColors.accent,
@@ -110,20 +119,9 @@ function Switch(props: SwitchProps) {
     <SwitchProvider value={contextValue}>
       <AnimatedSwitchPrimitivesRoot
         layout={layout}
-        className={cn(
-          // Default base styles
-          'shadow-sm border-[0.5px] rounded-full',
-          // Size variants
-          size === 'sm' && 'w-[32px] h-[20px]',
-          size === 'md' && 'w-[40px] h-[25px]',
-          size === 'lg' && 'w-[48px] h-[30px]',
-          // State variants
-          isDisabled && (classNames?.containerDisabled || 'opacity-disabled'),
-          isReadOnly && 'pointer-events-none',
-          // Outer custom styles
-          classNames?.container,
-          className
-        )}
+        className={base({
+          className: [className, classNames?.container],
+        })}
         style={[
           // Default styles
           styles.switchRoot,
@@ -143,24 +141,14 @@ function Switch(props: SwitchProps) {
           The overflow-hidden ensures content stays within the switch boundaries.
         */}
         <View
-          className={cn(
-            // Default styles
-            'flex-1  overflow-hidden',
-            // Size variants
-            size === 'sm' && 'px-[3px]',
-            size === 'md' && 'px-[3.5px]',
-            size === 'lg' && 'px-[4.5px]',
-            // Outer custom styles
-            classNames?.contentPaddingContainer
-          )}
+          className={contentPaddingContainer({
+            className: classNames?.contentPaddingContainer,
+          })}
         >
           <View
-            className={cn(
-              // Default styles
-              'flex-1 justify-center',
-              // Outer custom styles
-              classNames?.contentContainer
-            )}
+            className={contentContainer({
+              className: classNames?.contentContainer,
+            })}
             onLayout={(e) => {
               contentContainerWidth.set(e.nativeEvent.layout.width);
               contentContainerHeight.set(e.nativeEvent.layout.height);
@@ -251,12 +239,9 @@ function SwitchThumb(props: SwitchThumbProps) {
 
   return (
     <AnimatedSwitchPrimitivesThumb
-      className={cn(
-        // Default styles
-        `absolute items-center justify-center rounded-full overflow-hidden`,
-        // Outer custom styles
-        className
-      )}
+      className={switchStyles.thumb({
+        className,
+      })}
       style={[
         // Default styles
         {
@@ -279,12 +264,9 @@ function SwitchStartContent(props: SwitchContentProps) {
 
   return (
     <View
-      className={cn(
-        // Default styles
-        'absolute left-0',
-        // Outer custom styles
-        className
-      )}
+      className={switchStyles.startContent({
+        className,
+      })}
     >
       {children}
     </View>
@@ -298,17 +280,16 @@ function SwitchEndContent(props: SwitchContentProps) {
 
   return (
     <View
-      className={cn(
-        // Default styles
-        'absolute right-0',
-        // Outer custom styles
-        className
-      )}
+      className={switchStyles.endContent({
+        className,
+      })}
     >
       {children}
     </View>
   );
 }
+
+// --------------------------------------------------
 
 Switch.displayName = 'HeroUINative.Switch.Root';
 SwitchThumb.displayName = 'HeroUINative.Switch.Thumb';

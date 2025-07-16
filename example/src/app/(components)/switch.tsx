@@ -31,12 +31,7 @@ export default function SwitchScreen() {
         className="mb-6"
       />
 
-      <Switch
-        isSelected={md}
-        onSelectedChange={setMd}
-        size="md"
-        className="mb-6"
-      />
+      <Switch isSelected={md} onSelectedChange={setMd} className="mb-6" />
 
       <Switch
         isSelected={lg}

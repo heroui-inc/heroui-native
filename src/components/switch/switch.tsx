@@ -214,12 +214,13 @@ function SwitchThumb(props: SwitchThumbProps) {
       if (isSelected) {
         return {
           right: 0,
-          backgroundColor: colors?.selectedBackground ?? '#FFFFFF',
+          backgroundColor: colors?.selectedBackground ?? themeColors.background,
         };
       }
       return {
         left: 0,
-        backgroundColor: colors?.defaultBackground ?? '#D4D4D4',
+        backgroundColor:
+          colors?.defaultBackground ?? themeColors.mutedForeground,
       };
     }
 

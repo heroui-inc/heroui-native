@@ -1,10 +1,4 @@
-import {
-  Switch,
-  SwitchEndContent,
-  SwitchStartContent,
-  SwitchThumb,
-  useTheme,
-} from 'heroui-native';
+import { Switch, useTheme } from 'heroui-native';
 import { Check, Moon, Sun, X } from 'lucide-react-native';
 import React from 'react';
 import { Text, View } from 'react-native';
@@ -76,7 +70,7 @@ export default function SwitchScreen() {
       />
 
       <Switch isSelected={icon} onSelectedChange={setIcon} className="mb-6">
-        <SwitchThumb>
+        <Switch.Thumb>
           {icon ? (
             <Animated.View key="check" entering={ZoomIn}>
               <Check size={12} color={colors.accent} strokeWidth={4} />
@@ -86,7 +80,7 @@ export default function SwitchScreen() {
               <X size={14} color={colors.base} strokeWidth={3} />
             </Animated.View>
           )}
-        </SwitchThumb>
+        </Switch.Thumb>
       </Switch>
 
       <Switch
@@ -103,7 +97,7 @@ export default function SwitchScreen() {
           selectedBorder: '#eab308',
         }}
       >
-        <SwitchThumb
+        <Switch.Thumb
           width={22}
           colors={{
             defaultBackground: '#dbeafe',
@@ -115,7 +109,7 @@ export default function SwitchScreen() {
             mass: 1,
           }}
         />
-        <SwitchStartContent className="left-0.5">
+        <Switch.StartContent className="left-0.5">
           {contentIcon && (
             <Animated.View
               key="sun"
@@ -124,8 +118,8 @@ export default function SwitchScreen() {
               <Sun size={16} color="#854d0e" strokeWidth={3} />
             </Animated.View>
           )}
-        </SwitchStartContent>
-        <SwitchEndContent className="right-0.5">
+        </Switch.StartContent>
+        <Switch.EndContent className="right-0.5">
           {!contentIcon && (
             <Animated.View
               key="moon"
@@ -134,7 +128,7 @@ export default function SwitchScreen() {
               <Moon size={16} color="#dbeafe" />
             </Animated.View>
           )}
-        </SwitchEndContent>
+        </Switch.EndContent>
       </Switch>
 
       <Switch
@@ -151,7 +145,7 @@ export default function SwitchScreen() {
           selectedBorder: '#16a34a',
         }}
       >
-        <SwitchThumb
+        <Switch.Thumb
           width={22}
           colors={{ defaultBackground: '#fff', selectedBackground: '#fff' }}
           animatedMotionConfig={{
@@ -160,7 +154,7 @@ export default function SwitchScreen() {
             mass: 1,
           }}
         />
-        <SwitchStartContent className="left-1">
+        <Switch.StartContent className="left-1">
           {contentText && (
             <Animated.View
               key="sun"
@@ -169,8 +163,8 @@ export default function SwitchScreen() {
               <Text className="text-xs font-bold text-white">ON</Text>
             </Animated.View>
           )}
-        </SwitchStartContent>
-        <SwitchEndContent className="right-0.5">
+        </Switch.StartContent>
+        <Switch.EndContent className="right-0.5">
           {!contentText && (
             <Animated.View
               key="moon"
@@ -179,7 +173,7 @@ export default function SwitchScreen() {
               <Text className="text-xs font-bold text-zinc-200">OFF</Text>
             </Animated.View>
           )}
-        </SwitchEndContent>
+        </Switch.EndContent>
       </Switch>
 
       <Switch
@@ -195,7 +189,7 @@ export default function SwitchScreen() {
         }}
         hitSlop={20}
       >
-        <SwitchThumb
+        <Switch.Thumb
           width={20}
           className="border-[1.5px] border-muted-foreground"
           colors={{

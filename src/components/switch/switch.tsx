@@ -253,7 +253,7 @@ function SwitchThumb(props: SwitchThumbProps) {
     <AnimatedSwitchPrimitivesThumb
       className={cn(
         // Default styles
-        'absolute items-center justify-center rounded-full overflow-hidden',
+        `absolute items-center justify-center rounded-full overflow-hidden`,
         // Outer custom styles
         className
       )}
@@ -315,5 +315,10 @@ SwitchThumb.displayName = 'HeroUINative.Switch.Thumb';
 SwitchStartContent.displayName = 'HeroUINative.Switch.StartContent';
 SwitchEndContent.displayName = 'HeroUINative.Switch.EndContent';
 
-export default Switch;
-export { SwitchEndContent, SwitchStartContent, SwitchThumb };
+const CompoundSwitch = Object.assign(Switch, {
+  Thumb: SwitchThumb,
+  StartContent: SwitchStartContent,
+  EndContent: SwitchEndContent,
+});
+
+export default CompoundSwitch;

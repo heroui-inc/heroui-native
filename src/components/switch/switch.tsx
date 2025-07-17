@@ -20,11 +20,11 @@ import type {
   SwitchThumbProps,
 } from './switch.types';
 
-const AnimatedSwitchPrimitivesRoot = Animated.createAnimatedComponent(
+const AnimatedSwitchRoot = Animated.createAnimatedComponent(
   SwitchPrimitives.Root
 );
 
-const AnimatedSwitchPrimitivesThumb = Animated.createAnimatedComponent(
+const AnimatedSwitchThumb = Animated.createAnimatedComponent(
   SwitchPrimitives.Thumb
 );
 
@@ -66,6 +66,18 @@ function Switch(props: SwitchProps) {
     }
   );
 
+  const tvBaseStyles = base({
+    className: [className, classNames?.container],
+  });
+
+  const tvContentPaddingContainerStyles = contentPaddingContainer({
+    className: classNames?.contentPaddingContainer,
+  });
+
+  const tvContentContainerStyles = contentContainer({
+    className: classNames?.contentContainer,
+  });
+
   const backgroundColorMap: Record<SwitchColor, string> = {
     default: themeColors.accent,
     success: themeColors.success,
@@ -99,7 +111,7 @@ function Switch(props: SwitchProps) {
       borderColor: withTiming(
         isSelected
           ? (colors?.selectedBorder ?? borderColorMap[color])
-          : (colors?.defaultBorder ?? 'rgba(0, 0, 0, 0.1)'),
+          : (colors?.defaultBorder ?? themeColors.border),
         timingConfig
       ),
     };
@@ -117,19 +129,10 @@ function Switch(props: SwitchProps) {
 
   return (
     <SwitchProvider value={contextValue}>
-      <AnimatedSwitchPrimitivesRoot
+      <AnimatedSwitchRoot
         layout={layout}
-        className={base({
-          className: [className, classNames?.container],
-        })}
-        style={[
-          // Default styles
-          styles.switchRoot,
-          // Animated styles
-          containerAnimatedStyle,
-          // Outer custom styles
-          style,
-        ]}
+        className={tvBaseStyles}
+        style={[styles.switchRoot, containerAnimatedStyle, style]}
         isSelected={isSelected}
         onSelectedChange={onSelectedChange}
         isDisabled={isDisabled}
@@ -140,15 +143,9 @@ function Switch(props: SwitchProps) {
           and you want it to be hidden outside of switch right by the switch border.
           The overflow-hidden ensures content stays within the switch boundaries.
         */}
-        <View
-          className={contentPaddingContainer({
-            className: classNames?.contentPaddingContainer,
-          })}
-        >
+        <View className={tvContentPaddingContainerStyles}>
           <View
-            className={contentContainer({
-              className: classNames?.contentContainer,
-            })}
+            className={tvContentContainerStyles}
             onLayout={(e) => {
               contentContainerWidth.set(e.nativeEvent.layout.width);
               contentContainerHeight.set(e.nativeEvent.layout.height);
@@ -157,7 +154,7 @@ function Switch(props: SwitchProps) {
             {children ?? <SwitchThumb />}
           </View>
         </View>
-      </AnimatedSwitchPrimitivesRoot>
+      </AnimatedSwitchRoot>
     </SwitchProvider>
   );
 }
@@ -184,6 +181,10 @@ function SwitchThumb(props: SwitchThumbProps) {
   const { size, isSelected, contentContainerWidth } = useSwitchContext();
 
   const { colors: themeColors } = useTheme();
+
+  const tvStyles = switchStyles.thumb({
+    className,
+  });
 
   const widthMap: Record<SwitchSize, number> = {
     sm: 14,
@@ -239,22 +240,18 @@ function SwitchThumb(props: SwitchThumbProps) {
   });
 
   return (
-    <AnimatedSwitchPrimitivesThumb
-      className={switchStyles.thumb({
-        className,
-      })}
+    <AnimatedSwitchThumb
+      className={tvStyles}
       style={[
-        // Default styles
         {
           width: computedWidth,
           height: height ?? computedWidth,
         },
-        // Animated styles
         containerAnimatedStyle,
       ]}
     >
       {children}
-    </AnimatedSwitchPrimitivesThumb>
+    </AnimatedSwitchThumb>
   );
 }
 
@@ -263,15 +260,11 @@ function SwitchThumb(props: SwitchThumbProps) {
 function SwitchStartContent(props: SwitchContentProps) {
   const { children, className } = props;
 
-  return (
-    <View
-      className={switchStyles.startContent({
-        className,
-      })}
-    >
-      {children}
-    </View>
-  );
+  const tvStyles = switchStyles.startContent({
+    className,
+  });
+
+  return <View className={tvStyles}>{children}</View>;
 }
 
 // --------------------------------------------------
@@ -279,15 +272,11 @@ function SwitchStartContent(props: SwitchContentProps) {
 function SwitchEndContent(props: SwitchContentProps) {
   const { children, className } = props;
 
-  return (
-    <View
-      className={switchStyles.endContent({
-        className,
-      })}
-    >
-      {children}
-    </View>
-  );
+  const tvStyles = switchStyles.endContent({
+    className,
+  });
+
+  return <View className={tvStyles}>{children}</View>;
 }
 
 // --------------------------------------------------

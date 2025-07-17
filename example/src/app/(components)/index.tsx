@@ -14,6 +14,9 @@ export default function App() {
       <Link href="/switch" className={classNames.link}>
         Switch
       </Link>
+      <Link href="/checkbox" className={classNames.link}>
+        Checkbox
+      </Link>
     </View>
   );
 }

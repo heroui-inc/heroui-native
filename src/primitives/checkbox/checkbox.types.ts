@@ -1,5 +1,4 @@
 import type {
-  ForceMountable,
   PressableRef,
   SlottablePressableProps,
   SlottableViewProps,
@@ -24,9 +23,8 @@ type RootProps = Omit<SlottablePressableProps, 'disabled'> & {
  * Props for the checkbox indicator component.
  *
  * @extends SlottableViewProps Inherits view props except 'disabled'
- * @extends ForceMountable Allows forcing component to mount
  */
-type IndicatorProps = ForceMountable & Omit<SlottableViewProps, 'disabled'>;
+type IndicatorProps = Omit<SlottableViewProps, 'disabled'>;
 
 /** Reference type for the checkbox root component */
 type RootRef = PressableRef;

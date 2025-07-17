@@ -35,7 +35,7 @@ const Root = React.forwardRef<RootRef, RootProps>(
   }
 );
 
-Root.displayName = 'RootNativeCheckbox';
+Root.displayName = 'HeroUINative.Primitive.Checkbox.Root';
 
 function useCheckboxContext() {
   const context = React.useContext(CheckboxContext);
@@ -82,26 +82,20 @@ const Trigger = React.forwardRef<PressableRef, SlottablePressableProps>(
   }
 );
 
-Trigger.displayName = 'TriggerNativeCheckbox';
+Trigger.displayName = 'HeroUINative.Primitive.Checkbox.Trigger';
 
 // --------------------------------------------------
 
 const Indicator = React.forwardRef<IndicatorRef, IndicatorProps>(
-  ({ asChild, forceMount, ...props }, ref) => {
+  ({ asChild, ...props }, ref) => {
     const { isSelected, isDisabled } = useCheckboxContext();
-
-    if (!forceMount) {
-      if (!isSelected) {
-        return null;
-      }
-    }
 
     const Component = asChild ? Slot.View : View;
     return (
       <Component
         ref={ref}
         aria-disabled={isDisabled}
-        aria-hidden={!(forceMount || isSelected)}
+        aria-hidden={!isSelected}
         role={'presentation'}
         {...props}
       />
@@ -109,6 +103,6 @@ const Indicator = React.forwardRef<IndicatorRef, IndicatorProps>(
   }
 );
 
-Indicator.displayName = 'IndicatorNativeCheckbox';
+Indicator.displayName = 'HeroUINative.Primitive.Checkbox.Indicator';
 
 export { Indicator, Root };

@@ -49,16 +49,16 @@ export interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
   /** Content to render inside the switch */
   children?: React.ReactNode;
 
-  /** Size of the switch */
+  /** Size of the switch @default 'md' */
   size?: SwitchSize;
 
-  /** Color theme of the switch */
+  /** Color theme of the switch @default 'default' */
   color?: SwitchColor;
 
-  /** Whether the switch is read-only */
+  /** Whether the switch is read-only @default false */
   isReadOnly?: boolean;
 
-  /** Whether the switch is disabled */
+  /** Whether the switch is disabled @default false */
   isDisabled?: boolean;
 
   /** Custom class name for the switch */

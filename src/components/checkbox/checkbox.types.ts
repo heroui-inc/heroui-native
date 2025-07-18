@@ -54,13 +54,13 @@ export interface CheckboxProps extends CheckboxPrimitivesTypes.RootProps {
   /** Child elements to render inside the checkbox */
   children?: React.ReactNode;
 
-  /** Size of the checkbox */
+  /** Size of the checkbox @default 'md' */
   size?: CheckboxSize;
 
-  /** Color theme of the checkbox */
+  /** Color theme of the checkbox @default 'default' */
   color?: CheckboxColor;
 
-  /** Whether the checkbox is read-only */
+  /** Whether the checkbox is read-only @default false */
   isReadOnly?: boolean;
 
   /** Custom class name for the checkbox */

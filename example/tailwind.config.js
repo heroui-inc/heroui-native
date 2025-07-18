@@ -49,7 +49,7 @@ module.exports = {
           foreground: 'hsl(var(--danger-foreground))',
         },
         /* Misc Colors */
-        border: 'hsl(var(--border) / 0.1)',
+        border: 'hsl(var(--border))',
         link: 'hsl(var(--link))',
       },
       /* Layout */

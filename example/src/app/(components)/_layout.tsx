@@ -16,11 +16,15 @@ export default function Layout() {
         headerTintColor: colors.foreground,
         headerBackButtonDisplayMode: 'minimal',
         headerRight: _renderThemeToggle,
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
+        fullScreenGestureEnabled: true,
       }}
     >
       <Stack.Screen name="index" options={{ title: 'HeroUI Native' }} />
       <Stack.Screen name="theme" options={{ title: 'Theme' }} />
       <Stack.Screen name="switch" options={{ title: 'Switch' }} />
+      <Stack.Screen name="checkbox" options={{ title: 'Checkbox' }} />
     </Stack>
   );
 }

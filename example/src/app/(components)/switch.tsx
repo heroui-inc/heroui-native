@@ -1,7 +1,7 @@
 import { Switch, useTheme } from 'heroui-native';
 import { Check, Moon, Sun, X } from 'lucide-react-native';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import Animated, {
   FadeInLeft,
   FadeInRight,
@@ -12,9 +12,12 @@ export default function SwitchScreen() {
   const [sm, setSm] = React.useState(true);
   const [md, setMd] = React.useState(true);
   const [lg, setLg] = React.useState(true);
+  const [defaultColor, setDefaultColor] = React.useState(true);
   const [success, setSuccess] = React.useState(true);
   const [warning, setWarning] = React.useState(true);
   const [danger, setDanger] = React.useState(true);
+  const [disabled, setDisabled] = React.useState(true);
+  const [readonly, setReadonly] = React.useState(true);
   const [icon, setIcon] = React.useState(true);
   const [contentIcon, setContentIcon] = React.useState(true);
   const [contentText, setContentText] = React.useState(true);
@@ -23,46 +26,68 @@ export default function SwitchScreen() {
   const { theme, colors } = useTheme();
 
   return (
-    <View className="flex-1 items-center justify-center bg-background">
-      <Switch
-        isSelected={sm}
-        onSelectedChange={setSm}
-        size="sm"
-        className="mb-6"
-      />
+    <ScrollView
+      className="bg-background"
+      contentContainerClassName="items-center justify-center p-4"
+      contentInsetAdjustmentBehavior="automatic"
+    >
+      <Text className="text-lg font-bold text-muted-foreground mb-4">
+        Sizes
+      </Text>
 
-      <Switch isSelected={md} onSelectedChange={setMd} className="mb-6" />
+      <View className="flex-row gap-4 mb-6">
+        <Switch isSelected={sm} onSelectedChange={setSm} size="sm" />
+        <Switch isSelected={md} onSelectedChange={setMd} size="md" />
+        <Switch isSelected={lg} onSelectedChange={setLg} size="lg" />
+      </View>
 
-      <Switch
-        isSelected={lg}
-        onSelectedChange={setLg}
-        size="lg"
-        className="mb-6"
-      />
+      <Text className="text-lg font-bold text-muted-foreground mb-4">
+        Colors
+      </Text>
 
-      <Switch
-        isSelected={success}
-        onSelectedChange={setSuccess}
-        size="lg"
-        color="success"
-        className="mb-6"
-      />
+      <View className="flex-row gap-4 mb-6">
+        <Switch
+          isSelected={defaultColor}
+          onSelectedChange={setDefaultColor}
+          color="default"
+        />
+        <Switch
+          isSelected={success}
+          onSelectedChange={setSuccess}
+          color="success"
+        />
+        <Switch
+          isSelected={warning}
+          onSelectedChange={setWarning}
+          color="warning"
+        />
+        <Switch
+          isSelected={danger}
+          onSelectedChange={setDanger}
+          color="danger"
+        />
+      </View>
 
-      <Switch
-        isSelected={warning}
-        onSelectedChange={setWarning}
-        size="lg"
-        color="warning"
-        className="mb-6"
-      />
+      <Text className="text-lg font-bold text-muted-foreground mb-4">
+        States
+      </Text>
 
-      <Switch
-        isSelected={danger}
-        onSelectedChange={setDanger}
-        size="lg"
-        color="danger"
-        className="mb-6"
-      />
+      <View className="flex-row gap-4 mb-6">
+        <Switch
+          isSelected={disabled}
+          onSelectedChange={setDisabled}
+          isDisabled={true}
+        />
+        <Switch
+          isSelected={readonly}
+          onSelectedChange={setReadonly}
+          isReadOnly={true}
+        />
+      </View>
+
+      <Text className="text-lg font-bold text-muted-foreground mb-4">
+        Custom Thumb
+      </Text>
 
       <Switch isSelected={icon} onSelectedChange={setIcon} className="mb-6">
         <Switch.Thumb>
@@ -78,98 +103,112 @@ export default function SwitchScreen() {
         </Switch.Thumb>
       </Switch>
 
-      <Switch
-        isSelected={contentIcon}
-        onSelectedChange={setContentIcon}
-        className="w-[56px] h-[32px] mb-7"
-        classNames={{
-          contentPaddingContainer: 'px-1.5',
-        }}
-        colors={{
-          defaultBackground: '#172554',
-          selectedBackground: '#eab308',
-          defaultBorder: '#dbeafe20',
-          selectedBorder: '#eab308',
-        }}
-      >
-        <Switch.Thumb
-          width={22}
-          colors={{
-            defaultBackground: '#dbeafe',
-            selectedBackground: '#854d0e',
-          }}
-          animatedMotionConfig={{
-            damping: 30,
-            stiffness: 300,
-            mass: 1,
-          }}
-        />
-        <Switch.StartContent className="left-0.5">
-          {contentIcon && (
-            <Animated.View
-              key="sun"
-              entering={ZoomIn.springify().damping(30).stiffness(300)}
-            >
-              <Sun size={16} color="#854d0e" strokeWidth={3} />
-            </Animated.View>
-          )}
-        </Switch.StartContent>
-        <Switch.EndContent className="right-0.5">
-          {!contentIcon && (
-            <Animated.View
-              key="moon"
-              entering={ZoomIn.springify().damping(30).stiffness(300)}
-            >
-              <Moon size={16} color="#dbeafe" />
-            </Animated.View>
-          )}
-        </Switch.EndContent>
-      </Switch>
+      <Text className="text-lg font-bold text-muted-foreground mb-4">
+        With Start & End Content
+      </Text>
 
-      <Switch
-        isSelected={contentText}
-        onSelectedChange={setContentText}
-        className="w-[60px] h-[32px] mb-7"
-        classNames={{
-          contentPaddingContainer: 'px-1.5',
-        }}
-        colors={{
-          defaultBackground: '#71717a',
-          selectedBackground: '#16a34a',
-          defaultBorder: '#71717a',
-          selectedBorder: '#16a34a',
-        }}
-      >
-        <Switch.Thumb
-          width={22}
-          colors={{ defaultBackground: '#fff', selectedBackground: '#fff' }}
-          animatedMotionConfig={{
-            damping: 36,
-            stiffness: 400,
-            mass: 1,
+      <View className="gap-4 mb-6">
+        <Switch
+          isSelected={contentIcon}
+          onSelectedChange={setContentIcon}
+          className="w-[56px] h-[32px]"
+          classNames={{
+            contentPaddingContainer: 'px-1.5',
           }}
-        />
-        <Switch.StartContent className="left-1">
-          {contentText && (
-            <Animated.View
-              key="sun"
-              entering={FadeInRight.springify().damping(36).stiffness(400)}
-            >
-              <Text className="text-xs font-bold text-white">ON</Text>
-            </Animated.View>
-          )}
-        </Switch.StartContent>
-        <Switch.EndContent className="right-0.5">
-          {!contentText && (
-            <Animated.View
-              key="moon"
-              entering={FadeInLeft.springify().damping(36).stiffness(400)}
-            >
-              <Text className="text-xs font-bold text-zinc-200">OFF</Text>
-            </Animated.View>
-          )}
-        </Switch.EndContent>
-      </Switch>
+          colors={{
+            defaultBackground: '#172554',
+            selectedBackground: '#eab308',
+            defaultBorder: '#dbeafe20',
+            selectedBorder: '#eab308',
+          }}
+        >
+          <Switch.Thumb
+            width={22}
+            colors={{
+              defaultBackground: '#dbeafe',
+              selectedBackground: '#854d0e',
+            }}
+            animationConfig={{
+              translateX: {
+                damping: 30,
+                stiffness: 300,
+                mass: 1,
+              },
+            }}
+          />
+          <Switch.StartContent className="left-0.5">
+            {contentIcon && (
+              <Animated.View
+                key="sun"
+                entering={ZoomIn.springify().damping(30).stiffness(300)}
+              >
+                <Sun size={16} color="#854d0e" strokeWidth={3} />
+              </Animated.View>
+            )}
+          </Switch.StartContent>
+          <Switch.EndContent className="right-0.5">
+            {!contentIcon && (
+              <Animated.View
+                key="moon"
+                entering={ZoomIn.springify().damping(30).stiffness(300)}
+              >
+                <Moon size={16} color="#dbeafe" />
+              </Animated.View>
+            )}
+          </Switch.EndContent>
+        </Switch>
+
+        <Switch
+          isSelected={contentText}
+          onSelectedChange={setContentText}
+          className="w-[60px] h-[32px]"
+          classNames={{
+            contentPaddingContainer: 'px-1.5',
+          }}
+          colors={{
+            defaultBackground: '#71717a',
+            selectedBackground: '#16a34a',
+            defaultBorder: '#71717a',
+            selectedBorder: '#16a34a',
+          }}
+        >
+          <Switch.Thumb
+            width={22}
+            colors={{ defaultBackground: '#fff', selectedBackground: '#fff' }}
+            animationConfig={{
+              translateX: {
+                damping: 36,
+                stiffness: 400,
+                mass: 1,
+              },
+            }}
+          />
+          <Switch.StartContent className="left-1">
+            {contentText && (
+              <Animated.View
+                key="sun"
+                entering={FadeInRight.springify().damping(36).stiffness(400)}
+              >
+                <Text className="text-xs font-bold text-white">ON</Text>
+              </Animated.View>
+            )}
+          </Switch.StartContent>
+          <Switch.EndContent className="right-0.5">
+            {!contentText && (
+              <Animated.View
+                key="moon"
+                entering={FadeInLeft.springify().damping(36).stiffness(400)}
+              >
+                <Text className="text-xs font-bold text-zinc-200">OFF</Text>
+              </Animated.View>
+            )}
+          </Switch.EndContent>
+        </Switch>
+      </View>
+
+      <Text className="text-lg font-bold text-muted-foreground mb-4">
+        Custom Style
+      </Text>
 
       <Switch
         isSelected={custom1}
@@ -193,6 +232,6 @@ export default function SwitchScreen() {
           }}
         />
       </Switch>
-    </View>
+    </ScrollView>
   );
 }

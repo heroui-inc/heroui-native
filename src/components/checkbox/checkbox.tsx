@@ -51,6 +51,26 @@ function Checkbox(props: CheckboxProps) {
     ...restProps
   } = props;
 
+  const backgroundElement = useMemo(
+    () =>
+      getChildElement(
+        children,
+        'HeroUINative.Checkbox.Background',
+        <CheckboxBackground />
+      ),
+    [children]
+  );
+
+  const indicatorElement = useMemo(
+    () =>
+      getChildElement(
+        children,
+        'HeroUINative.Checkbox.Indicator',
+        <CheckboxIndicator />
+      ),
+    [children]
+  );
+
   const hitSlopMap: Record<CheckboxSize, number> = {
     sm: 10,
     md: 6,
@@ -88,26 +108,6 @@ function Checkbox(props: CheckboxProps) {
       ),
     };
   });
-
-  const backgroundElement = useMemo(
-    () =>
-      getChildElement(
-        children,
-        'HeroUINative.Checkbox.Background',
-        <CheckboxBackground />
-      ),
-    [children]
-  );
-
-  const indicatorElement = useMemo(
-    () =>
-      getChildElement(
-        children,
-        'HeroUINative.Checkbox.Indicator',
-        <CheckboxIndicator />
-      ),
-    [children]
-  );
 
   const contextValue = useMemo(
     () => ({

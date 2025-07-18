@@ -218,7 +218,7 @@ export default function CheckboxScreen() {
           {customBoth ? (
             <AnimatedView
               key="check"
-              entering={FadeInLeft.delay(100)
+              entering={FadeInLeft.delay(25)
                 .springify()
                 .damping(38)
                 .stiffness(450)}
@@ -228,7 +228,7 @@ export default function CheckboxScreen() {
           ) : (
             <AnimatedView
               key="x"
-              entering={FadeInRight.delay(100)
+              entering={FadeInRight.delay(25)
                 .springify()
                 .damping(38)
                 .stiffness(450)}

@@ -38,7 +38,7 @@ export default function CheckboxScreen() {
       transform: [
         {
           translateX: withTiming(customBoth ? 24.5 : -24.5, {
-            duration: 250,
+            duration: 200,
             easing: Easing.out(Easing.ease),
           }),
         },
@@ -218,22 +218,24 @@ export default function CheckboxScreen() {
           {customBoth ? (
             <AnimatedView
               key="check"
-              entering={FadeInLeft.delay(25)
-                .springify()
-                .damping(38)
-                .stiffness(450)}
+              entering={FadeInLeft.springify().damping(38).stiffness(450)}
             >
-              <Sun size={24} color="#0f172a" />
+              <Animated.View
+                entering={ZoomIn.springify().damping(38).stiffness(450)}
+              >
+                <Sun size={24} color="#0f172a" />
+              </Animated.View>
             </AnimatedView>
           ) : (
             <AnimatedView
               key="x"
-              entering={FadeInRight.delay(25)
-                .springify()
-                .damping(38)
-                .stiffness(450)}
+              entering={FadeInRight.springify().damping(38).stiffness(450)}
             >
-              <Moon size={20} color="#e2e8f0" />
+              <Animated.View
+                entering={ZoomIn.springify().damping(38).stiffness(450)}
+              >
+                <Moon size={20} color="#e2e8f0" />
+              </Animated.View>
             </AnimatedView>
           )}
         </Checkbox.Indicator>

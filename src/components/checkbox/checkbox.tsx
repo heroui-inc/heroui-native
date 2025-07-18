@@ -89,15 +89,6 @@ function Checkbox(props: CheckboxProps) {
     };
   });
 
-  const contextValue = useMemo(
-    () => ({
-      size,
-      color,
-      isSelected,
-    }),
-    [size, color, isSelected]
-  );
-
   const backgroundElement = useMemo(
     () =>
       getChildElement(
@@ -116,6 +107,15 @@ function Checkbox(props: CheckboxProps) {
         <CheckboxIndicator />
       ),
     [children]
+  );
+
+  const contextValue = useMemo(
+    () => ({
+      size,
+      color,
+      isSelected,
+    }),
+    [size, color, isSelected]
   );
 
   return (

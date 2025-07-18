@@ -2,7 +2,7 @@ import { cn } from '@/helpers/utils';
 import { Checkbox, useTheme } from 'heroui-native';
 import { Minus, Moon, Plus, Sun } from 'lucide-react-native';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import Animated, {
   Easing,
   FadeIn,
@@ -47,9 +47,13 @@ export default function CheckboxScreen() {
   });
 
   return (
-    <View className="flex-1 items-center justify-center bg-background p-4">
+    <ScrollView
+      className="bg-background"
+      contentContainerClassName="items-center justify-center  p-4"
+      contentInsetAdjustmentBehavior="automatic"
+    >
       <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Checkbox Sizes
+        Sizes
       </Text>
 
       <View className="flex-row gap-4 mb-6">
@@ -59,7 +63,7 @@ export default function CheckboxScreen() {
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Checkbox Colors
+        Colors
       </Text>
 
       <View className="flex-row gap-4 mb-6">
@@ -84,7 +88,7 @@ export default function CheckboxScreen() {
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Checkbox States
+        States
       </Text>
 
       <View className="flex-row gap-4 mb-6">
@@ -214,24 +218,26 @@ export default function CheckboxScreen() {
           {customBoth ? (
             <AnimatedView
               key="check"
-              entering={FadeInLeft.duration(250).easing(
-                Easing.out(Easing.ease)
-              )}
+              entering={FadeInLeft.delay(100)
+                .springify()
+                .damping(38)
+                .stiffness(450)}
             >
               <Sun size={24} color="#0f172a" />
             </AnimatedView>
           ) : (
             <AnimatedView
               key="x"
-              entering={FadeInRight.duration(250).easing(
-                Easing.out(Easing.ease)
-              )}
+              entering={FadeInRight.delay(100)
+                .springify()
+                .damping(38)
+                .stiffness(450)}
             >
               <Moon size={20} color="#e2e8f0" />
             </AnimatedView>
           )}
         </Checkbox.Indicator>
       </Checkbox>
-    </View>
+    </ScrollView>
   );
 }

@@ -51,8 +51,7 @@ function Switch(props: SwitchProps) {
     className,
     classNames,
     style,
-    layout,
-    animatedStylesConfig,
+    animationConfig,
     ...restProps
   } = props;
 
@@ -95,7 +94,7 @@ function Switch(props: SwitchProps) {
   const contentContainerWidth = useSharedValue(0);
   const contentContainerHeight = useSharedValue(0);
 
-  const timingConfig = animatedStylesConfig ?? {
+  const timingConfig = animationConfig ?? {
     duration: DURATION,
     easing: EASING,
   };
@@ -130,7 +129,6 @@ function Switch(props: SwitchProps) {
   return (
     <SwitchProvider value={contextValue}>
       <AnimatedSwitchRoot
-        layout={layout}
         className={tvBaseStyles}
         style={[styles.switchRoot, containerAnimatedStyle, style]}
         isSelected={isSelected}
@@ -168,15 +166,7 @@ const styles = StyleSheet.create({
 // --------------------------------------------------
 
 function SwitchThumb(props: SwitchThumbProps) {
-  const {
-    children,
-    className,
-    width,
-    height,
-    colors,
-    animatedMotionConfig,
-    animatedStylesConfig,
-  } = props;
+  const { children, className, width, height, colors, animationConfig } = props;
 
   const { size, isSelected, contentContainerWidth } = useSwitchContext();
 
@@ -194,13 +184,13 @@ function SwitchThumb(props: SwitchThumbProps) {
 
   const computedWidth = width ?? widthMap[size];
 
-  const springConfig = animatedMotionConfig ?? {
+  const springConfig = animationConfig?.translateX ?? {
     damping: 25,
     stiffness: 400,
     mass: 1,
   };
 
-  const timingConfig = animatedStylesConfig ?? {
+  const timingConfig = animationConfig?.backgroundColor ?? {
     duration: DURATION,
     easing: EASING,
   };

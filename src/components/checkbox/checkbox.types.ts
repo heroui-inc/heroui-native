@@ -69,8 +69,8 @@ export interface CheckboxProps extends CheckboxPrimitivesTypes.RootProps {
   /** Custom colors for different checkbox states */
   colors?: CheckboxBorderColors;
 
-  /** Animation configuration for checkbox transitions */
-  animatedStylesConfig?: TimingConfig;
+  /** Animation configuration for checkbox border color transition */
+  animationConfig?: TimingConfig;
 }
 
 /**
@@ -86,8 +86,8 @@ export interface CheckboxBackgroundProps extends ViewProps {
   /** Custom colors for different checkbox background states */
   colors?: CheckboxBackgroundColors;
 
-  /** Animation configuration for background transitions */
-  animatedStylesConfig?: TimingConfig;
+  /** Animation configuration for checkbox background color transition */
+  animationConfig?: TimingConfig;
 }
 
 /**
@@ -104,8 +104,8 @@ export interface CheckboxIndicatorProps
   /** Custom icon props for the indicator */
   iconProps?: CheckboxIndicatorIconProps;
 
-  /** Animation configuration for indicator transitions */
-  animatedStylesConfig?: TimingConfig;
+  /** Animation configuration for checkbox indicator scale transition */
+  animationConfig?: TimingConfig;
 }
 
 /**

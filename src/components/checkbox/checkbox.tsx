@@ -47,7 +47,7 @@ function Checkbox(props: CheckboxProps) {
     colors,
     className,
     style,
-    animatedStylesConfig,
+    animationConfig,
     ...restProps
   } = props;
 
@@ -73,7 +73,7 @@ function Checkbox(props: CheckboxProps) {
     danger: themeColors.danger,
   };
 
-  const timingConfig = animatedStylesConfig ?? {
+  const timingConfig = animationConfig ?? {
     duration: DURATION,
     easing: EASING,
   };
@@ -145,14 +145,8 @@ const styles = StyleSheet.create({
 // --------------------------------------------------
 
 function CheckboxBackground(props: CheckboxBackgroundProps) {
-  const {
-    children,
-    colors,
-    animatedStylesConfig,
-    className,
-    style,
-    ...restProps
-  } = props;
+  const { children, colors, animationConfig, className, style, ...restProps } =
+    props;
 
   const { size, color, isSelected } = useCheckboxContext();
 
@@ -170,7 +164,7 @@ function CheckboxBackground(props: CheckboxBackgroundProps) {
     danger: themeColors.danger,
   };
 
-  const timingConfig = animatedStylesConfig ?? {
+  const timingConfig = animationConfig ?? {
     duration: DURATION,
     easing: EASING,
   };
@@ -242,7 +236,7 @@ CheckIcon.displayName = 'HeroUINative.Checkbox.CheckIcon';
 function CheckboxIndicator(props: CheckboxIndicatorProps) {
   const {
     children,
-    animatedStylesConfig,
+    animationConfig,
     iconProps,
     className,
     style,
@@ -256,7 +250,7 @@ function CheckboxIndicator(props: CheckboxIndicatorProps) {
     className,
   });
 
-  const timingConfig = animatedStylesConfig ?? {
+  const timingConfig = animationConfig ?? {
     duration: DURATION,
     easing: EASING,
   };

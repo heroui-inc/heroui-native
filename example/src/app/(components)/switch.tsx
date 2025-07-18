@@ -98,10 +98,12 @@ export default function SwitchScreen() {
             defaultBackground: '#dbeafe',
             selectedBackground: '#854d0e',
           }}
-          animatedMotionConfig={{
-            damping: 30,
-            stiffness: 300,
-            mass: 1,
+          animationConfig={{
+            translateX: {
+              damping: 30,
+              stiffness: 300,
+              mass: 1,
+            },
           }}
         />
         <Switch.StartContent className="left-0.5">
@@ -143,10 +145,12 @@ export default function SwitchScreen() {
         <Switch.Thumb
           width={22}
           colors={{ defaultBackground: '#fff', selectedBackground: '#fff' }}
-          animatedMotionConfig={{
-            damping: 36,
-            stiffness: 400,
-            mass: 1,
+          animationConfig={{
+            translateX: {
+              damping: 36,
+              stiffness: 400,
+              mass: 1,
+            },
           }}
         />
         <Switch.StartContent className="left-1">

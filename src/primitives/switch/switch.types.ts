@@ -9,7 +9,7 @@ import type {
  * Props for the primitive Root Switch component
  * Extends SlottablePressableProps to support slot-based styling and pressable behavior
  */
-interface RootProps extends SlottablePressableProps {
+interface RootProps extends Omit<SlottablePressableProps, 'disabled'> {
   /**
    * Whether the switch is currently selected/checked
    * @type {boolean}

@@ -1,10 +1,6 @@
 import type { TimingConfig } from '@/helpers/types';
 import * as SwitchPrimitivesTypes from '@/primitives/switch/switch.types';
-import type {
-  BaseAnimationBuilder,
-  LayoutAnimationFunction,
-  SharedValue,
-} from 'react-native-reanimated';
+import type { SharedValue } from 'react-native-reanimated';
 import type { SpringConfig } from 'react-native-reanimated/lib/typescript/animation/springUtils';
 
 /** Switch size variants */
@@ -12,17 +8,7 @@ type SwitchSize = 'sm' | 'md' | 'lg';
 
 type SwitchColor = 'default' | 'success' | 'warning' | 'danger';
 
-interface SwitchProps
-  extends Omit<
-    SwitchPrimitivesTypes.RootProps,
-    'disabled' | 'checked' | 'onCheckedChange'
-  > {
-  // Required props
-  /** Whether the switch is selected or not */
-  isSelected: boolean;
-  /** Callback function called when the switch state changes */
-  onSelectedChange: (isSelected: boolean) => void;
-
+interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
   // Optional layout props
   /** Width of the switch component */
   width?: number;
@@ -41,6 +27,8 @@ interface SwitchProps
     defaultBackground?: string;
     selectedBackground?: string;
   };
+  /** NativeWind class name for the switch component */
+  className?: string;
   /** NativeWind class names for different parts of the component */
   classNames?: {
     container?: string;
@@ -55,18 +43,8 @@ interface SwitchProps
   isDisabled?: boolean;
 
   // Optional animation props
-  /** Whether to disable animations @default false */
-  disableAnimation?: boolean;
-  /** Animation configuration for styles */
-  animatedStylesConfig?: TimingConfig;
-  /** Layout animation configuration */
-  layout?:
-    | BaseAnimationBuilder
-    | LayoutAnimationFunction
-    | typeof BaseAnimationBuilder
-    | undefined;
-  /** Custom animated styles for the container */
-  containerAnimatedStyle?: Record<string, string>;
+  /** Animation configuration for switch background and border colors transition */
+  animationConfig?: TimingConfig;
 
   // Optional ref
   /** Reference to the switch component */
@@ -96,10 +74,13 @@ interface SwitchThumbProps extends SwitchPrimitivesTypes.ThumbProps {
   // Optional behavior props
 
   // Optional animation props
-  /** Spring animation configuration for thumb motion */
-  animatedMotionConfig?: SpringConfig;
-  /** Timing animation configuration for styles */
-  animatedStylesConfig?: TimingConfig;
+
+  animationConfig?: {
+    /** Spring animation configuration for thumb motion */
+    translateX?: SpringConfig;
+    /** Timing animation configuration for background color transition */
+    backgroundColor?: TimingConfig;
+  };
 
   // Children
   /** Content to render inside the thumb */

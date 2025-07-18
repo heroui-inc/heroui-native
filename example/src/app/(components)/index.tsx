@@ -19,6 +19,9 @@ export default function App() {
       <TouchableOpacity onPress={() => router.push('/checkbox')}>
         <Text className={classNames.link}>Checkbox</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => router.push('/radio')}>
+        <Text className={classNames.link}>Radio</Text>
+      </TouchableOpacity>
     </View>
   );
 }

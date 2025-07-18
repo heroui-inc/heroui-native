@@ -1,0 +1,156 @@
+import type { TextProps as LabelTextProps } from '@/primitives/label';
+import type { ItemProps, RootProps } from '@/primitives/radio-group';
+import type { TextProps, ViewProps } from 'react-native';
+import type { EasingFunction } from 'react-native-reanimated';
+
+/**
+ * Radio size variant
+ * @default 'md'
+ */
+export type RadioSize = 'sm' | 'md' | 'lg';
+
+/**
+ * Radio color variant
+ * @default 'default'
+ */
+export type RadioColor = 'default' | 'success' | 'warning' | 'danger';
+
+/**
+ * Custom color configuration for Radio
+ */
+export interface RadioColors {
+  /** Border color when not selected */
+  defaultBorder?: string;
+  /** Border color when selected */
+  selectedBorder?: string;
+  /** Background color when not selected */
+  defaultBackground?: string;
+  /** Background color when selected */
+  selectedBackground?: string;
+  /** Thumb color when selected */
+  selectedThumb?: string;
+}
+
+/**
+ * Animation configuration for Radio transitions
+ */
+export interface RadioAnimationConfig {
+  /** Animation duration in milliseconds */
+  duration?: number;
+  /** Easing function for animations */
+  easing?: EasingFunction;
+  /** Spring animation config */
+  spring?: {
+    damping?: number;
+    stiffness?: number;
+    mass?: number;
+  };
+}
+
+/**
+ * Context values shared between Radio compound components
+ */
+export interface RadioContextValue {
+  /** Current size variant */
+  size: RadioSize;
+  /** Current color variant */
+  color: RadioColor;
+  /** Whether the radio is selected */
+  isSelected: boolean;
+  /** Whether the radio is disabled */
+  isDisabled?: boolean;
+  /** Whether the radio is read-only */
+  isReadOnly?: boolean;
+}
+
+/**
+ * Props for the Radio component
+ */
+export interface RadioProps extends Omit<ItemProps, 'asChild'> {
+  /** Radio content */
+  children?: React.ReactNode;
+  /** Size variant */
+  size?: RadioSize;
+  /** Color variant */
+  color?: RadioColor;
+  /** Whether the radio is read-only */
+  isReadOnly?: boolean;
+  /** Custom class name */
+  className?: string;
+  /** Custom colors */
+  colors?: RadioColors;
+  /** Animation configuration */
+  animationConfig?: RadioAnimationConfig;
+}
+
+/**
+ * Props for RadioGroup.Indicator component
+ */
+export interface RadioIndicatorProps extends ViewProps {
+  /** Indicator content */
+  children?: React.ReactNode;
+  /** Custom class name */
+  className?: string;
+  /** Custom border colors */
+  colors?: Pick<RadioColors, 'defaultBorder' | 'selectedBorder'>;
+  /** Animation configuration */
+  animationConfig?: RadioAnimationConfig;
+}
+
+/**
+ * Props for RadioGroup.Background component
+ */
+export interface RadioBackgroundProps extends ViewProps {
+  /** Background content */
+  children?: React.ReactNode;
+  /** Custom class name */
+  className?: string;
+  /** Custom background colors */
+  colors?: Pick<RadioColors, 'defaultBackground' | 'selectedBackground'>;
+  /** Animation configuration */
+  animationConfig?: RadioAnimationConfig;
+}
+
+/**
+ * Props for RadioGroup.Thumb component
+ */
+export interface RadioThumbProps extends ViewProps {
+  /** Thumb content */
+  children?: React.ReactNode;
+  /** Custom class name */
+  className?: string;
+  /** Custom thumb colors */
+  colors?: Pick<RadioColors, 'selectedThumb'>;
+  /** Animation configuration */
+  animationConfig?: RadioAnimationConfig;
+}
+
+/**
+ * Props for RadioGroup.Label component
+ */
+export interface RadioLabelProps extends LabelTextProps {
+  /** Label content */
+  children?: React.ReactNode;
+  /** Custom class name */
+  className?: string;
+}
+
+/**
+ * Props for RadioGroup.Description component
+ */
+export interface RadioDescriptionProps extends TextProps {
+  /** Description content */
+  children?: React.ReactNode;
+  /** Custom class name */
+  className?: string;
+}
+
+/**
+ * Props for RadioGroup root component
+ */
+export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
+  /** Radio group content */
+  children?: React.ReactNode;
+  /** Custom class name */
+  className?: string;
+}

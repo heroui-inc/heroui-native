@@ -16,6 +16,9 @@ export default function Layout() {
         headerTintColor: colors.foreground,
         headerBackButtonDisplayMode: 'minimal',
         headerRight: _renderThemeToggle,
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
+        fullScreenGestureEnabled: true,
       }}
     >
       <Stack.Screen name="index" options={{ title: 'HeroUI Native' }} />

@@ -92,6 +92,8 @@ export interface RadioProps extends ItemProps {
   size?: RadioSize;
   /** Color variant */
   color?: RadioColor;
+  /** Alignment of the indicator */
+  alignIndicator?: 'start' | 'end';
   /** Whether the radio is read-only */
   isReadOnly?: boolean;
   /** Custom class name */

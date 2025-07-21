@@ -31,7 +31,7 @@ import type {
   RadioThumbProps,
 } from './radio.types';
 
-const AnimatedRadioGroupItem = Animated.createAnimatedComponent(
+const AnimatedRadioItem = Animated.createAnimatedComponent(
   RadioGroupPrimitives.Item
 );
 
@@ -63,6 +63,7 @@ function Radio(props: RadioProps) {
     children,
     size = 'md',
     color = 'default',
+    alignIndicator = 'end',
     isDisabled = false,
     isReadOnly = false,
     className,
@@ -115,7 +116,7 @@ function Radio(props: RadioProps) {
 
   return (
     <RadioProvider value={contextValue}>
-      <AnimatedRadioGroupItem
+      <AnimatedRadioItem
         className={tvStyles}
         style={style}
         value={value}
@@ -123,9 +124,10 @@ function Radio(props: RadioProps) {
         hitSlop={props.hitSlop ?? hitSlopMap[size]}
         {...restProps}
       >
-        {indicatorElement}
+        {alignIndicator === 'start' && indicatorElement}
         {contentElement}
-      </AnimatedRadioGroupItem>
+        {alignIndicator === 'end' && indicatorElement}
+      </AnimatedRadioItem>
     </RadioProvider>
   );
 }

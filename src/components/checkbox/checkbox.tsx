@@ -10,6 +10,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
+import { DISPLAY_NAME } from './checkbox.constants';
 import checkboxStyles from './checkbox.styles';
 import type {
   CheckboxBackgroundProps,
@@ -55,7 +56,7 @@ function Checkbox(props: CheckboxProps) {
     () =>
       getChildElementOrDefault(
         children,
-        'HeroUINative.Checkbox.Background',
+        DISPLAY_NAME.CHECKBOX_BACKGROUND,
         <CheckboxBackground />
       ),
     [children]
@@ -65,7 +66,7 @@ function Checkbox(props: CheckboxProps) {
     () =>
       getChildElementOrDefault(
         children,
-        'HeroUINative.Checkbox.Indicator',
+        DISPLAY_NAME.CHECKBOX_INDICATOR,
         <CheckboxIndicator />
       ),
     [children]
@@ -229,7 +230,7 @@ function CheckIcon(props: CheckboxIndicatorIconProps) {
   );
 }
 
-CheckIcon.displayName = 'HeroUINative.Checkbox.CheckIcon';
+CheckIcon.displayName = DISPLAY_NAME.CHECKBOX_CHECK_ICON;
 
 // --------------------------------------------------
 
@@ -278,9 +279,9 @@ function CheckboxIndicator(props: CheckboxIndicatorProps) {
 
 // --------------------------------------------------
 
-Checkbox.displayName = 'HeroUINative.Checkbox.Root';
-CheckboxBackground.displayName = 'HeroUINative.Checkbox.Background';
-CheckboxIndicator.displayName = 'HeroUINative.Checkbox.Indicator';
+Checkbox.displayName = DISPLAY_NAME.CHECKBOX_ROOT;
+CheckboxBackground.displayName = DISPLAY_NAME.CHECKBOX_BACKGROUND;
+CheckboxIndicator.displayName = DISPLAY_NAME.CHECKBOX_INDICATOR;
 
 const CompoundCheckbox = Object.assign(Checkbox, {
   Background: CheckboxBackground,

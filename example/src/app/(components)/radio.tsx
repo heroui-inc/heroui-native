@@ -152,18 +152,18 @@ export default function RadioScreen() {
         >
           <Radio value="custom1">
             <Radio.Indicator>
-              <Radio.Background>
+              <Radio.IndicatorBackground>
                 <View className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />
-              </Radio.Background>
+              </Radio.IndicatorBackground>
             </Radio.Indicator>
             <Radio.Label>Custom Background</Radio.Label>
           </Radio>
 
           <Radio value="custom2">
             <Radio.Indicator>
-              <Radio.Background>
+              <Radio.IndicatorBackground>
                 <View className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-green-500" />
-              </Radio.Background>
+              </Radio.IndicatorBackground>
             </Radio.Indicator>
             <Radio.Label>Another Custom</Radio.Label>
           </Radio>
@@ -172,18 +172,18 @@ export default function RadioScreen() {
         <RadioGroup value={customThumb} onValueChange={setCustomThumb}>
           <Radio value="custom1">
             <Radio.Indicator>
-              <Radio.Thumb>
+              <Radio.IndicatorThumb>
                 <View className="h-2 w-2 rounded-full bg-red-500" />
-              </Radio.Thumb>
+              </Radio.IndicatorThumb>
             </Radio.Indicator>
             <Radio.Label>Custom Thumb</Radio.Label>
           </Radio>
 
           <Radio value="custom2">
             <Radio.Indicator>
-              <Radio.Thumb>
+              <Radio.IndicatorThumb>
                 <View className="h-2 w-2 bg-blue-500" />
-              </Radio.Thumb>
+              </Radio.IndicatorThumb>
             </Radio.Indicator>
             <Radio.Label>Square Thumb</Radio.Label>
           </Radio>

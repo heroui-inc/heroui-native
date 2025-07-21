@@ -12,6 +12,7 @@ import * as LabelPrimitives from '@/primitives/label';
 import * as RadioGroupPrimitives from '@/primitives/radio-group';
 import { useTheme } from '@/theme';
 
+import { DISPLAY_NAME } from './radio.constants';
 import radioStyles from './radio.styles';
 import type {
   RadioBackgroundProps,
@@ -82,17 +83,11 @@ function Radio(props: RadioProps) {
     ...restProps
   } = props;
 
-  // Get the RadioGroup context
   const radioGroupContext = useContext(RadioGroupContext);
   const isSelected = radioGroupContext?.value === value;
 
   const indicatorElement = useMemo(
-    () =>
-      getChildElement(
-        children,
-        'HeroUINative.Radio.Indicator',
-        <RadioIndicator />
-      ),
+    () => getChildElement(children, DISPLAY_NAME.INDICATOR, <RadioIndicator />),
     [children]
   );
 
@@ -100,7 +95,7 @@ function Radio(props: RadioProps) {
     const found = React.Children.toArray(children).find(
       (child) =>
         React.isValidElement(child) &&
-        (child.type as any)?.displayName === 'HeroUINative.Radio.Label'
+        (child.type as any)?.displayName === DISPLAY_NAME.LABEL
     );
     return found || null;
   }, [children]);
@@ -109,7 +104,7 @@ function Radio(props: RadioProps) {
     const found = React.Children.toArray(children).find(
       (child) =>
         React.isValidElement(child) &&
-        (child.type as any)?.displayName === 'HeroUINative.Radio.Description'
+        (child.type as any)?.displayName === DISPLAY_NAME.DESCRIPTION
     );
     return found || null;
   }, [children]);
@@ -183,14 +178,19 @@ function RadioIndicator(props: RadioIndicatorProps) {
     () =>
       getChildElement(
         children,
-        'HeroUINative.Radio.Background',
-        <RadioBackground />
+        DISPLAY_NAME.INDICATOR_BACKGROUND,
+        <RadioIndicatorBackground />
       ),
     [children]
   );
 
   const thumbElement = useMemo(
-    () => getChildElement(children, 'HeroUINative.Radio.Thumb', <RadioThumb />),
+    () =>
+      getChildElement(
+        children,
+        DISPLAY_NAME.INDICATOR_THUMB,
+        <RadioIndicatorThumb />
+      ),
     [children]
   );
 
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
 
 // --------------------------------------------------
 
-function RadioBackground(props: RadioBackgroundProps) {
+function RadioIndicatorBackground(props: RadioBackgroundProps) {
   const { children, colors, animationConfig, className, style, ...restProps } =
     props;
 
@@ -295,7 +295,7 @@ function RadioBackground(props: RadioBackgroundProps) {
 
 // --------------------------------------------------
 
-function RadioThumb(props: RadioThumbProps) {
+function RadioIndicatorThumb(props: RadioThumbProps) {
   const { children, colors, animationConfig, className, style, ...restProps } =
     props;
 
@@ -372,18 +372,18 @@ function RadioDescription(props: RadioDescriptionProps) {
 
 // --------------------------------------------------
 
-RadioGroup.displayName = 'HeroUINative.RadioGroup.Root';
-Radio.displayName = 'HeroUINative.Radio.Root';
-RadioIndicator.displayName = 'HeroUINative.Radio.Indicator';
-RadioBackground.displayName = 'HeroUINative.Radio.Background';
-RadioThumb.displayName = 'HeroUINative.Radio.Thumb';
-RadioLabel.displayName = 'HeroUINative.Radio.Label';
-RadioDescription.displayName = 'HeroUINative.Radio.Description';
+RadioGroup.displayName = DISPLAY_NAME.ROOT;
+Radio.displayName = DISPLAY_NAME.ROOT;
+RadioIndicator.displayName = DISPLAY_NAME.INDICATOR;
+RadioIndicatorBackground.displayName = DISPLAY_NAME.INDICATOR_BACKGROUND;
+RadioIndicatorThumb.displayName = DISPLAY_NAME.INDICATOR_THUMB;
+RadioLabel.displayName = DISPLAY_NAME.LABEL;
+RadioDescription.displayName = DISPLAY_NAME.DESCRIPTION;
 
 const CompoundRadioGroup = Object.assign(Radio, {
   Indicator: RadioIndicator,
-  Background: RadioBackground,
-  Thumb: RadioThumb,
+  IndicatorBackground: RadioIndicatorBackground,
+  IndicatorThumb: RadioIndicatorThumb,
   Label: RadioLabel,
   Description: RadioDescription,
 });

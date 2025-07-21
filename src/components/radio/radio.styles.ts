@@ -1,12 +1,16 @@
 import { tv } from 'tailwind-variants';
 
-const item = tv({
-  base: 'flex-row items-center gap-2 relative',
+const groupRoot = tv({
+  base: 'gap-1.5',
+});
+
+const radioRoot = tv({
+  base: 'flex-row items-center',
   variants: {
     size: {
-      sm: 'gap-2',
-      md: 'gap-2.5',
-      lg: 'gap-3',
+      sm: 'gap-2.5',
+      md: 'gap-3',
+      lg: 'gap-3.5',
     },
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',
@@ -23,7 +27,7 @@ const item = tv({
 });
 
 const indicator = tv({
-  base: 'rounded-full border-2 items-center justify-center',
+  base: 'rounded-full border items-center justify-center',
   variants: {
     size: {
       sm: 'h-4 w-4',
@@ -54,6 +58,10 @@ const thumb = tv({
   },
 });
 
+const content = tv({
+  base: 'flex-1',
+});
+
 const label = tv({
   base: 'text-foreground select-none',
   variants: {
@@ -82,18 +90,15 @@ const description = tv({
   },
 });
 
-const content = tv({
-  base: 'flex-1 flex-col',
-});
-
 const radioStyles = Object.assign({
-  item,
+  groupRoot,
+  radioRoot,
   indicator,
   background,
   thumb,
+  content,
   label,
   description,
-  content,
 });
 
 export default radioStyles;

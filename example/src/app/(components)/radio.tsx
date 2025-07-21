@@ -2,6 +2,11 @@ import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 import { Radio, RadioGroup } from '@/components/radio';
+import { Eye } from 'lucide-react-native';
+import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
+import { StyledRadio } from '../../components/styled-radio';
+
+const AnimatedView = Animated.createAnimatedComponent(View);
 
 export default function RadioScreen() {
   // State for size variants
@@ -9,10 +14,7 @@ export default function RadioScreen() {
   const [mdSize, setMdSize] = React.useState('london');
   const [lgSize, setLgSize] = React.useState('berlin');
   // State for color variants
-  const [defaultColor, setDefaultColor] = React.useState('option1');
-  const [successColor, setSuccessColor] = React.useState('option1');
-  const [warningColor, setWarningColor] = React.useState('option1');
-  const [dangerColor, setDangerColor] = React.useState('option1');
+  const [selectedColor, setSelectedColor] = React.useState('default');
 
   // State for states
   const [disabledState, setDisabledState] = React.useState('option1');
@@ -22,6 +24,7 @@ export default function RadioScreen() {
   const [customBackground, setCustomBackground] = React.useState('custom1');
   const [customThumb, setCustomThumb] = React.useState('custom1');
   const [withDescription, setWithDescription] = React.useState('desc1');
+  const [advancedContent, setAdvancedContent] = React.useState('option1');
 
   return (
     <ScrollView
@@ -93,55 +96,26 @@ export default function RadioScreen() {
         Colors
       </Text>
 
-      <View className="w-full mb-6 gap-6">
-        <RadioGroup value={defaultColor} onValueChange={setDefaultColor}>
-          <Radio value="option1" color="default">
+      <View className="w-full mb-6">
+        <RadioGroup value={selectedColor} onValueChange={setSelectedColor}>
+          <Radio value="default" color="default">
             <Radio.Content>
-              <Radio.Label>Default Color</Radio.Label>
+              <Radio.Label>Default</Radio.Label>
             </Radio.Content>
           </Radio>
-          <Radio value="option2" color="default">
+          <Radio value="success" color="success">
             <Radio.Content>
-              <Radio.Label>Another Option</Radio.Label>
+              <Radio.Label>Success</Radio.Label>
             </Radio.Content>
           </Radio>
-        </RadioGroup>
-
-        <RadioGroup value={successColor} onValueChange={setSuccessColor}>
-          <Radio value="option1" color="success">
+          <Radio value="warning" color="warning">
             <Radio.Content>
-              <Radio.Label>Success Color</Radio.Label>
+              <Radio.Label>Warning</Radio.Label>
             </Radio.Content>
           </Radio>
-          <Radio value="option2" color="success">
+          <Radio value="danger" color="danger">
             <Radio.Content>
-              <Radio.Label>Another Option</Radio.Label>
-            </Radio.Content>
-          </Radio>
-        </RadioGroup>
-
-        <RadioGroup value={warningColor} onValueChange={setWarningColor}>
-          <Radio value="option1" color="warning">
-            <Radio.Content>
-              <Radio.Label>Warning Color</Radio.Label>
-            </Radio.Content>
-          </Radio>
-          <Radio value="option2" color="warning">
-            <Radio.Content>
-              <Radio.Label>Another Option</Radio.Label>
-            </Radio.Content>
-          </Radio>
-        </RadioGroup>
-
-        <RadioGroup value={dangerColor} onValueChange={setDangerColor}>
-          <Radio value="option1" color="danger">
-            <Radio.Content>
-              <Radio.Label>Danger Color</Radio.Label>
-            </Radio.Content>
-          </Radio>
-          <Radio value="option2" color="danger">
-            <Radio.Content>
-              <Radio.Label>Another Option</Radio.Label>
+              <Radio.Label>Danger</Radio.Label>
             </Radio.Content>
           </Radio>
         </RadioGroup>
@@ -193,44 +167,65 @@ export default function RadioScreen() {
           onValueChange={setCustomBackground}
         >
           <Radio value="custom1">
-            <Radio.Indicator>
+            <Radio.Indicator
+              colors={{
+                selectedBorder: '#a855f7',
+              }}
+            >
               <Radio.IndicatorBackground>
-                <View className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />
+                {customBackground === 'custom1' ? (
+                  <View className="absolute inset-0 rounded-full bg-purple-500" />
+                ) : null}
               </Radio.IndicatorBackground>
             </Radio.Indicator>
             <Radio.Content>
               <Radio.Label>Custom Background</Radio.Label>
             </Radio.Content>
           </Radio>
-
           <Radio value="custom2">
-            <Radio.Indicator>
+            <Radio.Indicator
+              colors={{
+                selectedBorder: '#3b82f6',
+              }}
+            >
               <Radio.IndicatorBackground>
-                <View className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-green-500" />
+                {customBackground === 'custom2' ? (
+                  <View className="absolute inset-0 rounded-full bg-blue-500" />
+                ) : null}
               </Radio.IndicatorBackground>
             </Radio.Indicator>
             <Radio.Content>
-              <Radio.Label>Another Custom</Radio.Label>
+              <Radio.Label>Custom Background</Radio.Label>
             </Radio.Content>
           </Radio>
         </RadioGroup>
 
         <RadioGroup value={customThumb} onValueChange={setCustomThumb}>
-          <Radio value="custom1">
+          <Radio value="custom1" size="lg">
             <Radio.Indicator>
               <Radio.IndicatorThumb>
-                <View className="h-2 w-2 rounded-full bg-red-500" />
+                {customThumb === 'custom1' ? (
+                  <AnimatedView entering={FadeIn.duration(200)}>
+                    <Eye size={12} color="white" />
+                  </AnimatedView>
+                ) : null}
               </Radio.IndicatorThumb>
             </Radio.Indicator>
             <Radio.Content>
-              <Radio.Label>Custom Thumb</Radio.Label>
+              <Radio.Label>Icon Thumb</Radio.Label>
             </Radio.Content>
           </Radio>
 
-          <Radio value="custom2">
+          <Radio value="custom2" size="lg">
             <Radio.Indicator>
               <Radio.IndicatorThumb>
-                <View className="h-2 w-2 bg-blue-500" />
+                {customThumb === 'custom2' ? (
+                  <AnimatedView
+                    key="square-thumb"
+                    entering={ZoomIn.springify().stiffness(300).damping(20)}
+                    className="h-2.5 w-2.5 rounded-xs bg-lime-300"
+                  />
+                ) : null}
               </Radio.IndicatorThumb>
             </Radio.Indicator>
             <Radio.Content>
@@ -264,57 +259,32 @@ export default function RadioScreen() {
 
       <View className="w-full mb-6">
         <Text className="text-lg font-bold text-muted-foreground mb-4">
-          Minimal Usage
+          Advanced Styled Radio
         </Text>
 
-        <RadioGroup value="minimal" onValueChange={() => {}}>
-          <Radio value="min1">
-            <Radio.Content>
-              <Radio.Label>Minimal with default indicator</Radio.Label>
-            </Radio.Content>
-          </Radio>
-          <Radio value="min2">
-            <Radio.Content>
-              <Radio.Label>Just a label</Radio.Label>
-            </Radio.Content>
-          </Radio>
-        </RadioGroup>
-      </View>
-
-      <View className="w-full mb-6">
-        <Text className="text-lg font-bold text-muted-foreground mb-4">
-          Custom Content
-        </Text>
-
-        <RadioGroup value="custom-content" onValueChange={() => {}}>
-          <Radio value="custom1">
-            <Radio.Content>
-              <View className="flex-row items-center gap-2">
-                <View className="h-8 w-8 bg-blue-500 rounded-full" />
-                <View>
-                  <Text className="text-foreground font-medium">
-                    Custom Content
-                  </Text>
-                  <Text className="text-muted-foreground text-sm">
-                    With icon
-                  </Text>
-                </View>
-              </View>
-            </Radio.Content>
-          </Radio>
-
-          <Radio value="custom2">
-            <Radio.Content>
-              <View className="px-3 py-2 bg-accent/10 rounded-lg">
-                <Text className="text-foreground font-semibold">
-                  Content Left
-                </Text>
-                <Text className="text-muted-foreground text-sm">
-                  Content can be placed before indicator
-                </Text>
-              </View>
-            </Radio.Content>
-          </Radio>
+        <RadioGroup
+          value={advancedContent}
+          onValueChange={setAdvancedContent}
+          className="w-full"
+        >
+          <StyledRadio
+            value="option1"
+            isSelected={advancedContent === 'option1'}
+            title="Basic Plan"
+            description="Perfect for individuals"
+          />
+          <StyledRadio
+            value="option2"
+            isSelected={advancedContent === 'option2'}
+            title="Premium"
+            description="Best for teams"
+          />
+          <StyledRadio
+            value="option3"
+            isSelected={advancedContent === 'option3'}
+            title="Enterprise"
+            description="Custom solutions"
+          />
         </RadioGroup>
       </View>
     </ScrollView>

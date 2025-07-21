@@ -23,6 +23,7 @@ import type {
   RadioContentProps,
   RadioContextValue,
   RadioDescriptionProps,
+  RadioGroupProps,
   RadioIndicatorProps,
   RadioLabelProps,
   RadioProps,
@@ -37,11 +38,6 @@ const AnimatedRadioGroupItem = Animated.createAnimatedComponent(
 const DURATION = 175;
 const EASING = Easing.bezier(0.25, 0.1, 0.25, 1);
 
-export const [RadioProvider, useRadioContext] =
-  createContext<RadioContextValue>({
-    name: 'RadioContext',
-  });
-
 // Internal context to get RadioGroup state
 const RadioGroupContext = React.createContext<{
   value: string | undefined;
@@ -49,28 +45,33 @@ const RadioGroupContext = React.createContext<{
   isDisabled?: boolean;
 } | null>(null);
 
+export const [RadioProvider, useRadioContext] =
+  createContext<RadioContextValue>({
+    name: 'RadioContext',
+  });
+
 // --------------------------------------------------
 
 // Custom RadioGroup root that provides context
-const RadioGroup = React.forwardRef<
-  View,
-  React.ComponentProps<typeof RadioGroupPrimitives.Root>
->((props, ref) => {
-  const { value, onValueChange, isDisabled, ...restProps } = props;
+const RadioGroup = (props: RadioGroupProps) => {
+  const { value, onValueChange, isDisabled, className, ...restProps } = props;
+
+  const tvStyles = radioStyles.groupRoot({
+    className,
+  });
 
   return (
     <RadioGroupContext.Provider value={{ value, onValueChange, isDisabled }}>
       <RadioGroupPrimitives.Root
-        ref={ref}
         value={value}
         onValueChange={onValueChange}
         isDisabled={isDisabled}
-        className="gap-1.5"
+        className={tvStyles}
         {...restProps}
       />
     </RadioGroupContext.Provider>
   );
-});
+};
 
 // --------------------------------------------------
 
@@ -110,7 +111,7 @@ function Radio(props: RadioProps) {
     lg: 4,
   };
 
-  const tvStyles = radioStyles.item({
+  const tvStyles = radioStyles.radioRoot({
     size,
     isDisabled: isDisabled || radioGroupContext?.isDisabled,
     isReadOnly,
@@ -203,7 +204,7 @@ function RadioIndicator(props: RadioIndicatorProps) {
       borderColor: withTiming(
         isSelected
           ? (colors?.selectedBorder ?? borderColorMap[color])
-          : (colors?.defaultBorder ?? borderColorMap.default),
+          : (colors?.defaultBorder ?? borderColorMap[color]),
         timingConfig
       ),
     };
@@ -307,7 +308,7 @@ function RadioIndicatorThumb(props: RadioThumbProps) {
   });
 
   if (children) {
-    return <Animated.View style={thumbAnimatedStyle}>{children}</Animated.View>;
+    return children;
   }
 
   return (

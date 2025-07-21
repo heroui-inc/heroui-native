@@ -1,5 +1,5 @@
 import { createContext } from '@/helpers/utils';
-import { getChildElement } from '@/helpers/utils/get-child-element';
+import { getChildElementOrDefault } from '@/helpers/utils/get-child-element-or-default';
 import * as CheckboxPrimitives from '@/primitives/checkbox';
 import { useTheme } from '@/theme';
 import { useMemo } from 'react';
@@ -53,7 +53,7 @@ function Checkbox(props: CheckboxProps) {
 
   const backgroundElement = useMemo(
     () =>
-      getChildElement(
+      getChildElementOrDefault(
         children,
         'HeroUINative.Checkbox.Background',
         <CheckboxBackground />
@@ -63,7 +63,7 @@ function Checkbox(props: CheckboxProps) {
 
   const indicatorElement = useMemo(
     () =>
-      getChildElement(
+      getChildElementOrDefault(
         children,
         'HeroUINative.Checkbox.Indicator',
         <CheckboxIndicator />

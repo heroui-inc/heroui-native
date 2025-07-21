@@ -1,8 +1,9 @@
 export const DISPLAY_NAME = {
-  ROOT: 'HeroUINative.Radio.Root',
-  INDICATOR: 'HeroUINative.Radio.Indicator',
-  INDICATOR_BACKGROUND: 'HeroUINative.Radio.IndicatorBackground',
-  INDICATOR_THUMB: 'HeroUINative.Radio.IndicatorThumb',
-  LABEL: 'HeroUINative.Radio.Label',
-  DESCRIPTION: 'HeroUINative.Radio.Description',
+  RADIO_GROUP: 'HeroUINative.RadioGroup.Root',
+  RADIO: 'HeroUINative.Radio.Root',
+  RADIO_INDICATOR: 'HeroUINative.Radio.Indicator',
+  RADIO_INDICATOR_BACKGROUND: 'HeroUINative.Radio.IndicatorBackground',
+  RADIO_INDICATOR_THUMB: 'HeroUINative.Radio.IndicatorThumb',
+  RADIO_LABEL: 'HeroUINative.Radio.Label',
+  RADIO_DESCRIPTION: 'HeroUINative.Radio.Description',
 };

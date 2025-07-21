@@ -6,8 +6,11 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { createContext } from '@/helpers/utils';
-import { getChildElement } from '@/helpers/utils/get-child-element';
+import {
+  createContext,
+  getChildElementOrDefault,
+  getElementByDisplayName,
+} from '@/helpers/utils';
 import * as LabelPrimitives from '@/primitives/label';
 import * as RadioGroupPrimitives from '@/primitives/radio-group';
 import { useTheme } from '@/theme';
@@ -87,26 +90,21 @@ function Radio(props: RadioProps) {
   const isSelected = radioGroupContext?.value === value;
 
   const indicatorElement = useMemo(
-    () => getChildElement(children, DISPLAY_NAME.INDICATOR, <RadioIndicator />),
+    () =>
+      getChildElementOrDefault(
+        children,
+        DISPLAY_NAME.RADIO_INDICATOR,
+        <RadioIndicator />
+      ),
     [children]
   );
 
   const labelElement = useMemo(() => {
-    const found = React.Children.toArray(children).find(
-      (child) =>
-        React.isValidElement(child) &&
-        (child.type as any)?.displayName === DISPLAY_NAME.LABEL
-    );
-    return found || null;
+    return getElementByDisplayName(children, DISPLAY_NAME.RADIO_LABEL);
   }, [children]);
 
   const descriptionElement = useMemo(() => {
-    const found = React.Children.toArray(children).find(
-      (child) =>
-        React.isValidElement(child) &&
-        (child.type as any)?.displayName === DISPLAY_NAME.DESCRIPTION
-    );
-    return found || null;
+    return getElementByDisplayName(children, DISPLAY_NAME.RADIO_DESCRIPTION);
   }, [children]);
 
   const hitSlopMap: Record<RadioSize, number> = {
@@ -176,9 +174,9 @@ function RadioIndicator(props: RadioIndicatorProps) {
 
   const backgroundElement = useMemo(
     () =>
-      getChildElement(
+      getChildElementOrDefault(
         children,
-        DISPLAY_NAME.INDICATOR_BACKGROUND,
+        DISPLAY_NAME.RADIO_INDICATOR_BACKGROUND,
         <RadioIndicatorBackground />
       ),
     [children]
@@ -186,9 +184,9 @@ function RadioIndicator(props: RadioIndicatorProps) {
 
   const thumbElement = useMemo(
     () =>
-      getChildElement(
+      getChildElementOrDefault(
         children,
-        DISPLAY_NAME.INDICATOR_THUMB,
+        DISPLAY_NAME.RADIO_INDICATOR_THUMB,
         <RadioIndicatorThumb />
       ),
     [children]
@@ -372,13 +370,13 @@ function RadioDescription(props: RadioDescriptionProps) {
 
 // --------------------------------------------------
 
-RadioGroup.displayName = DISPLAY_NAME.ROOT;
-Radio.displayName = DISPLAY_NAME.ROOT;
-RadioIndicator.displayName = DISPLAY_NAME.INDICATOR;
-RadioIndicatorBackground.displayName = DISPLAY_NAME.INDICATOR_BACKGROUND;
-RadioIndicatorThumb.displayName = DISPLAY_NAME.INDICATOR_THUMB;
-RadioLabel.displayName = DISPLAY_NAME.LABEL;
-RadioDescription.displayName = DISPLAY_NAME.DESCRIPTION;
+RadioGroup.displayName = DISPLAY_NAME.RADIO_GROUP;
+Radio.displayName = DISPLAY_NAME.RADIO;
+RadioIndicator.displayName = DISPLAY_NAME.RADIO_INDICATOR;
+RadioIndicatorBackground.displayName = DISPLAY_NAME.RADIO_INDICATOR_BACKGROUND;
+RadioIndicatorThumb.displayName = DISPLAY_NAME.RADIO_INDICATOR_THUMB;
+RadioLabel.displayName = DISPLAY_NAME.RADIO_LABEL;
+RadioDescription.displayName = DISPLAY_NAME.RADIO_DESCRIPTION;
 
 const CompoundRadioGroup = Object.assign(Radio, {
   Indicator: RadioIndicator,

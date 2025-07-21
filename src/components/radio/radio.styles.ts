@@ -82,6 +82,10 @@ const description = tv({
   },
 });
 
+const content = tv({
+  base: 'flex-1 flex-col',
+});
+
 const radioStyles = Object.assign({
   item,
   indicator,
@@ -89,6 +93,7 @@ const radioStyles = Object.assign({
   thumb,
   label,
   description,
+  content,
 });
 
 export default radioStyles;

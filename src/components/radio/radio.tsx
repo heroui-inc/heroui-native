@@ -20,6 +20,7 @@ import radioStyles from './radio.styles';
 import type {
   RadioBackgroundProps,
   RadioColor,
+  RadioContentProps,
   RadioContextValue,
   RadioDescriptionProps,
   RadioIndicatorProps,
@@ -99,12 +100,8 @@ function Radio(props: RadioProps) {
     [children]
   );
 
-  const labelElement = useMemo(() => {
-    return getElementByDisplayName(children, DISPLAY_NAME.RADIO_LABEL);
-  }, [children]);
-
-  const descriptionElement = useMemo(() => {
-    return getElementByDisplayName(children, DISPLAY_NAME.RADIO_DESCRIPTION);
+  const contentElement = useMemo(() => {
+    return getElementByDisplayName(children, DISPLAY_NAME.RADIO_CONTENT);
   }, [children]);
 
   const hitSlopMap: Record<RadioSize, number> = {
@@ -138,14 +135,6 @@ function Radio(props: RadioProps) {
     ]
   );
 
-  const labelContent =
-    labelElement || descriptionElement ? (
-      <View className="flex-col flex-1">
-        {labelElement}
-        {descriptionElement}
-      </View>
-    ) : null;
-
   return (
     <RadioProvider value={contextValue}>
       <AnimatedRadioGroupItem
@@ -157,7 +146,7 @@ function Radio(props: RadioProps) {
         {...restProps}
       >
         {indicatorElement}
-        {labelContent}
+        {contentElement}
       </AnimatedRadioGroupItem>
     </RadioProvider>
   );
@@ -332,6 +321,41 @@ function RadioIndicatorThumb(props: RadioThumbProps) {
 
 // --------------------------------------------------
 
+function RadioContent(props: RadioContentProps) {
+  const { children, className, style, ...restProps } = props;
+
+  const labelElement = useMemo(() => {
+    return getElementByDisplayName(children, DISPLAY_NAME.RADIO_LABEL);
+  }, [children]);
+
+  const descriptionElement = useMemo(() => {
+    return getElementByDisplayName(children, DISPLAY_NAME.RADIO_DESCRIPTION);
+  }, [children]);
+
+  const tvStyles = radioStyles.content({
+    className,
+  });
+
+  // If there are label or description elements, wrap them in a flex container
+  if (labelElement || descriptionElement) {
+    return (
+      <View className={tvStyles} style={style} {...restProps}>
+        {labelElement}
+        {descriptionElement}
+      </View>
+    );
+  }
+
+  // Otherwise, render children directly
+  return (
+    <View className={tvStyles} style={style} {...restProps}>
+      {children}
+    </View>
+  );
+}
+
+// --------------------------------------------------
+
 function RadioLabel(props: RadioLabelProps) {
   const { children, className, ...restProps } = props;
 
@@ -375,6 +399,7 @@ Radio.displayName = DISPLAY_NAME.RADIO;
 RadioIndicator.displayName = DISPLAY_NAME.RADIO_INDICATOR;
 RadioIndicatorBackground.displayName = DISPLAY_NAME.RADIO_INDICATOR_BACKGROUND;
 RadioIndicatorThumb.displayName = DISPLAY_NAME.RADIO_INDICATOR_THUMB;
+RadioContent.displayName = DISPLAY_NAME.RADIO_CONTENT;
 RadioLabel.displayName = DISPLAY_NAME.RADIO_LABEL;
 RadioDescription.displayName = DISPLAY_NAME.RADIO_DESCRIPTION;
 
@@ -382,6 +407,7 @@ const CompoundRadioGroup = Object.assign(Radio, {
   Indicator: RadioIndicator,
   IndicatorBackground: RadioIndicatorBackground,
   IndicatorThumb: RadioIndicatorThumb,
+  Content: RadioContent,
   Label: RadioLabel,
   Description: RadioDescription,
 });

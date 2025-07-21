@@ -126,7 +126,17 @@ export interface RadioThumbProps extends ViewProps {
 }
 
 /**
- * Props for RadioGroup.Label component
+ * Props for Radio.Content component
+ */
+export interface RadioContentProps extends ViewProps {
+  /** Content children */
+  children?: React.ReactNode;
+  /** Custom class name */
+  className?: string;
+}
+
+/**
+ * Props for Radio.Label component
  */
 export interface RadioLabelProps extends LabelTextProps {
   /** Label content */
@@ -136,7 +146,7 @@ export interface RadioLabelProps extends LabelTextProps {
 }
 
 /**
- * Props for RadioGroup.Description component
+ * Props for Radio.Description component
  */
 export interface RadioDescriptionProps extends TextProps {
   /** Description content */

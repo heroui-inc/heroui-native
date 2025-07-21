@@ -36,37 +36,55 @@ export default function RadioScreen() {
       <View className="w-full mb-6 gap-6">
         <RadioGroup value={smSize} onValueChange={setSmSize}>
           <Radio value="paris" size="sm">
-            <Radio.Label>Paris (Small)</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Paris (Small)</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="london" size="sm">
-            <Radio.Label>London (Small)</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>London (Small)</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="berlin" size="sm">
-            <Radio.Label>Berlin (Small)</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Berlin (Small)</Radio.Label>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
 
         <RadioGroup value={mdSize} onValueChange={setMdSize}>
           <Radio value="paris" size="md">
-            <Radio.Label>Paris (Medium)</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Paris (Medium)</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="london" size="md">
-            <Radio.Label>London (Medium)</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>London (Medium)</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="berlin" size="md">
-            <Radio.Label>Berlin (Medium)</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Berlin (Medium)</Radio.Label>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
 
         <RadioGroup value={lgSize} onValueChange={setLgSize}>
           <Radio value="paris" size="lg">
-            <Radio.Label>Paris (Large)</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Paris (Large)</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="london" size="lg">
-            <Radio.Label>London (Large)</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>London (Large)</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="berlin" size="lg">
-            <Radio.Label>Berlin (Large)</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Berlin (Large)</Radio.Label>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
       </View>
@@ -78,37 +96,53 @@ export default function RadioScreen() {
       <View className="w-full mb-6 gap-6">
         <RadioGroup value={defaultColor} onValueChange={setDefaultColor}>
           <Radio value="option1" color="default">
-            <Radio.Label>Default Color</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Default Color</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="option2" color="default">
-            <Radio.Label>Another Option</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Another Option</Radio.Label>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
 
         <RadioGroup value={successColor} onValueChange={setSuccessColor}>
           <Radio value="option1" color="success">
-            <Radio.Label>Success Color</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Success Color</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="option2" color="success">
-            <Radio.Label>Another Option</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Another Option</Radio.Label>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
 
         <RadioGroup value={warningColor} onValueChange={setWarningColor}>
           <Radio value="option1" color="warning">
-            <Radio.Label>Warning Color</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Warning Color</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="option2" color="warning">
-            <Radio.Label>Another Option</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Another Option</Radio.Label>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
 
         <RadioGroup value={dangerColor} onValueChange={setDangerColor}>
           <Radio value="option1" color="danger">
-            <Radio.Label>Danger Color</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Danger Color</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="option2" color="danger">
-            <Radio.Label>Another Option</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Another Option</Radio.Label>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
       </View>
@@ -124,19 +158,27 @@ export default function RadioScreen() {
           isDisabled
         >
           <Radio value="option1">
-            <Radio.Label>Disabled Option 1</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Disabled Option 1</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="option2">
-            <Radio.Label>Disabled Option 2</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Disabled Option 2</Radio.Label>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
 
         <RadioGroup value={readOnlyState} onValueChange={setReadOnlyState}>
           <Radio value="option1" isReadOnly>
-            <Radio.Label>Read-only Option 1</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Read-only Option 1</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="option2" isReadOnly>
-            <Radio.Label>Read-only Option 2</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Read-only Option 2</Radio.Label>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
       </View>
@@ -156,7 +198,9 @@ export default function RadioScreen() {
                 <View className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />
               </Radio.IndicatorBackground>
             </Radio.Indicator>
-            <Radio.Label>Custom Background</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Custom Background</Radio.Label>
+            </Radio.Content>
           </Radio>
 
           <Radio value="custom2">
@@ -165,7 +209,9 @@ export default function RadioScreen() {
                 <View className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-green-500" />
               </Radio.IndicatorBackground>
             </Radio.Indicator>
-            <Radio.Label>Another Custom</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Another Custom</Radio.Label>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
 
@@ -176,7 +222,9 @@ export default function RadioScreen() {
                 <View className="h-2 w-2 rounded-full bg-red-500" />
               </Radio.IndicatorThumb>
             </Radio.Indicator>
-            <Radio.Label>Custom Thumb</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Custom Thumb</Radio.Label>
+            </Radio.Content>
           </Radio>
 
           <Radio value="custom2">
@@ -185,39 +233,87 @@ export default function RadioScreen() {
                 <View className="h-2 w-2 bg-blue-500" />
               </Radio.IndicatorThumb>
             </Radio.Indicator>
-            <Radio.Label>Square Thumb</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Square Thumb</Radio.Label>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
 
         <RadioGroup value={withDescription} onValueChange={setWithDescription}>
           <Radio value="desc1">
-            <Radio.Label>Option with Description</Radio.Label>
-            <Radio.Description>
-              This is a helpful description that provides more context about
-              this option.
-            </Radio.Description>
+            <Radio.Content>
+              <Radio.Label>Option with Description</Radio.Label>
+              <Radio.Description>
+                This is a helpful description that provides more context about
+                this option.
+              </Radio.Description>
+            </Radio.Content>
           </Radio>
 
           <Radio value="desc2">
-            <Radio.Label>Another Option</Radio.Label>
-            <Radio.Description>
-              Here's another description to help users make an informed choice.
-            </Radio.Description>
+            <Radio.Content>
+              <Radio.Label>Another Option</Radio.Label>
+              <Radio.Description>
+                Here's another description to help users make an informed
+                choice.
+              </Radio.Description>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
       </View>
 
-      <View className="w-full">
+      <View className="w-full mb-6">
         <Text className="text-lg font-bold text-muted-foreground mb-4">
           Minimal Usage
         </Text>
 
         <RadioGroup value="minimal" onValueChange={() => {}}>
           <Radio value="min1">
-            <Radio.Label>Minimal with default indicator</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Minimal with default indicator</Radio.Label>
+            </Radio.Content>
           </Radio>
           <Radio value="min2">
-            <Radio.Label>Just a label</Radio.Label>
+            <Radio.Content>
+              <Radio.Label>Just a label</Radio.Label>
+            </Radio.Content>
+          </Radio>
+        </RadioGroup>
+      </View>
+
+      <View className="w-full mb-6">
+        <Text className="text-lg font-bold text-muted-foreground mb-4">
+          Custom Content
+        </Text>
+
+        <RadioGroup value="custom-content" onValueChange={() => {}}>
+          <Radio value="custom1">
+            <Radio.Content>
+              <View className="flex-row items-center gap-2">
+                <View className="h-8 w-8 bg-blue-500 rounded-full" />
+                <View>
+                  <Text className="text-foreground font-medium">
+                    Custom Content
+                  </Text>
+                  <Text className="text-muted-foreground text-sm">
+                    With icon
+                  </Text>
+                </View>
+              </View>
+            </Radio.Content>
+          </Radio>
+
+          <Radio value="custom2">
+            <Radio.Content>
+              <View className="px-3 py-2 bg-accent/10 rounded-lg">
+                <Text className="text-foreground font-semibold">
+                  Content Left
+                </Text>
+                <Text className="text-muted-foreground text-sm">
+                  Content can be placed before indicator
+                </Text>
+              </View>
+            </Radio.Content>
           </Radio>
         </RadioGroup>
       </View>

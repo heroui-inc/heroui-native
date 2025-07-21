@@ -79,7 +79,7 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
     return (
       <RadioItemContext.Provider
         value={{
-          itemValue: itemValue,
+          itemValue,
         }}
       >
         <Component
@@ -134,4 +134,4 @@ const Indicator = React.forwardRef<IndicatorRef, IndicatorProps>(
 
 Indicator.displayName = 'HeroUINative.Primitive.RadioGroup.Indicator';
 
-export { Indicator, Item, Root };
+export { Indicator, Item, Root, useRadioGroupContext };

@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Animated, {
   Easing,
@@ -38,13 +38,6 @@ const AnimatedRadioGroupItem = Animated.createAnimatedComponent(
 const DURATION = 175;
 const EASING = Easing.bezier(0.25, 0.1, 0.25, 1);
 
-// Internal context to get RadioGroup state
-const RadioGroupContext = React.createContext<{
-  value: string | undefined;
-  onValueChange: (value: string) => void;
-  isDisabled?: boolean;
-} | null>(null);
-
 export const [RadioProvider, useRadioContext] =
   createContext<RadioContextValue>({
     name: 'RadioContext',
@@ -52,25 +45,15 @@ export const [RadioProvider, useRadioContext] =
 
 // --------------------------------------------------
 
-// Custom RadioGroup root that provides context
+// RadioGroup root component
 const RadioGroup = (props: RadioGroupProps) => {
-  const { value, onValueChange, isDisabled, className, ...restProps } = props;
+  const { className, ...restProps } = props;
 
   const tvStyles = radioStyles.groupRoot({
     className,
   });
 
-  return (
-    <RadioGroupContext.Provider value={{ value, onValueChange, isDisabled }}>
-      <RadioGroupPrimitives.Root
-        value={value}
-        onValueChange={onValueChange}
-        isDisabled={isDisabled}
-        className={tvStyles}
-        {...restProps}
-      />
-    </RadioGroupContext.Provider>
-  );
+  return <RadioGroupPrimitives.Root className={tvStyles} {...restProps} />;
 };
 
 // --------------------------------------------------
@@ -88,8 +71,9 @@ function Radio(props: RadioProps) {
     ...restProps
   } = props;
 
-  const radioGroupContext = useContext(RadioGroupContext);
-  const isSelected = radioGroupContext?.value === value;
+  const radioGroupContext = RadioGroupPrimitives.useRadioGroupContext();
+  const isSelected = radioGroupContext.value === value;
+  const isDisabledValue = radioGroupContext.isDisabled || isDisabled;
 
   const indicatorElement = useMemo(
     () =>
@@ -113,7 +97,7 @@ function Radio(props: RadioProps) {
 
   const tvStyles = radioStyles.radioRoot({
     size,
-    isDisabled: isDisabled || radioGroupContext?.isDisabled,
+    isDisabled: isDisabledValue,
     isReadOnly,
     className,
   });
@@ -123,17 +107,10 @@ function Radio(props: RadioProps) {
       size,
       color,
       isSelected,
-      isDisabled: isDisabled || radioGroupContext?.isDisabled,
+      isDisabled: isDisabledValue,
       isReadOnly,
     }),
-    [
-      size,
-      color,
-      isSelected,
-      isDisabled,
-      radioGroupContext?.isDisabled,
-      isReadOnly,
-    ]
+    [size, color, isSelected, isDisabledValue, isReadOnly]
   );
 
   return (
@@ -142,7 +119,7 @@ function Radio(props: RadioProps) {
         className={tvStyles}
         style={style}
         value={value}
-        isDisabled={isDisabled || isReadOnly}
+        isDisabled={isDisabledValue || isReadOnly}
         hitSlop={props.hitSlop ?? hitSlopMap[size]}
         {...restProps}
       >

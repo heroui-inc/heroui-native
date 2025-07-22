@@ -26,6 +26,7 @@ export default function Layout() {
       <Stack.Screen name="switch" options={{ title: 'Switch' }} />
       <Stack.Screen name="checkbox" options={{ title: 'Checkbox' }} />
       <Stack.Screen name="radio" options={{ title: 'Radio' }} />
+      <Stack.Screen name="spinner" options={{ title: 'Spinner' }} />
     </Stack>
   );
 }

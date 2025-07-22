@@ -63,7 +63,7 @@ const content = tv({
 });
 
 const label = tv({
-  base: 'text-foreground select-none',
+  base: 'text-foreground',
   variants: {
     size: {
       sm: 'text-sm',
@@ -77,7 +77,7 @@ const label = tv({
 });
 
 const description = tv({
-  base: 'text-muted-foreground select-none',
+  base: 'text-muted-foreground',
   variants: {
     size: {
       sm: 'text-xs',

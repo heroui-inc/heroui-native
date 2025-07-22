@@ -168,6 +168,7 @@ export default function RadioScreen() {
         >
           <Radio value="custom1">
             <Radio.Indicator
+              className="w-8 h-8"
               colors={{
                 selectedBorder: '#a855f7',
               }}
@@ -175,8 +176,11 @@ export default function RadioScreen() {
               <Radio.IndicatorBackground>
                 {customBackground === 'custom1' ? (
                   <View className="absolute inset-0 rounded-full bg-purple-500" />
-                ) : null}
+                ) : (
+                  <View className="bg-transparent" />
+                )}
               </Radio.IndicatorBackground>
+              <Radio.IndicatorThumb className="w-4 h-4" />
             </Radio.Indicator>
             <Radio.Content>
               <Radio.Label>Custom Background</Radio.Label>
@@ -184,6 +188,7 @@ export default function RadioScreen() {
           </Radio>
           <Radio value="custom2">
             <Radio.Indicator
+              className="w-8 h-8"
               colors={{
                 selectedBorder: '#3b82f6',
               }}
@@ -191,8 +196,11 @@ export default function RadioScreen() {
               <Radio.IndicatorBackground>
                 {customBackground === 'custom2' ? (
                   <View className="absolute inset-0 rounded-full bg-blue-500" />
-                ) : null}
+                ) : (
+                  <View className="bg-transparent" />
+                )}
               </Radio.IndicatorBackground>
+              <Radio.IndicatorThumb className="w-4 h-4" />
             </Radio.Indicator>
             <Radio.Content>
               <Radio.Label>Custom Background</Radio.Label>

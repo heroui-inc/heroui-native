@@ -98,8 +98,6 @@ export interface RadioProps extends ItemProps {
   isReadOnly?: boolean;
   /** Custom class name */
   className?: string;
-  /** Animation configuration */
-  animationConfig?: RadioAnimationConfig;
 }
 
 /**

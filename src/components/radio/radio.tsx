@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
+  withSpring,
   withTiming,
 } from 'react-native-reanimated';
 
@@ -36,7 +37,7 @@ const AnimatedRadioItem = Animated.createAnimatedComponent(
 );
 
 const DURATION = 175;
-const EASING = Easing.bezier(0.25, 0.1, 0.25, 1);
+const EASING = Easing.out(Easing.ease);
 
 export const [RadioProvider, useRadioContext] =
   createContext<RadioContextValue>({
@@ -210,8 +211,7 @@ const styles = StyleSheet.create({
 // --------------------------------------------------
 
 function RadioIndicatorBackground(props: RadioBackgroundProps) {
-  const { children, colors, animationConfig, className, style, ...restProps } =
-    props;
+  const { children, colors, className, style, ...restProps } = props;
 
   const { color, isSelected } = useRadioContext();
   const { colors: themeColors } = useTheme();
@@ -227,19 +227,21 @@ function RadioIndicatorBackground(props: RadioBackgroundProps) {
     danger: themeColors.danger,
   };
 
-  const timingConfig = animationConfig ?? {
-    duration: DURATION,
-    easing: EASING,
-  };
+  // VS ---------------
+  // const timingConfig = animationConfig ?? {
+  //   duration: DURATION,
+  //   easing: EASING,
+  // };
 
   const backgroundAnimatedStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: withTiming(
-        isSelected
-          ? (colors?.selectedBackground ?? backgroundColorMap[color])
-          : (colors?.defaultBackground ?? 'transparent'),
-        timingConfig
-      ),
+      backgroundColor: isSelected
+        ? withSpring(colors?.selectedBackground ?? backgroundColorMap[color], {
+            duration: 300,
+          })
+        : withTiming(colors?.defaultBackground ?? 'transparent', {
+            duration: 100,
+          }),
     };
   });
 
@@ -263,8 +265,7 @@ function RadioIndicatorBackground(props: RadioBackgroundProps) {
 // --------------------------------------------------
 
 function RadioIndicatorThumb(props: RadioThumbProps) {
-  const { children, colors, animationConfig, className, style, ...restProps } =
-    props;
+  const { children, colors, className, style, ...restProps } = props;
 
   const { size, isSelected } = useRadioContext();
   const { colors: themeColors } = useTheme();
@@ -274,14 +275,22 @@ function RadioIndicatorThumb(props: RadioThumbProps) {
     className,
   });
 
-  const timingConfig = animationConfig ?? {
-    duration: DURATION,
-    easing: EASING,
-  };
+  // VS ----------------
+  // const timingConfig = animationConfig ?? {
+  //   duration: DURATION,
+  //   easing: EASING,
+  // };
 
   const thumbAnimatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: withTiming(isSelected ? 1 : 0, timingConfig) }],
+      transform: [
+        {
+          scale: withSpring(isSelected ? 1 : 0, {
+            damping: 20,
+            stiffness: 400,
+          }),
+        },
+      ],
       backgroundColor: colors?.selectedThumb ?? themeColors.background,
     };
   });

@@ -3,6 +3,7 @@ import { Text } from 'react-native';
 import { Radio } from '@/components/radio';
 import { cn } from '@/helpers/utils';
 import { useTheme } from 'heroui-native';
+import { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 interface StyledRadioProps {
   value: string;
@@ -22,15 +23,25 @@ export function StyledRadio({
 }: StyledRadioProps) {
   const { theme } = useTheme();
 
+  const rRadioStyle = useAnimatedStyle(() => {
+    return {
+      borderColor: withTiming(isSelected ? '#a3a3a3' : 'transparent', {
+        duration: 300,
+        easing: Easing.out(Easing.ease),
+      }),
+    };
+  });
+
   return (
     <Radio
+      key={value}
       value={value}
       className={cn(
-        'rounded-lg px-4 py-3 border transition-colors border-neutral-400',
+        'rounded-lg px-4 py-3 border',
         theme === 'dark' ? 'bg-neutral-800' : 'bg-neutral-100',
-        !isSelected && 'border-transparent',
         className
       )}
+      style={rRadioStyle}
       {...props}
     >
       <Radio.Content>

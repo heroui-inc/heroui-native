@@ -28,8 +28,13 @@ type SlottablePressableProps = ComponentPropsWithAsChild<typeof Pressable>;
 /** Text component props with asChild support for slot composition */
 type SlottableTextProps = ComponentPropsWithAsChild<typeof Text>;
 
+interface ForceMountable {
+  forceMount?: true | undefined;
+}
+
 export type {
   ComponentPropsWithAsChild,
+  ForceMountable,
   PressableRef,
   SlottablePressableProps,
   SlottableTextProps,

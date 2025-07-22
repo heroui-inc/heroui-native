@@ -10,6 +10,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { DISPLAY_NAME } from './switch.constants';
 import switchStyles from './switch.styles';
 import type {
   SwitchColor,
@@ -271,10 +272,10 @@ function SwitchEndContent(props: SwitchContentProps) {
 
 // --------------------------------------------------
 
-Switch.displayName = 'HeroUINative.Switch.Root';
-SwitchThumb.displayName = 'HeroUINative.Switch.Thumb';
-SwitchStartContent.displayName = 'HeroUINative.Switch.StartContent';
-SwitchEndContent.displayName = 'HeroUINative.Switch.EndContent';
+Switch.displayName = DISPLAY_NAME.SWITCH_ROOT;
+SwitchThumb.displayName = DISPLAY_NAME.SWITCH_THUMB;
+SwitchStartContent.displayName = DISPLAY_NAME.SWITCH_START_CONTENT;
+SwitchEndContent.displayName = DISPLAY_NAME.SWITCH_END_CONTENT;
 
 const CompoundSwitch = Object.assign(Switch, {
   Thumb: SwitchThumb,

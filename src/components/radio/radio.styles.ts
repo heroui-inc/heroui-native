@@ -53,6 +53,23 @@ const thumb = tv({
       lg: 'h-2.5 w-2.5',
     },
   },
+  compoundVariants: [
+    {
+      size: 'sm',
+      isDark: true,
+      className: 'h-2 w-2',
+    },
+    {
+      size: 'md',
+      isDark: true,
+      className: 'h-2.5 w-2.5',
+    },
+    {
+      size: 'lg',
+      isDark: true,
+      className: 'h-3 w-3',
+    },
+  ],
   defaultVariants: {
     size: 'md',
   },
@@ -63,7 +80,7 @@ const content = tv({
 });
 
 const label = tv({
-  base: 'text-foreground',
+  base: 'text-foreground font-medium',
   variants: {
     size: {
       sm: 'text-sm',
@@ -80,9 +97,9 @@ const description = tv({
   base: 'text-muted-foreground',
   variants: {
     size: {
-      sm: 'text-xs',
-      md: 'text-sm',
-      lg: 'text-base',
+      sm: 'text-sm',
+      md: 'text-base',
+      lg: 'text-lg',
     },
   },
   defaultVariants: {

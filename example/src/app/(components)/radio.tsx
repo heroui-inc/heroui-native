@@ -271,11 +271,11 @@ export default function RadioScreen() {
         </RadioGroup>
       </View>
 
-      <View className="w-full mb-6">
-        <Text className="text-lg font-bold text-muted-foreground mb-4">
-          Advanced Styled Radio
-        </Text>
+      <Text className="text-lg font-bold text-muted-foreground mb-4">
+        Advanced Styled Radio
+      </Text>
 
+      <View className="w-full">
         <RadioGroup
           value={advancedContent}
           onValueChange={setAdvancedContent}

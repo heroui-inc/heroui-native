@@ -258,10 +258,11 @@ function RadioIndicatorThumb(props: RadioThumbProps) {
     props;
 
   const { size, isSelected } = useRadioContext();
-  const { colors: themeColors } = useTheme();
+  const { theme, colors: themeColors } = useTheme();
 
   const tvStyles = radioStyles.thumb({
     size,
+    isDark: theme === 'dark',
     className,
   });
 

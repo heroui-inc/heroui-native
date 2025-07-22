@@ -11,7 +11,7 @@ const groupRoot = tv({
 });
 
 const radioRoot = tv({
-  base: 'flex-row items-center justify-between',
+  base: 'flex-row items-center',
   variants: {
     size: {
       sm: 'gap-2.5',
@@ -25,13 +25,6 @@ const radioRoot = tv({
       true: 'pointer-events-none',
     },
   },
-  compoundVariants: [
-    {
-      alignIndicator: 'start',
-      orientation: 'vertical',
-      className: 'justify-start',
-    },
-  ],
   defaultVariants: {
     size: 'md',
     isDisabled: false,
@@ -90,6 +83,12 @@ const thumb = tv({
 
 const content = tv({
   base: '',
+  variants: {
+    orientation: {
+      horizontal: '',
+      vertical: 'flex-1',
+    },
+  },
 });
 
 const label = tv({

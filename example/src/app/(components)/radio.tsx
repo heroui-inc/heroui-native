@@ -37,29 +37,27 @@ export default function RadioScreen() {
       </Text>
 
       <View className="w-full mb-6 gap-6">
-        <ScrollView horizontal>
-          <RadioGroup
-            value={smSize}
-            onValueChange={setSmSize}
-            orientation="horizontal"
-          >
-            <Radio value="paris" size="sm" alignIndicator="start">
-              <Radio.Content>
-                <Radio.Label>Paris (Small)</Radio.Label>
-              </Radio.Content>
-            </Radio>
-            <Radio value="london" size="sm" alignIndicator="start">
-              <Radio.Content>
-                <Radio.Label>London (Small)</Radio.Label>
-              </Radio.Content>
-            </Radio>
-            <Radio value="berlin" size="sm" alignIndicator="start">
-              <Radio.Content>
-                <Radio.Label>Berlin (Small)</Radio.Label>
-              </Radio.Content>
-            </Radio>
-          </RadioGroup>
-        </ScrollView>
+        <RadioGroup
+          value={smSize}
+          onValueChange={setSmSize}
+          orientation="horizontal"
+        >
+          <Radio value="paris" size="sm" alignIndicator="start">
+            <Radio.Content>
+              <Radio.Label>Paris (Small)</Radio.Label>
+            </Radio.Content>
+          </Radio>
+          <Radio value="london" size="sm" alignIndicator="start">
+            <Radio.Content>
+              <Radio.Label>London (Small)</Radio.Label>
+            </Radio.Content>
+          </Radio>
+          <Radio value="berlin" size="sm" alignIndicator="start">
+            <Radio.Content>
+              <Radio.Label>Berlin (Small)</Radio.Label>
+            </Radio.Content>
+          </Radio>
+        </RadioGroup>
 
         <RadioGroup value={mdSize} onValueChange={setMdSize}>
           <Radio value="paris" size="md">

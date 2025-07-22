@@ -48,14 +48,20 @@ export const [RadioProvider, useRadioContext] =
 
 // RadioGroup root component
 const RadioGroup = (props: RadioGroupProps) => {
-  const { className, orientation, ...restProps } = props;
+  const { className, orientation = 'vertical', ...restProps } = props;
 
   const tvStyles = radioStyles.groupRoot({
     orientation,
     className,
   });
 
-  return <RadioGroupPrimitives.Root className={tvStyles} {...restProps} />;
+  return (
+    <RadioGroupPrimitives.Root
+      className={tvStyles}
+      orientation={orientation}
+      {...restProps}
+    />
+  );
 };
 
 // --------------------------------------------------
@@ -74,8 +80,7 @@ function Radio(props: RadioProps) {
     ...restProps
   } = props;
 
-  const { value: groupValue, orientation } =
-    RadioGroupPrimitives.useRadioGroupContext();
+  const { value: groupValue } = RadioGroupPrimitives.useRadioGroupContext();
   const isSelected = groupValue === value;
   const isDisabledValue = isDisabled;
 
@@ -102,7 +107,6 @@ function Radio(props: RadioProps) {
   const tvStyles = radioStyles.radioRoot({
     size,
     alignIndicator,
-    orientation,
     isDisabled: isDisabledValue,
     isReadOnly,
     className,
@@ -305,6 +309,8 @@ function RadioIndicatorThumb(props: RadioThumbProps) {
 function RadioContent(props: RadioContentProps) {
   const { children, className, style, ...restProps } = props;
 
+  const { orientation } = RadioGroupPrimitives.useRadioGroupContext();
+
   const labelElement = useMemo(() => {
     return getElementByDisplayName(children, DISPLAY_NAME.RADIO_LABEL);
   }, [children]);
@@ -314,20 +320,19 @@ function RadioContent(props: RadioContentProps) {
   }, [children]);
 
   const tvStyles = radioStyles.content({
+    orientation,
     className,
   });
 
-  // If there are label or description elements, wrap them in a flex container
   if (labelElement || descriptionElement) {
     return (
-      <View className={tvStyles} style={style} {...restProps}>
+      <View className={tvStyles} {...restProps}>
         {labelElement}
         {descriptionElement}
       </View>
     );
   }
 
-  // Otherwise, render children directly
   return (
     <View className={tvStyles} style={style} {...restProps}>
       {children}

@@ -2,7 +2,9 @@ import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 import { Radio, RadioGroup } from '@/components/radio';
-import { Eye } from 'lucide-react-native';
+import { cn } from '@/helpers/utils';
+import { useTheme } from 'heroui-native';
+import { Zap } from 'lucide-react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
 import { StyledRadio } from '../../components/styled-radio';
 
@@ -25,6 +27,8 @@ export default function RadioScreen() {
   const [customThumb, setCustomThumb] = React.useState('custom1');
   const [withDescription, setWithDescription] = React.useState('desc1');
   const [advancedContent, setAdvancedContent] = React.useState('option1');
+
+  const { theme } = useTheme();
 
   return (
     <ScrollView
@@ -224,7 +228,11 @@ export default function RadioScreen() {
               <Radio.IndicatorThumb>
                 {customThumb === 'custom1' ? (
                   <AnimatedView entering={FadeIn.duration(200)}>
-                    <Eye size={12} color="white" />
+                    <Zap
+                      size={12}
+                      color={theme === 'dark' ? 'black' : 'white'}
+                      fill={theme === 'dark' ? 'black' : 'white'}
+                    />
                   </AnimatedView>
                 ) : null}
               </Radio.IndicatorThumb>
@@ -241,7 +249,10 @@ export default function RadioScreen() {
                   <AnimatedView
                     key="square-thumb"
                     entering={ZoomIn.springify().stiffness(300).damping(20)}
-                    className="h-2.5 w-2.5 rounded-xs bg-lime-300"
+                    className={cn(
+                      'h-2.5 w-2.5 rounded-xs bg-lime-300',
+                      theme === 'dark' && 'bg-lime-600'
+                    )}
                   />
                 ) : null}
               </Radio.IndicatorThumb>

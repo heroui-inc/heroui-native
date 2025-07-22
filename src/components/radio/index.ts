@@ -1,6 +1,5 @@
 export { default as Radio, RadioGroup } from './radio';
 export type {
-  RadioAnimationConfig,
   RadioBackgroundProps,
   RadioColor,
   RadioColors,

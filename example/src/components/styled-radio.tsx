@@ -25,10 +25,14 @@ export function StyledRadio({
 
   const rRadioStyle = useAnimatedStyle(() => {
     return {
-      borderColor: withTiming(isSelected ? '#a3a3a3' : 'transparent', {
-        duration: 300,
-        easing: Easing.out(Easing.ease),
-      }),
+      borderColor: isSelected
+        ? withTiming('#a3a3a3', {
+            duration: 500,
+            easing: Easing.out(Easing.ease),
+          })
+        : withTiming('transparent', {
+            duration: 100,
+          }),
     };
   });
 

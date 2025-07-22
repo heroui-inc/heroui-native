@@ -92,7 +92,7 @@ function Radio(props: RadioProps) {
   }, [children]);
 
   const hitSlopMap: Record<RadioSize, number> = {
-    sm: 10,
+    sm: 8,
     md: 6,
     lg: 4,
   };
@@ -227,24 +227,6 @@ function RadioIndicatorBackground(props: RadioBackgroundProps) {
     danger: themeColors.danger,
   };
 
-  // VS ---------------
-  // const timingConfig = animationConfig ?? {
-  //   duration: DURATION,
-  //   easing: EASING,
-  // };
-
-  const backgroundAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      backgroundColor: isSelected
-        ? withSpring(colors?.selectedBackground ?? backgroundColorMap[color], {
-            duration: 300,
-          })
-        : withTiming(colors?.defaultBackground ?? 'transparent', {
-            duration: 100,
-          }),
-    };
-  });
-
   if (children) {
     return (
       <View className={tvStyles} style={style} {...restProps}>
@@ -256,7 +238,14 @@ function RadioIndicatorBackground(props: RadioBackgroundProps) {
   return (
     <Animated.View
       className={tvStyles}
-      style={[backgroundAnimatedStyle, style]}
+      style={[
+        {
+          backgroundColor: isSelected
+            ? (colors?.selectedBackground ?? backgroundColorMap[color])
+            : (colors?.defaultBackground ?? 'transparent'),
+        },
+        style,
+      ]}
       {...restProps}
     />
   );
@@ -265,7 +254,8 @@ function RadioIndicatorBackground(props: RadioBackgroundProps) {
 // --------------------------------------------------
 
 function RadioIndicatorThumb(props: RadioThumbProps) {
-  const { children, colors, className, style, ...restProps } = props;
+  const { children, colors, className, style, animationConfig, ...restProps } =
+    props;
 
   const { size, isSelected } = useRadioContext();
   const { colors: themeColors } = useTheme();
@@ -275,20 +265,17 @@ function RadioIndicatorThumb(props: RadioThumbProps) {
     className,
   });
 
-  // VS ----------------
-  // const timingConfig = animationConfig ?? {
-  //   duration: DURATION,
-  //   easing: EASING,
-  // };
+  const timingConfig = animationConfig ?? {
+    damping: 40,
+    stiffness: 600,
+    mass: 1.5,
+  };
 
   const thumbAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
-          scale: withSpring(isSelected ? 1 : 0, {
-            damping: 20,
-            stiffness: 400,
-          }),
+          scale: withSpring(isSelected ? 1 : 0, timingConfig),
         },
       ],
       backgroundColor: colors?.selectedThumb ?? themeColors.background,

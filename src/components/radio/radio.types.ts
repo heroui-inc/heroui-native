@@ -1,3 +1,4 @@
+import type { SpringConfig, TimingConfig } from '@/helpers/types';
 import type { TextProps as LabelTextProps } from '@/primitives/label';
 import type {
   IndicatorProps,
@@ -8,7 +9,6 @@ import type {
   RootRef,
 } from '@/primitives/radio-group';
 import type { TextProps, ViewProps } from 'react-native';
-import type { EasingFunction } from 'react-native-reanimated';
 
 /**
  * Radio size variant
@@ -36,22 +36,6 @@ export interface RadioColors {
   selectedBackground?: string;
   /** Thumb color when selected */
   selectedThumb?: string;
-}
-
-/**
- * Animation configuration for Radio transitions
- */
-export interface RadioAnimationConfig {
-  /** Animation duration in milliseconds */
-  duration?: number;
-  /** Easing function for animations */
-  easing?: EasingFunction;
-  /** Spring animation config */
-  spring?: {
-    damping?: number;
-    stiffness?: number;
-    mass?: number;
-  };
 }
 
 /**
@@ -111,7 +95,7 @@ export interface RadioIndicatorProps extends ViewProps {
   /** Custom border colors */
   colors?: Pick<RadioColors, 'defaultBorder' | 'selectedBorder'>;
   /** Animation configuration */
-  animationConfig?: RadioAnimationConfig;
+  animationConfig?: TimingConfig;
 }
 
 /**
@@ -125,8 +109,6 @@ export interface RadioBackgroundProps extends IndicatorProps {
   className?: string;
   /** Custom background colors */
   colors?: Pick<RadioColors, 'defaultBackground' | 'selectedBackground'>;
-  /** Animation configuration */
-  animationConfig?: RadioAnimationConfig;
 }
 
 /**
@@ -140,7 +122,7 @@ export interface RadioThumbProps extends ViewProps {
   /** Custom thumb colors */
   colors?: Pick<RadioColors, 'selectedThumb'>;
   /** Animation configuration */
-  animationConfig?: RadioAnimationConfig;
+  animationConfig?: SpringConfig;
 }
 
 /**

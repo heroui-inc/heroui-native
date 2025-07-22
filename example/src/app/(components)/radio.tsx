@@ -180,7 +180,10 @@ export default function RadioScreen() {
                   <View className="bg-transparent" />
                 )}
               </Radio.IndicatorBackground>
-              <Radio.IndicatorThumb className="w-4 h-4" />
+              <Radio.IndicatorThumb
+                className="w-3.5 h-3.5"
+                colors={{ selectedThumb: '#f3e8ff' }}
+              />
             </Radio.Indicator>
             <Radio.Content>
               <Radio.Label>Custom Background</Radio.Label>
@@ -200,7 +203,10 @@ export default function RadioScreen() {
                   <View className="bg-transparent" />
                 )}
               </Radio.IndicatorBackground>
-              <Radio.IndicatorThumb className="w-4 h-4" />
+              <Radio.IndicatorThumb
+                className="w-3.5 h-3.5"
+                colors={{ selectedThumb: '#dbeafe' }}
+              />
             </Radio.Indicator>
             <Radio.Content>
               <Radio.Label>Custom Background</Radio.Label>

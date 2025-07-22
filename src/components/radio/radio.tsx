@@ -48,9 +48,10 @@ export const [RadioProvider, useRadioContext] =
 
 // RadioGroup root component
 const RadioGroup = (props: RadioGroupProps) => {
-  const { className, ...restProps } = props;
+  const { className, orientation, ...restProps } = props;
 
   const tvStyles = radioStyles.groupRoot({
+    orientation,
     className,
   });
 
@@ -73,9 +74,10 @@ function Radio(props: RadioProps) {
     ...restProps
   } = props;
 
-  const radioGroupContext = RadioGroupPrimitives.useRadioGroupContext();
-  const isSelected = radioGroupContext.value === value;
-  const isDisabledValue = radioGroupContext.isDisabled || isDisabled;
+  const { value: groupValue, orientation } =
+    RadioGroupPrimitives.useRadioGroupContext();
+  const isSelected = groupValue === value;
+  const isDisabledValue = isDisabled;
 
   const indicatorElement = useMemo(
     () =>
@@ -99,6 +101,8 @@ function Radio(props: RadioProps) {
 
   const tvStyles = radioStyles.radioRoot({
     size,
+    alignIndicator,
+    orientation,
     isDisabled: isDisabledValue,
     isReadOnly,
     className,

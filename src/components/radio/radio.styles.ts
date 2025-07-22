@@ -2,10 +2,16 @@ import { tv } from 'tailwind-variants';
 
 const groupRoot = tv({
   base: 'gap-1.5',
+  variants: {
+    orientation: {
+      horizontal: 'flex-row flex-wrap gap-x-6 gap-y-2',
+      vertical: 'flex-col',
+    },
+  },
 });
 
 const radioRoot = tv({
-  base: 'flex-row items-center',
+  base: 'flex-row items-center justify-between',
   variants: {
     size: {
       sm: 'gap-2.5',
@@ -19,6 +25,13 @@ const radioRoot = tv({
       true: 'pointer-events-none',
     },
   },
+  compoundVariants: [
+    {
+      alignIndicator: 'start',
+      orientation: 'vertical',
+      className: 'justify-start',
+    },
+  ],
   defaultVariants: {
     size: 'md',
     isDisabled: false,
@@ -76,7 +89,7 @@ const thumb = tv({
 });
 
 const content = tv({
-  base: 'flex-1',
+  base: '',
 });
 
 const label = tv({

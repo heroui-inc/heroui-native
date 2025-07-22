@@ -14,7 +14,14 @@ const RadioGroupContext = React.createContext<RootProps | null>(null);
 
 const Root = React.forwardRef<RootRef, RootProps>(
   (
-    { asChild, value, onValueChange, isDisabled = false, ...viewProps },
+    {
+      asChild,
+      value,
+      onValueChange,
+      isDisabled = false,
+      orientation = 'vertical',
+      ...viewProps
+    },
     ref
   ) => {
     const Component = asChild ? Slot.View : View;
@@ -25,6 +32,7 @@ const Root = React.forwardRef<RootRef, RootProps>(
           value,
           isDisabled,
           onValueChange,
+          orientation,
         }}
       >
         <Component ref={ref} role="radiogroup" {...viewProps} />

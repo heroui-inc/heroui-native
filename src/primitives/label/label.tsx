@@ -11,7 +11,9 @@ const Root = React.forwardRef<RootRef, RootProps>(
   }
 );
 
-Root.displayName = 'RootNativeLabel';
+Root.displayName = 'HeroUINative.Primitive.Label.Root';
+
+// --------------------------------------------------
 
 const Text = React.forwardRef<TextRef, TextProps>(
   ({ asChild, ...props }, ref) => {
@@ -21,6 +23,6 @@ const Text = React.forwardRef<TextRef, TextProps>(
   }
 );
 
-Text.displayName = 'TextNativeLabel';
+Text.displayName = 'HeroUINative.Primitive.Label.Text';
 
 export { Root, Text };

@@ -9,8 +9,8 @@ import Animated, {
 
 import {
   createContext,
-  getChildElementOrDefault,
   getElementByDisplayName,
+  getElementWithDefault,
 } from '@/helpers/utils';
 import * as LabelPrimitives from '@/primitives/label';
 import * as RadioGroupPrimitives from '@/primitives/radio-group';
@@ -86,7 +86,7 @@ function Radio(props: RadioProps) {
 
   const indicatorElement = useMemo(
     () =>
-      getChildElementOrDefault(
+      getElementWithDefault(
         children,
         DISPLAY_NAME.RADIO_INDICATOR,
         <RadioIndicator />
@@ -152,7 +152,7 @@ function RadioIndicator(props: RadioIndicatorProps) {
 
   const backgroundElement = useMemo(
     () =>
-      getChildElementOrDefault(
+      getElementWithDefault(
         children,
         DISPLAY_NAME.RADIO_INDICATOR_BACKGROUND,
         <RadioIndicatorBackground />
@@ -162,7 +162,7 @@ function RadioIndicator(props: RadioIndicatorProps) {
 
   const thumbElement = useMemo(
     () =>
-      getChildElementOrDefault(
+      getElementWithDefault(
         children,
         DISPLAY_NAME.RADIO_INDICATOR_THUMB,
         <RadioIndicatorThumb />

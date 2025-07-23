@@ -1,4 +1,4 @@
-import { createContext, getChildElementOrDefault } from '@/helpers/utils';
+import { createContext, getElementWithDefault } from '@/helpers/utils';
 import * as ActivityIndicatorPrimitives from '@/primitives/activity-indicator';
 import * as ActivityIndicatorPrimitivesTypes from '@/primitives/activity-indicator/activity-indicator.types';
 import { useTheme } from '@/theme';
@@ -60,7 +60,7 @@ const SpinnerRoot = React.forwardRef<
 
   const indicatorElement = useMemo(
     () =>
-      getChildElementOrDefault(
+      getElementWithDefault(
         children,
         DISPLAY_NAME.INDICATOR,
         <SpinnerIndicator />
@@ -86,7 +86,7 @@ const SpinnerRoot = React.forwardRef<
         style={style}
         {...restProps}
       >
-        {indicatorElement}
+        {children || indicatorElement}
       </ActivityIndicatorPrimitives.Root>
     </SpinnerProvider>
   );
@@ -112,11 +112,7 @@ const SpinnerIndicator = React.forwardRef<
 
   const { colors: themeColors } = useTheme();
 
-  const rotation = useSharedValue(0);
-
   const tvStyles = spinnerStyles.indicator({
-    size,
-    color,
     className,
   });
 
@@ -130,6 +126,8 @@ const SpinnerIndicator = React.forwardRef<
   };
 
   const iconColor = colorMap[color] || color;
+
+  const rotation = useSharedValue(0);
 
   useEffect(() => {
     if (loading) {
@@ -180,7 +178,6 @@ const SpinnerIndicator = React.forwardRef<
             width={iconProps?.width ?? iconSize}
             height={iconProps?.height ?? iconSize}
             color={iconProps?.color ?? iconColor}
-            {...iconProps}
           />
         )}
       </Animated.View>
@@ -198,4 +195,5 @@ const Spinner = Object.assign(SpinnerRoot, {
   Indicator: SpinnerIndicator,
 });
 
+export { useSpinnerContext };
 export default Spinner;

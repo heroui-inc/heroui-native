@@ -1,4 +1,4 @@
-export { default as Spinner } from './spinner';
+export { default as Spinner, useSpinnerContext } from './spinner';
 export type {
   SpinnerColor,
   SpinnerContextValue,

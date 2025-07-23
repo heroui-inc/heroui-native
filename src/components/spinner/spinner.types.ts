@@ -37,9 +37,9 @@ export interface SpinnerProps
  */
 export interface SpinnerIconProps {
   /** Width of the icon */
-  width?: number;
+  width?: number | string;
   /** Height of the icon */
-  height?: number;
+  height?: number | string;
   /** Color of the icon */
   color?: string;
 }

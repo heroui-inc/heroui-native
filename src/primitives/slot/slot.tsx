@@ -1,4 +1,10 @@
-import * as React from 'react';
+import {
+  cloneElement,
+  forwardRef,
+  isValidElement,
+  type ComponentPropsWithoutRef,
+  type ComponentRef,
+} from 'react';
 import {
   Image as RNImage,
   Pressable as RNPressable,
@@ -13,18 +19,18 @@ import { composeRefs, isTextChildren, mergeProps } from './utils';
 
 // --------------------------------------------------
 
-const Pressable = React.forwardRef<
+const Pressable = forwardRef<
   React.ComponentRef<typeof RNPressable>,
   RNPressableProps
 >((props, forwardedRef) => {
   const { children, ...pressableSlotProps } = props;
 
-  if (!React.isValidElement(children)) {
+  if (!isValidElement(children)) {
     console.log('Slot.Pressable - Invalid asChild element', children);
     return null;
   }
 
-  return React.cloneElement<
+  return cloneElement<
     React.ComponentPropsWithoutRef<typeof RNPressable>,
     React.ComponentRef<typeof RNPressable>
   >(isTextChildren(children) ? <></> : children, {
@@ -39,18 +45,18 @@ Pressable.displayName = 'HeroUINative.Primitive.Slot.Pressable';
 
 // --------------------------------------------------
 
-const View = React.forwardRef<React.ComponentRef<typeof RNView>, RNViewProps>(
+const View = forwardRef<React.ComponentRef<typeof RNView>, RNViewProps>(
   (props, forwardedRef) => {
     const { children, ...viewSlotProps } = props;
 
-    if (!React.isValidElement(children)) {
+    if (!isValidElement(children)) {
       console.log('Slot.View - Invalid asChild element', children);
       return null;
     }
 
-    return React.cloneElement<
-      React.ComponentPropsWithoutRef<typeof RNView>,
-      React.ComponentRef<typeof RNView>
+    return cloneElement<
+      ComponentPropsWithoutRef<typeof RNView>,
+      ComponentRef<typeof RNView>
     >(isTextChildren(children) ? <></> : children, {
       ...mergeProps(viewSlotProps, children.props as AnyProps),
       ref: forwardedRef
@@ -64,16 +70,16 @@ View.displayName = 'HeroUINative.Primitive.Slot.View';
 
 // --------------------------------------------------
 
-const Text = React.forwardRef<React.ComponentRef<typeof RNText>, RNTextProps>(
+const Text = forwardRef<ComponentRef<typeof RNText>, RNTextProps>(
   (props, forwardedRef) => {
     const { children, ...textSlotProps } = props;
 
-    if (!React.isValidElement(children)) {
+    if (!isValidElement(children)) {
       console.log('Slot.Text - Invalid asChild element', children);
       return null;
     }
 
-    return React.cloneElement<
+    return cloneElement<
       React.ComponentPropsWithoutRef<typeof RNText>,
       React.ComponentRef<typeof RNText>
     >(isTextChildren(children) ? <></> : children, {
@@ -89,27 +95,26 @@ Text.displayName = 'HeroUINative.Primitive.Slot.Text';
 
 // --------------------------------------------------
 
-const Image = React.forwardRef<
-  React.ComponentRef<typeof RNImage>,
-  ImageSlotProps
->((props, forwardedRef) => {
-  const { children, ...imageSlotProps } = props;
+const Image = forwardRef<ComponentRef<typeof RNImage>, ImageSlotProps>(
+  (props, forwardedRef) => {
+    const { children, ...imageSlotProps } = props;
 
-  if (!React.isValidElement(children)) {
-    console.log('Slot.Image - Invalid asChild element', children);
-    return null;
+    if (!isValidElement(children)) {
+      console.log('Slot.Image - Invalid asChild element', children);
+      return null;
+    }
+
+    return cloneElement<
+      ComponentPropsWithoutRef<typeof RNImage>,
+      ComponentRef<typeof RNImage>
+    >(isTextChildren(children) ? <></> : children, {
+      ...mergeProps(imageSlotProps, children.props as AnyProps),
+      ref: forwardedRef
+        ? composeRefs(forwardedRef, (children as any).ref)
+        : (children as any).ref,
+    });
   }
-
-  return React.cloneElement<
-    React.ComponentPropsWithoutRef<typeof RNImage>,
-    React.ComponentRef<typeof RNImage>
-  >(isTextChildren(children) ? <></> : children, {
-    ...mergeProps(imageSlotProps, children.props as AnyProps),
-    ref: forwardedRef
-      ? composeRefs(forwardedRef, (children as any).ref)
-      : (children as any).ref,
-  });
-});
+);
 
 Image.displayName = 'HeroUINative.Primitive.Slot.Image';
 

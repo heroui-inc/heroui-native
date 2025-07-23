@@ -1,8 +1,9 @@
 import { createContext } from '@/helpers/utils';
 import { getElementWithDefault } from '@/helpers/utils/get-element-with-default';
 import * as CheckboxPrimitives from '@/primitives/checkbox';
+import * as CheckboxPrimitivesTypes from '@/primitives/checkbox/checkbox.types';
 import { useTheme } from '@/theme';
-import { useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -36,97 +37,100 @@ const [CheckboxProvider, useCheckboxContext] =
 
 // --------------------------------------------------
 
-function Checkbox(props: CheckboxProps) {
-  const {
-    children,
-    size = 'md',
-    color = 'default',
-    isSelected,
-    onSelectedChange,
-    isDisabled = false,
-    isReadOnly = false,
-    colors,
-    className,
-    style,
-    animationConfig,
-    ...restProps
-  } = props;
-
-  const backgroundElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.CHECKBOX_BACKGROUND,
-        <CheckboxBackground />
-      ),
-    [children]
-  );
-
-  const indicatorElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.CHECKBOX_INDICATOR,
-        <CheckboxIndicator />
-      ),
-    [children]
-  );
-
-  const { colors: themeColors } = useTheme();
-
-  const tvStyles = checkboxStyles.root({
-    size,
-    isDisabled,
-    isReadOnly,
-    className,
-  });
-
-  const borderColorMap: Record<CheckboxColor, string> = {
-    default: isSelected ? themeColors.accent : themeColors.border,
-    success: themeColors.success,
-    warning: themeColors.warning,
-    danger: themeColors.danger,
-  };
-
-  const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
-
-  const containerAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      borderColor: withTiming(
-        isSelected
-          ? (colors?.selectedBorder ?? borderColorMap[color])
-          : (colors?.defaultBorder ?? borderColorMap[color]),
-        timingConfig
-      ),
-    };
-  });
-
-  const contextValue = useMemo(
-    () => ({
-      size,
-      color,
+const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
+  (props, ref) => {
+    const {
+      children,
+      size = 'md',
+      color = 'default',
       isSelected,
-    }),
-    [size, color, isSelected]
-  );
+      onSelectedChange,
+      isDisabled = false,
+      isReadOnly = false,
+      colors,
+      className,
+      style,
+      animationConfig,
+      ...restProps
+    } = props;
 
-  return (
-    <CheckboxProvider value={contextValue}>
-      <AnimatedCheckboxRoot
-        className={tvStyles}
-        style={[containerAnimatedStyle, styles.checkboxRoot, style]}
-        isSelected={isSelected}
-        onSelectedChange={onSelectedChange}
-        isDisabled={isDisabled}
-        hitSlop={props.hitSlop ?? HIT_SLOP_MAP[size]}
-        {...restProps}
-      >
-        {backgroundElement}
-        {indicatorElement}
-      </AnimatedCheckboxRoot>
-    </CheckboxProvider>
-  );
-}
+    const backgroundElement = useMemo(
+      () =>
+        getElementWithDefault(
+          children,
+          DISPLAY_NAME.CHECKBOX_BACKGROUND,
+          <CheckboxBackground />
+        ),
+      [children]
+    );
+
+    const indicatorElement = useMemo(
+      () =>
+        getElementWithDefault(
+          children,
+          DISPLAY_NAME.CHECKBOX_INDICATOR,
+          <CheckboxIndicator />
+        ),
+      [children]
+    );
+
+    const { colors: themeColors } = useTheme();
+
+    const tvStyles = checkboxStyles.root({
+      size,
+      isDisabled,
+      isReadOnly,
+      className,
+    });
+
+    const borderColorMap: Record<CheckboxColor, string> = {
+      default: isSelected ? themeColors.accent : themeColors.border,
+      success: themeColors.success,
+      warning: themeColors.warning,
+      danger: themeColors.danger,
+    };
+
+    const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
+
+    const containerAnimatedStyle = useAnimatedStyle(() => {
+      return {
+        borderColor: withTiming(
+          isSelected
+            ? (colors?.selectedBorder ?? borderColorMap[color])
+            : (colors?.defaultBorder ?? borderColorMap[color]),
+          timingConfig
+        ),
+      };
+    });
+
+    const contextValue = useMemo(
+      () => ({
+        size,
+        color,
+        isSelected,
+      }),
+      [size, color, isSelected]
+    );
+
+    return (
+      <CheckboxProvider value={contextValue}>
+        <AnimatedCheckboxRoot
+          ref={ref}
+          className={tvStyles}
+          style={[containerAnimatedStyle, styles.checkboxRoot, style]}
+          isSelected={isSelected}
+          onSelectedChange={onSelectedChange}
+          isDisabled={isDisabled}
+          hitSlop={props.hitSlop ?? HIT_SLOP_MAP[size]}
+          {...restProps}
+        >
+          {backgroundElement}
+          {indicatorElement}
+        </AnimatedCheckboxRoot>
+      </CheckboxProvider>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   checkboxRoot: {
@@ -216,7 +220,10 @@ CheckIcon.displayName = DISPLAY_NAME.CHECKBOX_CHECK_ICON;
 
 // --------------------------------------------------
 
-function CheckboxIndicator(props: CheckboxIndicatorProps) {
+const CheckboxIndicator = forwardRef<
+  CheckboxPrimitivesTypes.IndicatorRef,
+  CheckboxIndicatorProps
+>((props, ref) => {
   const {
     children,
     animationConfig,
@@ -243,6 +250,7 @@ function CheckboxIndicator(props: CheckboxIndicatorProps) {
 
   return (
     <CheckboxPrimitives.Indicator
+      ref={ref}
       className={tvStyles}
       style={style}
       {...restProps}
@@ -254,7 +262,7 @@ function CheckboxIndicator(props: CheckboxIndicatorProps) {
       )}
     </CheckboxPrimitives.Indicator>
   );
-}
+});
 
 // --------------------------------------------------
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext, forwardRef, useContext } from 'react';
 import { Pressable, View, type GestureResponderEvent } from 'react-native';
 import * as Slot from '../slot';
 import type {
@@ -10,9 +10,9 @@ import type {
   RootRef,
 } from './radio-group.types';
 
-const RadioGroupContext = React.createContext<RootProps | null>(null);
+const RadioGroupContext = createContext<RootProps | null>(null);
 
-const Root = React.forwardRef<RootRef, RootProps>(
+const Root = forwardRef<RootRef, RootProps>(
   (
     {
       asChild,
@@ -44,7 +44,7 @@ const Root = React.forwardRef<RootRef, RootProps>(
 Root.displayName = 'HeroUINative.Primitive.RadioGroup.Root';
 
 function useRadioGroupContext() {
-  const context = React.useContext(RadioGroupContext);
+  const context = useContext(RadioGroupContext);
 
   if (!context) {
     throw new Error(
@@ -57,13 +57,7 @@ function useRadioGroupContext() {
 
 // --------------------------------------------------
 
-interface RadioItemContext {
-  itemValue: string | undefined;
-}
-
-const RadioItemContext = React.createContext<RadioItemContext | null>(null);
-
-const Item = React.forwardRef<ItemRef, ItemProps>(
+const Item = forwardRef<ItemRef, ItemProps>(
   (
     {
       asChild,
@@ -85,55 +79,28 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
     const Component = asChild ? Slot.Pressable : Pressable;
 
     return (
-      <RadioItemContext.Provider
-        value={{
-          itemValue,
+      <Component
+        ref={ref}
+        role="radio"
+        onPress={onPress}
+        aria-checked={value === itemValue}
+        disabled={(isDisabled || disabledProp) ?? false}
+        accessibilityState={{
+          disabled: (isDisabled || disabledProp) ?? false,
+          checked: value === itemValue,
         }}
-      >
-        <Component
-          ref={ref}
-          role="radio"
-          onPress={onPress}
-          aria-checked={value === itemValue}
-          disabled={(isDisabled || disabledProp) ?? false}
-          accessibilityState={{
-            disabled: (isDisabled || disabledProp) ?? false,
-            checked: value === itemValue,
-          }}
-          {...props}
-        />
-      </RadioItemContext.Provider>
+        {...props}
+      />
     );
   }
 );
 
 Item.displayName = 'HeroUINative.Primitive.RadioGroup.Item';
 
-function useRadioItemContext() {
-  const context = React.useContext(RadioItemContext);
-
-  if (!context) {
-    throw new Error(
-      'RadioItem compound components cannot be rendered outside the RadioItem component'
-    );
-  }
-
-  return context;
-}
-
 // --------------------------------------------------
 
-const Indicator = React.forwardRef<IndicatorRef, IndicatorProps>(
-  ({ asChild, forceMount, ...props }, ref) => {
-    const { value } = useRadioGroupContext();
-    const { itemValue } = useRadioItemContext();
-
-    if (!forceMount) {
-      if (value !== itemValue) {
-        return null;
-      }
-    }
-
+const Indicator = forwardRef<IndicatorRef, IndicatorProps>(
+  ({ asChild, ...props }, ref) => {
     const Component = asChild ? Slot.View : View;
 
     return <Component ref={ref} role="presentation" {...props} />;

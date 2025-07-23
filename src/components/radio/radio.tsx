@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -39,6 +39,10 @@ const AnimatedRadioItem = Animated.createAnimatedComponent(
   RadioGroupPrimitives.Item
 );
 
+const AnimatedRadioIndicator = Animated.createAnimatedComponent(
+  RadioGroupPrimitives.Indicator
+);
+
 const [RadioProvider, useRadioContext] = createContext<RadioContextValue>({
   name: 'RadioContext',
 });
@@ -46,159 +50,174 @@ const [RadioProvider, useRadioContext] = createContext<RadioContextValue>({
 // --------------------------------------------------
 
 // RadioGroup root component
-const RadioGroup = (props: RadioGroupProps) => {
-  const { className, orientation = 'vertical', ...restProps } = props;
+const RadioGroup = forwardRef<RadioGroupPrimitives.RootRef, RadioGroupProps>(
+  (props, ref) => {
+    const { className, orientation = 'vertical', ...restProps } = props;
 
-  const tvStyles = radioStyles.groupRoot({
-    orientation,
-    className,
-  });
+    const tvStyles = radioStyles.groupRoot({
+      orientation,
+      className,
+    });
 
-  return (
-    <RadioGroupPrimitives.Root
-      className={tvStyles}
-      orientation={orientation}
-      {...restProps}
-    />
-  );
-};
+    return (
+      <RadioGroupPrimitives.Root
+        ref={ref}
+        className={tvStyles}
+        orientation={orientation}
+        {...restProps}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 
-function Radio(props: RadioProps) {
-  const {
-    children,
-    size = 'md',
-    color = 'default',
-    alignIndicator = 'end',
-    isDisabled = false,
-    isReadOnly = false,
-    className,
-    style,
-    value,
-    ...restProps
-  } = props;
+const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
+  (props, ref) => {
+    const {
+      children,
+      size = 'md',
+      color = 'default',
+      alignIndicator = 'end',
+      isDisabled = false,
+      isReadOnly = false,
+      className,
+      style,
+      value,
+      ...restProps
+    } = props;
 
-  const { value: groupValue } = RadioGroupPrimitives.useRadioGroupContext();
-  const isSelected = groupValue === value;
-  const isDisabledValue = isDisabled;
+    const { value: groupValue } = RadioGroupPrimitives.useRadioGroupContext();
+    const isSelected = groupValue === value;
+    const isDisabledValue = isDisabled;
 
-  const indicatorElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.RADIO_INDICATOR,
-        <RadioIndicator />
-      ),
-    [children]
-  );
+    const indicatorElement = useMemo(
+      () =>
+        getElementWithDefault(
+          children,
+          DISPLAY_NAME.RADIO_INDICATOR,
+          <RadioIndicator />
+        ),
+      [children]
+    );
 
-  const contentElement = useMemo(() => {
-    return getElementByDisplayName(children, DISPLAY_NAME.RADIO_CONTENT);
-  }, [children]);
+    const contentElement = useMemo(() => {
+      return getElementByDisplayName(children, DISPLAY_NAME.RADIO_CONTENT);
+    }, [children]);
 
-  const tvStyles = radioStyles.radioRoot({
-    size,
-    alignIndicator,
-    isDisabled: isDisabledValue,
-    isReadOnly,
-    className,
-  });
-
-  const contextValue = useMemo(
-    () => ({
+    const tvStyles = radioStyles.radioRoot({
       size,
-      color,
-      isSelected,
+      alignIndicator,
       isDisabled: isDisabledValue,
       isReadOnly,
-    }),
-    [size, color, isSelected, isDisabledValue, isReadOnly]
-  );
+      className,
+    });
 
-  return (
-    <RadioProvider value={contextValue}>
-      <AnimatedRadioItem
-        className={tvStyles}
-        style={style}
-        value={value}
-        isDisabled={isDisabledValue || isReadOnly}
-        hitSlop={props.hitSlop ?? HIT_SLOP_MAP[size]}
-        {...restProps}
-      >
-        {alignIndicator === 'start' && indicatorElement}
-        {contentElement}
-        {alignIndicator === 'end' && indicatorElement}
-      </AnimatedRadioItem>
-    </RadioProvider>
-  );
-}
+    const contextValue = useMemo(
+      () => ({
+        size,
+        color,
+        isSelected,
+        isDisabled: isDisabledValue,
+        isReadOnly,
+      }),
+      [size, color, isSelected, isDisabledValue, isReadOnly]
+    );
+
+    return (
+      <RadioProvider value={contextValue}>
+        <AnimatedRadioItem
+          ref={ref}
+          className={tvStyles}
+          style={style}
+          value={value}
+          isDisabled={isDisabledValue || isReadOnly}
+          hitSlop={props.hitSlop ?? HIT_SLOP_MAP[size]}
+          {...restProps}
+        >
+          {alignIndicator === 'start' && indicatorElement}
+          {contentElement}
+          {alignIndicator === 'end' && indicatorElement}
+        </AnimatedRadioItem>
+      </RadioProvider>
+    );
+  }
+);
 
 // --------------------------------------------------
 
-function RadioIndicator(props: RadioIndicatorProps) {
-  const { children, colors, animationConfig, className, style, ...restProps } =
-    props;
+const RadioIndicator = forwardRef<Animated.View, RadioIndicatorProps>(
+  (props, ref) => {
+    const {
+      children,
+      colors,
+      animationConfig,
+      className,
+      style,
+      ...restProps
+    } = props;
 
-  const { size, color, isSelected } = useRadioContext();
-  const { colors: themeColors } = useTheme();
+    const { size, color, isSelected } = useRadioContext();
+    const { colors: themeColors } = useTheme();
 
-  const backgroundElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.RADIO_INDICATOR_BACKGROUND,
-        <RadioIndicatorBackground />
-      ),
-    [children]
-  );
+    const backgroundElement = useMemo(
+      () =>
+        getElementWithDefault(
+          children,
+          DISPLAY_NAME.RADIO_INDICATOR_BACKGROUND,
+          <RadioIndicatorBackground />
+        ),
+      [children]
+    );
 
-  const thumbElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.RADIO_INDICATOR_THUMB,
-        <RadioIndicatorThumb />
-      ),
-    [children]
-  );
+    const thumbElement = useMemo(
+      () =>
+        getElementWithDefault(
+          children,
+          DISPLAY_NAME.RADIO_INDICATOR_THUMB,
+          <RadioIndicatorThumb />
+        ),
+      [children]
+    );
 
-  const tvStyles = radioStyles.indicator({
-    size,
-    className,
-  });
+    const tvStyles = radioStyles.indicator({
+      size,
+      className,
+    });
 
-  const borderColorMap: Record<RadioColor, string> = {
-    default: isSelected ? themeColors.accent : themeColors.border,
-    success: themeColors.success,
-    warning: themeColors.warning,
-    danger: themeColors.danger,
-  };
-
-  const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
-
-  const indicatorAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      borderColor: withTiming(
-        isSelected
-          ? (colors?.selectedBorder ?? borderColorMap[color])
-          : (colors?.defaultBorder ?? borderColorMap[color]),
-        timingConfig
-      ),
+    const borderColorMap: Record<RadioColor, string> = {
+      default: isSelected ? themeColors.accent : themeColors.border,
+      success: themeColors.success,
+      warning: themeColors.warning,
+      danger: themeColors.danger,
     };
-  });
 
-  return (
-    <Animated.View
-      className={tvStyles}
-      style={[indicatorAnimatedStyle, styles.indicatorRoot, style]}
-      {...restProps}
-    >
-      {backgroundElement}
-      {thumbElement}
-    </Animated.View>
-  );
-}
+    const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
+
+    const indicatorAnimatedStyle = useAnimatedStyle(() => {
+      return {
+        borderColor: withTiming(
+          isSelected
+            ? (colors?.selectedBorder ?? borderColorMap[color])
+            : (colors?.defaultBorder ?? borderColorMap[color]),
+          timingConfig
+        ),
+      };
+    });
+
+    return (
+      <AnimatedRadioIndicator
+        ref={ref}
+        className={tvStyles}
+        style={[indicatorAnimatedStyle, styles.indicatorRoot, style]}
+        {...restProps}
+      >
+        {backgroundElement}
+        {thumbElement}
+      </AnimatedRadioIndicator>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   indicatorRoot: {

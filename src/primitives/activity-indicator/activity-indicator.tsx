@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { forwardRef } from 'react';
 import { View } from 'react-native';
 import * as Slot from '../slot';
 import type {
@@ -10,7 +10,7 @@ import type {
 
 // --------------------------------------------------
 
-const Root = React.forwardRef<RootRef, RootProps>(
+const Root = forwardRef<RootRef, RootProps>(
   ({ asChild, loading = true, ...props }, ref) => {
     const Component = asChild ? Slot.View : View;
 
@@ -30,7 +30,7 @@ Root.displayName = 'HeroUINative.Primitive.ActivityIndicator.Root';
 
 // --------------------------------------------------
 
-const Indicator = React.forwardRef<IndicatorRef, IndicatorProps>(
+const Indicator = forwardRef<IndicatorRef, IndicatorProps>(
   ({ asChild, ...props }, ref) => {
     const Component = asChild ? Slot.View : View;
 

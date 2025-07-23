@@ -2,7 +2,7 @@ import { createContext, getElementWithDefault } from '@/helpers/utils';
 import * as ActivityIndicatorPrimitives from '@/primitives/activity-indicator';
 import * as ActivityIndicatorPrimitivesTypes from '@/primitives/activity-indicator/activity-indicator.types';
 import { useTheme } from '@/theme';
-import React, { useEffect, useMemo } from 'react';
+import { forwardRef, useEffect, useMemo } from 'react';
 import Animated, {
   cancelAnimation,
   Easing,
@@ -37,7 +37,7 @@ const [SpinnerProvider, useSpinnerContext] = createContext<SpinnerContextValue>(
   }
 );
 
-const SpinnerRoot = React.forwardRef<
+const SpinnerRoot = forwardRef<
   ActivityIndicatorPrimitivesTypes.RootRef,
   SpinnerProps
 >((props, ref) => {
@@ -92,7 +92,7 @@ const SpinnerRoot = React.forwardRef<
 
 // --------------------------------------------------
 
-const SpinnerIndicator = React.forwardRef<
+const SpinnerIndicator = forwardRef<
   ActivityIndicatorPrimitivesTypes.IndicatorRef,
   SpinnerIndicatorProps
 >((props, ref) => {

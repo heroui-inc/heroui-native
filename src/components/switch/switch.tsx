@@ -1,7 +1,8 @@
 import { createContext } from '@/helpers/utils';
 import * as SwitchPrimitives from '@/primitives/switch';
+import * as SwitchPrimitivesTypes from '@/primitives/switch/switch.types';
 import { useTheme } from '@/theme';
-import { useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -38,121 +39,123 @@ const [SwitchProvider, useSwitchContext] = createContext<SwitchContextValue>({
 
 // --------------------------------------------------
 
-function Switch(props: SwitchProps) {
-  const {
-    children,
-    size = 'md',
-    color = 'default',
-    isReadOnly,
-    isDisabled,
-    isSelected,
-    onSelectedChange,
-    colors,
-    className,
-    classNames,
-    style,
-    animationConfig,
-    ...restProps
-  } = props;
-
-  const { colors: themeColors } = useTheme();
-
-  const { base, contentPaddingContainer, contentContainer } = switchStyles.root(
-    {
-      size,
-      isDisabled,
+const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
+  (props, ref) => {
+    const {
+      children,
+      size = 'md',
+      color = 'default',
       isReadOnly,
-    }
-  );
-
-  const tvBaseStyles = base({
-    className: [className, classNames?.container],
-  });
-
-  const tvContentPaddingContainerStyles = contentPaddingContainer({
-    className: classNames?.contentPaddingContainer,
-  });
-
-  const tvContentContainerStyles = contentContainer({
-    className: classNames?.contentContainer,
-  });
-
-  const backgroundColorMap: Record<SwitchColor, string> = {
-    default: themeColors.accent,
-    success: themeColors.success,
-    warning: themeColors.warning,
-    danger: themeColors.danger,
-  };
-
-  const borderColorMap: Record<SwitchColor, string> = {
-    default: themeColors.accent,
-    success: themeColors.success,
-    warning: themeColors.warning,
-    danger: themeColors.danger,
-  };
-
-  const contentContainerWidth = useSharedValue(0);
-  const contentContainerHeight = useSharedValue(0);
-
-  const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
-
-  const containerAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      backgroundColor: withTiming(
-        isSelected
-          ? (colors?.selectedBackground ?? backgroundColorMap[color])
-          : (colors?.defaultBackground ?? themeColors.base),
-        timingConfig
-      ),
-      borderColor: withTiming(
-        isSelected
-          ? (colors?.selectedBorder ?? borderColorMap[color])
-          : (colors?.defaultBorder ?? themeColors.border),
-        timingConfig
-      ),
-    };
-  });
-
-  const contextValue = useMemo(
-    () => ({
-      size,
+      isDisabled,
       isSelected,
-      contentContainerWidth,
-      contentContainerHeight,
-    }),
-    [size, isSelected, contentContainerWidth, contentContainerHeight]
-  );
+      onSelectedChange,
+      colors,
+      className,
+      classNames,
+      style,
+      animationConfig,
+      ...restProps
+    } = props;
 
-  return (
-    <SwitchProvider value={contextValue}>
-      <AnimatedSwitchRoot
-        className={tvBaseStyles}
-        style={[styles.switchRoot, containerAnimatedStyle, style]}
-        isSelected={isSelected}
-        onSelectedChange={onSelectedChange}
-        isDisabled={isDisabled}
-        {...restProps}
-      >
-        {/* 
+    const { colors: themeColors } = useTheme();
+
+    const { base, contentPaddingContainer, contentContainer } =
+      switchStyles.root({
+        size,
+        isDisabled,
+        isReadOnly,
+      });
+
+    const tvBaseStyles = base({
+      className: [className, classNames?.container],
+    });
+
+    const tvContentPaddingContainerStyles = contentPaddingContainer({
+      className: classNames?.contentPaddingContainer,
+    });
+
+    const tvContentContainerStyles = contentContainer({
+      className: classNames?.contentContainer,
+    });
+
+    const backgroundColorMap: Record<SwitchColor, string> = {
+      default: themeColors.accent,
+      success: themeColors.success,
+      warning: themeColors.warning,
+      danger: themeColors.danger,
+    };
+
+    const borderColorMap: Record<SwitchColor, string> = {
+      default: themeColors.accent,
+      success: themeColors.success,
+      warning: themeColors.warning,
+      danger: themeColors.danger,
+    };
+
+    const contentContainerWidth = useSharedValue(0);
+    const contentContainerHeight = useSharedValue(0);
+
+    const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
+
+    const containerAnimatedStyle = useAnimatedStyle(() => {
+      return {
+        backgroundColor: withTiming(
+          isSelected
+            ? (colors?.selectedBackground ?? backgroundColorMap[color])
+            : (colors?.defaultBackground ?? themeColors.base),
+          timingConfig
+        ),
+        borderColor: withTiming(
+          isSelected
+            ? (colors?.selectedBorder ?? borderColorMap[color])
+            : (colors?.defaultBorder ?? themeColors.border),
+          timingConfig
+        ),
+      };
+    });
+
+    const contextValue = useMemo(
+      () => ({
+        size,
+        isSelected,
+        contentContainerWidth,
+        contentContainerHeight,
+      }),
+      [size, isSelected, contentContainerWidth, contentContainerHeight]
+    );
+
+    return (
+      <SwitchProvider value={contextValue}>
+        <AnimatedSwitchRoot
+          ref={ref}
+          className={tvBaseStyles}
+          style={[styles.switchRoot, containerAnimatedStyle, style]}
+          isSelected={isSelected}
+          onSelectedChange={onSelectedChange}
+          isDisabled={isDisabled}
+          {...restProps}
+        >
+          {/* 
           This container is useful when you want to animate start or end content entering 
           and you want it to be hidden outside of switch right by the switch border.
           The overflow-hidden ensures content stays within the switch boundaries.
         */}
-        <View className={tvContentPaddingContainerStyles}>
-          <View
-            className={tvContentContainerStyles}
-            onLayout={(e) => {
-              contentContainerWidth.set(e.nativeEvent.layout.width);
-              contentContainerHeight.set(e.nativeEvent.layout.height);
-            }}
-          >
-            {children ?? <SwitchThumb />}
+          <View className={tvContentPaddingContainerStyles}>
+            <View
+              className={tvContentContainerStyles}
+              onLayout={(e) => {
+                contentContainerWidth.set(e.nativeEvent.layout.width);
+                contentContainerHeight.set(e.nativeEvent.layout.height);
+              }}
+            >
+              {children ?? <SwitchThumb />}
+            </View>
           </View>
-        </View>
-      </AnimatedSwitchRoot>
-    </SwitchProvider>
-  );
-}
+        </AnimatedSwitchRoot>
+      </SwitchProvider>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   switchRoot: {
@@ -162,7 +165,10 @@ const styles = StyleSheet.create({
 
 // --------------------------------------------------
 
-function SwitchThumb(props: SwitchThumbProps) {
+const SwitchThumb = forwardRef<
+  SwitchPrimitivesTypes.ThumbRef,
+  SwitchThumbProps
+>((props, ref) => {
   const { children, className, width, height, colors, animationConfig } = props;
 
   const { size, isSelected, contentContainerWidth } = useSwitchContext();
@@ -216,6 +222,7 @@ function SwitchThumb(props: SwitchThumbProps) {
 
   return (
     <AnimatedSwitchThumb
+      ref={ref}
       className={tvStyles}
       style={[
         {
@@ -228,7 +235,7 @@ function SwitchThumb(props: SwitchThumbProps) {
       {children}
     </AnimatedSwitchThumb>
   );
-}
+});
 
 // --------------------------------------------------
 

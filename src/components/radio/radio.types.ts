@@ -2,11 +2,8 @@ import type { SpringConfig, TimingConfig } from '@/helpers/types';
 import type { TextProps as LabelTextProps } from '@/primitives/label';
 import type {
   IndicatorProps,
-  IndicatorRef,
   ItemProps,
-  ItemRef,
   RootProps,
-  RootRef,
 } from '@/primitives/radio-group';
 import type { TextProps, ViewProps } from 'react-native';
 
@@ -42,7 +39,6 @@ export interface RadioColors {
  * Props for RadioGroup root component
  */
 export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
-  ref?: React.RefObject<RootRef>;
   /** Radio group content */
   children?: React.ReactNode;
   /** Custom class name */
@@ -69,7 +65,6 @@ export interface RadioContextValue {
  * Props for the Radio component
  */
 export interface RadioProps extends ItemProps {
-  ref?: React.RefObject<ItemRef>;
   /** Radio content */
   children?: React.ReactNode;
   /** Size variant */
@@ -102,7 +97,6 @@ export interface RadioIndicatorProps extends ViewProps {
  * Props for RadioGroup.Background component
  */
 export interface RadioBackgroundProps extends IndicatorProps {
-  ref?: React.RefObject<IndicatorRef>;
   /** Background content */
   children?: React.ReactNode;
   /** Custom class name */

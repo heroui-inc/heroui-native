@@ -1,26 +1,24 @@
-import * as React from 'react';
+import { forwardRef } from 'react';
 import { Pressable, Text as RNText } from 'react-native';
 import * as Slot from '../slot';
 import type { RootProps, RootRef, TextProps, TextRef } from './label.types';
 
-const Root = React.forwardRef<RootRef, RootProps>(
-  ({ asChild, ...props }, ref) => {
-    const Component = asChild ? Slot.Pressable : Pressable;
+const Root = forwardRef<RootRef, RootProps>(({ asChild, ...props }, ref) => {
+  const Component = asChild ? Slot.Pressable : Pressable;
 
-    return <Component ref={ref} {...props} />;
-  }
-);
+  return <Component ref={ref} {...props} />;
+});
 
-Root.displayName = 'RootNativeLabel';
+Root.displayName = 'HeroUINative.Primitive.Label.Root';
 
-const Text = React.forwardRef<TextRef, TextProps>(
-  ({ asChild, ...props }, ref) => {
-    const Component = asChild ? Slot.Text : RNText;
+// --------------------------------------------------
 
-    return <Component ref={ref} {...props} />;
-  }
-);
+const Text = forwardRef<TextRef, TextProps>(({ asChild, ...props }, ref) => {
+  const Component = asChild ? Slot.Text : RNText;
 
-Text.displayName = 'TextNativeLabel';
+  return <Component ref={ref} {...props} />;
+});
+
+Text.displayName = 'HeroUINative.Primitive.Label.Text';
 
 export { Root, Text };

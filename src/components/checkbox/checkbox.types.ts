@@ -48,9 +48,6 @@ export interface CheckboxIndicatorIconProps {
  * Props for the main Checkbox component
  */
 export interface CheckboxProps extends CheckboxPrimitivesTypes.RootProps {
-  /** Ref for the checkbox root component */
-  ref?: React.RefObject<CheckboxPrimitivesTypes.RootRef>;
-
   /** Child elements to render inside the checkbox */
   children?: React.ReactNode;
 
@@ -95,9 +92,6 @@ export interface CheckboxBackgroundProps extends ViewProps {
  */
 export interface CheckboxIndicatorProps
   extends CheckboxPrimitivesTypes.IndicatorProps {
-  /** Ref for the checkbox indicator component */
-  ref?: React.RefObject<CheckboxPrimitivesTypes.IndicatorRef>;
-
   /** Custom class name for the indicator */
   className?: string;
 

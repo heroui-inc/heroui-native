@@ -1,5 +1,5 @@
 import type { PressableRef, SlottablePressableProps } from '@/helpers/types';
-import * as React from 'react';
+import { createContext, forwardRef, useContext } from 'react';
 import { type GestureResponderEvent, Pressable, View } from 'react-native';
 import * as Slot from '../slot';
 import type {
@@ -13,9 +13,9 @@ interface RootContext extends RootProps {
   nativeID?: string;
 }
 
-const CheckboxContext = React.createContext<RootContext | null>(null);
+const CheckboxContext = createContext<RootContext | null>(null);
 
-const Root = React.forwardRef<RootRef, RootProps>(
+const Root = forwardRef<RootRef, RootProps>(
   (
     { isDisabled = false, isSelected, onSelectedChange, nativeID, ...props },
     ref
@@ -38,7 +38,7 @@ const Root = React.forwardRef<RootRef, RootProps>(
 Root.displayName = 'HeroUINative.Primitive.Checkbox.Root';
 
 function useCheckboxContext() {
-  const context = React.useContext(CheckboxContext);
+  const context = useContext(CheckboxContext);
   if (!context) {
     throw new Error(
       'Checkbox compound components cannot be rendered outside the Checkbox component'
@@ -49,7 +49,7 @@ function useCheckboxContext() {
 
 // --------------------------------------------------
 
-const Trigger = React.forwardRef<PressableRef, SlottablePressableProps>(
+const Trigger = forwardRef<PressableRef, SlottablePressableProps>(
   ({ asChild, onPress: onPressProp, ...props }, ref) => {
     const { isDisabled, isSelected, onSelectedChange, nativeID } =
       useCheckboxContext();
@@ -86,7 +86,7 @@ Trigger.displayName = 'HeroUINative.Primitive.Checkbox.Trigger';
 
 // --------------------------------------------------
 
-const Indicator = React.forwardRef<IndicatorRef, IndicatorProps>(
+const Indicator = forwardRef<IndicatorRef, IndicatorProps>(
   ({ asChild, ...props }, ref) => {
     const { isSelected, isDisabled } = useCheckboxContext();
 

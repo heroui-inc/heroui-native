@@ -43,9 +43,6 @@ export interface SwitchClassNames {
  * Props for the main Switch component
  */
 export interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
-  /** Ref for the switch root component */
-  ref?: React.RefObject<SwitchPrimitivesTypes.RootRef>;
-
   /** Content to render inside the switch */
   children?: React.ReactNode;
 

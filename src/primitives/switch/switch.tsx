@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { forwardRef } from 'react';
 import { Pressable, View, type GestureResponderEvent } from 'react-native';
 import * as Slot from '../slot';
 import type { RootProps, RootRef, ThumbProps, ThumbRef } from './switch.types';
 
 // --------------------------------------------------
 
-const Root = React.forwardRef<RootRef, RootProps>(
+const Root = forwardRef<RootRef, RootProps>(
   (
     {
       asChild,
@@ -49,13 +49,11 @@ Root.displayName = 'HeroUINative.Primitive.Switch.Root';
 
 // --------------------------------------------------
 
-const Thumb = React.forwardRef<ThumbRef, ThumbProps>(
-  ({ asChild, ...props }, ref) => {
-    const Component = asChild ? Slot.View : View;
+const Thumb = forwardRef<ThumbRef, ThumbProps>(({ asChild, ...props }, ref) => {
+  const Component = asChild ? Slot.View : View;
 
-    return <Component ref={ref} role="presentation" {...props} />;
-  }
-);
+  return <Component ref={ref} role="presentation" {...props} />;
+});
 
 Thumb.displayName = 'HeroUINative.Primitive.Switch.Thumb';
 

@@ -4,20 +4,23 @@ import { useTheme } from '@/theme';
 import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
-  Easing,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { DISPLAY_NAME } from './switch.constants';
+import {
+  DEFAULT_SPRING_CONFIG,
+  DEFAULT_TIMING_CONFIG,
+  DISPLAY_NAME,
+  THUMB_WIDTH_MAP,
+} from './switch.constants';
 import switchStyles from './switch.styles';
 import type {
   SwitchColor,
   SwitchContentProps,
   SwitchContextValue,
   SwitchProps,
-  SwitchSize,
   SwitchThumbProps,
 } from './switch.types';
 
@@ -28,9 +31,6 @@ const AnimatedSwitchRoot = Animated.createAnimatedComponent(
 const AnimatedSwitchThumb = Animated.createAnimatedComponent(
   SwitchPrimitives.Thumb
 );
-
-const DURATION = 175;
-const EASING = Easing.bezier(0.25, 0.1, 0.25, 1);
 
 const [SwitchProvider, useSwitchContext] = createContext<SwitchContextValue>({
   name: 'SwitchContext',
@@ -94,10 +94,7 @@ function Switch(props: SwitchProps) {
   const contentContainerWidth = useSharedValue(0);
   const contentContainerHeight = useSharedValue(0);
 
-  const timingConfig = animationConfig ?? {
-    duration: DURATION,
-    easing: EASING,
-  };
+  const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
 
   const containerAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -176,24 +173,12 @@ function SwitchThumb(props: SwitchThumbProps) {
     className,
   });
 
-  const widthMap: Record<SwitchSize, number> = {
-    sm: 14,
-    md: 18,
-    lg: 21,
-  };
+  const computedWidth = width ?? THUMB_WIDTH_MAP[size];
 
-  const computedWidth = width ?? widthMap[size];
+  const springConfig = animationConfig?.translateX ?? DEFAULT_SPRING_CONFIG;
 
-  const springConfig = animationConfig?.translateX ?? {
-    damping: 25,
-    stiffness: 400,
-    mass: 1,
-  };
-
-  const timingConfig = animationConfig?.backgroundColor ?? {
-    duration: DURATION,
-    easing: EASING,
-  };
+  const timingConfig =
+    animationConfig?.backgroundColor ?? DEFAULT_TIMING_CONFIG;
 
   const containerAnimatedStyle = useAnimatedStyle(() => {
     const isMounted = contentContainerWidth.get() > 0;

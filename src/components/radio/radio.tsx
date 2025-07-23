@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Animated, {
-  Easing,
   useAnimatedStyle,
   withSpring,
   withTiming,
@@ -16,7 +15,12 @@ import * as LabelPrimitives from '@/primitives/label';
 import * as RadioGroupPrimitives from '@/primitives/radio-group';
 import { useTheme } from '@/theme';
 
-import { DISPLAY_NAME } from './radio.constants';
+import {
+  DEFAULT_SPRING_CONFIG,
+  DEFAULT_TIMING_CONFIG,
+  DISPLAY_NAME,
+  HIT_SLOP_MAP,
+} from './radio.constants';
 import radioStyles from './radio.styles';
 import type {
   RadioBackgroundProps,
@@ -28,16 +32,12 @@ import type {
   RadioIndicatorProps,
   RadioLabelProps,
   RadioProps,
-  RadioSize,
   RadioThumbProps,
 } from './radio.types';
 
 const AnimatedRadioItem = Animated.createAnimatedComponent(
   RadioGroupPrimitives.Item
 );
-
-const DURATION = 175;
-const EASING = Easing.out(Easing.ease);
 
 const [RadioProvider, useRadioContext] = createContext<RadioContextValue>({
   name: 'RadioContext',
@@ -97,12 +97,6 @@ function Radio(props: RadioProps) {
     return getElementByDisplayName(children, DISPLAY_NAME.RADIO_CONTENT);
   }, [children]);
 
-  const hitSlopMap: Record<RadioSize, number> = {
-    sm: 8,
-    md: 6,
-    lg: 4,
-  };
-
   const tvStyles = radioStyles.radioRoot({
     size,
     alignIndicator,
@@ -129,7 +123,7 @@ function Radio(props: RadioProps) {
         style={style}
         value={value}
         isDisabled={isDisabledValue || isReadOnly}
-        hitSlop={props.hitSlop ?? hitSlopMap[size]}
+        hitSlop={props.hitSlop ?? HIT_SLOP_MAP[size]}
         {...restProps}
       >
         {alignIndicator === 'start' && indicatorElement}
@@ -181,10 +175,7 @@ function RadioIndicator(props: RadioIndicatorProps) {
     danger: themeColors.danger,
   };
 
-  const timingConfig = animationConfig ?? {
-    duration: DURATION,
-    easing: EASING,
-  };
+  const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
 
   const indicatorAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -273,17 +264,13 @@ function RadioIndicatorThumb(props: RadioThumbProps) {
     className,
   });
 
-  const timingConfig = animationConfig ?? {
-    damping: 40,
-    stiffness: 600,
-    mass: 1.5,
-  };
+  const springConfig = animationConfig ?? DEFAULT_SPRING_CONFIG;
 
   const thumbAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
-          scale: withSpring(isSelected ? 1 : 0, timingConfig),
+          scale: withSpring(isSelected ? 1 : 0, springConfig),
         },
       ],
       backgroundColor: colors?.selectedThumb ?? themeColors.background,

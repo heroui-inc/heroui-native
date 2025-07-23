@@ -5,12 +5,16 @@ import { useTheme } from '@/theme';
 import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
-  Easing,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
-import { DISPLAY_NAME } from './checkbox.constants';
+import {
+  CHECK_ICON_SIZE_MAP,
+  DEFAULT_TIMING_CONFIG,
+  DISPLAY_NAME,
+  HIT_SLOP_MAP,
+} from './checkbox.constants';
 import checkboxStyles from './checkbox.styles';
 import type {
   CheckboxBackgroundProps,
@@ -19,15 +23,11 @@ import type {
   CheckboxIndicatorIconProps,
   CheckboxIndicatorProps,
   CheckboxProps,
-  CheckboxSize,
 } from './checkbox.types';
 
 const AnimatedCheckboxRoot = Animated.createAnimatedComponent(
   CheckboxPrimitives.Root
 );
-
-const DURATION = 175;
-const EASING = Easing.bezier(0.25, 0.1, 0.25, 1);
 
 const [CheckboxProvider, useCheckboxContext] =
   createContext<CheckboxContextValue>({
@@ -72,12 +72,6 @@ function Checkbox(props: CheckboxProps) {
     [children]
   );
 
-  const hitSlopMap: Record<CheckboxSize, number> = {
-    sm: 10,
-    md: 6,
-    lg: 4,
-  };
-
   const { colors: themeColors } = useTheme();
 
   const tvStyles = checkboxStyles.root({
@@ -94,10 +88,7 @@ function Checkbox(props: CheckboxProps) {
     danger: themeColors.danger,
   };
 
-  const timingConfig = animationConfig ?? {
-    duration: DURATION,
-    easing: EASING,
-  };
+  const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
 
   const containerAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -127,7 +118,7 @@ function Checkbox(props: CheckboxProps) {
         isSelected={isSelected}
         onSelectedChange={onSelectedChange}
         isDisabled={isDisabled}
-        hitSlop={props.hitSlop ?? hitSlopMap[size]}
+        hitSlop={props.hitSlop ?? HIT_SLOP_MAP[size]}
         {...restProps}
       >
         {backgroundElement}
@@ -165,10 +156,7 @@ function CheckboxBackground(props: CheckboxBackgroundProps) {
     danger: themeColors.danger,
   };
 
-  const timingConfig = animationConfig ?? {
-    duration: DURATION,
-    easing: EASING,
-  };
+  const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
 
   const backgroundAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -204,13 +192,7 @@ function CheckIcon(props: CheckboxIndicatorIconProps) {
   const { size } = useCheckboxContext();
   const { theme, colors } = useTheme();
 
-  const sizeMap = {
-    sm: 10,
-    md: 12,
-    lg: 14,
-  };
-
-  const iconSize = sizeMap[size];
+  const iconSize = CHECK_ICON_SIZE_MAP[size];
 
   return (
     <Svg
@@ -251,10 +233,7 @@ function CheckboxIndicator(props: CheckboxIndicatorProps) {
     className,
   });
 
-  const timingConfig = animationConfig ?? {
-    duration: DURATION,
-    easing: EASING,
-  };
+  const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
 
   const indicatorAnimatedStyle = useAnimatedStyle(() => {
     return {

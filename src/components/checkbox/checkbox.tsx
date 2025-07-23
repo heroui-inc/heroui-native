@@ -29,7 +29,7 @@ const AnimatedCheckboxRoot = Animated.createAnimatedComponent(
 const DURATION = 175;
 const EASING = Easing.bezier(0.25, 0.1, 0.25, 1);
 
-export const [CheckboxProvider, useCheckboxContext] =
+const [CheckboxProvider, useCheckboxContext] =
   createContext<CheckboxContextValue>({
     name: 'CheckboxContext',
   });
@@ -283,9 +283,32 @@ Checkbox.displayName = DISPLAY_NAME.CHECKBOX_ROOT;
 CheckboxBackground.displayName = DISPLAY_NAME.CHECKBOX_BACKGROUND;
 CheckboxIndicator.displayName = DISPLAY_NAME.CHECKBOX_INDICATOR;
 
+/**
+ * Compound Checkbox component with sub-components
+ *
+ * @component Checkbox - Main container that handles selection state and user interaction.
+ * Renders default background and indicator with checkmark if no children provided.
+ * Animates border color based on selection state.
+ *
+ * @component Checkbox.Background - Optional background layer that fills when selected.
+ * Animates background color transitions. Can be customized with different colors
+ * or replaced with custom content.
+ *
+ * @component Checkbox.Indicator - Optional checkmark container that scales in when selected.
+ * Renders default check icon if no children provided. Handles enter/exit animations
+ * and can be replaced with custom indicators.
+ *
+ * Props flow from Checkbox to sub-components via context (size, color, isSelected).
+ * The checkbox supports controlled and uncontrolled modes through isSelected/onSelectedChange.
+ *
+ * @see Full documentation: https://heroui.com/components/checkbox
+ */
 const CompoundCheckbox = Object.assign(Checkbox, {
+  /** @optional Custom background layer with color animations */
   Background: CheckboxBackground,
+  /** @optional Custom indicator with scale animations */
   Indicator: CheckboxIndicator,
 });
 
+export { useCheckboxContext };
 export default CompoundCheckbox;

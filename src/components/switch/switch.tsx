@@ -32,10 +32,9 @@ const AnimatedSwitchThumb = Animated.createAnimatedComponent(
 const DURATION = 175;
 const EASING = Easing.bezier(0.25, 0.1, 0.25, 1);
 
-export const [SwitchProvider, useSwitchContext] =
-  createContext<SwitchContextValue>({
-    name: 'SwitchContext',
-  });
+const [SwitchProvider, useSwitchContext] = createContext<SwitchContextValue>({
+  name: 'SwitchContext',
+});
 
 // --------------------------------------------------
 
@@ -277,10 +276,39 @@ SwitchThumb.displayName = DISPLAY_NAME.SWITCH_THUMB;
 SwitchStartContent.displayName = DISPLAY_NAME.SWITCH_START_CONTENT;
 SwitchEndContent.displayName = DISPLAY_NAME.SWITCH_END_CONTENT;
 
+/**
+ * Compound Switch component with sub-components
+ *
+ * @component Switch - Main container that handles toggle state and user interaction.
+ * Renders default thumb if no children provided. Animates background and border colors
+ * based on selection state. Acts as a pressable area for toggling.
+ *
+ * @component Switch.Thumb - Optional sliding thumb element that moves between positions.
+ * Uses spring animation for smooth transitions. Can contain custom content like icons
+ * or be customized with different colors and sizes.
+ *
+ * @component Switch.StartContent - Optional content displayed on the left side of the switch.
+ * Typically used for icons or text that appear when switch is off. Positioned absolutely
+ * within the switch container.
+ *
+ * @component Switch.EndContent - Optional content displayed on the right side of the switch.
+ * Typically used for icons or text that appear when switch is on. Positioned absolutely
+ * within the switch container.
+ *
+ * Props flow from Switch to sub-components via context (size, isSelected).
+ * The switch supports controlled and uncontrolled modes through isSelected/onSelectedChange.
+ * Content components provide visual feedback without affecting the toggle functionality.
+ *
+ * @see Full documentation: https://heroui.com/components/switch
+ */
 const CompoundSwitch = Object.assign(Switch, {
+  /** @optional Sliding thumb with spring animations */
   Thumb: SwitchThumb,
+  /** @optional Content shown when switch is off (left side) */
   StartContent: SwitchStartContent,
+  /** @optional Content shown when switch is on (right side) */
   EndContent: SwitchEndContent,
 });
 
+export { useSwitchContext };
 export default CompoundSwitch;

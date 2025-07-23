@@ -39,10 +39,9 @@ const AnimatedRadioItem = Animated.createAnimatedComponent(
 const DURATION = 175;
 const EASING = Easing.out(Easing.ease);
 
-export const [RadioProvider, useRadioContext] =
-  createContext<RadioContextValue>({
-    name: 'RadioContext',
-  });
+const [RadioProvider, useRadioContext] = createContext<RadioContextValue>({
+  name: 'RadioContext',
+});
 
 // --------------------------------------------------
 
@@ -389,14 +388,50 @@ RadioContent.displayName = DISPLAY_NAME.RADIO_CONTENT;
 RadioLabel.displayName = DISPLAY_NAME.RADIO_LABEL;
 RadioDescription.displayName = DISPLAY_NAME.RADIO_DESCRIPTION;
 
+/**
+ * Compound Radio component with sub-components
+ *
+ * @component Radio - Individual radio option within a RadioGroup. Must be used inside RadioGroup.
+ * Handles selection state and renders default indicator if no children provided. Animates border
+ * color based on selection state.
+ *
+ * @component Radio.Indicator - Optional container for the radio circle. Renders default background
+ * and thumb if no children provided. Manages the visual selection state.
+ *
+ * @component Radio.IndicatorBackground - Optional background of the radio circle. Animates background
+ * color based on selection state. Can be customized with different colors and animations.
+ *
+ * @component Radio.IndicatorThumb - Optional inner circle that appears when selected. Animates
+ * scale based on selection. Can be replaced with custom content.
+ *
+ * @component Radio.Content - Optional container for label and description. Provides consistent
+ * layout and spacing. Only renders if label or description exist.
+ *
+ * @component Radio.Label - Optional text label for the radio option. Clickable by default and
+ * linked to the radio for accessibility.
+ *
+ * @component Radio.Description - Optional secondary text below the label. Provides additional
+ * context about the radio option.
+ *
+ * Props flow from Radio to sub-components via context (size, color, value, isSelected).
+ * RadioGroup manages the overall selection state and orientation.
+ *
+ * @see Full documentation: https://heroui.com/components/radio
+ */
 const CompoundRadioGroup = Object.assign(Radio, {
+  /** @optional Custom radio indicator container */
   Indicator: RadioIndicator,
+  /** @optional Custom indicator background with border animations */
   IndicatorBackground: RadioIndicatorBackground,
+  /** @optional Custom indicator thumb that appears when selected */
   IndicatorThumb: RadioIndicatorThumb,
+  /** @optional Container for label and description */
   Content: RadioContent,
+  /** @optional Clickable text label */
   Label: RadioLabel,
+  /** @optional Secondary descriptive text */
   Description: RadioDescription,
 });
 
-export { Radio, RadioGroup };
+export { Radio, RadioGroup, useRadioContext };
 export default CompoundRadioGroup;

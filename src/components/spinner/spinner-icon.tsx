@@ -2,9 +2,6 @@ import Svg, { Defs, G, LinearGradient, Path, Stop } from 'react-native-svg';
 import { DISPLAY_NAME } from './spinner.constants';
 import type { SpinnerIconProps } from './spinner.types';
 
-/**
- * Default spinner icon component
- */
 export function SpinnerIcon(props: SpinnerIconProps) {
   const { width = 24, height = 24, color = 'currentColor' } = props;
 

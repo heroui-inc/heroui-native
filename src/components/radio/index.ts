@@ -1,4 +1,4 @@
-export { default as Radio, RadioGroup } from './radio';
+export { default as Radio, RadioGroup, useRadioContext } from './radio';
 export type {
   RadioBackgroundProps,
   RadioColor,

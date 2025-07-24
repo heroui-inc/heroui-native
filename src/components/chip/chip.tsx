@@ -1,6 +1,7 @@
 import { createContext } from '@/helpers/utils';
 import { getElementByDisplayName } from '@/helpers/utils/get-element-by-display-name';
 import { getElementWithDefault } from '@/helpers/utils/get-element-with-default';
+import * as Slot from '@/primitives/slot';
 import { forwardRef, useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { DISPLAY_NAME } from './chip.constants';
@@ -22,6 +23,7 @@ const [ChipProvider, useChipContext] = createContext<ChipContextValue>({
 const Chip = forwardRef<View, ChipProps>((props, ref) => {
   const {
     children,
+    asChild,
     variant = 'primary',
     size = 'md',
     color = 'accent',
@@ -66,9 +68,11 @@ const Chip = forwardRef<View, ChipProps>((props, ref) => {
     [size, variant, color]
   );
 
+  const Component = asChild ? Slot.View : View;
+
   return (
     <ChipProvider value={contextValue}>
-      <View
+      <Component
         ref={ref}
         className={tvStyles}
         style={[nativeStyles.root, style]}
@@ -77,7 +81,7 @@ const Chip = forwardRef<View, ChipProps>((props, ref) => {
         {startContentElement}
         {labelElement}
         {endContentElement}
-      </View>
+      </Component>
     </ChipProvider>
   );
 });

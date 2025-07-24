@@ -33,7 +33,7 @@ export const colors: Record<ColorScheme, ColorVariables> = {
     dangerForeground: 'hsl(300 0% 99%)',
 
     /* Misc Colors */
-    border: 'hsl(0 0% 82%)',
+    border: 'hsl(0 0% 86%)',
     link: 'hsl(348 0% 4%)',
   },
   dark: {
@@ -48,8 +48,8 @@ export const colors: Record<ColorScheme, ColorVariables> = {
     surface: 'hsl(0 0% 98%)',
     surfaceForeground: 'hsl(0 0% 25%)',
 
-    base: 'hsl(0 0% 98%)',
-    baseForeground: 'hsl(0 0% 25%)',
+    base: 'hsl(0 0% 9%)',
+    baseForeground: 'hsl(0 0% 90%)',
 
     accent: 'hsl(300 0% 99%)',
     accentForeground: 'hsl(0 0% 10%)',
@@ -68,7 +68,7 @@ export const colors: Record<ColorScheme, ColorVariables> = {
     dangerForeground: 'hsl(300 0% 99%)',
 
     /* Misc Colors */
-    border: 'hsl(0 0% 25%)',
+    border: 'hsl(0 0% 20%)',
     link: 'hsl(300 0% 99%)',
   },
 };

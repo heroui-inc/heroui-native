@@ -19,6 +19,7 @@ import type {
 
 export const ThemeContext = createContext<ThemeContextType>({
   theme: 'light',
+  isDark: false,
   colors: colorConstants.light,
   toggleTheme: () => {},
   setTheme: () => {},
@@ -57,6 +58,7 @@ export const ThemeProvider = ({
   const value = useMemo(
     () => ({
       theme: currentTheme,
+      isDark: currentTheme === 'dark',
       colors,
       toggleTheme,
       setTheme,

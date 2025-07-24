@@ -28,6 +28,7 @@ export default function Layout() {
       <Stack.Screen name="radio" options={{ title: 'Radio' }} />
       <Stack.Screen name="spinner" options={{ title: 'Spinner' }} />
       <Stack.Screen name="chip" options={{ title: 'Chip' }} />
+      <Stack.Screen name="button" options={{ title: 'Button' }} />
     </Stack>
   );
 }

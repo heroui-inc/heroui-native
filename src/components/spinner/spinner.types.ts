@@ -23,7 +23,7 @@ export interface SpinnerProps
   size?: SpinnerSize;
 
   /** Color theme of the spinner @default 'default' */
-  color?: SpinnerColor | string;
+  color?: SpinnerColor | (string & {});
 
   /** Whether the spinner is loading @default true */
   loading?: boolean;

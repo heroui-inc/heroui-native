@@ -73,6 +73,8 @@ interface ThemeProviderProps {
 type ThemeContextType = {
   /** Current active theme ('light' or 'dark') */
   theme: ColorScheme;
+  /** Whether the current theme is dark */
+  isDark: boolean;
   /** Color variables object with camelCase keys for direct usage */
   colors: ColorVariables;
   /** Function to toggle between light and dark themes */

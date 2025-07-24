@@ -10,7 +10,7 @@ export const DISPLAY_NAME = {
   RADIO_CONTENT: 'HeroUINative.Radio.Content',
   RADIO_LABEL: 'HeroUINative.Radio.Label',
   RADIO_DESCRIPTION: 'HeroUINative.Radio.Description',
-};
+} as const;
 
 export const ANIMATION_DURATION = 175;
 export const ANIMATION_EASING = Easing.out(Easing.ease);

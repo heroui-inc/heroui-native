@@ -6,7 +6,7 @@ export const DISPLAY_NAME = {
   CHECKBOX_BACKGROUND: 'HeroUINative.Checkbox.Background',
   CHECKBOX_INDICATOR: 'HeroUINative.Checkbox.Indicator',
   CHECKBOX_CHECK_ICON: 'HeroUINative.Checkbox.CheckIcon',
-};
+} as const;
 
 export const ANIMATION_DURATION = 175;
 export const ANIMATION_EASING = Easing.bezier(0.25, 0.1, 0.25, 1);

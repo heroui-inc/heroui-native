@@ -1,6 +1,7 @@
 import { createContext } from '@/helpers/utils';
 import { getElementWithDefault } from '@/helpers/utils/get-element-with-default';
 import * as Slot from '@/primitives/slot';
+import { useTheme } from '@/theme';
 import { forwardRef, useCallback, useMemo } from 'react';
 import {
   Pressable,
@@ -10,6 +11,7 @@ import {
 } from 'react-native';
 import Animated, {
   interpolate,
+  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -19,6 +21,8 @@ import {
   ANIMATION_EASING,
   DEFAULT_LABEL_TEXT,
   DISPLAY_NAME,
+  RIPPLE_COLOR_DARK_THEME_MAP,
+  RIPPLE_COLOR_LIGHT_THEME_MAP,
 } from './button.constants';
 import buttonStyles, { nativeStyles } from './button.styles';
 import type {
@@ -49,7 +53,10 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
     isDisabled = false,
     className,
     style,
-    disableAnimation = false,
+    disableAnimation = {
+      scale: false,
+      highlight: false,
+    },
     animationConfig,
     onPressIn,
     onPressOut,
@@ -96,6 +103,8 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
     [children]
   );
 
+  const { isDark } = useTheme();
+
   const tvStyles = buttonStyles.root({
     variant,
     size,
@@ -105,45 +114,97 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
     className,
   });
 
-  const timingConfig = useMemo(
+  const scale = useSharedValue(0);
+  const highlight = useSharedValue(0);
+
+  const scaleValue = useMemo(
+    () => animationConfig?.scale?.value ?? 0.995,
+    [animationConfig]
+  );
+  const scaleConfig = useMemo(
     () =>
-      animationConfig ?? {
+      animationConfig?.scale?.config ?? {
         duration: ANIMATION_DURATION,
         easing: ANIMATION_EASING,
       },
     [animationConfig]
   );
 
-  const pressed = useSharedValue(0);
-
-  const animatedStyle = useAnimatedStyle(() => {
+  const animatedContainerStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
-          scale: interpolate(pressed.value, [0, 1], [1, 0.995]),
+          scale: interpolate(scale.get(), [0, 1], [1, scaleValue]),
         },
       ],
     };
   });
 
+  const highlightValue = useMemo(
+    () =>
+      animationConfig?.highlight?.color ??
+      (isDark
+        ? RIPPLE_COLOR_DARK_THEME_MAP[variant]
+        : RIPPLE_COLOR_LIGHT_THEME_MAP[variant]),
+    [animationConfig, isDark, variant]
+  );
+  const highlightConfig = useMemo(
+    () =>
+      animationConfig?.highlight?.config ?? {
+        duration: ANIMATION_DURATION,
+        easing: ANIMATION_EASING,
+      },
+    [animationConfig]
+  );
+
+  const animatedBackgroundStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: interpolateColor(
+        highlight.get(),
+        [0, 1],
+        ['transparent', highlightValue]
+      ),
+    };
+  });
+
   const handlePressIn = useCallback(
     (e: GestureResponderEvent) => {
-      if (!disableAnimation) {
-        pressed.set(withTiming(1, timingConfig));
+      if (!disableAnimation.scale) {
+        scale.set(withTiming(1, scaleConfig));
+      }
+      if (!disableAnimation.highlight) {
+        highlight.set(withTiming(1, highlightConfig));
       }
       onPressIn?.(e);
     },
-    [pressed, timingConfig, onPressIn, disableAnimation]
+    [
+      scale,
+      scaleConfig,
+      onPressIn,
+      disableAnimation,
+      highlight,
+      highlightConfig,
+    ]
   );
 
   const handlePressOut = useCallback(
     (e: GestureResponderEvent) => {
-      if (!disableAnimation) {
-        pressed.set(withTiming(0, timingConfig));
+      if (!disableAnimation.scale) {
+        scale.set(withTiming(0, scaleConfig));
+      }
+      if (!disableAnimation.highlight) {
+        highlight.set(withTiming(0, highlightConfig));
       }
       onPressOut?.(e);
     },
-    [pressed, timingConfig, onPressOut, disableAnimation]
+    [
+      scale,
+      scaleConfig,
+      onPressOut,
+      disableAnimation,
+      highlight,
+      highlightConfig,
+    ]
   );
 
   const contextValue = useMemo(
@@ -151,9 +212,8 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
       size,
       variant,
       isDisabled,
-      animationConfig,
     }),
-    [size, variant, isDisabled, animationConfig]
+    [size, variant, isDisabled]
   );
 
   const Component = asChild ? Slot.Pressable : AnimatedPressable;
@@ -163,13 +223,14 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
       <Component
         ref={ref}
         className={tvStyles}
-        style={[nativeStyles.buttonRoot, animatedStyle, style]}
+        style={[nativeStyles.buttonRoot, animatedContainerStyle, style]}
         disabled={isDisabled}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         {...restProps}
       >
         {backgroundElement}
+        <ButtonBackground style={animatedBackgroundStyle} />
         {startContentElement}
         {labelElement}
         {endContentElement}
@@ -181,25 +242,23 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
 // --------------------------------------------------
 
 function ButtonStartContent(props: ButtonStartContentProps) {
-  const { children, asChild, className, ...restProps } = props;
+  const { children, className, ...restProps } = props;
 
   const tvStyles = buttonStyles.startContent({
     className,
   });
 
-  const Component = asChild ? Slot.View : View;
-
   return (
-    <Component className={tvStyles} {...restProps}>
+    <View className={tvStyles} {...restProps}>
       {children}
-    </Component>
+    </View>
   );
 }
 
 // --------------------------------------------------
 
 function ButtonLabel(props: ButtonLabelProps) {
-  const { children, asChild, className, classNames, ...restProps } = props;
+  const { children, className, classNames, ...restProps } = props;
 
   const { size, variant } = useButtonContext();
 
@@ -216,45 +275,41 @@ function ButtonLabel(props: ButtonLabelProps) {
     className: classNames?.text,
   });
 
-  const Component = asChild ? Slot.View : View;
-
   if (typeof children === 'string') {
     return (
-      <Component className={tvContainerStyles} {...restProps}>
+      <View className={tvContainerStyles} {...restProps}>
         <Text className={tvTextStyles}>{children}</Text>
-      </Component>
+      </View>
     );
   }
 
   return (
-    <Component className={tvContainerStyles} {...restProps}>
+    <View className={tvContainerStyles} {...restProps}>
       {children}
-    </Component>
+    </View>
   );
 }
 
 // --------------------------------------------------
 
 function ButtonEndContent(props: ButtonEndContentProps) {
-  const { children, asChild, className, ...restProps } = props;
+  const { children, className, ...restProps } = props;
 
   const tvStyles = buttonStyles.endContent({
     className,
   });
 
-  const Component = asChild ? Slot.View : View;
-
   return (
-    <Component className={tvStyles} {...restProps}>
+    <View className={tvStyles} {...restProps}>
       {children}
-    </Component>
+    </View>
   );
 }
 
 // --------------------------------------------------
 
 function ButtonBackground(props: ButtonBackgroundProps) {
-  const { children, asChild, className, ...restProps } = props;
+  const { children, className, style, ...restProps } = props;
 
   const { size } = useButtonContext();
 
@@ -263,16 +318,14 @@ function ButtonBackground(props: ButtonBackgroundProps) {
     className,
   });
 
-  const Component = asChild ? Slot.View : View;
-
   return (
-    <Component
+    <Animated.View
       className={tvStyles}
-      style={nativeStyles.background}
+      style={[nativeStyles.background, style]}
       {...restProps}
     >
       {children}
-    </Component>
+    </Animated.View>
   );
 }
 

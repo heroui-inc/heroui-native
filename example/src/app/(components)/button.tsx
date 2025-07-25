@@ -12,7 +12,7 @@ import {
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function ButtonScreen() {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
 
   return (
     <ScrollView
@@ -113,13 +113,13 @@ export default function ButtonScreen() {
       <View className="w-full gap-4 mb-6">
         <Button isDisabled>
           <Button.StartContent>
-            <Spinner color="white" size="sm" />
+            <Spinner color={isDark ? 'black' : 'white'} size="sm" />
           </Button.StartContent>
           <Button.Label>Loading</Button.Label>
         </Button>
         <Button variant="secondary" isDisabled>
           <Button.StartContent>
-            <Spinner size="sm" />
+            <Spinner size="sm" color={isDark ? 'black' : 'default'} />
           </Button.StartContent>
           <Button.Label>Loading</Button.Label>
         </Button>
@@ -164,7 +164,7 @@ export default function ButtonScreen() {
         </Button>
         <Button size="md" fullWidth={false} variant="secondary" onlyIcon>
           <Button.Label>
-            <Heart size={18} color={colors.accentSoftForeground} />
+            <Heart size={18} color="#ec4899" fill="#ec4899" />
           </Button.Label>
         </Button>
         <Button size="lg" fullWidth={false} variant="danger" onlyIcon>
@@ -216,13 +216,25 @@ export default function ButtonScreen() {
 
       <View className="w-full gap-4 mb-6">
         <Button
-          animationConfig={{ duration: 50 }}
+          animationConfig={{
+            scale: {
+              config: {
+                duration: 50,
+              },
+            },
+          }}
           onPress={() => console.log('Fast animation')}
         >
           <Button.Label>Fast Press Animation</Button.Label>
         </Button>
         <Button
-          animationConfig={{ duration: 300 }}
+          animationConfig={{
+            scale: {
+              config: {
+                duration: 300,
+              },
+            },
+          }}
           variant="secondary"
           onPress={() => console.log('Slow animation')}
         >

@@ -57,15 +57,54 @@ export interface ButtonRootProps extends SlottablePressableProps {
    */
   className?: string;
   /**
-   * Whether to disable the animation
+   * Whether to disable the animation (scale and/or highlight)
    * @default false
    */
-  disableAnimation?: boolean;
+  disableAnimation?: {
+    /**
+     * Whether to disable the scale animation
+     * @default false
+     */
+    scale?: boolean;
+    /**
+     * Whether to disable the highlight animation
+     * @default false
+     */
+    highlight?: boolean;
+  };
   /**
-   * Animation configuration for press states
-   * @default { duration: 150 }
+   * Animation configuration for press states (scale and highlight)
    */
-  animationConfig?: TimingConfig;
+  animationConfig?: {
+    /**
+     * Animation configuration for scale
+     */
+    scale?: {
+      /**
+       * Animation target value for scale
+       * @default 0.995
+       */
+      value?: number;
+      /**
+       * Animation configuration for scale
+       */
+      config?: TimingConfig;
+    };
+    /**
+     * Animation configuration for highlight
+     */
+    highlight?: {
+      /**
+       * Animation target color for highlight
+       * @default 'transparent'
+       */
+      color?: string;
+      /**
+       * Animation configuration for highlight
+       */
+      config?: TimingConfig;
+    };
+  };
 }
 
 /**
@@ -143,8 +182,4 @@ export interface ButtonContextValue {
    * Whether the button is disabled
    */
   isDisabled: boolean;
-  /**
-   * Animation configuration for press states
-   */
-  animationConfig?: TimingConfig;
 }

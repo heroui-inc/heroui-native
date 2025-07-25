@@ -114,6 +114,20 @@ export interface ButtonEndContentProps extends SlottableViewProps {
 }
 
 /**
+ * Props for the Button.Background component
+ */
+export interface ButtonBackgroundProps extends SlottableViewProps {
+  /**
+   * Content to be rendered as the button background
+   */
+  children?: React.ReactNode;
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
+}
+
+/**
  * Context values shared between Button components
  */
 export interface ButtonContextValue {

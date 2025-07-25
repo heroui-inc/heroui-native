@@ -13,7 +13,7 @@ const root = tv({
     },
     size: {
       sm: 'h-[36px] px-3 gap-1.5 rounded-md',
-      md: 'h-[44px] px-4 gap-2 rounded-md',
+      md: 'h-[44px] px-4 gap-2 rounded-lg',
       lg: 'h-[56px] px-5 gap-2.5 rounded-lg',
     },
     fullWidth: {
@@ -84,15 +84,33 @@ const endContent = tv({
   base: 'items-center justify-center',
 });
 
+const background = tv({
+  base: 'absolute inset-0 overflow-hidden',
+  variants: {
+    size: {
+      sm: 'rounded-md',
+      md: 'rounded-lg',
+      lg: 'rounded-lg',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
 const buttonStyles = Object.assign({
   root,
   label,
   startContent,
   endContent,
+  background,
 });
 
 export const nativeStyles = StyleSheet.create({
   buttonRoot: {
+    borderCurve: 'continuous',
+  },
+  background: {
     borderCurve: 'continuous',
   },
 });

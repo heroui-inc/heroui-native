@@ -8,6 +8,7 @@ export const DISPLAY_NAME = {
   LABEL: 'HeroUINative.Button.Label',
   START_CONTENT: 'HeroUINative.Button.StartContent',
   END_CONTENT: 'HeroUINative.Button.EndContent',
+  BACKGROUND: 'HeroUINative.Button.Background',
 };
 
 /**

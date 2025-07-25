@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Spinner, useTheme } from 'heroui-native';
 import {
   AlertCircle,
@@ -8,7 +9,7 @@ import {
   Plus,
   Trash2,
 } from 'lucide-react-native';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function ButtonScreen() {
   const { colors } = useTheme();
@@ -194,8 +195,15 @@ export default function ButtonScreen() {
             Purple Tertiary
           </Button.Label>
         </Button>
-        {/* VS ---------- gradient btn */}
-        <Button className=" px-8">
+        <Button>
+          <Button.Background>
+            <LinearGradient
+              colors={['#9333ea', '#ec4899']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={StyleSheet.absoluteFill}
+            />
+          </Button.Background>
           <Button.Label classNames={{ text: 'text-white font-bold' }}>
             Gradient
           </Button.Label>

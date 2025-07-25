@@ -22,6 +22,7 @@ import {
 } from './button.constants';
 import buttonStyles, { nativeStyles } from './button.styles';
 import type {
+  ButtonBackgroundProps,
   ButtonContextValue,
   ButtonEndContentProps,
   ButtonLabelProps,
@@ -81,6 +82,16 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
         children,
         DISPLAY_NAME.END_CONTENT,
         <ButtonEndContent />
+      ),
+    [children]
+  );
+
+  const backgroundElement = useMemo(
+    () =>
+      getElementWithDefault(
+        children,
+        DISPLAY_NAME.BACKGROUND,
+        <ButtonBackground />
       ),
     [children]
   );
@@ -158,6 +169,7 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
         onPressOut={handlePressOut}
         {...restProps}
       >
+        {backgroundElement}
         {startContentElement}
         {labelElement}
         {endContentElement}
@@ -241,10 +253,36 @@ function ButtonEndContent(props: ButtonEndContentProps) {
 
 // --------------------------------------------------
 
+function ButtonBackground(props: ButtonBackgroundProps) {
+  const { children, asChild, className, ...restProps } = props;
+
+  const { size } = useButtonContext();
+
+  const tvStyles = buttonStyles.background({
+    size,
+    className,
+  });
+
+  const Component = asChild ? Slot.View : View;
+
+  return (
+    <Component
+      className={tvStyles}
+      style={nativeStyles.background}
+      {...restProps}
+    >
+      {children}
+    </Component>
+  );
+}
+
+// --------------------------------------------------
+
 ButtonRoot.displayName = DISPLAY_NAME.ROOT;
 ButtonStartContent.displayName = DISPLAY_NAME.START_CONTENT;
 ButtonLabel.displayName = DISPLAY_NAME.LABEL;
 ButtonEndContent.displayName = DISPLAY_NAME.END_CONTENT;
+ButtonBackground.displayName = DISPLAY_NAME.BACKGROUND;
 
 /**
  * Compound Button component with sub-components
@@ -261,6 +299,9 @@ ButtonEndContent.displayName = DISPLAY_NAME.END_CONTENT;
  * @component Button.EndContent - Optional content displayed at the end of the button.
  * Use for icons or other elements after the label.
  *
+ * @component Button.Background - Optional background element with absolute positioning.
+ * Rendered beneath all other content. Use for gradients or custom backgrounds.
+ *
  * Props flow from Button to sub-components via context (size, variant, isDisabled, animationConfig).
  * The button scales down slightly when pressed for visual feedback.
  *
@@ -273,6 +314,8 @@ const Button = Object.assign(ButtonRoot, {
   Label: ButtonLabel,
   /** @optional Content displayed at the end of the button */
   EndContent: ButtonEndContent,
+  /** @optional Background element - absolute positioned beneath content */
+  Background: ButtonBackground,
 });
 
 export default Button;

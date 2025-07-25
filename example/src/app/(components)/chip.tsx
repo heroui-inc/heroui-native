@@ -56,8 +56,8 @@ export default function ChipScreen() {
         <Chip variant="primary" color="accent">
           <Chip.Label>Accent</Chip.Label>
         </Chip>
-        <Chip variant="primary" color="base">
-          <Chip.Label>Base</Chip.Label>
+        <Chip variant="primary" color="default">
+          <Chip.Label>Default</Chip.Label>
         </Chip>
         <Chip variant="primary" color="success">
           <Chip.Label>Success</Chip.Label>
@@ -78,8 +78,8 @@ export default function ChipScreen() {
         <Chip variant="secondary" color="accent">
           <Chip.Label>Accent</Chip.Label>
         </Chip>
-        <Chip variant="secondary" color="base">
-          <Chip.Label>Base</Chip.Label>
+        <Chip variant="secondary" color="default">
+          <Chip.Label>Default</Chip.Label>
         </Chip>
         <Chip variant="secondary" color="success">
           <Chip.Label>Success</Chip.Label>
@@ -100,8 +100,8 @@ export default function ChipScreen() {
         <Chip variant="tertiary" color="accent">
           <Chip.Label>Accent</Chip.Label>
         </Chip>
-        <Chip variant="tertiary" color="base">
-          <Chip.Label>Base</Chip.Label>
+        <Chip variant="tertiary" color="default">
+          <Chip.Label>Default</Chip.Label>
         </Chip>
         <Chip variant="tertiary" color="success">
           <Chip.Label>Success</Chip.Label>

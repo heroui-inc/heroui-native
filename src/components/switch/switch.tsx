@@ -59,14 +59,14 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
 
     const { colors: themeColors } = useTheme();
 
-    const { base, contentPaddingContainer, contentContainer } =
+    const { container, contentPaddingContainer, contentContainer } =
       switchStyles.root({
         size,
         isDisabled,
         isReadOnly,
       });
 
-    const tvBaseStyles = base({
+    const tvBaseStyles = container({
       className: [className, classNames?.container],
     });
 
@@ -102,7 +102,7 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
         backgroundColor: withTiming(
           isSelected
             ? (colors?.selectedBackground ?? backgroundColorMap[color])
-            : (colors?.defaultBackground ?? themeColors.base),
+            : (colors?.defaultBackground ?? themeColors.default),
           timingConfig
         ),
         borderColor: withTiming(

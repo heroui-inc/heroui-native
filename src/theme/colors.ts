@@ -13,8 +13,8 @@ export const colors: Record<ColorScheme, ColorVariables> = {
     surface: 'hsl(0 0% 96%)',
     surfaceForeground: 'hsl(348 0% 4%)',
 
-    base: 'hsl(0 0% 98%)',
-    baseForeground: 'hsl(0 0% 32%)',
+    default: 'hsl(0 0% 98%)',
+    defaultForeground: 'hsl(0 0% 32%)',
 
     accent: 'hsl(300 0% 4%)',
     accentForeground: 'hsl(300 0% 99%)',
@@ -48,8 +48,8 @@ export const colors: Record<ColorScheme, ColorVariables> = {
     surface: 'hsl(0 0% 98%)',
     surfaceForeground: 'hsl(0 0% 25%)',
 
-    base: 'hsl(0 0% 9%)',
-    baseForeground: 'hsl(0 0% 90%)',
+    default: 'hsl(0 0% 9%)',
+    defaultForeground: 'hsl(0 0% 90%)',
 
     accent: 'hsl(300 0% 99%)',
     accentForeground: 'hsl(0 0% 10%)',

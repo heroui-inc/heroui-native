@@ -7,7 +7,7 @@ const root = tv({
     variant: {
       primary: 'bg-accent',
       secondary: 'bg-accent-soft',
-      tertiary: 'bg-base border border-border',
+      tertiary: 'bg-default border border-border',
       ghost: 'bg-transparent',
       danger: 'bg-danger',
     },
@@ -43,19 +43,19 @@ const label = tv({
   variants: {
     variant: {
       primary: {
-        text: '!text-accent-foreground',
+        text: 'text-accent-foreground',
       },
       secondary: {
-        text: '!text-accent-soft-foreground',
+        text: 'text-accent-soft-foreground',
       },
       tertiary: {
-        text: '!text-base-foreground',
+        text: 'text-default-foreground',
       },
       ghost: {
-        text: '!text-base-foreground',
+        text: 'text-default-foreground',
       },
       danger: {
-        text: '!text-danger-foreground',
+        text: 'text-danger-foreground',
       },
     },
     size: {

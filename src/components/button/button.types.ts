@@ -57,6 +57,11 @@ export interface ButtonRootProps extends SlottablePressableProps {
    */
   className?: string;
   /**
+   * Whether to disable the animation
+   * @default false
+   */
+  disableAnimation?: boolean;
+  /**
    * Animation configuration for press states
    * @default { duration: 150 }
    */
@@ -71,10 +76,6 @@ export interface ButtonLabelProps extends SlottableViewProps {
    * Content to be rendered as label. If string, will be wrapped in Text component
    */
   children?: React.ReactNode;
-  /**
-   * Additional CSS classes for the container
-   */
-  className?: string;
   /**
    * Additional CSS classes for the slots
    */

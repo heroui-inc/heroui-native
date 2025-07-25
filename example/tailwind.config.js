@@ -23,9 +23,9 @@ module.exports = {
           DEFAULT: 'hsl(var(--surface))',
           foreground: 'hsl(var(--surface-foreground))',
         },
-        base: {
-          DEFAULT: 'hsl(var(--base))',
-          foreground: 'hsl(var(--base-foreground))',
+        default: {
+          DEFAULT: 'hsl(var(--default))',
+          foreground: 'hsl(var(--default-foreground))',
         },
         accent: {
           DEFAULT: 'hsl(var(--accent))',

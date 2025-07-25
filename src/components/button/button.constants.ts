@@ -13,7 +13,7 @@ export const DISPLAY_NAME = {
 /**
  * Default animation duration in milliseconds
  */
-export const ANIMATION_DURATION = 150;
+export const ANIMATION_DURATION = 100;
 
 /**
  * Default animation easing function

@@ -88,13 +88,13 @@ export default function ButtonScreen() {
           <Button.StartContent>
             <Heart
               size={14}
-              color={colors.baseForeground}
-              fill={colors.baseForeground}
+              color={colors.defaultForeground}
+              fill={colors.defaultForeground}
             />
           </Button.StartContent>
           <Button.Label>Favorite</Button.Label>
           <Button.EndContent>
-            <ChevronRight size={18} color={colors.baseForeground} />
+            <ChevronRight size={18} color={colors.defaultForeground} />
           </Button.EndContent>
         </Button>
 
@@ -124,7 +124,7 @@ export default function ButtonScreen() {
         </Button>
         <Button variant="tertiary" isDisabled>
           <Button.StartContent>
-            <AlertCircle size={16} color={colors.baseForeground} />
+            <AlertCircle size={16} color={colors.defaultForeground} />
           </Button.StartContent>
           <Button.Label>Access Denied</Button.Label>
         </Button>
@@ -179,9 +179,10 @@ export default function ButtonScreen() {
 
       <View className="w-full gap-4 mb-6">
         <Button className="bg-purple-600">
-          <Button.Label className="text-white">Custom Purple</Button.Label>
+          <Button.Label classNames={{ text: 'text-white' }}>
+            Custom Purple
+          </Button.Label>
         </Button>
-        {/* VS ---------- */}
         <Button
           variant="tertiary"
           className="border-purple-600/30 bg-purple-50"
@@ -189,13 +190,15 @@ export default function ButtonScreen() {
           <Button.StartContent>
             <Check size={18} color="#9333ea" />
           </Button.StartContent>
-          <Button.Label className="text-purple-600">
+          <Button.Label classNames={{ text: 'text-purple-600' }}>
             Purple Tertiary
           </Button.Label>
         </Button>
         {/* VS ---------- gradient btn */}
-        <Button fullWidth={false} className=" px-8">
-          <Button.Label className="text-white font-bold">Gradient</Button.Label>
+        <Button className=" px-8">
+          <Button.Label classNames={{ text: 'text-white font-bold' }}>
+            Gradient
+          </Button.Label>
         </Button>
       </View>
 

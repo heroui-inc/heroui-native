@@ -48,6 +48,7 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
     isDisabled = false,
     className,
     style,
+    disableAnimation = false,
     animationConfig,
     onPressIn,
     onPressOut,
@@ -108,7 +109,7 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
     return {
       transform: [
         {
-          scale: interpolate(pressed.value, [0, 1], [1, 0.99]),
+          scale: interpolate(pressed.value, [0, 1], [1, 0.995]),
         },
       ],
     };
@@ -116,18 +117,22 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
 
   const handlePressIn = useCallback(
     (e: GestureResponderEvent) => {
-      pressed.set(withTiming(1, timingConfig));
+      if (!disableAnimation) {
+        pressed.set(withTiming(1, timingConfig));
+      }
       onPressIn?.(e);
     },
-    [pressed, timingConfig, onPressIn]
+    [pressed, timingConfig, onPressIn, disableAnimation]
   );
 
   const handlePressOut = useCallback(
     (e: GestureResponderEvent) => {
-      pressed.set(withTiming(0, timingConfig));
+      if (!disableAnimation) {
+        pressed.set(withTiming(0, timingConfig));
+      }
       onPressOut?.(e);
     },
-    [pressed, timingConfig, onPressOut]
+    [pressed, timingConfig, onPressOut, disableAnimation]
   );
 
   const contextValue = useMemo(

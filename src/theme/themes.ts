@@ -24,8 +24,8 @@ export const themes: Record<ColorScheme, Record<string, string>> = {
     '--surface': '0 0% 96%',
     '--surface-foreground': 'var(--foreground)',
 
-    '--base': '0 0% 98%',
-    '--base-foreground': '0 0% 32%',
+    '--default': '0 0% 98%',
+    '--default-foreground': '0 0% 32%',
 
     '--accent': '300 0% 4%',
     '--accent-foreground': '300 0% 99%',
@@ -61,8 +61,8 @@ export const themes: Record<ColorScheme, Record<string, string>> = {
     '--surface': '0 0% 98%',
     '--surface-foreground': '0 0% 25%',
 
-    '--base': '0 0% 9%',
-    '--base-foreground': '0 0% 90%',
+    '--default': '0 0% 9%',
+    '--default-foreground': '0 0% 90%',
 
     '--accent': '300 0% 99%',
     '--accent-foreground': '0 0% 10%',

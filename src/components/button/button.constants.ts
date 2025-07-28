@@ -1,3 +1,4 @@
+import type { ColorVariables } from '@/theme/types';
 import { Easing } from 'react-native-reanimated';
 import type { ButtonVariant } from './button.types';
 
@@ -23,26 +24,36 @@ export const ANIMATION_DURATION = 125;
 export const ANIMATION_EASING = Easing.bezier(0.25, 0.1, 0.25, 1);
 
 /**
- * Ripple color map for different button variants in light theme
+ * Alpha values for ripple effect based on theme and variant
  */
-export const RIPPLE_COLOR_LIGHT_THEME_MAP: Record<ButtonVariant, string> = {
-  primary: 'rgba(250, 250, 250, 0.1)',
-  secondary: 'rgba(10, 10, 10, 0.05)',
-  tertiary: 'rgba(10, 10, 10, 0.02)',
-  ghost: 'rgba(10, 10, 10, 0.03)',
-  danger: 'rgba(250, 250, 250, 0.12)',
-};
+export const RIPPLE_ALPHA_MAP = {
+  light: {
+    primary: 0.1,
+    secondary: 0.05,
+    tertiary: 0.02,
+    ghost: 0.03,
+    danger: 0.12,
+  },
+  dark: {
+    primary: 0.07,
+    secondary: 0.08,
+    tertiary: 0.03,
+    ghost: 0.05,
+    danger: 0.1,
+  },
+} as const;
 
 /**
- * Ripple color map for different button variants in dark theme
+ * Map of button variant to theme color property
  */
-export const RIPPLE_COLOR_DARK_THEME_MAP: Record<ButtonVariant, string> = {
-  primary: 'rgba(10, 10, 10, 0.07)',
-  secondary: 'rgba(10, 10, 10, 0.07)',
-  tertiary: 'rgba(250, 250, 250, 0.03)',
-  ghost: 'rgba(250, 250, 250, 0.05)',
-  danger: 'rgba(250, 250, 250, 0.1)',
-};
+export const VARIANT_TO_COLOR_MAP: Record<ButtonVariant, keyof ColorVariables> =
+  {
+    primary: 'accentForeground',
+    secondary: 'accentSoftForeground',
+    tertiary: 'defaultForeground',
+    ghost: 'foreground',
+    danger: 'dangerForeground',
+  };
 
 /**
  * Default label text for the button

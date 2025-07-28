@@ -21,8 +21,6 @@ import {
   ANIMATION_EASING,
   DEFAULT_LABEL_TEXT,
   DISPLAY_NAME,
-  RIPPLE_COLOR_DARK_THEME_MAP,
-  RIPPLE_COLOR_LIGHT_THEME_MAP,
 } from './button.constants';
 import buttonStyles, { nativeStyles } from './button.styles';
 import type {
@@ -33,6 +31,7 @@ import type {
   ButtonRootProps,
   ButtonStartContentProps,
 } from './button.types';
+import { getHighlightColor } from './button.utils';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -103,7 +102,7 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
     [children]
   );
 
-  const { isDark } = useTheme();
+  const { isDark, colors } = useTheme();
 
   const tvStyles = buttonStyles.root({
     variant,
@@ -148,10 +147,8 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
   const highlightValue = useMemo(
     () =>
       animationConfig?.highlight?.color ??
-      (isDark
-        ? RIPPLE_COLOR_DARK_THEME_MAP[variant]
-        : RIPPLE_COLOR_LIGHT_THEME_MAP[variant]),
-    [animationConfig, isDark, variant]
+      getHighlightColor(variant, colors, isDark),
+    [animationConfig, variant, colors, isDark]
   );
   const highlightConfig = useMemo(
     () =>

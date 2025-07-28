@@ -116,6 +116,7 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
 
   const scale = useSharedValue(0);
   const highlight = useSharedValue(0);
+  const btnWidth = useSharedValue(0);
 
   const scaleValue = useMemo(
     () => animationConfig?.scale?.value ?? 0.995,
@@ -131,10 +132,14 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
   );
 
   const animatedContainerStyle = useAnimatedStyle(() => {
+    const baseWidth = 300;
+    const coefficient = btnWidth.get() > 0 ? baseWidth / btnWidth.get() : 1;
+    const adjustedScaleValue = 1 - (1 - scaleValue) * coefficient;
+
     return {
       transform: [
         {
-          scale: interpolate(scale.get(), [0, 1], [1, scaleValue]),
+          scale: interpolate(scale.get(), [0, 1], [1, adjustedScaleValue]),
         },
       ],
     };
@@ -218,6 +223,13 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
 
   const Component = asChild ? Slot.Pressable : AnimatedPressable;
 
+  const handleLayout = useCallback(
+    (event: { nativeEvent: { layout: { width: number } } }) => {
+      btnWidth.set(event.nativeEvent.layout.width);
+    },
+    [btnWidth]
+  );
+
   return (
     <ButtonProvider value={contextValue}>
       <Component
@@ -227,6 +239,7 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
         disabled={isDisabled}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
+        onLayout={handleLayout}
         {...restProps}
       >
         {backgroundElement}

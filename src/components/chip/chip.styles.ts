@@ -11,7 +11,7 @@ const root = tv({
     },
     variant: {
       primary: 'border-0',
-      secondary: 'border border-border bg-base',
+      secondary: 'border border-border bg-default',
       tertiary: 'border border-border bg-transparent',
     },
   },
@@ -24,8 +24,8 @@ const root = tv({
     },
     {
       variant: 'primary',
-      color: 'base',
-      className: 'bg-base',
+      color: 'default',
+      className: 'bg-default',
     },
     {
       variant: 'primary',
@@ -72,8 +72,8 @@ const label = tv({
     },
     {
       variant: 'primary',
-      color: 'base',
-      className: 'text-base-foreground',
+      color: 'default',
+      className: 'text-default-foreground',
     },
     {
       variant: 'primary',
@@ -93,7 +93,7 @@ const label = tv({
     // Secondary & Tertiary variant text colors
     {
       variant: ['secondary', 'tertiary'],
-      color: ['accent', 'base'],
+      color: ['accent', 'default'],
       className: 'text-foreground',
     },
     {

@@ -2,33 +2,33 @@ import { tv } from 'tailwind-variants';
 
 const root = tv({
   slots: {
-    base: 'shadow-2xl border-[0.5px] rounded-full',
+    container: 'shadow-2xl border-[0.5px] rounded-full',
     contentPaddingContainer: 'flex-1  overflow-hidden',
     contentContainer: 'flex-1 justify-center',
   },
   variants: {
     size: {
       sm: {
-        base: 'w-[32px] h-[20px]',
+        container: 'w-[32px] h-[20px]',
         contentPaddingContainer: 'px-[3px]',
       },
       md: {
-        base: 'w-[40px] h-[25px]',
+        container: 'w-[40px] h-[25px]',
         contentPaddingContainer: 'px-[3.5px]',
       },
       lg: {
-        base: 'w-[48px] h-[30px]',
+        container: 'w-[48px] h-[30px]',
         contentPaddingContainer: 'px-[4.5px]',
       },
     },
     isDisabled: {
       true: {
-        base: 'opacity-disabled pointer-events-none',
+        container: 'opacity-disabled pointer-events-none',
       },
     },
     isReadOnly: {
       true: {
-        base: 'pointer-events-none',
+        container: 'pointer-events-none',
       },
     },
   },

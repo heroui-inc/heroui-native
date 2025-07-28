@@ -13,20 +13,23 @@ export default function App() {
       <TouchableOpacity onPress={() => router.push('/theme')}>
         <Text className={classNames.link}>Theme</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/switch')}>
-        <Text className={classNames.link}>Switch</Text>
+      <TouchableOpacity onPress={() => router.push('/button')}>
+        <Text className={classNames.link}>Button</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/checkbox')}>
         <Text className={classNames.link}>Checkbox</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/radio')}>
-        <Text className={classNames.link}>Radio</Text>
+      <TouchableOpacity onPress={() => router.push('/chip')}>
+        <Text className={classNames.link}>Chip</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/spinner')}>
         <Text className={classNames.link}>Spinner</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/chip')}>
-        <Text className={classNames.link}>Chip</Text>
+      <TouchableOpacity onPress={() => router.push('/switch')}>
+        <Text className={classNames.link}>Switch</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => router.push('/radio')}>
+        <Text className={classNames.link}>Radio</Text>
       </TouchableOpacity>
     </View>
   );

@@ -14,7 +14,7 @@ export type ChipVariant = 'primary' | 'secondary' | 'tertiary';
 /**
  * Chip color variants
  */
-export type ChipColor = 'accent' | 'base' | 'success' | 'warning' | 'danger';
+export type ChipColor = 'accent' | 'default' | 'success' | 'warning' | 'danger';
 
 /**
  * Props for the main Chip component

@@ -73,8 +73,8 @@ export default function Theme() {
         />
         <ColorPreview
           title="Base"
-          className="bg-base"
-          textClassName="text-base-foreground"
+          className="bg-default"
+          textClassName="text-default-foreground"
         />
         <ColorPreview
           title="Accent"

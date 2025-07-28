@@ -6815,6 +6815,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-linear-gradient@npm:~14.1.5":
+  version: 14.1.5
+  resolution: "expo-linear-gradient@npm:14.1.5"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 7550e1ff999fbe3da4a4b189a430fbadaeeffa98a2bfe5b4642a27dfdec73e7920e5a60e7db0c3bcc8345604841b4ea251cd5aa30c32d166d6ac2d86e00ecb58
+  languageName: node
+  linkType: hard
+
 "expo-linking@npm:~7.1.7":
   version: 7.1.7
   resolution: "expo-linking@npm:7.1.7"
@@ -7801,6 +7812,7 @@ __metadata:
     babel-plugin-module-resolver: ^5.0.2
     expo: ~53.0.13
     expo-constants: ~17.1.7
+    expo-linear-gradient: ~14.1.5
     expo-linking: ~7.1.7
     expo-router: ~5.1.3
     expo-status-bar: ~2.2.3

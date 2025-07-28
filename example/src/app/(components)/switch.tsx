@@ -97,7 +97,7 @@ export default function SwitchScreen() {
             </Animated.View>
           ) : (
             <Animated.View key="x" entering={ZoomIn}>
-              <X size={14} color={colors.base} strokeWidth={3} />
+              <X size={14} color={colors.default} strokeWidth={3} />
             </Animated.View>
           )}
         </Switch.Thumb>

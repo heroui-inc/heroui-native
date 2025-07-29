@@ -1,0 +1,197 @@
+import { useTheme } from '@/theme';
+import { Accordion, AccordionLayoutTransition } from 'heroui-native';
+import {
+  CreditCard,
+  Earth,
+  Package,
+  ReceiptText,
+  RefreshCcw,
+  ShoppingBag,
+} from 'lucide-react-native';
+import { ScrollView, Text, View } from 'react-native';
+import Animated from 'react-native-reanimated';
+
+const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
+const AnimatedView = Animated.createAnimatedComponent(View);
+
+const ICON_SIZE = 16;
+
+const AccordionScreen = () => {
+  const { colors } = useTheme();
+
+  const accordionData = [
+    {
+      id: '1',
+      title: 'How do I place an order?',
+      icon: <ShoppingBag size={ICON_SIZE} color={colors.mutedForeground} />,
+      content:
+        'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
+    },
+    {
+      id: '2',
+      title: 'Can I modify or cancel my order?',
+      icon: <ReceiptText size={ICON_SIZE} color={colors.mutedForeground} />,
+      content:
+        'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
+    },
+    {
+      id: '3',
+      title: 'What payment methods do you accept?',
+      icon: <CreditCard size={ICON_SIZE} color={colors.mutedForeground} />,
+      content:
+        'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
+    },
+    {
+      id: '4',
+      title: 'How much does shipping cost?',
+      icon: <Package size={ICON_SIZE} color={colors.mutedForeground} />,
+      content:
+        'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
+    },
+    {
+      id: '5',
+      title: 'Do you ship internationally?',
+      icon: <Earth size={ICON_SIZE} color={colors.mutedForeground} />,
+      content:
+        'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
+    },
+    {
+      id: '6',
+      title: 'How do I request a refund?',
+      icon: <RefreshCcw size={ICON_SIZE} color={colors.mutedForeground} />,
+      content:
+        'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
+    },
+  ];
+
+  const classNames = {
+    triggerContentContainer: 'flex-row items-center flex-1 gap-3',
+    triggerTitle: 'text-foreground text-base flex-1',
+    contentText: 'text-muted-foreground text-base/relaxed px-[25px]',
+  };
+
+  return (
+    <AnimatedScrollView
+      className="bg-background"
+      contentContainerClassName="p-4 pb-[150px]"
+      contentInsetAdjustmentBehavior="automatic"
+      layout={AccordionLayoutTransition}
+    >
+      <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
+        <Text className="text-lg font-bold text-muted-foreground mb-4">
+          Default Variant
+        </Text>
+        <Accordion selectionMode="single" defaultValue="1">
+          {accordionData.map((item) => (
+            <Accordion.Item key={item.id} value={item.id}>
+              <Accordion.Trigger>
+                <View className={classNames.triggerContentContainer}>
+                  {item.icon}
+                  <Text className={classNames.triggerTitle}>{item.title}</Text>
+                </View>
+              </Accordion.Trigger>
+              <Accordion.Content>
+                <Text className={classNames.contentText}>{item.content}</Text>
+              </Accordion.Content>
+            </Accordion.Item>
+          ))}
+        </Accordion>
+      </AnimatedView>
+
+      <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
+        <Text className="text-lg font-bold text-muted-foreground mb-4">
+          Border Variant
+        </Text>
+        <Accordion selectionMode="single" variant="border">
+          {accordionData.map((item) => (
+            <Accordion.Item key={item.id} value={item.id}>
+              <Accordion.Trigger>
+                <View className={classNames.triggerContentContainer}>
+                  {item.icon}
+                  <Text className={classNames.triggerTitle}>{item.title}</Text>
+                </View>
+              </Accordion.Trigger>
+              <Accordion.Content>
+                <Text className={classNames.contentText}>{item.content}</Text>
+              </Accordion.Content>
+            </Accordion.Item>
+          ))}
+        </Accordion>
+      </AnimatedView>
+
+      <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
+        <Text className="text-lg font-bold text-muted-foreground mb-4">
+          Multiple Selection
+        </Text>
+        <Accordion
+          selectionMode="multiple"
+          variant="border"
+          defaultValue={['1', '3']}
+        >
+          {accordionData.slice(0, 3).map((item) => (
+            <Accordion.Item key={item.id} value={item.id}>
+              <Accordion.Trigger>
+                <View className={classNames.triggerContentContainer}>
+                  {item.icon}
+                  <Text className={classNames.triggerTitle}>{item.title}</Text>
+                </View>
+              </Accordion.Trigger>
+              <Accordion.Content>
+                <Text className={classNames.contentText}>{item.content}</Text>
+              </Accordion.Content>
+            </Accordion.Item>
+          ))}
+        </Accordion>
+      </AnimatedView>
+
+      <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
+        <Text className="text-lg font-bold text-muted-foreground mb-4">
+          Custom Indicator
+        </Text>
+        <Accordion selectionMode="single" variant="border">
+          {accordionData.slice(0, 2).map((item) => (
+            <Accordion.Item key={item.id} value={item.id}>
+              <Accordion.Trigger>
+                <View className={classNames.triggerContentContainer}>
+                  {item.icon}
+                  <Text className={classNames.triggerTitle}>{item.title}</Text>
+                </View>
+                <Accordion.Indicator>
+                  <Text className="text-accent text-sm font-medium">
+                    {item.id === '1' ? '▼' : '▶'}
+                  </Text>
+                </Accordion.Indicator>
+              </Accordion.Trigger>
+              <Accordion.Content>
+                <Text className={classNames.contentText}>{item.content}</Text>
+              </Accordion.Content>
+            </Accordion.Item>
+          ))}
+        </Accordion>
+      </AnimatedView>
+
+      <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
+        <Text className="text-lg font-bold text-muted-foreground mb-4">
+          No Divider
+        </Text>
+        <Accordion selectionMode="single" variant="border" showDivider={false}>
+          {accordionData.slice(0, 3).map((item) => (
+            <Accordion.Item key={item.id} value={item.id}>
+              <Accordion.Trigger>
+                <View className={classNames.triggerContentContainer}>
+                  {item.icon}
+                  <Text className={classNames.triggerTitle}>{item.title}</Text>
+                </View>
+              </Accordion.Trigger>
+              <Accordion.Content>
+                <Text className={classNames.contentText}>{item.content}</Text>
+              </Accordion.Content>
+            </Accordion.Item>
+          ))}
+        </Accordion>
+      </AnimatedView>
+    </AnimatedScrollView>
+  );
+};
+
+export default AccordionScreen;

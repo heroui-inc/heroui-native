@@ -13,6 +13,9 @@ export default function App() {
       <TouchableOpacity onPress={() => router.push('/theme')}>
         <Text className={classNames.link}>Theme</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => router.push('/accordion')}>
+        <Text className={classNames.link}>Accordion</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/button')}>
         <Text className={classNames.link}>Button</Text>
       </TouchableOpacity>

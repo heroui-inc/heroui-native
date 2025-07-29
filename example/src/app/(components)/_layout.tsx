@@ -23,6 +23,7 @@ export default function Layout() {
     >
       <Stack.Screen name="index" options={{ title: 'HeroUI Native' }} />
       <Stack.Screen name="theme" options={{ title: 'Theme' }} />
+      <Stack.Screen name="accordion" options={{ title: 'Accordion' }} />
       <Stack.Screen name="switch" options={{ title: 'Switch' }} />
       <Stack.Screen name="checkbox" options={{ title: 'Checkbox' }} />
       <Stack.Screen name="radio" options={{ title: 'Radio' }} />

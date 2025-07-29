@@ -66,7 +66,7 @@ const content = tv({
   },
 });
 
-const styles = StyleSheet.create({
+const nativeStyles = StyleSheet.create({
   borderContainer: {
     borderCurve: 'continuous',
   },
@@ -78,7 +78,7 @@ const accordionStyles = Object.assign({
   trigger,
   indicator,
   content,
-  styles,
+  nativeStyles,
 });
 
 export default accordionStyles;

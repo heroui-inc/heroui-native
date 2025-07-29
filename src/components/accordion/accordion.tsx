@@ -1,9 +1,8 @@
-import { createContext, getElementWithDefault } from '@/helpers/utils';
+import { createContext } from '@/helpers/utils';
 import * as AccordionPrimitive from '@/primitives/accordion';
-import * as Slot from '@/primitives/slot';
 import { useTheme } from '@/theme';
-import React, { forwardRef, useEffect, useMemo } from 'react';
-import { Pressable, View, type GestureResponderEvent } from 'react-native';
+import { Children, forwardRef, useEffect, useMemo } from 'react';
+import { View, type GestureResponderEvent } from 'react-native';
 import Animated, {
   Easing,
   FadeIn,
@@ -34,6 +33,18 @@ import type {
 } from './accordion.types';
 import { ChevronDownIcon } from './chevron-down-icon';
 
+const AnimatedRootView = Animated.createAnimatedComponent(
+  AccordionPrimitive.Root
+);
+
+const AnimatedItemView = Animated.createAnimatedComponent(
+  AccordionPrimitive.Item
+);
+
+const AnimatedContent = Animated.createAnimatedComponent(
+  AccordionPrimitive.Content
+);
+
 // ------------------------------------------------------------------------------
 
 const [AccordionProvider, useAccordionContext] =
@@ -56,37 +67,47 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
   } = props;
 
   const { container, divider } = accordionStyles.root({ variant });
+
   const containerStyles = container({
     className: [className, classNames?.container],
   });
+
   const dividerStyles = divider({ className: classNames?.divider });
 
+  const contextValue: AccordionContextValue = useMemo(
+    () => ({
+      variant,
+      showDivider,
+    }),
+    [variant, showDivider]
+  );
+
   return (
-    <AccordionProvider value={{ variant, showDivider }}>
-      <AccordionPrimitive.Root {...restProps} asChild>
-        <Animated.View
-          ref={ref}
-          className={containerStyles}
-          style={
-            variant === 'border'
-              ? accordionStyles.styles.borderContainer
-              : undefined
-          }
-          layout={ACCORDION_LAYOUT_TRANSITION}
-        >
-          {React.Children.map(children, (child, index) => (
-            <>
-              {child}
-              {showDivider && index < React.Children.count(children) - 1 && (
-                <Animated.View
-                  className={dividerStyles}
-                  layout={ACCORDION_LAYOUT_TRANSITION}
-                />
-              )}
-            </>
-          ))}
-        </Animated.View>
-      </AccordionPrimitive.Root>
+    <AccordionProvider value={contextValue}>
+      <AnimatedRootView
+        ref={ref}
+        className={containerStyles}
+        style={
+          variant === 'border'
+            ? accordionStyles.nativeStyles.borderContainer
+            : undefined
+        }
+        // VS -------------------------
+        layout={ACCORDION_LAYOUT_TRANSITION}
+        {...restProps}
+      >
+        {Children.map(children, (child, index) => (
+          <>
+            {child}
+            {showDivider && index < Children.count(children) - 1 && (
+              <Animated.View
+                className={dividerStyles}
+                layout={ACCORDION_LAYOUT_TRANSITION}
+              />
+            )}
+          </>
+        ))}
+      </AnimatedRootView>
     </AccordionProvider>
   );
 });
@@ -94,54 +115,61 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
 // ------------------------------------------------------------------------------
 
 const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
-  const { children, className, ...primitiveProps } = props;
+  const { children, className, ...restProps } = props;
+
   const tvStyles = accordionStyles.item({ className });
 
   return (
-    <AccordionPrimitive.Item {...primitiveProps} asChild>
-      <Animated.View
-        ref={ref}
-        className={tvStyles}
-        layout={ACCORDION_LAYOUT_TRANSITION}
-      >
-        {children}
-      </Animated.View>
-    </AccordionPrimitive.Item>
+    <AnimatedItemView
+      ref={ref}
+      className={tvStyles}
+      // VS -------------------------
+      layout={ACCORDION_LAYOUT_TRANSITION}
+      {...restProps}
+    >
+      {children}
+    </AnimatedItemView>
   );
 });
 
 // ------------------------------------------------------------------------------
 
 const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
-  const { children, className, ...primitiveProps } = props;
+  const { children, className, ...restProps } = props;
+
   const { variant } = useAccordionContext();
 
   const { colors } = useTheme();
 
-  const indicatorElement = useMemo(
-    () =>
-      getElementWithDefault(children, DISPLAY_NAME.INDICATOR, <Indicator />),
-    [children]
-  );
+  const { base, highlight } = accordionStyles.trigger({
+    variant,
+    isDisabled: restProps.isDisabled,
+  });
+
+  const tvBaseStyles = base({ className });
+
+  const tvHighlightStyles = highlight();
 
   const highlightOpacity = useSharedValue(0);
 
-  const handlePressIn = () => {
-    highlightOpacity.value = withTiming(1, {
-      duration: HIGHLIGHT_CONFIG.duration,
-      easing: HIGHLIGHT_CONFIG.easing,
-    });
+  const handlePressIn = (event: GestureResponderEvent) => {
+    highlightOpacity.set(
+      withTiming(1, {
+        duration: HIGHLIGHT_CONFIG.duration,
+        easing: HIGHLIGHT_CONFIG.easing,
+      })
+    );
+    restProps.onPressIn?.(event);
   };
 
-  const handlePressOut = () => {
-    highlightOpacity.value = withTiming(0, {
-      duration: HIGHLIGHT_CONFIG.duration,
-      easing: HIGHLIGHT_CONFIG.easing,
-    });
-  };
-
-  const handlePress = (event: GestureResponderEvent) => {
-    primitiveProps.onPress?.(event);
+  const handlePressOut = (event: GestureResponderEvent) => {
+    highlightOpacity.set(
+      withTiming(0, {
+        duration: HIGHLIGHT_CONFIG.duration,
+        easing: HIGHLIGHT_CONFIG.easing,
+      })
+    );
+    restProps.onPressOut?.(event);
   };
 
   const animatedHighlightStyle = useAnimatedStyle(() => ({
@@ -149,32 +177,20 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
     backgroundColor: colors.foreground,
   }));
 
-  const { base, highlight } = accordionStyles.trigger({
-    variant,
-    isDisabled: primitiveProps.isDisabled,
-  });
-  const tvBaseStyles = base({ className });
-  const tvHighlightStyles = highlight();
-
   return (
-    <AccordionPrimitive.Header asChild>
+    <AccordionPrimitive.Header>
       <AccordionPrimitive.Trigger
-        {...primitiveProps}
-        onPress={handlePress}
+        ref={ref}
+        className={tvBaseStyles}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
-        asChild
+        {...restProps}
       >
-        <Pressable ref={ref}>
-          <View className={tvBaseStyles}>
-            <Animated.View
-              className={tvHighlightStyles}
-              style={animatedHighlightStyle}
-            />
-            {children}
-            {indicatorElement}
-          </View>
-        </Pressable>
+        <Animated.View
+          className={tvHighlightStyles}
+          style={animatedHighlightStyle}
+        />
+        {children}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   );
@@ -184,35 +200,36 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 
 const Indicator = forwardRef<AccordionIndicatorRef, AccordionIndicatorProps>(
   (props, ref) => {
-    const { children, className, iconProps, asChild, ...viewProps } = props;
-
-    const { colors } = useTheme();
-    const rotation = useSharedValue(0);
+    const { children, className, iconProps, ...restProps } = props;
 
     const { isExpanded } = useAccordionItemContext();
 
+    const { colors } = useTheme();
+
+    const tvStyles = accordionStyles.indicator({ className });
+
+    const rotation = useSharedValue(0);
+
     useEffect(() => {
-      rotation.value = withSpring(isExpanded ? 1 : 0, INDICATOR_SPRING_CONFIG);
+      // VS -------------------------
+      rotation.set(withSpring(isExpanded ? 1 : 0, INDICATOR_SPRING_CONFIG));
     }, [isExpanded, rotation]);
 
     const animatedStyle = useAnimatedStyle(() => {
       return {
         transform: [
           {
-            rotate: interpolate(rotation.value, [0, 1], [0, 180]) + 'deg',
+            rotate: interpolate(rotation.get(), [0, 1], [0, 180]) + 'deg',
           },
         ],
       };
     });
 
-    const tvStyles = accordionStyles.indicator({ className });
-    const Component = asChild ? Slot.View : View;
-
     if (children) {
       return (
-        <Component ref={ref} className={tvStyles} {...viewProps}>
+        <View ref={ref} className={tvStyles} {...restProps}>
           {children}
-        </Component>
+        </View>
       );
     }
 
@@ -221,7 +238,7 @@ const Indicator = forwardRef<AccordionIndicatorRef, AccordionIndicatorProps>(
         ref={ref}
         className={tvStyles}
         style={animatedStyle}
-        {...viewProps}
+        {...restProps}
       >
         <ChevronDownIcon
           size={iconProps?.size ?? DEFAULT_ICON_SIZE}
@@ -236,22 +253,29 @@ const Indicator = forwardRef<AccordionIndicatorRef, AccordionIndicatorProps>(
 // ------------------------------------------------------------------------------
 
 const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
-  const { children, className, ...primitiveProps } = props;
+  const { children, className, ...restProps } = props;
+
   const { variant } = useAccordionContext();
+
+  const { isExpanded } = useAccordionItemContext();
+
   const tvStyles = accordionStyles.content({ variant, className });
 
+  if (!isExpanded) {
+    return <></>;
+  }
+
   return (
-    <AccordionPrimitive.Content {...primitiveProps} asChild>
-      <Animated.View
-        ref={ref}
-        className={tvStyles}
-        // VS -----------
-        entering={FadeIn.duration(200).easing(Easing.out(Easing.ease))}
-        exiting={FadeOut.duration(200).easing(Easing.in(Easing.ease))}
-      >
-        {children}
-      </Animated.View>
-    </AccordionPrimitive.Content>
+    <AnimatedContent
+      ref={ref}
+      className={tvStyles}
+      // VS -----------
+      entering={FadeIn.duration(200).easing(Easing.out(Easing.ease))}
+      exiting={FadeOut.duration(200).easing(Easing.in(Easing.ease))}
+      {...restProps}
+    >
+      {children}
+    </AnimatedContent>
   );
 });
 

@@ -89,6 +89,7 @@ const AccordionScreen = () => {
                   {item.icon}
                   <Text className={classNames.triggerTitle}>{item.title}</Text>
                 </View>
+                <Accordion.Indicator />
               </Accordion.Trigger>
               <Accordion.Content>
                 <Text className={classNames.contentText}>{item.content}</Text>
@@ -110,6 +111,7 @@ const AccordionScreen = () => {
                   {item.icon}
                   <Text className={classNames.triggerTitle}>{item.title}</Text>
                 </View>
+                <Accordion.Indicator />
               </Accordion.Trigger>
               <Accordion.Content>
                 <Text className={classNames.contentText}>{item.content}</Text>
@@ -135,6 +137,7 @@ const AccordionScreen = () => {
                   {item.icon}
                   <Text className={classNames.triggerTitle}>{item.title}</Text>
                 </View>
+                <Accordion.Indicator />
               </Accordion.Trigger>
               <Accordion.Content>
                 <Text className={classNames.contentText}>{item.content}</Text>
@@ -182,6 +185,7 @@ const AccordionScreen = () => {
                   {item.icon}
                   <Text className={classNames.triggerTitle}>{item.title}</Text>
                 </View>
+                <Accordion.Indicator />
               </Accordion.Trigger>
               <Accordion.Content>
                 <Text className={classNames.contentText}>{item.content}</Text>

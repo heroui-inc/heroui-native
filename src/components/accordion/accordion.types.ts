@@ -6,6 +6,12 @@ import type {
   RootProps as PrimitiveRootProps,
   TriggerProps as PrimitiveTriggerProps,
 } from '@/primitives/accordion';
+import type {
+  BaseAnimationBuilder,
+  EntryExitAnimationFunction,
+  LayoutAnimationFunction,
+  WithSpringConfig,
+} from 'react-native-reanimated';
 
 /**
  * Variant types for the Accordion component
@@ -47,6 +53,10 @@ export type AccordionRootProps = PrimitiveRootProps & {
      */
     divider?: string;
   };
+  /**
+   * Custom layout animation for accordion transitions
+   */
+  layoutTransition?: LayoutAnimationFunction;
 };
 
 /**
@@ -75,6 +85,24 @@ export interface AccordionTriggerProps extends PrimitiveTriggerProps {
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Custom highlight color for press feedback
+   */
+  highlightColor?: string;
+  /**
+   * Custom highlight opacity for press feedback
+   * @default 0.03
+   */
+  highlightOpacity?: number;
+  /**
+   * Custom timing config for highlight animation
+   */
+  highlightTimingConfig?: TimingConfig;
+  /**
+   * Whether to hide the highlight on press
+   * @default false
+   */
+  hideHighlight?: boolean;
 }
 
 /**
@@ -112,6 +140,10 @@ export interface AccordionIndicatorProps extends SlottableViewProps {
    * Animation configuration for the indicator rotation
    */
   animationConfig?: TimingConfig;
+  /**
+   * Spring configuration for indicator animation
+   */
+  springConfig?: WithSpringConfig;
 }
 
 /**
@@ -126,6 +158,20 @@ export interface AccordionContentProps extends PrimitiveContentProps {
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Custom entering animation for content
+   */
+  entering?:
+    | BaseAnimationBuilder
+    | typeof BaseAnimationBuilder
+    | EntryExitAnimationFunction;
+  /**
+   * Custom exiting animation for content
+   */
+  exiting?:
+    | BaseAnimationBuilder
+    | typeof BaseAnimationBuilder
+    | EntryExitAnimationFunction;
 }
 
 /**
@@ -140,6 +186,10 @@ export interface AccordionContextValue {
    * Whether to show dividers between items
    */
   showDivider: boolean;
+  /**
+   * Custom layout animation for accordion transitions
+   */
+  layoutTransition?: LayoutAnimationFunction;
 }
 
 /**

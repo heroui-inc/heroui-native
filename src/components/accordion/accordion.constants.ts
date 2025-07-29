@@ -1,4 +1,9 @@
-import { Easing, LinearTransition } from 'react-native-reanimated';
+import {
+  Easing,
+  FadeIn,
+  FadeOut,
+  LinearTransition,
+} from 'react-native-reanimated';
 
 /**
  * Display names for Accordion components
@@ -10,16 +15,6 @@ export const DISPLAY_NAME = {
   INDICATOR: 'HeroUINative.Accordion.Indicator',
   CONTENT: 'HeroUINative.Accordion.Content',
 };
-
-/**
- * Animation duration for accordion transitions in milliseconds
- */
-export const ANIMATION_DURATION = 200;
-
-/**
- * Animation easing function for smooth transitions
- */
-export const ANIMATION_EASING = Easing.bezier(0.32, 0, 0.67, 0);
 
 /**
  * Default layout transition for accordion animations
@@ -61,3 +56,17 @@ export const INDICATOR_SPRING_CONFIG = {
   damping: 28,
   stiffness: 260,
 };
+
+/**
+ * Default entering animation for accordion content
+ */
+export const DEFAULT_CONTENT_ENTERING = FadeIn.duration(200).easing(
+  Easing.out(Easing.ease)
+);
+
+/**
+ * Default exiting animation for accordion content
+ */
+export const DEFAULT_CONTENT_EXITING = FadeOut.duration(200).easing(
+  Easing.in(Easing.ease)
+);

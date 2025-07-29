@@ -4,9 +4,6 @@ import { useTheme } from '@/theme';
 import { Children, forwardRef, useEffect, useMemo } from 'react';
 import { View, type GestureResponderEvent } from 'react-native';
 import Animated, {
-  Easing,
-  FadeIn,
-  FadeOut,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
@@ -15,6 +12,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import {
   ACCORDION_LAYOUT_TRANSITION,
+  DEFAULT_CONTENT_ENTERING,
+  DEFAULT_CONTENT_EXITING,
   DEFAULT_ICON_SIZE,
   DEFAULT_ICON_STROKE_WIDTH,
   DISPLAY_NAME,
@@ -63,6 +62,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     showDivider = true,
     className,
     classNames,
+    layoutTransition,
     ...restProps
   } = props;
 
@@ -78,8 +78,9 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     () => ({
       variant,
       showDivider,
+      layoutTransition,
     }),
-    [variant, showDivider]
+    [variant, showDivider, layoutTransition]
   );
 
   return (
@@ -92,8 +93,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
             ? accordionStyles.nativeStyles.borderContainer
             : undefined
         }
-        // VS -------------------------
-        layout={ACCORDION_LAYOUT_TRANSITION}
+        layout={layoutTransition || ACCORDION_LAYOUT_TRANSITION}
         {...restProps}
       >
         {Children.map(children, (child, index) => (
@@ -102,7 +102,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
             {showDivider && index < Children.count(children) - 1 && (
               <Animated.View
                 className={dividerStyles}
-                layout={ACCORDION_LAYOUT_TRANSITION}
+                layout={layoutTransition || ACCORDION_LAYOUT_TRANSITION}
               />
             )}
           </>
@@ -117,14 +117,15 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
 const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
+  const { layoutTransition } = useAccordionContext();
+
   const tvStyles = accordionStyles.item({ className });
 
   return (
     <AnimatedItemView
       ref={ref}
       className={tvStyles}
-      // VS -------------------------
-      layout={ACCORDION_LAYOUT_TRANSITION}
+      layout={layoutTransition || ACCORDION_LAYOUT_TRANSITION}
       {...restProps}
     >
       {children}
@@ -135,7 +136,15 @@ const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
 // ------------------------------------------------------------------------------
 
 const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
-  const { children, className, ...restProps } = props;
+  const {
+    children,
+    className,
+    highlightColor,
+    highlightOpacity: highlightOpacityProp = 0.03,
+    highlightTimingConfig,
+    hideHighlight = false,
+    ...restProps
+  } = props;
 
   const { variant } = useAccordionContext();
 
@@ -153,28 +162,38 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
   const highlightOpacity = useSharedValue(0);
 
   const handlePressIn = (event: GestureResponderEvent) => {
-    highlightOpacity.set(
-      withTiming(1, {
-        duration: HIGHLIGHT_CONFIG.duration,
-        easing: HIGHLIGHT_CONFIG.easing,
-      })
-    );
+    if (!hideHighlight) {
+      highlightOpacity.set(
+        withTiming(
+          1,
+          highlightTimingConfig || {
+            duration: HIGHLIGHT_CONFIG.duration,
+            easing: HIGHLIGHT_CONFIG.easing,
+          }
+        )
+      );
+    }
     restProps.onPressIn?.(event);
   };
 
   const handlePressOut = (event: GestureResponderEvent) => {
-    highlightOpacity.set(
-      withTiming(0, {
-        duration: HIGHLIGHT_CONFIG.duration,
-        easing: HIGHLIGHT_CONFIG.easing,
-      })
-    );
+    if (!hideHighlight) {
+      highlightOpacity.set(
+        withTiming(
+          0,
+          highlightTimingConfig || {
+            duration: HIGHLIGHT_CONFIG.duration,
+            easing: HIGHLIGHT_CONFIG.easing,
+          }
+        )
+      );
+    }
     restProps.onPressOut?.(event);
   };
 
   const animatedHighlightStyle = useAnimatedStyle(() => ({
-    opacity: highlightOpacity.value * 0.03,
-    backgroundColor: colors.foreground,
+    opacity: highlightOpacity.get() * highlightOpacityProp,
+    backgroundColor: highlightColor || colors.foreground,
   }));
 
   return (
@@ -186,10 +205,12 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
         onPressOut={handlePressOut}
         {...restProps}
       >
-        <Animated.View
-          className={tvHighlightStyles}
-          style={animatedHighlightStyle}
-        />
+        {!hideHighlight && (
+          <Animated.View
+            className={tvHighlightStyles}
+            style={animatedHighlightStyle}
+          />
+        )}
         {children}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
@@ -200,7 +221,8 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 
 const Indicator = forwardRef<AccordionIndicatorRef, AccordionIndicatorProps>(
   (props, ref) => {
-    const { children, className, iconProps, ...restProps } = props;
+    const { children, className, iconProps, springConfig, ...restProps } =
+      props;
 
     const { isExpanded } = useAccordionItemContext();
 
@@ -211,9 +233,10 @@ const Indicator = forwardRef<AccordionIndicatorRef, AccordionIndicatorProps>(
     const rotation = useSharedValue(0);
 
     useEffect(() => {
-      // VS -------------------------
-      rotation.set(withSpring(isExpanded ? 1 : 0, INDICATOR_SPRING_CONFIG));
-    }, [isExpanded, rotation]);
+      rotation.set(
+        withSpring(isExpanded ? 1 : 0, springConfig || INDICATOR_SPRING_CONFIG)
+      );
+    }, [isExpanded, rotation, springConfig]);
 
     const animatedStyle = useAnimatedStyle(() => {
       return {
@@ -253,7 +276,7 @@ const Indicator = forwardRef<AccordionIndicatorRef, AccordionIndicatorProps>(
 // ------------------------------------------------------------------------------
 
 const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
-  const { children, className, ...restProps } = props;
+  const { children, className, entering, exiting, ...restProps } = props;
 
   const { variant } = useAccordionContext();
 
@@ -269,9 +292,8 @@ const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
     <AnimatedContent
       ref={ref}
       className={tvStyles}
-      // VS -----------
-      entering={FadeIn.duration(200).easing(Easing.out(Easing.ease))}
-      exiting={FadeOut.duration(200).easing(Easing.in(Easing.ease))}
+      entering={entering || DEFAULT_CONTENT_ENTERING}
+      exiting={exiting || DEFAULT_CONTENT_EXITING}
       {...restProps}
     >
       {children}

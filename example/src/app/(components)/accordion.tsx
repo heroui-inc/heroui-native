@@ -1,20 +1,59 @@
 import { useTheme } from '@/theme';
-import { Accordion, AccordionLayoutTransition } from 'heroui-native';
+import {
+  Accordion,
+  AccordionLayoutTransition,
+  useAccordionItemContext,
+} from 'heroui-native';
 import {
   CreditCard,
   Earth,
+  Minus,
   Package,
+  Plus,
   ReceiptText,
   RefreshCcw,
   ShoppingBag,
 } from 'lucide-react-native';
 import { ScrollView, Text, View } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, { Easing, ZoomIn, ZoomOut } from 'react-native-reanimated';
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 const AnimatedView = Animated.createAnimatedComponent(View);
 
 const ICON_SIZE = 16;
+const CUSTOM_INDICATOR_ENTERING = ZoomIn.duration(200).easing(
+  Easing.inOut(Easing.ease)
+);
+const CUSTOM_INDICATOR_EXITING = ZoomOut.duration(200).easing(
+  Easing.inOut(Easing.ease)
+);
+
+const CustomIndicator = () => {
+  const { isExpanded } = useAccordionItemContext();
+  const { colors } = useTheme();
+
+  return (
+    <View className="w-5 h-5 items-center justify-center">
+      {isExpanded ? (
+        <Animated.View
+          key="minus"
+          entering={CUSTOM_INDICATOR_ENTERING}
+          exiting={CUSTOM_INDICATOR_EXITING}
+        >
+          <Minus size={16} color={colors.mutedForeground} />
+        </Animated.View>
+      ) : (
+        <Animated.View
+          key="plus"
+          entering={CUSTOM_INDICATOR_ENTERING}
+          exiting={CUSTOM_INDICATOR_EXITING}
+        >
+          <Plus size={16} color={colors.mutedForeground} />
+        </Animated.View>
+      )}
+    </View>
+  );
+};
 
 const AccordionScreen = () => {
   const { colors } = useTheme();
@@ -160,9 +199,7 @@ const AccordionScreen = () => {
                   <Text className={classNames.triggerTitle}>{item.title}</Text>
                 </View>
                 <Accordion.Indicator>
-                  <Text className="text-accent text-sm font-medium">
-                    {item.id === '1' ? '▼' : '▶'}
-                  </Text>
+                  <CustomIndicator />
                 </Accordion.Indicator>
               </Accordion.Trigger>
               <Accordion.Content>

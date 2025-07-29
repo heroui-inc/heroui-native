@@ -95,11 +95,18 @@ type TriggerProps = Omit<SlottablePressableProps, 'disabled'> & {
 /** Ref type for accordion trigger */
 type TriggerRef = PressableRef;
 
+/** Props for accordion item indicator */
+type IndicatorProps = SlottableViewProps;
+/** Ref type for accordion indicator */
+type IndicatorRef = ViewRef;
+
 export type {
   ContentProps,
   ContentRef,
   HeaderProps,
   HeaderRef,
+  IndicatorProps,
+  IndicatorRef,
   ItemProps,
   ItemRef,
   RootContext,

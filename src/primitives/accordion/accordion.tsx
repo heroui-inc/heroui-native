@@ -7,6 +7,8 @@ import type {
   ContentRef,
   HeaderProps,
   HeaderRef,
+  IndicatorProps,
+  IndicatorRef,
   ItemProps,
   ItemRef,
   RootContext,
@@ -216,6 +218,20 @@ Trigger.displayName = 'HeroUINative.Primitive.Accordion.Trigger';
 
 // --------------------------------------------------
 
+const Indicator = forwardRef<IndicatorRef, IndicatorProps>(
+  ({ asChild, ...props }, ref) => {
+    const Component = asChild ? Slot.View : View;
+
+    return (
+      <Component ref={ref} role="presentation" aria-hidden={true} {...props} />
+    );
+  }
+);
+
+Indicator.displayName = 'HeroUINative.Primitive.Accordion.Indicator';
+
+// --------------------------------------------------
+
 const Content = forwardRef<ContentRef, ContentProps>(
   ({ asChild, forceMount, ...props }, ref) => {
     const { selectionMode } = useRootContext();
@@ -242,4 +258,4 @@ const Content = forwardRef<ContentRef, ContentProps>(
 
 Content.displayName = 'HeroUINative.Primitive.Accordion.Content';
 
-export { Content, Header, Item, Root, Trigger, useItemContext };
+export { Content, Header, Indicator, Item, Root, Trigger, useItemContext };

@@ -44,6 +44,10 @@ const AnimatedContent = Animated.createAnimatedComponent(
   AccordionPrimitive.Content
 );
 
+const AnimatedIndicator = Animated.createAnimatedComponent(
+  AccordionPrimitive.Indicator
+);
+
 // ------------------------------------------------------------------------------
 
 const [AccordionProvider, useAccordionContext] =
@@ -250,14 +254,18 @@ const Indicator = forwardRef<AccordionIndicatorRef, AccordionIndicatorProps>(
 
     if (children) {
       return (
-        <View ref={ref} className={tvStyles} {...restProps}>
+        <AccordionPrimitive.Indicator
+          ref={ref}
+          className={tvStyles}
+          {...restProps}
+        >
           {children}
-        </View>
+        </AccordionPrimitive.Indicator>
       );
     }
 
     return (
-      <Animated.View
+      <AnimatedIndicator
         ref={ref}
         className={tvStyles}
         style={animatedStyle}
@@ -268,7 +276,7 @@ const Indicator = forwardRef<AccordionIndicatorRef, AccordionIndicatorProps>(
           strokeWidth={iconProps?.strokeWidth ?? DEFAULT_ICON_STROKE_WIDTH}
           color={iconProps?.color ?? colors.foreground}
         />
-      </Animated.View>
+      </AnimatedIndicator>
     );
   }
 );

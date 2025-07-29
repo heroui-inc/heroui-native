@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 
 const root = tv({
   slots: {
-    container: 'flex-col',
+    container: 'flex-col overflow-hidden',
     divider: 'h-px bg-border',
   },
   variants: {
@@ -13,7 +13,7 @@ const root = tv({
         divider: '',
       },
       border: {
-        container: 'border border-border rounded-xl overflow-hidden',
+        container: 'border border-border rounded-xl ',
         divider: '',
       },
     },
@@ -29,7 +29,7 @@ const item = tv({
 
 const trigger = tv({
   slots: {
-    base: 'flex-row items-center justify-between py-4 px-4',
+    base: 'flex-row items-center justify-between py-4 px-4 bg-background z-10',
     highlight: 'absolute inset-0',
   },
   variants: {

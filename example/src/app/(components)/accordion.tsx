@@ -1,8 +1,8 @@
-import { useTheme } from '@/theme';
 import {
   Accordion,
   AccordionLayoutTransition,
   useAccordionItemContext,
+  useTheme,
 } from 'heroui-native';
 import {
   CreditCard,
@@ -15,7 +15,15 @@ import {
   ShoppingBag,
 } from 'lucide-react-native';
 import { ScrollView, Text, View } from 'react-native';
-import Animated, { Easing, ZoomIn, ZoomOut } from 'react-native-reanimated';
+import Animated, {
+  Easing,
+  FadeIn,
+  FadeOut,
+  SlideInDown,
+  SlideOutUp,
+  ZoomIn,
+  ZoomOut,
+} from 'react-native-reanimated';
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 const AnimatedView = Animated.createAnimatedComponent(View);
@@ -212,19 +220,61 @@ const AccordionScreen = () => {
 
       <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
         <Text className="text-lg font-bold text-muted-foreground mb-4">
-          No Divider
+          No Divider (Animation Props Test)
         </Text>
         <Accordion selectionMode="single" variant="border" showDivider={false}>
-          {accordionData.slice(0, 3).map((item) => (
+          {accordionData.slice(0, 3).map((item, index) => (
             <Accordion.Item key={item.id} value={item.id}>
-              <Accordion.Trigger>
+              <Accordion.Trigger
+                highlightColor={
+                  index === 0
+                    ? colors.accent
+                    : index === 1
+                      ? colors.success
+                      : colors.danger
+                }
+                highlightOpacity={0.1}
+                highlightTimingConfig={
+                  index === 0
+                    ? {
+                        duration: 300,
+                        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+                      }
+                    : index === 1
+                      ? { duration: 100, easing: Easing.linear }
+                      : { duration: 300, easing: Easing.out(Easing.bounce) }
+                }
+              >
                 <View className={classNames.triggerContentContainer}>
                   {item.icon}
                   <Text className={classNames.triggerTitle}>{item.title}</Text>
                 </View>
-                <Accordion.Indicator />
+                <Accordion.Indicator
+                  springConfig={
+                    index === 0
+                      ? { damping: 10, stiffness: 100 }
+                      : index === 1
+                        ? { damping: 50, stiffness: 500 }
+                        : { damping: 15, stiffness: 150 }
+                  }
+                />
               </Accordion.Trigger>
-              <Accordion.Content>
+              <Accordion.Content
+                entering={
+                  index === 0
+                    ? ZoomIn.duration(300).easing(Easing.elastic(1))
+                    : index === 1
+                      ? FadeIn.duration(500).easing(Easing.inOut(Easing.ease))
+                      : SlideInDown.duration(400).easing(Easing.out(Easing.exp))
+                }
+                exiting={
+                  index === 0
+                    ? ZoomOut.duration(200).easing(Easing.in(Easing.ease))
+                    : index === 1
+                      ? FadeOut.duration(300).easing(Easing.out(Easing.ease))
+                      : SlideOutUp.duration(300).easing(Easing.in(Easing.exp))
+                }
+              >
                 <Text className={classNames.contentText}>{item.content}</Text>
               </Accordion.Content>
             </Accordion.Item>

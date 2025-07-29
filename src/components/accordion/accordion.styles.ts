@@ -29,7 +29,7 @@ const item = tv({
 
 const trigger = tv({
   slots: {
-    base: 'flex-row items-center justify-between py-4 px-4 bg-background z-10',
+    base: 'flex-row items-center justify-between py-4 px-4 bg-background z-10 overflow-hidden',
     highlight: 'absolute inset-0',
   },
   variants: {

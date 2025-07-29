@@ -24,9 +24,17 @@ export const ANIMATION_DURATION = 125;
 export const ANIMATION_EASING = Easing.bezier(0.25, 0.1, 0.25, 1);
 
 /**
- * Alpha values for ripple effect based on theme and variant
+ * Highlight animation configuration
  */
-export const RIPPLE_ALPHA_MAP = {
+export const HIGHLIGHT_CONFIG = {
+  duration: ANIMATION_DURATION,
+  easing: ANIMATION_EASING,
+};
+
+/**
+ * Alpha values for highlight effect based on theme and variant
+ */
+export const OPACITY_ALPHA_MAP = {
   light: {
     primary: 0.1,
     secondary: 0.05,

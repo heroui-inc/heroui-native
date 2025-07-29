@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import Animated, {
   interpolate,
-  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -21,6 +20,9 @@ import {
   ANIMATION_EASING,
   DEFAULT_LABEL_TEXT,
   DISPLAY_NAME,
+  HIGHLIGHT_CONFIG,
+  OPACITY_ALPHA_MAP,
+  VARIANT_TO_COLOR_MAP,
 } from './button.constants';
 import buttonStyles, { nativeStyles } from './button.styles';
 import type {
@@ -31,7 +33,6 @@ import type {
   ButtonRootProps,
   ButtonStartContentProps,
 } from './button.types';
-import { getHighlightColor } from './button.utils';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -114,7 +115,7 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
   });
 
   const scale = useSharedValue(0);
-  const highlight = useSharedValue(0);
+  const highlightOpacityValue = useSharedValue(0);
   const btnWidth = useSharedValue(0);
 
   const scaleValue = useMemo(
@@ -144,28 +145,24 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
     };
   });
 
-  const highlightValue = useMemo(
-    () =>
-      animationConfig?.highlight?.color ??
-      getHighlightColor(variant, colors, isDark),
-    [animationConfig, variant, colors, isDark]
-  );
-  const highlightConfig = useMemo(
-    () =>
-      animationConfig?.highlight?.config ?? {
-        duration: ANIMATION_DURATION,
-        easing: ANIMATION_EASING,
-      },
-    [animationConfig]
-  );
+  const defaultOpacity = useMemo(() => {
+    return OPACITY_ALPHA_MAP[isDark ? 'dark' : 'light'][variant];
+  }, [variant, isDark]);
+
+  const finalHighlightOpacity =
+    animationConfig?.highlight?.opacity ?? defaultOpacity;
+
+  const highlightColorValue = useMemo(() => {
+    if (animationConfig?.highlight?.color)
+      return animationConfig?.highlight?.color;
+    const colorKey = VARIANT_TO_COLOR_MAP[variant];
+    return colors[colorKey];
+  }, [animationConfig?.highlight?.color, variant, colors]);
 
   const animatedBackgroundStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: interpolateColor(
-        highlight.get(),
-        [0, 1],
-        ['transparent', highlightValue]
-      ),
+      opacity: highlightOpacityValue.get() * finalHighlightOpacity,
+      backgroundColor: highlightColorValue,
     };
   });
 
@@ -175,7 +172,15 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
         scale.set(withTiming(1, scaleConfig));
       }
       if (!disableAnimation.highlight) {
-        highlight.set(withTiming(1, highlightConfig));
+        highlightOpacityValue.set(
+          withTiming(
+            1,
+            animationConfig?.highlight?.config || {
+              duration: HIGHLIGHT_CONFIG.duration,
+              easing: HIGHLIGHT_CONFIG.easing,
+            }
+          )
+        );
       }
       onPressIn?.(e);
     },
@@ -184,8 +189,8 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
       scaleConfig,
       onPressIn,
       disableAnimation,
-      highlight,
-      highlightConfig,
+      animationConfig,
+      highlightOpacityValue,
     ]
   );
 
@@ -195,7 +200,15 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
         scale.set(withTiming(0, scaleConfig));
       }
       if (!disableAnimation.highlight) {
-        highlight.set(withTiming(0, highlightConfig));
+        highlightOpacityValue.set(
+          withTiming(
+            0,
+            animationConfig?.highlight?.config || {
+              duration: HIGHLIGHT_CONFIG.duration,
+              easing: HIGHLIGHT_CONFIG.easing,
+            }
+          )
+        );
       }
       onPressOut?.(e);
     },
@@ -204,8 +217,8 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
       scaleConfig,
       onPressOut,
       disableAnimation,
-      highlight,
-      highlightConfig,
+      animationConfig,
+      highlightOpacityValue,
     ]
   );
 

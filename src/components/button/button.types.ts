@@ -100,6 +100,11 @@ export interface ButtonRootProps extends SlottablePressableProps {
        */
       color?: string;
       /**
+       * Animation target opacity for highlight
+       * @default varies by variant and theme
+       */
+      opacity?: number;
+      /**
        * Animation configuration for highlight
        */
       config?: TimingConfig;

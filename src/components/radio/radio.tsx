@@ -107,7 +107,6 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
 
     const tvStyles = radioStyles.radioRoot({
       size,
-      alignIndicator,
       isDisabled: isDisabledValue,
       isReadOnly,
       className,

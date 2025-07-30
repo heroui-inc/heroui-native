@@ -1,7 +1,9 @@
 import type { TimingConfig } from '@/helpers/types';
 import * as SwitchPrimitivesTypes from '@/primitives/switch/switch.types';
+import type { ElementSlots } from '@/theme';
 import type { SharedValue } from 'react-native-reanimated';
 import type { SpringConfig } from 'react-native-reanimated/lib/typescript/animation/springUtils';
+import type { RootSlots } from './switch.styles';
 
 /**
  * Base switch size variants
@@ -28,18 +30,6 @@ export interface SwitchColors {
 }
 
 /**
- * Custom class names for switch parts
- */
-export interface SwitchClassNames {
-  /** Class name for the container */
-  container?: string;
-  /** Class name for the content padding container */
-  contentPaddingContainer?: string;
-  /** Class name for the content container */
-  contentContainer?: string;
-}
-
-/**
  * Props for the main Switch component
  */
 export interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
@@ -62,7 +52,7 @@ export interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
   className?: string;
 
   /** Custom class names for different parts of the component */
-  classNames?: SwitchClassNames;
+  classNames?: ElementSlots<RootSlots>;
 
   /** Custom colors for different switch states */
   colors?: SwitchColors;

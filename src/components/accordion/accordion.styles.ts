@@ -1,3 +1,4 @@
+import { combineStyles } from '@/theme/utils';
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 
@@ -28,24 +29,15 @@ const item = tv({
 });
 
 const trigger = tv({
-  slots: {
-    base: 'flex-row items-center justify-between py-4 px-4 bg-background z-10 overflow-hidden',
-    highlight: 'absolute inset-0',
-  },
+  base: 'flex-row items-center justify-between py-4 px-4 bg-background z-10 overflow-hidden',
   variants: {
     variant: {
       default: '',
       border: '',
     },
-    isDisabled: {
-      true: {
-        base: 'opacity-disabled',
-      },
-    },
   },
   defaultVariants: {
     variant: 'default',
-    isDisabled: false,
   },
 });
 
@@ -72,7 +64,7 @@ const nativeStyles = StyleSheet.create({
   },
 });
 
-const accordionStyles = Object.assign({
+const accordionStyles = combineStyles({
   root,
   item,
   trigger,
@@ -81,4 +73,5 @@ const accordionStyles = Object.assign({
   nativeStyles,
 });
 
+export type RootSlots = keyof ReturnType<typeof root>;
 export default accordionStyles;

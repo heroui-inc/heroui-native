@@ -128,7 +128,7 @@ const AccordionScreen = () => {
         <Text className="text-lg font-bold text-muted-foreground mb-4">
           Default Variant
         </Text>
-        <Accordion selectionMode="single" defaultValue="1">
+        <Accordion selectionMode="single" defaultValue="2">
           {accordionData.map((item) => (
             <Accordion.Item key={item.id} value={item.id}>
               <Accordion.Trigger>
@@ -290,9 +290,9 @@ const AccordionScreen = () => {
           <Accordion selectionMode="single" showDivider={false}>
             {accordionData.slice(0, 4).map((item) => (
               <Accordion.Item key={item.id} value={item.id} className="mb-3">
-                <Accordion.Trigger className="bg-surface rounded-xl border border-border/50 shadow-sm">
+                <Accordion.Trigger className="bg-surface-2 rounded-xl border border-border/50 shadow-sm">
                   <View className="flex-row items-center flex-1 gap-4">
-                    <View className="w-10 h-10 rounded-full bg-accent/10 items-center justify-center">
+                    <View className="w-10 h-10 rounded-full bg-accent/5 items-center justify-center">
                       {item.icon}
                     </View>
                     <Text className="text-foreground text-base font-medium flex-1">
@@ -303,8 +303,8 @@ const AccordionScreen = () => {
                     </Accordion.Indicator>
                   </View>
                 </Accordion.Trigger>
-                <Accordion.Content className="mt-2 bg-surface rounded-xl px-5 py-4 border border-border/50">
-                  <Text className="text-mutedForeground text-base/relaxed">
+                <Accordion.Content className="mt-2 bg-surface-2 rounded-xl px-5 py-4 border border-border/50">
+                  <Text className="text-muted-foreground text-base/relaxed">
                     {item.content}
                   </Text>
                 </Accordion.Content>

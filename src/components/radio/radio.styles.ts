@@ -1,3 +1,4 @@
+import { combineStyles } from '@/theme/utils';
 import { tv } from 'tailwind-variants';
 
 const groupRoot = tv({
@@ -57,6 +58,10 @@ const thumb = tv({
       sm: 'h-1.5 w-1.5',
       md: 'h-2 w-2',
       lg: 'h-2.5 w-2.5',
+    },
+    isDark: {
+      true: '',
+      false: '',
     },
   },
   compoundVariants: [
@@ -119,7 +124,7 @@ const description = tv({
   },
 });
 
-const radioStyles = Object.assign({
+const radioStyles = combineStyles({
   groupRoot,
   radioRoot,
   indicator,

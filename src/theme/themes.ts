@@ -43,6 +43,11 @@ export const themes: Record<ColorScheme, Record<string, string>> = {
     '--danger': '4.69 82% 49%',
     '--danger-foreground': '300 0% 99%',
 
+    /* Surface Colors */
+    '--surface-1': '300 50% 100%',
+    '--surface-2': '0 0% 96%',
+    '--surface-3': '0 0% 90%',
+
     /* Misc Colors */
     '--border': '0 0% 86%',
     '--link': 'var(--foreground)',
@@ -79,6 +84,11 @@ export const themes: Record<ColorScheme, Record<string, string>> = {
 
     '--danger': '5.79 75% 54%',
     '--danger-foreground': '300 0% 99%',
+
+    /* Surface Colors */
+    '--surface-1': '0 0% 5%',
+    '--surface-2': '0 0% 9%',
+    '--surface-3': '0 0% 15%',
 
     /* Misc Colors */
     '--border': '0 0% 20%',

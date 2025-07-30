@@ -1,3 +1,4 @@
+import { combineStyles } from '@/theme/utils';
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 
@@ -98,14 +99,6 @@ const background = tv({
   },
 });
 
-const buttonStyles = Object.assign({
-  root,
-  label,
-  startContent,
-  endContent,
-  background,
-});
-
 export const nativeStyles = StyleSheet.create({
   buttonRoot: {
     borderCurve: 'continuous',
@@ -115,4 +108,13 @@ export const nativeStyles = StyleSheet.create({
   },
 });
 
+const buttonStyles = combineStyles({
+  root,
+  label,
+  startContent,
+  endContent,
+  background,
+});
+
+export type LabelSlots = keyof ReturnType<typeof label>;
 export default buttonStyles;

@@ -38,6 +38,9 @@ type ColorVariableKeys =
   | '--warning-foreground'
   | '--danger'
   | '--danger-foreground'
+  | '--surface-1'
+  | '--surface-2'
+  | '--surface-3'
   | '--border'
   | '--link';
 

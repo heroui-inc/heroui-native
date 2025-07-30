@@ -25,14 +25,17 @@ export default function App() {
       <TouchableOpacity onPress={() => router.push('/chip')}>
         <Text className={classNames.link}>Chip</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => router.push('/radio')}>
+        <Text className={classNames.link}>Radio</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/spinner')}>
         <Text className={classNames.link}>Spinner</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/switch')}>
         <Text className={classNames.link}>Switch</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/radio')}>
-        <Text className={classNames.link}>Radio</Text>
+      <TouchableOpacity onPress={() => router.push('/surface')}>
+        <Text className={classNames.link}>Surface</Text>
       </TouchableOpacity>
     </View>
   );

@@ -7866,7 +7866,7 @@ __metadata:
     react-native-svg: ^15.12.0
     release-it: ^17.10.0
     tailwind-merge: ^3.3.1
-    tailwind-variants: ^1.0.0
+    tailwind-variants: ^2.0.1
     typescript: ^5.8.3
   peerDependencies:
     nativewind: ">=4.0"
@@ -13655,13 +13655,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwind-merge@npm:3.0.2":
-  version: 3.0.2
-  resolution: "tailwind-merge@npm:3.0.2"
-  checksum: fdcf4d9e65c8767077b93de4f6296125d9a761fce1ef85715e7cadbf467973a6b1c5fd95ca3a0416013b24ecfba61d0340f201d7becd1fc1f2f771e007bd5bd3
-  languageName: node
-  linkType: hard
-
 "tailwind-merge@npm:^3.3.1":
   version: 3.3.1
   resolution: "tailwind-merge@npm:3.3.1"
@@ -13669,14 +13662,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwind-variants@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "tailwind-variants@npm:1.0.0"
-  dependencies:
-    tailwind-merge: 3.0.2
+"tailwind-variants@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "tailwind-variants@npm:2.0.1"
   peerDependencies:
+    tailwind-merge: ">=3.0.0"
     tailwindcss: "*"
-  checksum: 3c9e6f438e569382ff9a6dee8d3e85a94e440c2baed27525705bb8dabd70c7f404f368621b5cf7dfc042d9a148aa6fc0fd7b8d236b081e4c2d1c7e82554d6991
+  peerDependenciesMeta:
+    tailwind-merge:
+      optional: true
+  checksum: 37470f6e0a93b5de313b7bd3c3efeccfe56167492276acaa85d49565a990bf07d32514f61aa5640851ca33cc7fec6c7c7a993cec850ead607966264b98b2c689
   languageName: node
   linkType: hard
 

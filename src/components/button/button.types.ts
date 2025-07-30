@@ -3,6 +3,8 @@ import type {
   SlottablePressableProps,
   SlottableViewProps,
 } from '@/helpers/types/primitives';
+import type { ElementSlots } from '@/theme';
+import type { LabelSlots } from './button.styles';
 
 /**
  * Size variants for the Button component
@@ -121,12 +123,9 @@ export interface ButtonLabelProps extends SlottableViewProps {
    */
   children?: React.ReactNode;
   /**
-   * Additional CSS classes for the slots
+   * Additional CSS classes for the different parts of the label
    */
-  classNames?: {
-    container?: string;
-    text?: string;
-  };
+  classNames?: ElementSlots<LabelSlots>;
 }
 
 /**

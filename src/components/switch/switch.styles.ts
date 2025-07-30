@@ -59,4 +59,5 @@ const switchStyles = combineStyles({
   endContent,
 });
 
+export type RootSlots = keyof ReturnType<typeof root>;
 export default switchStyles;

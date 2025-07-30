@@ -116,4 +116,5 @@ const buttonStyles = combineStyles({
   background,
 });
 
+export type LabelSlots = keyof ReturnType<typeof label>;
 export default buttonStyles;

@@ -2,7 +2,7 @@ import { createContext } from '@/helpers/utils';
 import * as AccordionPrimitive from '@/primitives/accordion';
 import { useTheme } from '@/theme';
 import { Children, forwardRef, useEffect, useMemo } from 'react';
-import { View, type GestureResponderEvent } from 'react-native';
+import { StyleSheet, View, type GestureResponderEvent } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -38,10 +38,6 @@ const AnimatedRootView = Animated.createAnimatedComponent(
 
 const AnimatedItemView = Animated.createAnimatedComponent(
   AccordionPrimitive.Item
-);
-
-const AnimatedContent = Animated.createAnimatedComponent(
-  AccordionPrimitive.Content
 );
 
 const AnimatedIndicator = Animated.createAnimatedComponent(
@@ -154,14 +150,10 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 
   const { colors } = useTheme();
 
-  const { base, highlight } = accordionStyles.trigger({
+  const tvStyles = accordionStyles.trigger({
     variant,
-    isDisabled: restProps.isDisabled,
+    className,
   });
-
-  const tvBaseStyles = base({ className });
-
-  const tvHighlightStyles = highlight();
 
   const highlightOpacity = useSharedValue(0);
 
@@ -204,15 +196,14 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
     <AccordionPrimitive.Header>
       <AccordionPrimitive.Trigger
         ref={ref}
-        className={tvBaseStyles}
+        className={tvStyles}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         {...restProps}
       >
         {!hideHighlight && (
           <Animated.View
-            className={tvHighlightStyles}
-            style={animatedHighlightStyle}
+            style={[StyleSheet.absoluteFill, animatedHighlightStyle]}
           />
         )}
         {children}
@@ -288,24 +279,17 @@ const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
 
   const { variant } = useAccordionContext();
 
-  const { isExpanded } = useAccordionItemContext();
-
   const tvStyles = accordionStyles.content({ variant, className });
 
-  if (!isExpanded) {
-    return <></>;
-  }
-
   return (
-    <AnimatedContent
-      ref={ref}
-      className={tvStyles}
+    <Animated.View
       entering={entering || DEFAULT_CONTENT_ENTERING}
       exiting={exiting || DEFAULT_CONTENT_EXITING}
-      {...restProps}
     >
-      {children}
-    </AnimatedContent>
+      <AccordionPrimitive.Content ref={ref} className={tvStyles} {...restProps}>
+        {children}
+      </AccordionPrimitive.Content>
+    </Animated.View>
   );
 });
 

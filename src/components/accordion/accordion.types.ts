@@ -6,12 +6,14 @@ import type {
   RootProps as PrimitiveRootProps,
   TriggerProps as PrimitiveTriggerProps,
 } from '@/primitives/accordion';
+import type { ElementSlots } from '@/theme';
 import type {
   BaseAnimationBuilder,
   EntryExitAnimationFunction,
   LayoutAnimationFunction,
   WithSpringConfig,
 } from 'react-native-reanimated';
+import type { RootSlots } from './accordion.styles';
 
 /**
  * Variant types for the Accordion component
@@ -43,16 +45,7 @@ export type AccordionRootProps = PrimitiveRootProps & {
   /**
    * Additional CSS classes for the slots
    */
-  classNames?: {
-    /**
-     * Container slot class name
-     */
-    container?: string;
-    /**
-     * Divider slot class name
-     */
-    divider?: string;
-  };
+  classNames?: ElementSlots<RootSlots>;
   /**
    * Custom layout animation for accordion transitions
    */

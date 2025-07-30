@@ -1,3 +1,4 @@
+import { combineStyles } from '@/theme/utils';
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 
@@ -63,7 +64,7 @@ const nativeStyles = StyleSheet.create({
   },
 });
 
-const accordionStyles = Object.assign({
+const accordionStyles = combineStyles({
   root,
   item,
   trigger,

@@ -233,10 +233,9 @@ const CheckboxIndicator = forwardRef<
     ...restProps
   } = props;
 
-  const { size, isSelected } = useCheckboxContext();
+  const { isSelected } = useCheckboxContext();
 
   const tvStyles = checkboxStyles.indicator({
-    size,
     className,
   });
 

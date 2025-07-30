@@ -1,3 +1,4 @@
+import { combineStyles } from '@/theme/utils';
 import { tv } from 'tailwind-variants';
 
 const root = tv({
@@ -37,7 +38,7 @@ const indicator = tv({
   base: 'absolute inset-0 items-center justify-center',
 });
 
-const checkboxStyles = Object.assign({
+const checkboxStyles = combineStyles({
   root,
   background,
   indicator,

@@ -1,18 +1,26 @@
+import { combineStyles } from '@/theme/utils';
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 
 const root = tv({
   base: 'self-start flex-row items-center justify-center rounded-full py-1 gap-1',
   variants: {
+    variant: {
+      primary: 'border-0',
+      secondary: 'border border-border bg-default',
+      tertiary: 'border border-border bg-transparent',
+    },
     size: {
       sm: 'px-2',
       md: 'px-3',
       lg: 'px-4',
     },
-    variant: {
-      primary: 'border-0',
-      secondary: 'border border-border bg-default',
-      tertiary: 'border border-border bg-transparent',
+    color: {
+      accent: '',
+      default: '',
+      success: '',
+      warning: '',
+      danger: '',
     },
   },
   compoundVariants: [
@@ -57,10 +65,22 @@ const startContent = tv({
 const label = tv({
   base: 'font-medium',
   variants: {
+    variant: {
+      primary: '',
+      secondary: '',
+      tertiary: '',
+    },
     size: {
       sm: 'text-xs',
       md: 'text-sm',
       lg: 'text-base',
+    },
+    color: {
+      accent: '',
+      default: '',
+      success: '',
+      warning: '',
+      danger: '',
     },
   },
   compoundVariants: [
@@ -129,7 +149,7 @@ export const nativeStyles = StyleSheet.create({
   },
 });
 
-const chipStyles = Object.assign({
+const chipStyles = combineStyles({
   root,
   startContent,
   label,

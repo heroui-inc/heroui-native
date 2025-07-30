@@ -1,3 +1,4 @@
+import { combineStyles } from '@/theme/utils';
 import { tv } from 'tailwind-variants';
 
 const root = tv({
@@ -51,7 +52,7 @@ const endContent = tv({
   base: 'absolute right-0',
 });
 
-const switchStyles = Object.assign({
+const switchStyles = combineStyles({
   root,
   thumb,
   startContent,

@@ -1,3 +1,4 @@
+import { combineStyles } from '@/theme/utils';
 import { tv } from 'tailwind-variants';
 
 const root = tv({
@@ -18,7 +19,7 @@ const indicator = tv({
   base: 'items-center justify-center w-full h-full',
 });
 
-const spinnerStyles = Object.assign({
+const spinnerStyles = combineStyles({
   root,
   indicator,
 });

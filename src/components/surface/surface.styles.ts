@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 
 const root = tv({
-  base: 'p-4 rounded-lg',
+  base: 'p-4 rounded-lg overflow-hidden',
   variants: {
     variant: {
       'none': 'bg-transparent',

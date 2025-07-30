@@ -1,5 +1,6 @@
 export * from './components/accordion';
 export * from './components/button';
+export * from './components/card';
 export * from './components/checkbox';
 export * from './components/chip';
 export * from './components/radio';

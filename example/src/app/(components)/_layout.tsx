@@ -31,6 +31,7 @@ export default function Layout() {
       <Stack.Screen name="chip" options={{ title: 'Chip' }} />
       <Stack.Screen name="button" options={{ title: 'Button' }} />
       <Stack.Screen name="surface" options={{ title: 'Surface' }} />
+      <Stack.Screen name="card" options={{ title: 'Card' }} />
     </Stack>
   );
 }

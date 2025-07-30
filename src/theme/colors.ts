@@ -32,6 +32,11 @@ export const colors: Record<ColorScheme, ColorVariables> = {
     danger: 'hsl(4.69 82% 49%)',
     dangerForeground: 'hsl(300 0% 99%)',
 
+    /* Surface Colors */
+    surface1: 'hsl(300 50% 100%)',
+    surface2: 'hsl(0 0% 96%)',
+    surface3: 'hsl(0 0% 90%)',
+
     /* Misc Colors */
     border: 'hsl(0 0% 86%)',
     link: 'hsl(348 0% 4%)',
@@ -66,6 +71,11 @@ export const colors: Record<ColorScheme, ColorVariables> = {
 
     danger: 'hsl(5.79 75% 54%)',
     dangerForeground: 'hsl(300 0% 99%)',
+
+    /* Surface Colors */
+    surface1: 'hsl(0 0% 5%)',
+    surface2: 'hsl(0 0% 9%)',
+    surface3: 'hsl(0 0% 15%)',
 
     /* Misc Colors */
     border: 'hsl(0 0% 20%)',

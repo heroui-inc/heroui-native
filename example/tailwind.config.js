@@ -12,22 +12,22 @@ module.exports = {
     extend: {
       colors: {
         /* Base Colors */
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        panel: 'hsl(var(--panel))',
-        muted: {
+        'background': 'hsl(var(--background))',
+        'foreground': 'hsl(var(--foreground))',
+        'panel': 'hsl(var(--panel))',
+        'muted': {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
         },
-        surface: {
+        'surface': {
           DEFAULT: 'hsl(var(--surface))',
           foreground: 'hsl(var(--surface-foreground))',
         },
-        default: {
+        'default': {
           DEFAULT: 'hsl(var(--default))',
           foreground: 'hsl(var(--default-foreground))',
         },
-        accent: {
+        'accent': {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
           soft: {
@@ -36,21 +36,25 @@ module.exports = {
           },
         },
         /* Status Colors */
-        success: {
+        'success': {
           DEFAULT: 'hsl(var(--success))',
           foreground: 'hsl(var(--success-foreground))',
         },
-        warning: {
+        'warning': {
           DEFAULT: 'hsl(var(--warning))',
           foreground: 'hsl(var(--warning-foreground))',
         },
-        danger: {
+        'danger': {
           DEFAULT: 'hsl(var(--danger))',
           foreground: 'hsl(var(--danger-foreground))',
         },
+        /* Surface Colors */
+        'surface-1': 'hsl(var(--surface-1))',
+        'surface-2': 'hsl(var(--surface-2))',
+        'surface-3': 'hsl(var(--surface-3))',
         /* Misc Colors */
-        border: 'hsl(var(--border))',
-        link: 'hsl(var(--link))',
+        'border': 'hsl(var(--border))',
+        'link': 'hsl(var(--link))',
       },
       /* Layout */
       borderRadius: {

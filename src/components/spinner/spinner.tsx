@@ -203,10 +203,10 @@ SpinnerIndicator.displayName = DISPLAY_NAME.INDICATOR;
  *
  * @see Full documentation: https://heroui.com/components/spinner
  */
-const Spinner = Object.assign(SpinnerRoot, {
+const CompoundSpinner = Object.assign(SpinnerRoot, {
   /** @optional Customize animation speed, easing, and icon appearance */
   Indicator: SpinnerIndicator,
 });
 
 export { useSpinnerContext };
-export default Spinner;
+export default CompoundSpinner;

@@ -166,7 +166,7 @@ CardDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  *
  * @see Full documentation: https://heroui.com/components/card
  */
-export const Card = Object.assign(CardRoot, {
+const CompoundCard = Object.assign(CardRoot, {
   /** @optional Content wrapper with gap spacing for proper layout */
   Details: CardDetails,
   /** @optional Top-aligned header section */
@@ -180,3 +180,5 @@ export const Card = Object.assign(CardRoot, {
   /** @optional Description text with muted styling */
   Description: CardDescription,
 });
+
+export default CompoundCard;

@@ -423,7 +423,7 @@ RadioDescription.displayName = DISPLAY_NAME.RADIO_DESCRIPTION;
  *
  * @see Full documentation: https://heroui.com/components/radio
  */
-const CompoundRadioGroup = Object.assign(Radio, {
+const CompoundRadio = Object.assign(Radio, {
   /** @optional Custom radio indicator container */
   Indicator: RadioIndicator,
   /** @optional Custom indicator background with border animations */
@@ -439,4 +439,4 @@ const CompoundRadioGroup = Object.assign(Radio, {
 });
 
 export { Radio, RadioGroup, useRadioContext };
-export default CompoundRadioGroup;
+export default CompoundRadio;

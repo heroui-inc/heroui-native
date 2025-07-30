@@ -325,7 +325,7 @@ Content.displayName = DISPLAY_NAME.CONTENT;
  *
  * @see Full documentation: https://heroui.com/components/accordion
  */
-const Accordion = Object.assign(Root, {
+const CompoundAccordion = Object.assign(Root, {
   /** @required Container for individual accordion items */
   Item,
   /** @required Interactive trigger element with press feedback */
@@ -336,5 +336,5 @@ const Accordion = Object.assign(Root, {
   Content,
 });
 
-export default Accordion;
+export default CompoundAccordion;
 export { useAccordionContext, useAccordionItemContext };

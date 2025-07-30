@@ -383,7 +383,7 @@ ButtonBackground.displayName = DISPLAY_NAME.BACKGROUND;
  *
  * @see Full documentation: https://heroui.com/components/button
  */
-const Button = Object.assign(ButtonRoot, {
+const CompoundButton = Object.assign(ButtonRoot, {
   /** @optional Content displayed at the start of the button */
   StartContent: ButtonStartContent,
   /** @optional Button label - renders text or custom content */
@@ -394,5 +394,5 @@ const Button = Object.assign(ButtonRoot, {
   Background: ButtonBackground,
 });
 
-export default Button;
+export default CompoundButton;
 export { useButtonContext };

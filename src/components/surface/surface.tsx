@@ -27,4 +27,4 @@ const Surface = forwardRef<ViewRef, SurfaceRootProps>(
 
 Surface.displayName = DISPLAY_NAME.ROOT;
 
-export { Surface };
+export default Surface;

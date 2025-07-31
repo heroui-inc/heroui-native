@@ -15,18 +15,26 @@ const label = tv({
     text: 'text-base text-foreground font-medium',
     asterisk: 'text-lg/6 text-danger',
   },
+  variants: {
+    isDisabled: {
+      true: {
+        text: '',
+        asterisk: 'text-muted-foreground',
+      },
+    },
+  },
 });
 
 const input = tv({
   slots: {
-    container:
-      'flex-row gap-3 py-2 px-3 rounded-lg border border-border bg-base',
-    input: 'text-base text-foreground flex-1',
+    container: 'h-[44px] px-3 rounded-lg border flex-row items-center gap-3',
+    input: 'flex-1 h-full text-base/5 text-foreground',
   },
   variants: {
-    isFocused: {
+    isMultiline: {
       true: {
-        container: 'bg-transparent border-[3px]',
+        container: 'h-[120px]',
+        input: 'py-2.5',
       },
     },
   },

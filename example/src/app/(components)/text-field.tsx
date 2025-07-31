@@ -9,6 +9,7 @@ export default function TextFieldScreen() {
     <ScrollView
       className="bg-background"
       contentInsetAdjustmentBehavior="automatic"
+      automaticallyAdjustKeyboardInsets
     >
       <View className="gap-8 p-6">
         {/* Basic TextField */}
@@ -28,14 +29,14 @@ export default function TextFieldScreen() {
         <TextField>
           <TextField.Label>Password</TextField.Label>
           <TextField.Input placeholder="Enter your password" secureTextEntry>
-            <TextField.InputStartContent>
+            <TextField.InputStartContent className="pointer-events-none">
               <Ionicons
                 name="lock-closed-outline"
                 size={16}
                 color={colors.mutedForeground}
               />
             </TextField.InputStartContent>
-            <TextField.InputEndContent>
+            <TextField.InputEndContent className="pointer-events-none">
               <Ionicons
                 name="eye-outline"
                 size={16}
@@ -101,6 +102,28 @@ export default function TextFieldScreen() {
               />
             </TextField.InputStartContent>
           </TextField.Input>
+        </TextField>
+
+        {/* TextField with custom colors */}
+        <TextField>
+          <TextField.Label>Custom Colors</TextField.Label>
+          <TextField.Input
+            placeholder="Custom color animation"
+            placeholderTextColor="#2e1065"
+            colors={{
+              blurBackground: '#e9d5ff',
+              focusBackground: '#c4b5fd',
+              blurBorder: '#c4b5fd',
+              focusBorder: '#a78bfa',
+            }}
+            animationConfig={{
+              duration: 300,
+            }}
+            className="text-violet-950"
+          />
+          <TextField.Description>
+            This input has custom colors and slower animation
+          </TextField.Description>
         </TextField>
       </View>
     </ScrollView>

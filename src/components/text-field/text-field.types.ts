@@ -1,3 +1,4 @@
+import type { TimingConfig } from '@/helpers/types';
 import type {
   SlottableTextProps,
   SlottableViewProps,
@@ -23,6 +24,32 @@ export interface TextFieldRootProps extends SlottableViewProps {
    * @default false
    */
   isDisabled?: boolean;
+}
+
+/**
+ * Custom colors for TextField.Input component
+ */
+export interface TextFieldInputColors {
+  /**
+   * Background color when input is blurred
+   * @default colors.default
+   */
+  blurBackground?: string;
+  /**
+   * Background color when input is focused
+   * @default colors.background
+   */
+  focusBackground?: string;
+  /**
+   * Border color when input is blurred
+   * @default colors.border
+   */
+  blurBorder?: string;
+  /**
+   * Border color when input is focused
+   * @default colors.mutedForeground
+   */
+  focusBorder?: string;
 }
 
 /**
@@ -64,6 +91,14 @@ export interface TextFieldInputProps extends TextInputProps {
    * Additional CSS classes for different parts of the input
    */
   classNames?: ElementSlots<InputSlots>;
+  /**
+   * Custom colors for the input
+   */
+  colors?: TextFieldInputColors;
+  /**
+   * Animation configuration for focus/blur transitions
+   */
+  animationConfig?: TimingConfig;
 }
 
 /**
@@ -106,4 +141,14 @@ export interface TextFieldDescriptionProps extends SlottableTextProps {
    * Additional CSS classes
    */
   className?: string;
+}
+
+/**
+ * Context value for the TextField component
+ */
+export interface TextFieldContextValue {
+  /**
+   * Whether the entire text field is disabled
+   */
+  isDisabled: boolean;
 }

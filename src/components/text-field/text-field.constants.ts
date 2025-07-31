@@ -20,4 +20,4 @@ export const ANIMATION_DURATION = 200;
 /**
  * Animation easing function for focus/blur transitions
  */
-export const ANIMATION_EASING = Easing.bezier(0.25, 0.1, 0.25, 1);
+export const ANIMATION_EASING = Easing.out(Easing.ease);

@@ -1,12 +1,14 @@
 import type { TextRef, ViewRef } from '@/helpers/types/primitives';
+import { createContext, getElementByDisplayName } from '@/helpers/utils';
 import { Text as SlotText, View as SlotView } from '@/primitives/slot';
 import { useTheme } from '@/theme';
-import React, { forwardRef, useState } from 'react';
+import { forwardRef, useMemo } from 'react';
 import {
-  Pressable,
   Text,
   TextInput,
   View,
+  type NativeSyntheticEvent,
+  type TextInputFocusEventData,
   type TextInput as TextInputType,
 } from 'react-native';
 import Animated, {
@@ -22,6 +24,7 @@ import {
 } from './text-field.constants';
 import textFieldStyles from './text-field.styles';
 import type {
+  TextFieldContextValue,
   TextFieldDescriptionProps,
   TextFieldInputEndContentProps,
   TextFieldInputProps,
@@ -30,19 +33,34 @@ import type {
   TextFieldRootProps,
 } from './text-field.types';
 
+const [TextFieldProvider, useTextFieldContext] =
+  createContext<TextFieldContextValue>({
+    name: 'TextFieldContext',
+  });
+
 // --------------------------------------------------
 
 const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
-  const { children, className, isDisabled, asChild, ...restProps } = props;
+  const {
+    children,
+    className,
+    isDisabled = false,
+    asChild,
+    ...restProps
+  } = props;
 
   const tvStyles = textFieldStyles.root({ isDisabled, className });
 
   const Component = asChild ? SlotView : View;
 
+  const contextValue = useMemo(() => ({ isDisabled }), [isDisabled]);
+
   return (
-    <Component ref={ref} className={tvStyles} {...restProps}>
-      {children}
-    </Component>
+    <TextFieldProvider value={contextValue}>
+      <Component ref={ref} className={tvStyles} {...restProps}>
+        {children}
+      </Component>
+    </TextFieldProvider>
   );
 });
 
@@ -59,10 +77,14 @@ const TextFieldLabel = forwardRef<ViewRef, TextFieldLabelProps>(
       ...restProps
     } = props;
 
-    const tvStyles = textFieldStyles.label();
+    const { isDisabled } = useTextFieldContext();
+
+    const tvStyles = textFieldStyles.label({ isDisabled });
+
     const textStyles = tvStyles.text({
       className: [className, classNames?.text],
     });
+
     const asteriskStyles = tvStyles.asterisk({
       className: classNames?.asterisk,
     });
@@ -80,8 +102,6 @@ const TextFieldLabel = forwardRef<ViewRef, TextFieldLabelProps>(
 
 // --------------------------------------------------
 
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-
 const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
   (props, ref) => {
     const {
@@ -89,82 +109,94 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       className,
       classNames,
       placeholderTextColor,
+      colors: customColors,
+      animationConfig,
       ...restProps
     } = props;
 
-    const [isFocused, setIsFocused] = useState(false);
+    const startContent = getElementByDisplayName(
+      children,
+      DISPLAY_NAME.INPUT_START_CONTENT
+    );
+    const endContent = getElementByDisplayName(
+      children,
+      DISPLAY_NAME.INPUT_END_CONTENT
+    );
+
     const { colors } = useTheme();
 
-    const borderWidth = useSharedValue(1);
-    const backgroundColor = useSharedValue(0);
+    const tvStyles = textFieldStyles.input({
+      isMultiline: Boolean(restProps.multiline),
+    });
 
-    const tvStyles = textFieldStyles.input({ isFocused });
     const containerStyles = tvStyles.container({
       className: [className, classNames?.container],
     });
+
     const inputStyles = tvStyles.input({ className: classNames?.input });
 
-    // Extract start and end content from children
-    const startContent = React.Children.toArray(children).find(
-      (child) =>
-        React.isValidElement(child) && child.type === TextFieldInputStartContent
-    );
-    const endContent = React.Children.toArray(children).find(
-      (child) =>
-        React.isValidElement(child) && child.type === TextFieldInputEndContent
-    );
+    const isFocused = useSharedValue(0);
+
+    const blurBackground = customColors?.blurBackground || colors.default;
+    const focusBackground = customColors?.focusBackground || colors.background;
+    const blurBorder = customColors?.blurBorder || colors.border;
+    const focusBorder = customColors?.focusBorder || colors.mutedForeground;
 
     const animatedContainerStyle = useAnimatedStyle(() => {
       return {
-        borderWidth: withTiming(borderWidth.value, {
-          duration: ANIMATION_DURATION,
-          easing: ANIMATION_EASING,
-        }),
-        backgroundColor: withTiming(
-          interpolateColor(
-            backgroundColor.value,
-            [0, 1],
-            [colors.surface2, 'transparent']
-          ),
-          {
-            duration: ANIMATION_DURATION,
-            easing: ANIMATION_EASING,
-          }
+        backgroundColor: interpolateColor(
+          isFocused.get(),
+          [0, 1],
+          [blurBackground, focusBackground]
+        ),
+        borderColor: interpolateColor(
+          isFocused.get(),
+          [0, 1],
+          [blurBorder, focusBorder]
         ),
       };
     });
 
-    const handleFocus = () => {
-      setIsFocused(true);
-      borderWidth.value = 3;
-      backgroundColor.value = 1;
+    const handleFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+      isFocused.set(
+        withTiming(1, {
+          duration: animationConfig?.duration || ANIMATION_DURATION,
+          easing: animationConfig?.easing || ANIMATION_EASING,
+        })
+      );
+      restProps.onFocus?.(e);
     };
 
-    const handleBlur = () => {
-      setIsFocused(false);
-      borderWidth.value = 1;
-      backgroundColor.value = 0;
+    const handleBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+      isFocused.set(
+        withTiming(0, {
+          duration: animationConfig?.duration || ANIMATION_DURATION,
+          easing: animationConfig?.easing || ANIMATION_EASING,
+        })
+      );
+      restProps.onBlur?.(e);
     };
-
-    const handlePressIn = () => {};
 
     return (
-      <AnimatedPressable
-        onPressIn={handlePressIn}
-        className={containerStyles}
-        style={animatedContainerStyle}
-      >
+      <Animated.View className={containerStyles} style={animatedContainerStyle}>
         {startContent}
         <TextInput
           ref={ref}
           className={inputStyles}
           placeholderTextColor={placeholderTextColor || colors.mutedForeground}
+          selectionColor={
+            props.colors?.focusBackground || colors.mutedForeground
+          }
+          selectionHandleColor={
+            props.colors?.focusBackground || colors.mutedForeground
+          }
           onFocus={handleFocus}
           onBlur={handleBlur}
+          textAlignVertical={restProps.multiline ? 'top' : 'center'}
           {...restProps}
         />
         {endContent}
-      </AnimatedPressable>
+      </Animated.View>
     );
   }
 );
@@ -273,3 +305,4 @@ const CompoundTextField = Object.assign(TextFieldRoot, {
 });
 
 export default CompoundTextField;
+export { useTextFieldContext };

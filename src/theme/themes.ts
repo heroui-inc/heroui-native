@@ -49,7 +49,7 @@ export const themes: Record<ColorScheme, Record<string, string>> = {
     '--surface-3': '0 0% 90%',
 
     /* Misc Colors */
-    '--border': '0 0% 86%',
+    '--border': '0 0% 90%',
     '--link': 'var(--foreground)',
 
     ...nonColorsVars,
@@ -91,7 +91,7 @@ export const themes: Record<ColorScheme, Record<string, string>> = {
     '--surface-3': '0 0% 15%',
 
     /* Misc Colors */
-    '--border': '0 0% 20%',
+    '--border': '0 0% 14%',
     '--link': 'var(--foreground)',
 
     ...nonColorsVars,

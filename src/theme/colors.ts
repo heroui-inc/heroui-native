@@ -38,7 +38,7 @@ export const colors: Record<ColorScheme, ColorVariables> = {
     surface3: 'hsl(0 0% 90%)',
 
     /* Misc Colors */
-    border: 'hsl(0 0% 86%)',
+    border: 'hsl(0 0% 90%)',
     link: 'hsl(348 0% 4%)',
   },
   dark: {
@@ -78,7 +78,7 @@ export const colors: Record<ColorScheme, ColorVariables> = {
     surface3: 'hsl(0 0% 15%)',
 
     /* Misc Colors */
-    border: 'hsl(0 0% 20%)',
+    border: 'hsl(0 0% 14%)',
     link: 'hsl(300 0% 99%)',
   },
 };

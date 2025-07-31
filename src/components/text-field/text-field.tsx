@@ -60,20 +60,19 @@ const TextFieldLabel = forwardRef<ViewRef, TextFieldLabelProps>(
     } = props;
 
     const tvStyles = textFieldStyles.label();
-    const containerStyles = tvStyles.container({
-      className: [className, classNames?.container],
+    const textStyles = tvStyles.text({
+      className: [className, classNames?.text],
     });
-    const textStyles = tvStyles.text({ className: classNames?.text });
     const asteriskStyles = tvStyles.asterisk({
       className: classNames?.asterisk,
     });
 
-    const Component = asChild ? SlotView : View;
+    const Component = asChild ? SlotText : Text;
 
     return (
-      <Component ref={ref} className={containerStyles} {...restProps}>
-        <Text className={textStyles}>{children}</Text>
-        {!hideAsterisk && <Text className={asteriskStyles}>*</Text>}
+      <Component ref={ref} className={textStyles} {...restProps}>
+        {children}
+        {!hideAsterisk && <Text className={asteriskStyles}> *</Text>}
       </Component>
     );
   }

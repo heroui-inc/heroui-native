@@ -2,7 +2,7 @@ import { combineStyles } from '@/theme/utils';
 import { tv } from 'tailwind-variants';
 
 const root = tv({
-  base: 'gap-2',
+  base: 'gap-1',
   variants: {
     isDisabled: {
       true: 'pointer-events-none opacity-disabled',
@@ -12,7 +12,6 @@ const root = tv({
 
 const label = tv({
   slots: {
-    container: 'flex-row gap-0.5',
     text: 'text-base text-foreground font-medium',
     asterisk: 'text-lg/6 text-danger',
   },

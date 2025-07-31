@@ -12,9 +12,9 @@ const root = tv({
 
 const label = tv({
   slots: {
-    container: 'flex-row gap-1',
+    container: 'flex-row gap-0.5',
     text: 'text-base text-foreground font-medium',
-    asterisk: 'text-danger',
+    asterisk: 'text-lg/6 text-danger',
   },
 });
 

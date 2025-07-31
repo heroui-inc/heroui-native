@@ -24,6 +24,20 @@ export interface TextFieldRootProps extends SlottableViewProps {
    * @default false
    */
   isDisabled?: boolean;
+  /**
+   * Whether the text field is in a valid state
+   * @default true
+   */
+  isValid?: boolean;
+  /**
+   * Error message to display when the field is invalid
+   */
+  errorMessage?: string;
+  /**
+   * Whether the text field is required (shows asterisk in label)
+   * @default false
+   */
+  isRequired?: boolean;
 }
 
 /**
@@ -41,6 +55,11 @@ export interface TextFieldInputColors {
    */
   focusBackground?: string;
   /**
+   * Background color when input is invalid
+   * @default colors.default (same as blurBackground)
+   */
+  errorBackground?: string;
+  /**
    * Border color when input is blurred
    * @default colors.border
    */
@@ -50,6 +69,11 @@ export interface TextFieldInputColors {
    * @default colors.mutedForeground
    */
   focusBorder?: string;
+  /**
+   * Border color when input is invalid
+   * @default colors.danger
+   */
+  errorBorder?: string;
 }
 
 /**
@@ -68,11 +92,6 @@ export interface TextFieldLabelProps extends SlottableViewProps {
    * Additional CSS classes for different parts of the label
    */
   classNames?: ElementSlots<LabelSlots>;
-  /**
-   * Whether to hide the asterisk for required fields
-   * @default false
-   */
-  hideAsterisk?: boolean;
 }
 
 /**
@@ -151,4 +170,17 @@ export interface TextFieldContextValue {
    * Whether the entire text field is disabled
    */
   isDisabled: boolean;
+  /**
+   * Whether the text field is in a valid state
+   * @default true
+   */
+  isValid: boolean;
+  /**
+   * Error message to display when the field is invalid
+   */
+  errorMessage?: string;
+  /**
+   * Whether the text field is required
+   */
+  isRequired: boolean;
 }

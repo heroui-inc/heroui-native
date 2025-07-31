@@ -22,6 +22,11 @@ const label = tv({
         asterisk: 'text-muted-foreground',
       },
     },
+    isValid: {
+      false: {
+        text: 'text-danger',
+      },
+    },
   },
 });
 
@@ -52,6 +57,10 @@ const description = tv({
   base: 'text-sm text-muted-foreground m-1 font-medium',
 });
 
+const errorMessage = tv({
+  base: 'text-sm text-danger m-1',
+});
+
 const textFieldStyles = combineStyles({
   root,
   label,
@@ -59,6 +68,7 @@ const textFieldStyles = combineStyles({
   inputStartContent,
   inputEndContent,
   description,
+  errorMessage,
 });
 
 export type InputSlots = keyof ReturnType<typeof input>;

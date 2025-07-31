@@ -15,12 +15,15 @@ import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
+  withSequence,
   withTiming,
 } from 'react-native-reanimated';
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
   DISPLAY_NAME,
+  ENTERING_ANIMATION_CONFIG,
+  EXITING_ANIMATION_CONFIG,
 } from './text-field.constants';
 import textFieldStyles from './text-field.styles';
 import type {
@@ -45,6 +48,9 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
     children,
     className,
     isDisabled = false,
+    isValid = true,
+    errorMessage,
+    isRequired = false,
     asChild,
     ...restProps
   } = props;
@@ -53,7 +59,10 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
 
   const Component = asChild ? SlotView : View;
 
-  const contextValue = useMemo(() => ({ isDisabled }), [isDisabled]);
+  const contextValue = useMemo(
+    () => ({ isDisabled, isValid, errorMessage, isRequired }),
+    [isDisabled, isValid, errorMessage, isRequired]
+  );
 
   return (
     <TextFieldProvider value={contextValue}>
@@ -68,18 +77,11 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
 
 const TextFieldLabel = forwardRef<ViewRef, TextFieldLabelProps>(
   (props, ref) => {
-    const {
-      children,
-      className,
-      classNames,
-      hideAsterisk,
-      asChild,
-      ...restProps
-    } = props;
+    const { children, className, classNames, asChild, ...restProps } = props;
 
-    const { isDisabled } = useTextFieldContext();
+    const { isDisabled, isValid, isRequired } = useTextFieldContext();
 
-    const tvStyles = textFieldStyles.label({ isDisabled });
+    const tvStyles = textFieldStyles.label({ isDisabled, isValid });
 
     const textStyles = tvStyles.text({
       className: [className, classNames?.text],
@@ -92,10 +94,16 @@ const TextFieldLabel = forwardRef<ViewRef, TextFieldLabelProps>(
     const Component = asChild ? SlotText : Text;
 
     return (
-      <Component ref={ref} className={textStyles} {...restProps}>
-        {children}
-        {!hideAsterisk && <Text className={asteriskStyles}> *</Text>}
-      </Component>
+      <Animated.View
+        key={isValid ? 'label-valid' : 'label-invalid'}
+        entering={ENTERING_ANIMATION_CONFIG}
+        exiting={EXITING_ANIMATION_CONFIG}
+      >
+        <Component ref={ref} className={textStyles} {...restProps}>
+          {children}
+          {isRequired && <Text className={asteriskStyles}> *</Text>}
+        </Component>
+      </Animated.View>
     );
   }
 );
@@ -124,6 +132,7 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     );
 
     const { colors } = useTheme();
+    const { isValid } = useTextFieldContext();
 
     const tvStyles = textFieldStyles.input({
       isMultiline: Boolean(restProps.multiline),
@@ -137,12 +146,56 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
 
     const isFocused = useSharedValue(0);
 
+    const timingConfig = {
+      duration: animationConfig?.duration || ANIMATION_DURATION,
+      easing: animationConfig?.easing || ANIMATION_EASING,
+    };
+
     const blurBackground = customColors?.blurBackground || colors.default;
     const focusBackground = customColors?.focusBackground || colors.background;
     const blurBorder = customColors?.blurBorder || colors.border;
     const focusBorder = customColors?.focusBorder || colors.mutedForeground;
+    const errorBorder = customColors?.errorBorder || colors.danger;
+
+    // VS -------------
+    const duration = 50;
 
     const animatedContainerStyle = useAnimatedStyle(() => {
+      if (!isValid) {
+        const currentBackgroundColor = isFocused.get()
+          ? focusBackground
+          : blurBackground;
+        const errorBackground =
+          customColors?.errorBackground || currentBackgroundColor;
+        const currentBorderColor = isFocused.get()
+          ? focusBackground
+          : blurBackground;
+
+        return {
+          backgroundColor: withSequence(
+            withTiming(currentBackgroundColor, { duration: 0 }),
+            withTiming(errorBackground, timingConfig)
+          ),
+          borderColor: withSequence(
+            withTiming(currentBorderColor, { duration: 0 }),
+            withTiming(errorBorder, timingConfig)
+          ),
+          transform: [
+            {
+              translateX: withSequence(
+                withTiming(-12, { duration }),
+                withTiming(8, { duration }),
+                withTiming(-6, { duration }),
+                withTiming(4, { duration }),
+                withTiming(-2, { duration }),
+                withTiming(1, { duration }),
+                withTiming(0, { duration })
+              ),
+            },
+          ],
+        };
+      }
+
       return {
         backgroundColor: interpolateColor(
           isFocused.get(),
@@ -158,22 +211,12 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     });
 
     const handleFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-      isFocused.set(
-        withTiming(1, {
-          duration: animationConfig?.duration || ANIMATION_DURATION,
-          easing: animationConfig?.easing || ANIMATION_EASING,
-        })
-      );
+      isFocused.set(withTiming(1, timingConfig));
       restProps.onFocus?.(e);
     };
 
     const handleBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-      isFocused.set(
-        withTiming(0, {
-          duration: animationConfig?.duration || ANIMATION_DURATION,
-          easing: animationConfig?.easing || ANIMATION_EASING,
-        })
-      );
+      isFocused.set(withTiming(0, timingConfig));
       restProps.onBlur?.(e);
     };
 
@@ -245,14 +288,49 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
   (props, ref) => {
     const { children, className, asChild, ...restProps } = props;
 
+    const { isValid } = useTextFieldContext();
+
     const tvStyles = textFieldStyles.description({ className });
 
     const Component = asChild ? SlotText : Text;
 
+    if (!isValid) return null;
+
     return (
-      <Component ref={ref} className={tvStyles} {...restProps}>
-        {children}
-      </Component>
+      <Animated.View
+        entering={ENTERING_ANIMATION_CONFIG}
+        exiting={EXITING_ANIMATION_CONFIG}
+      >
+        <Component ref={ref} className={tvStyles} {...restProps}>
+          {children}
+        </Component>
+      </Animated.View>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const TextFieldErrorMessage = forwardRef<TextRef, TextFieldDescriptionProps>(
+  (props, ref) => {
+    const { className, ...restProps } = props;
+
+    const { errorMessage, isValid } = useTextFieldContext();
+
+    const tvStyles = textFieldStyles.errorMessage({ className });
+
+    if (isValid || !errorMessage) return null;
+
+    return (
+      <Animated.Text
+        ref={ref}
+        entering={ENTERING_ANIMATION_CONFIG}
+        exiting={EXITING_ANIMATION_CONFIG}
+        className={tvStyles}
+        {...restProps}
+      >
+        {errorMessage}
+      </Animated.Text>
     );
   }
 );
@@ -265,18 +343,20 @@ TextFieldInput.displayName = DISPLAY_NAME.INPUT;
 TextFieldInputStartContent.displayName = DISPLAY_NAME.INPUT_START_CONTENT;
 TextFieldInputEndContent.displayName = DISPLAY_NAME.INPUT_END_CONTENT;
 TextFieldDescription.displayName = DISPLAY_NAME.DESCRIPTION;
+TextFieldErrorMessage.displayName = DISPLAY_NAME.ERROR_MESSAGE;
 
 /**
  * Compound TextField component with sub-components
  *
  * @component TextField - Main container that provides gap-2 spacing between children.
- * Handles disabled state for the entire field.
+ * Handles disabled state and validation state for the entire field.
  *
  * @component TextField.Label - Label with optional asterisk for required fields.
- * Wraps text in a View to support flex-row layout with gap.
+ * Changes to danger color when field is invalid.
  *
  * @component TextField.Input - Input container with animated border and background.
  * Supports start/end content slots and handles focus state animations.
+ * Border turns danger color when field is invalid.
  *
  * @component TextField.InputStartContent - Optional content at the start of the input.
  * Use for icons or prefixes.
@@ -285,7 +365,10 @@ TextFieldDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  * Use for icons, suffixes, or action buttons.
  *
  * @component TextField.Description - Description text with muted styling.
- * Use for helper text or error messages.
+ * Hidden when field is invalid and error message is shown.
+ *
+ * @component TextField.ErrorMessage - Error message with danger styling.
+ * Shown with animation when field is invalid. Automatically populated from errorMessage prop.
  *
  * All sub-components support asChild pattern for custom element composition.
  *
@@ -302,6 +385,8 @@ const CompoundTextField = Object.assign(TextFieldRoot, {
   InputEndContent: TextFieldInputEndContent,
   /** @optional Description or helper text */
   Description: TextFieldDescription,
+  /** @optional Error message displayed when field is invalid */
+  ErrorMessage: TextFieldErrorMessage,
 });
 
 export default CompoundTextField;

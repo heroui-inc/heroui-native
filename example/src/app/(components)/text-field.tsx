@@ -1,9 +1,19 @@
 import { Ionicons } from '@expo/vector-icons';
-import { TextField, useTheme } from 'heroui-native';
+import { Button, TextField, useTheme } from 'heroui-native';
+import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
 export default function TextFieldScreen() {
   const { colors } = useTheme();
+  const [email, setEmail] = useState('');
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  // State for animation testing
+  const [isTestFieldValid, setIsTestFieldValid] = useState(true);
+  const [testFieldValue, setTestFieldValue] = useState('');
+
+  // State for slow animation testing
+  const [isSlowTestValid, setIsSlowTestValid] = useState(true);
 
   return (
     <ScrollView
@@ -12,8 +22,37 @@ export default function TextFieldScreen() {
       automaticallyAdjustKeyboardInsets
     >
       <View className="gap-8 p-6">
+        {/* Animation Test Field */}
+        <View className="gap-3">
+          <TextField
+            isRequired
+            isValid={isTestFieldValid}
+            errorMessage="This field has validation errors"
+          >
+            <TextField.Label>Test Animation Transitions</TextField.Label>
+            <TextField.Input
+              placeholder="Type to see animations"
+              value={testFieldValue}
+              onChangeText={setTestFieldValue}
+            />
+            <TextField.Description>
+              Click the button below to toggle valid/invalid state
+            </TextField.Description>
+            <TextField.ErrorMessage />
+          </TextField>
+          <Button
+            onPress={() => setIsTestFieldValid(!isTestFieldValid)}
+            size="sm"
+            fullWidth={false}
+          >
+            <Button.Label>
+              {isTestFieldValid ? 'Make Invalid' : 'Make Valid'}
+            </Button.Label>
+          </Button>
+        </View>
+
         {/* Basic TextField */}
-        <TextField>
+        <TextField isRequired>
           <TextField.Label>Email</TextField.Label>
           <TextField.Input
             placeholder="Enter your email"
@@ -26,7 +65,7 @@ export default function TextFieldScreen() {
         </TextField>
 
         {/* TextField with Icons */}
-        <TextField>
+        <TextField isRequired>
           <TextField.Label>Password</TextField.Label>
           <TextField.Input placeholder="Enter your password" secureTextEntry>
             <TextField.InputStartContent className="pointer-events-none">
@@ -46,9 +85,9 @@ export default function TextFieldScreen() {
           </TextField.Input>
         </TextField>
 
-        {/* TextField without asterisk */}
+        {/* Optional TextField */}
         <TextField>
-          <TextField.Label hideAsterisk>Optional Field</TextField.Label>
+          <TextField.Label>Optional Field</TextField.Label>
           <TextField.Input placeholder="This field is optional" />
         </TextField>
 
@@ -64,6 +103,15 @@ export default function TextFieldScreen() {
         {/* TextField with only Input */}
         <TextField>
           <TextField.Input placeholder="No label, just input" />
+        </TextField>
+
+        {/* Non-required field (no asterisk) */}
+        <TextField>
+          <TextField.Label>Company Name</TextField.Label>
+          <TextField.Input placeholder="Optional field" />
+          <TextField.Description>
+            This field is optional - no asterisk shown
+          </TextField.Description>
         </TextField>
 
         {/* TextField with multiline */}
@@ -92,7 +140,7 @@ export default function TextFieldScreen() {
 
         {/* TextField with search icon */}
         <TextField>
-          <TextField.Label hideAsterisk>Search</TextField.Label>
+          <TextField.Label>Search</TextField.Label>
           <TextField.Input placeholder="Search...">
             <TextField.InputStartContent>
               <Ionicons
@@ -125,6 +173,82 @@ export default function TextFieldScreen() {
             This input has custom colors and slower animation
           </TextField.Description>
         </TextField>
+
+        {/* TextField with validation */}
+        <TextField
+          isRequired
+          isValid={email === '' || isValidEmail}
+          errorMessage="Please enter a valid email address"
+        >
+          <TextField.Label>Email with Validation</TextField.Label>
+          <TextField.Input
+            placeholder="Enter your email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextField.Description>
+            We'll send a confirmation to this email
+          </TextField.Description>
+          <TextField.ErrorMessage />
+        </TextField>
+
+        {/* TextField with custom error */}
+        <TextField
+          isRequired
+          isValid={false}
+          errorMessage="This field is required"
+        >
+          <TextField.Label>Required Field</TextField.Label>
+          <TextField.Input placeholder="This field has an error" />
+          <TextField.ErrorMessage />
+        </TextField>
+
+        {/* TextField with custom invalid colors */}
+        <TextField isValid={false} errorMessage="Custom error styling">
+          <TextField.Label>Custom Invalid Colors</TextField.Label>
+          <TextField.Input
+            placeholder="Custom invalid colors"
+            colors={{
+              errorBackground: '#fef2f2',
+              errorBorder: '#fca5a5',
+            }}
+          />
+          <TextField.ErrorMessage />
+        </TextField>
+
+        {/* Slow Animation Test */}
+        <View className="gap-3">
+          <TextField
+            isRequired
+            isValid={isSlowTestValid}
+            errorMessage="Watch the slow transition"
+          >
+            <TextField.Label>Slow Animation (500ms)</TextField.Label>
+            <TextField.Input
+              placeholder="Slow transition effect"
+              animationConfig={{
+                duration: 500,
+              }}
+              colors={{
+                errorBorder: '#dc2626',
+                errorBackground: '#fee2e2',
+              }}
+            />
+            <TextField.Description>
+              This field has a slower 500ms transition
+            </TextField.Description>
+            <TextField.ErrorMessage />
+          </TextField>
+          <Button
+            onPress={() => setIsSlowTestValid(!isSlowTestValid)}
+            size="sm"
+            fullWidth={false}
+          >
+            <Button.Label>Toggle Slow Animation</Button.Label>
+          </Button>
+        </View>
       </View>
     </ScrollView>
   );

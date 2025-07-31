@@ -1,10 +1,24 @@
 /* eslint-disable react-native/no-inline-styles */
 import { Button, Card, useTheme } from 'heroui-native';
-import { ExternalLink, ShoppingBasket } from 'lucide-react-native';
-import { Image, Pressable, ScrollView, Text, View } from 'react-native';
+import {
+  Check,
+  ExternalLink,
+  ShoppingBasket,
+  Users,
+} from 'lucide-react-native';
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 
 export default function CardScreen() {
   const { colors } = useTheme();
+
+  const { width } = useWindowDimensions();
 
   return (
     <ScrollView
@@ -90,7 +104,7 @@ export default function CardScreen() {
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Horizontal Card
+        Horizontal Card With Image
       </Text>
 
       <View className="w-full gap-4 mb-6">
@@ -124,6 +138,99 @@ export default function CardScreen() {
             </Card.Footer>
           </Card.Details>
         </Card>
+      </View>
+
+      <Text className="text-lg font-bold text-muted-foreground mb-4">
+        Threads Profile Onboarding
+      </Text>
+
+      <View className="w-full mb-6">
+        <ScrollView
+          horizontal
+          contentContainerClassName="gap-2"
+          showsHorizontalScrollIndicator={false}
+        >
+          <Card
+            surfaceVariant="2"
+            style={{ width: width / 1.6 }}
+            className="border-0"
+          >
+            <Card.Details>
+              <Card.Body className="items-center mb-2">
+                <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
+                  <Users size={20} color={colors.foreground} />
+                </View>
+                <Card.Title className="text-center">
+                  Follow 10 profiles
+                </Card.Title>
+                <Card.Description className="text-center">
+                  Fill your feed with threads that interest you.
+                </Card.Description>
+              </Card.Body>
+              <Card.Footer>
+                <Button size="sm">
+                  <Button.Label>See profiles</Button.Label>
+                </Button>
+              </Card.Footer>
+            </Card.Details>
+          </Card>
+
+          <Card
+            surfaceVariant="2"
+            style={{ width: width / 1.5 }}
+            className="border-0"
+          >
+            <Card.Details>
+              <Card.Body className="items-center mb-2">
+                <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
+                  <Check size={28} color={colors.foreground} />
+                </View>
+                <Card.Title className="text-center">Create thread</Card.Title>
+                <Card.Description className="text-center">
+                  Say what's on your mind or share a recent highlight.
+                </Card.Description>
+              </Card.Body>
+              <Card.Footer>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="border border-muted-foreground/50"
+                >
+                  <Button.Label>Done</Button.Label>
+                </Button>
+              </Card.Footer>
+            </Card.Details>
+          </Card>
+
+          <Card
+            surfaceVariant="2"
+            style={{ width: width / 1.5 }}
+            className="border-0"
+          >
+            <Card.Details>
+              <Card.Body className="items-center mb-2">
+                <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
+                  <Check size={28} color={colors.foreground} />
+                </View>
+                <Card.Title className="text-center">
+                  Add profile photo
+                </Card.Title>
+                <Card.Description className="text-center">
+                  Make it easier for people to recognize you.
+                </Card.Description>
+              </Card.Body>
+              <Card.Footer>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="border border-muted-foreground/50"
+                >
+                  <Button.Label>Done</Button.Label>
+                </Button>
+              </Card.Footer>
+            </Card.Details>
+          </Card>
+        </ScrollView>
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">
@@ -186,49 +293,25 @@ export default function CardScreen() {
           <Card.Details>
             <Card.Header>
               <View className="bg-accent rounded-full w-12 h-12 items-center justify-center">
-                <Text className="text-accent-foreground font-bold">$</Text>
+                <Text className="text-accent-foreground font-bold text-xl">
+                  $
+                </Text>
               </View>
             </Card.Header>
             <Card.Body>
               <Card.Title>Premium Plan</Card.Title>
-              <Card.Description>
+              <Card.Description className="mb-4">
                 Get access to all premium features and priority support.
               </Card.Description>
-              <Text className="text-2xl font-bold">$29.99/month</Text>
+              <Text className="text-2xl font-bold text-foreground">
+                $29.99/month
+              </Text>
             </Card.Body>
             <Card.Footer>
-              <Button variant="primary" className="w-full">
-                Subscribe Now
+              <Button>
+                <Button.Label>Subscribe Now</Button.Label>
               </Button>
             </Card.Footer>
-          </Card.Details>
-        </Card>
-      </View>
-
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Simple Cards
-      </Text>
-
-      <View className="w-full gap-4 mb-6">
-        <Card>
-          <Card.Details>
-            <Card.Body>
-              <Text>Simple card with just text content</Text>
-            </Card.Body>
-          </Card.Details>
-        </Card>
-
-        <Card>
-          <Card.Details>
-            <Card.Title>Title Only</Card.Title>
-          </Card.Details>
-        </Card>
-
-        <Card>
-          <Card.Details>
-            <Card.Description>
-              A card with only a description and no title.
-            </Card.Description>
           </Card.Details>
         </Card>
       </View>

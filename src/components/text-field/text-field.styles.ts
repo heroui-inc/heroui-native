@@ -12,7 +12,7 @@ const root = tv({
 
 const label = tv({
   slots: {
-    text: 'text-base text-foreground font-medium',
+    text: 'mx-1 text-base text-foreground font-medium',
     asterisk: 'text-lg/6 text-danger',
   },
   variants: {
@@ -57,10 +57,6 @@ const description = tv({
   base: 'm-1 text-sm text-muted-foreground  font-medium',
 });
 
-const errorMessage = tv({
-  base: 'text-sm text-danger m-1',
-});
-
 const textFieldStyles = combineStyles({
   root,
   label,
@@ -68,7 +64,6 @@ const textFieldStyles = combineStyles({
   inputStartContent,
   inputEndContent,
   description,
-  errorMessage,
 });
 
 export type LabelSlots = keyof ReturnType<typeof label>;

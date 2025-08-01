@@ -1,3 +1,4 @@
+import type { ErrorFieldRootProps } from '@/components/error-field';
 import type { ReanimatedAnimationProps, TimingConfig } from '@/helpers/types';
 import type { SlottableViewProps } from '@/helpers/types/primitives';
 import type { ElementSlots } from '@/theme';
@@ -62,10 +63,6 @@ export interface TextFieldRootProps extends SlottableViewProps {
    * @default true
    */
   isValid?: boolean;
-  /**
-   * Error message to display when the field is invalid
-   */
-  errorMessage?: string;
   /**
    * Whether the text field is required (shows asterisk in label)
    * @default false
@@ -164,6 +161,11 @@ export interface TextFieldDescriptionProps
 }
 
 /**
+ * Props for the TextField.ErrorMessage component
+ */
+export interface TextFieldErrorMessageProps extends ErrorFieldRootProps {}
+
+/**
  * Context value for the TextField component
  */
 export interface TextFieldContextValue {
@@ -176,10 +178,6 @@ export interface TextFieldContextValue {
    * @default true
    */
   isValid: boolean;
-  /**
-   * Error message to display when the field is invalid
-   */
-  errorMessage?: string;
   /**
    * Whether the text field is required
    */

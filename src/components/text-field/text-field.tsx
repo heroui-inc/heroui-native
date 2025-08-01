@@ -1,3 +1,4 @@
+import ErrorField from '@/components/error-field';
 import type { TextRef, ViewRef } from '@/helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '@/helpers/utils';
 import { View as SlotView } from '@/primitives/slot';
@@ -28,6 +29,7 @@ import textFieldStyles from './text-field.styles';
 import type {
   TextFieldContextValue,
   TextFieldDescriptionProps,
+  TextFieldErrorMessageProps,
   TextFieldInputEndContentProps,
   TextFieldInputProps,
   TextFieldInputStartContentProps,
@@ -48,7 +50,6 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
     className,
     isDisabled = false,
     isValid = true,
-    errorMessage,
     isRequired = false,
     asChild,
     ...restProps
@@ -59,8 +60,8 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
   const Component = asChild ? SlotView : View;
 
   const contextValue = useMemo(
-    () => ({ isDisabled, isValid, errorMessage, isRequired }),
-    [isDisabled, isValid, errorMessage, isRequired]
+    () => ({ isDisabled, isValid, isRequired }),
+    [isDisabled, isValid, isRequired]
   );
 
   return (
@@ -76,7 +77,14 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
 
 const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
   (props, ref) => {
-    const { children, className, classNames, ...restProps } = props;
+    const {
+      entering = ENTERING_ANIMATION_CONFIG,
+      exiting = EXITING_ANIMATION_CONFIG,
+      children,
+      className,
+      classNames,
+      ...restProps
+    } = props;
 
     const { isDisabled, isValid, isRequired } = useTextFieldContext();
 
@@ -94,8 +102,8 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
       <Animated.Text
         key={isValid ? 'label-valid' : 'label-invalid'}
         ref={ref}
-        entering={restProps.entering || ENTERING_ANIMATION_CONFIG}
-        exiting={restProps.exiting || EXITING_ANIMATION_CONFIG}
+        entering={entering}
+        exiting={exiting}
         className={textStyles}
         {...restProps}
       >
@@ -287,7 +295,13 @@ const TextFieldInputEndContent = forwardRef<
 
 const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
   (props, ref) => {
-    const { children, className, ...restProps } = props;
+    const {
+      entering = ENTERING_ANIMATION_CONFIG,
+      exiting = EXITING_ANIMATION_CONFIG,
+      children,
+      className,
+      ...restProps
+    } = props;
 
     const { isValid } = useTextFieldContext();
 
@@ -298,8 +312,8 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
     return (
       <Animated.Text
         ref={ref}
-        entering={restProps.entering || ENTERING_ANIMATION_CONFIG}
-        exiting={restProps.exiting || EXITING_ANIMATION_CONFIG}
+        entering={entering}
+        exiting={exiting}
         className={tvStyles}
         {...restProps}
       >
@@ -311,27 +325,11 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
 
 // --------------------------------------------------
 
-const TextFieldErrorMessage = forwardRef<TextRef, TextFieldDescriptionProps>(
+const TextFieldErrorMessage = forwardRef<TextRef, TextFieldErrorMessageProps>(
   (props, ref) => {
-    const { className, ...restProps } = props;
+    const { isValid } = useTextFieldContext();
 
-    const { errorMessage, isValid } = useTextFieldContext();
-
-    const tvStyles = textFieldStyles.errorMessage({ className });
-
-    if (isValid || !errorMessage) return null;
-
-    return (
-      <Animated.Text
-        ref={ref}
-        entering={ENTERING_ANIMATION_CONFIG}
-        exiting={EXITING_ANIMATION_CONFIG}
-        className={tvStyles}
-        {...restProps}
-      >
-        {errorMessage}
-      </Animated.Text>
-    );
+    return <ErrorField ref={ref} isValid={isValid} {...props} />;
   }
 );
 

@@ -22,11 +22,7 @@ export default function TextFieldScreen() {
         <View className="gap-8 p-6">
           {/* Animation Test Field */}
           <View className="gap-3">
-            <TextField
-              isRequired
-              isValid={isTestFieldValid}
-              errorMessage="This field has validation errors"
-            >
+            <TextField isRequired isValid={isTestFieldValid}>
               <TextField.Label>Test Animation Transitions</TextField.Label>
               <TextField.Input
                 placeholder="Type to see animations"
@@ -36,7 +32,9 @@ export default function TextFieldScreen() {
               <TextField.Description>
                 Click the button below to toggle valid/invalid state
               </TextField.Description>
-              <TextField.ErrorMessage />
+              <TextField.ErrorMessage>
+                This field has validation errors
+              </TextField.ErrorMessage>
             </TextField>
             <Button
               onPress={() => setIsTestFieldValid(!isTestFieldValid)}
@@ -157,11 +155,7 @@ export default function TextFieldScreen() {
           </TextField>
 
           {/* TextField with validation */}
-          <TextField
-            isRequired
-            isValid={email === '' || isValidEmail}
-            errorMessage="Please enter a valid email address"
-          >
+          <TextField isRequired isValid={email === '' || isValidEmail}>
             <TextField.Label>Email with Validation</TextField.Label>
             <TextField.Input
               placeholder="Enter your email"
@@ -173,18 +167,18 @@ export default function TextFieldScreen() {
             <TextField.Description>
               We'll send a confirmation to this email
             </TextField.Description>
-            <TextField.ErrorMessage />
+            <TextField.ErrorMessage>
+              Please enter a valid email address
+            </TextField.ErrorMessage>
           </TextField>
 
           {/* TextField with custom error */}
-          <TextField
-            isRequired
-            isValid={false}
-            errorMessage="This field is required"
-          >
+          <TextField isRequired isValid={false}>
             <TextField.Label>Required Field</TextField.Label>
             <TextField.Input placeholder="This field has an error" />
-            <TextField.ErrorMessage />
+            <TextField.ErrorMessage>
+              Please enter a valid email address
+            </TextField.ErrorMessage>
           </TextField>
         </View>
       </ScrollView>

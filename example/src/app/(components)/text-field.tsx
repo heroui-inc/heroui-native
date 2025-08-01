@@ -4,16 +4,13 @@ import { useState } from 'react';
 import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
 
 export default function TextFieldScreen() {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
   const [email, setEmail] = useState('');
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   // State for animation testing
   const [isTestFieldValid, setIsTestFieldValid] = useState(true);
   const [testFieldValue, setTestFieldValue] = useState('');
-
-  // State for slow animation testing
-  const [isSlowTestValid, setIsSlowTestValid] = useState(true);
 
   return (
     <KeyboardAvoidingView behavior="padding">
@@ -137,10 +134,10 @@ export default function TextFieldScreen() {
               placeholder="Custom colors"
               className="border-[2px]"
               colors={{
-                blurBorder: '#2563eb',
-                focusBorder: '#2563eb',
-                blurBackground: '#eff6ff',
-                focusBackground: '#eff6ff',
+                blurBorder: isDark ? '#2563eb' : '#2563eb',
+                focusBorder: isDark ? '#2563eb' : '#2563eb',
+                blurBackground: isDark ? '#172554' : '#eff6ff',
+                focusBackground: isDark ? '#172554' : '#eff6ff',
               }}
             />
           </TextField>
@@ -189,51 +186,6 @@ export default function TextFieldScreen() {
             <TextField.Input placeholder="This field has an error" />
             <TextField.ErrorMessage />
           </TextField>
-
-          {/* TextField with custom invalid colors */}
-          <TextField isValid={false} errorMessage="Custom error styling">
-            <TextField.Label>Custom Invalid Colors</TextField.Label>
-            <TextField.Input
-              placeholder="Custom invalid colors"
-              colors={{
-                errorBackground: '#fef2f2',
-                errorBorder: '#fca5a5',
-              }}
-            />
-            <TextField.ErrorMessage />
-          </TextField>
-
-          {/* Slow Animation Test */}
-          <View className="gap-3">
-            <TextField
-              isRequired
-              isValid={isSlowTestValid}
-              errorMessage="Watch the slow transition"
-            >
-              <TextField.Label>Slow Animation (500ms)</TextField.Label>
-              <TextField.Input
-                placeholder="Slow transition effect"
-                animationConfig={{
-                  duration: 500,
-                }}
-                colors={{
-                  errorBorder: '#dc2626',
-                  errorBackground: '#fee2e2',
-                }}
-              />
-              <TextField.Description>
-                This field has a slower 500ms transition
-              </TextField.Description>
-              <TextField.ErrorMessage />
-            </TextField>
-            <Button
-              onPress={() => setIsSlowTestValid(!isSlowTestValid)}
-              size="sm"
-              fullWidth={false}
-            >
-              <Button.Label>Toggle Slow Animation</Button.Label>
-            </Button>
-          </View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

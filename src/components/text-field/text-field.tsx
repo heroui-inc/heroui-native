@@ -131,7 +131,7 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       DISPLAY_NAME.INPUT_END_CONTENT
     );
 
-    const { colors } = useTheme();
+    const { colors, theme } = useTheme();
 
     const tvStyles = textFieldStyles.input({
       isMultiline: Boolean(restProps.multiline),
@@ -170,6 +170,12 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
         isError.set(withTiming(0, timingConfig));
       }
     }, [isValid, isError, timingConfig]);
+
+    useEffect(() => {
+      currentBgColor.set(isFocused.get() ? focusBackground : blurBackground);
+      currentBorderColor.set(isFocused.get() ? focusBorder : blurBorder);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [theme]);
 
     const animatedContainerStyle = useAnimatedStyle(() => {
       if (!isValid) {
@@ -279,7 +285,7 @@ const TextFieldInputEndContent = forwardRef<
 
 // --------------------------------------------------
 
-const TextFieldDescription = forwardRef<ViewRef, TextFieldDescriptionProps>(
+const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 

@@ -43,6 +43,7 @@ export default function TextFieldScreen() {
             </TextField>
             <Button
               onPress={() => setIsTestFieldValid(!isTestFieldValid)}
+              variant="tertiary"
               size="sm"
               fullWidth={false}
             >

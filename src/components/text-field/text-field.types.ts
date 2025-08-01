@@ -1,10 +1,7 @@
 import type { ReanimatedAnimationProps, TimingConfig } from '@/helpers/types';
-import type {
-  SlottableTextProps,
-  SlottableViewProps,
-} from '@/helpers/types/primitives';
+import type { SlottableViewProps } from '@/helpers/types/primitives';
 import type { ElementSlots } from '@/theme';
-import type { TextInputProps, TextProps } from 'react-native';
+import type { TextInputProps, TextProps, ViewProps } from 'react-native';
 import type { InputSlots, LabelSlots } from './text-field.styles';
 
 /**
@@ -153,7 +150,9 @@ export interface TextFieldInputEndContentProps extends SlottableViewProps {
 /**
  * Props for the TextField.Description component
  */
-export interface TextFieldDescriptionProps extends SlottableTextProps {
+export interface TextFieldDescriptionProps
+  extends ViewProps,
+    ReanimatedAnimationProps {
   /**
    * Children elements to be rendered as the description text
    */

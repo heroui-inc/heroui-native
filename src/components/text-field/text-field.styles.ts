@@ -54,7 +54,7 @@ const inputEndContent = tv({
 });
 
 const description = tv({
-  base: 'text-sm text-muted-foreground m-1 font-medium',
+  base: 'm-1 text-sm text-muted-foreground  font-medium',
 });
 
 const errorMessage = tv({
@@ -71,7 +71,7 @@ const textFieldStyles = combineStyles({
   errorMessage,
 });
 
-export type InputSlots = keyof ReturnType<typeof input>;
 export type LabelSlots = keyof ReturnType<typeof label>;
+export type InputSlots = keyof ReturnType<typeof input>;
 
 export default textFieldStyles;

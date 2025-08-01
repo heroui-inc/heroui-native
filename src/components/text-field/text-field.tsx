@@ -1,6 +1,6 @@
 import type { TextRef, ViewRef } from '@/helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '@/helpers/utils';
-import { Text as SlotText, View as SlotView } from '@/primitives/slot';
+import { View as SlotView } from '@/primitives/slot';
 import { useTheme } from '@/theme';
 import { forwardRef, useEffect, useMemo } from 'react';
 import {
@@ -91,7 +91,7 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
     });
 
     return (
-      <Animated.View
+      <Animated.Text
         key={isValid ? 'label-valid' : 'label-invalid'}
         ref={ref}
         entering={restProps.entering || ENTERING_ANIMATION_CONFIG}
@@ -101,7 +101,7 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
       >
         {children}
         {isRequired && <Text className={asteriskStyles}> *</Text>}
-      </Animated.View>
+      </Animated.Text>
     );
   }
 );
@@ -279,27 +279,26 @@ const TextFieldInputEndContent = forwardRef<
 
 // --------------------------------------------------
 
-const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
+const TextFieldDescription = forwardRef<ViewRef, TextFieldDescriptionProps>(
   (props, ref) => {
-    const { children, className, asChild, ...restProps } = props;
+    const { children, className, ...restProps } = props;
 
     const { isValid } = useTextFieldContext();
 
     const tvStyles = textFieldStyles.description({ className });
 
-    const Component = asChild ? SlotText : Text;
-
     if (!isValid) return null;
 
     return (
-      <Animated.View
-        entering={ENTERING_ANIMATION_CONFIG}
-        exiting={EXITING_ANIMATION_CONFIG}
+      <Animated.Text
+        ref={ref}
+        entering={restProps.entering || ENTERING_ANIMATION_CONFIG}
+        exiting={restProps.exiting || EXITING_ANIMATION_CONFIG}
+        className={tvStyles}
+        {...restProps}
       >
-        <Component ref={ref} className={tvStyles} {...restProps}>
-          {children}
-        </Component>
-      </Animated.View>
+        {children}
+      </Animated.Text>
     );
   }
 );

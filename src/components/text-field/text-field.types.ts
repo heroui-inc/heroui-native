@@ -1,44 +1,11 @@
-import type { TimingConfig } from '@/helpers/types';
+import type { ReanimatedAnimationProps, TimingConfig } from '@/helpers/types';
 import type {
   SlottableTextProps,
   SlottableViewProps,
 } from '@/helpers/types/primitives';
 import type { ElementSlots } from '@/theme';
-import type { TextInputProps } from 'react-native';
+import type { TextInputProps, TextProps } from 'react-native';
 import type { InputSlots, LabelSlots } from './text-field.styles';
-
-/**
- * Props for the TextField.Root component
- */
-export interface TextFieldRootProps extends SlottableViewProps {
-  /**
-   * Children elements to be rendered inside the root container
-   */
-  children?: React.ReactNode;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-  /**
-   * Whether the entire text field is disabled
-   * @default false
-   */
-  isDisabled?: boolean;
-  /**
-   * Whether the text field is in a valid state
-   * @default true
-   */
-  isValid?: boolean;
-  /**
-   * Error message to display when the field is invalid
-   */
-  errorMessage?: string;
-  /**
-   * Whether the text field is required (shows asterisk in label)
-   * @default false
-   */
-  isRequired?: boolean;
-}
 
 /**
  * Custom colors for TextField.Input component
@@ -77,9 +44,44 @@ export interface TextFieldInputColors {
 }
 
 /**
+ * Props for the TextField.Root component
+ */
+export interface TextFieldRootProps extends SlottableViewProps {
+  /**
+   * Children elements to be rendered inside the root container
+   */
+  children?: React.ReactNode;
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
+  /**
+   * Whether the entire text field is disabled
+   * @default false
+   */
+  isDisabled?: boolean;
+  /**
+   * Whether the text field is in a valid state
+   * @default true
+   */
+  isValid?: boolean;
+  /**
+   * Error message to display when the field is invalid
+   */
+  errorMessage?: string;
+  /**
+   * Whether the text field is required (shows asterisk in label)
+   * @default false
+   */
+  isRequired?: boolean;
+}
+
+/**
  * Props for the TextField.Label component
  */
-export interface TextFieldLabelProps extends SlottableViewProps {
+export interface TextFieldLabelProps
+  extends TextProps,
+    ReanimatedAnimationProps {
   /**
    * Children elements to be rendered as the label text
    */
@@ -111,7 +113,7 @@ export interface TextFieldInputProps extends TextInputProps {
    */
   classNames?: ElementSlots<InputSlots>;
   /**
-   * Custom colors for the input
+   * Custom colors for the input background and border
    */
   colors?: TextFieldInputColors;
   /**

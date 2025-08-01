@@ -74,9 +74,9 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const TextFieldLabel = forwardRef<ViewRef, TextFieldLabelProps>(
+const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
   (props, ref) => {
-    const { children, className, classNames, asChild, ...restProps } = props;
+    const { children, className, classNames, ...restProps } = props;
 
     const { isDisabled, isValid, isRequired } = useTextFieldContext();
 
@@ -90,18 +90,17 @@ const TextFieldLabel = forwardRef<ViewRef, TextFieldLabelProps>(
       className: classNames?.asterisk,
     });
 
-    const Component = asChild ? SlotText : Text;
-
     return (
       <Animated.View
         key={isValid ? 'label-valid' : 'label-invalid'}
-        entering={ENTERING_ANIMATION_CONFIG}
-        exiting={EXITING_ANIMATION_CONFIG}
+        ref={ref}
+        entering={restProps.entering || ENTERING_ANIMATION_CONFIG}
+        exiting={restProps.exiting || EXITING_ANIMATION_CONFIG}
+        className={textStyles}
+        {...restProps}
       >
-        <Component ref={ref} className={textStyles} {...restProps}>
-          {children}
-          {isRequired && <Text className={asteriskStyles}> *</Text>}
-        </Component>
+        {children}
+        {isRequired && <Text className={asteriskStyles}> *</Text>}
       </Animated.View>
     );
   }

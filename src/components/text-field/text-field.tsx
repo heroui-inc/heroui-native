@@ -2,7 +2,7 @@ import type { TextRef, ViewRef } from '@/helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '@/helpers/utils';
 import { Text as SlotText, View as SlotView } from '@/primitives/slot';
 import { useTheme } from '@/theme';
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useEffect, useMemo } from 'react';
 import {
   Text,
   TextInput,
@@ -15,7 +15,6 @@ import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
-  withSequence,
   withTiming,
 } from 'react-native-reanimated';
 import {
@@ -122,6 +121,8 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       ...restProps
     } = props;
 
+    const { isValid } = useTextFieldContext();
+
     const startContent = getElementByDisplayName(
       children,
       DISPLAY_NAME.INPUT_START_CONTENT
@@ -132,7 +133,6 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     );
 
     const { colors } = useTheme();
-    const { isValid } = useTextFieldContext();
 
     const tvStyles = textFieldStyles.input({
       isMultiline: Boolean(restProps.multiline),
@@ -144,55 +144,47 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
 
     const inputStyles = tvStyles.input({ className: classNames?.input });
 
-    const isFocused = useSharedValue(0);
-
-    const timingConfig = {
-      duration: animationConfig?.duration || ANIMATION_DURATION,
-      easing: animationConfig?.easing || ANIMATION_EASING,
-    };
-
     const blurBackground = customColors?.blurBackground || colors.default;
     const focusBackground = customColors?.focusBackground || colors.background;
+    const errorBackground = customColors?.errorBackground;
     const blurBorder = customColors?.blurBorder || colors.border;
     const focusBorder = customColors?.focusBorder || colors.mutedForeground;
     const errorBorder = customColors?.errorBorder || colors.danger;
 
-    // VS -------------
-    const duration = 50;
+    const isFocused = useSharedValue(0);
+    const isError = useSharedValue(0);
+    const currentBgColor = useSharedValue(blurBackground);
+    const currentBorderColor = useSharedValue(blurBorder);
+
+    const timingConfig = useMemo(
+      () => ({
+        duration: animationConfig?.duration || ANIMATION_DURATION,
+        easing: animationConfig?.easing || ANIMATION_EASING,
+      }),
+      [animationConfig?.duration, animationConfig?.easing]
+    );
+
+    useEffect(() => {
+      if (!isValid) {
+        isError.set(withTiming(1, timingConfig));
+      } else {
+        isError.set(withTiming(0, timingConfig));
+      }
+    }, [isValid, isError, timingConfig]);
 
     const animatedContainerStyle = useAnimatedStyle(() => {
       if (!isValid) {
-        const currentBackgroundColor = isFocused.get()
-          ? focusBackground
-          : blurBackground;
-        const errorBackground =
-          customColors?.errorBackground || currentBackgroundColor;
-        const currentBorderColor = isFocused.get()
-          ? focusBackground
-          : blurBackground;
-
         return {
-          backgroundColor: withSequence(
-            withTiming(currentBackgroundColor, { duration: 0 }),
-            withTiming(errorBackground, timingConfig)
+          backgroundColor: interpolateColor(
+            isError.get(),
+            [0, 1],
+            [currentBgColor.get(), errorBackground || currentBgColor.get()]
           ),
-          borderColor: withSequence(
-            withTiming(currentBorderColor, { duration: 0 }),
-            withTiming(errorBorder, timingConfig)
+          borderColor: interpolateColor(
+            isError.get(),
+            [0, 1],
+            [currentBorderColor.get(), errorBorder]
           ),
-          transform: [
-            {
-              translateX: withSequence(
-                withTiming(-12, { duration }),
-                withTiming(8, { duration }),
-                withTiming(-6, { duration }),
-                withTiming(4, { duration }),
-                withTiming(-2, { duration }),
-                withTiming(1, { duration }),
-                withTiming(0, { duration })
-              ),
-            },
-          ],
         };
       }
 
@@ -212,11 +204,15 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
 
     const handleFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
       isFocused.set(withTiming(1, timingConfig));
+      currentBgColor.set(focusBackground);
+      currentBorderColor.set(focusBorder);
       restProps.onFocus?.(e);
     };
 
     const handleBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
       isFocused.set(withTiming(0, timingConfig));
+      currentBgColor.set(blurBackground);
+      currentBorderColor.set(blurBorder);
       restProps.onBlur?.(e);
     };
 

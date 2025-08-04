@@ -54,6 +54,7 @@ module.exports = {
         'surface-3': 'hsl(var(--surface-3))',
         /* Misc Colors */
         'border': 'hsl(var(--border))',
+        'divider': 'hsl(var(--divider))',
         'link': 'hsl(var(--link))',
       },
       /* Layout */

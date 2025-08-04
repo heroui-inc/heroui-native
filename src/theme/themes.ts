@@ -50,6 +50,7 @@ export const themes: Record<ColorScheme, Record<string, string>> = {
 
     /* Misc Colors */
     '--border': '0 0% 90%',
+    '--divider': '0 0% 72%',
     '--link': 'var(--foreground)',
 
     ...nonColorsVars,
@@ -92,6 +93,7 @@ export const themes: Record<ColorScheme, Record<string, string>> = {
 
     /* Misc Colors */
     '--border': '0 0% 14%',
+    '--divider': '0 0% 28%',
     '--link': 'var(--foreground)',
 
     ...nonColorsVars,

@@ -1,7 +1,6 @@
 import ErrorField from '@/components/error-field';
 import type { TextRef, ViewRef } from '@/helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '@/helpers/utils';
-import { View as SlotView } from '@/primitives/slot';
 import { useTheme } from '@/theme';
 import { forwardRef, useEffect, useMemo } from 'react';
 import {
@@ -51,13 +50,10 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
     isDisabled = false,
     isValid = true,
     isRequired = false,
-    asChild,
     ...restProps
   } = props;
 
   const tvStyles = textFieldStyles.root({ isDisabled, className });
-
-  const Component = asChild ? SlotView : View;
 
   const contextValue = useMemo(
     () => ({ isDisabled, isValid, isRequired }),
@@ -66,9 +62,9 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
 
   return (
     <TextFieldProvider value={contextValue}>
-      <Component ref={ref} className={tvStyles} {...restProps}>
+      <View ref={ref} className={tvStyles} {...restProps}>
         {children}
-      </Component>
+      </View>
     </TextFieldProvider>
   );
 });
@@ -259,16 +255,14 @@ const TextFieldInputStartContent = forwardRef<
   ViewRef,
   TextFieldInputStartContentProps
 >((props, ref) => {
-  const { children, className, asChild, ...restProps } = props;
+  const { children, className, ...restProps } = props;
 
   const tvStyles = textFieldStyles.inputStartContent({ className });
 
-  const Component = asChild ? SlotView : View;
-
   return (
-    <Component ref={ref} className={tvStyles} {...restProps}>
+    <View ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Component>
+    </View>
   );
 });
 
@@ -278,16 +272,14 @@ const TextFieldInputEndContent = forwardRef<
   ViewRef,
   TextFieldInputEndContentProps
 >((props, ref) => {
-  const { children, className, asChild, ...restProps } = props;
+  const { children, className, ...restProps } = props;
 
   const tvStyles = textFieldStyles.inputEndContent({ className });
 
-  const Component = asChild ? SlotView : View;
-
   return (
-    <Component ref={ref} className={tvStyles} {...restProps}>
+    <View ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Component>
+    </View>
   );
 });
 

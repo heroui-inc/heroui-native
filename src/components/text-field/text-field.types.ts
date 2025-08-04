@@ -1,6 +1,5 @@
 import type { ErrorFieldRootProps } from '@/components/error-field';
 import type { ReanimatedAnimationProps, TimingConfig } from '@/helpers/types';
-import type { SlottableViewProps } from '@/helpers/types/primitives';
 import type { ElementSlots } from '@/theme';
 import type { TextInputProps, TextProps, ViewProps } from 'react-native';
 import type { InputSlots, LabelSlots } from './text-field.styles';
@@ -44,7 +43,7 @@ export interface TextFieldInputColors {
 /**
  * Props for the TextField.Root component
  */
-export interface TextFieldRootProps extends SlottableViewProps {
+export interface TextFieldRootProps extends ViewProps {
   /**
    * Children elements to be rendered inside the root container
    */
@@ -119,7 +118,7 @@ export interface TextFieldInputProps extends TextInputProps {
 /**
  * Props for the TextField.InputStartContent component
  */
-export interface TextFieldInputStartContentProps extends SlottableViewProps {
+export interface TextFieldInputStartContentProps extends ViewProps {
   /**
    * Children elements to be rendered at the start of the input
    */
@@ -133,7 +132,7 @@ export interface TextFieldInputStartContentProps extends SlottableViewProps {
 /**
  * Props for the TextField.InputEndContent component
  */
-export interface TextFieldInputEndContentProps extends SlottableViewProps {
+export interface TextFieldInputEndContentProps extends ViewProps {
   /**
    * Children elements to be rendered at the end of the input
    */

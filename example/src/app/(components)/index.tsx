@@ -40,6 +40,9 @@ export default function App() {
       <TouchableOpacity onPress={() => router.push('/surface')}>
         <Text className={classNames.link}>Surface</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => router.push('/text-field')}>
+        <Text className={classNames.link}>TextField</Text>
+      </TouchableOpacity>
     </View>
   );
 }

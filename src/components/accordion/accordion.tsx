@@ -279,7 +279,13 @@ const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
 
   const { variant } = useAccordionContext();
 
+  const { isExpanded } = useAccordionItemContext();
+
   const tvStyles = accordionStyles.content({ variant, className });
+
+  if (!isExpanded) {
+    return null;
+  }
 
   return (
     <Animated.View

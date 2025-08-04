@@ -17,10 +17,8 @@ import {
 import { ScrollView, Text, View } from 'react-native';
 import Animated, {
   Easing,
-  FadeIn,
-  FadeOut,
-  SlideInDown,
-  SlideOutUp,
+  FadeInLeft,
+  FadeInRight,
   ZoomIn,
   ZoomOut,
 } from 'react-native-reanimated';
@@ -220,31 +218,12 @@ const AccordionScreen = () => {
 
       <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
         <Text className="text-lg font-bold text-muted-foreground mb-4">
-          No Divider (Animation Props Test)
+          Custom entering animation
         </Text>
         <Accordion selectionMode="single" variant="border" showDivider={false}>
           {accordionData.slice(0, 3).map((item, index) => (
             <Accordion.Item key={item.id} value={item.id}>
-              <Accordion.Trigger
-                highlightColor={
-                  index === 0
-                    ? colors.accent
-                    : index === 1
-                      ? colors.success
-                      : colors.danger
-                }
-                highlightOpacity={0.1}
-                highlightTimingConfig={
-                  index === 0
-                    ? {
-                        duration: 300,
-                        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-                      }
-                    : index === 1
-                      ? { duration: 100, easing: Easing.linear }
-                      : { duration: 300, easing: Easing.out(Easing.bounce) }
-                }
-              >
+              <Accordion.Trigger hideHighlight>
                 <View className={classNames.triggerContentContainer}>
                   {item.icon}
                   <Text className={classNames.triggerTitle}>{item.title}</Text>
@@ -262,17 +241,10 @@ const AccordionScreen = () => {
               <Accordion.Content
                 entering={
                   index === 0
-                    ? ZoomIn.duration(300).easing(Easing.elastic(1))
+                    ? FadeInRight.delay(50).easing(Easing.inOut(Easing.ease))
                     : index === 1
-                      ? FadeIn.duration(500).easing(Easing.inOut(Easing.ease))
-                      : SlideInDown.duration(400).easing(Easing.out(Easing.exp))
-                }
-                exiting={
-                  index === 0
-                    ? ZoomOut.duration(200).easing(Easing.in(Easing.ease))
-                    : index === 1
-                      ? FadeOut.duration(300).easing(Easing.out(Easing.ease))
-                      : SlideOutUp.duration(300).easing(Easing.in(Easing.exp))
+                      ? FadeInLeft.delay(50).easing(Easing.inOut(Easing.ease))
+                      : ZoomIn.delay(50).easing(Easing.out(Easing.exp))
                 }
               >
                 <Text className={classNames.contentText}>{item.content}</Text>

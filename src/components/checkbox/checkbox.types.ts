@@ -3,11 +3,6 @@ import * as CheckboxPrimitivesTypes from '@/primitives/checkbox/checkbox.types';
 import type { ViewProps } from 'react-native';
 
 /**
- * Base checkbox size variants
- */
-export type CheckboxSize = 'sm' | 'md' | 'lg';
-
-/**
  * Base checkbox color variants
  */
 export type CheckboxColor = 'default' | 'success' | 'warning' | 'danger';
@@ -50,9 +45,6 @@ export interface CheckboxIndicatorIconProps {
 export interface CheckboxProps extends CheckboxPrimitivesTypes.RootProps {
   /** Child elements to render inside the checkbox */
   children?: React.ReactNode;
-
-  /** Size of the checkbox @default 'md' */
-  size?: CheckboxSize;
 
   /** Color theme of the checkbox @default 'default' */
   color?: CheckboxColor;
@@ -106,9 +98,6 @@ export interface CheckboxIndicatorProps
  * Context value for checkbox components
  */
 export interface CheckboxContextValue {
-  /** Size of the checkbox */
-  size: CheckboxSize;
-
   /** Color theme of the checkbox */
   color: CheckboxColor;
 

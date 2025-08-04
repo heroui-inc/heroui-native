@@ -11,10 +11,10 @@ import Animated, {
 } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
 import {
-  CHECK_ICON_SIZE_MAP,
+  DEFAULT_CHECK_ICON_SIZE,
+  DEFAULT_HIT_SLOP,
   DEFAULT_TIMING_CONFIG,
   DISPLAY_NAME,
-  HIT_SLOP_MAP,
 } from './checkbox.constants';
 import checkboxStyles from './checkbox.styles';
 import type {
@@ -41,7 +41,6 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
   (props, ref) => {
     const {
       children,
-      size = 'md',
       color = 'default',
       isSelected,
       onSelectedChange,
@@ -77,7 +76,6 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
     const { colors: themeColors } = useTheme();
 
     const tvStyles = checkboxStyles.root({
-      size,
       isDisabled,
       isReadOnly,
       className,
@@ -105,11 +103,10 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
 
     const contextValue = useMemo(
       () => ({
-        size,
         color,
         isSelected,
       }),
-      [size, color, isSelected]
+      [color, isSelected]
     );
 
     return (
@@ -121,7 +118,7 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
           isSelected={isSelected}
           onSelectedChange={onSelectedChange}
           isDisabled={isDisabled}
-          hitSlop={props.hitSlop ?? HIT_SLOP_MAP[size]}
+          hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
           {...restProps}
         >
           {backgroundElement}
@@ -144,12 +141,11 @@ function CheckboxBackground(props: CheckboxBackgroundProps) {
   const { children, colors, animationConfig, className, style, ...restProps } =
     props;
 
-  const { size, color, isSelected } = useCheckboxContext();
+  const { color, isSelected } = useCheckboxContext();
 
   const { colors: themeColors } = useTheme();
 
   const tvStyles = checkboxStyles.background({
-    size,
     className,
   });
 
@@ -193,10 +189,9 @@ function CheckboxBackground(props: CheckboxBackgroundProps) {
 // --------------------------------------------------
 
 function CheckIcon(props: CheckboxIndicatorIconProps) {
-  const { size } = useCheckboxContext();
   const { theme, colors } = useTheme();
 
-  const iconSize = CHECK_ICON_SIZE_MAP[size];
+  const iconSize = DEFAULT_CHECK_ICON_SIZE;
 
   return (
     <Svg
@@ -284,7 +279,7 @@ CheckboxIndicator.displayName = DISPLAY_NAME.CHECKBOX_INDICATOR;
  * Renders default check icon if no children provided. Handles enter/exit animations
  * and can be replaced with custom indicators.
  *
- * Props flow from Checkbox to sub-components via context (size, color, isSelected).
+ * Props flow from Checkbox to sub-components via context (color, isSelected).
  * The checkbox supports controlled and uncontrolled modes through isSelected/onSelectedChange.
  *
  * @see Full documentation: https://heroui.com/components/checkbox

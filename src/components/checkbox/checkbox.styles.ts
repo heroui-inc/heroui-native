@@ -2,13 +2,8 @@ import { combineStyles } from '@/theme/utils';
 import { tv } from 'tailwind-variants';
 
 const root = tv({
-  base: 'relative border items-center justify-center overflow-hidden',
+  base: 'relative border items-center justify-center overflow-hidden w-[20px] h-[20px] rounded-[6px]',
   variants: {
-    size: {
-      sm: 'w-[17px] h-[17px] rounded-[5px]',
-      md: 'w-[20px] h-[20px] rounded-[6px]',
-      lg: 'w-[24px] h-[24px] rounded-[7px]',
-    },
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',
     },
@@ -17,21 +12,13 @@ const root = tv({
     },
   },
   defaultVariants: {
-    size: 'md',
     isDisabled: false,
     isReadOnly: false,
   },
 });
 
 const background = tv({
-  base: 'absolute inset-0',
-  variants: {
-    size: {
-      sm: 'rounded-[4px]',
-      md: 'rounded-[5px]',
-      lg: 'rounded-[6px]',
-    },
-  },
+  base: 'absolute inset-0 rounded-[5px]',
 });
 
 const indicator = tv({

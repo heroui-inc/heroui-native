@@ -1,4 +1,3 @@
-import type { SlottableViewProps } from '@/helpers/types';
 import type { ViewProps } from 'react-native';
 
 /**
@@ -19,7 +18,7 @@ export type ChipColor = 'accent' | 'default' | 'success' | 'warning' | 'danger';
 /**
  * Props for the main Chip component
  */
-export interface ChipProps extends SlottableViewProps {
+export interface ChipProps extends ViewProps {
   /** Child elements to render inside the chip */
   children?: React.ReactNode;
 

@@ -12,9 +12,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import {
   DEFAULT_SPRING_CONFIG,
+  DEFAULT_THUMB_WIDTH,
   DEFAULT_TIMING_CONFIG,
   DISPLAY_NAME,
-  THUMB_WIDTH_MAP,
 } from './switch.constants';
 import switchStyles from './switch.styles';
 import type {
@@ -43,7 +43,6 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
   (props, ref) => {
     const {
       children,
-      size = 'md',
       color = 'default',
       isReadOnly,
       isDisabled,
@@ -61,7 +60,6 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
 
     const { container, contentPaddingContainer, contentContainer } =
       switchStyles.root({
-        size,
         isDisabled,
         isReadOnly,
       });
@@ -116,12 +114,11 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
 
     const contextValue = useMemo(
       () => ({
-        size,
         isSelected,
         contentContainerWidth,
         contentContainerHeight,
       }),
-      [size, isSelected, contentContainerWidth, contentContainerHeight]
+      [isSelected, contentContainerWidth, contentContainerHeight]
     );
 
     return (
@@ -171,7 +168,7 @@ const SwitchThumb = forwardRef<
 >((props, ref) => {
   const { children, className, width, height, colors, animationConfig } = props;
 
-  const { size, isSelected, contentContainerWidth } = useSwitchContext();
+  const { isSelected, contentContainerWidth } = useSwitchContext();
 
   const { colors: themeColors } = useTheme();
 
@@ -179,7 +176,7 @@ const SwitchThumb = forwardRef<
     className,
   });
 
-  const computedWidth = width ?? THUMB_WIDTH_MAP[size];
+  const computedWidth = width ?? DEFAULT_THUMB_WIDTH;
 
   const springConfig = animationConfig?.translateX ?? DEFAULT_SPRING_CONFIG;
 
@@ -287,7 +284,7 @@ SwitchEndContent.displayName = DISPLAY_NAME.SWITCH_END_CONTENT;
  * Typically used for icons or text that appear when switch is on. Positioned absolutely
  * within the switch container.
  *
- * Props flow from Switch to sub-components via context (size, isSelected).
+ * Props flow from Switch to sub-components via context (isSelected).
  * The switch supports controlled and uncontrolled modes through isSelected/onSelectedChange.
  * Content components provide visual feedback without affecting the toggle functionality.
  *

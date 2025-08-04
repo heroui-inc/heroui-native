@@ -3,25 +3,11 @@ import { tv } from 'tailwind-variants';
 
 const root = tv({
   slots: {
-    container: 'shadow-2xl border-[0.5px] rounded-full',
-    contentPaddingContainer: 'flex-1  overflow-hidden',
+    container: 'shadow-2xl border-[0.5px] rounded-full w-[40px] h-[25px]',
+    contentPaddingContainer: 'flex-1  overflow-hidden px-[3.5px]',
     contentContainer: 'flex-1 justify-center',
   },
   variants: {
-    size: {
-      sm: {
-        container: 'w-[32px] h-[20px]',
-        contentPaddingContainer: 'px-[3px]',
-      },
-      md: {
-        container: 'w-[40px] h-[25px]',
-        contentPaddingContainer: 'px-[3.5px]',
-      },
-      lg: {
-        container: 'w-[48px] h-[30px]',
-        contentPaddingContainer: 'px-[4.5px]',
-      },
-    },
     isDisabled: {
       true: {
         container: 'opacity-disabled pointer-events-none',
@@ -34,7 +20,6 @@ const root = tv({
     },
   },
   defaultVariants: {
-    size: 'md',
     isDisabled: false,
     isReadOnly: false,
   },

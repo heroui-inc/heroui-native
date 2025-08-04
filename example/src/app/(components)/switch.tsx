@@ -9,9 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 export default function SwitchScreen() {
-  const [sm, setSm] = React.useState(true);
-  const [md, setMd] = React.useState(true);
-  const [lg, setLg] = React.useState(true);
+  const [defaultSwitch, setDefaultSwitch] = React.useState(true);
   const [defaultColor, setDefaultColor] = React.useState(true);
   const [success, setSuccess] = React.useState(true);
   const [warning, setWarning] = React.useState(true);
@@ -32,13 +30,14 @@ export default function SwitchScreen() {
       contentInsetAdjustmentBehavior="automatic"
     >
       <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Sizes
+        Default
       </Text>
 
       <View className="flex-row gap-4 mb-6">
-        <Switch isSelected={sm} onSelectedChange={setSm} size="sm" />
-        <Switch isSelected={md} onSelectedChange={setMd} size="md" />
-        <Switch isSelected={lg} onSelectedChange={setLg} size="lg" />
+        <Switch
+          isSelected={defaultSwitch}
+          onSelectedChange={setDefaultSwitch}
+        />
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">

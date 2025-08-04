@@ -1,5 +1,4 @@
 import type { ViewRef } from '@/helpers/types';
-import { cn } from '@/helpers/utils';
 import { forwardRef } from 'react';
 import { View } from 'react-native';
 import { DISPLAY_NAME, THICK_VARIANT_HEIGHT } from './divider.constants';
@@ -49,7 +48,7 @@ const DividerRoot = forwardRef<ViewRef, DividerProps>((props, ref) => {
   return (
     <View
       ref={ref}
-      className={cn(tvStyles)}
+      className={tvStyles}
       style={[thicknessStyles, style]}
       {...restProps}
     />

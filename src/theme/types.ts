@@ -42,6 +42,7 @@ type ColorVariableKeys =
   | '--surface-2'
   | '--surface-3'
   | '--border'
+  | '--divider'
   | '--link';
 
 /**

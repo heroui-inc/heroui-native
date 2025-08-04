@@ -39,6 +39,7 @@ export const colors: Record<ColorScheme, ColorVariables> = {
 
     /* Misc Colors */
     border: 'hsl(0 0% 90%)',
+    divider: 'hsl(0 0% 72%)',
     link: 'hsl(348 0% 4%)',
   },
   dark: {
@@ -79,6 +80,7 @@ export const colors: Record<ColorScheme, ColorVariables> = {
 
     /* Misc Colors */
     border: 'hsl(0 0% 14%)',
+    divider: 'hsl(0 0% 28%)',
     link: 'hsl(300 0% 99%)',
   },
 };

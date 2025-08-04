@@ -28,6 +28,9 @@ export default function App() {
       <TouchableOpacity onPress={() => router.push('/chip')}>
         <Text className={classNames.link}>Chip</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => router.push('/divider')}>
+        <Text className={classNames.link}>Divider</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/radio')}>
         <Text className={classNames.link}>Radio</Text>
       </TouchableOpacity>

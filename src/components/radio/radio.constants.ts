@@ -1,5 +1,4 @@
 import { Easing } from 'react-native-reanimated';
-import type { RadioSize } from './radio.types';
 
 export const DISPLAY_NAME = {
   RADIO_GROUP: 'HeroUINative.RadioGroup.Root',
@@ -22,12 +21,7 @@ export const DEFAULT_TIMING_CONFIG = {
 
 export const DEFAULT_SPRING_CONFIG = {
   damping: 40,
-  stiffness: 600,
-  mass: 1.5,
+  stiffness: 800,
 };
 
-export const HIT_SLOP_MAP: Record<RadioSize, number> = {
-  sm: 8,
-  md: 6,
-  lg: 4,
-};
+export const DEFAULT_HIT_SLOP = 6;

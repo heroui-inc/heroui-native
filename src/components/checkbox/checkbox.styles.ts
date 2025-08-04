@@ -2,7 +2,7 @@ import { combineStyles } from '@/theme/utils';
 import { tv } from 'tailwind-variants';
 
 const root = tv({
-  base: 'relative border items-center justify-center overflow-hidden w-[20px] h-[20px] rounded-[6px]',
+  base: 'relative border items-center justify-center overflow-hidden w-6 h-6 rounded-[6px]',
   variants: {
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',

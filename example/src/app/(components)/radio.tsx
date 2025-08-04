@@ -11,10 +11,8 @@ import { StyledRadio } from '../../components/styled-radio';
 const AnimatedView = Animated.createAnimatedComponent(View);
 
 export default function RadioScreen() {
-  // State for size variants
-  const [smSize, setSmSize] = React.useState('paris');
-  const [mdSize, setMdSize] = React.useState('london');
-  const [lgSize, setLgSize] = React.useState('berlin');
+  // State for default radio
+  const [defaultRadio, setDefaultRadio] = React.useState('london');
   // State for color variants
   const [selectedColor, setSelectedColor] = React.useState('default');
 
@@ -37,64 +35,24 @@ export default function RadioScreen() {
       contentInsetAdjustmentBehavior="automatic"
     >
       <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Sizes
+        Default
       </Text>
 
-      <View className="w-full mb-6 gap-6">
-        <RadioGroup
-          value={smSize}
-          onValueChange={setSmSize}
-          orientation="horizontal"
-        >
-          <Radio value="paris" size="sm" alignIndicator="start">
+      <View className="w-full mb-6">
+        <RadioGroup value={defaultRadio} onValueChange={setDefaultRadio}>
+          <Radio value="paris">
             <Radio.Content>
-              <Radio.Label>Paris (Small)</Radio.Label>
+              <Radio.Label>Paris</Radio.Label>
             </Radio.Content>
           </Radio>
-          <Radio value="london" size="sm" alignIndicator="start">
+          <Radio value="london">
             <Radio.Content>
-              <Radio.Label>London (Small)</Radio.Label>
+              <Radio.Label>London</Radio.Label>
             </Radio.Content>
           </Radio>
-          <Radio value="berlin" size="sm" alignIndicator="start">
+          <Radio value="berlin">
             <Radio.Content>
-              <Radio.Label>Berlin (Small)</Radio.Label>
-            </Radio.Content>
-          </Radio>
-        </RadioGroup>
-
-        <RadioGroup value={mdSize} onValueChange={setMdSize}>
-          <Radio value="paris" size="md">
-            <Radio.Content>
-              <Radio.Label>Paris (Medium)</Radio.Label>
-            </Radio.Content>
-          </Radio>
-          <Radio value="london" size="md">
-            <Radio.Content>
-              <Radio.Label>London (Medium)</Radio.Label>
-            </Radio.Content>
-          </Radio>
-          <Radio value="berlin" size="md">
-            <Radio.Content>
-              <Radio.Label>Berlin (Medium)</Radio.Label>
-            </Radio.Content>
-          </Radio>
-        </RadioGroup>
-
-        <RadioGroup value={lgSize} onValueChange={setLgSize}>
-          <Radio value="paris" size="lg">
-            <Radio.Content>
-              <Radio.Label>Paris (Large)</Radio.Label>
-            </Radio.Content>
-          </Radio>
-          <Radio value="london" size="lg">
-            <Radio.Content>
-              <Radio.Label>London (Large)</Radio.Label>
-            </Radio.Content>
-          </Radio>
-          <Radio value="berlin" size="lg">
-            <Radio.Content>
-              <Radio.Label>Berlin (Large)</Radio.Label>
+              <Radio.Label>Berlin</Radio.Label>
             </Radio.Content>
           </Radio>
         </RadioGroup>
@@ -223,7 +181,7 @@ export default function RadioScreen() {
         </RadioGroup>
 
         <RadioGroup value={customThumb} onValueChange={setCustomThumb}>
-          <Radio value="custom1" size="lg">
+          <Radio value="custom1">
             <Radio.Indicator>
               <Radio.IndicatorThumb>
                 {customThumb === 'custom1' ? (
@@ -242,7 +200,7 @@ export default function RadioScreen() {
             </Radio.Content>
           </Radio>
 
-          <Radio value="custom2" size="lg">
+          <Radio value="custom2">
             <Radio.Indicator>
               <Radio.IndicatorThumb>
                 {customThumb === 'custom2' ? (

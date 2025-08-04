@@ -16,10 +16,10 @@ import * as RadioGroupPrimitives from '@/primitives/radio-group';
 import { useTheme } from '@/theme';
 
 import {
+  DEFAULT_HIT_SLOP,
   DEFAULT_SPRING_CONFIG,
   DEFAULT_TIMING_CONFIG,
   DISPLAY_NAME,
-  HIT_SLOP_MAP,
 } from './radio.constants';
 import radioStyles from './radio.styles';
 import type {
@@ -76,7 +76,6 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
   (props, ref) => {
     const {
       children,
-      size = 'md',
       color = 'default',
       alignIndicator = 'end',
       isDisabled = false,
@@ -106,7 +105,6 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
     }, [children]);
 
     const tvStyles = radioStyles.radioRoot({
-      size,
       isDisabled: isDisabledValue,
       isReadOnly,
       className,
@@ -114,13 +112,12 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
 
     const contextValue = useMemo(
       () => ({
-        size,
         color,
         isSelected,
         isDisabled: isDisabledValue,
         isReadOnly,
       }),
-      [size, color, isSelected, isDisabledValue, isReadOnly]
+      [color, isSelected, isDisabledValue, isReadOnly]
     );
 
     return (
@@ -131,7 +128,7 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
           style={style}
           value={value}
           isDisabled={isDisabledValue || isReadOnly}
-          hitSlop={props.hitSlop ?? HIT_SLOP_MAP[size]}
+          hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
           {...restProps}
         >
           {alignIndicator === 'start' && indicatorElement}
@@ -156,7 +153,7 @@ const RadioIndicator = forwardRef<Animated.View, RadioIndicatorProps>(
       ...restProps
     } = props;
 
-    const { size, color, isSelected } = useRadioContext();
+    const { color, isSelected } = useRadioContext();
     const { colors: themeColors } = useTheme();
 
     const backgroundElement = useMemo(
@@ -180,7 +177,6 @@ const RadioIndicator = forwardRef<Animated.View, RadioIndicatorProps>(
     );
 
     const tvStyles = radioStyles.indicator({
-      size,
       className,
     });
 
@@ -273,11 +269,10 @@ function RadioIndicatorThumb(props: RadioThumbProps) {
   const { children, colors, className, style, animationConfig, ...restProps } =
     props;
 
-  const { size, isSelected } = useRadioContext();
+  const { isSelected } = useRadioContext();
   const { theme, colors: themeColors } = useTheme();
 
   const tvStyles = radioStyles.thumb({
-    size,
     isDark: theme === 'dark',
     className,
   });
@@ -349,10 +344,7 @@ function RadioContent(props: RadioContentProps) {
 function RadioLabel(props: RadioLabelProps) {
   const { children, className, ...restProps } = props;
 
-  const { size } = useRadioContext();
-
   const tvStyles = radioStyles.label({
-    size,
     className,
   });
 
@@ -368,10 +360,7 @@ function RadioLabel(props: RadioLabelProps) {
 function RadioDescription(props: RadioDescriptionProps) {
   const { children, className, ...restProps } = props;
 
-  const { size } = useRadioContext();
-
   const tvStyles = radioStyles.description({
-    size,
     className,
   });
 
@@ -418,7 +407,7 @@ RadioDescription.displayName = DISPLAY_NAME.RADIO_DESCRIPTION;
  * @component Radio.Description - Optional secondary text below the label. Provides additional
  * context about the radio option.
  *
- * Props flow from Radio to sub-components via context (size, color, value, isSelected).
+ * Props flow from Radio to sub-components via context (color, value, isSelected).
  * RadioGroup manages the overall selection state and orientation.
  *
  * @see Full documentation: https://heroui.com/components/radio

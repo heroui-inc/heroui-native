@@ -8,6 +8,5 @@ export type {
   RadioIndicatorProps,
   RadioLabelProps,
   RadioProps,
-  RadioSize,
   RadioThumbProps,
 } from './radio.types';

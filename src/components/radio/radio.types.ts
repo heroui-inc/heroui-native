@@ -8,12 +8,6 @@ import type {
 import type { TextProps, ViewProps } from 'react-native';
 
 /**
- * Radio size variant
- * @default 'md'
- */
-export type RadioSize = 'sm' | 'md' | 'lg';
-
-/**
  * Radio color variant
  * @default 'default'
  */
@@ -49,8 +43,6 @@ export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
  * Context values shared between Radio compound components
  */
 export interface RadioContextValue {
-  /** Current size variant */
-  size: RadioSize;
   /** Current color variant */
   color: RadioColor;
   /** Whether the radio is selected */
@@ -67,8 +59,6 @@ export interface RadioContextValue {
 export interface RadioProps extends ItemProps {
   /** Radio content */
   children?: React.ReactNode;
-  /** Size variant */
-  size?: RadioSize;
   /** Color variant */
   color?: RadioColor;
   /** Alignment of the indicator */

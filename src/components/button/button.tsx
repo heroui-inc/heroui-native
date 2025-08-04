@@ -60,6 +60,7 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
     animationConfig,
     onPressIn,
     onPressOut,
+    accessibilityRole = 'button',
     ...restProps
   } = props;
 
@@ -250,13 +251,21 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         onLayout={handleLayout}
+        accessibilityRole={accessibilityRole}
+        accessibilityState={{ disabled: isDisabled }}
         {...restProps}
       >
-        {backgroundElement}
-        <ButtonBackground style={animatedBackgroundStyle} />
-        {startContentElement}
-        {labelElement}
-        {endContentElement}
+        {asChild ? (
+          children
+        ) : (
+          <>
+            {backgroundElement}
+            <ButtonBackground style={animatedBackgroundStyle} />
+            {startContentElement}
+            {labelElement}
+            {endContentElement}
+          </>
+        )}
       </Component>
     </ButtonProvider>
   );

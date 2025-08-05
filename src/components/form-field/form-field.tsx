@@ -6,7 +6,12 @@ import {
   type GestureResponderEvent,
 } from 'react-native';
 
-import { cn, createContext, getElementByDisplayName } from '@/helpers/utils';
+import {
+  cn,
+  createContext,
+  getElementByDisplayName,
+  hasProp,
+} from '@/helpers/utils';
 
 import ErrorField from '@/components/error-field';
 import type { ErrorFieldRootProps } from '@/components/error-field/error-field.types';
@@ -206,11 +211,14 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
       const child = children as React.ReactElement;
 
       return cloneElement(child, {
-        ...(isSelected !== undefined && { isSelected }),
-        ...(onSelectedChange && { onSelectedChange }),
-        ...(isDisabled && { isDisabled }),
-        ...(isReadOnly && { isReadOnly }),
-        ...(isValid !== undefined && { isValid }),
+        // Only pass props from context if child doesn't already have them
+        ...(isSelected !== undefined &&
+          !hasProp(child, 'isSelected') && { isSelected }),
+        ...(onSelectedChange &&
+          !hasProp(child, 'onSelectedChange') && { onSelectedChange }),
+        ...(isDisabled && !hasProp(child, 'isDisabled') && { isDisabled }),
+        ...(isReadOnly && !hasProp(child, 'isReadOnly') && { isReadOnly }),
+        ...(isValid !== undefined && !hasProp(child, 'isValid') && { isValid }),
       });
     }, [
       children,

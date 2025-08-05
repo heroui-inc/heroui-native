@@ -84,8 +84,6 @@ export default function FormFieldScreen() {
           isSelected={checkboxValue1}
           onSelectedChange={setCheckboxValue1}
           isValid={checkboxValue1}
-          alignIndicator="start"
-          className="items-start"
         >
           <FormField.Content>
             <FormField.Label>
@@ -99,7 +97,7 @@ export default function FormFieldScreen() {
           <FormField.Indicator className="mt-0.5">
             <Checkbox />
           </FormField.Indicator>
-          <FormField.ErrorMessage className="ml-[31px] mt-1">
+          <FormField.ErrorMessage>
             This field is required
           </FormField.ErrorMessage>
         </FormField>

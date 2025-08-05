@@ -27,7 +27,7 @@ const root = tv({
   },
 });
 
-const details = tv({
+const content = tv({
   base: 'flex-1',
   variants: {
     orientation: {
@@ -57,7 +57,7 @@ const indicator = tv({
 
 const formFieldStyles = combineStyles({
   root,
-  details,
+  content,
   label,
   description,
   indicator,

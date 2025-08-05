@@ -52,15 +52,15 @@ interface FormFieldVerticalProps extends FormFieldBaseProps {
 export type FormFieldProps = FormFieldHorizontalProps | FormFieldVerticalProps;
 
 /**
- * Props for the FormFieldDetails component
+ * Props for the FormFieldContent component
  */
-export interface FormFieldDetailsProps
+export interface FormFieldContentProps
   extends ViewProps,
     ReanimatedAnimationProps {
-  /** Content to render inside the details container */
+  /** Content to render inside the content container */
   children?: React.ReactNode;
 
-  /** Custom class name for the details element */
+  /** Custom class name for the content element */
   className?: string;
 }
 

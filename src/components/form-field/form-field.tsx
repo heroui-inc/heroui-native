@@ -7,9 +7,9 @@ import Animated from 'react-native-reanimated';
 import { DISPLAY_NAME } from './form-field.constants';
 import formFieldStyles from './form-field.styles';
 import type {
+  FormFieldContentProps,
   FormFieldContextValue,
   FormFieldDescriptionProps,
-  FormFieldDetailsProps,
   FormFieldIndicatorProps,
   FormFieldLabelProps,
   FormFieldProps,
@@ -37,8 +37,8 @@ const FormField = forwardRef<View, FormFieldProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const detailsElement = useMemo(() => {
-    return getElementByDisplayName(children, DISPLAY_NAME.FORM_FIELD_DETAILS);
+  const contentElement = useMemo(() => {
+    return getElementByDisplayName(children, DISPLAY_NAME.FORM_FIELD_CONTENT);
   }, [children]);
 
   const indicatorElement = useMemo(() => {
@@ -85,13 +85,13 @@ const FormField = forwardRef<View, FormFieldProps>((props, ref) => {
       >
         {orientation === 'horizontal' ? (
           <>
-            {detailsElement}
+            {contentElement}
             {indicatorElement}
           </>
         ) : (
           <>
             {indicatorElement}
-            {detailsElement}
+            {contentElement}
           </>
         )}
       </AnimatedPressable>
@@ -101,10 +101,10 @@ const FormField = forwardRef<View, FormFieldProps>((props, ref) => {
 
 // --------------------------------------------------
 
-function FormFieldDetails(props: FormFieldDetailsProps) {
+function FormFieldContent(props: FormFieldContentProps) {
   const { children, className, ...restProps } = props;
 
-  const tvStyles = formFieldStyles.details({
+  const tvStyles = formFieldStyles.content({
     className,
   });
 
@@ -197,7 +197,7 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
 // --------------------------------------------------
 
 FormField.displayName = DISPLAY_NAME.FORM_FIELD;
-FormFieldDetails.displayName = DISPLAY_NAME.FORM_FIELD_DETAILS;
+FormFieldContent.displayName = DISPLAY_NAME.FORM_FIELD_CONTENT;
 FormFieldLabel.displayName = DISPLAY_NAME.FORM_FIELD_LABEL;
 FormFieldDescription.displayName = DISPLAY_NAME.FORM_FIELD_DESCRIPTION;
 FormFieldIndicator.displayName = DISPLAY_NAME.FORM_FIELD_INDICATOR;
@@ -208,7 +208,7 @@ FormFieldIndicator.displayName = DISPLAY_NAME.FORM_FIELD_INDICATOR;
  * @component FormField - Wrapper that provides consistent layout and interaction for form controls.
  * Handles press events to toggle selection state and manages disabled/readonly states.
  *
- * @component FormField.Details - Container for label and description text. Provides
+ * @component FormField.Content - Container for label and description text. Provides
  * consistent spacing and layout for textual content.
  *
  * @component FormField.Label - Primary text label for the form control. Renders as
@@ -217,7 +217,7 @@ FormFieldIndicator.displayName = DISPLAY_NAME.FORM_FIELD_INDICATOR;
  * @component FormField.Description - Secondary descriptive text. Renders as Text
  * component when children is a string, otherwise as a View.
  *
- * @component FormField.Indicator - Container for the control component (Switch, Checkbox, Radio).
+ * @component FormField.Indicator - Container for the control component (Switch, Checkbox).
  * Automatically passes down isSelected, onSelectedChange, isDisabled, and isReadOnly props.
  *
  * Props flow from FormField to sub-components via context.
@@ -225,7 +225,7 @@ FormFieldIndicator.displayName = DISPLAY_NAME.FORM_FIELD_INDICATOR;
  */
 const CompoundFormField = Object.assign(FormField, {
   /** @optional Container for label and description */
-  Details: FormFieldDetails,
+  Content: FormFieldContent,
   /** @optional Primary text label */
   Label: FormFieldLabel,
   /** @optional Secondary descriptive text */

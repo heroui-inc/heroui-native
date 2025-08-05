@@ -1,7 +1,7 @@
 export { default as FormField } from './form-field';
 export type {
+  FormFieldContentProps,
   FormFieldDescriptionProps,
-  FormFieldDetailsProps,
   FormFieldIndicatorProps,
   FormFieldLabelProps,
   FormFieldProps,

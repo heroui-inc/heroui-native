@@ -23,30 +23,30 @@ export default function FormFieldScreen() {
 
       <View className="w-full max-w-lg gap-4 mb-6">
         <FormField isSelected={switchValue1} onSelectedChange={setSwitchValue1}>
-          <FormField.Details>
+          <FormField.Content>
             <FormField.Label>Enable notifications</FormField.Label>
             <FormField.Description>
               Receive push notifications about your account activity
             </FormField.Description>
-          </FormField.Details>
+          </FormField.Content>
           <FormField.Indicator>
             <Switch />
           </FormField.Indicator>
         </FormField>
 
         <FormField isSelected={switchValue2} onSelectedChange={setSwitchValue2}>
-          <FormField.Details>
+          <FormField.Content>
             <FormField.Label>Dark mode</FormField.Label>
-          </FormField.Details>
+          </FormField.Content>
           <FormField.Indicator>
             <Switch />
           </FormField.Indicator>
         </FormField>
 
         <FormField isSelected={switchValue3} onSelectedChange={setSwitchValue3}>
-          <FormField.Details>
+          <FormField.Content>
             <FormField.Label>Enable automatic updates</FormField.Label>
-          </FormField.Details>
+          </FormField.Content>
           <FormField.Indicator>
             <Switch color="success" />
           </FormField.Indicator>
@@ -62,7 +62,7 @@ export default function FormFieldScreen() {
           isSelected={checkboxValue1}
           onSelectedChange={setCheckboxValue1}
         >
-          <FormField.Details>
+          <FormField.Content>
             <FormField.Label>
               I agree to the terms and conditions
             </FormField.Label>
@@ -70,7 +70,7 @@ export default function FormFieldScreen() {
               By checking this box, you agree to our Terms of Service and
               Privacy Policy
             </FormField.Description>
-          </FormField.Details>
+          </FormField.Content>
           <FormField.Indicator>
             <Checkbox />
           </FormField.Indicator>
@@ -80,9 +80,9 @@ export default function FormFieldScreen() {
           isSelected={checkboxValue2}
           onSelectedChange={setCheckboxValue2}
         >
-          <FormField.Details>
+          <FormField.Content>
             <FormField.Label>Subscribe to newsletter</FormField.Label>
-          </FormField.Details>
+          </FormField.Content>
           <FormField.Indicator>
             <Checkbox color="warning" />
           </FormField.Indicator>
@@ -99,12 +99,12 @@ export default function FormFieldScreen() {
           onSelectedChange={setDisabledSwitch}
           isDisabled
         >
-          <FormField.Details>
+          <FormField.Content>
             <FormField.Label>Disabled control</FormField.Label>
             <FormField.Description>
               This control is disabled
             </FormField.Description>
-          </FormField.Details>
+          </FormField.Content>
           <FormField.Indicator>
             <Switch />
           </FormField.Indicator>
@@ -115,12 +115,12 @@ export default function FormFieldScreen() {
           onSelectedChange={setReadonlySwitch}
           isReadOnly
         >
-          <FormField.Details>
+          <FormField.Content>
             <FormField.Label>Read-only control</FormField.Label>
             <FormField.Description>
               This control is read-only
             </FormField.Description>
-          </FormField.Details>
+          </FormField.Content>
           <FormField.Indicator>
             <Switch />
           </FormField.Indicator>

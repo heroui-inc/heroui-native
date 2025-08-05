@@ -1,10 +1,17 @@
+import { ErrorField } from '@/components/error-field';
+import type { ViewRef } from '@/helpers/types/primitives';
 import * as RadioGroupPrimitives from '@/primitives/radio-group';
 import { forwardRef } from 'react';
 import { DISPLAY_NAME } from './radio-group.constants';
 import radioGroupStyles from './radio-group.styles';
-import type { RadioGroupProps } from './radio-group.types';
+import type {
+  RadioGroupErrorMessageProps,
+  RadioGroupProps,
+} from './radio-group.types';
 
 // --------------------------------------------------
+
+const useRadioGroupContext = RadioGroupPrimitives.useRadioGroupContext;
 
 const RadioGroupRoot = forwardRef<
   RadioGroupPrimitives.RootRef,
@@ -35,16 +42,47 @@ const RadioGroupRoot = forwardRef<
 
 // --------------------------------------------------
 
+const RadioGroupErrorMessage = forwardRef<ViewRef, RadioGroupErrorMessageProps>(
+  (props, ref) => {
+    const { isValid, orientation } = useRadioGroupContext();
+    const { className, ...restProps } = props;
+
+    const tvStyles = radioGroupStyles.errorMessage({
+      orientation,
+      className,
+    });
+
+    return (
+      <ErrorField
+        ref={ref}
+        isValid={isValid}
+        className={tvStyles}
+        {...restProps}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 RadioGroupRoot.displayName = DISPLAY_NAME.RADIO_GROUP_ROOT;
+RadioGroupErrorMessage.displayName = DISPLAY_NAME.RADIO_GROUP_ERROR_MESSAGE;
 
 /**
- * RadioGroup component for managing radio button selection
+ * Compound RadioGroup component with sub-components
  *
  * @component RadioGroup - Container that manages the selection state of Radio components.
  * Supports both horizontal and vertical orientations.
  *
+ * @component RadioGroup.ErrorMessage - Error message displayed when radio group is invalid.
+ * Shown with animation below the radio group content. Takes full width when orientation is horizontal.
+ *
  * @see Full documentation: https://heroui.com/components/radio-group
  */
-const RadioGroup = RadioGroupRoot;
+const CompoundRadioGroup = Object.assign(RadioGroupRoot, {
+  /** @optional Error message displayed when radio group is invalid */
+  ErrorMessage: RadioGroupErrorMessage,
+});
 
-export default RadioGroup;
+export default CompoundRadioGroup;
+export { useRadioGroupContext };

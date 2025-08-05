@@ -1,3 +1,4 @@
+import type { ErrorFieldRootProps } from '@/components/error-field/error-field.types';
 import type { RootProps } from '@/primitives/radio-group';
 
 /**
@@ -9,3 +10,8 @@ export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
   /** Custom class name */
   className?: string;
 }
+
+/**
+ * Props for RadioGroup.ErrorMessage component
+ */
+export interface RadioGroupErrorMessageProps extends ErrorFieldRootProps {}

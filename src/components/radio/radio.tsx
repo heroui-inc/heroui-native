@@ -15,6 +15,7 @@ import * as RadioGroupPrimitives from '@/primitives/radio-group';
 import { useTheme } from '@/theme';
 
 import { FormField } from '../form-field';
+import { useRadioGroupContext } from '../radio-group';
 import {
   DEFAULT_HIT_SLOP,
   DEFAULT_SPRING_CONFIG,
@@ -63,7 +64,7 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
       ...restProps
     } = props;
 
-    const radioGroupContext = RadioGroupPrimitives.useRadioGroupContext();
+    const radioGroupContext = useRadioGroupContext();
     const { value: groupValue, isValid: groupIsValid } = radioGroupContext;
     const isSelected = groupValue === value;
     const isDisabledValue = isDisabled;
@@ -291,7 +292,7 @@ function RadioIndicatorThumb(props: RadioThumbProps) {
 function RadioContent(props: RadioContentProps) {
   const { children, className, style, ...restProps } = props;
 
-  const { orientation } = RadioGroupPrimitives.useRadioGroupContext();
+  const { orientation } = useRadioGroupContext();
 
   const tvStyles = radioStyles.content({
     orientation,

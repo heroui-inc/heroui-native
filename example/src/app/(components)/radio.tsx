@@ -1,5 +1,5 @@
 import { cn } from '@/helpers/utils';
-import { ErrorField, Radio, RadioGroup, useTheme } from 'heroui-native';
+import { Radio, RadioGroup, useTheme } from 'heroui-native';
 import { Zap } from 'lucide-react-native';
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
@@ -57,10 +57,8 @@ export default function RadioScreen() {
               <Radio.Label>Berlin</Radio.Label>
             </Radio.Content>
           </Radio>
+          <RadioGroup.ErrorMessage>Invalid selection</RadioGroup.ErrorMessage>
         </RadioGroup>
-        <ErrorField isValid={defaultRadio === 'london'} className="mt-2">
-          Invalid selection
-        </ErrorField>
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">
@@ -226,7 +224,11 @@ export default function RadioScreen() {
           </Radio>
         </RadioGroup>
 
-        <RadioGroup value={withDescription} onValueChange={setWithDescription}>
+        <RadioGroup
+          value={withDescription}
+          onValueChange={setWithDescription}
+          isValid={withDescription === 'desc1'}
+        >
           <Radio value="desc1">
             <Radio.Content>
               <Radio.Label>Option with Description</Radio.Label>
@@ -246,6 +248,7 @@ export default function RadioScreen() {
               </Radio.Description>
             </Radio.Content>
           </Radio>
+          <RadioGroup.ErrorMessage>Invalid selection</RadioGroup.ErrorMessage>
         </RadioGroup>
       </View>
 

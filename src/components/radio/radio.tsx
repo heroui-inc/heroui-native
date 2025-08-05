@@ -56,15 +56,22 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
       alignIndicator = 'end',
       isDisabled = false,
       isReadOnly = false,
+      isValid,
       className,
       style,
       value,
       ...restProps
     } = props;
 
-    const { value: groupValue } = RadioGroupPrimitives.useRadioGroupContext();
+    const radioGroupContext = RadioGroupPrimitives.useRadioGroupContext();
+    const { value: groupValue, isValid: groupIsValid } = radioGroupContext;
     const isSelected = groupValue === value;
     const isDisabledValue = isDisabled;
+
+    // Use prop isValid if provided, otherwise use context isValid
+    const effectiveIsValid = isValid ?? groupIsValid ?? true;
+    // Use danger color when invalid
+    const effectiveColor = !effectiveIsValid ? 'danger' : color;
 
     const indicatorElement = useMemo(
       () =>
@@ -88,12 +95,12 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
 
     const contextValue = useMemo(
       () => ({
-        color,
+        color: effectiveColor,
         isSelected,
         isDisabled: isDisabledValue,
         isReadOnly,
       }),
-      [color, isSelected, isDisabledValue, isReadOnly]
+      [effectiveColor, isSelected, isDisabledValue, isReadOnly]
     );
 
     return (

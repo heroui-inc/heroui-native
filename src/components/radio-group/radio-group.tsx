@@ -10,7 +10,12 @@ const RadioGroupRoot = forwardRef<
   RadioGroupPrimitives.RootRef,
   RadioGroupProps
 >((props, ref) => {
-  const { className, orientation = 'vertical', ...restProps } = props;
+  const {
+    className,
+    orientation = 'vertical',
+    isValid = true,
+    ...restProps
+  } = props;
 
   const tvStyles = radioGroupStyles.root({
     orientation,
@@ -22,6 +27,7 @@ const RadioGroupRoot = forwardRef<
       ref={ref}
       className={tvStyles}
       orientation={orientation}
+      isValid={isValid}
       {...restProps}
     />
   );

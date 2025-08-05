@@ -13,10 +13,10 @@ import {
   hasProp,
 } from '@/helpers/utils';
 
-import ErrorField from '@/components/error-field';
+import { ErrorField } from '@/components/error-field';
 import type { ErrorFieldRootProps } from '@/components/error-field/error-field.types';
 import type { PressableRef } from '@/helpers/types';
-import type { TextRef } from '@/helpers/types/primitives';
+import type { ViewRef } from '@/helpers/types/primitives';
 import Animated from 'react-native-reanimated';
 import { DISPLAY_NAME } from './form-field.constants';
 import formFieldStyles from './form-field.styles';
@@ -239,7 +239,7 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
 
 // --------------------------------------------------
 
-const FormFieldErrorMessage = forwardRef<TextRef, ErrorFieldRootProps>(
+const FormFieldErrorMessage = forwardRef<ViewRef, ErrorFieldRootProps>(
   (props, ref) => {
     const { isValid } = useFormFieldContext();
 

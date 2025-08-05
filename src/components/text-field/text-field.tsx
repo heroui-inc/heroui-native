@@ -1,4 +1,4 @@
-import ErrorField from '@/components/error-field';
+import { ErrorField } from '@/components/error-field';
 import type { TextRef, ViewRef } from '@/helpers/types/primitives';
 import { cn, createContext, getElementByDisplayName } from '@/helpers/utils';
 import { useTheme } from '@/theme';

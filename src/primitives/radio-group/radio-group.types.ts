@@ -20,6 +20,8 @@ type RootProps = Omit<SlottableViewProps, 'disabled'> & {
   isDisabled?: boolean;
   /** Radio group orientation @default 'vertical' */
   orientation?: 'horizontal' | 'vertical';
+  /** Whether the radio group is valid @default true */
+  isValid?: boolean;
 };
 
 /**

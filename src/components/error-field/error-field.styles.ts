@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 
 const root = tv({
   slots: {
-    container: 'p-1',
+    container: '',
     text: 'text-sm text-danger',
   },
 });

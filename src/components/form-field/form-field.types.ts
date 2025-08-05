@@ -30,6 +30,9 @@ interface FormFieldBaseProps extends PressableProps, ReanimatedAnimationProps {
 
   /** Whether the form control is inline (using inside flex-row container) @default false */
   isInline?: boolean;
+
+  /** Whether the form control is valid @default true */
+  isValid?: boolean;
 }
 
 /**
@@ -132,5 +135,10 @@ export interface FormFieldIndicatorProps
 export interface FormFieldContextValue
   extends Pick<
     FormFieldBaseProps,
-    'isSelected' | 'onSelectedChange' | 'isDisabled' | 'isReadOnly' | 'isInline'
+    | 'isSelected'
+    | 'onSelectedChange'
+    | 'isDisabled'
+    | 'isReadOnly'
+    | 'isInline'
+    | 'isValid'
   > {}

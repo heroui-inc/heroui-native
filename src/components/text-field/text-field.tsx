@@ -1,6 +1,6 @@
 import ErrorField from '@/components/error-field';
 import type { TextRef, ViewRef } from '@/helpers/types/primitives';
-import { createContext, getElementByDisplayName } from '@/helpers/utils';
+import { cn, createContext, getElementByDisplayName } from '@/helpers/utils';
 import { useTheme } from '@/theme';
 import { forwardRef, useEffect, useMemo } from 'react';
 import {
@@ -321,7 +321,14 @@ const TextFieldErrorMessage = forwardRef<TextRef, TextFieldErrorMessageProps>(
   (props, ref) => {
     const { isValid } = useTextFieldContext();
 
-    return <ErrorField ref={ref} isValid={isValid} {...props} />;
+    return (
+      <ErrorField
+        ref={ref}
+        isValid={isValid}
+        className={cn('p-1', props.className)}
+        {...props}
+      />
+    );
   }
 );
 

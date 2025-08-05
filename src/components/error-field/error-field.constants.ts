@@ -26,5 +26,6 @@ export const ENTERING_ANIMATION_CONFIG =
 /**
  * Default exiting animation configuration
  */
-export const EXITING_ANIMATION_CONFIG =
-  FadeOut.duration(ANIMATION_DURATION).easing(ANIMATION_EASING);
+export const EXITING_ANIMATION_CONFIG = FadeOut.duration(
+  ANIMATION_DURATION / 1.5
+).easing(ANIMATION_EASING);

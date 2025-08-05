@@ -22,7 +22,11 @@ export default function FormFieldScreen() {
       </Text>
 
       <View className="w-full max-w-lg gap-4 mb-6">
-        <FormField isSelected={switchValue1} onSelectedChange={setSwitchValue1}>
+        <FormField
+          isSelected={switchValue1}
+          onSelectedChange={setSwitchValue1}
+          isValid={!switchValue1}
+        >
           <FormField.Content>
             <FormField.Label>Enable notifications</FormField.Label>
             <FormField.Description>
@@ -35,18 +39,6 @@ export default function FormFieldScreen() {
         </FormField>
 
         <View className="flex-row flex-wrap gap-x-6 gap-y-3">
-          <FormField
-            isSelected={switchValue2}
-            onSelectedChange={setSwitchValue2}
-            isInline
-          >
-            <FormField.Content>
-              <FormField.Label>Dark mode</FormField.Label>
-            </FormField.Content>
-            <FormField.Indicator>
-              <Switch />
-            </FormField.Indicator>
-          </FormField>
           <FormField
             isSelected={switchValue2}
             onSelectedChange={setSwitchValue2}
@@ -91,6 +83,7 @@ export default function FormFieldScreen() {
         <FormField
           isSelected={checkboxValue1}
           onSelectedChange={setCheckboxValue1}
+          isValid={!checkboxValue1}
         >
           <FormField.Content>
             <FormField.Label>
@@ -104,6 +97,9 @@ export default function FormFieldScreen() {
           <FormField.Indicator>
             <Checkbox />
           </FormField.Indicator>
+          <FormField.ErrorMessage>
+            This field is required
+          </FormField.ErrorMessage>
         </FormField>
 
         <FormField

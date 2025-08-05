@@ -8,7 +8,10 @@ import {
 
 import { createContext, getElementByDisplayName } from '@/helpers/utils';
 
+import ErrorField from '@/components/error-field';
+import type { ErrorFieldRootProps } from '@/components/error-field/error-field.types';
 import type { PressableRef } from '@/helpers/types';
+import type { TextRef } from '@/helpers/types/primitives';
 import Animated from 'react-native-reanimated';
 import { DISPLAY_NAME } from './form-field.constants';
 import formFieldStyles from './form-field.styles';
@@ -41,6 +44,7 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     isDisabled = false,
     isReadOnly = false,
     isInline = false,
+    isValid = true,
     ...restProps
   } = props;
 
@@ -50,6 +54,13 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
 
   const indicatorElement = useMemo(() => {
     return getElementByDisplayName(children, DISPLAY_NAME.FORM_FIELD_INDICATOR);
+  }, [children]);
+
+  const errorMessageElement = useMemo(() => {
+    return getElementByDisplayName(
+      children,
+      DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE
+    );
   }, [children]);
 
   const tvStyles = formFieldStyles.root({
@@ -79,31 +90,35 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
       isDisabled,
       isReadOnly,
       isInline,
+      isValid,
     }),
-    [isSelected, onSelectedChange, isDisabled, isReadOnly, isInline]
+    [isSelected, onSelectedChange, isDisabled, isReadOnly, isInline, isValid]
   );
 
   return (
     <FormFieldProvider value={contextValue}>
-      <AnimatedPressable
-        ref={ref}
-        className={tvStyles}
-        onPress={handlePress}
-        disabled={isDisabled || isReadOnly}
-        {...restProps}
-      >
-        {orientation === 'horizontal' ? (
-          <>
-            {contentElement}
-            {indicatorElement}
-          </>
-        ) : (
-          <>
-            {indicatorElement}
-            {contentElement}
-          </>
-        )}
-      </AnimatedPressable>
+      <View>
+        <AnimatedPressable
+          ref={ref}
+          className={tvStyles}
+          onPress={handlePress}
+          disabled={isDisabled || isReadOnly}
+          {...restProps}
+        >
+          {orientation === 'horizontal' ? (
+            <>
+              {contentElement}
+              {indicatorElement}
+            </>
+          ) : (
+            <>
+              {indicatorElement}
+              {contentElement}
+            </>
+          )}
+        </AnimatedPressable>
+        {errorMessageElement}
+      </View>
     </FormFieldProvider>
   );
 });
@@ -208,11 +223,22 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
 
 // --------------------------------------------------
 
+const FormFieldErrorMessage = forwardRef<TextRef, ErrorFieldRootProps>(
+  (props, ref) => {
+    const { isValid } = useFormFieldContext();
+
+    return <ErrorField ref={ref} isValid={isValid} {...props} />;
+  }
+);
+
+// --------------------------------------------------
+
 FormField.displayName = DISPLAY_NAME.FORM_FIELD;
 FormFieldContent.displayName = DISPLAY_NAME.FORM_FIELD_CONTENT;
 FormFieldLabel.displayName = DISPLAY_NAME.FORM_FIELD_LABEL;
 FormFieldDescription.displayName = DISPLAY_NAME.FORM_FIELD_DESCRIPTION;
 FormFieldIndicator.displayName = DISPLAY_NAME.FORM_FIELD_INDICATOR;
+FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
 
 /**
  * Compound FormField component with sub-components
@@ -232,6 +258,9 @@ FormFieldIndicator.displayName = DISPLAY_NAME.FORM_FIELD_INDICATOR;
  * @component FormField.Indicator - Container for the control component (Switch, Checkbox).
  * Automatically passes down isSelected, onSelectedChange, isDisabled, and isReadOnly props.
  *
+ * @component FormField.ErrorMessage - Error message displayed when field is invalid.
+ * Shown with animation below the form field content.
+ *
  * Props flow from FormField to sub-components via context.
  * The component supports both horizontal and vertical orientations.
  */
@@ -244,6 +273,8 @@ const CompoundFormField = Object.assign(FormField, {
   Description: FormFieldDescription,
   /** @optional Container for control component */
   Indicator: FormFieldIndicator,
+  /** @optional Error message displayed when field is invalid */
+  ErrorMessage: FormFieldErrorMessage,
 });
 
 export { useFormFieldContext };

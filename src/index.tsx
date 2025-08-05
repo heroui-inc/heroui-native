@@ -4,6 +4,7 @@ export * from './components/card';
 export * from './components/checkbox';
 export * from './components/chip';
 export * from './components/divider';
+export * from './components/form-field';
 export * from './components/radio';
 export * from './components/spinner';
 export * from './components/surface';

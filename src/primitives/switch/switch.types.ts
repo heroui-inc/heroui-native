@@ -14,14 +14,14 @@ interface RootProps extends Omit<SlottablePressableProps, 'disabled'> {
    * Whether the switch is currently selected/checked
    * @type {boolean}
    */
-  isSelected: boolean;
+  isSelected?: boolean;
 
   /**
    * Callback function fired when the switch selection state changes
    * @param {boolean} isSelected - The new selection state
    * @type {(isSelected: boolean) => void}
    */
-  onSelectedChange: (isSelected: boolean) => void;
+  onSelectedChange?: (isSelected: boolean) => void;
 
   /**
    * Whether the switch is disabled and cannot be interacted with

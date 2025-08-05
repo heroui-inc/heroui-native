@@ -31,6 +31,9 @@ export default function App() {
       <TouchableOpacity onPress={() => router.push('/divider')}>
         <Text className={classNames.link}>Divider</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => router.push('/form-field')}>
+        <Text className={classNames.link}>FormField</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/radio')}>
         <Text className={classNames.link}>Radio</Text>
       </TouchableOpacity>

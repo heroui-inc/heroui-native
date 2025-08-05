@@ -29,6 +29,7 @@ export default function Layout() {
       <Stack.Screen name="checkbox" options={{ title: 'Checkbox' }} />
       <Stack.Screen name="chip" options={{ title: 'Chip' }} />
       <Stack.Screen name="divider" options={{ title: 'Divider' }} />
+      <Stack.Screen name="form-field" options={{ title: 'FormField' }} />
       <Stack.Screen name="radio" options={{ title: 'Radio' }} />
       <Stack.Screen name="spinner" options={{ title: 'Spinner' }} />
       <Stack.Screen name="surface" options={{ title: 'Surface' }} />

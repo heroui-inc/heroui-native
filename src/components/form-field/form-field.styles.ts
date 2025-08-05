@@ -1,0 +1,66 @@
+import { combineStyles } from '@/theme/utils';
+import { tv } from 'tailwind-variants';
+
+const root = tv({
+  base: 'flex-row items-center gap-5',
+  variants: {
+    orientation: {
+      horizontal: 'flex-row',
+      vertical: 'flex-col items-start',
+    },
+    alignIndicator: {
+      start: 'flex-row-reverse',
+      end: '',
+    },
+    isDisabled: {
+      true: 'opacity-disabled pointer-events-none',
+    },
+    isReadOnly: {
+      true: 'pointer-events-none',
+    },
+  },
+  defaultVariants: {
+    orientation: 'horizontal',
+    alignIndicator: 'end',
+    isDisabled: false,
+    isReadOnly: false,
+  },
+});
+
+const details = tv({
+  base: 'flex-1',
+  variants: {
+    orientation: {
+      horizontal: '',
+      vertical: 'flex-1',
+    },
+  },
+});
+
+const label = tv({
+  slots: {
+    container: '',
+    text: 'text-foreground font-medium text-base',
+  },
+});
+
+const description = tv({
+  slots: {
+    container: '',
+    text: 'text-muted-foreground text-sm',
+  },
+});
+
+const indicator = tv({
+  base: '',
+});
+
+const formFieldStyles = combineStyles({
+  root,
+  details,
+  label,
+  description,
+  indicator,
+});
+
+export default formFieldStyles;

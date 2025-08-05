@@ -97,10 +97,8 @@ export interface CheckboxIndicatorProps
 /**
  * Context value for checkbox components
  */
-export interface CheckboxContextValue {
+export interface CheckboxContextValue
+  extends Pick<CheckboxProps, 'isSelected'> {
   /** Color theme of the checkbox */
   color: CheckboxColor;
-
-  /** Whether the checkbox is currently selected */
-  isSelected: boolean;
 }

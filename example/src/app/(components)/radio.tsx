@@ -1,10 +1,8 @@
+import { cn } from '@/helpers/utils';
+import { Radio, RadioGroup, useTheme } from 'heroui-native';
+import { Zap } from 'lucide-react-native';
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
-
-import { Radio, RadioGroup } from '@/components/radio';
-import { cn } from '@/helpers/utils';
-import { useTheme } from 'heroui-native';
-import { Zap } from 'lucide-react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
 import { StyledRadio } from '../../components/styled-radio';
 

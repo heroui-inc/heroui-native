@@ -28,7 +28,6 @@ import type {
   RadioContentProps,
   RadioContextValue,
   RadioDescriptionProps,
-  RadioGroupProps,
   RadioIndicatorProps,
   RadioLabelProps,
   RadioProps,
@@ -46,29 +45,6 @@ const AnimatedRadioIndicator = Animated.createAnimatedComponent(
 const [RadioProvider, useRadioContext] = createContext<RadioContextValue>({
   name: 'RadioContext',
 });
-
-// --------------------------------------------------
-
-// RadioGroup root component
-const RadioGroup = forwardRef<RadioGroupPrimitives.RootRef, RadioGroupProps>(
-  (props, ref) => {
-    const { className, orientation = 'vertical', ...restProps } = props;
-
-    const tvStyles = radioStyles.groupRoot({
-      orientation,
-      className,
-    });
-
-    return (
-      <RadioGroupPrimitives.Root
-        ref={ref}
-        className={tvStyles}
-        orientation={orientation}
-        {...restProps}
-      />
-    );
-  }
-);
 
 // --------------------------------------------------
 
@@ -336,7 +312,6 @@ function RadioDescription(props: RadioDescriptionProps) {
 
 // --------------------------------------------------
 
-RadioGroup.displayName = DISPLAY_NAME.RADIO_GROUP;
 Radio.displayName = DISPLAY_NAME.RADIO;
 RadioIndicator.displayName = DISPLAY_NAME.RADIO_INDICATOR;
 RadioIndicatorBackground.displayName = DISPLAY_NAME.RADIO_INDICATOR_BACKGROUND;
@@ -390,5 +365,5 @@ const CompoundRadio = Object.assign(Radio, {
   Description: RadioDescription,
 });
 
-export { Radio, RadioGroup, useRadioContext };
+export { useRadioContext };
 export default CompoundRadio;

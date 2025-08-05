@@ -1,7 +1,6 @@
 import { Easing } from 'react-native-reanimated';
 
 export const DISPLAY_NAME = {
-  RADIO_GROUP: 'HeroUINative.RadioGroup.Root',
   RADIO: 'HeroUINative.Radio.Root',
   RADIO_INDICATOR: 'HeroUINative.Radio.Indicator',
   RADIO_INDICATOR_BACKGROUND: 'HeroUINative.Radio.IndicatorBackground',

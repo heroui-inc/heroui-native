@@ -1,10 +1,6 @@
 import type { SpringConfig, TimingConfig } from '@/helpers/types';
 import type { TextProps as LabelTextProps } from '@/primitives/label';
-import type {
-  IndicatorProps,
-  ItemProps,
-  RootProps,
-} from '@/primitives/radio-group';
+import type { IndicatorProps, ItemProps } from '@/primitives/radio-group';
 import type { TextProps, ViewProps } from 'react-native';
 
 /**
@@ -27,16 +23,6 @@ export interface RadioColors {
   selectedBackground?: string;
   /** Thumb color when selected */
   selectedThumb?: string;
-}
-
-/**
- * Props for RadioGroup root component
- */
-export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
-  /** Radio group content */
-  children?: React.ReactNode;
-  /** Custom class name */
-  className?: string;
 }
 
 /**

@@ -1,16 +1,6 @@
 import { combineStyles } from '@/theme/utils';
 import { tv } from 'tailwind-variants';
 
-const groupRoot = tv({
-  base: 'gap-1.5',
-  variants: {
-    orientation: {
-      horizontal: 'flex-row flex-wrap gap-x-6 gap-y-2',
-      vertical: 'flex-col',
-    },
-  },
-});
-
 const radioRoot = tv({
   base: 'flex-row items-center gap-3',
   variants: {
@@ -64,7 +54,6 @@ const description = tv({
 });
 
 const radioStyles = combineStyles({
-  groupRoot,
   radioRoot,
   indicator,
   background,

@@ -6,6 +6,7 @@ export * from './components/chip';
 export * from './components/divider';
 export * from './components/form-field';
 export * from './components/radio';
+export * from './components/radio-group';
 export * from './components/spinner';
 export * from './components/surface';
 export * from './components/switch';

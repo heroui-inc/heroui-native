@@ -2,11 +2,11 @@ import { combineStyles } from '@/theme/utils';
 import { tv } from 'tailwind-variants';
 
 const root = tv({
-  base: 'flex-row items-center gap-5',
+  base: 'flex-row items-center gap-3',
   variants: {
     orientation: {
       horizontal: 'flex-row',
-      vertical: 'flex-col items-start',
+      vertical: 'flex-col',
     },
     alignIndicator: {
       start: 'flex-row-reverse',
@@ -30,9 +30,8 @@ const root = tv({
 const content = tv({
   base: 'flex-1',
   variants: {
-    orientation: {
-      horizontal: '',
-      vertical: 'flex-1',
+    isInline: {
+      true: 'flex-0',
     },
   },
 });

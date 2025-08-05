@@ -1,8 +1,14 @@
 import { cloneElement, forwardRef, useMemo } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import {
+  Pressable,
+  Text,
+  View,
+  type GestureResponderEvent,
+} from 'react-native';
 
 import { createContext, getElementByDisplayName } from '@/helpers/utils';
 
+import type { PressableRef } from '@/helpers/types';
 import Animated from 'react-native-reanimated';
 import { DISPLAY_NAME } from './form-field.constants';
 import formFieldStyles from './form-field.styles';
@@ -24,7 +30,7 @@ const [FormFieldProvider, useFormFieldContext] =
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-const FormField = forwardRef<View, FormFieldProps>((props, ref) => {
+const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
   const {
     children,
     className,
@@ -34,6 +40,7 @@ const FormField = forwardRef<View, FormFieldProps>((props, ref) => {
     alignIndicator = 'end',
     isDisabled = false,
     isReadOnly = false,
+    isInline = false,
     ...restProps
   } = props;
 
@@ -53,17 +60,7 @@ const FormField = forwardRef<View, FormFieldProps>((props, ref) => {
     className,
   });
 
-  const contextValue = useMemo(
-    () => ({
-      isSelected,
-      onSelectedChange,
-      isDisabled,
-      isReadOnly,
-    }),
-    [isSelected, onSelectedChange, isDisabled, isReadOnly]
-  );
-
-  const handlePress = () => {
+  const handlePress = (e: GestureResponderEvent) => {
     if (
       !isDisabled &&
       !isReadOnly &&
@@ -71,8 +68,20 @@ const FormField = forwardRef<View, FormFieldProps>((props, ref) => {
       isSelected !== undefined
     ) {
       onSelectedChange(!isSelected);
+      props.onPress?.(e);
     }
   };
+
+  const contextValue: FormFieldContextValue = useMemo(
+    () => ({
+      isSelected,
+      onSelectedChange,
+      isDisabled,
+      isReadOnly,
+      isInline,
+    }),
+    [isSelected, onSelectedChange, isDisabled, isReadOnly, isInline]
+  );
 
   return (
     <FormFieldProvider value={contextValue}>
@@ -104,7 +113,10 @@ const FormField = forwardRef<View, FormFieldProps>((props, ref) => {
 function FormFieldContent(props: FormFieldContentProps) {
   const { children, className, ...restProps } = props;
 
+  const { isInline } = useFormFieldContext();
+
   const tvStyles = formFieldStyles.content({
+    isInline,
     className,
   });
 

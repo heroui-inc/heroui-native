@@ -1,11 +1,15 @@
 import type { ReanimatedAnimationProps } from '@/helpers/types';
 import type { ElementSlots } from '@/theme';
-import type { ViewProps } from 'react-native';
+import type { PressableProps, ViewProps } from 'react-native';
+
+type FormFieldAlignIndicator = 'start' | 'end';
+
+type FormFieldOrientation = 'horizontal' | 'vertical';
 
 /**
  * Base FormField props shared between all orientations
  */
-interface FormFieldBaseProps extends ViewProps, ReanimatedAnimationProps {
+interface FormFieldBaseProps extends PressableProps, ReanimatedAnimationProps {
   /** Content to render inside the form control */
   children?: React.ReactNode;
 
@@ -23,6 +27,9 @@ interface FormFieldBaseProps extends ViewProps, ReanimatedAnimationProps {
 
   /** Whether the form control is read-only @default false */
   isReadOnly?: boolean;
+
+  /** Whether the form control is inline (using inside flex-row container) @default false */
+  isInline?: boolean;
 }
 
 /**
@@ -30,10 +37,10 @@ interface FormFieldBaseProps extends ViewProps, ReanimatedAnimationProps {
  */
 interface FormFieldHorizontalProps extends FormFieldBaseProps {
   /** Layout orientation of the form control */
-  orientation?: 'horizontal';
+  orientation?: Extract<FormFieldOrientation, 'horizontal'>;
 
   /** Alignment of the indicator @default 'end' */
-  alignIndicator?: 'start' | 'end';
+  alignIndicator?: FormFieldAlignIndicator;
 }
 
 /**
@@ -41,7 +48,7 @@ interface FormFieldHorizontalProps extends FormFieldBaseProps {
  */
 interface FormFieldVerticalProps extends FormFieldBaseProps {
   /** Layout orientation of the form control */
-  orientation: 'vertical';
+  orientation: Extract<FormFieldOrientation, 'vertical'>;
   /** alignIndicator is not allowed with vertical orientation */
   alignIndicator?: undefined;
 }
@@ -125,5 +132,5 @@ export interface FormFieldIndicatorProps
 export interface FormFieldContextValue
   extends Pick<
     FormFieldBaseProps,
-    'isSelected' | 'onSelectedChange' | 'isDisabled' | 'isReadOnly'
+    'isSelected' | 'onSelectedChange' | 'isDisabled' | 'isReadOnly' | 'isInline'
   > {}

@@ -34,14 +34,44 @@ export default function FormFieldScreen() {
           </FormField.Indicator>
         </FormField>
 
-        <FormField isSelected={switchValue2} onSelectedChange={setSwitchValue2}>
-          <FormField.Content>
-            <FormField.Label>Dark mode</FormField.Label>
-          </FormField.Content>
-          <FormField.Indicator>
-            <Switch />
-          </FormField.Indicator>
-        </FormField>
+        <View className="flex-row flex-wrap gap-x-6 gap-y-3">
+          <FormField
+            isSelected={switchValue2}
+            onSelectedChange={setSwitchValue2}
+            isInline
+          >
+            <FormField.Content>
+              <FormField.Label>Dark mode</FormField.Label>
+            </FormField.Content>
+            <FormField.Indicator>
+              <Switch />
+            </FormField.Indicator>
+          </FormField>
+          <FormField
+            isSelected={switchValue2}
+            onSelectedChange={setSwitchValue2}
+            isInline
+          >
+            <FormField.Content>
+              <FormField.Label>Dark mode</FormField.Label>
+            </FormField.Content>
+            <FormField.Indicator>
+              <Switch />
+            </FormField.Indicator>
+          </FormField>
+          <FormField
+            isSelected={switchValue2}
+            onSelectedChange={setSwitchValue2}
+            isInline
+          >
+            <FormField.Content>
+              <FormField.Label>Dark mode</FormField.Label>
+            </FormField.Content>
+            <FormField.Indicator>
+              <Switch />
+            </FormField.Indicator>
+          </FormField>
+        </View>
 
         <FormField isSelected={switchValue3} onSelectedChange={setSwitchValue3}>
           <FormField.Content>

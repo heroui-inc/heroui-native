@@ -52,6 +52,9 @@ export interface CheckboxProps extends CheckboxPrimitivesTypes.RootProps {
   /** Whether the checkbox is read-only @default false */
   isReadOnly?: boolean;
 
+  /** Whether the checkbox is valid @default true */
+  isValid?: boolean;
+
   /** Custom class name for the checkbox */
   className?: string;
 

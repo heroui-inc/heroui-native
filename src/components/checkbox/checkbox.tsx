@@ -46,6 +46,7 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       onSelectedChange,
       isDisabled = false,
       isReadOnly = false,
+      isValid = true,
       colors,
       className,
       style,
@@ -81,6 +82,9 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       className,
     });
 
+    // Use danger color when isValid is false
+    const effectiveColor = !isValid ? 'danger' : color;
+
     const borderColorMap: Record<CheckboxColor, string> = {
       default: isSelected ? themeColors.accent : themeColors.border,
       success: themeColors.success,
@@ -94,8 +98,8 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       return {
         borderColor: withTiming(
           isSelected
-            ? (colors?.selectedBorder ?? borderColorMap[color])
-            : (colors?.defaultBorder ?? borderColorMap[color]),
+            ? (colors?.selectedBorder ?? borderColorMap[effectiveColor])
+            : (colors?.defaultBorder ?? borderColorMap[effectiveColor]),
           timingConfig
         ),
       };
@@ -103,10 +107,10 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
 
     const contextValue = useMemo(
       () => ({
-        color,
+        color: effectiveColor,
         isSelected,
       }),
-      [color, isSelected]
+      [effectiveColor, isSelected]
     );
 
     return (
@@ -203,7 +207,7 @@ function CheckIcon(props: CheckboxIndicatorIconProps) {
       <Path
         d="M20 6L9 17L4 12"
         stroke={props.color ?? colors.accentForeground}
-        strokeWidth={props.strokeWidth ?? (theme === 'dark' ? 4.5 : 3)}
+        strokeWidth={props.strokeWidth ?? (theme === 'dark' ? 4.5 : 3.5)}
         strokeLinecap="round"
         strokeLinejoin="round"
       />

@@ -83,7 +83,9 @@ export default function FormFieldScreen() {
         <FormField
           isSelected={checkboxValue1}
           onSelectedChange={setCheckboxValue1}
-          isValid={!checkboxValue1}
+          isValid={checkboxValue1}
+          alignIndicator="start"
+          className="items-start"
         >
           <FormField.Content>
             <FormField.Label>
@@ -94,10 +96,10 @@ export default function FormFieldScreen() {
               Privacy Policy
             </FormField.Description>
           </FormField.Content>
-          <FormField.Indicator>
+          <FormField.Indicator className="mt-0.5">
             <Checkbox />
           </FormField.Indicator>
-          <FormField.ErrorMessage>
+          <FormField.ErrorMessage className="ml-[31px] mt-1">
             This field is required
           </FormField.ErrorMessage>
         </FormField>
@@ -105,6 +107,7 @@ export default function FormFieldScreen() {
         <FormField
           isSelected={checkboxValue2}
           onSelectedChange={setCheckboxValue2}
+          isValid={checkboxValue2}
         >
           <FormField.Content>
             <FormField.Label>Subscribe to newsletter</FormField.Label>
@@ -112,6 +115,9 @@ export default function FormFieldScreen() {
           <FormField.Indicator>
             <Checkbox color="warning" />
           </FormField.Indicator>
+          <FormField.ErrorMessage>
+            This field is required
+          </FormField.ErrorMessage>
         </FormField>
       </View>
 

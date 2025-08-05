@@ -6,7 +6,7 @@ import {
   type GestureResponderEvent,
 } from 'react-native';
 
-import { createContext, getElementByDisplayName } from '@/helpers/utils';
+import { cn, createContext, getElementByDisplayName } from '@/helpers/utils';
 
 import ErrorField from '@/components/error-field';
 import type { ErrorFieldRootProps } from '@/components/error-field/error-field.types';
@@ -193,7 +193,7 @@ function FormFieldDescription(props: FormFieldDescriptionProps) {
 const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
-    const { isSelected, onSelectedChange, isDisabled, isReadOnly } =
+    const { isSelected, onSelectedChange, isDisabled, isReadOnly, isValid } =
       useFormFieldContext();
 
     const tvStyles = formFieldStyles.indicator({
@@ -210,8 +210,16 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
         ...(onSelectedChange && { onSelectedChange }),
         ...(isDisabled && { isDisabled }),
         ...(isReadOnly && { isReadOnly }),
+        ...(isValid !== undefined && { isValid }),
       });
-    }, [children, isSelected, onSelectedChange, isDisabled, isReadOnly]);
+    }, [
+      children,
+      isSelected,
+      onSelectedChange,
+      isDisabled,
+      isReadOnly,
+      isValid,
+    ]);
 
     return (
       <Animated.View ref={ref} className={tvStyles} {...restProps}>
@@ -227,7 +235,14 @@ const FormFieldErrorMessage = forwardRef<TextRef, ErrorFieldRootProps>(
   (props, ref) => {
     const { isValid } = useFormFieldContext();
 
-    return <ErrorField ref={ref} isValid={isValid} {...props} />;
+    return (
+      <ErrorField
+        ref={ref}
+        isValid={isValid}
+        className={cn('mt-1', props.className)}
+        {...props}
+      />
+    );
   }
 );
 

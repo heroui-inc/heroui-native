@@ -6,7 +6,7 @@ const root = tv({
   variants: {
     orientation: {
       horizontal: 'flex-row',
-      vertical: 'flex-col',
+      vertical: 'flex-col items-start',
     },
     alignIndicator: {
       start: 'flex-row-reverse',

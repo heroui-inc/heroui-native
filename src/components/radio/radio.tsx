@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   withSpring,
@@ -11,10 +11,10 @@ import {
   getElementByDisplayName,
   getElementWithDefault,
 } from '@/helpers/utils';
-import * as LabelPrimitives from '@/primitives/label';
 import * as RadioGroupPrimitives from '@/primitives/radio-group';
 import { useTheme } from '@/theme';
 
+import { FormField } from '../form-field';
 import {
   DEFAULT_HIT_SLOP,
   DEFAULT_SPRING_CONFIG,
@@ -310,27 +310,10 @@ function RadioContent(props: RadioContentProps) {
 
   const { orientation } = RadioGroupPrimitives.useRadioGroupContext();
 
-  const labelElement = useMemo(() => {
-    return getElementByDisplayName(children, DISPLAY_NAME.RADIO_LABEL);
-  }, [children]);
-
-  const descriptionElement = useMemo(() => {
-    return getElementByDisplayName(children, DISPLAY_NAME.RADIO_DESCRIPTION);
-  }, [children]);
-
   const tvStyles = radioStyles.content({
     orientation,
     className,
   });
-
-  if (labelElement || descriptionElement) {
-    return (
-      <View className={tvStyles} {...restProps}>
-        {labelElement}
-        {descriptionElement}
-      </View>
-    );
-  }
 
   return (
     <View className={tvStyles} style={style} {...restProps}>
@@ -342,33 +325,13 @@ function RadioContent(props: RadioContentProps) {
 // --------------------------------------------------
 
 function RadioLabel(props: RadioLabelProps) {
-  const { children, className, ...restProps } = props;
-
-  const tvStyles = radioStyles.label({
-    className,
-  });
-
-  return (
-    <LabelPrimitives.Text className={tvStyles} {...restProps}>
-      {children}
-    </LabelPrimitives.Text>
-  );
+  return <FormField.Label {...props} />;
 }
 
 // --------------------------------------------------
 
 function RadioDescription(props: RadioDescriptionProps) {
-  const { children, className, ...restProps } = props;
-
-  const tvStyles = radioStyles.description({
-    className,
-  });
-
-  return (
-    <Text className={tvStyles} {...restProps}>
-      {children}
-    </Text>
-  );
+  return <FormField.Description {...props} />;
 }
 
 // --------------------------------------------------

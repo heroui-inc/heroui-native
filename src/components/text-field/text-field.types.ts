@@ -1,7 +1,8 @@
 import type { ErrorFieldRootProps } from '@/components/error-field';
-import type { ReanimatedAnimationProps, TimingConfig } from '@/helpers/types';
+import type { TimingConfig } from '@/helpers/types';
 import type { ElementSlots } from '@/theme';
 import type { TextInputProps, TextProps, ViewProps } from 'react-native';
+import type { AnimatedProps } from 'react-native-reanimated';
 import type { InputSlots, LabelSlots } from './text-field.styles';
 
 /**
@@ -72,9 +73,7 @@ export interface TextFieldRootProps extends ViewProps {
 /**
  * Props for the TextField.Label component
  */
-export interface TextFieldLabelProps
-  extends TextProps,
-    ReanimatedAnimationProps {
+export interface TextFieldLabelProps extends AnimatedProps<TextProps> {
   /**
    * Children elements to be rendered as the label text
    */
@@ -146,9 +145,7 @@ export interface TextFieldInputEndContentProps extends ViewProps {
 /**
  * Props for the TextField.Description component
  */
-export interface TextFieldDescriptionProps
-  extends ViewProps,
-    ReanimatedAnimationProps {
+export interface TextFieldDescriptionProps extends AnimatedProps<ViewProps> {
   /**
    * Children elements to be rendered as the description text
    */

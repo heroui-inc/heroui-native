@@ -84,7 +84,10 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
       isSelected !== undefined
     ) {
       onSelectedChange(!isSelected);
-      props.onPress?.(e);
+
+      if (props.onPress && typeof props.onPress === 'function') {
+        props.onPress(e);
+      }
     }
   };
 

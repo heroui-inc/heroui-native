@@ -1,6 +1,6 @@
-import type { ReanimatedAnimationProps } from '@/helpers/types';
 import type { ElementSlots } from '@/theme';
 import type { PressableProps, ViewProps } from 'react-native';
+import type { AnimatedProps } from 'react-native-reanimated';
 
 type FormFieldAlignIndicator = 'start' | 'end';
 
@@ -9,7 +9,7 @@ type FormFieldOrientation = 'horizontal' | 'vertical';
 /**
  * Base FormField props shared between all orientations
  */
-interface FormFieldBaseProps extends PressableProps, ReanimatedAnimationProps {
+interface FormFieldBaseProps extends AnimatedProps<PressableProps> {
   /** Content to render inside the form control */
   children?: React.ReactNode;
 
@@ -64,9 +64,7 @@ export type FormFieldProps = FormFieldHorizontalProps | FormFieldVerticalProps;
 /**
  * Props for the FormFieldContent component
  */
-export interface FormFieldContentProps
-  extends ViewProps,
-    ReanimatedAnimationProps {
+export interface FormFieldContentProps extends AnimatedProps<ViewProps> {
   /** Content to render inside the content container */
   children?: React.ReactNode;
 
@@ -82,9 +80,7 @@ export type LabelSlots = 'container' | 'text';
 /**
  * Props for the FormFieldLabel component
  */
-export interface FormFieldLabelProps
-  extends ViewProps,
-    ReanimatedAnimationProps {
+export interface FormFieldLabelProps extends AnimatedProps<ViewProps> {
   /** Label text content */
   children?: React.ReactNode;
 
@@ -103,9 +99,7 @@ export type DescriptionSlots = 'container' | 'text';
 /**
  * Props for the FormFieldDescription component
  */
-export interface FormFieldDescriptionProps
-  extends ViewProps,
-    ReanimatedAnimationProps {
+export interface FormFieldDescriptionProps extends AnimatedProps<ViewProps> {
   /** Description text content */
   children?: React.ReactNode;
 
@@ -119,9 +113,7 @@ export interface FormFieldDescriptionProps
 /**
  * Props for the FormFieldIndicator component
  */
-export interface FormFieldIndicatorProps
-  extends ViewProps,
-    ReanimatedAnimationProps {
+export interface FormFieldIndicatorProps extends AnimatedProps<ViewProps> {
   /** Control component to render (Switch, Checkbox, Radio) */
   children?: React.ReactNode;
 

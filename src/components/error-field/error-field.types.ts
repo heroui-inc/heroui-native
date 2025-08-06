@@ -1,14 +1,12 @@
-import type { ReanimatedAnimationProps } from '@/helpers/types/animation';
 import type { ElementSlots } from '@/theme';
 import type { ViewProps } from 'react-native';
+import type { AnimatedProps } from 'react-native-reanimated';
 import type { ErrorFieldSlots } from './error-field.styles';
 
 /**
  * Props for the ErrorField root component
  */
-export interface ErrorFieldRootProps
-  extends ViewProps,
-    ReanimatedAnimationProps {
+export interface ErrorFieldRootProps extends AnimatedProps<ViewProps> {
   /**
    * The content of the error field
    * When passed as string, it will be wrapped with Text component

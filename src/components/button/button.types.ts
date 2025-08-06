@@ -1,9 +1,7 @@
 import type { TimingConfig } from '@/helpers/types';
-import type {
-  SlottablePressableProps,
-  SlottableViewProps,
-} from '@/helpers/types/primitives';
 import type { ElementSlots } from '@/theme';
+import type { PressableProps, ViewProps } from 'react-native';
+import type { AnimatedProps } from 'react-native-reanimated';
 import type { LabelSlots } from './button.styles';
 
 /**
@@ -24,7 +22,7 @@ export type ButtonVariant =
 /**
  * Props for the Button.Root component
  */
-export interface ButtonRootProps extends SlottablePressableProps {
+export interface ButtonRootProps extends AnimatedProps<PressableProps> {
   /**
    * Children elements to be rendered inside the button
    */
@@ -117,11 +115,15 @@ export interface ButtonRootProps extends SlottablePressableProps {
 /**
  * Props for the Button.Label component
  */
-export interface ButtonLabelProps extends SlottableViewProps {
+export interface ButtonLabelProps extends AnimatedProps<ViewProps> {
   /**
    * Content to be rendered as label. If string, will be wrapped in Text component
    */
   children?: React.ReactNode;
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
   /**
    * Additional CSS classes for the different parts of the label
    */
@@ -131,7 +133,7 @@ export interface ButtonLabelProps extends SlottableViewProps {
 /**
  * Props for the Button.StartContent component
  */
-export interface ButtonStartContentProps extends SlottableViewProps {
+export interface ButtonStartContentProps extends AnimatedProps<ViewProps> {
   /**
    * Content to be rendered at the start of the button
    */
@@ -145,7 +147,7 @@ export interface ButtonStartContentProps extends SlottableViewProps {
 /**
  * Props for the Button.EndContent component
  */
-export interface ButtonEndContentProps extends SlottableViewProps {
+export interface ButtonEndContentProps extends AnimatedProps<ViewProps> {
   /**
    * Content to be rendered at the end of the button
    */
@@ -159,7 +161,7 @@ export interface ButtonEndContentProps extends SlottableViewProps {
 /**
  * Props for the Button.Background component
  */
-export interface ButtonBackgroundProps extends SlottableViewProps {
+export interface ButtonBackgroundProps extends AnimatedProps<ViewProps> {
   /**
    * Content to be rendered as the button background
    */

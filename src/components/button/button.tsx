@@ -1,14 +1,9 @@
+import type { PressableRef } from '@/helpers/types';
 import { createContext } from '@/helpers/utils';
 import { getElementWithDefault } from '@/helpers/utils/get-element-with-default';
-import * as Slot from '@/primitives/slot';
 import { useTheme } from '@/theme';
 import { forwardRef, useCallback, useMemo } from 'react';
-import {
-  Pressable,
-  Text,
-  View,
-  type GestureResponderEvent,
-} from 'react-native';
+import { Pressable, Text, type GestureResponderEvent } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -19,6 +14,7 @@ import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
   DEFAULT_LABEL_TEXT,
+  DEFAULT_LAYOUT_TRANSITION,
   DISPLAY_NAME,
   HIGHLIGHT_CONFIG,
   OPACITY_ALPHA_MAP,
@@ -42,10 +38,10 @@ const [ButtonProvider, useButtonContext] = createContext<ButtonContextValue>({
 
 // --------------------------------------------------
 
-const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
+const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   const {
     children,
-    asChild,
+    layout = DEFAULT_LAYOUT_TRANSITION,
     variant = 'primary',
     size = 'md',
     fullWidth = true,
@@ -183,7 +179,9 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
           )
         );
       }
-      onPressIn?.(e);
+      if (onPressIn && typeof onPressIn === 'function') {
+        onPressIn(e);
+      }
     },
     [
       scale,
@@ -211,7 +209,9 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
           )
         );
       }
-      onPressOut?.(e);
+      if (onPressOut && typeof onPressOut === 'function') {
+        onPressOut(e);
+      }
     },
     [
       scale,
@@ -232,8 +232,6 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
     [size, variant, isDisabled]
   );
 
-  const Component = asChild ? Slot.Pressable : AnimatedPressable;
-
   const handleLayout = useCallback(
     (event: { nativeEvent: { layout: { width: number } } }) => {
       btnWidth.set(event.nativeEvent.layout.width);
@@ -243,8 +241,9 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
 
   return (
     <ButtonProvider value={contextValue}>
-      <Component
+      <AnimatedPressable
         ref={ref}
+        layout={layout}
         className={tvStyles}
         style={[nativeStyles.buttonRoot, animatedContainerStyle, style]}
         disabled={isDisabled}
@@ -255,18 +254,12 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
         accessibilityState={{ disabled: isDisabled }}
         {...restProps}
       >
-        {asChild ? (
-          children
-        ) : (
-          <>
-            {backgroundElement}
-            <ButtonBackground style={animatedBackgroundStyle} />
-            {startContentElement}
-            {labelElement}
-            {endContentElement}
-          </>
-        )}
-      </Component>
+        {backgroundElement}
+        <ButtonBackground style={animatedBackgroundStyle} />
+        {startContentElement}
+        {labelElement}
+        {endContentElement}
+      </AnimatedPressable>
     </ButtonProvider>
   );
 });
@@ -274,23 +267,34 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
 // --------------------------------------------------
 
 function ButtonStartContent(props: ButtonStartContentProps) {
-  const { children, className, ...restProps } = props;
+  const {
+    children,
+    layout = DEFAULT_LAYOUT_TRANSITION,
+    className,
+    ...restProps
+  } = props;
 
   const tvStyles = buttonStyles.startContent({
     className,
   });
 
   return (
-    <View className={tvStyles} {...restProps}>
+    <Animated.View layout={layout} className={tvStyles} {...restProps}>
       {children}
-    </View>
+    </Animated.View>
   );
 }
 
 // --------------------------------------------------
 
 function ButtonLabel(props: ButtonLabelProps) {
-  const { children, className, classNames, ...restProps } = props;
+  const {
+    children,
+    layout = DEFAULT_LAYOUT_TRANSITION,
+    className,
+    classNames,
+    ...restProps
+  } = props;
 
   const { size, variant } = useButtonContext();
 
@@ -309,39 +313,54 @@ function ButtonLabel(props: ButtonLabelProps) {
 
   if (typeof children === 'string') {
     return (
-      <View className={tvContainerStyles} {...restProps}>
+      <Animated.View
+        layout={layout}
+        className={tvContainerStyles}
+        {...restProps}
+      >
         <Text className={tvTextStyles}>{children}</Text>
-      </View>
+      </Animated.View>
     );
   }
 
   return (
-    <View className={tvContainerStyles} {...restProps}>
+    <Animated.View layout={layout} className={tvContainerStyles} {...restProps}>
       {children}
-    </View>
+    </Animated.View>
   );
 }
 
 // --------------------------------------------------
 
 function ButtonEndContent(props: ButtonEndContentProps) {
-  const { children, className, ...restProps } = props;
+  const {
+    children,
+    layout = DEFAULT_LAYOUT_TRANSITION,
+    className,
+    ...restProps
+  } = props;
 
   const tvStyles = buttonStyles.endContent({
     className,
   });
 
   return (
-    <View className={tvStyles} {...restProps}>
+    <Animated.View layout={layout} className={tvStyles} {...restProps}>
       {children}
-    </View>
+    </Animated.View>
   );
 }
 
 // --------------------------------------------------
 
 function ButtonBackground(props: ButtonBackgroundProps) {
-  const { children, className, style, ...restProps } = props;
+  const {
+    children,
+    layout = DEFAULT_LAYOUT_TRANSITION,
+    className,
+    style,
+    ...restProps
+  } = props;
 
   const { size } = useButtonContext();
 
@@ -352,6 +371,7 @@ function ButtonBackground(props: ButtonBackgroundProps) {
 
   return (
     <Animated.View
+      layout={layout}
       className={tvStyles}
       style={[nativeStyles.background, style]}
       {...restProps}

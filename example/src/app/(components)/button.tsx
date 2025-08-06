@@ -1,18 +1,29 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, Spinner, useTheme } from 'heroui-native';
+import { Button, Spinner, Surface, Switch, useTheme } from 'heroui-native';
 import {
   AlertCircle,
+  ArrowRight,
   Check,
   ChevronRight,
   Download,
   Heart,
   Plus,
+  Star,
   Trash2,
 } from 'lucide-react-native';
+import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function ButtonScreen() {
   const { colors, isDark } = useTheme();
+
+  // States for layout transition demo
+  const [showStartContent, setShowStartContent] = React.useState(true);
+  const [showLabel, setShowLabel] = React.useState(true);
+  const [showEndContent, setShowEndContent] = React.useState(true);
+
+  // State for download button demo
+  const [isDownloading, setIsDownloading] = React.useState(false);
 
   return (
     <ScrollView
@@ -26,6 +37,85 @@ export default function ButtonScreen() {
 
       <View className="w-full gap-4 mb-6">
         <Button onPress={() => console.log('Button pressed')} />
+      </View>
+
+      <Text className="text-lg font-bold text-muted-foreground mb-4">
+        Layout Transitions Demo
+      </Text>
+
+      <View className="w-full gap-4 mb-6">
+        {/* Control switches for toggling button parts */}
+        <Surface variant="3" className="gap-3">
+          <Text className="text-base font-semibold text-foreground mb-2">
+            Toggle Button Parts
+          </Text>
+
+          <View className="flex-row items-center justify-between">
+            <Text className="text-sm text-foreground">Start Content</Text>
+            <Switch
+              isSelected={showStartContent}
+              onSelectedChange={setShowStartContent}
+            />
+          </View>
+
+          <View className="flex-row items-center justify-between">
+            <Text className="text-sm text-foreground">Label</Text>
+            <Switch isSelected={showLabel} onSelectedChange={setShowLabel} />
+          </View>
+
+          <View className="flex-row items-center justify-between">
+            <Text className="text-sm text-foreground">End Content</Text>
+            <Switch
+              isSelected={showEndContent}
+              onSelectedChange={setShowEndContent}
+            />
+          </View>
+        </Surface>
+
+        {/* Animated button with dynamic content */}
+        <Button
+          variant="primary"
+          onPress={() => console.log('Dynamic button pressed')}
+          fullWidth={false}
+        >
+          {showStartContent && (
+            <Button.StartContent>
+              <Star
+                size={18}
+                color={colors.accentForeground}
+                fill={colors.accentForeground}
+              />
+            </Button.StartContent>
+          )}
+          {showLabel && <Button.Label>Dynamic Button</Button.Label>}
+          {showEndContent && (
+            <Button.EndContent>
+              <ArrowRight size={18} color={colors.accentForeground} />
+            </Button.EndContent>
+          )}
+        </Button>
+
+        {/* Download button with loading state transition */}
+        <Button
+          variant="primary"
+          onPress={() => {
+            setIsDownloading(true);
+            // Simulate download completion after 3 seconds
+            setTimeout(() => {
+              setIsDownloading(false);
+            }, 3000);
+          }}
+          fullWidth={false}
+          onlyIcon={isDownloading}
+        >
+          <Button.Label>
+            {isDownloading ? (
+              <Spinner color={colors.accentForeground} />
+            ) : (
+              'Download now'
+            )}
+          </Button.Label>
+        </Button>
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">

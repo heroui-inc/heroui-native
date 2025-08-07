@@ -63,11 +63,6 @@ export const VARIANT_TO_COLOR_MAP: Record<ButtonVariant, keyof ColorVariables> =
     danger: 'dangerForeground',
   };
 
-/**
- * Default label text for the button
- */
-export const DEFAULT_LABEL_TEXT = 'Label';
-
 export const DEFAULT_LAYOUT_TRANSITION = LinearTransition.springify()
   .damping(32)
   .stiffness(360);

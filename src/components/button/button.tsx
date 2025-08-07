@@ -13,7 +13,6 @@ import Animated, {
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
-  DEFAULT_LABEL_TEXT,
   DEFAULT_LAYOUT_TRANSITION,
   DISPLAY_NAME,
   HIGHLIGHT_CONFIG,
@@ -71,12 +70,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   );
 
   const labelElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.LABEL,
-        <ButtonLabel>{DEFAULT_LABEL_TEXT}</ButtonLabel>
-      ),
+    () => getElementWithDefault(children, DISPLAY_NAME.LABEL, <ButtonLabel />),
     [children]
   );
 
@@ -257,7 +251,11 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         {backgroundElement}
         <ButtonBackground style={animatedBackgroundStyle} />
         {startContentElement}
-        {labelElement}
+        {typeof children === 'string' ? (
+          <ButtonLabel>{children}</ButtonLabel>
+        ) : (
+          labelElement
+        )}
         {endContentElement}
       </AnimatedPressable>
     </ButtonProvider>

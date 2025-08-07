@@ -36,7 +36,9 @@ export default function ButtonScreen() {
       </Text>
 
       <View className="w-full gap-4 mb-6">
-        <Button onPress={() => console.log('Button pressed')} />
+        <Button onPress={() => console.log('Button pressed')}>
+          Basic Button
+        </Button>
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">

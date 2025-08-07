@@ -24,4 +24,13 @@ const Surface = forwardRef<ViewRef, SurfaceRootProps>(
 
 Surface.displayName = DISPLAY_NAME.ROOT;
 
+/**
+ * Surface component
+ *
+ * @component Surface - Container component that provides elevation and background styling.
+ * Used as a base for other components like Card. Supports different visual variants
+ * for various elevation levels and styling needs.
+ *
+ * @see Full documentation: https://heroui.com/components/surface
+ */
 export default Surface;

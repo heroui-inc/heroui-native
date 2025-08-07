@@ -13,21 +13,6 @@ import type { DropShadowViewProps } from './drop-shadow-view.types';
 
 // --------------------------------------------------
 
-/**
- * DropShadowView component provides platform-specific shadow rendering
- *
- * Platform-specific behavior:
- * - iOS: Uses shadowColor, shadowOffset, shadowOpacity, shadowRadius
- * - Android: Uses shadowColor and elevation only
- *
- * Note: To customize the shadow, use iosShadowStyle or androidShadowStyle props for platform-specific overrides
- *
- * Android limitations: shadowOffset, shadowOpacity, and shadowRadius are ignored on Android.
- * Only elevation and shadowColor work on Android.
- *
- * IMPORTANT: For proper shadow rendering, this view should be the root
- * component and must have a background color set (not transparent).
- */
 const DropShadowViewRoot = forwardRef<View, DropShadowViewProps>(
   (props, ref) => {
     const {
@@ -96,18 +81,19 @@ const DropShadowViewRoot = forwardRef<View, DropShadowViewProps>(
 DropShadowViewRoot.displayName = DISPLAY_NAME.ROOT;
 
 /**
- * DropShadowView component for adding platform-specific shadows to children
+ * DropShadowView component
  *
- * @component DropShadowView - Main container that wraps children with a drop shadow.
- * Provides platform-optimized shadow rendering with size presets and theme awareness.
+ * @component DropShadowView - Container that wraps children with platform-specific drop shadows.
+ * Provides optimized shadow rendering with size presets and automatic theme awareness.
  *
- * Platform differences:
+ * Platform behavior:
  * - iOS: Uses shadowColor, shadowOffset, shadowOpacity, shadowRadius
- * - Android: Uses shadowColor and elevation only (requires background color for proper rendering)
+ * - Android: Uses shadowColor and elevation only
+ *
+ * IMPORTANT: The component must have a background color set (not transparent) on both platforms for proper shadow rendering.
  *
  * Size presets: 'none', 'xs', 'sm', 'md', 'lg', 'xl'
- *
- * To customize shadow properties, use iosShadowStyle or androidShadowStyle props for platform-specific overrides.
+ * Custom shadows: Use iosShadowStyle or androidShadowStyle props for platform-specific overrides.
  *
  * @see Full documentation: https://heroui.com/components/drop-shadow-view
  */

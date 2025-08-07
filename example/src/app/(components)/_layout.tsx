@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 import { useTheme } from 'heroui-native';
+import { Platform } from 'react-native';
 import { ThemeToggle } from '../../components/theme-toggle';
 
 export default function Layout() {
@@ -11,9 +12,18 @@ export default function Layout() {
     <Stack
       screenOptions={{
         headerTitleAlign: 'center',
-        headerTransparent: true,
+        headerTransparent: Platform.select({
+          ios: true,
+          android: false,
+        }),
         headerBlurEffect: theme === 'dark' ? 'dark' : 'light',
         headerTintColor: colors.foreground,
+        headerStyle: {
+          backgroundColor: Platform.select({
+            ios: undefined,
+            android: colors.background,
+          }),
+        },
         headerBackButtonDisplayMode: 'minimal',
         headerRight: _renderThemeToggle,
         gestureEnabled: true,

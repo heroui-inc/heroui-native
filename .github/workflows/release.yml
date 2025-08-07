@@ -21,7 +21,7 @@ jobs:
           node-version: lts/*
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --frozen-lockfile
 
       - name: Run lint
         run: yarn lint

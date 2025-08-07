@@ -236,27 +236,37 @@ const SwitchThumb = forwardRef<
 
 // --------------------------------------------------
 
-function SwitchStartContent(props: SwitchContentProps) {
-  const { children, className } = props;
+const SwitchStartContent = forwardRef<View, SwitchContentProps>(
+  (props, ref) => {
+    const { children, className } = props;
 
-  const tvStyles = switchStyles.startContent({
-    className,
-  });
+    const tvStyles = switchStyles.startContent({
+      className,
+    });
 
-  return <View className={tvStyles}>{children}</View>;
-}
+    return (
+      <View ref={ref} className={tvStyles}>
+        {children}
+      </View>
+    );
+  }
+);
 
 // --------------------------------------------------
 
-function SwitchEndContent(props: SwitchContentProps) {
+const SwitchEndContent = forwardRef<View, SwitchContentProps>((props, ref) => {
   const { children, className } = props;
 
   const tvStyles = switchStyles.endContent({
     className,
   });
 
-  return <View className={tvStyles}>{children}</View>;
-}
+  return (
+    <View ref={ref} className={tvStyles}>
+      {children}
+    </View>
+  );
+});
 
 // --------------------------------------------------
 

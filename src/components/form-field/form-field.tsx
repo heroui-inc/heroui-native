@@ -133,26 +133,28 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
 
 // --------------------------------------------------
 
-function FormFieldContent(props: FormFieldContentProps) {
-  const { children, className, ...restProps } = props;
+const FormFieldContent = forwardRef<View, FormFieldContentProps>(
+  (props, ref) => {
+    const { children, className, ...restProps } = props;
 
-  const { isInline } = useFormFieldContext();
+    const { isInline } = useFormFieldContext();
 
-  const tvStyles = formFieldStyles.content({
-    isInline,
-    className,
-  });
+    const tvStyles = formFieldStyles.content({
+      isInline,
+      className,
+    });
 
-  return (
-    <Animated.View className={tvStyles} {...restProps}>
-      {children}
-    </Animated.View>
-  );
-}
+    return (
+      <Animated.View ref={ref} className={tvStyles} {...restProps}>
+        {children}
+      </Animated.View>
+    );
+  }
+);
 
 // --------------------------------------------------
 
-function FormFieldLabel(props: FormFieldLabelProps) {
+const FormFieldLabel = forwardRef<View, FormFieldLabelProps>((props, ref) => {
   const { children, className, classNames, ...restProps } = props;
 
   const { container, text } = formFieldStyles.label();
@@ -163,7 +165,7 @@ function FormFieldLabel(props: FormFieldLabelProps) {
   const textStyles = text({ className: classNames?.text });
 
   return (
-    <Animated.View className={containerStyles} {...restProps}>
+    <Animated.View ref={ref} className={containerStyles} {...restProps}>
       {typeof children === 'string' ? (
         <Text className={textStyles}>{children}</Text>
       ) : (
@@ -171,30 +173,32 @@ function FormFieldLabel(props: FormFieldLabelProps) {
       )}
     </Animated.View>
   );
-}
+});
 
 // --------------------------------------------------
 
-function FormFieldDescription(props: FormFieldDescriptionProps) {
-  const { children, className, classNames, ...restProps } = props;
+const FormFieldDescription = forwardRef<View, FormFieldDescriptionProps>(
+  (props, ref) => {
+    const { children, className, classNames, ...restProps } = props;
 
-  const { container, text } = formFieldStyles.description();
+    const { container, text } = formFieldStyles.description();
 
-  const containerStyles = container({
-    className: [className, classNames?.container],
-  });
-  const textStyles = text({ className: classNames?.text });
+    const containerStyles = container({
+      className: [className, classNames?.container],
+    });
+    const textStyles = text({ className: classNames?.text });
 
-  return (
-    <Animated.View className={containerStyles} {...restProps}>
-      {typeof children === 'string' ? (
-        <Text className={textStyles}>{children}</Text>
-      ) : (
-        children
-      )}
-    </Animated.View>
-  );
-}
+    return (
+      <Animated.View ref={ref} className={containerStyles} {...restProps}>
+        {typeof children === 'string' ? (
+          <Text className={textStyles}>{children}</Text>
+        ) : (
+          children
+        )}
+      </Animated.View>
+    );
+  }
+);
 
 // --------------------------------------------------
 

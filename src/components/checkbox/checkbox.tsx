@@ -141,54 +141,63 @@ const styles = StyleSheet.create({
 
 // --------------------------------------------------
 
-function CheckboxBackground(props: CheckboxBackgroundProps) {
-  const { children, colors, animationConfig, className, style, ...restProps } =
-    props;
+const CheckboxBackground = forwardRef<View, CheckboxBackgroundProps>(
+  (props, ref) => {
+    const {
+      children,
+      colors,
+      animationConfig,
+      className,
+      style,
+      ...restProps
+    } = props;
 
-  const { color, isSelected } = useCheckboxContext();
+    const { color, isSelected } = useCheckboxContext();
 
-  const { colors: themeColors } = useTheme();
+    const { colors: themeColors } = useTheme();
 
-  const tvStyles = checkboxStyles.background({
-    className,
-  });
+    const tvStyles = checkboxStyles.background({
+      className,
+    });
 
-  const backgroundColorMap: Record<CheckboxColor, string> = {
-    default: themeColors.accent,
-    success: themeColors.success,
-    warning: themeColors.warning,
-    danger: themeColors.danger,
-  };
-
-  const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
-
-  const backgroundAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      backgroundColor: withTiming(
-        isSelected
-          ? (colors?.selectedBackground ?? backgroundColorMap[color])
-          : (colors?.defaultBackground ?? 'transparent'),
-        timingConfig
-      ),
+    const backgroundColorMap: Record<CheckboxColor, string> = {
+      default: themeColors.accent,
+      success: themeColors.success,
+      warning: themeColors.warning,
+      danger: themeColors.danger,
     };
-  });
 
-  if (children) {
+    const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
+
+    const backgroundAnimatedStyle = useAnimatedStyle(() => {
+      return {
+        backgroundColor: withTiming(
+          isSelected
+            ? (colors?.selectedBackground ?? backgroundColorMap[color])
+            : (colors?.defaultBackground ?? 'transparent'),
+          timingConfig
+        ),
+      };
+    });
+
+    if (children) {
+      return (
+        <View ref={ref} className={tvStyles} style={style} {...restProps}>
+          {children}
+        </View>
+      );
+    }
+
     return (
-      <View className={tvStyles} style={style} {...restProps}>
-        {children}
-      </View>
+      <Animated.View
+        ref={ref}
+        className={tvStyles}
+        style={[backgroundAnimatedStyle, style]}
+        {...restProps}
+      />
     );
   }
-
-  return (
-    <Animated.View
-      className={tvStyles}
-      style={[backgroundAnimatedStyle, style]}
-      {...restProps}
-    />
-  );
-}
+);
 
 // --------------------------------------------------
 

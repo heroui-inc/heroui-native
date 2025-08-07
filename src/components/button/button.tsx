@@ -3,7 +3,12 @@ import { createContext } from '@/helpers/utils';
 import { getElementWithDefault } from '@/helpers/utils/get-element-with-default';
 import { useTheme } from '@/theme';
 import { forwardRef, useCallback, useMemo } from 'react';
-import { Pressable, Text, type GestureResponderEvent } from 'react-native';
+import {
+  Pressable,
+  Text,
+  View,
+  type GestureResponderEvent,
+} from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -264,28 +269,35 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
 
 // --------------------------------------------------
 
-function ButtonStartContent(props: ButtonStartContentProps) {
-  const {
-    children,
-    layout = DEFAULT_LAYOUT_TRANSITION,
-    className,
-    ...restProps
-  } = props;
+const ButtonStartContent = forwardRef<View, ButtonStartContentProps>(
+  (props, ref) => {
+    const {
+      children,
+      layout = DEFAULT_LAYOUT_TRANSITION,
+      className,
+      ...restProps
+    } = props;
 
-  const tvStyles = buttonStyles.startContent({
-    className,
-  });
+    const tvStyles = buttonStyles.startContent({
+      className,
+    });
 
-  return (
-    <Animated.View layout={layout} className={tvStyles} {...restProps}>
-      {children}
-    </Animated.View>
-  );
-}
+    return (
+      <Animated.View
+        ref={ref}
+        layout={layout}
+        className={tvStyles}
+        {...restProps}
+      >
+        {children}
+      </Animated.View>
+    );
+  }
+);
 
 // --------------------------------------------------
 
-function ButtonLabel(props: ButtonLabelProps) {
+const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
   const {
     children,
     layout = DEFAULT_LAYOUT_TRANSITION,
@@ -312,6 +324,7 @@ function ButtonLabel(props: ButtonLabelProps) {
   if (typeof children === 'string') {
     return (
       <Animated.View
+        ref={ref}
         layout={layout}
         className={tvContainerStyles}
         {...restProps}
@@ -322,62 +335,77 @@ function ButtonLabel(props: ButtonLabelProps) {
   }
 
   return (
-    <Animated.View layout={layout} className={tvContainerStyles} {...restProps}>
-      {children}
-    </Animated.View>
-  );
-}
-
-// --------------------------------------------------
-
-function ButtonEndContent(props: ButtonEndContentProps) {
-  const {
-    children,
-    layout = DEFAULT_LAYOUT_TRANSITION,
-    className,
-    ...restProps
-  } = props;
-
-  const tvStyles = buttonStyles.endContent({
-    className,
-  });
-
-  return (
-    <Animated.View layout={layout} className={tvStyles} {...restProps}>
-      {children}
-    </Animated.View>
-  );
-}
-
-// --------------------------------------------------
-
-function ButtonBackground(props: ButtonBackgroundProps) {
-  const {
-    children,
-    layout = DEFAULT_LAYOUT_TRANSITION,
-    className,
-    style,
-    ...restProps
-  } = props;
-
-  const { size } = useButtonContext();
-
-  const tvStyles = buttonStyles.background({
-    size,
-    className,
-  });
-
-  return (
     <Animated.View
+      ref={ref}
       layout={layout}
-      className={tvStyles}
-      style={[nativeStyles.background, style]}
+      className={tvContainerStyles}
       {...restProps}
     >
       {children}
     </Animated.View>
   );
-}
+});
+
+// --------------------------------------------------
+
+const ButtonEndContent = forwardRef<View, ButtonEndContentProps>(
+  (props, ref) => {
+    const {
+      children,
+      layout = DEFAULT_LAYOUT_TRANSITION,
+      className,
+      ...restProps
+    } = props;
+
+    const tvStyles = buttonStyles.endContent({
+      className,
+    });
+
+    return (
+      <Animated.View
+        ref={ref}
+        layout={layout}
+        className={tvStyles}
+        {...restProps}
+      >
+        {children}
+      </Animated.View>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const ButtonBackground = forwardRef<View, ButtonBackgroundProps>(
+  (props, ref) => {
+    const {
+      children,
+      layout = DEFAULT_LAYOUT_TRANSITION,
+      className,
+      style,
+      ...restProps
+    } = props;
+
+    const { size } = useButtonContext();
+
+    const tvStyles = buttonStyles.background({
+      size,
+      className,
+    });
+
+    return (
+      <Animated.View
+        ref={ref}
+        layout={layout}
+        className={tvStyles}
+        style={[nativeStyles.background, style]}
+        {...restProps}
+      >
+        {children}
+      </Animated.View>
+    );
+  }
+);
 
 // --------------------------------------------------
 

@@ -206,50 +206,53 @@ const styles = StyleSheet.create({
 
 // --------------------------------------------------
 
-function RadioIndicatorBackground(props: RadioBackgroundProps) {
-  const { children, colors, className, style, ...restProps } = props;
+const RadioIndicatorBackground = forwardRef<View, RadioBackgroundProps>(
+  (props, ref) => {
+    const { children, colors, className, style, ...restProps } = props;
 
-  const { color, isSelected } = useRadioContext();
-  const { colors: themeColors } = useTheme();
+    const { color, isSelected } = useRadioContext();
+    const { colors: themeColors } = useTheme();
 
-  const tvStyles = radioStyles.background({
-    className,
-  });
+    const tvStyles = radioStyles.background({
+      className,
+    });
 
-  const backgroundColorMap: Record<RadioColor, string> = {
-    default: themeColors.accent,
-    success: themeColors.success,
-    warning: themeColors.warning,
-    danger: themeColors.danger,
-  };
+    const backgroundColorMap: Record<RadioColor, string> = {
+      default: themeColors.accent,
+      success: themeColors.success,
+      warning: themeColors.warning,
+      danger: themeColors.danger,
+    };
 
-  if (children) {
+    if (children) {
+      return (
+        <View ref={ref} className={tvStyles} style={style} {...restProps}>
+          {children}
+        </View>
+      );
+    }
+
     return (
-      <View className={tvStyles} style={style} {...restProps}>
-        {children}
-      </View>
+      <Animated.View
+        ref={ref}
+        className={tvStyles}
+        style={[
+          {
+            backgroundColor: isSelected
+              ? (colors?.selectedBackground ?? backgroundColorMap[color])
+              : (colors?.defaultBackground ?? 'transparent'),
+          },
+          style,
+        ]}
+        {...restProps}
+      />
     );
   }
-
-  return (
-    <Animated.View
-      className={tvStyles}
-      style={[
-        {
-          backgroundColor: isSelected
-            ? (colors?.selectedBackground ?? backgroundColorMap[color])
-            : (colors?.defaultBackground ?? 'transparent'),
-        },
-        style,
-      ]}
-      {...restProps}
-    />
-  );
-}
+);
 
 // --------------------------------------------------
 
-function RadioIndicatorThumb(props: RadioThumbProps) {
+const RadioIndicatorThumb = forwardRef<View, RadioThumbProps>((props, ref) => {
   const { children, colors, className, style, animationConfig, ...restProps } =
     props;
 
@@ -280,16 +283,17 @@ function RadioIndicatorThumb(props: RadioThumbProps) {
 
   return (
     <Animated.View
+      ref={ref}
       className={tvStyles}
       style={[thumbAnimatedStyle, style]}
       {...restProps}
     />
   );
-}
+});
 
 // --------------------------------------------------
 
-function RadioContent(props: RadioContentProps) {
+const RadioContent = forwardRef<View, RadioContentProps>((props, ref) => {
   const { children, className, style, ...restProps } = props;
 
   const { orientation } = useRadioGroupContext();
@@ -300,23 +304,25 @@ function RadioContent(props: RadioContentProps) {
   });
 
   return (
-    <View className={tvStyles} style={style} {...restProps}>
+    <View ref={ref} className={tvStyles} style={style} {...restProps}>
       {children}
     </View>
   );
-}
+});
 
 // --------------------------------------------------
 
-function RadioLabel(props: RadioLabelProps) {
-  return <FormField.Label {...props} />;
-}
+const RadioLabel = forwardRef<any, RadioLabelProps>((props, ref) => {
+  return <FormField.Label ref={ref} {...props} />;
+});
 
 // --------------------------------------------------
 
-function RadioDescription(props: RadioDescriptionProps) {
-  return <FormField.Description {...props} />;
-}
+const RadioDescription = forwardRef<any, RadioDescriptionProps>(
+  (props, ref) => {
+    return <FormField.Description ref={ref} {...props} />;
+  }
+);
 
 // --------------------------------------------------
 

@@ -1,4 +1,4 @@
-import type { ViewProps } from 'react-native';
+import type { TextProps, ViewProps } from 'react-native';
 
 /**
  * Chip size variants
@@ -49,7 +49,7 @@ export interface ChipStartContentProps extends ViewProps {
 /**
  * Props for the ChipLabel component
  */
-export interface ChipLabelProps extends ViewProps {
+export interface ChipLabelProps extends TextProps {
   /** Child elements to render as the label */
   children?: React.ReactNode;
 

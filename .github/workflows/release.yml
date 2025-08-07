@@ -32,13 +32,22 @@ jobs:
       - name: Run tests
         run: yarn test
 
+      - name: Setup Git User
+        shell: bash
+        run: |
+          git config --global user.email "jrgarciadev@gmail.com"
+          git config --global user.name "Junior Garcia"
+
       - name: Initialize NPM Config
         run: npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
 
+      - name: Build library
+        run: yarn clean && yarn prepare
+
       - name: Publish to npm
-        run: yarn release --ci
+        run:: npm run release --ci
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

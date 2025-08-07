@@ -128,6 +128,7 @@
       "after:bump": "npx auto-changelog -p"
     },
     "npm": {
+      "preRelease": "alpha",
       "publish": true
     },
     "github": {

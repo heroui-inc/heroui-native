@@ -38,16 +38,21 @@ jobs:
           git config --global user.email "jrgarciadev@gmail.com"
           git config --global user.name "Junior Garcia"
 
-      - name: Initialize NPM Config
-        run: npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-        env:
-          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
-
       - name: Build library
         run: yarn clean && yarn prepare
 
-      - name: Publish to npm
+      - name: Run bumpp for versioning
         run: npm run release
         env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Publish to npm
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+          npm publish
+        env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - run: npx changelogithub
+        env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

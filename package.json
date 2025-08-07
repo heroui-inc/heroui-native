@@ -1,6 +1,6 @@
 {
   "name": "heroui-native",
-  "version": "1.1.0",
+  "version": "1.0.0-alpha.0",
   "description": "Beautiful, fast and modern React Native UI library",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -39,7 +39,7 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",
-    "release": "release-it --ci"
+    "release": "bumpp"
   },
   "keywords": [
     "react-native",
@@ -70,10 +70,11 @@
     "@evilmartians/lefthook": "^1.5.0",
     "@react-native/babel-preset": "0.78.2",
     "@react-native/eslint-config": "^0.78.0",
-    "@release-it/conventional-changelog": "^9.0.2",
     "@types/jest": "^29.5.5",
     "@types/react": "^19.0.12",
     "babel-plugin-module-resolver": "^5.0.2",
+    "bumpp": "^9.10.2",
+    "changelogithub": "^13.16.0",
     "clsx": "^2.1.1",
     "commitlint": "^19.6.1",
     "del-cli": "^5.1.0",
@@ -91,7 +92,6 @@
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-svg": "^15.12.0",
-    "release-it": "^17.10.0",
     "tailwind-merge": "^3.3.1",
     "tailwind-variants": "^2.0.1",
     "typescript": "^5.8.3"
@@ -119,29 +119,13 @@
       "@commitlint/config-conventional"
     ]
   },
-  "release-it": {
-    "git": {
-      "requireBranch": "alpha",
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "hooks": {
-      "after:bump": "npx auto-changelog -p"
-    },
-    "npm": {
-      "preRelease": "alpha",
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": {
-          "name": "angular"
-        }
-      }
-    }
+  "bumpp": {
+    "commit": true,
+    "confirm": true,
+    "push": true,
+    "tag": true,
+    "release": "prompt",
+    "all": true
   },
   "prettier": {
     "quoteProps": "consistent",

@@ -1,6 +1,6 @@
 {
   "name": "heroui-native",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "Beautiful, fast and modern React Native UI library",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -39,7 +39,7 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",
-    "release": "release-it --only-version"
+    "release": "release-it --ci"
   },
   "keywords": [
     "react-native",
@@ -59,6 +59,7 @@
   },
   "homepage": "https://github.com/heroui-inc/heroui-native#readme",
   "publishConfig": {
+    "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {

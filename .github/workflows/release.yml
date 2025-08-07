@@ -47,7 +47,7 @@ jobs:
         run: yarn clean && yarn prepare
 
       - name: Publish to npm
-        run: npm run release -- --ci
+        run: npm run release
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

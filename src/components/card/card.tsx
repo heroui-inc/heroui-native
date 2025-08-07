@@ -1,6 +1,5 @@
 import { Surface } from '@/components/surface';
 import type { TextRef, ViewRef } from '@/helpers/types/primitives';
-import { Text as SlotText, View as SlotView } from '@/primitives/slot';
 import { forwardRef } from 'react';
 import { Text, View } from 'react-native';
 import { DISPLAY_NAME } from './card.constants';
@@ -37,80 +36,70 @@ const CardRoot = forwardRef<ViewRef, CardRootProps>((props, ref) => {
 // --------------------------------------------------
 
 const CardDetails = forwardRef<ViewRef, CardDetailsProps>((props, ref) => {
-  const { children, className, asChild, ...restProps } = props;
+  const { children, className, ...restProps } = props;
 
   const tvStyles = cardStyles.details({ className });
 
-  const Component = asChild ? SlotView : View;
-
   return (
-    <Component ref={ref} className={tvStyles} {...restProps}>
+    <View ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Component>
+    </View>
   );
 });
 
 // --------------------------------------------------
 
 const CardHeader = forwardRef<ViewRef, CardHeaderProps>((props, ref) => {
-  const { children, className, asChild, ...restProps } = props;
+  const { children, className, ...restProps } = props;
 
   const tvStyles = cardStyles.header({ className });
 
-  const Component = asChild ? SlotView : View;
-
   return (
-    <Component ref={ref} className={tvStyles} {...restProps}>
+    <View ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Component>
+    </View>
   );
 });
 
 // --------------------------------------------------
 
 const CardBody = forwardRef<ViewRef, CardBodyProps>((props, ref) => {
-  const { children, className, asChild, ...restProps } = props;
+  const { children, className, ...restProps } = props;
 
   const tvStyles = cardStyles.body({ className });
 
-  const Component = asChild ? SlotView : View;
-
   return (
-    <Component ref={ref} className={tvStyles} {...restProps}>
+    <View ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Component>
+    </View>
   );
 });
 
 // --------------------------------------------------
 
 const CardFooter = forwardRef<ViewRef, CardFooterProps>((props, ref) => {
-  const { children, className, asChild, ...restProps } = props;
+  const { children, className, ...restProps } = props;
 
   const tvStyles = cardStyles.footer({ className });
 
-  const Component = asChild ? SlotView : View;
-
   return (
-    <Component ref={ref} className={tvStyles} {...restProps}>
+    <View ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Component>
+    </View>
   );
 });
 
 // --------------------------------------------------
 
 const CardTitle = forwardRef<TextRef, CardTitleProps>((props, ref) => {
-  const { children, className, asChild, ...restProps } = props;
+  const { children, className, ...restProps } = props;
 
   const tvStyles = cardStyles.title({ className });
 
-  const Component = asChild ? SlotText : Text;
-
   return (
-    <Component ref={ref} className={tvStyles} {...restProps}>
+    <Text ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Component>
+    </Text>
   );
 });
 
@@ -118,16 +107,14 @@ const CardTitle = forwardRef<TextRef, CardTitleProps>((props, ref) => {
 
 const CardDescription = forwardRef<TextRef, CardDescriptionProps>(
   (props, ref) => {
-    const { children, className, asChild, ...restProps } = props;
+    const { children, className, ...restProps } = props;
 
     const tvStyles = cardStyles.description({ className });
 
-    const Component = asChild ? SlotText : Text;
-
     return (
-      <Component ref={ref} className={tvStyles} {...restProps}>
+      <Text ref={ref} className={tvStyles} {...restProps}>
         {children}
-      </Component>
+      </Text>
     );
   }
 );

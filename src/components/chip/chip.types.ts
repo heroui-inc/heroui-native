@@ -1,5 +1,4 @@
-import type { SlottableViewProps } from '@/helpers/types';
-import type { ViewProps } from 'react-native';
+import type { TextProps, ViewProps } from 'react-native';
 
 /**
  * Chip size variants
@@ -19,7 +18,7 @@ export type ChipColor = 'accent' | 'default' | 'success' | 'warning' | 'danger';
 /**
  * Props for the main Chip component
  */
-export interface ChipProps extends SlottableViewProps {
+export interface ChipProps extends ViewProps {
   /** Child elements to render inside the chip */
   children?: React.ReactNode;
 
@@ -50,7 +49,7 @@ export interface ChipStartContentProps extends ViewProps {
 /**
  * Props for the ChipLabel component
  */
-export interface ChipLabelProps extends ViewProps {
+export interface ChipLabelProps extends TextProps {
   /** Child elements to render as the label */
   children?: React.ReactNode;
 

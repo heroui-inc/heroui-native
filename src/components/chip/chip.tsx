@@ -1,7 +1,6 @@
 import { createContext } from '@/helpers/utils';
 import { getElementByDisplayName } from '@/helpers/utils/get-element-by-display-name';
 import { getElementWithDefault } from '@/helpers/utils/get-element-with-default';
-import * as Slot from '@/primitives/slot';
 import { forwardRef, useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { DISPLAY_NAME } from './chip.constants';
@@ -23,7 +22,6 @@ const [ChipProvider, useChipContext] = createContext<ChipContextValue>({
 const Chip = forwardRef<View, ChipProps>((props, ref) => {
   const {
     children,
-    asChild,
     variant = 'primary',
     size = 'md',
     color = 'accent',
@@ -68,11 +66,9 @@ const Chip = forwardRef<View, ChipProps>((props, ref) => {
     [size, variant, color]
   );
 
-  const Component = asChild ? Slot.View : View;
-
   return (
     <ChipProvider value={contextValue}>
-      <Component
+      <View
         ref={ref}
         className={tvStyles}
         style={[nativeStyles.root, style]}
@@ -81,30 +77,32 @@ const Chip = forwardRef<View, ChipProps>((props, ref) => {
         {startContentElement}
         {labelElement}
         {endContentElement}
-      </Component>
+      </View>
     </ChipProvider>
   );
 });
 
 // --------------------------------------------------
 
-function ChipStartContent(props: ChipStartContentProps) {
-  const { children, className, style, ...restProps } = props;
+const ChipStartContent = forwardRef<View, ChipStartContentProps>(
+  (props, ref) => {
+    const { children, className, style, ...restProps } = props;
 
-  const tvStyles = chipStyles.startContent({
-    className,
-  });
+    const tvStyles = chipStyles.startContent({
+      className,
+    });
 
-  return (
-    <View className={tvStyles} style={style} {...restProps}>
-      {children}
-    </View>
-  );
-}
+    return (
+      <View ref={ref} className={tvStyles} style={style} {...restProps}>
+        {children}
+      </View>
+    );
+  }
+);
 
 // --------------------------------------------------
 
-function ChipLabel(props: ChipLabelProps) {
+const ChipLabel = forwardRef<Text, ChipLabelProps>((props, ref) => {
   const { children, className, style, ...restProps } = props;
 
   const { size, variant, color } = useChipContext();
@@ -117,15 +115,15 @@ function ChipLabel(props: ChipLabelProps) {
   });
 
   return (
-    <Text className={tvStyles} style={style} {...restProps}>
+    <Text ref={ref} className={tvStyles} style={style} {...restProps}>
       {children}
     </Text>
   );
-}
+});
 
 // --------------------------------------------------
 
-function ChipEndContent(props: ChipEndContentProps) {
+const ChipEndContent = forwardRef<View, ChipEndContentProps>((props, ref) => {
   const { children, className, style, ...restProps } = props;
 
   const tvStyles = chipStyles.endContent({
@@ -133,11 +131,11 @@ function ChipEndContent(props: ChipEndContentProps) {
   });
 
   return (
-    <View className={tvStyles} style={style} {...restProps}>
+    <View ref={ref} className={tvStyles} style={style} {...restProps}>
       {children}
     </View>
   );
-}
+});
 
 // --------------------------------------------------
 

@@ -1,9 +1,6 @@
 import type {
-  AnimatedProps,
   EasingFunction,
   EasingFunctionFactory,
-  EntryExitAnimationFunction,
-  LayoutAnimationFunction,
 } from 'react-native-reanimated';
 
 /**
@@ -44,32 +41,4 @@ export interface SpringConfig {
    * @default 1
    */
   mass?: number;
-}
-
-/**
- * Universal animation properties for React Native Reanimated components
- * This interface provides a consistent API for all animated components
- */
-export interface ReanimatedAnimationProps {
-  /**
-   * Animation to run when the component mounts or becomes visible
-   * @example FadeIn.duration(300).easing(Easing.ease)
-   */
-  entering?: EntryExitAnimationFunction;
-  /**
-   * Animation to run when the component unmounts or becomes hidden
-   * @example FadeOut.duration(200).easing(Easing.ease)
-   */
-  exiting?: EntryExitAnimationFunction;
-  /**
-   * Animation to run when the component's layout changes
-   * @example LinearTransition.springify()
-   */
-  layout?: LayoutAnimationFunction;
-  /**
-   * Animated properties that can be passed to the underlying animated component
-   * Used for custom animated props that are not styles
-   * @example { opacity: animatedValue }
-   */
-  animatedProps?: Partial<AnimatedProps<any>>;
 }

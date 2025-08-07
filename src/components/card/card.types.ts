@@ -1,8 +1,5 @@
 import type { SurfaceRootProps } from '@/components/surface/surface.types';
-import type {
-  SlottableTextProps,
-  SlottableViewProps,
-} from '@/helpers/types/primitives';
+import type { TextProps, ViewProps } from 'react-native';
 
 /**
  * Props for the Card.Root component
@@ -18,7 +15,7 @@ export interface CardRootProps extends Omit<SurfaceRootProps, 'variant'> {
 /**
  * Props for the Card.Details component
  */
-export interface CardDetailsProps extends SlottableViewProps {
+export interface CardDetailsProps extends ViewProps {
   /**
    * Children elements to be rendered inside the details container
    */
@@ -32,7 +29,7 @@ export interface CardDetailsProps extends SlottableViewProps {
 /**
  * Props for the Card.Header component
  */
-export interface CardHeaderProps extends SlottableViewProps {
+export interface CardHeaderProps extends ViewProps {
   /**
    * Children elements to be rendered inside the header
    */
@@ -46,7 +43,7 @@ export interface CardHeaderProps extends SlottableViewProps {
 /**
  * Props for the Card.Body component
  */
-export interface CardBodyProps extends SlottableViewProps {
+export interface CardBodyProps extends ViewProps {
   /**
    * Children elements to be rendered inside the body
    */
@@ -60,7 +57,7 @@ export interface CardBodyProps extends SlottableViewProps {
 /**
  * Props for the Card.Footer component
  */
-export interface CardFooterProps extends SlottableViewProps {
+export interface CardFooterProps extends ViewProps {
   /**
    * Children elements to be rendered inside the footer
    */
@@ -74,7 +71,7 @@ export interface CardFooterProps extends SlottableViewProps {
 /**
  * Props for the Card.Title component
  */
-export interface CardTitleProps extends SlottableTextProps {
+export interface CardTitleProps extends TextProps {
   /**
    * Children elements to be rendered as the title text
    */
@@ -88,7 +85,7 @@ export interface CardTitleProps extends SlottableTextProps {
 /**
  * Props for the Card.Description component
  */
-export interface CardDescriptionProps extends SlottableTextProps {
+export interface CardDescriptionProps extends TextProps {
   /**
    * Children elements to be rendered as the description text
    */

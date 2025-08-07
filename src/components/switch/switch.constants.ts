@@ -1,5 +1,4 @@
 import { Easing } from 'react-native-reanimated';
-import type { SwitchSize } from './switch.types';
 
 export const DISPLAY_NAME = {
   SWITCH_ROOT: 'HeroUINative.Switch.Root',
@@ -22,8 +21,4 @@ export const DEFAULT_SPRING_CONFIG = {
   mass: 1,
 };
 
-export const THUMB_WIDTH_MAP: Record<SwitchSize, number> = {
-  sm: 14,
-  md: 18,
-  lg: 21,
-};
+export const DEFAULT_THUMB_WIDTH = 18;

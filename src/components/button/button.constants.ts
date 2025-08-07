@@ -1,5 +1,5 @@
 import type { ColorVariables } from '@/theme/types';
-import { Easing } from 'react-native-reanimated';
+import { Easing, LinearTransition } from 'react-native-reanimated';
 import type { ButtonVariant } from './button.types';
 
 /**
@@ -63,7 +63,6 @@ export const VARIANT_TO_COLOR_MAP: Record<ButtonVariant, keyof ColorVariables> =
     danger: 'dangerForeground',
   };
 
-/**
- * Default label text for the button
- */
-export const DEFAULT_LABEL_TEXT = 'Label';
+export const DEFAULT_LAYOUT_TRANSITION = LinearTransition.springify()
+  .damping(32)
+  .stiffness(360);

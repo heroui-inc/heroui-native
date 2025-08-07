@@ -1,6 +1,6 @@
+import type { PressableRef } from '@/helpers/types';
 import { createContext } from '@/helpers/utils';
 import { getElementWithDefault } from '@/helpers/utils/get-element-with-default';
-import * as Slot from '@/primitives/slot';
 import { useTheme } from '@/theme';
 import { forwardRef, useCallback, useMemo } from 'react';
 import {
@@ -18,7 +18,7 @@ import Animated, {
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
-  DEFAULT_LABEL_TEXT,
+  DEFAULT_LAYOUT_TRANSITION,
   DISPLAY_NAME,
   HIGHLIGHT_CONFIG,
   OPACITY_ALPHA_MAP,
@@ -42,10 +42,10 @@ const [ButtonProvider, useButtonContext] = createContext<ButtonContextValue>({
 
 // --------------------------------------------------
 
-const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
+const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   const {
     children,
-    asChild,
+    layout = DEFAULT_LAYOUT_TRANSITION,
     variant = 'primary',
     size = 'md',
     fullWidth = true,
@@ -60,6 +60,7 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
     animationConfig,
     onPressIn,
     onPressOut,
+    accessibilityRole = 'button',
     ...restProps
   } = props;
 
@@ -74,12 +75,7 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
   );
 
   const labelElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.LABEL,
-        <ButtonLabel>{DEFAULT_LABEL_TEXT}</ButtonLabel>
-      ),
+    () => getElementWithDefault(children, DISPLAY_NAME.LABEL, <ButtonLabel />),
     [children]
   );
 
@@ -182,7 +178,9 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
           )
         );
       }
-      onPressIn?.(e);
+      if (onPressIn && typeof onPressIn === 'function') {
+        onPressIn(e);
+      }
     },
     [
       scale,
@@ -210,7 +208,9 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
           )
         );
       }
-      onPressOut?.(e);
+      if (onPressOut && typeof onPressOut === 'function') {
+        onPressOut(e);
+      }
     },
     [
       scale,
@@ -231,8 +231,6 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
     [size, variant, isDisabled]
   );
 
-  const Component = asChild ? Slot.Pressable : AnimatedPressable;
-
   const handleLayout = useCallback(
     (event: { nativeEvent: { layout: { width: number } } }) => {
       btnWidth.set(event.nativeEvent.layout.width);
@@ -242,46 +240,71 @@ const ButtonRoot = forwardRef<View, ButtonRootProps>((props, ref) => {
 
   return (
     <ButtonProvider value={contextValue}>
-      <Component
+      <AnimatedPressable
         ref={ref}
+        layout={layout}
         className={tvStyles}
         style={[nativeStyles.buttonRoot, animatedContainerStyle, style]}
         disabled={isDisabled}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         onLayout={handleLayout}
+        accessibilityRole={accessibilityRole}
+        accessibilityState={{ disabled: isDisabled }}
         {...restProps}
       >
         {backgroundElement}
         <ButtonBackground style={animatedBackgroundStyle} />
         {startContentElement}
-        {labelElement}
+        {typeof children === 'string' ? (
+          <ButtonLabel>{children}</ButtonLabel>
+        ) : (
+          labelElement
+        )}
         {endContentElement}
-      </Component>
+      </AnimatedPressable>
     </ButtonProvider>
   );
 });
 
 // --------------------------------------------------
 
-function ButtonStartContent(props: ButtonStartContentProps) {
-  const { children, className, ...restProps } = props;
+const ButtonStartContent = forwardRef<View, ButtonStartContentProps>(
+  (props, ref) => {
+    const {
+      children,
+      layout = DEFAULT_LAYOUT_TRANSITION,
+      className,
+      ...restProps
+    } = props;
 
-  const tvStyles = buttonStyles.startContent({
-    className,
-  });
+    const tvStyles = buttonStyles.startContent({
+      className,
+    });
 
-  return (
-    <View className={tvStyles} {...restProps}>
-      {children}
-    </View>
-  );
-}
+    return (
+      <Animated.View
+        ref={ref}
+        layout={layout}
+        className={tvStyles}
+        {...restProps}
+      >
+        {children}
+      </Animated.View>
+    );
+  }
+);
 
 // --------------------------------------------------
 
-function ButtonLabel(props: ButtonLabelProps) {
-  const { children, className, classNames, ...restProps } = props;
+const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
+  const {
+    children,
+    layout = DEFAULT_LAYOUT_TRANSITION,
+    className,
+    classNames,
+    ...restProps
+  } = props;
 
   const { size, variant } = useButtonContext();
 
@@ -300,57 +323,89 @@ function ButtonLabel(props: ButtonLabelProps) {
 
   if (typeof children === 'string') {
     return (
-      <View className={tvContainerStyles} {...restProps}>
+      <Animated.View
+        ref={ref}
+        layout={layout}
+        className={tvContainerStyles}
+        {...restProps}
+      >
         <Text className={tvTextStyles}>{children}</Text>
-      </View>
+      </Animated.View>
     );
   }
 
   return (
-    <View className={tvContainerStyles} {...restProps}>
-      {children}
-    </View>
-  );
-}
-
-// --------------------------------------------------
-
-function ButtonEndContent(props: ButtonEndContentProps) {
-  const { children, className, ...restProps } = props;
-
-  const tvStyles = buttonStyles.endContent({
-    className,
-  });
-
-  return (
-    <View className={tvStyles} {...restProps}>
-      {children}
-    </View>
-  );
-}
-
-// --------------------------------------------------
-
-function ButtonBackground(props: ButtonBackgroundProps) {
-  const { children, className, style, ...restProps } = props;
-
-  const { size } = useButtonContext();
-
-  const tvStyles = buttonStyles.background({
-    size,
-    className,
-  });
-
-  return (
     <Animated.View
-      className={tvStyles}
-      style={[nativeStyles.background, style]}
+      ref={ref}
+      layout={layout}
+      className={tvContainerStyles}
       {...restProps}
     >
       {children}
     </Animated.View>
   );
-}
+});
+
+// --------------------------------------------------
+
+const ButtonEndContent = forwardRef<View, ButtonEndContentProps>(
+  (props, ref) => {
+    const {
+      children,
+      layout = DEFAULT_LAYOUT_TRANSITION,
+      className,
+      ...restProps
+    } = props;
+
+    const tvStyles = buttonStyles.endContent({
+      className,
+    });
+
+    return (
+      <Animated.View
+        ref={ref}
+        layout={layout}
+        className={tvStyles}
+        {...restProps}
+      >
+        {children}
+      </Animated.View>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const ButtonBackground = forwardRef<View, ButtonBackgroundProps>(
+  (props, ref) => {
+    const {
+      children,
+      layout = DEFAULT_LAYOUT_TRANSITION,
+      className,
+      style,
+      ...restProps
+    } = props;
+
+    const { size } = useButtonContext();
+
+    const tvStyles = buttonStyles.background({
+      size,
+      className,
+    });
+
+    return (
+      <Animated.View
+        ref={ref}
+        layout={layout}
+        className={tvStyles}
+        style={[nativeStyles.background, style]}
+        {...restProps}
+      >
+        {children}
+      </Animated.View>
+    );
+  }
+);
 
 // --------------------------------------------------
 

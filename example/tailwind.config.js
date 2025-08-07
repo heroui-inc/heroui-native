@@ -70,7 +70,7 @@ module.exports = {
       },
       /* Misc */
       opacity: {
-        disabled: 'var(--opacity-disabled)',
+        disabled: '0.5',
       },
     },
   },

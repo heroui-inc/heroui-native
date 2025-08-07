@@ -1,5 +1,4 @@
 import { Easing } from 'react-native-reanimated';
-import type { CheckboxSize } from './checkbox.types';
 
 export const DISPLAY_NAME = {
   CHECKBOX_ROOT: 'HeroUINative.Checkbox.Root',
@@ -16,14 +15,6 @@ export const DEFAULT_TIMING_CONFIG = {
   easing: ANIMATION_EASING,
 };
 
-export const HIT_SLOP_MAP: Record<CheckboxSize, number> = {
-  sm: 10,
-  md: 6,
-  lg: 4,
-};
+export const DEFAULT_HIT_SLOP = 6;
 
-export const CHECK_ICON_SIZE_MAP: Record<CheckboxSize, number> = {
-  sm: 10,
-  md: 12,
-  lg: 14,
-};
+export const DEFAULT_CHECK_ICON_SIZE = 12;

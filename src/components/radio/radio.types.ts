@@ -1,17 +1,7 @@
 import type { SpringConfig, TimingConfig } from '@/helpers/types';
 import type { TextProps as LabelTextProps } from '@/primitives/label';
-import type {
-  IndicatorProps,
-  ItemProps,
-  RootProps,
-} from '@/primitives/radio-group';
+import type { IndicatorProps, ItemProps } from '@/primitives/radio-group';
 import type { TextProps, ViewProps } from 'react-native';
-
-/**
- * Radio size variant
- * @default 'md'
- */
-export type RadioSize = 'sm' | 'md' | 'lg';
 
 /**
  * Radio color variant
@@ -36,21 +26,9 @@ export interface RadioColors {
 }
 
 /**
- * Props for RadioGroup root component
- */
-export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
-  /** Radio group content */
-  children?: React.ReactNode;
-  /** Custom class name */
-  className?: string;
-}
-
-/**
  * Context values shared between Radio compound components
  */
 export interface RadioContextValue {
-  /** Current size variant */
-  size: RadioSize;
   /** Current color variant */
   color: RadioColor;
   /** Whether the radio is selected */
@@ -67,14 +45,14 @@ export interface RadioContextValue {
 export interface RadioProps extends ItemProps {
   /** Radio content */
   children?: React.ReactNode;
-  /** Size variant */
-  size?: RadioSize;
   /** Color variant */
   color?: RadioColor;
   /** Alignment of the indicator */
   alignIndicator?: 'start' | 'end';
   /** Whether the radio is read-only */
   isReadOnly?: boolean;
+  /** Whether the radio is valid @default true */
+  isValid?: boolean;
   /** Custom class name */
   className?: string;
 }

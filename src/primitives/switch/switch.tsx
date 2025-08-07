@@ -20,7 +20,8 @@ const Root = forwardRef<RootRef, RootProps>(
   ) => {
     function onPress(ev: GestureResponderEvent) {
       if (isDisabled) return;
-      onSelectedChange(!isSelected);
+      const newValue = !isSelected;
+      onSelectedChange?.(newValue);
       onPressProp?.(ev);
     }
 

@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   withSpring,
@@ -11,15 +11,16 @@ import {
   getElementByDisplayName,
   getElementWithDefault,
 } from '@/helpers/utils';
-import * as LabelPrimitives from '@/primitives/label';
 import * as RadioGroupPrimitives from '@/primitives/radio-group';
 import { useTheme } from '@/theme';
 
+import { FormField } from '../form-field';
+import { useRadioGroupContext } from '../radio-group';
 import {
+  DEFAULT_HIT_SLOP,
   DEFAULT_SPRING_CONFIG,
   DEFAULT_TIMING_CONFIG,
   DISPLAY_NAME,
-  HIT_SLOP_MAP,
 } from './radio.constants';
 import radioStyles from './radio.styles';
 import type {
@@ -28,7 +29,6 @@ import type {
   RadioContentProps,
   RadioContextValue,
   RadioDescriptionProps,
-  RadioGroupProps,
   RadioIndicatorProps,
   RadioLabelProps,
   RadioProps,
@@ -49,47 +49,30 @@ const [RadioProvider, useRadioContext] = createContext<RadioContextValue>({
 
 // --------------------------------------------------
 
-// RadioGroup root component
-const RadioGroup = forwardRef<RadioGroupPrimitives.RootRef, RadioGroupProps>(
-  (props, ref) => {
-    const { className, orientation = 'vertical', ...restProps } = props;
-
-    const tvStyles = radioStyles.groupRoot({
-      orientation,
-      className,
-    });
-
-    return (
-      <RadioGroupPrimitives.Root
-        ref={ref}
-        className={tvStyles}
-        orientation={orientation}
-        {...restProps}
-      />
-    );
-  }
-);
-
-// --------------------------------------------------
-
 const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
   (props, ref) => {
     const {
       children,
-      size = 'md',
       color = 'default',
       alignIndicator = 'end',
       isDisabled = false,
       isReadOnly = false,
+      isValid,
       className,
       style,
       value,
       ...restProps
     } = props;
 
-    const { value: groupValue } = RadioGroupPrimitives.useRadioGroupContext();
+    const radioGroupContext = useRadioGroupContext();
+    const { value: groupValue, isValid: groupIsValid } = radioGroupContext;
     const isSelected = groupValue === value;
     const isDisabledValue = isDisabled;
+
+    // Use prop isValid if provided, otherwise use context isValid
+    const effectiveIsValid = isValid ?? groupIsValid ?? true;
+    // Use danger color when invalid
+    const effectiveColor = !effectiveIsValid ? 'danger' : color;
 
     const indicatorElement = useMemo(
       () =>
@@ -106,7 +89,6 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
     }, [children]);
 
     const tvStyles = radioStyles.radioRoot({
-      size,
       isDisabled: isDisabledValue,
       isReadOnly,
       className,
@@ -114,13 +96,12 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
 
     const contextValue = useMemo(
       () => ({
-        size,
-        color,
+        color: effectiveColor,
         isSelected,
         isDisabled: isDisabledValue,
         isReadOnly,
       }),
-      [size, color, isSelected, isDisabledValue, isReadOnly]
+      [effectiveColor, isSelected, isDisabledValue, isReadOnly]
     );
 
     return (
@@ -131,7 +112,7 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
           style={style}
           value={value}
           isDisabled={isDisabledValue || isReadOnly}
-          hitSlop={props.hitSlop ?? HIT_SLOP_MAP[size]}
+          hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
           {...restProps}
         >
           {alignIndicator === 'start' && indicatorElement}
@@ -156,7 +137,7 @@ const RadioIndicator = forwardRef<Animated.View, RadioIndicatorProps>(
       ...restProps
     } = props;
 
-    const { size, color, isSelected } = useRadioContext();
+    const { color, isSelected } = useRadioContext();
     const { colors: themeColors } = useTheme();
 
     const backgroundElement = useMemo(
@@ -180,7 +161,6 @@ const RadioIndicator = forwardRef<Animated.View, RadioIndicatorProps>(
     );
 
     const tvStyles = radioStyles.indicator({
-      size,
       className,
     });
 
@@ -226,58 +206,60 @@ const styles = StyleSheet.create({
 
 // --------------------------------------------------
 
-function RadioIndicatorBackground(props: RadioBackgroundProps) {
-  const { children, colors, className, style, ...restProps } = props;
+const RadioIndicatorBackground = forwardRef<View, RadioBackgroundProps>(
+  (props, ref) => {
+    const { children, colors, className, style, ...restProps } = props;
 
-  const { color, isSelected } = useRadioContext();
-  const { colors: themeColors } = useTheme();
+    const { color, isSelected } = useRadioContext();
+    const { colors: themeColors } = useTheme();
 
-  const tvStyles = radioStyles.background({
-    className,
-  });
+    const tvStyles = radioStyles.background({
+      className,
+    });
 
-  const backgroundColorMap: Record<RadioColor, string> = {
-    default: themeColors.accent,
-    success: themeColors.success,
-    warning: themeColors.warning,
-    danger: themeColors.danger,
-  };
+    const backgroundColorMap: Record<RadioColor, string> = {
+      default: themeColors.accent,
+      success: themeColors.success,
+      warning: themeColors.warning,
+      danger: themeColors.danger,
+    };
 
-  if (children) {
+    if (children) {
+      return (
+        <View ref={ref} className={tvStyles} style={style} {...restProps}>
+          {children}
+        </View>
+      );
+    }
+
     return (
-      <View className={tvStyles} style={style} {...restProps}>
-        {children}
-      </View>
+      <Animated.View
+        ref={ref}
+        className={tvStyles}
+        style={[
+          {
+            backgroundColor: isSelected
+              ? (colors?.selectedBackground ?? backgroundColorMap[color])
+              : (colors?.defaultBackground ?? 'transparent'),
+          },
+          style,
+        ]}
+        {...restProps}
+      />
     );
   }
-
-  return (
-    <Animated.View
-      className={tvStyles}
-      style={[
-        {
-          backgroundColor: isSelected
-            ? (colors?.selectedBackground ?? backgroundColorMap[color])
-            : (colors?.defaultBackground ?? 'transparent'),
-        },
-        style,
-      ]}
-      {...restProps}
-    />
-  );
-}
+);
 
 // --------------------------------------------------
 
-function RadioIndicatorThumb(props: RadioThumbProps) {
+const RadioIndicatorThumb = forwardRef<View, RadioThumbProps>((props, ref) => {
   const { children, colors, className, style, animationConfig, ...restProps } =
     props;
 
-  const { size, isSelected } = useRadioContext();
+  const { isSelected } = useRadioContext();
   const { theme, colors: themeColors } = useTheme();
 
   const tvStyles = radioStyles.thumb({
-    size,
     isDark: theme === 'dark',
     className,
   });
@@ -301,90 +283,49 @@ function RadioIndicatorThumb(props: RadioThumbProps) {
 
   return (
     <Animated.View
+      ref={ref}
       className={tvStyles}
       style={[thumbAnimatedStyle, style]}
       {...restProps}
     />
   );
-}
+});
 
 // --------------------------------------------------
 
-function RadioContent(props: RadioContentProps) {
+const RadioContent = forwardRef<View, RadioContentProps>((props, ref) => {
   const { children, className, style, ...restProps } = props;
 
-  const { orientation } = RadioGroupPrimitives.useRadioGroupContext();
-
-  const labelElement = useMemo(() => {
-    return getElementByDisplayName(children, DISPLAY_NAME.RADIO_LABEL);
-  }, [children]);
-
-  const descriptionElement = useMemo(() => {
-    return getElementByDisplayName(children, DISPLAY_NAME.RADIO_DESCRIPTION);
-  }, [children]);
+  const { orientation } = useRadioGroupContext();
 
   const tvStyles = radioStyles.content({
     orientation,
     className,
   });
 
-  if (labelElement || descriptionElement) {
-    return (
-      <View className={tvStyles} {...restProps}>
-        {labelElement}
-        {descriptionElement}
-      </View>
-    );
-  }
-
   return (
-    <View className={tvStyles} style={style} {...restProps}>
+    <View ref={ref} className={tvStyles} style={style} {...restProps}>
       {children}
     </View>
   );
-}
+});
 
 // --------------------------------------------------
 
-function RadioLabel(props: RadioLabelProps) {
-  const { children, className, ...restProps } = props;
-
-  const { size } = useRadioContext();
-
-  const tvStyles = radioStyles.label({
-    size,
-    className,
-  });
-
-  return (
-    <LabelPrimitives.Text className={tvStyles} {...restProps}>
-      {children}
-    </LabelPrimitives.Text>
-  );
-}
+const RadioLabel = forwardRef<any, RadioLabelProps>((props, ref) => {
+  return <FormField.Label ref={ref} {...props} />;
+});
 
 // --------------------------------------------------
 
-function RadioDescription(props: RadioDescriptionProps) {
-  const { children, className, ...restProps } = props;
-
-  const { size } = useRadioContext();
-
-  const tvStyles = radioStyles.description({
-    size,
-    className,
-  });
-
-  return (
-    <Text className={tvStyles} {...restProps}>
-      {children}
-    </Text>
-  );
-}
+const RadioDescription = forwardRef<any, RadioDescriptionProps>(
+  (props, ref) => {
+    return <FormField.Description ref={ref} {...props} />;
+  }
+);
 
 // --------------------------------------------------
 
-RadioGroup.displayName = DISPLAY_NAME.RADIO_GROUP;
 Radio.displayName = DISPLAY_NAME.RADIO;
 RadioIndicator.displayName = DISPLAY_NAME.RADIO_INDICATOR;
 RadioIndicatorBackground.displayName = DISPLAY_NAME.RADIO_INDICATOR_BACKGROUND;
@@ -418,7 +359,7 @@ RadioDescription.displayName = DISPLAY_NAME.RADIO_DESCRIPTION;
  * @component Radio.Description - Optional secondary text below the label. Provides additional
  * context about the radio option.
  *
- * Props flow from Radio to sub-components via context (size, color, value, isSelected).
+ * Props flow from Radio to sub-components via context (color, value, isSelected).
  * RadioGroup manages the overall selection state and orientation.
  *
  * @see Full documentation: https://heroui.com/components/radio
@@ -438,5 +379,5 @@ const CompoundRadio = Object.assign(Radio, {
   Description: RadioDescription,
 });
 
-export { Radio, RadioGroup, useRadioContext };
+export { useRadioContext };
 export default CompoundRadio;

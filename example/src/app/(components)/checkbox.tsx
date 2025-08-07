@@ -19,9 +19,7 @@ import Animated, {
 const AnimatedView = Animated.createAnimatedComponent(View);
 
 export default function CheckboxScreen() {
-  const [sm, setSm] = React.useState(true);
-  const [md, setMd] = React.useState(true);
-  const [lg, setLg] = React.useState(true);
+  const [defaultCheck, setDefaultCheck] = React.useState(true);
   const [success, setSuccess] = React.useState(true);
   const [warning, setWarning] = React.useState(true);
   const [danger, setDanger] = React.useState(true);
@@ -53,13 +51,14 @@ export default function CheckboxScreen() {
       contentInsetAdjustmentBehavior="automatic"
     >
       <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Sizes
+        Default
       </Text>
 
       <View className="flex-row gap-4 mb-6">
-        <Checkbox isSelected={sm} onSelectedChange={setSm} size="sm" />
-        <Checkbox isSelected={md} onSelectedChange={setMd} size="md" />
-        <Checkbox isSelected={lg} onSelectedChange={setLg} size="lg" />
+        <Checkbox
+          isSelected={defaultCheck}
+          onSelectedChange={setDefaultCheck}
+        />
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">
@@ -70,19 +69,16 @@ export default function CheckboxScreen() {
         <Checkbox
           isSelected={success}
           onSelectedChange={setSuccess}
-          size="lg"
           color="success"
         />
         <Checkbox
           isSelected={warning}
           onSelectedChange={setWarning}
-          size="lg"
           color="warning"
         />
         <Checkbox
           isSelected={danger}
           onSelectedChange={setDanger}
-          size="lg"
           color="danger"
         />
       </View>
@@ -95,13 +91,11 @@ export default function CheckboxScreen() {
         <Checkbox
           isSelected={disabled}
           onSelectedChange={setDisabled}
-          size="lg"
           isDisabled={true}
         />
         <Checkbox
           isSelected={readonly}
           onSelectedChange={setReadonly}
-          size="lg"
           isReadOnly={true}
         />
       </View>
@@ -141,7 +135,6 @@ export default function CheckboxScreen() {
       <Checkbox
         isSelected={customIndicator}
         onSelectedChange={setCustomIndicator}
-        size="lg"
         className="mb-6"
       >
         <Checkbox.Indicator>
@@ -175,7 +168,6 @@ export default function CheckboxScreen() {
       <Checkbox
         isSelected={customBoth}
         onSelectedChange={setCustomBoth}
-        size="lg"
         className="w-12 h-12 rounded-full"
         colors={{
           defaultBorder: colors.background,

@@ -6,11 +6,6 @@ import type { SpringConfig } from 'react-native-reanimated/lib/typescript/animat
 import type { RootSlots } from './switch.styles';
 
 /**
- * Base switch size variants
- */
-export type SwitchSize = 'sm' | 'md' | 'lg';
-
-/**
  * Base switch color variants
  */
 export type SwitchColor = 'default' | 'success' | 'warning' | 'danger';
@@ -35,9 +30,6 @@ export interface SwitchColors {
 export interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
   /** Content to render inside the switch */
   children?: React.ReactNode;
-
-  /** Size of the switch @default 'md' */
-  size?: SwitchSize;
 
   /** Color theme of the switch @default 'default' */
   color?: SwitchColor;
@@ -119,9 +111,6 @@ export interface SwitchContentProps {
  * Context value for switch components
  */
 export interface SwitchContextValue extends Pick<SwitchProps, 'isSelected'> {
-  /** Size of the switch */
-  size: SwitchSize;
-
   /** Width of the content container */
   contentContainerWidth: SharedValue<number>;
 

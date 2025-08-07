@@ -12,9 +12,9 @@ import type {
  */
 type RootProps = Omit<SlottablePressableProps, 'disabled'> & {
   /** Whether the checkbox is currently selected */
-  isSelected: boolean;
+  isSelected?: boolean;
   /** Callback fired when the checkbox selection state changes */
-  onSelectedChange: (isSelected: boolean) => void;
+  onSelectedChange?: (isSelected: boolean) => void;
   /** Whether the checkbox is disabled and cannot be interacted with */
   isDisabled?: boolean;
 };

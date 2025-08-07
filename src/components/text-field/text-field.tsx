@@ -1,6 +1,6 @@
-import ErrorField from '@/components/error-field';
+import { ErrorField } from '@/components/error-field';
 import type { TextRef, ViewRef } from '@/helpers/types/primitives';
-import { createContext, getElementByDisplayName } from '@/helpers/utils';
+import { cn, createContext, getElementByDisplayName } from '@/helpers/utils';
 import { useTheme } from '@/theme';
 import { forwardRef, useEffect, useMemo } from 'react';
 import {
@@ -321,7 +321,14 @@ const TextFieldErrorMessage = forwardRef<TextRef, TextFieldErrorMessageProps>(
   (props, ref) => {
     const { isValid } = useTextFieldContext();
 
-    return <ErrorField ref={ref} isValid={isValid} {...props} />;
+    return (
+      <ErrorField
+        ref={ref}
+        isValid={isValid}
+        className={cn('p-1', props.className)}
+        {...props}
+      />
+    );
   }
 );
 
@@ -359,8 +366,6 @@ TextFieldErrorMessage.displayName = DISPLAY_NAME.ERROR_MESSAGE;
  *
  * @component TextField.ErrorMessage - Error message with danger styling.
  * Shown with animation when field is invalid. Automatically populated from errorMessage prop.
- *
- * All sub-components support asChild pattern for custom element composition.
  *
  * @see Full documentation: https://heroui.com/components/text-field
  */

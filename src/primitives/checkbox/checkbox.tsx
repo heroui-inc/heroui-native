@@ -57,7 +57,7 @@ const Trigger = forwardRef<PressableRef, SlottablePressableProps>(
     function onPress(ev: GestureResponderEvent) {
       if (isDisabled) return;
       const newValue = !isSelected;
-      onSelectedChange(newValue);
+      onSelectedChange?.(newValue);
       onPressProp?.(ev);
     }
 

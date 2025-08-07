@@ -120,6 +120,7 @@
   },
   "release-it": {
     "git": {
+      "requireBranch": "alpha",
       "commitMessage": "chore: release ${version}",
       "tagName": "v${version}"
     },

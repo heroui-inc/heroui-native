@@ -1,10 +1,10 @@
+import type { ViewStyle } from 'react-native';
 import type {
   PressableRef,
   SlottablePressableProps,
   SlottableTextProps,
   TextRef,
-} from '@/helpers/types';
-import type { ViewStyle } from 'react-native';
+} from '../../helpers/types';
 
 /**
  * Props for the label root component.

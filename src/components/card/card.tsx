@@ -1,7 +1,7 @@
-import { Surface } from '@/components/surface';
-import type { TextRef, ViewRef } from '@/helpers/types/primitives';
 import { forwardRef } from 'react';
 import { Text, View } from 'react-native';
+import type { TextRef, ViewRef } from '../../helpers/types/primitives';
+import { Surface } from '../surface';
 import { DISPLAY_NAME } from './card.constants';
 import cardStyles from './card.styles';
 import type {

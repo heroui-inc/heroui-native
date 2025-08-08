@@ -1,5 +1,5 @@
-import type { ColorVariables } from '@/theme/types';
 import { Easing, LinearTransition } from 'react-native-reanimated';
+import type { ColorVariables } from '../../theme/types';
 import type { ButtonVariant } from './button.types';
 
 /**

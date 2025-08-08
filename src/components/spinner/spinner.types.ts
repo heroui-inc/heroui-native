@@ -1,5 +1,5 @@
-import type { TimingConfig } from '@/helpers/types';
-import * as ActivityIndicatorPrimitivesTypes from '@/primitives/activity-indicator';
+import type { TimingConfig } from '../../helpers/types';
+import * as ActivityIndicatorPrimitivesTypes from '../../primitives/activity-indicator';
 
 /**
  * Base spinner size variants

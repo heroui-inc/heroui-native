@@ -1,6 +1,6 @@
-import type { TimingConfig } from '@/helpers/types';
-import * as CheckboxPrimitivesTypes from '@/primitives/checkbox/checkbox.types';
 import type { ViewProps } from 'react-native';
+import type { TimingConfig } from '../../helpers/types';
+import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 
 /**
  * Base checkbox color variants

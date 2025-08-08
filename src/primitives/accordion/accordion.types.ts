@@ -4,7 +4,7 @@ import type {
   SlottablePressableProps,
   SlottableViewProps,
   ViewRef,
-} from '@/helpers/types';
+} from '../../helpers/types';
 
 /**
  * Internal context type for the Accordion root component

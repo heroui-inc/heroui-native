@@ -1,6 +1,6 @@
-import { cn } from '@/helpers/utils';
 import * as React from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import { cn } from '../../../../src/helpers/utils';
 
 // Color Preview Component
 const ColorPreview: React.FC<{

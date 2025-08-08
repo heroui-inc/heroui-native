@@ -1,9 +1,8 @@
 import { Text } from 'react-native';
 
-import { Radio } from '@/components/radio';
-import { cn } from '@/helpers/utils';
-import { useTheme } from 'heroui-native';
+import { Radio, useTheme } from 'heroui-native';
 import { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { cn } from '../../../src/helpers/utils';
 
 interface StyledRadioProps {
   value: string;

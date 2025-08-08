@@ -1,5 +1,5 @@
-import type { TimingConfig } from '@/helpers/types';
 import { Easing } from 'react-native-reanimated';
+import type { TimingConfig } from '../../helpers/types';
 
 /**
  * Display names for Spinner components

@@ -1,4 +1,3 @@
-import { cn } from '@/helpers/utils';
 import { Spinner, useTheme } from 'heroui-native';
 import { Loader } from 'lucide-react-native';
 import React from 'react';
@@ -9,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { cn } from '../../../../src/helpers/utils';
 
 export default function SpinnerScreen() {
   const [loading, setLoading] = React.useState(true);

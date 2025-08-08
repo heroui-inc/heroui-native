@@ -1,5 +1,5 @@
-import type { SurfaceRootProps } from '@/components/surface/surface.types';
 import type { TextProps, ViewProps } from 'react-native';
+import type { SurfaceRootProps } from '../surface/surface.types';
 
 /**
  * Props for the Card.Root component

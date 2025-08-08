@@ -2,8 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "heroui-native": ["./src/index"],
-      "@/*": ["./src/*"]
+      "heroui-native": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

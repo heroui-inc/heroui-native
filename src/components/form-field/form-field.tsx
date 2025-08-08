@@ -11,13 +11,13 @@ import {
   createContext,
   getElementByDisplayName,
   hasProp,
-} from '@/helpers/utils';
+} from '../../helpers/utils';
 
-import { ErrorField } from '@/components/error-field';
-import type { ErrorFieldRootProps } from '@/components/error-field/error-field.types';
-import type { PressableRef } from '@/helpers/types';
-import type { ViewRef } from '@/helpers/types/primitives';
 import Animated from 'react-native-reanimated';
+import type { PressableRef } from '../../helpers/types';
+import type { ViewRef } from '../../helpers/types/primitives';
+import { ErrorField } from '../error-field';
+import type { ErrorFieldRootProps } from '../error-field/error-field.types';
 import { DISPLAY_NAME } from './form-field.constants';
 import formFieldStyles from './form-field.styles';
 import type {

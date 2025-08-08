@@ -1,5 +1,5 @@
-import type { ErrorFieldRootProps } from '@/components/error-field/error-field.types';
-import type { RootProps } from '@/primitives/radio-group';
+import type { RootProps } from '../../primitives/radio-group';
+import type { ErrorFieldRootProps } from '../error-field/error-field.types';
 
 /**
  * Props for RadioGroup root component

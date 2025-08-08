@@ -1,8 +1,8 @@
-import { createContext } from '@/helpers/utils';
-import { getElementByDisplayName } from '@/helpers/utils/get-element-by-display-name';
-import { getElementWithDefault } from '@/helpers/utils/get-element-with-default';
 import { forwardRef, useMemo } from 'react';
 import { Text, View } from 'react-native';
+import { createContext } from '../../helpers/utils';
+import { getElementByDisplayName } from '../../helpers/utils/get-element-by-display-name';
+import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
 import { DISPLAY_NAME } from './chip.constants';
 import chipStyles, { nativeStyles } from './chip.styles';
 import type {

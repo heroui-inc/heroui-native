@@ -1,6 +1,6 @@
-import { combineStyles } from '@/theme/utils';
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../theme/utils';
 
 const root = tv({
   slots: {

@@ -1,7 +1,3 @@
-import { ErrorField } from '@/components/error-field';
-import type { TextRef, ViewRef } from '@/helpers/types/primitives';
-import { cn, createContext, getElementByDisplayName } from '@/helpers/utils';
-import { useTheme } from '@/theme';
 import { forwardRef, useEffect, useMemo } from 'react';
 import {
   Text,
@@ -17,6 +13,14 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import type { TextRef, ViewRef } from '../../helpers/types/primitives';
+import {
+  cn,
+  createContext,
+  getElementByDisplayName,
+} from '../../helpers/utils';
+import { useTheme } from '../../theme';
+import { ErrorField } from '../error-field';
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,

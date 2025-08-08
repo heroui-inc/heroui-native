@@ -1,7 +1,3 @@
-import type { PressableRef } from '@/helpers/types';
-import { createContext } from '@/helpers/utils';
-import { getElementWithDefault } from '@/helpers/utils/get-element-with-default';
-import { useTheme } from '@/theme';
 import { forwardRef, useCallback, useMemo } from 'react';
 import {
   Pressable,
@@ -15,6 +11,10 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import type { PressableRef } from '../../helpers/types';
+import { createContext } from '../../helpers/utils';
+import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
+import { useTheme } from '../../theme';
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,

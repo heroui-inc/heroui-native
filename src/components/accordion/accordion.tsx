@@ -1,6 +1,3 @@
-import { createContext } from '@/helpers/utils';
-import * as AccordionPrimitive from '@/primitives/accordion';
-import { useTheme } from '@/theme';
 import { Children, forwardRef, useEffect, useMemo } from 'react';
 import { StyleSheet, View, type GestureResponderEvent } from 'react-native';
 import Animated, {
@@ -10,6 +7,9 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { createContext } from '../../helpers/utils';
+import * as AccordionPrimitive from '../../primitives/accordion';
+import { useTheme } from '../../theme';
 import {
   ACCORDION_LAYOUT_TRANSITION,
   DEFAULT_CONTENT_ENTERING,

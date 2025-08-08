@@ -1,5 +1,5 @@
-import { combineStyles } from '@/theme/utils';
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../theme/utils';
 
 const root = tv({
   base: 'items-center justify-center',

@@ -1,5 +1,5 @@
-import { combineStyles } from '@/theme/utils';
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../theme/utils';
 
 const root = tv({
   base: 'flex-row items-center gap-3',

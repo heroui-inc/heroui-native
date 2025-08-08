@@ -10,9 +10,9 @@ import {
   createContext,
   getElementByDisplayName,
   getElementWithDefault,
-} from '@/helpers/utils';
-import * as RadioGroupPrimitives from '@/primitives/radio-group';
-import { useTheme } from '@/theme';
+} from '../../helpers/utils';
+import * as RadioGroupPrimitives from '../../primitives/radio-group';
+import { useTheme } from '../../theme';
 
 import { FormField } from '../form-field';
 import { useRadioGroupContext } from '../radio-group';

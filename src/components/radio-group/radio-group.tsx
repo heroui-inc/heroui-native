@@ -1,7 +1,7 @@
-import { ErrorField } from '@/components/error-field';
-import type { ViewRef } from '@/helpers/types/primitives';
-import * as RadioGroupPrimitives from '@/primitives/radio-group';
 import { forwardRef } from 'react';
+import type { ViewRef } from '../../helpers/types/primitives';
+import * as RadioGroupPrimitives from '../../primitives/radio-group';
+import { ErrorField } from '../error-field';
 import { DISPLAY_NAME } from './radio-group.constants';
 import radioGroupStyles from './radio-group.styles';
 import type {

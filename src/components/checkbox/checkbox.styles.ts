@@ -1,5 +1,5 @@
-import { combineStyles } from '@/theme/utils';
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../theme/utils';
 
 const root = tv({
   base: 'relative border items-center justify-center overflow-hidden w-6 h-6 rounded-[6px]',

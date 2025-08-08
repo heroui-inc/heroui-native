@@ -1,8 +1,3 @@
-import { createContext } from '@/helpers/utils';
-import { getElementWithDefault } from '@/helpers/utils/get-element-with-default';
-import * as CheckboxPrimitives from '@/primitives/checkbox';
-import * as CheckboxPrimitivesTypes from '@/primitives/checkbox/checkbox.types';
-import { useTheme } from '@/theme';
 import { forwardRef, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
@@ -10,6 +5,11 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
+import { createContext } from '../../helpers/utils';
+import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
+import * as CheckboxPrimitives from '../../primitives/checkbox';
+import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
+import { useTheme } from '../../theme';
 import {
   DEFAULT_CHECK_ICON_SIZE,
   DEFAULT_HIT_SLOP,

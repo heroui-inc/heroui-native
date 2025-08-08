@@ -1,7 +1,3 @@
-import { createContext } from '@/helpers/utils';
-import * as SwitchPrimitives from '@/primitives/switch';
-import * as SwitchPrimitivesTypes from '@/primitives/switch/switch.types';
-import { useTheme } from '@/theme';
 import { forwardRef, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
@@ -10,6 +6,10 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { createContext } from '../../helpers/utils';
+import * as SwitchPrimitives from '../../primitives/switch';
+import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
+import { useTheme } from '../../theme';
 import {
   DEFAULT_SPRING_CONFIG,
   DEFAULT_THUMB_WIDTH,

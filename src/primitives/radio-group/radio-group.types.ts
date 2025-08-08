@@ -4,7 +4,7 @@ import {
   type SlottablePressableProps,
   type SlottableViewProps,
   type ViewRef,
-} from '@/helpers/types';
+} from '../../helpers/types';
 
 /**
  * Props for the radio group root component.

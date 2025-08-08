@@ -3,7 +3,7 @@ import type {
   SlottablePressableProps,
   SlottableViewProps,
   ViewRef,
-} from '@/helpers/types';
+} from '../../helpers/types';
 
 /**
  * Props for the checkbox root component.

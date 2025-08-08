@@ -1,6 +1,9 @@
-import type { PressableRef, SlottablePressableProps } from '@/helpers/types';
 import { createContext, forwardRef, useContext } from 'react';
 import { type GestureResponderEvent, Pressable, View } from 'react-native';
+import type {
+  PressableRef,
+  SlottablePressableProps,
+} from '../../helpers/types';
 import * as Slot from '../slot';
 import type {
   IndicatorProps,

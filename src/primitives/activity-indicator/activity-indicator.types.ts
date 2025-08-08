@@ -1,4 +1,4 @@
-import type { SlottableViewProps, ViewRef } from '@/helpers/types';
+import type { SlottableViewProps, ViewRef } from '../../helpers/types';
 
 /**
  * Props for the activity indicator root component.

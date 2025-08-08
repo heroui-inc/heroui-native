@@ -1,4 +1,3 @@
-import { cn } from '@/helpers/utils';
 import { Checkbox, useTheme } from 'heroui-native';
 import { Minus, Moon, Plus, Sun } from 'lucide-react-native';
 import React from 'react';
@@ -15,6 +14,7 @@ import Animated, {
   ZoomIn,
   ZoomInDown,
 } from 'react-native-reanimated';
+import { cn } from '../../../../src/helpers/utils';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 

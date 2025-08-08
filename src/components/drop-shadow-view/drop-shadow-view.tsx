@@ -1,7 +1,7 @@
-import { useTheme } from '@/theme';
 import { forwardRef } from 'react';
 import { Platform, View } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { useTheme } from '../../theme';
 import {
   ANDROID_ELEVATION_MAP,
   DEFAULT_SHADOW_COLORS,

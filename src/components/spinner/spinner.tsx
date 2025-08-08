@@ -1,7 +1,3 @@
-import { createContext, getElementWithDefault } from '@/helpers/utils';
-import * as ActivityIndicatorPrimitives from '@/primitives/activity-indicator';
-import * as ActivityIndicatorPrimitivesTypes from '@/primitives/activity-indicator/activity-indicator.types';
-import { useTheme } from '@/theme';
 import { forwardRef, useEffect, useMemo } from 'react';
 import Animated, {
   cancelAnimation,
@@ -14,6 +10,10 @@ import Animated, {
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
+import { createContext, getElementWithDefault } from '../../helpers/utils';
+import * as ActivityIndicatorPrimitives from '../../primitives/activity-indicator';
+import * as ActivityIndicatorPrimitivesTypes from '../../primitives/activity-indicator/activity-indicator.types';
+import { useTheme } from '../../theme';
 import { SpinnerIcon } from './spinner-icon';
 import {
   DEFAULT_ROTATION_DURATION,

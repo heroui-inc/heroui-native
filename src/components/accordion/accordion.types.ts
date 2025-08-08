@@ -1,18 +1,21 @@
-import type { TimingConfig } from '@/helpers/types';
-import type { SlottableViewProps, ViewRef } from '@/helpers/types/primitives';
-import type {
-  ContentProps as PrimitiveContentProps,
-  ItemProps as PrimitiveItemProps,
-  RootProps as PrimitiveRootProps,
-  TriggerProps as PrimitiveTriggerProps,
-} from '@/primitives/accordion';
-import type { ElementSlots } from '@/theme';
 import type {
   BaseAnimationBuilder,
   EntryExitAnimationFunction,
   LayoutAnimationFunction,
   WithSpringConfig,
 } from 'react-native-reanimated';
+import type { TimingConfig } from '../../helpers/types';
+import type {
+  SlottableViewProps,
+  ViewRef,
+} from '../../helpers/types/primitives';
+import type {
+  ContentProps as PrimitiveContentProps,
+  ItemProps as PrimitiveItemProps,
+  RootProps as PrimitiveRootProps,
+  TriggerProps as PrimitiveTriggerProps,
+} from '../../primitives/accordion';
+import type { ElementSlots } from '../../theme';
 import type { RootSlots } from './accordion.styles';
 
 /**

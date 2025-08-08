@@ -1,7 +1,7 @@
-import type { TimingConfig } from '@/helpers/types';
-import type { ElementSlots } from '@/theme';
 import type { PressableProps, ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
+import type { TimingConfig } from '../../helpers/types';
+import type { ElementSlots } from '../../theme';
 import type { LabelSlots } from './button.styles';
 
 /**

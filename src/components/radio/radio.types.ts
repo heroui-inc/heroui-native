@@ -1,7 +1,7 @@
-import type { SpringConfig, TimingConfig } from '@/helpers/types';
-import type { TextProps as LabelTextProps } from '@/primitives/label';
-import type { IndicatorProps, ItemProps } from '@/primitives/radio-group';
 import type { TextProps, ViewProps } from 'react-native';
+import type { SpringConfig, TimingConfig } from '../../helpers/types';
+import type { TextProps as LabelTextProps } from '../../primitives/label';
+import type { IndicatorProps, ItemProps } from '../../primitives/radio-group';
 
 /**
  * Radio color variant

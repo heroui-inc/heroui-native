@@ -1,6 +1,6 @@
-import type { ViewRef } from '@/helpers/types/primitives';
 import { forwardRef } from 'react';
 import { View } from 'react-native';
+import type { ViewRef } from '../../helpers/types/primitives';
 import { DISPLAY_NAME } from './surface.constants';
 import surfaceStyles, { nativeStyles } from './surface.styles';
 import type { SurfaceRootProps } from './surface.types';

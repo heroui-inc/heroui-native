@@ -1,8 +1,0 @@
-{
-  "aliases": {
-    "components": "@/components",
-    "helpers": "@/helpers",
-    "primitives": "@/primitives",
-    "theme": "@/theme"
-  }
-}

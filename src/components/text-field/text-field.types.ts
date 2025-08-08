@@ -1,8 +1,8 @@
-import type { ErrorFieldRootProps } from '@/components/error-field';
-import type { TimingConfig } from '@/helpers/types';
-import type { ElementSlots } from '@/theme';
 import type { TextInputProps, TextProps, ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
+import type { TimingConfig } from '../../helpers/types';
+import type { ElementSlots } from '../../theme';
+import type { ErrorFieldRootProps } from '../error-field';
 import type { InputSlots, LabelSlots } from './text-field.styles';
 
 /**

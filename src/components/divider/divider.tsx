@@ -1,4 +1,3 @@
-import type { ViewRef } from '@/helpers/types';
 import { forwardRef } from 'react';
 import { View } from 'react-native';
 import { DISPLAY_NAME, THICK_VARIANT_HEIGHT } from './divider.constants';
@@ -7,7 +6,7 @@ import type { DividerProps } from './divider.types';
 
 // --------------------------------------------------
 
-const DividerRoot = forwardRef<ViewRef, DividerProps>((props, ref) => {
+const DividerRoot = forwardRef<View, DividerProps>((props, ref) => {
   const {
     variant = 'thin',
     orientation = 'horizontal',

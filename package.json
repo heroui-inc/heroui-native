@@ -1,6 +1,6 @@
 {
   "name": "heroui-native",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "Beautiful, fast and modern React Native UI library",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",

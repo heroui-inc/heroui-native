@@ -1,3 +1,10 @@
+## 1.0.0-alpha.2 (2025-08-08)
+
+* build: set up changelog ([d9ed905](https://github.com/heroui-inc/heroui-native/commit/d9ed905))
+* fix: lib path aliases resolution ([9132988](https://github.com/heroui-inc/heroui-native/commit/9132988))
+
+
+
 # Changelog
 
 All notable changes to this project will be documented in this file.

@@ -73,6 +73,7 @@
     "@types/jest": "^29.5.5",
     "@types/react": "^19.0.12",
     "babel-plugin-module-resolver": "^5.0.2",
+    "babel-plugin-transform-remove-imports": "^1.8.0",
     "bumpp": "^9.10.2",
     "changelogithub": "^13.16.0",
     "clsx": "^2.1.1",
@@ -144,7 +145,8 @@
       [
         "module",
         {
-          "esm": true
+          "esm": true,
+          "configFile": true
         }
       ],
       [

@@ -11,8 +11,8 @@ import { View } from 'react-native';
 import { colors as colorConstants } from './colors';
 import { themes } from './themes';
 import type {
+  ColorConstants,
   ColorScheme,
-  ColorVariables,
   ThemeContextType,
   ThemeProviderProps,
 } from './types';
@@ -30,7 +30,7 @@ export const ThemeProvider = ({
   defaultTheme = 'light',
 }: ThemeProviderProps) => {
   const [currentTheme, setCurrentTheme] = useState<ColorScheme>('light');
-  const [colors, setColors] = useState<ColorVariables>(colorConstants.light);
+  const [colors, setColors] = useState<ColorConstants>(colorConstants.light);
 
   const setTheme = useCallback(
     (theme: ColorScheme) => {

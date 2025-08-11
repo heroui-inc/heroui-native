@@ -1,6 +1,6 @@
-import type { ColorScheme, ColorVariables } from './types';
+import type { ColorConstants, ColorScheme } from './types';
 
-export const colors: Record<ColorScheme, ColorVariables> = {
+export const colors: Record<ColorScheme, ColorConstants> = {
   light: {
     /* Base Colors */
     background: 'hsl(300 50% 100%)',

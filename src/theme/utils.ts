@@ -1,19 +1,4 @@
-import type { ClassValue } from 'tailwind-variants';
-
-/**
- * This Typescript utility transform a list of slots into a list of {slot: classes}
- */
-export type ElementSlots<S extends string> = {
-  [key in S]?: Exclude<ClassValue, 0n>;
-};
-
-/**
- * Type helper that preserves the exact type of combined style objects
- * This ensures that VariantProps inference works correctly for each style
- */
-export type CombinedStyles<T extends Record<string, any>> = {
-  [K in keyof T]: T[K];
-};
+import type { CombinedStyles } from './types';
 
 /**
  * Helper function to combine style objects with proper type inference
@@ -29,4 +14,21 @@ export function combineStyles<T extends Record<string, any>>(
   styles: T
 ): CombinedStyles<T> {
   return styles as CombinedStyles<T>;
+}
+
+/**
+ * Adds alpha channel to an HSL color
+ * @param color - HSL color in format 'hsl(0 0% 100%)' or '0 0% 100%'
+ * @param alpha - Alpha value between 0 and 1
+ * @returns HSL color with alpha channel
+ * @example
+ * addAlpha('hsl(0 0% 100%)', 0.5) // 'hsl(0 0% 100% / 0.5)'
+ * addAlpha('0 0% 100%', 0.5) // 'hsl(0 0% 100% / 0.5)'
+ */
+export function addAlpha(color: string, alpha: number): string {
+  const baseColor = color.startsWith('hsl(')
+    ? color.replace(/^hsl\((.*)\)$/, '$1')
+    : color;
+
+  return `hsl(${baseColor} / ${alpha})`;
 }

@@ -1,5 +1,5 @@
 import { Easing, LinearTransition } from 'react-native-reanimated';
-import type { ColorVariables } from '../../theme/types';
+import type { ColorConstants } from '../../theme/types';
 import type { ButtonVariant } from './button.types';
 
 /**
@@ -54,7 +54,7 @@ export const OPACITY_ALPHA_MAP = {
 /**
  * Map of button variant to theme color property
  */
-export const VARIANT_TO_COLOR_MAP: Record<ButtonVariant, keyof ColorVariables> =
+export const VARIANT_TO_COLOR_MAP: Record<ButtonVariant, keyof ColorConstants> =
   {
     primary: 'accentForeground',
     secondary: 'accentSoftForeground',

@@ -57,6 +57,10 @@ const description = tv({
   base: 'm-1 text-sm text-muted-foreground  font-medium',
 });
 
+const errorMessage = tv({
+  base: 'p-1',
+});
+
 const textFieldStyles = combineStyles({
   root,
   label,
@@ -64,6 +68,7 @@ const textFieldStyles = combineStyles({
   inputStartContent,
   inputEndContent,
   description,
+  errorMessage,
 });
 
 export type LabelSlots = keyof ReturnType<typeof label>;

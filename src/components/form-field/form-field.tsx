@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 
 import {
-  cn,
   createContext,
   getElementByDisplayName,
   hasProp,
@@ -249,13 +248,18 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
 const FormFieldErrorMessage = forwardRef<ViewRef, ErrorFieldRootProps>(
   (props, ref) => {
     const { isValid } = useFormFieldContext();
+    const { className, ...restProps } = props;
+
+    const tvStyles = formFieldStyles.errorMessage({
+      className,
+    });
 
     return (
       <ErrorField
         ref={ref}
         isValid={isValid}
-        className={cn('mt-1', props.className)}
-        {...props}
+        className={tvStyles}
+        {...restProps}
       />
     );
   }

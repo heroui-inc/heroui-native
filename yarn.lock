@@ -7517,6 +7517,7 @@ __metadata:
     "@babel/core": ^7.20.0
     "@expo/metro-runtime": ~5.0.4
     babel-plugin-module-resolver: ^5.0.2
+    clsx: ^2.1.1
     expo: ~53.0.13
     expo-constants: ~17.1.7
     expo-linear-gradient: ~14.1.5
@@ -7534,7 +7535,10 @@ __metadata:
     react-native-reanimated: ~3.17.4
     react-native-safe-area-context: 5.4.0
     react-native-screens: ~4.11.1
+    react-native-svg: ^15.12.1
     react-native-web: ~0.20.0
+    tailwind-merge: ^3.3.1
+    tailwind-variants: ^2.1.0
     tailwindcss: ^3.4.17
   languageName: unknown
   linkType: soft
@@ -7556,7 +7560,6 @@ __metadata:
     babel-plugin-transform-remove-imports: ^1.8.0
     bumpp: ^9.10.2
     changelogithub: ^13.16.0
-    clsx: ^2.1.1
     commitlint: ^19.6.1
     conventional-changelog: ^7.1.1
     del-cli: ^5.1.0
@@ -7583,6 +7586,9 @@ __metadata:
     react-native: "*"
     react-native-reanimated: ">=3"
     react-native-safe-area-context: ">=5"
+    react-native-svg: "*"
+    tailwind-merge: "*"
+    tailwind-variants: "*"
   languageName: unknown
   linkType: soft
 
@@ -11648,7 +11654,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-svg@npm:^15.12.0":
+"react-native-svg@npm:^15.12.0, react-native-svg@npm:^15.12.1":
   version: 15.12.1
   resolution: "react-native-svg@npm:15.12.1"
   dependencies:
@@ -12973,7 +12979,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwind-variants@npm:^2.0.1":
+"tailwind-variants@npm:^2.0.1, tailwind-variants@npm:^2.1.0":
   version: 2.1.0
   resolution: "tailwind-variants@npm:2.1.0"
   peerDependencies:

@@ -3,8 +3,8 @@ import { Zap } from 'lucide-react-native';
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
-import { cn } from '../../../../src/helpers/utils';
 import { StyledRadio } from '../../components/styled-radio';
+import { cn } from '../lib/utils/cn';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 

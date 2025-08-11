@@ -54,12 +54,17 @@ const indicator = tv({
   base: '',
 });
 
+const errorMessage = tv({
+  base: 'mt-1',
+});
+
 const formFieldStyles = combineStyles({
   root,
   content,
   label,
   description,
   indicator,
+  errorMessage,
 });
 
 export default formFieldStyles;

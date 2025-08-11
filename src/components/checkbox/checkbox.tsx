@@ -4,14 +4,13 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import Svg, { Path } from 'react-native-svg';
 import { createContext } from '../../helpers/utils';
 import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 import { useTheme } from '../../theme';
+import { CheckIcon } from './check-icon';
 import {
-  DEFAULT_CHECK_ICON_SIZE,
   DEFAULT_HIT_SLOP,
   DEFAULT_TIMING_CONFIG,
   DISPLAY_NAME,
@@ -21,7 +20,6 @@ import type {
   CheckboxBackgroundProps,
   CheckboxColor,
   CheckboxContextValue,
-  CheckboxIndicatorIconProps,
   CheckboxIndicatorProps,
   CheckboxProps,
 } from './checkbox.types';
@@ -198,33 +196,6 @@ const CheckboxBackground = forwardRef<View, CheckboxBackgroundProps>(
     );
   }
 );
-
-// --------------------------------------------------
-
-function CheckIcon(props: CheckboxIndicatorIconProps) {
-  const { theme, colors } = useTheme();
-
-  const iconSize = DEFAULT_CHECK_ICON_SIZE;
-
-  return (
-    <Svg
-      width={props.size ?? iconSize}
-      height={props.size ?? iconSize}
-      viewBox="0 0 24 24"
-      fill="none"
-    >
-      <Path
-        d="M20 6L9 17L4 12"
-        stroke={props.color ?? colors.accentForeground}
-        strokeWidth={props.strokeWidth ?? (theme === 'dark' ? 4.5 : 3.5)}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </Svg>
-  );
-}
-
-CheckIcon.displayName = DISPLAY_NAME.CHECKBOX_CHECK_ICON;
 
 // --------------------------------------------------
 

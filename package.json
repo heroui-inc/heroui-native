@@ -77,7 +77,6 @@
     "babel-plugin-transform-remove-imports": "^1.8.0",
     "bumpp": "^9.10.2",
     "changelogithub": "^13.16.0",
-    "clsx": "^2.1.1",
     "commitlint": "^19.6.1",
     "conventional-changelog": "^7.1.1",
     "del-cli": "^5.1.0",
@@ -104,7 +103,10 @@
     "react": "*",
     "react-native": "*",
     "react-native-reanimated": ">=3",
-    "react-native-safe-area-context": ">=5"
+    "react-native-safe-area-context": ">=5",
+    "react-native-svg": "*",
+    "tailwind-merge": "*",
+    "tailwind-variants": "*"
   },
   "workspaces": [
     "example"

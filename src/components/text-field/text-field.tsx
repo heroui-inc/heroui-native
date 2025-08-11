@@ -14,11 +14,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
-import {
-  cn,
-  createContext,
-  getElementByDisplayName,
-} from '../../helpers/utils';
+import { createContext, getElementByDisplayName } from '../../helpers/utils';
 import { useTheme } from '../../theme';
 import { ErrorField } from '../error-field';
 import {
@@ -324,13 +320,18 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
 const TextFieldErrorMessage = forwardRef<TextRef, TextFieldErrorMessageProps>(
   (props, ref) => {
     const { isValid } = useTextFieldContext();
+    const { className, ...restProps } = props;
+
+    const tvStyles = textFieldStyles.errorMessage({
+      className,
+    });
 
     return (
       <ErrorField
         ref={ref}
         isValid={isValid}
-        className={cn('p-1', props.className)}
-        {...props}
+        className={tvStyles}
+        {...restProps}
       />
     );
   }

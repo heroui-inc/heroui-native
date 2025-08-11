@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",
+    "clsx": "^2.1.1",
     "expo": "~53.0.13",
     "expo-constants": "~17.1.7",
     "expo-linear-gradient": "~14.1.5",
@@ -24,7 +25,10 @@
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
-    "react-native-web": "~0.20.0"
+    "react-native-svg": "^15.12.1",
+    "react-native-web": "~0.20.0",
+    "tailwind-merge": "^3.3.1",
+    "tailwind-variants": "^2.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

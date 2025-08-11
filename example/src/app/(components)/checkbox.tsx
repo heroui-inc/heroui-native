@@ -14,7 +14,7 @@ import Animated, {
   ZoomIn,
   ZoomInDown,
 } from 'react-native-reanimated';
-import { cn } from '../lib/utils/cn';
+import { cn } from '../../helpers/utils/cn';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 

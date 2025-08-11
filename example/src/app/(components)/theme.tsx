@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import { cn } from '../lib/utils/cn';
+import { cn } from '../../helpers/utils/cn';
 
 // Color Preview Component
 const ColorPreview: React.FC<{

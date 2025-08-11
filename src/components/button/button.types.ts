@@ -46,7 +46,7 @@ export interface ButtonRootProps extends AnimatedProps<PressableProps> {
    * Whether the button displays an icon only (needed for correct layout)
    * @default false
    */
-  onlyIcon?: boolean;
+  isIconOnly?: boolean;
   /**
    * Whether the button is disabled
    * @default false

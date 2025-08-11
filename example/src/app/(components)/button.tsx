@@ -108,7 +108,7 @@ export default function ButtonScreen() {
             }, 3000);
           }}
           fullWidth={false}
-          onlyIcon={isDownloading}
+          isIconOnly={isDownloading}
         >
           <Button.Label>
             {isDownloading ? (
@@ -249,17 +249,17 @@ export default function ButtonScreen() {
       </Text>
 
       <View className="flex-row gap-4 mb-6">
-        <Button size="sm" fullWidth={false} onlyIcon>
+        <Button size="sm" fullWidth={false} isIconOnly>
           <Button.Label>
             <Plus size={16} color={colors.accentForeground} />
           </Button.Label>
         </Button>
-        <Button size="md" fullWidth={false} variant="secondary" onlyIcon>
+        <Button size="md" fullWidth={false} variant="secondary" isIconOnly>
           <Button.Label>
             <Heart size={18} color="#ec4899" fill="#ec4899" />
           </Button.Label>
         </Button>
-        <Button size="lg" fullWidth={false} variant="danger" onlyIcon>
+        <Button size="lg" fullWidth={false} variant="danger" isIconOnly>
           <Button.Label>
             <Trash2 size={20} color={colors.dangerForeground} />
           </Button.Label>

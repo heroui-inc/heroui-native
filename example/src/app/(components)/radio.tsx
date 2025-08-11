@@ -4,7 +4,7 @@ import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
 import { StyledRadio } from '../../components/styled-radio';
-import { cn } from '../lib/utils/cn';
+import { cn } from '../../helpers/utils/cn';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 

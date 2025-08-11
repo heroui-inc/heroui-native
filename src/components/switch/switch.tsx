@@ -238,14 +238,14 @@ const SwitchThumb = forwardRef<
 
 const SwitchStartContent = forwardRef<View, SwitchContentProps>(
   (props, ref) => {
-    const { children, className } = props;
+    const { children, className, ...restProps } = props;
 
     const tvStyles = switchStyles.startContent({
       className,
     });
 
     return (
-      <View ref={ref} className={tvStyles}>
+      <View ref={ref} className={tvStyles} {...restProps}>
         {children}
       </View>
     );
@@ -255,14 +255,14 @@ const SwitchStartContent = forwardRef<View, SwitchContentProps>(
 // --------------------------------------------------
 
 const SwitchEndContent = forwardRef<View, SwitchContentProps>((props, ref) => {
-  const { children, className } = props;
+  const { children, className, ...restProps } = props;
 
   const tvStyles = switchStyles.endContent({
     className,
   });
 
   return (
-    <View ref={ref} className={tvStyles}>
+    <View ref={ref} className={tvStyles} {...restProps}>
       {children}
     </View>
   );

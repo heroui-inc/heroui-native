@@ -14,6 +14,7 @@ import {
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
 import { useTheme } from '../../theme';
 
+import type { TextRef } from '../../helpers/types';
 import { FormField } from '../form-field';
 import { useRadioGroupContext } from '../radio-group';
 import {
@@ -312,13 +313,13 @@ const RadioContent = forwardRef<View, RadioContentProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const RadioLabel = forwardRef<any, RadioLabelProps>((props, ref) => {
+const RadioLabel = forwardRef<TextRef, RadioLabelProps>((props, ref) => {
   return <FormField.Label ref={ref} {...props} />;
 });
 
 // --------------------------------------------------
 
-const RadioDescription = forwardRef<any, RadioDescriptionProps>(
+const RadioDescription = forwardRef<TextRef, RadioDescriptionProps>(
   (props, ref) => {
     return <FormField.Description ref={ref} {...props} />;
   }

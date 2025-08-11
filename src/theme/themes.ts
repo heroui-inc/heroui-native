@@ -8,7 +8,7 @@ const nonColorsVars = {
   '--radius-panel-inner': 'calc(var(--radius-panel) * 0.5)',
 
   /* Misc */
-  '--opacity-disabled': '0.5',
+  '--opacity-disabled': 0.5,
 };
 
 export const themes: Record<ColorScheme, Record<string, string>> = {

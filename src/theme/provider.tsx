@@ -1,4 +1,4 @@
-import { colorScheme } from 'nativewind';
+import { colorScheme, vars } from 'nativewind';
 import {
   createContext,
   useCallback,
@@ -8,19 +8,21 @@ import {
   useState,
 } from 'react';
 import { View } from 'react-native';
-import { colors as colorConstants } from './colors';
-import { themes } from './themes';
+import { colors as defaultColors } from './colors';
+import { colorsToCSSVars, deepMerge, extensionToCSSVars } from './helpers';
+import { themes as defaultThemes, themeVariables } from './themes';
 import type {
   ColorConstants,
   ColorScheme,
   ThemeContextType,
   ThemeProviderProps,
+  ThemeVariables,
 } from './types';
 
 export const ThemeContext = createContext<ThemeContextType>({
   theme: 'light',
   isDark: false,
-  colors: colorConstants.light,
+  colors: defaultColors.light,
   toggleTheme: () => {},
   setTheme: () => {},
 });
@@ -28,17 +30,82 @@ export const ThemeContext = createContext<ThemeContextType>({
 export const ThemeProvider = ({
   children,
   defaultTheme = 'light',
+  theme: customTheme,
 }: ThemeProviderProps) => {
   const [currentTheme, setCurrentTheme] = useState<ColorScheme>('light');
-  const [colors, setColors] = useState<ColorConstants>(colorConstants.light);
+
+  // Merge custom theme with default colors
+  const mergedColors = useMemo(() => {
+    const result = { ...defaultColors };
+
+    if (customTheme?.extend) {
+      if (customTheme.extend.light?.colors) {
+        result.light = deepMerge(
+          defaultColors.light,
+          customTheme.extend.light.colors
+        );
+      }
+      if (customTheme.extend.dark?.colors) {
+        result.dark = deepMerge(
+          defaultColors.dark,
+          customTheme.extend.dark.colors
+        );
+      }
+    }
+
+    return result;
+  }, [customTheme]);
+
+  const [colors, setColors] = useState<ColorConstants>(mergedColors.light);
+
+  // Build theme CSS variables with custom overrides
+  const themes = useMemo(() => {
+    if (!customTheme?.extend) {
+      return defaultThemes;
+    }
+
+    const result: Record<ColorScheme, Record<string, string>> = {} as any;
+
+    // Process light theme
+    const lightVars: ThemeVariables = { ...themeVariables.light };
+    if (customTheme.extend.light) {
+      // Add color overrides
+      if (customTheme.extend.light.colors) {
+        Object.assign(
+          lightVars,
+          colorsToCSSVars(customTheme.extend.light.colors)
+        );
+      }
+      // Add non-color overrides
+      Object.assign(lightVars, extensionToCSSVars(customTheme.extend.light));
+    }
+    result.light = vars<ThemeVariables>(lightVars);
+
+    // Process dark theme
+    const darkVars: ThemeVariables = { ...themeVariables.dark };
+    if (customTheme.extend.dark) {
+      // Add color overrides
+      if (customTheme.extend.dark.colors) {
+        Object.assign(
+          darkVars,
+          colorsToCSSVars(customTheme.extend.dark.colors)
+        );
+      }
+      // Add non-color overrides
+      Object.assign(darkVars, extensionToCSSVars(customTheme.extend.dark));
+    }
+    result.dark = vars<ThemeVariables>(darkVars);
+
+    return result;
+  }, [customTheme]);
 
   const setTheme = useCallback(
     (theme: ColorScheme) => {
       setCurrentTheme(theme);
       colorScheme.set(theme);
-      setColors(colorConstants[theme]);
+      setColors(mergedColors[theme]);
     },
-    [setCurrentTheme, setColors]
+    [mergedColors]
   );
 
   useEffect(() => {

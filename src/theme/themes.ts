@@ -8,7 +8,7 @@ import type {
   ThemeVariables,
 } from './types';
 
-const nonColorsVars: NonColorVariablesCSS = {
+export const nonColorsVars: NonColorVariablesCSS = {
   /* Radius */
   '--radius': '12px',
   '--radius-panel': '8px',
@@ -18,13 +18,20 @@ const nonColorsVars: NonColorVariablesCSS = {
   '--opacity-disabled': 0.5,
 };
 
-export const themes: Record<ColorScheme, Record<string, string>> = {
-  light: vars<ThemeVariables>({
+// Export raw theme variables for merging
+export const themeVariables: Record<ColorScheme, ThemeVariables> = {
+  light: {
     ...(colorsToCSSVars(colors.light) as ColorVariablesCSS),
     ...nonColorsVars,
-  }),
-  dark: vars<ThemeVariables>({
+  },
+  dark: {
     ...(colorsToCSSVars(colors.dark) as ColorVariablesCSS),
     ...nonColorsVars,
-  }),
+  },
+};
+
+// Default themes with vars applied
+export const themes: Record<ColorScheme, Record<string, string>> = {
+  light: vars<ThemeVariables>(themeVariables.light),
+  dark: vars<ThemeVariables>(themeVariables.dark),
 };

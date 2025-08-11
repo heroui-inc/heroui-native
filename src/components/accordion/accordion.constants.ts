@@ -14,7 +14,8 @@ export const DISPLAY_NAME = {
   TRIGGER: 'HeroUINative.Accordion.Trigger',
   INDICATOR: 'HeroUINative.Accordion.Indicator',
   CONTENT: 'HeroUINative.Accordion.Content',
-};
+  CHEVRON_DOWN_ICON: 'HeroUINative.Accordion.ChevronDownIcon',
+} as const;
 
 /**
  * Default layout transition for accordion animations

@@ -1,5 +1,6 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
+import { DISPLAY_NAME } from './accordion.constants';
 
 interface ChevronDownIconProps {
   size?: number;
@@ -27,3 +28,5 @@ export const ChevronDownIcon: React.FC<ChevronDownIconProps> = ({
     </Svg>
   );
 };
+
+ChevronDownIcon.displayName = DISPLAY_NAME.CHEVRON_DOWN_ICON;

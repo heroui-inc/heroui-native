@@ -133,10 +133,6 @@ export interface AccordionIndicatorProps extends SlottableViewProps {
     color?: string;
   };
   /**
-   * Animation configuration for the indicator rotation
-   */
-  animationConfig?: TimingConfig;
-  /**
    * Spring configuration for indicator animation
    */
   springConfig?: WithSpringConfig;

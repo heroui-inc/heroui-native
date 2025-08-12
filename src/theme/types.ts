@@ -163,8 +163,8 @@ type ThemeConfig = {
 interface ThemeProviderProps {
   /** React children components to be wrapped by the theme provider */
   children: React.ReactNode;
-  /** Initial theme to use (defaults to 'system' if not specified) */
-  defaultTheme?: ColorScheme | 'system';
+  /** Initial color scheme to use (defaults to 'system' if not specified) */
+  colorScheme?: ColorScheme | 'system';
   /** Custom theme configuration using Tailwind's extend pattern */
   theme?: ThemeConfig;
 }

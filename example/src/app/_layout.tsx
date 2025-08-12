@@ -106,19 +106,19 @@ const customTheme: ThemeConfig = {
       link: 'hsl(263 70% 65%)', // Purple links
     },
     borderRadius: {
-      'DEFAULT': '16px',
-      'panel': '12px',
-      'panel-inner': '8px',
+      'DEFAULT': '8px',
+      'panel': '8px',
+      'panel-inner': '4px',
     },
     opacity: {
-      disabled: 0.3,
+      disabled: 0.5,
     },
   },
 };
 
 export default function Layout() {
   return (
-    <ThemeProvider defaultTheme="system" theme={customTheme}>
+    <ThemeProvider colorScheme="system" theme={customTheme}>
       <Slot />
     </ThemeProvider>
   );

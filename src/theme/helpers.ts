@@ -1,36 +1,4 @@
-import type {
-  CombinedStyles,
-  NonColorVariables,
-  ThemeExtension,
-} from './types';
-
-/**
- * Converts ThemeExtension to NonColorVariables format
- * @internal
- */
-export function extensionToNonColorVars(
-  extension: ThemeExtension
-): Partial<NonColorVariables> {
-  const vars: Partial<NonColorVariables> = {};
-
-  if (extension.borderRadius) {
-    if (extension.borderRadius.DEFAULT) {
-      vars.radius = extension.borderRadius.DEFAULT;
-    }
-    if (extension.borderRadius.panel) {
-      vars.radiusPanel = extension.borderRadius.panel;
-    }
-    if (extension.borderRadius['panel-inner']) {
-      vars.radiusPanelInner = extension.borderRadius['panel-inner'];
-    }
-  }
-
-  if (extension.opacity?.disabled !== undefined) {
-    vars.opacityDisabled = extension.opacity.disabled;
-  }
-
-  return vars;
-}
+import type { CombinedStyles } from './types';
 
 /**
  * Deep merges two objects, with the second object's values taking precedence

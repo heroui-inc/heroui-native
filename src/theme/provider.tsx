@@ -38,18 +38,12 @@ export const ThemeProvider = ({
   const mergedColors = useMemo(() => {
     const result = { ...defaultColors };
 
-    if (customTheme?.extend) {
-      if (customTheme.extend.light?.colors) {
-        result.light = deepMerge(
-          defaultColors.light,
-          customTheme.extend.light.colors
-        );
+    if (customTheme) {
+      if (customTheme.light?.colors) {
+        result.light = deepMerge(defaultColors.light, customTheme.light.colors);
       }
-      if (customTheme.extend.dark?.colors) {
-        result.dark = deepMerge(
-          defaultColors.dark,
-          customTheme.extend.dark.colors
-        );
+      if (customTheme.dark?.colors) {
+        result.dark = deepMerge(defaultColors.dark, customTheme.dark.colors);
       }
     }
 
@@ -60,7 +54,7 @@ export const ThemeProvider = ({
 
   // Build theme CSS variables with custom overrides
   const themes = useMemo(() => {
-    if (!customTheme?.extend) {
+    if (!customTheme) {
       return defaultThemes;
     }
 
@@ -68,31 +62,25 @@ export const ThemeProvider = ({
 
     // Process light theme
     const lightVars: ThemeVariables = { ...themeVariables.light };
-    if (customTheme.extend.light) {
+    if (customTheme.light) {
       // Add color overrides
-      if (customTheme.extend.light.colors) {
-        Object.assign(
-          lightVars,
-          colorsToCSSVars(customTheme.extend.light.colors)
-        );
+      if (customTheme.light.colors) {
+        Object.assign(lightVars, colorsToCSSVars(customTheme.light.colors));
       }
       // Add non-color overrides
-      Object.assign(lightVars, extensionToCSSVars(customTheme.extend.light));
+      Object.assign(lightVars, extensionToCSSVars(customTheme.light));
     }
     result.light = vars<ThemeVariables>(lightVars);
 
     // Process dark theme
     const darkVars: ThemeVariables = { ...themeVariables.dark };
-    if (customTheme.extend.dark) {
+    if (customTheme.dark) {
       // Add color overrides
-      if (customTheme.extend.dark.colors) {
-        Object.assign(
-          darkVars,
-          colorsToCSSVars(customTheme.extend.dark.colors)
-        );
+      if (customTheme.dark.colors) {
+        Object.assign(darkVars, colorsToCSSVars(customTheme.dark.colors));
       }
       // Add non-color overrides
-      Object.assign(darkVars, extensionToCSSVars(customTheme.extend.dark));
+      Object.assign(darkVars, extensionToCSSVars(customTheme.dark));
     }
     result.dark = vars<ThemeVariables>(darkVars);
 

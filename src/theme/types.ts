@@ -134,32 +134,30 @@ type ThemeExtension = {
 };
 
 /**
- * Theme customization options using Tailwind's extend pattern
+ * Theme customization options
  * @example
  * ```tsx
  * const customTheme = {
- *   extend: {
- *     light: {
- *       colors: {
- *         background: 'hsl(0 0% 100%)',
- *         foreground: 'hsl(0 0% 0%)',
- *         primary: 'hsl(220 90% 50%)',
- *         // ... other colors in 'hsl(H S% L%)' format
- *       },
- *       borderRadius: {
- *         DEFAULT: '12px',
- *         panel: '8px',
- *       },
- *       opacity: {
- *         disabled: 0.5,
- *       }
+ *   light: {
+ *     colors: {
+ *       background: 'hsl(0 0% 100%)',
+ *       foreground: 'hsl(0 0% 0%)',
+ *       primary: 'hsl(220 90% 50%)',
+ *       // ... other colors in 'hsl(H S% L%)' format
  *     },
- *     dark: {
- *       colors: {
- *         background: 'hsl(0 0% 10%)',
- *         foreground: 'hsl(0 0% 100%)',
- *         // ... other colors
- *       }
+ *     borderRadius: {
+ *       DEFAULT: '12px',
+ *       panel: '8px',
+ *     },
+ *     opacity: {
+ *       disabled: 0.5,
+ *     }
+ *   },
+ *   dark: {
+ *     colors: {
+ *       background: 'hsl(0 0% 10%)',
+ *       foreground: 'hsl(0 0% 100%)',
+ *       // ... other colors
  *     }
  *   }
  * }
@@ -168,10 +166,8 @@ type ThemeExtension = {
  * @note Alpha should be applied via className (e.g., 'bg-foreground/10') or addAlpha utility
  */
 type ThemeConfig = {
-  extend?: {
-    light?: ThemeExtension;
-    dark?: ThemeExtension;
-  };
+  light?: ThemeExtension;
+  dark?: ThemeExtension;
 };
 
 /**

@@ -35,7 +35,7 @@ type RemovePrefix<S extends string> = S extends `--${infer T}` ? T : S;
 /**
  * HSL color format for CSS variables (without hsl wrapper)
  * @example '300 50% 100%' - WITHOUT 'hsl(' wrapper and WITHOUT alpha channel
- * Alpha should be applied via className (e.g., 'bg-foreground/10') or using addAlpha utility
+ * Alpha should be applied via className (e.g., 'bg-foreground/10') or using colorKit.setAlpha utility
  */
 type HSLValue = `${string} ${string}% ${string}%`;
 
@@ -163,7 +163,7 @@ type ThemeExtension = {
  * }
  * ```
  * @note Colors MUST be in 'hsl(H S% L%)' format without alpha channel
- * @note Alpha should be applied via className (e.g., 'bg-foreground/10') or addAlpha utility
+ * @note Alpha should be applied via className (e.g., 'bg-foreground/10') or colorKit.setAlpha utility
  */
 type ThemeConfig = {
   light?: ThemeExtension;

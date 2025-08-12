@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../theme/utils';
+import { combineStyles } from '../../theme/helpers';
 
 const root = tv({
   base: 'self-start flex-row items-center justify-center rounded-full py-1 gap-1',

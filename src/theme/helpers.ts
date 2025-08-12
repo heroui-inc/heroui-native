@@ -1,6 +1,7 @@
 import type {
   ColorConstants,
   ColorVariablesCSS,
+  CombinedStyles,
   NonColorVariables,
   NonColorVariablesCSS,
   ThemeExtension,
@@ -134,4 +135,20 @@ export function deepMerge<T extends Record<string, any>>(
   }
 
   return result;
+}
+
+/**
+ * Helper function to combine style objects with proper type inference
+ * This preserves the exact types of each style object, including VariantProps
+ * @example
+ * const styles = combineStyles({
+ *   root,
+ *   item,
+ *   content
+ * });
+ */
+export function combineStyles<T extends Record<string, any>>(
+  styles: T
+): CombinedStyles<T> {
+  return styles as CombinedStyles<T>;
 }

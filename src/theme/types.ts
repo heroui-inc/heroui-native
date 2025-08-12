@@ -33,19 +33,6 @@ type KebabToCamelCase<S extends string> = S extends `${infer T}-${infer U}`
 type RemovePrefix<S extends string> = S extends `--${infer T}` ? T : S;
 
 /**
- * HSL color format for CSS variables (without hsl wrapper)
- * @example '300 50% 100%' - WITHOUT 'hsl(' wrapper and WITHOUT alpha channel
- * Alpha should be applied via className (e.g., 'bg-foreground/10') or using colorKit.setAlpha utility
- */
-type HSLValue = `${string} ${string}% ${string}%`;
-
-/**
- * HSL color format for runtime constants (with hsl wrapper)
- * @example 'hsl(300 50% 100%)' - WITH 'hsl(' wrapper for runtime usage
- */
-type HSLColor = `hsl(${HSLValue})`;
-
-/**
  * Non-color theme variables (radius, opacity, etc.)
  */
 type NonColorVariables = {
@@ -98,19 +85,19 @@ type ColorVariableKeys =
 /**
  * Type for color constants object for runtime usage
  * Example: 'background', 'foreground', 'mutedForeground', etc.
- * Values are in format: 'hsl(300 50% 100%)'
+ * Values are color strings in any format supported by color-kit
  */
 type ColorConstants = {
-  [K in ColorVariableKeys as KebabToCamelCase<RemovePrefix<K>>]: HSLColor;
+  [K in ColorVariableKeys as KebabToCamelCase<RemovePrefix<K>>]: string;
 };
 
 /**
  * Type for CSS color variables for NativeWind vars() usage
  * Example: '--background', '--foreground', '--muted-foreground', etc.
- * Values are in format: '300 50% 100%' (without hsl wrapper)
+ * Values are color strings formatted for CSS variables
  */
 type ColorVariablesCSS = {
-  [K in ColorVariableKeys]: HSLValue;
+  [K in ColorVariableKeys]: string;
 };
 
 /**
@@ -140,10 +127,10 @@ type ThemeExtension = {
  * const customTheme = {
  *   light: {
  *     colors: {
- *       background: 'hsl(0 0% 100%)',
- *       foreground: 'hsl(0 0% 0%)',
+ *       background: '#ffffff',
+ *       foreground: 'rgb(0, 0, 0)',
  *       primary: 'hsl(220 90% 50%)',
- *       // ... other colors in 'hsl(H S% L%)' format
+ *       // ... colors in any format supported by color-kit
  *     },
  *     borderRadius: {
  *       DEFAULT: '12px',
@@ -155,15 +142,15 @@ type ThemeExtension = {
  *   },
  *   dark: {
  *     colors: {
- *       background: 'hsl(0 0% 10%)',
+ *       background: '#1a1a1a',
  *       foreground: 'hsl(0 0% 100%)',
- *       // ... other colors
+ *       // ... colors in any format
  *     }
  *   }
  * }
  * ```
- * @note Colors MUST be in 'hsl(H S% L%)' format without alpha channel
- * @note Alpha should be applied via className (e.g., 'bg-foreground/10') or colorKit.setAlpha utility
+ * @note Colors can be in any format supported by color-kit (hex, rgb, hsl, etc.)
+ * @note Colors with alpha are supported (e.g., 'rgba(255, 0, 0, 0.5)')
  */
 type ThemeConfig = {
   light?: ThemeExtension;
@@ -204,8 +191,6 @@ export type {
   ColorVariablesCSS,
   CombinedStyles,
   ElementSlots,
-  HSLColor,
-  HSLValue,
   NonColorVariables,
   NonColorVariablesCSS,
   ThemeConfig,

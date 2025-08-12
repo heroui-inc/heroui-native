@@ -17,7 +17,7 @@ export default function ChipScreen() {
       </Text>
 
       <View className="flex-row gap-4 mb-6">
-        <Chip />
+        <Chip className="bg-surface" />
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">

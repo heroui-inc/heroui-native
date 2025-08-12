@@ -1,3 +1,5 @@
+import colorKit from './color-kit';
+import type { SupportedColorFormats } from './color-kit/types';
 import type {
   ColorConstants,
   ColorVariablesCSS,
@@ -8,12 +10,96 @@ import type {
 } from './types';
 
 /**
+ * Converts any valid color format to HSL/HSLA string for CSS variables
+ * @param color - Color in any format supported by color-kit
+ * @returns HSL/HSLA string in format "h s% l%" or "h s% l% / a" for CSS variables
+ */
+export function convertToHSLString(
+  color: SupportedColorFormats
+): string | null {
+  // Use colorKit.getFormat to validate - it's the single source of truth
+  if (colorKit.getFormat(color) === null) {
+    return null;
+  }
+
+  const hslColor = colorKit.HSL(color);
+  const hslObject = hslColor.object();
+
+  // Check if color has alpha channel
+  if (hslObject.a !== undefined && hslObject.a < 1) {
+    // Return HSLA format for CSS variables with alpha
+    return `${Math.round(hslObject.h)} ${Math.round(hslObject.s)}% ${Math.round(hslObject.l)}% / ${hslObject.a}`;
+  }
+
+  // Return HSL format for CSS variables without alpha
+  return `${Math.round(hslObject.h)} ${Math.round(hslObject.s)}% ${Math.round(hslObject.l)}%`;
+}
+
+/**
+ * Processes a color value, validating and converting it to HSL format
+ * Logs warning in development if color format is invalid
+ * @param color - Color in any format supported by color-kit
+ * @param colorName - Name of the color variable for error messages
+ * @param defaultColor - Default color to use as fallback (should be in CSS var format)
+ * @returns Converted HSL string or default color if validation fails
+ */
+export function processColorValue(
+  color: string | null | undefined,
+  colorName: string,
+  defaultColor: string
+): string {
+  const errorMsg = `🎨 HeroUI Native Theme:\nInvalid color format for "${colorName}: ${color}".\nPlease provide a valid color format (HSL, HSLA, RGB, RGBA, HEX, HEXA).\nUsing default ${colorName} color as a fallback.`;
+
+  // Handle null/undefined
+  if (!color) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(errorMsg);
+    }
+    return defaultColor;
+  }
+
+  // Try to convert to HSL
+  const hslString = convertToHSLString(color);
+
+  if (!hslString) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(errorMsg);
+    }
+    return defaultColor;
+  }
+
+  return hslString;
+}
+
+/**
  * Converts HSL string format between runtime and CSS variable formats
  * @param color - Color in either 'hsl(0 0% 100%)' or '0 0% 100%' format
  * @param toRuntime - If true, converts to runtime format (hsl wrapped), otherwise to CSS var format
  * @internal
  */
 export function formatHSL(color: string, toRuntime: boolean = true): string {
+  // Check if string contains alpha (has " / " separator)
+  if (color.includes(' / ')) {
+    if (toRuntime) {
+      // Convert to hsla() format
+      const parts = color.split(' / ');
+      if (parts.length === 2 && parts[0] && parts[1]) {
+        return `hsla(${parts[0].replace(/ /g, ', ')}, ${parts[1]})`;
+      }
+    } else if (color.startsWith('hsla(')) {
+      // Unwrap hsla() to CSS variable format
+      const match = color.match(
+        /hsla\(([\d.]+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)/
+      );
+      if (match) {
+        const [, h, s, l, a] = match;
+        return `${h} ${s}% ${l}% / ${a}`;
+      }
+    }
+    return color;
+  }
+
+  // Handle regular HSL format
   const isWrapped = color.startsWith('hsl(');
 
   if (toRuntime && !isWrapped) {
@@ -43,7 +129,7 @@ export function colorsToCSSVars(
         .toLowerCase()
         .replace(/^-/, '');
 
-    // Type assertion needed because we're converting from HSLColor to HSLValue
+    // Convert to CSS variable format (unwrap hsl/hsla)
     const cssValue = formatHSL(value, false);
     (cssVars as any)[cssKey] = cssValue;
   }

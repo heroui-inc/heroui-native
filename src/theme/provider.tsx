@@ -9,7 +9,13 @@ import {
 } from 'react';
 import { View } from 'react-native';
 import { colors as defaultColors } from './colors';
-import { colorsToCSSVars, deepMerge, extensionToCSSVars } from './helpers';
+import {
+  colorsToCSSVars,
+  deepMerge,
+  extensionToCSSVars,
+  formatHSL,
+  processColorValue,
+} from './helpers';
 import { themes as defaultThemes, themeVariables } from './themes';
 import type {
   ColorConstants,
@@ -34,16 +40,56 @@ export const ThemeProvider = ({
 }: ThemeProviderProps) => {
   const [currentTheme, setCurrentTheme] = useState<ColorScheme>('light');
 
-  // Merge custom theme with default colors
+  // Merge and process custom theme colors with defaults
   const mergedColors = useMemo(() => {
     const result = { ...defaultColors };
 
     if (customTheme) {
       if (customTheme.light?.colors) {
-        result.light = deepMerge(defaultColors.light, customTheme.light.colors);
+        // Process custom colors to HSL format for runtime usage
+        const processedColors: Partial<ColorConstants> = {};
+
+        for (const [key, value] of Object.entries(customTheme.light.colors)) {
+          // Get the default color for this key to use as fallback
+          const defaultColorValue =
+            defaultColors.light[key as keyof ColorConstants];
+          // First unwrap the default color to get CSS var format
+          const defaultCSSVar = formatHSL(defaultColorValue, false);
+          // Process the custom color
+          const hslValue = processColorValue(value, key, defaultCSSVar);
+          // Wrap HSL values for runtime usage
+          processedColors[key as keyof ColorConstants] = formatHSL(
+            hslValue,
+            true
+          );
+        }
+
+        result.light = deepMerge(
+          defaultColors.light,
+          processedColors as ColorConstants
+        );
       }
       if (customTheme.dark?.colors) {
-        result.dark = deepMerge(defaultColors.dark, customTheme.dark.colors);
+        // Process custom colors to HSL format for runtime usage
+        const processedColors: Partial<ColorConstants> = {};
+        for (const [key, value] of Object.entries(customTheme.dark.colors)) {
+          // Get the default color for this key to use as fallback
+          const defaultColorValue =
+            defaultColors.dark[key as keyof ColorConstants];
+          // First unwrap the default color to get CSS var format
+          const defaultCSSVar = formatHSL(defaultColorValue, false);
+          // Process the custom color
+          const hslValue = processColorValue(value, key, defaultCSSVar);
+          // Wrap HSL values for runtime usage
+          processedColors[key as keyof ColorConstants] = formatHSL(
+            hslValue,
+            true
+          );
+        }
+        result.dark = deepMerge(
+          defaultColors.dark,
+          processedColors as ColorConstants
+        );
       }
     }
 
@@ -61,31 +107,33 @@ export const ThemeProvider = ({
     const result: Record<ColorScheme, Record<string, string>> = {} as any;
 
     // Process light theme
-    const lightVars: ThemeVariables = { ...themeVariables.light };
+    // Start with default theme variables (includes non-color vars)
+    const lightVars: ThemeVariables = {
+      ...themeVariables.light,
+      // Override with processed colors
+      ...colorsToCSSVars(mergedColors.light),
+    } as ThemeVariables;
     if (customTheme.light) {
-      // Add color overrides
-      if (customTheme.light.colors) {
-        Object.assign(lightVars, colorsToCSSVars(customTheme.light.colors));
-      }
       // Add non-color overrides
       Object.assign(lightVars, extensionToCSSVars(customTheme.light));
     }
     result.light = vars<ThemeVariables>(lightVars);
 
     // Process dark theme
-    const darkVars: ThemeVariables = { ...themeVariables.dark };
+    // Start with default theme variables (includes non-color vars)
+    const darkVars: ThemeVariables = {
+      ...themeVariables.dark,
+      // Override with processed colors
+      ...colorsToCSSVars(mergedColors.dark),
+    } as ThemeVariables;
     if (customTheme.dark) {
-      // Add color overrides
-      if (customTheme.dark.colors) {
-        Object.assign(darkVars, colorsToCSSVars(customTheme.dark.colors));
-      }
       // Add non-color overrides
       Object.assign(darkVars, extensionToCSSVars(customTheme.dark));
     }
     result.dark = vars<ThemeVariables>(darkVars);
 
     return result;
-  }, [customTheme]);
+  }, [customTheme, mergedColors]);
 
   const setTheme = useCallback(
     (theme: ColorScheme) => {

@@ -1,7 +1,7 @@
 import { Chip, useTheme } from 'heroui-native';
 import { Plus, Star, X } from 'lucide-react-native';
 import { ScrollView, Text, View } from 'react-native';
-import { cn } from '../lib/utils/cn';
+import { cn } from '../../helpers/utils/cn';
 
 export default function ChipScreen() {
   const { isDark } = useTheme();
@@ -17,7 +17,7 @@ export default function ChipScreen() {
       </Text>
 
       <View className="flex-row gap-4 mb-6">
-        <Chip />
+        <Chip className="bg-surface" />
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">

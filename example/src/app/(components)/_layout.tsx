@@ -49,6 +49,10 @@ export default function Layout() {
       <Stack.Screen name="surface" options={{ title: 'Surface' }} />
       <Stack.Screen name="switch" options={{ title: 'Switch' }} />
       <Stack.Screen name="text-field" options={{ title: 'TextField' }} />
+      <Stack.Screen
+        name="theme-showcase"
+        options={{ title: 'Theme Showcase' }}
+      />
     </Stack>
   );
 }

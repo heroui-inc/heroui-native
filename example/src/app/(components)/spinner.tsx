@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { cn } from '../lib/utils/cn';
+import { cn } from '../../helpers/utils/cn';
 
 export default function SpinnerScreen() {
   const [loading, setLoading] = React.useState(true);

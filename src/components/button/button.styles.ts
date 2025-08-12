@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../theme/utils';
+import { combineStyles } from '../../theme/helpers';
 
 const root = tv({
   base: 'flex-row items-center justify-center',
@@ -21,7 +21,7 @@ const root = tv({
       true: 'self-stretch',
       false: 'self-start',
     },
-    onlyIcon: {
+    isIconOnly: {
       true: 'p-0 aspect-square',
     },
     isDisabled: {
@@ -32,6 +32,7 @@ const root = tv({
     variant: 'primary',
     size: 'md',
     fullWidth: true,
+    isIconOnly: false,
     isDisabled: false,
   },
 });

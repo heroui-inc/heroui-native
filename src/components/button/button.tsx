@@ -49,7 +49,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     variant = 'primary',
     size = 'md',
     fullWidth = true,
-    onlyIcon = false,
+    isIconOnly = false,
     isDisabled = false,
     className,
     style,
@@ -105,7 +105,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     variant,
     size,
     fullWidth,
-    onlyIcon,
+    isIconOnly,
     isDisabled,
     className,
   });

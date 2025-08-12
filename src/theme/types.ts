@@ -111,11 +111,23 @@ type ThemeVariables = ColorVariablesCSS & NonColorVariablesCSS;
 type ThemeExtension = {
   colors?: Partial<ColorConstants>;
   borderRadius?: {
+    /**
+     * @default '12px'
+     */
     'DEFAULT'?: string;
+    /**
+     * @default '8px'
+     */
     'panel'?: string;
+    /**
+     * @default '4px'
+     */
     'panel-inner'?: string;
   };
   opacity?: {
+    /**
+     * @default 0.5
+     */
     disabled?: number;
   };
 };

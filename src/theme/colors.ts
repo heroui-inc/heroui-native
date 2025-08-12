@@ -60,8 +60,8 @@ export const colors: Record<ColorScheme, ColorConstants> = {
     accent: 'hsl(300 0% 99%)',
     accentForeground: 'hsl(0 0% 10%)',
 
-    accentSoft: 'hsl(0 0% 96%)',
-    accentSoftForeground: 'hsl(0 0% 25%)',
+    accentSoft: 'hsl(0 0% 15%)',
+    accentSoftForeground: 'hsl(0 0% 98%)',
 
     /* Status Colors */
     success: 'hsl(143.49 63% 61%)',

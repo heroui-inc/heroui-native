@@ -189,7 +189,7 @@ type ThemeContextType = {
   theme: ColorScheme;
   /** Whether the current theme is dark */
   isDark: boolean;
-  /** Color constants object with camelCase keys for direct usage */
+  /** The theme colors in hsl format */
   colors: ColorConstants;
   /** Function to toggle between light and dark themes */
   toggleTheme: () => void;

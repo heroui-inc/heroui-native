@@ -10,6 +10,9 @@ export default function App() {
 
   return (
     <View className="flex-1 bg-background items-center justify-center gap-5">
+      <TouchableOpacity onPress={() => router.push('/theme-showcase')}>
+        <Text className={classNames.link}>Theme Showcase</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/theme')}>
         <Text className={classNames.link}>Theme</Text>
       </TouchableOpacity>

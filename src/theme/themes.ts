@@ -1,6 +1,6 @@
 import { vars } from 'nativewind';
 import { colors } from './colors';
-import { colorsToCSSVars } from './helpers';
+import { colorsToCSSVars } from './provider.helpers';
 import type {
   ColorScheme,
   ColorVariablesCSS,

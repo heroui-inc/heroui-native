@@ -9,13 +9,13 @@ import {
 } from 'react';
 import { View } from 'react-native';
 import { colors as defaultColors } from './colors';
+import { deepMerge } from './helpers';
 import {
   colorsToCSSVars,
-  deepMerge,
   extensionToCSSVars,
   formatHSL,
   processColorValue,
-} from './helpers';
+} from './provider.helpers';
 import { themes as defaultThemes, themeVariables } from './themes';
 import type {
   ColorConstants,
@@ -64,10 +64,7 @@ export const ThemeProvider = ({
           );
         }
 
-        result.light = deepMerge(
-          defaultColors.light,
-          processedColors as ColorConstants
-        );
+        result.light = deepMerge(defaultColors.light, processedColors);
       }
       if (customTheme.dark?.colors) {
         // Process custom colors to HSL format for runtime usage
@@ -86,10 +83,7 @@ export const ThemeProvider = ({
             true
           );
         }
-        result.dark = deepMerge(
-          defaultColors.dark,
-          processedColors as ColorConstants
-        );
+        result.dark = deepMerge(defaultColors.dark, processedColors);
       }
     }
 
@@ -112,7 +106,8 @@ export const ThemeProvider = ({
       ...themeVariables.light,
       // Override with processed colors
       ...colorsToCSSVars(mergedColors.light),
-    } as ThemeVariables;
+    };
+
     if (customTheme.light) {
       // Add non-color overrides
       Object.assign(lightVars, extensionToCSSVars(customTheme.light));
@@ -125,7 +120,8 @@ export const ThemeProvider = ({
       ...themeVariables.dark,
       // Override with processed colors
       ...colorsToCSSVars(mergedColors.dark),
-    } as ThemeVariables;
+    };
+
     if (customTheme.dark) {
       // Add non-color overrides
       Object.assign(darkVars, extensionToCSSVars(customTheme.dark));

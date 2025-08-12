@@ -125,6 +125,9 @@ export function colorsToCSSVars(
     const cssKey =
       '--' +
       key
+        // Handle surface1, surface2, surface3 special case
+        .replace(/surface(\d)/, 'surface-$1')
+        // Convert camelCase to kebab-case
         .replace(/([A-Z])/g, '-$1')
         .toLowerCase()
         .replace(/^-/, '');

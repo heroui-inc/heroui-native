@@ -1,5 +1,6 @@
-import { DropShadowView } from 'heroui-native';
-import { ScrollView, Text, View } from 'react-native';
+import { Button, Card } from 'heroui-native';
+import { ShoppingBasket } from 'lucide-react-native';
+import { ScrollView, View } from 'react-native';
 
 export default function Theme() {
   return (
@@ -8,39 +9,29 @@ export default function Theme() {
       contentContainerClassName="pb-20"
       contentInsetAdjustmentBehavior="automatic"
     >
-      <View className="gap-4">
-        <DropShadowView className="bg-surface-1 p-4 rounded-lg" shadowSize="sm">
-          <Text className="text-foreground font-semibold">Small Shadow</Text>
-          <Text className="text-muted-foreground text-sm">
-            Subtle elevation for cards and containers
-          </Text>
-        </DropShadowView>
-
-        <DropShadowView className="bg-surface-1 p-6 rounded-lg" shadowSize="md">
-          <Text className="text-lg font-semibold text-foreground mb-2">
-            Card Component
-          </Text>
-          <Text className="text-muted-foreground mb-4">
-            This card uses medium shadow for standard elevation.
-          </Text>
-          <View className="flex-row gap-2">
-            <View className="bg-accent px-3 py-1 rounded">
-              <Text className="text-accent-foreground text-sm">Action</Text>
+      <Card>
+        <Card.Details>
+          <Card.Body className="mb-4">
+            <View className="gap-1 mb-2">
+              <Card.Title className="text-pink-500">$450</Card.Title>
+              <Card.Title>Living room Sofa • Collection 2025</Card.Title>
             </View>
-          </View>
-        </DropShadowView>
-
-        <DropShadowView
-          className="bg-surface-1 p-4 rounded-lg"
-          shadowSize="xl"
-          shadowColor="red"
-        >
-          <Text className="text-red-900 font-semibold">Custom Blue Shadow</Text>
-          <Text className="text-red-700 text-sm">
-            Large shadow with custom color
-          </Text>
-        </DropShadowView>
-      </View>
+            <Card.Description>
+              This sofa is perfect for modern tropical spaces, baroque inspired
+              spaces.
+            </Card.Description>
+          </Card.Body>
+          <Card.Footer className="gap-3">
+            <Button variant="primary">Buy now</Button>
+            <Button variant="ghost">
+              <Button.Label>Add to cart</Button.Label>
+              <Button.EndContent>
+                <ShoppingBasket size={16} />
+              </Button.EndContent>
+            </Button>
+          </Card.Footer>
+        </Card.Details>
+      </Card>
     </ScrollView>
   );
 }

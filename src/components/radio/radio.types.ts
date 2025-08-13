@@ -1,7 +1,11 @@
-import type { TextProps, ViewProps } from 'react-native';
+import type { ViewProps } from 'react-native';
+import type { AnimatedProps } from 'react-native-reanimated';
 import type { SpringConfig, TimingConfig } from '../../helpers/types';
-import type { TextProps as LabelTextProps } from '../../primitives/label';
-import type { IndicatorProps, ItemProps } from '../../primitives/radio-group';
+import type { ItemProps } from '../../primitives/radio-group';
+import type {
+  FormFieldDescriptionProps,
+  FormFieldLabelProps,
+} from '../form-field';
 
 /**
  * Radio color variant
@@ -60,7 +64,7 @@ export interface RadioProps extends ItemProps {
 /**
  * Props for RadioGroup.Indicator component
  */
-export interface RadioIndicatorProps extends ViewProps {
+export interface RadioIndicatorProps extends AnimatedProps<ViewProps> {
   /** Indicator content */
   children?: React.ReactNode;
   /** Custom class name */
@@ -74,7 +78,8 @@ export interface RadioIndicatorProps extends ViewProps {
 /**
  * Props for RadioGroup.Background component
  */
-export interface RadioBackgroundProps extends IndicatorProps {
+export interface RadioIndicatorBackgroundProps
+  extends AnimatedProps<ViewProps> {
   /** Background content */
   children?: React.ReactNode;
   /** Custom class name */
@@ -86,7 +91,7 @@ export interface RadioBackgroundProps extends IndicatorProps {
 /**
  * Props for RadioGroup.Thumb component
  */
-export interface RadioThumbProps extends ViewProps {
+export interface RadioIndicatorThumbProps extends AnimatedProps<ViewProps> {
   /** Thumb content */
   children?: React.ReactNode;
   /** Custom class name */
@@ -110,19 +115,9 @@ export interface RadioContentProps extends ViewProps {
 /**
  * Props for Radio.Label component
  */
-export interface RadioLabelProps extends LabelTextProps {
-  /** Label content */
-  children?: React.ReactNode;
-  /** Custom class name */
-  className?: string;
-}
+export interface RadioLabelProps extends FormFieldLabelProps {}
 
 /**
  * Props for Radio.Description component
  */
-export interface RadioDescriptionProps extends TextProps {
-  /** Description content */
-  children?: React.ReactNode;
-  /** Custom class name */
-  className?: string;
-}
+export interface RadioDescriptionProps extends FormFieldDescriptionProps {}

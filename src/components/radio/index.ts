@@ -1,11 +1,11 @@
 export { default as Radio, useRadioContext } from './radio';
 export type {
-  RadioBackgroundProps,
   RadioColor,
   RadioColors,
   RadioDescriptionProps,
+  RadioIndicatorBackgroundProps,
   RadioIndicatorProps,
+  RadioIndicatorThumbProps,
   RadioLabelProps,
   RadioProps,
-  RadioThumbProps,
 } from './radio.types';

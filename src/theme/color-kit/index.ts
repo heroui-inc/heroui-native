@@ -194,16 +194,16 @@ export const colorKitUI = () => {
     hex8: /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i,
 
     hsl: [
-      // hsl(360deg, 100%, 100%) hsl(360, 100%, 100%)
-      /^hsl\s*\(\s*(\d{1,3})(?:deg)?\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*\)$/i,
-      // hsl(360deg 100% 100%) hsl(360 100% 100%)
-      /^hsl\s*\(\s*(\d{1,3})(?:deg)?\s+([\d.]+)%\s+([\d.]+)%\s*\)$/i,
+      // hsl(360deg, 100%, 100%) hsl(360, 100%, 100%) hsl(23.55, 12.22%, 34.56%)
+      /^hsl\s*\(\s*([\d.]+)(?:deg)?\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*\)$/i,
+      // hsl(360deg 100% 100%) hsl(360 100% 100%) hsl(23.55 12.22% 34.56%)
+      /^hsl\s*\(\s*([\d.]+)(?:deg)?\s+([\d.]+)%\s+([\d.]+)%\s*\)$/i,
     ],
     hsla: [
       // hsla(360deg, 100%, 100%, 1.0) hsla(360, 100%, 100%, 1.0) hsl(360deg, 100%, 100%, 1.0) hsl(360, 100%, 100%, 1.0)
-      /^hsla?\s*\(\s*(\d{1,3})(?:deg)?\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*,\s*(\d|\d\.\d+)\s*\)$/i,
+      /^hsla?\s*\(\s*([\d.]+)(?:deg)?\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*,\s*(\d|\d\.\d+)\s*\)$/i,
       // hsla(360deg 100% 100% / 1.0) hsla(360 100% 100% / 1.0) hsl(360deg 100% 100% / 1.0) hsl(360 100% 100% / 1.0)
-      /^hsla?\s*\(\s*(\d{1,3})(?:deg)?\s+([\d.]+)%\s+([\d.]+)%\s*\/\s*(\d|\d\.\d+)\s*\)$/i,
+      /^hsla?\s*\(\s*([\d.]+)(?:deg)?\s+([\d.]+)%\s+([\d.]+)%\s*\/\s*(\d|\d\.\d+)\s*\)$/i,
     ],
 
     hsv: [
@@ -1281,6 +1281,7 @@ export const colorKitUI = () => {
 
   /** - Convert `HSL`, `HSV`, `HWB`, or `HEX` color to the `RGB` color format. */
   const RGB = (color: SupportedColorFormats): ColorTypes<rgbaT> => {
+    console.log('🔴', color); // VS --------- Remove Log
     // named color
     if (typeof color === 'string') {
       color = color.trim().toLowerCase();
@@ -1291,6 +1292,8 @@ export const colorKitUI = () => {
     }
 
     const colorType = detectColorFormat(color);
+
+    console.log('🔴', colorType); // VS --------- Remove Log
 
     // HEX to RGB
     if (colorType?.includes('hex')) {

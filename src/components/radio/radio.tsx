@@ -12,7 +12,7 @@ import {
   getElementWithDefault,
 } from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
-import { useTheme } from '../../theme';
+import { colorKit, useTheme } from '../../theme';
 
 import type { TextRef } from '../../helpers/types';
 import { FormField } from '../form-field';
@@ -25,15 +25,15 @@ import {
 } from './radio.constants';
 import radioStyles from './radio.styles';
 import type {
-  RadioBackgroundProps,
   RadioColor,
   RadioContentProps,
   RadioContextValue,
   RadioDescriptionProps,
+  RadioIndicatorBackgroundProps,
   RadioIndicatorProps,
+  RadioIndicatorThumbProps,
   RadioLabelProps,
   RadioProps,
-  RadioThumbProps,
 } from './radio.types';
 
 const AnimatedRadioItem = Animated.createAnimatedComponent(
@@ -167,9 +167,15 @@ const RadioIndicator = forwardRef<Animated.View, RadioIndicatorProps>(
 
     const borderColorMap: Record<RadioColor, string> = {
       default: isSelected ? themeColors.accent : themeColors.border,
-      success: themeColors.success,
-      warning: themeColors.warning,
-      danger: themeColors.danger,
+      success: isSelected
+        ? themeColors.success
+        : colorKit.setAlpha(themeColors.success, 0.5).hex(),
+      warning: isSelected
+        ? themeColors.warning
+        : colorKit.setAlpha(themeColors.warning, 0.5).hex(),
+      danger: isSelected
+        ? themeColors.danger
+        : colorKit.setAlpha(themeColors.danger, 0.5).hex(),
     };
 
     const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
@@ -207,90 +213,100 @@ const styles = StyleSheet.create({
 
 // --------------------------------------------------
 
-const RadioIndicatorBackground = forwardRef<View, RadioBackgroundProps>(
-  (props, ref) => {
-    const { children, colors, className, style, ...restProps } = props;
+const RadioIndicatorBackground = forwardRef<
+  View,
+  RadioIndicatorBackgroundProps
+>((props, ref) => {
+  const { children, colors, className, style, ...restProps } = props;
 
-    const { color, isSelected } = useRadioContext();
-    const { colors: themeColors } = useTheme();
+  const { color, isSelected } = useRadioContext();
+  const { colors: themeColors } = useTheme();
 
-    const tvStyles = radioStyles.background({
-      className,
-    });
-
-    const backgroundColorMap: Record<RadioColor, string> = {
-      default: themeColors.accent,
-      success: themeColors.success,
-      warning: themeColors.warning,
-      danger: themeColors.danger,
-    };
-
-    if (children) {
-      return (
-        <View ref={ref} className={tvStyles} style={style} {...restProps}>
-          {children}
-        </View>
-      );
-    }
-
-    return (
-      <Animated.View
-        ref={ref}
-        className={tvStyles}
-        style={[
-          {
-            backgroundColor: isSelected
-              ? (colors?.selectedBackground ?? backgroundColorMap[color])
-              : (colors?.defaultBackground ?? 'transparent'),
-          },
-          style,
-        ]}
-        {...restProps}
-      />
-    );
-  }
-);
-
-// --------------------------------------------------
-
-const RadioIndicatorThumb = forwardRef<View, RadioThumbProps>((props, ref) => {
-  const { children, colors, className, style, animationConfig, ...restProps } =
-    props;
-
-  const { isSelected } = useRadioContext();
-  const { theme, colors: themeColors } = useTheme();
-
-  const tvStyles = radioStyles.thumb({
-    isDark: theme === 'dark',
+  const tvStyles = radioStyles.background({
     className,
   });
 
-  const springConfig = animationConfig ?? DEFAULT_SPRING_CONFIG;
-
-  const thumbAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          scale: withSpring(isSelected ? 1 : 0, springConfig),
-        },
-      ],
-      backgroundColor: colors?.selectedThumb ?? themeColors.background,
-    };
-  });
+  const backgroundColorMap: Record<RadioColor, string> = {
+    default: themeColors.accent,
+    success: themeColors.success,
+    warning: themeColors.warning,
+    danger: themeColors.danger,
+  };
 
   if (children) {
-    return children;
+    return (
+      <Animated.View ref={ref} className={tvStyles} {...restProps}>
+        {children}
+      </Animated.View>
+    );
   }
 
   return (
     <Animated.View
       ref={ref}
       className={tvStyles}
-      style={[thumbAnimatedStyle, style]}
+      style={[
+        {
+          backgroundColor: isSelected
+            ? (colors?.selectedBackground ?? backgroundColorMap[color])
+            : (colors?.defaultBackground ?? 'transparent'),
+        },
+        style,
+      ]}
       {...restProps}
     />
   );
 });
+
+// --------------------------------------------------
+
+const RadioIndicatorThumb = forwardRef<View, RadioIndicatorThumbProps>(
+  (props, ref) => {
+    const {
+      children,
+      colors,
+      className,
+      style,
+      animationConfig,
+      ...restProps
+    } = props;
+
+    const { isSelected } = useRadioContext();
+    const { theme, colors: themeColors } = useTheme();
+
+    const tvStyles = radioStyles.thumb({
+      isDark: theme === 'dark',
+      className,
+    });
+
+    const springConfig = animationConfig ?? DEFAULT_SPRING_CONFIG;
+
+    const thumbAnimatedStyle = useAnimatedStyle(() => {
+      return {
+        opacity: withSpring(isSelected ? 1 : 0, springConfig),
+        transform: [
+          {
+            scale: withSpring(isSelected ? 1 : 0.5, springConfig),
+          },
+        ],
+        backgroundColor: colors?.selectedThumb ?? themeColors.background,
+      };
+    });
+
+    if (children) {
+      return children;
+    }
+
+    return (
+      <Animated.View
+        ref={ref}
+        className={tvStyles}
+        style={[thumbAnimatedStyle, style]}
+        {...restProps}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 

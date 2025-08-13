@@ -1,4 +1,5 @@
 import type {
+  AnimatedProps,
   BaseAnimationBuilder,
   EntryExitAnimationFunction,
   LayoutAnimationFunction,
@@ -6,11 +7,8 @@ import type {
 } from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
 import type {
-  SlottableViewProps,
-  ViewRef,
-} from '../../helpers/types/primitives';
-import type {
   ContentProps as PrimitiveContentProps,
+  IndicatorProps as PrimitiveIndicatorProps,
   ItemProps as PrimitiveItemProps,
   RootProps as PrimitiveRootProps,
   TriggerProps as PrimitiveTriggerProps,
@@ -24,9 +22,30 @@ import type { RootSlots } from './accordion.styles';
 export type AccordionVariant = 'default' | 'border';
 
 /**
+ * Icon props for the Accordion.Indicator component
+ */
+export interface AccordionIndicatorIconProps {
+  /**
+   * Size of the icon
+   * @default 16
+   */
+  size?: number;
+  /**
+   * Stroke width of the icon
+   * @default 2
+   */
+  strokeWidth?: number;
+  /**
+   * Color of the icon
+   * @default foreground
+   */
+  color?: string;
+}
+
+/**
  * Props for the Accordion root component
  */
-export type AccordionRootProps = PrimitiveRootProps & {
+export type AccordionRootProps = AnimatedProps<PrimitiveRootProps> & {
   /**
    * Children elements to be rendered inside the accordion
    */
@@ -49,16 +68,12 @@ export type AccordionRootProps = PrimitiveRootProps & {
    * Additional CSS classes for the slots
    */
   classNames?: ElementSlots<RootSlots>;
-  /**
-   * Custom layout animation for accordion transitions
-   */
-  layoutTransition?: LayoutAnimationFunction;
 };
 
 /**
  * Props for the Accordion.Item component
  */
-export interface AccordionItemProps extends PrimitiveItemProps {
+export interface AccordionItemProps extends AnimatedProps<PrimitiveItemProps> {
   /**
    * Children elements to be rendered inside the accordion item
    */
@@ -104,7 +119,8 @@ export interface AccordionTriggerProps extends PrimitiveTriggerProps {
 /**
  * Props for the Accordion.Indicator component
  */
-export interface AccordionIndicatorProps extends SlottableViewProps {
+export interface AccordionIndicatorProps
+  extends AnimatedProps<PrimitiveIndicatorProps> {
   /**
    * Custom indicator content, if not provided defaults to animated chevron
    */
@@ -116,22 +132,7 @@ export interface AccordionIndicatorProps extends SlottableViewProps {
   /**
    * Icon configuration
    */
-  iconProps?: {
-    /**
-     * Size of the icon
-     * @default 16
-     */
-    size?: number;
-    /**
-     * Stroke width of the icon
-     * @default 2
-     */
-    strokeWidth?: number;
-    /**
-     * Color of the icon
-     */
-    color?: string;
-  };
+  iconProps?: AccordionIndicatorIconProps;
   /**
    * Spring configuration for indicator animation
    */
@@ -181,10 +182,8 @@ export interface AccordionContextValue {
   /**
    * Custom layout animation for accordion transitions
    */
-  layoutTransition?: LayoutAnimationFunction;
+  layoutTransition?:
+    | BaseAnimationBuilder
+    | LayoutAnimationFunction
+    | typeof BaseAnimationBuilder;
 }
-
-/**
- * Reference type for Accordion Indicator component
- */
-export type AccordionIndicatorRef = ViewRef;

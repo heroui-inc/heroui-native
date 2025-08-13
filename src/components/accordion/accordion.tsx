@@ -7,6 +7,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as AccordionPrimitive from '../../primitives/accordion';
 import { useTheme } from '../../theme';
@@ -25,7 +26,6 @@ import type {
   AccordionContentProps,
   AccordionContextValue,
   AccordionIndicatorProps,
-  AccordionIndicatorRef,
   AccordionItemProps,
   AccordionRootProps,
   AccordionTriggerProps,
@@ -62,7 +62,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     showDivider = true,
     className,
     classNames,
-    layoutTransition,
+    layout = ACCORDION_LAYOUT_TRANSITION,
     ...restProps
   } = props;
 
@@ -78,9 +78,9 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     () => ({
       variant,
       showDivider,
-      layoutTransition,
+      layoutTransition: layout,
     }),
-    [variant, showDivider, layoutTransition]
+    [variant, showDivider, layout]
   );
 
   return (
@@ -93,17 +93,14 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
             ? accordionStyles.nativeStyles.borderContainer
             : undefined
         }
-        layout={layoutTransition || ACCORDION_LAYOUT_TRANSITION}
+        layout={layout}
         {...restProps}
       >
         {Children.map(children, (child, index) => (
           <>
             {child}
             {showDivider && index < Children.count(children) - 1 && (
-              <Animated.View
-                className={dividerStyles}
-                layout={layoutTransition || ACCORDION_LAYOUT_TRANSITION}
-              />
+              <Animated.View className={dividerStyles} layout={layout} />
             )}
           </>
         ))}
@@ -115,7 +112,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
 // ------------------------------------------------------------------------------
 
 const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
-  const { children, className, ...restProps } = props;
+  const { children, layout: layoutProp, className, ...restProps } = props;
 
   const { layoutTransition } = useAccordionContext();
 
@@ -125,7 +122,7 @@ const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
     <AnimatedItemView
       ref={ref}
       className={tvStyles}
-      layout={layoutTransition || ACCORDION_LAYOUT_TRANSITION}
+      layout={layoutProp || layoutTransition}
       {...restProps}
     >
       {children}
@@ -214,63 +211,56 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 
 // ------------------------------------------------------------------------------
 
-const Indicator = forwardRef<AccordionIndicatorRef, AccordionIndicatorProps>(
-  (props, ref) => {
-    const { children, className, iconProps, springConfig, ...restProps } =
-      props;
+const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
+  const { children, className, iconProps, springConfig, ...restProps } = props;
 
-    const { isExpanded } = useAccordionItemContext();
+  const { isExpanded } = useAccordionItemContext();
 
-    const { colors } = useTheme();
+  const { colors } = useTheme();
 
-    const tvStyles = accordionStyles.indicator({ className });
+  const tvStyles = accordionStyles.indicator({ className });
 
-    const rotation = useSharedValue(0);
+  const rotation = useSharedValue(0);
 
-    useEffect(() => {
-      rotation.set(
-        withSpring(isExpanded ? 1 : 0, springConfig || INDICATOR_SPRING_CONFIG)
-      );
-    }, [isExpanded, rotation, springConfig]);
+  useEffect(() => {
+    rotation.set(
+      withSpring(isExpanded ? 1 : 0, springConfig || INDICATOR_SPRING_CONFIG)
+    );
+  }, [isExpanded, rotation, springConfig]);
 
-    const animatedStyle = useAnimatedStyle(() => {
-      return {
-        transform: [
-          {
-            rotate: interpolate(rotation.get(), [0, 1], [0, 180]) + 'deg',
-          },
-        ],
-      };
-    });
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          rotate: interpolate(rotation.get(), [0, 1], [0, 180]) + 'deg',
+        },
+      ],
+    };
+  });
 
-    if (children) {
-      return (
-        <AccordionPrimitive.Indicator
-          ref={ref}
-          className={tvStyles}
-          {...restProps}
-        >
-          {children}
-        </AccordionPrimitive.Indicator>
-      );
-    }
-
+  if (children) {
     return (
-      <AnimatedIndicator
-        ref={ref}
-        className={tvStyles}
-        style={animatedStyle}
-        {...restProps}
-      >
-        <ChevronDownIcon
-          size={iconProps?.size ?? DEFAULT_ICON_SIZE}
-          strokeWidth={iconProps?.strokeWidth ?? DEFAULT_ICON_STROKE_WIDTH}
-          color={iconProps?.color ?? colors.foreground}
-        />
+      <AnimatedIndicator ref={ref} className={tvStyles} {...restProps}>
+        {children}
       </AnimatedIndicator>
     );
   }
-);
+
+  return (
+    <AnimatedIndicator
+      ref={ref}
+      className={tvStyles}
+      style={animatedStyle}
+      {...restProps}
+    >
+      <ChevronDownIcon
+        size={iconProps?.size ?? DEFAULT_ICON_SIZE}
+        strokeWidth={iconProps?.strokeWidth ?? DEFAULT_ICON_STROKE_WIDTH}
+        color={iconProps?.color ?? colors.foreground}
+      />
+    </AnimatedIndicator>
+  );
+});
 
 // ------------------------------------------------------------------------------
 

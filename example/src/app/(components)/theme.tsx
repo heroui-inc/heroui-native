@@ -1,69 +1,60 @@
-import { Checkbox, useTheme } from 'heroui-native';
-import { Minus, Plus } from 'lucide-react-native';
-import React from 'react';
-import { ScrollView, View } from 'react-native';
-import Animated, { ZoomIn } from 'react-native-reanimated';
+import { Accordion, useTheme } from 'heroui-native';
+import { CreditCard, Package, ShoppingBag } from 'lucide-react-native';
+import { ScrollView, Text, View } from 'react-native';
 
 export default function Theme() {
-  const [defaultCheck, setDefaultCheck] = React.useState(true);
-  const [success, setSuccess] = React.useState(true);
-  const [warning, setWarning] = React.useState(true);
-  const [danger, setDanger] = React.useState(true);
-  const [custom, setCustom] = React.useState(true);
-
   const { colors } = useTheme();
+
+  const accordionData = [
+    {
+      id: '1',
+      title: 'How do I place an order?',
+      icon: <ShoppingBag size={16} color={colors.mutedForeground} />,
+      content:
+        'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
+    },
+    {
+      id: '2',
+      title: 'What payment methods do you accept?',
+      icon: <CreditCard size={16} color={colors.mutedForeground} />,
+      content:
+        'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
+    },
+    {
+      id: '3',
+      title: 'How much does shipping cost?',
+      icon: <Package size={16} color={colors.mutedForeground} />,
+      content:
+        'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
+    },
+  ];
+
   return (
     <ScrollView
       className="flex-1 px-4 py-6 bg-background"
       contentContainerClassName="pb-20"
       contentInsetAdjustmentBehavior="automatic"
     >
-      <View className="flex-row gap-4">
-        <Checkbox
-          isSelected={defaultCheck}
-          onSelectedChange={setDefaultCheck}
-        />
-
-        <Checkbox
-          isSelected={success}
-          onSelectedChange={setSuccess}
-          color="success"
-        />
-
-        <Checkbox
-          isSelected={warning}
-          onSelectedChange={setWarning}
-          color="warning"
-        />
-
-        <Checkbox
-          isSelected={danger}
-          onSelectedChange={setDanger}
-          color="danger"
-        />
-
-        <Checkbox
-          isSelected={custom}
-          onSelectedChange={setCustom}
-          className="w-8 h-8"
-        >
-          <Checkbox.Indicator>
-            {custom ? (
-              <Animated.View key="selected" entering={ZoomIn}>
-                <Minus
-                  size={16}
-                  color={colors.accentForeground}
-                  strokeWidth={3}
-                />
-              </Animated.View>
-            ) : (
-              <Animated.View key="unselected" entering={ZoomIn}>
-                <Plus size={16} color={colors.accent} strokeWidth={3} />
-              </Animated.View>
-            )}
-          </Checkbox.Indicator>
-        </Checkbox>
-      </View>
+      <Accordion selectionMode="single" variant="border" defaultValue="2">
+        {accordionData.map((item) => (
+          <Accordion.Item key={item.id} value={item.id}>
+            <Accordion.Trigger>
+              <View className="flex-row items-center flex-1 gap-3">
+                {item.icon}
+                <Text className="text-foreground text-base flex-1">
+                  {item.title}
+                </Text>
+              </View>
+              <Accordion.Indicator />
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <Text className="text-muted-foreground text-base/relaxed px-[25px]">
+                {item.content}
+              </Text>
+            </Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion>
     </ScrollView>
   );
 }

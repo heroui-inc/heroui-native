@@ -40,7 +40,7 @@ export default function TextFieldScreen() {
               onPress={() => setIsTestFieldValid(!isTestFieldValid)}
               variant="tertiary"
               size="sm"
-              fullWidth={false}
+              isFullWidth={false}
             >
               <Button.Label>
                 {isTestFieldValid ? 'Make Invalid' : 'Make Valid'}

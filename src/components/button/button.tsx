@@ -48,7 +48,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     layout = DEFAULT_LAYOUT_TRANSITION,
     variant = 'primary',
     size = 'md',
-    fullWidth = true,
+    isFullWidth = true,
     isIconOnly = false,
     isDisabled = false,
     className,
@@ -104,7 +104,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   const tvStyles = buttonStyles.root({
     variant,
     size,
-    fullWidth,
+    isFullWidth,
     isIconOnly,
     isDisabled,
     className,

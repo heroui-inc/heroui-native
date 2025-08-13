@@ -20,6 +20,61 @@ export type ButtonVariant =
   | 'danger';
 
 /**
+ * Configuration for disabling button animations
+ */
+export interface DisableAnimation {
+  /**
+   * Whether to disable the scale animation
+   * @default false
+   */
+  scale?: boolean;
+  /**
+   * Whether to disable the highlight animation
+   * @default false
+   */
+  highlight?: boolean;
+}
+
+/**
+ * Configuration for button animations
+ */
+export interface AnimationConfig {
+  /**
+   * Animation configuration for scale
+   */
+  scale?: {
+    /**
+     * Animation target value for scale
+     * @default 0.995
+     */
+    value?: number;
+    /**
+     * Animation configuration for scale
+     */
+    config?: TimingConfig;
+  };
+  /**
+   * Animation configuration for highlight
+   */
+  highlight?: {
+    /**
+     * Animation target color for highlight
+     * @default 'transparent'
+     */
+    color?: string;
+    /**
+     * Animation target opacity for highlight
+     * @default varies by variant and theme
+     */
+    opacity?: number;
+    /**
+     * Animation configuration for highlight
+     */
+    config?: TimingConfig;
+  };
+}
+
+/**
  * Props for the Button.Root component
  */
 export interface ButtonRootProps extends AnimatedProps<PressableProps> {
@@ -41,7 +96,7 @@ export interface ButtonRootProps extends AnimatedProps<PressableProps> {
    * Whether the button should take full width of its container
    * @default true
    */
-  fullWidth?: boolean;
+  isFullWidth?: boolean;
   /**
    * Whether the button displays an icon only (needed for correct layout)
    * @default false
@@ -60,56 +115,39 @@ export interface ButtonRootProps extends AnimatedProps<PressableProps> {
    * Whether to disable the animation (scale and/or highlight)
    * @default false
    */
-  disableAnimation?: {
-    /**
-     * Whether to disable the scale animation
-     * @default false
-     */
-    scale?: boolean;
-    /**
-     * Whether to disable the highlight animation
-     * @default false
-     */
-    highlight?: boolean;
-  };
+  disableAnimation?: DisableAnimation;
   /**
    * Animation configuration for press states (scale and highlight)
    */
-  animationConfig?: {
-    /**
-     * Animation configuration for scale
-     */
-    scale?: {
-      /**
-       * Animation target value for scale
-       * @default 0.995
-       */
-      value?: number;
-      /**
-       * Animation configuration for scale
-       */
-      config?: TimingConfig;
-    };
-    /**
-     * Animation configuration for highlight
-     */
-    highlight?: {
-      /**
-       * Animation target color for highlight
-       * @default 'transparent'
-       */
-      color?: string;
-      /**
-       * Animation target opacity for highlight
-       * @default varies by variant and theme
-       */
-      opacity?: number;
-      /**
-       * Animation configuration for highlight
-       */
-      config?: TimingConfig;
-    };
-  };
+  animationConfig?: AnimationConfig;
+}
+
+/**
+ * Props for the Button.Background component
+ */
+export interface ButtonBackgroundProps extends AnimatedProps<ViewProps> {
+  /**
+   * Content to be rendered as the button background
+   */
+  children?: React.ReactNode;
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
+}
+
+/**
+ * Props for the Button.StartContent component
+ */
+export interface ButtonStartContentProps extends AnimatedProps<ViewProps> {
+  /**
+   * Content to be rendered at the start of the button
+   */
+  children?: React.ReactNode;
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
 }
 
 /**
@@ -131,39 +169,11 @@ export interface ButtonLabelProps extends AnimatedProps<ViewProps> {
 }
 
 /**
- * Props for the Button.StartContent component
- */
-export interface ButtonStartContentProps extends AnimatedProps<ViewProps> {
-  /**
-   * Content to be rendered at the start of the button
-   */
-  children?: React.ReactNode;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-}
-
-/**
  * Props for the Button.EndContent component
  */
 export interface ButtonEndContentProps extends AnimatedProps<ViewProps> {
   /**
    * Content to be rendered at the end of the button
-   */
-  children?: React.ReactNode;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-}
-
-/**
- * Props for the Button.Background component
- */
-export interface ButtonBackgroundProps extends AnimatedProps<ViewProps> {
-  /**
-   * Content to be rendered as the button background
    */
   children?: React.ReactNode;
   /**

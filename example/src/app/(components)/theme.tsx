@@ -1,35 +1,52 @@
-import { Chip } from 'heroui-native';
-import { Star, X } from 'lucide-react-native';
-import { ScrollView, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Button, useTheme } from 'heroui-native';
+import { Download, Heart } from 'lucide-react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 export default function Theme() {
+  const { colors } = useTheme();
   return (
     <ScrollView
       className="flex-1 px-4 py-6 bg-background"
       contentContainerClassName="pb-20"
       contentInsetAdjustmentBehavior="automatic"
     >
-      <View className="flex-row gap-4">
-        <Chip variant="secondary" color="success">
-          <Chip.StartContent>
-            <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-success" />
-          </Chip.StartContent>
-          <Chip.Label>Completed</Chip.Label>
-        </Chip>
+      <View className="gap-4">
+        <Button
+          variant="primary"
+          onPress={() => console.log('Download pressed')}
+        >
+          <Button.StartContent>
+            <Download size={18} color={colors.accentForeground} />
+          </Button.StartContent>
+          <Button.Label>Download File</Button.Label>
+        </Button>
 
-        <Chip variant="primary" color="warning">
-          <Chip.StartContent className="pr-1">
-            <Star size={12} color="#F59E0B" fill="#F59E0B" />
-          </Chip.StartContent>
-          <Chip.Label>Premium</Chip.Label>
-        </Chip>
+        <Button>
+          <Button.Background>
+            <LinearGradient
+              colors={['#9333ea', '#ec4899']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={StyleSheet.absoluteFill}
+            />
+          </Button.Background>
+          <Button.Label classNames={{ text: 'text-white font-bold' }}>
+            Gradient Button
+          </Button.Label>
+        </Button>
 
-        <Chip variant="tertiary" color="danger">
-          <Chip.Label>Remove</Chip.Label>
-          <Chip.EndContent>
-            <X size={16} color="#EF4444" />
-          </Chip.EndContent>
-        </Chip>
+        <Button
+          variant="secondary"
+          size="sm"
+          isFullWidth={false}
+          className="self-end"
+        >
+          <Button.Label>Like</Button.Label>
+          <Button.EndContent>
+            <Heart size={16} color={colors.accentSoftForeground} />
+          </Button.EndContent>
+        </Button>
       </View>
     </ScrollView>
   );

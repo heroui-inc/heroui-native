@@ -1,9 +1,16 @@
-import { LinearGradient } from 'expo-linear-gradient';
-import { Button, useTheme } from 'heroui-native';
-import { Download, Heart } from 'lucide-react-native';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Checkbox, useTheme } from 'heroui-native';
+import { Minus, Plus } from 'lucide-react-native';
+import React from 'react';
+import { ScrollView, View } from 'react-native';
+import Animated, { ZoomIn } from 'react-native-reanimated';
 
 export default function Theme() {
+  const [defaultCheck, setDefaultCheck] = React.useState(true);
+  const [success, setSuccess] = React.useState(true);
+  const [warning, setWarning] = React.useState(true);
+  const [danger, setDanger] = React.useState(true);
+  const [custom, setCustom] = React.useState(true);
+
   const { colors } = useTheme();
   return (
     <ScrollView
@@ -11,42 +18,51 @@ export default function Theme() {
       contentContainerClassName="pb-20"
       contentInsetAdjustmentBehavior="automatic"
     >
-      <View className="gap-4">
-        <Button
-          variant="primary"
-          onPress={() => console.log('Download pressed')}
-        >
-          <Button.StartContent>
-            <Download size={18} color={colors.accentForeground} />
-          </Button.StartContent>
-          <Button.Label>Download File</Button.Label>
-        </Button>
+      <View className="flex-row gap-4">
+        <Checkbox
+          isSelected={defaultCheck}
+          onSelectedChange={setDefaultCheck}
+        />
 
-        <Button>
-          <Button.Background>
-            <LinearGradient
-              colors={['#9333ea', '#ec4899']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={StyleSheet.absoluteFill}
-            />
-          </Button.Background>
-          <Button.Label classNames={{ text: 'text-white font-bold' }}>
-            Gradient Button
-          </Button.Label>
-        </Button>
+        <Checkbox
+          isSelected={success}
+          onSelectedChange={setSuccess}
+          color="success"
+        />
 
-        <Button
-          variant="secondary"
-          size="sm"
-          isFullWidth={false}
-          className="self-end"
+        <Checkbox
+          isSelected={warning}
+          onSelectedChange={setWarning}
+          color="warning"
+        />
+
+        <Checkbox
+          isSelected={danger}
+          onSelectedChange={setDanger}
+          color="danger"
+        />
+
+        <Checkbox
+          isSelected={custom}
+          onSelectedChange={setCustom}
+          className="w-8 h-8"
         >
-          <Button.Label>Like</Button.Label>
-          <Button.EndContent>
-            <Heart size={16} color={colors.accentSoftForeground} />
-          </Button.EndContent>
-        </Button>
+          <Checkbox.Indicator>
+            {custom ? (
+              <Animated.View key="selected" entering={ZoomIn}>
+                <Minus
+                  size={16}
+                  color={colors.accentForeground}
+                  strokeWidth={3}
+                />
+              </Animated.View>
+            ) : (
+              <Animated.View key="unselected" entering={ZoomIn}>
+                <Plus size={16} color={colors.accent} strokeWidth={3} />
+              </Animated.View>
+            )}
+          </Checkbox.Indicator>
+        </Checkbox>
       </View>
     </ScrollView>
   );

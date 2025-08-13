@@ -1,33 +1,11 @@
-import { Accordion, useTheme } from 'heroui-native';
-import { CreditCard, Package, ShoppingBag } from 'lucide-react-native';
-import { ScrollView, Text, View } from 'react-native';
+import { Checkbox, FormField, Switch } from 'heroui-native';
+import React from 'react';
+import { ScrollView, View } from 'react-native';
 
 export default function Theme() {
-  const { colors } = useTheme();
-
-  const accordionData = [
-    {
-      id: '1',
-      title: 'How do I place an order?',
-      icon: <ShoppingBag size={16} color={colors.mutedForeground} />,
-      content:
-        'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
-    },
-    {
-      id: '2',
-      title: 'What payment methods do you accept?',
-      icon: <CreditCard size={16} color={colors.mutedForeground} />,
-      content:
-        'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
-    },
-    {
-      id: '3',
-      title: 'How much does shipping cost?',
-      icon: <Package size={16} color={colors.mutedForeground} />,
-      content:
-        'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
-    },
-  ];
+  const [notifications, setNotifications] = React.useState(false);
+  const [terms, setTerms] = React.useState(false);
+  const [newsletter, setNewsletter] = React.useState(true);
 
   return (
     <ScrollView
@@ -35,26 +13,52 @@ export default function Theme() {
       contentContainerClassName="pb-20"
       contentInsetAdjustmentBehavior="automatic"
     >
-      <Accordion selectionMode="single" variant="border" defaultValue="2">
-        {accordionData.map((item) => (
-          <Accordion.Item key={item.id} value={item.id}>
-            <Accordion.Trigger>
-              <View className="flex-row items-center flex-1 gap-3">
-                {item.icon}
-                <Text className="text-foreground text-base flex-1">
-                  {item.title}
-                </Text>
-              </View>
-              <Accordion.Indicator />
-            </Accordion.Trigger>
-            <Accordion.Content>
-              <Text className="text-muted-foreground text-base/relaxed px-[25px]">
-                {item.content}
-              </Text>
-            </Accordion.Content>
-          </Accordion.Item>
-        ))}
-      </Accordion>
+      <View className="gap-4">
+        <FormField
+          isSelected={notifications}
+          onSelectedChange={setNotifications}
+        >
+          <FormField.Content>
+            <FormField.Label>Enable notifications</FormField.Label>
+            <FormField.Description>
+              Receive push notifications about your account activity
+            </FormField.Description>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Switch />
+          </FormField.Indicator>
+        </FormField>
+
+        <FormField
+          isSelected={terms}
+          onSelectedChange={setTerms}
+          isValid={terms}
+        >
+          <FormField.Content>
+            <FormField.Label>
+              I agree to the terms and conditions
+            </FormField.Label>
+            <FormField.Description>
+              By checking this box, you agree to our Terms of Service
+            </FormField.Description>
+          </FormField.Content>
+          <FormField.Indicator className="mt-0.5">
+            <Checkbox />
+          </FormField.Indicator>
+          <FormField.ErrorMessage>
+            This field is required
+          </FormField.ErrorMessage>
+        </FormField>
+
+        <FormField isSelected={newsletter} onSelectedChange={setNewsletter}>
+          <FormField.Content>
+            <FormField.Label>Subscribe to newsletter</FormField.Label>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Checkbox color="warning" />
+          </FormField.Indicator>
+        </FormField>
+      </View>
     </ScrollView>
   );
 }

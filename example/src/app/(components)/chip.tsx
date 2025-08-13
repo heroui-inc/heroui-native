@@ -17,7 +17,9 @@ export default function ChipScreen() {
       </Text>
 
       <View className="flex-row gap-4 mb-6">
-        <Chip className="bg-surface" />
+        <Chip>
+          <Chip.Label>Basic Chip</Chip.Label>
+        </Chip>
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">
@@ -25,9 +27,15 @@ export default function ChipScreen() {
       </Text>
 
       <View className="flex-row gap-4 mb-6">
-        <Chip size="sm" />
-        <Chip size="md" />
-        <Chip size="lg" />
+        <Chip size="sm">
+          <Chip.Label>Small Chip</Chip.Label>
+        </Chip>
+        <Chip size="md">
+          <Chip.Label>Medium Chip</Chip.Label>
+        </Chip>
+        <Chip size="lg">
+          <Chip.Label>Large Chip</Chip.Label>
+        </Chip>
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">

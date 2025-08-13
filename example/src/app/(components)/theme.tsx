@@ -1,5 +1,5 @@
-import { Button, Card } from 'heroui-native';
-import { ShoppingBasket } from 'lucide-react-native';
+import { Chip } from 'heroui-native';
+import { Star, X } from 'lucide-react-native';
 import { ScrollView, View } from 'react-native';
 
 export default function Theme() {
@@ -9,29 +9,28 @@ export default function Theme() {
       contentContainerClassName="pb-20"
       contentInsetAdjustmentBehavior="automatic"
     >
-      <Card>
-        <Card.Details>
-          <Card.Body className="mb-4">
-            <View className="gap-1 mb-2">
-              <Card.Title className="text-pink-500">$450</Card.Title>
-              <Card.Title>Living room Sofa • Collection 2025</Card.Title>
-            </View>
-            <Card.Description>
-              This sofa is perfect for modern tropical spaces, baroque inspired
-              spaces.
-            </Card.Description>
-          </Card.Body>
-          <Card.Footer className="gap-3">
-            <Button variant="primary">Buy now</Button>
-            <Button variant="ghost">
-              <Button.Label>Add to cart</Button.Label>
-              <Button.EndContent>
-                <ShoppingBasket size={16} />
-              </Button.EndContent>
-            </Button>
-          </Card.Footer>
-        </Card.Details>
-      </Card>
+      <View className="flex-row gap-4">
+        <Chip variant="secondary" color="success">
+          <Chip.StartContent>
+            <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-success" />
+          </Chip.StartContent>
+          <Chip.Label>Completed</Chip.Label>
+        </Chip>
+
+        <Chip variant="primary" color="warning">
+          <Chip.StartContent className="pr-1">
+            <Star size={12} color="#F59E0B" fill="#F59E0B" />
+          </Chip.StartContent>
+          <Chip.Label>Premium</Chip.Label>
+        </Chip>
+
+        <Chip variant="tertiary" color="danger">
+          <Chip.Label>Remove</Chip.Label>
+          <Chip.EndContent>
+            <X size={16} color="#EF4444" />
+          </Chip.EndContent>
+        </Chip>
+      </View>
     </ScrollView>
   );
 }

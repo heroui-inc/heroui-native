@@ -2,7 +2,6 @@ import { forwardRef, useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { createContext } from '../../helpers/utils';
 import { getElementByDisplayName } from '../../helpers/utils/get-element-by-display-name';
-import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
 import { DISPLAY_NAME } from './chip.constants';
 import chipStyles, { nativeStyles } from './chip.styles';
 import type {
@@ -36,12 +35,7 @@ const Chip = forwardRef<View, ChipProps>((props, ref) => {
   );
 
   const labelElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.CHIP_LABEL,
-        <ChipLabel>Label</ChipLabel>
-      ),
+    () => getElementByDisplayName(children, DISPLAY_NAME.CHIP_LABEL),
     [children]
   );
 

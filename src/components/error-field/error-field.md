@@ -132,4 +132,4 @@ export default function ErrorFieldExample() {
 | `isValid`              | `boolean`                               | `true`      | Controls the visibility of the error field                            |
 | `className`            | `string`                                | `undefined` | Additional CSS classes for the container                              |
 | `classNames`           | `{ container?: string, text?: string }` | `undefined` | Additional CSS classes for different parts of the component           |
-| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`              | -           | All standard React Native Animated.View props are supported           |
+| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`              | -           | All Reanimated Animated.View props are supported                      |

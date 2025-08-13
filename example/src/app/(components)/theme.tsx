@@ -1,16 +1,10 @@
-import { ErrorField, TextField } from 'heroui-native';
+import { Spinner } from 'heroui-native';
+import { Loader } from 'lucide-react-native';
 import { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Theme() {
-  const [email, setEmail] = useState('');
-  const [showError, setShowError] = useState(false);
-
-  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  const handleBlur = () => {
-    setShowError(email !== '' && !isValidEmail);
-  };
+  const [loading, setLoading] = useState(true);
 
   return (
     <ScrollView
@@ -18,25 +12,29 @@ export default function Theme() {
       contentContainerClassName="pb-20"
       contentInsetAdjustmentBehavior="automatic"
     >
-      <View className="p-4">
-        <TextField>
-          <TextField.Label>Email Address</TextField.Label>
-          <TextField.Input
-            placeholder="Enter your email"
-            value={email}
-            onChangeText={setEmail}
-            onBlur={handleBlur}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          <TextField.Description>
-            We'll use this to contact you
-          </TextField.Description>
-        </TextField>
+      <View className="gap-4 p-4 bg-background">
+        <View className="flex-row items-center gap-2 p-4 rounded-lg bg-stone-200">
+          <Spinner size="sm" color="default" />
+          <Text className="text-stone-500">Loading content...</Text>
+        </View>
 
-        <ErrorField isValid={!showError} className="ml-1">
-          Please enter a valid email address
-        </ErrorField>
+        <View className="items-center p-8 rounded-2xl bg-stone-200">
+          <Spinner size="lg" color="success" loading={loading} />
+          <Text className="text-stone-500 mt-4">Processing...</Text>
+          <TouchableOpacity onPress={() => setLoading(!loading)}>
+            <Text className="text-primary mt-2 text-sm">
+              {loading ? 'Tap to stop' : 'Tap to start'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View className="flex-row gap-4 items-center justify-center">
+          <Spinner size="md" color="#EC4899">
+            <Spinner.Indicator speed={0.7}>
+              <Loader size={24} color="#EC4899" />
+            </Spinner.Indicator>
+          </Spinner>
+        </View>
       </View>
     </ScrollView>
   );

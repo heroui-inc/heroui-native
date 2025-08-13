@@ -2,8 +2,6 @@ import { forwardRef, useEffect, useMemo } from 'react';
 import Animated, {
   cancelAnimation,
   Easing,
-  FadeIn,
-  FadeOut,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
@@ -17,6 +15,8 @@ import { useTheme } from '../../theme';
 import { SpinnerIcon } from './spinner-icon';
 import {
   DEFAULT_ROTATION_DURATION,
+  DEFAULT_SPINNER_INDICATOR_ENTERING,
+  DEFAULT_SPINNER_INDICATOR_EXITING,
   DISPLAY_NAME,
   SPINNER_SIZE_MAP,
 } from './spinner.constants';
@@ -98,9 +98,11 @@ const SpinnerIndicator = forwardRef<
 >((props, ref) => {
   const {
     children,
+    entering = DEFAULT_SPINNER_INDICATOR_ENTERING,
+    exiting = DEFAULT_SPINNER_INDICATOR_EXITING,
     className,
     style,
-    speed = 1,
+    speed = 1.1,
     animationEasing,
     iconProps,
     ...restProps
@@ -163,22 +165,19 @@ const SpinnerIndicator = forwardRef<
   return (
     <AnimatedIndicator
       ref={ref}
+      entering={entering}
+      exiting={exiting}
       className={tvStyles}
       style={[animatedStyle, style]}
       {...restProps}
     >
-      <Animated.View
-        entering={FadeIn.easing(Easing.out(Easing.ease))}
-        exiting={FadeOut}
-      >
-        {children || (
-          <SpinnerIcon
-            width={iconProps?.width ?? iconSize}
-            height={iconProps?.height ?? iconSize}
-            color={iconProps?.color ?? iconColor}
-          />
-        )}
-      </Animated.View>
+      {children || (
+        <SpinnerIcon
+          width={iconProps?.width ?? iconSize}
+          height={iconProps?.height ?? iconSize}
+          color={iconProps?.color ?? iconColor}
+        />
+      )}
     </AnimatedIndicator>
   );
 });

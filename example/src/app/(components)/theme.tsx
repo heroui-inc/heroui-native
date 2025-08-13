@@ -1,34 +1,42 @@
-import { Surface } from 'heroui-native';
-import { ScrollView, Text, View } from 'react-native';
+import { ErrorField, TextField } from 'heroui-native';
+import { useState } from 'react';
+import { ScrollView, View } from 'react-native';
 
 export default function Theme() {
+  const [email, setEmail] = useState('');
+  const [showError, setShowError] = useState(false);
+
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleBlur = () => {
+    setShowError(email !== '' && !isValidEmail);
+  };
+
   return (
     <ScrollView
       className="flex-1 px-4 py-6 bg-background"
       contentContainerClassName="pb-20"
       contentInsetAdjustmentBehavior="automatic"
     >
-      <View className="gap-4 p-4">
-        <Surface variant="1">
-          <View className="gap-2">
-            <Text className="text-lg font-semibold text-foreground">
-              Card Title
-            </Text>
-            <Text className="text-muted-foreground">
-              This is a surface component that provides consistent elevation and
-              styling for content containers.
-            </Text>
-          </View>
-        </Surface>
+      <View className="p-4">
+        <TextField>
+          <TextField.Label>Email Address</TextField.Label>
+          <TextField.Input
+            placeholder="Enter your email"
+            value={email}
+            onChangeText={setEmail}
+            onBlur={handleBlur}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+          <TextField.Description>
+            We'll use this to contact you
+          </TextField.Description>
+        </TextField>
 
-        <View className="flex-row gap-4">
-          <Surface variant="2" className="flex-1">
-            <Text className="text-foreground text-center">Left Panel</Text>
-          </Surface>
-          <Surface variant="3" className="flex-1">
-            <Text className="text-foreground text-center">Right Panel</Text>
-          </Surface>
-        </View>
+        <ErrorField isValid={!showError} className="ml-1">
+          Please enter a valid email address
+        </ErrorField>
       </View>
     </ScrollView>
   );

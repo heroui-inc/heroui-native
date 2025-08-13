@@ -14,6 +14,12 @@ export interface ErrorFieldRootProps extends AnimatedProps<ViewProps> {
   children?: React.ReactNode;
 
   /**
+   * Controls the visibility of the error field
+   * @default true
+   */
+  isValid?: boolean;
+
+  /**
    * Additional CSS class for styling
    */
   className?: string;
@@ -22,10 +28,4 @@ export interface ErrorFieldRootProps extends AnimatedProps<ViewProps> {
    * Additional CSS classes for different parts of the component
    */
   classNames?: ElementSlots<ErrorFieldSlots>;
-
-  /**
-   * Controls the visibility of the error field
-   * @default true
-   */
-  isValid?: boolean;
 }

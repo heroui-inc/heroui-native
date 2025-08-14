@@ -54,7 +54,7 @@ Add helper text below the label using the Description component.
 Display validation errors using the ErrorMessage component.
 
 ```tsx
-<FormField isSelected={value} onSelectedChange={setValue} isValid={value}>
+<FormField isSelected={value} onSelectedChange={setValue} isInvalid={!value}>
   <FormField.Content>
     <FormField.Label>I agree to the terms</FormField.Label>
   </FormField.Content>
@@ -170,7 +170,7 @@ export default function FormFieldExample() {
         <FormField
           isSelected={terms}
           onSelectedChange={setTerms}
-          isValid={terms}
+          isInvalid={!terms}
         >
           <FormField.Content>
             <FormField.Label>
@@ -235,7 +235,7 @@ export default function FormFieldExample() {
 | isDisabled                 | `boolean`                       | `false`        | Whether the form control is disabled                         |
 | isReadOnly                 | `boolean`                       | `false`        | Whether the form control is read-only                        |
 | isInline                   | `boolean`                       | `false`        | Whether the form control is inline (for flex-row containers) |
-| isValid                    | `boolean`                       | `true`         | Whether the form control is valid                            |
+| isInvalid                  | `boolean`                       | `false`        | Whether the form control is invalid                          |
 | className                  | `string`                        | -              | Custom class name for the root element                       |
 | onSelectedChange           | `(isSelected: boolean) => void` | -              | Callback when selection state changes                        |
 | ...Animated.PressableProps | `AnimatedProps<PressableProps>` | -              | All Reanimated AnimatedPressable props are supported         |
@@ -293,7 +293,7 @@ export default function FormFieldExample() {
 | prop                  | type                            | default | description                                             |
 | --------------------- | ------------------------------- | ------- | ------------------------------------------------------- |
 | children              | `React.ReactNode`               | -       | Error message content                                   |
-| isValid               | `boolean`                       | `true`  | Controls the visibility of the error field              |
+| isInvalid             | `boolean`                       | `false` | Controls the visibility of the error field              |
 | className             | `string`                        | -       | Custom class name for styling                           |
 | classNames            | `ElementSlots<ErrorFieldSlots>` | -       | Custom class names for different parts of the component |
 | ...Animated.ViewProps | `AnimatedProps<ViewProps>`      | -       | All Reanimated Animated.View props are supported        |

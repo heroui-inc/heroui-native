@@ -15,9 +15,9 @@ export interface ErrorFieldRootProps extends AnimatedProps<ViewProps> {
 
   /**
    * Controls the visibility of the error field
-   * @default true
+   * @default false
    */
-  isValid?: boolean;
+  isInvalid?: boolean;
 
   /**
    * Additional CSS class for styling

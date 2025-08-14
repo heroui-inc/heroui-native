@@ -48,7 +48,7 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     isDisabled = false,
     isReadOnly = false,
     isInline = false,
-    isValid = true,
+    isInvalid = false,
     ...restProps
   } = props;
 
@@ -97,9 +97,9 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
       isDisabled,
       isReadOnly,
       isInline,
-      isValid,
+      isInvalid,
     }),
-    [isSelected, onSelectedChange, isDisabled, isReadOnly, isInline, isValid]
+    [isSelected, onSelectedChange, isDisabled, isReadOnly, isInline, isInvalid]
   );
 
   return (
@@ -204,7 +204,7 @@ const FormFieldDescription = forwardRef<View, FormFieldDescriptionProps>(
 const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
-    const { isSelected, onSelectedChange, isDisabled, isReadOnly, isValid } =
+    const { isSelected, onSelectedChange, isDisabled, isReadOnly, isInvalid } =
       useFormFieldContext();
 
     const tvStyles = formFieldStyles.indicator({
@@ -224,7 +224,8 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
           !hasProp(child, 'onSelectedChange') && { onSelectedChange }),
         ...(isDisabled && !hasProp(child, 'isDisabled') && { isDisabled }),
         ...(isReadOnly && !hasProp(child, 'isReadOnly') && { isReadOnly }),
-        ...(isValid !== undefined && !hasProp(child, 'isValid') && { isValid }),
+        ...(isInvalid !== undefined &&
+          !hasProp(child, 'isInvalid') && { isInvalid }),
       });
     }, [
       children,
@@ -232,7 +233,7 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
       onSelectedChange,
       isDisabled,
       isReadOnly,
-      isValid,
+      isInvalid,
     ]);
 
     return (
@@ -247,7 +248,7 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
 
 const FormFieldErrorMessage = forwardRef<ViewRef, ErrorFieldRootProps>(
   (props, ref) => {
-    const { isValid } = useFormFieldContext();
+    const { isInvalid } = useFormFieldContext();
     const { className, ...restProps } = props;
 
     const tvStyles = formFieldStyles.errorMessage({
@@ -257,7 +258,7 @@ const FormFieldErrorMessage = forwardRef<ViewRef, ErrorFieldRootProps>(
     return (
       <ErrorField
         ref={ref}
-        isValid={isValid}
+        isInvalid={isInvalid}
         className={tvStyles}
         {...restProps}
       />

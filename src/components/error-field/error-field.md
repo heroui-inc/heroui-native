@@ -21,17 +21,19 @@ import { ErrorField } from 'heroui-native';
 The ErrorField component displays error messages when validation fails.
 
 ```tsx
-<ErrorField isValid={false}>This field is required</ErrorField>
+<ErrorField isInvalid={true}>This field is required</ErrorField>
 ```
 
 ### Controlled Visibility
 
-Control when the error appears using the `isValid` prop.
+Control when the error appears using the `isInvalid` prop.
 
 ```tsx
-const [isValid, setIsValid] = useState(true);
+const [isInvalid, setIsInvalid] = useState(false);
 
-<ErrorField isValid={isValid}>Please enter a valid email address</ErrorField>;
+<ErrorField isInvalid={isInvalid}>
+  Please enter a valid email address
+</ErrorField>;
 ```
 
 ### Custom Content
@@ -39,7 +41,7 @@ const [isValid, setIsValid] = useState(true);
 Pass custom React components as children instead of strings.
 
 ```tsx
-<ErrorField isValid={false}>
+<ErrorField isInvalid={true}>
   <View className="flex-row items-center">
     <Icon name="alert-circle" />
     <Text className="ml-2 text-danger">Invalid input</Text>
@@ -55,7 +57,7 @@ Override default entering and exiting animations.
 import { SlideInDown, SlideOutUp } from 'react-native-reanimated';
 
 <ErrorField
-  isValid={false}
+  isInvalid={true}
   entering={SlideInDown.duration(200)}
   exiting={SlideOutUp.duration(150)}
 >
@@ -69,7 +71,7 @@ Apply custom styles to the container and text elements.
 
 ```tsx
 <ErrorField
-  isValid={false}
+  isInvalid={true}
   className="mt-2"
   classNames={{
     container: 'bg-danger/10 p-2 rounded',
@@ -114,7 +116,7 @@ export default function ErrorFieldExample() {
         </TextField.Description>
       </TextField>
 
-      <ErrorField isValid={!showError} className="ml-1">
+      <ErrorField isInvalid={showError} className="ml-1">
         Please enter a valid email address
       </ErrorField>
     </View>
@@ -129,7 +131,7 @@ export default function ErrorFieldExample() {
 | prop                   | type                                    | default     | description                                                           |
 | ---------------------- | --------------------------------------- | ----------- | --------------------------------------------------------------------- |
 | `children`             | `React.ReactNode`                       | `undefined` | The content of the error field. String children are wrapped with Text |
-| `isValid`              | `boolean`                               | `true`      | Controls the visibility of the error field                            |
+| `isInvalid`            | `boolean`                               | `false`     | Controls the visibility of the error field                            |
 | `className`            | `string`                                | `undefined` | Additional CSS classes for the container                              |
 | `classNames`           | `{ container?: string, text?: string }` | `undefined` | Additional CSS classes for different parts of the component           |
 | `...AnimatedViewProps` | `AnimatedProps<ViewProps>`              | -           | All Reanimated Animated.View props are supported                      |

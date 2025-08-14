@@ -159,11 +159,11 @@ export default function RadioGroupExample() {
 | --------------- | ----------------------------- | ------------ | -------------------------------------------------- |
 | `children`      | `React.ReactNode`             | `undefined`  | Radio group content                                |
 | `value`         | `string \| undefined`         | `undefined`  | The currently selected value of the radio group    |
-| `onValueChange` | `(value: string) => void`     | `undefined`  | Callback fired when the selected value changes     |
 | `orientation`   | `'horizontal' \| 'vertical'`  | `'vertical'` | Radio group orientation                            |
 | `isDisabled`    | `boolean`                     | `false`      | Whether the entire radio group is disabled         |
 | `isValid`       | `boolean`                     | `true`       | Whether the radio group is valid                   |
 | `className`     | `string`                      | `undefined`  | Custom class name                                  |
+| `onValueChange` | `(value: string) => void`     | `undefined`  | Callback fired when the selected value changes     |
 | `...ViewProps`  | `Omit<ViewProps, 'disabled'>` | -            | All standard React Native View props are supported |
 
 ### RadioGroup.ErrorMessage

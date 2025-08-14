@@ -44,9 +44,7 @@ Add descriptive text to provide more context about each radio option.
   <Radio value="option1">
     <Radio.Content>
       <Radio.Label>Option 1</Radio.Label>
-      <Radio.Description>
-        Additional details about this option
-      </Radio.Description>
+      <Radio.Description>Additional details about this option</Radio.Description>
     </Radio.Content>
   </Radio>
   <Radio value="option2">
@@ -65,41 +63,69 @@ Customize the radio indicator appearance with custom colors and animations.
 ```tsx
 <RadioGroup value={value} onValueChange={setValue}>
   <Radio value="option1">
-    <Radio.Content>
-      <Radio.Label>Custom Indicator</Radio.Label>
-    </Radio.Content>
     <Radio.Indicator colors={{ selectedBorder: '#a855f7' }}>
       <Radio.IndicatorBackground>...</Radio.IndicatorBackground>
       <Radio.IndicatorThumb>...</Radio.IndicatorThumb>
     </Radio.Indicator>
+    <Radio.Content>
+      <Radio.Label>Custom Indicator</Radio.Label>
+    </Radio.Content>
   </Radio>
 </RadioGroup>
 ```
 
-### With Error State
+### With Color Variants
 
-Show validation errors using RadioGroup.ErrorMessage component.
+Use different color themes for radio buttons.
 
 ```tsx
-<RadioGroup value={value} onValueChange={setValue} isValid={false}>
-  <Radio value="option1">
+<RadioGroup value={value} onValueChange={setValue}>
+  <Radio value="default" color="default">
     <Radio.Content>
-      <Radio.Label>Option 1</Radio.Label>
+      <Radio.Label>Default</Radio.Label>
     </Radio.Content>
   </Radio>
-  <Radio value="option2">
+  <Radio value="success" color="success">
     <Radio.Content>
-      <Radio.Label>Option 2</Radio.Label>
+      <Radio.Label>Success</Radio.Label>
     </Radio.Content>
   </Radio>
-  <RadioGroup.ErrorMessage>Please select an option</RadioGroup.ErrorMessage>
+  <Radio value="warning" color="warning">
+    <Radio.Content>
+      <Radio.Label>Warning</Radio.Label>
+    </Radio.Content>
+  </Radio>
+  <Radio value="danger" color="danger">
+    <Radio.Content>
+      <Radio.Label>Danger</Radio.Label>
+    </Radio.Content>
+  </Radio>
+</RadioGroup>
+```
+
+### With Indicator Alignment
+
+Position the indicator on either side of the content.
+
+```tsx
+<RadioGroup value={value} onValueChange={setValue}>
+  <Radio value="start" alignIndicator="start">
+    <Radio.Content>
+      <Radio.Label>Indicator on Start</Radio.Label>
+    </Radio.Content>
+  </Radio>
+  <Radio value="end" alignIndicator="end">
+    <Radio.Content>
+      <Radio.Label>Indicator on End</Radio.Label>
+    </Radio.Content>
+  </Radio>
 </RadioGroup>
 ```
 
 ## Example
 
 ```tsx
-import { Radio, RadioGroup } from 'heroui-native';
+import { Radio, RadioGroup, useTheme } from 'heroui-native';
 import { Zap } from 'lucide-react-native';
 import React from 'react';
 import { View } from 'react-native';
@@ -108,6 +134,7 @@ import Animated, { FadeIn } from 'react-native-reanimated';
 export default function RadioExample() {
   const [selectedPlan, setSelectedPlan] = React.useState('basic');
   const [selectedColor, setSelectedColor] = React.useState('success');
+  const { theme } = useTheme();
 
   return (
     <View className="gap-8">
@@ -149,18 +176,18 @@ export default function RadioExample() {
           </Radio.Content>
         </Radio>
         <Radio value="danger" color="danger">
-          <Radio.Content>
-            <Radio.Label>Danger with Icon</Radio.Label>
-          </Radio.Content>
           <Radio.Indicator>
             <Radio.IndicatorThumb>
               {selectedColor === 'danger' ? (
                 <Animated.View key="zap-icon" entering={FadeIn.duration(200)}>
-                  <Zap size={12} color="white" fill="white" />
+                  <Zap size={12} color={theme === 'dark' ? 'black' : 'white'} fill={theme === 'dark' ? 'black' : 'white'} />
                 </Animated.View>
               ) : null}
             </Radio.IndicatorThumb>
           </Radio.Indicator>
+          <Radio.Content>
+            <Radio.Label>Danger with Icon</Radio.Label>
+          </Radio.Content>
         </Radio>
       </RadioGroup>
     </View>
@@ -200,7 +227,7 @@ export default function RadioExample() {
 
 ### RadioGroup
 
-See [RadioGroup documentation](./radio-group.md#api-reference) for complete RadioGroup props reference.
+See [RadioGroup documentation](../radio-group/radio-group.md#api-reference) for complete RadioGroup props reference.
 
 ### Radio
 
@@ -223,7 +250,7 @@ See [RadioGroup documentation](./radio-group.md#api-reference) for complete Radi
 | `children`             | `React.ReactNode`                                        | `undefined` | Indicator content                                |
 | `className`            | `string`                                                 | `undefined` | Custom class name                                |
 | `colors`               | `Pick<RadioColors, 'defaultBorder' \| 'selectedBorder'>` | `undefined` | Custom border colors                             |
-| `animationConfig`      | `TimingConfig`                                           | `undefined` | Reanimated animation configuration               |
+| `animationConfig`      | `TimingConfig`                                           | `undefined` | Animation configuration for border color transition |
 | `...AnimatedViewProps` | `AnimatedProps<ViewProps>`                               | -           | All Reanimated Animated.View props are supported |
 
 #### RadioColors
@@ -254,21 +281,21 @@ See [RadioGroup documentation](./radio-group.md#api-reference) for complete Radi
 
 ### Radio.IndicatorThumb
 
-| prop              | type                                 | default     | description                                        |
-| ----------------- | ------------------------------------ | ----------- | -------------------------------------------------- |
-| `children`        | `React.ReactNode`                    | `undefined` | Thumb content                                      |
-| `className`       | `string`                             | `undefined` | Custom class name                                  |
-| `colors`          | `Pick<RadioColors, 'selectedThumb'>` | `undefined` | Custom thumb colors                                |
-| `animationConfig` | `SpringConfig`                       | `undefined` | Animation configuration                            |
-| `...ViewProps`    | `ViewProps`                          | -           | All standard React Native View props are supported |
+| prop                   | type                                 | default     | description                                      |
+| ---------------------- | ------------------------------------ | ----------- | ------------------------------------------------ |
+| `children`             | `React.ReactNode`                    | `undefined` | Thumb content                                    |
+| `className`            | `string`                             | `undefined` | Custom class name                                |
+| `colors`               | `Pick<RadioColors, 'selectedThumb'>` | `undefined` | Custom thumb colors                              |
+| `animationConfig`      | `SpringConfig`                       | `undefined` | Animation configuration for scale transition     |
+| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`           | -           | All Reanimated Animated.View props are supported |
 
 #### SpringConfig
 
-| prop        | type     | description             |
-| ----------- | -------- | ----------------------- |
-| `mass`      | `number` | Mass of the spring      |
-| `damping`   | `number` | Amount of damping       |
-| `stiffness` | `number` | Stiffness of the spring |
+| prop        | type     | description                                     |
+| ----------- | -------- | ----------------------------------------------- |
+| `mass`      | `number` | Mass of the spring                              |
+| `damping`   | `number` | Amount of damping applied to the spring motion |
+| `stiffness` | `number` | Stiffness of the spring                        |
 
 ### Radio.Content
 
@@ -280,22 +307,22 @@ See [RadioGroup documentation](./radio-group.md#api-reference) for complete Radi
 
 ### Radio.Label
 
-| prop                  | type                                    | default | description                                             |
-| --------------------- | --------------------------------------- | ------- | ------------------------------------------------------- |
-| children              | `React.ReactNode`                       | -       | Label text content                                      |
-| className             | `string`                                | -       | Custom class name for the label element                 |
-| classNames            | `{ container?: string, text?: string }` | -       | Custom class names for different parts of the component |
-| ...Animated.ViewProps | `AnimatedProps<ViewProps>`              | -       | All Reanimated Animated.View props are supported        |
+| prop                  | type                                    | default     | description                                             |
+| --------------------- | --------------------------------------- | ----------- | ------------------------------------------------------- |
+| `children`            | `React.ReactNode`                       | `undefined` | Label text content                                      |
+| `className`           | `string`                                | `undefined` | Custom class name for the label element                 |
+| `classNames`          | `{ container?: string, text?: string }` | `undefined` | Custom class names for different parts of the component |
+| `...AnimatedViewProps`| `AnimatedProps<ViewProps>`              | -           | All Reanimated Animated.View props are supported        |
 
 ### Radio.Description
 
-| prop                  | type                                    | default | description                                             |
-| --------------------- | --------------------------------------- | ------- | ------------------------------------------------------- |
-| children              | `React.ReactNode`                       | -       | Description text content                                |
-| className             | `string`                                | -       | Custom class name for the description element           |
-| classNames            | `{ container?: string, text?: string }` | -       | Custom class names for different parts of the component |
-| ...Animated.ViewProps | `AnimatedProps<ViewProps>`              | -       | All Reanimated Animated.View props are supported        |
+| prop                  | type                                    | default     | description                                             |
+| --------------------- | --------------------------------------- | ----------- | ------------------------------------------------------- |
+| `children`            | `React.ReactNode`                       | `undefined` | Description text content                                |
+| `className`           | `string`                                | `undefined` | Custom class name for the description element           |
+| `classNames`          | `{ container?: string, text?: string }` | `undefined` | Custom class names for different parts of the component |
+| `...AnimatedViewProps`| `AnimatedProps<ViewProps>`              | -           | All Reanimated Animated.View props are supported        |
 
 ### RadioGroup.ErrorMessage
 
-See [RadioGroup documentation](./radio-group.md#radiogrouperrormessage) for RadioGroup.ErrorMessage props reference.
+See [RadioGroup documentation](../radio-group/radio-group.md#radiogrouperrormessage) for RadioGroup.ErrorMessage props reference.

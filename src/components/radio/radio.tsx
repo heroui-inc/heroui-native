@@ -169,13 +169,13 @@ const RadioIndicator = forwardRef<Animated.View, RadioIndicatorProps>(
       default: isSelected ? themeColors.accent : themeColors.border,
       success: isSelected
         ? themeColors.success
-        : colorKit.setAlpha(themeColors.success, 0.5).hex(),
+        : colorKit.setAlpha(themeColors.success, 0.4).hex(),
       warning: isSelected
         ? themeColors.warning
-        : colorKit.setAlpha(themeColors.warning, 0.5).hex(),
+        : colorKit.setAlpha(themeColors.warning, 0.4).hex(),
       danger: isSelected
         ? themeColors.danger
-        : colorKit.setAlpha(themeColors.danger, 0.5).hex(),
+        : colorKit.setAlpha(themeColors.danger, 0.4).hex(),
     };
 
     const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;

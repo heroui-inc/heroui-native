@@ -1,12 +1,12 @@
 import { Radio, RadioGroup } from 'heroui-native';
-import { Zap } from 'lucide-react-native';
 import React from 'react';
-import { ScrollView, View } from 'react-native';
-import Animated, { FadeIn } from 'react-native-reanimated';
+import { ScrollView, Text, View } from 'react-native';
 
 export default function Theme() {
-  const [selectedPlan, setSelectedPlan] = React.useState('basic');
-  const [selectedColor, setSelectedColor] = React.useState('success');
+  const [selectedCity, setSelectedCity] = React.useState('london');
+  const [selectedPlan, setSelectedPlan] = React.useState('');
+
+  const isValidSelection = selectedPlan !== '';
 
   return (
     <ScrollView
@@ -15,58 +15,60 @@ export default function Theme() {
       contentInsetAdjustmentBehavior="automatic"
     >
       <View className="gap-8">
-        <RadioGroup value={selectedPlan} onValueChange={setSelectedPlan}>
-          <Radio value="basic">
-            <Radio.Content>
-              <Radio.Label>Basic Plan</Radio.Label>
-              <Radio.Description>Perfect for individuals</Radio.Description>
-            </Radio.Content>
-          </Radio>
-          <Radio value="pro">
-            <Radio.Content>
-              <Radio.Label>Pro Plan</Radio.Label>
-              <Radio.Description>Best for teams</Radio.Description>
-            </Radio.Content>
-          </Radio>
-          <Radio value="enterprise">
-            <Radio.Content>
-              <Radio.Label>Enterprise</Radio.Label>
-              <Radio.Description>Custom solutions</Radio.Description>
-            </Radio.Content>
-          </Radio>
-        </RadioGroup>
+        <View>
+          <Text className="text-lg font-semibold mb-3">Select City</Text>
+          <RadioGroup value={selectedCity} onValueChange={setSelectedCity}>
+            <Radio value="paris">
+              <Radio.Content>
+                <Radio.Label>Paris</Radio.Label>
+              </Radio.Content>
+            </Radio>
+            <Radio value="london">
+              <Radio.Content>
+                <Radio.Label>London</Radio.Label>
+              </Radio.Content>
+            </Radio>
+            <Radio value="berlin">
+              <Radio.Content>
+                <Radio.Label>Berlin</Radio.Label>
+              </Radio.Content>
+            </Radio>
+          </RadioGroup>
+        </View>
 
-        <RadioGroup value={selectedColor} onValueChange={setSelectedColor}>
-          <Radio value="default" color="default">
-            <Radio.Content>
-              <Radio.Label>Default</Radio.Label>
-            </Radio.Content>
-          </Radio>
-          <Radio value="success" color="success">
-            <Radio.Content>
-              <Radio.Label>Success</Radio.Label>
-            </Radio.Content>
-          </Radio>
-          <Radio value="warning" color="warning">
-            <Radio.Content>
-              <Radio.Label>Warning</Radio.Label>
-            </Radio.Content>
-          </Radio>
-          <Radio value="danger" color="danger">
-            <Radio.Content>
-              <Radio.Label>Danger with Icon</Radio.Label>
-            </Radio.Content>
-            <Radio.Indicator>
-              <Radio.IndicatorThumb>
-                {selectedColor === 'danger' ? (
-                  <Animated.View key="zap-icon" entering={FadeIn.duration(200)}>
-                    <Zap size={12} color="white" fill="white" />
-                  </Animated.View>
-                ) : null}
-              </Radio.IndicatorThumb>
-            </Radio.Indicator>
-          </Radio>
-        </RadioGroup>
+        <View>
+          <Text className="text-lg font-semibold mb-3">Choose Plan</Text>
+          <RadioGroup
+            value={selectedPlan}
+            onValueChange={setSelectedPlan}
+            isValid={isValidSelection}
+            orientation="vertical"
+          >
+            <Radio value="basic">
+              <Radio.Content>
+                <Radio.Label>Basic Plan</Radio.Label>
+                <Radio.Description>Perfect for individuals</Radio.Description>
+              </Radio.Content>
+            </Radio>
+            <Radio value="pro">
+              <Radio.Content>
+                <Radio.Label>Pro Plan</Radio.Label>
+                <Radio.Description>Best for small teams</Radio.Description>
+              </Radio.Content>
+            </Radio>
+            <Radio value="enterprise">
+              <Radio.Content>
+                <Radio.Label>Enterprise</Radio.Label>
+                <Radio.Description>
+                  Custom solutions for large organizations
+                </Radio.Description>
+              </Radio.Content>
+            </Radio>
+            <RadioGroup.ErrorMessage>
+              Please select a plan to continue
+            </RadioGroup.ErrorMessage>
+          </RadioGroup>
+        </View>
       </View>
     </ScrollView>
   );

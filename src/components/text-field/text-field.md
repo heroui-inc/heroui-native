@@ -58,7 +58,7 @@ Add icons or other content at the beginning or end of the input.
 Display error messages when the field is invalid.
 
 ```tsx
-<TextField isRequired isValid={false}>
+<TextField isRequired isInvalid={true}>
   <TextField.Label>Email</TextField.Label>
   <TextField.Input placeholder="Enter your email" />
   <TextField.ErrorMessage>Please enter a valid email</TextField.ErrorMessage>
@@ -123,12 +123,13 @@ import { ScrollView, View } from 'react-native';
 export default function TextFieldExample() {
   const { colors } = useTheme();
   const [email, setEmail] = React.useState('');
-  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isInvalidEmail =
+    email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   return (
     <ScrollView className="bg-background p-6">
       <View className="gap-6">
-        <TextField isRequired isValid={email === '' || isValidEmail}>
+        <TextField isRequired isInvalid={isInvalidEmail}>
           <TextField.Label>Email Address</TextField.Label>
           <TextField.Input
             placeholder="Enter your email"
@@ -220,7 +221,7 @@ export default function TextFieldExample() {
 | ------------ | ----------------- | ------- | --------------------------------------------------- |
 | children     | `React.ReactNode` | -       | Content to render inside the text field             |
 | isDisabled   | `boolean`         | `false` | Whether the entire text field is disabled           |
-| isValid      | `boolean`         | `true`  | Whether the text field is in a valid state          |
+| isInvalid    | `boolean`         | `false` | Whether the text field is in an invalid state       |
 | isRequired   | `boolean`         | `false` | Whether the text field is required (shows asterisk) |
 | className    | `string`          | -       | Custom class name for the root element              |
 | ...ViewProps | `ViewProps`       | -       | All standard React Native View props are supported  |
@@ -307,7 +308,7 @@ export default function TextFieldExample() {
 | prop                  | type                            | default | description                                             |
 | --------------------- | ------------------------------- | ------- | ------------------------------------------------------- |
 | children              | `React.ReactNode`               | -       | Error message content                                   |
-| isValid               | `boolean`                       | `true`  | Controls the visibility of the error field              |
+| isInvalid             | `boolean`                       | `false` | Controls the visibility of the error field              |
 | className             | `string`                        | -       | Custom class name for styling                           |
 | classNames            | `ElementSlots<ErrorFieldSlots>` | -       | Custom class names for different parts of the component |
 | ...Animated.ViewProps | `AnimatedProps<ViewProps>`      | -       | All Reanimated Animated.View props are supported        |

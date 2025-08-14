@@ -245,7 +245,7 @@ See [RadioGroup documentation](../radio-group/radio-group.md#api-reference) for 
 | `alignIndicator`    | `'start' \| 'end'`                                | `'end'`     | Alignment of the indicator                                              |
 | `isDisabled`        | `boolean`                                         | `false`     | Whether this specific radio item is disabled                            |
 | `isReadOnly`        | `boolean`                                         | `false`     | Whether the radio is read-only                                          |
-| `isValid`           | `boolean`                                         | `true`      | Whether the radio is valid                                              |
+| `isInvalid`         | `boolean`                                         | `false`     | Whether the radio is invalid                                            |
 | `className`         | `string`                                          | `undefined` | Custom class name                                                       |
 | `...PressableProps` | `Omit<PressableProps, 'disabled'>`                | -           | All standard React Native Pressable props are supported except disabled |
 

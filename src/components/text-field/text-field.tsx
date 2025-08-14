@@ -48,7 +48,7 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
     children,
     className,
     isDisabled = false,
-    isValid = true,
+    isInvalid = false,
     isRequired = false,
     ...restProps
   } = props;
@@ -56,8 +56,8 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
   const tvStyles = textFieldStyles.root({ isDisabled, className });
 
   const contextValue = useMemo(
-    () => ({ isDisabled, isValid, isRequired }),
-    [isDisabled, isValid, isRequired]
+    () => ({ isDisabled, isInvalid, isRequired }),
+    [isDisabled, isInvalid, isRequired]
   );
 
   return (
@@ -82,9 +82,9 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
       ...restProps
     } = props;
 
-    const { isDisabled, isValid, isRequired } = useTextFieldContext();
+    const { isDisabled, isInvalid, isRequired } = useTextFieldContext();
 
-    const tvStyles = textFieldStyles.label({ isDisabled, isValid });
+    const tvStyles = textFieldStyles.label({ isDisabled, isInvalid });
 
     const textStyles = tvStyles.text({
       className: [className, classNames?.text],
@@ -96,7 +96,7 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
 
     return (
       <Animated.Text
-        key={isValid ? 'label-valid' : 'label-invalid'}
+        key={isInvalid ? 'label-invalid' : 'label-valid'}
         ref={ref}
         entering={entering}
         exiting={exiting}
@@ -124,7 +124,7 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       ...restProps
     } = props;
 
-    const { isValid } = useTextFieldContext();
+    const { isInvalid } = useTextFieldContext();
 
     const startContent = getElementByDisplayName(
       children,
@@ -168,12 +168,12 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     );
 
     useEffect(() => {
-      if (!isValid) {
+      if (isInvalid) {
         isError.set(withTiming(1, timingConfig));
       } else {
         isError.set(withTiming(0, timingConfig));
       }
-    }, [isValid, isError, timingConfig]);
+    }, [isInvalid, isError, timingConfig]);
 
     useEffect(() => {
       currentBgColor.set(isFocused.get() ? focusBackground : blurBackground);
@@ -182,7 +182,7 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     }, [theme]);
 
     const animatedContainerStyle = useAnimatedStyle(() => {
-      if (!isValid) {
+      if (isInvalid) {
         return {
           backgroundColor: interpolateColor(
             isError.get(),
@@ -295,11 +295,11 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
       ...restProps
     } = props;
 
-    const { isValid } = useTextFieldContext();
+    const { isInvalid } = useTextFieldContext();
 
     const tvStyles = textFieldStyles.description({ className });
 
-    if (!isValid) return null;
+    if (isInvalid) return null;
 
     return (
       <Animated.Text
@@ -319,7 +319,7 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
 
 const TextFieldErrorMessage = forwardRef<TextRef, TextFieldErrorMessageProps>(
   (props, ref) => {
-    const { isValid } = useTextFieldContext();
+    const { isInvalid } = useTextFieldContext();
     const { className, ...restProps } = props;
 
     const tvStyles = textFieldStyles.errorMessage({
@@ -329,7 +329,7 @@ const TextFieldErrorMessage = forwardRef<TextRef, TextFieldErrorMessageProps>(
     return (
       <ErrorField
         ref={ref}
-        isValid={isValid}
+        isInvalid={isInvalid}
         className={tvStyles}
         {...restProps}
       />

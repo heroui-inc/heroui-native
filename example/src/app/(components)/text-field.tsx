@@ -6,10 +6,11 @@ import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
 export default function TextFieldScreen() {
   const { colors, isDark } = useTheme();
   const [email, setEmail] = useState('');
-  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isInvalidEmail =
+    email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   // State for animation testing
-  const [isTestFieldValid, setIsTestFieldValid] = useState(true);
+  const [isTestFieldInvalid, setIsTestFieldInvalid] = useState(false);
   const [testFieldValue, setTestFieldValue] = useState('');
 
   return (
@@ -22,7 +23,7 @@ export default function TextFieldScreen() {
         <View className="gap-8 p-6">
           {/* Animation Test Field */}
           <View className="gap-3">
-            <TextField isRequired isValid={isTestFieldValid}>
+            <TextField isRequired isInvalid={isTestFieldInvalid}>
               <TextField.Label>Test Animation Transitions</TextField.Label>
               <TextField.Input
                 placeholder="Type to see animations"
@@ -37,13 +38,13 @@ export default function TextFieldScreen() {
               </TextField.ErrorMessage>
             </TextField>
             <Button
-              onPress={() => setIsTestFieldValid(!isTestFieldValid)}
+              onPress={() => setIsTestFieldInvalid(!isTestFieldInvalid)}
               variant="tertiary"
               size="sm"
               isFullWidth={false}
             >
               <Button.Label>
-                {isTestFieldValid ? 'Make Invalid' : 'Make Valid'}
+                {isTestFieldInvalid ? 'Make Valid' : 'Make Invalid'}
               </Button.Label>
             </Button>
           </View>
@@ -155,7 +156,7 @@ export default function TextFieldScreen() {
           </TextField>
 
           {/* TextField with validation */}
-          <TextField isRequired isValid={email === '' || isValidEmail}>
+          <TextField isRequired isInvalid={isInvalidEmail}>
             <TextField.Label>Email with Validation</TextField.Label>
             <TextField.Input
               placeholder="Enter your email"
@@ -173,7 +174,7 @@ export default function TextFieldScreen() {
           </TextField>
 
           {/* TextField with custom error */}
-          <TextField isRequired isValid={false}>
+          <TextField isRequired isInvalid={true}>
             <TextField.Label>Required Field</TextField.Label>
             <TextField.Input placeholder="This field has an error" />
             <TextField.ErrorMessage>

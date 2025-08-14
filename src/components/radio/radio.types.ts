@@ -55,8 +55,8 @@ export interface RadioProps extends ItemProps {
   alignIndicator?: 'start' | 'end';
   /** Whether the radio is read-only */
   isReadOnly?: boolean;
-  /** Whether the radio is valid @default true */
-  isValid?: boolean;
+  /** Whether the radio is invalid @default false */
+  isInvalid?: boolean;
   /** Custom class name */
   className?: string;
 }

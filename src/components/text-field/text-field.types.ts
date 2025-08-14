@@ -55,10 +55,10 @@ export interface TextFieldRootProps extends ViewProps {
    */
   isDisabled?: boolean;
   /**
-   * Whether the text field is in a valid state
-   * @default true
+   * Whether the text field is in an invalid state
+   * @default false
    */
-  isValid?: boolean;
+  isInvalid?: boolean;
   /**
    * Whether the text field is required (shows asterisk in label)
    * @default false
@@ -170,10 +170,10 @@ export interface TextFieldContextValue {
    */
   isDisabled: boolean;
   /**
-   * Whether the text field is in a valid state
-   * @default true
+   * Whether the text field is in an invalid state
+   * @default false
    */
-  isValid: boolean;
+  isInvalid: boolean;
   /**
    * Whether the text field is required
    */

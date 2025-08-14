@@ -6,7 +6,8 @@ import { ScrollView, View } from 'react-native';
 export default function Theme() {
   const { colors } = useTheme();
   const [email, setEmail] = React.useState('');
-  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isInvalidEmail =
+    email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   return (
     <ScrollView
@@ -15,7 +16,7 @@ export default function Theme() {
       contentInsetAdjustmentBehavior="automatic"
     >
       <View className="gap-6">
-        <TextField isRequired isValid={email === '' || isValidEmail}>
+        <TextField isRequired isInvalid={isInvalidEmail}>
           <TextField.Label>Email Address</TextField.Label>
           <TextField.Input
             placeholder="Enter your email"

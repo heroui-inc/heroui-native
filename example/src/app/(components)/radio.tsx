@@ -40,7 +40,7 @@ export default function RadioScreen() {
         <RadioGroup
           value={defaultRadio}
           onValueChange={setDefaultRadio}
-          isValid={defaultRadio === 'london'}
+          isInvalid={defaultRadio !== 'london'}
         >
           <Radio value="paris">
             <Radio.Content>
@@ -227,7 +227,7 @@ export default function RadioScreen() {
         <RadioGroup
           value={withDescription}
           onValueChange={setWithDescription}
-          isValid={withDescription === 'desc1'}
+          isInvalid={withDescription !== 'desc1'}
         >
           <Radio value="desc1">
             <Radio.Content>

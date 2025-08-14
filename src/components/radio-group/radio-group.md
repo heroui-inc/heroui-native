@@ -57,7 +57,7 @@ Disable all radio options within the group.
 Show validation errors using the ErrorMessage component.
 
 ```tsx
-<RadioGroup value={value} onValueChange={setValue} isValid={false}>
+<RadioGroup value={value} onValueChange={setValue} isInvalid={true}>
   <Radio value="option1">...</Radio>
   <Radio value="option2">...</Radio>
   <Radio value="option3">...</Radio>
@@ -76,7 +76,7 @@ export default function RadioGroupExample() {
   const [selectedCity, setSelectedCity] = React.useState('london');
   const [selectedPlan, setSelectedPlan] = React.useState('');
 
-  const isValidSelection = selectedPlan !== '';
+  const isInvalidSelection = selectedPlan === '';
 
   return (
     <View className="gap-8">
@@ -106,7 +106,7 @@ export default function RadioGroupExample() {
         <RadioGroup
           value={selectedPlan}
           onValueChange={setSelectedPlan}
-          isValid={isValidSelection}
+          isInvalid={isInvalidSelection}
           orientation="vertical"
         >
           <Radio value="basic">
@@ -161,7 +161,7 @@ export default function RadioGroupExample() {
 | `value`         | `string \| undefined`         | `undefined`  | The currently selected value of the radio group    |
 | `orientation`   | `'horizontal' \| 'vertical'`  | `'vertical'` | Radio group orientation                            |
 | `isDisabled`    | `boolean`                     | `false`      | Whether the entire radio group is disabled         |
-| `isValid`       | `boolean`                     | `true`       | Whether the radio group is valid                   |
+| `isInvalid`     | `boolean`                     | `false`      | Whether the radio group is invalid                 |
 | `className`     | `string`                      | `undefined`  | Custom class name                                  |
 | `onValueChange` | `(value: string) => void`     | `undefined`  | Callback fired when the selected value changes     |
 | `...ViewProps`  | `Omit<ViewProps, 'disabled'>` | -            | All standard React Native View props are supported |
@@ -171,7 +171,7 @@ export default function RadioGroupExample() {
 | prop                   | type                            | default     | description                                                           |
 | ---------------------- | ------------------------------- | ----------- | --------------------------------------------------------------------- |
 | `children`             | `React.ReactNode`               | `undefined` | The content of the error field. String children are wrapped with Text |
-| `isValid`              | `boolean`                       | `true`      | Controls the visibility of the error field                            |
+| `isInvalid`            | `boolean`                       | `false`     | Controls the visibility of the error field                            |
 | `className`            | `string`                        | `undefined` | Additional CSS classes for the container                              |
 | `classNames`           | `ElementSlots<ErrorFieldSlots>` | `undefined` | Additional CSS classes for different parts of the component           |
 | `...AnimatedViewProps` | `AnimatedProps<ViewProps>`      | -           | All Reanimated Animated.View props are supported                      |

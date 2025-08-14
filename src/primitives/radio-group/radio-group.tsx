@@ -20,7 +20,7 @@ const Root = forwardRef<RootRef, RootProps>(
       onValueChange,
       isDisabled = false,
       orientation = 'vertical',
-      isValid = true,
+      isInvalid = false,
       ...viewProps
     },
     ref
@@ -34,7 +34,7 @@ const Root = forwardRef<RootRef, RootProps>(
           isDisabled,
           onValueChange,
           orientation,
-          isValid,
+          isInvalid,
         }}
       >
         <Component ref={ref} role="radiogroup" {...viewProps} />

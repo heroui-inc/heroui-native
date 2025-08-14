@@ -16,7 +16,7 @@ function ThemedLayout() {
   const { currentTheme } = useAppTheme();
 
   return (
-    <ThemeProvider colorScheme="system" theme={currentTheme}>
+    <ThemeProvider colorScheme="dark" theme={currentTheme}>
       <Slot />
     </ThemeProvider>
   );

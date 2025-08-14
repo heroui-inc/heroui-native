@@ -1,10 +1,15 @@
+/* eslint-disable react-native/no-inline-styles */
+import { LinearGradient } from 'expo-linear-gradient';
 import { Chip, useTheme } from 'heroui-native';
 import { Plus, Star, X } from 'lucide-react-native';
-import { ScrollView, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { cn } from '../../helpers/utils/cn';
 
 export default function ChipScreen() {
   const { isDark } = useTheme();
+  const [hasNotification, setHasNotification] = useState(true);
+  const [chipCount, setChipCount] = useState(3);
 
   return (
     <ScrollView
@@ -17,9 +22,7 @@ export default function ChipScreen() {
       </Text>
 
       <View className="flex-row gap-4 mb-6">
-        <Chip>
-          <Chip.Label>Basic Chip</Chip.Label>
-        </Chip>
+        <Chip>Basic Chip</Chip>
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">
@@ -27,15 +30,9 @@ export default function ChipScreen() {
       </Text>
 
       <View className="flex-row gap-4 mb-6">
-        <Chip size="sm">
-          <Chip.Label>Small Chip</Chip.Label>
-        </Chip>
-        <Chip size="md">
-          <Chip.Label>Medium Chip</Chip.Label>
-        </Chip>
-        <Chip size="lg">
-          <Chip.Label>Large Chip</Chip.Label>
-        </Chip>
+        <Chip size="sm">Small Chip</Chip>
+        <Chip size="md">Medium Chip</Chip>
+        <Chip size="lg">Large Chip</Chip>
       </View>
 
       <Text className="text-lg font-bold text-muted-foreground mb-4">
@@ -215,14 +212,124 @@ export default function ChipScreen() {
 
       <View className="flex-row gap-4 mb-6 justify-center">
         <Chip className="bg-purple-600 px-6">
-          <Chip.Label className="text-white text-base">Custom</Chip.Label>
+          <Chip.Label className="text-background text-base">Custom</Chip.Label>
         </Chip>
         <Chip
           variant="secondary"
-          className="border-purple-600 bg-purple-50 rounded-sm"
+          className="border-purple-600 bg-purple-100 rounded-sm"
         >
-          <Chip.Label className="text-purple-600">Purple</Chip.Label>
+          <Chip.Label classNames={{ text: 'text-black' }}>Purple</Chip.Label>
         </Chip>
+      </View>
+
+      <Text className="text-lg font-bold text-muted-foreground mb-4">
+        Gradient Background
+      </Text>
+
+      <View className="flex-row flex-wrap gap-4 mb-6 justify-center">
+        <Chip className="border-0">
+          <Chip.Background>
+            <LinearGradient
+              colors={['#ec4899', '#8b5cf6']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{ flex: 1 }}
+            />
+          </Chip.Background>
+          <Chip.Label className="text-white font-semibold">Gradient</Chip.Label>
+        </Chip>
+
+        <Chip className="border-0 pl-2" size="lg">
+          <Chip.Background>
+            <LinearGradient
+              colors={['#10b981', '#3b82f6']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={{ flex: 1 }}
+            />
+          </Chip.Background>
+          <Chip.StartContent>
+            <Star size={16} color="white" fill="white" />
+          </Chip.StartContent>
+          <Chip.Label className="text-white font-bold">Premium</Chip.Label>
+        </Chip>
+
+        <Chip className="border-0">
+          <Chip.Background>
+            <LinearGradient
+              colors={['#f59e0b', '#ef4444']}
+              start={{ x: 0, y: 0.5 }}
+              end={{ x: 1, y: 0.5 }}
+              style={{ flex: 1 }}
+            />
+          </Chip.Background>
+          <Chip.Label>Hot</Chip.Label>
+          <Chip.EndContent>
+            <Text className="text-white text-xs">🔥</Text>
+          </Chip.EndContent>
+        </Chip>
+      </View>
+
+      <Text className="text-lg font-bold text-muted-foreground mb-4">
+        Dynamic Parts
+      </Text>
+
+      <View className="gap-4 mb-6">
+        <View className="flex-row gap-4 justify-center">
+          <Chip variant="secondary">
+            {hasNotification && (
+              <Chip.StartContent>
+                <View className="w-2 h-2 rounded-full bg-red-500" />
+              </Chip.StartContent>
+            )}
+            <Chip.Label>Notifications</Chip.Label>
+            <Chip.EndContent>
+              <Pressable
+                onPress={() => setHasNotification(!hasNotification)}
+                hitSlop={8}
+              >
+                <Text className="text-accent text-xs font-bold">
+                  {hasNotification ? 'ON' : 'OFF'}
+                </Text>
+              </Pressable>
+            </Chip.EndContent>
+          </Chip>
+        </View>
+
+        <View className="flex-row gap-4 justify-center">
+          <Chip variant="primary" color="accent">
+            <Chip.Label>Items</Chip.Label>
+            <Chip.EndContent>
+              <View className="ml-1 bg-white/20 px-2 rounded-full">
+                <Text className="text-background text-xs font-bold">
+                  {chipCount}
+                </Text>
+              </View>
+            </Chip.EndContent>
+          </Chip>
+
+          <Pressable onPress={() => setChipCount(chipCount + 1)}>
+            <Chip variant="secondary">
+              <Chip.Label>Add Item</Chip.Label>
+              <Chip.EndContent>
+                <Plus size={14} color="#6B7280" />
+              </Chip.EndContent>
+            </Chip>
+          </Pressable>
+
+          <Pressable onPress={() => setChipCount(Math.max(0, chipCount - 1))}>
+            <Chip variant="secondary" color="danger">
+              <Chip.Label>Remove</Chip.Label>
+              <Chip.EndContent>
+                <X size={14} color="#EF4444" />
+              </Chip.EndContent>
+            </Chip>
+          </Pressable>
+        </View>
+
+        <Text className="text-center text-sm text-muted-foreground mt-2">
+          Tap chips to interact with dynamic content
+        </Text>
       </View>
     </ScrollView>
   );

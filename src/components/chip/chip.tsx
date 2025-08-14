@@ -1,10 +1,12 @@
 import { forwardRef, useMemo } from 'react';
 import { Text, View } from 'react-native';
-import { createContext } from '../../helpers/utils';
-import { getElementByDisplayName } from '../../helpers/utils/get-element-by-display-name';
-import { DISPLAY_NAME } from './chip.constants';
+import Animated from 'react-native-reanimated';
+import { createContext, getElementByDisplayName } from '../../helpers/utils';
+import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
+import { DEFAULT_LAYOUT_TRANSITION, DISPLAY_NAME } from './chip.constants';
 import chipStyles, { nativeStyles } from './chip.styles';
 import type {
+  ChipBackgroundProps,
   ChipContextValue,
   ChipEndContentProps,
   ChipLabelProps,
@@ -21,6 +23,7 @@ const [ChipProvider, useChipContext] = createContext<ChipContextValue>({
 const Chip = forwardRef<View, ChipProps>((props, ref) => {
   const {
     children,
+    layout = DEFAULT_LAYOUT_TRANSITION,
     variant = 'primary',
     size = 'md',
     color = 'accent',
@@ -29,13 +32,27 @@ const Chip = forwardRef<View, ChipProps>((props, ref) => {
     ...restProps
   } = props;
 
+  const backgroundElement = useMemo(
+    () => getElementByDisplayName(children, DISPLAY_NAME.CHIP_BACKGROUND),
+    [children]
+  );
+
   const startContentElement = useMemo(
     () => getElementByDisplayName(children, DISPLAY_NAME.CHIP_START_CONTENT),
     [children]
   );
 
   const labelElement = useMemo(
-    () => getElementByDisplayName(children, DISPLAY_NAME.CHIP_LABEL),
+    () =>
+      getElementWithDefault(
+        children,
+        DISPLAY_NAME.CHIP_LABEL,
+        typeof children === 'string' ? (
+          <ChipLabel>{children}</ChipLabel>
+        ) : (
+          <ChipLabel />
+        )
+      ),
     [children]
   );
 
@@ -56,23 +73,49 @@ const Chip = forwardRef<View, ChipProps>((props, ref) => {
       size,
       variant,
       color,
+      layout,
     }),
-    [size, variant, color]
+    [size, variant, color, layout]
   );
 
   return (
     <ChipProvider value={contextValue}>
-      <View
+      <Animated.View
         ref={ref}
+        layout={layout}
         className={tvStyles}
         style={[nativeStyles.root, style]}
         {...restProps}
       >
+        {backgroundElement}
         {startContentElement}
         {labelElement}
         {endContentElement}
-      </View>
+      </Animated.View>
     </ChipProvider>
+  );
+});
+
+// --------------------------------------------------
+
+const ChipBackground = forwardRef<View, ChipBackgroundProps>((props, ref) => {
+  const { layout: contextLayout } = useChipContext();
+
+  const { children, layout: layoutProp, className, ...restProps } = props;
+
+  const tvStyles = chipStyles.background({
+    className,
+  });
+
+  return (
+    <Animated.View
+      ref={ref}
+      layout={layoutProp || contextLayout}
+      className={tvStyles}
+      {...restProps}
+    >
+      {children}
+    </Animated.View>
   );
 });
 
@@ -80,60 +123,106 @@ const Chip = forwardRef<View, ChipProps>((props, ref) => {
 
 const ChipStartContent = forwardRef<View, ChipStartContentProps>(
   (props, ref) => {
-    const { children, className, style, ...restProps } = props;
+    const { layout: contextLayout } = useChipContext();
+
+    const { children, layout: layoutProp, className, ...restProps } = props;
 
     const tvStyles = chipStyles.startContent({
       className,
     });
 
     return (
-      <View ref={ref} className={tvStyles} style={style} {...restProps}>
+      <Animated.View
+        ref={ref}
+        layout={layoutProp || contextLayout}
+        className={tvStyles}
+        {...restProps}
+      >
         {children}
-      </View>
+      </Animated.View>
     );
   }
 );
 
 // --------------------------------------------------
 
-const ChipLabel = forwardRef<Text, ChipLabelProps>((props, ref) => {
-  const { children, className, style, ...restProps } = props;
+const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
+  const { size, variant, color, layout: contextLayout } = useChipContext();
 
-  const { size, variant, color } = useChipContext();
+  const {
+    children,
+    layout: layoutProp,
+    className,
+    classNames,
+    ...restProps
+  } = props;
 
-  const tvStyles = chipStyles.label({
+  const { text, container } = chipStyles.label({
     size,
     variant,
     color,
-    className,
   });
 
+  const tvContainerStyles = container({
+    className: [className, classNames?.container],
+  });
+
+  const tvTextStyles = text({
+    className: classNames?.text,
+  });
+
+  if (typeof children === 'string') {
+    return (
+      <Animated.View
+        ref={ref}
+        layout={layoutProp || contextLayout}
+        className={tvContainerStyles}
+        {...restProps}
+      >
+        <Text className={tvTextStyles}>{children}</Text>
+      </Animated.View>
+    );
+  }
+
   return (
-    <Text ref={ref} className={tvStyles} style={style} {...restProps}>
+    <Animated.View
+      ref={ref}
+      layout={layoutProp || contextLayout}
+      className={tvContainerStyles}
+      {...restProps}
+    >
       {children}
-    </Text>
+    </Animated.View>
   );
 });
 
 // --------------------------------------------------
 
 const ChipEndContent = forwardRef<View, ChipEndContentProps>((props, ref) => {
-  const { children, className, style, ...restProps } = props;
+  const { layout: contextLayout } = useChipContext();
+
+  const { children, layout: layoutProp, className, ...restProps } = props;
 
   const tvStyles = chipStyles.endContent({
     className,
   });
 
   return (
-    <View ref={ref} className={tvStyles} style={style} {...restProps}>
+    <Animated.View
+      ref={ref}
+      layout={layoutProp || contextLayout}
+      className={tvStyles}
+      {...restProps}
+    >
       {children}
-    </View>
+    </Animated.View>
   );
 });
 
 // --------------------------------------------------
 
 Chip.displayName = DISPLAY_NAME.CHIP_ROOT;
+ChipBackground.displayName = DISPLAY_NAME.CHIP_BACKGROUND;
 ChipStartContent.displayName = DISPLAY_NAME.CHIP_START_CONTENT;
 ChipLabel.displayName = DISPLAY_NAME.CHIP_LABEL;
 ChipEndContent.displayName = DISPLAY_NAME.CHIP_END_CONTENT;
@@ -142,26 +231,31 @@ ChipEndContent.displayName = DISPLAY_NAME.CHIP_END_CONTENT;
  * Compound Chip component with sub-components
  *
  * @component Chip - Main container that displays a compact element. Renders with
- * default label "Label" if no children provided. Supports three variants and five colors.
+ * string children as label or accepts compound components for custom layouts.
+ *
+ * @component Chip.Background - Optional background element with absolute positioning.
+ * Rendered beneath all other content. Use for gradients or custom backgrounds.
  *
  * @component Chip.StartContent - Optional leading content displayed before the label.
  * Use for icons or other visual elements at the start of the chip.
  *
- * @component Chip.Label - Text content of the chip. Defaults to "Label" if not provided.
- * Inherits size, variant, and color from parent Chip via context.
+ * @component Chip.Label - Text content of the chip. When string is provided,
+ * it renders as Text. Otherwise renders children as-is.
  *
  * @component Chip.EndContent - Optional trailing content displayed after the label.
  * Use for icons, badges, or interactive elements at the end of the chip.
  *
  * Props flow from Chip to sub-components via context (size, variant, color).
- * The chip layout is horizontal with consistent spacing between elements.
+ * All components use animated views with layout transitions for smooth animations.
  *
  * @see Full documentation: https://heroui.com/components/chip
  */
 const CompoundChip = Object.assign(Chip, {
+  /** @optional Background element - absolute positioned beneath content */
+  Background: ChipBackground,
   /** @optional Leading content like icons */
   StartContent: ChipStartContent,
-  /** Text label content */
+  /** Chip label - renders text or custom content */
   Label: ChipLabel,
   /** @optional Trailing content like icons or badges */
   EndContent: ChipEndContent,

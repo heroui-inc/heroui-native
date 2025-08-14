@@ -50,10 +50,6 @@ export interface TextFieldRootProps extends ViewProps {
    */
   children?: React.ReactNode;
   /**
-   * Additional CSS classes
-   */
-  className?: string;
-  /**
    * Whether the entire text field is disabled
    * @default false
    */
@@ -68,6 +64,10 @@ export interface TextFieldRootProps extends ViewProps {
    * @default false
    */
   isRequired?: boolean;
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
 }
 
 /**

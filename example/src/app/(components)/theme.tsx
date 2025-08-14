@@ -1,11 +1,12 @@
-import { Switch } from 'heroui-native';
-import { Moon, Sun } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { TextField, useTheme } from 'heroui-native';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
-import Animated, { ZoomIn } from 'react-native-reanimated';
 
 export default function Theme() {
-  const [darkMode, setDarkMode] = React.useState(false);
+  const { colors } = useTheme();
+  const [email, setEmail] = React.useState('');
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   return (
     <ScrollView
@@ -13,43 +14,63 @@ export default function Theme() {
       contentContainerClassName="pb-20"
       contentInsetAdjustmentBehavior="automatic"
     >
-      <View className="flex-row gap-4">
-        <Switch
-          isSelected={darkMode}
-          onSelectedChange={setDarkMode}
-          className="w-[56px] h-[32px]"
-          classNames={{
-            contentPaddingContainer: 'px-1.5',
-          }}
-          colors={{
-            defaultBackground: '#172554',
-            selectedBackground: '#eab308',
-            defaultBorder: '#dbeafe20',
-            selectedBorder: '#eab308',
-          }}
-        >
-          <Switch.Thumb
-            width={22}
-            colors={{
-              defaultBackground: '#dbeafe',
-              selectedBackground: '#854d0e',
-            }}
+      <View className="gap-6">
+        <TextField isRequired isValid={email === '' || isValidEmail}>
+          <TextField.Label>Email Address</TextField.Label>
+          <TextField.Input
+            placeholder="Enter your email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
+          >
+            <TextField.InputStartContent>
+              <Ionicons
+                name="mail-outline"
+                size={16}
+                color={colors.mutedForeground}
+              />
+            </TextField.InputStartContent>
+          </TextField.Input>
+          <TextField.Description>
+            We'll send a confirmation to this email
+          </TextField.Description>
+          <TextField.ErrorMessage>
+            Please enter a valid email address
+          </TextField.ErrorMessage>
+        </TextField>
+
+        <TextField isRequired>
+          <TextField.Label>Password</TextField.Label>
+          <TextField.Input placeholder="Enter password" secureTextEntry>
+            <TextField.InputStartContent>
+              <Ionicons
+                name="lock-closed-outline"
+                size={16}
+                color={colors.mutedForeground}
+              />
+            </TextField.InputStartContent>
+            <TextField.InputEndContent>
+              <Ionicons
+                name="eye-outline"
+                size={16}
+                color={colors.mutedForeground}
+              />
+            </TextField.InputEndContent>
+          </TextField.Input>
+        </TextField>
+
+        <TextField>
+          <TextField.Label>Bio</TextField.Label>
+          <TextField.Input
+            placeholder="Tell us about yourself..."
+            multiline
+            numberOfLines={4}
           />
-          <Switch.StartContent className="left-0.5">
-            {darkMode && (
-              <Animated.View key="sun" entering={ZoomIn}>
-                <Sun size={16} color="#854d0e" strokeWidth={3} />
-              </Animated.View>
-            )}
-          </Switch.StartContent>
-          <Switch.EndContent className="right-0.5">
-            {!darkMode && (
-              <Animated.View key="moon" entering={ZoomIn}>
-                <Moon size={16} color="#dbeafe" />
-              </Animated.View>
-            )}
-          </Switch.EndContent>
-        </Switch>
+          <TextField.Description>
+            Brief description for your profile
+          </TextField.Description>
+        </TextField>
       </View>
     </ScrollView>
   );

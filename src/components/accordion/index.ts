@@ -9,7 +9,6 @@ export type {
   AccordionContentProps,
   AccordionContextValue,
   AccordionIndicatorProps,
-  AccordionIndicatorRef,
   AccordionItemProps,
   AccordionRootProps,
   AccordionTriggerProps,

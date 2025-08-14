@@ -1,4 +1,11 @@
-import type { TextProps, ViewProps } from 'react-native';
+import type { ViewProps } from 'react-native';
+import type {
+  AnimatedProps,
+  BaseAnimationBuilder,
+  LayoutAnimationFunction,
+} from 'react-native-reanimated';
+import type { ElementSlots } from '../../theme';
+import type { LabelSlots } from './chip.styles';
 
 /**
  * Chip size variants
@@ -18,7 +25,7 @@ export type ChipColor = 'accent' | 'default' | 'success' | 'warning' | 'danger';
 /**
  * Props for the main Chip component
  */
-export interface ChipProps extends ViewProps {
+export interface ChipProps extends AnimatedProps<ViewProps> {
   /** Child elements to render inside the chip */
   children?: React.ReactNode;
 
@@ -36,9 +43,20 @@ export interface ChipProps extends ViewProps {
 }
 
 /**
+ * Props for the ChipBackground component
+ */
+export interface ChipBackgroundProps extends AnimatedProps<ViewProps> {
+  /** Content to be rendered as the chip background */
+  children?: React.ReactNode;
+
+  /** Custom class name for the background */
+  className?: string;
+}
+
+/**
  * Props for the ChipStartContent component
  */
-export interface ChipStartContentProps extends ViewProps {
+export interface ChipStartContentProps extends AnimatedProps<ViewProps> {
   /** Child elements to render inside the start content */
   children?: React.ReactNode;
 
@@ -49,18 +67,21 @@ export interface ChipStartContentProps extends ViewProps {
 /**
  * Props for the ChipLabel component
  */
-export interface ChipLabelProps extends TextProps {
-  /** Child elements to render as the label */
+export interface ChipLabelProps extends AnimatedProps<ViewProps> {
+  /** Child elements to render as the label. If string, will be wrapped in Text component */
   children?: React.ReactNode;
 
   /** Custom class name for the label */
   className?: string;
+
+  /** Additional CSS classes for the different parts of the label */
+  classNames?: ElementSlots<LabelSlots>;
 }
 
 /**
  * Props for the ChipEndContent component
  */
-export interface ChipEndContentProps extends ViewProps {
+export interface ChipEndContentProps extends AnimatedProps<ViewProps> {
   /** Child elements to render inside the end content */
   children?: React.ReactNode;
 
@@ -80,4 +101,10 @@ export interface ChipContextValue {
 
   /** Color theme of the chip */
   color: ChipColor;
+
+  /** Layout transition for animated components */
+  layout?:
+    | BaseAnimationBuilder
+    | LayoutAnimationFunction
+    | typeof BaseAnimationBuilder;
 }

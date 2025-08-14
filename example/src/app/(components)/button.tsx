@@ -78,7 +78,7 @@ export default function ButtonScreen() {
         <Button
           variant="primary"
           onPress={() => console.log('Dynamic button pressed')}
-          fullWidth={false}
+          className="self-center"
         >
           {showStartContent && (
             <Button.StartContent>
@@ -107,8 +107,8 @@ export default function ButtonScreen() {
               setIsDownloading(false);
             }, 3000);
           }}
-          fullWidth={false}
           isIconOnly={isDownloading}
+          className="self-center"
         >
           <Button.Label>
             {isDownloading ? (
@@ -228,17 +228,17 @@ export default function ButtonScreen() {
       </Text>
 
       <View className="w-full gap-4 mb-6">
-        <Button fullWidth>
+        <Button>
           <Button.Label>Full Width Button</Button.Label>
         </Button>
         <View className="flex-row gap-4">
-          <Button fullWidth={false} variant="secondary" size="sm">
+          <Button variant="secondary" size="sm">
             <Button.Label>Auto</Button.Label>
           </Button>
-          <Button fullWidth={false} variant="secondary" size="md">
+          <Button variant="secondary" size="md">
             <Button.Label>Width</Button.Label>
           </Button>
-          <Button fullWidth={false} variant="secondary" size="lg">
+          <Button variant="secondary" size="lg">
             <Button.Label>Buttons</Button.Label>
           </Button>
         </View>
@@ -249,17 +249,17 @@ export default function ButtonScreen() {
       </Text>
 
       <View className="flex-row gap-4 mb-6">
-        <Button size="sm" fullWidth={false} isIconOnly>
+        <Button size="sm" isIconOnly>
           <Button.Label>
             <Plus size={16} color={colors.accentForeground} />
           </Button.Label>
         </Button>
-        <Button size="md" fullWidth={false} variant="secondary" isIconOnly>
+        <Button size="md" variant="secondary" isIconOnly>
           <Button.Label>
             <Heart size={18} color="#ec4899" fill="#ec4899" />
           </Button.Label>
         </Button>
-        <Button size="lg" fullWidth={false} variant="danger" isIconOnly>
+        <Button size="lg" variant="danger" isIconOnly>
           <Button.Label>
             <Trash2 size={20} color={colors.dangerForeground} />
           </Button.Label>

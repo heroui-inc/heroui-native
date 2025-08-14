@@ -22,8 +22,8 @@ const label = tv({
         asterisk: 'text-muted-foreground',
       },
     },
-    isValid: {
-      false: {
+    isInvalid: {
+      true: {
         text: 'text-danger',
       },
     },
@@ -32,7 +32,8 @@ const label = tv({
 
 const input = tv({
   slots: {
-    container: 'h-[44px] px-3 rounded-lg border flex-row items-center gap-3',
+    container:
+      'h-[44px] px-3 rounded-lg border-[1.5px] flex-row items-center gap-3',
     input: 'flex-1 h-full text-base/5 text-foreground',
   },
   variants: {

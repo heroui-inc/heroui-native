@@ -18,7 +18,7 @@ const ErrorFieldRoot = forwardRef<ViewRef, ErrorFieldRootProps>(
       children,
       className,
       classNames,
-      isValid = true,
+      isInvalid = false,
       entering = ENTERING_ANIMATION_CONFIG,
       exiting = EXITING_ANIMATION_CONFIG,
       ...restProps
@@ -32,7 +32,7 @@ const ErrorFieldRoot = forwardRef<ViewRef, ErrorFieldRootProps>(
 
     const textStyles = tvStyles.text({ className: classNames?.text });
 
-    if (isValid) return null;
+    if (!isInvalid) return null;
 
     return (
       <Animated.View
@@ -61,7 +61,7 @@ ErrorFieldRoot.displayName = DISPLAY_NAME.ROOT;
  *
  * @component ErrorField - Error message container with entering/exiting animations.
  * Automatically wraps string children with Text component.
- * Hidden when isValid is true.
+ * Hidden when isInvalid is false.
  */
 const ErrorField = ErrorFieldRoot;
 

@@ -220,10 +220,14 @@ const AccordionScreen = () => {
         <Text className="text-lg font-bold text-muted-foreground mb-4">
           Custom entering animation
         </Text>
-        <Accordion selectionMode="single" variant="border" showDivider={false}>
+        <Accordion
+          selectionMode="single"
+          variant="border"
+          isDividerVisible={false}
+        >
           {accordionData.slice(0, 3).map((item, index) => (
             <Accordion.Item key={item.id} value={item.id}>
-              <Accordion.Trigger hideHighlight>
+              <Accordion.Trigger isHighlightVisible={false}>
                 <View className={classNames.triggerContentContainer}>
                   {item.icon}
                   <Text className={classNames.triggerTitle}>{item.title}</Text>
@@ -259,7 +263,7 @@ const AccordionScreen = () => {
           Custom Styles
         </Text>
         <View className="gap-3">
-          <Accordion selectionMode="single" showDivider={false}>
+          <Accordion selectionMode="single" isDividerVisible={false}>
             {accordionData.slice(0, 4).map((item) => (
               <Accordion.Item key={item.id} value={item.id} className="mb-3">
                 <Accordion.Trigger className="bg-surface-2 rounded-xl border border-border/50 shadow-sm">

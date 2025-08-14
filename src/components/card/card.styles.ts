@@ -6,7 +6,7 @@ const root = tv({
 });
 
 const details = tv({
-  base: 'flex-1 gap-3 flex-shrink-0',
+  base: 'flex-1 gap-4 flex-shrink-0',
 });
 
 const header = tv({

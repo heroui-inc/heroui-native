@@ -1,4 +1,4 @@
-import { Easing } from 'react-native-reanimated';
+import { Easing, FadeIn, FadeOut } from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
 
 /**
@@ -31,3 +31,15 @@ export const SPINNER_SIZE_MAP = {
   md: 24,
   lg: 32,
 } as const;
+
+/**
+ * Default entering animation configuration for spinner indicator
+ */
+export const DEFAULT_SPINNER_INDICATOR_ENTERING = FadeIn.duration(200).easing(
+  Easing.out(Easing.ease)
+);
+
+/**
+ * Default exiting animation configuration for spinner indicator
+ */
+export const DEFAULT_SPINNER_INDICATOR_EXITING = FadeOut.duration(100);

@@ -20,7 +20,7 @@ const RadioGroupRoot = forwardRef<
   const {
     className,
     orientation = 'vertical',
-    isValid = true,
+    isInvalid = false,
     ...restProps
   } = props;
 
@@ -34,7 +34,7 @@ const RadioGroupRoot = forwardRef<
       ref={ref}
       className={tvStyles}
       orientation={orientation}
-      isValid={isValid}
+      isInvalid={isInvalid}
       {...restProps}
     />
   );
@@ -44,7 +44,7 @@ const RadioGroupRoot = forwardRef<
 
 const RadioGroupErrorMessage = forwardRef<ViewRef, RadioGroupErrorMessageProps>(
   (props, ref) => {
-    const { isValid, orientation } = useRadioGroupContext();
+    const { isInvalid, orientation } = useRadioGroupContext();
     const { className, ...restProps } = props;
 
     const tvStyles = radioGroupStyles.errorMessage({
@@ -55,7 +55,7 @@ const RadioGroupErrorMessage = forwardRef<ViewRef, RadioGroupErrorMessageProps>(
     return (
       <ErrorField
         ref={ref}
-        isValid={isValid}
+        isInvalid={isInvalid}
         className={tvStyles}
         {...restProps}
       />

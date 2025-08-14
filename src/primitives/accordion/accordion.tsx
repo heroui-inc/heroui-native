@@ -27,7 +27,7 @@ const Root = forwardRef<RootRef, RootProps>(
       asChild,
       selectionMode,
       isDisabled,
-      collapsible = true,
+      isCollapsible = true,
       value: valueProp,
       onValueChange: onValueChangeProps,
       defaultValue,
@@ -53,7 +53,7 @@ const Root = forwardRef<RootRef, RootProps>(
         value={{
           selectionMode,
           isDisabled,
-          collapsible,
+          isCollapsible,
           value,
           onValueChange,
         }}
@@ -157,7 +157,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       selectionMode,
       onValueChange,
       value: rootValue,
-      collapsible,
+      isCollapsible,
     } = useRootContext();
 
     const {
@@ -171,7 +171,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       if (rootDisabled || itemDisabled) return;
 
       if (selectionMode === 'single') {
-        const newValue = collapsible
+        const newValue = isCollapsible
           ? value === rootValue
             ? undefined
             : value
@@ -181,7 +181,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
 
       if (selectionMode === 'multiple') {
         const rootToArray = toStringArray(rootValue);
-        const newValue = collapsible
+        const newValue = isCollapsible
           ? rootToArray.includes(value)
             ? rootToArray.filter((val) => val !== value)
             : rootToArray.concat(value)

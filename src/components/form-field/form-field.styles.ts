@@ -28,10 +28,11 @@ const root = tv({
 });
 
 const content = tv({
-  base: 'flex-1',
+  base: '',
   variants: {
     isInline: {
-      true: 'flex-0',
+      true: '',
+      false: 'flex-1',
     },
   },
 });

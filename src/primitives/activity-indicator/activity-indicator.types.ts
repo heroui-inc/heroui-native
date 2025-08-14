@@ -7,7 +7,7 @@ import type { SlottableViewProps, ViewRef } from '../../helpers/types';
  */
 export interface RootProps extends SlottableViewProps {
   /** Whether the activity indicator is loading */
-  loading?: boolean;
+  isLoading?: boolean;
 }
 
 /** Reference type for the activity indicator root component */

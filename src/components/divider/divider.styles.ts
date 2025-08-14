@@ -10,7 +10,7 @@ const root = tv({
       thick: '',
     },
     orientation: {
-      horizontal: 'w-full',
+      horizontal: '',
       vertical: 'h-full',
     },
   },

@@ -1,3 +1,5 @@
+import type { ViewProps } from 'react-native';
+import type { AnimatedProps } from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
 import * as ActivityIndicatorPrimitivesTypes from '../../primitives/activity-indicator';
 
@@ -25,9 +27,6 @@ export interface SpinnerProps
   /** Color theme of the spinner @default 'default' */
   color?: SpinnerColor | (string & {});
 
-  /** Whether the spinner is loading @default true */
-  loading?: boolean;
-
   /** Custom class name for the spinner */
   className?: string;
 }
@@ -38,8 +37,10 @@ export interface SpinnerProps
 export interface SpinnerIconProps {
   /** Width of the icon */
   width?: number | string;
+
   /** Height of the icon */
   height?: number | string;
+
   /** Color of the icon */
   color?: string;
 }
@@ -47,13 +48,9 @@ export interface SpinnerIconProps {
 /**
  * Props for the SpinnerIndicator component
  */
-export interface SpinnerIndicatorProps
-  extends ActivityIndicatorPrimitivesTypes.IndicatorProps {
+export interface SpinnerIndicatorProps extends AnimatedProps<ViewProps> {
   /** Content to render inside the indicator */
   children?: React.ReactNode;
-
-  /** Custom class name for the indicator element */
-  className?: string;
 
   /** Speed in rounds per second @default 1 */
   speed?: number;
@@ -63,6 +60,9 @@ export interface SpinnerIndicatorProps
 
   /** Props for the default icon */
   iconProps?: SpinnerIconProps;
+
+  /** Custom class name for the indicator element */
+  className?: string;
 }
 
 /**
@@ -76,5 +76,5 @@ export interface SpinnerContextValue {
   color: SpinnerColor | string;
 
   /** Whether the spinner is loading */
-  loading: boolean;
+  isLoading: boolean;
 }

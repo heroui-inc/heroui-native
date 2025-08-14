@@ -19,9 +19,6 @@ interface FormFieldBaseProps extends AnimatedProps<PressableProps> {
   /** Whether the control is selected/checked @default undefined */
   isSelected?: boolean;
 
-  /** Callback when selection state changes */
-  onSelectedChange?: (isSelected: boolean) => void;
-
   /** Whether the form control is disabled @default false */
   isDisabled?: boolean;
 
@@ -31,8 +28,11 @@ interface FormFieldBaseProps extends AnimatedProps<PressableProps> {
   /** Whether the form control is inline (using inside flex-row container) @default false */
   isInline?: boolean;
 
-  /** Whether the form control is valid @default true */
-  isValid?: boolean;
+  /** Whether the form control is invalid @default false */
+  isInvalid?: boolean;
+
+  /** Callback when selection state changes */
+  onSelectedChange?: (isSelected: boolean) => void;
 }
 
 /**
@@ -132,5 +132,5 @@ export interface FormFieldContextValue
     | 'isDisabled'
     | 'isReadOnly'
     | 'isInline'
-    | 'isValid'
+    | 'isInvalid'
   > {}

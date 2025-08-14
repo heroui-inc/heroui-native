@@ -100,14 +100,14 @@
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
-    "nativewind": ">=4.0",
     "react": "*",
     "react-native": "*",
-    "react-native-reanimated": ">=3",
-    "react-native-safe-area-context": ">=5",
-    "react-native-svg": "*",
-    "tailwind-merge": "*",
-    "tailwind-variants": "*"
+    "nativewind": "^4.1.23",
+    "react-native-reanimated": "~3.17.4",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-svg": "^15.12.1",
+    "tailwind-variants": "^2.0.1",
+    "tailwind-merge": "^3.3.1"
   },
   "workspaces": [
     "example"

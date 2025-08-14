@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../theme/helpers';
 
 const root = tv({
-  base: 'self-start flex-row items-center justify-center rounded-full py-1 gap-1',
+  base: 'self-start flex-row items-center justify-center rounded-full py-1 gap-1 overflow-hidden',
   variants: {
     variant: {
       primary: 'border-0',
@@ -63,24 +63,49 @@ const startContent = tv({
 });
 
 const label = tv({
-  base: 'font-medium',
+  slots: {
+    container: 'items-center justify-center',
+    text: 'font-medium',
+  },
   variants: {
     variant: {
-      primary: '',
-      secondary: '',
-      tertiary: '',
+      primary: {
+        text: '',
+      },
+      secondary: {
+        text: '',
+      },
+      tertiary: {
+        text: '',
+      },
     },
     size: {
-      sm: 'text-xs',
-      md: 'text-sm',
-      lg: 'text-base',
+      sm: {
+        text: 'text-xs',
+      },
+      md: {
+        text: 'text-sm',
+      },
+      lg: {
+        text: 'text-base',
+      },
     },
     color: {
-      accent: '',
-      default: '',
-      success: '',
-      warning: '',
-      danger: '',
+      accent: {
+        text: '',
+      },
+      default: {
+        text: '',
+      },
+      success: {
+        text: '',
+      },
+      warning: {
+        text: '',
+      },
+      danger: {
+        text: '',
+      },
     },
   },
   compoundVariants: [
@@ -88,48 +113,66 @@ const label = tv({
     {
       variant: 'primary',
       color: 'accent',
-      className: 'text-accent-foreground',
+      className: {
+        text: 'text-accent-foreground',
+      },
     },
     {
       variant: 'primary',
       color: 'default',
-      className: 'text-default-foreground',
+      className: {
+        text: 'text-default-foreground',
+      },
     },
     {
       variant: 'primary',
       color: 'success',
-      className: 'text-success-foreground',
+      className: {
+        text: 'text-success-foreground',
+      },
     },
     {
       variant: 'primary',
       color: 'warning',
-      className: 'text-warning-foreground',
+      className: {
+        text: 'text-warning-foreground',
+      },
     },
     {
       variant: 'primary',
       color: 'danger',
-      className: 'text-danger-foreground',
+      className: {
+        text: 'text-danger-foreground',
+      },
     },
     // Secondary & Tertiary variant text colors
     {
       variant: ['secondary', 'tertiary'],
       color: ['accent', 'default'],
-      className: 'text-foreground',
+      className: {
+        text: 'text-foreground',
+      },
     },
     {
       variant: ['secondary', 'tertiary'],
       color: 'success',
-      className: 'text-success',
+      className: {
+        text: 'text-success',
+      },
     },
     {
       variant: ['secondary', 'tertiary'],
       color: 'warning',
-      className: 'text-warning',
+      className: {
+        text: 'text-warning',
+      },
     },
     {
       variant: ['secondary', 'tertiary'],
       color: 'danger',
-      className: 'text-danger',
+      className: {
+        text: 'text-danger',
+      },
     },
   ],
   defaultVariants: {
@@ -143,6 +186,10 @@ const endContent = tv({
   base: 'items-center justify-center',
 });
 
+const background = tv({
+  base: 'absolute inset-0 rounded-full',
+});
+
 export const nativeStyles = StyleSheet.create({
   root: {
     borderCurve: 'continuous',
@@ -154,6 +201,8 @@ const chipStyles = combineStyles({
   startContent,
   label,
   endContent,
+  background,
 });
 
+export type LabelSlots = keyof ReturnType<typeof label>;
 export default chipStyles;

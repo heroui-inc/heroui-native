@@ -64,5 +64,5 @@ export const VARIANT_TO_COLOR_MAP: Record<ButtonVariant, keyof ColorConstants> =
   };
 
 export const DEFAULT_LAYOUT_TRANSITION = LinearTransition.springify()
-  .damping(32)
-  .stiffness(360);
+  .damping(42)
+  .stiffness(600);

@@ -25,7 +25,7 @@ export default function FormFieldScreen() {
         <FormField
           isSelected={switchValue1}
           onSelectedChange={setSwitchValue1}
-          isValid={!switchValue1}
+          isInvalid={switchValue1}
         >
           <FormField.Content>
             <FormField.Label>Enable notifications</FormField.Label>
@@ -83,7 +83,7 @@ export default function FormFieldScreen() {
         <FormField
           isSelected={checkboxValue1}
           onSelectedChange={setCheckboxValue1}
-          isValid={checkboxValue1}
+          isInvalid={!checkboxValue1}
         >
           <FormField.Content>
             <FormField.Label>
@@ -105,7 +105,7 @@ export default function FormFieldScreen() {
         <FormField
           isSelected={checkboxValue2}
           onSelectedChange={setCheckboxValue2}
-          isValid={checkboxValue2}
+          isInvalid={!checkboxValue2}
         >
           <FormField.Content>
             <FormField.Label>Subscribe to newsletter</FormField.Label>

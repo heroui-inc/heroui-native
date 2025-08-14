@@ -48,11 +48,11 @@ Use predefined color variants or custom colors.
 
 ### Loading State
 
-Control the visibility of the spinner with the `loading` prop.
+Control the visibility of the spinner with the `isLoading` prop.
 
 ```tsx
-<Spinner loading={true} />
-<Spinner loading={false} />
+<Spinner isLoading={true} />
+<Spinner isLoading={false} />
 ```
 
 ### Animation Speed
@@ -96,7 +96,7 @@ import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 export default function SpinnerExample() {
-  const [loading, setLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   return (
     <View className="gap-4 p-4 bg-background">
@@ -106,11 +106,11 @@ export default function SpinnerExample() {
       </View>
 
       <View className="items-center p-8 rounded-2xl bg-stone-200">
-        <Spinner size="lg" color="success" loading={loading} />
+        <Spinner size="lg" color="success" isLoading={isLoading} />
         <Text className="text-stone-500 mt-4">Processing...</Text>
-        <TouchableOpacity onPress={() => setLoading(!loading)}>
+        <TouchableOpacity onPress={() => setIsLoading(!isLoading)}>
           <Text className="text-primary mt-2 text-sm">
-            {loading ? 'Tap to stop' : 'Tap to start'}
+            {isLoading ? 'Tap to stop' : 'Tap to start'}
           </Text>
         </TouchableOpacity>
       </View>
@@ -147,7 +147,7 @@ export default function SpinnerExample() {
 | `children`     | `React.ReactNode`                                           | `undefined` | Content to render inside the spinner               |
 | `size`         | `'sm' \| 'md' \| 'lg'`                                      | `'md'`      | Size of the spinner                                |
 | `color`        | `'default' \| 'success' \| 'warning' \| 'danger' \| string` | `'default'` | Color theme of the spinner                         |
-| `loading`      | `boolean`                                                   | `true`      | Whether the spinner is loading                     |
+| `isLoading`    | `boolean`                                                   | `true`      | Whether the spinner is loading                     |
 | `className`    | `string`                                                    | `undefined` | Custom class name for the spinner                  |
 | `...ViewProps` | `ViewProps`                                                 | -           | All standard React Native View props are supported |
 

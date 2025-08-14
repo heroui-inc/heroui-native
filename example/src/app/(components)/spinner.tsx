@@ -11,7 +11,7 @@ import {
 import { cn } from '../../helpers/utils/cn';
 
 export default function SpinnerScreen() {
-  const [loading, setLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(true);
   const { theme, colors } = useTheme();
 
   const isDark = theme === 'dark';
@@ -83,10 +83,10 @@ export default function SpinnerScreen() {
       </Text>
 
       <View className="items-center mb-6">
-        <Spinner size="lg" color="success" loading={loading} />
-        <TouchableOpacity onPress={() => setLoading(!loading)}>
+        <Spinner size="lg" color="success" isLoading={isLoading} />
+        <TouchableOpacity onPress={() => setIsLoading(!isLoading)}>
           <Text className="text-primary mt-4 text-sm">
-            {loading ? 'Tap to stop' : 'Tap to start'}
+            {isLoading ? 'Tap to stop' : 'Tap to start'}
           </Text>
         </TouchableOpacity>
       </View>

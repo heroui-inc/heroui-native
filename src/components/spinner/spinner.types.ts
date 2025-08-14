@@ -27,9 +27,6 @@ export interface SpinnerProps
   /** Color theme of the spinner @default 'default' */
   color?: SpinnerColor | (string & {});
 
-  /** Whether the spinner is loading @default true */
-  loading?: boolean;
-
   /** Custom class name for the spinner */
   className?: string;
 }
@@ -79,5 +76,5 @@ export interface SpinnerContextValue {
   color: SpinnerColor | string;
 
   /** Whether the spinner is loading */
-  loading: boolean;
+  isLoading: boolean;
 }

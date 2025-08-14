@@ -11,7 +11,7 @@ import type {
 // --------------------------------------------------
 
 const Root = forwardRef<RootRef, RootProps>(
-  ({ asChild, loading = true, ...props }, ref) => {
+  ({ asChild, isLoading = true, ...props }, ref) => {
     const Component = asChild ? Slot.View : View;
 
     return (
@@ -19,7 +19,7 @@ const Root = forwardRef<RootRef, RootProps>(
         ref={ref}
         accessible
         accessibilityRole="progressbar"
-        accessibilityState={{ busy: loading }}
+        accessibilityState={{ busy: isLoading }}
         {...props}
       />
     );

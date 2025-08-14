@@ -59,7 +59,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
   const {
     children,
     variant = 'default',
-    showDivider = true,
+    isDividerVisible = true,
     className,
     classNames,
     layout = ACCORDION_LAYOUT_TRANSITION,
@@ -77,10 +77,10 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
   const contextValue: AccordionContextValue = useMemo(
     () => ({
       variant,
-      showDivider,
+      isDividerVisible,
       layoutTransition: layout,
     }),
-    [variant, showDivider, layout]
+    [variant, isDividerVisible, layout]
   );
 
   return (
@@ -99,7 +99,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
         {Children.map(children, (child, index) => (
           <>
             {child}
-            {showDivider && index < Children.count(children) - 1 && (
+            {isDividerVisible && index < Children.count(children) - 1 && (
               <Animated.View className={dividerStyles} layout={layout} />
             )}
           </>
@@ -316,7 +316,7 @@ Content.displayName = DISPLAY_NAME.CONTENT;
  * @component Accordion.Content - Container for expandable content.
  * Animated with layout transitions for smooth expand/collapse effects.
  *
- * Props flow from Accordion to sub-components via context (variant, showDivider).
+ * Props flow from Accordion to sub-components via context (variant, isDividerVisible).
  * Item expansion state is managed by the primitive accordion context.
  *
  * @see Full documentation: https://heroui.com/components/accordion

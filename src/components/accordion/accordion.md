@@ -109,7 +109,7 @@ Replace the default chevron indicator with custom content.
 Hide the dividers between accordion items.
 
 ```tsx
-<Accordion selectionMode="single" showDivider={false}>
+<Accordion selectionMode="single" isDividerVisible={false}>
   <Accordion.Item value="1">
     <Accordion.Trigger>...</Accordion.Trigger>
     <Accordion.Content>...</Accordion.Content>
@@ -209,7 +209,7 @@ export default function AccordionExample() {
 | `children`              | `React.ReactNode`                                  | -           | Children elements to be rendered inside the accordion             |
 | `selectionMode`         | `'single' \| 'multiple'`                           | -           | Whether the accordion allows single or multiple expanded items    |
 | `variant`               | `'default' \| 'border'`                            | `'default'` | Visual variant of the accordion                                   |
-| `showDivider`           | `boolean`                                          | `true`      | Whether to display a divider at the bottom of each accordion item |
+| `isDividerVisible`      | `boolean`                                          | `true`      | Whether to display a divider at the bottom of each accordion item |
 | `defaultValue`          | `string \| string[] \| undefined`                  | -           | Default expanded item(s) in uncontrolled mode                     |
 | `value`                 | `string \| string[] \| undefined`                  | -           | Controlled expanded item(s)                                       |
 | `isDisabled`            | `boolean`                                          | -           | Whether all accordion items are disabled                          |

@@ -59,7 +59,7 @@ export type AccordionRootProps = AnimatedProps<PrimitiveRootProps> & {
    * Whether to display a divider at the bottom of each accordion item
    * @default true
    */
-  showDivider?: boolean;
+  isDividerVisible?: boolean;
   /**
    * Additional CSS classes for the container
    */
@@ -178,7 +178,7 @@ export interface AccordionContextValue {
   /**
    * Whether to show dividers between items
    */
-  showDivider: boolean;
+  isDividerVisible: boolean;
   /**
    * Custom layout animation for accordion transitions
    */

@@ -110,10 +110,10 @@ export interface AccordionTriggerProps extends PrimitiveTriggerProps {
    */
   highlightTimingConfig?: TimingConfig;
   /**
-   * Whether to hide the highlight on press
-   * @default false
+   * Whether to show the highlight on press
+   * @default true
    */
-  hideHighlight?: boolean;
+  isHighlightVisible?: boolean;
 }
 
 /**

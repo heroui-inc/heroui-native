@@ -139,7 +139,7 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
     highlightColor,
     highlightOpacity: highlightOpacityProp = 0.03,
     highlightTimingConfig,
-    hideHighlight = false,
+    isHighlightVisible = true,
     ...restProps
   } = props;
 
@@ -155,7 +155,7 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
   const highlightOpacity = useSharedValue(0);
 
   const handlePressIn = (event: GestureResponderEvent) => {
-    if (!hideHighlight) {
+    if (isHighlightVisible) {
       highlightOpacity.set(
         withTiming(
           1,
@@ -170,7 +170,7 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
   };
 
   const handlePressOut = (event: GestureResponderEvent) => {
-    if (!hideHighlight) {
+    if (isHighlightVisible) {
       highlightOpacity.set(
         withTiming(
           0,
@@ -198,7 +198,7 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
         onPressOut={handlePressOut}
         {...restProps}
       >
-        {!hideHighlight && (
+        {isHighlightVisible && (
           <Animated.View
             style={[StyleSheet.absoluteFill, animatedHighlightStyle]}
           />

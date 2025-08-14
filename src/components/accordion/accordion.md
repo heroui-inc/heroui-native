@@ -245,7 +245,7 @@ export default function AccordionExample() {
 | `highlightColor`        | `string`          | -       | Custom highlight color for press feedback               |
 | `highlightOpacity`      | `number`          | `0.03`  | Custom highlight opacity for press feedback             |
 | `highlightTimingConfig` | `TimingConfig`    | -       | Custom timing config for highlight animation            |
-| `hideHighlight`         | `boolean`         | `false` | Whether to hide the highlight on press                  |
+| `isHighlightVisible`    | `boolean`         | `true`  | Whether to show the highlight on press                  |
 | `isDisabled`            | `boolean`         | -       | Whether the trigger is disabled                         |
 | `...PressableProps`     | `PressableProps`  | -       | All standard React Native Pressable props are supported |
 
@@ -282,7 +282,6 @@ export default function AccordionExample() {
 | `className`    | `string`                                                                            | -       | Additional CSS classes                              |
 | `entering`     | `BaseAnimationBuilder \| typeof BaseAnimationBuilder \| EntryExitAnimationFunction` | -       | Custom reanimated entering animation for content    |
 | `exiting`      | `BaseAnimationBuilder \| typeof BaseAnimationBuilder \| EntryExitAnimationFunction` | -       | Custom reanimated exiting animation for content     |
-| `forceMount`   | `boolean`                                                                           | -       | Whether to force mount the content                  |
 | `...ViewProps` | `ViewProps`                                                                         | -       | All standard React Native View props are supported  |
 
 ## Special Note

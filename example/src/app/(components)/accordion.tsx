@@ -227,7 +227,7 @@ const AccordionScreen = () => {
         >
           {accordionData.slice(0, 3).map((item, index) => (
             <Accordion.Item key={item.id} value={item.id}>
-              <Accordion.Trigger hideHighlight>
+              <Accordion.Trigger isHighlightVisible={false}>
                 <View className={classNames.triggerContentContainer}>
                   {item.icon}
                   <Text className={classNames.triggerTitle}>{item.title}</Text>

@@ -8,7 +8,7 @@ Container that manages the selection state of Radio components.
 
 ## Imports
 
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](https://heroui.com/docs/quick-start).
+Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
 
 ```tsx
 import { RadioGroup } from 'heroui-native';
@@ -168,13 +168,13 @@ export default function RadioGroupExample() {
 
 ### RadioGroup.ErrorMessage
 
-| prop                   | type                                    | default     | description                                                           |
-| ---------------------- | --------------------------------------- | ----------- | --------------------------------------------------------------------- |
-| `children`             | `React.ReactNode`                       | `undefined` | The content of the error field. String children are wrapped with Text |
-| `isValid`              | `boolean`                               | `true`      | Controls the visibility of the error field                            |
-| `className`            | `string`                                | `undefined` | Additional CSS classes for the container                              |
-| `classNames`           | `ElementSlots<ErrorFieldSlots>`          | `undefined` | Additional CSS classes for different parts of the component           |
-| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`              | -           | All Reanimated Animated.View props are supported                      |
+| prop                   | type                            | default     | description                                                           |
+| ---------------------- | ------------------------------- | ----------- | --------------------------------------------------------------------- |
+| `children`             | `React.ReactNode`               | `undefined` | The content of the error field. String children are wrapped with Text |
+| `isValid`              | `boolean`                       | `true`      | Controls the visibility of the error field                            |
+| `className`            | `string`                        | `undefined` | Additional CSS classes for the container                              |
+| `classNames`           | `ElementSlots<ErrorFieldSlots>` | `undefined` | Additional CSS classes for different parts of the component           |
+| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`      | -           | All Reanimated Animated.View props are supported                      |
 
 #### ElementSlots<ErrorFieldSlots>
 

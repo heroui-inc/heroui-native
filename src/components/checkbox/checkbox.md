@@ -8,7 +8,7 @@ A selectable control that allows users to toggle between checked and unchecked s
 
 ## Imports
 
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](https://heroui.com/docs/quick-start).
+Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
 
 ```tsx
 import { Checkbox } from 'heroui-native';

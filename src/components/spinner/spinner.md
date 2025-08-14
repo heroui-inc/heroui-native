@@ -8,7 +8,7 @@ Displays an animated loading indicator.
 
 ## Imports
 
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](https://heroui.com/docs/quick-start).
+Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
 
 ```tsx
 import { Spinner } from 'heroui-native';

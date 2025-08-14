@@ -8,7 +8,7 @@ Container that wraps children with platform-specific drop shadows.
 
 ## Imports
 
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](https://heroui.com/docs/quick-start).
+Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
 
 ```tsx
 import { DropShadowView } from 'heroui-native';
@@ -136,16 +136,16 @@ export default function DropShadowViewExample() {
 
 ### IOSShadowStyle
 
-| prop           | type                        | description                           |
-| -------------- | --------------------------- | ------------------------------------- |
-| `shadowColor`  | `ViewStyle['shadowColor']`  | Shadow color                          |
-| `shadowOffset` | `ViewStyle['shadowOffset']` | Shadow offset `{width: number, height: number}` |
-| `shadowOpacity`| `ViewStyle['shadowOpacity']`| Shadow opacity (0-1)                  |
-| `shadowRadius` | `ViewStyle['shadowRadius']` | Shadow blur radius                    |
+| prop            | type                         | description                                     |
+| --------------- | ---------------------------- | ----------------------------------------------- |
+| `shadowColor`   | `ViewStyle['shadowColor']`   | Shadow color                                    |
+| `shadowOffset`  | `ViewStyle['shadowOffset']`  | Shadow offset `{width: number, height: number}` |
+| `shadowOpacity` | `ViewStyle['shadowOpacity']` | Shadow opacity (0-1)                            |
+| `shadowRadius`  | `ViewStyle['shadowRadius']`  | Shadow blur radius                              |
 
 ### AndroidShadowStyle
 
-| prop          | type                       | description                            |
-| ------------- | -------------------------- | -------------------------------------- |
-| `shadowColor` | `ViewStyle['shadowColor']` | Shadow color                           |
-| `elevation`   | `ViewStyle['elevation']`   | Shadow elevation (0-24)                |
+| prop          | type                       | description             |
+| ------------- | -------------------------- | ----------------------- |
+| `shadowColor` | `ViewStyle['shadowColor']` | Shadow color            |
+| `elevation`   | `ViewStyle['elevation']`   | Shadow elevation (0-24) |

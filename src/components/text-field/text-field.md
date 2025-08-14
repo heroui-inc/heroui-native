@@ -8,7 +8,7 @@ A text input component with label, description, and error handling for collectin
 
 ## Imports
 
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](https://heroui.com/docs/quick-start).
+Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
 
 ```tsx
 import { TextField } from 'heroui-native';

@@ -173,5 +173,12 @@ export default function RadioGroupExample() {
 | `children`             | `React.ReactNode`                       | `undefined` | The content of the error field. String children are wrapped with Text |
 | `isValid`              | `boolean`                               | `true`      | Controls the visibility of the error field                            |
 | `className`            | `string`                                | `undefined` | Additional CSS classes for the container                              |
-| `classNames`           | `{ container?: string, text?: string }` | `undefined` | Additional CSS classes for different parts of the component           |
+| `classNames`           | `ElementSlots<ErrorFieldSlots>`          | `undefined` | Additional CSS classes for different parts of the component           |
 | `...AnimatedViewProps` | `AnimatedProps<ViewProps>`              | -           | All Reanimated Animated.View props are supported                      |
+
+#### ElementSlots<ErrorFieldSlots>
+
+| prop        | type     | description                               |
+| ----------- | -------- | ----------------------------------------- |
+| `container` | `string` | Custom class name for the error container |
+| `text`      | `string` | Custom class name for the error text      |

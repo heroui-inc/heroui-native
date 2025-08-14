@@ -44,7 +44,9 @@ Add descriptive text to provide more context about each radio option.
   <Radio value="option1">
     <Radio.Content>
       <Radio.Label>Option 1</Radio.Label>
-      <Radio.Description>Additional details about this option</Radio.Description>
+      <Radio.Description>
+        Additional details about this option
+      </Radio.Description>
     </Radio.Content>
   </Radio>
   <Radio value="option2">
@@ -180,7 +182,11 @@ export default function RadioExample() {
             <Radio.IndicatorThumb>
               {selectedColor === 'danger' ? (
                 <Animated.View key="zap-icon" entering={FadeIn.duration(200)}>
-                  <Zap size={12} color={theme === 'dark' ? 'black' : 'white'} fill={theme === 'dark' ? 'black' : 'white'} />
+                  <Zap
+                    size={12}
+                    color={theme === 'dark' ? 'black' : 'white'}
+                    fill={theme === 'dark' ? 'black' : 'white'}
+                  />
                 </Animated.View>
               ) : null}
             </Radio.IndicatorThumb>
@@ -245,13 +251,13 @@ See [RadioGroup documentation](../radio-group/radio-group.md#api-reference) for 
 
 ### Radio.Indicator
 
-| prop                   | type                                                     | default     | description                                      |
-| ---------------------- | -------------------------------------------------------- | ----------- | ------------------------------------------------ |
-| `children`             | `React.ReactNode`                                        | `undefined` | Indicator content                                |
-| `className`            | `string`                                                 | `undefined` | Custom class name                                |
-| `colors`               | `Pick<RadioColors, 'defaultBorder' \| 'selectedBorder'>` | `undefined` | Custom border colors                             |
+| prop                   | type                                                     | default     | description                                         |
+| ---------------------- | -------------------------------------------------------- | ----------- | --------------------------------------------------- |
+| `children`             | `React.ReactNode`                                        | `undefined` | Indicator content                                   |
+| `className`            | `string`                                                 | `undefined` | Custom class name                                   |
+| `colors`               | `Pick<RadioColors, 'defaultBorder' \| 'selectedBorder'>` | `undefined` | Custom border colors                                |
 | `animationConfig`      | `TimingConfig`                                           | `undefined` | Animation configuration for border color transition |
-| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`                               | -           | All Reanimated Animated.View props are supported |
+| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`                               | -           | All Reanimated Animated.View props are supported    |
 
 #### RadioColors
 
@@ -291,9 +297,9 @@ See [RadioGroup documentation](../radio-group/radio-group.md#api-reference) for 
 
 #### SpringConfig
 
-| prop        | type     | description                                     |
-| ----------- | -------- | ----------------------------------------------- |
-| `mass`      | `number` | Mass of the spring                              |
+| prop        | type     | description                                    |
+| ----------- | -------- | ---------------------------------------------- |
+| `mass`      | `number` | Mass of the spring                             |
 | `damping`   | `number` | Amount of damping applied to the spring motion |
 | `stiffness` | `number` | Stiffness of the spring                        |
 
@@ -307,21 +313,35 @@ See [RadioGroup documentation](../radio-group/radio-group.md#api-reference) for 
 
 ### Radio.Label
 
-| prop                  | type                                    | default     | description                                             |
-| --------------------- | --------------------------------------- | ----------- | ------------------------------------------------------- |
-| `children`            | `React.ReactNode`                       | `undefined` | Label text content                                      |
-| `className`           | `string`                                | `undefined` | Custom class name for the label element                 |
-| `classNames`          | `{ container?: string, text?: string }` | `undefined` | Custom class names for different parts of the component |
-| `...AnimatedViewProps`| `AnimatedProps<ViewProps>`              | -           | All Reanimated Animated.View props are supported        |
+| prop                   | type                       | default     | description                                             |
+| ---------------------- | -------------------------- | ----------- | ------------------------------------------------------- |
+| `children`             | `React.ReactNode`          | `undefined` | Label text content                                      |
+| `className`            | `string`                   | `undefined` | Custom class name for the label element                 |
+| `classNames`           | `ElementSlots<LabelSlots>` | `undefined` | Custom class names for different parts of the component |
+| `...AnimatedViewProps` | `AnimatedProps<ViewProps>` | -           | All Reanimated Animated.View props are supported        |
+
+#### ElementSlots<LabelSlots>
+
+| prop        | type     | description                               |
+| ----------- | -------- | ----------------------------------------- |
+| `container` | `string` | Custom class name for the label container |
+| `text`      | `string` | Custom class name for the label text      |
 
 ### Radio.Description
 
-| prop                  | type                                    | default     | description                                             |
-| --------------------- | --------------------------------------- | ----------- | ------------------------------------------------------- |
-| `children`            | `React.ReactNode`                       | `undefined` | Description text content                                |
-| `className`           | `string`                                | `undefined` | Custom class name for the description element           |
-| `classNames`          | `{ container?: string, text?: string }` | `undefined` | Custom class names for different parts of the component |
-| `...AnimatedViewProps`| `AnimatedProps<ViewProps>`              | -           | All Reanimated Animated.View props are supported        |
+| prop                   | type                             | default     | description                                             |
+| ---------------------- | -------------------------------- | ----------- | ------------------------------------------------------- |
+| `children`             | `React.ReactNode`                | `undefined` | Description text content                                |
+| `className`            | `string`                         | `undefined` | Custom class name for the description element           |
+| `classNames`           | `ElementSlots<DescriptionSlots>` | `undefined` | Custom class names for different parts of the component |
+| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`       | -           | All Reanimated Animated.View props are supported        |
+
+#### ElementSlots<DescriptionSlots>
+
+| prop        | type     | description                                     |
+| ----------- | -------- | ----------------------------------------------- |
+| `container` | `string` | Custom class name for the description container |
+| `text`      | `string` | Custom class name for the description text      |
 
 ### RadioGroup.ErrorMessage
 

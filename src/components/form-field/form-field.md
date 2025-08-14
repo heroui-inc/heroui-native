@@ -250,21 +250,35 @@ export default function FormFieldExample() {
 
 ### FormField.Label
 
-| prop                  | type                                    | default | description                                             |
-| --------------------- | --------------------------------------- | ------- | ------------------------------------------------------- |
-| children              | `React.ReactNode`                       | -       | Label text content                                      |
-| className             | `string`                                | -       | Custom class name for the label element                 |
-| classNames            | `{ container?: string, text?: string }` | -       | Custom class names for different parts of the component |
-| ...Animated.ViewProps | `AnimatedProps<ViewProps>`              | -       | All Reanimated Animated.View props are supported        |
+| prop                  | type                       | default | description                                             |
+| --------------------- | -------------------------- | ------- | ------------------------------------------------------- |
+| children              | `React.ReactNode`          | -       | Label text content                                      |
+| className             | `string`                   | -       | Custom class name for the label element                 |
+| classNames            | `ElementSlots<LabelSlots>` | -       | Custom class names for different parts of the component |
+| ...Animated.ViewProps | `AnimatedProps<ViewProps>` | -       | All Reanimated Animated.View props are supported        |
+
+#### ElementSlots<LabelSlots>
+
+| prop        | type     | description                               |
+| ----------- | -------- | ----------------------------------------- |
+| `container` | `string` | Custom class name for the label container |
+| `text`      | `string` | Custom class name for the label text      |
 
 ### FormField.Description
 
-| prop                  | type                                    | default | description                                             |
-| --------------------- | --------------------------------------- | ------- | ------------------------------------------------------- |
-| children              | `React.ReactNode`                       | -       | Description text content                                |
-| className             | `string`                                | -       | Custom class name for the description element           |
-| classNames            | `{ container?: string, text?: string }` | -       | Custom class names for different parts of the component |
-| ...Animated.ViewProps | `AnimatedProps<ViewProps>`              | -       | All Reanimated Animated.View props are supported        |
+| prop                  | type                             | default | description                                             |
+| --------------------- | -------------------------------- | ------- | ------------------------------------------------------- |
+| children              | `React.ReactNode`                | -       | Description text content                                |
+| className             | `string`                         | -       | Custom class name for the description element           |
+| classNames            | `ElementSlots<DescriptionSlots>` | -       | Custom class names for different parts of the component |
+| ...Animated.ViewProps | `AnimatedProps<ViewProps>`       | -       | All Reanimated Animated.View props are supported        |
+
+#### ElementSlots<DescriptionSlots>
+
+| prop        | type     | description                                     |
+| ----------- | -------- | ----------------------------------------------- |
+| `container` | `string` | Custom class name for the description container |
+| `text`      | `string` | Custom class name for the description text      |
 
 ### FormField.Indicator
 
@@ -283,3 +297,10 @@ export default function FormFieldExample() {
 | className             | `string`                        | -       | Custom class name for styling                           |
 | classNames            | `ElementSlots<ErrorFieldSlots>` | -       | Custom class names for different parts of the component |
 | ...Animated.ViewProps | `AnimatedProps<ViewProps>`      | -       | All Reanimated Animated.View props are supported        |
+
+#### ElementSlots<ErrorFieldSlots>
+
+| prop        | type     | description                               |
+| ----------- | -------- | ----------------------------------------- |
+| `container` | `string` | Custom class name for the error container |
+| `text`      | `string` | Custom class name for the error text      |

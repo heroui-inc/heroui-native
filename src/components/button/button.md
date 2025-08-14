@@ -200,8 +200,15 @@ export default function ButtonExample() {
 | ----------------------- | --------------------------------------- | ----------------------------------------------------------------------------- |
 | `children`              | `React.ReactNode`                       | Content to be rendered as label. If string, will be wrapped in Text component |
 | `className`             | `string`                                | Additional CSS classes for container                                          |
-| `classNames`            | `{ container?: string, text?: string }` | Additional CSS classes for the different parts of the label                   |
+| `classNames`            | `ElementSlots<LabelSlots>`              | Additional CSS classes for the different parts of the label                   |
 | `...Animated.ViewProps` | `Animated.ViewProps`                    | All Reanimated Animated.View props are supported                              |
+
+#### ElementSlots<LabelSlots>
+
+| prop        | type     | description                                  |
+| ----------- | -------- | -------------------------------------------- |
+| `container` | `string` | Custom class name for the label container    |
+| `text`      | `string` | Custom class name for the label text element |
 
 ### Button.EndContent
 

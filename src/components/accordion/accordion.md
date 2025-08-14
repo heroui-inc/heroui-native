@@ -215,9 +215,16 @@ export default function AccordionExample() {
 | `isDisabled`            | `boolean`                                          | -           | Whether all accordion items are disabled                          |
 | `collapsible`           | `boolean`                                          | `true`      | Whether expanded items can be collapsed                           |
 | `className`             | `string`                                           | -           | Additional CSS classes for the container                          |
-| `classNames`            | `{ container?: string, divider?: string }`         | -           | Additional CSS classes for the slots                              |
+| `classNames`            | `ElementSlots<RootSlots>`                          | -           | Additional CSS classes for the slots                              |
 | `onValueChange`         | `(value: string \| string[] \| undefined) => void` | -           | Callback when expanded items change                               |
 | `...Animated.ViewProps` | `Animated.ViewProps`                               | -           | All Reanimated Animated.View props are supported                  |
+
+#### ElementSlots<RootSlots>
+
+| prop        | type     | description                                     |
+| ----------- | -------- | ----------------------------------------------- |
+| `container` | `string` | Custom class name for the accordion container   |
+| `divider`   | `string` | Custom class name for the divider between items |
 
 ### Accordion.Item
 

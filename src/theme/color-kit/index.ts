@@ -1281,7 +1281,6 @@ export const colorKitUI = () => {
 
   /** - Convert `HSL`, `HSV`, `HWB`, or `HEX` color to the `RGB` color format. */
   const RGB = (color: SupportedColorFormats): ColorTypes<rgbaT> => {
-    console.log('🔴', color); // VS --------- Remove Log
     // named color
     if (typeof color === 'string') {
       color = color.trim().toLowerCase();
@@ -1292,8 +1291,6 @@ export const colorKitUI = () => {
     }
 
     const colorType = detectColorFormat(color);
-
-    console.log('🔴', colorType); // VS --------- Remove Log
 
     // HEX to RGB
     if (colorType?.includes('hex')) {

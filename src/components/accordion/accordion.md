@@ -213,7 +213,7 @@ export default function AccordionExample() {
 | `defaultValue`          | `string \| string[] \| undefined`                  | -           | Default expanded item(s) in uncontrolled mode                     |
 | `value`                 | `string \| string[] \| undefined`                  | -           | Controlled expanded item(s)                                       |
 | `isDisabled`            | `boolean`                                          | -           | Whether all accordion items are disabled                          |
-| `collapsible`           | `boolean`                                          | `true`      | Whether expanded items can be collapsed                           |
+| `isCollapsible`         | `boolean`                                          | `true`      | Whether expanded items can be collapsed                           |
 | `className`             | `string`                                           | -           | Additional CSS classes for the container                          |
 | `classNames`            | `ElementSlots<RootSlots>`                          | -           | Additional CSS classes for the slots                              |
 | `onValueChange`         | `(value: string \| string[] \| undefined) => void` | -           | Callback when expanded items change                               |

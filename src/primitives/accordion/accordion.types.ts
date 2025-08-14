@@ -19,7 +19,7 @@ type RootContext = {
     value: string | undefined
   ) => void | ((value: string[]) => void);
   /** Whether expanded items can be collapsed */
-  collapsible: boolean;
+  isCollapsible: boolean;
   /** Whether all accordion items are disabled */
   isDisabled?: boolean;
 };
@@ -61,7 +61,7 @@ type RootProps = (SingleRootProps | MultipleRootProps) & {
   /** Whether all accordion items are disabled */
   isDisabled?: boolean;
   /** Whether expanded items can be collapsed (defaults to true) */
-  collapsible?: boolean;
+  isCollapsible?: boolean;
 } & SlottableViewProps;
 
 type RootRef = ViewRef;

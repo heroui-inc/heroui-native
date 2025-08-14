@@ -44,7 +44,7 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       onSelectedChange,
       isDisabled = false,
       isReadOnly = false,
-      isValid = true,
+      isInvalid = false,
       colors,
       className,
       style,
@@ -80,8 +80,7 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       className,
     });
 
-    // Use danger color when isValid is false
-    const effectiveColor = !isValid ? 'danger' : color;
+    const effectiveColor = isInvalid ? 'danger' : color;
 
     const borderColorMap: Record<CheckboxColor, string> = {
       default: isSelected ? themeColors.accent : themeColors.border,

@@ -146,7 +146,7 @@ export default function CheckboxExample() {
 | `color`             | `'default' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Color theme of the checkbox                                               |
 | `isDisabled`        | `boolean`                                         | `false`     | Whether the checkbox is disabled and cannot be interacted with            |
 | `isReadOnly`        | `boolean`                                         | `false`     | Whether the checkbox is read-only                                         |
-| `isValid`           | `boolean`                                         | `true`      | Whether the checkbox is valid                                             |
+| `isInvalid`         | `boolean`                                         | `false`     | Whether the checkbox is invalid                                           |
 | `className`         | `string`                                          | `undefined` | Additional CSS classes to apply                                           |
 | `colors`            | `CheckboxBorderColors`                            | `undefined` | Custom colors for different checkbox border states                        |
 | `animationConfig`   | `TimingConfig`                                    | `undefined` | Animation configuration for checkbox border color transition              |

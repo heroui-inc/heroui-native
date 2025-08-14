@@ -1,5 +1,5 @@
 import type { PressableProps, ViewProps } from 'react-native';
-import type { AnimatedProps } from 'react-native-reanimated';
+import type { AnimatedProps, BaseAnimationBuilder, LayoutAnimationFunction } from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
 import type { ElementSlots } from '../../theme';
 import type { LabelSlots } from './button.styles';
@@ -92,11 +92,6 @@ export interface ButtonRootProps extends AnimatedProps<PressableProps> {
    * @default 'md'
    */
   size?: ButtonSize;
-  /**
-   * Whether the button should take full width of its container
-   * @default true
-   */
-  isFullWidth?: boolean;
   /**
    * Whether the button displays an icon only (needed for correct layout)
    * @default false
@@ -198,4 +193,8 @@ export interface ButtonContextValue {
    * Whether the button is disabled
    */
   isDisabled: boolean;
+  /**
+   * Layout transition for animated components
+   */
+  layout?: BaseAnimationBuilder | LayoutAnimationFunction | typeof BaseAnimationBuilder;
 }

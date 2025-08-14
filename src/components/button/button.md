@@ -149,7 +149,6 @@ export default function ButtonExample() {
 | `children`                   | `React.ReactNode`                                               | Children elements to be rendered inside the button                   |
 | `variant`                    | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'danger'` | Visual variant of the button                                         |
 | `size`                       | `'sm' \| 'md' \| 'lg'`                                          | Size of the button                                                   |
-| `isFullWidth`                | `boolean`                                                       | Whether the button should take full width of its container           |
 | `isIconOnly`                 | `boolean`                                                       | Whether the button displays an icon only (needed for correct layout) |
 | `isDisabled`                 | `boolean`                                                       | Whether the button is disabled                                       |
 | `className`                  | `string`                                                        | Additional CSS classes                                               |

@@ -17,10 +17,6 @@ const root = tv({
       md: 'h-[44px] px-4 gap-2 rounded-lg',
       lg: 'h-[56px] px-5 gap-2.5 rounded-lg',
     },
-    isFullWidth: {
-      true: 'self-stretch',
-      false: 'self-start',
-    },
     isIconOnly: {
       true: 'p-0 aspect-square',
     },
@@ -31,7 +27,6 @@ const root = tv({
   defaultVariants: {
     variant: 'primary',
     size: 'md',
-    isFullWidth: true,
     isIconOnly: false,
     isDisabled: false,
   },

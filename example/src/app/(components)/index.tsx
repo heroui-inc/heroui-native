@@ -96,7 +96,7 @@ export default function App() {
 
   return (
     <ScreenScrollView>
-      <View className="items-center justify-center mb-8">
+      <View className="items-center justify-center my-8">
         <Image
           source={{ uri: 'https://heroui.com/isotipo.png' }}
           className="w-20 h-20"

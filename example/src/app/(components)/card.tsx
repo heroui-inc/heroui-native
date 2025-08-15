@@ -23,7 +23,7 @@ export default function CardScreen() {
   const { width } = useWindowDimensions();
 
   return (
-    <ScreenScrollView contentContainerClassName="gap-10">
+    <ScreenScrollView contentContainerClassName="gap-16">
       <SectionTitle title="Basic Card" className="-mx-5" />
       <Card>
         <Card.Details>
@@ -234,7 +234,7 @@ export default function CardScreen() {
 
       <SectionTitle title="Surface Variants" className="-mx-5" />
 
-      <View className="gap-5">
+      <View className="gap-8">
         <Card surfaceVariant="none">
           <Card.Details>
             <Card.Body>

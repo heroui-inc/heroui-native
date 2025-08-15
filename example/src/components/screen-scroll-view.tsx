@@ -25,7 +25,7 @@ export const ScreenScrollView: FC<PropsWithChildren<Props>> = ({
       className={cn('bg-background', className)}
       contentContainerClassName={cn('px-5', contentContainerClassName)}
       contentContainerStyle={{
-        paddingTop: headerHeight + 16,
+        paddingTop: headerHeight,
         paddingBottom: insets.bottom + 16,
       }}
       showsVerticalScrollIndicator={false}

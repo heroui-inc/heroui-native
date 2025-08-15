@@ -120,9 +120,9 @@ const AccordionScreen = () => {
   return (
     <ScreenScrollView
       layout={AccordionLayoutTransition}
-      contentContainerClassName="gap-10"
+      contentContainerClassName="gap-16"
     >
-      <AnimatedView className="gap-5" layout={AccordionLayoutTransition}>
+      <AnimatedView className="gap-12" layout={AccordionLayoutTransition}>
         <SectionTitle title="Default Variant" className="-mx-5" />
         <Accordion selectionMode="single" defaultValue="2">
           {accordionData.map((item) => (
@@ -142,7 +142,7 @@ const AccordionScreen = () => {
         </Accordion>
       </AnimatedView>
 
-      <AnimatedView className="gap-10" layout={AccordionLayoutTransition}>
+      <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
         <SectionTitle title="Border Variant" className="-mx-5" />
         <Accordion selectionMode="single" variant="border">
           {accordionData.map((item) => (
@@ -162,7 +162,7 @@ const AccordionScreen = () => {
         </Accordion>
       </AnimatedView>
 
-      <AnimatedView className="gap-10" layout={AccordionLayoutTransition}>
+      <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
         <SectionTitle title="Multiple Selection" className="-mx-5" />
         <Accordion
           selectionMode="multiple"
@@ -186,7 +186,7 @@ const AccordionScreen = () => {
         </Accordion>
       </AnimatedView>
 
-      <AnimatedView className="gap-10" layout={AccordionLayoutTransition}>
+      <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
         <SectionTitle title="Custom Indicator" className="-mx-5" />
         <Accordion selectionMode="single" variant="border">
           {accordionData.slice(0, 2).map((item) => (
@@ -208,7 +208,7 @@ const AccordionScreen = () => {
         </Accordion>
       </AnimatedView>
 
-      <AnimatedView className="gap-10" layout={AccordionLayoutTransition}>
+      <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
         <SectionTitle title="Custom entering animation" className="-mx-5" />
         <Accordion
           selectionMode="single"
@@ -248,7 +248,7 @@ const AccordionScreen = () => {
         </Accordion>
       </AnimatedView>
 
-      <AnimatedView className="gap-10" layout={AccordionLayoutTransition}>
+      <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
         <SectionTitle title="Custom Styles" className="-mx-5" />
         <Accordion selectionMode="single" isDividerVisible={false}>
           {accordionData.slice(0, 4).map((item) => (

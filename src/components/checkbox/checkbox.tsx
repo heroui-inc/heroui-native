@@ -8,7 +8,7 @@ import { createContext } from '../../helpers/utils';
 import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
-import { useTheme } from '../../theme';
+import { colorKit, useTheme } from '../../theme';
 import { CheckIcon } from './check-icon';
 import {
   DEFAULT_HIT_SLOP,
@@ -84,9 +84,15 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
 
     const borderColorMap: Record<CheckboxColor, string> = {
       default: isSelected ? themeColors.accent : themeColors.border,
-      success: themeColors.success,
-      warning: themeColors.warning,
-      danger: themeColors.danger,
+      success: isSelected
+        ? themeColors.success
+        : colorKit.setAlpha(themeColors.success, 0.4).hex(),
+      warning: isSelected
+        ? themeColors.warning
+        : colorKit.setAlpha(themeColors.warning, 0.4).hex(),
+      danger: isSelected
+        ? themeColors.danger
+        : colorKit.setAlpha(themeColors.danger, 0.4).hex(),
     };
 
     const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;

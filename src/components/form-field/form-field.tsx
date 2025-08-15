@@ -222,8 +222,10 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
           !hasProp(child, 'isSelected') && { isSelected }),
         ...(onSelectedChange &&
           !hasProp(child, 'onSelectedChange') && { onSelectedChange }),
-        ...(isDisabled && !hasProp(child, 'isDisabled') && { isDisabled }),
-        ...(isReadOnly && !hasProp(child, 'isReadOnly') && { isReadOnly }),
+        ...(isDisabled !== undefined &&
+          !hasProp(child, 'isDisabled') && { isDisabled }),
+        ...(isReadOnly !== undefined &&
+          !hasProp(child, 'isReadOnly') && { isReadOnly }),
         ...(isInvalid !== undefined &&
           !hasProp(child, 'isInvalid') && { isInvalid }),
       });

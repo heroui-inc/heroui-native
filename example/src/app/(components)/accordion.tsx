@@ -14,7 +14,7 @@ import {
   RefreshCcw,
   ShoppingBag,
 } from 'lucide-react-native';
-import { ScrollView, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import Animated, {
   Easing,
   FadeInLeft,
@@ -22,11 +22,13 @@ import Animated, {
   ZoomIn,
   ZoomOut,
 } from 'react-native-reanimated';
+import { ScreenScrollView } from '../../components/screen-scroll-view';
+import { SectionTitle } from '../../components/section-title';
 
-const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 const AnimatedView = Animated.createAnimatedComponent(View);
 
 const ICON_SIZE = 16;
+
 const CUSTOM_INDICATOR_ENTERING = ZoomIn.duration(200).easing(
   Easing.inOut(Easing.ease)
 );
@@ -116,16 +118,12 @@ const AccordionScreen = () => {
   };
 
   return (
-    <AnimatedScrollView
-      className="bg-background"
-      contentContainerClassName="p-4 pb-[150px]"
-      contentInsetAdjustmentBehavior="automatic"
+    <ScreenScrollView
       layout={AccordionLayoutTransition}
+      contentContainerClassName="gap-10"
     >
-      <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
-        <Text className="text-lg font-bold text-muted-foreground mb-4">
-          Default Variant
-        </Text>
+      <AnimatedView className="gap-5" layout={AccordionLayoutTransition}>
+        <SectionTitle title="Default Variant" className="-mx-5" />
         <Accordion selectionMode="single" defaultValue="2">
           {accordionData.map((item) => (
             <Accordion.Item key={item.id} value={item.id}>
@@ -144,10 +142,8 @@ const AccordionScreen = () => {
         </Accordion>
       </AnimatedView>
 
-      <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
-        <Text className="text-lg font-bold text-muted-foreground mb-4">
-          Border Variant
-        </Text>
+      <AnimatedView className="gap-10" layout={AccordionLayoutTransition}>
+        <SectionTitle title="Border Variant" className="-mx-5" />
         <Accordion selectionMode="single" variant="border">
           {accordionData.map((item) => (
             <Accordion.Item key={item.id} value={item.id}>
@@ -166,10 +162,8 @@ const AccordionScreen = () => {
         </Accordion>
       </AnimatedView>
 
-      <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
-        <Text className="text-lg font-bold text-muted-foreground mb-4">
-          Multiple Selection
-        </Text>
+      <AnimatedView className="gap-10" layout={AccordionLayoutTransition}>
+        <SectionTitle title="Multiple Selection" className="-mx-5" />
         <Accordion
           selectionMode="multiple"
           variant="border"
@@ -192,10 +186,8 @@ const AccordionScreen = () => {
         </Accordion>
       </AnimatedView>
 
-      <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
-        <Text className="text-lg font-bold text-muted-foreground mb-4">
-          Custom Indicator
-        </Text>
+      <AnimatedView className="gap-10" layout={AccordionLayoutTransition}>
+        <SectionTitle title="Custom Indicator" className="-mx-5" />
         <Accordion selectionMode="single" variant="border">
           {accordionData.slice(0, 2).map((item) => (
             <Accordion.Item key={item.id} value={item.id}>
@@ -216,10 +208,8 @@ const AccordionScreen = () => {
         </Accordion>
       </AnimatedView>
 
-      <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
-        <Text className="text-lg font-bold text-muted-foreground mb-4">
-          Custom entering animation
-        </Text>
+      <AnimatedView className="gap-10" layout={AccordionLayoutTransition}>
+        <SectionTitle title="Custom entering animation" className="-mx-5" />
         <Accordion
           selectionMode="single"
           variant="border"
@@ -258,38 +248,34 @@ const AccordionScreen = () => {
         </Accordion>
       </AnimatedView>
 
-      <AnimatedView className="mb-8" layout={AccordionLayoutTransition}>
-        <Text className="text-lg font-bold text-muted-foreground mb-4">
-          Custom Styles
-        </Text>
-        <View className="gap-3">
-          <Accordion selectionMode="single" isDividerVisible={false}>
-            {accordionData.slice(0, 4).map((item) => (
-              <Accordion.Item key={item.id} value={item.id} className="mb-3">
-                <Accordion.Trigger className="bg-surface-2 rounded-xl border border-border/50 shadow-sm">
-                  <View className="flex-row items-center flex-1 gap-4">
-                    <View className="w-10 h-10 rounded-full bg-accent/5 items-center justify-center">
-                      {item.icon}
-                    </View>
-                    <Text className="text-foreground text-base font-medium flex-1">
-                      {item.title}
-                    </Text>
-                    <Accordion.Indicator>
-                      <CustomIndicator />
-                    </Accordion.Indicator>
+      <AnimatedView className="gap-10" layout={AccordionLayoutTransition}>
+        <SectionTitle title="Custom Styles" className="-mx-5" />
+        <Accordion selectionMode="single" isDividerVisible={false}>
+          {accordionData.slice(0, 4).map((item) => (
+            <Accordion.Item key={item.id} value={item.id} className="mb-1">
+              <Accordion.Trigger className="bg-surface-2 rounded-xl border border-border/50 shadow-sm">
+                <View className="flex-1 flex-row items-center gap-4">
+                  <View className="w-10 h-10 rounded-full bg-accent/5 items-center justify-center">
+                    {item.icon}
                   </View>
-                </Accordion.Trigger>
-                <Accordion.Content className="mt-2 bg-surface-2 rounded-xl px-5 py-4 border border-border/50">
-                  <Text className="text-muted-foreground text-base/relaxed">
-                    {item.content}
+                  <Text className="text-foreground text-base font-medium flex-1">
+                    {item.title}
                   </Text>
-                </Accordion.Content>
-              </Accordion.Item>
-            ))}
-          </Accordion>
-        </View>
+                </View>
+                <Accordion.Indicator>
+                  <CustomIndicator />
+                </Accordion.Indicator>
+              </Accordion.Trigger>
+              <Accordion.Content className="mt-1 bg-surface-2 rounded-xl px-5 py-4 border border-border/50">
+                <Text className="text-muted-foreground text-base/relaxed">
+                  {item.content}
+                </Text>
+              </Accordion.Content>
+            </Accordion.Item>
+          ))}
+        </Accordion>
       </AnimatedView>
-    </AnimatedScrollView>
+    </ScreenScrollView>
   );
 };
 

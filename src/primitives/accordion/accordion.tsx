@@ -25,7 +25,7 @@ const Root = forwardRef<RootRef, RootProps>(
   (
     {
       asChild,
-      selectionMode,
+      selectionMode = 'single',
       isDisabled,
       isCollapsible = true,
       value: valueProp,

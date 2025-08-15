@@ -1,12 +1,14 @@
 import { Switch, useTheme } from 'heroui-native';
 import { Check, Moon, Sun, X } from 'lucide-react-native';
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import Animated, {
   FadeInLeft,
   FadeInRight,
   ZoomIn,
 } from 'react-native-reanimated';
+import { ScreenScrollView } from '../../components/screen-scroll-view';
+import { SectionTitle } from '../../components/section-title';
 
 export default function SwitchScreen() {
   const [defaultSwitch, setDefaultSwitch] = React.useState(true);
@@ -24,27 +26,16 @@ export default function SwitchScreen() {
   const { theme, colors } = useTheme();
 
   return (
-    <ScrollView
-      className="bg-background"
-      contentContainerClassName="items-center justify-center p-4"
-      contentInsetAdjustmentBehavior="automatic"
-    >
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Default
-      </Text>
+    <ScreenScrollView contentContainerClassName="gap-16">
+      <SectionTitle title="Default" />
+      <Switch
+        isSelected={defaultSwitch}
+        onSelectedChange={setDefaultSwitch}
+        className="self-center"
+      />
 
-      <View className="flex-row gap-4 mb-6">
-        <Switch
-          isSelected={defaultSwitch}
-          onSelectedChange={setDefaultSwitch}
-        />
-      </View>
-
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Colors
-      </Text>
-
-      <View className="flex-row gap-4 mb-6">
+      <SectionTitle title="Colors" />
+      <View className="flex-row gap-4 self-center">
         <Switch
           isSelected={defaultColor}
           onSelectedChange={setDefaultColor}
@@ -67,28 +58,39 @@ export default function SwitchScreen() {
         />
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        States
-      </Text>
-
-      <View className="flex-row gap-4 mb-6">
-        <Switch
-          isSelected={disabled}
-          onSelectedChange={setDisabled}
-          isDisabled={true}
-        />
-        <Switch
-          isSelected={readonly}
-          onSelectedChange={setReadonly}
-          isReadOnly={true}
-        />
+      <SectionTitle title="States" />
+      <View className="flex-row gap-8 self-center">
+        <View className="items-center gap-2">
+          <Switch
+            isSelected={defaultSwitch}
+            onSelectedChange={setDefaultSwitch}
+          />
+          <Text className="text-xs text-muted-foreground">Default</Text>
+        </View>
+        <View className="items-center gap-2">
+          <Switch
+            isSelected={disabled}
+            onSelectedChange={setDisabled}
+            isDisabled={true}
+          />
+          <Text className="text-xs text-muted-foreground">Disabled</Text>
+        </View>
+        <View className="items-center gap-2">
+          <Switch
+            isSelected={readonly}
+            onSelectedChange={setReadonly}
+            isReadOnly={true}
+          />
+          <Text className="text-xs text-muted-foreground">Read Only</Text>
+        </View>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Custom Thumb
-      </Text>
-
-      <Switch isSelected={icon} onSelectedChange={setIcon} className="mb-6">
+      <SectionTitle title="Custom Thumb" />
+      <Switch
+        isSelected={icon}
+        onSelectedChange={setIcon}
+        className="self-center"
+      >
         <Switch.Thumb>
           {icon ? (
             <Animated.View key="check" entering={ZoomIn}>
@@ -102,11 +104,8 @@ export default function SwitchScreen() {
         </Switch.Thumb>
       </Switch>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        With Start & End Content
-      </Text>
-
-      <View className="gap-4 mb-6">
+      <SectionTitle title="With Start & End Content" />
+      <View className="gap-8 items-center">
         <Switch
           isSelected={contentIcon}
           onSelectedChange={setContentIcon}
@@ -205,13 +204,11 @@ export default function SwitchScreen() {
         </Switch>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Custom Style
-      </Text>
-
+      <SectionTitle title="Custom Style" />
       <Switch
         isSelected={custom1}
         onSelectedChange={setCustom1}
+        className="self-center"
         classNames={{
           container: 'w-[40px] h-[8px]',
           contentPaddingContainer: 'p-0 overflow-visible',
@@ -231,6 +228,6 @@ export default function SwitchScreen() {
           }}
         />
       </Switch>
-    </ScrollView>
+    </ScreenScrollView>
   );
 }

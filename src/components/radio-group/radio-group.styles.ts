@@ -5,8 +5,8 @@ const root = tv({
   base: 'gap-1.5',
   variants: {
     orientation: {
-      horizontal: 'flex-row flex-wrap gap-x-6 gap-y-2',
-      vertical: 'flex-col',
+      horizontal: 'flex-row flex-wrap gap-x-6 gap-y-3',
+      vertical: 'flex-col gap-y-3',
     },
   },
 });

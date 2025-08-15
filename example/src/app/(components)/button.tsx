@@ -23,17 +23,17 @@ export default function ButtonScreen() {
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
-      <SectionTitle title="Basic Usage" className="-mx-5" />
+      <SectionTitle title="Basic Usage" />
       <Button>Basic Button</Button>
 
-      <SectionTitle title="Sizes" className="-mx-5" />
+      <SectionTitle title="Sizes" />
       <View className="gap-8">
         <Button size="sm">Small Button</Button>
         <Button size="md">Medium Button</Button>
         <Button size="lg">Large Button</Button>
       </View>
 
-      <SectionTitle title="Variants" className="-mx-5" />
+      <SectionTitle title="Variants" />
       <View className="gap-8">
         <Button variant="primary">Primary</Button>
         <Button variant="secondary">Secondary</Button>
@@ -44,7 +44,7 @@ export default function ButtonScreen() {
         </Button>
       </View>
 
-      <SectionTitle title="With Icons" className="-mx-5" />
+      <SectionTitle title="With Icons" />
       <View className="gap-8">
         <Button variant="primary">
           <Button.StartContent>
@@ -82,7 +82,7 @@ export default function ButtonScreen() {
         </Button>
       </View>
 
-      <SectionTitle title="Disabled State" className="-mx-5" />
+      <SectionTitle title="Disabled State" />
       <View className="gap-8">
         <Button isDisabled>
           <Button.StartContent>
@@ -104,7 +104,7 @@ export default function ButtonScreen() {
         </Button>
       </View>
 
-      <SectionTitle title="Width/Alignment Control" className="-mx-5" />
+      <SectionTitle title="Width/Alignment Control" />
       <View className="gap-8">
         <Button>Full Width Button</Button>
         <View>
@@ -120,7 +120,7 @@ export default function ButtonScreen() {
         </View>
       </View>
 
-      <SectionTitle title="Icon Only Buttons" className="-mx-5" />
+      <SectionTitle title="Icon Only Buttons" />
       <View className="self-center flex-row gap-8">
         <Button size="sm" isIconOnly>
           <Button.Label>
@@ -139,7 +139,7 @@ export default function ButtonScreen() {
         </Button>
       </View>
 
-      <SectionTitle title="Custom Styling" className="-mx-5" />
+      <SectionTitle title="Custom Styling" />
       <View className="gap-8">
         <Button className="bg-purple-600">
           <Button.Label classNames={{ text: 'text-white font-semibold' }}>
@@ -172,7 +172,7 @@ export default function ButtonScreen() {
         </Button>
       </View>
 
-      <SectionTitle title="Layout Transitions Demo" className="-mx-5" />
+      <SectionTitle title="Layout Transitions Demo" />
       <Button
         variant="primary"
         onPress={() => {
@@ -196,7 +196,7 @@ export default function ButtonScreen() {
         </Button.Label>
       </Button>
 
-      <SectionTitle title="Custom Animation" className="-mx-5" />
+      <SectionTitle title="Custom Animation" />
       <View className="gap-8">
         <Button
           animationConfig={{

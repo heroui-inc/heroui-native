@@ -26,7 +26,7 @@ export const ScreenScrollView: FC<PropsWithChildren<Props>> = ({
       contentContainerClassName={cn('px-5', contentContainerClassName)}
       contentContainerStyle={{
         paddingTop: headerHeight,
-        paddingBottom: insets.bottom + 16,
+        paddingBottom: insets.bottom + 32,
       }}
       showsVerticalScrollIndicator={false}
       {...props}

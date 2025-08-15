@@ -24,7 +24,7 @@ export default function CardScreen() {
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
-      <SectionTitle title="Basic Card" className="-mx-5" />
+      <SectionTitle title="Basic Card" />
       <Card>
         <Card.Details>
           <Card.Body className="mb-4">
@@ -78,7 +78,7 @@ export default function CardScreen() {
           </Card.Footer>
         </Card.Details>
       </Card>
-      <SectionTitle title="Card with Image" className="-mx-5" />
+      <SectionTitle title="Card with Image" />
       <Card className="p-0">
         <Image
           source={{
@@ -114,7 +114,7 @@ export default function CardScreen() {
           </Card.Footer>
         </Card.Details>
       </Card>
-      <SectionTitle title="Horizontal Card With Image" className="-mx-5" />
+      <SectionTitle title="Horizontal Card With Image" />
       <Card className="flex-row gap-3 p-1.5" surfaceVariant="2">
         <Image
           source={{
@@ -145,7 +145,7 @@ export default function CardScreen() {
           </Card.Footer>
         </Card.Details>
       </Card>
-      <SectionTitle title="Profile Onboarding Cards" className="-mx-5" />
+      <SectionTitle title="Profile Onboarding Cards" />
       <ScrollView
         horizontal
         className="-mx-5"
@@ -232,7 +232,7 @@ export default function CardScreen() {
         </Card>
       </ScrollView>
 
-      <SectionTitle title="Surface Variants" className="-mx-5" />
+      <SectionTitle title="Surface Variants" />
 
       <View className="gap-8">
         <Card surfaceVariant="none">

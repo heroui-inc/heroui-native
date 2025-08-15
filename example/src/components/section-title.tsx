@@ -10,7 +10,10 @@ type Props = {
 export const SectionTitle: FC<Props> = ({ title, className }) => {
   return (
     <View
-      className={cn('bg-surface-2 items-center justify-center py-3', className)}
+      className={cn(
+        'bg-surface-2 items-center justify-center py-3 -mx-5',
+        className
+      )}
     >
       <Text className="text-base font-medium text-warning">{title}</Text>
     </View>

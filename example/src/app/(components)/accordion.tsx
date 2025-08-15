@@ -123,7 +123,7 @@ const AccordionScreen = () => {
       contentContainerClassName="gap-16"
     >
       <AnimatedView className="gap-12" layout={AccordionLayoutTransition}>
-        <SectionTitle title="Default Variant" className="-mx-5" />
+        <SectionTitle title="Default Variant" />
         <Accordion selectionMode="single" defaultValue="2">
           {accordionData.map((item) => (
             <Accordion.Item key={item.id} value={item.id}>
@@ -143,7 +143,7 @@ const AccordionScreen = () => {
       </AnimatedView>
 
       <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
-        <SectionTitle title="Border Variant" className="-mx-5" />
+        <SectionTitle title="Border Variant" />
         <Accordion selectionMode="single" variant="border">
           {accordionData.map((item) => (
             <Accordion.Item key={item.id} value={item.id}>
@@ -163,7 +163,7 @@ const AccordionScreen = () => {
       </AnimatedView>
 
       <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
-        <SectionTitle title="Multiple Selection" className="-mx-5" />
+        <SectionTitle title="Multiple Selection" />
         <Accordion
           selectionMode="multiple"
           variant="border"
@@ -187,7 +187,7 @@ const AccordionScreen = () => {
       </AnimatedView>
 
       <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
-        <SectionTitle title="Custom Indicator" className="-mx-5" />
+        <SectionTitle title="Custom Indicator" />
         <Accordion selectionMode="single" variant="border">
           {accordionData.slice(0, 2).map((item) => (
             <Accordion.Item key={item.id} value={item.id}>
@@ -209,7 +209,7 @@ const AccordionScreen = () => {
       </AnimatedView>
 
       <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
-        <SectionTitle title="Custom entering animation" className="-mx-5" />
+        <SectionTitle title="Custom entering animation" />
         <Accordion
           selectionMode="single"
           variant="border"
@@ -249,7 +249,7 @@ const AccordionScreen = () => {
       </AnimatedView>
 
       <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
-        <SectionTitle title="Custom Styles" className="-mx-5" />
+        <SectionTitle title="Custom Styles" />
         <Accordion selectionMode="single" isDividerVisible={false}>
           {accordionData.slice(0, 4).map((item) => (
             <Accordion.Item key={item.id} value={item.id} className="mb-1">

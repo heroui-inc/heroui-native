@@ -137,7 +137,7 @@ export default function ButtonExample() {
 - **Button**: Main container that handles press interactions, animations, and variants. Provides sensible defaults when sub-components are omitted.
 - **Button.Background**: Optional background element with absolute positioning. Rendered beneath all other content. Use for gradients or custom backgrounds.
 - **Button.StartContent**: Optional content displayed at the start of the button. Use for icons or other elements before the label.
-- **Button.Label**: Button label that displays text or custom content. When string is provided, it renders as Text. Otherwise renders children as-is.
+- **Button.Label**: Optional label that displays text or custom content. When string is provided, it renders as Text. Otherwise renders children as-is.
 - **Button.EndContent**: Optional content displayed at the end of the button. Use for icons or other elements after the label.
 
 ## API Reference

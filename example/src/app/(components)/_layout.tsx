@@ -32,7 +32,6 @@ export default function Layout() {
       }}
     >
       <Stack.Screen name="index" options={{ title: 'HeroUI Native' }} />
-      <Stack.Screen name="theme" options={{ title: 'Theme' }} />
       <Stack.Screen name="accordion" options={{ title: 'Accordion' }} />
       <Stack.Screen name="button" options={{ title: 'Button' }} />
       <Stack.Screen name="card" options={{ title: 'Card' }} />
@@ -49,10 +48,7 @@ export default function Layout() {
       <Stack.Screen name="surface" options={{ title: 'Surface' }} />
       <Stack.Screen name="switch" options={{ title: 'Switch' }} />
       <Stack.Screen name="text-field" options={{ title: 'TextField' }} />
-      <Stack.Screen
-        name="theme-showcase"
-        options={{ title: 'Theme Showcase' }}
-      />
+      <Stack.Screen name="error-field" options={{ title: 'ErrorField' }} />
     </Stack>
   );
 }

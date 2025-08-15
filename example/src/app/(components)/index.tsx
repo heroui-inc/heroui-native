@@ -65,7 +65,7 @@ const components: Component[] = [
   {
     title: 'Radio Group',
     icon: <ComponentIcon />,
-    path: 'radio-group',
+    path: 'radio',
   },
   {
     title: 'Spinner',

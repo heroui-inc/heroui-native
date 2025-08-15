@@ -1,6 +1,7 @@
 import { forwardRef, useMemo } from 'react';
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import Animated from 'react-native-reanimated';
+import type { PressableRef } from '../../helpers/types';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
 import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
 import { DEFAULT_LAYOUT_TRANSITION, DISPLAY_NAME } from './chip.constants';
@@ -20,7 +21,9 @@ const [ChipProvider, useChipContext] = createContext<ChipContextValue>({
 
 // --------------------------------------------------
 
-const Chip = forwardRef<View, ChipProps>((props, ref) => {
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
   const {
     children,
     layout = DEFAULT_LAYOUT_TRANSITION,
@@ -80,7 +83,7 @@ const Chip = forwardRef<View, ChipProps>((props, ref) => {
 
   return (
     <ChipProvider value={contextValue}>
-      <Animated.View
+      <AnimatedPressable
         ref={ref}
         layout={layout}
         className={tvStyles}
@@ -91,7 +94,7 @@ const Chip = forwardRef<View, ChipProps>((props, ref) => {
         {startContentElement}
         {labelElement}
         {endContentElement}
-      </Animated.View>
+      </AnimatedPressable>
     </ChipProvider>
   );
 });

@@ -3,7 +3,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Chip, useTheme } from 'heroui-native';
 import { Plus, Star, X } from 'lucide-react-native';
 import { useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { ScreenScrollView } from '../../components/screen-scroll-view';
+import { SectionTitle } from '../../components/section-title';
 import { cn } from '../../helpers/utils/cn';
 
 export default function ChipScreen() {
@@ -12,173 +14,134 @@ export default function ChipScreen() {
   const [chipCount, setChipCount] = useState(3);
 
   return (
-    <ScrollView
-      className="bg-background"
-      contentContainerClassName="items-center justify-center p-4"
-      contentInsetAdjustmentBehavior="automatic"
-    >
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Basic Usage
-      </Text>
+    <ScreenScrollView contentContainerClassName="gap-16">
+      <SectionTitle title="Basic Usage" />
+      <Chip className="self-center">Basic Chip</Chip>
 
-      <View className="flex-row gap-4 mb-6">
-        <Chip>Basic Chip</Chip>
-      </View>
-
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Sizes
-      </Text>
-
-      <View className="flex-row gap-4 mb-6">
+      <SectionTitle title="Sizes" />
+      <View className="flex-row gap-4 self-center">
         <Chip size="sm">Small Chip</Chip>
         <Chip size="md">Medium Chip</Chip>
         <Chip size="lg">Large Chip</Chip>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Variants
-      </Text>
+      <SectionTitle title="Variants" />
+      <View className="flex-row gap-4 self-center">
+        <Chip variant="primary">Primary</Chip>
+        <Chip variant="secondary">Secondary</Chip>
+        <Chip variant="tertiary">Tertiary</Chip>
+      </View>
 
-      <View className="gap-4 mb-6">
-        <View className="flex-row gap-4">
-          <Chip variant="primary">
-            <Chip.Label>Primary</Chip.Label>
+      <SectionTitle title="Colors - Primary Variant" />
+      <View className="flex-row flex-wrap gap-4 justify-center">
+        <Chip variant="primary" color="accent">
+          Accent
+        </Chip>
+        <Chip variant="primary" color="default">
+          Default
+        </Chip>
+        <Chip variant="primary" color="success">
+          Success
+        </Chip>
+        <Chip variant="primary" color="warning">
+          Warning
+        </Chip>
+        <Chip variant="primary" color="danger">
+          Danger
+        </Chip>
+      </View>
+
+      <SectionTitle title="Colors - Secondary Variant" />
+      <View className="flex-row flex-wrap gap-4 justify-center">
+        <Chip variant="secondary" color="accent">
+          Accent
+        </Chip>
+        <Chip variant="secondary" color="default">
+          Default
+        </Chip>
+        <Chip variant="secondary" color="success">
+          Success
+        </Chip>
+        <Chip variant="secondary" color="warning">
+          Warning
+        </Chip>
+        <Chip variant="secondary" color="danger">
+          Danger
+        </Chip>
+      </View>
+
+      <SectionTitle title="Colors - Tertiary Variant" />
+      <View className="flex-row flex-wrap gap-4 justify-center">
+        <Chip variant="tertiary" color="accent">
+          Accent
+        </Chip>
+        <Chip variant="tertiary" color="default">
+          Default
+        </Chip>
+        <Chip variant="tertiary" color="success">
+          Success
+        </Chip>
+        <Chip variant="tertiary" color="warning">
+          Warning
+        </Chip>
+        <Chip variant="tertiary" color="danger">
+          Danger
+        </Chip>
+      </View>
+
+      <SectionTitle title="With Start Content" />
+      <View className="gap-8">
+        <View className="flex-row flex-wrap gap-4 justify-center">
+          <Chip size="sm" variant="primary">
+            <Chip.StartContent>
+              <Text className="text-xs">📌</Text>
+            </Chip.StartContent>
+            <Chip.Label>Featured</Chip.Label>
           </Chip>
-          <Chip variant="secondary">
-            <Chip.Label>Secondary</Chip.Label>
+          <Chip size="md" variant="secondary" color="success">
+            <Chip.StartContent>
+              <Plus size={16} color="#10B981" />
+            </Chip.StartContent>
+            <Chip.Label>New</Chip.Label>
           </Chip>
-          <Chip variant="tertiary">
-            <Chip.Label>Tertiary</Chip.Label>
+          <Chip size="lg" variant="tertiary" color="warning">
+            <Chip.StartContent className="pr-1">
+              <Star size={12} color="#F59E0B" fill="#F59E0B" />
+            </Chip.StartContent>
+            <Chip.Label>Premium</Chip.Label>
+          </Chip>
+        </View>
+
+        <View className="flex-row flex-wrap gap-4 justify-center">
+          <Chip size="md" variant="secondary">
+            <Chip.StartContent>
+              <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-accent" />
+            </Chip.StartContent>
+            <Chip.Label>Information</Chip.Label>
+          </Chip>
+          <Chip size="md" variant="secondary" color="success">
+            <Chip.StartContent>
+              <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-success" />
+            </Chip.StartContent>
+            <Chip.Label>Completed</Chip.Label>
+          </Chip>
+          <Chip size="md" variant="secondary" color="warning">
+            <Chip.StartContent>
+              <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-warning" />
+            </Chip.StartContent>
+            <Chip.Label>Pending</Chip.Label>
+          </Chip>
+          <Chip size="md" variant="secondary" color="danger">
+            <Chip.StartContent>
+              <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-danger" />
+            </Chip.StartContent>
+            <Chip.Label>Failed</Chip.Label>
           </Chip>
         </View>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Colors - Primary Variant
-      </Text>
-
-      <View className="flex-row flex-wrap gap-4 mb-6 justify-center">
-        <Chip variant="primary" color="accent">
-          <Chip.Label>Accent</Chip.Label>
-        </Chip>
-        <Chip variant="primary" color="default">
-          <Chip.Label>Default</Chip.Label>
-        </Chip>
-        <Chip variant="primary" color="success">
-          <Chip.Label>Success</Chip.Label>
-        </Chip>
-        <Chip variant="primary" color="warning">
-          <Chip.Label>Warning</Chip.Label>
-        </Chip>
-        <Chip variant="primary" color="danger">
-          <Chip.Label>Danger</Chip.Label>
-        </Chip>
-      </View>
-
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Colors - Secondary Variant
-      </Text>
-
-      <View className="flex-row flex-wrap gap-4 mb-6 justify-center">
-        <Chip variant="secondary" color="accent">
-          <Chip.Label>Accent</Chip.Label>
-        </Chip>
-        <Chip variant="secondary" color="default">
-          <Chip.Label>Default</Chip.Label>
-        </Chip>
-        <Chip variant="secondary" color="success">
-          <Chip.Label>Success</Chip.Label>
-        </Chip>
-        <Chip variant="secondary" color="warning">
-          <Chip.Label>Warning</Chip.Label>
-        </Chip>
-        <Chip variant="secondary" color="danger">
-          <Chip.Label>Danger</Chip.Label>
-        </Chip>
-      </View>
-
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Colors - Tertiary Variant
-      </Text>
-
-      <View className="flex-row flex-wrap gap-4 mb-6 justify-center">
-        <Chip variant="tertiary" color="accent">
-          <Chip.Label>Accent</Chip.Label>
-        </Chip>
-        <Chip variant="tertiary" color="default">
-          <Chip.Label>Default</Chip.Label>
-        </Chip>
-        <Chip variant="tertiary" color="success">
-          <Chip.Label>Success</Chip.Label>
-        </Chip>
-        <Chip variant="tertiary" color="warning">
-          <Chip.Label>Warning</Chip.Label>
-        </Chip>
-        <Chip variant="tertiary" color="danger">
-          <Chip.Label>Danger</Chip.Label>
-        </Chip>
-      </View>
-
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        With Start Content
-      </Text>
-
-      <View className="flex-row flex-wrap gap-4 mb-6 justify-center">
-        <Chip size="sm" variant="primary">
-          <Chip.StartContent>
-            <Text className="text-xs">📌</Text>
-          </Chip.StartContent>
-          <Chip.Label>Featured</Chip.Label>
-          <Chip.EndContent>
-            <Text className="text-xs">📌</Text>
-          </Chip.EndContent>
-        </Chip>
-        <Chip size="md" variant="secondary" color="success">
-          <Chip.StartContent>
-            <Plus size={16} color="#10B981" />
-          </Chip.StartContent>
-          <Chip.Label>New</Chip.Label>
-        </Chip>
-        <Chip size="lg" variant="tertiary" color="warning">
-          <Chip.StartContent className="pr-1">
-            <Star size={12} color="#F59E0B" fill="#F59E0B" />
-          </Chip.StartContent>
-          <Chip.Label>Premium</Chip.Label>
-        </Chip>
-      </View>
-
-      <View className="flex-row flex-wrap gap-4 mb-6 justify-center">
-        <Chip size="md" variant="secondary">
-          <Chip.StartContent>
-            <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-accent" />
-          </Chip.StartContent>
-          <Chip.Label>Information</Chip.Label>
-        </Chip>
-        <Chip size="md" variant="secondary" color="success">
-          <Chip.StartContent>
-            <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-success" />
-          </Chip.StartContent>
-          <Chip.Label>Completed</Chip.Label>
-        </Chip>
-        <Chip size="md" variant="secondary" color="warning">
-          <Chip.StartContent>
-            <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-warning" />
-          </Chip.StartContent>
-          <Chip.Label>Pending</Chip.Label>
-        </Chip>
-        <Chip size="md" variant="secondary" color="danger">
-          <Chip.StartContent>
-            <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-danger" />
-          </Chip.StartContent>
-          <Chip.Label>Failed</Chip.Label>
-        </Chip>
-      </View>
-
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        With End Content
-      </Text>
-
-      <View className="flex-row gap-4 mb-6 justify-center">
+      <SectionTitle title="With End Content" />
+      <View className="flex-row gap-4 justify-center">
         <Chip size="sm" variant="secondary">
           <Chip.Label>Close</Chip.Label>
           <Chip.EndContent>
@@ -206,11 +169,8 @@ export default function ChipScreen() {
         </Chip>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Custom Styling
-      </Text>
-
-      <View className="flex-row gap-4 mb-6 justify-center">
+      <SectionTitle title="Custom Styling" />
+      <View className="flex-row gap-4 justify-center">
         <Chip className="bg-purple-600 px-6">
           <Chip.Label className="text-background text-base">Custom</Chip.Label>
         </Chip>
@@ -218,15 +178,14 @@ export default function ChipScreen() {
           variant="secondary"
           className="border-purple-600 bg-purple-100 rounded-sm"
         >
-          <Chip.Label classNames={{ text: 'text-black' }}>Purple</Chip.Label>
+          <Chip.Label classNames={{ text: 'text-purple-800' }}>
+            Purple
+          </Chip.Label>
         </Chip>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Gradient Background
-      </Text>
-
-      <View className="flex-row flex-wrap gap-4 mb-6 justify-center">
+      <SectionTitle title="Gradient Background" />
+      <View className="flex-row flex-wrap gap-4 justify-center">
         <Chip className="border-0">
           <Chip.Background>
             <LinearGradient
@@ -270,28 +229,28 @@ export default function ChipScreen() {
         </Chip>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Dynamic Parts
-      </Text>
-
-      <View className="gap-4 mb-6">
+      <SectionTitle title="Dynamic Parts" />
+      <View className="gap-8">
         <View className="flex-row gap-4 justify-center">
-          <Chip variant="secondary">
-            {hasNotification && (
-              <Chip.StartContent>
-                <View className="w-2 h-2 rounded-full bg-red-500" />
-              </Chip.StartContent>
-            )}
+          <Chip
+            variant="secondary"
+            className={cn(hasNotification ? 'px-6 py-2' : 'px-4 py-1')}
+            onPress={() => setHasNotification(!hasNotification)}
+            hitSlop={8}
+          >
+            <Chip.StartContent>
+              <View
+                className={cn(
+                  'w-2 h-2 rounded-full bg-red-500',
+                  hasNotification ? 'bg-red-500' : 'bg-stone-400'
+                )}
+              />
+            </Chip.StartContent>
             <Chip.Label>Notifications</Chip.Label>
             <Chip.EndContent>
-              <Pressable
-                onPress={() => setHasNotification(!hasNotification)}
-                hitSlop={8}
-              >
-                <Text className="text-accent text-xs font-bold">
-                  {hasNotification ? 'ON' : 'OFF'}
-                </Text>
-              </Pressable>
+              <Text className="text-accent text-xs font-bold">
+                {hasNotification ? 'ON' : 'OFF'}
+              </Text>
             </Chip.EndContent>
           </Chip>
         </View>
@@ -308,29 +267,28 @@ export default function ChipScreen() {
             </Chip.EndContent>
           </Chip>
 
-          <Pressable onPress={() => setChipCount(chipCount + 1)}>
-            <Chip variant="secondary">
-              <Chip.Label>Add Item</Chip.Label>
-              <Chip.EndContent>
-                <Plus size={14} color="#6B7280" />
-              </Chip.EndContent>
-            </Chip>
-          </Pressable>
+          <Chip variant="secondary" onPress={() => setChipCount(chipCount + 1)}>
+            <Chip.Label>Add Item</Chip.Label>
+            <Chip.EndContent>
+              <Plus size={14} color="#6B7280" />
+            </Chip.EndContent>
+          </Chip>
 
-          <Pressable onPress={() => setChipCount(Math.max(0, chipCount - 1))}>
-            <Chip variant="secondary" color="danger">
-              <Chip.Label>Remove</Chip.Label>
-              <Chip.EndContent>
-                <X size={14} color="#EF4444" />
-              </Chip.EndContent>
-            </Chip>
-          </Pressable>
+          <Chip
+            variant="secondary"
+            onPress={() => setChipCount(Math.max(0, chipCount - 1))}
+          >
+            <Chip.Label>Remove</Chip.Label>
+            <Chip.EndContent>
+              <X size={14} color="#EF4444" />
+            </Chip.EndContent>
+          </Chip>
         </View>
 
-        <Text className="text-center text-sm text-muted-foreground mt-2">
+        <Text className="text-center text-sm text-muted-foreground">
           Tap chips to interact with dynamic content
         </Text>
       </View>
-    </ScrollView>
+    </ScreenScrollView>
   );
 }

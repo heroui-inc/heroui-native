@@ -170,7 +170,7 @@ export default function ChipExample() {
 | `variant`          | `'primary' \| 'secondary' \| 'tertiary'`                      | `'primary'` | Visual variant of the chip                                                |
 | `color`            | `'accent' \| 'default' \| 'success' \| 'warning' \| 'danger'` | `'accent'`  | Color theme of the chip                                                   |
 | `className`        | `string`                                                      | -           | Custom class name for the chip                                            |
-| `...AnimatedProps` | `AnimatedProps<ViewProps>`                                    | -           | All Reanimated Animated.View props are supported                          |
+| `...AnimatedProps` | `AnimatedProps<PressableProps>`                               | -           | All Reanimated AnimatedPressable props are supported                      |
 
 ### Chip.Background
 

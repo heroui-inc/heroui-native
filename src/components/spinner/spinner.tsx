@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useMemo } from 'react';
+import type { View } from 'react-native';
 import Animated, {
   cancelAnimation,
   Easing,
@@ -10,7 +11,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { createContext, getElementWithDefault } from '../../helpers/utils';
 import * as ActivityIndicatorPrimitives from '../../primitives/activity-indicator';
-import * as ActivityIndicatorPrimitivesTypes from '../../primitives/activity-indicator/activity-indicator.types';
 import { useTheme } from '../../theme';
 import { SpinnerIcon } from './spinner-icon';
 import {
@@ -27,6 +27,10 @@ import type {
   SpinnerProps,
 } from './spinner.types';
 
+const AnimatedRoot = Animated.createAnimatedComponent(
+  ActivityIndicatorPrimitives.Root
+);
+
 const AnimatedIndicator = Animated.createAnimatedComponent(
   ActivityIndicatorPrimitives.Indicator
 );
@@ -37,12 +41,11 @@ const [SpinnerProvider, useSpinnerContext] = createContext<SpinnerContextValue>(
   }
 );
 
-const SpinnerRoot = forwardRef<
-  ActivityIndicatorPrimitivesTypes.RootRef,
-  SpinnerProps
->((props, ref) => {
+const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
   const {
     children,
+    entering = DEFAULT_SPINNER_INDICATOR_ENTERING,
+    exiting = DEFAULT_SPINNER_INDICATOR_EXITING,
     size = 'md',
     color = 'default',
     isLoading = true,
@@ -77,110 +80,107 @@ const SpinnerRoot = forwardRef<
 
   return (
     <SpinnerProvider value={contextValue}>
-      <ActivityIndicatorPrimitives.Root
+      <AnimatedRoot
         ref={ref}
+        entering={entering}
+        exiting={exiting}
         isLoading={isLoading}
         className={tvStyles}
         style={style}
         {...restProps}
       >
         {children || indicatorElement}
-      </ActivityIndicatorPrimitives.Root>
+      </AnimatedRoot>
     </SpinnerProvider>
   );
 });
 
 // --------------------------------------------------
 
-const SpinnerIndicator = forwardRef<
-  ActivityIndicatorPrimitivesTypes.IndicatorRef,
-  SpinnerIndicatorProps
->((props, ref) => {
-  const {
-    children,
-    entering = DEFAULT_SPINNER_INDICATOR_ENTERING,
-    exiting = DEFAULT_SPINNER_INDICATOR_EXITING,
-    className,
-    style,
-    speed = 1.1,
-    animationEasing,
-    iconProps,
-    ...restProps
-  } = props;
+const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
+  (props, ref) => {
+    const {
+      children,
+      className,
+      style,
+      speed = 1.1,
+      animationEasing,
+      iconProps,
+      ...restProps
+    } = props;
 
-  const { size, color, isLoading } = useSpinnerContext();
+    const { size, color, isLoading } = useSpinnerContext();
 
-  const { colors: themeColors } = useTheme();
+    const { colors: themeColors } = useTheme();
 
-  const tvStyles = spinnerStyles.indicator({
-    className,
-  });
+    const tvStyles = spinnerStyles.indicator({
+      className,
+    });
 
-  const iconSize = SPINNER_SIZE_MAP[size];
+    const iconSize = SPINNER_SIZE_MAP[size];
 
-  const colorMap: Record<string, string> = {
-    default: themeColors.foreground,
-    success: themeColors.success,
-    warning: themeColors.warning,
-    danger: themeColors.danger,
-  };
+    const colorMap: Record<string, string> = {
+      default: themeColors.foreground,
+      success: themeColors.success,
+      warning: themeColors.warning,
+      danger: themeColors.danger,
+    };
 
-  const iconColor = colorMap[color] || color;
+    const iconColor = colorMap[color] || color;
 
-  const rotation = useSharedValue(0);
+    const rotation = useSharedValue(0);
 
-  useEffect(() => {
-    if (isLoading) {
-      rotation.set(
-        withRepeat(
-          withSequence(
-            withTiming(360, {
-              duration: DEFAULT_ROTATION_DURATION / speed,
-              easing: animationEasing || Easing.linear,
-            })
-          ),
-          -1,
-          false
-        )
-      );
-    } else {
-      rotation.set(withTiming(0, { duration: 300 }));
+    useEffect(() => {
+      if (isLoading) {
+        rotation.set(
+          withRepeat(
+            withSequence(
+              withTiming(360, {
+                duration: DEFAULT_ROTATION_DURATION / speed,
+                easing: animationEasing || Easing.linear,
+              })
+            ),
+            -1,
+            false
+          )
+        );
+      } else {
+        rotation.set(withTiming(0, { duration: 300 }));
+      }
+
+      return () => {
+        cancelAnimation(rotation);
+      };
+    }, [isLoading, speed, animationEasing, rotation]);
+
+    const animatedStyle = useAnimatedStyle(() => {
+      return {
+        transform: [{ rotate: `${rotation.get()}deg` }],
+      };
+    });
+
+    if (!isLoading) {
+      return null;
     }
 
-    return () => {
-      cancelAnimation(rotation);
-    };
-  }, [isLoading, speed, animationEasing, rotation]);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ rotate: `${rotation.get()}deg` }],
-    };
-  });
-
-  if (!isLoading) {
-    return null;
+    return (
+      <AnimatedIndicator
+        ref={ref}
+        className={tvStyles}
+        style={[animatedStyle, style]}
+        {...restProps}
+      >
+        {children || (
+          <SpinnerIcon
+            width={iconProps?.width ?? iconSize}
+            height={iconProps?.height ?? iconSize}
+            color={iconProps?.color ?? iconColor}
+          />
+        )}
+      </AnimatedIndicator>
+    );
   }
-
-  return (
-    <AnimatedIndicator
-      ref={ref}
-      entering={entering}
-      exiting={exiting}
-      className={tvStyles}
-      style={[animatedStyle, style]}
-      {...restProps}
-    >
-      {children || (
-        <SpinnerIcon
-          width={iconProps?.width ?? iconSize}
-          height={iconProps?.height ?? iconSize}
-          color={iconProps?.color ?? iconColor}
-        />
-      )}
-    </AnimatedIndicator>
-  );
-});
+);
 
 // --------------------------------------------------
 

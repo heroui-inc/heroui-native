@@ -13,6 +13,7 @@ import {
 } from 'lucide-react-native';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FadeIn } from 'react-native-reanimated';
 
 export default function ButtonScreen() {
   const { colors, isDark } = useTheme();
@@ -112,7 +113,10 @@ export default function ButtonScreen() {
         >
           <Button.Label>
             {isDownloading ? (
-              <Spinner color={colors.accentForeground} />
+              <Spinner
+                entering={FadeIn.delay(50)}
+                color={colors.accentForeground}
+              />
             ) : (
               'Download now'
             )}

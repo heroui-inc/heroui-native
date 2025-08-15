@@ -1,19 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import { DropShadowView } from 'heroui-native';
-import { ScrollView, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { ScreenScrollView } from '../../components/screen-scroll-view';
+import { SectionTitle } from '../../components/section-title';
 
 export default function DropShadowViewScreen() {
   return (
-    <ScrollView
-      className="bg-background"
-      contentContainerClassName="items-center justify-center p-4"
-      contentInsetAdjustmentBehavior="automatic"
-    >
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Shadow Sizes
-      </Text>
-
-      <View className="w-full gap-4 mb-6">
+    <ScreenScrollView contentContainerClassName="gap-16">
+      <SectionTitle title="Shadow Sizes" />
+      <View className="gap-8">
         <DropShadowView
           className="bg-surface-1 p-4 rounded-lg"
           shadowSize="none"
@@ -52,14 +47,11 @@ export default function DropShadowViewScreen() {
         </DropShadowView>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Custom Colors
-      </Text>
-
-      <View className="w-full gap-4 mb-6">
+      <SectionTitle title="Custom Colors" />
+      <View className="gap-8">
         <DropShadowView
           className="bg-blue-100 p-4 rounded-lg"
-          shadowSize="md"
+          shadowSize="xl"
           shadowColor="#3b82f6"
         >
           <Text className="text-blue-900 font-semibold">Blue Shadow</Text>
@@ -68,7 +60,7 @@ export default function DropShadowViewScreen() {
 
         <DropShadowView
           className="bg-emerald-100 p-4 rounded-lg"
-          shadowSize="md"
+          shadowSize="xl"
           shadowColor="#10b981"
         >
           <Text className="text-emerald-900 font-semibold">Green Shadow</Text>
@@ -79,7 +71,7 @@ export default function DropShadowViewScreen() {
 
         <DropShadowView
           className="bg-violet-100 p-4 rounded-lg"
-          shadowSize="md"
+          shadowSize="xl"
           shadowColor="#8b5cf6"
         >
           <Text className="text-violet-900 font-semibold">Purple Shadow</Text>
@@ -88,7 +80,7 @@ export default function DropShadowViewScreen() {
 
         <DropShadowView
           className="bg-red-100 p-4 rounded-lg"
-          shadowSize="md"
+          shadowSize="xl"
           shadowColor="#ef4444"
         >
           <Text className="text-red-900 font-semibold">Red Shadow</Text>
@@ -96,11 +88,8 @@ export default function DropShadowViewScreen() {
         </DropShadowView>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Platform-Specific Overrides
-      </Text>
-
-      <View className="w-full gap-4 mb-6">
+      <SectionTitle title="Platform-Specific Overrides" />
+      <View className="gap-8">
         <DropShadowView
           className="bg-surface-1 p-4 rounded-lg"
           shadowSize="md"
@@ -143,11 +132,8 @@ export default function DropShadowViewScreen() {
         </DropShadowView>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Layout Examples
-      </Text>
-
-      <View className="w-full gap-4 mb-6">
+      <SectionTitle title="Layout Examples" />
+      <View className="gap-8">
         <View className="flex-row gap-4">
           <DropShadowView
             className="flex-1 bg-surface-1 p-4 rounded-lg"
@@ -184,29 +170,8 @@ export default function DropShadowViewScreen() {
         </DropShadowView>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Theme-Aware Shadows
-      </Text>
-
-      <View className="w-full gap-4 mb-6">
-        <DropShadowView className="bg-surface-1 p-4 rounded-lg" shadowSize="md">
-          <Text className="text-foreground font-semibold mb-2">
-            Default Theme Shadow
-          </Text>
-          <Text className="text-muted-foreground text-sm">
-            Light theme: rgba(0,0,0,0.3)
-          </Text>
-          <Text className="text-muted-foreground text-sm">
-            Dark theme: rgba(255,255,255,0.3)
-          </Text>
-        </DropShadowView>
-      </View>
-
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        Platform Notes
-      </Text>
-
-      <View className="w-full gap-4 mb-6">
+      <SectionTitle title="Platform Notes" />
+      <View className="gap-8">
         <DropShadowView className="bg-surface-1 p-4 rounded-lg" shadowSize="md">
           <Text className="text-foreground font-semibold mb-2">
             iOS Shadow Properties
@@ -243,6 +208,6 @@ export default function DropShadowViewScreen() {
           </Text>
         </DropShadowView>
       </View>
-    </ScrollView>
+    </ScreenScrollView>
   );
 }

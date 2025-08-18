@@ -1,10 +1,22 @@
 import { Stack } from 'expo-router';
 import { useTheme } from 'heroui-native';
-import { Platform } from 'react-native';
+import { Image, Platform } from 'react-native';
+import LogoDark from '../../../assets/logo-dark.png';
+import LogoLight from '../../../assets/logo-light.png';
 import { ThemeToggle } from '../../components/theme-toggle';
 
 export default function Layout() {
-  const { theme, colors } = useTheme();
+  const { theme, colors, isDark } = useTheme();
+
+  const _renderTitle = () => {
+    return (
+      <Image
+        source={isDark ? LogoLight : LogoDark}
+        className="h-7"
+        resizeMode="contain"
+      />
+    );
+  };
 
   const _renderThemeToggle = () => <ThemeToggle />;
 
@@ -31,7 +43,7 @@ export default function Layout() {
         fullScreenGestureEnabled: true,
       }}
     >
-      <Stack.Screen name="index" options={{ title: 'HeroUI Native' }} />
+      <Stack.Screen name="index" options={{ headerTitle: _renderTitle }} />
       <Stack.Screen name="accordion" options={{ title: 'Accordion' }} />
       <Stack.Screen name="button" options={{ title: 'Button' }} />
       <Stack.Screen name="card" options={{ title: 'Card' }} />

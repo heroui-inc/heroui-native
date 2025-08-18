@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useRouter } from 'expo-router';
 import { Accordion, useTheme } from 'heroui-native';
-import { Image, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 
 const ComponentIcon = () => {
@@ -103,11 +103,8 @@ export default function App() {
 
   return (
     <ScreenScrollView>
-      <View className="items-center justify-center my-8">
-        <Image
-          source={{ uri: 'https://heroui.com/isotipo.png' }}
-          className="w-20 h-20"
-        />
+      <View className="items-center justify-center my-4">
+        <Text className="text-muted-foreground text-base">v1.0.0-alpha.3</Text>
       </View>
       <Accordion variant="border" isCollapsible={false}>
         {components.map((item) => (

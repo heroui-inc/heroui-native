@@ -9,26 +9,22 @@
   Beautiful, fast and modern React Native UI library
 </p>
 
+<p align="center">
+  v1.0.0-alpha.3
+</p>
+
 ## Getting Started
 
 ### 1. Install HeroUI Native
 
 ```bash
 npm install heroui-native
-# or
-yarn add heroui-native
-# or
-pnpm add heroui-native
 ```
 
 ### 2. Install Mandatory Peer Dependencies
 
 ```bash
 npm install react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0 react-native-svg@^15.12.1 tailwind-variants@^2.0.1 tailwind-merge@^3.3.1
-# or
-yarn add react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0 react-native-svg@^15.12.1 tailwind-variants@^2.0.1 tailwind-merge@^3.3.1
-# or
-pnpm add react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0 react-native-svg@^15.12.1 tailwind-variants@^2.0.1 tailwind-merge@^3.3.1
 ```
 
 ### 3. Set Up NativeWind

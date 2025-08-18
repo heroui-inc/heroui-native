@@ -1,19 +1,10 @@
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import {
   Accordion,
   AccordionLayoutTransition,
   useAccordionItemContext,
   useTheme,
 } from 'heroui-native';
-import {
-  CreditCard,
-  Earth,
-  Minus,
-  Package,
-  Plus,
-  ReceiptText,
-  RefreshCcw,
-  ShoppingBag,
-} from 'lucide-react-native';
 import { Text, View } from 'react-native';
 import Animated, {
   Easing,
@@ -48,7 +39,7 @@ const CustomIndicator = () => {
           entering={CUSTOM_INDICATOR_ENTERING}
           exiting={CUSTOM_INDICATOR_EXITING}
         >
-          <Minus size={16} color={colors.mutedForeground} />
+          <Ionicons name="remove" size={16} color={colors.mutedForeground} />
         </Animated.View>
       ) : (
         <Animated.View
@@ -56,7 +47,7 @@ const CustomIndicator = () => {
           entering={CUSTOM_INDICATOR_ENTERING}
           exiting={CUSTOM_INDICATOR_EXITING}
         >
-          <Plus size={16} color={colors.mutedForeground} />
+          <Ionicons name="add" size={16} color={colors.mutedForeground} />
         </Animated.View>
       )}
     </View>
@@ -70,42 +61,78 @@ const AccordionScreen = () => {
     {
       id: '1',
       title: 'How do I place an order?',
-      icon: <ShoppingBag size={ICON_SIZE} color={colors.mutedForeground} />,
+      icon: (
+        <Ionicons
+          name="bag-outline"
+          size={ICON_SIZE}
+          color={colors.mutedForeground}
+        />
+      ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
     },
     {
       id: '2',
       title: 'Can I modify or cancel my order?',
-      icon: <ReceiptText size={ICON_SIZE} color={colors.mutedForeground} />,
+      icon: (
+        <Ionicons
+          name="receipt-outline"
+          size={ICON_SIZE}
+          color={colors.mutedForeground}
+        />
+      ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
     },
     {
       id: '3',
       title: 'What payment methods do you accept?',
-      icon: <CreditCard size={ICON_SIZE} color={colors.mutedForeground} />,
+      icon: (
+        <Ionicons
+          name="card-outline"
+          size={ICON_SIZE}
+          color={colors.mutedForeground}
+        />
+      ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
     },
     {
       id: '4',
       title: 'How much does shipping cost?',
-      icon: <Package size={ICON_SIZE} color={colors.mutedForeground} />,
+      icon: (
+        <MaterialIcons
+          name="inventory-2"
+          size={ICON_SIZE}
+          color={colors.mutedForeground}
+        />
+      ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
     },
     {
       id: '5',
       title: 'Do you ship internationally?',
-      icon: <Earth size={ICON_SIZE} color={colors.mutedForeground} />,
+      icon: (
+        <Ionicons
+          name="globe-outline"
+          size={ICON_SIZE}
+          color={colors.mutedForeground}
+        />
+      ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
     },
     {
       id: '6',
       title: 'How do I request a refund?',
-      icon: <RefreshCcw size={ICON_SIZE} color={colors.mutedForeground} />,
+      icon: (
+        <Ionicons
+          name="refresh"
+          size={ICON_SIZE}
+          color={colors.mutedForeground}
+        />
+      ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
     },

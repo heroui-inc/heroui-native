@@ -111,7 +111,7 @@ Apply different colors for semantic meaning.
 
 ```tsx
 import { Chip } from 'heroui-native';
-import { X, Star } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { View } from 'react-native';
 
 export default function ChipExample() {
@@ -126,7 +126,7 @@ export default function ChipExample() {
 
       <Chip variant="primary" color="warning">
         <Chip.StartContent className="pr-1">
-          <Star size={12} color="#F59E0B" fill="#F59E0B" />
+          <Ionicons name="star" size={12} color="#F59E0B" />
         </Chip.StartContent>
         <Chip.Label>Premium</Chip.Label>
       </Chip>
@@ -134,7 +134,7 @@ export default function ChipExample() {
       <Chip variant="tertiary" color="danger">
         <Chip.Label>Remove</Chip.Label>
         <Chip.EndContent>
-          <X size={16} color="#EF4444" />
+          <Ionicons name="close" size={16} color="#EF4444" />
         </Chip.EndContent>
       </Chip>
     </View>

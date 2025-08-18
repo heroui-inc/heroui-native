@@ -50,7 +50,7 @@ Add icons or text that appear on each side of the switch.
 
 ```tsx
 import { Switch } from 'heroui-native';
-import { Moon, Sun } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { ZoomIn } from 'react-native-reanimated';
@@ -84,14 +84,14 @@ export default function SwitchExample() {
         <Switch.StartContent className="left-0.5">
           {darkMode && (
             <Animated.View key="sun" entering={ZoomIn}>
-              <Sun size={16} color="#854d0e" strokeWidth={3} />
+              <Ionicons name="sunny" size={16} color="#854d0e" />
             </Animated.View>
           )}
         </Switch.StartContent>
         <Switch.EndContent className="right-0.5">
           {!darkMode && (
             <Animated.View key="moon" entering={ZoomIn}>
-              <Moon size={16} color="#dbeafe" />
+              <Ionicons name="moon" size={16} color="#dbeafe" />
             </Animated.View>
           )}
         </Switch.EndContent>

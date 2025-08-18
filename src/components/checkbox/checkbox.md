@@ -59,7 +59,7 @@ Combine custom background and indicator for fully customized checkboxes.
 
 ```tsx
 import { Checkbox, useTheme } from 'heroui-native';
-import { Minus, Plus } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { ZoomIn } from 'react-native-reanimated';
@@ -103,15 +103,15 @@ export default function CheckboxExample() {
         <Checkbox.Indicator>
           {custom ? (
             <Animated.View key="selected" entering={ZoomIn}>
-              <Minus
+              <Ionicons
+                name="remove"
                 size={16}
                 color={colors.accentForeground}
-                strokeWidth={3}
               />
             </Animated.View>
           ) : (
             <Animated.View key="unselected" entering={ZoomIn}>
-              <Plus size={16} color={colors.accent} strokeWidth={3} />
+              <Ionicons name="add" size={16} color={colors.accent} />
             </Animated.View>
           )}
         </Checkbox.Indicator>

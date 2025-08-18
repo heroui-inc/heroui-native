@@ -1,5 +1,5 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Checkbox, useTheme } from 'heroui-native';
-import { Minus, Moon, Plus, Sun } from 'lucide-react-native';
 import React from 'react';
 import { Text, View } from 'react-native';
 import Animated, {
@@ -130,10 +130,10 @@ export default function CheckboxScreen() {
           <View>
             {customIndicator ? (
               <Animated.View key="selected" entering={ZoomIn}>
-                <Minus
+                <Ionicons
+                  name="remove"
                   size={16}
                   color={colors.accentForeground}
-                  strokeWidth={3}
                 />
               </Animated.View>
             ) : (
@@ -142,7 +142,7 @@ export default function CheckboxScreen() {
                 entering={ZoomInDown.springify().damping(38).stiffness(450)}
               >
                 <Animated.View key="default-2" entering={ZoomIn.duration(175)}>
-                  <Plus size={16} color={colors.accent} strokeWidth={3} />
+                  <Ionicons name="add" size={16} color={colors.accent} />
                 </Animated.View>
               </Animated.View>
             )}
@@ -202,7 +202,7 @@ export default function CheckboxScreen() {
               <Animated.View
                 entering={ZoomIn.springify().damping(38).stiffness(450)}
               >
-                <Sun size={24} color="#0f172a" />
+                <Ionicons name="sunny" size={24} color="#0f172a" />
               </Animated.View>
             </AnimatedView>
           ) : (
@@ -213,7 +213,7 @@ export default function CheckboxScreen() {
               <Animated.View
                 entering={ZoomIn.springify().damping(38).stiffness(450)}
               >
-                <Moon size={20} color="#e2e8f0" />
+                <Ionicons name="moon" size={20} color="#e2e8f0" />
               </Animated.View>
             </AnimatedView>
           )}

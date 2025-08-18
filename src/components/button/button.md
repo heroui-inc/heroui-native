@@ -77,7 +77,7 @@ Add gradients or custom backgrounds using the Background component.
 
 ```tsx
 import { Button } from 'heroui-native';
-import { Download, Heart } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { View, StyleSheet } from 'react-native';
 
@@ -88,7 +88,7 @@ export default function ButtonExample() {
     <View className="gap-4">
       <Button variant="primary" onPress={() => console.log('Download pressed')}>
         <Button.StartContent>
-          <Download size={18} color={colors.accentForeground} />
+          <Ionicons name="download" size={18} color={colors.accentForeground} />
         </Button.StartContent>
         <Button.Label>Download File</Button.Label>
       </Button>
@@ -115,7 +115,11 @@ export default function ButtonExample() {
       >
         <Button.Label>Like</Button.Label>
         <Button.EndContent>
-          <Heart size={16} color={colors.accentSoftForeground} />
+          <Ionicons
+            name="heart"
+            size={16}
+            color={colors.accentSoftForeground}
+          />
         </Button.EndContent>
       </Button>
     </View>
@@ -195,12 +199,12 @@ export default function ButtonExample() {
 
 ### Button.Label
 
-| prop                    | type                                    | description                                                                   |
-| ----------------------- | --------------------------------------- | ----------------------------------------------------------------------------- |
-| `children`              | `React.ReactNode`                       | Content to be rendered as label. If string, will be wrapped in Text component |
-| `className`             | `string`                                | Additional CSS classes for container                                          |
-| `classNames`            | `ElementSlots<LabelSlots>`              | Additional CSS classes for the different parts of the label                   |
-| `...Animated.ViewProps` | `Animated.ViewProps`                    | All Reanimated Animated.View props are supported                              |
+| prop                    | type                       | description                                                                   |
+| ----------------------- | -------------------------- | ----------------------------------------------------------------------------- |
+| `children`              | `React.ReactNode`          | Content to be rendered as label. If string, will be wrapped in Text component |
+| `className`             | `string`                   | Additional CSS classes for container                                          |
+| `classNames`            | `ElementSlots<LabelSlots>` | Additional CSS classes for the different parts of the label                   |
+| `...Animated.ViewProps` | `Animated.ViewProps`       | All Reanimated Animated.View props are supported                              |
 
 #### ElementSlots<LabelSlots>
 

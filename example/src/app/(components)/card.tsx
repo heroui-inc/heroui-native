@@ -1,12 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Card, useTheme } from 'heroui-native';
-import {
-  Check,
-  ExternalLink,
-  ShoppingBasket,
-  Users,
-} from 'lucide-react-native';
 import {
   Image,
   Pressable,
@@ -49,7 +44,11 @@ export default function CardScreen() {
             <Button variant="ghost">
               <Button.Label>Add to cart</Button.Label>
               <Button.EndContent>
-                <ShoppingBasket size={16} color={colors.mutedForeground} />
+                <Ionicons
+                  name="basket-outline"
+                  size={16}
+                  color={colors.mutedForeground}
+                />
               </Button.EndContent>
             </Button>
           </Card.Footer>
@@ -110,7 +109,11 @@ export default function CardScreen() {
             <Button variant="ghost">
               <Button.Label>Add to cart</Button.Label>
               <Button.EndContent>
-                <ShoppingBasket size={16} color={colors.mutedForeground} />
+                <Ionicons
+                  name="basket-outline"
+                  size={16}
+                  color={colors.mutedForeground}
+                />
               </Button.EndContent>
             </Button>
           </Card.Footer>
@@ -142,7 +145,11 @@ export default function CardScreen() {
               <Text className="text-sm font-medium text-foreground">
                 View Details
               </Text>
-              <ExternalLink size={12} color={colors.foreground} />
+              <Ionicons
+                name="open-outline"
+                size={12}
+                color={colors.foreground}
+              />
             </Pressable>
           </Card.Footer>
         </Card.Details>
@@ -162,7 +169,11 @@ export default function CardScreen() {
           <Card.Details>
             <Card.Body className="items-center mb-2">
               <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
-                <Users size={20} color={colors.foreground} />
+                <Ionicons
+                  name="people-outline"
+                  size={20}
+                  color={colors.foreground}
+                />
               </View>
               <Card.Title className="text-center">
                 Follow 10 profiles
@@ -187,7 +198,11 @@ export default function CardScreen() {
           <Card.Details>
             <Card.Body className="items-center mb-2">
               <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
-                <Check size={28} color={colors.foreground} />
+                <Ionicons
+                  name="checkmark"
+                  size={28}
+                  color={colors.foreground}
+                />
               </View>
               <Card.Title className="text-center">Create thread</Card.Title>
               <Card.Description className="text-center">
@@ -214,7 +229,11 @@ export default function CardScreen() {
           <Card.Details>
             <Card.Body className="items-center mb-2">
               <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
-                <Check size={28} color={colors.foreground} />
+                <Ionicons
+                  name="checkmark"
+                  size={28}
+                  color={colors.foreground}
+                />
               </View>
               <Card.Title className="text-center">Add profile photo</Card.Title>
               <Card.Description className="text-center">

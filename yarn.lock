@@ -7524,7 +7524,6 @@ __metadata:
     expo-linking: ~7.1.7
     expo-router: ~5.1.3
     expo-status-bar: ~2.2.3
-    lucide-react-native: ^0.525.0
     nativewind: ^4.1.23
     prettier-plugin-tailwindcss: ^0.5.11
     react: 19.0.0
@@ -7567,7 +7566,6 @@ __metadata:
     eslint-config-prettier: ^10.1.1
     eslint-plugin-prettier: ^5.2.3
     jest: ^29.7.0
-    lucide-react-native: ^0.525.0
     nativewind: ^4.1.23
     prettier: ^3.0.3
     prettier-plugin-organize-imports: ^4.1.0
@@ -7582,14 +7580,14 @@ __metadata:
     tailwindcss: ^3.4.17
     typescript: ^5.8.3
   peerDependencies:
-    nativewind: ">=4.0"
+    nativewind: ^4.1.23
     react: "*"
     react-native: "*"
-    react-native-reanimated: ">=3"
-    react-native-safe-area-context: ">=5"
-    react-native-svg: "*"
-    tailwind-merge: "*"
-    tailwind-variants: "*"
+    react-native-reanimated: ~3.17.4
+    react-native-safe-area-context: 5.4.0
+    react-native-svg: ^15.12.1
+    tailwind-merge: ^3.3.1
+    tailwind-variants: ^2.0.1
   languageName: unknown
   linkType: soft
 
@@ -9557,17 +9555,6 @@ __metadata:
   dependencies:
     yallist: ^4.0.0
   checksum: f97f499f898f23e4585742138a22f22526254fdba6d75d41a1c2526b3b6cc5747ef59c5612ba7375f42aca4f8461950e925ba08c991ead0651b4918b7c978297
-  languageName: node
-  linkType: hard
-
-"lucide-react-native@npm:^0.525.0":
-  version: 0.525.0
-  resolution: "lucide-react-native@npm:0.525.0"
-  peerDependencies:
-    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
-    react-native: "*"
-    react-native-svg: ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0
-  checksum: b9be1685faf224651d0db0f65d66890e5632634145e67368f079d4dcc862bc7e30457fa9878016dc917c869a457307cf8609c1c5787fe4f95149bf23cf718068
   languageName: node
   linkType: hard
 

@@ -1,15 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Spinner, useTheme } from 'heroui-native';
-import {
-  AlertCircle,
-  Check,
-  ChevronRight,
-  Download,
-  Heart,
-  Plus,
-  Trash2,
-} from 'lucide-react-native';
 import React from 'react';
 import { View } from 'react-native';
 import { FadeIn } from 'react-native-reanimated';
@@ -48,7 +40,7 @@ export default function ButtonScreen() {
       <View className="gap-8">
         <Button variant="primary">
           <Button.StartContent>
-            <Plus size={20} color={colors.accentForeground} />
+            <Ionicons name="add" size={20} color={colors.accentForeground} />
           </Button.StartContent>
           <Button.Label>Add Item</Button.Label>
         </Button>
@@ -56,27 +48,31 @@ export default function ButtonScreen() {
         <Button variant="secondary">
           <Button.Label>Download</Button.Label>
           <Button.EndContent>
-            <Download size={18} color={colors.accentSoftForeground} />
+            <Ionicons
+              name="download"
+              size={18}
+              color={colors.accentSoftForeground}
+            />
           </Button.EndContent>
         </Button>
 
         <Button variant="tertiary">
           <Button.StartContent>
-            <Heart
-              size={14}
-              color={colors.defaultForeground}
-              fill={colors.defaultForeground}
-            />
+            <Ionicons name="heart" size={14} color={colors.defaultForeground} />
           </Button.StartContent>
           <Button.Label>Favorite</Button.Label>
           <Button.EndContent>
-            <ChevronRight size={18} color={colors.defaultForeground} />
+            <Ionicons
+              name="chevron-forward"
+              size={18}
+              color={colors.defaultForeground}
+            />
           </Button.EndContent>
         </Button>
 
         <Button variant="danger" size="sm">
           <Button.StartContent>
-            <Trash2 size={14} color={colors.dangerForeground} />
+            <Ionicons name="trash" size={14} color={colors.dangerForeground} />
           </Button.StartContent>
           <Button.Label>Delete</Button.Label>
         </Button>
@@ -98,7 +94,11 @@ export default function ButtonScreen() {
         </Button>
         <Button variant="tertiary" isDisabled>
           <Button.StartContent>
-            <AlertCircle size={16} color={colors.defaultForeground} />
+            <Ionicons
+              name="alert-circle"
+              size={16}
+              color={colors.defaultForeground}
+            />
           </Button.StartContent>
           <Button.Label>Access Denied</Button.Label>
         </Button>
@@ -124,17 +124,17 @@ export default function ButtonScreen() {
       <View className="self-center flex-row gap-8">
         <Button size="sm" isIconOnly>
           <Button.Label>
-            <Plus size={16} color={colors.accentForeground} />
+            <Ionicons name="add" size={16} color={colors.accentForeground} />
           </Button.Label>
         </Button>
         <Button size="md" variant="secondary" isIconOnly>
           <Button.Label>
-            <Heart size={18} color="#ec4899" fill="#ec4899" />
+            <Ionicons name="heart" size={18} color="#ec4899" />
           </Button.Label>
         </Button>
         <Button size="lg" variant="danger" isIconOnly>
           <Button.Label>
-            <Trash2 size={20} color={colors.dangerForeground} />
+            <Ionicons name="trash" size={20} color={colors.dangerForeground} />
           </Button.Label>
         </Button>
       </View>
@@ -151,7 +151,7 @@ export default function ButtonScreen() {
           className="border-purple-600/30 bg-purple-50"
         >
           <Button.StartContent>
-            <Check size={18} color="#9333ea" />
+            <Ionicons name="checkmark" size={18} color="#9333ea" />
           </Button.StartContent>
           <Button.Label classNames={{ text: 'text-purple-600' }}>
             Purple Tertiary

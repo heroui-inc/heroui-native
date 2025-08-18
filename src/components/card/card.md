@@ -96,7 +96,7 @@ Use an image as an absolute positioned background.
 
 ```tsx
 import { Button, Card } from 'heroui-native';
-import { ShoppingBasket } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { View } from 'react-native';
 
 export default function CardExample() {
@@ -118,7 +118,7 @@ export default function CardExample() {
           <Button variant="ghost">
             <Button.Label>Add to cart</Button.Label>
             <Button.EndContent>
-              <ShoppingBasket size={16} />
+              <Ionicons name="bag-outline" size={16} />
             </Button.EndContent>
           </Button>
         </Card.Footer>

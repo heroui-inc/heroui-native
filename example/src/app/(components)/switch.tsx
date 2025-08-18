@@ -1,5 +1,5 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Switch, useTheme } from 'heroui-native';
-import { Check, Moon, Sun, X } from 'lucide-react-native';
 import React from 'react';
 import { Text, View } from 'react-native';
 import Animated, {
@@ -86,11 +86,11 @@ export default function SwitchScreen() {
         <Switch.Thumb>
           {icon ? (
             <Animated.View key="check" entering={ZoomIn}>
-              <Check size={12} color={colors.accent} strokeWidth={4} />
+              <Ionicons name="checkmark" size={12} color={colors.accent} />
             </Animated.View>
           ) : (
             <Animated.View key="x" entering={ZoomIn}>
-              <X size={14} color={colors.default} strokeWidth={3} />
+              <Ionicons name="close" size={14} color={colors.default} />
             </Animated.View>
           )}
         </Switch.Thumb>
@@ -132,7 +132,7 @@ export default function SwitchScreen() {
                 key="sun"
                 entering={ZoomIn.springify().damping(30).stiffness(300)}
               >
-                <Sun size={16} color="#854d0e" strokeWidth={3} />
+                <Ionicons name="sunny" size={16} color="#854d0e" />
               </Animated.View>
             )}
           </Switch.StartContent>
@@ -142,7 +142,7 @@ export default function SwitchScreen() {
                 key="moon"
                 entering={ZoomIn.springify().damping(30).stiffness(300)}
               >
-                <Moon size={16} color="#dbeafe" />
+                <Ionicons name="moon" size={16} color="#dbeafe" />
               </Animated.View>
             )}
           </Switch.EndContent>

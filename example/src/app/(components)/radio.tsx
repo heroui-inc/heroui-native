@@ -1,5 +1,6 @@
+import { Ionicons } from '@expo/vector-icons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Radio, RadioGroup, Surface, useTheme } from 'heroui-native';
-import { Check, CreditCard, Zap } from 'lucide-react-native';
 import React from 'react';
 import { Text, View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
@@ -258,10 +259,10 @@ export default function RadioScreen() {
             <Radio.IndicatorThumb>
               {customThumb === 'icon' && (
                 <AnimatedView entering={FadeIn.duration(200)}>
-                  <Check
+                  <FontAwesome
+                    name="check"
                     size={12}
                     color={colors.accentForeground}
-                    strokeWidth={4}
                   />
                 </AnimatedView>
               )}
@@ -277,11 +278,7 @@ export default function RadioScreen() {
             <Radio.IndicatorThumb>
               {customThumb === 'zap' && (
                 <AnimatedView entering={FadeIn.duration(200)}>
-                  <Zap
-                    size={12}
-                    color={colors.background}
-                    fill={colors.background}
-                  />
+                  <Ionicons name="flash" size={12} color={colors.background} />
                 </AnimatedView>
               )}
             </Radio.IndicatorThumb>
@@ -314,7 +311,11 @@ export default function RadioScreen() {
         <Radio value="card">
           <Radio.Content>
             <View className="flex-row items-center gap-1.5">
-              <CreditCard size={16} color={colors.foreground} />
+              <Ionicons
+                name="card-outline"
+                size={16}
+                color={colors.foreground}
+              />
               <Radio.Label>Credit/Debit Card</Radio.Label>
             </View>
             <Radio.Description>

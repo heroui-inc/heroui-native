@@ -1,5 +1,5 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Spinner, useTheme } from 'heroui-native';
-import { Loader } from 'lucide-react-native';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
@@ -72,7 +72,7 @@ export default function SpinnerScreen() {
       <View className="flex-row gap-4 self-center">
         <Spinner size="md" color="default">
           <Spinner.Indicator speed={0.7}>
-            <Loader size={24} color={colors.foreground} />
+            <Ionicons name="reload" size={24} color={colors.foreground} />
           </Spinner.Indicator>
         </Spinner>
         <Spinner size="lg" color="default">

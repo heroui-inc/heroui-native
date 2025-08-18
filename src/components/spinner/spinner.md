@@ -76,7 +76,7 @@ Replace the default spinner icon with custom content.
 ```tsx
 <Spinner>
   <Spinner.Indicator>
-    <Loader size={24} color={colors.foreground} />
+    <Ionicons name="refresh" size={24} color={colors.foreground} />
   </Spinner.Indicator>
 </Spinner>
 
@@ -91,7 +91,7 @@ Replace the default spinner icon with custom content.
 
 ```tsx
 import { Spinner, useTheme } from 'heroui-native';
-import { Loader } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
@@ -118,7 +118,7 @@ export default function SpinnerExample() {
       <View className="flex-row gap-4 items-center justify-center">
         <Spinner size="md" color="#EC4899">
           <Spinner.Indicator speed={0.7}>
-            <Loader size={24} color="#EC4899" />
+            <Ionicons name="refresh" size={24} color="#EC4899" />
           </Spinner.Indicator>
         </Spinner>
       </View>

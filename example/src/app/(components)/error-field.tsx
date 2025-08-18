@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Button, ErrorField, TextField, useTheme } from 'heroui-native';
-import { AlertTriangle, Info, XCircle } from 'lucide-react-native';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 import {
@@ -47,14 +46,14 @@ export default function ErrorFieldScreen() {
       <View className="gap-4">
         <ErrorField isInvalid={true}>
           <View className="flex-row items-center gap-2">
-            <XCircle size={16} color={colors.danger} />
+            <Ionicons name="close-circle" size={16} color={colors.danger} />
             <Text className="text-danger text-sm">Critical error occurred</Text>
           </View>
         </ErrorField>
 
         <ErrorField isInvalid={true}>
           <View className="flex-row items-center gap-2">
-            <AlertTriangle size={16} color={colors.warning} />
+            <Ionicons name="warning" size={16} color={colors.warning} />
             <Text className="text-warning text-sm">
               Warning: Check your input
             </Text>
@@ -63,7 +62,11 @@ export default function ErrorFieldScreen() {
 
         <ErrorField isInvalid={true}>
           <View className="flex-row items-center gap-2">
-            <Info size={16} color={colors.accent} />
+            <Ionicons
+              name="information-circle"
+              size={16}
+              color={colors.accent}
+            />
             <Text className="text-accent text-sm">
               Information: Field requires attention
             </Text>

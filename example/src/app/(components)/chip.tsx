@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Chip, useTheme } from 'heroui-native';
-import { Plus, Star, X } from 'lucide-react-native';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
@@ -100,13 +100,13 @@ export default function ChipScreen() {
           </Chip>
           <Chip size="md" variant="secondary" color="success">
             <Chip.StartContent>
-              <Plus size={16} color="#10B981" />
+              <Ionicons name="add" size={16} color="#10B981" />
             </Chip.StartContent>
             <Chip.Label>New</Chip.Label>
           </Chip>
           <Chip size="lg" variant="tertiary" color="warning">
             <Chip.StartContent className="pr-1">
-              <Star size={12} color="#F59E0B" fill="#F59E0B" />
+              <Ionicons name="star" size={12} color="#F59E0B" />
             </Chip.StartContent>
             <Chip.Label>Premium</Chip.Label>
           </Chip>
@@ -145,13 +145,13 @@ export default function ChipScreen() {
         <Chip size="sm" variant="secondary">
           <Chip.Label>Close</Chip.Label>
           <Chip.EndContent>
-            <X size={12} color="#6B7280" strokeWidth={3} />
+            <Ionicons name="close" size={12} color="#6B7280" />
           </Chip.EndContent>
         </Chip>
         <Chip size="md" variant="primary" color="danger" className="pr-1.5">
           <Chip.Label>Remove</Chip.Label>
           <Chip.EndContent>
-            <X size={16} color="white" />
+            <Ionicons name="close" size={16} color="white" />
           </Chip.EndContent>
         </Chip>
         <Chip size="lg" variant="tertiary" color="accent" className="pr-1.5">
@@ -163,7 +163,11 @@ export default function ChipScreen() {
                 isDark ? 'bg-neutral-700' : 'bg-neutral-200'
               )}
             >
-              <X size={12} color={isDark ? 'white' : 'black'} strokeWidth={3} />
+              <Ionicons
+                name="close"
+                size={12}
+                color={isDark ? 'white' : 'black'}
+              />
             </View>
           </Chip.EndContent>
         </Chip>
@@ -208,7 +212,7 @@ export default function ChipScreen() {
             />
           </Chip.Background>
           <Chip.StartContent>
-            <Star size={16} color="white" fill="white" />
+            <Ionicons name="star" size={16} color="white" />
           </Chip.StartContent>
           <Chip.Label className="text-white font-bold">Premium</Chip.Label>
         </Chip>
@@ -270,7 +274,7 @@ export default function ChipScreen() {
           <Chip variant="secondary" onPress={() => setChipCount(chipCount + 1)}>
             <Chip.Label>Add Item</Chip.Label>
             <Chip.EndContent>
-              <Plus size={14} color="#6B7280" />
+              <Ionicons name="add" size={14} color="#6B7280" />
             </Chip.EndContent>
           </Chip>
 
@@ -280,7 +284,7 @@ export default function ChipScreen() {
           >
             <Chip.Label>Remove</Chip.Label>
             <Chip.EndContent>
-              <X size={14} color="#EF4444" />
+              <Ionicons name="close" size={14} color="#EF4444" />
             </Chip.EndContent>
           </Chip>
         </View>

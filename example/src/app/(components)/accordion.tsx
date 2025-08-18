@@ -124,7 +124,7 @@ const AccordionScreen = () => {
     >
       <AnimatedView className="gap-12" layout={AccordionLayoutTransition}>
         <SectionTitle title="Default Variant" />
-        <Accordion selectionMode="single" defaultValue="2">
+        <Accordion defaultValue="2">
           {accordionData.map((item) => (
             <Accordion.Item key={item.id} value={item.id}>
               <Accordion.Trigger>
@@ -144,7 +144,7 @@ const AccordionScreen = () => {
 
       <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
         <SectionTitle title="Border Variant" />
-        <Accordion selectionMode="single" variant="border">
+        <Accordion variant="border">
           {accordionData.map((item) => (
             <Accordion.Item key={item.id} value={item.id}>
               <Accordion.Trigger>
@@ -187,8 +187,28 @@ const AccordionScreen = () => {
       </AnimatedView>
 
       <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
+        <SectionTitle title="Without Dividers" />
+        <Accordion isDividerVisible={false}>
+          {accordionData.slice(0, 3).map((item) => (
+            <Accordion.Item key={item.id} value={item.id}>
+              <Accordion.Trigger className="rounded-lg">
+                <View className={classNames.triggerContentContainer}>
+                  {item.icon}
+                  <Text className={classNames.triggerTitle}>{item.title}</Text>
+                </View>
+                <Accordion.Indicator />
+              </Accordion.Trigger>
+              <Accordion.Content>
+                <Text className={classNames.contentText}>{item.content}</Text>
+              </Accordion.Content>
+            </Accordion.Item>
+          ))}
+        </Accordion>
+      </AnimatedView>
+
+      <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
         <SectionTitle title="Custom Indicator" />
-        <Accordion selectionMode="single" variant="border">
+        <Accordion variant="border">
           {accordionData.slice(0, 2).map((item) => (
             <Accordion.Item key={item.id} value={item.id}>
               <Accordion.Trigger>
@@ -210,11 +230,7 @@ const AccordionScreen = () => {
 
       <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
         <SectionTitle title="Custom entering animation" />
-        <Accordion
-          selectionMode="single"
-          variant="border"
-          isDividerVisible={false}
-        >
+        <Accordion variant="border">
           {accordionData.slice(0, 3).map((item, index) => (
             <Accordion.Item key={item.id} value={item.id}>
               <Accordion.Trigger isHighlightVisible={false}>
@@ -250,7 +266,7 @@ const AccordionScreen = () => {
 
       <AnimatedView className="gap-16" layout={AccordionLayoutTransition}>
         <SectionTitle title="Custom Styles" />
-        <Accordion selectionMode="single" isDividerVisible={false}>
+        <Accordion isDividerVisible={false}>
           {accordionData.slice(0, 4).map((item) => (
             <Accordion.Item key={item.id} value={item.id} className="mb-1">
               <Accordion.Trigger className="bg-surface-2 rounded-xl border border-border/50 shadow-sm">

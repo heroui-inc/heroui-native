@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Card, useTheme } from 'heroui-native';
 import {
   Check,
@@ -10,6 +11,7 @@ import {
   Image,
   Pressable,
   ScrollView,
+  StyleSheet,
   Text,
   useWindowDimensions,
   View,
@@ -231,6 +233,39 @@ export default function CardScreen() {
           </Card.Details>
         </Card>
       </ScrollView>
+
+      <SectionTitle title="Background Image Card" />
+      <Card className="aspect-video overflow-hidden">
+        <Image
+          source={{
+            uri: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1794&q=80',
+          }}
+          className="absolute inset-0"
+          resizeMode="cover"
+        />
+        <LinearGradient
+          colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.8)']}
+          style={StyleSheet.absoluteFill}
+        />
+        <Card.Details className="justify-end h-full">
+          <Card.Body>
+            <Card.Title className="text-lime-100 text-2xl font-bold mb-1">
+              Tokyo Skyline
+            </Card.Title>
+            <Card.Description className="text-lime-200 font-semibold">
+              Experience the vibrant city lights and modern architecture of
+              Japan's capital
+            </Card.Description>
+          </Card.Body>
+          <Card.Footer className="gap-3">
+            <Button variant="primary" className="bg-white">
+              <Button.Label classNames={{ text: 'text-black' }}>
+                Explore
+              </Button.Label>
+            </Button>
+          </Card.Footer>
+        </Card.Details>
+      </Card>
 
       <SectionTitle title="Surface Variants" />
 

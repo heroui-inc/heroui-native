@@ -43,7 +43,6 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       isSelected,
       onSelectedChange,
       isDisabled = false,
-      isReadOnly = false,
       isInvalid = false,
       colors,
       className,
@@ -76,7 +75,6 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
 
     const tvStyles = checkboxStyles.root({
       isDisabled,
-      isReadOnly,
       className,
     });
 

@@ -44,7 +44,6 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
     const {
       children,
       color = 'default',
-      isReadOnly,
       isDisabled,
       isSelected,
       onSelectedChange,
@@ -61,7 +60,6 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
     const { container, contentPaddingContainer, contentContainer } =
       switchStyles.root({
         isDisabled,
-        isReadOnly,
       });
 
     const tvBaseStyles = container({

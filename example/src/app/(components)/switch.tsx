@@ -16,8 +16,8 @@ export default function SwitchScreen() {
   const [success, setSuccess] = React.useState(true);
   const [warning, setWarning] = React.useState(true);
   const [danger, setDanger] = React.useState(true);
+  const [defaultState, setDefaultState] = React.useState(true);
   const [disabled, setDisabled] = React.useState(true);
-  const [readonly, setReadonly] = React.useState(true);
   const [icon, setIcon] = React.useState(true);
   const [contentIcon, setContentIcon] = React.useState(true);
   const [contentText, setContentText] = React.useState(true);
@@ -62,8 +62,8 @@ export default function SwitchScreen() {
       <View className="flex-row gap-8 self-center">
         <View className="items-center gap-2">
           <Switch
-            isSelected={defaultSwitch}
-            onSelectedChange={setDefaultSwitch}
+            isSelected={defaultState}
+            onSelectedChange={setDefaultState}
           />
           <Text className="text-xs text-muted-foreground">Default</Text>
         </View>
@@ -74,14 +74,6 @@ export default function SwitchScreen() {
             isDisabled={true}
           />
           <Text className="text-xs text-muted-foreground">Disabled</Text>
-        </View>
-        <View className="items-center gap-2">
-          <Switch
-            isSelected={readonly}
-            onSelectedChange={setReadonly}
-            isReadOnly={true}
-          />
-          <Text className="text-xs text-muted-foreground">Read Only</Text>
         </View>
       </View>
 

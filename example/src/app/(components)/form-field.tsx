@@ -24,9 +24,8 @@ export default function FormFieldScreen() {
   const [verticalSwitch, setVerticalSwitch] = React.useState(false);
   const [verticalCheckbox, setVerticalCheckbox] = React.useState(true);
 
-  // Disabled and readonly states
+  // Disabled states
   const [disabledSwitch, setDisabledSwitch] = React.useState(true);
-  const [readonlySwitch, setReadonlySwitch] = React.useState(true);
 
   // Validation states
   const [privacyAccepted, setPrivacyAccepted] = React.useState(false);
@@ -196,7 +195,7 @@ export default function FormFieldScreen() {
         </FormField>
       </View>
 
-      <SectionTitle title="Disabled & Read-Only States" />
+      <SectionTitle title="Disabled State" />
       <View className="gap-8">
         <FormField
           isSelected={disabledSwitch}
@@ -207,22 +206,6 @@ export default function FormFieldScreen() {
             <FormField.Label>Disabled control</FormField.Label>
             <FormField.Description>
               This entire field is disabled and cannot be interacted with
-            </FormField.Description>
-          </FormField.Content>
-          <FormField.Indicator>
-            <Switch />
-          </FormField.Indicator>
-        </FormField>
-
-        <FormField
-          isSelected={readonlySwitch}
-          onSelectedChange={setReadonlySwitch}
-          isReadOnly
-        >
-          <FormField.Content>
-            <FormField.Label>Read-only control</FormField.Label>
-            <FormField.Description>
-              This field is read-only. The value can be seen but not changed
             </FormField.Description>
           </FormField.Content>
           <FormField.Indicator>

@@ -49,9 +49,6 @@ export interface CheckboxProps extends CheckboxPrimitivesTypes.RootProps {
   /** Color theme of the checkbox @default 'default' */
   color?: CheckboxColor;
 
-  /** Whether the checkbox is read-only @default false */
-  isReadOnly?: boolean;
-
   /** Whether the checkbox is invalid @default false */
   isInvalid?: boolean;
 

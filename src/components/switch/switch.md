@@ -126,7 +126,6 @@ export default function SwitchExample() {
 | `color`             | `'default' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Color theme of the switch                                                  |
 | `isSelected`        | `boolean`                                         | `undefined` | Whether the switch is currently selected                                   |
 | `isDisabled`        | `boolean`                                         | `false`     | Whether the switch is disabled and cannot be interacted with               |
-| `isReadOnly`        | `boolean`                                         | `false`     | Whether the switch is read-only                                            |
 | `className`         | `string`                                          | `undefined` | Custom class name for the switch                                           |
 | `classNames`        | `ElementSlots<RootSlots>`                         | `undefined` | Custom class names for different parts of the component                    |
 | `colors`            | `SwitchColors`                                    | `undefined` | Custom colors for different switch states                                  |

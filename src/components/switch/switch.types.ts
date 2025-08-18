@@ -34,9 +34,6 @@ export interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
   /** Color theme of the switch @default 'default' */
   color?: SwitchColor;
 
-  /** Whether the switch is read-only @default false */
-  isReadOnly?: boolean;
-
   /** Whether the switch is disabled @default false */
   isDisabled?: boolean;
 

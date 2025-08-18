@@ -13,15 +13,9 @@ const root = tv({
         container: 'opacity-disabled pointer-events-none',
       },
     },
-    isReadOnly: {
-      true: {
-        container: 'pointer-events-none',
-      },
-    },
   },
   defaultVariants: {
     isDisabled: false,
-    isReadOnly: false,
   },
 });
 

@@ -39,8 +39,6 @@ export interface RadioContextValue {
   isSelected: boolean;
   /** Whether the radio is disabled */
   isDisabled?: boolean;
-  /** Whether the radio is read-only */
-  isReadOnly?: boolean;
 }
 
 /**
@@ -53,8 +51,6 @@ export interface RadioProps extends ItemProps {
   color?: RadioColor;
   /** Alignment of the indicator */
   alignIndicator?: 'start' | 'end';
-  /** Whether the radio is read-only */
-  isReadOnly?: boolean;
   /** Whether the radio is invalid @default false */
   isInvalid?: boolean;
   /** Custom class name */

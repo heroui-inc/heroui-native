@@ -57,7 +57,6 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
       color = 'default',
       alignIndicator = 'end',
       isDisabled,
-      isReadOnly = false,
       isInvalid,
       className,
       style,
@@ -95,7 +94,6 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
 
     const tvStyles = radioStyles.radioRoot({
       isDisabled: isDisabledValue,
-      isReadOnly,
       className,
     });
 
@@ -104,9 +102,8 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
         color: effectiveColor,
         isSelected,
         isDisabled: isDisabledValue,
-        isReadOnly,
       }),
-      [effectiveColor, isSelected, isDisabledValue, isReadOnly]
+      [effectiveColor, isSelected, isDisabledValue]
     );
 
     return (
@@ -116,7 +113,7 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
           className={tvStyles}
           style={style}
           value={value}
-          isDisabled={isDisabledValue || isReadOnly}
+          isDisabled={isDisabledValue}
           hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
           {...restProps}
         >

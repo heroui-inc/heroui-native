@@ -7,13 +7,9 @@ const root = tv({
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',
     },
-    isReadOnly: {
-      true: 'pointer-events-none',
-    },
   },
   defaultVariants: {
     isDisabled: false,
-    isReadOnly: false,
   },
 });
 

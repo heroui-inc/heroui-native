@@ -23,7 +23,6 @@ export default function RadioScreen() {
 
   // States
   const [disabledState, setDisabledState] = React.useState('option1');
-  const [readOnlyState, setReadOnlyState] = React.useState('option1');
 
   // Validation
   const [validationSelection, setValidationSelection] = React.useState('');
@@ -156,22 +155,6 @@ export default function RadioScreen() {
           <Radio value="option2">
             <Radio.Content>
               <Radio.Label>Disabled Option 2</Radio.Label>
-            </Radio.Content>
-          </Radio>
-        </RadioGroup>
-
-        <Text className="text-sm text-muted-foreground mt-4">
-          Read-Only Options
-        </Text>
-        <RadioGroup value={readOnlyState} onValueChange={setReadOnlyState}>
-          <Radio value="option1" isReadOnly>
-            <Radio.Content>
-              <Radio.Label>Read-only Option 1 (Selected)</Radio.Label>
-            </Radio.Content>
-          </Radio>
-          <Radio value="option2" isReadOnly>
-            <Radio.Content>
-              <Radio.Label>Read-only Option 2</Radio.Label>
             </Radio.Content>
           </Radio>
         </RadioGroup>

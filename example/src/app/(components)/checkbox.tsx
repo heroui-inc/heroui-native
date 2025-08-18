@@ -1,7 +1,7 @@
 import { Checkbox, useTheme } from 'heroui-native';
 import { Minus, Moon, Plus, Sun } from 'lucide-react-native';
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import Animated, {
   Easing,
   FadeIn,
@@ -25,8 +25,8 @@ export default function CheckboxScreen() {
   const [success, setSuccess] = React.useState(true);
   const [warning, setWarning] = React.useState(true);
   const [danger, setDanger] = React.useState(true);
+  const [defaultState, setDefaultState] = React.useState(true);
   const [disabled, setDisabled] = React.useState(true);
-  const [readonly, setReadonly] = React.useState(true);
   const [customBackground, setCustomBackground] = React.useState(true);
   const [customIndicator, setCustomIndicator] = React.useState(true);
   const [customBoth, setCustomBoth] = React.useState(true);
@@ -76,16 +76,21 @@ export default function CheckboxScreen() {
 
       <SectionTitle title="States" />
       <View className="flex-row gap-8 self-center">
-        <Checkbox
-          isSelected={disabled}
-          onSelectedChange={setDisabled}
-          isDisabled={true}
-        />
-        <Checkbox
-          isSelected={readonly}
-          onSelectedChange={setReadonly}
-          isReadOnly={true}
-        />
+        <View className="items-center gap-2">
+          <Checkbox
+            isSelected={defaultState}
+            onSelectedChange={setDefaultState}
+          />
+          <Text className="text-xs text-muted-foreground">Default</Text>
+        </View>
+        <View className="items-center gap-2">
+          <Checkbox
+            isSelected={disabled}
+            onSelectedChange={setDisabled}
+            isDisabled={true}
+          />
+          <Text className="text-xs text-muted-foreground">Disabled</Text>
+        </View>
       </View>
 
       <SectionTitle title="Custom Background" />

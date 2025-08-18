@@ -40,7 +40,7 @@
     "clean": "del-cli lib",
     "prepare": "bob build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",
-    "release": "bumpp --execute='yarn changelog' --all"
+    "release": "bumpp"
   },
   "keywords": [
     "react-native",
@@ -130,6 +130,10 @@
     "push": true,
     "tag": true,
     "release": "prompt",
+    "execute": "yarn changelog",
+    "hooks": {
+      "after:bump": "bash scripts/sync-version.sh"
+    },
     "all": true
   },
   "prettier": {

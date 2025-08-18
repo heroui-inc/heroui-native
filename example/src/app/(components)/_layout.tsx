@@ -40,15 +40,15 @@ export default function Layout() {
       <Stack.Screen name="divider" options={{ title: 'Divider' }} />
       <Stack.Screen
         name="drop-shadow-view"
-        options={{ title: 'DropShadowView' }}
+        options={{ title: 'Drop Shadow View' }}
       />
-      <Stack.Screen name="form-field" options={{ title: 'FormField' }} />
+      <Stack.Screen name="form-field" options={{ title: 'Form Field' }} />
       <Stack.Screen name="radio" options={{ title: 'Radio' }} />
       <Stack.Screen name="spinner" options={{ title: 'Spinner' }} />
       <Stack.Screen name="surface" options={{ title: 'Surface' }} />
       <Stack.Screen name="switch" options={{ title: 'Switch' }} />
       <Stack.Screen name="text-field" options={{ title: 'TextField' }} />
-      <Stack.Screen name="error-field" options={{ title: 'ErrorField' }} />
+      <Stack.Screen name="error-field" options={{ title: 'Error Field' }} />
     </Stack>
   );
 }

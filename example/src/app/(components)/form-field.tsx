@@ -1,4 +1,4 @@
-import { Checkbox, FormField, Switch } from 'heroui-native';
+import { Checkbox, DropShadowView, FormField, Switch } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
@@ -314,23 +314,29 @@ export default function FormFieldScreen() {
           </FormField.Indicator>
         </FormField>
 
-        <FormField
-          isSelected={darkMode}
-          onSelectedChange={setDarkMode}
-          className="bg-accent/10 p-4 rounded-xl"
+        <DropShadowView
+          shadowSize="xl"
+          shadowColor="orange"
+          className="bg-white rounded-xl"
         >
-          <FormField.Content className="gap-1.5">
-            <FormField.Label classNames={{ text: 'text-accent font-bold' }}>
-              Highlighted Option
-            </FormField.Label>
-            <FormField.Description classNames={{ text: 'text-accent/50' }}>
-              This option has custom background and text colors
-            </FormField.Description>
-          </FormField.Content>
-          <FormField.Indicator>
-            <Checkbox color="warning" />
-          </FormField.Indicator>
-        </FormField>
+          <FormField
+            isSelected={darkMode}
+            onSelectedChange={setDarkMode}
+            className="bg-accent/10 p-4 rounded-xl"
+          >
+            <FormField.Content className="gap-1.5">
+              <FormField.Label classNames={{ text: 'text-accent font-bold' }}>
+                Highlighted Option
+              </FormField.Label>
+              <FormField.Description classNames={{ text: 'text-amber-600' }}>
+                This option has custom background and text colors
+              </FormField.Description>
+            </FormField.Content>
+            <FormField.Indicator>
+              <Checkbox color="warning" />
+            </FormField.Indicator>
+          </FormField>
+        </DropShadowView>
       </View>
     </ScreenScrollView>
   );

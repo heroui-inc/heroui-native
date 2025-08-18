@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { Text, View } from 'react-native';
 import {
   FadeInDown,
-  SlideInLeft,
-  SlideOutLeft,
+  FadeInLeft,
+  FadeOutLeft,
   ZoomIn,
   ZoomOut,
 } from 'react-native-reanimated';
@@ -18,31 +18,13 @@ export default function ErrorFieldScreen() {
 
   // Basic error states
   const [basicError, setBasicError] = useState(true);
-  const [toggleError, setToggleError] = useState(false);
-
-  // Form validation states
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [username, setUsername] = useState('');
 
   // Multiple errors state
   const [showMultipleErrors, setShowMultipleErrors] = useState(false);
 
   // Custom animation states
   const [slideError, setSlideError] = useState(false);
-  const [bounceError, setBounceError] = useState(false);
   const [zoomError, setZoomError] = useState(false);
-
-  // Validation helpers
-  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const isPasswordStrong =
-    password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password);
-  const passwordsMatch = password === confirmPassword && password !== '';
-  const isUsernameValid =
-    username.length >= 3 &&
-    username.length <= 20 &&
-    /^[a-zA-Z0-9_]+$/.test(username);
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -90,49 +72,53 @@ export default function ErrorFieldScreen() {
       </View>
 
       <SectionTitle title="Custom Animations - Slide" />
-      <View className="gap-4">
-        <TextField>
-          <TextField.Label>Field with Slide Animation</TextField.Label>
-          <TextField.Input placeholder="Toggle to see slide animation" />
-        </TextField>
-        <ErrorField
-          isInvalid={slideError}
-          entering={SlideInLeft.duration(300)}
-          exiting={SlideOutLeft.duration(200)}
-        >
-          This error slides in from the left
-        </ErrorField>
+      <View className="gap-8">
         <Button
           onPress={() => setSlideError(!slideError)}
           variant="tertiary"
           size="sm"
           className="self-start"
         >
-          <Button.Label>Toggle Slide Error</Button.Label>
+          Toggle Slide Error
         </Button>
+        <TextField isInvalid={slideError}>
+          <TextField.Label>Field with Slide Animation</TextField.Label>
+          <TextField.Input
+            placeholder="Toggle to see slide animation"
+            editable={false}
+          />
+          <TextField.ErrorMessage
+            entering={FadeInLeft.duration(200)}
+            exiting={FadeOutLeft.duration(100)}
+          >
+            This error slides in from the left
+          </TextField.ErrorMessage>
+        </TextField>
       </View>
 
       <SectionTitle title="Custom Animations - Zoom" />
-      <View className="gap-4">
-        <TextField>
-          <TextField.Label>Field with Zoom Animation</TextField.Label>
-          <TextField.Input placeholder="Toggle to see zoom animation" />
-        </TextField>
-        <ErrorField
-          isInvalid={zoomError}
-          entering={ZoomIn.duration(300)}
-          exiting={ZoomOut.duration(200)}
-        >
-          This error zooms in and out
-        </ErrorField>
+      <View className="gap-8">
         <Button
           onPress={() => setZoomError(!zoomError)}
           variant="tertiary"
           size="sm"
           className="self-start"
         >
-          <Button.Label>Toggle Zoom Error</Button.Label>
+          Toggle Zoom Error
         </Button>
+        <TextField isInvalid={zoomError}>
+          <TextField.Label>Field with Zoom Animation</TextField.Label>
+          <TextField.Input
+            placeholder="Toggle to see zoom animation"
+            editable={false}
+          />
+          <TextField.ErrorMessage
+            entering={ZoomIn.duration(300)}
+            exiting={ZoomOut.duration(200)}
+          >
+            This error zooms in and out
+          </TextField.ErrorMessage>
+        </TextField>
       </View>
 
       <SectionTitle title="Custom Styling" />
@@ -169,7 +155,17 @@ export default function ErrorFieldScreen() {
       </View>
 
       <SectionTitle title="Multiple Errors Example" />
-      <View className="gap-4">
+      <View className="gap-8">
+        <Button
+          onPress={() => setShowMultipleErrors(!showMultipleErrors)}
+          variant={showMultipleErrors ? 'danger' : 'primary'}
+          size="sm"
+          className="self-start"
+        >
+          <Button.Label>
+            {showMultipleErrors ? 'Hide All Errors' : 'Show All Errors'}
+          </Button.Label>
+        </Button>
         <TextField>
           <TextField.Label>Form Field</TextField.Label>
           <TextField.Input
@@ -201,17 +197,6 @@ export default function ErrorFieldScreen() {
             • Cannot contain special characters
           </ErrorField>
         </View>
-
-        <Button
-          onPress={() => setShowMultipleErrors(!showMultipleErrors)}
-          variant={showMultipleErrors ? 'danger' : 'primary'}
-          size="sm"
-          className="self-start"
-        >
-          <Button.Label>
-            {showMultipleErrors ? 'Hide All Errors' : 'Show All Errors'}
-          </Button.Label>
-        </Button>
       </View>
 
       <SectionTitle title="Inline Error Messages" />
@@ -221,9 +206,10 @@ export default function ErrorFieldScreen() {
             <TextField.Input
               placeholder="Inline error example"
               value="Invalid"
+              editable={false}
             />
           </TextField>
-          <ErrorField isInvalid={true} className="flex-1">
+          <ErrorField isInvalid={true}>
             <Text className="text-danger text-xs">Invalid format</Text>
           </ErrorField>
         </View>
@@ -233,9 +219,10 @@ export default function ErrorFieldScreen() {
             <TextField.Input
               placeholder="Another inline example"
               value="Error"
+              editable={false}
             />
           </TextField>
-          <ErrorField isInvalid={true} className="flex-1">
+          <ErrorField isInvalid={true}>
             <View className="flex-row items-center gap-1">
               <Ionicons name="warning" size={14} color={colors.danger} />
               <Text className="text-danger text-xs">Required</Text>

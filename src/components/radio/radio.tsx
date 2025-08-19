@@ -12,7 +12,7 @@ import {
   getElementWithDefault,
 } from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
-import { colorKit, useTheme } from '../../theme';
+import { colorKit, useTheme } from '../../providers/theme';
 
 import type { TextRef } from '../../helpers/types';
 import { FormField } from '../form-field';

@@ -13,7 +13,7 @@ import type {
   RootProps as PrimitiveRootProps,
   TriggerProps as PrimitiveTriggerProps,
 } from '../../primitives/accordion';
-import type { ElementSlots } from '../../theme';
+import type { ElementSlots } from '../../providers/theme';
 import type { RootSlots } from './accordion.styles';
 
 /**

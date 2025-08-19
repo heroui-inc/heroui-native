@@ -11,7 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { createContext, getElementWithDefault } from '../../helpers/utils';
 import * as ActivityIndicatorPrimitives from '../../primitives/activity-indicator';
-import { useTheme } from '../../theme';
+import { useTheme } from '../../providers/theme';
 import { SpinnerIcon } from './spinner-icon';
 import {
   DEFAULT_ROTATION_DURATION,

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import type { ThemeProviderProps } from '../../theme/types';
 import type { TextComponentContextValue } from '../text-component/types';
+import type { ThemeProviderProps } from '../theme/types';
 
 /**
  * Configuration object for HeroUINativeProvider

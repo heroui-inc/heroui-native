@@ -8,7 +8,7 @@ import { createContext } from '../../helpers/utils';
 import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
-import { colorKit, useTheme } from '../../theme';
+import { colorKit, useTheme } from '../../providers/theme';
 import { CheckIcon } from './check-icon';
 import {
   DEFAULT_HIT_SLOP,

@@ -10,7 +10,7 @@ import Animated, {
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as AccordionPrimitive from '../../primitives/accordion';
-import { useTheme } from '../../theme';
+import { useTheme } from '../../providers/theme';
 import {
   ACCORDION_LAYOUT_TRANSITION,
   DEFAULT_CONTENT_ENTERING,

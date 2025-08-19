@@ -4,7 +4,7 @@ import type {
   BaseAnimationBuilder,
   LayoutAnimationFunction,
 } from 'react-native-reanimated';
-import type { ElementSlots } from '../../theme';
+import type { ElementSlots } from '../../providers/theme';
 import type { LabelSlots } from './chip.styles';
 
 /**

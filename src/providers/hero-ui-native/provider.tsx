@@ -1,6 +1,6 @@
 import React from 'react';
-import { ThemeProvider } from '../../theme/provider';
 import { TextComponentProvider } from '../text-component/provider';
+import { ThemeProvider } from '../theme/provider';
 import type { HeroUINativeProviderProps } from './types';
 
 /**

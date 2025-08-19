@@ -1,6 +1,6 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme } from '../../theme';
+import { useTheme } from '../../providers/theme';
 import { DEFAULT_CHECK_ICON_SIZE, DISPLAY_NAME } from './checkbox.constants';
 import type { CheckboxIndicatorIconProps } from './checkbox.types';
 

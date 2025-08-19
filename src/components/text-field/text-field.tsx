@@ -15,7 +15,7 @@ import Animated, {
 import { Text } from '../../helpers/components';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
-import { useTheme } from '../../theme';
+import { useTheme } from '../../providers/theme';
 import { ErrorField } from '../error-field';
 import {
   ANIMATION_DURATION,

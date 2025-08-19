@@ -14,4 +14,4 @@ export * from './components/surface';
 export * from './components/switch';
 export * from './components/text-field';
 export * from './providers/hero-ui-native';
-export * from './theme';
+export * from './providers/theme';

@@ -13,4 +13,5 @@ export * from './components/spinner';
 export * from './components/surface';
 export * from './components/switch';
 export * from './components/text-field';
+export * from './provider';
 export * from './theme';

@@ -94,6 +94,11 @@ const components: Component[] = [
     icon: <ComponentIcon />,
     path: 'text-field',
   },
+  {
+    title: 'Theme Showcase',
+    icon: <ComponentIcon />,
+    path: 'theme-showcase',
+  },
 ];
 
 export default function App() {

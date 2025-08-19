@@ -1,5 +1,5 @@
 import { Slot } from 'expo-router';
-import { ThemeProvider } from 'heroui-native';
+import { HeroUINativeProvider } from 'heroui-native';
 import {
   configureReanimatedLogger,
   ReanimatedLogLevel,
@@ -16,9 +16,11 @@ function ThemedLayout() {
   const { currentTheme } = useAppTheme();
 
   return (
-    <ThemeProvider colorScheme="system" theme={currentTheme}>
+    <HeroUINativeProvider
+      config={{ colorScheme: 'system', theme: currentTheme }}
+    >
       <Slot />
-    </ThemeProvider>
+    </HeroUINativeProvider>
   );
 }
 

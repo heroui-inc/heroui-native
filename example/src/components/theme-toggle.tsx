@@ -8,7 +8,7 @@ export const ThemeToggle: FC = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <Pressable onPress={toggleTheme}>
+    <Pressable onPress={toggleTheme} className="px-2">
       {theme === 'light' ? (
         <Animated.View key="moon" entering={ZoomIn} exiting={FadeOut}>
           <Ionicons name="moon" color="black" size={20} />

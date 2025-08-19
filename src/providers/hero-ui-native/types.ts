@@ -61,7 +61,7 @@ export interface HeroUINativeProviderProps {
    *
    * @description
    * Contains all configuration options including theme settings,
-   * color scheme preference, and future configuration options.
+   * color scheme preference, and global text component configuration.
    *
    * @example
    * ```tsx
@@ -87,6 +87,11 @@ export interface HeroUINativeProviderProps {
    *         accent: 'hsl(220 90% 60%)'
    *       }
    *     }
+   *   },
+   *   textProps: {
+   *     allowFontScaling: false,
+   *     adjustsFontSizeToFit: false,
+   *     maxFontSizeMultiplier: 1.5
    *   }
    * };
    * ```

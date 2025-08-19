@@ -1,3 +1,4 @@
+import { useTheme } from 'heroui-native';
 import { type FC } from 'react';
 import { View } from 'react-native';
 import { cn } from '../helpers/utils/cn';
@@ -9,10 +10,13 @@ type Props = {
 };
 
 export const SectionTitle: FC<Props> = ({ title, className }) => {
+  const { isDark } = useTheme();
+
   return (
     <View
       className={cn(
-        'bg-surface-2 items-center justify-center py-3 -mx-5',
+        'items-center justify-center py-3 -mx-5',
+        isDark ? 'bg-neutral-900' : 'bg-neutral-100',
         className
       )}
     >

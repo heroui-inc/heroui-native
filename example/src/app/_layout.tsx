@@ -27,9 +27,9 @@ function ThemedLayout() {
       config={{
         colorScheme: 'system',
         theme: currentTheme,
-        // textProps: {
-        //   className: 'font-medium',
-        // },
+        textProps: {
+          allowFontScaling: false,
+        },
       }}
     >
       <Slot />

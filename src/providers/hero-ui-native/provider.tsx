@@ -77,7 +77,8 @@ import type { HeroUINativeProviderProps } from './types';
  *     },
  *     textProps: {
  *       allowFontScaling: false,
- *       style: { fontFamily: 'Inter' }
+ *       adjustsFontSizeToFit: false,
+ *       maxFontSizeMultiplier: 1.5
  *     }
  *   }}
  * >

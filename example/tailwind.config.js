@@ -13,7 +13,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'inter-400': ['Inter_400Regular'],
+        normal: ['Inter_400Regular'],
+        medium: ['Inter_500Medium'],
+        semibold: ['Inter_600SemiBold'],
+        bold: ['Inter_700Bold'],
       },
     },
   },

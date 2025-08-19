@@ -26,7 +26,7 @@ const title = tv({
 });
 
 const description = tv({
-  base: 'text-muted-foreground text-base',
+  base: 'text-muted-foreground text-base font-normal',
 });
 
 const cardStyles = combineStyles({

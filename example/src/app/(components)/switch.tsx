@@ -1,12 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Switch, useTheme } from 'heroui-native';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, {
   FadeInLeft,
   FadeInRight,
   ZoomIn,
 } from 'react-native-reanimated';
+import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
 
@@ -65,7 +66,7 @@ export default function SwitchScreen() {
             isSelected={defaultState}
             onSelectedChange={setDefaultState}
           />
-          <Text className="text-xs text-muted-foreground">Default</Text>
+          <AppText className="text-xs text-muted-foreground">Default</AppText>
         </View>
         <View className="items-center gap-2">
           <Switch
@@ -73,7 +74,7 @@ export default function SwitchScreen() {
             onSelectedChange={setDisabled}
             isDisabled={true}
           />
-          <Text className="text-xs text-muted-foreground">Disabled</Text>
+          <AppText className="text-xs text-muted-foreground">Disabled</AppText>
         </View>
       </View>
 
@@ -179,7 +180,7 @@ export default function SwitchScreen() {
                 key="sun"
                 entering={FadeInRight.springify().damping(36).stiffness(400)}
               >
-                <Text className="text-xs font-bold text-white">ON</Text>
+                <AppText className="text-xs font-bold text-white">ON</AppText>
               </Animated.View>
             )}
           </Switch.StartContent>
@@ -189,7 +190,9 @@ export default function SwitchScreen() {
                 key="moon"
                 entering={FadeInLeft.springify().damping(36).stiffness(400)}
               >
-                <Text className="text-xs font-bold text-zinc-200">OFF</Text>
+                <AppText className="text-xs font-bold text-zinc-200">
+                  OFF
+                </AppText>
               </Animated.View>
             )}
           </Switch.EndContent>

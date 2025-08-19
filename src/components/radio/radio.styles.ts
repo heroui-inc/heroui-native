@@ -41,22 +41,12 @@ const content = tv({
   },
 });
 
-const label = tv({
-  base: 'text-foreground font-medium text-base',
-});
-
-const description = tv({
-  base: 'text-muted-foreground text-base',
-});
-
 const radioStyles = combineStyles({
   radioRoot,
   indicator,
   background,
   thumb,
   content,
-  label,
-  description,
 });
 
 export default radioStyles;

@@ -2,8 +2,9 @@ import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Radio, RadioGroup, Surface, useTheme } from 'heroui-native';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
+import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
 
@@ -140,9 +141,9 @@ export default function RadioScreen() {
 
       <SectionTitle title="Disabled & Read-Only States" />
       <View className="gap-8">
-        <Text className="text-sm text-muted-foreground">
+        <AppText className="text-sm text-muted-foreground">
           Disabled RadioGroup
-        </Text>
+        </AppText>
         <RadioGroup
           value={disabledState}
           onValueChange={setDisabledState}
@@ -357,7 +358,9 @@ export default function RadioScreen() {
                   <Radio.Label>Standard Shipping</Radio.Label>
                   <Radio.Description>5-7 business days</Radio.Description>
                 </View>
-                <Text className="text-foreground font-semibold">Free</Text>
+                <AppText className="text-foreground font-semibold">
+                  Free
+                </AppText>
               </View>
             </Radio.Content>
           </Radio>
@@ -371,7 +374,9 @@ export default function RadioScreen() {
                   <Radio.Label>Express Shipping</Radio.Label>
                   <Radio.Description>2-3 business days</Radio.Description>
                 </View>
-                <Text className="text-foreground font-semibold">$9.99</Text>
+                <AppText className="text-foreground font-semibold">
+                  $9.99
+                </AppText>
               </View>
             </Radio.Content>
           </Radio>
@@ -385,7 +390,9 @@ export default function RadioScreen() {
                   <Radio.Label>Overnight Shipping</Radio.Label>
                   <Radio.Description>Next business day</Radio.Description>
                 </View>
-                <Text className="text-foreground font-semibold">$24.99</Text>
+                <AppText className="text-foreground font-semibold">
+                  $24.99
+                </AppText>
               </View>
             </Radio.Content>
           </Radio>

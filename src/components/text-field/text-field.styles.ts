@@ -34,7 +34,7 @@ const input = tv({
   slots: {
     container:
       'h-[44px] px-3 rounded-lg border-[1.5px] flex-row items-center gap-3',
-    input: 'flex-1 h-full text-base/5 text-foreground',
+    input: 'flex-1 h-full text-base/5 text-foreground font-normal',
   },
   variants: {
     isMultiline: {
@@ -55,7 +55,7 @@ const inputEndContent = tv({
 });
 
 const description = tv({
-  base: 'm-1 text-sm text-muted-foreground  font-medium',
+  base: 'm-1 text-sm text-muted-foreground font-normal',
 });
 
 const errorMessage = tv({

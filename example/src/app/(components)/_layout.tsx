@@ -36,6 +36,9 @@ export default function Layout() {
             android: colors.background,
           }),
         },
+        headerTitleStyle: {
+          fontFamily: 'Inter_600SemiBold',
+        },
         headerBackButtonDisplayMode: 'minimal',
         headerRight: _renderThemeToggle,
         gestureEnabled: true,

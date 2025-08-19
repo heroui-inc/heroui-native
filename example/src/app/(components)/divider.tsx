@@ -1,5 +1,6 @@
 import { Divider, Surface } from 'heroui-native';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
 
@@ -9,14 +10,16 @@ export default function DividerScreen() {
       <SectionTitle title="Orientation" />
       <View className="gap-8">
         <View>
-          <Text className="text-sm text-muted-foreground mb-2">
+          <AppText className="text-sm text-muted-foreground mb-2">
             Horizontal (default)
-          </Text>
+          </AppText>
           <Divider />
         </View>
 
         <View>
-          <Text className="text-sm text-muted-foreground mb-2">Vertical</Text>
+          <AppText className="text-sm text-muted-foreground mb-2">
+            Vertical
+          </AppText>
           <View className="h-20 w-full flex-row justify-center">
             <Divider orientation="vertical" />
           </View>
@@ -26,14 +29,16 @@ export default function DividerScreen() {
       <SectionTitle title="Variants" />
       <View className="gap-8">
         <View>
-          <Text className="text-sm text-muted-foreground mb-2">
+          <AppText className="text-sm text-muted-foreground mb-2">
             Thin (default)
-          </Text>
+          </AppText>
           <Divider variant="thin" />
         </View>
 
         <View>
-          <Text className="text-sm text-muted-foreground mb-2">Thick</Text>
+          <AppText className="text-sm text-muted-foreground mb-2">
+            Thick
+          </AppText>
           <Divider variant="thick" />
         </View>
       </View>
@@ -41,22 +46,22 @@ export default function DividerScreen() {
       <SectionTitle title="Custom Thickness" />
       <View className="gap-8">
         <View>
-          <Text className="text-sm text-muted-foreground mb-2">1px</Text>
+          <AppText className="text-sm text-muted-foreground mb-2">1px</AppText>
           <Divider thickness={1} />
         </View>
 
         <View>
-          <Text className="text-sm text-muted-foreground mb-2">2px</Text>
+          <AppText className="text-sm text-muted-foreground mb-2">2px</AppText>
           <Divider thickness={2} />
         </View>
 
         <View>
-          <Text className="text-sm text-muted-foreground mb-2">5px</Text>
+          <AppText className="text-sm text-muted-foreground mb-2">5px</AppText>
           <Divider thickness={5} />
         </View>
 
         <View>
-          <Text className="text-sm text-muted-foreground mb-2">10px</Text>
+          <AppText className="text-sm text-muted-foreground mb-2">10px</AppText>
           <Divider thickness={10} />
         </View>
       </View>
@@ -64,49 +69,49 @@ export default function DividerScreen() {
       <SectionTitle title="Custom Styling" />
       <View className="gap-8">
         <View>
-          <Text className="text-sm text-muted-foreground mb-2">
+          <AppText className="text-sm text-muted-foreground mb-2">
             Custom Background Color
-          </Text>
+          </AppText>
           <Divider className="bg-accent" thickness={2} />
         </View>
 
         <View>
-          <Text className="text-sm text-muted-foreground mb-2">
+          <AppText className="text-sm text-muted-foreground mb-2">
             Success Color
-          </Text>
+          </AppText>
           <Divider className="bg-success" thickness={2} />
         </View>
 
         <View>
-          <Text className="text-sm text-muted-foreground mb-2">
+          <AppText className="text-sm text-muted-foreground mb-2">
             Warning Color
-          </Text>
+          </AppText>
           <Divider className="bg-warning" thickness={2} />
         </View>
 
         <View>
-          <Text className="text-sm text-muted-foreground mb-2">
+          <AppText className="text-sm text-muted-foreground mb-2">
             Danger Color
-          </Text>
+          </AppText>
           <Divider className="bg-danger" thickness={2} />
         </View>
       </View>
 
       <SectionTitle title="Layout Examples" />
       <Surface variant="2">
-        <Text className="text-base font-medium text-foreground">
+        <AppText className="text-base font-medium text-foreground">
           HeroUI Native
-        </Text>
-        <Text className="text-sm text-muted-foreground">
+        </AppText>
+        <AppText className="text-sm text-muted-foreground">
           A modern React Native component library.
-        </Text>
+        </AppText>
         <Divider className="my-4" />
         <View className="flex-row items-center h-5">
-          <Text className="text-sm text-foreground">Components</Text>
+          <AppText className="text-sm text-foreground">Components</AppText>
           <Divider orientation="vertical" className="mx-3" />
-          <Text className="text-sm text-foreground">Themes</Text>
+          <AppText className="text-sm text-foreground">Themes</AppText>
           <Divider orientation="vertical" className="mx-3" />
-          <Text className="text-sm text-foreground">Examples</Text>
+          <AppText className="text-sm text-foreground">Examples</AppText>
         </View>
       </Surface>
     </ScreenScrollView>

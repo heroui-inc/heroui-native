@@ -43,7 +43,7 @@ const label = tv({
 const description = tv({
   slots: {
     container: '',
-    text: 'text-muted-foreground text-sm',
+    text: 'text-muted-foreground text-sm font-normal',
   },
 });
 

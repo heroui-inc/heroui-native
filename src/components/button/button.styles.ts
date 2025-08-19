@@ -14,7 +14,7 @@ const root = tv({
     },
     size: {
       sm: 'h-[36px] px-3 gap-1.5 rounded-md',
-      md: 'h-[44px] px-4 gap-2 rounded-lg',
+      md: 'h-[48px] px-4 gap-2 rounded-lg',
       lg: 'h-[56px] px-5 gap-2.5 rounded-lg',
     },
     isIconOnly: {

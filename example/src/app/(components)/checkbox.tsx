@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Checkbox, useTheme } from 'heroui-native';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, {
   Easing,
   FadeIn,
@@ -14,6 +14,7 @@ import Animated, {
   ZoomIn,
   ZoomInDown,
 } from 'react-native-reanimated';
+import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
 import { cn } from '../../helpers/utils/cn';
@@ -81,7 +82,7 @@ export default function CheckboxScreen() {
             isSelected={defaultState}
             onSelectedChange={setDefaultState}
           />
-          <Text className="text-xs text-muted-foreground">Default</Text>
+          <AppText className="text-xs text-muted-foreground">Default</AppText>
         </View>
         <View className="items-center gap-2">
           <Checkbox
@@ -89,7 +90,7 @@ export default function CheckboxScreen() {
             onSelectedChange={setDisabled}
             isDisabled={true}
           />
-          <Text className="text-xs text-muted-foreground">Disabled</Text>
+          <AppText className="text-xs text-muted-foreground">Disabled</AppText>
         </View>
       </View>
 

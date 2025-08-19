@@ -41,7 +41,8 @@ export const Text = React.forwardRef<RNText, TextProps>((props, ref) => {
   const mergedProps = Object.assign(restProps, restGlobalProps);
 
   return (
-    <RNText ref={ref} className={className} style={style} {...mergedProps} />
+    // <RNText ref={ref} className={className} style={style} {...mergedProps} />
+    <RNText ref={ref} {...props} />
   );
 });
 

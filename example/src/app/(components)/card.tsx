@@ -7,10 +7,10 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Text,
   useWindowDimensions,
   View,
 } from 'react-native';
+import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
 
@@ -28,8 +28,8 @@ export default function CardScreen() {
             <View className="gap-1 mb-2">
               <Card.Title className="text-pink-400">$450</Card.Title>
               <Card.Title>
-                Living room Sofa <Text className="text-sm">✦</Text> Collection
-                2025
+                Living room Sofa <AppText className="text-sm">✦</AppText>{' '}
+                Collection 2025
               </Card.Title>
             </View>
             <Card.Description>
@@ -58,9 +58,9 @@ export default function CardScreen() {
         <Card.Details>
           <Card.Header>
             <View className="bg-accent rounded-full w-12 h-12 items-center justify-center">
-              <Text className="text-accent-foreground font-bold text-xl">
+              <AppText className="text-accent-foreground font-bold text-xl">
                 $
-              </Text>
+              </AppText>
             </View>
           </Card.Header>
           <Card.Body>
@@ -68,9 +68,9 @@ export default function CardScreen() {
             <Card.Description className="mb-4">
               Get access to all premium features and priority support.
             </Card.Description>
-            <Text className="text-2xl font-bold text-foreground">
+            <AppText className="text-2xl font-bold text-foreground">
               $29.99/month
-            </Text>
+            </AppText>
           </Card.Body>
           <Card.Footer>
             <Button>
@@ -93,8 +93,8 @@ export default function CardScreen() {
             <View className="gap-1 mb-2">
               <Card.Title className="text-pink-400">$450</Card.Title>
               <Card.Title>
-                Living room Sofa <Text className="text-sm">✦</Text> Collection
-                2025
+                Living room Sofa <AppText className="text-sm">✦</AppText>{' '}
+                Collection 2025
               </Card.Title>
             </View>
             <Card.Description>
@@ -142,9 +142,9 @@ export default function CardScreen() {
           </Card.Body>
           <Card.Footer>
             <Pressable className="flex-row items-center gap-1">
-              <Text className="text-sm font-medium text-foreground">
+              <AppText className="text-sm font-medium text-foreground">
                 View Details
-              </Text>
+              </AppText>
               <Ionicons
                 name="open-outline"
                 size={12}

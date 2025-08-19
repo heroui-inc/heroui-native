@@ -5,7 +5,7 @@ import {
   useAccordionItemContext,
   useTheme,
 } from 'heroui-native';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, {
   Easing,
   FadeInLeft,
@@ -13,6 +13,7 @@ import Animated, {
   ZoomIn,
   ZoomOut,
 } from 'react-native-reanimated';
+import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
 
@@ -157,12 +158,16 @@ const AccordionScreen = () => {
               <Accordion.Trigger>
                 <View className={classNames.triggerContentContainer}>
                   {item.icon}
-                  <Text className={classNames.triggerTitle}>{item.title}</Text>
+                  <AppText className={classNames.triggerTitle}>
+                    {item.title}
+                  </AppText>
                 </View>
                 <Accordion.Indicator />
               </Accordion.Trigger>
               <Accordion.Content>
-                <Text className={classNames.contentText}>{item.content}</Text>
+                <AppText className={classNames.contentText}>
+                  {item.content}
+                </AppText>
               </Accordion.Content>
             </Accordion.Item>
           ))}
@@ -177,12 +182,16 @@ const AccordionScreen = () => {
               <Accordion.Trigger>
                 <View className={classNames.triggerContentContainer}>
                   {item.icon}
-                  <Text className={classNames.triggerTitle}>{item.title}</Text>
+                  <AppText className={classNames.triggerTitle}>
+                    {item.title}
+                  </AppText>
                 </View>
                 <Accordion.Indicator />
               </Accordion.Trigger>
               <Accordion.Content>
-                <Text className={classNames.contentText}>{item.content}</Text>
+                <AppText className={classNames.contentText}>
+                  {item.content}
+                </AppText>
               </Accordion.Content>
             </Accordion.Item>
           ))}
@@ -201,12 +210,16 @@ const AccordionScreen = () => {
               <Accordion.Trigger>
                 <View className={classNames.triggerContentContainer}>
                   {item.icon}
-                  <Text className={classNames.triggerTitle}>{item.title}</Text>
+                  <AppText className={classNames.triggerTitle}>
+                    {item.title}
+                  </AppText>
                 </View>
                 <Accordion.Indicator />
               </Accordion.Trigger>
               <Accordion.Content>
-                <Text className={classNames.contentText}>{item.content}</Text>
+                <AppText className={classNames.contentText}>
+                  {item.content}
+                </AppText>
               </Accordion.Content>
             </Accordion.Item>
           ))}
@@ -221,12 +234,16 @@ const AccordionScreen = () => {
               <Accordion.Trigger className="rounded-lg">
                 <View className={classNames.triggerContentContainer}>
                   {item.icon}
-                  <Text className={classNames.triggerTitle}>{item.title}</Text>
+                  <AppText className={classNames.triggerTitle}>
+                    {item.title}
+                  </AppText>
                 </View>
                 <Accordion.Indicator />
               </Accordion.Trigger>
               <Accordion.Content>
-                <Text className={classNames.contentText}>{item.content}</Text>
+                <AppText className={classNames.contentText}>
+                  {item.content}
+                </AppText>
               </Accordion.Content>
             </Accordion.Item>
           ))}
@@ -241,14 +258,18 @@ const AccordionScreen = () => {
               <Accordion.Trigger>
                 <View className={classNames.triggerContentContainer}>
                   {item.icon}
-                  <Text className={classNames.triggerTitle}>{item.title}</Text>
+                  <AppText className={classNames.triggerTitle}>
+                    {item.title}
+                  </AppText>
                 </View>
                 <Accordion.Indicator>
                   <CustomIndicator />
                 </Accordion.Indicator>
               </Accordion.Trigger>
               <Accordion.Content>
-                <Text className={classNames.contentText}>{item.content}</Text>
+                <AppText className={classNames.contentText}>
+                  {item.content}
+                </AppText>
               </Accordion.Content>
             </Accordion.Item>
           ))}
@@ -263,7 +284,9 @@ const AccordionScreen = () => {
               <Accordion.Trigger isHighlightVisible={false}>
                 <View className={classNames.triggerContentContainer}>
                   {item.icon}
-                  <Text className={classNames.triggerTitle}>{item.title}</Text>
+                  <AppText className={classNames.triggerTitle}>
+                    {item.title}
+                  </AppText>
                 </View>
                 <Accordion.Indicator
                   springConfig={
@@ -284,7 +307,9 @@ const AccordionScreen = () => {
                       : ZoomIn.delay(50).easing(Easing.out(Easing.exp))
                 }
               >
-                <Text className={classNames.contentText}>{item.content}</Text>
+                <AppText className={classNames.contentText}>
+                  {item.content}
+                </AppText>
               </Accordion.Content>
             </Accordion.Item>
           ))}
@@ -301,18 +326,18 @@ const AccordionScreen = () => {
                   <View className="w-10 h-10 rounded-full bg-accent/5 items-center justify-center">
                     {item.icon}
                   </View>
-                  <Text className="text-foreground text-base font-medium flex-1">
+                  <AppText className="text-foreground text-base font-medium flex-1">
                     {item.title}
-                  </Text>
+                  </AppText>
                 </View>
                 <Accordion.Indicator>
                   <CustomIndicator />
                 </Accordion.Indicator>
               </Accordion.Trigger>
               <Accordion.Content className="mt-1 bg-surface-2 rounded-xl px-5 py-4 border border-border/50">
-                <Text className="text-muted-foreground text-base/relaxed">
+                <AppText className="text-muted-foreground text-base/relaxed">
                   {item.content}
-                </Text>
+                </AppText>
               </Accordion.Content>
             </Accordion.Item>
           ))}

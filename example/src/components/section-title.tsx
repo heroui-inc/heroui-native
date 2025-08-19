@@ -1,6 +1,7 @@
 import { type FC } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { cn } from '../helpers/utils/cn';
+import { AppText } from './app-text';
 
 type Props = {
   title: string;
@@ -15,7 +16,9 @@ export const SectionTitle: FC<Props> = ({ title, className }) => {
         className
       )}
     >
-      <Text className="text-base font-medium text-warning">{title}</Text>
+      <AppText className="text-base font-inter-500 text-warning">
+        {title}
+      </AppText>
     </View>
   );
 };

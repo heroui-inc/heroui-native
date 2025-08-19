@@ -41,6 +41,8 @@ const [TextFieldProvider, useTextFieldContext] =
     name: 'TextFieldContext',
   });
 
+const AnimatedText = Animated.createAnimatedComponent(Text);
+
 // --------------------------------------------------
 
 const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
@@ -95,7 +97,7 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
     });
 
     return (
-      <Animated.Text
+      <AnimatedText
         key={isInvalid ? 'label-invalid' : 'label-valid'}
         ref={ref}
         entering={entering}
@@ -105,7 +107,7 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
       >
         {children}
         {isRequired && <Text className={asteriskStyles}> *</Text>}
-      </Animated.Text>
+      </AnimatedText>
     );
   }
 );
@@ -302,7 +304,7 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
     if (isInvalid) return null;
 
     return (
-      <Animated.Text
+      <AnimatedText
         ref={ref}
         entering={entering}
         exiting={exiting}
@@ -310,7 +312,7 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
         {...restProps}
       >
         {children}
-      </Animated.Text>
+      </AnimatedText>
     );
   }
 );

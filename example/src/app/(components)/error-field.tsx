@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Button, ErrorField, TextField, useTheme } from 'heroui-native';
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import {
   FadeInDown,
   FadeInLeft,
@@ -9,6 +9,7 @@ import {
   ZoomIn,
   ZoomOut,
 } from 'react-native-reanimated';
+import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
 
@@ -47,16 +48,18 @@ export default function ErrorFieldScreen() {
         <ErrorField isInvalid={true}>
           <View className="flex-row items-center gap-2">
             <Ionicons name="close-circle" size={16} color={colors.danger} />
-            <Text className="text-danger text-sm">Critical error occurred</Text>
+            <AppText className="text-danger text-sm">
+              Critical error occurred
+            </AppText>
           </View>
         </ErrorField>
 
         <ErrorField isInvalid={true}>
           <View className="flex-row items-center gap-2">
             <Ionicons name="warning" size={16} color={colors.warning} />
-            <Text className="text-warning text-sm">
+            <AppText className="text-warning text-sm">
               Warning: Check your input
-            </Text>
+            </AppText>
           </View>
         </ErrorField>
 
@@ -67,9 +70,9 @@ export default function ErrorFieldScreen() {
               size={16}
               color={colors.accent}
             />
-            <Text className="text-accent text-sm">
+            <AppText className="text-accent text-sm">
               Information: Field requires attention
-            </Text>
+            </AppText>
           </View>
         </ErrorField>
       </View>
@@ -213,7 +216,7 @@ export default function ErrorFieldScreen() {
             />
           </TextField>
           <ErrorField isInvalid={true}>
-            <Text className="text-danger text-xs">Invalid format</Text>
+            <AppText className="text-danger text-xs">Invalid format</AppText>
           </ErrorField>
         </View>
 
@@ -228,7 +231,7 @@ export default function ErrorFieldScreen() {
           <ErrorField isInvalid={true}>
             <View className="flex-row items-center gap-1">
               <Ionicons name="warning" size={14} color={colors.danger} />
-              <Text className="text-danger text-xs">Required</Text>
+              <AppText className="text-danger text-xs">Required</AppText>
             </View>
           </ErrorField>
         </View>

@@ -3,7 +3,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Chip, useTheme } from 'heroui-native';
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
 import { cn } from '../../helpers/utils/cn';
@@ -94,7 +95,7 @@ export default function ChipScreen() {
         <View className="flex-row flex-wrap gap-4 justify-center">
           <Chip size="sm" variant="primary">
             <Chip.StartContent>
-              <Text className="text-xs">📌</Text>
+              <AppText className="text-xs">📌</AppText>
             </Chip.StartContent>
             <Chip.Label>Featured</Chip.Label>
           </Chip>
@@ -228,7 +229,7 @@ export default function ChipScreen() {
           </Chip.Background>
           <Chip.Label>Hot</Chip.Label>
           <Chip.EndContent>
-            <Text className="text-white text-xs">🔥</Text>
+            <AppText className="text-white text-xs">🔥</AppText>
           </Chip.EndContent>
         </Chip>
       </View>
@@ -252,9 +253,9 @@ export default function ChipScreen() {
             </Chip.StartContent>
             <Chip.Label>Notifications</Chip.Label>
             <Chip.EndContent>
-              <Text className="text-accent text-xs font-bold">
+              <AppText className="text-accent text-xs font-bold">
                 {hasNotification ? 'ON' : 'OFF'}
-              </Text>
+              </AppText>
             </Chip.EndContent>
           </Chip>
         </View>
@@ -264,9 +265,9 @@ export default function ChipScreen() {
             <Chip.Label>Items</Chip.Label>
             <Chip.EndContent>
               <View className="ml-1 bg-white/20 px-2 rounded-full">
-                <Text className="text-background text-xs font-bold">
+                <AppText className="text-background text-xs font-bold">
                   {chipCount}
-                </Text>
+                </AppText>
               </View>
             </Chip.EndContent>
           </Chip>
@@ -289,9 +290,9 @@ export default function ChipScreen() {
           </Chip>
         </View>
 
-        <Text className="text-center text-sm text-muted-foreground">
+        <AppText className="text-center text-sm text-muted-foreground">
           Tap chips to interact with dynamic content
-        </Text>
+        </AppText>
       </View>
     </ScreenScrollView>
   );

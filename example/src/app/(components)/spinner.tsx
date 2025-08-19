@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Spinner, useTheme } from 'heroui-native';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
 import { cn } from '../../helpers/utils/cn';
@@ -42,19 +43,19 @@ export default function SpinnerScreen() {
           <Spinner size="md" color="default">
             <Spinner.Indicator speed={0.5} />
           </Spinner>
-          <Text className="text-xs text-muted-foreground mt-2">0.5x</Text>
+          <AppText className="text-xs text-muted-foreground mt-2">0.5x</AppText>
         </View>
         <View className="items-center">
           <Spinner size="md" color="default">
             <Spinner.Indicator speed={1} />
           </Spinner>
-          <Text className="text-xs text-muted-foreground mt-2">1x</Text>
+          <AppText className="text-xs text-muted-foreground mt-2">1x</AppText>
         </View>
         <View className="items-center">
           <Spinner size="md" color="default">
             <Spinner.Indicator speed={2} />
           </Spinner>
-          <Text className="text-xs text-muted-foreground mt-2">2x</Text>
+          <AppText className="text-xs text-muted-foreground mt-2">2x</AppText>
         </View>
       </View>
 
@@ -62,9 +63,9 @@ export default function SpinnerScreen() {
       <View className="items-center">
         <Spinner size="lg" color="success" isLoading={isLoading} />
         <TouchableOpacity onPress={() => setIsLoading(!isLoading)}>
-          <Text className="text-primary mt-4 text-sm">
+          <AppText className="text-primary mt-4 text-sm">
             {isLoading ? 'Tap to stop' : 'Tap to start'}
-          </Text>
+          </AppText>
         </TouchableOpacity>
       </View>
 
@@ -77,7 +78,7 @@ export default function SpinnerScreen() {
         </Spinner>
         <Spinner size="lg" color="default">
           <Spinner.Indicator speed={0.7}>
-            <Text className="text-xl">⏳</Text>
+            <AppText className="text-xl">⏳</AppText>
           </Spinner.Indicator>
         </Spinner>
       </View>
@@ -92,7 +93,7 @@ export default function SpinnerScreen() {
           style={styles.borderCurve}
         >
           <Spinner size="sm" color="default" />
-          <Text className="text-stone-500">Loading content...</Text>
+          <AppText className="text-stone-500">Loading content...</AppText>
         </View>
 
         <View
@@ -103,7 +104,7 @@ export default function SpinnerScreen() {
           style={styles.borderCurve}
         >
           <Spinner size="lg" color="success" />
-          <Text className="text-stone-500 mt-4">Processing...</Text>
+          <AppText className="text-stone-500 mt-4">Processing...</AppText>
         </View>
       </View>
     </ScreenScrollView>

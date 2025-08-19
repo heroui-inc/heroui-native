@@ -38,11 +38,6 @@ export const HIGHLIGHT_CONFIG = {
 export const DEFAULT_ICON_SIZE = 16;
 
 /**
- * Default icon stroke width
- */
-export const DEFAULT_ICON_STROKE_WIDTH = 2;
-
-/**
  * Rotation values for indicator animation
  */
 export const INDICATOR_ROTATION = {

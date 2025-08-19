@@ -194,8 +194,7 @@ export default function CheckboxExample() {
 
 #### CheckboxIndicatorIconProps
 
-| prop          | type     | description            |
-| ------------- | -------- | ---------------------- |
-| `size`        | `number` | Indicator size         |
-| `strokeWidth` | `number` | Indicator stroke width |
-| `color`       | `string` | Indicator color        |
+| prop    | type     | description     |
+| ------- | -------- | --------------- |
+| `size`  | `number` | Indicator size  |
+| `color` | `string` | Indicator color |

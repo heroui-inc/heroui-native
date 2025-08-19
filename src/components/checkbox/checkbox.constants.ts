@@ -17,4 +17,4 @@ export const DEFAULT_TIMING_CONFIG = {
 
 export const DEFAULT_HIT_SLOP = 6;
 
-export const DEFAULT_CHECK_ICON_SIZE = 12;
+export const DEFAULT_CHECK_ICON_SIZE = 14;

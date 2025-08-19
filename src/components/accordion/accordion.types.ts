@@ -31,11 +31,6 @@ export interface AccordionIndicatorIconProps {
    */
   size?: number;
   /**
-   * Stroke width of the icon
-   * @default 2
-   */
-  strokeWidth?: number;
-  /**
    * Color of the icon
    * @default foreground
    */

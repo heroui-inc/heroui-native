@@ -5,26 +5,19 @@ import { DISPLAY_NAME } from './accordion.constants';
 interface ChevronDownIconProps {
   size?: number;
   color?: string;
-  strokeWidth?: number;
 }
 
 export const ChevronDownIcon: React.FC<ChevronDownIconProps> = ({
   size = 16,
   color = 'currentColor',
-  strokeWidth = 2,
 }) => {
   return (
-    <Svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={color}
-      strokeWidth={strokeWidth}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <Path d="m6 9 6 6 6-6" />
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+      <Path
+        fillRule="evenodd"
+        d="M4.455 8.205a1.125 1.125 0 0 1 1.59 0L12 14.16l5.955-5.955a1.125 1.125 0 1 1 1.59 1.59l-6.75 6.75a1.125 1.125 0 0 1-1.59 0l-6.75-6.75a1.125 1.125 0 0 1 0-1.59"
+        clipRule="evenodd"
+      />
     </Svg>
   );
 };

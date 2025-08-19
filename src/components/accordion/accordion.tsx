@@ -16,7 +16,6 @@ import {
   DEFAULT_CONTENT_ENTERING,
   DEFAULT_CONTENT_EXITING,
   DEFAULT_ICON_SIZE,
-  DEFAULT_ICON_STROKE_WIDTH,
   DISPLAY_NAME,
   HIGHLIGHT_CONFIG,
   INDICATOR_SPRING_CONFIG,
@@ -255,7 +254,6 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
     >
       <ChevronDownIcon
         size={iconProps?.size ?? DEFAULT_ICON_SIZE}
-        strokeWidth={iconProps?.strokeWidth ?? DEFAULT_ICON_STROKE_WIDTH}
         color={iconProps?.color ?? colors.foreground}
       />
     </AnimatedIndicator>

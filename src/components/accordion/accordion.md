@@ -282,11 +282,10 @@ export default function AccordionExample() {
 
 #### AccordionIndicatorIconProps
 
-| prop          | type     | default      | description              |
-| ------------- | -------- | ------------ | ------------------------ |
-| `size`        | `number` | `16`         | Size of the icon         |
-| `strokeWidth` | `number` | `2`          | Stroke width of the icon |
-| `color`       | `string` | `foreground` | Color of the icon        |
+| prop    | type     | default      | description       |
+| ------- | -------- | ------------ | ----------------- |
+| `size`  | `number` | `16`         | Size of the icon  |
+| `color` | `string` | `foreground` | Color of the icon |
 
 ### Accordion.Content
 

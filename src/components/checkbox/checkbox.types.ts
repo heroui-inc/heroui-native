@@ -33,8 +33,6 @@ export interface CheckboxBackgroundColors {
 export interface CheckboxIndicatorIconProps {
   /** Indicator size */
   size?: number;
-  /** Indicator stroke width */
-  strokeWidth?: number;
   /** Indicator color */
   color?: string;
 }

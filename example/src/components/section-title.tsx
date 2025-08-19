@@ -20,7 +20,7 @@ export const SectionTitle: FC<Props> = ({ title, className }) => {
         className
       )}
     >
-      <AppText className="text-base font-inter-500 text-warning">
+      <AppText className="text-base font-medium text-indigo-600">
         {title}
       </AppText>
     </View>

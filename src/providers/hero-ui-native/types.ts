@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import type { ThemeProviderProps } from '../theme/types';
+import type { ThemeProviderProps } from '../../theme/types';
+import type { TextComponentContextValue } from '../text-component/types';
 
 /**
  * Configuration object for HeroUINativeProvider
@@ -12,10 +13,11 @@ import type { ThemeProviderProps } from '../theme/types';
  * additional configuration options in future versions.
  */
 export interface HeroUINativeConfig
-  extends Omit<ThemeProviderProps, 'children'> {
+  extends Omit<ThemeProviderProps, 'children'>,
+    TextComponentContextValue {
   /**
    * Future configuration options can be added here
-   * For now, it extends ThemeProviderProps (colorScheme, theme)
+   * For now, it extends ThemeProviderProps (colorScheme, theme) and TextComponentContextValue (textProps)
    */
 }
 

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
-import { Text } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { Text } from '../../helpers/components';
 import type { ViewRef } from '../../helpers/types/primitives';
 import {
   DISPLAY_NAME,

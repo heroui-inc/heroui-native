@@ -11,7 +11,11 @@ module.exports = {
   ],
   presets: [require('nativewind/preset')],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'inter-400': ['Inter_400Regular'],
+      },
+    },
   },
   plugins: [herouiNative],
 };

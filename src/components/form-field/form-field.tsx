@@ -1,11 +1,6 @@
 import { cloneElement, forwardRef, useMemo } from 'react';
-import {
-  Pressable,
-  Text,
-  View,
-  type GestureResponderEvent,
-} from 'react-native';
-
+import { Pressable, View, type GestureResponderEvent } from 'react-native';
+import { Text } from '../../helpers/components';
 import {
   createContext,
   getElementByDisplayName,

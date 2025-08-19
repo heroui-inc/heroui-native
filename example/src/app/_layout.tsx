@@ -1,3 +1,4 @@
+import { Inter_400Regular, useFonts } from '@expo-google-fonts/inter';
 import { Slot } from 'expo-router';
 import { HeroUINativeProvider } from 'heroui-native';
 import {
@@ -17,7 +18,13 @@ function ThemedLayout() {
 
   return (
     <HeroUINativeProvider
-      config={{ colorScheme: 'system', theme: currentTheme }}
+      config={{
+        colorScheme: 'system',
+        theme: currentTheme,
+        textProps: {
+          className: 'font-inter-400',
+        },
+      }}
     >
       <Slot />
     </HeroUINativeProvider>
@@ -25,6 +32,10 @@ function ThemedLayout() {
 }
 
 export default function Layout() {
+  useFonts({
+    Inter_400Regular,
+  });
+
   return (
     <AppThemeProvider>
       <ThemedLayout />

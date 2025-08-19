@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useMemo } from 'react';
 import {
-  Text,
   TextInput,
   View,
   type NativeSyntheticEvent,
@@ -13,6 +12,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { Text } from '../../helpers/components';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
 import { useTheme } from '../../theme';

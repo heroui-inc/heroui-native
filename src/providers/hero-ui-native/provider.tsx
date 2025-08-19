@@ -1,6 +1,7 @@
 import React from 'react';
-import { ThemeProvider } from '../theme/provider';
-import type { HeroUINativeProviderProps } from './hero-ui-native-provider.types';
+import { ThemeProvider } from '../../theme/provider';
+import { TextComponentProvider } from '../text-component/provider';
+import type { HeroUINativeProviderProps } from './types';
 
 /**
  * HeroUINativeProvider Component
@@ -15,6 +16,7 @@ import type { HeroUINativeProviderProps } from './hero-ui-native-provider.types'
  * - Theme management (light/dark mode)
  * - Custom theme configuration
  * - Color scheme preferences
+ * - Global text component configuration
  *
  * @param {HeroUINativeProviderProps} props - Provider configuration props
  * @param {ReactNode} props.children - Child components to wrap
@@ -72,6 +74,10 @@ import type { HeroUINativeProviderProps } from './hero-ui-native-provider.types'
  *           accent: '#0A84FF'
  *         }
  *       }
+ *     },
+ *     textProps: {
+ *       allowFontScaling: false,
+ *       style: { fontFamily: 'Inter' }
  *     }
  *   }}
  * >
@@ -106,11 +112,13 @@ export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   children,
   config = {},
 }) => {
-  const { colorScheme, theme } = config;
+  const { colorScheme, theme, textProps } = config;
 
   return (
     <ThemeProvider colorScheme={colorScheme} theme={theme}>
-      {children}
+      <TextComponentProvider value={{ textProps }}>
+        {children}
+      </TextComponentProvider>
     </ThemeProvider>
   );
 };

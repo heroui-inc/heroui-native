@@ -1943,6 +1943,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@expo-google-fonts/inter@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "@expo-google-fonts/inter@npm:0.4.1"
+  checksum: cfaed2e280ee0a544f00386610a3ca425cc53a4b20abd8535af6855096573f15900e44245734eada23861759b8f8b96b7fec30ee9621f08c9116c139ee8c7d12
+  languageName: node
+  linkType: hard
+
 "@expo/cli@npm:0.24.20":
   version: 0.24.20
   resolution: "@expo/cli@npm:0.24.20"
@@ -6530,7 +6537,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-font@npm:~13.3.2":
+"expo-font@npm:^13.3.2, expo-font@npm:~13.3.2":
   version: 13.3.2
   resolution: "expo-font@npm:13.3.2"
   dependencies:
@@ -7515,11 +7522,13 @@ __metadata:
   resolution: "heroui-native-example@workspace:example"
   dependencies:
     "@babel/core": ^7.20.0
+    "@expo-google-fonts/inter": ^0.4.1
     "@expo/metro-runtime": ~5.0.4
     babel-plugin-module-resolver: ^5.0.2
     clsx: ^2.1.1
     expo: ~53.0.13
     expo-constants: ~17.1.7
+    expo-font: ^13.3.2
     expo-linear-gradient: ~14.1.5
     expo-linking: ~7.1.7
     expo-router: ~5.1.3

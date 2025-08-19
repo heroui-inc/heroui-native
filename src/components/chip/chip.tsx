@@ -1,6 +1,7 @@
 import { forwardRef, useMemo } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { Text } from '../../helpers/components';
 import type { PressableRef } from '../../helpers/types';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
 import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';

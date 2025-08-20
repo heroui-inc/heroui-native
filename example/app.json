@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "HeroUI Native",
-    "slug": "herouinative",
+    "slug": "heroui-native",
     "scheme": "herouinative",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,7 +15,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "herouinative.example"
+      "bundleIdentifier": "herouinative.example",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -29,6 +32,21 @@
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "13560f7b-27d6-41e8-a677-0b4d06705e7e"
+      }
+    },
+    "owner": "heroui-inc",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/13560f7b-27d6-41e8-a677-0b4d06705e7e"
+    }
   }
 }

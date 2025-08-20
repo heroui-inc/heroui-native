@@ -2021,7 +2021,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/code-signing-certificates@npm:^0.0.5":
+"@expo/code-signing-certificates@npm:0.0.5, @expo/code-signing-certificates@npm:^0.0.5":
   version: 0.0.5
   resolution: "@expo/code-signing-certificates@npm:0.0.5"
   dependencies:
@@ -3883,6 +3883,13 @@ __metadata:
     normalize-path: ^3.0.0
     picomatch: ^2.0.4
   checksum: 3e044fd6d1d26545f235a9fe4d7a534e2029d8e59fa7fd9f2a6eb21230f6b5380ea1eaf55136e60cbf8e613544b3b766e7a6fa2102e2a3a117505466e3025dc2
+  languageName: node
+  linkType: hard
+
+"arg@npm:4.1.0":
+  version: 4.1.0
+  resolution: "arg@npm:4.1.0"
+  checksum: ea97513bf27aa5f2acf5dadf41501108fe786631fdd9d33f373174631800b57f85272dbf8190e937008a02b38d5c2f679514146f89a23123d8cb4ba30e8c066c
   languageName: node
   linkType: hard
 
@@ -6527,6 +6534,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-eas-client@npm:~0.14.4":
+  version: 0.14.4
+  resolution: "expo-eas-client@npm:0.14.4"
+  checksum: 3b9347b5cc94612c6fb9798e0351efefeea8e4b09c48b9a1c69cbae002eb2952f0ae32f3fdb7c6491dc74b6a8b415977c67ef6906b1f58a71677802ac272e6de
+  languageName: node
+  linkType: hard
+
 "expo-file-system@npm:~18.1.11":
   version: 18.1.11
   resolution: "expo-file-system@npm:18.1.11"
@@ -6546,6 +6560,13 @@ __metadata:
     expo: "*"
     react: "*"
   checksum: ea257395f2267c6d5c491561a415a57e3a55473428da1c7c7b1639cc386525fca8b56793d40f079e21ad1ccbb56e3180ecd943dbecc8c5543146e8760f930376
+  languageName: node
+  linkType: hard
+
+"expo-json-utils@npm:~0.15.0":
+  version: 0.15.0
+  resolution: "expo-json-utils@npm:0.15.0"
+  checksum: f514aef7000dd785b5f8e85cbeb809aef6eeaff4877e25e0ae2770db6a3b41f8813a60f13eb821cbf827407cfa0f20a5a2e8d6f18aff7ee20bd51c003af1c7c7
   languageName: node
   linkType: hard
 
@@ -6580,6 +6601,18 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: a595b6a8f2097334aa98f7efb44e554ecc0ee05955bdc85e32fec951363670ae731d75ec67d7c6909e29de094dcba1fa11548398ca01a267619f9eadbeba2966
+  languageName: node
+  linkType: hard
+
+"expo-manifests@npm:~0.16.6":
+  version: 0.16.6
+  resolution: "expo-manifests@npm:0.16.6"
+  dependencies:
+    "@expo/config": ~11.0.12
+    expo-json-utils: ~0.15.0
+  peerDependencies:
+    expo: "*"
+  checksum: 0d64d1c7b19830f362fa841a47e05ba1be27c9c6c5903c8155063d1564334d56fc26809784cd82b5216976edfaca6a702bfed084b33662e6be966ef04032f855
   languageName: node
   linkType: hard
 
@@ -6656,6 +6689,48 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 37e8a111037a3dc94ada9c0549e1b7bae0d6dcef48392edf7a559f64d5db78560e11165f5a8d5fe3a15e6d0bd3895b782443e7bb3018eb2798a11b509f3acf97
+  languageName: node
+  linkType: hard
+
+"expo-structured-headers@npm:~4.1.0":
+  version: 4.1.0
+  resolution: "expo-structured-headers@npm:4.1.0"
+  checksum: 9e3139f50dc983b6db4483b8b68d45f6830b41a03b0fa00662a8d544e04784d1412b26aff91b61e4148b7ceb5a47195c2c034a1ea0ac97e49fc02cfd2342dd61
+  languageName: node
+  linkType: hard
+
+"expo-updates-interface@npm:~1.1.0":
+  version: 1.1.0
+  resolution: "expo-updates-interface@npm:1.1.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 35eedfd77b1f76638a32fa016e4783d5ae5622144e599136f68b5703c09747626f4cc2d3b8de57f266a1323be23343a9ff1b3e541648b756f0a52456625afb52
+  languageName: node
+  linkType: hard
+
+"expo-updates@npm:~0.28.17":
+  version: 0.28.17
+  resolution: "expo-updates@npm:0.28.17"
+  dependencies:
+    "@expo/code-signing-certificates": 0.0.5
+    "@expo/config": ~11.0.13
+    "@expo/config-plugins": ~10.1.2
+    "@expo/spawn-async": ^1.7.2
+    arg: 4.1.0
+    chalk: ^4.1.2
+    expo-eas-client: ~0.14.4
+    expo-manifests: ~0.16.6
+    expo-structured-headers: ~4.1.0
+    expo-updates-interface: ~1.1.0
+    glob: ^10.4.2
+    ignore: ^5.3.1
+    resolve-from: ^5.0.0
+  peerDependencies:
+    expo: "*"
+    react: "*"
+  bin:
+    expo-updates: bin/cli.js
+  checksum: ce0ad1a62b0d9b424c87ca3b71b114e60a9827db2c61a95271652c785d71d439e508c12319202f4044ae1118453ae527ad09b005af8fafdcda79a08037a0dd55
   languageName: node
   linkType: hard
 
@@ -7533,6 +7608,7 @@ __metadata:
     expo-linking: ~7.1.7
     expo-router: ~5.1.3
     expo-status-bar: ~2.2.3
+    expo-updates: ~0.28.17
     nativewind: ^4.1.23
     prettier-plugin-tailwindcss: ^0.5.11
     react: 19.0.0

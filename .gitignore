@@ -89,3 +89,7 @@ nitrogen/
 .claude
 .workflows
 
+# Example dist
+example/dist
+
+

@@ -1,3 +1,14 @@
+## 1.0.0-alpha.5 (2025-08-20)
+
+* fix: tailwind plugin export ([4d8cbd6](https://github.com/heroui-inc/heroui-native/commit/4d8cbd6))
+* fix: text component lint errors ([21b41ea](https://github.com/heroui-inc/heroui-native/commit/21b41ea))
+* build: upd release action ([226cff4](https://github.com/heroui-inc/heroui-native/commit/226cff4))
+* build: upd release script ([446a287](https://github.com/heroui-inc/heroui-native/commit/446a287))
+* docs: minor readme updates ([762eab9](https://github.com/heroui-inc/heroui-native/commit/762eab9))
+* chore: sync versions ([50c03e0](https://github.com/heroui-inc/heroui-native/commit/50c03e0))
+
+
+
 ## 1.0.0-alpha.3 (2025-08-08)
 
 - refactor: remove path aliases ([933626b](https://github.com/heroui-inc/heroui-native/commit/933626b))

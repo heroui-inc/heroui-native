@@ -37,7 +37,7 @@ Follow the [NativeWind installation guide](https://www.nativewind.dev/docs/getti
 
 ### 4. Configure Tailwind
 
-Update your `tailwind.config.js` to include the HeroUI plugin:
+Update your `tailwind.config.js` to include the HeroUI Native plugin:
 
 ```javascript
 import { herouiNative } from 'heroui-native';
@@ -86,7 +86,7 @@ export default function MyComponent() {
 
 ## Documentation
 
-### Core Documentation
+### Core
 
 - [Provider Configuration](./src/providers/hero-ui-native/provider.md) - Complete setup and configuration guide
 - [Theming](./src/providers/theme/theme.md) - Theme customization, colors, and dark mode

@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "herouinative.example",
+      "bundleIdentifier": "com.herouinative.ios",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -26,17 +26,17 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "herouinative.example"
+      "package": "com.herouinative.android"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": [
-      "expo-router"
-    ],
+    "plugins": ["expo-router"],
     "extra": {
-      "router": {},
+      "router": {
+        "origin": false
+      },
       "eas": {
         "projectId": "13560f7b-27d6-41e8-a677-0b4d06705e7e"
       }

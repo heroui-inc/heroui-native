@@ -29,7 +29,7 @@ npm install react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0
 
 > **Important:** It's recommended to use the exact versions specified above to avoid compatibility issues. Version mismatches may cause unexpected bugs.
 
-> **Note:** We will upgrade to Reanimated v4 as soon as Expo SDK 54 is released, ensuring compatibility with the latest Expo ecosystem.
+> **Note:** We will upgrade to Reanimated v4 as soon as Expo SDK 54 is released, ensuring full compatibility with the latest Expo ecosystem.
 
 ### 3. Set Up NativeWind
 

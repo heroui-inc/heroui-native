@@ -1,63 +1,64 @@
-# HeroUI Native Theme System
+# HeroUI Native Theming
 
-## Purpose
+## Overview
 
-The HeroUI Native theme system provides a comprehensive theming solution for React Native applications, built on top of NativeWind. It offers:
+The HeroUI Native theme system provides a comprehensive theming solution built on top of NativeWind, offering:
 
+- **Semantic Color Tokens**: Consistent color system with meaningful names
+- **HSL-Based Architecture**: All colors processed to HSL for consistency
 - **Dynamic Theme Switching**: Seamless light/dark mode transitions
-- **Color System**: Semantic color tokens with HSL-based architecture
-- **Type Safety**: Full TypeScript support for theme configuration
-- **Runtime Access**: Direct access to theme colors via React Context
+- **Runtime Access**: Direct access to theme colors via `useTheme` hook
 - **Tailwind Integration**: Use theme colors directly in className props
 - **Color Manipulation**: Advanced color utilities via colorKit
+- **Type Safety**: Full TypeScript support for theme configuration
 
-## Setup
+## Getting Started
 
-### 1. Prerequisites
+To use the theme system, wrap your app with the `HeroUINativeProvider` and configure your theme. See the [Provider Documentation](../hero-ui-native/provider.md) for complete setup instructions.
 
-Make sure you have completed the necessary installation steps as per the [Quick Start Guide](../quickstart), including:
+## Theme Configuration
 
-- HeroUI Native package installation
-- NativeWind configuration
-- Required peer dependencies
+The theme system can be customized through the `HeroUINativeProvider`'s config prop. Here's what you can configure:
 
-### 2. Configure Tailwind
+### Color Scheme
 
-Update your `tailwind.config.ts` to include the HeroUI plugin and content paths:
-
-```typescript
-import { herouiNative } from 'heroui-native/theme';
-
-export default {
-  content: [
-    // Your app's content paths
-    './app/**/*.{js,jsx,ts,tsx}',
-    './components/**/*.{js,jsx,ts,tsx}',
-
-    // IMPORTANT: Include HeroUI components (pointing to ROOT node_modules)
-    './node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}',
-  ],
-  presets: [require('nativewind/preset')],
-  theme: {
-    extend: {},
-  },
-  plugins: [herouiNative],
-};
-```
-
-### 3. Add Theme Provider
-
-Wrap your app with the `ThemeProvider` at the root level:
+Set the initial theme mode:
 
 ```tsx
-import { ThemeProvider } from 'heroui-native';
-
-export default function App() {
-  return <ThemeProvider>{/* Your app content */}</ThemeProvider>;
-}
+<HeroUINativeProvider 
+  config={{ 
+    colorScheme: 'light' | 'dark' | 'system' 
+  }}
+/>
 ```
 
-## Usage
+### Custom Theme Colors
+
+Override any theme color by providing a custom theme object:
+
+```tsx
+<HeroUINativeProvider
+  config={{
+    theme: {
+      light: {
+        colors: {
+          accent: '#007AFF',
+          success: '#34C759',
+          // ... other colors
+        },
+      },
+      dark: {
+        colors: {
+          accent: '#0A84FF',
+          // ... other colors
+        },
+      },
+    },
+  }}
+/>
+```
+
+## Using Theme Colors
 
 ### NativeWind Classes
 
@@ -383,7 +384,9 @@ const customTheme = {
   },
 };
 
-<ThemeProvider theme={customTheme}>{/* Your app */}</ThemeProvider>;
+<HeroUINativeProvider config={{ theme: customTheme }}>
+  {/* Your app */}
+</HeroUINativeProvider>
 ```
 
 ### Advanced Customization
@@ -419,9 +422,14 @@ const customTheme = {
   },
 };
 
-<ThemeProvider theme={customTheme} colorScheme="system">
+<HeroUINativeProvider 
+  config={{ 
+    theme: customTheme, 
+    colorScheme: 'system' 
+  }}
+>
   {/* Your app */}
-</ThemeProvider>;
+</HeroUINativeProvider>
 ```
 
 ### Color Format Support
@@ -454,14 +462,6 @@ const theme = {
 All colors are automatically converted to HSL format internally for consistency and manipulation.
 
 ## API Reference
-
-### ThemeProvider
-
-| Prop          | Type                            | Default     | Description                                                   |
-| ------------- | ------------------------------- | ----------- | ------------------------------------------------------------- |
-| `children`    | `React.ReactNode`               | Required    | React children components to be wrapped by the theme provider |
-| `colorScheme` | `'light' \| 'dark' \| 'system'` | `'system'`  | Initial color scheme to use                                   |
-| `theme`       | `ThemeConfig`                   | `undefined` | Custom theme configuration using Tailwind's extend pattern    |
 
 ### useTheme Hook
 

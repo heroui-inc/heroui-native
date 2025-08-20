@@ -1,4 +1,4 @@
-import { herouiNative } from '../src/providers/theme/plugin';
+import herouiNativeTailwindPlugin from '../src/providers/theme/plugin';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -20,5 +20,5 @@ module.exports = {
       },
     },
   },
-  plugins: [herouiNative],
+  plugins: [herouiNativeTailwindPlugin],
 };

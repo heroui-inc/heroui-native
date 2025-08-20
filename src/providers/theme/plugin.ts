@@ -1,6 +1,6 @@
 import plugin from 'tailwindcss/plugin';
 
-export const herouiNative = plugin(function () {}, {
+const herouiNativeTailwindPlugin = plugin(function () {}, {
   theme: {
     extend: {
       colors: {
@@ -69,4 +69,4 @@ export const herouiNative = plugin(function () {}, {
   },
 });
 
-export default herouiNative;
+export default herouiNativeTailwindPlugin;

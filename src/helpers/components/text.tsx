@@ -5,7 +5,7 @@ import { useTextComponentContext } from '../../providers/text-component/provider
 /**
  * Text component that automatically applies global text configuration
  * from HeroUINativeProvider.
- * 
+ *
  * Global text props that can be configured:
  * - adjustsFontSizeToFit: Auto-scale text to fit constraints
  * - allowFontScaling: Respect Text Size accessibility settings
@@ -16,7 +16,7 @@ import { useTextComponentContext } from '../../providers/text-component/provider
  * ```tsx
  * <Text>Hello World</Text>
  * ```
- * 
+ *
  * @example
  * Global configuration in HeroUINativeProvider:
  * ```tsx

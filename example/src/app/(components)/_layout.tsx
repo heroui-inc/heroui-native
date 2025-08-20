@@ -1,19 +1,18 @@
 import { Stack } from 'expo-router';
 import { useTheme } from 'heroui-native';
-import { Image, Platform } from 'react-native';
-import LogoDark from '../../../assets/logo-dark.png';
-import LogoLight from '../../../assets/logo-light.png';
+import { Image, Platform, StyleSheet } from 'react-native';
 import { ThemeToggle } from '../../components/theme-toggle';
 
 export default function Layout() {
-  const { theme, colors, isDark } = useTheme();
+  const { theme, colors } = useTheme();
 
   const _renderTitle = () => {
     return (
       <Image
-        source={isDark ? LogoLight : LogoDark}
-        className="h-7"
-        resizeMode="contain"
+        source={{
+          uri: 'https://raw.githubusercontent.com/heroui-inc/heroui/main/apps/docs/public/isotipo.png',
+        }}
+        style={styles.logo}
       />
     );
   };
@@ -71,3 +70,10 @@ export default function Layout() {
     </Stack>
   );
 }
+
+const styles = StyleSheet.create({
+  logo: {
+    width: 24,
+    height: 24,
+  },
+});

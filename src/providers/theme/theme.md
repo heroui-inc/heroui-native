@@ -97,6 +97,111 @@ Use semantic color tokens directly in your className props:
 <View className="opacity-disabled" />
 ```
 
+## Custom Fonts
+
+HeroUI Native components utilize font weight utilities that can be customized through your Tailwind configuration. This ensures consistent typography across both your app and the library components.
+
+### Font Setup
+
+The library components use the following font weight classes:
+
+- `font-normal` - Used for body text and input values
+- `font-medium` - Used for labels, headers, and emphasized text
+
+To apply custom fonts to HeroUI Native components, you need to configure these font families in your `tailwind.config.js`:
+
+#### For Expo (with expo-font)
+
+```tsx
+// app/_layout.tsx or App.tsx
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  useFonts,
+} from '@expo-google-fonts/inter';
+
+export default function Layout() {
+  // Load fonts
+  let fontsLoaded = useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  return <ThemeProvider>{/* Your app */}</ThemeProvider>;
+}
+```
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  content: [
+    './app/**/*.{js,jsx,ts,tsx}',
+    './node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}',
+  ],
+  presets: [require('nativewind/preset')],
+  theme: {
+    extend: {
+      fontFamily: {
+        // Map font weights to your custom fonts
+        normal: ['Inter_400Regular'], // Will be used by components with font-normal
+        medium: ['Inter_500Medium'], // Will be used by components with font-medium
+        semibold: ['Inter_600SemiBold'], // For custom usage
+        bold: ['Inter_700Bold'], // For custom usage
+      },
+    },
+  },
+  plugins: [herouiNative],
+};
+```
+
+#### For Bare React Native Workflow
+
+For bare React Native projects, you'll need to link fonts manually:
+
+1. Place font files in your assets folder
+2. Link them using react-native-link or configure manually for each platform
+3. Update your Tailwind config:
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      fontFamily: {
+        // Use the exact font family names as registered in your app
+        normal: ['YourFont-Regular'],
+        medium: ['YourFont-Medium'],
+        semibold: ['YourFont-SemiBold'],
+        bold: ['YourFont-Bold'],
+      },
+    },
+  },
+  // ... rest of config
+};
+```
+
+### Important Notes
+
+1. **Required Font Weights**: At minimum, configure `font-normal` and `font-medium` as these are used throughout HeroUI Native components
+2. **Component Consistency**: All text within HeroUI Native components will automatically use these font families
+3. **Custom Text Components**: For your own text components, apply font classes explicitly:
+
+```tsx
+<Text className="font-normal">Body text</Text>
+<Text className="font-medium">Label text</Text>
+<Text className="font-semibold">Heading</Text>
+```
+
+4. **Platform Differences**: Ensure font family names match exactly how they're registered on each platform (iOS and Android may differ)
+
 ### Color Constants
 
 Access theme colors programmatically for runtime styling:

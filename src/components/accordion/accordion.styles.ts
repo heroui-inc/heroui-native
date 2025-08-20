@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../theme/helpers';
+import { combineStyles } from '../../providers/theme/helpers';
 
 const root = tv({
   slots: {
-    container: 'flex-col overflow-hidden bg-background',
+    container: 'flex-col overflow-hidden',
     divider: 'h-px bg-border',
   },
   variants: {
@@ -46,7 +46,7 @@ const indicator = tv({
 });
 
 const content = tv({
-  base: 'px-4 pb-4',
+  base: 'px-4 pb-4 bg-background',
   variants: {
     variant: {
       default: '',

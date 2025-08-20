@@ -1,7 +1,11 @@
 import type { PressableProps, ViewProps } from 'react-native';
-import type { AnimatedProps, BaseAnimationBuilder, LayoutAnimationFunction } from 'react-native-reanimated';
+import type {
+  AnimatedProps,
+  BaseAnimationBuilder,
+  LayoutAnimationFunction,
+} from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
-import type { ElementSlots } from '../../theme';
+import type { ElementSlots } from '../../providers/theme';
 import type { LabelSlots } from './button.styles';
 
 /**
@@ -196,5 +200,8 @@ export interface ButtonContextValue {
   /**
    * Layout transition for animated components
    */
-  layout?: BaseAnimationBuilder | LayoutAnimationFunction | typeof BaseAnimationBuilder;
+  layout?:
+    | BaseAnimationBuilder
+    | LayoutAnimationFunction
+    | typeof BaseAnimationBuilder;
 }

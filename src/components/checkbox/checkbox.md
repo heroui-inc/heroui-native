@@ -59,7 +59,7 @@ Combine custom background and indicator for fully customized checkboxes.
 
 ```tsx
 import { Checkbox, useTheme } from 'heroui-native';
-import { Minus, Plus } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { ZoomIn } from 'react-native-reanimated';
@@ -103,15 +103,15 @@ export default function CheckboxExample() {
         <Checkbox.Indicator>
           {custom ? (
             <Animated.View key="selected" entering={ZoomIn}>
-              <Minus
+              <Ionicons
+                name="remove"
                 size={16}
                 color={colors.accentForeground}
-                strokeWidth={3}
               />
             </Animated.View>
           ) : (
             <Animated.View key="unselected" entering={ZoomIn}>
-              <Plus size={16} color={colors.accent} strokeWidth={3} />
+              <Ionicons name="add" size={16} color={colors.accent} />
             </Animated.View>
           )}
         </Checkbox.Indicator>
@@ -145,7 +145,6 @@ export default function CheckboxExample() {
 | `onSelectedChange`  | `(isSelected: boolean) => void`                   | `undefined` | Callback fired when the checkbox selection state changes                  |
 | `color`             | `'default' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Color theme of the checkbox                                               |
 | `isDisabled`        | `boolean`                                         | `false`     | Whether the checkbox is disabled and cannot be interacted with            |
-| `isReadOnly`        | `boolean`                                         | `false`     | Whether the checkbox is read-only                                         |
 | `isInvalid`         | `boolean`                                         | `false`     | Whether the checkbox is invalid                                           |
 | `className`         | `string`                                          | `undefined` | Additional CSS classes to apply                                           |
 | `colors`            | `CheckboxBorderColors`                            | `undefined` | Custom colors for different checkbox border states                        |
@@ -195,8 +194,7 @@ export default function CheckboxExample() {
 
 #### CheckboxIndicatorIconProps
 
-| prop          | type     | description            |
-| ------------- | -------- | ---------------------- |
-| `size`        | `number` | Indicator size         |
-| `strokeWidth` | `number` | Indicator stroke width |
-| `color`       | `string` | Indicator color        |
+| prop    | type     | description     |
+| ------- | -------- | --------------- |
+| `size`  | `number` | Indicator size  |
+| `color` | `string` | Indicator color |

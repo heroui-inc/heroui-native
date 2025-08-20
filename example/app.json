@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "example",
-    "slug": "example",
-    "scheme": "example",
+    "name": "HeroUI Native",
+    "slug": "heroui-native",
+    "scheme": "herouinative",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,24 +11,42 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "herouinative.example"
+      "bundleIdentifier": "com.herouinative.ios",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "herouinative.example"
+      "package": "com.herouinative.android"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": ["expo-router"]
+    "plugins": ["expo-router"],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "13560f7b-27d6-41e8-a677-0b4d06705e7e"
+      }
+    },
+    "owner": "heroui-inc",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/13560f7b-27d6-41e8-a677-0b4d06705e7e"
+    }
   }
 }

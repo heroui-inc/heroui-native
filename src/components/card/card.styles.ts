@@ -1,5 +1,5 @@
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../theme/helpers';
+import { combineStyles } from '../../providers/theme/helpers';
 
 const root = tv({
   base: '',
@@ -26,7 +26,7 @@ const title = tv({
 });
 
 const description = tv({
-  base: 'text-muted-foreground text-base',
+  base: 'text-muted-foreground text-base font-normal',
 });
 
 const cardStyles = combineStyles({

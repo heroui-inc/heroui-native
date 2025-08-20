@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useMemo } from 'react';
 import {
-  Text,
   TextInput,
   View,
   type NativeSyntheticEvent,
@@ -13,9 +12,10 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { Text } from '../../helpers/components';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
-import { useTheme } from '../../theme';
+import { useTheme } from '../../providers/theme';
 import { ErrorField } from '../error-field';
 import {
   ANIMATION_DURATION,
@@ -40,6 +40,8 @@ const [TextFieldProvider, useTextFieldContext] =
   createContext<TextFieldContextValue>({
     name: 'TextFieldContext',
   });
+
+const AnimatedText = Animated.createAnimatedComponent(Text);
 
 // --------------------------------------------------
 
@@ -95,7 +97,7 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
     });
 
     return (
-      <Animated.Text
+      <AnimatedText
         key={isInvalid ? 'label-invalid' : 'label-valid'}
         ref={ref}
         entering={entering}
@@ -105,7 +107,7 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
       >
         {children}
         {isRequired && <Text className={asteriskStyles}> *</Text>}
-      </Animated.Text>
+      </AnimatedText>
     );
   }
 );
@@ -302,7 +304,7 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
     if (isInvalid) return null;
 
     return (
-      <Animated.Text
+      <AnimatedText
         ref={ref}
         entering={entering}
         exiting={exiting}
@@ -310,7 +312,7 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
         {...restProps}
       >
         {children}
-      </Animated.Text>
+      </AnimatedText>
     );
   }
 );

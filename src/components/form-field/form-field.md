@@ -126,15 +126,6 @@ Control interactivity with disabled and read-only props.
     <Switch />
   </FormField.Indicator>
 </FormField>
-
-<FormField isSelected={value} onSelectedChange={setValue} isReadOnly>
-  <FormField.Content>
-    <FormField.Label>Read-only field</FormField.Label>
-  </FormField.Content>
-  <FormField.Indicator>
-    <Switch />
-  </FormField.Indicator>
-</FormField>
 ```
 
 ## Example
@@ -233,7 +224,6 @@ export default function FormFieldExample() {
 | alignIndicator             | `'start' \| 'end'`              | `'end'`        | Alignment of the indicator (horizontal orientation only)     |
 | isSelected                 | `boolean`                       | `undefined`    | Whether the control is selected/checked                      |
 | isDisabled                 | `boolean`                       | `false`        | Whether the form control is disabled                         |
-| isReadOnly                 | `boolean`                       | `false`        | Whether the form control is read-only                        |
 | isInline                   | `boolean`                       | `false`        | Whether the form control is inline (for flex-row containers) |
 | isInvalid                  | `boolean`                       | `false`        | Whether the form control is invalid                          |
 | className                  | `string`                        | -              | Custom class name for the root element                       |

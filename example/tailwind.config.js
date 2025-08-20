@@ -1,4 +1,4 @@
-import { herouiNative } from '../src/theme/plugin';
+import { herouiNative } from '../src/providers/theme/plugin';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -11,7 +11,14 @@ module.exports = {
   ],
   presets: [require('nativewind/preset')],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        normal: ['Inter_400Regular'],
+        medium: ['Inter_500Medium'],
+        semibold: ['Inter_600SemiBold'],
+        bold: ['Inter_700Bold'],
+      },
+    },
   },
   plugins: [herouiNative],
 };

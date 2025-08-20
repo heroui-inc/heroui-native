@@ -2,7 +2,7 @@ import type { SharedValue } from 'react-native-reanimated';
 import type { SpringConfig } from 'react-native-reanimated/lib/typescript/animation/springUtils';
 import type { TimingConfig } from '../../helpers/types';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
-import type { ElementSlots } from '../../theme';
+import type { ElementSlots } from '../../providers/theme';
 import type { RootSlots } from './switch.styles';
 
 /**
@@ -33,9 +33,6 @@ export interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
 
   /** Color theme of the switch @default 'default' */
   color?: SwitchColor;
-
-  /** Whether the switch is read-only @default false */
-  isReadOnly?: boolean;
 
   /** Whether the switch is disabled @default false */
   isDisabled?: boolean;

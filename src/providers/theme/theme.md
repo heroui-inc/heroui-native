@@ -1,63 +1,64 @@
-# HeroUI Native Theme System
+# HeroUI Native Theming
 
-## Purpose
+## Overview
 
-The HeroUI Native theme system provides a comprehensive theming solution for React Native applications, built on top of NativeWind. It offers:
+The HeroUI Native theme system provides a comprehensive theming solution built on top of NativeWind, offering:
 
+- **Semantic Color Tokens**: Consistent color system with meaningful names
+- **HSL-Based Architecture**: All colors processed to HSL for consistency
 - **Dynamic Theme Switching**: Seamless light/dark mode transitions
-- **Color System**: Semantic color tokens with HSL-based architecture
-- **Type Safety**: Full TypeScript support for theme configuration
-- **Runtime Access**: Direct access to theme colors via React Context
+- **Runtime Access**: Direct access to theme colors via `useTheme` hook
 - **Tailwind Integration**: Use theme colors directly in className props
 - **Color Manipulation**: Advanced color utilities via colorKit
+- **Type Safety**: Full TypeScript support for theme configuration
 
-## Setup
+## Getting Started
 
-### 1. Prerequisites
+To use the theme system, wrap your app with the `HeroUINativeProvider` and configure your theme. See the [Provider Documentation](../hero-ui-native/provider.md) for complete setup instructions.
 
-Make sure you have completed the necessary installation steps as per the [Quick Start Guide](../quickstart), including:
+## Theme Configuration
 
-- HeroUI Native package installation
-- NativeWind configuration
-- Required peer dependencies
+The theme system can be customized through the `HeroUINativeProvider`'s config prop. Here's what you can configure:
 
-### 2. Configure Tailwind
+### Color Scheme
 
-Update your `tailwind.config.ts` to include the HeroUI plugin and content paths:
-
-```typescript
-import { herouiNative } from 'heroui-native/theme';
-
-export default {
-  content: [
-    // Your app's content paths
-    './app/**/*.{js,jsx,ts,tsx}',
-    './components/**/*.{js,jsx,ts,tsx}',
-
-    // IMPORTANT: Include HeroUI components (pointing to ROOT node_modules)
-    './node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}',
-  ],
-  presets: [require('nativewind/preset')],
-  theme: {
-    extend: {},
-  },
-  plugins: [herouiNative],
-};
-```
-
-### 3. Add Theme Provider
-
-Wrap your app with the `ThemeProvider` at the root level:
+Set the initial theme mode:
 
 ```tsx
-import { ThemeProvider } from 'heroui-native';
-
-export default function App() {
-  return <ThemeProvider>{/* Your app content */}</ThemeProvider>;
-}
+<HeroUINativeProvider 
+  config={{ 
+    colorScheme: 'light' | 'dark' | 'system' 
+  }}
+/>
 ```
 
-## Usage
+### Custom Theme Colors
+
+Override any theme color by providing a custom theme object:
+
+```tsx
+<HeroUINativeProvider
+  config={{
+    theme: {
+      light: {
+        colors: {
+          accent: '#007AFF',
+          success: '#34C759',
+          // ... other colors
+        },
+      },
+      dark: {
+        colors: {
+          accent: '#0A84FF',
+          // ... other colors
+        },
+      },
+    },
+  }}
+/>
+```
+
+## Using Theme Colors
 
 ### NativeWind Classes
 
@@ -96,6 +97,111 @@ Use semantic color tokens directly in your className props:
 // Opacity
 <View className="opacity-disabled" />
 ```
+
+## Custom Fonts
+
+HeroUI Native components utilize font weight utilities that can be customized through your Tailwind configuration. This ensures consistent typography across both your app and the library components.
+
+### Font Setup
+
+The library components use the following font weight classes:
+
+- `font-normal` - Used for body text and input values
+- `font-medium` - Used for labels, headers, and emphasized text
+
+To apply custom fonts to HeroUI Native components, you need to configure these font families in your `tailwind.config.js`:
+
+#### For Expo (with expo-font)
+
+```tsx
+// app/_layout.tsx or App.tsx
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  useFonts,
+} from '@expo-google-fonts/inter';
+
+export default function Layout() {
+  // Load fonts
+  let fontsLoaded = useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  return <ThemeProvider>{/* Your app */}</ThemeProvider>;
+}
+```
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  content: [
+    './app/**/*.{js,jsx,ts,tsx}',
+    './node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}',
+  ],
+  presets: [require('nativewind/preset')],
+  theme: {
+    extend: {
+      fontFamily: {
+        // Map font weights to your custom fonts
+        normal: ['Inter_400Regular'], // Will be used by components with font-normal
+        medium: ['Inter_500Medium'], // Will be used by components with font-medium
+        semibold: ['Inter_600SemiBold'], // For custom usage
+        bold: ['Inter_700Bold'], // For custom usage
+      },
+    },
+  },
+  plugins: [herouiNative],
+};
+```
+
+#### For Bare React Native Workflow
+
+For bare React Native projects, you'll need to link fonts manually:
+
+1. Place font files in your assets folder
+2. Link them using react-native-link or configure manually for each platform
+3. Update your Tailwind config:
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      fontFamily: {
+        // Use the exact font family names as registered in your app
+        normal: ['YourFont-Regular'],
+        medium: ['YourFont-Medium'],
+        semibold: ['YourFont-SemiBold'],
+        bold: ['YourFont-Bold'],
+      },
+    },
+  },
+  // ... rest of config
+};
+```
+
+### Important Notes
+
+1. **Required Font Weights**: At minimum, configure `font-normal` and `font-medium` as these are used throughout HeroUI Native components
+2. **Component Consistency**: All text within HeroUI Native components will automatically use these font families
+3. **Custom Text Components**: For your own text components, apply font classes explicitly:
+
+```tsx
+<Text className="font-normal">Body text</Text>
+<Text className="font-medium">Label text</Text>
+<Text className="font-semibold">Heading</Text>
+```
+
+4. **Platform Differences**: Ensure font family names match exactly how they're registered on each platform (iOS and Android may differ)
 
 ### Color Constants
 
@@ -278,7 +384,9 @@ const customTheme = {
   },
 };
 
-<ThemeProvider theme={customTheme}>{/* Your app */}</ThemeProvider>;
+<HeroUINativeProvider config={{ theme: customTheme }}>
+  {/* Your app */}
+</HeroUINativeProvider>
 ```
 
 ### Advanced Customization
@@ -314,9 +422,14 @@ const customTheme = {
   },
 };
 
-<ThemeProvider theme={customTheme} colorScheme="system">
+<HeroUINativeProvider 
+  config={{ 
+    theme: customTheme, 
+    colorScheme: 'system' 
+  }}
+>
   {/* Your app */}
-</ThemeProvider>;
+</HeroUINativeProvider>
 ```
 
 ### Color Format Support
@@ -349,14 +462,6 @@ const theme = {
 All colors are automatically converted to HSL format internally for consistency and manipulation.
 
 ## API Reference
-
-### ThemeProvider
-
-| Prop          | Type                            | Default     | Description                                                   |
-| ------------- | ------------------------------- | ----------- | ------------------------------------------------------------- |
-| `children`    | `React.ReactNode`               | Required    | React children components to be wrapped by the theme provider |
-| `colorScheme` | `'light' \| 'dark' \| 'system'` | `'system'`  | Initial color scheme to use                                   |
-| `theme`       | `ThemeConfig`                   | `undefined` | Custom theme configuration using Tailwind's extend pattern    |
 
 ### useTheme Hook
 

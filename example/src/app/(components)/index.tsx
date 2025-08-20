@@ -1,60 +1,143 @@
+import { Ionicons } from '@expo/vector-icons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useRouter } from 'expo-router';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Accordion, useTheme } from 'heroui-native';
+import { View } from 'react-native';
+import { AppText } from '../../components/app-text';
+import { ScreenScrollView } from '../../components/screen-scroll-view';
 
-const classNames = {
-  link: 'text-lg font-bold text-foreground',
+const ComponentIcon = () => {
+  const { colors } = useTheme();
+
+  return (
+    <MaterialCommunityIcons
+      name="atom"
+      size={16}
+      color={colors.mutedForeground}
+    />
+  );
 };
+
+type Component = {
+  title: string;
+  icon: React.ReactNode;
+  path: string;
+};
+
+const components: Component[] = [
+  {
+    title: 'Accordion',
+    icon: <ComponentIcon />,
+    path: 'accordion',
+  },
+  {
+    title: 'Button',
+    icon: <ComponentIcon />,
+    path: 'button',
+  },
+  {
+    title: 'Card',
+    icon: <ComponentIcon />,
+    path: 'card',
+  },
+  {
+    title: 'Checkbox',
+    icon: <ComponentIcon />,
+    path: 'checkbox',
+  },
+  {
+    title: 'Chip',
+    icon: <ComponentIcon />,
+    path: 'chip',
+  },
+  {
+    title: 'Divider',
+    icon: <ComponentIcon />,
+    path: 'divider',
+  },
+  {
+    title: 'Drop Shadow View',
+    icon: <ComponentIcon />,
+    path: 'drop-shadow-view',
+  },
+  {
+    title: 'Error Field',
+    icon: <ComponentIcon />,
+    path: 'error-field',
+  },
+  {
+    title: 'Form Field',
+    icon: <ComponentIcon />,
+    path: 'form-field',
+  },
+  {
+    title: 'Radio Group',
+    icon: <ComponentIcon />,
+    path: 'radio',
+  },
+  {
+    title: 'Spinner',
+    icon: <ComponentIcon />,
+    path: 'spinner',
+  },
+  {
+    title: 'Surface',
+    icon: <ComponentIcon />,
+    path: 'surface',
+  },
+  {
+    title: 'Switch',
+    icon: <ComponentIcon />,
+    path: 'switch',
+  },
+  {
+    title: 'Text Field',
+    icon: <ComponentIcon />,
+    path: 'text-field',
+  },
+  {
+    title: 'Theme Showcase',
+    icon: <ComponentIcon />,
+    path: 'theme-showcase',
+  },
+];
 
 export default function App() {
   const router = useRouter();
 
+  const { colors } = useTheme();
+
   return (
-    <View className="flex-1 bg-background items-center justify-center gap-5">
-      <TouchableOpacity onPress={() => router.push('/theme-showcase')}>
-        <Text className={classNames.link}>Theme Showcase</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/theme')}>
-        <Text className={classNames.link}>Theme</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/accordion')}>
-        <Text className={classNames.link}>Accordion</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/button')}>
-        <Text className={classNames.link}>Button</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/checkbox')}>
-        <Text className={classNames.link}>Checkbox</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/card')}>
-        <Text className={classNames.link}>Card</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/chip')}>
-        <Text className={classNames.link}>Chip</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/divider')}>
-        <Text className={classNames.link}>Divider</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/drop-shadow-view')}>
-        <Text className={classNames.link}>DropShadowView</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/form-field')}>
-        <Text className={classNames.link}>FormField</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/radio')}>
-        <Text className={classNames.link}>Radio</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/spinner')}>
-        <Text className={classNames.link}>Spinner</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/switch')}>
-        <Text className={classNames.link}>Switch</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/surface')}>
-        <Text className={classNames.link}>Surface</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/text-field')}>
-        <Text className={classNames.link}>TextField</Text>
-      </TouchableOpacity>
-    </View>
+    <ScreenScrollView>
+      <View className="items-center justify-center my-4">
+        <AppText className="text-muted-foreground text-base">
+          v1.0.0-alpha.4
+        </AppText>
+      </View>
+      <Accordion variant="border" isCollapsible={false}>
+        {components.map((item) => (
+          <Accordion.Item key={item.title} value={item.title}>
+            <Accordion.Trigger
+              className="bg-surface-2"
+              onPress={() => router.push(item.path)}
+            >
+              <View className="flex-row items-center flex-1 gap-3">
+                {item.icon}
+                <AppText className="text-foreground text-base flex-1">
+                  {item.title}
+                </AppText>
+              </View>
+              <Accordion.Indicator>
+                <Ionicons
+                  name="chevron-forward"
+                  size={16}
+                  color={colors.mutedForeground}
+                />
+              </Accordion.Indicator>
+            </Accordion.Trigger>
+          </Accordion.Item>
+        ))}
+      </Accordion>
+    </ScreenScrollView>
   );
 }

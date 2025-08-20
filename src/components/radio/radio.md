@@ -128,7 +128,7 @@ Position the indicator on either side of the content.
 
 ```tsx
 import { Radio, RadioGroup, useTheme } from 'heroui-native';
-import { Zap } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
@@ -182,10 +182,10 @@ export default function RadioExample() {
             <Radio.IndicatorThumb>
               {selectedColor === 'danger' ? (
                 <Animated.View key="zap-icon" entering={FadeIn.duration(200)}>
-                  <Zap
+                  <Ionicons
+                    name="flash"
                     size={12}
                     color={theme === 'dark' ? 'black' : 'white'}
-                    fill={theme === 'dark' ? 'black' : 'white'}
                   />
                 </Animated.View>
               ) : null}
@@ -244,7 +244,6 @@ See [RadioGroup documentation](../radio-group/radio-group.md#api-reference) for 
 | `color`             | `'default' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Color variant                                                           |
 | `alignIndicator`    | `'start' \| 'end'`                                | `'end'`     | Alignment of the indicator                                              |
 | `isDisabled`        | `boolean`                                         | `false`     | Whether this specific radio item is disabled                            |
-| `isReadOnly`        | `boolean`                                         | `false`     | Whether the radio is read-only                                          |
 | `isInvalid`         | `boolean`                                         | `false`     | Whether the radio is invalid                                            |
 | `className`         | `string`                                          | `undefined` | Custom class name                                                       |
 | `...PressableProps` | `Omit<PressableProps, 'disabled'>`                | -           | All standard React Native Pressable props are supported except disabled |

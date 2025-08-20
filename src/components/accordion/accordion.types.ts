@@ -13,7 +13,7 @@ import type {
   RootProps as PrimitiveRootProps,
   TriggerProps as PrimitiveTriggerProps,
 } from '../../primitives/accordion';
-import type { ElementSlots } from '../../theme';
+import type { ElementSlots } from '../../providers/theme';
 import type { RootSlots } from './accordion.styles';
 
 /**
@@ -30,11 +30,6 @@ export interface AccordionIndicatorIconProps {
    * @default 16
    */
   size?: number;
-  /**
-   * Stroke width of the icon
-   * @default 2
-   */
-  strokeWidth?: number;
   /**
    * Color of the icon
    * @default foreground

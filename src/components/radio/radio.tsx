@@ -12,7 +12,7 @@ import {
   getElementWithDefault,
 } from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
-import { colorKit, useTheme } from '../../theme';
+import { colorKit, useTheme } from '../../providers/theme';
 
 import type { TextRef } from '../../helpers/types';
 import { FormField } from '../form-field';
@@ -56,8 +56,7 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
       children,
       color = 'default',
       alignIndicator = 'end',
-      isDisabled = false,
-      isReadOnly = false,
+      isDisabled,
       isInvalid,
       className,
       style,
@@ -65,14 +64,18 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
       ...restProps
     } = props;
 
-    const radioGroupContext = useRadioGroupContext();
-    const { value: groupValue, isInvalid: groupIsInvalid } = radioGroupContext;
-    const isSelected = groupValue === value;
-    const isDisabledValue = isDisabled;
+    const {
+      value: groupValue,
+      isInvalid: groupIsInvalid,
+      isDisabled: groupIsDisabled,
+    } = useRadioGroupContext();
 
-    // Use prop isInvalid if provided, otherwise use context isInvalid
+    const isSelected = groupValue === value;
+
+    const isDisabledValue = isDisabled ?? groupIsDisabled ?? false;
+
     const effectiveIsInvalid = isInvalid ?? groupIsInvalid ?? false;
-    // Use danger color when invalid
+
     const effectiveColor = effectiveIsInvalid ? 'danger' : color;
 
     const indicatorElement = useMemo(
@@ -91,7 +94,6 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
 
     const tvStyles = radioStyles.radioRoot({
       isDisabled: isDisabledValue,
-      isReadOnly,
       className,
     });
 
@@ -100,9 +102,8 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
         color: effectiveColor,
         isSelected,
         isDisabled: isDisabledValue,
-        isReadOnly,
       }),
-      [effectiveColor, isSelected, isDisabledValue, isReadOnly]
+      [effectiveColor, isSelected, isDisabledValue]
     );
 
     return (
@@ -112,7 +113,7 @@ const Radio = forwardRef<RadioGroupPrimitives.ItemRef, RadioProps>(
           className={tvStyles}
           style={style}
           value={value}
-          isDisabled={isDisabledValue || isReadOnly}
+          isDisabled={isDisabledValue}
           hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
           {...restProps}
         >

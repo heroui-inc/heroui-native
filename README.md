@@ -9,37 +9,67 @@
   Beautiful, fast and modern React Native UI library
 </p>
 
+<p align="center">
+  v1.0.0-alpha.4
+</p>
+
 ## Getting Started
 
 ### 1. Install HeroUI Native
 
 ```bash
 npm install heroui-native
-# or
-yarn add heroui-native
-# or
-pnpm add heroui-native
 ```
 
 ### 2. Install Mandatory Peer Dependencies
 
 ```bash
 npm install react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0 react-native-svg@^15.12.1 tailwind-variants@^2.0.1 tailwind-merge@^3.3.1
-# or
-yarn add react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0 react-native-svg@^15.12.1 tailwind-variants@^2.0.1 tailwind-merge@^3.3.1
-# or
-pnpm add react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0 react-native-svg@^15.12.1 tailwind-variants@^2.0.1 tailwind-merge@^3.3.1
 ```
+
+> **Important:** It's recommended to use the exact versions specified above to avoid compatibility issues. Version mismatches may cause unexpected bugs.
+
+> **Note:** We will upgrade to Reanimated v4 as soon as Expo SDK 54 is released, ensuring full compatibility with the latest Expo ecosystem.
 
 ### 3. Set Up NativeWind
 
 Follow the [NativeWind installation guide](https://www.nativewind.dev/docs/getting-started/installation) to set up Tailwind CSS for React Native.
 
-### 4. Set Up Theme
+### 4. Configure Tailwind
 
-Configure your theme following the instructions in our [Theme Documentation](./src/theme/theme.md)
+Update your `tailwind.config.js` to include the HeroUI Native plugin:
 
-### 5. Import Your First Component
+```javascript
+import { herouiNative } from 'heroui-native';
+
+module.exports = {
+  content: [
+    './app/**/*.{js,jsx,ts,tsx}',
+    './node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}',
+  ],
+  presets: [require('nativewind/preset')],
+  theme: {
+    extend: {},
+  },
+  plugins: [herouiNative],
+};
+```
+
+> **Important:** The `'./node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}'` path is crucial for Tailwind to process the library's component styles. Without it, HeroUI Native components won't be styled correctly.
+
+### 5. Wrap Your App with Provider
+
+Wrap your application with `HeroUINativeProvider`:
+
+```tsx
+import { HeroUINativeProvider } from 'heroui-native';
+
+export default function App() {
+  return <HeroUINativeProvider>{/* Your app content */}</HeroUINativeProvider>;
+}
+```
+
+### 6. Use Your First Component
 
 ```tsx
 import { Button } from 'heroui-native';
@@ -56,23 +86,29 @@ export default function MyComponent() {
 
 ## Documentation
 
-- [Theme System](./src/theme/theme.md) - Complete theming guide including colors, dark mode, and customization
-- Components - Full component library documentation
-  - [Accordion](./src/components/accordion/accordion.md)
-  - [Button](./src/components/button/button.md)
-  - [Card](./src/components/card/card.md)
-  - [Checkbox](./src/components/checkbox/checkbox.md)
-  - [Chip](./src/components/chip/chip.md)
-  - [Divider](./src/components/divider/divider.md)
-  - [Drop Shadow View](./src/components/drop-shadow-view/drop-shadow-view.md)
-  - [Error Field](./src/components/error-field/error-field.md)
-  - [Form Field](./src/components/form-field/form-field.md)
-  - [Radio](./src/components/radio/radio.md)
-  - [Radio Group](./src/components/radio-group/radio-group.md)
-  - [Spinner](./src/components/spinner/spinner.md)
-  - [Surface](./src/components/surface/surface.md)
-  - [Switch](./src/components/switch/switch.md)
-  - [Text Field](./src/components/text-field/text-field.md)
+### Core
+
+- [Provider Configuration](./src/providers/hero-ui-native/provider.md) - Complete setup and configuration guide
+- [Theming](./src/providers/theme/theme.md) - Theme customization, colors, and dark mode
+- [Custom Fonts](./src/providers/theme/theme.md#custom-fonts) - How to use custom fonts with HeroUI Native
+
+### Components
+
+- [Accordion](./src/components/accordion/accordion.md)
+- [Button](./src/components/button/button.md)
+- [Card](./src/components/card/card.md)
+- [Checkbox](./src/components/checkbox/checkbox.md)
+- [Chip](./src/components/chip/chip.md)
+- [Divider](./src/components/divider/divider.md)
+- [Drop Shadow View](./src/components/drop-shadow-view/drop-shadow-view.md)
+- [Error Field](./src/components/error-field/error-field.md)
+- [Form Field](./src/components/form-field/form-field.md)
+- [Radio](./src/components/radio/radio.md)
+- [Radio Group](./src/components/radio-group/radio-group.md)
+- [Spinner](./src/components/spinner/spinner.md)
+- [Surface](./src/components/surface/surface.md)
+- [Switch](./src/components/switch/switch.md)
+- [Text Field](./src/components/text-field/text-field.md)
 
 ## Changelog
 

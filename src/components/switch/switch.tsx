@@ -9,7 +9,7 @@ import Animated, {
 import { createContext } from '../../helpers/utils';
 import * as SwitchPrimitives from '../../primitives/switch';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
-import { useTheme } from '../../theme';
+import { useTheme } from '../../providers/theme';
 import {
   DEFAULT_SPRING_CONFIG,
   DEFAULT_THUMB_WIDTH,
@@ -44,7 +44,6 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
     const {
       children,
       color = 'default',
-      isReadOnly,
       isDisabled,
       isSelected,
       onSelectedChange,
@@ -61,7 +60,6 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
     const { container, contentPaddingContainer, contentContainer } =
       switchStyles.root({
         isDisabled,
-        isReadOnly,
       });
 
     const tvBaseStyles = container({

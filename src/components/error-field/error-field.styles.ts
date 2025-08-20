@@ -1,10 +1,10 @@
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../theme/helpers';
+import { combineStyles } from '../../providers/theme/helpers';
 
 const root = tv({
   slots: {
     container: '',
-    text: 'text-sm text-danger',
+    text: 'text-sm text-danger font-normal',
   },
 });
 

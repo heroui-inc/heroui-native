@@ -1,5 +1,12 @@
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  useFonts,
+} from '@expo-google-fonts/inter';
 import { Slot } from 'expo-router';
-import { ThemeProvider } from 'heroui-native';
+import { HeroUINativeProvider } from 'heroui-native';
 import {
   configureReanimatedLogger,
   ReanimatedLogLevel,
@@ -16,13 +23,28 @@ function ThemedLayout() {
   const { currentTheme } = useAppTheme();
 
   return (
-    <ThemeProvider colorScheme="system" theme={currentTheme}>
+    <HeroUINativeProvider
+      config={{
+        colorScheme: 'system',
+        theme: currentTheme,
+        textProps: {
+          allowFontScaling: false,
+        },
+      }}
+    >
       <Slot />
-    </ThemeProvider>
+    </HeroUINativeProvider>
   );
 }
 
 export default function Layout() {
+  useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+  });
+
   return (
     <AppThemeProvider>
       <ThemedLayout />

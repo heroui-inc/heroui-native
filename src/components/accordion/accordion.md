@@ -125,7 +125,7 @@ Hide the dividers between accordion items.
 
 ```tsx
 import { Accordion, useTheme } from 'heroui-native';
-import { ShoppingBag, CreditCard, Package } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { View, Text } from 'react-native';
 
 export default function AccordionExample() {
@@ -135,21 +135,35 @@ export default function AccordionExample() {
     {
       id: '1',
       title: 'How do I place an order?',
-      icon: <ShoppingBag size={16} color={colors.mutedForeground} />,
+      icon: (
+        <Ionicons name="bag-outline" size={16} color={colors.mutedForeground} />
+      ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
     },
     {
       id: '2',
       title: 'What payment methods do you accept?',
-      icon: <CreditCard size={16} color={colors.mutedForeground} />,
+      icon: (
+        <Ionicons
+          name="card-outline"
+          size={16}
+          color={colors.mutedForeground}
+        />
+      ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
     },
     {
       id: '3',
       title: 'How much does shipping cost?',
-      icon: <Package size={16} color={colors.mutedForeground} />,
+      icon: (
+        <Ionicons
+          name="cube-outline"
+          size={16}
+          color={colors.mutedForeground}
+        />
+      ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
     },
@@ -268,11 +282,10 @@ export default function AccordionExample() {
 
 #### AccordionIndicatorIconProps
 
-| prop          | type     | default      | description              |
-| ------------- | -------- | ------------ | ------------------------ |
-| `size`        | `number` | `16`         | Size of the icon         |
-| `strokeWidth` | `number` | `2`          | Stroke width of the icon |
-| `color`       | `string` | `foreground` | Color of the icon        |
+| prop    | type     | default      | description       |
+| ------- | -------- | ------------ | ----------------- |
+| `size`  | `number` | `16`         | Size of the icon  |
+| `color` | `string` | `foreground` | Color of the icon |
 
 ### Accordion.Content
 

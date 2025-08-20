@@ -1,10 +1,10 @@
-import type { ViewProps } from 'react-native';
+import type { PressableProps, ViewProps } from 'react-native';
 import type {
   AnimatedProps,
   BaseAnimationBuilder,
   LayoutAnimationFunction,
 } from 'react-native-reanimated';
-import type { ElementSlots } from '../../theme';
+import type { ElementSlots } from '../../providers/theme';
 import type { LabelSlots } from './chip.styles';
 
 /**
@@ -25,7 +25,7 @@ export type ChipColor = 'accent' | 'default' | 'success' | 'warning' | 'danger';
 /**
  * Props for the main Chip component
  */
-export interface ChipProps extends AnimatedProps<ViewProps> {
+export interface ChipProps extends AnimatedProps<PressableProps> {
   /** Child elements to render inside the chip */
   children?: React.ReactNode;
 

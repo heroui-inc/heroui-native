@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '../../helpers/components';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { Surface } from '../surface';
 import { DISPLAY_NAME } from './card.constants';

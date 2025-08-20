@@ -1,11 +1,6 @@
 import { cloneElement, forwardRef, useMemo } from 'react';
-import {
-  Pressable,
-  Text,
-  View,
-  type GestureResponderEvent,
-} from 'react-native';
-
+import { Pressable, View, type GestureResponderEvent } from 'react-native';
+import { Text } from '../../helpers/components';
 import {
   createContext,
   getElementByDisplayName,
@@ -46,7 +41,6 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     orientation = 'horizontal',
     alignIndicator = 'end',
     isDisabled = false,
-    isReadOnly = false,
     isInline = false,
     isInvalid = false,
     ...restProps
@@ -71,17 +65,11 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     orientation,
     alignIndicator,
     isDisabled,
-    isReadOnly,
     className,
   });
 
   const handlePress = (e: GestureResponderEvent) => {
-    if (
-      !isDisabled &&
-      !isReadOnly &&
-      onSelectedChange &&
-      isSelected !== undefined
-    ) {
+    if (!isDisabled && onSelectedChange && isSelected !== undefined) {
       onSelectedChange(!isSelected);
 
       if (props.onPress && typeof props.onPress === 'function') {
@@ -95,11 +83,10 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
       isSelected,
       onSelectedChange,
       isDisabled,
-      isReadOnly,
       isInline,
       isInvalid,
     }),
-    [isSelected, onSelectedChange, isDisabled, isReadOnly, isInline, isInvalid]
+    [isSelected, onSelectedChange, isDisabled, isInline, isInvalid]
   );
 
   return (
@@ -109,7 +96,7 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
           ref={ref}
           className={tvStyles}
           onPress={handlePress}
-          disabled={isDisabled || isReadOnly}
+          disabled={isDisabled}
           {...restProps}
         >
           {orientation === 'horizontal' ? (
@@ -204,7 +191,7 @@ const FormFieldDescription = forwardRef<View, FormFieldDescriptionProps>(
 const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
-    const { isSelected, onSelectedChange, isDisabled, isReadOnly, isInvalid } =
+    const { isSelected, onSelectedChange, isDisabled, isInvalid } =
       useFormFieldContext();
 
     const tvStyles = formFieldStyles.indicator({
@@ -222,19 +209,12 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
           !hasProp(child, 'isSelected') && { isSelected }),
         ...(onSelectedChange &&
           !hasProp(child, 'onSelectedChange') && { onSelectedChange }),
-        ...(isDisabled && !hasProp(child, 'isDisabled') && { isDisabled }),
-        ...(isReadOnly && !hasProp(child, 'isReadOnly') && { isReadOnly }),
+        ...(isDisabled !== undefined &&
+          !hasProp(child, 'isDisabled') && { isDisabled }),
         ...(isInvalid !== undefined &&
           !hasProp(child, 'isInvalid') && { isInvalid }),
       });
-    }, [
-      children,
-      isSelected,
-      onSelectedChange,
-      isDisabled,
-      isReadOnly,
-      isInvalid,
-    ]);
+    }, [children, isSelected, onSelectedChange, isDisabled, isInvalid]);
 
     return (
       <Animated.View ref={ref} className={tvStyles} {...restProps}>
@@ -291,7 +271,7 @@ FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
  * component when children is a string, otherwise as a View.
  *
  * @component FormField.Indicator - Container for the control component (Switch, Checkbox).
- * Automatically passes down isSelected, onSelectedChange, isDisabled, and isReadOnly props.
+ * Automatically passes down isSelected, onSelectedChange, and isDisabled props.
  *
  * @component FormField.ErrorMessage - Error message displayed when field is invalid.
  * Shown with animation below the form field content.

@@ -1,5 +1,5 @@
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../theme/helpers';
+import { combineStyles } from '../../providers/theme/helpers';
 
 const radioRoot = tv({
   base: 'flex-row items-center gap-3',
@@ -7,13 +7,9 @@ const radioRoot = tv({
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',
     },
-    isReadOnly: {
-      true: 'pointer-events-none',
-    },
   },
   defaultVariants: {
     isDisabled: false,
-    isReadOnly: false,
   },
 });
 
@@ -45,22 +41,12 @@ const content = tv({
   },
 });
 
-const label = tv({
-  base: 'text-foreground font-medium text-base',
-});
-
-const description = tv({
-  base: 'text-muted-foreground text-base',
-});
-
 const radioStyles = combineStyles({
   radioRoot,
   indicator,
   background,
   thumb,
   content,
-  label,
-  description,
 });
 
 export default radioStyles;

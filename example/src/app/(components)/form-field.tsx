@@ -1,71 +1,67 @@
-import { Checkbox, FormField, Switch } from 'heroui-native';
+import { Checkbox, DropShadowView, FormField, Switch } from 'heroui-native';
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { View } from 'react-native';
+import { ScreenScrollView } from '../../components/screen-scroll-view';
+import { SectionTitle } from '../../components/section-title';
 
 export default function FormFieldScreen() {
-  const [switchValue1, setSwitchValue1] = React.useState(false);
-  const [switchValue2, setSwitchValue2] = React.useState(true);
-  const [switchValue3, setSwitchValue3] = React.useState(false);
-  const [checkboxValue1, setCheckboxValue1] = React.useState(false);
-  const [checkboxValue2, setCheckboxValue2] = React.useState(true);
+  // Basic usage states
+  const [notifications, setNotifications] = React.useState(false);
+  const [darkMode, setDarkMode] = React.useState(false);
+  const [autoUpdate, setAutoUpdate] = React.useState(true);
+
+  // Checkbox states
+  const [terms, setTerms] = React.useState(false);
+  const [newsletter, setNewsletter] = React.useState(true);
+  const [marketing, setMarketing] = React.useState(false);
+
+  // Inline states
+  const [option1, setOption1] = React.useState(true);
+  const [option2, setOption2] = React.useState(false);
+  const [option3, setOption3] = React.useState(true);
+
+  // Vertical orientation states
+  const [verticalSwitch, setVerticalSwitch] = React.useState(false);
+  const [verticalCheckbox, setVerticalCheckbox] = React.useState(true);
+
+  // Disabled states
   const [disabledSwitch, setDisabledSwitch] = React.useState(true);
-  const [readonlySwitch, setReadonlySwitch] = React.useState(true);
+
+  // Validation states
+  const [privacyAccepted, setPrivacyAccepted] = React.useState(false);
+  const [dataSharing, setDataSharing] = React.useState(false);
+
+  // Different indicator alignments
+  const [startAlign, setStartAlign] = React.useState(true);
+  const [endAlign, setEndAlign] = React.useState(false);
 
   return (
-    <ScrollView
-      className="bg-background"
-      contentContainerClassName="items-center justify-center p-4"
-      contentInsetAdjustmentBehavior="automatic"
-    >
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        With Switch
-      </Text>
+    <ScreenScrollView contentContainerClassName="gap-16">
+      <SectionTitle title="Basic Switch FormField" />
+      <FormField isSelected={notifications} onSelectedChange={setNotifications}>
+        <FormField.Content>
+          <FormField.Label>Enable notifications</FormField.Label>
+          <FormField.Description>
+            Receive push notifications about your account activity
+          </FormField.Description>
+        </FormField.Content>
+        <FormField.Indicator>
+          <Switch />
+        </FormField.Indicator>
+      </FormField>
 
-      <View className="w-full max-w-lg gap-4 mb-6">
-        <FormField
-          isSelected={switchValue1}
-          onSelectedChange={setSwitchValue1}
-          isInvalid={switchValue1}
-        >
+      <SectionTitle title="Switch Without Description" />
+      <View className="gap-8">
+        <FormField isSelected={darkMode} onSelectedChange={setDarkMode}>
           <FormField.Content>
-            <FormField.Label>Enable notifications</FormField.Label>
-            <FormField.Description>
-              Receive push notifications about your account activity
-            </FormField.Description>
+            <FormField.Label>Dark mode</FormField.Label>
           </FormField.Content>
           <FormField.Indicator>
             <Switch />
           </FormField.Indicator>
         </FormField>
 
-        <View className="flex-row flex-wrap gap-x-6 gap-y-3">
-          <FormField
-            isSelected={switchValue2}
-            onSelectedChange={setSwitchValue2}
-            isInline
-          >
-            <FormField.Content>
-              <FormField.Label>Dark mode</FormField.Label>
-            </FormField.Content>
-            <FormField.Indicator>
-              <Switch />
-            </FormField.Indicator>
-          </FormField>
-          <FormField
-            isSelected={switchValue2}
-            onSelectedChange={setSwitchValue2}
-            isInline
-          >
-            <FormField.Content>
-              <FormField.Label>Dark mode</FormField.Label>
-            </FormField.Content>
-            <FormField.Indicator>
-              <Switch />
-            </FormField.Indicator>
-          </FormField>
-        </View>
-
-        <FormField isSelected={switchValue3} onSelectedChange={setSwitchValue3}>
+        <FormField isSelected={autoUpdate} onSelectedChange={setAutoUpdate}>
           <FormField.Content>
             <FormField.Label>Enable automatic updates</FormField.Label>
           </FormField.Content>
@@ -75,15 +71,155 @@ export default function FormFieldScreen() {
         </FormField>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        With Checkbox
-      </Text>
+      <SectionTitle title="Checkbox FormField" />
+      <View className="gap-8">
+        <FormField isSelected={newsletter} onSelectedChange={setNewsletter}>
+          <FormField.Content>
+            <FormField.Label>Subscribe to newsletter</FormField.Label>
+            <FormField.Description>
+              Get weekly updates about new features and tips
+            </FormField.Description>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Checkbox color="warning" />
+          </FormField.Indicator>
+        </FormField>
 
-      <View className="w-full max-w-lg gap-4 mb-6">
+        <FormField isSelected={marketing} onSelectedChange={setMarketing}>
+          <FormField.Content>
+            <FormField.Label>Marketing communications</FormField.Label>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Checkbox />
+          </FormField.Indicator>
+        </FormField>
+      </View>
+
+      <SectionTitle title="Inline Layout (Compact)" />
+      <View className="flex-row flex-wrap gap-6">
+        <FormField isSelected={option1} onSelectedChange={setOption1} isInline>
+          <FormField.Content>
+            <FormField.Label>WiFi</FormField.Label>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Switch />
+          </FormField.Indicator>
+        </FormField>
+
+        <FormField isSelected={option2} onSelectedChange={setOption2} isInline>
+          <FormField.Content>
+            <FormField.Label>Bluetooth</FormField.Label>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Switch />
+          </FormField.Indicator>
+        </FormField>
+
+        <FormField isSelected={option3} onSelectedChange={setOption3} isInline>
+          <FormField.Content>
+            <FormField.Label>Location</FormField.Label>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Switch />
+          </FormField.Indicator>
+        </FormField>
+      </View>
+
+      <SectionTitle title="Vertical Orientation" />
+      <View className="gap-8">
         <FormField
-          isSelected={checkboxValue1}
-          onSelectedChange={setCheckboxValue1}
-          isInvalid={!checkboxValue1}
+          isSelected={verticalSwitch}
+          onSelectedChange={setVerticalSwitch}
+          orientation="vertical"
+        >
+          <FormField.Content>
+            <FormField.Label>Vertical Switch Layout</FormField.Label>
+            <FormField.Description>
+              The control appears above the text content in this layout
+            </FormField.Description>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Switch />
+          </FormField.Indicator>
+        </FormField>
+
+        <FormField
+          isSelected={verticalCheckbox}
+          onSelectedChange={setVerticalCheckbox}
+          orientation="vertical"
+        >
+          <FormField.Content>
+            <FormField.Label>Vertical Checkbox Layout</FormField.Label>
+            <FormField.Description>
+              Perfect for cards or when you want the control to be prominent
+            </FormField.Description>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Checkbox color="danger" />
+          </FormField.Indicator>
+        </FormField>
+      </View>
+
+      <SectionTitle title="Indicator Alignment" />
+      <View className="gap-8">
+        <FormField
+          isSelected={startAlign}
+          onSelectedChange={setStartAlign}
+          alignIndicator="start"
+        >
+          <FormField.Content>
+            <FormField.Label>Control on the left</FormField.Label>
+            <FormField.Description>
+              The indicator is aligned to the start (left side)
+            </FormField.Description>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Switch />
+          </FormField.Indicator>
+        </FormField>
+
+        <FormField
+          isSelected={endAlign}
+          onSelectedChange={setEndAlign}
+          alignIndicator="end"
+        >
+          <FormField.Content>
+            <FormField.Label>Control on the right (default)</FormField.Label>
+            <FormField.Description>
+              The indicator is aligned to the end (right side)
+            </FormField.Description>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Checkbox />
+          </FormField.Indicator>
+        </FormField>
+      </View>
+
+      <SectionTitle title="Disabled State" />
+      <View className="gap-8">
+        <FormField
+          isSelected={disabledSwitch}
+          onSelectedChange={setDisabledSwitch}
+          isDisabled
+        >
+          <FormField.Content>
+            <FormField.Label>Disabled control</FormField.Label>
+            <FormField.Description>
+              This entire field is disabled and cannot be interacted with
+            </FormField.Description>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Switch />
+          </FormField.Indicator>
+        </FormField>
+      </View>
+
+      <SectionTitle title="Validation & Error States" />
+      <View className="gap-8">
+        <FormField
+          isSelected={terms}
+          onSelectedChange={setTerms}
+          isInvalid={!terms}
         >
           <FormField.Content>
             <FormField.Label>
@@ -94,68 +230,97 @@ export default function FormFieldScreen() {
               Privacy Policy
             </FormField.Description>
           </FormField.Content>
-          <FormField.Indicator className="mt-0.5">
+          <FormField.Indicator>
             <Checkbox />
           </FormField.Indicator>
           <FormField.ErrorMessage>
-            This field is required
+            You must accept the terms to continue
           </FormField.ErrorMessage>
         </FormField>
 
         <FormField
-          isSelected={checkboxValue2}
-          onSelectedChange={setCheckboxValue2}
-          isInvalid={!checkboxValue2}
+          isSelected={privacyAccepted}
+          onSelectedChange={setPrivacyAccepted}
+          isInvalid={!privacyAccepted}
         >
           <FormField.Content>
-            <FormField.Label>Subscribe to newsletter</FormField.Label>
+            <FormField.Label>Accept Privacy Policy</FormField.Label>
+            <FormField.Description>
+              You must accept our privacy policy to create an account
+            </FormField.Description>
           </FormField.Content>
           <FormField.Indicator>
-            <Checkbox color="warning" />
+            <Checkbox isInvalid={false} />
           </FormField.Indicator>
           <FormField.ErrorMessage>
-            This field is required
+            Please accept the privacy policy to continue
+          </FormField.ErrorMessage>
+        </FormField>
+
+        <FormField
+          isSelected={dataSharing}
+          onSelectedChange={setDataSharing}
+          isInvalid={dataSharing}
+        >
+          <FormField.Content>
+            <FormField.Label>Share usage data</FormField.Label>
+            <FormField.Description>
+              Help improve our product by sharing anonymous usage data
+            </FormField.Description>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Switch />
+          </FormField.Indicator>
+          <FormField.ErrorMessage>
+            Warning: This will share your usage patterns
           </FormField.ErrorMessage>
         </FormField>
       </View>
 
-      <Text className="text-lg font-bold text-muted-foreground mb-4">
-        States
-      </Text>
-
-      <View className="w-full max-w-lg gap-4 mb-6">
+      <SectionTitle title="Custom Styling" />
+      <View className="gap-8">
         <FormField
-          isSelected={disabledSwitch}
-          onSelectedChange={setDisabledSwitch}
-          isDisabled
+          isSelected={notifications}
+          onSelectedChange={setNotifications}
+          className="bg-surface-2 p-4 rounded-lg border border-border"
         >
           <FormField.Content>
-            <FormField.Label>Disabled control</FormField.Label>
-            <FormField.Description>
-              This control is disabled
+            <FormField.Label classNames={{ text: 'text-lg font-semibold' }}>
+              Premium Feature
+            </FormField.Label>
+            <FormField.Description classNames={{ text: 'text-sm' }}>
+              This is a premium feature with custom styling
             </FormField.Description>
           </FormField.Content>
           <FormField.Indicator>
-            <Switch />
+            <Switch color="success" />
           </FormField.Indicator>
         </FormField>
 
-        <FormField
-          isSelected={readonlySwitch}
-          onSelectedChange={setReadonlySwitch}
-          isReadOnly
+        <DropShadowView
+          shadowSize="xl"
+          shadowColor="orange"
+          className="bg-white rounded-xl"
         >
-          <FormField.Content>
-            <FormField.Label>Read-only control</FormField.Label>
-            <FormField.Description>
-              This control is read-only
-            </FormField.Description>
-          </FormField.Content>
-          <FormField.Indicator>
-            <Switch />
-          </FormField.Indicator>
-        </FormField>
+          <FormField
+            isSelected={darkMode}
+            onSelectedChange={setDarkMode}
+            className="bg-accent/10 p-4 rounded-xl"
+          >
+            <FormField.Content className="gap-1.5">
+              <FormField.Label classNames={{ text: 'text-accent font-bold' }}>
+                Highlighted Option
+              </FormField.Label>
+              <FormField.Description classNames={{ text: 'text-amber-600' }}>
+                This option has custom background and text colors
+              </FormField.Description>
+            </FormField.Content>
+            <FormField.Indicator>
+              <Checkbox color="warning" />
+            </FormField.Indicator>
+          </FormField>
+        </DropShadowView>
       </View>
-    </ScrollView>
+    </ScreenScrollView>
   );
 }

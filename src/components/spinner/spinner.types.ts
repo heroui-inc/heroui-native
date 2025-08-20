@@ -1,7 +1,6 @@
 import type { ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
-import * as ActivityIndicatorPrimitivesTypes from '../../primitives/activity-indicator';
 
 /**
  * Base spinner size variants
@@ -16,8 +15,7 @@ export type SpinnerColor = 'default' | 'success' | 'warning' | 'danger';
 /**
  * Props for the main Spinner component
  */
-export interface SpinnerProps
-  extends ActivityIndicatorPrimitivesTypes.RootProps {
+export interface SpinnerProps extends AnimatedProps<ViewProps> {
   /** Content to render inside the spinner */
   children?: React.ReactNode;
 
@@ -26,6 +24,9 @@ export interface SpinnerProps
 
   /** Color theme of the spinner @default 'default' */
   color?: SpinnerColor | (string & {});
+
+  /** Whether the spinner is loading @default true */
+  isLoading?: boolean;
 
   /** Custom class name for the spinner */
   className?: string;

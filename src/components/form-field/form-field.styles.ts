@@ -1,5 +1,5 @@
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../theme/helpers';
+import { combineStyles } from '../../providers/theme/helpers';
 
 const root = tv({
   base: 'flex-row items-center gap-3',
@@ -15,15 +15,11 @@ const root = tv({
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',
     },
-    isReadOnly: {
-      true: 'pointer-events-none',
-    },
   },
   defaultVariants: {
     orientation: 'horizontal',
     alignIndicator: 'end',
     isDisabled: false,
-    isReadOnly: false,
   },
 });
 
@@ -47,7 +43,7 @@ const label = tv({
 const description = tv({
   slots: {
     container: '',
-    text: 'text-muted-foreground text-sm',
+    text: 'text-muted-foreground text-sm font-normal',
   },
 });
 

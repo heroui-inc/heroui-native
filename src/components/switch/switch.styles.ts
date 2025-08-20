@@ -1,5 +1,5 @@
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../theme/helpers';
+import { combineStyles } from '../../providers/theme/helpers';
 
 const root = tv({
   slots: {
@@ -13,15 +13,9 @@ const root = tv({
         container: 'opacity-disabled pointer-events-none',
       },
     },
-    isReadOnly: {
-      true: {
-        container: 'pointer-events-none',
-      },
-    },
   },
   defaultVariants: {
     isDisabled: false,
-    isReadOnly: false,
   },
 });
 

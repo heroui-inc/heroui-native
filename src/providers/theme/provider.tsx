@@ -198,17 +198,23 @@ export const ThemeProvider = ({
    * Sets the active theme and updates all related state
    *
    * Actions performed:
-   * 1. Update local theme state
+   * 1. Update runtime color constants for the new theme
    * 2. Update NativeWind's color scheme (for system integration)
-   * 3. Update runtime color constants for the new theme
+   * 3. Delay theme state update to allow NativeWind cache flush
+   *
+   * IMPORTANT: The 10ms delay before setCurrentTheme is critical for proper
+   * style updates. It allows NativeWind to process the color scheme change
+   * and flush its internal style cache before new theme styles are applied.
    *
    * @param {ColorScheme} theme - Theme to switch to ('light' | 'dark')
    */
   const setTheme = useCallback(
     (theme: ColorScheme) => {
-      setCurrentTheme(theme);
-      colorSchemeNativeWind.set(theme); // NativeWind system integration
       setColors(mergedColors[theme]); // Update runtime colors
+      colorSchemeNativeWind.set(theme); // NativeWind system integration
+      setTimeout(() => {
+        setCurrentTheme(theme); // Delayed to ensure NativeWind cache flush
+      }, 10);
     },
     [mergedColors]
   );

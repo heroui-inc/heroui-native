@@ -11,7 +11,7 @@ import type {
  */
 type RootContext = {
   /** Whether the accordion allows single or multiple expanded items */
-  selectionMode: 'single' | 'multiple';
+  selectionMode?: 'single' | 'multiple';
   /** Currently expanded item(s) - string for single, array for multiple */
   value: (string | undefined) | string[];
   /** Callback when expanded items change */
@@ -29,7 +29,7 @@ type RootContext = {
  */
 type SingleRootProps = {
   /** Single selection mode */
-  selectionMode: 'single';
+  selectionMode?: 'single';
   /** Default expanded item in uncontrolled mode */
   defaultValue?: string | undefined;
   /** Controlled expanded item */
@@ -43,7 +43,7 @@ type SingleRootProps = {
  */
 type MultipleRootProps = {
   /** Multiple selection mode */
-  selectionMode: 'multiple';
+  selectionMode?: 'multiple';
   /** Default expanded items in uncontrolled mode */
   defaultValue?: string[];
   /** Controlled expanded items */

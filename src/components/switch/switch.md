@@ -50,7 +50,7 @@ Add icons or text that appear on each side of the switch.
 
 ```tsx
 import { Switch } from 'heroui-native';
-import { Moon, Sun } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { ZoomIn } from 'react-native-reanimated';
@@ -84,14 +84,14 @@ export default function SwitchExample() {
         <Switch.StartContent className="left-0.5">
           {darkMode && (
             <Animated.View key="sun" entering={ZoomIn}>
-              <Sun size={16} color="#854d0e" strokeWidth={3} />
+              <Ionicons name="sunny" size={16} color="#854d0e" />
             </Animated.View>
           )}
         </Switch.StartContent>
         <Switch.EndContent className="right-0.5">
           {!darkMode && (
             <Animated.View key="moon" entering={ZoomIn}>
-              <Moon size={16} color="#dbeafe" />
+              <Ionicons name="moon" size={16} color="#dbeafe" />
             </Animated.View>
           )}
         </Switch.EndContent>
@@ -126,7 +126,6 @@ export default function SwitchExample() {
 | `color`             | `'default' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Color theme of the switch                                                  |
 | `isSelected`        | `boolean`                                         | `undefined` | Whether the switch is currently selected                                   |
 | `isDisabled`        | `boolean`                                         | `false`     | Whether the switch is disabled and cannot be interacted with               |
-| `isReadOnly`        | `boolean`                                         | `false`     | Whether the switch is read-only                                            |
 | `className`         | `string`                                          | `undefined` | Custom class name for the switch                                           |
 | `classNames`        | `ElementSlots<RootSlots>`                         | `undefined` | Custom class names for different parts of the component                    |
 | `colors`            | `SwitchColors`                                    | `undefined` | Custom colors for different switch states                                  |

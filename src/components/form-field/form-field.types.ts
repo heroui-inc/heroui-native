@@ -1,6 +1,6 @@
 import type { PressableProps, ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
-import type { ElementSlots } from '../../theme';
+import type { ElementSlots } from '../../providers/theme';
 
 type FormFieldAlignIndicator = 'start' | 'end';
 
@@ -21,9 +21,6 @@ interface FormFieldBaseProps extends AnimatedProps<PressableProps> {
 
   /** Whether the form control is disabled @default false */
   isDisabled?: boolean;
-
-  /** Whether the form control is read-only @default false */
-  isReadOnly?: boolean;
 
   /** Whether the form control is inline (using inside flex-row container) @default false */
   isInline?: boolean;
@@ -127,10 +124,5 @@ export interface FormFieldIndicatorProps extends AnimatedProps<ViewProps> {
 export interface FormFieldContextValue
   extends Pick<
     FormFieldBaseProps,
-    | 'isSelected'
-    | 'onSelectedChange'
-    | 'isDisabled'
-    | 'isReadOnly'
-    | 'isInline'
-    | 'isInvalid'
+    'isSelected' | 'onSelectedChange' | 'isDisabled' | 'isInline' | 'isInvalid'
   > {}

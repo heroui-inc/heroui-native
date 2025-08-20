@@ -1,10 +1,21 @@
 import { Stack } from 'expo-router';
 import { useTheme } from 'heroui-native';
-import { Platform } from 'react-native';
+import { Image, Platform, StyleSheet } from 'react-native';
 import { ThemeToggle } from '../../components/theme-toggle';
 
 export default function Layout() {
   const { theme, colors } = useTheme();
+
+  const _renderTitle = () => {
+    return (
+      <Image
+        source={{
+          uri: 'https://raw.githubusercontent.com/heroui-inc/heroui/main/apps/docs/public/isotipo.png',
+        }}
+        style={styles.logo}
+      />
+    );
+  };
 
   const _renderThemeToggle = () => <ThemeToggle />;
 
@@ -24,6 +35,9 @@ export default function Layout() {
             android: colors.background,
           }),
         },
+        headerTitleStyle: {
+          fontFamily: 'Inter_600SemiBold',
+        },
         headerBackButtonDisplayMode: 'minimal',
         headerRight: _renderThemeToggle,
         gestureEnabled: true,
@@ -31,8 +45,7 @@ export default function Layout() {
         fullScreenGestureEnabled: true,
       }}
     >
-      <Stack.Screen name="index" options={{ title: 'HeroUI Native' }} />
-      <Stack.Screen name="theme" options={{ title: 'Theme' }} />
+      <Stack.Screen name="index" options={{ headerTitle: _renderTitle }} />
       <Stack.Screen name="accordion" options={{ title: 'Accordion' }} />
       <Stack.Screen name="button" options={{ title: 'Button' }} />
       <Stack.Screen name="card" options={{ title: 'Card' }} />
@@ -41,14 +54,15 @@ export default function Layout() {
       <Stack.Screen name="divider" options={{ title: 'Divider' }} />
       <Stack.Screen
         name="drop-shadow-view"
-        options={{ title: 'DropShadowView' }}
+        options={{ title: 'Drop Shadow View' }}
       />
-      <Stack.Screen name="form-field" options={{ title: 'FormField' }} />
+      <Stack.Screen name="form-field" options={{ title: 'Form Field' }} />
       <Stack.Screen name="radio" options={{ title: 'Radio' }} />
       <Stack.Screen name="spinner" options={{ title: 'Spinner' }} />
       <Stack.Screen name="surface" options={{ title: 'Surface' }} />
       <Stack.Screen name="switch" options={{ title: 'Switch' }} />
       <Stack.Screen name="text-field" options={{ title: 'TextField' }} />
+      <Stack.Screen name="error-field" options={{ title: 'Error Field' }} />
       <Stack.Screen
         name="theme-showcase"
         options={{ title: 'Theme Showcase' }}
@@ -56,3 +70,10 @@ export default function Layout() {
     </Stack>
   );
 }
+
+const styles = StyleSheet.create({
+  logo: {
+    width: 24,
+    height: 24,
+  },
+});

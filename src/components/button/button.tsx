@@ -1,20 +1,16 @@
 import { forwardRef, useCallback, useMemo } from 'react';
-import {
-  Pressable,
-  Text,
-  View,
-  type GestureResponderEvent,
-} from 'react-native';
+import { Pressable, View, type GestureResponderEvent } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { Text } from '../../helpers/components';
 import type { PressableRef } from '../../helpers/types';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
 import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
-import { useTheme } from '../../theme';
+import { useTheme } from '../../providers/theme';
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,

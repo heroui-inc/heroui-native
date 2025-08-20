@@ -10,13 +10,12 @@ import Animated, {
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as AccordionPrimitive from '../../primitives/accordion';
-import { useTheme } from '../../theme';
+import { useTheme } from '../../providers/theme';
 import {
   ACCORDION_LAYOUT_TRANSITION,
   DEFAULT_CONTENT_ENTERING,
   DEFAULT_CONTENT_EXITING,
   DEFAULT_ICON_SIZE,
-  DEFAULT_ICON_STROKE_WIDTH,
   DISPLAY_NAME,
   HIGHLIGHT_CONFIG,
   INDICATOR_SPRING_CONFIG,
@@ -255,7 +254,6 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
     >
       <ChevronDownIcon
         size={iconProps?.size ?? DEFAULT_ICON_SIZE}
-        strokeWidth={iconProps?.strokeWidth ?? DEFAULT_ICON_STROKE_WIDTH}
         color={iconProps?.color ?? colors.foreground}
       />
     </AnimatedIndicator>

@@ -1,6 +1,6 @@
 import { useHeaderHeight } from '@react-navigation/elements';
 import { type FC, type PropsWithChildren } from 'react';
-import { ScrollView, type ScrollViewProps } from 'react-native';
+import { Platform, ScrollView, type ScrollViewProps } from 'react-native';
 import Animated, { type AnimatedProps } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { cn } from '../helpers/utils/cn';
@@ -25,7 +25,10 @@ export const ScreenScrollView: FC<PropsWithChildren<Props>> = ({
       className={cn('bg-background', className)}
       contentContainerClassName={cn('px-5', contentContainerClassName)}
       contentContainerStyle={{
-        paddingTop: headerHeight,
+        paddingTop: Platform.select({
+          ios: headerHeight,
+          android: 0,
+        }),
         paddingBottom: insets.bottom + 32,
       }}
       showsVerticalScrollIndicator={false}

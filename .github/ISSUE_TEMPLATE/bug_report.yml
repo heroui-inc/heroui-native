@@ -36,14 +36,14 @@ body:
     attributes:
       label: Library version
       description: What version of the library are you using?
-      placeholder: "x.x.x"
+      placeholder: 'x.x.x'
     validations:
       required: true
   - type: textarea
     id: react-native-info
     attributes:
       label: Environment info
-      description: Run `react-native info` in your terminal and paste the results here.
+      description: Run `npx react-native info` in your terminal and paste the results here. If you get an error, first install `@react-native-community/cli` as a dev dependency.
       render: shell
     validations:
       required: true
@@ -61,7 +61,7 @@ body:
   - type: input
     id: reproducible-example
     attributes:
-      label: Reproducible example repository 
+      label: Reproducible example repository
       description: Please provide a link to a repository on GitHub with a reproducible example.
     validations:
       required: true

@@ -40,11 +40,12 @@
   "scripts": {
     "example": "yarn workspace heroui-native-example",
     "test": "jest",
-    "typecheck": "tsc",
+    "typecheck": "tsc -p tsconfig.build.json && yarn example typecheck",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",
+    "sync-version": "bash ./scripts/sync-version.sh",
     "release": "bumpp --execute='yarn changelog' --all"
   },
   "keywords": [

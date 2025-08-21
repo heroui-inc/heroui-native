@@ -111,7 +111,7 @@ export default function App() {
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
         <AppText className="text-muted-foreground text-base">
-          v1.0.0-alpha.4
+          v1.0.0-alpha.6
         </AppText>
       </View>
       <Accordion variant="border" isCollapsible={false}>

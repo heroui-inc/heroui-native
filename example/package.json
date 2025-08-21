@@ -6,7 +6,8 @@
     "start": "expo start -c",
     "android": "expo start --android -c",
     "ios": "expo start --ios -c",
-    "web": "expo start --web -c"
+    "web": "expo start --web -c",
+    "typecheck": "npx --package=typescript tsc --noEmit"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.4.1",

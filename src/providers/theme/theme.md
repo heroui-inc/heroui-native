@@ -159,7 +159,7 @@ module.exports = {
       },
     },
   },
-  plugins: [herouiNative],
+  plugins: [heroUINativePlugin],
 };
 ```
 

@@ -66,8 +66,8 @@ export default function SurfaceScreen() {
           </View>
         </Surface>
 
-        <Surface variant="2" className="bg-accent-soft">
-          <AppText className="text-accent-soft-foreground">
+        <Surface variant="2" className="bg-lime-100">
+          <AppText className="text-lime-800">
             Surface with custom background color
           </AppText>
         </Surface>

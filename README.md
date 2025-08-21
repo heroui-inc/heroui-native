@@ -40,7 +40,7 @@ Follow the [NativeWind installation guide](https://www.nativewind.dev/docs/getti
 Update your `tailwind.config.js` to include the HeroUI Native plugin:
 
 ```javascript
-import { herouiNative } from 'heroui-native';
+import heroUINativePlugin from "heroui-native/tailwind-plugin"
 
 module.exports = {
   content: [
@@ -51,9 +51,11 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [herouiNative],
+  plugins: [heroUINativePlugin],
 };
 ```
+
+> **Important:** Import the tailwind plugin from `heroui-native/tailwind-plugin` and not from `heroui-native`.
 
 > **Important:** The `'./node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}'` path is crucial for Tailwind to process the library's component styles. Without it, HeroUI Native components won't be styled correctly.
 

@@ -11,6 +11,11 @@
       "types": "./lib/typescript/src/index.d.ts",
       "default": "./lib/module/index.js"
     },
+    "./tailwind-plugin": {
+      "source": "./src/providers/theme/plugin.ts",
+      "types": "./lib/typescript/src/providers/theme/plugin.d.ts",
+      "default": "./lib/module/providers/theme/plugin.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [

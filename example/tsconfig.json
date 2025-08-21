@@ -2,11 +2,5 @@
   "extends": "../tsconfig",
   "compilerOptions": {
     // Avoid expo-cli auto-generating a tsconfig
-    "skipLibCheck": true,
-    "paths": {
-      "heroui-native": ["../lib/typescript/src/index"]
-    }
-  },
-  "include": ["src/**/*", "nativewind-env.d.ts", "*.js"],
-  "exclude": ["node_modules"]
+  }
 }

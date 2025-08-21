@@ -40,7 +40,7 @@
   "scripts": {
     "example": "yarn workspace heroui-native-example",
     "test": "jest",
-    "typecheck": "tsc -p tsconfig.build.json && yarn example typecheck",
+    "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",

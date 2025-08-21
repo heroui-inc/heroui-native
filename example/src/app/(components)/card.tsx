@@ -80,80 +80,218 @@ export default function CardScreen() {
         </Card.Details>
       </Card>
       <SectionTitle title="Card with Image" />
-      <Card className="p-0">
+      <View className="gap-8">
+        <Card className="p-0">
+          <Image
+            source={{
+              uri: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
+            }}
+            style={{ height: 200 }}
+            resizeMode="cover"
+          />
+          <Card.Details className="p-4">
+            <Card.Body className="mb-2 pb-4">
+              <View className="gap-1 mb-2">
+                <Card.Title className="text-pink-400">$450</Card.Title>
+                <Card.Title>
+                  Living room Sofa <AppText className="text-sm">✦</AppText>{' '}
+                  Collection 2025
+                </Card.Title>
+              </View>
+              <Card.Description>
+                This sofa is perfect for modern tropical spaces, baroque
+                inspired spaces.
+              </Card.Description>
+            </Card.Body>
+            <Card.Footer className="gap-3">
+              <Button variant="primary">
+                <Button.Label>Buy now</Button.Label>
+              </Button>
+              <Button variant="ghost">
+                <Button.Label>Add to cart</Button.Label>
+                <Button.EndContent>
+                  <Ionicons
+                    name="basket-outline"
+                    size={16}
+                    color={colors.mutedForeground}
+                  />
+                </Button.EndContent>
+              </Button>
+            </Card.Footer>
+          </Card.Details>
+        </Card>
+        <View className="flex-row gap-4">
+          <Card surfaceVariant="2" className="flex-1 rounded-xl">
+            <Card.Details>
+              <Card.Header>
+                <Image
+                  source={{
+                    uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/robot1.jpg',
+                  }}
+                  style={{
+                    height: 60,
+                    aspectRatio: 1,
+                    borderRadius: 12,
+                  }}
+                  resizeMode="cover"
+                />
+              </Card.Header>
+              <Card.Body>
+                <Card.Title>Indie Hackers</Card.Title>
+                <Card.Description className="mb-4">
+                  148 members
+                </Card.Description>
+              </Card.Body>
+              <Card.Footer className="flex-row items-center gap-2">
+                <View className="w-4 h-4 rounded-full bg-rose-400" />
+                <AppText className="text-sm font-medium text-foreground">
+                  @indiehackers
+                </AppText>
+              </Card.Footer>
+            </Card.Details>
+          </Card>
+          <Card surfaceVariant="2" className="flex-1 rounded-xl">
+            <Card.Details>
+              <Card.Header>
+                <Image
+                  source={{
+                    uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/robot2.jpg',
+                  }}
+                  style={{
+                    height: 60,
+                    aspectRatio: 1,
+                    borderRadius: 12,
+                  }}
+                  resizeMode="cover"
+                />
+              </Card.Header>
+              <Card.Body>
+                <Card.Title>AI Builders</Card.Title>
+                <Card.Description className="mb-4">
+                  362 members
+                </Card.Description>
+              </Card.Body>
+              <Card.Footer className="flex-row items-center gap-2">
+                <View className="w-4 h-4 rounded-full bg-emerald-400" />
+                <AppText className="text-sm font-medium text-foreground">
+                  @aibuilders
+                </AppText>
+              </Card.Footer>
+            </Card.Details>
+          </Card>
+        </View>
+      </View>
+
+      <SectionTitle title="Horizontal Card With Image" />
+      <View className="gap-8">
+        <Card className="flex-row rounded-xl gap-4 p-4" surfaceVariant="2">
+          <Image
+            source={{
+              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/robot1.jpg',
+            }}
+            style={{
+              height: 110,
+              aspectRatio: 1,
+              borderRadius: 12,
+            }}
+            resizeMode="cover"
+          />
+          <Card.Details>
+            <Card.Body className="mb-2">
+              <Card.Title className="mb-1">Bringing the future</Card.Title>
+              <Card.Description numberOfLines={2}>
+                Today, 6:30 PM
+              </Card.Description>
+            </Card.Body>
+            <Card.Footer>
+              <Pressable className="flex-row items-center gap-1">
+                <AppText className="text-sm font-medium text-foreground">
+                  View Details
+                </AppText>
+                <Ionicons
+                  name="open-outline"
+                  size={12}
+                  color={colors.foreground}
+                />
+              </Pressable>
+            </Card.Footer>
+          </Card.Details>
+        </Card>
+        <Card className="flex-row rounded-xl gap-4 p-4" surfaceVariant="2">
+          <Image
+            source={{
+              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/car1.jpg',
+            }}
+            style={{
+              height: 110,
+              aspectRatio: 1,
+              borderRadius: 12,
+            }}
+            resizeMode="cover"
+          />
+          <Card.Details>
+            <Card.Body className="mb-2">
+              <Card.Title className="mb-1">Marketing Conf</Card.Title>
+              <Card.Description numberOfLines={2}>
+                Wed, 4:30 PM
+              </Card.Description>
+            </Card.Body>
+            <Card.Footer>
+              <Pressable className="flex-row items-center gap-1">
+                <AppText className="text-sm font-medium text-foreground">
+                  View Details
+                </AppText>
+                <Ionicons
+                  name="open-outline"
+                  size={12}
+                  color={colors.foreground}
+                />
+              </Pressable>
+            </Card.Footer>
+          </Card.Details>
+        </Card>
+      </View>
+
+      <SectionTitle title="Background Image Card" />
+      <Card className="aspect-square rounded-2xl">
         <Image
           source={{
-            uri: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
+            uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/dog1.jpg',
           }}
-          style={{ height: 200 }}
+          className="absolute inset-0"
           resizeMode="cover"
         />
-        <Card.Details className="p-4">
-          <Card.Body className="mb-2 pb-4">
-            <View className="gap-1 mb-2">
-              <Card.Title className="text-pink-400">$450</Card.Title>
-              <Card.Title>
-                Living room Sofa <AppText className="text-sm">✦</AppText>{' '}
-                Collection 2025
-              </Card.Title>
-            </View>
-            <Card.Description>
-              This sofa is perfect for modern tropical spaces, baroque inspired
-              spaces.
+        <LinearGradient
+          colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.8)']}
+          style={StyleSheet.absoluteFill}
+        />
+        <Card.Details className="justify-end h-full">
+          <Card.Body>
+            <Card.Title className="text-base text-white uppercase mb-0.5">
+              Pet health
+            </Card.Title>
+            <Card.Description className="text-neutral-200 font-semibold text-lg">
+              Your pet deserve the best
             </Card.Description>
           </Card.Body>
           <Card.Footer className="gap-3">
-            <Button variant="primary">
-              <Button.Label>Buy now</Button.Label>
-            </Button>
-            <Button variant="ghost">
-              <Button.Label>Add to cart</Button.Label>
-              <Button.EndContent>
-                <Ionicons
-                  name="basket-outline"
-                  size={16}
-                  color={colors.mutedForeground}
-                />
-              </Button.EndContent>
-            </Button>
+            <View className="flex-row items-center justify-between">
+              <View>
+                <AppText className="text-lg text-white">Available soon</AppText>
+                <AppText className="text-base font-medium text-neutral-400">
+                  Get notified
+                </AppText>
+              </View>
+              <Button variant="primary" size="sm" className="bg-white">
+                <Button.Label classNames={{ text: 'text-black' }}>
+                  Notify me
+                </Button.Label>
+              </Button>
+            </View>
           </Card.Footer>
         </Card.Details>
       </Card>
-      <SectionTitle title="Horizontal Card With Image" />
-      <Card className="flex-row gap-3 p-1.5" surfaceVariant="2">
-        <Image
-          source={{
-            uri: 'https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60',
-          }}
-          style={{
-            height: 110,
-            aspectRatio: 1,
-            borderRadius: 8,
-          }}
-          resizeMode="cover"
-        />
-        <Card.Details>
-          <Card.Body className="mb-2">
-            <Card.Title className="mb-1">The perfect latte</Card.Title>
-            <Card.Description numberOfLines={2}>
-              Caffè latte is a coffee beverage of Italian origin made with
-              espresso and steamed milk.
-            </Card.Description>
-          </Card.Body>
-          <Card.Footer>
-            <Pressable className="flex-row items-center gap-1">
-              <AppText className="text-sm font-medium text-foreground">
-                View Details
-              </AppText>
-              <Ionicons
-                name="open-outline"
-                size={12}
-                color={colors.foreground}
-              />
-            </Pressable>
-          </Card.Footer>
-        </Card.Details>
-      </Card>
+
       <SectionTitle title="Profile Onboarding Cards" />
       <ScrollView
         horizontal
@@ -252,39 +390,6 @@ export default function CardScreen() {
           </Card.Details>
         </Card>
       </ScrollView>
-
-      <SectionTitle title="Background Image Card" />
-      <Card className="aspect-video overflow-hidden">
-        <Image
-          source={{
-            uri: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1794&q=80',
-          }}
-          className="absolute inset-0"
-          resizeMode="cover"
-        />
-        <LinearGradient
-          colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.8)']}
-          style={StyleSheet.absoluteFill}
-        />
-        <Card.Details className="justify-end h-full">
-          <Card.Body>
-            <Card.Title className="text-lime-100 text-2xl font-bold mb-1">
-              Tokyo Skyline
-            </Card.Title>
-            <Card.Description className="text-lime-200 font-semibold">
-              Experience the vibrant city lights and modern architecture of
-              Japan's capital
-            </Card.Description>
-          </Card.Body>
-          <Card.Footer className="gap-3">
-            <Button variant="primary" className="bg-white">
-              <Button.Label classNames={{ text: 'text-black' }}>
-                Explore
-              </Button.Label>
-            </Button>
-          </Card.Footer>
-        </Card.Details>
-      </Card>
 
       <SectionTitle title="Surface Variants" />
 

@@ -1,3 +1,11 @@
+## 1.0.0-alpha.6 (2025-08-21)
+
+* fix: example app classname typecheck issue ([0846468](https://github.com/heroui-inc/heroui-native/commit/0846468))
+* fix: tailwind plugin import resolution ([affd469](https://github.com/heroui-inc/heroui-native/commit/affd469))
+* feat: add more card examples ([b5a9249](https://github.com/heroui-inc/heroui-native/commit/b5a9249))
+
+
+
 ## 1.0.0-alpha.5 (2025-08-20)
 
 * fix: tailwind plugin export ([4d8cbd6](https://github.com/heroui-inc/heroui-native/commit/4d8cbd6))

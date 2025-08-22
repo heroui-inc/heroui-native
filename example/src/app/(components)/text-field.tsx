@@ -12,7 +12,7 @@ export default function TextFieldScreen() {
   const [testFieldValue, setTestFieldValue] = useState('');
 
   return (
-    <KeyboardAvoidingView behavior="padding">
+    <KeyboardAvoidingView behavior="padding" className="flex-1 bg-background">
       <ScreenScrollView
         contentContainerClassName="gap-16"
         keyboardShouldPersistTaps="handled"

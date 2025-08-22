@@ -23,13 +23,25 @@ Make sure you have the latest version of [Expo Go](https://expo.dev/go) installe
 
 ### How to Access
 
-**Scan the QR Code** with your device's camera or Expo Go app:
+Choose one of the following methods to access the preview app:
+
+#### Option 1: Scan the QR Code
+
+Use your device's camera or Expo Go app to scan:
 
 <p align="center">
   <img width="200" src="./expo-go-qr.svg" alt="Expo Go QR Code" />
 </p>
 
 > **Note for Android users:** If scanning the QR code with your device's camera or other scanner apps redirects to a browser and shows a 404 error, open Expo Go first and use its built-in QR scanner instead.
+
+#### Option 2: Click the Link
+
+Open the preview app directly by clicking this link on your mobile device:
+
+**[https://link.heroui.com/native](https://link.heroui.com/native)**
+
+This will automatically open the app in Expo Go if it's installed on your device.
 
 ## Getting Started
 

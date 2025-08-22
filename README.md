@@ -37,9 +37,7 @@ Use your device's camera or Expo Go app to scan:
 
 #### Option 2: Click the Link
 
-Open the preview app directly by clicking this link on your mobile device:
-
-**[https://link.heroui.com/native-demo](https://link.heroui.com/native-demo)**
+**[📱 Open Demo App in Expo Go](https://link.heroui.com/native-demo)**
 
 This will automatically open the app in Expo Go if it's installed on your device.
 
@@ -63,7 +61,7 @@ npm install react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0
 
 > **Note:** We currently use tailwind-variants v1.0.0 as the latest version has known issues on Android devices. We're actively investigating this and will update once the issue is resolved.
 
-### 3. Set Up NativeWind
+### 3. Set Up Nativewind
 
 Follow the [NativeWind installation guide](https://www.nativewind.dev/docs/getting-started/installation) to set up Tailwind CSS for React Native.
 

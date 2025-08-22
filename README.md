@@ -35,7 +35,9 @@ You have two options to open the preview app:
 
 2. **Open the link directly** on your mobile device:
 
-   [exp://u.expo.dev/13560f7b-27d6-41e8-a677-0b4d06705e7e?runtime-version=1.0.0&channel-name=preview](exp://u.expo.dev/13560f7b-27d6-41e8-a677-0b4d06705e7e?runtime-version=1.0.0&channel-name=preview)
+   ```
+   exp://u.expo.dev/13560f7b-27d6-41e8-a677-0b4d06705e7e?runtime-version=1.0.0&channel-name=preview
+   ```
 
 ## Getting Started
 

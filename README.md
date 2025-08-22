@@ -30,7 +30,7 @@ Choose one of the following methods to access the preview app:
 Use your device's camera or Expo Go app to scan:
 
 <p align="center">
-  <img width="200" src="./expo-go-qr.svg" alt="Expo Go QR Code" />
+  <img width="20%" src="./expo-go-qr.png" alt="Expo Go QR Code" />
 </p>
 
 > **Note for Android users:** If scanning the QR code with your device's camera or other scanner apps redirects to a browser and shows a 404 error, open Expo Go first and use its built-in QR scanner instead.
@@ -39,7 +39,7 @@ Use your device's camera or Expo Go app to scan:
 
 Open the preview app directly by clicking this link on your mobile device:
 
-**[https://link.heroui.com/native](https://link.heroui.com/native)**
+**[https://link.heroui.com/native-demo](https://link.heroui.com/native-demo)**
 
 This will automatically open the app in Expo Go if it's installed on your device.
 

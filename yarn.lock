@@ -4956,9 +4956,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001735":
-  version: 1.0.30001736
-  resolution: "caniuse-lite@npm:1.0.30001736"
-  checksum: 1d664e9bbb4ecb9d2b410c06eedb036f151e2e3c7ca43d2405e5082fb5e394f8a802eb342987e7b5b01aa5b5b84633f679fc19bc12369405bc2f06c3e3374d54
+  version: 1.0.30001737
+  resolution: "caniuse-lite@npm:1.0.30001737"
+  checksum: 347ad0dccd76d04d86163fdd59ec89894660cced949252ff05c65aea4a35ffeba5814a60733c0b44ee1b56c083ae9aba4ab715b783ab72b69d8a653ef3ab6c9e
   languageName: node
   linkType: hard
 
@@ -6178,9 +6178,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.204":
-  version: 1.5.207
-  resolution: "electron-to-chromium@npm:1.5.207"
-  checksum: 1a80f7ae83197d7afe124cfa5ba605c2911f9ff8f1d553cc87d2dcb827f66c2318c7169c26e55301ce627e385c6884784c17528b6014201eab485d62c5f6f933
+  version: 1.5.208
+  resolution: "electron-to-chromium@npm:1.5.208"
+  checksum: 3b206597b3f11b9db304ea9fccb7dfc3fac0a078a0b5f294315cdde7b826870639ab48c053b5085f839175a143a7ab73396449cdb797cbb7c265a190f90843fb
   languageName: node
   linkType: hard
 
@@ -8059,6 +8059,7 @@ __metadata:
     react-native-safe-area-context: 5.4.0
     react-native-svg: ^15.12.1
     tailwind-merge: ^3.3.1
+    tailwind-variants: 1.0.0
   languageName: unknown
   linkType: soft
 

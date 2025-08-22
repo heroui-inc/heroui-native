@@ -1,3 +1,4 @@
+import { hairlineWidth } from 'nativewind/theme';
 import plugin from 'tailwindcss/plugin';
 
 const herouiNativeTailwindPlugin = plugin(function () {}, {
@@ -51,6 +52,15 @@ const herouiNativeTailwindPlugin = plugin(function () {}, {
         'link': 'hsl(var(--link))',
       },
       /* Layout */
+      height: {
+        hairline: hairlineWidth(),
+      },
+      width: {
+        hairline: hairlineWidth(),
+      },
+      borderWidth: {
+        hairline: hairlineWidth(),
+      },
       borderRadius: {
         'xs': 'calc(var(--radius) * 0.25)',
         'sm': 'calc(var(--radius) * 0.5)',

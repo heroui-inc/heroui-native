@@ -1,3 +1,14 @@
+## 1.0.0-alpha.8 (2025-08-22)
+
+* docs: minor copy changes ([bfa14e6](https://github.com/heroui-inc/heroui-native/commit/bfa14e6))
+* docs: upd demo image url ([5cc0c5f](https://github.com/heroui-inc/heroui-native/commit/5cc0c5f))
+* docs: upd readme preview app link ([38d359a](https://github.com/heroui-inc/heroui-native/commit/38d359a))
+* docs: upd readme preview app qr code image ([147fc48](https://github.com/heroui-inc/heroui-native/commit/147fc48))
+* fix: root view bg color ([2dba88d](https://github.com/heroui-inc/heroui-native/commit/2dba88d))
+* refactor: drop-shadow-view map constants ([e08f949](https://github.com/heroui-inc/heroui-native/commit/e08f949))
+
+
+
 ## 1.0.0-alpha.7 (2025-08-22)
 
 * docs: add preview app section to readme ([ba4e5bc](https://github.com/heroui-inc/heroui-native/commit/ba4e5bc))

@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  v1.0.0-alpha.7
+  v1.0.0-alpha.8
 </p>
 
 ## Preview App

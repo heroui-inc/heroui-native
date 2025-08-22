@@ -2,10 +2,6 @@
 
 A selectable control that allows users to choose one option from a set of mutually exclusive choices.
 
-## Interactive Demo
-
-[Interactive demo placeholder - will be added to documentation site]
-
 ## Imports
 
 Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).

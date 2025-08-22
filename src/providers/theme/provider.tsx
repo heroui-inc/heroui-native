@@ -275,7 +275,7 @@ export const ThemeProvider = ({
    */
   return (
     <ThemeContext.Provider value={value}>
-      <View style={themes[currentTheme]} className="flex-1">
+      <View style={themes[currentTheme]} className="flex-1 bg-background">
         {children}
       </View>
     </ThemeContext.Provider>

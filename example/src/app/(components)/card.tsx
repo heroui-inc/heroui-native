@@ -10,6 +10,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+import RobotImage from '../../../assets/images/robot.png';
 import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
@@ -79,107 +80,59 @@ export default function CardScreen() {
           </Card.Footer>
         </Card.Details>
       </Card>
+
       <SectionTitle title="Card with Image" />
-      <View className="gap-8">
-        <Card className="p-0">
-          <Image
-            source={{
-              uri: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
-            }}
-            style={{ height: 200 }}
-            resizeMode="cover"
-          />
-          <Card.Details className="p-4">
-            <Card.Body className="mb-2 pb-4">
-              <View className="gap-1 mb-2">
-                <Card.Title className="text-pink-400">$450</Card.Title>
-                <Card.Title>
-                  Living room Sofa <AppText className="text-sm">✦</AppText>{' '}
-                  Collection 2025
-                </Card.Title>
-              </View>
-              <Card.Description>
-                This sofa is perfect for modern tropical spaces, baroque
-                inspired spaces.
-              </Card.Description>
+      <View className="flex-row gap-4">
+        <Card surfaceVariant="2" className="flex-1 rounded-xl">
+          <Card.Details>
+            <Card.Header>
+              <Image
+                source={{
+                  uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/robot1.jpg',
+                }}
+                style={{
+                  height: 60,
+                  aspectRatio: 1,
+                  borderRadius: 12,
+                }}
+              />
+            </Card.Header>
+            <Card.Body>
+              <Card.Title>Indie Hackers</Card.Title>
+              <Card.Description className="mb-4">148 members</Card.Description>
             </Card.Body>
-            <Card.Footer className="gap-3">
-              <Button variant="primary">
-                <Button.Label>Buy now</Button.Label>
-              </Button>
-              <Button variant="ghost">
-                <Button.Label>Add to cart</Button.Label>
-                <Button.EndContent>
-                  <Ionicons
-                    name="basket-outline"
-                    size={16}
-                    color={colors.mutedForeground}
-                  />
-                </Button.EndContent>
-              </Button>
+            <Card.Footer className="flex-row items-center gap-2">
+              <View className="w-4 h-4 rounded-full bg-rose-400" />
+              <AppText className="text-sm font-medium text-foreground">
+                @indiehackers
+              </AppText>
             </Card.Footer>
           </Card.Details>
         </Card>
-        <View className="flex-row gap-4">
-          <Card surfaceVariant="2" className="flex-1 rounded-xl">
-            <Card.Details>
-              <Card.Header>
-                <Image
-                  source={{
-                    uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/robot1.jpg',
-                  }}
-                  style={{
-                    height: 60,
-                    aspectRatio: 1,
-                    borderRadius: 12,
-                  }}
-                  resizeMode="cover"
-                />
-              </Card.Header>
-              <Card.Body>
-                <Card.Title>Indie Hackers</Card.Title>
-                <Card.Description className="mb-4">
-                  148 members
-                </Card.Description>
-              </Card.Body>
-              <Card.Footer className="flex-row items-center gap-2">
-                <View className="w-4 h-4 rounded-full bg-rose-400" />
-                <AppText className="text-sm font-medium text-foreground">
-                  @indiehackers
-                </AppText>
-              </Card.Footer>
-            </Card.Details>
-          </Card>
-          <Card surfaceVariant="2" className="flex-1 rounded-xl">
-            <Card.Details>
-              <Card.Header>
-                <Image
-                  source={{
-                    uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/robot2.jpg',
-                  }}
-                  style={{
-                    height: 60,
-                    aspectRatio: 1,
-                    borderRadius: 12,
-                  }}
-                  resizeMode="cover"
-                />
-              </Card.Header>
-              <Card.Body>
-                <Card.Title>AI Builders</Card.Title>
-                <Card.Description className="mb-4">
-                  362 members
-                </Card.Description>
-              </Card.Body>
-              <Card.Footer className="flex-row items-center gap-2">
-                <View className="w-4 h-4 rounded-full bg-emerald-400" />
-                <AppText className="text-sm font-medium text-foreground">
-                  @aibuilders
-                </AppText>
-              </Card.Footer>
-            </Card.Details>
-          </Card>
-        </View>
+        <Card surfaceVariant="2" className="flex-1 rounded-xl">
+          <Card.Details>
+            <Card.Header>
+              <Image
+                source={RobotImage}
+                style={{
+                  height: 60,
+                  aspectRatio: 1,
+                  borderRadius: 12,
+                }}
+              />
+            </Card.Header>
+            <Card.Body>
+              <Card.Title>AI Builders</Card.Title>
+              <Card.Description className="mb-4">362 members</Card.Description>
+            </Card.Body>
+            <Card.Footer className="flex-row items-center gap-2">
+              <View className="w-4 h-4 rounded-full bg-emerald-400" />
+              <AppText className="text-sm font-medium text-foreground">
+                @aibuilders
+              </AppText>
+            </Card.Footer>
+          </Card.Details>
+        </Card>
       </View>
 
       <SectionTitle title="Horizontal Card With Image" />
@@ -187,7 +140,7 @@ export default function CardScreen() {
         <Card className="flex-row rounded-xl gap-4 p-4" surfaceVariant="2">
           <Image
             source={{
-              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/robot1.jpg',
+              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/robot2.jpg',
             }}
             style={{
               height: 110,

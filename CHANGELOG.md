@@ -1,3 +1,19 @@
+## 1.0.0-alpha.7 (2025-08-22)
+
+* docs: add preview app section to readme ([ba4e5bc](https://github.com/heroui-inc/heroui-native/commit/ba4e5bc))
+* docs: add pull_request_template.md ([bc1ba43](https://github.com/heroui-inc/heroui-native/commit/bc1ba43))
+* docs: remove preview link from readme ([8a015cb](https://github.com/heroui-inc/heroui-native/commit/8a015cb))
+* docs: upd readme preview app link ([0fe9250](https://github.com/heroui-inc/heroui-native/commit/0fe9250))
+* docs: upd readme preview app link ([25d66c9](https://github.com/heroui-inc/heroui-native/commit/25d66c9))
+* refactor: example app section-title ([2c45e79](https://github.com/heroui-inc/heroui-native/commit/2c45e79))
+* refactor: issue template ([618edb4](https://github.com/heroui-inc/heroui-native/commit/618edb4))
+* feat: upd tailwind plugin with hairline props ([3240878](https://github.com/heroui-inc/heroui-native/commit/3240878))
+* build: downgrade tailwind-variants to 1.0.0 ([ebef88c](https://github.com/heroui-inc/heroui-native/commit/ebef88c))
+* build: exclude example app from typecheck ([478ca5c](https://github.com/heroui-inc/heroui-native/commit/478ca5c))
+* fix: change typecheck settings ([81a9764](https://github.com/heroui-inc/heroui-native/commit/81a9764))
+
+
+
 ## 1.0.0-alpha.6 (2025-08-21)
 
 * fix: example app classname typecheck issue ([0846468](https://github.com/heroui-inc/heroui-native/commit/0846468))

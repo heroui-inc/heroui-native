@@ -27,7 +27,7 @@ export const SectionTitle: FC<Props> = ({ title, className }) => {
       >
         <View
           className={cn(
-            'absolute left-0 top-0 h-[0.5px] w-full',
+            'absolute left-0 top-0 h-hairline w-full',
             isDark ? 'bg-neutral-800' : 'bg-neutral-300'
           )}
         />
@@ -43,7 +43,7 @@ export const SectionTitle: FC<Props> = ({ title, className }) => {
 
         <View
           className={cn(
-            'absolute left-0 bottom-0 h-[0.5px] w-full',
+            'absolute left-0 bottom-0 h-hairline w-full',
             isDark ? 'bg-neutral-800' : 'bg-neutral-300'
           )}
         />

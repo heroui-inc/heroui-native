@@ -36,12 +36,12 @@ export const IOS_SHADOW_MAP: Record<
   md: {
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 3,
+    shadowRadius: 4,
   },
   lg: {
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 6,
+    shadowRadius: 7,
   },
   xl: {
     shadowOffset: { width: 0, height: 8 },
@@ -59,8 +59,8 @@ export const ANDROID_ELEVATION_MAP: Record<DropShadowSize, number> = {
   xs: 1,
   sm: 2,
   md: 4,
-  lg: 8,
-  xl: 12,
+  lg: 7,
+  xl: 10,
 };
 
 /**

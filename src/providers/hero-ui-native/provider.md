@@ -443,7 +443,7 @@ Ensure the provider is at the root of your app and that NativeWind is properly c
 
 ```tsx
 // Check tailwind.config.js includes HeroUI plugin
-plugins: [herouiNative];
+plugins: [heroUINativePlugin];
 
 // Ensure content paths include HeroUI components
 content: ['./node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}'];

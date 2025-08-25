@@ -331,7 +331,7 @@ const RadioContent = forwardRef<View, RadioContentProps>((props, ref) => {
 // --------------------------------------------------
 
 const RadioLabel = forwardRef<TextRef, RadioLabelProps>((props, ref) => {
-  return <FormField.Label ref={ref} {...props} />;
+  return <FormField.Title ref={ref} {...props} />;
 });
 
 // --------------------------------------------------

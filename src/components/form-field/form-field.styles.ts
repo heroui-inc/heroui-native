@@ -33,18 +33,12 @@ const content = tv({
   },
 });
 
-const label = tv({
-  slots: {
-    container: '',
-    text: 'text-foreground font-medium text-base',
-  },
+const title = tv({
+  base: 'text-foreground font-medium text-base',
 });
 
 const description = tv({
-  slots: {
-    container: '',
-    text: 'text-muted-foreground text-sm font-normal',
-  },
+  base: 'text-muted-foreground text-sm font-normal',
 });
 
 const indicator = tv({
@@ -58,7 +52,7 @@ const errorMessage = tv({
 const formFieldStyles = combineStyles({
   root,
   content,
-  label,
+  title,
   description,
   indicator,
   errorMessage,

@@ -145,7 +145,7 @@ export interface TextFieldInputEndContentProps extends ViewProps {
 /**
  * Props for the TextField.Description component
  */
-export interface TextFieldDescriptionProps extends AnimatedProps<ViewProps> {
+export interface TextFieldDescriptionProps extends AnimatedProps<TextProps> {
   /**
    * Children elements to be rendered as the description text
    */

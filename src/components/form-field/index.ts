@@ -3,6 +3,6 @@ export type {
   FormFieldContentProps,
   FormFieldDescriptionProps,
   FormFieldIndicatorProps,
-  FormFieldLabelProps,
   FormFieldProps,
+  FormFieldTitleProps,
 } from './form-field.types';

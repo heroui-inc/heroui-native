@@ -1,6 +1,10 @@
 import { cloneElement, forwardRef, useMemo } from 'react';
-import { Pressable, View, type GestureResponderEvent } from 'react-native';
-import { Text } from '../../helpers/components';
+import {
+  Pressable,
+  Text,
+  View,
+  type GestureResponderEvent,
+} from 'react-native';
 import {
   createContext,
   getElementByDisplayName,
@@ -19,8 +23,8 @@ import type {
   FormFieldContextValue,
   FormFieldDescriptionProps,
   FormFieldIndicatorProps,
-  FormFieldLabelProps,
   FormFieldProps,
+  FormFieldTitleProps,
 } from './form-field.types';
 
 const [FormFieldProvider, useFormFieldContext] =
@@ -31,6 +35,7 @@ const [FormFieldProvider, useFormFieldContext] =
 // --------------------------------------------------
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+const AnimatedText = Animated.createAnimatedComponent(Text);
 
 const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
   const {
@@ -140,48 +145,34 @@ const FormFieldContent = forwardRef<View, FormFieldContentProps>(
 
 // --------------------------------------------------
 
-const FormFieldLabel = forwardRef<View, FormFieldLabelProps>((props, ref) => {
-  const { children, className, classNames, ...restProps } = props;
+const FormFieldTitle = forwardRef<Text, FormFieldTitleProps>((props, ref) => {
+  const { children, className, ...restProps } = props;
 
-  const { container, text } = formFieldStyles.label();
-
-  const containerStyles = container({
-    className: [className, classNames?.container],
+  const tvStyles = formFieldStyles.title({
+    className,
   });
-  const textStyles = text({ className: classNames?.text });
 
   return (
-    <Animated.View ref={ref} className={containerStyles} {...restProps}>
-      {typeof children === 'string' ? (
-        <Text className={textStyles}>{children}</Text>
-      ) : (
-        children
-      )}
-    </Animated.View>
+    <AnimatedText ref={ref} className={tvStyles} {...restProps}>
+      {children}
+    </AnimatedText>
   );
 });
 
 // --------------------------------------------------
 
-const FormFieldDescription = forwardRef<View, FormFieldDescriptionProps>(
+const FormFieldDescription = forwardRef<Text, FormFieldDescriptionProps>(
   (props, ref) => {
-    const { children, className, classNames, ...restProps } = props;
+    const { children, className, ...restProps } = props;
 
-    const { container, text } = formFieldStyles.description();
-
-    const containerStyles = container({
-      className: [className, classNames?.container],
+    const tvStyles = formFieldStyles.description({
+      className,
     });
-    const textStyles = text({ className: classNames?.text });
 
     return (
-      <Animated.View ref={ref} className={containerStyles} {...restProps}>
-        {typeof children === 'string' ? (
-          <Text className={textStyles}>{children}</Text>
-        ) : (
-          children
-        )}
-      </Animated.View>
+      <AnimatedText ref={ref} className={tvStyles} {...restProps}>
+        {children}
+      </AnimatedText>
     );
   }
 );
@@ -250,7 +241,7 @@ const FormFieldErrorMessage = forwardRef<ViewRef, ErrorViewRootProps>(
 
 FormField.displayName = DISPLAY_NAME.FORM_FIELD;
 FormFieldContent.displayName = DISPLAY_NAME.FORM_FIELD_CONTENT;
-FormFieldLabel.displayName = DISPLAY_NAME.FORM_FIELD_LABEL;
+FormFieldTitle.displayName = DISPLAY_NAME.FORM_FIELD_TITLE;
 FormFieldDescription.displayName = DISPLAY_NAME.FORM_FIELD_DESCRIPTION;
 FormFieldIndicator.displayName = DISPLAY_NAME.FORM_FIELD_INDICATOR;
 FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
@@ -264,11 +255,11 @@ FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
  * @component FormField.Content - Container for label and description text. Provides
  * consistent spacing and layout for textual content.
  *
- * @component FormField.Label - Primary text label for the form control. Renders as
- * Text component when children is a string, otherwise as a View.
+ * @component FormField.Title - Primary text title for the form control. Renders as
+ * AnimatedText component when children is a string.
  *
- * @component FormField.Description - Secondary descriptive text. Renders as Text
- * component when children is a string, otherwise as a View.
+ * @component FormField.Description - Secondary descriptive text. Renders as AnimatedText
+ * component when children is a string.
  *
  * @component FormField.Indicator - Container for the control component (Switch, Checkbox).
  * Automatically passes down isSelected, onSelectedChange, and isDisabled props.
@@ -280,10 +271,10 @@ FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
  * The component supports both horizontal and vertical orientations.
  */
 const CompoundFormField = Object.assign(FormField, {
-  /** @optional Container for label and description */
+  /** @optional Container for title and description */
   Content: FormFieldContent,
-  /** @optional Primary text label */
-  Label: FormFieldLabel,
+  /** @optional Primary text title */
+  Title: FormFieldTitle,
   /** @optional Secondary descriptive text */
   Description: FormFieldDescription,
   /** @optional Container for control component */

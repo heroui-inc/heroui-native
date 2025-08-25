@@ -1,4 +1,4 @@
-import type { ViewProps } from 'react-native';
+import type { TextProps, ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
 import type { ElementSlots } from '../../providers/theme';
 import type { ErrorViewSlots } from './error-view.styles';
@@ -28,4 +28,9 @@ export interface ErrorViewRootProps extends AnimatedProps<ViewProps> {
    * Additional CSS classes for different parts of the component
    */
   classNames?: ElementSlots<ErrorViewSlots>;
+
+  /**
+   * Additional props to pass to the Text component when children is a string
+   */
+  textProps?: TextProps;
 }

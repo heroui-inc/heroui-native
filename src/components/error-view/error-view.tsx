@@ -17,6 +17,7 @@ const ErrorViewRoot = forwardRef<ViewRef, ErrorViewRootProps>((props, ref) => {
     children,
     className,
     classNames,
+    textProps,
     isInvalid = false,
     entering = ENTERING_ANIMATION_CONFIG,
     exiting = EXITING_ANIMATION_CONFIG,
@@ -29,7 +30,9 @@ const ErrorViewRoot = forwardRef<ViewRef, ErrorViewRootProps>((props, ref) => {
     className: [className, classNames?.container],
   });
 
-  const textStyles = tvStyles.text({ className: classNames?.text });
+  const textStyles = tvStyles.text({
+    className: [classNames?.text, textProps?.className],
+  });
 
   if (!isInvalid) return null;
 
@@ -42,7 +45,9 @@ const ErrorViewRoot = forwardRef<ViewRef, ErrorViewRootProps>((props, ref) => {
       {...restProps}
     >
       {typeof children === 'string' ? (
-        <Text className={textStyles}>{children}</Text>
+        <Text className={textStyles} {...textProps}>
+          {children}
+        </Text>
       ) : (
         children
       )}

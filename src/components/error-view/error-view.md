@@ -78,6 +78,23 @@ Apply custom styles to the container and text elements.
 </ErrorView>
 ```
 
+### Custom Text Props
+
+Pass additional props to the Text component when children is a string.
+
+```tsx
+<ErrorView
+  isInvalid={true}
+  textProps={{
+    numberOfLines: 1,
+    ellipsizeMode: 'tail',
+    style: { letterSpacing: 0.5 }
+  }}
+>
+  This is a very long error message that might need to be truncated
+</ErrorView>
+```
+
 ## Example
 
 ```tsx
@@ -130,4 +147,5 @@ export default function ErrorViewExample() {
 | `isInvalid`            | `boolean`                               | `false`     | Controls the visibility of the error field                            |
 | `className`            | `string`                                | `undefined` | Additional CSS classes for the container                              |
 | `classNames`           | `{ container?: string, text?: string }` | `undefined` | Additional CSS classes for different parts of the component           |
+| `textProps`            | `TextProps`                             | `undefined` | Additional props to pass to the Text component when children is a string |
 | `...AnimatedViewProps` | `AnimatedProps<ViewProps>`              | -           | All Reanimated Animated.View props are supported                      |

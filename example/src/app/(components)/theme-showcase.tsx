@@ -351,17 +351,17 @@ export default function ThemeShowcase() {
             <RadioGroup value={radioValue} onValueChange={setRadioValue}>
               <Radio value="option1">
                 <Radio.Content>
-                  <Radio.Label>Option 1</Radio.Label>
+                  <Radio.Title>Option 1</Radio.Title>
                 </Radio.Content>
               </Radio>
               <Radio value="option2">
                 <Radio.Content>
-                  <Radio.Label>Option 2</Radio.Label>
+                  <Radio.Title>Option 2</Radio.Title>
                 </Radio.Content>
               </Radio>
               <Radio value="option3">
                 <Radio.Content>
-                  <Radio.Label>Option 3</Radio.Label>
+                  <Radio.Title>Option 3</Radio.Title>
                 </Radio.Content>
               </Radio>
             </RadioGroup>

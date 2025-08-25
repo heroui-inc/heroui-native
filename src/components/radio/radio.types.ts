@@ -109,9 +109,9 @@ export interface RadioContentProps extends ViewProps {
 }
 
 /**
- * Props for Radio.Label component
+ * Props for Radio.Title component
  */
-export interface RadioLabelProps extends FormFieldTitleProps {}
+export interface RadioTitleProps extends FormFieldTitleProps {}
 
 /**
  * Props for Radio.Description component

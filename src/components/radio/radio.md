@@ -20,12 +20,12 @@ The Radio component must be used within a RadioGroup to manage selection state.
 <RadioGroup value={value} onValueChange={setValue}>
   <Radio value="option1">
     <Radio.Content>
-      <Radio.Label>Option 1</Radio.Label>
+      <Radio.Title>Option 1</Radio.Title>
     </Radio.Content>
   </Radio>
   <Radio value="option2">
     <Radio.Content>
-      <Radio.Label>Option 2</Radio.Label>
+      <Radio.Title>Option 2</Radio.Title>
     </Radio.Content>
   </Radio>
 </RadioGroup>
@@ -39,7 +39,7 @@ Add descriptive text to provide more context about each radio option.
 <RadioGroup value={value} onValueChange={setValue}>
   <Radio value="option1">
     <Radio.Content>
-      <Radio.Label>Option 1</Radio.Label>
+      <Radio.Title>Option 1</Radio.Title>
       <Radio.Description>
         Additional details about this option
       </Radio.Description>
@@ -47,7 +47,7 @@ Add descriptive text to provide more context about each radio option.
   </Radio>
   <Radio value="option2">
     <Radio.Content>
-      <Radio.Label>Option 2</Radio.Label>
+      <Radio.Title>Option 2</Radio.Title>
       <Radio.Description>More information about this choice</Radio.Description>
     </Radio.Content>
   </Radio>
@@ -66,7 +66,7 @@ Customize the radio indicator appearance with custom colors and animations.
       <Radio.IndicatorThumb>...</Radio.IndicatorThumb>
     </Radio.Indicator>
     <Radio.Content>
-      <Radio.Label>Custom Indicator</Radio.Label>
+      <Radio.Title>Custom Indicator</Radio.Title>
     </Radio.Content>
   </Radio>
 </RadioGroup>
@@ -80,22 +80,22 @@ Use different color themes for radio buttons.
 <RadioGroup value={value} onValueChange={setValue}>
   <Radio value="default" color="default">
     <Radio.Content>
-      <Radio.Label>Default</Radio.Label>
+      <Radio.Title>Default</Radio.Title>
     </Radio.Content>
   </Radio>
   <Radio value="success" color="success">
     <Radio.Content>
-      <Radio.Label>Success</Radio.Label>
+      <Radio.Title>Success</Radio.Title>
     </Radio.Content>
   </Radio>
   <Radio value="warning" color="warning">
     <Radio.Content>
-      <Radio.Label>Warning</Radio.Label>
+      <Radio.Title>Warning</Radio.Title>
     </Radio.Content>
   </Radio>
   <Radio value="danger" color="danger">
     <Radio.Content>
-      <Radio.Label>Danger</Radio.Label>
+      <Radio.Title>Danger</Radio.Title>
     </Radio.Content>
   </Radio>
 </RadioGroup>
@@ -109,12 +109,12 @@ Position the indicator on either side of the content.
 <RadioGroup value={value} onValueChange={setValue}>
   <Radio value="start" alignIndicator="start">
     <Radio.Content>
-      <Radio.Label>Indicator on Start</Radio.Label>
+      <Radio.Title>Indicator on Start</Radio.Title>
     </Radio.Content>
   </Radio>
   <Radio value="end" alignIndicator="end">
     <Radio.Content>
-      <Radio.Label>Indicator on End</Radio.Label>
+      <Radio.Title>Indicator on End</Radio.Title>
     </Radio.Content>
   </Radio>
 </RadioGroup>
@@ -139,19 +139,19 @@ export default function RadioExample() {
       <RadioGroup value={selectedPlan} onValueChange={setSelectedPlan}>
         <Radio value="basic">
           <Radio.Content>
-            <Radio.Label>Basic Plan</Radio.Label>
+            <Radio.Title>Basic Plan</Radio.Title>
             <Radio.Description>Perfect for individuals</Radio.Description>
           </Radio.Content>
         </Radio>
         <Radio value="pro">
           <Radio.Content>
-            <Radio.Label>Pro Plan</Radio.Label>
+            <Radio.Title>Pro Plan</Radio.Title>
             <Radio.Description>Best for teams</Radio.Description>
           </Radio.Content>
         </Radio>
         <Radio value="enterprise">
           <Radio.Content>
-            <Radio.Label>Enterprise</Radio.Label>
+            <Radio.Title>Enterprise</Radio.Title>
             <Radio.Description>Custom solutions</Radio.Description>
           </Radio.Content>
         </Radio>
@@ -160,17 +160,17 @@ export default function RadioExample() {
       <RadioGroup value={selectedColor} onValueChange={setSelectedColor}>
         <Radio value="default" color="default">
           <Radio.Content>
-            <Radio.Label>Default</Radio.Label>
+            <Radio.Title>Default</Radio.Title>
           </Radio.Content>
         </Radio>
         <Radio value="success" color="success">
           <Radio.Content>
-            <Radio.Label>Success</Radio.Label>
+            <Radio.Title>Success</Radio.Title>
           </Radio.Content>
         </Radio>
         <Radio value="warning" color="warning">
           <Radio.Content>
-            <Radio.Label>Warning</Radio.Label>
+            <Radio.Title>Warning</Radio.Title>
           </Radio.Content>
         </Radio>
         <Radio value="danger" color="danger">
@@ -188,7 +188,7 @@ export default function RadioExample() {
             </Radio.IndicatorThumb>
           </Radio.Indicator>
           <Radio.Content>
-            <Radio.Label>Danger with Icon</Radio.Label>
+            <Radio.Title>Danger with Icon</Radio.Title>
           </Radio.Content>
         </Radio>
       </RadioGroup>
@@ -207,7 +207,7 @@ export default function RadioExample() {
       <Radio.IndicatorThumb>...</Radio.IndicatorThumb>
     </Radio.Indicator>
     <Radio.Content>
-      <Radio.Label>...</Radio.Label>
+      <Radio.Title>...</Radio.Title>
       <Radio.Description>...</Radio.Description>
     </Radio.Content>
   </Radio>
@@ -221,7 +221,7 @@ export default function RadioExample() {
 - **Radio.IndicatorBackground**: Optional background of the radio circle. Animates background color based on selection state. Can be customized with different colors and animations.
 - **Radio.IndicatorThumb**: Optional inner circle that appears when selected. Animates scale based on selection. Can be replaced with custom content.
 - **Radio.Content**: Optional container for label and description. Provides consistent layout and spacing. Only renders if label or description exist.
-- **Radio.Label**: Optional text label for the radio option. Clickable by default and linked to the radio for accessibility.
+- **Radio.Title**: Optional text label for the radio option. Clickable by default and linked to the radio for accessibility.
 - **Radio.Description**: Optional secondary text below the label. Provides additional context about the radio option.
 - **RadioGroup.ErrorMessage**: Error message displayed when radio group is invalid. Shown with animation below the radio group content. Takes full width when orientation is horizontal.
 
@@ -306,7 +306,7 @@ See [RadioGroup documentation](../radio-group/radio-group.md#api-reference) for 
 | `className`    | `string`          | `undefined` | Custom class name                                  |
 | `...ViewProps` | `ViewProps`       | -           | All standard React Native View props are supported |
 
-### Radio.Label
+### Radio.Title
 
 | prop                   | type                       | default     | description                                             |
 | ---------------------- | -------------------------- | ----------- | ------------------------------------------------------- |

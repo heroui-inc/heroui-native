@@ -2,7 +2,7 @@ import type { TextInputProps, TextProps, ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
 import type { ElementSlots } from '../../providers/theme';
-import type { ErrorFieldRootProps } from '../error-field';
+import type { ErrorViewRootProps } from '../error-view';
 import type { InputSlots, LabelSlots } from './text-field.styles';
 
 /**
@@ -159,7 +159,7 @@ export interface TextFieldDescriptionProps extends AnimatedProps<ViewProps> {
 /**
  * Props for the TextField.ErrorMessage component
  */
-export interface TextFieldErrorMessageProps extends ErrorFieldRootProps {}
+export interface TextFieldErrorMessageProps extends ErrorViewRootProps {}
 
 /**
  * Context value for the TextField component

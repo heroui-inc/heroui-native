@@ -10,8 +10,8 @@ import {
 import Animated from 'react-native-reanimated';
 import type { PressableRef } from '../../helpers/types';
 import type { ViewRef } from '../../helpers/types/primitives';
-import { ErrorField } from '../error-field';
-import type { ErrorFieldRootProps } from '../error-field/error-field.types';
+import { ErrorView } from '../error-view';
+import type { ErrorViewRootProps } from '../error-view/error-view.types';
 import { DISPLAY_NAME } from './form-field.constants';
 import formFieldStyles from './form-field.styles';
 import type {
@@ -226,7 +226,7 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
 
 // --------------------------------------------------
 
-const FormFieldErrorMessage = forwardRef<ViewRef, ErrorFieldRootProps>(
+const FormFieldErrorMessage = forwardRef<ViewRef, ErrorViewRootProps>(
   (props, ref) => {
     const { isInvalid } = useFormFieldContext();
     const { className, ...restProps } = props;
@@ -236,7 +236,7 @@ const FormFieldErrorMessage = forwardRef<ViewRef, ErrorFieldRootProps>(
     });
 
     return (
-      <ErrorField
+      <ErrorView
         ref={ref}
         isInvalid={isInvalid}
         className={tvStyles}

@@ -16,7 +16,7 @@ import { Text } from '../../helpers/components';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
 import { useTheme } from '../../providers/theme';
-import { ErrorField } from '../error-field';
+import { ErrorView } from '../error-view';
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
@@ -329,7 +329,7 @@ const TextFieldErrorMessage = forwardRef<TextRef, TextFieldErrorMessageProps>(
     });
 
     return (
-      <ErrorField
+      <ErrorView
         ref={ref}
         isInvalid={isInvalid}
         className={tvStyles}

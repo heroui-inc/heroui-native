@@ -306,10 +306,10 @@ export default function TextFieldExample() {
 | children              | `React.ReactNode`               | -       | Error message content                                   |
 | isInvalid             | `boolean`                       | `false` | Controls the visibility of the error field              |
 | className             | `string`                        | -       | Custom class name for styling                           |
-| classNames            | `ElementSlots<ErrorFieldSlots>` | -       | Custom class names for different parts of the component |
+| classNames            | `ElementSlots<ErrorViewSlots>` | -       | Custom class names for different parts of the component |
 | ...Animated.ViewProps | `AnimatedProps<ViewProps>`      | -       | All Reanimated Animated.View props are supported        |
 
-#### ElementSlots<ErrorFieldSlots>
+#### ElementSlots<ErrorViewSlots>
 
 | prop      | type     | description                               |
 | --------- | -------- | ----------------------------------------- |

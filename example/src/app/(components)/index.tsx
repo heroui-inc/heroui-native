@@ -61,9 +61,9 @@ const components: Component[] = [
     path: 'drop-shadow-view',
   },
   {
-    title: 'Error Field',
+    title: 'Error View',
     icon: <ComponentIcon />,
-    path: 'error-field',
+    path: 'error-view',
   },
   {
     title: 'Form Field',

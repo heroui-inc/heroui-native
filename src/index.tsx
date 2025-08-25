@@ -5,7 +5,7 @@ export * from './components/checkbox';
 export * from './components/chip';
 export * from './components/divider';
 export * from './components/drop-shadow-view';
-export * from './components/error-field';
+export * from './components/error-view';
 export * from './components/form-field';
 export * from './components/radio';
 export * from './components/radio-group';

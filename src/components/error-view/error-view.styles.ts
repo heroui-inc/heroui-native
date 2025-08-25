@@ -8,10 +8,10 @@ const root = tv({
   },
 });
 
-const errorFieldStyles = combineStyles({
+const errorViewStyles = combineStyles({
   root,
 });
 
-export type ErrorFieldSlots = keyof ReturnType<typeof root>;
+export type ErrorViewSlots = keyof ReturnType<typeof root>;
 
-export default errorFieldStyles;
+export default errorViewStyles;

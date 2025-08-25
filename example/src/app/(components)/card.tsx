@@ -39,11 +39,9 @@ export default function CardScreen() {
             </Card.Description>
           </Card.Body>
           <Card.Footer className="gap-3">
-            <Button variant="primary">
-              <Button.Label>Buy now</Button.Label>
-            </Button>
+            <Button variant="primary">Buy now</Button>
             <Button variant="ghost">
-              <Button.Label>Add to cart</Button.Label>
+              <Button.LabelContent>Add to cart</Button.LabelContent>
               <Button.EndContent>
                 <Ionicons
                   name="basket-outline"
@@ -75,7 +73,7 @@ export default function CardScreen() {
           </Card.Body>
           <Card.Footer>
             <Button>
-              <Button.Label>Subscribe Now</Button.Label>
+              <Button.LabelContent>Subscribe Now</Button.LabelContent>
             </Button>
           </Card.Footer>
         </Card.Details>
@@ -236,9 +234,9 @@ export default function CardScreen() {
                 </AppText>
               </View>
               <Button variant="primary" size="sm" className="bg-white">
-                <Button.Label classNames={{ text: 'text-black' }}>
+                <Button.LabelContent classNames={{ text: 'text-black' }}>
                   Notify me
-                </Button.Label>
+                </Button.LabelContent>
               </Button>
             </View>
           </Card.Footer>
@@ -275,7 +273,7 @@ export default function CardScreen() {
             </Card.Body>
             <Card.Footer>
               <Button size="sm">
-                <Button.Label>See profiles</Button.Label>
+                <Button.LabelContent>See profiles</Button.LabelContent>
               </Button>
             </Card.Footer>
           </Card.Details>
@@ -306,7 +304,7 @@ export default function CardScreen() {
                 variant="ghost"
                 className="border border-muted-foreground/50"
               >
-                <Button.Label>Done</Button.Label>
+                <Button.LabelContent>Done</Button.LabelContent>
               </Button>
             </Card.Footer>
           </Card.Details>
@@ -337,7 +335,7 @@ export default function CardScreen() {
                 variant="ghost"
                 className="border border-muted-foreground/50"
               >
-                <Button.Label>Done</Button.Label>
+                <Button.LabelContent>Done</Button.LabelContent>
               </Button>
             </Card.Footer>
           </Card.Details>

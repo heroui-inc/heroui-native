@@ -25,7 +25,7 @@ import type {
   ButtonBackgroundProps,
   ButtonContextValue,
   ButtonEndContentProps,
-  ButtonLabelProps,
+  ButtonLabelContentProps,
   ButtonRootProps,
   ButtonStartContentProps,
 } from './button.types';
@@ -68,11 +68,11 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     () =>
       getElementWithDefault(
         children,
-        DISPLAY_NAME.LABEL,
+        DISPLAY_NAME.LABEL_CONTENT,
         typeof children === 'string' ? (
-          <ButtonLabel>{children}</ButtonLabel>
+          <ButtonLabelContent>{children}</ButtonLabelContent>
         ) : (
-          <ButtonLabel />
+          <ButtonLabelContent />
         )
       ),
     [children]
@@ -284,31 +284,47 @@ const ButtonStartContent = forwardRef<View, ButtonStartContentProps>(
 
 // --------------------------------------------------
 
-const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
-  const { size, variant, layout: contextLayout } = useButtonContext();
+const ButtonLabelContent = forwardRef<View, ButtonLabelContentProps>(
+  (props, ref) => {
+    const { size, variant, layout: contextLayout } = useButtonContext();
 
-  const {
-    children,
-    layout: layoutProp,
-    className,
-    classNames,
-    ...restProps
-  } = props;
+    const {
+      children,
+      layout: layoutProp,
+      className,
+      classNames,
+      textProps,
+      ...restProps
+    } = props;
 
-  const { text, container } = buttonStyles.label({
-    size,
-    variant,
-  });
+    const { text, container } = buttonStyles.label({
+      size,
+      variant,
+    });
 
-  const tvContainerStyles = container({
-    className: [className, classNames?.container],
-  });
+    const tvContainerStyles = container({
+      className: [className, classNames?.container],
+    });
 
-  const tvTextStyles = text({
-    className: classNames?.text,
-  });
+    const tvTextStyles = text({
+      className: classNames?.text,
+    });
 
-  if (typeof children === 'string') {
+    if (typeof children === 'string') {
+      return (
+        <Animated.View
+          ref={ref}
+          layout={layoutProp || contextLayout}
+          className={tvContainerStyles}
+          {...restProps}
+        >
+          <Text className={tvTextStyles} {...textProps}>
+            {children}
+          </Text>
+        </Animated.View>
+      );
+    }
+
     return (
       <Animated.View
         ref={ref}
@@ -316,22 +332,11 @@ const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
         className={tvContainerStyles}
         {...restProps}
       >
-        <Text className={tvTextStyles}>{children}</Text>
+        {children}
       </Animated.View>
     );
   }
-
-  return (
-    <Animated.View
-      ref={ref}
-      layout={layoutProp || contextLayout}
-      className={tvContainerStyles}
-      {...restProps}
-    >
-      {children}
-    </Animated.View>
-  );
-});
+);
 
 // --------------------------------------------------
 
@@ -395,7 +400,7 @@ const ButtonBackground = forwardRef<View, ButtonBackgroundProps>(
 
 ButtonRoot.displayName = DISPLAY_NAME.ROOT;
 ButtonStartContent.displayName = DISPLAY_NAME.START_CONTENT;
-ButtonLabel.displayName = DISPLAY_NAME.LABEL;
+ButtonLabelContent.displayName = DISPLAY_NAME.LABEL_CONTENT;
 ButtonEndContent.displayName = DISPLAY_NAME.END_CONTENT;
 ButtonBackground.displayName = DISPLAY_NAME.BACKGROUND;
 
@@ -408,7 +413,7 @@ ButtonBackground.displayName = DISPLAY_NAME.BACKGROUND;
  * @component Button.StartContent - Optional content displayed at the start of the button.
  * Use for icons or other elements before the label.
  *
- * @component Button.Label - Button label that displays text or custom content.
+ * @component Button.LabelContent - Button label that displays text or custom content.
  * When string is provided, it renders as Text. Otherwise renders children as-is.
  *
  * @component Button.EndContent - Optional content displayed at the end of the button.
@@ -426,7 +431,7 @@ const CompoundButton = Object.assign(ButtonRoot, {
   /** @optional Content displayed at the start of the button */
   StartContent: ButtonStartContent,
   /** @optional Button label - renders text or custom content */
-  Label: ButtonLabel,
+  LabelContent: ButtonLabelContent,
   /** @optional Content displayed at the end of the button */
   EndContent: ButtonEndContent,
   /** @optional Background element - absolute positioned beneath content */

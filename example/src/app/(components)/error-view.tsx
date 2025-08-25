@@ -36,7 +36,7 @@ export default function ErrorViewScreen() {
           size="sm"
           className="self-start"
         >
-          <Button.Label>Toggle Error</Button.Label>
+          Toggle Error
         </Button>
         <ErrorView isInvalid={basicError}>
           This is a basic error message
@@ -168,9 +168,9 @@ export default function ErrorViewScreen() {
           size="sm"
           className="self-start"
         >
-          <Button.Label>
+          <Button.LabelContent>
             {showMultipleErrors ? 'Hide All Errors' : 'Show All Errors'}
-          </Button.Label>
+          </Button.LabelContent>
         </Button>
         <TextField>
           <TextField.Label>Form Field</TextField.Label>

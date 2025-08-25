@@ -27,11 +27,11 @@ Add icons to the start or end of the button using compound parts.
 ```tsx
 <Button>
   <Button.StartContent>...</Button.StartContent>
-  <Button.Label>...</Button.Label>
+  <Button.LabelContent>...</Button.LabelContent>
 </Button>
 
 <Button>
-  <Button.Label>...</Button.Label>
+  <Button.LabelContent>...</Button.LabelContent>
   <Button.EndContent>...</Button.EndContent>
 </Button>
 ```
@@ -43,7 +43,7 @@ Combine multiple parts for complex button layouts.
 ```tsx
 <Button>
   <Button.StartContent>...</Button.StartContent>
-  <Button.Label>...</Button.Label>
+  <Button.LabelContent>...</Button.LabelContent>
   <Button.EndContent>...</Button.EndContent>
 </Button>
 ```
@@ -54,7 +54,7 @@ Create square icon buttons with proper aspect ratio.
 
 ```tsx
 <Button isIconOnly>
-  <Button.Label>...</Button.Label>
+  <Button.LabelContent>...</Button.LabelContent>
 </Button>
 ```
 
@@ -65,7 +65,7 @@ Add gradients or custom backgrounds using the Background component.
 ```tsx
 <Button>
   <Button.Background>...</Button.Background>
-  <Button.Label>...</Button.Label>
+  <Button.LabelContent>...</Button.LabelContent>
 </Button>
 ```
 
@@ -86,7 +86,7 @@ export default function ButtonExample() {
         <Button.StartContent>
           <Ionicons name="download" size={18} color={colors.accentForeground} />
         </Button.StartContent>
-        <Button.Label>Download File</Button.Label>
+        <Button.LabelContent>Download File</Button.LabelContent>
       </Button>
 
       <Button>
@@ -98,9 +98,9 @@ export default function ButtonExample() {
             style={StyleSheet.absoluteFill}
           />
         </Button.Background>
-        <Button.Label classNames={{ text: 'text-white font-bold' }}>
+        <Button.LabelContent classNames={{ text: 'text-white font-bold' }}>
           Gradient Button
-        </Button.Label>
+        </Button.LabelContent>
       </Button>
 
       <Button
@@ -109,7 +109,7 @@ export default function ButtonExample() {
         isFullWidth={false}
         className="self-end"
       >
-        <Button.Label>Like</Button.Label>
+        <Button.LabelContent>Like</Button.LabelContent>
         <Button.EndContent>
           <Ionicons
             name="heart"
@@ -129,7 +129,7 @@ export default function ButtonExample() {
 <Button>
   <Button.Background>...</Button.Background>
   <Button.StartContent>...</Button.StartContent>
-  <Button.Label>...</Button.Label>
+  <Button.LabelContent>...</Button.LabelContent>
   <Button.EndContent>...</Button.EndContent>
 </Button>
 ```
@@ -137,7 +137,7 @@ export default function ButtonExample() {
 - **Button**: Main container that handles press interactions, animations, and variants. Provides sensible defaults when sub-components are omitted.
 - **Button.Background**: Optional background element with absolute positioning. Rendered beneath all other content. Use for gradients or custom backgrounds.
 - **Button.StartContent**: Optional content displayed at the start of the button. Use for icons or other elements before the label.
-- **Button.Label**: Optional label that displays text or custom content. When string is provided, it renders as Text. Otherwise renders children as-is.
+- **Button.LabelContent**: Optional label that displays text or custom content. When string is provided, it renders as Text. Otherwise renders children as-is.
 - **Button.EndContent**: Optional content displayed at the end of the button. Use for icons or other elements after the label.
 
 ## API Reference
@@ -193,13 +193,14 @@ export default function ButtonExample() {
 | `className`             | `string`             | Additional CSS classes                            |
 | `...Animated.ViewProps` | `Animated.ViewProps` | All Reanimated Animated.View props are supported  |
 
-### Button.Label
+### Button.LabelContent
 
 | prop                    | type                       | description                                                                   |
 | ----------------------- | -------------------------- | ----------------------------------------------------------------------------- |
 | `children`              | `React.ReactNode`          | Content to be rendered as label. If string, will be wrapped in Text component |
 | `className`             | `string`                   | Additional CSS classes for container                                          |
 | `classNames`            | `ElementSlots<LabelSlots>` | Additional CSS classes for the different parts of the label                   |
+| `textProps`             | `TextProps`                | Additional props to pass to the Text component when children is a string      |
 | `...Animated.ViewProps` | `Animated.ViewProps`       | All Reanimated Animated.View props are supported                              |
 
 #### ElementSlots<LabelSlots>

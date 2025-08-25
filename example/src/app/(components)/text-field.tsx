@@ -123,9 +123,7 @@ export default function TextFieldScreen() {
             size="sm"
             className="self-start"
           >
-            <Button.Label>
-              {isTestFieldInvalid ? 'Make Valid' : 'Make Invalid'}
-            </Button.Label>
+            {isTestFieldInvalid ? 'Make Valid' : 'Make Invalid'}
           </Button>
         </View>
       </ScreenScrollView>

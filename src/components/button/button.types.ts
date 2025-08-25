@@ -6,7 +6,7 @@ import type {
 } from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
 import type { ElementSlots } from '../../providers/theme';
-import type { LabelSlots } from './button.styles';
+import type { LabelContentSlots } from './button.styles';
 
 /**
  * Size variants for the Button component
@@ -164,7 +164,7 @@ export interface ButtonLabelContentProps extends AnimatedProps<ViewProps> {
   /**
    * Additional CSS classes for the different parts of the label
    */
-  classNames?: ElementSlots<LabelSlots>;
+  classNames?: ElementSlots<LabelContentSlots>;
   /**
    * Additional props to pass to the Text component when children is a string
    */

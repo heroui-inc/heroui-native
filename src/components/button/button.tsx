@@ -297,7 +297,7 @@ const ButtonLabelContent = forwardRef<View, ButtonLabelContentProps>(
       ...restProps
     } = props;
 
-    const { text, container } = buttonStyles.label({
+    const { text, container } = buttonStyles.labelContent({
       size,
       variant,
     });
@@ -307,7 +307,7 @@ const ButtonLabelContent = forwardRef<View, ButtonLabelContentProps>(
     });
 
     const tvTextStyles = text({
-      className: classNames?.text,
+      className: [classNames?.text, textProps?.className],
     });
 
     if (typeof children === 'string') {

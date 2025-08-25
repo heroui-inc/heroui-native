@@ -32,7 +32,7 @@ const root = tv({
   },
 });
 
-const label = tv({
+const labelContent = tv({
   slots: {
     container: 'items-center justify-center',
     text: 'font-medium',
@@ -106,11 +106,11 @@ export const nativeStyles = StyleSheet.create({
 
 const buttonStyles = combineStyles({
   root,
-  label,
   startContent,
+  labelContent,
   endContent,
   background,
 });
 
-export type LabelSlots = keyof ReturnType<typeof label>;
+export type LabelContentSlots = keyof ReturnType<typeof labelContent>;
 export default buttonStyles;

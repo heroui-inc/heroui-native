@@ -1,11 +1,11 @@
-import type { PressableProps, ViewProps } from 'react-native';
+import type { PressableProps, TextProps, ViewProps } from 'react-native';
 import type {
   AnimatedProps,
   BaseAnimationBuilder,
   LayoutAnimationFunction,
 } from 'react-native-reanimated';
 import type { ElementSlots } from '../../providers/theme';
-import type { LabelSlots } from './chip.styles';
+import type { LabelContentSlots } from './chip.styles';
 
 /**
  * Chip size variants
@@ -65,9 +65,9 @@ export interface ChipStartContentProps extends AnimatedProps<ViewProps> {
 }
 
 /**
- * Props for the ChipLabel component
+ * Props for the ChipLabelContent component
  */
-export interface ChipLabelProps extends AnimatedProps<ViewProps> {
+export interface ChipLabelContentProps extends AnimatedProps<ViewProps> {
   /** Child elements to render as the label. If string, will be wrapped in Text component */
   children?: React.ReactNode;
 
@@ -75,7 +75,10 @@ export interface ChipLabelProps extends AnimatedProps<ViewProps> {
   className?: string;
 
   /** Additional CSS classes for the different parts of the label */
-  classNames?: ElementSlots<LabelSlots>;
+  classNames?: ElementSlots<LabelContentSlots>;
+
+  /** Additional props to pass to the Text component when children is a string */
+  textProps?: TextProps;
 }
 
 /**

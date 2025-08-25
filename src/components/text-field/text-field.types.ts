@@ -75,6 +75,11 @@ export interface TextFieldRootProps extends ViewProps {
  */
 export interface TextFieldLabelProps extends AnimatedProps<TextProps> {
   /**
+   * Whether the label is in an invalid state (overrides context)
+   * @default undefined - uses context value
+   */
+  isInvalid?: boolean;
+  /**
    * Children elements to be rendered as the label text
    */
   children?: React.ReactNode;
@@ -96,6 +101,11 @@ export interface TextFieldInputProps extends TextInputProps {
    * Children elements to be rendered inside the input container
    */
   children?: React.ReactNode;
+  /**
+   * Whether the input is in an invalid state (overrides context)
+   * @default undefined - uses context value
+   */
+  isInvalid?: boolean;
   /**
    * Additional CSS classes
    */
@@ -150,6 +160,11 @@ export interface TextFieldDescriptionProps extends AnimatedProps<TextProps> {
    * Children elements to be rendered as the description text
    */
   children?: React.ReactNode;
+  /**
+   * Whether the description is in an invalid state (overrides context)
+   * @default undefined - uses context value
+   */
+  isInvalid?: boolean;
   /**
    * Additional CSS classes
    */

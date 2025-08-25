@@ -61,6 +61,21 @@ Display error messages when the field is invalid.
 </TextField>
 ```
 
+### With Local Invalid State Override
+
+Override the context's invalid state for individual components.
+
+```tsx
+<TextField isInvalid={true}>
+  <TextField.Label isInvalid={false}>Email</TextField.Label>
+  <TextField.Input placeholder="Enter your email" isInvalid={false} />
+  <TextField.Description>
+    This shows despite input being invalid
+  </TextField.Description>
+  <TextField.ErrorMessage>Email format is incorrect</TextField.ErrorMessage>
+</TextField>
+```
+
 ### Multiline Input
 
 Create text areas for longer content.
@@ -224,12 +239,13 @@ export default function TextFieldExample() {
 
 ### TextField.Label
 
-| prop                  | type                       | default | description                                         |
-| --------------------- | -------------------------- | ------- | --------------------------------------------------- |
-| children              | `React.ReactNode`          | -       | Label text content                                  |
-| className             | `string`                   | -       | Custom class name for the label element             |
-| classNames            | `ElementSlots<LabelSlots>` | -       | Custom class names for different parts of the label |
-| ...Animated.TextProps | `AnimatedProps<TextProps>` | -       | All Reanimated Animated.Text props are supported    |
+| prop                  | type                       | default     | description                                                  |
+| --------------------- | -------------------------- | ----------- | ------------------------------------------------------------ |
+| children              | `React.ReactNode`          | -           | Label text content                                           |
+| isInvalid             | `boolean`                  | `undefined` | Whether the label is in an invalid state (overrides context) |
+| className             | `string`                   | -           | Custom class name for the label element                      |
+| classNames            | `ElementSlots<LabelSlots>` | -           | Custom class names for different parts of the label          |
+| ...Animated.TextProps | `AnimatedProps<TextProps>` | -           | All Reanimated Animated.Text props are supported             |
 
 #### ElementSlots<LabelSlots>
 
@@ -240,15 +256,16 @@ export default function TextFieldExample() {
 
 ### TextField.Input
 
-| prop                 | type                       | default                  | description                                             |
-| -------------------- | -------------------------- | ------------------------ | ------------------------------------------------------- |
-| children             | `React.ReactNode`          | -                        | Content to render inside the input container            |
-| className            | `string`                   | -                        | Custom class name for the input container               |
-| classNames           | `ElementSlots<InputSlots>` | -                        | Custom class names for different parts of the input     |
-| colors               | `TextFieldInputColors`     | -                        | Custom colors for input background and border           |
-| animationConfig      | `TimingConfig`             | -                        | Animation configuration for focus/blur transitions      |
-| placeholderTextColor | `string`                   | `colors.mutedForeground` | Color of the placeholder text                           |
-| ...TextInputProps    | `TextInputProps`           | -                        | All standard React Native TextInput props are supported |
+| prop                 | type                       | default                  | description                                                  |
+| -------------------- | -------------------------- | ------------------------ | ------------------------------------------------------------ |
+| children             | `React.ReactNode`          | -                        | Content to render inside the input container                 |
+| isInvalid            | `boolean`                  | `undefined`              | Whether the input is in an invalid state (overrides context) |
+| className            | `string`                   | -                        | Custom class name for the input container                    |
+| classNames           | `ElementSlots<InputSlots>` | -                        | Custom class names for different parts of the input          |
+| colors               | `TextFieldInputColors`     | -                        | Custom colors for input background and border                |
+| animationConfig      | `TimingConfig`             | -                        | Animation configuration for focus/blur transitions           |
+| placeholderTextColor | `string`                   | `colors.mutedForeground` | Color of the placeholder text                                |
+| ...TextInputProps    | `TextInputProps`           | -                        | All standard React Native TextInput props are supported      |
 
 #### ElementSlots<InputSlots>
 
@@ -293,21 +310,22 @@ export default function TextFieldExample() {
 
 ### TextField.Description
 
-| prop                  | type                       | default | description                                      |
-| --------------------- | -------------------------- | ------- | ------------------------------------------------ |
-| children              | `React.ReactNode`          | -       | Description text content                         |
-| className             | `string`                   | -       | Custom class name for the description element    |
-| ...Animated.ViewProps | `AnimatedProps<ViewProps>` | -       | All Reanimated Animated.View props are supported |
+| prop                  | type                       | default     | description                                                        |
+| --------------------- | -------------------------- | ----------- | ------------------------------------------------------------------ |
+| children              | `React.ReactNode`          | -           | Description text content                                           |
+| isInvalid             | `boolean`                  | `undefined` | Whether the description is in an invalid state (overrides context) |
+| className             | `string`                   | -           | Custom class name for the description element                      |
+| ...Animated.TextProps | `AnimatedProps<TextProps>` | -           | All Reanimated Animated.Text props are supported                   |
 
 ### TextField.ErrorMessage
 
-| prop                  | type                            | default | description                                             |
-| --------------------- | ------------------------------- | ------- | ------------------------------------------------------- |
-| children              | `React.ReactNode`               | -       | Error message content                                   |
-| isInvalid             | `boolean`                       | `false` | Controls the visibility of the error field              |
-| className             | `string`                        | -       | Custom class name for styling                           |
-| classNames            | `ElementSlots<ErrorViewSlots>` | -       | Custom class names for different parts of the component |
-| ...Animated.ViewProps | `AnimatedProps<ViewProps>`      | -       | All Reanimated Animated.View props are supported        |
+| prop                  | type                           | default     | description                                                    |
+| --------------------- | ------------------------------ | ----------- | -------------------------------------------------------------- |
+| children              | `React.ReactNode`              | -           | Error message content                                          |
+| isInvalid             | `boolean`                      | `undefined` | Controls the visibility of the error field (overrides context) |
+| className             | `string`                       | -           | Custom class name for styling                                  |
+| classNames            | `ElementSlots<ErrorViewSlots>` | -           | Custom class names for different parts of the component        |
+| ...Animated.ViewProps | `AnimatedProps<ViewProps>`     | -           | All Reanimated Animated.View props are supported               |
 
 #### ElementSlots<ErrorViewSlots>
 

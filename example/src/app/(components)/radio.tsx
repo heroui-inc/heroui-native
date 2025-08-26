@@ -45,17 +45,17 @@ export default function RadioScreen() {
       <RadioGroup value={basicSelection} onValueChange={setBasicSelection}>
         <Radio value="option1">
           <Radio.Content>
-            <Radio.Label>Option 1</Radio.Label>
+            <Radio.Title>Option 1</Radio.Title>
           </Radio.Content>
         </Radio>
         <Radio value="option2">
           <Radio.Content>
-            <Radio.Label>Option 2</Radio.Label>
+            <Radio.Title>Option 2</Radio.Title>
           </Radio.Content>
         </Radio>
         <Radio value="option3">
           <Radio.Content>
-            <Radio.Label>Option 3</Radio.Label>
+            <Radio.Title>Option 3</Radio.Title>
           </Radio.Content>
         </Radio>
       </RadioGroup>
@@ -67,7 +67,7 @@ export default function RadioScreen() {
       >
         <Radio value="desc1">
           <Radio.Content>
-            <Radio.Label>Standard Shipping</Radio.Label>
+            <Radio.Title>Standard Shipping</Radio.Title>
             <Radio.Description>
               Delivered in 5-7 business days
             </Radio.Description>
@@ -75,7 +75,7 @@ export default function RadioScreen() {
         </Radio>
         <Radio value="desc2">
           <Radio.Content>
-            <Radio.Label>Express Shipping</Radio.Label>
+            <Radio.Title>Express Shipping</Radio.Title>
             <Radio.Description>
               Delivered in 2-3 business days
             </Radio.Description>
@@ -83,7 +83,7 @@ export default function RadioScreen() {
         </Radio>
         <Radio value="desc3">
           <Radio.Content>
-            <Radio.Label>Overnight Shipping</Radio.Label>
+            <Radio.Title>Overnight Shipping</Radio.Title>
             <Radio.Description>Delivered next business day</Radio.Description>
           </Radio.Content>
         </Radio>
@@ -94,22 +94,22 @@ export default function RadioScreen() {
         <View className="gap-8">
           <Radio value="default" color="default">
             <Radio.Content>
-              <Radio.Label>Default Color</Radio.Label>
+              <Radio.Title>Default Color</Radio.Title>
             </Radio.Content>
           </Radio>
           <Radio value="success" color="success">
             <Radio.Content>
-              <Radio.Label>Success Color</Radio.Label>
+              <Radio.Title>Success Color</Radio.Title>
             </Radio.Content>
           </Radio>
           <Radio value="warning" color="warning">
             <Radio.Content>
-              <Radio.Label>Warning Color</Radio.Label>
+              <Radio.Title>Warning Color</Radio.Title>
             </Radio.Content>
           </Radio>
           <Radio value="danger" color="danger">
             <Radio.Content>
-              <Radio.Label>Danger Color</Radio.Label>
+              <Radio.Title>Danger Color</Radio.Title>
             </Radio.Content>
           </Radio>
         </View>
@@ -123,7 +123,7 @@ export default function RadioScreen() {
       >
         <Radio value="start" alignIndicator="start">
           <Radio.Content>
-            <Radio.Label>Indicator on Start (Left)</Radio.Label>
+            <Radio.Title>Indicator on Start (Left)</Radio.Title>
             <Radio.Description>
               The radio button appears on the left side
             </Radio.Description>
@@ -131,7 +131,7 @@ export default function RadioScreen() {
         </Radio>
         <Radio value="end" alignIndicator="end">
           <Radio.Content>
-            <Radio.Label>Indicator on End (Right)</Radio.Label>
+            <Radio.Title>Indicator on End (Right)</Radio.Title>
             <Radio.Description>
               The radio button appears on the right side (default)
             </Radio.Description>
@@ -151,12 +151,12 @@ export default function RadioScreen() {
         >
           <Radio value="option1">
             <Radio.Content>
-              <Radio.Label>Disabled Option 1</Radio.Label>
+              <Radio.Title>Disabled Option 1</Radio.Title>
             </Radio.Content>
           </Radio>
           <Radio value="option2">
             <Radio.Content>
-              <Radio.Label>Disabled Option 2</Radio.Label>
+              <Radio.Title>Disabled Option 2</Radio.Title>
             </Radio.Content>
           </Radio>
         </RadioGroup>
@@ -170,7 +170,7 @@ export default function RadioScreen() {
       >
         <Radio value="agree">
           <Radio.Content>
-            <Radio.Label>I agree to the terms</Radio.Label>
+            <Radio.Title>I agree to the terms</Radio.Title>
             <Radio.Description>
               You must select this option to continue
             </Radio.Description>
@@ -178,7 +178,7 @@ export default function RadioScreen() {
         </Radio>
         <Radio value="disagree">
           <Radio.Content>
-            <Radio.Label>I do not agree</Radio.Label>
+            <Radio.Title>I do not agree</Radio.Title>
           </Radio.Content>
         </Radio>
         <RadioGroup.ErrorMessage>
@@ -206,7 +206,7 @@ export default function RadioScreen() {
             />
           </Radio.Indicator>
           <Radio.Content>
-            <Radio.Label>Purple Background</Radio.Label>
+            <Radio.Title>Purple Background</Radio.Title>
           </Radio.Content>
         </Radio>
 
@@ -226,7 +226,7 @@ export default function RadioScreen() {
             />
           </Radio.Indicator>
           <Radio.Content>
-            <Radio.Label>Blue Background</Radio.Label>
+            <Radio.Title>Blue Background</Radio.Title>
           </Radio.Content>
         </Radio>
 
@@ -248,7 +248,7 @@ export default function RadioScreen() {
             />
           </Radio.Indicator>
           <Radio.Content>
-            <Radio.Label>Green Background</Radio.Label>
+            <Radio.Title>Green Background</Radio.Title>
           </Radio.Content>
         </Radio>
       </RadioGroup>
@@ -270,7 +270,7 @@ export default function RadioScreen() {
             </Radio.IndicatorThumb>
           </Radio.Indicator>
           <Radio.Content>
-            <Radio.Label>Checkmark Icon</Radio.Label>
+            <Radio.Title>Checkmark Icon</Radio.Title>
           </Radio.Content>
         </Radio>
 
@@ -285,7 +285,7 @@ export default function RadioScreen() {
             </Radio.IndicatorThumb>
           </Radio.Indicator>
           <Radio.Content>
-            <Radio.Label>Lightning Icon</Radio.Label>
+            <Radio.Title>Lightning Icon</Radio.Title>
           </Radio.Content>
         </Radio>
 
@@ -302,7 +302,7 @@ export default function RadioScreen() {
             </Radio.IndicatorThumb>
           </Radio.Indicator>
           <Radio.Content>
-            <Radio.Label>Square Thumb</Radio.Label>
+            <Radio.Title>Square Thumb</Radio.Title>
           </Radio.Content>
         </Radio>
       </RadioGroup>
@@ -317,7 +317,7 @@ export default function RadioScreen() {
                 size={16}
                 color={colors.foreground}
               />
-              <Radio.Label>Credit/Debit Card</Radio.Label>
+              <Radio.Title>Credit/Debit Card</Radio.Title>
             </View>
             <Radio.Description>
               Pay securely with your credit or debit card
@@ -327,7 +327,7 @@ export default function RadioScreen() {
 
         <Radio value="paypal">
           <Radio.Content>
-            <Radio.Label>PayPal</Radio.Label>
+            <Radio.Title>PayPal</Radio.Title>
             <Radio.Description>
               Fast and secure payment with PayPal
             </Radio.Description>
@@ -336,7 +336,7 @@ export default function RadioScreen() {
 
         <Radio value="bank">
           <Radio.Content>
-            <Radio.Label>Bank Transfer</Radio.Label>
+            <Radio.Title>Bank Transfer</Radio.Title>
             <Radio.Description>
               Direct transfer from your bank account
             </Radio.Description>
@@ -355,7 +355,7 @@ export default function RadioScreen() {
             <Radio.Content className="flex-1">
               <View className="flex-row items-center justify-between">
                 <View className="flex-1">
-                  <Radio.Label>Standard Shipping</Radio.Label>
+                  <Radio.Title>Standard Shipping</Radio.Title>
                   <Radio.Description>5-7 business days</Radio.Description>
                 </View>
                 <AppText className="text-foreground font-semibold">
@@ -371,7 +371,7 @@ export default function RadioScreen() {
             <Radio.Content className="flex-1">
               <View className="flex-row items-center justify-between">
                 <View className="flex-1">
-                  <Radio.Label>Express Shipping</Radio.Label>
+                  <Radio.Title>Express Shipping</Radio.Title>
                   <Radio.Description>2-3 business days</Radio.Description>
                 </View>
                 <AppText className="text-foreground font-semibold">
@@ -387,7 +387,7 @@ export default function RadioScreen() {
             <Radio.Content className="flex-1">
               <View className="flex-row items-center justify-between">
                 <View className="flex-1">
-                  <Radio.Label>Overnight Shipping</Radio.Label>
+                  <Radio.Title>Overnight Shipping</Radio.Title>
                   <Radio.Description>Next business day</Radio.Description>
                 </View>
                 <AppText className="text-foreground font-semibold">
@@ -408,17 +408,17 @@ export default function RadioScreen() {
       >
         <Radio value="option1">
           <Radio.Content>
-            <Radio.Label>Small</Radio.Label>
+            <Radio.Title>Small</Radio.Title>
           </Radio.Content>
         </Radio>
         <Radio value="option2">
           <Radio.Content>
-            <Radio.Label>Medium</Radio.Label>
+            <Radio.Title>Medium</Radio.Title>
           </Radio.Content>
         </Radio>
         <Radio value="option3">
           <Radio.Content>
-            <Radio.Label>Large</Radio.Label>
+            <Radio.Title>Large</Radio.Title>
           </Radio.Content>
         </Radio>
       </RadioGroup>

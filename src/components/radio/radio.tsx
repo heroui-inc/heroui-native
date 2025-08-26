@@ -32,8 +32,8 @@ import type {
   RadioIndicatorBackgroundProps,
   RadioIndicatorProps,
   RadioIndicatorThumbProps,
-  RadioLabelProps,
   RadioProps,
+  RadioTitleProps,
 } from './radio.types';
 
 const AnimatedRadioItem = Animated.createAnimatedComponent(
@@ -330,8 +330,8 @@ const RadioContent = forwardRef<View, RadioContentProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const RadioLabel = forwardRef<TextRef, RadioLabelProps>((props, ref) => {
-  return <FormField.Label ref={ref} {...props} />;
+const RadioTitle = forwardRef<TextRef, RadioTitleProps>((props, ref) => {
+  return <FormField.Title ref={ref} {...props} />;
 });
 
 // --------------------------------------------------
@@ -349,7 +349,7 @@ RadioIndicator.displayName = DISPLAY_NAME.RADIO_INDICATOR;
 RadioIndicatorBackground.displayName = DISPLAY_NAME.RADIO_INDICATOR_BACKGROUND;
 RadioIndicatorThumb.displayName = DISPLAY_NAME.RADIO_INDICATOR_THUMB;
 RadioContent.displayName = DISPLAY_NAME.RADIO_CONTENT;
-RadioLabel.displayName = DISPLAY_NAME.RADIO_LABEL;
+RadioTitle.displayName = DISPLAY_NAME.RADIO_TITLE;
 RadioDescription.displayName = DISPLAY_NAME.RADIO_DESCRIPTION;
 
 /**
@@ -371,7 +371,7 @@ RadioDescription.displayName = DISPLAY_NAME.RADIO_DESCRIPTION;
  * @component Radio.Content - Optional container for label and description. Provides consistent
  * layout and spacing. Only renders if label or description exist.
  *
- * @component Radio.Label - Optional text label for the radio option. Clickable by default and
+ * @component Radio.Title - Optional text title for the radio option. Clickable by default and
  * linked to the radio for accessibility.
  *
  * @component Radio.Description - Optional secondary text below the label. Provides additional
@@ -391,8 +391,8 @@ const CompoundRadio = Object.assign(Radio, {
   IndicatorThumb: RadioIndicatorThumb,
   /** @optional Container for label and description */
   Content: RadioContent,
-  /** @optional Clickable text label */
-  Label: RadioLabel,
+  /** @optional Clickable text title */
+  Title: RadioTitle,
   /** @optional Secondary descriptive text */
   Description: RadioDescription,
 });

@@ -4,7 +4,7 @@ import type { SpringConfig, TimingConfig } from '../../helpers/types';
 import type { ItemProps } from '../../primitives/radio-group';
 import type {
   FormFieldDescriptionProps,
-  FormFieldLabelProps,
+  FormFieldTitleProps,
 } from '../form-field';
 
 /**
@@ -109,9 +109,9 @@ export interface RadioContentProps extends ViewProps {
 }
 
 /**
- * Props for Radio.Label component
+ * Props for Radio.Title component
  */
-export interface RadioLabelProps extends FormFieldLabelProps {}
+export interface RadioTitleProps extends FormFieldTitleProps {}
 
 /**
  * Props for Radio.Description component

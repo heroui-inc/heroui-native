@@ -81,17 +81,17 @@ export default function RadioGroupExample() {
         <RadioGroup value={selectedCity} onValueChange={setSelectedCity}>
           <Radio value="paris">
             <Radio.Content>
-              <Radio.Label>Paris</Radio.Label>
+              <Radio.Title>Paris</Radio.Title>
             </Radio.Content>
           </Radio>
           <Radio value="london">
             <Radio.Content>
-              <Radio.Label>London</Radio.Label>
+              <Radio.Title>London</Radio.Title>
             </Radio.Content>
           </Radio>
           <Radio value="berlin">
             <Radio.Content>
-              <Radio.Label>Berlin</Radio.Label>
+              <Radio.Title>Berlin</Radio.Title>
             </Radio.Content>
           </Radio>
         </RadioGroup>
@@ -107,19 +107,19 @@ export default function RadioGroupExample() {
         >
           <Radio value="basic">
             <Radio.Content>
-              <Radio.Label>Basic Plan</Radio.Label>
+              <Radio.Title>Basic Plan</Radio.Title>
               <Radio.Description>Perfect for individuals</Radio.Description>
             </Radio.Content>
           </Radio>
           <Radio value="pro">
             <Radio.Content>
-              <Radio.Label>Pro Plan</Radio.Label>
+              <Radio.Title>Pro Plan</Radio.Title>
               <Radio.Description>Best for small teams</Radio.Description>
             </Radio.Content>
           </Radio>
           <Radio value="enterprise">
             <Radio.Content>
-              <Radio.Label>Enterprise</Radio.Label>
+              <Radio.Title>Enterprise</Radio.Title>
               <Radio.Description>
                 Custom solutions for large organizations
               </Radio.Description>
@@ -164,15 +164,15 @@ export default function RadioGroupExample() {
 
 ### RadioGroup.ErrorMessage
 
-| prop                   | type                            | default     | description                                                           |
-| ---------------------- | ------------------------------- | ----------- | --------------------------------------------------------------------- |
-| `children`             | `React.ReactNode`               | `undefined` | The content of the error field. String children are wrapped with Text |
-| `isInvalid`            | `boolean`                       | `false`     | Controls the visibility of the error field                            |
-| `className`            | `string`                        | `undefined` | Additional CSS classes for the container                              |
-| `classNames`           | `ElementSlots<ErrorFieldSlots>` | `undefined` | Additional CSS classes for different parts of the component           |
-| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`      | -           | All Reanimated Animated.View props are supported                      |
+| prop                   | type                           | default     | description                                                           |
+| ---------------------- | ------------------------------ | ----------- | --------------------------------------------------------------------- |
+| `children`             | `React.ReactNode`              | `undefined` | The content of the error field. String children are wrapped with Text |
+| `isInvalid`            | `boolean`                      | `false`     | Controls the visibility of the error field                            |
+| `className`            | `string`                       | `undefined` | Additional CSS classes for the container                              |
+| `classNames`           | `ElementSlots<ErrorViewSlots>` | `undefined` | Additional CSS classes for different parts of the component           |
+| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`     | -           | All Reanimated Animated.View props are supported                      |
 
-#### ElementSlots<ErrorFieldSlots>
+#### ElementSlots<ErrorViewSlots>
 
 | prop        | type     | description                               |
 | ----------- | -------- | ----------------------------------------- |

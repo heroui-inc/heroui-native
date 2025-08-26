@@ -16,7 +16,7 @@ import { Text } from '../../helpers/components';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
 import { useTheme } from '../../providers/theme';
-import { ErrorField } from '../error-field';
+import { ErrorView } from '../error-view';
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
@@ -81,10 +81,18 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
       children,
       className,
       classNames,
+      isInvalid: localIsInvalid,
       ...restProps
     } = props;
 
-    const { isDisabled, isInvalid, isRequired } = useTextFieldContext();
+    const {
+      isDisabled,
+      isInvalid: contextIsInvalid,
+      isRequired,
+    } = useTextFieldContext();
+
+    const isInvalid =
+      localIsInvalid !== undefined ? localIsInvalid : contextIsInvalid;
 
     const tvStyles = textFieldStyles.label({ isDisabled, isInvalid });
 
@@ -123,10 +131,14 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       placeholderTextColor,
       colors: customColors,
       animationConfig,
+      isInvalid: localIsInvalid,
       ...restProps
     } = props;
 
-    const { isInvalid } = useTextFieldContext();
+    const { isInvalid: contextIsInvalid } = useTextFieldContext();
+
+    const isInvalid =
+      localIsInvalid !== undefined ? localIsInvalid : contextIsInvalid;
 
     const startContent = getElementByDisplayName(
       children,
@@ -292,12 +304,16 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
     const {
       entering = ENTERING_ANIMATION_CONFIG,
       exiting = EXITING_ANIMATION_CONFIG,
+      isInvalid: localIsInvalid,
       children,
       className,
       ...restProps
     } = props;
 
-    const { isInvalid } = useTextFieldContext();
+    const { isInvalid: contextIsInvalid } = useTextFieldContext();
+
+    const isInvalid =
+      localIsInvalid !== undefined ? localIsInvalid : contextIsInvalid;
 
     const tvStyles = textFieldStyles.description({ className });
 
@@ -321,15 +337,18 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
 
 const TextFieldErrorMessage = forwardRef<TextRef, TextFieldErrorMessageProps>(
   (props, ref) => {
-    const { isInvalid } = useTextFieldContext();
-    const { className, ...restProps } = props;
+    const { isInvalid: contextIsInvalid } = useTextFieldContext();
+    const { className, isInvalid: localIsInvalid, ...restProps } = props;
+
+    const isInvalid =
+      localIsInvalid !== undefined ? localIsInvalid : contextIsInvalid;
 
     const tvStyles = textFieldStyles.errorMessage({
       className,
     });
 
     return (
-      <ErrorField
+      <ErrorView
         ref={ref}
         isInvalid={isInvalid}
         className={tvStyles}

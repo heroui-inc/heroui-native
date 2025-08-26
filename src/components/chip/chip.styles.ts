@@ -62,7 +62,7 @@ const startContent = tv({
   base: 'items-center justify-center',
 });
 
-const label = tv({
+const labelContent = tv({
   slots: {
     container: 'items-center justify-center',
     text: 'font-medium',
@@ -199,10 +199,10 @@ export const nativeStyles = StyleSheet.create({
 const chipStyles = combineStyles({
   root,
   startContent,
-  label,
+  labelContent,
   endContent,
   background,
 });
 
-export type LabelSlots = keyof ReturnType<typeof label>;
+export type LabelContentSlots = keyof ReturnType<typeof labelContent>;
 export default chipStyles;

@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Button, ErrorField, TextField, useTheme } from 'heroui-native';
+import { Button, ErrorView, TextField, useTheme } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 import {
@@ -13,7 +13,7 @@ import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
 
-export default function ErrorFieldScreen() {
+export default function ErrorViewScreen() {
   const { colors } = useTheme();
 
   // Basic error states
@@ -28,7 +28,7 @@ export default function ErrorFieldScreen() {
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
-      <SectionTitle title="Basic ErrorField" />
+      <SectionTitle title="Basic ErrorView" />
       <View className="flex-row items-center gap-4">
         <Button
           onPress={() => setBasicError(!basicError)}
@@ -36,34 +36,34 @@ export default function ErrorFieldScreen() {
           size="sm"
           className="self-start"
         >
-          <Button.Label>Toggle Error</Button.Label>
+          Toggle Error
         </Button>
-        <ErrorField isInvalid={basicError}>
+        <ErrorView isInvalid={basicError}>
           This is a basic error message
-        </ErrorField>
+        </ErrorView>
       </View>
 
       <SectionTitle title="Custom Content with Icons" />
       <View className="gap-4">
-        <ErrorField isInvalid={true}>
+        <ErrorView isInvalid={true}>
           <View className="flex-row items-center gap-2">
             <Ionicons name="close-circle" size={16} color={colors.danger} />
             <AppText className="text-danger text-sm">
               Critical error occurred
             </AppText>
           </View>
-        </ErrorField>
+        </ErrorView>
 
-        <ErrorField isInvalid={true}>
+        <ErrorView isInvalid={true}>
           <View className="flex-row items-center gap-2">
             <Ionicons name="warning" size={16} color={colors.warning} />
             <AppText className="text-warning text-sm">
               Warning: Check your input
             </AppText>
           </View>
-        </ErrorField>
+        </ErrorView>
 
-        <ErrorField isInvalid={true}>
+        <ErrorView isInvalid={true}>
           <View className="flex-row items-center gap-2">
             <Ionicons
               name="information-circle"
@@ -74,7 +74,7 @@ export default function ErrorFieldScreen() {
               Information: Field requires attention
             </AppText>
           </View>
-        </ErrorField>
+        </ErrorView>
       </View>
 
       <SectionTitle title="Custom Animations - Slide" />
@@ -129,7 +129,7 @@ export default function ErrorFieldScreen() {
 
       <SectionTitle title="Custom Styling" />
       <View className="gap-4">
-        <ErrorField
+        <ErrorView
           isInvalid={true}
           className="bg-danger/10 p-3 rounded-lg border border-danger/20"
           classNames={{
@@ -137,9 +137,9 @@ export default function ErrorFieldScreen() {
           }}
         >
           Styled error with background and border
-        </ErrorField>
+        </ErrorView>
 
-        <ErrorField
+        <ErrorView
           isInvalid={true}
           className="bg-warning/10 p-2 rounded"
           classNames={{
@@ -147,9 +147,9 @@ export default function ErrorFieldScreen() {
           }}
         >
           Warning styled error message
-        </ErrorField>
+        </ErrorView>
 
-        <ErrorField
+        <ErrorView
           isInvalid={true}
           className="border-l-4 border-danger pl-3"
           classNames={{
@@ -157,7 +157,7 @@ export default function ErrorFieldScreen() {
           }}
         >
           Error with left border accent
-        </ErrorField>
+        </ErrorView>
       </View>
 
       <SectionTitle title="Multiple Errors Example" />
@@ -168,9 +168,9 @@ export default function ErrorFieldScreen() {
           size="sm"
           className="self-start"
         >
-          <Button.Label>
+          <Button.LabelContent>
             {showMultipleErrors ? 'Hide All Errors' : 'Show All Errors'}
-          </Button.Label>
+          </Button.LabelContent>
         </Button>
         <TextField>
           <TextField.Label>Form Field</TextField.Label>
@@ -181,27 +181,27 @@ export default function ErrorFieldScreen() {
         </TextField>
 
         <View className="gap-2">
-          <ErrorField isInvalid={showMultipleErrors}>
+          <ErrorView isInvalid={showMultipleErrors}>
             • Field cannot be empty
-          </ErrorField>
-          <ErrorField
+          </ErrorView>
+          <ErrorView
             isInvalid={showMultipleErrors}
             entering={FadeInDown.delay(100)}
           >
             • Must contain only alphanumeric characters
-          </ErrorField>
-          <ErrorField
+          </ErrorView>
+          <ErrorView
             isInvalid={showMultipleErrors}
             entering={FadeInDown.delay(200)}
           >
             • Length must be between 5 and 50 characters
-          </ErrorField>
-          <ErrorField
+          </ErrorView>
+          <ErrorView
             isInvalid={showMultipleErrors}
             entering={FadeInDown.delay(300)}
           >
             • Cannot contain special characters
-          </ErrorField>
+          </ErrorView>
         </View>
       </View>
 
@@ -215,9 +215,9 @@ export default function ErrorFieldScreen() {
               editable={false}
             />
           </TextField>
-          <ErrorField isInvalid={true}>
+          <ErrorView isInvalid={true}>
             <AppText className="text-danger text-xs">Invalid format</AppText>
-          </ErrorField>
+          </ErrorView>
         </View>
 
         <View className="flex-row items-center gap-4">
@@ -228,12 +228,12 @@ export default function ErrorFieldScreen() {
               editable={false}
             />
           </TextField>
-          <ErrorField isInvalid={true}>
+          <ErrorView isInvalid={true}>
             <View className="flex-row items-center gap-1">
               <Ionicons name="warning" size={14} color={colors.danger} />
               <AppText className="text-danger text-xs">Required</AppText>
             </View>
-          </ErrorField>
+          </ErrorView>
         </View>
       </View>
     </ScreenScrollView>

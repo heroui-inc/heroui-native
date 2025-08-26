@@ -1,10 +1,10 @@
 import { Easing, FadeIn, FadeOut } from 'react-native-reanimated';
 
 /**
- * Display names for the ErrorField component parts
+ * Display names for the ErrorView component parts
  */
 export const DISPLAY_NAME = {
-  ROOT: 'HeroUINative.ErrorField',
+  ROOT: 'HeroUINative.ErrorView',
 };
 
 /**

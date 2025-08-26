@@ -2,7 +2,7 @@ import type { TextInputProps, TextProps, ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
 import type { ElementSlots } from '../../providers/theme';
-import type { ErrorFieldRootProps } from '../error-field';
+import type { ErrorViewRootProps } from '../error-view';
 import type { InputSlots, LabelSlots } from './text-field.styles';
 
 /**
@@ -75,6 +75,11 @@ export interface TextFieldRootProps extends ViewProps {
  */
 export interface TextFieldLabelProps extends AnimatedProps<TextProps> {
   /**
+   * Whether the label is in an invalid state (overrides context)
+   * @default undefined - uses context value
+   */
+  isInvalid?: boolean;
+  /**
    * Children elements to be rendered as the label text
    */
   children?: React.ReactNode;
@@ -96,6 +101,11 @@ export interface TextFieldInputProps extends TextInputProps {
    * Children elements to be rendered inside the input container
    */
   children?: React.ReactNode;
+  /**
+   * Whether the input is in an invalid state (overrides context)
+   * @default undefined - uses context value
+   */
+  isInvalid?: boolean;
   /**
    * Additional CSS classes
    */
@@ -145,11 +155,16 @@ export interface TextFieldInputEndContentProps extends ViewProps {
 /**
  * Props for the TextField.Description component
  */
-export interface TextFieldDescriptionProps extends AnimatedProps<ViewProps> {
+export interface TextFieldDescriptionProps extends AnimatedProps<TextProps> {
   /**
    * Children elements to be rendered as the description text
    */
   children?: React.ReactNode;
+  /**
+   * Whether the description is in an invalid state (overrides context)
+   * @default undefined - uses context value
+   */
+  isInvalid?: boolean;
   /**
    * Additional CSS classes
    */
@@ -159,7 +174,7 @@ export interface TextFieldDescriptionProps extends AnimatedProps<ViewProps> {
 /**
  * Props for the TextField.ErrorMessage component
  */
-export interface TextFieldErrorMessageProps extends ErrorFieldRootProps {}
+export interface TextFieldErrorMessageProps extends ErrorViewRootProps {}
 
 /**
  * Context value for the TextField component

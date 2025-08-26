@@ -1,4 +1,4 @@
-import type { PressableProps, ViewProps } from 'react-native';
+import type { PressableProps, TextProps, ViewProps } from 'react-native';
 import type {
   AnimatedProps,
   BaseAnimationBuilder,
@@ -6,7 +6,7 @@ import type {
 } from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
 import type { ElementSlots } from '../../providers/theme';
-import type { LabelSlots } from './button.styles';
+import type { LabelContentSlots } from './button.styles';
 
 /**
  * Size variants for the Button component
@@ -150,9 +150,9 @@ export interface ButtonStartContentProps extends AnimatedProps<ViewProps> {
 }
 
 /**
- * Props for the Button.Label component
+ * Props for the Button.LabelContent component
  */
-export interface ButtonLabelProps extends AnimatedProps<ViewProps> {
+export interface ButtonLabelContentProps extends AnimatedProps<ViewProps> {
   /**
    * Content to be rendered as label. If string, will be wrapped in Text component
    */
@@ -164,7 +164,11 @@ export interface ButtonLabelProps extends AnimatedProps<ViewProps> {
   /**
    * Additional CSS classes for the different parts of the label
    */
-  classNames?: ElementSlots<LabelSlots>;
+  classNames?: ElementSlots<LabelContentSlots>;
+  /**
+   * Additional props to pass to the Text component when children is a string
+   */
+  textProps?: TextProps;
 }
 
 /**

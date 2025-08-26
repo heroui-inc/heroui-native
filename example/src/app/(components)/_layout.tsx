@@ -62,7 +62,7 @@ export default function Layout() {
       <Stack.Screen name="surface" options={{ title: 'Surface' }} />
       <Stack.Screen name="switch" options={{ title: 'Switch' }} />
       <Stack.Screen name="text-field" options={{ title: 'TextField' }} />
-      <Stack.Screen name="error-field" options={{ title: 'Error Field' }} />
+      <Stack.Screen name="error-view" options={{ title: 'Error View' }} />
       <Stack.Screen
         name="theme-showcase"
         options={{ title: 'Theme Showcase' }}

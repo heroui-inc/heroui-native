@@ -1,6 +1,5 @@
-import type { PressableProps, ViewProps } from 'react-native';
+import type { PressableProps, TextProps, ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
-import type { ElementSlots } from '../../providers/theme';
 
 type FormFieldAlignIndicator = 'start' | 'end';
 
@@ -70,41 +69,25 @@ export interface FormFieldContentProps extends AnimatedProps<ViewProps> {
 }
 
 /**
- * Label slot names for styling customization
+ * Props for the FormFieldTitle component
  */
-export type LabelSlots = 'container' | 'text';
-
-/**
- * Props for the FormFieldLabel component
- */
-export interface FormFieldLabelProps extends AnimatedProps<ViewProps> {
-  /** Label text content */
+export interface FormFieldTitleProps extends AnimatedProps<TextProps> {
+  /** Title text content */
   children?: React.ReactNode;
 
-  /** Custom class name for the label element */
+  /** Custom class name for the title element */
   className?: string;
-
-  /** Custom class names for different parts of the component */
-  classNames?: ElementSlots<LabelSlots>;
 }
-
-/**
- * Description slot names for styling customization
- */
-export type DescriptionSlots = 'container' | 'text';
 
 /**
  * Props for the FormFieldDescription component
  */
-export interface FormFieldDescriptionProps extends AnimatedProps<ViewProps> {
+export interface FormFieldDescriptionProps extends AnimatedProps<TextProps> {
   /** Description text content */
   children?: React.ReactNode;
 
   /** Custom class name for the description element */
   className?: string;
-
-  /** Custom class names for different parts of the component */
-  classNames?: ElementSlots<DescriptionSlots>;
 }
 
 /**

@@ -7,7 +7,7 @@ import type { ButtonVariant } from './button.types';
  */
 export const DISPLAY_NAME = {
   ROOT: 'HeroUINative.Button.Root',
-  LABEL: 'HeroUINative.Button.Label',
+  LABEL_CONTENT: 'HeroUINative.Button.LabelContent',
   START_CONTENT: 'HeroUINative.Button.StartContent',
   END_CONTENT: 'HeroUINative.Button.EndContent',
   BACKGROUND: 'HeroUINative.Button.Background',

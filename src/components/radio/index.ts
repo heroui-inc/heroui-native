@@ -6,6 +6,6 @@ export type {
   RadioIndicatorBackgroundProps,
   RadioIndicatorProps,
   RadioIndicatorThumbProps,
-  RadioLabelProps,
   RadioProps,
+  RadioTitleProps,
 } from './radio.types';

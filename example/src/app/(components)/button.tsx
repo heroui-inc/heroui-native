@@ -31,9 +31,7 @@ export default function ButtonScreen() {
         <Button variant="secondary">Secondary</Button>
         <Button variant="tertiary">Tertiary</Button>
         <Button variant="ghost">Ghost</Button>
-        <Button variant="danger">
-          <Button.Label>Danger</Button.Label>
-        </Button>
+        <Button variant="danger">Danger</Button>
       </View>
 
       <SectionTitle title="With Icons" />
@@ -42,11 +40,11 @@ export default function ButtonScreen() {
           <Button.StartContent>
             <Ionicons name="add" size={20} color={colors.accentForeground} />
           </Button.StartContent>
-          <Button.Label>Add Item</Button.Label>
+          <Button.LabelContent>Add Item</Button.LabelContent>
         </Button>
 
         <Button variant="secondary">
-          <Button.Label>Download</Button.Label>
+          <Button.LabelContent>Download</Button.LabelContent>
           <Button.EndContent>
             <Ionicons
               name="download"
@@ -60,7 +58,7 @@ export default function ButtonScreen() {
           <Button.StartContent>
             <Ionicons name="heart" size={14} color={colors.defaultForeground} />
           </Button.StartContent>
-          <Button.Label>Favorite</Button.Label>
+          <Button.LabelContent>Favorite</Button.LabelContent>
           <Button.EndContent>
             <Ionicons
               name="chevron-forward"
@@ -74,7 +72,7 @@ export default function ButtonScreen() {
           <Button.StartContent>
             <Ionicons name="trash" size={14} color={colors.dangerForeground} />
           </Button.StartContent>
-          <Button.Label>Delete</Button.Label>
+          <Button.LabelContent>Delete</Button.LabelContent>
         </Button>
       </View>
 
@@ -84,13 +82,13 @@ export default function ButtonScreen() {
           <Button.StartContent>
             <Spinner color={isDark ? 'black' : 'white'} size="sm" />
           </Button.StartContent>
-          <Button.Label>Loading</Button.Label>
+          <Button.LabelContent>Loading</Button.LabelContent>
         </Button>
         <Button variant="secondary" isDisabled>
           <Button.StartContent>
             <Spinner size="sm" color={isDark ? 'black' : 'default'} />
           </Button.StartContent>
-          <Button.Label>Loading</Button.Label>
+          <Button.LabelContent>Loading</Button.LabelContent>
         </Button>
         <Button variant="tertiary" isDisabled>
           <Button.StartContent>
@@ -100,7 +98,7 @@ export default function ButtonScreen() {
               color={colors.defaultForeground}
             />
           </Button.StartContent>
-          <Button.Label>Access Denied</Button.Label>
+          <Button.LabelContent>Access Denied</Button.LabelContent>
         </Button>
       </View>
 
@@ -123,28 +121,30 @@ export default function ButtonScreen() {
       <SectionTitle title="Icon Only Buttons" />
       <View className="self-center flex-row gap-8">
         <Button size="sm" isIconOnly>
-          <Button.Label>
+          <Button.LabelContent>
             <Ionicons name="add" size={16} color={colors.accentForeground} />
-          </Button.Label>
+          </Button.LabelContent>
         </Button>
         <Button size="md" variant="secondary" isIconOnly>
-          <Button.Label>
+          <Button.LabelContent>
             <Ionicons name="heart" size={18} color="#ec4899" />
-          </Button.Label>
+          </Button.LabelContent>
         </Button>
         <Button size="lg" variant="danger" isIconOnly>
-          <Button.Label>
+          <Button.LabelContent>
             <Ionicons name="trash" size={20} color={colors.dangerForeground} />
-          </Button.Label>
+          </Button.LabelContent>
         </Button>
       </View>
 
       <SectionTitle title="Custom Styling" />
       <View className="gap-8">
         <Button className="bg-purple-600">
-          <Button.Label classNames={{ text: 'text-white font-semibold' }}>
+          <Button.LabelContent
+            classNames={{ text: 'text-white font-semibold' }}
+          >
             Custom Purple
-          </Button.Label>
+          </Button.LabelContent>
         </Button>
         <Button
           variant="tertiary"
@@ -153,9 +153,9 @@ export default function ButtonScreen() {
           <Button.StartContent>
             <Ionicons name="checkmark" size={18} color="#9333ea" />
           </Button.StartContent>
-          <Button.Label classNames={{ text: 'text-purple-600' }}>
+          <Button.LabelContent classNames={{ text: 'text-purple-600' }}>
             Purple Tertiary
-          </Button.Label>
+          </Button.LabelContent>
         </Button>
         <Button>
           <Button.Background>
@@ -166,9 +166,9 @@ export default function ButtonScreen() {
               style={{ flex: 1 }}
             />
           </Button.Background>
-          <Button.Label classNames={{ text: 'text-white font-bold' }}>
+          <Button.LabelContent classNames={{ text: 'text-white font-bold' }}>
             Gradient
-          </Button.Label>
+          </Button.LabelContent>
         </Button>
       </View>
 
@@ -184,7 +184,7 @@ export default function ButtonScreen() {
         isIconOnly={isDownloading}
         className="self-center"
       >
-        <Button.Label>
+        <Button.LabelContent>
           {isDownloading ? (
             <Spinner
               entering={FadeIn.delay(50)}
@@ -193,7 +193,7 @@ export default function ButtonScreen() {
           ) : (
             'Download now'
           )}
-        </Button.Label>
+        </Button.LabelContent>
       </Button>
 
       <SectionTitle title="Custom Animation" />
@@ -208,7 +208,7 @@ export default function ButtonScreen() {
           }}
           onPress={() => console.log('Fast animation')}
         >
-          <Button.Label>Fast Highlight Animation</Button.Label>
+          <Button.LabelContent>Fast Highlight Animation</Button.LabelContent>
         </Button>
         <Button
           animationConfig={{
@@ -222,7 +222,7 @@ export default function ButtonScreen() {
           variant="secondary"
           onPress={() => console.log('Slow animation')}
         >
-          <Button.Label>Slow Scale Animation</Button.Label>
+          <Button.LabelContent>Slow Scale Animation</Button.LabelContent>
         </Button>
       </View>
     </ScreenScrollView>

@@ -1,12 +1,12 @@
-import type { ViewProps } from 'react-native';
+import type { TextProps, ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
 import type { ElementSlots } from '../../providers/theme';
-import type { ErrorFieldSlots } from './error-field.styles';
+import type { ErrorViewSlots } from './error-view.styles';
 
 /**
- * Props for the ErrorField root component
+ * Props for the ErrorView root component
  */
-export interface ErrorFieldRootProps extends AnimatedProps<ViewProps> {
+export interface ErrorViewRootProps extends AnimatedProps<ViewProps> {
   /**
    * The content of the error field
    * When passed as string, it will be wrapped with Text component
@@ -27,5 +27,10 @@ export interface ErrorFieldRootProps extends AnimatedProps<ViewProps> {
   /**
    * Additional CSS classes for different parts of the component
    */
-  classNames?: ElementSlots<ErrorFieldSlots>;
+  classNames?: ElementSlots<ErrorViewSlots>;
+
+  /**
+   * Additional props to pass to the Text component when children is a string
+   */
+  textProps?: TextProps;
 }

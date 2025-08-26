@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import type { ViewRef } from '../../helpers/types/primitives';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
-import { ErrorField } from '../error-field';
+import { ErrorView } from '../error-view';
 import { DISPLAY_NAME } from './radio-group.constants';
 import radioGroupStyles from './radio-group.styles';
 import type {
@@ -53,7 +53,7 @@ const RadioGroupErrorMessage = forwardRef<ViewRef, RadioGroupErrorMessageProps>(
     });
 
     return (
-      <ErrorField
+      <ErrorView
         ref={ref}
         isInvalid={isInvalid}
         className={tvStyles}

@@ -46,6 +46,7 @@ export default function Layout() {
       }}
     >
       <Stack.Screen name="index" options={{ headerTitle: _renderTitle }} />
+      <Stack.Screen name="avatar" options={{ title: 'Avatar' }} />
       <Stack.Screen name="accordion" options={{ title: 'Accordion' }} />
       <Stack.Screen name="button" options={{ title: 'Button' }} />
       <Stack.Screen name="card" options={{ title: 'Card' }} />

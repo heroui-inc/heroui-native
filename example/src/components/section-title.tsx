@@ -1,8 +1,7 @@
 import { LinearGradient, type LinearGradientProps } from 'expo-linear-gradient';
-import { useTheme } from 'heroui-native';
+import { cn, useTheme } from 'heroui-native';
 import { type FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { cn } from '../helpers/utils/cn';
 import { AppText } from './app-text';
 
 type Props = {

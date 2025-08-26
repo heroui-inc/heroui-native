@@ -172,36 +172,38 @@ export default function ErrorViewScreen() {
             {showMultipleErrors ? 'Hide All Errors' : 'Show All Errors'}
           </Button.LabelContent>
         </Button>
-        <TextField>
-          <TextField.Label>Form Field</TextField.Label>
-          <TextField.Input
-            placeholder="This field has multiple validation rules"
-            editable={false}
-          />
-        </TextField>
-
         <View className="gap-2">
-          <ErrorView isInvalid={showMultipleErrors}>
-            • Field cannot be empty
-          </ErrorView>
-          <ErrorView
-            isInvalid={showMultipleErrors}
-            entering={FadeInDown.delay(100)}
-          >
-            • Must contain only alphanumeric characters
-          </ErrorView>
-          <ErrorView
-            isInvalid={showMultipleErrors}
-            entering={FadeInDown.delay(200)}
-          >
-            • Length must be between 5 and 50 characters
-          </ErrorView>
-          <ErrorView
-            isInvalid={showMultipleErrors}
-            entering={FadeInDown.delay(300)}
-          >
-            • Cannot contain special characters
-          </ErrorView>
+          <TextField>
+            <TextField.Label>Form Field</TextField.Label>
+            <TextField.Input
+              placeholder="This field has multiple validation rules"
+              editable={false}
+            />
+          </TextField>
+
+          <View className="gap-2">
+            <ErrorView isInvalid={showMultipleErrors}>
+              • Field cannot be empty
+            </ErrorView>
+            <ErrorView
+              isInvalid={showMultipleErrors}
+              entering={FadeInDown.delay(100)}
+            >
+              • Must contain only alphanumeric characters
+            </ErrorView>
+            <ErrorView
+              isInvalid={showMultipleErrors}
+              entering={FadeInDown.delay(200)}
+            >
+              • Length must be between 5 and 50 characters
+            </ErrorView>
+            <ErrorView
+              isInvalid={showMultipleErrors}
+              entering={FadeInDown.delay(300)}
+            >
+              • Cannot contain special characters
+            </ErrorView>
+          </View>
         </View>
       </View>
 

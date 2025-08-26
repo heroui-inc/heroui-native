@@ -24,7 +24,7 @@ const root = tv({
 });
 
 const content = tv({
-  base: '',
+  base: 'flex-shrink-0',
   variants: {
     isInline: {
       true: '',

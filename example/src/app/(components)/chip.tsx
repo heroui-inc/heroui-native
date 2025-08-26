@@ -1,13 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Chip, useTheme } from 'heroui-native';
+import { Chip, cn, useTheme } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
-import { cn } from '../../helpers/utils/cn';
 
 export default function ChipScreen() {
   const { isDark } = useTheme();
@@ -270,7 +269,7 @@ export default function ChipScreen() {
           <Chip variant="primary" color="accent">
             <Chip.LabelContent>Items</Chip.LabelContent>
             <Chip.EndContent>
-              <View className="ml-1 bg-white/20 px-2 rounded-full">
+              <View className="ml-1 w-5 h-5 bg-default/10 rounded-full items-center justify-center">
                 <AppText className="text-background text-xs font-bold">
                   {chipCount}
                 </AppText>

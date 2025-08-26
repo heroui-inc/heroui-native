@@ -3,13 +3,13 @@ import {
   DropShadowView,
   FormField,
   Switch,
+  cn,
   useTheme,
 } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
-import { cn } from '../../helpers/utils/cn';
 
 export default function FormFieldScreen() {
   // Basic usage states
@@ -29,7 +29,7 @@ export default function FormFieldScreen() {
 
   // Vertical orientation states
   const [verticalSwitch, setVerticalSwitch] = React.useState(false);
-  const [verticalCheckbox, setVerticalCheckbox] = React.useState(true);
+  const [verticalCheckbox, setVerticalCheckbox] = React.useState(false);
 
   // Disabled states
   const [disabledSwitch, setDisabledSwitch] = React.useState(true);
@@ -294,10 +294,10 @@ export default function FormFieldScreen() {
           className="bg-surface-2 p-4 rounded-lg border border-border"
         >
           <FormField.Content>
-            <FormField.Title classNames={{ text: 'text-lg font-semibold' }}>
+            <FormField.Title className="text-lg font-semibold">
               Premium Feature
             </FormField.Title>
-            <FormField.Description classNames={{ text: 'text-sm' }}>
+            <FormField.Description className="text-sm">
               This is a premium feature with custom styling
             </FormField.Description>
           </FormField.Content>
@@ -317,10 +317,10 @@ export default function FormFieldScreen() {
             className="bg-accent/10 p-4 rounded-xl"
           >
             <FormField.Content className="gap-1.5">
-              <FormField.Title classNames={{ text: 'text-accent font-bold' }}>
+              <FormField.Title className="text-accent font-bold">
                 Highlighted Option
               </FormField.Title>
-              <FormField.Description classNames={{ text: 'text-amber-600' }}>
+              <FormField.Description className="text-amber-600">
                 This option has custom background and text colors
               </FormField.Description>
             </FormField.Content>

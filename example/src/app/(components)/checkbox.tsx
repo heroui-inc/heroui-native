@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Checkbox, useTheme } from 'heroui-native';
+import { Checkbox, cn, useTheme } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -17,7 +17,6 @@ import Animated, {
 import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { SectionTitle } from '../../components/section-title';
-import { cn } from '../../helpers/utils/cn';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 

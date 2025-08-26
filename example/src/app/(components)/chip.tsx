@@ -270,7 +270,7 @@ export default function ChipScreen() {
           <Chip variant="primary" color="accent">
             <Chip.LabelContent>Items</Chip.LabelContent>
             <Chip.EndContent>
-              <View className="ml-1 bg-white/20 px-2 rounded-full">
+              <View className="ml-1 w-5 h-5 bg-default/10 rounded-full items-center justify-center">
                 <AppText className="text-background text-xs font-bold">
                   {chipCount}
                 </AppText>

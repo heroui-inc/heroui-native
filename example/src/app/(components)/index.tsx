@@ -96,11 +96,6 @@ const components: Component[] = [
     path: 'text-field',
   },
   {
-    title: 'Avatar',
-    icon: <ComponentIcon />,
-    path: 'avatar',
-  },
-  {
     title: 'Theme Showcase',
     icon: <ComponentIcon />,
     path: 'theme-showcase',

@@ -164,7 +164,7 @@ export default function FormFieldScreen() {
             </FormField.Description>
           </FormField.Content>
           <FormField.Indicator>
-            <Checkbox color="danger" />
+            <Checkbox color="success" />
           </FormField.Indicator>
         </FormField>
       </View>

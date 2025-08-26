@@ -4,10 +4,8 @@ export function cn(...args: CnOptions) {
   return twcn(args)({
     twMerge: true,
     twMergeConfig: {
-      extend: {
-        classGroups: {
-          opacity: [{ opacity: ['disabled'] }],
-        },
+      classGroups: {
+        opacity: [{ opacity: ['disabled'] }],
       },
     },
   });

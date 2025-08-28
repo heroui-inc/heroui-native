@@ -46,7 +46,7 @@ export default function ShowcasesScreen() {
                   source={{
                     uri: isDark ? showcase.imageDark : showcase.imageLight,
                   }}
-                  className="w-[28%] aspect-[1/2.15] rounded-lg border border-border"
+                  className="w-[30%] aspect-[1/2.12] rounded-lg border border-border"
                   resizeMode="cover"
                 />
                 <Card.Details className="pl-3 pt-1">

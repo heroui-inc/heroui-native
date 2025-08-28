@@ -36,7 +36,7 @@ const cards: HomeCard[] = [
     image:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-card-showcases.png',
     count: 1,
-    footer: 'View example apps',
+    footer: 'View example ',
     path: 'showcases',
   },
 ];
@@ -66,7 +66,7 @@ export default function App() {
               <LinearGradient
                 colors={[
                   colorKit.setAlpha('#000', 0).hex(),
-                  colorKit.setAlpha('#000', 0.4).hex(),
+                  colorKit.setAlpha('#000', 0.3).hex(),
                 ]}
                 style={StyleSheet.absoluteFill}
               />

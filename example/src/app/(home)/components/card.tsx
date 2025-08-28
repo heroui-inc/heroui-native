@@ -10,7 +10,6 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import RobotImage from '../../../../assets/images/robot.png';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
@@ -111,7 +110,9 @@ export default function CardScreen() {
           <Card.Details>
             <Card.Header>
               <Image
-                source={RobotImage}
+                source={{
+                  uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/components-card-robot.png',
+                }}
                 style={{
                   height: 60,
                   aspectRatio: 1,

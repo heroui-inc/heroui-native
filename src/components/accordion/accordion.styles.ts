@@ -14,7 +14,7 @@ const root = tv({
         divider: '',
       },
       border: {
-        container: 'border border-border rounded-xl ',
+        container: 'border border-border rounded-xl',
         divider: '',
       },
     },

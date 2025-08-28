@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from '../../../components/app-text';
 import MarqueeCarousel, {
   type CardProps,
-} from '../../../components/lesson-preview/marquee-carousel';
+} from '../../../components/showcases/onboarding/marquee-carousel';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
@@ -15,34 +15,34 @@ const cards: CardProps[] = [
   {
     title: 'My First Show',
     image:
-      'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=600&fit=crop',
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcase-onboarding-sneakers-1.png',
     liveCount: 23,
     category: 'Sneakers',
-    brands: 'Nike, Adidas',
+    brands: 'AetherStep',
   },
   {
     title: 'Fashion Week Special',
     image:
-      'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&h=600&fit=crop',
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcase-onboarding-fashion.png',
     liveCount: 45,
     category: 'Fashion',
-    brands: 'Gucci, Prada',
+    brands: 'Maison Orrix',
   },
   {
     title: 'Tech Gadgets',
     image:
-      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=600&fit=crop',
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcase-onboarding-headphones.png',
     liveCount: 12,
     category: 'Electronics',
-    brands: 'Apple, Samsung',
+    brands: 'QuantaLabs',
   },
   {
-    title: 'Vintage Collection',
+    title: 'Air Collection',
     image:
-      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=600&fit=crop',
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcase-onboarding-sneakers-2.png',
     liveCount: 8,
     category: 'Collectibles',
-    brands: 'Rare Finds',
+    brands: 'CurioVault',
   },
 ];
 
@@ -67,7 +67,7 @@ const OnboardingScreen = () => {
       >
         <Button
           size="sm"
-          className={cn('rounded-full bg-black/25', isDark && 'bg-white/25')}
+          className={cn('rounded-full bg-black/20', isDark && 'bg-white/20')}
           isIconOnly
           onPress={router.back}
         >
@@ -81,7 +81,7 @@ const OnboardingScreen = () => {
         </Button>
         <Button
           size="sm"
-          className={cn('rounded-full bg-black/25', isDark && 'bg-white/25')}
+          className={cn('rounded-full bg-black/20', isDark && 'bg-white/20')}
           isIconOnly
           onPress={router.back}
         >
@@ -101,11 +101,11 @@ const OnboardingScreen = () => {
           Lesson 1
         </AppText>
         <AppText className="text-4xl font-semibold text-foreground">
-          Creating a Show
+          Setting Up a Show
         </AppText>
         <AppText className="text-lg leading-6 text-center text-foreground/75">
-          It's quick and easy, and we have a few tips to share to set you up for
-          success.
+          It's fast and simple, and we've got a few pointers to help you get
+          started successfully.
         </AppText>
       </AnimatedView>
 

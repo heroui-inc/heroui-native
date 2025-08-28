@@ -1,17 +1,14 @@
 import Feather from '@expo/vector-icons/Feather';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { Card, Chip, colorKit } from 'heroui-native';
+import { Card, Chip, colorKit, useTheme } from 'heroui-native';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
-import componentsImage from '../../../assets/images/components.png';
-import showcasesImage from '../../../assets/images/showcases.png';
-import themesImage from '../../../assets/images/themes.png';
 import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 
 type HomeCard = {
   title: string;
-  image: number;
+  image: string;
   count: number;
   footer: string;
   path: string;
@@ -20,21 +17,24 @@ type HomeCard = {
 const cards: HomeCard[] = [
   {
     title: 'Components',
-    image: componentsImage,
+    image:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-card-components.png',
     count: 15,
     footer: 'Explore all components',
     path: 'components',
   },
   {
     title: 'Themes',
-    image: themesImage,
+    image:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-card-themes.png',
     count: 4,
     footer: 'Try different themes',
     path: 'themes',
   },
   {
     title: 'Showcases',
-    image: showcasesImage,
+    image:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-card-showcases.png',
     count: 1,
     footer: 'View example apps',
     path: 'showcases',
@@ -43,6 +43,8 @@ const cards: HomeCard[] = [
 
 export default function App() {
   const router = useRouter();
+
+  const { colors } = useTheme();
 
   return (
     <ScreenScrollView>
@@ -57,7 +59,7 @@ export default function App() {
           <Pressable key={card.title} onPress={() => router.push(card.path)}>
             <Card className="p-0 rounded-xl">
               <Image
-                source={card.image}
+                source={{ uri: card.image }}
                 className="absolute inset-0 w-full h-full"
                 resizeMode="cover"
               />
@@ -70,10 +72,8 @@ export default function App() {
               />
               <Card.Details>
                 <Card.Header className="p-3">
-                  <Chip size="sm" className="bg-black">
-                    <Chip.LabelContent
-                      classNames={{ text: 'text-white' }}
-                    >{`${card.count} total`}</Chip.LabelContent>
+                  <Chip size="sm" variant="secondary">
+                    {`${card.count} total`}
                   </Chip>
                 </Card.Header>
                 <Card.Body className="h-16" />
@@ -86,8 +86,12 @@ export default function App() {
                       {card.footer}
                     </Card.Description>
                   </View>
-                  <View className="w-9 h-9 rounded-full bg-white items-center justify-center">
-                    <Feather name="arrow-up-right" size={20} color="black" />
+                  <View className="w-9 h-9 rounded-full bg-background items-center justify-center">
+                    <Feather
+                      name="arrow-up-right"
+                      size={20}
+                      color={colors.foreground}
+                    />
                   </View>
                 </Card.Footer>
               </Card.Details>

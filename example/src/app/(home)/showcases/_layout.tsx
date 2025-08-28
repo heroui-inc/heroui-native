@@ -35,7 +35,7 @@ export default function Layout() {
       }}
     >
       <Stack.Screen name="index" options={{ headerTitle: 'Showcases' }} />
-      <Stack.Screen name="onboarding" options={{ headerTitle: 'Onboarding' }} />
+      <Stack.Screen name="onboarding" options={{ headerShown: false }} />
     </Stack>
   );
 }

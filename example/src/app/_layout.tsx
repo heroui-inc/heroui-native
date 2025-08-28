@@ -27,7 +27,7 @@ function ThemedLayout() {
   return (
     <HeroUINativeProvider
       config={{
-        colorScheme: 'light',
+        colorScheme: 'system',
         theme: currentTheme,
         textProps: {
           allowFontScaling: false,

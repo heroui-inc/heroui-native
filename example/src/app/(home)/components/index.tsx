@@ -104,7 +104,8 @@ export default function App() {
 
   return (
     <ScreenScrollView>
-      <Accordion variant="border" isCollapsible={false} className="mt-5">
+      <View className="h-5" />
+      <Accordion variant="border" isCollapsible={false}>
         {components.map((item) => (
           <Accordion.Item key={item.title} value={item.title}>
             <Accordion.Trigger

@@ -1,51 +1,142 @@
 import Feather from '@expo/vector-icons/Feather';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { Card, Chip, colorKit, useTheme } from 'heroui-native';
-import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { Card, Chip, useTheme } from 'heroui-native';
+import type { FC } from 'react';
+import { Image, Pressable, View } from 'react-native';
+import Animated, {
+  Easing,
+  FadeInDown,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 
-type HomeCard = {
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+const AnimatedImage = Animated.createAnimatedComponent(Image);
+
+type HomeCardProps = {
   title: string;
-  image: string;
+  imageLight: string;
+  imageDark: string;
   count: number;
   footer: string;
   path: string;
 };
 
-const cards: HomeCard[] = [
+const cards: HomeCardProps[] = [
   {
     title: 'Components',
-    image:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-card-components.png',
+    imageLight:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-components-light.png',
+    imageDark:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-components-dark.png',
     count: 15,
     footer: 'Explore all components',
     path: 'components',
   },
   {
     title: 'Themes',
-    image:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-card-themes.png',
+    imageLight:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-themes-light.png',
+    imageDark:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-themes-dark.png',
     count: 4,
     footer: 'Try different themes',
     path: 'themes',
   },
   {
     title: 'Showcases',
-    image:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-card-showcases.png',
+    imageLight:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-showcases-light.png',
+    imageDark:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-showcases-dark-1.png',
     count: 1,
-    footer: 'View example ',
+    footer: 'View components in action',
     path: 'showcases',
   },
 ];
 
-export default function App() {
+const HomeCard: FC<HomeCardProps & { index: number }> = ({
+  title,
+  imageLight,
+  imageDark,
+  count,
+  footer,
+  path,
+  index,
+}) => {
   const router = useRouter();
 
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
 
+  const rLightImageStyle = useAnimatedStyle(() => {
+    return {
+      opacity: isDark ? 0 : withTiming(0.4),
+    };
+  });
+
+  const rDarkImageStyle = useAnimatedStyle(() => {
+    return {
+      opacity: isDark ? withTiming(0.4) : 0,
+    };
+  });
+
+  return (
+    <AnimatedPressable
+      entering={FadeInDown.duration(300)
+        .delay(index * 100)
+        .easing(Easing.out(Easing.ease))}
+      onPress={() => router.push(path)}
+    >
+      <Card className="p-0 rounded-xl">
+        <View className="absolute inset-0 w-full h-full">
+          <AnimatedImage
+            source={{ uri: imageLight }}
+            className="absolute inset-0 w-full h-full"
+            resizeMode="cover"
+            style={rLightImageStyle}
+          />
+          <AnimatedImage
+            source={{ uri: imageDark }}
+            className="absolute inset-0 w-full h-full"
+            resizeMode="cover"
+            style={rDarkImageStyle}
+          />
+        </View>
+        <Card.Details>
+          <Card.Header className="p-3">
+            <Chip size="sm" className="bg-background/25">
+              <Chip.LabelContent classNames={{ text: 'text-foreground/85' }}>
+                {`${count} total`}
+              </Chip.LabelContent>
+            </Chip>
+          </Card.Header>
+          <Card.Body className="h-16" />
+          <Card.Footer className="px-3 pb-3 flex-row items-end gap-4">
+            <View className="flex-1">
+              <Card.Title className="text-2xl text-foreground/85">
+                {title}
+              </Card.Title>
+              <Card.Description className="text-foreground/65 pl-0.5">
+                {footer}
+              </Card.Description>
+            </View>
+            <View className="w-9 h-9 rounded-full bg-background/25 items-center justify-center">
+              <Feather
+                name="arrow-up-right"
+                size={20}
+                color={colors.foreground}
+              />
+            </View>
+          </Card.Footer>
+        </Card.Details>
+      </Card>
+    </AnimatedPressable>
+  );
+};
+
+export default function App() {
   return (
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
@@ -55,48 +146,17 @@ export default function App() {
       </View>
 
       <View className="gap-6">
-        {cards.map((card) => (
-          <Pressable key={card.title} onPress={() => router.push(card.path)}>
-            <Card className="p-0 rounded-xl">
-              <Image
-                source={{ uri: card.image }}
-                className="absolute inset-0 w-full h-full"
-                resizeMode="cover"
-              />
-              <LinearGradient
-                colors={[
-                  colorKit.setAlpha('#000', 0).hex(),
-                  colorKit.setAlpha('#000', 0.3).hex(),
-                ]}
-                style={StyleSheet.absoluteFill}
-              />
-              <Card.Details>
-                <Card.Header className="p-3">
-                  <Chip size="sm" variant="secondary">
-                    {`${card.count} total`}
-                  </Chip>
-                </Card.Header>
-                <Card.Body className="h-16" />
-                <Card.Footer className="px-3 pb-3 flex-row items-end gap-4">
-                  <View className="flex-1">
-                    <Card.Title className="text-3xl text-white">
-                      {card.title}
-                    </Card.Title>
-                    <Card.Description className="text-white pl-0.5">
-                      {card.footer}
-                    </Card.Description>
-                  </View>
-                  <View className="w-9 h-9 rounded-full bg-background items-center justify-center">
-                    <Feather
-                      name="arrow-up-right"
-                      size={20}
-                      color={colors.foreground}
-                    />
-                  </View>
-                </Card.Footer>
-              </Card.Details>
-            </Card>
-          </Pressable>
+        {cards.map((card, index) => (
+          <HomeCard
+            key={card.title}
+            title={card.title}
+            imageLight={card.imageLight}
+            imageDark={card.imageDark}
+            count={card.count}
+            footer={card.footer}
+            path={card.path}
+            index={index}
+          />
         ))}
       </View>
     </ScreenScrollView>

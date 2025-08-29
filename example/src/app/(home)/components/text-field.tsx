@@ -2,8 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Button, TextField, useTheme } from 'heroui-native';
 import { useState } from 'react';
 import { KeyboardAvoidingView, View } from 'react-native';
-import { ScreenScrollView } from '../../components/screen-scroll-view';
-import { SectionTitle } from '../../components/section-title';
+import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { SectionTitle } from '../../../components/section-title';
 
 export default function TextFieldScreen() {
   const { colors, isDark } = useTheme();

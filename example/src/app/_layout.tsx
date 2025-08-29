@@ -7,6 +7,8 @@ import {
 } from '@expo-google-fonts/inter';
 import { Slot } from 'expo-router';
 import { HeroUINativeProvider } from 'heroui-native';
+import { StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
   configureReanimatedLogger,
   ReanimatedLogLevel,
@@ -46,8 +48,16 @@ export default function Layout() {
   });
 
   return (
-    <AppThemeProvider>
-      <ThemedLayout />
-    </AppThemeProvider>
+    <GestureHandlerRootView style={styles.root}>
+      <AppThemeProvider>
+        <ThemedLayout />
+      </AppThemeProvider>
+    </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+});

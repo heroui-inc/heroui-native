@@ -1,8 +1,8 @@
 import { Surface } from 'heroui-native';
 import { View } from 'react-native';
-import { AppText } from '../../components/app-text';
-import { ScreenScrollView } from '../../components/screen-scroll-view';
-import { SectionTitle } from '../../components/section-title';
+import { AppText } from '../../../components/app-text';
+import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { SectionTitle } from '../../../components/section-title';
 
 export default function SurfaceScreen() {
   return (

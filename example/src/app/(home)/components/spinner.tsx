@@ -2,9 +2,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { Spinner, cn, useTheme } from 'heroui-native';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { AppText } from '../../components/app-text';
-import { ScreenScrollView } from '../../components/screen-scroll-view';
-import { SectionTitle } from '../../components/section-title';
+import { AppText } from '../../../components/app-text';
+import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { SectionTitle } from '../../../components/section-title';
 
 export default function SpinnerScreen() {
   const [isLoading, setIsLoading] = React.useState(true);

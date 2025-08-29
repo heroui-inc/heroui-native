@@ -14,9 +14,9 @@ import Animated, {
   ZoomIn,
   ZoomInDown,
 } from 'react-native-reanimated';
-import { AppText } from '../../components/app-text';
-import { ScreenScrollView } from '../../components/screen-scroll-view';
-import { SectionTitle } from '../../components/section-title';
+import { AppText } from '../../../components/app-text';
+import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { SectionTitle } from '../../../components/section-title';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 

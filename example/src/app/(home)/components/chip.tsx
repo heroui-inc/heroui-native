@@ -4,9 +4,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Chip, cn, useTheme } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { AppText } from '../../components/app-text';
-import { ScreenScrollView } from '../../components/screen-scroll-view';
-import { SectionTitle } from '../../components/section-title';
+import { AppText } from '../../../components/app-text';
+import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { SectionTitle } from '../../../components/section-title';
 
 export default function ChipScreen() {
   const { isDark } = useTheme();

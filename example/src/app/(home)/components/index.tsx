@@ -3,8 +3,8 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useRouter } from 'expo-router';
 import { Accordion, useTheme } from 'heroui-native';
 import { View } from 'react-native';
-import { AppText } from '../../components/app-text';
-import { ScreenScrollView } from '../../components/screen-scroll-view';
+import { AppText } from '../../../components/app-text';
+import { ScreenScrollView } from '../../../components/screen-scroll-view';
 
 const ComponentIcon = () => {
   const { colors } = useTheme();
@@ -95,11 +95,6 @@ const components: Component[] = [
     icon: <ComponentIcon />,
     path: 'text-field',
   },
-  {
-    title: 'Theme Showcase',
-    icon: <ComponentIcon />,
-    path: 'theme-showcase',
-  },
 ];
 
 export default function App() {
@@ -109,17 +104,13 @@ export default function App() {
 
   return (
     <ScreenScrollView>
-      <View className="items-center justify-center my-4">
-        <AppText className="text-muted-foreground text-base">
-          v1.0.0-alpha.8
-        </AppText>
-      </View>
+      <View className="h-5" />
       <Accordion variant="border" isCollapsible={false}>
         {components.map((item) => (
           <Accordion.Item key={item.title} value={item.title}>
             <Accordion.Trigger
               className="bg-surface-2"
-              onPress={() => router.push(item.path)}
+              onPress={() => router.push(`/components/${item.path}`)}
             >
               <View className="flex-row items-center flex-1 gap-3">
                 {item.icon}

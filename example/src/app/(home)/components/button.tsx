@@ -5,8 +5,8 @@ import { Button, Spinner, useTheme } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import { FadeIn } from 'react-native-reanimated';
-import { ScreenScrollView } from '../../components/screen-scroll-view';
-import { SectionTitle } from '../../components/section-title';
+import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { SectionTitle } from '../../../components/section-title';
 
 export default function ButtonScreen() {
   const [isDownloading, setIsDownloading] = React.useState(false);

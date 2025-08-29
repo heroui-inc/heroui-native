@@ -1,7 +1,7 @@
 import { Avatar } from 'heroui-native';
 import { View } from 'react-native';
-import { ScreenScrollView } from '../../components/screen-scroll-view';
-import { SectionTitle } from '../../components/section-title';
+import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { SectionTitle } from '../../../components/section-title';
 
 export default function AvatarExample() {
   return (

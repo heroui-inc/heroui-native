@@ -8,8 +8,8 @@ import {
 } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
-import { ScreenScrollView } from '../../components/screen-scroll-view';
-import { SectionTitle } from '../../components/section-title';
+import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { SectionTitle } from '../../../components/section-title';
 
 export default function FormFieldScreen() {
   // Basic usage states

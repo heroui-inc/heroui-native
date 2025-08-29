@@ -14,10 +14,10 @@ import {
   useTheme,
 } from 'heroui-native';
 import React from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
-import { useAppTheme } from '../../contexts/app-theme-context';
+import { Pressable, Text, View } from 'react-native';
+import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { useAppTheme } from '../../../contexts/app-theme-context';
 
-// Theme Selector Circle Component
 const ThemeCircle: React.FC<{
   themeId: string;
   themeName: string;
@@ -96,7 +96,7 @@ const ThemeCircle: React.FC<{
   );
 };
 
-export default function ThemeShowcase() {
+export default function Themes() {
   const { currentThemeId, setThemeById, availableThemes } = useAppTheme();
   const [switchValue, setSwitchValue] = React.useState(false);
   const [checkboxValue, setCheckboxValue] = React.useState(false);
@@ -122,10 +122,7 @@ export default function ThemeShowcase() {
   };
 
   return (
-    <ScrollView
-      className="flex-1 bg-background"
-      contentInsetAdjustmentBehavior="automatic"
-    >
+    <ScreenScrollView contentContainerClassName="px-0">
       {/* Theme Selector */}
       <View className="px-5 py-8 bg-panel border-b border-divider">
         <Text className="text-lg font-bold text-foreground mb-4">
@@ -455,7 +452,7 @@ export default function ThemeShowcase() {
         <Divider className="my-8" />
 
         {/* Typography Section */}
-        <View className="mb-10">
+        <View>
           <Text className="text-lg font-semibold text-foreground mb-4">
             Typography
           </Text>
@@ -483,6 +480,6 @@ export default function ThemeShowcase() {
           </View>
         </View>
       </View>
-    </ScrollView>
+    </ScreenScrollView>
   );
 }

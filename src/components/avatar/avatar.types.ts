@@ -1,4 +1,5 @@
-import type { TextProps } from 'react-native';
+import type { ImageProps, TextProps } from 'react-native';
+import type { AnimatedProps } from 'react-native-reanimated';
 import type {
   FallbackProps as PrimitiveFallbackProps,
   FallbackRef as PrimitiveFallbackRef,
@@ -52,18 +53,34 @@ export interface AvatarRootProps extends PrimitiveRootProps {
  * Props for the Avatar image component
  * Extends primitive image props with styling
  */
-export interface AvatarImageProps extends PrimitiveImageProps {
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-}
+export type AvatarImageProps =
+  | (AnimatedProps<ImageProps> & {
+      /**
+       * Additional CSS classes
+       */
+      className?: string;
+      /**
+       * Whether to use the primitive image directly
+       */
+      asChild?: false;
+    })
+  | (PrimitiveImageProps & {
+      /**
+       * Additional CSS classes
+       */
+      className?: string;
+      /**
+       * Whether to use the primitive image directly
+       */
+      asChild: true;
+    });
 
 /**
  * Props for the Avatar fallback component
  * Extends primitive fallback props with styled variants
  */
-export interface AvatarFallbackProps extends PrimitiveFallbackProps {
+export interface AvatarFallbackProps
+  extends AnimatedProps<PrimitiveFallbackProps> {
   /**
    * Delay in milliseconds before the fallback is shown
    * @default 0

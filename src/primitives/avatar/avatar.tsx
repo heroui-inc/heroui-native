@@ -26,7 +26,7 @@ interface IRootContext extends RootProps {
 
 const RootContext = createContext<IRootContext | null>(null);
 
-function useRootContext() {
+export function useRootContext() {
   const context = React.useContext(RootContext);
   if (!context) {
     throw new Error(
@@ -106,11 +106,11 @@ const Image = forwardRef<ImageRef, ImageProps>(
       [onErrorProps, setStatus, onLoadingStatusChange]
     );
 
+    const Component = asChild ? Slot.Image : RNImage;
+
     if (status === 'error') {
       return null;
     }
-
-    const Component = asChild ? Slot.Image : RNImage;
 
     return (
       <Component

@@ -24,7 +24,7 @@ const avatarRoot = tv({
  * Avatar image styles
  */
 const avatarImage = tv({
-  base: 'h-full w-full',
+  base: 'h-full w-full rounded-full',
 });
 
 /**

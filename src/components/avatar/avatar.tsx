@@ -1,8 +1,13 @@
 import { forwardRef, useEffect, useMemo, useState } from 'react';
+import type { ImageSourcePropType } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
 import { createContext } from '../../helpers/utils';
 import * as AvatarPrimitives from '../../primitives/avatar';
-import { AVATAR_DISPLAY_NAME } from './avatar.constants';
+import {
+  AVATAR_DISPLAY_NAME,
+  AVATAR_ENTERING_ANIMATION,
+} from './avatar.constants';
 import avatarStyles, { avatarNativeStyles } from './avatar.styles';
 import type {
   AvatarContextValue,
@@ -13,6 +18,10 @@ import type {
   AvatarRootProps,
   AvatarRootRef,
 } from './avatar.types';
+
+const AnimatedFallback = Animated.createAnimatedComponent(
+  AvatarPrimitives.Fallback
+);
 
 const [AvatarProvider, useAvatarContext] = createContext<AvatarContextValue>({
   name: 'AvatarContext',
@@ -61,7 +70,24 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
 
 const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
   (props, ref) => {
-    const { className, style, ...restProps } = props;
+    if (props.asChild) {
+      const { className, ...restProps } = props;
+
+      const tvStyles = avatarStyles.image({
+        className,
+      });
+
+      return (
+        <AvatarPrimitives.Image ref={ref} className={tvStyles} {...restProps} />
+      );
+    }
+
+    const {
+      className,
+      entering = AVATAR_ENTERING_ANIMATION,
+      source,
+      ...restProps
+    } = props;
 
     const tvStyles = avatarStyles.image({
       className,
@@ -70,10 +96,16 @@ const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
     return (
       <AvatarPrimitives.Image
         ref={ref}
-        className={tvStyles}
-        style={style}
-        {...restProps}
-      />
+        source={source as ImageSourcePropType}
+        asChild
+      >
+        <Animated.Image
+          key={AVATAR_DISPLAY_NAME.IMAGE}
+          entering={entering}
+          className={tvStyles}
+          {...restProps}
+        />
+      </AvatarPrimitives.Image>
     );
   }
 );
@@ -86,6 +118,7 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
 
     const {
       children,
+      entering = AVATAR_ENTERING_ANIMATION,
       delayMs = 0,
       color: colorProp,
       className,
@@ -129,8 +162,10 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
     }
 
     return (
-      <AvatarPrimitives.Fallback
+      <AnimatedFallback
+        key={AVATAR_DISPLAY_NAME.FALLBACK}
         ref={ref}
+        entering={entering}
         className={tvContainerStyles}
         style={[avatarNativeStyles.borderCurve, style]}
         {...restProps}
@@ -142,7 +177,7 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
         ) : (
           children
         )}
-      </AvatarPrimitives.Fallback>
+      </AnimatedFallback>
     );
   }
 );

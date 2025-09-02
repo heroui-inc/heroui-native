@@ -1,4 +1,4 @@
-import type { Image } from 'react-native';
+import type { Image, ImageProps as RNImageProps } from 'react-native';
 import type {
   ComponentPropsWithAsChild,
   SlottableViewProps,
@@ -26,9 +26,14 @@ type RootProps = SlottableViewProps & {
  * Props for the Avatar image component.
  * Extends React Native Image props with additional avatar-specific functionality.
  */
-type ImageProps = Omit<ComponentPropsWithAsChild<typeof Image>, 'alt'> & {
+type ImageProps = Omit<
+  ComponentPropsWithAsChild<typeof Image>,
+  'alt' | 'source'
+> & {
   /** Optional child elements to render within the image component */
   children?: React.ReactNode;
+  /** Source of the image */
+  source: RNImageProps['source'];
   /** Callback fired when the loading status changes */
   onLoadingStatusChange?: (status: AvatarStatus) => void;
 };

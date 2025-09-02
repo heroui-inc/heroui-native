@@ -31,6 +31,11 @@ const components: Component[] = [
     path: 'accordion',
   },
   {
+    title: 'Avatar',
+    icon: <ComponentIcon />,
+    path: 'avatar',
+  },
+  {
     title: 'Button',
     icon: <ComponentIcon />,
     path: 'button',

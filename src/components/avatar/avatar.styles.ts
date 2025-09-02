@@ -1,103 +1,97 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../providers/theme/helpers';
 
-const root = tv({
-  base: 'items-center justify-center overflow-hidden bg-muted',
+/**
+ * Avatar root styles
+ */
+const avatarRoot = tv({
+  base: 'items-center justify-center overflow-hidden rounded-full border border-border bg-default',
   variants: {
     size: {
-      sm: 'w-8 h-8',
-      md: 'w-10 h-10',
-      lg: 'w-12 h-12',
-      xl: 'w-16 h-16',
-    },
-    radius: {
-      sm: 'rounded-md',
-      md: 'rounded-lg',
-      lg: 'rounded-xl',
-      xl: 'rounded-2xl',
-      full: 'rounded-full',
-    },
-    isDisabled: {
-      true: 'opacity-disabled',
-    },
-    isLoading: {
-      true: 'opacity-60',
+      sm: 'h-8 w-8',
+      md: 'h-10 w-10',
+      lg: 'h-12 w-12',
     },
   },
   defaultVariants: {
     size: 'md',
-    radius: 'full',
-    isDisabled: false,
-    isLoading: false,
+    color: 'default',
   },
 });
 
-const fallback = tv({
-  base: 'w-full h-full items-center justify-center bg-muted text-muted-foreground font-medium',
+/**
+ * Avatar image styles
+ */
+const avatarImage = tv({
+  base: 'h-full w-full',
+});
+
+/**
+ * Avatar fallback styles with slots
+ */
+const avatarFallback = tv({
+  slots: {
+    container: 'h-full w-full items-center justify-center rounded-full',
+    text: 'font-medium',
+  },
   variants: {
     size: {
-      sm: 'text-xs',
-      md: 'text-sm',
-      lg: 'text-base',
-      xl: 'text-lg',
+      sm: {
+        text: 'text-xs',
+      },
+      md: {
+        text: 'text-sm',
+      },
+      lg: {
+        text: 'text-base',
+      },
+    },
+    color: {
+      default: {
+        text: 'text-default-foreground',
+      },
+      accent: {
+        text: 'text-accent',
+      },
+      success: {
+        text: 'text-success',
+      },
+      warning: {
+        text: 'text-warning',
+      },
+      danger: {
+        text: 'text-danger',
+      },
     },
   },
   defaultVariants: {
     size: 'md',
+    color: 'default',
   },
 });
 
-const image = tv({
-  variants: {
-    radius: {
-      sm: 'rounded-md',
-      md: 'rounded-lg',
-      lg: 'rounded-xl',
-      xl: 'rounded-2xl',
-      full: 'rounded-full',
-    },
-  },
-  defaultVariants: {
-    radius: 'full',
-  },
-});
-
-const text = tv({
-  base: 'text-foreground',
-  variants: {
-    size: {
-      sm: 'text-xs',
-      md: 'text-sm',
-      lg: 'text-base',
-      xl: 'text-lg',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-});
-
-export const nativeStyles = StyleSheet.create({
-  avatarRoot: {
-    borderCurve: 'continuous',
-  },
-  avatarImage: {
-    borderCurve: 'continuous',
-  },
-  avatarFallback: {
-    borderCurve: 'continuous',
-  },
-  avatarGroup: {
-    borderCurve: 'continuous',
-  },
-  avatarGroupTotal: {
+/**
+ * Native styles for border curves
+ */
+export const avatarNativeStyles = StyleSheet.create({
+  borderCurve: {
     borderCurve: 'continuous',
   },
 });
 
-export default {
-  root,
-  fallback,
-  image,
-  text,
-};
+/**
+ * Combined avatar styles
+ */
+const avatarStyles = combineStyles({
+  root: avatarRoot,
+  image: avatarImage,
+  fallback: avatarFallback,
+});
+
+/**
+ * Export slot types for type-safe classNames props
+ */
+export type AvatarFallbackSlots = keyof ReturnType<typeof avatarFallback>;
+
+export default avatarStyles;

@@ -60,22 +60,51 @@ export default function AvatarScreen() {
       </View>
 
       <SectionTitle title="Colors" />
-      <View className="flex-row items-center justify-center gap-4">
-        <Avatar color="default" alt="Default">
-          <Avatar.Fallback>DF</Avatar.Fallback>
-        </Avatar>
-        <Avatar color="accent" alt="Accent">
-          <Avatar.Fallback>AC</Avatar.Fallback>
-        </Avatar>
-        <Avatar color="success" alt="Success">
-          <Avatar.Fallback>SC</Avatar.Fallback>
-        </Avatar>
-        <Avatar color="warning" alt="Warning">
-          <Avatar.Fallback>WR</Avatar.Fallback>
-        </Avatar>
-        <Avatar color="danger" alt="Danger">
-          <Avatar.Fallback>DG</Avatar.Fallback>
-        </Avatar>
+      <View className="gap-8">
+        <View className="flex-row items-center justify-center gap-4">
+          <Avatar color="default" alt="Default">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+          <Avatar color="accent" alt="Accent">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+          <Avatar color="success" alt="Success">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+          <Avatar color="warning" alt="Warning">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+          <Avatar color="danger" alt="Danger">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+        </View>
+        <View className="flex-row items-center justify-center gap-4">
+          <Avatar color="default" alt="Default">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>DF</Avatar.Fallback>
+          </Avatar>
+          <Avatar color="accent" alt="Accent">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>AC</Avatar.Fallback>
+          </Avatar>
+          <Avatar color="success" alt="Success">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>SC</Avatar.Fallback>
+          </Avatar>
+          <Avatar color="warning" alt="Warning">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>WR</Avatar.Fallback>
+          </Avatar>
+          <Avatar color="danger" alt="Danger">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>DG</Avatar.Fallback>
+          </Avatar>
+        </View>
       </View>
 
       <SectionTitle title="Fallback Content" />

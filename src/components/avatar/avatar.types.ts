@@ -10,6 +10,7 @@ import type {
 } from '../../primitives/avatar';
 import type { ElementSlots } from '../../providers/theme';
 import type { AvatarFallbackSlots } from './avatar.styles';
+import type { PersonIconProps } from './person-icon';
 
 /**
  * Available sizes for the Avatar component
@@ -107,6 +108,11 @@ export interface AvatarFallbackProps
    * Props to pass to the Text component when children is a string
    */
   textProps?: TextProps;
+
+  /**
+   * Props to pass to the default icon when no children are provided
+   */
+  iconProps?: PersonIconProps;
 }
 
 /**

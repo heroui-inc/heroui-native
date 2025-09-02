@@ -5,6 +5,7 @@ import type { FC } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import Animated, {
   Easing,
+  FadeIn,
   FadeInDown,
   useAnimatedStyle,
   withTiming,
@@ -14,6 +15,7 @@ import { ScreenScrollView } from '../../components/screen-scroll-view';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const AnimatedImage = Animated.createAnimatedComponent(Image);
+const AnimatedView = Animated.createAnimatedComponent(View);
 
 type HomeCardProps = {
   title: string;
@@ -90,7 +92,10 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
       onPress={() => router.push(path)}
     >
       <Card className="p-0 rounded-xl">
-        <View className="absolute inset-0 w-full h-full">
+        <AnimatedView
+          entering={FadeIn}
+          className="absolute inset-0 w-full h-full"
+        >
           <AnimatedImage
             source={{ uri: imageLight }}
             className="absolute inset-0 w-full h-full"
@@ -103,7 +108,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
             resizeMode="cover"
             style={rDarkImageStyle}
           />
-        </View>
+        </AnimatedView>
         <Card.Details>
           <Card.Header className="p-3">
             <Chip size="sm" className="bg-background/25">

@@ -4,12 +4,15 @@ import Animated from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
 import { createContext } from '../../helpers/utils';
 import * as AvatarPrimitives from '../../primitives/avatar';
+import { useTheme } from '../../providers/theme';
 import {
+  AVATAR_DEFAULT_ICON_SIZE,
   AVATAR_DISPLAY_NAME,
   AVATAR_ENTERING_ANIMATION,
 } from './avatar.constants';
 import avatarStyles, { avatarNativeStyles } from './avatar.styles';
 import type {
+  AvatarColor,
   AvatarContextValue,
   AvatarFallbackProps,
   AvatarFallbackRef,
@@ -17,7 +20,10 @@ import type {
   AvatarImageRef,
   AvatarRootProps,
   AvatarRootRef,
+  AvatarSize,
 } from './avatar.types';
+import type { PersonIconProps } from './person-icon';
+import { PersonIcon } from './person-icon';
 
 const AnimatedFallback = Animated.createAnimatedComponent(
   AvatarPrimitives.Fallback
@@ -112,6 +118,30 @@ const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
 
 // --------------------------------------------------
 
+const DefaultFallbackIcon: React.FC<{
+  sizeVariant: AvatarSize;
+  colorVariant: AvatarColor;
+  iconProps?: PersonIconProps;
+}> = ({ sizeVariant, colorVariant, iconProps }) => {
+  const { colors } = useTheme();
+
+  const iconSize = iconProps?.size ?? AVATAR_DEFAULT_ICON_SIZE[sizeVariant];
+
+  const defaultIconColorMap: Record<AvatarColor, string> = {
+    default: colors.defaultForeground,
+    accent: colors.accent,
+    success: colors.success,
+    warning: colors.warning,
+    danger: colors.danger,
+  };
+
+  const iconColor = iconProps?.color ?? defaultIconColorMap[colorVariant];
+
+  return <PersonIcon size={iconSize} color={iconColor} />;
+};
+
+// --------------------------------------------------
+
 const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
   (props, ref) => {
     const contextValue = useAvatarContext();
@@ -124,6 +154,7 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
       className,
       classNames,
       textProps,
+      iconProps,
       style,
       ...restProps
     } = props;
@@ -170,12 +201,20 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
         style={[avatarNativeStyles.borderCurve, style]}
         {...restProps}
       >
-        {typeof children === 'string' ? (
-          <Text className={tvTextStyles} {...textProps}>
-            {children}
-          </Text>
+        {children ? (
+          typeof children === 'string' ? (
+            <Text className={tvTextStyles} {...textProps}>
+              {children}
+            </Text>
+          ) : (
+            children
+          )
         ) : (
-          children
+          <DefaultFallbackIcon
+            sizeVariant={size}
+            colorVariant={color}
+            iconProps={iconProps}
+          />
         )}
       </AnimatedFallback>
     );

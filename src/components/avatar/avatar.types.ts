@@ -61,7 +61,7 @@ export type AvatarImageProps =
        */
       className?: string;
       /**
-       * Whether to use the primitive image directly
+       * Whether to use the default image directly
        */
       asChild?: false;
     })
@@ -71,7 +71,7 @@ export type AvatarImageProps =
        */
       className?: string;
       /**
-       * Whether to use the primitive image directly
+       * Whether to use the default image directly
        */
       asChild: true;
     });

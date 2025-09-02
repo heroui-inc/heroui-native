@@ -9,9 +9,9 @@ const avatarRoot = tv({
   base: 'items-center justify-center overflow-hidden rounded-full border border-border bg-default',
   variants: {
     size: {
-      sm: 'h-8 w-8',
-      md: 'h-10 w-10',
-      lg: 'h-12 w-12',
+      sm: 'h-10 w-10',
+      md: 'h-12 w-12',
+      lg: 'h-16 w-16',
     },
   },
   defaultVariants: {
@@ -24,7 +24,7 @@ const avatarRoot = tv({
  * Avatar image styles
  */
 const avatarImage = tv({
-  base: 'h-full w-full rounded-full',
+  base: 'h-full w-full',
 });
 
 /**

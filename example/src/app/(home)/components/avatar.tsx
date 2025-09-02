@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, cn } from 'heroui-native';
 import { StyleSheet, Text, View } from 'react-native';
@@ -64,7 +65,7 @@ export default function AvatarScreen() {
         <View className="flex-row items-center justify-center gap-4">
           <Avatar color="default" alt="Default">
             <Avatar.Image source={undefined} />
-            <Avatar.Fallback />
+            <Avatar.Fallback delayMs={2000} />
           </Avatar>
           <Avatar color="accent" alt="Accent">
             <Avatar.Image source={undefined} />
@@ -153,7 +154,7 @@ export default function AvatarScreen() {
             <Avatar
               key={user.id}
               className={cn(
-                'border-background border-[1.5px]',
+                'border-background border-[2px]',
                 index !== 0 && '-ml-3'
               )}
               alt={user.name}
@@ -203,7 +204,12 @@ export default function AvatarScreen() {
 
         <View className="relative">
           <Avatar size="lg" alt="Online User">
-            <Avatar.Image source={{ uri: users[3]?.image }} />
+            <Avatar.Image source={{ uri: users[3]?.image }} asChild>
+              <Image
+                style={{ width: '100%', height: '100%' }}
+                contentFit="cover"
+              />
+            </Avatar.Image>
             <Avatar.Fallback>ON</Avatar.Fallback>
           </Avatar>
           <View className="absolute bottom-0 right-0 size-3.5 rounded-full bg-green-500 border border-background" />

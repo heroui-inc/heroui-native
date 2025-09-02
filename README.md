@@ -125,6 +125,7 @@ export default function MyComponent() {
 ### Components
 
 - [Accordion](./src/components/accordion/accordion.md)
+- [Avatar](./src/components/avatar/avatar.md)
 - [Button](./src/components/button/button.md)
 - [Card](./src/components/card/card.md)
 - [Checkbox](./src/components/checkbox/checkbox.md)

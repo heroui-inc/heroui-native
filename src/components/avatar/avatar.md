@@ -1,6 +1,6 @@
 # Avatar
 
-A component for displaying user profile pictures with fallback support.
+Displays a user avatar with support for images, text initials, or fallback icons.
 
 ## Imports
 
@@ -14,90 +14,115 @@ import { Avatar } from 'heroui-native';
 
 ### Basic Usage
 
-The Avatar component displays a profile image with automatic fallback handling.
+The Avatar component displays a default person icon when no image or text is provided.
 
 ```tsx
 <Avatar>
-  <Avatar.Image source="https://example.com/profile.jpg" alt="Profile" />
+  <Avatar.Fallback />
+</Avatar>
+```
+
+### With Image
+
+Display an avatar image with automatic fallback handling.
+
+```tsx
+<Avatar>
+  <Avatar.Image source={{ uri: 'https://example.com/avatar.jpg' }} />
   <Avatar.Fallback>JD</Avatar.Fallback>
 </Avatar>
 ```
 
-### Different Sizes
+### With Text Initials
 
-Avatars come in four sizes: `sm`, `md`, `lg`, and `xl`.
+Show text initials as the avatar content.
+
+```tsx
+<Avatar>
+  <Avatar.Fallback>AB</Avatar.Fallback>
+</Avatar>
+```
+
+### With Custom Icon
+
+Provide a custom icon as fallback content.
+
+```tsx
+<Avatar>
+  <Avatar.Fallback>
+    <Ionicons name="person" size={18} />
+  </Avatar.Fallback>
+</Avatar>
+```
+
+### Sizes
+
+Control the avatar size with the size prop.
 
 ```tsx
 <Avatar size="sm">
-  <Avatar.Image source="https://example.com/profile.jpg" alt="Profile" />
-  <Avatar.Fallback>JD</Avatar.Fallback>
+  <Avatar.Fallback />
+</Avatar>
+
+<Avatar size="md">
+  <Avatar.Fallback />
 </Avatar>
 
 <Avatar size="lg">
-  <Avatar.Image source="https://example.com/profile.jpg" alt="Profile" />
-  <Avatar.Fallback>JD</Avatar.Fallback>
+  <Avatar.Fallback />
 </Avatar>
 ```
 
-### Different Radius
+### Colors
 
-Customize the border radius with predefined options.
+Apply different color variants to the avatar.
 
 ```tsx
-<Avatar radius="lg">
-  <Avatar.Image source="https://example.com/profile.jpg" alt="Profile" />
-  <Avatar.Fallback>JD</Avatar.Fallback>
+<Avatar color="default">
+  <Avatar.Fallback>DF</Avatar.Fallback>
 </Avatar>
 
-<Avatar radius="full">
-  <Avatar.Image source="https://example.com/profile.jpg" alt="Profile" />
-  <Avatar.Fallback>JD</Avatar.Fallback>
+<Avatar color="accent">
+  <Avatar.Fallback>AC</Avatar.Fallback>
+</Avatar>
+
+<Avatar color="success">
+  <Avatar.Fallback>SC</Avatar.Fallback>
+</Avatar>
+
+<Avatar color="warning">
+  <Avatar.Fallback>WR</Avatar.Fallback>
+</Avatar>
+
+<Avatar color="danger">
+  <Avatar.Fallback>DG</Avatar.Fallback>
 </Avatar>
 ```
 
-### Image Only
+### Delayed Fallback
 
-Use just the image without fallback for simple cases.
+Show fallback after a delay to prevent flashing during image load.
 
 ```tsx
 <Avatar>
-  <Avatar.Image source="https://example.com/profile.jpg" alt="Profile" />
+  <Avatar.Image source={{ uri: imageUrl }} />
+  <Avatar.Fallback delayMs={600}>NA</Avatar.Fallback>
 </Avatar>
 ```
 
-### Fallback Only
+### Custom Image Component
 
-Show fallback content when no image is provided.
+Use a custom image component with the asChild prop.
 
 ```tsx
+import { Image } from 'expo-image';
+
 <Avatar>
-  <Avatar.Fallback>JD</Avatar.Fallback>
-</Avatar>
-```
-
-### Avatar Groups
-
-Group multiple avatars together with overflow handling.
-
-```tsx
-<Avatar.Group max={3} showTotal>
-  <Avatar>
-    <Avatar.Image source="https://example.com/user1.jpg" alt="User 1" />
-    <Avatar.Fallback>U1</Avatar.Fallback>
-  </Avatar>
-  <Avatar>
-   <Avatar.Image source="https://example.com/user1.jpg" alt="User 1" />
-    <Avatar.Fallback>U2</Avatar.Fallback>
-  </Avatar>
-  <Avatar>
-   <Avatar.Image source="https://example.com/user1.jpg" alt="User 1" />
-    <Avatar.Fallback>U3</Avatar.Fallback>
-  </Avatar>
-  <Avatar>
-  <Avatar.Image source="https://example.com/user1.jpg" alt="User 1" />
-    <Avatar.Fallback>U4</Avatar.Fallback>
-  </Avatar>
-</Avatar.Group>
+  <Avatar.Image source={{ uri: imageUrl }} asChild>
+    <Image style={{ width: '100%', height: '100%' }} contentFit="cover" />
+  </Avatar.Image>
+  <Avatar.Fallback>EI</Avatar.Fallback>
+</Avatar>;
 ```
 
 ## Example
@@ -107,161 +132,90 @@ import { Avatar } from 'heroui-native';
 import { View } from 'react-native';
 
 export default function AvatarExample() {
+  const users = [
+    { id: 1, image: 'https://example.com/user1.jpg', name: 'John Doe' },
+    { id: 2, image: 'https://example.com/user2.jpg', name: 'Jane Smith' },
+    { id: 3, image: 'https://example.com/user3.jpg', name: 'Bob Johnson' },
+  ];
+
   return (
-    <View className="gap-4 p-4">
-      {/* Basic Avatar */}
-      <Avatar>
-        <Avatar.Image 
-          source="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e" 
-          alt="John Doe" 
-        />
-        <Avatar.Fallback>JD</Avatar.Fallback>
-      </Avatar>
-
-      {/* Different Sizes */}
-      <View className="flex-row gap-4">
-        <Avatar size="sm">
-          <Avatar.Image source="https://example.com/small.jpg" alt="Small" />
-          <Avatar.Fallback>SM</Avatar.Fallback>
+    <View className="flex-row gap-4">
+      {users.map((user) => (
+        <Avatar key={user.id} size="lg" color="accent">
+          <Avatar.Image source={{ uri: user.image }} />
+          <Avatar.Fallback>
+            {user.name
+              .split(' ')
+              .map((n) => n[0])
+              .join('')}
+          </Avatar.Fallback>
         </Avatar>
-        <Avatar size="md">
-          <Avatar.Image source="https://example.com/medium.jpg" alt="Medium" />
-          <Avatar.Fallback>MD</Avatar.Fallback>
-        </Avatar>
-        <Avatar size="lg">
-          <Avatar.Image source="https://example.com/large.jpg" alt="Large" />
-          <Avatar.Fallback>LG</Avatar.Fallback>
-        </Avatar>
-        <Avatar size="xl">
-          <Avatar.Image source="https://example.com/xlarge.jpg" alt="XLarge" />
-          <Avatar.Fallback>XL</Avatar.Fallback>
-        </Avatar>
-      </View>
-
-      {/* Different Radius */}
-      <View className="flex-row gap-4">
-        <Avatar radius="sm">
-          <Avatar.Fallback>SM</Avatar.Fallback>
-        </Avatar>
-        <Avatar radius="md">
-          <Avatar.Fallback>MD</Avatar.Fallback>
-        </Avatar>
-        <Avatar radius="lg">
-          <Avatar.Fallback>LG</Avatar.Fallback>
-        </Avatar>
-        <Avatar radius="xl">
-          <Avatar.Fallback>XL</Avatar.Fallback>
-        </Avatar>
-        <Avatar radius="full">
-          <Avatar.Fallback>FU</Avatar.Fallback>
-        </Avatar>
-      </View>
-
-      {/* Avatar Group */}
-      <Avatar.Group max={4} showTotal>
-        <Avatar>
-          <Avatar.Image source="https://example.com/user1.jpg" alt="User 1" />
-          <Avatar.Fallback>U1</Avatar.Fallback>
-        </Avatar>
-        <Avatar>
-          <Avatar.Image source="https://example.com/user2.jpg" alt="User 2" />
-          <Avatar.Fallback>U2</Avatar.Fallback>
-        </Avatar>
-        <Avatar>
-          <Avatar.Image source="https://example.com/user3.jpg" alt="User 3" />
-          <Avatar.Fallback>U3</Avatar.Fallback>
-        </Avatar>
-        <Avatar>
-          <Avatar.Image source="https://example.com/user4.jpg" alt="User 4" />
-          <Avatar.Fallback>U4</Avatar.Fallback>
-        </Avatar>
-        <Avatar>
-          <Avatar.Image source="https://example.com/user5.jpg" alt="User 5" />
-          <Avatar.Fallback>U5</Avatar.Fallback>
-        </Avatar>
-        <Avatar>
-          <Avatar.Image source="https://example.com/user6.jpg" alt="User 6" />
-          <Avatar.Fallback>U6</Avatar.Fallback>
-        </Avatar>
-      </Avatar.Group>
+      ))}
     </View>
   );
 }
 ```
 
+## Anatomy
+
+```tsx
+<Avatar>
+  <Avatar.Image />
+  <Avatar.Fallback />
+</Avatar>
+```
+
+- **Avatar**: Main container that manages avatar display state. Provides size and color context to child components.
+- **Avatar.Image**: Optional image component that displays the avatar image. Handles loading states and errors automatically with fade-in animation.
+- **Avatar.Fallback**: Optional fallback component shown when image fails to load or is unavailable. Displays a default person icon when no children are provided.
+
 ## API Reference
 
-### Avatar.Root
+### Avatar
 
-The main avatar container component.
-
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `size` | `'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size of the avatar |
-| `radius` | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'full'` | Border radius of the avatar |
-| `isDisabled` | `boolean` | `false` | Whether the avatar is disabled |
-| `children` | `ReactNode` | - | Avatar content (Image and/or Fallback) |
+| prop           | type                                                          | default     | description                                        |
+| -------------- | ------------------------------------------------------------- | ----------- | -------------------------------------------------- |
+| `children`     | `React.ReactNode`                                             | -           | Avatar content (Image and/or Fallback components)  |
+| `size`         | `'sm' \| 'md' \| 'lg'`                                        | `'md'`      | Size of the avatar                                 |
+| `color`        | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Color variant of the avatar                        |
+| `className`    | `string`                                                      | -           | Additional CSS classes to apply                    |
+| `alt`          | `string`                                                      | -           | Alternative text description for accessibility     |
+| `...ViewProps` | `ViewProps`                                                   | -           | All standard React Native View props are supported |
 
 ### Avatar.Image
 
-Displays the profile image with error handling.
+Props extend different base types depending on the `asChild` prop value:
+- When `asChild={false}` (default): extends `AnimatedProps<ImageProps>` from React Native Reanimated
+- When `asChild={true}`: extends primitive image props for custom image components
 
-#### Props
+**Note:** When using `asChild={true}` with custom image components, the `className` prop may not be applied in some cases depending on the custom component's implementation. Ensure your custom component properly handles style props.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `source` | `string` | - | **Required.** Source of the image |
-| `alt` | `string` | - | Alt text for accessibility |
-| `style` | `StyleProp<ImageStyle>` | - | Custom style object |
+| prop                    | type                                                                                                     | default                | description                                                          |
+| ----------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------- | -------------------------------------------------------------------- |
+| `source`                | `ImageSourcePropType`                                                                                    | -                      | Image source (required)                                              |
+| `asChild`               | `boolean`                                                                                                | `false`                | Whether to use a custom image component as child                     |
+| `className`             | `string`                                                                                                 | -                      | Additional CSS classes to apply                                      |
+| `entering`              | `BaseAnimationBuilder \| typeof BaseAnimationBuilder \| EntryExitAnimationFunction \| AnimationFunction` | `FadeIn.duration(200)` | Reanimated entering animation (only when `asChild={false}`)          |
+| `onLoadingStatusChange` | `(status: 'loading' \| 'loaded' \| 'error') => void`                                                     | -                      | Callback fired when the loading status changes                       |
+| `...AnimatedProps`      | `AnimatedProps<ImageProps>` or primitive props                                                          | -                      | Additional props based on `asChild` value                            |
 
 ### Avatar.Fallback
 
-Shows fallback content when the image fails to load or is not provided.
+| prop                    | type                                                                                                     | default                | description                                               |
+| ----------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------- | --------------------------------------------------------- |
+| `children`              | `React.ReactNode`                                                                                        | -                      | Fallback content (text, icon, or custom element)          |
+| `delayMs`               | `number`                                                                                                 | `0`                    | Delay in milliseconds before showing the fallback         |
+| `color`                 | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'`                                            | inherited from parent  | Color variant of the fallback                             |
+| `className`             | `string`                                                                                                 | -                      | Additional CSS classes for the container                  |
+| `classNames`            | `{ container?: string, text?: string }`                                                                  | -                      | Additional CSS classes for different parts                |
+| `textProps`             | `TextProps`                                                                                              | -                      | Props to pass to Text component when children is a string |
+| `iconProps`             | `PersonIconProps`                                                                                        | -                      | Props to customize the default person icon                |
+| `entering`              | `BaseAnimationBuilder \| typeof BaseAnimationBuilder \| EntryExitAnimationFunction \| AnimationFunction` | `FadeIn.duration(200)` | Reanimated entering animation                             |
+| `...Animated.ViewProps` | `Animated.ViewProps`                                                                                     | -                      | All Reanimated Animated.View props are supported          |
 
-#### Props
+#### PersonIconProps
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | `'?'` | Fallback content to display |
-| `style` | `StyleProp<ViewStyle>` | - | Custom style object |
-
-
-
-## Styling
-
-The Avatar component uses Tailwind CSS classes for styling. You can customize the appearance by:
-
-1. **Modifying the theme colors** in your theme configuration
-2. **Overriding styles** using the `className` prop
-3. **Custom styling** using the `style` prop
-
-### Default Sizes
-
-- `sm`: 32x32 pixels (w-8 h-8)
-- `md`: 40x40 pixels (w-10 h-10)
-- `lg`: 48x48 pixels (w-12 h-12)
-- `xl`: 64x64 pixels (w-16 h-16)
-
-### Default Radius
-
-- `sm`: rounded-md
-- `md`: rounded-lg
-- `lg`: rounded-xl
-- `xl`: rounded-2xl
-- `full`: rounded-full
-
-## Accessibility
-
-The Avatar component includes several accessibility features:
-
-- **Alt text support** for images via the `alt` prop
-- **Semantic markup** for screen readers
-- **Proper contrast** with fallback text
-
-## Best Practices
-
-1. **Always provide alt text or fallback** for images to improve accessibility
-2. **Use meaningful fallback content** (initials, icons, or descriptive text)
-3. **Choose appropriate sizes** based on your UI context
+| prop    | type     | description                |
+| ------- | -------- | -------------------------- |
+| `size`  | `number` | Size of the icon in pixels |
+| `color` | `string` | Color of the icon          |

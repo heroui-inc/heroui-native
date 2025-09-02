@@ -1,20 +1,33 @@
-import { forwardRef, useCallback, useMemo, useState } from 'react';
-import { Image, View } from 'react-native';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import { forwardRef, useEffect, useMemo, useState } from 'react';
+import type { ImageSourcePropType } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
-import { createContext, getElementByDisplayName } from '../../helpers/utils';
-import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
-import { DISPLAY_NAME } from './avatar.constants';
-import avatarStyles, { nativeStyles } from './avatar.styles';
+import { createContext } from '../../helpers/utils';
+import * as AvatarPrimitives from '../../primitives/avatar';
+import { useTheme } from '../../providers/theme';
+import {
+  AVATAR_DEFAULT_ICON_SIZE,
+  AVATAR_DISPLAY_NAME,
+  AVATAR_ENTERING_ANIMATION,
+} from './avatar.constants';
+import avatarStyles, { avatarNativeStyles } from './avatar.styles';
 import type {
+  AvatarColor,
   AvatarContextValue,
   AvatarFallbackProps,
+  AvatarFallbackRef,
   AvatarImageProps,
+  AvatarImageRef,
   AvatarRootProps,
+  AvatarRootRef,
+  AvatarSize,
 } from './avatar.types';
+import type { PersonIconProps } from './person-icon';
+import { PersonIcon } from './person-icon';
 
-const AnimatedView = Animated.createAnimatedComponent(View);
-const AnimatedImage = Animated.createAnimatedComponent(Image);
+const AnimatedFallback = Animated.createAnimatedComponent(
+  AvatarPrimitives.Fallback
+);
 
 const [AvatarProvider, useAvatarContext] = createContext<AvatarContextValue>({
   name: 'AvatarContext',
@@ -22,145 +35,219 @@ const [AvatarProvider, useAvatarContext] = createContext<AvatarContextValue>({
 
 // --------------------------------------------------
 
-const AvatarRoot = forwardRef<View, AvatarRootProps>((props, ref) => {
+const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
   const {
     children,
     size = 'md',
-    radius = 'full',
-    isDisabled = false,
-    isLoading = false,
+    color = 'default',
     className,
     style,
     ...restProps
   } = props;
 
-  const [isImageFailed, setIsImageFailed] = useState(false);
-
-  // Look for IMAGE
-  const imageElement = useMemo(
-    () => getElementByDisplayName(children, DISPLAY_NAME.IMAGE),
-    [children]
-  );
-
-  const fallbackElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.FALLBACK,
-        <AvatarFallback>?</AvatarFallback>
-      ),
-    [children]
-  );
-
   const tvStyles = avatarStyles.root({
     size,
-    radius,
-    isDisabled,
-    isLoading,
     className,
   });
 
-  const contextValue: AvatarContextValue = useMemo(
+  const contextValue = useMemo(
     () => ({
       size,
-      radius,
-      isDisabled,
-      isLoading,
-      isImageFailed,
-      setImageFailed: setIsImageFailed,
-      imageElementPresent: !!imageElement,
+      color,
     }),
-    [size, radius, isDisabled, isLoading, isImageFailed, imageElement]
+    [size, color]
   );
 
   return (
     <AvatarProvider value={contextValue}>
-      <AnimatedView
+      <AvatarPrimitives.Root
         ref={ref}
         className={tvStyles}
-        style={[nativeStyles.avatarRoot, style]}
+        style={[avatarNativeStyles.borderCurve, style]}
         {...restProps}
       >
-        {imageElement}
-        {fallbackElement}
-      </AnimatedView>
+        {children}
+      </AvatarPrimitives.Root>
     </AvatarProvider>
   );
 });
 
-AvatarRoot.displayName = DISPLAY_NAME.ROOT;
-
 // --------------------------------------------------
 
-const AvatarImage = forwardRef<Image, AvatarImageProps>((props, ref) => {
-  const { source, alt, ...restProps } = props;
-  const { size, radius, isImageFailed, setImageFailed } = useAvatarContext();
+const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
+  (props, ref) => {
+    if (props.asChild) {
+      const { className, ...restProps } = props;
 
-  const handleError = useCallback(() => {
-    setImageFailed(true);
-  }, [setImageFailed]);
+      const tvStyles = avatarStyles.image({
+        className,
+      });
 
-  const handleLoad = useCallback(() => {
-    setImageFailed(false);
-  }, [setImageFailed]);
+      return (
+        <AvatarPrimitives.Image ref={ref} className={tvStyles} {...restProps} />
+      );
+    }
 
-  const tvStyles = avatarStyles.root({ size });
-  const imageStyles = avatarStyles.image({ radius });
+    const {
+      className,
+      entering = AVATAR_ENTERING_ANIMATION,
+      source,
+      ...restProps
+    } = props;
 
-  if (isImageFailed) {
-    return null;
+    const tvStyles = avatarStyles.image({
+      className,
+    });
+
+    return (
+      <AvatarPrimitives.Image
+        ref={ref}
+        source={source as ImageSourcePropType}
+        asChild
+      >
+        <Animated.Image
+          key={AVATAR_DISPLAY_NAME.IMAGE}
+          entering={entering}
+          className={tvStyles}
+          {...restProps}
+        />
+      </AvatarPrimitives.Image>
+    );
   }
-
-  return (
-    <AnimatedImage
-      ref={ref}
-      source={{ uri: source }}
-      accessibilityLabel={alt}
-      // Fix: Tailwind merge is not imported in the project
-      className={`${tvStyles} ${imageStyles}`}
-      onError={handleError}
-      onLoad={handleLoad}
-      entering={FadeIn.duration(200)}
-      exiting={FadeOut.duration(200)}
-      {...restProps}
-    />
-  );
-});
-
-AvatarImage.displayName = DISPLAY_NAME.IMAGE;
+);
 
 // --------------------------------------------------
 
-const AvatarFallback = forwardRef<View, AvatarFallbackProps>((props, ref) => {
-  const { children, style, ...restProps } = props;
-  const { size, isImageFailed, imageElementPresent } = useAvatarContext();
+const DefaultFallbackIcon: React.FC<{
+  sizeVariant: AvatarSize;
+  colorVariant: AvatarColor;
+  iconProps?: PersonIconProps;
+}> = ({ sizeVariant, colorVariant, iconProps }) => {
+  const { colors } = useTheme();
 
-  if (imageElementPresent && !isImageFailed) {
-    return null;
+  const iconSize = iconProps?.size ?? AVATAR_DEFAULT_ICON_SIZE[sizeVariant];
+
+  const defaultIconColorMap: Record<AvatarColor, string> = {
+    default: colors.defaultForeground,
+    accent: colors.accent,
+    success: colors.success,
+    warning: colors.warning,
+    danger: colors.danger,
+  };
+
+  const iconColor = iconProps?.color ?? defaultIconColorMap[colorVariant];
+
+  return <PersonIcon size={iconSize} color={iconColor} />;
+};
+
+// --------------------------------------------------
+
+const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
+  (props, ref) => {
+    const contextValue = useAvatarContext();
+
+    const {
+      children,
+      entering = AVATAR_ENTERING_ANIMATION,
+      delayMs = 0,
+      color: colorProp,
+      className,
+      classNames,
+      textProps,
+      iconProps,
+      style,
+      ...restProps
+    } = props;
+
+    const [isVisible, setIsVisible] = useState(delayMs === 0);
+
+    useEffect(() => {
+      if (delayMs > 0) {
+        const timer = setTimeout(() => {
+          setIsVisible(true);
+        }, delayMs);
+
+        return () => clearTimeout(timer);
+      }
+      return undefined;
+    }, [delayMs]);
+
+    const size = contextValue.size;
+    const color = colorProp ?? contextValue.color;
+
+    const { container, text } = avatarStyles.fallback({
+      size,
+      color,
+    });
+
+    const tvContainerStyles = container({
+      className: [className, classNames?.container],
+    });
+
+    const tvTextStyles = text({
+      className: [classNames?.text, textProps?.className],
+    });
+
+    if (!isVisible) {
+      return null;
+    }
+
+    return (
+      <AnimatedFallback
+        key={AVATAR_DISPLAY_NAME.FALLBACK}
+        ref={ref}
+        entering={entering}
+        className={tvContainerStyles}
+        style={[avatarNativeStyles.borderCurve, style]}
+        {...restProps}
+      >
+        {children ? (
+          typeof children === 'string' ? (
+            <Text className={tvTextStyles} {...textProps}>
+              {children}
+            </Text>
+          ) : (
+            children
+          )
+        ) : (
+          <DefaultFallbackIcon
+            sizeVariant={size}
+            colorVariant={color}
+            iconProps={iconProps}
+          />
+        )}
+      </AnimatedFallback>
+    );
   }
-
-  const tvStyles = avatarStyles.fallback({ size });
-  const textStyles = avatarStyles.text({ size });
-
-  return (
-    <AnimatedView
-      ref={ref}
-      className={tvStyles}
-      style={[nativeStyles.avatarFallback, style]}
-      entering={FadeIn.duration(200)}
-      {...restProps}
-    >
-      <Text className={textStyles}>{isImageFailed ? '?' : children}</Text>
-    </AnimatedView>
-  );
-});
-
-AvatarFallback.displayName = DISPLAY_NAME.FALLBACK;
+);
 
 // --------------------------------------------------
 
+AvatarRoot.displayName = AVATAR_DISPLAY_NAME.ROOT;
+AvatarImage.displayName = AVATAR_DISPLAY_NAME.IMAGE;
+AvatarFallback.displayName = AVATAR_DISPLAY_NAME.FALLBACK;
+
+/**
+ * Compound Avatar component with sub-components
+ *
+ * @component Avatar - Main container that manages avatar display state.
+ * Provides color and size context to child components.
+ *
+ * @component Avatar.Image - Optional image component that displays the avatar image.
+ * Handles loading states and errors automatically.
+ *
+ * @component Avatar.Fallback - Optional fallback component shown when image fails to load.
+ * Supports text initials or custom content with optional delay.
+ *
+ * Props flow from Avatar to sub-components via context (size, color).
+ * Fallback can override color with its own prop.
+ *
+ * @see Full documentation: https://heroui.com/components/avatar
+ */
 const Avatar = Object.assign(AvatarRoot, {
+  /** @optional Displays the avatar image with loading state management */
   Image: AvatarImage,
+  /** @optional Shows fallback content when image is unavailable */
   Fallback: AvatarFallback,
 });
 

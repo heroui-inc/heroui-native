@@ -1,146 +1,140 @@
-import type { ImageProps, ViewProps } from 'react-native';
+import type { ImageProps, TextProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
+import type {
+  FallbackProps as PrimitiveFallbackProps,
+  FallbackRef as PrimitiveFallbackRef,
+  ImageProps as PrimitiveImageProps,
+  ImageRef as PrimitiveImageRef,
+  RootProps as PrimitiveRootProps,
+  RootRef as PrimitiveRootRef,
+} from '../../primitives/avatar';
+import type { ElementSlots } from '../../providers/theme';
+import type { AvatarFallbackSlots } from './avatar.styles';
+import type { PersonIconProps } from './person-icon';
 
 /**
- * Size variants for the Avatar component
+ * Available sizes for the Avatar component
  */
-export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl';
+export type AvatarSize = 'sm' | 'md' | 'lg';
 
 /**
- * Radius variants for the Avatar component
+ * Available color variants for the Avatar component
  */
-export type AvatarRadius = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+export type AvatarColor =
+  | 'default'
+  | 'accent'
+  | 'success'
+  | 'warning'
+  | 'danger';
 
 /**
- * Props for the Avatar.Root component
+ * Props for the Avatar root component
+ * Extends primitive root props with styled variants
  */
-export interface AvatarRootProps extends AnimatedProps<ViewProps> {
-  /**
-   * Children elements to be rendered inside the avatar
-   */
-  children?: React.ReactNode;
+export interface AvatarRootProps extends PrimitiveRootProps {
   /**
    * Size of the avatar
    * @default 'md'
    */
   size?: AvatarSize;
+
   /**
-   * Border radius of the avatar
-   * @default 'full'
+   * Color variant of the avatar
+   * @default 'default'
    */
-  radius?: AvatarRadius;
+  color?: AvatarColor;
+
   /**
-   * Whether the avatar is disabled
-   * @default false
-   */
-  isDisabled?: boolean;
-  /**
-   * Whether to show a loading state
-   * @default false
-   */
-  isLoading?: boolean;
-  /**
-   * Custom class name for styling
+   * Additional CSS classes
    */
   className?: string;
-  /**
-   * Custom style object
-   */
-  style?: any;
 }
 
 /**
- * Props for the Avatar.Image component
+ * Props for the Avatar image component
+ * Extends primitive image props with styling
  */
-export interface AvatarImageProps extends AnimatedProps<ImageProps> {
-  /**
-   * Source of the image
-   */
-  source: any;
-  /**
-   * Alt text for accessibility
-   */
-  alt?: string;
-  /**
-   * Whether the image failed to load
-   */
-  isFailed?: boolean;
-  /**
-   * Custom class name for styling
-   */
-  className?: string;
-  /**
-   * Custom style object
-   */
-  style?: any;
-}
+export type AvatarImageProps =
+  | (AnimatedProps<ImageProps> & {
+      /**
+       * Additional CSS classes
+       */
+      className?: string;
+      /**
+       * Whether to use the default image directly
+       */
+      asChild?: false;
+    })
+  | (PrimitiveImageProps & {
+      /**
+       * Additional CSS classes
+       */
+      className?: string;
+      /**
+       * Whether to use the default image directly
+       */
+      asChild: true;
+    });
 
 /**
- * Props for the Avatar.Fallback component
+ * Props for the Avatar fallback component
+ * Extends primitive fallback props with styled variants
  */
-export interface AvatarFallbackProps extends AnimatedProps<ViewProps> {
+export interface AvatarFallbackProps
+  extends AnimatedProps<PrimitiveFallbackProps> {
   /**
-   * Children elements to be rendered as fallback
+   * Delay in milliseconds before the fallback is shown
+   * @default 0
    */
-  children?: React.ReactNode;
+  delayMs?: number;
+
   /**
-   * Custom class name for styling
+   * Color variant of the fallback
+   * Inherits from parent if not specified
+   */
+  color?: AvatarColor;
+
+  /**
+   * Additional CSS classes
    */
   className?: string;
+
   /**
-   * Custom style object
+   * Additional CSS classes for different parts of the fallback
    */
-  style?: any;
+  classNames?: ElementSlots<AvatarFallbackSlots>;
+
+  /**
+   * Props to pass to the Text component when children is a string
+   */
+  textProps?: TextProps;
+
+  /**
+   * Props to pass to the default icon when no children are provided
+   */
+  iconProps?: PersonIconProps;
 }
 
 /**
- * Props for the Avatar.Text component
- */
-export interface AvatarTextProps extends AnimatedProps<ViewProps> {
-  /**
-   * Children elements to be rendered as text
-   */
-  children?: React.ReactNode;
-  /**
-   * Custom class name for styling
-   */
-  className?: string;
-  /**
-   * Custom style object
-   */
-  style?: any;
-}
-
-/**
- * Context value for Avatar components
+ * Context value shared between Avatar components
  */
 export interface AvatarContextValue {
   /**
-   * Size of the avatar
+   * Current size of the avatar
    */
   size: AvatarSize;
+
   /**
-   * Radius of the avatar
+   * Current color variant of the avatar
    */
-  radius: AvatarRadius;
-  /**
-   * Whether the avatar is disabled
-   */
-  isDisabled: boolean;
-  /**
-   * Whether the avatar is loading
-   */
-  isLoading: boolean;
-  /**
-   * Whether the image failed to load
-   */
-  isImageFailed: boolean;
-  /**
-   * Function to set image failed state
-   */
-  setImageFailed: (failed: boolean) => void;
-  /**
-   * Whether the image element is not found
-   */
-  imageElementPresent: boolean;
+  color: AvatarColor;
 }
+
+/** Reference type for the Avatar root component */
+export type AvatarRootRef = PrimitiveRootRef;
+
+/** Reference type for the Avatar image component */
+export type AvatarImageRef = PrimitiveImageRef;
+
+/** Reference type for the Avatar fallback component */
+export type AvatarFallbackRef = PrimitiveFallbackRef;

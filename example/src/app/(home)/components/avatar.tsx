@@ -1,90 +1,219 @@
-import { Avatar } from 'heroui-native';
-import { View } from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import { Ionicons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Avatar, cn } from 'heroui-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
-export default function AvatarExample() {
+type User = {
+  id: number;
+  image: string;
+  name: string;
+};
+
+const users: User[] = [
+  {
+    id: 1,
+    image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
+    name: 'John Doe',
+  },
+  {
+    id: 2,
+    image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
+    name: 'Kate Wilson',
+  },
+  {
+    id: 3,
+    image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
+    name: 'Emily Chen',
+  },
+  {
+    id: 4,
+    image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=23',
+    name: 'Michael Brown',
+  },
+  {
+    id: 5,
+    image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=16',
+    name: 'Olivia Davis',
+  },
+];
+
+export default function AvatarScreen() {
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
-      {/* Basic Usage */}
-      <SectionTitle title="Basic Usage" />
-      <View className="gap-4 flex-row">
-        <Avatar>
+      <SectionTitle title="Sizes" />
+      <View className="flex-row items-center justify-center gap-4">
+        <Avatar size="sm" alt="Small Avatar">
+          <Avatar.Image source={{ uri: users[0]?.image }} />
+          <Avatar.Fallback>SM</Avatar.Fallback>
+        </Avatar>
+        <Avatar size="md" alt="Medium Avatar">
+          <Avatar.Image source={{ uri: users[1]?.image }} />
+          <Avatar.Fallback>MD</Avatar.Fallback>
+        </Avatar>
+        <Avatar size="lg" alt="Large Avatar">
+          <Avatar.Image source={{ uri: users[2]?.image }} />
+          <Avatar.Fallback>LG</Avatar.Fallback>
+        </Avatar>
+      </View>
+
+      <SectionTitle title="Colors" />
+      <View className="gap-8">
+        <View className="flex-row items-center justify-center gap-4">
+          <Avatar color="default" alt="Default">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback delayMs={2000} />
+          </Avatar>
+          <Avatar color="accent" alt="Accent">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+          <Avatar color="success" alt="Success">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+          <Avatar color="warning" alt="Warning">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+          <Avatar color="danger" alt="Danger">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+        </View>
+        <View className="flex-row items-center justify-center gap-4">
+          <Avatar color="default" alt="Default">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>DF</Avatar.Fallback>
+          </Avatar>
+          <Avatar color="accent" alt="Accent">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>AC</Avatar.Fallback>
+          </Avatar>
+          <Avatar color="success" alt="Success">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>SC</Avatar.Fallback>
+          </Avatar>
+          <Avatar color="warning" alt="Warning">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>WR</Avatar.Fallback>
+          </Avatar>
+          <Avatar color="danger" alt="Danger">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>DG</Avatar.Fallback>
+          </Avatar>
+        </View>
+      </View>
+
+      <SectionTitle title="Fallback Content" />
+      <View className="flex-row items-center justify-center gap-4">
+        <Avatar alt="John Doe">
           <Avatar.Fallback>JD</Avatar.Fallback>
         </Avatar>
-
-        <Avatar>
+        <Avatar alt="User">
+          <Avatar.Fallback>
+            <Ionicons name="person" size={18} color="#666" />
+          </Avatar.Fallback>
+        </Avatar>
+        <Avatar alt="Delayed Avatar">
           <Avatar.Image
-            source="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
-            alt="Colm Tuite"
+            source={{
+              uri: 'https://invalid-url-to-show-fallback.com/image.jpg',
+            }}
           />
-          <Avatar.Fallback>AB</Avatar.Fallback>
+          <Avatar.Fallback delayMs={600}>NA</Avatar.Fallback>
         </Avatar>
 
-        <Avatar>
-          <Avatar.Image
-            source="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-            alt="Pedro Duarte"
-          />
-          <Avatar.Fallback>JS</Avatar.Fallback>
+        <Avatar alt="Custom">
+          <Avatar.Fallback>
+            <LinearGradient
+              colors={['#ec4899', '#a855f7']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={{
+                flex: 1,
+                width: '100%',
+                height: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text className="text-white font-medium">GB</Text>
+            </LinearGradient>
+          </Avatar.Fallback>
         </Avatar>
       </View>
 
-      {/* Different Sizes */}
-      <SectionTitle title="Different Sizes" />
-      <View className="flex-row gap-4 items-end">
-        <Avatar size="sm">
-          <Avatar.Fallback>SM</Avatar.Fallback>
-        </Avatar>
-        <Avatar size="md">
-          <Avatar.Fallback>MD</Avatar.Fallback>
-        </Avatar>
-        <Avatar size="lg">
-          <Avatar.Image
-            source="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-            alt="Pedro Duarte"
-          />
-          <Avatar.Fallback>LG</Avatar.Fallback>
-        </Avatar>
-        <Avatar size="xl">
-          <Avatar.Image
-            source="https://images.unsplash.com/photo-1511485977113-f34c92461ad9"
-            alt="Pedro Duarte"
-          />
-          <Avatar.Fallback>XL</Avatar.Fallback>
-        </Avatar>
+      <SectionTitle title="Avatar Group" />
+      <View className="gap-6 items-center justify-center">
+        <View className="flex-row">
+          {users.slice(0, 4).map((user, index) => (
+            <Avatar
+              key={user.id}
+              className={cn(
+                'border-background border-[2px]',
+                index !== 0 && '-ml-3'
+              )}
+              alt={user.name}
+            >
+              <Avatar.Image source={{ uri: user.image }} />
+              <Avatar.Fallback
+                classNames={{
+                  container: 'bg-warning',
+                  text: 'text-warning-foreground',
+                }}
+              >
+                {user.name
+                  .split(' ')
+                  .map((n) => n[0])
+                  .join('')}
+              </Avatar.Fallback>
+            </Avatar>
+          ))}
+        </View>
       </View>
 
-      {/* Different Radius */}
-      <SectionTitle title="Different Radius" />
-      <View className="flex-row gap-4">
-        <Avatar radius="sm">
-          <Avatar.Fallback>SM</Avatar.Fallback>
-        </Avatar>
-        <Avatar radius="md">
-          <Avatar.Fallback>MD</Avatar.Fallback>
-        </Avatar>
-        <Avatar radius="lg">
-          <Avatar.Image
-            source="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
-            alt="Colm Tuite"
-          />
-          <Avatar.Fallback>LG</Avatar.Fallback>
-        </Avatar>
-        <Avatar radius="xl">
-          <Avatar.Image
-            source="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-            alt="Pedro Duarte"
-          />
+      <SectionTitle title="Custom Styles" />
+      <View className="flex-row items-center justify-center gap-4">
+        <Avatar className="h-16 w-16" alt="Extra Large">
+          <Avatar.Image source={{ uri: users[0]?.image }} />
           <Avatar.Fallback>XL</Avatar.Fallback>
         </Avatar>
-        <Avatar radius="full">
-          <Avatar.Image
-            source="https://images.unsplash.com/photo-1511485977113-f34c92461ad9"
-            alt="Pedro Duarte"
-          />
-          <Avatar.Fallback>FU</Avatar.Fallback>
+
+        <Avatar className="rounded-lg" alt="Square Avatar">
+          <Avatar.Image source={{ uri: users[1]?.image }} />
+          <Avatar.Fallback className="rounded-lg">SQ</Avatar.Fallback>
         </Avatar>
+
+        <Avatar className="p-0.5" size="lg" alt="Gradient Border">
+          <LinearGradient
+            colors={['#ec4899', '#f59e0b']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={StyleSheet.absoluteFill}
+          />
+          <Avatar.Image
+            className="border-[0.5px] border-background rounded-full"
+            source={{ uri: users[2]?.image }}
+          />
+          <Avatar.Fallback className="border-none">GB</Avatar.Fallback>
+        </Avatar>
+
+        <View className="relative">
+          <Avatar size="lg" alt="Online User">
+            <Avatar.Image source={{ uri: users[3]?.image }} asChild>
+              <Image
+                style={{ width: '100%', height: '100%' }}
+                contentFit="cover"
+              />
+            </Avatar.Image>
+            <Avatar.Fallback>ON</Avatar.Fallback>
+          </Avatar>
+          <View className="absolute bottom-0 right-0 size-3.5 rounded-full bg-green-500 border border-background" />
+        </View>
       </View>
     </ScreenScrollView>
   );

@@ -76,7 +76,9 @@ export const PreviewCard: FC<PreviewCardProps> = ({
               <Chip className="bg-danger rounded-md">
                 <Chip.LabelContent
                   classNames={{ text: 'text-white font-semibold' }}
-                >{`Live • ${liveCount}`}</Chip.LabelContent>
+                >
+                  Live • {liveCount}
+                </Chip.LabelContent>
               </Chip>
             </Card.Body>
             <Card.Footer>

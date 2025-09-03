@@ -2,7 +2,7 @@ import { forwardRef, useEffect, useMemo, useState } from 'react';
 import type { ImageSourcePropType } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
-import { createContext } from '../../helpers/utils';
+import { childrenToString, createContext } from '../../helpers/utils';
 import * as AvatarPrimitives from '../../primitives/avatar';
 import { useTheme } from '../../providers/theme';
 import {
@@ -192,6 +192,8 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
       return null;
     }
 
+    const stringifiedChildren = childrenToString(children);
+
     return (
       <AnimatedFallback
         key={AVATAR_DISPLAY_NAME.FALLBACK}
@@ -202,9 +204,9 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
         {...restProps}
       >
         {children ? (
-          typeof children === 'string' ? (
+          stringifiedChildren ? (
             <Text className={tvTextStyles} {...textProps}>
-              {children}
+              {stringifiedChildren}
             </Text>
           ) : (
             children

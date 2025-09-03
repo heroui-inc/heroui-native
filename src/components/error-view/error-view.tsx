@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import Animated from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
 import type { ViewRef } from '../../helpers/types/primitives';
+import { childrenToString } from '../../helpers/utils';
 import {
   DISPLAY_NAME,
   ENTERING_ANIMATION_CONFIG,
@@ -44,13 +45,17 @@ const ErrorViewRoot = forwardRef<ViewRef, ErrorViewRootProps>((props, ref) => {
       className={containerStyles}
       {...restProps}
     >
-      {typeof children === 'string' ? (
-        <Text className={textStyles} {...textProps}>
-          {children}
-        </Text>
-      ) : (
-        children
-      )}
+      {(() => {
+        const stringifiedChildren = childrenToString(children);
+
+        return stringifiedChildren ? (
+          <Text className={textStyles} {...textProps}>
+            {stringifiedChildren}
+          </Text>
+        ) : (
+          children
+        );
+      })()}
     </Animated.View>
   );
 });

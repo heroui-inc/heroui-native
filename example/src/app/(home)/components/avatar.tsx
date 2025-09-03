@@ -87,7 +87,7 @@ export default function AvatarScreen() {
         <View className="flex-row items-center justify-center gap-4">
           <Avatar color="default" alt="Default">
             <Avatar.Image source={undefined} />
-            <Avatar.Fallback>DF</Avatar.Fallback>
+            <Avatar.Fallback />
           </Avatar>
           <Avatar color="accent" alt="Accent">
             <Avatar.Image source={undefined} />

@@ -204,7 +204,7 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
         {...restProps}
       >
         {children ? (
-          stringifiedChildren !== null ? (
+          stringifiedChildren ? (
             <Text className={tvTextStyles} {...textProps}>
               {stringifiedChildren}
             </Text>

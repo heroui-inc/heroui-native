@@ -8,7 +8,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
 import type { PressableRef } from '../../helpers/types';
-import { createContext, getElementByDisplayName } from '../../helpers/utils';
+import {
+  childrenToString,
+  createContext,
+  getElementByDisplayName,
+} from '../../helpers/utils';
 import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
 import { useTheme } from '../../providers/theme';
 import {
@@ -64,19 +68,19 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     [children]
   );
 
-  const labelElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.LABEL_CONTENT,
-        typeof children === 'string' ? (
-          <ButtonLabelContent>{children}</ButtonLabelContent>
-        ) : (
-          <ButtonLabelContent />
-        )
-      ),
-    [children]
-  );
+  const labelElement = useMemo(() => {
+    const stringifiedChildren = childrenToString(children);
+
+    return getElementWithDefault(
+      children,
+      DISPLAY_NAME.LABEL_CONTENT,
+      stringifiedChildren ? (
+        <ButtonLabelContent>{stringifiedChildren}</ButtonLabelContent>
+      ) : (
+        <ButtonLabelContent />
+      )
+    );
+  }, [children]);
 
   const endContentElement = useMemo(
     () => getElementByDisplayName(children, DISPLAY_NAME.END_CONTENT),
@@ -310,7 +314,9 @@ const ButtonLabelContent = forwardRef<View, ButtonLabelContentProps>(
       className: [classNames?.text, textProps?.className],
     });
 
-    if (typeof children === 'string') {
+    const stringifiedChildren = childrenToString(children);
+
+    if (stringifiedChildren) {
       return (
         <Animated.View
           ref={ref}
@@ -319,7 +325,7 @@ const ButtonLabelContent = forwardRef<View, ButtonLabelContentProps>(
           {...restProps}
         >
           <Text className={tvTextStyles} {...textProps}>
-            {children}
+            {stringifiedChildren}
           </Text>
         </Animated.View>
       );

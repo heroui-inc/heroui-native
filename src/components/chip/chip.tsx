@@ -3,7 +3,11 @@ import { Pressable, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
 import type { PressableRef } from '../../helpers/types';
-import { createContext, getElementByDisplayName } from '../../helpers/utils';
+import {
+  childrenToString,
+  createContext,
+  getElementByDisplayName,
+} from '../../helpers/utils';
 import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
 import { DEFAULT_LAYOUT_TRANSITION, DISPLAY_NAME } from './chip.constants';
 import chipStyles, { nativeStyles } from './chip.styles';
@@ -46,19 +50,19 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
     [children]
   );
 
-  const labelElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.CHIP_LABEL_CONTENT,
-        typeof children === 'string' ? (
-          <ChipLabelContent>{children}</ChipLabelContent>
-        ) : (
-          <ChipLabelContent />
-        )
-      ),
-    [children]
-  );
+  const labelElement = useMemo(() => {
+    const stringifiedChildren = childrenToString(children);
+
+    return getElementWithDefault(
+      children,
+      DISPLAY_NAME.CHIP_LABEL_CONTENT,
+      stringifiedChildren ? (
+        <ChipLabelContent>{stringifiedChildren}</ChipLabelContent>
+      ) : (
+        <ChipLabelContent />
+      )
+    );
+  }, [children]);
 
   const endContentElement = useMemo(
     () => getElementByDisplayName(children, DISPLAY_NAME.CHIP_END_CONTENT),
@@ -177,7 +181,9 @@ const ChipLabelContent = forwardRef<View, ChipLabelContentProps>(
       className: [classNames?.text, textProps?.className],
     });
 
-    if (typeof children === 'string') {
+    const stringifiedChildren = childrenToString(children);
+
+    if (stringifiedChildren) {
       return (
         <Animated.View
           ref={ref}
@@ -186,7 +192,7 @@ const ChipLabelContent = forwardRef<View, ChipLabelContentProps>(
           {...restProps}
         >
           <Text className={tvTextStyles} {...textProps}>
-            {children}
+            {stringifiedChildren}
           </Text>
         </Animated.View>
       );

@@ -48,7 +48,7 @@ export default function AvatarScreen() {
       <View className="flex-row items-center justify-center gap-4">
         <Avatar size="sm" alt="Small Avatar">
           <Avatar.Image source={{ uri: users[0]?.image }} />
-          <Avatar.Fallback>SM</Avatar.Fallback>
+          <Avatar.Fallback />
         </Avatar>
         <Avatar size="md" alt="Medium Avatar">
           <Avatar.Image source={{ uri: users[1]?.image }} />
@@ -65,7 +65,7 @@ export default function AvatarScreen() {
         <View className="flex-row items-center justify-center gap-4">
           <Avatar color="default" alt="Default">
             <Avatar.Image source={undefined} />
-            <Avatar.Fallback delayMs={2000} />
+            <Avatar.Fallback />
           </Avatar>
           <Avatar color="accent" alt="Accent">
             <Avatar.Image source={undefined} />

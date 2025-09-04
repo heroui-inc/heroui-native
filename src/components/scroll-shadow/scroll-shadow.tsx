@@ -1,19 +1,15 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { forwardRef, useRef } from 'react';
-import {
-  StyleSheet,
-  View,
-  type LayoutChangeEvent,
-  type NativeScrollEvent,
-} from 'react-native';
+import { cloneElement, createElement, forwardRef, isValidElement } from 'react';
+import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Animated, {
   Extrapolation,
   interpolate,
-  runOnJS,
   useAnimatedScrollHandler,
   useAnimatedStyle,
+  useComposedEventHandler,
   useDerivedValue,
   useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import { easeGradient } from '../../helpers/utils';
 import { colorKit, useTheme } from '../../providers/theme';
@@ -21,6 +17,7 @@ import {
   DEFAULT_SCROLL_EVENT_THROTTLE,
   DEFAULT_SHADOW_SIZE,
   SCROLL_SHADOW_DISPLAY_NAME,
+  SHADOW_EXIT_ANIMATION_DURATION,
 } from './scroll-shadow.constants';
 import { nativeStyles, scrollShadowStyles } from './scroll-shadow.styles';
 import type { ScrollShadowProps } from './scroll-shadow.types';
@@ -41,6 +38,8 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
   const theme = useTheme();
   const shadowColor = color || theme.colors.background;
 
+  const containerStyles = scrollShadowStyles({ className });
+
   const childHorizontal =
     children?.props &&
     typeof children?.props === 'object' &&
@@ -54,56 +53,24 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
   const contentSize = useSharedValue(0);
   const containerSize = useSharedValue(0);
 
-  const userScrollHandler = useRef((children as any).props?.onScroll);
-  userScrollHandler.current = (children as any).props?.onScroll;
-
-  const containerStyles = scrollShadowStyles({ className });
-
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event: NativeScrollEvent) => {
-      'worklet';
+  const localScrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
       const offset =
         orientation === 'vertical'
           ? event.contentOffset.y
           : event.contentOffset.x;
       scrollOffset.set(offset);
-
-      // Chain user's handler if exists
-      if (userScrollHandler.current) {
-        const handler = userScrollHandler.current;
-
-        // Check if it's a reanimated handler object with onScroll method
-        if (
-          typeof handler === 'object' &&
-          handler !== null &&
-          'onScroll' in handler
-        ) {
-          if (typeof handler.onScroll === 'function') {
-            handler.onScroll(event);
-          }
-        } else if (typeof handler === 'function') {
-          // It's a regular function or worklet
-          if (handler.__workletHash || handler._isReanimatedHandler) {
-            // It's a worklet, call it directly
-            handler(event);
-          } else {
-            // Regular JS function
-            runOnJS(handler)(event);
-          }
-        }
-      }
     },
-    onBeginDrag: userScrollHandler.current?.onBeginDrag,
-    onEndDrag: userScrollHandler.current?.onEndDrag,
-    onMomentumBegin: userScrollHandler.current?.onMomentumBegin,
-    onMomentumEnd: userScrollHandler.current?.onMomentumEnd,
   });
 
   const topShadowOpacity = useDerivedValue(() => {
-    if (!isEnabled) return 0;
+    if (!isEnabled)
+      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
 
-    if (visibility === 'none') return 0;
-    if (visibility === 'bottom' || visibility === 'right') return 0;
+    if (visibility === 'none')
+      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
+    if (visibility === 'bottom' || visibility === 'right')
+      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
 
     return interpolate(
       scrollOffset.get(),
@@ -114,10 +81,13 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
   });
 
   const bottomShadowOpacity = useDerivedValue(() => {
-    if (!isEnabled) return 0;
+    if (!isEnabled)
+      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
 
-    if (visibility === 'none') return 0;
-    if (visibility === 'top' || visibility === 'left') return 0;
+    if (visibility === 'none')
+      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
+    if (visibility === 'top' || visibility === 'left')
+      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
 
     return interpolate(
       scrollOffset.get() + containerSize.get(),
@@ -135,39 +105,52 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
     opacity: bottomShadowOpacity.get(),
   }));
 
-  const handleContentSizeChange = (w: number, h: number) => {
+  const onContentSizeChange = (w: number, h: number) => {
     const contentDimension = orientation === 'vertical' ? h : w;
-    contentSize.value = contentDimension;
+    contentSize.set(contentDimension);
     (children as any).props?.onContentSizeChange?.(w, h);
   };
 
-  const handleLayout = (event: LayoutChangeEvent) => {
+  const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
     const containerDimension = orientation === 'vertical' ? height : width;
-    containerSize.value = containerDimension;
+    containerSize.set(containerDimension);
     (children as any).props?.onLayout?.(event);
   };
 
-  // Check if the child is already an Animated component
+  const outerScrollHandler = (children as any).props?.onScroll;
+  const handlers = outerScrollHandler
+    ? [localScrollHandler, outerScrollHandler]
+    : [localScrollHandler];
+
+  const onScroll = useComposedEventHandler(handlers);
+
+  const scrollEventThrottle =
+    (children as any).props?.scrollEventThrottle ||
+    DEFAULT_SCROLL_EVENT_THROTTLE;
+
+  if (!isValidElement(children)) {
+    return null;
+  }
+
   const isAnimatedComponent =
     (children.type as any)?.displayName?.includes('AnimatedComponent') ||
     (children.type as any)?.__isAnimatedComponent;
 
-  // Create animated version if needed
-  const ChildComponent = isAnimatedComponent
-    ? children.type
-    : Animated.createAnimatedComponent(children.type as any);
-
-  // Create enhanced child with the animated component
-  const enhancedChild = React.createElement(ChildComponent, {
-    ...(children as any).props,
-    onScroll: scrollHandler,
-    onContentSizeChange: handleContentSizeChange,
-    onLayout: handleLayout,
-    scrollEventThrottle:
-      (children as any).props?.scrollEventThrottle ||
-      DEFAULT_SCROLL_EVENT_THROTTLE,
-  });
+  const enhancedChild = isAnimatedComponent
+    ? cloneElement(children as any, {
+        onContentSizeChange,
+        onLayout,
+        scrollEventThrottle,
+        onScroll,
+      })
+    : createElement(Animated.createAnimatedComponent(children.type as any), {
+        ...(children as any).props,
+        onContentSizeChange,
+        onLayout,
+        scrollEventThrottle,
+        onScroll,
+      });
 
   const { colors: topLeftColors, locations: topLeftLocations } = easeGradient({
     colorStops: {

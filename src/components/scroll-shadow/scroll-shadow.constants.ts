@@ -13,12 +13,7 @@ export const DEFAULT_SHADOW_SIZE = 50;
 /**
  * Animation duration for shadow opacity transitions in milliseconds
  */
-export const SHADOW_ANIMATION_DURATION = 300;
-
-/**
- * Scroll threshold in pixels to start showing shadows
- */
-export const SCROLL_THRESHOLD = 10;
+export const SHADOW_EXIT_ANIMATION_DURATION = 200;
 
 /**
  * Default scroll event throttle for performance

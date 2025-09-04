@@ -66,6 +66,7 @@ export const PreviewCard: FC<PreviewCardProps> = ({
             'flex-1 border-0 rounded-xl',
             isDark && 'border border-border/70'
           )}
+          surfaceVariant={isDark ? '2' : 'none'}
         >
           <Card.Details>
             <Card.Body className="p-2">

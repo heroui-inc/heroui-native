@@ -19,9 +19,9 @@ const showcases: ShowcaseCard[] = [
     title: 'Onboarding Flow',
     description: 'Onboarding step with marquee carousel of shadowed cards',
     imageLight:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcases-onboarding-light.png',
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcases-onboarding-light-1.png',
     imageDark:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcases-onboarding-dark.png',
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcases-onboarding-dark-1.png',
     components: ['Button', 'Card', 'Divider', 'DropShadowView'],
     path: 'onboarding',
   },

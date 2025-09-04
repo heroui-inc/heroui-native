@@ -81,6 +81,11 @@ const components: Component[] = [
     path: 'radio',
   },
   {
+    title: 'Scroll Shadow',
+    icon: <ComponentIcon />,
+    path: 'scroll-shadow',
+  },
+  {
     title: 'Spinner',
     icon: <ComponentIcon />,
     path: 'spinner',

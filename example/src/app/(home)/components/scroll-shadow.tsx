@@ -15,7 +15,7 @@ export default function ScrollShadowScreen() {
 
   return (
     <View
-      className="flex-1 bg-background"
+      className="flex-1 bg-background overflow-hidden"
       style={{
         paddingTop: Platform.select({
           ios: headerHeight,

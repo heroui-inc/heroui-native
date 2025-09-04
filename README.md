@@ -136,6 +136,7 @@ export default function MyComponent() {
 - [Form Field](./src/components/form-field/form-field.md)
 - [Radio](./src/components/radio/radio.md)
 - [Radio Group](./src/components/radio-group/radio-group.md)
+- [Scroll Shadow](./src/components/scroll-shadow/scroll-shadow.md)
 - [Spinner](./src/components/spinner/spinner.md)
 - [Surface](./src/components/surface/surface.md)
 - [Switch](./src/components/switch/switch.md)

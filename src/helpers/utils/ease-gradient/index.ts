@@ -1,3 +1,14 @@
+/**
+ * Easing gradient utilities for React Native
+ *
+ * Original source: https://github.com/phamfoo/react-native-easing-gradient
+ * Author: @phamfoo
+ * License: MIT
+ *
+ * This code has been adapted for use in HeroUI Native with modifications
+ * for TypeScript compatibility and integration with the animation system.
+ */
+
 import { Easing, type EasingFunction } from 'react-native';
 import { createInterpolation } from './create-interpolation';
 

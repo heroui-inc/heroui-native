@@ -34,7 +34,7 @@ export default function Layout() {
         fullScreenGestureEnabled: true,
       }}
     >
-      <Stack.Screen name="index" options={{ headerTitle: 'Showcases' }} />
+      <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="onboarding" options={{ headerShown: false }} />
     </Stack>
   );

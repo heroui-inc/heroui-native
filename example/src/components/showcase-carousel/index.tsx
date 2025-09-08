@@ -1,4 +1,3 @@
-import { useTheme } from 'heroui-native';
 import { useWindowDimensions, View } from 'react-native';
 import Animated, {
   useAnimatedScrollHandler,
@@ -16,8 +15,6 @@ export type Props = {
 
 export function Carousel({ data }: Props) {
   const { width, height } = useWindowDimensions();
-
-  const { isDark } = useTheme();
 
   const scrollY = useSharedValue(0);
 
@@ -39,7 +36,6 @@ export function Carousel({ data }: Props) {
               index={index}
               scrollY={scrollY}
               itemSize={height}
-              isDark={isDark}
             />
           </View>
         )}

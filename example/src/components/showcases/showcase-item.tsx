@@ -1,6 +1,7 @@
+import Feather from '@expo/vector-icons/Feather';
 import { Image as ExpoImage } from 'expo-image';
 import { useRouter } from 'expo-router';
-import { Chip, DropShadowView, Surface } from 'heroui-native';
+import { Chip, DropShadowView, Surface, useTheme } from 'heroui-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, {
   Extrapolation,
@@ -34,7 +35,6 @@ export type ShowcaseItemProps = {
   scrollY: SharedValue<number>;
   item: ShowcaseItemData;
   itemSize: number;
-  isDark: boolean;
 };
 
 export function ShowcaseItem({
@@ -42,9 +42,10 @@ export function ShowcaseItem({
   index,
   scrollY,
   itemSize,
-  isDark,
 }: ShowcaseItemProps) {
   const router = useRouter();
+
+  const { colors, isDark } = useTheme();
 
   const animatedIndex = useDerivedValue(() => {
     return scrollY.get() / itemSize;
@@ -121,9 +122,15 @@ export function ShowcaseItem({
         className="flex-1 items-center justify-center p-8"
         style={[rContainerStyle]}
       >
-        <AppText className="text-2xl text-foreground font-semibold mb-5">
-          {item.title}
-        </AppText>
+        <Pressable
+          className="flex-row items-center gap-1 mb-5"
+          onPress={() => router.push(item.href)}
+        >
+          <AppText className="text-2xl/7 text-foreground font-semibold">
+            {item.title}
+          </AppText>
+          <Feather name="chevron-right" size={24} color={colors.foreground} />
+        </Pressable>
         <AnimatedPressable
           entering={
             index === 0
@@ -136,7 +143,7 @@ export function ShowcaseItem({
             shadowSize={isDark ? 'none' : 'xl'}
             className="w-[62%] aspect-[1/2] rounded-2xl"
           >
-            <Surface className="flex-1 rounded-2xl p-0">
+            <Surface className="flex-1 items-center justify-center rounded-2xl p-0">
               <ExpoImage
                 source={{ uri: isDark ? item.imageDark : item.imageLight }}
                 style={StyleSheet.absoluteFill}

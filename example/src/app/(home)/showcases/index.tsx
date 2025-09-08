@@ -22,9 +22,9 @@ const data = [
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcases-onboarding-light-1.png',
     imageDark:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcases-onboarding-dark-1.png',
-    title: 'Profile',
-    description: 'Onboarding step with marquee carousel of shadowed cards',
-    href: '/showcases/onboarding',
+    title: 'Auth Flow',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+    href: '/showcases/auth',
     components: [
       { name: 'Button', href: '/components/button' },
       { name: 'Card', href: '/components/card' },

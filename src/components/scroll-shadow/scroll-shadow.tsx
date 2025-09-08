@@ -1,4 +1,3 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import { cloneElement, createElement, forwardRef, isValidElement } from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Animated, {
@@ -32,6 +31,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
     isEnabled = true,
     className,
     style,
+    LinearGradientComponent,
     ...restProps
   } = props;
 
@@ -184,7 +184,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
         <Animated.View
           style={[nativeStyles.topShadow, { height: size }, topShadowStyle]}
         >
-          <LinearGradient
+          <LinearGradientComponent
             colors={topLeftColors}
             locations={topLeftLocations}
             style={StyleSheet.absoluteFill}
@@ -194,7 +194,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
         <Animated.View
           style={[nativeStyles.leftShadow, { width: size }, topShadowStyle]}
         >
-          <LinearGradient
+          <LinearGradientComponent
             colors={topLeftColors}
             locations={topLeftLocations}
             start={{ x: 0, y: 0 }}
@@ -213,7 +213,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
             bottomShadowStyle,
           ]}
         >
-          <LinearGradient
+          <LinearGradientComponent
             colors={bottomRightColors}
             locations={bottomRightLocations}
             style={StyleSheet.absoluteFill}
@@ -223,7 +223,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
         <Animated.View
           style={[nativeStyles.rightShadow, { width: size }, bottomShadowStyle]}
         >
-          <LinearGradient
+          <LinearGradientComponent
             colors={bottomRightColors}
             locations={bottomRightLocations}
             start={{ x: 0, y: 0 }}

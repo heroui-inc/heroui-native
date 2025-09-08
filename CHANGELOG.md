@@ -1,3 +1,12 @@
+## 1.0.0-alpha.10 (2025-09-08)
+
+* docs: update version ([4330d99](https://github.com/heroui-inc/heroui-native/commit/4330d99))
+* refactor: add LinearGradientComponent prop ([03268b5](https://github.com/heroui-inc/heroui-native/commit/03268b5))
+* refactor: upd showcase onboarding preview card ([77797b9](https://github.com/heroui-inc/heroui-native/commit/77797b9))
+* chore: add original source comment to ease gradient util ([515c123](https://github.com/heroui-inc/heroui-native/commit/515c123))
+
+
+
 ## 1.0.0-alpha.9 (2025-09-04)
 
 * chore: update example app assets ([193df55](https://github.com/heroui-inc/heroui-native/commit/193df55))

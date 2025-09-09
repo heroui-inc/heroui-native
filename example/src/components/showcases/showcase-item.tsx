@@ -152,10 +152,7 @@ export function ShowcaseItem({
             </Surface>
           </DropShadowView>
         </AnimatedPressable>
-        <View className="pt-6 gap-5 w-[70%]">
-          <AppText className="text-center text-muted-foreground font-medium text-base">
-            {item.description}
-          </AppText>
+        <View className="pt-8 gap-5 w-[82%]">
           <View className="flex-row flex-wrap justify-center gap-2">
             {item.components.map((component, componentIndex) => (
               <Chip
@@ -168,6 +165,9 @@ export function ShowcaseItem({
               </Chip>
             ))}
           </View>
+          <AppText className="text-center text-foreground/60 font-medium text-base">
+            {item.description}
+          </AppText>
         </View>
       </AnimatedView>
     </View>

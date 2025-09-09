@@ -8,6 +8,7 @@ export default function Layout() {
         gestureEnabled: true,
         gestureDirection: 'horizontal',
         fullScreenGestureEnabled: true,
+        animation: 'none',
       }}
     />
   );

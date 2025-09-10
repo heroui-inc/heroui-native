@@ -50,6 +50,7 @@ export default function Layout() {
       <Stack.Screen name="form-field" options={{ title: 'Form Field' }} />
       <Stack.Screen name="radio" options={{ title: 'Radio' }} />
       <Stack.Screen name="scroll-shadow" options={{ title: 'Scroll Shadow' }} />
+      <Stack.Screen name="skeleton" options={{ title: 'Skeleton' }} />
       <Stack.Screen name="spinner" options={{ title: 'Spinner' }} />
       <Stack.Screen name="surface" options={{ title: 'Surface' }} />
       <Stack.Screen name="switch" options={{ title: 'Switch' }} />

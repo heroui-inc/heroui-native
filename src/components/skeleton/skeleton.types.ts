@@ -1,5 +1,5 @@
 import type { ViewProps } from 'react-native';
-import type { EasingFunction } from 'react-native-reanimated';
+import type { AnimatedProps, EasingFunction } from 'react-native-reanimated';
 
 /**
  * Skeleton animation type - defines the animation style
@@ -87,7 +87,7 @@ export interface PulseConfig {
 /**
  * Props for the main Skeleton component
  */
-export interface SkeletonProps extends ViewProps {
+export interface SkeletonProps extends AnimatedProps<ViewProps> {
   /**
    * Child components to show when not loading
    */

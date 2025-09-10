@@ -7,12 +7,15 @@ import {
 import Animated, {
   cancelAnimation,
   Easing,
+  FadeIn,
+  FadeOut,
   interpolate,
   ReduceMotion,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withTiming,
+  type SharedValue,
 } from 'react-native-reanimated';
 
 import { colorKit, useTheme } from '../../providers/theme';
@@ -29,33 +32,35 @@ import {
   DEFAULT_SPEED,
   DISPLAY_NAME,
 } from './skeleton.constants';
-import skeletonStyles from './skeleton.styles';
-import type { SkeletonProps } from './skeleton.types';
+import skeletonStyles, { nativeStyles } from './skeleton.styles';
+import type {
+  PulseConfig,
+  ShimmerConfig,
+  SkeletonProps,
+} from './skeleton.types';
 
-const Skeleton: React.FC<SkeletonProps> = (props) => {
-  const {
-    children,
-    isLoading = true,
-    animationType = 'shimmer',
-    shimmerConfig,
-    pulseConfig,
-    className,
-    style,
-    ...restProps
-  } = props;
+// --------------------------------------------------
 
-  const [componentWidth, setComponentWidth] = useState(0);
-  const [offset, setOffset] = useState(0);
-  const progress = useSharedValue(0);
+interface ShimmerAnimationProps {
+  isLoading: boolean;
+  shimmerConfig?: ShimmerConfig;
+  componentWidth: number;
+  offset: number;
+  progress: SharedValue<number>;
+  screenWidth: number;
+  isDark: boolean;
+  colors: any;
+}
 
-  const { width: SCREEN_WIDTH } = useWindowDimensions();
-
-  const { colors, isDark } = useTheme();
-
-  const shimmerDuration = shimmerConfig?.duration ?? DEFAULT_SHIMMER_DURATION;
-  const shimmerEasing = shimmerConfig?.easing ?? DEFAULT_EASING;
-  const shimmerSpeed = shimmerConfig?.speed ?? DEFAULT_SPEED;
-
+const ShimmerAnimation: React.FC<ShimmerAnimationProps> = ({
+  shimmerConfig,
+  componentWidth,
+  offset,
+  progress,
+  screenWidth,
+  isDark,
+  colors,
+}) => {
   const highlightColor = isDark
     ? colorKit
         .setAlpha(colorKit.increaseBrightness(colors.background, 10).hex(), 0.5)
@@ -74,16 +79,94 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
   const gradientEnd =
     shimmerConfig?.gradientConfig?.end ?? DEFAULT_GRADIENT_END;
 
-  // Pulse configuration
-  const pulseDuration = pulseConfig?.duration ?? DEFAULT_PULSE_DURATION;
-  const pulseEasing = pulseConfig?.easing ?? Easing.inOut(Easing.ease);
+  const shimmerAnimatedStyle = useAnimatedStyle(() => {
+    const translateX = interpolate(
+      progress.get(),
+      [0, 1],
+      [-(componentWidth + offset), screenWidth]
+    );
+
+    return {
+      opacity: 1,
+      transform: [{ translateX }],
+    };
+  });
+
+  return (
+    <Animated.View
+      style={[
+        StyleSheet.absoluteFill,
+        nativeStyles.borderCurve,
+        shimmerAnimatedStyle,
+      ]}
+    >
+      <LinearGradientComponent
+        colors={gradientColors}
+        start={gradientStart}
+        end={gradientEnd}
+        style={StyleSheet.absoluteFill}
+      />
+    </Animated.View>
+  );
+};
+
+// --------------------------------------------------
+
+interface PulseAnimationProps {
+  pulseConfig?: PulseConfig;
+  progress: SharedValue<number>;
+}
+
+const usePulseAnimation = ({ pulseConfig, progress }: PulseAnimationProps) => {
   const pulseMinOpacity = pulseConfig?.minOpacity ?? DEFAULT_PULSE_MIN_OPACITY;
   const pulseMaxOpacity = pulseConfig?.maxOpacity ?? DEFAULT_PULSE_MAX_OPACITY;
 
-  // 5. Styles
-  const tvStyles = skeletonStyles.skeleton({ className });
+  return useAnimatedStyle(() => {
+    const opacity = interpolate(
+      progress.get(),
+      [0, 1],
+      [pulseMinOpacity, pulseMaxOpacity]
+    );
 
-  // 6. Effects
+    return {
+      opacity,
+    };
+  });
+};
+
+// --------------------------------------------------
+
+const Skeleton: React.FC<SkeletonProps> = (props) => {
+  const {
+    children,
+    entering = FadeIn,
+    exiting = FadeOut,
+    isLoading = true,
+    animationType = 'shimmer',
+    shimmerConfig,
+    pulseConfig,
+    className,
+    style,
+    ...restProps
+  } = props;
+
+  const [componentWidth, setComponentWidth] = useState(0);
+  const [offset, setOffset] = useState(0);
+  const progress = useSharedValue(0);
+
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const { colors, isDark } = useTheme();
+
+  const shimmerDuration = shimmerConfig?.duration ?? DEFAULT_SHIMMER_DURATION;
+  const shimmerEasing = shimmerConfig?.easing ?? DEFAULT_EASING;
+  const shimmerSpeed = shimmerConfig?.speed ?? DEFAULT_SPEED;
+
+  const pulseDuration = pulseConfig?.duration ?? DEFAULT_PULSE_DURATION;
+  const pulseEasing = pulseConfig?.easing ?? Easing.inOut(Easing.ease);
+
+  const tvStyles = skeletonStyles.skeleton({ className });
+  const pulseAnimatedStyle = usePulseAnimation({ pulseConfig, progress });
+
   useEffect(() => {
     if (isLoading && animationType !== 'none') {
       progress.set(0);
@@ -130,46 +213,6 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
     pulseEasing,
   ]);
 
-  // 7. Animation styles
-  const shimmerAnimatedStyle = useAnimatedStyle(() => {
-    if (animationType !== 'shimmer' || !isLoading) {
-      return {
-        opacity: 0,
-        transform: [{ translateX: 0 }],
-      };
-    }
-
-    const translateX = interpolate(
-      progress.get(),
-      [0, 1],
-      [-(componentWidth + offset), SCREEN_WIDTH]
-    );
-
-    return {
-      opacity: 1,
-      transform: [{ translateX }],
-    };
-  });
-
-  const pulseAnimatedStyle = useAnimatedStyle(() => {
-    if (animationType !== 'pulse' || !isLoading) {
-      return {
-        opacity: 1,
-      };
-    }
-
-    const opacity = interpolate(
-      progress.get(),
-      [0, 1],
-      [pulseMinOpacity, pulseMaxOpacity]
-    );
-
-    return {
-      opacity,
-    };
-  });
-
-  // 8. Callbacks
   const handleLayout = useCallback(
     (event: LayoutChangeEvent) => {
       if (componentWidth === 0) {
@@ -181,27 +224,39 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
     [componentWidth]
   );
 
-  // 9. Render
   if (!isLoading) {
-    return <>{children}</>;
+    return (
+      <Animated.View key="content" entering={entering} exiting={exiting}>
+        {children}
+      </Animated.View>
+    );
   }
 
   return (
     <Animated.View
+      key="skeleton"
+      entering={entering}
+      exiting={exiting}
       onLayout={handleLayout}
-      style={[animationType === 'pulse' && pulseAnimatedStyle, style]}
+      style={[
+        animationType === 'pulse' && pulseAnimatedStyle,
+        nativeStyles.borderCurve,
+        style,
+      ]}
       className={tvStyles}
       {...restProps}
     >
       {animationType === 'shimmer' && componentWidth > 0 && (
-        <Animated.View style={[StyleSheet.absoluteFill, shimmerAnimatedStyle]}>
-          <LinearGradientComponent
-            colors={gradientColors}
-            start={gradientStart}
-            end={gradientEnd}
-            style={StyleSheet.absoluteFill}
-          />
-        </Animated.View>
+        <ShimmerAnimation
+          isLoading={isLoading}
+          shimmerConfig={shimmerConfig}
+          componentWidth={componentWidth}
+          offset={offset}
+          progress={progress}
+          screenWidth={SCREEN_WIDTH}
+          isDark={isDark}
+          colors={colors}
+        />
       )}
     </Animated.View>
   );

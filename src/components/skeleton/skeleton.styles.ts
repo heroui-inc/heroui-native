@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../providers/theme/helpers';
 
@@ -5,7 +6,7 @@ import { combineStyles } from '../../providers/theme/helpers';
  * Main skeleton component styles
  */
 const skeleton = tv({
-  base: 'bg-muted overflow-hidden',
+  base: 'bg-muted/70 overflow-hidden',
 });
 
 /**
@@ -13,6 +14,15 @@ const skeleton = tv({
  */
 const gradientWrapper = tv({
   base: 'absolute inset-0',
+});
+
+/**
+ * Native styles for border curve
+ */
+export const nativeStyles = StyleSheet.create({
+  borderCurve: {
+    borderCurve: 'continuous',
+  },
 });
 
 /**

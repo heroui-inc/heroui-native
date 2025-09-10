@@ -1,6 +1,7 @@
 import { Avatar, Button, Card, Skeleton } from 'heroui-native';
 import { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import { FadeInLeft, FadeOutRight } from 'react-native-reanimated';
 
 export default function SkeletonScreen() {
   const [isLoading, setIsLoading] = useState(true);
@@ -46,6 +47,8 @@ export default function SkeletonScreen() {
 
       <View className="w-full gap-3 mb-6">
         <Skeleton
+          entering={FadeInLeft}
+          exiting={FadeOutRight}
           className="h-4 w-full rounded-md"
           isLoading={isLoading}
           animationType={animationType}
@@ -56,6 +59,8 @@ export default function SkeletonScreen() {
         </Skeleton>
 
         <Skeleton
+          entering={FadeInLeft}
+          exiting={FadeOutRight}
           className="h-4 w-3/4 rounded-md"
           isLoading={isLoading}
           animationType={animationType}
@@ -64,6 +69,8 @@ export default function SkeletonScreen() {
         </Skeleton>
 
         <Skeleton
+          entering={FadeInLeft}
+          exiting={FadeOutRight}
           className="h-4 w-1/2 rounded-md"
           isLoading={isLoading}
           animationType={animationType}

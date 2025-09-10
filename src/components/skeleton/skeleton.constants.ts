@@ -33,19 +33,9 @@ export const DEFAULT_GRADIENT_COLORS = [
 ];
 
 /**
- * Default gradient start position
- */
-export const DEFAULT_GRADIENT_START = { x: 0, y: 0.5 };
-
-/**
- * Default gradient end position
- */
-export const DEFAULT_GRADIENT_END = { x: 1, y: 0.5 };
-
-/**
  * Default minimum opacity for pulse animation
  */
-export const DEFAULT_PULSE_MIN_OPACITY = 0.3;
+export const DEFAULT_PULSE_MIN_OPACITY = 0.5;
 
 /**
  * Default maximum opacity for pulse animation

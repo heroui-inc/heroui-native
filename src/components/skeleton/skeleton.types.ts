@@ -1,33 +1,14 @@
 import type { ViewProps } from 'react-native';
-import type { AnimatedProps, EasingFunction } from 'react-native-reanimated';
+import type {
+  AnimatedProps,
+  EasingFunction,
+  SharedValue,
+} from 'react-native-reanimated';
 
 /**
  * Skeleton animation type - defines the animation style
  */
 export type SkeletonAnimation = 'shimmer' | 'pulse' | 'none';
-
-/**
- * Gradient configuration for the shimmer effect
- */
-export interface GradientConfig {
-  /**
-   * Array of gradient colors
-   * @default ['transparent', 'rgba(255, 255, 255, 0.5)', 'transparent']
-   */
-  colors?: string[];
-
-  /**
-   * Gradient start position
-   * @default { x: 0, y: 0.5 }
-   */
-  start?: { x: number; y: number };
-
-  /**
-   * Gradient end position
-   * @default { x: 1, y: 0.5 }
-   */
-  end?: { x: number; y: number };
-}
 
 /**
  * Shimmer animation configuration
@@ -51,9 +32,9 @@ export interface ShimmerConfig {
   speed?: number;
 
   /**
-   * Gradient configuration for shimmer effect
+   * Highlight color for the shimmer effect
    */
-  gradientConfig?: GradientConfig;
+  highlightColor?: string;
 }
 
 /**
@@ -82,6 +63,44 @@ export interface PulseConfig {
    * @default 1
    */
   maxOpacity?: number;
+}
+
+/**
+ * Context value for skeleton provider
+ */
+export interface SkeletonContextValue {
+  /**
+   * Whether the skeleton is currently loading
+   */
+  isLoading: boolean;
+  /**
+   * Animation type
+   */
+  animationType: SkeletonAnimation;
+  /**
+   * Shimmer configuration
+   */
+  shimmerConfig?: ShimmerConfig;
+  /**
+   * Pulse configuration
+   */
+  pulseConfig?: PulseConfig;
+  /**
+   * Shared animation progress value
+   */
+  progress: SharedValue<number>;
+  /**
+   * Component width for shimmer calculation
+   */
+  componentWidth: number;
+  /**
+   * Component offset for shimmer calculation
+   */
+  offset: number;
+  /**
+   * Screen width for animation calculation
+   */
+  screenWidth: number;
 }
 
 /**
@@ -119,19 +138,4 @@ export interface SkeletonProps extends AnimatedProps<ViewProps> {
    * Additional CSS classes for styling
    */
   className?: string;
-}
-
-/**
- * Props for LinearGradient component
- */
-export interface LinearGradientProps extends GradientConfig {
-  /**
-   * Style for the gradient container
-   */
-  style?: ViewProps['style'];
-
-  /**
-   * Child components
-   */
-  children?: React.ReactNode;
 }

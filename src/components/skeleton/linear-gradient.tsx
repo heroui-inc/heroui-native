@@ -1,30 +1,18 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { colorKit } from '../../providers/theme';
 import { DISPLAY_NAME } from './skeleton.constants';
-import type { LinearGradientProps } from './skeleton.types';
 
-/**
- * Linear gradient component for creating shimmer effects
- */
-const LinearGradientComponent: React.FC<LinearGradientProps> = ({
+const LinearGradientComponent: React.FC<{ colors?: string[] }> = ({
   colors = ['transparent', 'rgba(255, 255, 255, 0.5)', 'transparent'],
-  start = { x: 0, y: 0.5 },
-  end = { x: 1, y: 0.5 },
-  style,
 }) => {
   const gradientId = colors.join('-');
 
   return (
-    <Svg style={style}>
+    <Svg style={StyleSheet.absoluteFill}>
       <Defs>
-        <LinearGradient
-          id={gradientId}
-          x1={start.x}
-          y1={start.y}
-          x2={end.x}
-          y2={end.y}
-        >
+        <LinearGradient id={gradientId} x1={0} y1={0.5} x2={1} y2={0.5}>
           {colors.map((color, index) => {
             const isTransparent = color === 'transparent';
             const processedColor = isTransparent ? '#FFFFFF' : color;

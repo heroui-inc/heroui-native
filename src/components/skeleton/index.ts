@@ -1,9 +1,8 @@
-export { default as Skeleton } from './skeleton';
+export { default as Skeleton, useSkeletonContext } from './skeleton';
 export type {
-  GradientConfig,
-  LinearGradientProps,
   PulseConfig,
   ShimmerConfig,
   SkeletonAnimation,
+  SkeletonContextValue,
   SkeletonProps,
 } from './skeleton.types';

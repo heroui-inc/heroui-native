@@ -119,6 +119,85 @@ The `package.json` file contains various scripts for common tasks:
 - `yarn example android`: run the example app on Android.
 - `yarn example ios`: run the example app on iOS.
 
+## Component Engineering Design System
+
+When adding new components to HeroUI Native, follow our standardized component engineering process to ensure consistency and quality across the library.
+
+### Component Structure
+
+All components must follow these architectural patterns:
+
+1. **Compound Component Pattern**: Components should use compound composition with a Root component and optional sub-components
+2. **File Organization**: Each component requires specific files in a strict order
+3. **Styling**: Use NativeWind v4 with tailwind-variants for all styling
+4. **Animations**: Use react-native-reanimated for animations when needed
+5. **API Compatibility**: Component structure and API must align with the latest HeroUI web version where possible
+
+### Required Files for New Components
+
+When creating a new component, you must create these files in the following order:
+
+#### 1. `[component].types.ts`
+
+- Define all TypeScript interfaces and types
+- Include comprehensive JSDoc comments for all props
+- Export all public types
+
+#### 2. `[component].constants.ts`
+
+- Use SCREAMING_SNAKE_CASE for constant names
+- Include animation constants if applicable
+- Define display names for debugging
+
+#### 3. `[component].styles.ts`
+
+- Use tailwind-variants for variant definitions
+- Define all style variants (size, color, etc.)
+- Use StyleSheet only for native-specific properties
+
+#### 4. `[component].utils.ts` (if needed)
+
+- Include calculation functions
+- Add formatting utilities
+- Create validation helpers
+
+#### 5. `[component].tsx`
+
+- Implement the main component logic
+- Use compound component pattern
+- Include proper ref forwarding
+- Add context provider if needed
+
+#### 6. `index.ts`
+
+- Export all public APIs
+- Ensure tree-shaking optimization
+
+### Component Implementation Checklist
+
+Before submitting a component:
+
+- [ ] All types defined with JSDoc documentation
+- [ ] Constants properly extracted and named
+- [ ] Styles use tailwind-variants pattern
+- [ ] Component follows compound pattern
+- [ ] Proper ref forwarding implemented
+- [ ] Context pattern used when needed
+- [ ] Component exported from `src/index.ts`
+- [ ] Example screen created in `example/src/screens/`
+- [ ] Navigation link added alphabetically in example app
+- [ ] All variants and features working correctly
+- [ ] TypeScript checks pass (`yarn typecheck`)
+- [ ] Linting passes (`yarn lint`)
+
+### Example Implementation
+
+For detailed implementation guidance and templates, refer to the `.workflows/add-component/` directory which contains:
+
+- Complete implementation templates
+- Quality standard documentation
+- Example patterns and best practices
+
 ### Sending a pull request
 
 > **Working on your first pull request?** You can learn how from this _free_ series: [How to Contribute to an Open Source Project on GitHub](https://app.egghead.io/playlists/how-to-contribute-to-an-open-source-project-on-github).

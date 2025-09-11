@@ -23,7 +23,13 @@ const [SkeletonGroupProvider, useSkeletonGroupContext] =
 const SkeletonGroupRoot: React.FC<PropsWithChildren<SkeletonGroupRootProps>> = (
   props
 ) => {
-  const { children, className, style, isVisible = true, ...restProps } = props;
+  const {
+    children,
+    className,
+    style,
+    isSkeletonOnly = false,
+    ...restProps
+  } = props;
 
   const containerStyles = skeletonGroupStyles({ className });
 
@@ -34,7 +40,7 @@ const SkeletonGroupRoot: React.FC<PropsWithChildren<SkeletonGroupRootProps>> = (
     [restProps]
   );
 
-  if (!isVisible) {
+  if (isSkeletonOnly && !restProps.isLoading) {
     return null;
   }
 

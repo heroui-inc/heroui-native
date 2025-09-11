@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {
   Avatar,
   Button,
@@ -229,7 +228,7 @@ export default function SkeletonScreen() {
             <SkeletonGroup
               key={item}
               isLoading={isLoading}
-              isVisible={isLoading}
+              isSkeletonOnly
               animationType={animationType}
               className="flex-row items-center gap-3"
             >

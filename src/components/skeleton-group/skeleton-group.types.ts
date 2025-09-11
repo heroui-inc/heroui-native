@@ -5,7 +5,15 @@ import type { SkeletonProps } from '../skeleton/skeleton.types';
  * Props for the SkeletonGroup root component
  */
 export interface SkeletonGroupRootProps extends Omit<SkeletonProps, 'style'> {
-  isVisible?: boolean;
+  /**
+   * When true, hides the entire group when isLoading is false.
+   * Use this to prevent layout issues when skeleton contains wrapper elements.
+   * @default false
+   */
+  isSkeletonOnly?: boolean;
+  /**
+   * Style for the skeleton group container
+   */
   style?: StyleProp<ViewStyle>;
 }
 

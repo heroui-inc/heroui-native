@@ -12,6 +12,7 @@ export * from './components/radio';
 export * from './components/radio-group';
 export * from './components/scroll-shadow';
 export * from './components/skeleton';
+export * from './components/skeleton-group';
 export * from './components/spinner';
 export * from './components/surface';
 export * from './components/switch';

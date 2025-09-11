@@ -12,7 +12,12 @@ export default function Layout() {
   const _renderThemeToggle = () => <ThemeToggle />;
 
   const _renderHeaderLeft = (props: any) => (
-    <HeaderBackButton displayMode="minimal" {...props} onPress={router.back} />
+    <HeaderBackButton
+      displayMode="minimal"
+      {...props}
+      onPress={router.back}
+      pressColor="transparent"
+    />
   );
 
   return (

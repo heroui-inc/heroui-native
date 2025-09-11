@@ -1,4 +1,8 @@
-import { View } from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import { HeaderBackButton } from '@react-navigation/elements';
+import { useRouter } from 'expo-router';
+import { Platform, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Carousel } from '../../../components/showcase-carousel';
 
 const data = [
@@ -36,8 +40,25 @@ const data = [
 ];
 
 export default function ScaleCarousel() {
+  const router = useRouter();
+
+  const insets = useSafeAreaInsets();
+
   return (
     <View className="flex-1 bg-background">
+      {Platform.OS === 'android' && (
+        <HeaderBackButton
+          displayMode="minimal"
+          onPress={router.back}
+          pressColor="transparent"
+          style={{
+            position: 'absolute',
+            top: insets.top + 12,
+            left: 16,
+            zIndex: 99,
+          }}
+        />
+      )}
       <Carousel data={data} />
     </View>
   );

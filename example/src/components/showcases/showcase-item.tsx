@@ -2,7 +2,7 @@ import Feather from '@expo/vector-icons/Feather';
 import { Image as ExpoImage } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { Chip, DropShadowView, Surface, useTheme } from 'heroui-native';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import Animated, {
   Extrapolation,
   FadeInRight,
@@ -52,6 +52,15 @@ export function ShowcaseItem({
   });
 
   const rContainerStyle = useAnimatedStyle(() => {
+    const translateY =
+      Platform.OS === 'ios'
+        ? interpolate(
+            scrollY.get(),
+            [(index - 1) * itemSize, index * itemSize, index * itemSize + 1],
+            [0, 0, 1]
+          )
+        : 0;
+
     return {
       opacity: interpolate(
         animatedIndex.get(),
@@ -60,11 +69,7 @@ export function ShowcaseItem({
       ),
       transform: [
         {
-          translateY: interpolate(
-            scrollY.get(),
-            [(index - 1) * itemSize, index * itemSize, index * itemSize + 1],
-            [0, 0, 1]
-          ),
+          translateY,
         },
         {
           scale: interpolate(

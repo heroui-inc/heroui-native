@@ -62,7 +62,8 @@ export default function Layout() {
       <Stack.Screen
         name="showcases"
         options={{
-          headerShown: pathname === '/showcases',
+          headerShown:
+            Platform.OS === 'ios' ? pathname === '/showcases' : false,
           headerTitle: 'Showcases',
         }}
       />

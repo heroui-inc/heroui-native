@@ -161,6 +161,8 @@ Whether it's a feature request, bug report, or a project to showcase, please get
 
 Contributions are always welcome!
 
+Check out our [Roadmap](https://herouiv3.featurebase.app/roadmap) to see what we're working on.
+
 See [CONTRIBUTING.md](https://github.com/heroui-inc/heroui-native/blob/main/CONTRIBUTING.md) for ways to get started.
 
 Please adhere to this project's [CODE_OF_CONDUCT](https://github.com/heroui-inc/heroui-native/blob/main/CODE_OF_CONDUCT.md).

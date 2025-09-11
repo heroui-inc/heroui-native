@@ -1,4 +1,5 @@
 import { useHeaderHeight } from '@react-navigation/elements';
+import { LinearGradient } from 'expo-linear-gradient';
 import { ScrollShadow, Surface } from 'heroui-native';
 import { FlatList, Platform, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -25,7 +26,7 @@ export default function ScrollShadowScreen() {
       }}
     >
       <SectionTitle title="Horizontal" />
-      <ScrollShadow>
+      <ScrollShadow LinearGradientComponent={LinearGradient}>
         <FlatList
           data={HORIZONTAL_ITEMS}
           horizontal
@@ -36,7 +37,11 @@ export default function ScrollShadowScreen() {
         />
       </ScrollShadow>
       <SectionTitle title="Vertical" />
-      <ScrollShadow size={100} className="flex-1">
+      <ScrollShadow
+        size={100}
+        className="flex-1"
+        LinearGradientComponent={LinearGradient}
+      >
         <ScrollView
           contentContainerClassName="px-5 py-8"
           showsVerticalScrollIndicator={false}

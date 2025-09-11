@@ -6995,7 +6995,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-linear-gradient@npm:^14.1.5, expo-linear-gradient@npm:~14.1.5":
+"expo-linear-gradient@npm:~14.1.5":
   version: 14.1.5
   resolution: "expo-linear-gradient@npm:14.1.5"
   peerDependencies:
@@ -8092,7 +8092,6 @@ __metadata:
     eslint: ^9.22.0
     eslint-config-prettier: ^10.1.1
     eslint-plugin-prettier: ^5.2.3
-    expo-linear-gradient: ^14.1.5
     jest: ^29.7.0
     nativewind: ^4.1.23
     prettier: ^3.0.3
@@ -8108,7 +8107,6 @@ __metadata:
     tailwindcss: ^3.4.17
     typescript: ^5.8.3
   peerDependencies:
-    expo-linear-gradient: ^14.1.5
     nativewind: ^4.1.23
     react: "*"
     react-native: "*"

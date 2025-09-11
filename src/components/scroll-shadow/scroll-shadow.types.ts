@@ -1,4 +1,5 @@
-import type { ViewProps } from 'react-native';
+import type { ComponentType } from 'react';
+import type { StyleProp, ViewProps, ViewStyle } from 'react-native';
 
 /**
  * Orientation of the scroll shadow
@@ -25,6 +26,16 @@ export type ScrollShadowVisibility =
   | 'right'
   | 'both'
   | 'none';
+
+export interface LinearGradientProps {
+  colors: any;
+  locations?: any;
+  start?: any;
+  end?: any;
+  style?: StyleProp<ViewStyle>;
+}
+
+export type LinearGradientComponent = ComponentType<LinearGradientProps>;
 
 /**
  * Props for the ScrollShadow component
@@ -71,4 +82,11 @@ export interface ScrollShadowProps extends ViewProps {
    * Additional CSS classes to apply to the container
    */
   className?: string;
+
+  /**
+   * LinearGradient component to use for rendering shadows
+   * Compatible with expo-linear-gradient, react-native-linear-gradient, etc.
+   * Required for the component to render shadows
+   */
+  LinearGradientComponent: LinearGradientComponent;
 }

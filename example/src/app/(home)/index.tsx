@@ -146,7 +146,7 @@ export default function App() {
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
         <AppText className="text-muted-foreground text-base">
-          v1.0.0-alpha.9
+          v1.0.0-alpha.10
         </AppText>
       </View>
 

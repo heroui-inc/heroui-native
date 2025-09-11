@@ -1,3 +1,20 @@
+## 1.0.0-alpha.11 (2025-09-11)
+
+* fix: showcase carousel android issue ([a198934](https://github.com/heroui-inc/heroui-native/commit/a198934))
+* docs: add skeleton and skeleton-group doc files ([85b8415](https://github.com/heroui-inc/heroui-native/commit/85b8415))
+* docs: upd readme with roadmap link ([3f77e36](https://github.com/heroui-inc/heroui-native/commit/3f77e36))
+* docs: update CONTRIBUTION.md ([7454a18](https://github.com/heroui-inc/heroui-native/commit/7454a18))
+* feat: add initial skeleton components ([742217c](https://github.com/heroui-inc/heroui-native/commit/742217c))
+* feat: add showcase carousel ([c210e26](https://github.com/heroui-inc/heroui-native/commit/c210e26))
+* feat: add skeleton-group components ([be8a23f](https://github.com/heroui-inc/heroui-native/commit/be8a23f))
+* feat(example app): add auth showcase route ([967e81e](https://github.com/heroui-inc/heroui-native/commit/967e81e))
+* feat(example app): add paywall showcase ([9ee78b2](https://github.com/heroui-inc/heroui-native/commit/9ee78b2))
+* feat(skeleton): handle entering and exiting ([2f30afd](https://github.com/heroui-inc/heroui-native/commit/2f30afd))
+* refactor: main skeleton component ([7923af7](https://github.com/heroui-inc/heroui-native/commit/7923af7))
+* refactor(example app): home navigation ([7b618ae](https://github.com/heroui-inc/heroui-native/commit/7b618ae))
+
+
+
 ## 1.0.0-alpha.10 (2025-09-08)
 
 * docs: update version ([4330d99](https://github.com/heroui-inc/heroui-native/commit/4330d99))

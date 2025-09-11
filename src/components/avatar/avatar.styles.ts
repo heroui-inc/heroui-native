@@ -9,9 +9,9 @@ const avatarRoot = tv({
   base: 'items-center justify-center overflow-hidden rounded-full border border-border bg-default',
   variants: {
     size: {
-      sm: 'h-10 w-10',
-      md: 'h-12 w-12',
-      lg: 'h-16 w-16',
+      sm: 'size-10',
+      md: 'size-12',
+      lg: 'size-16',
     },
   },
   defaultVariants: {

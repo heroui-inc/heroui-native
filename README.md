@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  v1.0.0-alpha.10
+  v1.0.0-alpha.11
 </p>
 
 ## Preview App
@@ -137,6 +137,8 @@ export default function MyComponent() {
 - [Radio](./src/components/radio/radio.md)
 - [Radio Group](./src/components/radio-group/radio-group.md)
 - [Scroll Shadow](./src/components/scroll-shadow/scroll-shadow.md)
+- [Skeleton](./src/components/skeleton/skeleton.md)
+- [Skeleton Group](./src/components/skeleton-group/skeleton-group.md)
 - [Spinner](./src/components/spinner/spinner.md)
 - [Surface](./src/components/surface/surface.md)
 - [Switch](./src/components/switch/switch.md)
@@ -158,6 +160,8 @@ Whether it's a feature request, bug report, or a project to showcase, please get
 ## Contributing
 
 Contributions are always welcome!
+
+Check out our [Roadmap](https://herouiv3.featurebase.app/roadmap) to see what we're working on.
 
 See [CONTRIBUTING.md](https://github.com/heroui-inc/heroui-native/blob/main/CONTRIBUTING.md) for ways to get started.
 

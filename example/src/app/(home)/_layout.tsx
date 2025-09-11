@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+import { Stack, usePathname } from 'expo-router';
 import { useTheme } from 'heroui-native';
 import { useCallback } from 'react';
 import { Image, Platform, StyleSheet } from 'react-native';
@@ -8,6 +8,8 @@ import { ThemeToggle } from '../../components/theme-toggle';
 
 export default function Layout() {
   const { theme, colors, isDark } = useTheme();
+
+  const pathname = usePathname();
 
   const _renderTitle = () => {
     return (
@@ -57,7 +59,14 @@ export default function Layout() {
         name="themes/index"
         options={{ headerShown: true, headerTitle: 'Themes' }}
       />
-      <Stack.Screen name="showcases" />
+      <Stack.Screen
+        name="showcases"
+        options={{
+          headerShown:
+            Platform.OS === 'ios' ? pathname === '/showcases' : false,
+          headerTitle: 'Showcases',
+        }}
+      />
     </Stack>
   );
 }

@@ -1,4 +1,5 @@
-import { Stack } from 'expo-router';
+import { HeaderBackButton } from '@react-navigation/elements';
+import { Stack, useRouter } from 'expo-router';
 import { useTheme } from 'heroui-native';
 import { Platform } from 'react-native';
 import { ThemeToggle } from '../../../components/theme-toggle';
@@ -6,7 +7,18 @@ import { ThemeToggle } from '../../../components/theme-toggle';
 export default function Layout() {
   const { theme, colors } = useTheme();
 
+  const router = useRouter();
+
   const _renderThemeToggle = () => <ThemeToggle />;
+
+  const _renderHeaderLeft = (props: any) => (
+    <HeaderBackButton
+      displayMode="minimal"
+      {...props}
+      onPress={router.back}
+      pressColor="transparent"
+    />
+  );
 
   return (
     <Stack
@@ -34,7 +46,13 @@ export default function Layout() {
         fullScreenGestureEnabled: true,
       }}
     >
-      <Stack.Screen name="index" options={{ headerTitle: 'Components' }} />
+      <Stack.Screen
+        name="index"
+        options={{
+          headerTitle: 'Components',
+          headerLeft: _renderHeaderLeft,
+        }}
+      />
       <Stack.Screen name="accordion" options={{ title: 'Accordion' }} />
       <Stack.Screen name="avatar" options={{ title: 'Avatar' }} />
       <Stack.Screen name="button" options={{ title: 'Button' }} />

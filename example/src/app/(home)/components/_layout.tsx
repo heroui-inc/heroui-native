@@ -39,6 +39,7 @@ export default function Layout() {
       <Stack.Screen name="avatar" options={{ title: 'Avatar' }} />
       <Stack.Screen name="button" options={{ title: 'Button' }} />
       <Stack.Screen name="card" options={{ title: 'Card' }} />
+      <Stack.Screen name="card-in-view" options={{ title: 'Card' }} />
       <Stack.Screen name="checkbox" options={{ title: 'Checkbox' }} />
       <Stack.Screen name="chip" options={{ title: 'Chip' }} />
       <Stack.Screen name="divider" options={{ title: 'Divider' }} />

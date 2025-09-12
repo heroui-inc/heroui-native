@@ -1,8 +1,5 @@
 <p align="center">
-  <a href="https://heroui.com">
-      <img width="25%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-logo.png" alt="heroui" />
-      <h1 align="center">HeroUI Native</h1>
-  </a>
+  <img width="35%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/hero-native-logo.png" alt="heroui native logo" />
 </p>
 
 <p align="center">

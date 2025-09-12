@@ -5,10 +5,6 @@ const root = tv({
   base: '',
 });
 
-const details = tv({
-  base: 'gap-4 flex-shrink-0',
-});
-
 const header = tv({
   base: '',
 });
@@ -31,7 +27,6 @@ const description = tv({
 
 const cardStyles = combineStyles({
   root,
-  details,
   header,
   body,
   footer,

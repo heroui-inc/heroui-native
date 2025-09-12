@@ -8,7 +8,6 @@ import cardStyles from './card.styles';
 import type {
   CardBodyProps,
   CardDescriptionProps,
-  CardDetailsProps,
   CardFooterProps,
   CardHeaderProps,
   CardRootProps,
@@ -31,20 +30,6 @@ const CardRoot = forwardRef<ViewRef, CardRootProps>((props, ref) => {
     >
       {children}
     </Surface>
-  );
-});
-
-// --------------------------------------------------
-
-const CardDetails = forwardRef<ViewRef, CardDetailsProps>((props, ref) => {
-  const { children, className, ...restProps } = props;
-
-  const tvStyles = cardStyles.details({ className });
-
-  return (
-    <View ref={ref} className={tvStyles} {...restProps}>
-      {children}
-    </View>
   );
 });
 
@@ -123,7 +108,6 @@ const CardDescription = forwardRef<TextRef, CardDescriptionProps>(
 // --------------------------------------------------
 
 CardRoot.displayName = DISPLAY_NAME.ROOT;
-CardDetails.displayName = DISPLAY_NAME.DETAILS;
 CardHeader.displayName = DISPLAY_NAME.HEADER;
 CardBody.displayName = DISPLAY_NAME.BODY;
 CardFooter.displayName = DISPLAY_NAME.FOOTER;
@@ -135,9 +119,6 @@ CardDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  *
  * @component Card - Main container that extends Surface component. Provides base card structure
  * with configurable surface variants and handles overall layout.
- *
- * @component Card.Details - Content wrapper that applies gap-3 spacing between children.
- * Use when you need proper layout for vertical cards with images.
  *
  * @component Card.Header - Header section for top-aligned content like icons or badges.
  *
@@ -155,8 +136,6 @@ CardDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  * @see Full documentation: https://heroui.com/components/card
  */
 const CompoundCard = Object.assign(CardRoot, {
-  /** @optional Content wrapper with gap spacing for proper layout */
-  Details: CardDetails,
   /** @optional Top-aligned header section */
   Header: CardHeader,
   /** @optional Main content area that expands between header and footer */

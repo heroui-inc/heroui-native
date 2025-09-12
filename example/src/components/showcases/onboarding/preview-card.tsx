@@ -68,30 +68,28 @@ export const PreviewCard: FC<PreviewCardProps> = ({
           )}
           surfaceVariant={isDark ? '2' : 'none'}
         >
-          <Card.Details>
-            <Card.Body className="p-2">
-              <Image
-                source={{ uri: image }}
-                className="absolute inset-0 rounded-lg"
-              />
-              <Chip className="bg-danger rounded-md">
-                <Chip.LabelContent
-                  classNames={{ text: 'text-white font-semibold' }}
-                >
-                  Live • {liveCount}
-                </Chip.LabelContent>
-              </Chip>
-            </Card.Body>
-            <Card.Footer>
-              <Card.Title className="font-semibold">{title}</Card.Title>
-              <Card.Description>
-                <AppText className="text-blue-500 font-medium">
-                  {category}
-                </AppText>{' '}
-                • {brands}
-              </Card.Description>
-            </Card.Footer>
-          </Card.Details>
+          <Card.Body className="flex-1 p-2 mb-4">
+            <Image
+              source={{ uri: image }}
+              className="absolute inset-0 rounded-lg"
+            />
+            <Chip className="bg-danger rounded-md">
+              <Chip.LabelContent
+                classNames={{ text: 'text-white font-semibold' }}
+              >
+                Live • {liveCount}
+              </Chip.LabelContent>
+            </Chip>
+          </Card.Body>
+          <Card.Footer>
+            <Card.Title className="font-semibold">{title}</Card.Title>
+            <Card.Description>
+              <AppText className="text-blue-500 font-medium">
+                {category}
+              </AppText>{' '}
+              • {brands}
+            </Card.Description>
+          </Card.Footer>
         </Card>
       </DropShadowView>
     </AnimatedView>

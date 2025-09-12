@@ -13,20 +13,6 @@ export interface CardRootProps extends Omit<SurfaceRootProps, 'variant'> {
 }
 
 /**
- * Props for the Card.Details component
- */
-export interface CardDetailsProps extends ViewProps {
-  /**
-   * Children elements to be rendered inside the details container
-   */
-  children?: React.ReactNode;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-}
-
-/**
  * Props for the Card.Header component
  */
 export interface CardHeaderProps extends ViewProps {

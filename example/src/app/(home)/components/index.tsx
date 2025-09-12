@@ -46,11 +46,6 @@ const components: Component[] = [
     path: 'card',
   },
   {
-    title: 'Card In View',
-    icon: <ComponentIcon />,
-    path: 'card-in-view',
-  },
-  {
     title: 'Checkbox',
     icon: <ComponentIcon />,
     path: 'checkbox',

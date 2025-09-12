@@ -18,9 +18,7 @@ The Card component creates a container with built-in sections for organized cont
 
 ```tsx
 <Card>
-  <Card.Details>
-    <Card.Body>...</Card.Body>
-  </Card.Details>
+  <Card.Body>...</Card.Body>
 </Card>
 ```
 
@@ -30,12 +28,10 @@ Combine title and description components for structured text content.
 
 ```tsx
 <Card>
-  <Card.Details>
-    <Card.Body>
-      <Card.Title>...</Card.Title>
-      <Card.Description>...</Card.Description>
-    </Card.Body>
-  </Card.Details>
+  <Card.Body>
+    <Card.Title>...</Card.Title>
+    <Card.Description>...</Card.Description>
+  </Card.Body>
 </Card>
 ```
 
@@ -45,11 +41,9 @@ Add header and footer sections for icons, badges, or actions.
 
 ```tsx
 <Card>
-  <Card.Details>
-    <Card.Header>...</Card.Header>
-    <Card.Body>...</Card.Body>
-    <Card.Footer>...</Card.Footer>
-  </Card.Details>
+  <Card.Header>...</Card.Header>
+  <Card.Body>...</Card.Body>
+  <Card.Footer>...</Card.Footer>
 </Card>
 ```
 
@@ -69,11 +63,8 @@ Control the card's background appearance using different surface variants.
 Create horizontal cards by using flex-row styling.
 
 ```tsx
-<Card className="flex-row">
-  ...
-  <Card.Details>
-    <Card.Body>...</Card.Body>
-  </Card.Details>
+<Card className="flex-row gap-4">
+  <Image source={...} className="size-24 rounded-lg" />
 </Card>
 ```
 
@@ -84,7 +75,7 @@ Use an image as an absolute positioned background.
 ```tsx
 <Card>
   <Image source={...} className="absolute inset-0" />
-  <Card.Details>...</Card.Details>
+  <View className="gap-4">...</View>
 </Card>
 ```
 
@@ -98,7 +89,7 @@ import { View } from 'react-native';
 export default function CardExample() {
   return (
     <Card>
-      <Card.Details>
+      <View className="gap-4">
         <Card.Body className="mb-4">
           <View className="gap-1 mb-2">
             <Card.Title className="text-pink-500">$450</Card.Title>
@@ -118,7 +109,7 @@ export default function CardExample() {
             </Button.EndContent>
           </Button>
         </Card.Footer>
-      </Card.Details>
+      </View>
     </Card>
   );
 }
@@ -128,19 +119,16 @@ export default function CardExample() {
 
 ```tsx
 <Card>
-  <Card.Details>
-    <Card.Header>...</Card.Header>
-    <Card.Body>
-      <Card.Title>...</Card.Title>
-      <Card.Description>...</Card.Description>
-    </Card.Body>
-    <Card.Footer>...</Card.Footer>
-  </Card.Details>
+  <Card.Header>...</Card.Header>
+  <Card.Body>
+    <Card.Title>...</Card.Title>
+    <Card.Description>...</Card.Description>
+  </Card.Body>
+  <Card.Footer>...</Card.Footer>
 </Card>
 ```
 
 - **Card**: Main container that extends Surface component. Provides base card structure with configurable surface variants and handles overall layout.
-- **Card.Details**: Content wrapper that applies gap-3 spacing between children. Use when you need proper layout for vertical cards with images.
 - **Card.Header**: Header section for top-aligned content like icons or badges.
 - **Card.Body**: Main content area with flex-1 that expands to fill all available space between Card.Header and Card.Footer.
 - **Card.Title**: Title text with foreground color and medium font weight.
@@ -157,14 +145,6 @@ export default function CardExample() {
 | `surfaceVariant` | `'none' \| '1' \| '2' \| '3'` | `'1'`   | Visual variant of the card surface                 |
 | `className`      | `string`                      | -       | Additional CSS classes to apply                    |
 | `...ViewProps`   | `ViewProps`                   | -       | All standard React Native View props are supported |
-
-### Card.Details
-
-| prop           | type              | default | description                                                   |
-| -------------- | ----------------- | ------- | ------------------------------------------------------------- |
-| `children`     | `React.ReactNode` | -       | Children elements to be rendered inside the details container |
-| `className`    | `string`          | -       | Additional CSS classes                                        |
-| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported            |
 
 ### Card.Header
 

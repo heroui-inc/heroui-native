@@ -1,5 +1,8 @@
 <p align="center">
-  <img width="35%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/hero-native-logo.png" alt="heroui native logo" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/hero-native-logo-black.png">
+    <img alt="HeroUI Native logo" width="40%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/hero-native-logo-black.png"  >
+  </picture>
 </p>
 
 <p align="center">

@@ -1,10 +1,18 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/hero-native-logo-black.png">
-    <img alt="HeroUI Native logo" width="40%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/hero-native-logo-white.png"  >
+    <!-- White logo for dark mode -->
+    <source 
+      media="(prefers-color-scheme: dark)" 
+      srcset="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/hero-native-logo-white.png"
+    >
+    <!-- Black logo for light mode (default fallback) -->
+    <img 
+      alt="HeroUI Native logo" 
+      width="40%" 
+      src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/hero-native-logo-black.png"
+    >
   </picture>
 </p>
-
 <p align="center">
   Beautiful, fast and modern React Native UI library
 </p>

@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://heroui.com">
-      <img width="20%" src="https://raw.githubusercontent.com/heroui-inc/heroui/main/apps/docs/public/isotipo.png" alt="heroui" />
+      <img width="100%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/docs-intro-cover.jpg" alt="heroui" />
       <h1 align="center">HeroUI Native</h1>
   </a>
 </p>
@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  v1.0.0-alpha.11
+  v1.0.0-alpha.12
 </p>
 
 ## Preview App
@@ -30,7 +30,7 @@ Choose one of the following methods to access the preview app:
 Use your device's camera or Expo Go app to scan:
 
 <p align="center">
-  <img width="20%" src="https://raw.githubusercontent.com/heroui-inc/heroui-native/refs/heads/alpha/expo-go-qr.png" alt="Expo Go QR Code" />
+  <img width="25%" src="https://raw.githubusercontent.com/heroui-inc/heroui-native/refs/heads/alpha/expo-go-qr.png" alt="Expo Go QR Code" />
 </p>
 
 > **Note for Android users:** If scanning the QR code with your device's camera or other scanner apps redirects to a browser and shows a 404 error, open Expo Go first and use its built-in QR scanner instead.

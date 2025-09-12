@@ -1,3 +1,16 @@
+## 1.0.0-alpha.12 (2025-09-12)
+
+* refactor(card): remove card details component ([d7d857d](https://github.com/heroui-inc/heroui-native/commit/d7d857d))
+* fix(card): remove flex properties ([2bf9f83](https://github.com/heroui-inc/heroui-native/commit/2bf9f83))
+* fix(scroll-shadow): linear gradient style type issue ([cb0fb6f](https://github.com/heroui-inc/heroui-native/commit/cb0fb6f))
+* chore: adjust example app spring animations ([47888f7](https://github.com/heroui-inc/heroui-native/commit/47888f7))
+* chore: adjust lib components spring animations ([1d0c571](https://github.com/heroui-inc/heroui-native/commit/1d0c571))
+* chore: remove after review ([754caf6](https://github.com/heroui-inc/heroui-native/commit/754caf6))
+* build: upgrade to expo sdk54 and reanimated v4 ([661a02f](https://github.com/heroui-inc/heroui-native/commit/661a02f))
+* docs: fix readme roadmap link ([48a8268](https://github.com/heroui-inc/heroui-native/commit/48a8268))
+
+
+
 ## 1.0.0-alpha.11 (2025-09-11)
 
 * fix: showcase carousel android issue ([a198934](https://github.com/heroui-inc/heroui-native/commit/a198934))

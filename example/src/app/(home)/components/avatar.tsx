@@ -212,7 +212,7 @@ export default function AvatarScreen() {
             </Avatar.Image>
             <Avatar.Fallback>ON</Avatar.Fallback>
           </Avatar>
-          <View className="absolute bottom-0 right-0 size-3.5 rounded-full bg-green-500 border border-background" />
+          <View className="absolute bottom-0.5 right-0.5 size-3.5 rounded-full bg-green-500 border border-background" />
         </View>
       </View>
     </ScreenScrollView>

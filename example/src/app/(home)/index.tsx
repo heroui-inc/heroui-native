@@ -109,7 +109,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
             style={rDarkImageStyle}
           />
         </AnimatedView>
-        <Card.Details>
+        <View className="gap-4">
           <Card.Header className="p-3">
             <Chip size="sm" className="bg-background/25">
               <Chip.LabelContent classNames={{ text: 'text-foreground/85' }}>
@@ -135,7 +135,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
               />
             </View>
           </Card.Footer>
-        </Card.Details>
+        </View>
       </Card>
     </AnimatedPressable>
   );

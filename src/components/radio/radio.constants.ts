@@ -1,5 +1,3 @@
-import { Easing } from 'react-native-reanimated';
-
 export const DISPLAY_NAME = {
   RADIO: 'HeroUINative.Radio.Root',
   RADIO_INDICATOR: 'HeroUINative.Radio.Indicator',
@@ -10,17 +8,14 @@ export const DISPLAY_NAME = {
   RADIO_DESCRIPTION: 'HeroUINative.Radio.Description',
 } as const;
 
-export const ANIMATION_DURATION = 175;
-export const ANIMATION_EASING = Easing.out(Easing.ease);
-
-export const DEFAULT_TIMING_CONFIG = {
-  duration: ANIMATION_DURATION,
-  easing: ANIMATION_EASING,
+export const DEFAULT_INDICATOR_BORDER_COLOR_TIMING_CONFIG = {
+  duration: 0,
 };
 
-export const DEFAULT_SPRING_CONFIG = {
-  damping: 40,
-  stiffness: 800,
+export const DEFAULT_INDICATOR_THUMB_SPRING_CONFIG = {
+  damping: 140,
+  stiffness: 1600,
+  mass: 6,
 };
 
 export const DEFAULT_HIT_SLOP = 6;

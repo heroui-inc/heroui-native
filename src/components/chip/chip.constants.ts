@@ -14,6 +14,4 @@ export const DISPLAY_NAME = {
 /**
  * Default layout transition for animated chip components
  */
-export const DEFAULT_LAYOUT_TRANSITION = LinearTransition.springify()
-  .damping(42)
-  .stiffness(600);
+export const DEFAULT_LAYOUT_TRANSITION = LinearTransition.springify();

@@ -23,7 +23,7 @@ export default function CardScreen() {
     <ScreenScrollView contentContainerClassName="gap-16">
       <SectionTitle title="Basic Card" />
       <Card>
-        <Card.Details>
+        <View className="gap-4">
           <Card.Body className="mb-4">
             <View className="gap-1 mb-2">
               <Card.Title className="text-pink-400">$450</Card.Title>
@@ -50,10 +50,10 @@ export default function CardScreen() {
               </Button.EndContent>
             </Button>
           </Card.Footer>
-        </Card.Details>
+        </View>
       </Card>
       <Card>
-        <Card.Details>
+        <View className="gap-4">
           <Card.Header>
             <View className="bg-accent rounded-full w-12 h-12 items-center justify-center">
               <AppText className="text-accent-foreground font-bold text-xl">
@@ -75,13 +75,13 @@ export default function CardScreen() {
               <Button.LabelContent>Subscribe Now</Button.LabelContent>
             </Button>
           </Card.Footer>
-        </Card.Details>
+        </View>
       </Card>
 
       <SectionTitle title="Card with Image" />
       <View className="flex-row gap-4">
         <Card surfaceVariant="2" className="flex-1 rounded-xl">
-          <Card.Details>
+          <View className="gap-4">
             <Card.Header>
               <Image
                 source={{
@@ -104,10 +104,10 @@ export default function CardScreen() {
                 @indiehackers
               </AppText>
             </Card.Footer>
-          </Card.Details>
+          </View>
         </Card>
         <Card surfaceVariant="2" className="flex-1 rounded-xl">
-          <Card.Details>
+          <View className="gap-4">
             <Card.Header>
               <Image
                 source={{
@@ -130,7 +130,7 @@ export default function CardScreen() {
                 @aibuilders
               </AppText>
             </Card.Footer>
-          </Card.Details>
+          </View>
         </Card>
       </View>
 
@@ -148,7 +148,7 @@ export default function CardScreen() {
             }}
             resizeMode="cover"
           />
-          <Card.Details>
+          <View className="gap-4">
             <Card.Body className="mb-2">
               <Card.Title className="mb-1">Bringing the future</Card.Title>
               <Card.Description numberOfLines={2}>
@@ -167,7 +167,7 @@ export default function CardScreen() {
                 />
               </Pressable>
             </Card.Footer>
-          </Card.Details>
+          </View>
         </Card>
         <Card className="flex-row rounded-xl gap-4 p-4" surfaceVariant="2">
           <Image
@@ -181,7 +181,7 @@ export default function CardScreen() {
             }}
             resizeMode="cover"
           />
-          <Card.Details>
+          <View className="gap-4">
             <Card.Body className="mb-2">
               <Card.Title className="mb-1">Marketing Conf</Card.Title>
               <Card.Description numberOfLines={2}>
@@ -200,7 +200,7 @@ export default function CardScreen() {
                 />
               </Pressable>
             </Card.Footer>
-          </Card.Details>
+          </View>
         </Card>
       </View>
 
@@ -217,7 +217,7 @@ export default function CardScreen() {
           colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.8)']}
           style={StyleSheet.absoluteFill}
         />
-        <Card.Details className="justify-end h-full">
+        <View className="gap-4 justify-end h-full">
           <Card.Body>
             <Card.Title className="text-base text-white uppercase mb-0.5">
               Pet health
@@ -241,7 +241,7 @@ export default function CardScreen() {
               </Button>
             </View>
           </Card.Footer>
-        </Card.Details>
+        </View>
       </Card>
 
       <SectionTitle title="Profile Onboarding Cards" />
@@ -256,7 +256,7 @@ export default function CardScreen() {
           style={{ width: width / 1.6 }}
           className="border-0"
         >
-          <Card.Details>
+          <View className="gap-4">
             <Card.Body className="items-center mb-2">
               <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
                 <Ionicons
@@ -277,7 +277,7 @@ export default function CardScreen() {
                 <Button.LabelContent>See profiles</Button.LabelContent>
               </Button>
             </Card.Footer>
-          </Card.Details>
+          </View>
         </Card>
 
         <Card
@@ -285,7 +285,7 @@ export default function CardScreen() {
           style={{ width: width / 1.5 }}
           className="border-0"
         >
-          <Card.Details>
+          <View className="gap-4">
             <Card.Body className="items-center mb-2">
               <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
                 <Ionicons
@@ -308,7 +308,7 @@ export default function CardScreen() {
                 <Button.LabelContent>Done</Button.LabelContent>
               </Button>
             </Card.Footer>
-          </Card.Details>
+          </View>
         </Card>
 
         <Card
@@ -316,7 +316,7 @@ export default function CardScreen() {
           style={{ width: width / 1.5 }}
           className="border-0"
         >
-          <Card.Details>
+          <View className="gap-4">
             <Card.Body className="items-center mb-2">
               <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
                 <Ionicons
@@ -339,7 +339,7 @@ export default function CardScreen() {
                 <Button.LabelContent>Done</Button.LabelContent>
               </Button>
             </Card.Footer>
-          </Card.Details>
+          </View>
         </Card>
       </ScrollView>
 
@@ -347,7 +347,7 @@ export default function CardScreen() {
 
       <View className="gap-8">
         <Card surfaceVariant="none">
-          <Card.Details>
+          <View className="gap-4">
             <Card.Body>
               <Card.Title>Transparent Card</Card.Title>
               <Card.Description>
@@ -355,40 +355,40 @@ export default function CardScreen() {
                 background.
               </Card.Description>
             </Card.Body>
-          </Card.Details>
+          </View>
         </Card>
 
         <Card surfaceVariant="1">
-          <Card.Details>
+          <View className="gap-4">
             <Card.Body>
               <Card.Title>Surface 1 Card</Card.Title>
               <Card.Description>
                 This is the default card appearance with surfaceVariant="1".
               </Card.Description>
             </Card.Body>
-          </Card.Details>
+          </View>
         </Card>
 
         <Card surfaceVariant="2">
-          <Card.Details>
+          <View className="gap-4">
             <Card.Body>
               <Card.Title>Surface 2 Card</Card.Title>
               <Card.Description>
                 This card uses surfaceVariant="2" for a different surface color.
               </Card.Description>
             </Card.Body>
-          </Card.Details>
+          </View>
         </Card>
 
         <Card surfaceVariant="3">
-          <Card.Details>
+          <View className="gap-4">
             <Card.Body>
               <Card.Title>Surface 3 Card</Card.Title>
               <Card.Description>
                 This card uses surfaceVariant="3" for the deepest surface color.
               </Card.Description>
             </Card.Body>
-          </Card.Details>
+          </View>
         </Card>
       </View>
     </ScreenScrollView>

@@ -55,7 +55,7 @@ const MarqueeCarousel: FC<Props> = ({ cards }) => {
   return (
     <GestureDetector gesture={gesture}>
       <AnimatedView
-        entering={FadeInUp.delay(300).springify().damping(20).stiffness(180)}
+        entering={FadeInUp.delay(300).springify()}
         className="flex-1 flex-row items-center overflow-hidden"
       >
         {cards.map((card, index) => (

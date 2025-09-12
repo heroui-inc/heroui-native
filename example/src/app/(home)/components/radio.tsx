@@ -295,7 +295,7 @@ export default function RadioScreen() {
               {customThumb === 'square' && (
                 <AnimatedView
                   key="square"
-                  entering={ZoomIn.springify().stiffness(300).damping(20)}
+                  entering={ZoomIn.springify()}
                   className="h-2.5 w-2.5 bg-accent-foreground"
                 />
               )}

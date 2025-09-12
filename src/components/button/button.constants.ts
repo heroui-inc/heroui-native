@@ -63,6 +63,4 @@ export const VARIANT_TO_COLOR_MAP: Record<ButtonVariant, keyof ColorConstants> =
     danger: 'dangerForeground',
   };
 
-export const DEFAULT_LAYOUT_TRANSITION = LinearTransition.springify()
-  .damping(42)
-  .stiffness(600);
+export const DEFAULT_LAYOUT_TRANSITION = LinearTransition.springify();

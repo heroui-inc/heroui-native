@@ -139,7 +139,7 @@ export default function CheckboxScreen() {
             ) : (
               <Animated.View
                 key="default-1"
-                entering={ZoomInDown.springify().damping(38).stiffness(450)}
+                entering={ZoomInDown.springify().damping(130).stiffness(1300)}
               >
                 <Animated.View key="default-2" entering={ZoomIn.duration(175)}>
                   <Ionicons name="add" size={16} color={colors.accent} />
@@ -195,24 +195,14 @@ export default function CheckboxScreen() {
         </Checkbox.Background>
         <Checkbox.Indicator className="z-50">
           {customBoth ? (
-            <AnimatedView
-              key="check"
-              entering={FadeInLeft.springify().damping(38).stiffness(450)}
-            >
-              <Animated.View
-                entering={ZoomIn.springify().damping(38).stiffness(450)}
-              >
+            <AnimatedView key="check" entering={FadeInLeft.springify()}>
+              <Animated.View entering={ZoomIn.springify()}>
                 <Ionicons name="sunny" size={24} color="#0f172a" />
               </Animated.View>
             </AnimatedView>
           ) : (
-            <AnimatedView
-              key="x"
-              entering={FadeInRight.springify().damping(38).stiffness(450)}
-            >
-              <Animated.View
-                entering={ZoomIn.springify().damping(38).stiffness(450)}
-              >
+            <AnimatedView key="x" entering={FadeInRight.springify()}>
+              <Animated.View entering={ZoomIn.springify()}>
                 <Ionicons name="moon" size={20} color="#e2e8f0" />
               </Animated.View>
             </AnimatedView>

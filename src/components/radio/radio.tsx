@@ -19,8 +19,8 @@ import { FormField } from '../form-field';
 import { useRadioGroupContext } from '../radio-group';
 import {
   DEFAULT_HIT_SLOP,
-  DEFAULT_SPRING_CONFIG,
-  DEFAULT_TIMING_CONFIG,
+  DEFAULT_INDICATOR_BORDER_COLOR_TIMING_CONFIG,
+  DEFAULT_INDICATOR_THUMB_SPRING_CONFIG,
   DISPLAY_NAME,
 } from './radio.constants';
 import radioStyles from './radio.styles';
@@ -179,7 +179,8 @@ const RadioIndicator = forwardRef<Animated.View, RadioIndicatorProps>(
         : colorKit.setAlpha(themeColors.danger, 0.4).hex(),
     };
 
-    const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
+    const timingConfig =
+      animationConfig ?? DEFAULT_INDICATOR_BORDER_COLOR_TIMING_CONFIG;
 
     const indicatorAnimatedStyle = useAnimatedStyle(() => {
       return {
@@ -280,14 +281,15 @@ const RadioIndicatorThumb = forwardRef<View, RadioIndicatorThumbProps>(
       className,
     });
 
-    const springConfig = animationConfig ?? DEFAULT_SPRING_CONFIG;
+    const springConfig =
+      animationConfig ?? DEFAULT_INDICATOR_THUMB_SPRING_CONFIG;
 
     const thumbAnimatedStyle = useAnimatedStyle(() => {
       return {
         opacity: withSpring(isSelected ? 1 : 0, springConfig),
         transform: [
           {
-            scale: withSpring(isSelected ? 1 : 0.5, springConfig),
+            scale: withSpring(isSelected ? 1 : 0.6, springConfig),
           },
         ],
         backgroundColor: colors?.selectedThumb ?? themeColors.background,

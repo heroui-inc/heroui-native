@@ -16,9 +16,9 @@ export const DEFAULT_TIMING_CONFIG = {
 };
 
 export const DEFAULT_SPRING_CONFIG = {
-  damping: 25,
-  stiffness: 400,
-  mass: 1,
+  damping: 120,
+  stiffness: 1600,
+  mass: 2,
 };
 
 export const DEFAULT_THUMB_WIDTH = 18;

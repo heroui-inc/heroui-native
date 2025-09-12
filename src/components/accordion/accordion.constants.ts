@@ -21,8 +21,9 @@ export const DISPLAY_NAME = {
  * Default layout transition for accordion animations
  */
 export const ACCORDION_LAYOUT_TRANSITION = LinearTransition.springify()
-  .damping(34)
-  .stiffness(380);
+  .damping(140)
+  .stiffness(1600)
+  .mass(4);
 
 /**
  * Highlight animation configuration
@@ -49,8 +50,9 @@ export const INDICATOR_ROTATION = {
  * Spring configuration for indicator animation
  */
 export const INDICATOR_SPRING_CONFIG = {
-  damping: 28,
-  stiffness: 260,
+  damping: 140,
+  stiffness: 1000,
+  mass: 4,
 };
 
 /**

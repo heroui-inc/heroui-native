@@ -23,20 +23,6 @@ export const ANIMATION_DURATION = 150;
  */
 export const ANIMATION_EASING = Easing.out(Easing.ease);
 
-// /**
-//  * Animation configuration for entering transitions
-//  */
-// export const ENTERING_ANIMATION_CONFIG = FadeInRight.springify()
-//   .damping(28)
-//   .stiffness(320);
-
-// /**
-//  * Animation configuration for exiting transitions
-//  */
-// export const EXITING_ANIMATION_CONFIG = FadeOutLeft.springify()
-//   .damping(14)
-//   .stiffness(320);
-
 /**
  * Animation configuration for entering transitions
  */

@@ -291,10 +291,10 @@ const AccordionScreen = () => {
                 <Accordion.Indicator
                   springConfig={
                     index === 0
-                      ? { damping: 10, stiffness: 100 }
+                      ? { damping: 60, stiffness: 900, mass: 3 }
                       : index === 1
-                        ? { damping: 50, stiffness: 500 }
-                        : { damping: 15, stiffness: 150 }
+                        ? { damping: 50, stiffness: 900, mass: 3 }
+                        : { damping: 40, stiffness: 900, mass: 3 }
                   }
                 />
               </Accordion.Trigger>

@@ -231,7 +231,7 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
     return {
       transform: [
         {
-          rotate: interpolate(rotation.get(), [0, 1], [0, 180]) + 'deg',
+          rotate: interpolate(rotation.get(), [0, 1], [0, -180]) + 'deg',
         },
       ],
     };

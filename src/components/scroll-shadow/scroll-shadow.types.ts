@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import type { StyleProp, ViewProps, ViewStyle } from 'react-native';
+import type { ViewProps } from 'react-native';
 
 /**
  * Orientation of the scroll shadow
@@ -32,7 +32,7 @@ export interface LinearGradientProps {
   locations?: any;
   start?: any;
   end?: any;
-  style?: StyleProp<ViewStyle>;
+  style?: any;
 }
 
 export type LinearGradientComponent = ComponentType<LinearGradientProps>;

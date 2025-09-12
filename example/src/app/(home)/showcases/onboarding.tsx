@@ -95,7 +95,7 @@ const OnboardingScreen = () => {
 
       <AnimatedView
         className="items-center gap-2 px-8"
-        entering={FadeInDown.delay(300).springify().damping(20).stiffness(180)}
+        entering={FadeInDown.delay(300).springify()}
       >
         <AppText className="text-muted-foreground text-sm font-semibold uppercase tracking-wider">
           Lesson 1
@@ -103,19 +103,17 @@ const OnboardingScreen = () => {
         <AppText className="text-4xl font-semibold text-foreground">
           Setting Up a Show
         </AppText>
-        <AppText className="text-lg leading-6 text-center text-foreground/75">
+        <AppText className="text-lg text-center text-foreground/75">
           It's fast and simple, and we've got a few pointers to help you get
           started successfully.
         </AppText>
       </AnimatedView>
 
-      <AnimatedView entering={FadeIn.delay(500)}>
+      <AnimatedView entering={FadeIn.delay(350)}>
         <Divider variant="thick" className="my-8 opacity-20" />
       </AnimatedView>
 
-      <AnimatedView
-        entering={FadeInDown.delay(400).springify().damping(20).stiffness(180)}
-      >
+      <AnimatedView entering={FadeInDown.delay(400).springify()}>
         <Button
           onPress={() => console.log('Next pressed')}
           className="mx-8 rounded-full bg-[#F8DD00]"

@@ -52,12 +52,10 @@ npm install heroui-native
 ### 2. Install Mandatory Peer Dependencies
 
 ```bash
-npm install react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0 react-native-svg@^15.12.1 tailwind-variants@^3.1.0 tailwind-merge@^3.3.1
+npm install react-native-reanimated@~4.1.0 react-native-safe-area-context@5.6.0 react-native-svg@^15.12.1 tailwind-variants@^3.1.0 tailwind-merge@^3.3.1
 ```
 
 > **Important:** It's recommended to use the exact versions specified above to avoid compatibility issues. Version mismatches may cause unexpected bugs.
-
-> **Note:** We will upgrade to Reanimated v4 as soon as Expo SDK 54 is released, ensuring full compatibility with the latest Expo ecosystem.
 
 ### 3. Set Up Nativewind
 

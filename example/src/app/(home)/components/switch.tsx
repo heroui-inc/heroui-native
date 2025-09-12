@@ -129,20 +129,14 @@ export default function SwitchScreen() {
           />
           <Switch.StartContent className="left-0.5">
             {contentIcon && (
-              <Animated.View
-                key="sun"
-                entering={ZoomIn.springify().damping(30).stiffness(300)}
-              >
+              <Animated.View key="sun" entering={ZoomIn.springify()}>
                 <Ionicons name="sunny" size={16} color="#854d0e" />
               </Animated.View>
             )}
           </Switch.StartContent>
           <Switch.EndContent className="right-0.5">
             {!contentIcon && (
-              <Animated.View
-                key="moon"
-                entering={ZoomIn.springify().damping(30).stiffness(300)}
-              >
+              <Animated.View key="moon" entering={ZoomIn.springify()}>
                 <Ionicons name="moon" size={16} color="#dbeafe" />
               </Animated.View>
             )}
@@ -176,20 +170,14 @@ export default function SwitchScreen() {
           />
           <Switch.StartContent className="left-1">
             {contentText && (
-              <Animated.View
-                key="sun"
-                entering={FadeInRight.springify().damping(36).stiffness(400)}
-              >
+              <Animated.View key="sun" entering={FadeInRight.springify()}>
                 <AppText className="text-xs font-bold text-white">ON</AppText>
               </Animated.View>
             )}
           </Switch.StartContent>
           <Switch.EndContent className="right-0.5">
             {!contentText && (
-              <Animated.View
-                key="moon"
-                entering={FadeInLeft.springify().damping(36).stiffness(400)}
-              >
+              <Animated.View key="moon" entering={FadeInLeft.springify()}>
                 <AppText className="text-xs font-bold text-zinc-200">
                   OFF
                 </AppText>

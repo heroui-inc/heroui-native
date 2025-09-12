@@ -1,7 +1,7 @@
 import { useWindowDimensions, View } from 'react-native';
 import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue,
+  useAnimatedRef,
+  useScrollOffset,
 } from 'react-native-reanimated';
 import {
   ShowcaseItem,
@@ -16,15 +16,13 @@ export type Props = {
 export function Carousel({ data }: Props) {
   const { width, height } = useWindowDimensions();
 
-  const scrollY = useSharedValue(0);
-
-  const onScroll = useAnimatedScrollHandler((e) => {
-    scrollY.set(e.contentOffset.y);
-  });
+  const animatedRef = useAnimatedRef<Animated.FlatList>();
+  const scrollY = useScrollOffset(animatedRef);
 
   return (
     <>
       <Animated.FlatList
+        ref={animatedRef}
         data={data}
         keyExtractor={(_, index) => String(index)}
         snapToInterval={height}
@@ -39,7 +37,6 @@ export function Carousel({ data }: Props) {
             />
           </View>
         )}
-        onScroll={onScroll}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         bounces={false}

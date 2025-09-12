@@ -138,9 +138,7 @@ export function ShowcaseItem({
         </Pressable>
         <AnimatedPressable
           entering={
-            index === 0
-              ? FadeInRight.springify().damping(28).stiffness(400).delay(250)
-              : undefined
+            index === 0 ? FadeInRight.springify().delay(300) : undefined
           }
           onPress={() => router.push(item.href)}
         >

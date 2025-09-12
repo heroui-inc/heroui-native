@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://heroui.com">
-      <img width="100%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/docs-intro-cover.jpg" alt="heroui" />
+      <img width="25%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-logo.png" alt="heroui" />
       <h1 align="center">HeroUI Native</h1>
   </a>
 </p>
@@ -146,6 +146,10 @@ export default function MyComponent() {
 
 See [CHANGELOG.md](./CHANGELOG.md) for a history of changes to this library.
 
+## Roadmap
+
+See [Roadmap](https://herouinative.featurebase.app/roadmap) to see what we're working on.
+
 ## Community
 
 We're excited to see the community adopt HeroUI, raise issues, and provide feedback.
@@ -158,8 +162,6 @@ Whether it's a feature request, bug report, or a project to showcase, please get
 ## Contributing
 
 Contributions are always welcome!
-
-Check out our [Roadmap](https://herouinative.featurebase.app/dashboard/roadmap) to see what we're working on.
 
 See [CONTRIBUTING.md](https://github.com/heroui-inc/heroui-native/blob/main/CONTRIBUTING.md) for ways to get started.
 

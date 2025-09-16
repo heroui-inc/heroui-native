@@ -1,7 +1,8 @@
 import { useHeaderHeight } from '@react-navigation/elements';
+import { FlashList } from '@shopify/flash-list';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ScrollShadow, Surface } from 'heroui-native';
-import { Platform, ScrollView, Text, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SectionTitle } from '../../../components/section-title';
 
@@ -9,6 +10,8 @@ const HORIZONTAL_ITEMS = Array.from({ length: 10 }, (_, i) => ({
   id: i,
   title: `Card ${i + 1}`,
 }));
+
+const HorizontalSeparator = () => <View className="w-5" />;
 
 export default function ScrollShadowScreen() {
   const insets = useSafeAreaInsets();
@@ -27,16 +30,16 @@ export default function ScrollShadowScreen() {
     >
       <SectionTitle title="Horizontal" />
       <ScrollShadow LinearGradientComponent={LinearGradient}>
-        <ScrollView
+        <FlashList
           horizontal
+          data={HORIZONTAL_ITEMS}
+          renderItem={({ item: _item }) => (
+            <Surface variant="2" className="w-32 h-16" />
+          )}
+          ItemSeparatorComponent={HorizontalSeparator}
+          contentContainerStyle={styles.horizontalContent}
           showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={32}
-          contentContainerClassName="p-5 gap-5"
-        >
-          {HORIZONTAL_ITEMS.map((item) => (
-            <Surface key={item.id} variant="2" className="w-32 h-16" />
-          ))}
-        </ScrollView>
+        />
       </ScrollShadow>
       <SectionTitle title="Vertical" />
       <ScrollShadow
@@ -188,3 +191,9 @@ export default function ScrollShadowScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  horizontalContent: {
+    padding: 20,
+  },
+});

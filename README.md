@@ -61,6 +61,8 @@ npm install react-native-reanimated@~4.1.0 react-native-safe-area-context@5.6.0 
 
 Follow the [NativeWind installation guide](https://www.nativewind.dev/docs/getting-started/installation) to set up Tailwind CSS for React Native.
 
+> **Important:** For correct compatibility with Reanimated v4, you must install NativeWind v4.2.1 specifically. This is crucial for proper functionality.
+
 ### 4. Configure Tailwind
 
 Update your `tailwind.config.js` to include the HeroUI Native plugin:

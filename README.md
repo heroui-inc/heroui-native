@@ -3,7 +3,6 @@
       <img width="100%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-repo.png" alt="heroui" />
   </a>
 </p>
-
 <p align="center">
   Beautiful, fast and modern React Native UI library
 </p>

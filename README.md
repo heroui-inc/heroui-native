@@ -39,6 +39,20 @@ Use your device's camera or Expo Go app to scan:
 
 This will automatically open the app in Expo Go if it's installed on your device.
 
+## Quick Start with Example App
+
+Want to start building with HeroUI Native immediately? We provide a standalone example app that's fully configured and ready to use:
+
+**[🚀 HeroUI Native Example App](https://github.com/heroui-inc/heroui-native-example)**
+
+This repository contains a pre-configured React Native app with HeroUI Native already set up, including:
+- All necessary dependencies installed
+- Nativewind configuration ready
+- Example components showcasing best practices
+- Perfect for quickly prototyping or starting a new project
+
+Simply clone, install, and start building!
+
 ## Getting Started
 
 ### 1. Install HeroUI Native

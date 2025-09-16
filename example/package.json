@@ -11,6 +11,7 @@
   "dependencies": {
     "@expo-google-fonts/inter": "^0.4.1",
     "@expo/metro-runtime": "~6.1.1",
+    "@shopify/flash-list": "2.0.3",
     "clsx": "^2.1.1",
     "expo": "^54.0.0",
     "expo-blur": "~15.0.6",
@@ -23,7 +24,7 @@
     "expo-router": "~6.0.0",
     "expo-status-bar": "~3.0.7",
     "expo-updates": "~29.0.9",
-    "nativewind": "^4.1.23",
+    "nativewind": "4.2.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.4",

@@ -1,17 +1,7 @@
 <p align="center">
-  <picture>
-    <!-- White logo for dark mode -->
-    <source 
-      media="(prefers-color-scheme: dark)" 
-      srcset="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/hero-native-logo-white.png"
-    >
-    <!-- Black logo for light mode (default fallback) -->
-    <img 
-      alt="HeroUI Native logo" 
-      width="40%" 
-      src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/hero-native-logo-black.png"
-    >
-  </picture>
+  <a href="https://heroui.com">
+      <img width="100%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-repo.png" alt="heroui" />
+  </a>
 </p>
 <p align="center">
   Beautiful, fast and modern React Native UI library
@@ -68,6 +58,8 @@ npm install react-native-reanimated@~4.1.0 react-native-safe-area-context@5.6.0 
 ### 3. Set Up Nativewind
 
 Follow the [NativeWind installation guide](https://www.nativewind.dev/docs/getting-started/installation) to set up Tailwind CSS for React Native.
+
+> **Important:** For correct compatibility with Reanimated v4, you must install NativeWind v4.2.1 specifically. This is crucial for proper functionality.
 
 ### 4. Configure Tailwind
 

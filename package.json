@@ -91,7 +91,7 @@
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.3",
     "jest": "^29.7.0",
-    "nativewind": "^4.1.23",
+    "nativewind": "4.2.1",
     "prettier": "^3.0.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "react": "19.0.0",
@@ -107,7 +107,7 @@
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
-    "nativewind": "^4.1.23",
+    "nativewind": "4.2.1",
     "react": "*",
     "react-native": "*",
     "react-native-reanimated": "~4.1.0",

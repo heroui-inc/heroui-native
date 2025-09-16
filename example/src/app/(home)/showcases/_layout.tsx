@@ -14,7 +14,7 @@ export default function Layout() {
         animation: 'none',
         contentStyle: {
           backgroundColor: colors.background,
-        }
+        },
       }}
     />
   );

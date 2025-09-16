@@ -46,7 +46,7 @@ export default function Layout() {
         fullScreenGestureEnabled: true,
         contentStyle: {
           backgroundColor: colors.background,
-        }
+        },
       }}
     >
       <Stack.Screen

@@ -29,6 +29,14 @@ export default function SpinnerScreen() {
         <Spinner size="md" color="danger" />
       </View>
 
+      <SectionTitle title="Variants" />
+      <View className="flex-row gap-4 self-center">
+        <Spinner size="md" color="default" variant="rotate" />
+        <Spinner size="md" color="default" variant="sweep" />
+        <Spinner size="md" color="default" variant="dots" />
+        <Spinner size="md" color="default" variant="wave" />
+      </View>
+
       <SectionTitle title="Custom Colors" />
       <View className="flex-row gap-4 self-center">
         <Spinner size="md" color="#8B5CF6" />

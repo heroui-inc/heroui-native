@@ -3,6 +3,11 @@ import type { AnimatedProps } from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
 
 /**
+ * Base spinner variants
+ */
+export type SpinnerVariant = 'rotate' | 'sweep' | 'dots' | 'wave';
+
+/**
  * Base spinner size variants
  */
 export type SpinnerSize = 'sm' | 'md' | 'lg';
@@ -24,6 +29,9 @@ export interface SpinnerProps extends AnimatedProps<ViewProps> {
 
   /** Color theme of the spinner @default 'default' */
   color?: SpinnerColor | (string & {});
+
+  /** Variant of the spinner @default 'default' */
+  variant?: SpinnerVariant;
 
   /** Whether the spinner is loading @default true */
   isLoading?: boolean;
@@ -70,6 +78,9 @@ export interface SpinnerIndicatorProps extends AnimatedProps<ViewProps> {
  * Context value for spinner components
  */
 export interface SpinnerContextValue {
+  /** Variant of the spinner */
+  variant: SpinnerVariant;
+
   /** Size of the spinner */
   size: SpinnerSize;
 

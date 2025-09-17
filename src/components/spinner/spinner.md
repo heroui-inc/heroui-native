@@ -42,6 +42,17 @@ Use predefined color variants or custom colors.
 <Spinner color="#8B5CF6" />
 ```
 
+### Variants
+
+Use predefined variants.
+
+```tsx
+<Spinner variant="rotate" />
+<Spinner variant="sweep" />
+<Spinner variant="dots" />
+<Spinner variant="wave" />
+```
+
 ### Loading State
 
 Control the visibility of the spinner with the `isLoading` prop.
@@ -143,6 +154,7 @@ export default function SpinnerExample() {
 | `children`     | `React.ReactNode`                                           | `undefined` | Content to render inside the spinner               |
 | `size`         | `'sm' \| 'md' \| 'lg'`                                      | `'md'`      | Size of the spinner                                |
 | `color`        | `'default' \| 'success' \| 'warning' \| 'danger' \| string` | `'default'` | Color theme of the spinner                         |
+| `variant`      | `'rotate' \| 'sweep' \| 'dots' \| 'wave'`                   | `'rotate'`  | Variant of the spinner                              |
 | `isLoading`    | `boolean`                                                   | `true`      | Whether the spinner is loading                     |
 | `className`    | `string`                                                    | `undefined` | Custom class name for the spinner                  |
 | `...ViewProps` | `ViewProps`                                                 | -           | All standard React Native View props are supported |

@@ -1,7 +1,8 @@
 import { forwardRef } from 'react';
-import { Platform, Text, View } from 'react-native';
+import { View } from 'react-native';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
+import { useTheme } from '../../providers/theme';
 import { CloseIcon } from './close-icon';
 import { DISPLAY_NAME } from './dialog.constants';
 import dialogStyles, { nativeStyles } from './dialog.styles';
@@ -35,17 +36,6 @@ const DialogTrigger = forwardRef<
 
 // --------------------------------------------------
 
-const DialogOverlay = forwardRef<
-  DialogPrimitivesTypes.OverlayRef,
-  DialogPrimitivesTypes.OverlayProps & { className?: string }
->(({ className, ...props }, ref) => {
-  const tvStyles = dialogStyles.overlay({ className });
-
-  return <DialogPrimitives.Overlay ref={ref} className={tvStyles} {...props} />;
-});
-
-// --------------------------------------------------
-
 const DialogContent = forwardRef<
   DialogPrimitivesTypes.ContentRef,
   DialogContentProps
@@ -54,44 +44,54 @@ const DialogContent = forwardRef<
     {
       className,
       classNames,
+      style,
       portalHost,
       children,
       isCloseVisible = true,
+      iconProps,
       ...props
     },
     ref
   ) => {
-    const { container, closeButton, closeIcon } = dialogStyles.content({
+    const { colors } = useTheme();
+
+    const { container, content, closeButton } = dialogStyles.content();
+
+    const containerStyles = container({
       className: classNames?.container,
     });
 
-    const contentStyles = container({ className });
+    const contentStyles = content({
+      className: [className, classNames?.content],
+    });
+
+    const closeButtonStyles = closeButton({
+      className: classNames?.closeButton,
+    });
 
     return (
       <DialogPrimitives.Portal hostName={portalHost}>
-        <DialogOverlay>
+        <DialogPrimitives.Overlay className={containerStyles}>
           <DialogPrimitives.Content
             ref={ref}
             className={contentStyles}
-            style={[Platform.OS === 'ios' && nativeStyles.contentContainer]}
+            style={[nativeStyles.contentContainer, style]}
             {...props}
           >
-            {children}
             {isCloseVisible && (
               <DialogPrimitives.Close
-                className={closeButton({ className: classNames?.closeButton })}
+                className={closeButtonStyles}
                 hitSlop={12}
               >
-                <View
-                  className={closeIcon({ className: classNames?.closeIcon })}
-                >
-                  <CloseIcon size={16} />
-                </View>
-                <Text className="sr-only">Close</Text>
+                <CloseIcon
+                  size={iconProps?.size ?? 18}
+                  color={iconProps?.color ?? colors.foreground}
+                />
               </DialogPrimitives.Close>
             )}
+            {children}
           </DialogPrimitives.Content>
-        </DialogOverlay>
+        </DialogPrimitives.Overlay>
       </DialogPrimitives.Portal>
     );
   }
@@ -102,6 +102,7 @@ const DialogContent = forwardRef<
 const DialogHeader = forwardRef<View, DialogHeaderProps>(
   ({ className, ...props }, ref) => {
     const tvStyles = dialogStyles.header({ className });
+
     return <View ref={ref} className={tvStyles} {...props} />;
   }
 );
@@ -120,6 +121,7 @@ const DialogBody = forwardRef<View, DialogBodyProps>(
 const DialogFooter = forwardRef<View, DialogFooterProps>(
   ({ className, ...props }, ref) => {
     const tvStyles = dialogStyles.footer({ className });
+
     return <View ref={ref} className={tvStyles} {...props} />;
   }
 );
@@ -131,6 +133,7 @@ const DialogTitle = forwardRef<
   DialogTitleProps
 >(({ className, ...props }, ref) => {
   const tvStyles = dialogStyles.title({ className });
+
   return <DialogPrimitives.Title ref={ref} className={tvStyles} {...props} />;
 });
 
@@ -141,6 +144,7 @@ const DialogDescription = forwardRef<
   DialogDescriptionProps
 >(({ className, ...props }, ref) => {
   const tvStyles = dialogStyles.description({ className });
+
   return (
     <DialogPrimitives.Description ref={ref} className={tvStyles} {...props} />
   );
@@ -148,7 +152,6 @@ const DialogDescription = forwardRef<
 
 // --------------------------------------------------
 
-// Display names grouped together
 DialogRoot.displayName = DISPLAY_NAME.ROOT;
 DialogTrigger.displayName = DISPLAY_NAME.TRIGGER;
 DialogContent.displayName = DISPLAY_NAME.CONTENT;

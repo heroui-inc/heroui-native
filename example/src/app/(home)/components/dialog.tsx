@@ -2,6 +2,7 @@ import { Button, Dialog } from 'heroui-native';
 import { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 export default function DialogScreen() {
   const [open, setOpen] = useState(false);
@@ -15,23 +16,20 @@ export default function DialogScreen() {
           <Button variant="primary">Open Basic Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Content>
-          <Dialog.Header>
+          <Dialog.Body className="gap-2">
             <Dialog.Title>Dialog Title</Dialog.Title>
             <Dialog.Description>
-              This is a basic dialog with a title and description.
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam
+              laudantium voluptates suscipit magnam nemo nesciunt repellat,
+              explicabo, beatae nobis maxime, obcaecati non dolorum?
             </Dialog.Description>
-          </Dialog.Header>
-          <Dialog.Body>
-            <Text className="text-foreground">
-              This is the main content of the dialog. You can add any content
-              here including forms, images, or other components.
-            </Text>
           </Dialog.Body>
-          <Dialog.Footer>
-            <Button variant="secondary" onPress={() => {}}>
-              Cancel
-            </Button>
-            <Button variant="primary" onPress={() => {}}>
+          <Dialog.Footer className="flex-row w-full gap-3">
+            <Button
+              variant="primary"
+              className="flex-1"
+              onPress={simulatePress}
+            >
               Confirm
             </Button>
           </Dialog.Footer>

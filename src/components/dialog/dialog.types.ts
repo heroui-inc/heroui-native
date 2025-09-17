@@ -25,6 +25,22 @@ export interface DialogTriggerProps extends DialogPrimitivesTypes.TriggerProps {
 }
 
 /**
+ * Close icon props
+ */
+export interface DialogCloseIconProps {
+  /**
+   * Size of the close icon
+   * @default 18
+   */
+  size?: number;
+  /**
+   * Color of the close icon
+   * @default theme.colors.foreground
+   */
+  color?: string;
+}
+
+/**
  * Dialog Content component props
  */
 export interface DialogContentProps
@@ -34,6 +50,10 @@ export interface DialogContentProps
    * @default true
    */
   isCloseVisible?: boolean;
+  /**
+   * Props for customizing the close icon
+   */
+  iconProps?: DialogCloseIconProps;
   /**
    * Custom portal host name for rendering in specific container
    */

@@ -1,4 +1,5 @@
 import React from 'react';
+import { PortalHost } from '../../primitives/portal';
 import { TextComponentProvider } from '../text-component/provider';
 import { ThemeProvider } from '../theme/provider';
 import type { HeroUINativeProviderProps } from './types';
@@ -119,6 +120,7 @@ export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
     <ThemeProvider colorScheme={colorScheme} theme={theme}>
       <TextComponentProvider value={{ textProps }}>
         {children}
+        <PortalHost />
       </TextComponentProvider>
     </ThemeProvider>
   );

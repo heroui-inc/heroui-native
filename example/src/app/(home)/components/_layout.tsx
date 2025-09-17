@@ -62,6 +62,7 @@ export default function Layout() {
       <Stack.Screen name="card" options={{ title: 'Card' }} />
       <Stack.Screen name="checkbox" options={{ title: 'Checkbox' }} />
       <Stack.Screen name="chip" options={{ title: 'Chip' }} />
+      <Stack.Screen name="dialog" options={{ title: 'Dialog' }} />
       <Stack.Screen name="divider" options={{ title: 'Divider' }} />
       <Stack.Screen
         name="drop-shadow-view"

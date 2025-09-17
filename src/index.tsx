@@ -14,5 +14,6 @@ export * from './components/spinner';
 export * from './components/surface';
 export * from './components/switch';
 export * from './components/text-field';
+export * from './components/toast';
 export * from './providers/hero-ui-native';
 export * from './providers/theme';

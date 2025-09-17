@@ -2,6 +2,7 @@ import React from 'react';
 import { TextComponentProvider } from '../text-component/provider';
 import { ThemeProvider } from '../theme/provider';
 import type { HeroUINativeProviderProps } from './types';
+import {Toaster} from '../../components/toast';
 
 /**
  * HeroUINativeProvider Component
@@ -118,6 +119,7 @@ export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   return (
     <ThemeProvider colorScheme={colorScheme} theme={theme}>
       <TextComponentProvider value={{ textProps }}>
+        <Toaster />
         {children}
       </TextComponentProvider>
     </ThemeProvider>

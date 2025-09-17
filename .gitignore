@@ -89,6 +89,10 @@ nitrogen/
 .claude
 .workflows
 
+# cursor
+.cursorrules
+.cursor/
+
 # Example dist
 example/dist
 

@@ -6,7 +6,7 @@ import {
   useFonts,
 } from '@expo-google-fonts/inter';
 import { Slot } from 'expo-router';
-import { HeroUINativeProvider } from 'heroui-native';
+import { HeroUINativeProvider, Toaster } from 'heroui-native';
 import {
   configureReanimatedLogger,
   ReanimatedLogLevel,
@@ -33,6 +33,7 @@ function ThemedLayout() {
       }}
     >
       <Slot />
+      <Toaster />
     </HeroUINativeProvider>
   );
 }

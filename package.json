@@ -171,5 +171,10 @@
     "languages": "js",
     "type": "library",
     "version": "0.51.1"
+  },
+  "dependencies": {
+    "i": "^0.3.7",
+    "npm": "^11.5.2",
+    "react-native-screens": "^4.15.4"
   }
 }

@@ -7,19 +7,19 @@ import { CloseIcon } from './close-icon';
 import { DISPLAY_NAME } from './dialog.constants';
 import dialogStyles, { nativeStyles } from './dialog.styles';
 import type {
-  DialogBodyProps,
+  DialogCloseProps,
   DialogContentProps,
   DialogDescriptionProps,
-  DialogFooterProps,
-  DialogHeaderProps,
-  DialogProps,
+  DialogOverlayProps,
+  DialogPortalProps,
+  DialogRootProps,
   DialogTitleProps,
   DialogTriggerProps,
 } from './dialog.types';
 
 // --------------------------------------------------
 
-const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogProps>(
+const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
   (props, ref) => {
     return <DialogPrimitives.Root ref={ref} {...props} />;
   }
@@ -36,95 +36,72 @@ const DialogTrigger = forwardRef<
 
 // --------------------------------------------------
 
+const DialogPortal = ({ className, children, ...props }: DialogPortalProps) => {
+  const tvStyles = dialogStyles.portal({ className });
+
+  return (
+    <DialogPrimitives.Portal {...props}>
+      <View className={tvStyles}>{children}</View>
+    </DialogPrimitives.Portal>
+  );
+};
+
+// --------------------------------------------------
+
+const DialogOverlay = forwardRef<
+  DialogPrimitivesTypes.OverlayRef,
+  DialogOverlayProps
+>(({ className, ...props }, ref) => {
+  const tvStyles = dialogStyles.overlay({ className });
+
+  return <DialogPrimitives.Overlay ref={ref} className={tvStyles} {...props} />;
+});
+
+// --------------------------------------------------
+
 const DialogContent = forwardRef<
   DialogPrimitivesTypes.ContentRef,
   DialogContentProps
->(
-  (
-    {
-      className,
-      classNames,
-      style,
-      portalHost,
-      children,
-      isCloseVisible = true,
-      iconProps,
-      ...props
-    },
-    ref
-  ) => {
-    const { colors } = useTheme();
+>(({ className, style, children, ...props }, ref) => {
+  const tvStyles = dialogStyles.content({ className });
 
-    const { container, content, closeButton } = dialogStyles.content();
-
-    const containerStyles = container({
-      className: classNames?.container,
-    });
-
-    const contentStyles = content({
-      className: [className, classNames?.content],
-    });
-
-    const closeButtonStyles = closeButton({
-      className: classNames?.closeButton,
-    });
-
-    return (
-      <DialogPrimitives.Portal hostName={portalHost}>
-        <DialogPrimitives.Overlay className={containerStyles}>
-          <DialogPrimitives.Content
-            ref={ref}
-            className={contentStyles}
-            style={[nativeStyles.contentContainer, style]}
-            {...props}
-          >
-            {isCloseVisible && (
-              <DialogPrimitives.Close
-                className={closeButtonStyles}
-                hitSlop={12}
-              >
-                <CloseIcon
-                  size={iconProps?.size ?? 18}
-                  color={iconProps?.color ?? colors.foreground}
-                />
-              </DialogPrimitives.Close>
-            )}
-            {children}
-          </DialogPrimitives.Content>
-        </DialogPrimitives.Overlay>
-      </DialogPrimitives.Portal>
-    );
-  }
-);
+  return (
+    <DialogPrimitives.Content
+      ref={ref}
+      className={tvStyles}
+      style={[nativeStyles.contentContainer, style]}
+      {...props}
+    >
+      {children}
+    </DialogPrimitives.Content>
+  );
+});
 
 // --------------------------------------------------
 
-const DialogHeader = forwardRef<View, DialogHeaderProps>(
-  ({ className, ...props }, ref) => {
-    const tvStyles = dialogStyles.header({ className });
+const DialogClose = forwardRef<
+  DialogPrimitivesTypes.CloseRef,
+  DialogCloseProps
+>(({ className, iconProps, children, ...props }, ref) => {
+  const { colors } = useTheme();
+  const tvStyles = dialogStyles.close({ className });
 
-    return <View ref={ref} className={tvStyles} {...props} />;
-  }
-);
-
-// --------------------------------------------------
-
-const DialogBody = forwardRef<View, DialogBodyProps>(
-  ({ className, ...props }, ref) => {
-    const tvStyles = dialogStyles.body({ className });
-    return <View ref={ref} className={tvStyles} {...props} />;
-  }
-);
-
-// --------------------------------------------------
-
-const DialogFooter = forwardRef<View, DialogFooterProps>(
-  ({ className, ...props }, ref) => {
-    const tvStyles = dialogStyles.footer({ className });
-
-    return <View ref={ref} className={tvStyles} {...props} />;
-  }
-);
+  return (
+    <DialogPrimitives.Close
+      ref={ref}
+      className={tvStyles}
+      hitSlop={12}
+      {...props}
+    >
+      {children || (
+        <CloseIcon
+          size={iconProps?.size ?? 18}
+          color={iconProps?.color ?? colors.foreground}
+        />
+      )}
+    </DialogPrimitives.Close>
+  );
+});
 
 // --------------------------------------------------
 
@@ -154,33 +131,33 @@ const DialogDescription = forwardRef<
 
 DialogRoot.displayName = DISPLAY_NAME.ROOT;
 DialogTrigger.displayName = DISPLAY_NAME.TRIGGER;
+DialogPortal.displayName = DISPLAY_NAME.PORTAL;
+DialogOverlay.displayName = DISPLAY_NAME.OVERLAY;
 DialogContent.displayName = DISPLAY_NAME.CONTENT;
-DialogHeader.displayName = DISPLAY_NAME.HEADER;
-DialogBody.displayName = DISPLAY_NAME.BODY;
-DialogFooter.displayName = DISPLAY_NAME.FOOTER;
+DialogClose.displayName = DISPLAY_NAME.CLOSE;
 DialogTitle.displayName = DISPLAY_NAME.TITLE;
 DialogDescription.displayName = DISPLAY_NAME.DESCRIPTION;
 
 /**
  * Compound Dialog component with sub-components
  *
- * @component Dialog - Main container that manages open/close state.
+ * @component Dialog.Root - Main container that manages open/close state.
  * Provides the dialog context to child components.
  *
  * @component Dialog.Trigger - Button or element that opens the dialog.
  * Accepts any pressable element as children.
  *
- * @component Dialog.Content - The dialog modal content container.
- * Renders in a portal with overlay and handles close button visibility.
+ * @component Dialog.Portal - Portal container for dialog overlay and content.
+ * Renders children in a portal with centered layout.
  *
- * @component Dialog.Header - Optional header section for title and description.
- * Use for grouping Dialog.Title and Dialog.Description.
+ * @component Dialog.Overlay - Background overlay that covers the screen.
+ * Typically closes the dialog when clicked.
  *
- * @component Dialog.Body - Optional body section for main content.
- * Use for the main dialog content area.
+ * @component Dialog.Content - The dialog content container.
+ * Contains the main dialog UI elements.
  *
- * @component Dialog.Footer - Optional footer section for actions.
- * Use for action buttons like Cancel/Confirm.
+ * @component Dialog.Close - Close button for the dialog.
+ * Can accept custom children or uses default close icon.
  *
  * @component Dialog.Title - The dialog title text.
  * Automatically linked for accessibility.
@@ -193,14 +170,14 @@ DialogDescription.displayName = DISPLAY_NAME.DESCRIPTION;
 const Dialog = Object.assign(DialogRoot, {
   /** @optional Trigger element to open the dialog */
   Trigger: DialogTrigger,
-  /** @optional Main dialog content container with overlay */
+  /** @optional Portal container for overlay and content */
+  Portal: DialogPortal,
+  /** @optional Background overlay */
+  Overlay: DialogOverlay,
+  /** @optional Main dialog content container */
   Content: DialogContent,
-  /** @optional Header section for title and description */
-  Header: DialogHeader,
-  /** @optional Body section for main content */
-  Body: DialogBody,
-  /** @optional Footer section for action buttons */
-  Footer: DialogFooter,
+  /** @optional Close button for the dialog */
+  Close: DialogClose,
   /** @optional Dialog title text */
   Title: DialogTitle,
   /** @optional Dialog description text */

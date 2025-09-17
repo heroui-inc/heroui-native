@@ -1,12 +1,12 @@
 export { default as Dialog } from './dialog';
 export type {
-  DialogBodyProps,
   DialogCloseIconProps,
+  DialogCloseProps,
   DialogContentProps,
   DialogDescriptionProps,
-  DialogFooterProps,
-  DialogHeaderProps,
-  DialogProps,
+  DialogOverlayProps,
+  DialogPortalProps,
+  DialogRootProps,
   DialogTitleProps,
   DialogTriggerProps,
 } from './dialog.types';

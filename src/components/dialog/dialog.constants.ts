@@ -4,10 +4,10 @@
 export const DISPLAY_NAME = {
   ROOT: 'HeroUINative.Dialog.Root',
   TRIGGER: 'HeroUINative.Dialog.Trigger',
+  PORTAL: 'HeroUINative.Dialog.Portal',
+  OVERLAY: 'HeroUINative.Dialog.Overlay',
   CONTENT: 'HeroUINative.Dialog.Content',
-  HEADER: 'HeroUINative.Dialog.Header',
-  BODY: 'HeroUINative.Dialog.Body',
-  FOOTER: 'HeroUINative.Dialog.Footer',
+  CLOSE: 'HeroUINative.Dialog.Close',
   TITLE: 'HeroUINative.Dialog.Title',
   DESCRIPTION: 'HeroUINative.Dialog.Description',
 };

@@ -2,24 +2,20 @@ import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../providers/theme/helpers';
 
+const portal = tv({
+  base: 'absolute inset-0 items-center justify-center p-5',
+});
+
+const overlay = tv({
+  base: 'absolute inset-0 bg-black/70',
+});
+
 const content = tv({
-  slots: {
-    container: 'absolute inset-0 items-center justify-center p-5 bg-black/70',
-    content: 'bg-background rounded-lg border border-border p-5 gap-8',
-    closeButton: 'self-end -mb-5',
-  },
+  base: 'bg-background rounded-lg border border-border p-5',
 });
 
-const header = tv({
-  base: '',
-});
-
-const body = tv({
-  base: '',
-});
-
-const footer = tv({
-  base: '',
+const close = tv({
+  base: 'self-end',
 });
 
 const title = tv({
@@ -31,15 +27,13 @@ const description = tv({
 });
 
 const dialogStyles = combineStyles({
+  portal,
+  overlay,
   content,
-  header,
-  body,
-  footer,
+  close,
   title,
   description,
 });
-
-export type ContentSlots = keyof ReturnType<typeof content>;
 
 export const nativeStyles = StyleSheet.create({
   contentContainer: {

@@ -190,6 +190,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
     }
 
     const Component = asChild ? Slot.View : View;
+
     return (
       <Component
         ref={ref}
@@ -198,7 +199,6 @@ const Content = forwardRef<ContentRef, ContentProps>(
         aria-labelledby={`${nativeID}_label`}
         aria-describedby={`${nativeID}_desc`}
         aria-modal={true}
-        onStartShouldSetResponder={onStartShouldSetResponder}
         {...props}
       />
     );
@@ -270,7 +270,3 @@ export {
   Trigger,
   useRootContext,
 };
-
-function onStartShouldSetResponder() {
-  return true;
-}

@@ -1,13 +1,10 @@
 import type { ReactNode } from 'react';
-import type { ViewProps } from 'react-native';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
-import type { ElementSlots } from '../../providers/theme';
-import type { ContentSlots } from './dialog.styles';
 
 /**
  * Dialog Root component props
  */
-export interface DialogProps extends DialogPrimitivesTypes.RootProps {
+export interface DialogRootProps extends DialogPrimitivesTypes.RootProps {
   /**
    * The content of the dialog
    */
@@ -20,6 +17,64 @@ export interface DialogProps extends DialogPrimitivesTypes.RootProps {
 export interface DialogTriggerProps extends DialogPrimitivesTypes.TriggerProps {
   /**
    * The trigger element content
+   */
+  children?: ReactNode;
+}
+
+/**
+ * Dialog Portal component props
+ */
+export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
+  /**
+   * Additional CSS class for the portal container
+   */
+  className?: string;
+  /**
+   * The portal content
+   */
+  children: ReactNode;
+}
+
+/**
+ * Dialog Overlay component props
+ */
+export interface DialogOverlayProps
+  extends Omit<DialogPrimitivesTypes.OverlayProps, 'asChild'> {
+  /**
+   * Additional CSS class for the overlay
+   */
+  className?: string;
+}
+
+/**
+ * Dialog Content component props
+ */
+export interface DialogContentProps
+  extends Omit<DialogPrimitivesTypes.ContentProps, 'asChild'> {
+  /**
+   * Additional CSS class for the content container
+   */
+  className?: string;
+  /**
+   * The dialog content
+   */
+  children?: ReactNode;
+}
+
+/**
+ * Dialog Close component props
+ */
+export interface DialogCloseProps extends DialogPrimitivesTypes.CloseProps {
+  /**
+   * Close icon props
+   */
+  iconProps?: DialogCloseIconProps;
+  /**
+   * Additional CSS class for the close button
+   */
+  className?: string;
+  /**
+   * The close button content
    */
   children?: ReactNode;
 }
@@ -38,80 +93,6 @@ export interface DialogCloseIconProps {
    * @default theme.colors.foreground
    */
   color?: string;
-}
-
-/**
- * Dialog Content component props
- */
-export interface DialogContentProps
-  extends Omit<DialogPrimitivesTypes.ContentProps, 'asChild'> {
-  /**
-   * Whether to show the close button
-   * @default true
-   */
-  isCloseVisible?: boolean;
-  /**
-   * Props for customizing the close icon
-   */
-  iconProps?: DialogCloseIconProps;
-  /**
-   * Custom portal host name for rendering in specific container
-   */
-  portalHost?: string;
-  /**
-   * Additional CSS classes for different parts of the dialog content
-   */
-  classNames?: ElementSlots<ContentSlots>;
-  /**
-   * Additional CSS class for the content container
-   */
-  className?: string;
-  /**
-   * The dialog content
-   */
-  children?: ReactNode;
-}
-
-/**
- * Dialog Header component props
- */
-export interface DialogHeaderProps extends ViewProps {
-  /**
-   * Additional CSS class for the header
-   */
-  className?: string;
-  /**
-   * Header content
-   */
-  children?: ReactNode;
-}
-
-/**
- * Dialog Body component props
- */
-export interface DialogBodyProps extends ViewProps {
-  /**
-   * Additional CSS class for the body
-   */
-  className?: string;
-  /**
-   * Body content
-   */
-  children?: ReactNode;
-}
-
-/**
- * Dialog Footer component props
- */
-export interface DialogFooterProps extends ViewProps {
-  /**
-   * Additional CSS class for the footer
-   */
-  className?: string;
-  /**
-   * Footer content
-   */
-  children?: ReactNode;
 }
 
 /**

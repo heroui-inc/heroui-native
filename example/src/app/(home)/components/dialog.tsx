@@ -3,22 +3,44 @@ import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
   Dialog,
+  DropShadowView,
   ScrollShadow,
   TextField,
+  useDialog,
   useTheme,
 } from 'heroui-native';
 import { useState } from 'react';
 import {
   KeyboardAvoidingView,
   ScrollView,
+  StyleSheet,
   Text,
   useWindowDimensions,
   View,
 } from 'react-native';
+import { interpolate, useDerivedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { AnimatedBlurView } from '../../../components/animated-blur-view';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
+
+const DialogBlurBackdrop = () => {
+  const { isDark } = useTheme();
+  const { progress } = useDialog();
+
+  const blurIntensity = useDerivedValue(() => {
+    return interpolate(progress.get(), [0, 1], [0, isDark ? 75 : 50]);
+  });
+
+  return (
+    <AnimatedBlurView
+      blurIntensity={blurIntensity}
+      tint={isDark ? 'dark' : 'systemUltraThinMaterialDark'}
+      style={StyleSheet.absoluteFill}
+    />
+  );
+};
 
 export default function DialogScreen() {
   const [basicDialogOpen, setBasicDialogOpen] = useState(false);
@@ -86,7 +108,9 @@ export default function DialogScreen() {
           <Button variant="tertiary">Basic Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Overlay />
+          <Dialog.Overlay>
+            <DialogBlurBackdrop />
+          </Dialog.Overlay>
           <Dialog.Content>
             <Dialog.Close />
             <View className="mb-5 gap-1.5">
@@ -255,70 +279,72 @@ export default function DialogScreen() {
           <Button variant="tertiary">Scroll Content Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Overlay />
-          <Dialog.Content className="rounded-2xl px-0">
-            <Dialog.Close className="mr-4" />
-            <Dialog.Title className="text-center mb-5">
-              Upload Audio
-            </Dialog.Title>
-            <ScrollShadow
-              LinearGradientComponent={LinearGradient}
-              style={{ height: height * 0.35 }}
-            >
-              <ScrollView contentContainerClassName="px-6">
-                <Text className="text-foreground/80 text-center">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                  {'\n\n'}
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                  occaecat cupidatat non proident, sunt in culpa qui officia
-                  deserunt mollit anim id est laborum.
-                  {'\n\n'}
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque laudantium, totam rem aperiam, eaque
-                  ipsa quae ab illo inventore veritatis et quasi architecto
-                  beatae vitae dicta sunt explicabo.
-                  {'\n\n'}
-                  Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                  odit aut fugit, sed quia consequuntur magni dolores eos qui
-                  ratione voluptatem sequi nesciunt.
-                  {'\n\n'}
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                  {'\n\n'}
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                  occaecat cupidatat non proident, sunt in culpa qui officia
-                  deserunt mollit anim id est laborum.
-                  {'\n\n'}
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque laudantium, totam rem aperiam, eaque
-                  ipsa quae ab illo inventore veritatis et quasi architecto
-                  beatae vitae dicta sunt explicabo.
-                  {'\n\n'}
-                  Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                  odit aut fugit, sed quia consequuntur magni dolores eos qui
-                  ratione voluptatem sequi nesciunt.
-                </Text>
-              </ScrollView>
-            </ScrollShadow>
-            <Button
-              variant="ghost"
-              className="self-center"
-              onPress={() => setScrollDialogOpen(false)}
-            >
-              <Button.LabelContent
-                classNames={{ text: 'text-foreground font-semibold' }}
+          <Dialog.Overlay className="bg-stone-100" />
+          <DropShadowView shadowSize="xl" asChild>
+            <Dialog.Content className="rounded-2xl px-0">
+              <Dialog.Close className="mr-4" />
+              <Dialog.Title className="text-center mb-5">
+                Upload Audio
+              </Dialog.Title>
+              <ScrollShadow
+                LinearGradientComponent={LinearGradient}
+                style={{ height: height * 0.35 }}
               >
-                Agree to Terms
-              </Button.LabelContent>
-            </Button>
-          </Dialog.Content>
+                <ScrollView contentContainerClassName="px-6">
+                  <Text className="text-foreground/80 text-center">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    {'\n\n'}
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                    {'\n\n'}
+                    Sed ut perspiciatis unde omnis iste natus error sit
+                    voluptatem accusantium doloremque laudantium, totam rem
+                    aperiam, eaque ipsa quae ab illo inventore veritatis et
+                    quasi architecto beatae vitae dicta sunt explicabo.
+                    {'\n\n'}
+                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+                    odit aut fugit, sed quia consequuntur magni dolores eos qui
+                    ratione voluptatem sequi nesciunt.
+                    {'\n\n'}
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    {'\n\n'}
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                    {'\n\n'}
+                    Sed ut perspiciatis unde omnis iste natus error sit
+                    voluptatem accusantium doloremque laudantium, totam rem
+                    aperiam, eaque ipsa quae ab illo inventore veritatis et
+                    quasi architecto beatae vitae dicta sunt explicabo.
+                    {'\n\n'}
+                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+                    odit aut fugit, sed quia consequuntur magni dolores eos qui
+                    ratione voluptatem sequi nesciunt.
+                  </Text>
+                </ScrollView>
+              </ScrollShadow>
+              <Button
+                variant="ghost"
+                className="self-center"
+                onPress={() => setScrollDialogOpen(false)}
+              >
+                <Button.LabelContent
+                  classNames={{ text: 'text-foreground font-semibold' }}
+                >
+                  Agree to Terms
+                </Button.LabelContent>
+              </Button>
+            </Dialog.Content>
+          </DropShadowView>
         </Dialog.Portal>
       </Dialog>
     </ScreenScrollView>

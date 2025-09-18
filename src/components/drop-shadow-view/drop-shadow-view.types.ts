@@ -1,5 +1,6 @@
-import type { ViewProps, ViewStyle } from 'react-native';
+import type { ViewStyle } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
+import type { SlottableViewProps } from '../../helpers/types';
 
 /**
  * Available shadow sizes
@@ -28,7 +29,7 @@ export interface AndroidShadowStyle {
  * Props for the DropShadowView component
  * Extends AnimatedProps<ViewProps> for animated capabilities
  */
-export interface DropShadowViewProps extends AnimatedProps<ViewProps> {
+export interface DropShadowViewProps extends AnimatedProps<SlottableViewProps> {
   /**
    * The children to be wrapped with the drop shadow
    */

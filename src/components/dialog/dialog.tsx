@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import { forwardRef, useEffect } from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -8,7 +7,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
-import { useTheme } from '../../providers/theme';
+import { cn, useTheme } from '../../providers/theme';
 import { CloseIcon } from './close-icon';
 import { DISPLAY_NAME } from './dialog.constants';
 import dialogStyles, { nativeStyles } from './dialog.styles';
@@ -98,7 +97,7 @@ const DialogPortal = ({
 const DialogOverlay = forwardRef<
   DialogPrimitivesTypes.OverlayRef,
   DialogOverlayProps
->(({ className, ...props }, ref) => {
+>(({ children, className, ...props }, ref) => {
   const { progress } = useDialog();
 
   const rContainerStyle = useAnimatedStyle(() => {
@@ -108,6 +107,18 @@ const DialogOverlay = forwardRef<
   });
 
   const tvStyles = dialogStyles.overlay({ className });
+
+  if (children) {
+    return (
+      <DialogPrimitives.Overlay
+        ref={ref}
+        className={cn(tvStyles, 'bg-transparent')}
+        {...props}
+      >
+        {children}
+      </DialogPrimitives.Overlay>
+    );
+  }
 
   return (
     <AnimatedOverlay

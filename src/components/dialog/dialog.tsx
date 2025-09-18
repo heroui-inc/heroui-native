@@ -1,5 +1,11 @@
-import { forwardRef } from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import { forwardRef, useEffect } from 'react';
 import { View } from 'react-native';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import { useTheme } from '../../providers/theme';
@@ -17,11 +23,30 @@ import type {
   DialogTriggerProps,
 } from './dialog.types';
 
+const AnimatedOverlay = Animated.createAnimatedComponent(
+  DialogPrimitives.Overlay
+);
+
+const AnimatedContent = Animated.createAnimatedComponent(
+  DialogPrimitives.Content
+);
+
+const useDialog = DialogPrimitives.useRootContext;
+
 // --------------------------------------------------
 
 const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
-  (props, ref) => {
-    return <DialogPrimitives.Root ref={ref} {...props} />;
+  ({ children, open, onOpenChange, ...props }, ref) => {
+    return (
+      <DialogPrimitives.Root
+        ref={ref}
+        open={open}
+        onOpenChange={onOpenChange}
+        {...props}
+      >
+        {children}
+      </DialogPrimitives.Root>
+    );
   }
 );
 
@@ -42,7 +67,17 @@ const DialogPortal = ({
   style,
   ...props
 }: DialogPortalProps) => {
+  const { open, progress } = useDialog();
+
   const tvStyles = dialogStyles.portal({ className });
+
+  useEffect(() => {
+    if (open) {
+      progress.value = withTiming(1, { duration: 200 });
+    } else {
+      progress.value = withTiming(0, { duration: 200 });
+    }
+  }, [open, progress]);
 
   return (
     <DialogPrimitives.Portal {...props}>
@@ -59,9 +94,24 @@ const DialogOverlay = forwardRef<
   DialogPrimitivesTypes.OverlayRef,
   DialogOverlayProps
 >(({ className, ...props }, ref) => {
+  const { progress } = useDialog();
+
+  const rContainerStyle = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(progress.get(), [0, 1], [0, 1]),
+    };
+  });
+
   const tvStyles = dialogStyles.overlay({ className });
 
-  return <DialogPrimitives.Overlay ref={ref} className={tvStyles} {...props} />;
+  return (
+    <AnimatedOverlay
+      ref={ref}
+      className={tvStyles}
+      style={rContainerStyle}
+      {...props}
+    />
+  );
 });
 
 // --------------------------------------------------
@@ -70,17 +120,25 @@ const DialogContent = forwardRef<
   DialogPrimitivesTypes.ContentRef,
   DialogContentProps
 >(({ className, style, children, ...props }, ref) => {
+  const { progress } = useDialog();
+
   const tvStyles = dialogStyles.content({ className });
 
+  const rContainerStyle = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(progress.get(), [0.25, 1], [0, 1]),
+    };
+  });
+
   return (
-    <DialogPrimitives.Content
+    <AnimatedContent
       ref={ref}
       className={tvStyles}
-      style={[nativeStyles.contentContainer, style]}
+      style={[nativeStyles.contentContainer, style, rContainerStyle]}
       {...props}
     >
       {children}
-    </DialogPrimitives.Content>
+    </AnimatedContent>
   );
 });
 
@@ -192,4 +250,5 @@ const Dialog = Object.assign(DialogRoot, {
   Description: DialogDescription,
 });
 
+export { useDialog };
 export default Dialog;

@@ -1,3 +1,4 @@
+import type { SharedValue } from 'react-native-reanimated';
 import type {
   ForceMountable,
   PressableRef,
@@ -16,6 +17,8 @@ type RootContext = {
   open: boolean;
   /** Callback fired when the open state changes */
   onOpenChange: (value: boolean) => void;
+  /** Animation progress shared value (0-1) */
+  progress: SharedValue<number>;
 };
 
 /**

@@ -6,6 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
 import { useControllableState } from '../../helpers/hooks';
 import { Portal as PortalPrimitive } from '../portal';
 import * as Slot from '../slot';
@@ -44,11 +45,14 @@ const Root = forwardRef<RootRef, RootProps>(
     ref
   ) => {
     const nativeID = useId();
+
     const [open = false, onOpenChange] = useControllableState({
       prop: openProp,
       defaultProp: defaultOpen,
       onChange: onOpenChangeProp,
     });
+
+    const progress = useSharedValue(0);
 
     const Component = asChild ? Slot.View : View;
     return (
@@ -57,6 +61,7 @@ const Root = forwardRef<RootRef, RootProps>(
           open,
           onOpenChange,
           nativeID,
+          progress,
         }}
       >
         <Component ref={ref} {...viewProps} />

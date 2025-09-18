@@ -1,4 +1,4 @@
-export { default as Dialog } from './dialog';
+export { default as Dialog, useDialog } from './dialog';
 export type {
   DialogCloseIconProps,
   DialogCloseProps,

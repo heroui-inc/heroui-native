@@ -36,12 +36,19 @@ const DialogTrigger = forwardRef<
 
 // --------------------------------------------------
 
-const DialogPortal = ({ className, children, ...props }: DialogPortalProps) => {
+const DialogPortal = ({
+  className,
+  children,
+  style,
+  ...props
+}: DialogPortalProps) => {
   const tvStyles = dialogStyles.portal({ className });
 
   return (
     <DialogPrimitives.Portal {...props}>
-      <View className={tvStyles}>{children}</View>
+      <View className={tvStyles} style={style}>
+        {children}
+      </View>
     </DialogPrimitives.Portal>
   );
 };
@@ -82,15 +89,16 @@ const DialogContent = forwardRef<
 const DialogClose = forwardRef<
   DialogPrimitivesTypes.CloseRef,
   DialogCloseProps
->(({ className, iconProps, children, ...props }, ref) => {
+>(({ className, iconProps, hitSlop = 12, children, ...props }, ref) => {
   const { colors } = useTheme();
+
   const tvStyles = dialogStyles.close({ className });
 
   return (
     <DialogPrimitives.Close
       ref={ref}
       className={tvStyles}
-      hitSlop={12}
+      hitSlop={hitSlop}
       {...props}
     >
       {children || (

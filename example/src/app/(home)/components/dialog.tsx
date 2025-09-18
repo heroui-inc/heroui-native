@@ -1,64 +1,147 @@
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, Dialog, ScrollShadow } from 'heroui-native';
+import {
+  Button,
+  Dialog,
+  ScrollShadow,
+  TextField,
+  useTheme,
+} from 'heroui-native';
 import { useState } from 'react';
-import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 export default function DialogScreen() {
-  const [open, setOpen] = useState(false);
+  const [basicDialogOpen, setBasicDialogOpen] = useState(false);
+  const [customCloseDialogOpen, setCustomCloseDialogOpen] = useState(false);
+  const [scrollDialogOpen, setScrollDialogOpen] = useState(false);
+  const [textInputDialogOpen, setTextInputDialogOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   const { height } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+
+  const maxTextInputDialogHeight = (height - insets.top + 12) / 2;
+
+  const { colors } = useTheme();
+
+  const validateEmail = (emailValue: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(emailValue);
+  };
+
+  const handleSubmit = () => {
+    let hasError = false;
+
+    if (!name.trim()) {
+      setNameError('Name is required');
+      hasError = true;
+    } else if (name.trim().length < 2) {
+      setNameError('Name must be at least 2 characters');
+      hasError = true;
+    } else {
+      setNameError('');
+    }
+
+    if (!email.trim()) {
+      setEmailError('Email is required');
+      hasError = true;
+    } else if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email address');
+      hasError = true;
+    } else {
+      setEmailError('');
+    }
+
+    if (!hasError) {
+      simulatePress();
+      setName('');
+      setEmail('');
+      setNameError('');
+      setEmailError('');
+      return true;
+    }
+
+    return false;
+  };
 
   return (
-    <ScreenScrollView contentContainerClassName="gap-8">
+    <ScreenScrollView contentContainerClassName="gap-12">
       <View />
       {/* Basic Dialog */}
-      <Dialog>
+      <Dialog open={basicDialogOpen} onOpenChange={setBasicDialogOpen}>
         <Dialog.Trigger>
-          <Button variant="primary">Open Basic Dialog</Button>
+          <Button variant="tertiary">Basic Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Overlay />
           <Dialog.Content>
             <Dialog.Close />
-            <Dialog.Title>Dialog Title</Dialog.Title>
-            <Dialog.Description>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam
-              laudantium voluptates suscipit magnam nemo nesciunt repellat,
-              explicabo, beatae nobis maxime, obcaecati non dolorum?
-            </Dialog.Description>
-            <View className="flex-row w-full gap-3 mt-4">
-              <Button
-                variant="primary"
-                className="flex-1"
-                onPress={simulatePress}
-              >
-                Confirm
-              </Button>
+            <View className="mb-5 gap-1.5">
+              <Dialog.Title>Dialog Title</Dialog.Title>
+              <Dialog.Description>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam
+                laudantium voluptates suscipit magnam nemo nesciunt repellat,
+                explicabo, beatae nobis maxime, obcaecati non dolorum?
+              </Dialog.Description>
             </View>
+            <Button
+              size="sm"
+              className="self-end"
+              onPress={() => setBasicDialogOpen(false)}
+            >
+              Confirm
+            </Button>
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog>
 
       {/* Dialog with Custom Close Icon */}
-      <Dialog>
+      <Dialog
+        open={customCloseDialogOpen}
+        onOpenChange={setCustomCloseDialogOpen}
+      >
         <Dialog.Trigger>
-          <Button variant="secondary">Dialog with Custom Close Icon</Button>
+          <Button variant="tertiary">Custom Close Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Overlay />
           <Dialog.Content>
-            <Dialog.Close iconProps={{ size: 24, color: '#ff0000' }} />
-            <Dialog.Title>Confirm Action</Dialog.Title>
-            <Dialog.Description>
-              This action cannot be undone. Please confirm to proceed.
-            </Dialog.Description>
-            <View className="flex-row gap-3 mt-4">
-              <Button variant="ghost" onPress={() => {}}>
+            <Dialog.Close className="flex-row items-center gap-1.5">
+              <AppText className="mb-0.5 text-sm">Close</AppText>
+              <AntDesign name="close" size={11} color={colors.foreground} />
+            </Dialog.Close>
+            <View className="mb-5 gap-1.5">
+              <Dialog.Title>Confirm Action</Dialog.Title>
+              <Dialog.Description>
+                This action cannot be undone. Please confirm to proceed.
+              </Dialog.Description>
+            </View>
+            <View className="flex-row justify-end gap-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onPress={() => setCustomCloseDialogOpen(false)}
+              >
                 Cancel
               </Button>
-              <Button variant="danger" onPress={() => {}}>
+              <Button
+                variant="danger"
+                size="sm"
+                onPress={() => setCustomCloseDialogOpen(false)}
+              >
                 Delete
               </Button>
             </View>
@@ -66,63 +149,108 @@ export default function DialogScreen() {
         </Dialog.Portal>
       </Dialog>
 
-      {/* Controlled Dialog */}
-      <Dialog open={open} onOpenChange={setOpen}>
+      {/* Dialog with Custom Content */}
+      <Dialog
+        open={textInputDialogOpen}
+        onOpenChange={(isOpen) => {
+          setTextInputDialogOpen(isOpen);
+          // Reset form and errors when dialog closes
+          if (!isOpen) {
+            setName('');
+            setEmail('');
+            setNameError('');
+            setEmailError('');
+          }
+        }}
+      >
         <Dialog.Trigger>
-          <Button variant="tertiary">Open Controlled Dialog</Button>
+          <Button variant="tertiary">Text Input Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Overlay />
-          <Dialog.Content>
-            <Dialog.Close />
-            <Dialog.Title>Controlled Dialog</Dialog.Title>
-            <Dialog.Description>
-              This dialog's state is controlled by the parent component.
-            </Dialog.Description>
-            <Text className="text-foreground mt-4">
-              Open state: {open ? 'Open' : 'Closed'}
-            </Text>
-            <Button
-              variant="primary"
-              className="mt-4"
-              onPress={() => setOpen(false)}
-            >
-              Close Dialog
-            </Button>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog>
-
-      {/* Dialog with Custom Content */}
-      <View>
-        <Dialog>
-          <Dialog.Trigger>
-            <Button variant="ghost">Open Custom Dialog</Button>
-          </Dialog.Trigger>
-          <Dialog.Portal>
-            <Dialog.Overlay />
-            <Dialog.Content className="max-w-sm">
-              <View className="items-center py-6">
-                <View className="h-20 w-20 rounded-full bg-primary/10 items-center justify-center mb-4">
-                  <Text className="text-4xl">🎉</Text>
-                </View>
-                <Dialog.Title>Success!</Dialog.Title>
-                <Dialog.Description className="text-center mt-2">
-                  Your action has been completed successfully.
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
+            <Dialog.Content style={{ maxHeight: maxTextInputDialogHeight }}>
+              <Dialog.Close />
+              <View className="mb-6 gap-1.5">
+                <Dialog.Title>Update Profile</Dialog.Title>
+                <Dialog.Description>
+                  Update your profile information. All fields are required.
                 </Dialog.Description>
-                <Button variant="primary" className="mt-6 w-full">
-                  Got it
+              </View>
+
+              <ScrollView contentContainerClassName="gap-5">
+                <TextField isRequired isInvalid={!!nameError}>
+                  <TextField.Label isInvalid={false}>Full Name</TextField.Label>
+                  <TextField.Input
+                    placeholder="Enter your name"
+                    value={name}
+                    onChangeText={(text) => {
+                      setName(text);
+                      if (nameError) setNameError('');
+                    }}
+                    autoCapitalize="words"
+                    autoCorrect
+                    autoFocus
+                    isInvalid={false}
+                  />
+                  <TextField.ErrorMessage>{nameError}</TextField.ErrorMessage>
+                </TextField>
+
+                <TextField isRequired isInvalid={!!emailError}>
+                  <TextField.Label isInvalid={false}>
+                    Email Address
+                  </TextField.Label>
+                  <TextField.Input
+                    placeholder="email@example.com"
+                    value={email}
+                    onChangeText={(text) => {
+                      setEmail(text);
+                      if (emailError) setEmailError('');
+                    }}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    isInvalid={false}
+                  />
+                  <TextField.ErrorMessage>{emailError}</TextField.ErrorMessage>
+                </TextField>
+              </ScrollView>
+
+              <View className="flex-row justify-end gap-3">
+                <Dialog.Close asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onPress={() => {
+                      setName('');
+                      setEmail('');
+                      setNameError('');
+                      setEmailError('');
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </Dialog.Close>
+                <Button
+                  size="sm"
+                  onPress={() => {
+                    const isValid = handleSubmit();
+                    if (isValid) {
+                      setTextInputDialogOpen(false);
+                    }
+                  }}
+                >
+                  Update Profile
                 </Button>
               </View>
             </Dialog.Content>
-          </Dialog.Portal>
-        </Dialog>
-      </View>
+          </KeyboardAvoidingView>
+        </Dialog.Portal>
+      </Dialog>
 
       {/* Dialog with Long Content */}
-      <Dialog>
+      <Dialog open={scrollDialogOpen} onOpenChange={setScrollDialogOpen}>
         <Dialog.Trigger>
-          <Button variant="primary">Open Scroll Content Dialog</Button>
+          <Button variant="tertiary">Scroll Content Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Overlay />
@@ -177,7 +305,11 @@ export default function DialogScreen() {
                 </Text>
               </ScrollView>
             </ScrollShadow>
-            <Button variant="ghost" className="self-center">
+            <Button
+              variant="ghost"
+              className="self-center"
+              onPress={() => setScrollDialogOpen(false)}
+            >
               <Button.LabelContent
                 classNames={{ text: 'text-foreground font-semibold' }}
               >

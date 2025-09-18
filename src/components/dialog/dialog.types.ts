@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 
 /**
@@ -29,6 +30,10 @@ export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
    * Additional CSS class for the portal container
    */
   className?: string;
+  /**
+   * Additional style for the portal container
+   */
+  style?: StyleProp<ViewStyle>;
   /**
    * The portal content
    */

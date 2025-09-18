@@ -1,4 +1,13 @@
-import { createContext, forwardRef, useContext, useEffect, useId } from 'react';
+import {
+  createContext,
+  forwardRef,
+  useCallback,
+  useContext,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from 'react';
 import {
   BackHandler,
   type GestureResponderEvent,
@@ -30,7 +39,7 @@ import type {
 } from './dialog.types';
 
 const DialogContext = createContext<
-  (RootContext & { nativeID: string }) | null
+  (RootContext & { nativeID: string; visibleState?: boolean }) | null
 >(null);
 
 const Root = forwardRef<RootRef, RootProps>(
@@ -40,17 +49,69 @@ const Root = forwardRef<RootRef, RootProps>(
       open: openProp,
       defaultOpen,
       onOpenChange: onOpenChangeProp,
+      closeDelay = 0,
       ...viewProps
     },
     ref
   ) => {
     const nativeID = useId();
+    const [visibleState, setVisibleState] = useState<boolean>(
+      () => openProp || defaultOpen || false
+    );
+    const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
-    const [open = false, onOpenChange] = useControllableState({
+    const [open = false, onOpenChangeBase] = useControllableState({
       prop: openProp,
       defaultProp: defaultOpen,
       onChange: onOpenChangeProp,
     });
+
+    // Handle delayed close for animations
+    const onOpenChange = useCallback(
+      (value: boolean) => {
+        if (value) {
+          // Opening: set visible immediately
+          setVisibleState(true);
+          onOpenChangeBase(value);
+        } else {
+          // Closing: delay the actual close
+          onOpenChangeBase(value);
+          if (closeDelay > 0) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = setTimeout(() => {
+              setVisibleState(false);
+            }, closeDelay);
+          } else {
+            setVisibleState(false);
+          }
+        }
+      },
+      [onOpenChangeBase, closeDelay]
+    );
+
+    // Sync visible state when open prop changes
+    useEffect(() => {
+      if (open) {
+        setVisibleState(true);
+      } else if (closeDelay > 0) {
+        const timeout = setTimeout(() => {
+          setVisibleState(false);
+        }, closeDelay);
+        return () => clearTimeout(timeout);
+      } else {
+        setVisibleState(false);
+      }
+      return undefined;
+    }, [open, closeDelay]);
+
+    // Cleanup timeout on unmount
+    useEffect(() => {
+      return () => {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+      };
+    }, []);
 
     const progress = useSharedValue(0);
 
@@ -62,6 +123,8 @@ const Root = forwardRef<RootRef, RootProps>(
           onOpenChange,
           nativeID,
           progress,
+          closeDelay,
+          visibleState,
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -120,7 +183,7 @@ function Portal({ forceMount, hostName, children }: PortalProps) {
   const value = useRootContext();
 
   if (!forceMount) {
-    if (!value.open) {
+    if (!value.visibleState) {
       return null;
     }
   }
@@ -145,7 +208,7 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
     },
     ref
   ) => {
-    const { open, onOpenChange } = useRootContext();
+    const { open, onOpenChange, visibleState } = useRootContext();
 
     function onPress(ev: GestureResponderEvent) {
       if (closeOnPress) {
@@ -155,7 +218,7 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
     }
 
     if (!forceMount) {
-      if (!open) {
+      if (!visibleState) {
         return null;
       }
     }
@@ -171,7 +234,7 @@ Overlay.displayName = 'HeroUINative.Primitive.Dialog.Overlay';
 
 const Content = forwardRef<ContentRef, ContentProps>(
   ({ asChild, forceMount, ...props }, ref) => {
-    const { open, nativeID, onOpenChange } = useRootContext();
+    const { visibleState, nativeID, onOpenChange } = useRootContext();
 
     useEffect(() => {
       const backHandler = BackHandler.addEventListener(
@@ -189,7 +252,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
     }, []);
 
     if (!forceMount) {
-      if (!open) {
+      if (!visibleState) {
         return null;
       }
     }

@@ -10,6 +10,11 @@ export interface DialogRootProps extends DialogPrimitivesTypes.RootProps {
    * The content of the dialog
    */
   children?: ReactNode;
+  /**
+   * Animation duration in milliseconds
+   * @default 200
+   */
+  animationDuration?: number;
 }
 
 /**

@@ -120,7 +120,9 @@ export default function DialogScreen() {
           <Dialog.Overlay />
           <Dialog.Content>
             <Dialog.Close className="flex-row items-center gap-1.5">
-              <AppText className="mb-0.5 text-sm">Close</AppText>
+              <AppText className="mb-0.5 text-sm text-foreground">
+                Close
+              </AppText>
               <AntDesign name="close" size={11} color={colors.foreground} />
             </Dialog.Close>
             <View className="mb-5 gap-1.5">

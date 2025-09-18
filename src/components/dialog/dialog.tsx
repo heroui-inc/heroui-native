@@ -36,12 +36,16 @@ const useDialog = DialogPrimitives.useRootContext;
 // --------------------------------------------------
 
 const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
-  ({ children, open, onOpenChange, ...props }, ref) => {
+  (
+    { children, open, onOpenChange, animationDuration = 250, ...props },
+    ref
+  ) => {
     return (
       <DialogPrimitives.Root
         ref={ref}
         open={open}
         onOpenChange={onOpenChange}
+        closeDelay={animationDuration}
         {...props}
       >
         {children}
@@ -67,17 +71,18 @@ const DialogPortal = ({
   style,
   ...props
 }: DialogPortalProps) => {
-  const { open, progress } = useDialog();
+  const { open, progress, closeDelay } = useDialog();
 
   const tvStyles = dialogStyles.portal({ className });
 
   useEffect(() => {
+    const duration = closeDelay || 200;
     if (open) {
-      progress.value = withTiming(1, { duration: 200 });
+      progress.value = withTiming(1, { duration });
     } else {
-      progress.value = withTiming(0, { duration: 200 });
+      progress.value = withTiming(0, { duration });
     }
-  }, [open, progress]);
+  }, [open, progress, closeDelay]);
 
   return (
     <DialogPrimitives.Portal {...props}>

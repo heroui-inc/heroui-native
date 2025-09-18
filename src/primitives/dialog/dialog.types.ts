@@ -19,6 +19,8 @@ type RootContext = {
   onOpenChange: (value: boolean) => void;
   /** Animation progress shared value (0-1) */
   progress: SharedValue<number>;
+  /** Delay in milliseconds before the dialog closes */
+  closeDelay?: number;
 };
 
 /**
@@ -31,6 +33,8 @@ type RootProps = SlottableViewProps & {
   defaultOpen?: boolean;
   /** Event handler called when the open state changes */
   onOpenChange?: (value: boolean) => void;
+  /** Delay in milliseconds before the dialog closes (for exit animations) */
+  closeDelay?: number;
 };
 
 /**

@@ -1,5 +1,9 @@
 import type { ReactNode } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
+import type {
+  WithSpringConfig,
+  WithTimingConfig,
+} from 'react-native-reanimated';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 
 /**
@@ -28,6 +32,36 @@ export interface DialogTriggerProps extends DialogPrimitivesTypes.TriggerProps {
 }
 
 /**
+ * Spring animation configuration
+ */
+interface SpringAnimationConfig {
+  animationType: 'spring';
+  animationConfig?: WithSpringConfig;
+}
+
+/**
+ * Timing animation configuration
+ */
+interface TimingAnimationConfig {
+  animationType: 'timing';
+  animationConfig?: WithTimingConfig;
+}
+
+/**
+ * Progress animation configuration
+ */
+export interface ProgressAnimationConfigs {
+  /**
+   * Animation configuration for opening
+   */
+  onOpen?: SpringAnimationConfig | TimingAnimationConfig;
+  /**
+   * Animation configuration for closing
+   */
+  onClose?: SpringAnimationConfig | TimingAnimationConfig;
+}
+
+/**
  * Dialog Portal component props
  */
 export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
@@ -43,6 +77,10 @@ export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
    * The portal content
    */
   children: ReactNode;
+  /**
+   * Animation configurations for open/close progress animations
+   */
+  progressAnimationConfigs?: ProgressAnimationConfigs;
 }
 
 /**

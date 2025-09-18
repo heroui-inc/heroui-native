@@ -9,4 +9,5 @@ export type {
   DialogRootProps,
   DialogTitleProps,
   DialogTriggerProps,
+  ProgressAnimationConfigs,
 } from './dialog.types';

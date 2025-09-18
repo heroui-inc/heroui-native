@@ -1,8 +1,8 @@
 import { forwardRef, useEffect } from 'react';
-import { View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
+  withSpring,
   withTiming,
 } from 'react-native-reanimated';
 import * as DialogPrimitives from '../../primitives/dialog';
@@ -36,7 +36,7 @@ const useDialog = DialogPrimitives.useRootContext;
 
 const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
   (
-    { children, open, onOpenChange, animationDuration = 250, ...props },
+    { children, open, onOpenChange, animationDuration = 300, ...props },
     ref
   ) => {
     return (
@@ -68,26 +68,40 @@ const DialogPortal = ({
   className,
   children,
   style,
+  progressAnimationConfigs,
   ...props
 }: DialogPortalProps) => {
-  const { open, progress, closeDelay } = useDialog();
+  const { open, progress } = useDialog();
 
   const tvStyles = dialogStyles.portal({ className });
 
   useEffect(() => {
-    const duration = closeDelay || 200;
     if (open) {
-      progress.value = withTiming(1, { duration });
+      const openConfig = progressAnimationConfigs?.onOpen;
+      if (openConfig?.animationType === 'spring') {
+        progress.set(withSpring(1, openConfig.animationConfig));
+      } else if (openConfig?.animationType === 'timing') {
+        progress.set(withTiming(1, openConfig.animationConfig));
+      } else {
+        progress.set(withTiming(1, { duration: 200 }));
+      }
     } else {
-      progress.value = withTiming(0, { duration });
+      const closeConfig = progressAnimationConfigs?.onClose;
+      if (closeConfig?.animationType === 'spring') {
+        progress.set(withSpring(0, closeConfig.animationConfig));
+      } else if (closeConfig?.animationType === 'timing') {
+        progress.set(withTiming(0, closeConfig.animationConfig));
+      } else {
+        progress.set(withTiming(0, { duration: 200 }));
+      }
     }
-  }, [open, progress, closeDelay]);
+  }, [open, progress, progressAnimationConfigs]);
 
   return (
     <DialogPrimitives.Portal {...props}>
-      <View className={tvStyles} style={style}>
+      <Animated.View className={tvStyles} style={style}>
         {children}
-      </View>
+      </Animated.View>
     </DialogPrimitives.Portal>
   );
 };
@@ -142,7 +156,7 @@ const DialogContent = forwardRef<
 
   const rContainerStyle = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(progress.get(), [0.25, 1], [0, 1]),
+      opacity: interpolate(progress.get(), [0, 1], [0, 1]),
     };
   });
 
@@ -150,7 +164,7 @@ const DialogContent = forwardRef<
     <AnimatedContent
       ref={ref}
       className={tvStyles}
-      style={[nativeStyles.contentContainer, style, rContainerStyle]}
+      style={[nativeStyles.contentContainer, rContainerStyle, style]}
       {...props}
     >
       {children}

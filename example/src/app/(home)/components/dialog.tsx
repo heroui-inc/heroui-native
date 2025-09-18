@@ -9,16 +9,24 @@ import {
   useDialog,
   useTheme,
 } from 'heroui-native';
-import { useState } from 'react';
+import { useState, type FC, type PropsWithChildren } from 'react';
 import {
-  KeyboardAvoidingView,
+  Keyboard,
   ScrollView,
   StyleSheet,
   Text,
   useWindowDimensions,
   View,
 } from 'react-native';
-import { interpolate, useDerivedValue } from 'react-native-reanimated';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import {
+  Extrapolation,
+  interpolate,
+  useAnimatedReaction,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AnimatedBlurView } from '../../../components/animated-blur-view';
 import { AppText } from '../../../components/app-text';
@@ -42,6 +50,62 @@ const DialogBlurBackdrop = () => {
   );
 };
 
+const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
+  const { height } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+
+  const maxTextInputDialogHeight = (height - insets.top + 12) / 2;
+
+  const { progress } = useDialog();
+
+  const isOpen = useSharedValue(false);
+
+  useAnimatedReaction(
+    () => progress.get(),
+    (value) => {
+      if (value === 1) {
+        isOpen.value = true;
+      } else if (value === 0) {
+        isOpen.value = false;
+      }
+    }
+  );
+
+  const rContainerStyle = useAnimatedStyle(() => {
+    if (isOpen.get()) {
+      return {
+        opacity: interpolate(
+          progress.get(),
+          [0.75, 1],
+          [0, 1],
+          Extrapolation.CLAMP
+        ),
+        transform: [
+          {
+            scaleX: 1,
+          },
+        ],
+      };
+    }
+    return {
+      transform: [
+        {
+          scaleX: interpolate(progress.get(), [0, 1], [0.95, 1]),
+        },
+      ],
+    };
+  });
+
+  return (
+    <Dialog.Content
+      className="rounded-xl"
+      style={[rContainerStyle, { maxHeight: maxTextInputDialogHeight }]}
+    >
+      {children}
+    </Dialog.Content>
+  );
+};
+
 export default function DialogScreen() {
   const [basicDialogOpen, setBasicDialogOpen] = useState(false);
   const [customCloseDialogOpen, setCustomCloseDialogOpen] = useState(false);
@@ -53,9 +117,6 @@ export default function DialogScreen() {
   const [emailError, setEmailError] = useState('');
 
   const { height } = useWindowDimensions();
-  const insets = useSafeAreaInsets();
-
-  const maxTextInputDialogHeight = (height - insets.top + 12) / 2;
 
   const { colors } = useTheme();
 
@@ -192,11 +253,26 @@ export default function DialogScreen() {
         <Dialog.Trigger>
           <Button variant="tertiary">Text Input Dialog</Button>
         </Dialog.Trigger>
-        <Dialog.Portal>
-          <Dialog.Overlay />
+        <Dialog.Portal
+          progressAnimationConfigs={{
+            onOpen: {
+              animationType: 'timing',
+              animationConfig: {
+                duration: 400,
+              },
+            },
+            onClose: {
+              animationType: 'timing',
+              animationConfig: {
+                duration: 300,
+              },
+            },
+          }}
+        >
+          <DialogBlurBackdrop />
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
-            <Dialog.Content style={{ maxHeight: maxTextInputDialogHeight }}>
-              <Dialog.Close />
+            <CustomAnimatedContent>
+              <Dialog.Close onPress={Keyboard.dismiss} />
               <View className="mb-6 gap-1.5">
                 <Dialog.Title>Update Profile</Dialog.Title>
                 <Dialog.Description>
@@ -268,7 +344,7 @@ export default function DialogScreen() {
                   Update Profile
                 </Button>
               </View>
-            </Dialog.Content>
+            </CustomAnimatedContent>
           </KeyboardAvoidingView>
         </Dialog.Portal>
       </Dialog>

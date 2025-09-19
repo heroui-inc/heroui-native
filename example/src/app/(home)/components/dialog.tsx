@@ -11,7 +11,6 @@ import {
 } from 'heroui-native';
 import { useState, type FC, type PropsWithChildren } from 'react';
 import {
-  Keyboard,
   ScrollView,
   StyleSheet,
   Text,
@@ -20,12 +19,9 @@ import {
 } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import {
-  Extrapolation,
   interpolate,
-  useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
-  useSharedValue,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AnimatedBlurView } from '../../../components/animated-blur-view';
@@ -58,35 +54,7 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
 
   const { progress } = useDialog();
 
-  const isOpen = useSharedValue(false);
-
-  useAnimatedReaction(
-    () => progress.get(),
-    (value) => {
-      if (value === 1) {
-        isOpen.value = true;
-      } else if (value === 0) {
-        isOpen.value = false;
-      }
-    }
-  );
-
   const rContainerStyle = useAnimatedStyle(() => {
-    if (isOpen.get()) {
-      return {
-        opacity: interpolate(
-          progress.get(),
-          [0.75, 1],
-          [0, 1],
-          Extrapolation.CLAMP
-        ),
-        transform: [
-          {
-            scaleX: 1,
-          },
-        ],
-      };
-    }
     return {
       transform: [
         {
@@ -253,26 +221,13 @@ export default function DialogScreen() {
         <Dialog.Trigger>
           <Button variant="tertiary">Text Input Dialog</Button>
         </Dialog.Trigger>
-        <Dialog.Portal
-          progressAnimationConfigs={{
-            onOpen: {
-              animationType: 'timing',
-              animationConfig: {
-                duration: 400,
-              },
-            },
-            onClose: {
-              animationType: 'timing',
-              animationConfig: {
-                duration: 300,
-              },
-            },
-          }}
-        >
-          <DialogBlurBackdrop />
+        <Dialog.Portal>
+          <Dialog.Overlay>
+            <DialogBlurBackdrop />
+          </Dialog.Overlay>
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
             <CustomAnimatedContent>
-              <Dialog.Close onPress={Keyboard.dismiss} />
+              <Dialog.Close />
               <View className="mb-6 gap-1.5">
                 <Dialog.Title>Update Profile</Dialog.Title>
                 <Dialog.Description>

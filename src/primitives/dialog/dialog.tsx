@@ -11,6 +11,7 @@ import {
 import {
   BackHandler,
   type GestureResponderEvent,
+  Keyboard,
   Pressable,
   Text,
   View,
@@ -26,6 +27,7 @@ import type {
   ContentRef,
   DescriptionProps,
   DescriptionRef,
+  DialogState,
   OverlayProps,
   OverlayRef,
   PortalProps,
@@ -39,7 +41,7 @@ import type {
 } from './dialog.types';
 
 const DialogContext = createContext<
-  (RootContext & { nativeID: string; visibleState?: boolean }) | null
+  (RootContext & { nativeID: string }) | null
 >(null);
 
 const Root = forwardRef<RootRef, RootProps>(
@@ -50,13 +52,14 @@ const Root = forwardRef<RootRef, RootProps>(
       defaultOpen,
       onOpenChange: onOpenChangeProp,
       closeDelay = 0,
+      dismissKeyboardOnClose = true,
       ...viewProps
     },
     ref
   ) => {
     const nativeID = useId();
-    const [visibleState, setVisibleState] = useState<boolean>(
-      () => openProp || defaultOpen || false
+    const [dialogState, setDialogState] = useState<DialogState>(() =>
+      openProp || defaultOpen ? 'open' : 'idle'
     );
     const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
@@ -66,45 +69,43 @@ const Root = forwardRef<RootRef, RootProps>(
       onChange: onOpenChangeProp,
     });
 
-    // Handle delayed close for animations
+    const progressValue: Record<DialogState, number> = {
+      idle: 0,
+      open: 1,
+      close: 2,
+    };
+
+    const progress = useSharedValue(progressValue[dialogState]);
+
     const onOpenChange = useCallback(
       (value: boolean) => {
         if (value) {
-          // Opening: set visible immediately
-          setVisibleState(true);
           onOpenChangeBase(value);
+          setDialogState('open');
         } else {
-          // Closing: delay the actual close
-          onOpenChangeBase(value);
+          setDialogState('close');
+          if (dismissKeyboardOnClose) {
+            Keyboard.dismiss();
+          }
+          // Wait until the close animation is finished
           if (closeDelay > 0) {
             clearTimeout(timeoutRef.current);
             timeoutRef.current = setTimeout(() => {
-              setVisibleState(false);
+              onOpenChangeBase(value);
+              setDialogState('idle');
+              progress.set(0);
             }, closeDelay);
+            // or if closeDelay is 0, close immediately
           } else {
-            setVisibleState(false);
+            onOpenChangeBase(value);
+            setDialogState('idle');
+            progress.set(0);
           }
         }
       },
-      [onOpenChangeBase, closeDelay]
+      [onOpenChangeBase, closeDelay, progress, dismissKeyboardOnClose]
     );
 
-    // Sync visible state when open prop changes
-    useEffect(() => {
-      if (open) {
-        setVisibleState(true);
-      } else if (closeDelay > 0) {
-        const timeout = setTimeout(() => {
-          setVisibleState(false);
-        }, closeDelay);
-        return () => clearTimeout(timeout);
-      } else {
-        setVisibleState(false);
-      }
-      return undefined;
-    }, [open, closeDelay]);
-
-    // Cleanup timeout on unmount
     useEffect(() => {
       return () => {
         if (timeoutRef.current) {
@@ -112,8 +113,6 @@ const Root = forwardRef<RootRef, RootProps>(
         }
       };
     }, []);
-
-    const progress = useSharedValue(0);
 
     const Component = asChild ? Slot.View : View;
     return (
@@ -124,7 +123,7 @@ const Root = forwardRef<RootRef, RootProps>(
           nativeID,
           progress,
           closeDelay,
-          visibleState,
+          dialogState,
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -183,7 +182,7 @@ function Portal({ forceMount, hostName, children }: PortalProps) {
   const value = useRootContext();
 
   if (!forceMount) {
-    if (!value.visibleState) {
+    if (value.dialogState === 'idle') {
       return null;
     }
   }
@@ -208,7 +207,7 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
     },
     ref
   ) => {
-    const { open, onOpenChange, visibleState } = useRootContext();
+    const { open, onOpenChange, dialogState } = useRootContext();
 
     function onPress(ev: GestureResponderEvent) {
       if (closeOnPress) {
@@ -218,7 +217,7 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
     }
 
     if (!forceMount) {
-      if (!visibleState) {
+      if (dialogState === 'idle') {
         return null;
       }
     }
@@ -234,7 +233,7 @@ Overlay.displayName = 'HeroUINative.Primitive.Dialog.Overlay';
 
 const Content = forwardRef<ContentRef, ContentProps>(
   ({ asChild, forceMount, ...props }, ref) => {
-    const { visibleState, nativeID, onOpenChange } = useRootContext();
+    const { dialogState, nativeID, onOpenChange } = useRootContext();
 
     useEffect(() => {
       const backHandler = BackHandler.addEventListener(
@@ -252,7 +251,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
     }, []);
 
     if (!forceMount) {
-      if (!visibleState) {
+      if (dialogState === 'idle') {
         return null;
       }
     }

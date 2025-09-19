@@ -19,9 +19,11 @@ import {
 } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import {
+  Extrapolation,
   interpolate,
   useAnimatedStyle,
   useDerivedValue,
+  withSpring,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AnimatedBlurView } from '../../../components/animated-blur-view';
@@ -34,7 +36,7 @@ const DialogBlurBackdrop = () => {
   const { progress } = useDialog();
 
   const blurIntensity = useDerivedValue(() => {
-    return interpolate(progress.get(), [0, 1], [0, isDark ? 75 : 50]);
+    return interpolate(progress.get(), [0, 1, 2], [0, isDark ? 75 : 50, 0]);
   });
 
   return (
@@ -52,13 +54,21 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
 
   const maxTextInputDialogHeight = (height - insets.top + 12) / 2;
 
-  const { progress } = useDialog();
+  const { progress, dialogState } = useDialog();
 
   const rContainerStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
-          scaleX: interpolate(progress.get(), [0, 1], [0.95, 1]),
+          translateY: withSpring(dialogState === 'close' ? 100 : 0),
+        },
+        {
+          scaleX: interpolate(
+            progress.get(),
+            [0, 1, 2],
+            [0.95, 1, 0.9],
+            Extrapolation.CLAMP
+          ),
         },
       ],
     };

@@ -10,6 +10,11 @@ import type {
 } from '../../helpers/types';
 
 /**
+ * Dialog internal state
+ */
+type DialogState = 'idle' | 'open' | 'close';
+
+/**
  * Context for the dialog root component
  */
 type RootContext = {
@@ -17,10 +22,14 @@ type RootContext = {
   open: boolean;
   /** Callback fired when the open state changes */
   onOpenChange: (value: boolean) => void;
-  /** Animation progress shared value (0-1) */
+  /** Extended internal state for additional control (useful for coordinating animations) */
+  dialogState: DialogState;
+  /** Animation progress shared value (0=idle, 1=open, 2=close) */
   progress: SharedValue<number>;
   /** Delay in milliseconds before the dialog closes */
   closeDelay?: number;
+  /** Whether to dismiss the keyboard when the dialog closes */
+  dismissKeyboardOnClose?: boolean;
 };
 
 /**
@@ -35,6 +44,8 @@ type RootProps = SlottableViewProps & {
   onOpenChange?: (value: boolean) => void;
   /** Delay in milliseconds before the dialog closes (for exit animations) */
   closeDelay?: number;
+  /** Whether to dismiss the keyboard when the dialog closes */
+  dismissKeyboardOnClose?: boolean;
 };
 
 /**
@@ -123,6 +134,7 @@ export type {
   ContentRef,
   DescriptionProps,
   DescriptionRef,
+  DialogState,
   OverlayProps,
   OverlayRef,
   PortalProps,

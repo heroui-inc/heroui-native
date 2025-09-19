@@ -35,16 +35,13 @@ const useDialog = DialogPrimitives.useRootContext;
 // --------------------------------------------------
 
 const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
-  (
-    { children, open, onOpenChange, animationDuration = 300, ...props },
-    ref
-  ) => {
+  ({ children, open, onOpenChange, closeDelay = 300, ...props }, ref) => {
     return (
       <DialogPrimitives.Root
         ref={ref}
         open={open}
         onOpenChange={onOpenChange}
-        closeDelay={animationDuration}
+        closeDelay={closeDelay}
         {...props}
       >
         {children}
@@ -71,12 +68,13 @@ const DialogPortal = ({
   progressAnimationConfigs,
   ...props
 }: DialogPortalProps) => {
-  const { open, progress } = useDialog();
+  const { dialogState, progress } = useDialog();
 
   const tvStyles = dialogStyles.portal({ className });
 
   useEffect(() => {
-    if (open) {
+    if (dialogState === 'open') {
+      // Transition to open state (progress = 1)
       const openConfig = progressAnimationConfigs?.onOpen;
       if (openConfig?.animationType === 'spring') {
         progress.set(withSpring(1, openConfig.animationConfig));
@@ -85,17 +83,18 @@ const DialogPortal = ({
       } else {
         progress.set(withTiming(1, { duration: 200 }));
       }
-    } else {
+    } else if (dialogState === 'close') {
+      // Transition to close state (progress = 2)
       const closeConfig = progressAnimationConfigs?.onClose;
       if (closeConfig?.animationType === 'spring') {
-        progress.set(withSpring(0, closeConfig.animationConfig));
+        progress.set(withSpring(2, closeConfig.animationConfig));
       } else if (closeConfig?.animationType === 'timing') {
-        progress.set(withTiming(0, closeConfig.animationConfig));
+        progress.set(withTiming(2, closeConfig.animationConfig));
       } else {
-        progress.set(withTiming(0, { duration: 200 }));
+        progress.set(withTiming(2, { duration: 200 }));
       }
     }
-  }, [open, progress, progressAnimationConfigs]);
+  }, [dialogState, progress, progressAnimationConfigs]);
 
   return (
     <DialogPrimitives.Portal {...props}>
@@ -115,8 +114,9 @@ const DialogOverlay = forwardRef<
   const { progress } = useDialog();
 
   const rContainerStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
     return {
-      opacity: interpolate(progress.get(), [0, 1], [0, 1]),
+      opacity,
     };
   });
 
@@ -155,8 +155,9 @@ const DialogContent = forwardRef<
   const tvStyles = dialogStyles.content({ className });
 
   const rContainerStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
     return {
-      opacity: interpolate(progress.get(), [0, 1], [0, 1]),
+      opacity,
     };
   });
 

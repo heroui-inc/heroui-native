@@ -2,6 +2,7 @@ import { forwardRef, useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
+  Extrapolation,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
@@ -175,6 +176,8 @@ const DialogContent = forwardRef<
       const maxDragDistance = screenHeight - contentY.get();
       if (event.translationY > 0) {
         progress.set(1 + event.translationY / maxDragDistance);
+      } else {
+        progress.set(1 - Math.abs(event.translationY) / maxDragDistance);
       }
     })
     .onEnd(() => {
@@ -201,14 +204,22 @@ const DialogContent = forwardRef<
     if (isDragging.get()) {
       const maxDragDistance = screenHeight - contentY.get();
       return {
-        opacity: 1,
+        opacity: interpolate(
+          progress.get(),
+          [1.25, 2],
+          [1, 0],
+          Extrapolation.CLAMP
+        ),
         transform: [
           {
             translateY: interpolate(
               progress.get(),
-              [1, 2],
-              [0, maxDragDistance]
+              [0, 1, 2],
+              [-maxDragDistance * 0.1, 0, maxDragDistance]
             ),
+          },
+          {
+            scale: interpolate(progress.get(), [0, 1, 2], [1, 1, 0.9]),
           },
         ],
       };

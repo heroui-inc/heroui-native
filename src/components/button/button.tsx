@@ -1,5 +1,5 @@
 import { forwardRef, useCallback, useMemo } from 'react';
-import { Pressable, View, type GestureResponderEvent } from 'react-native';
+import { View, type GestureResponderEvent } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -7,6 +7,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
+import { PressableRipple } from '../../helpers/components/pressable-ripple';
 import type { PressableRef } from '../../helpers/types';
 import {
   childrenToString,
@@ -14,7 +15,7 @@ import {
   getElementByDisplayName,
 } from '../../helpers/utils';
 import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
-import { useTheme } from '../../providers/theme';
+import { colorKit, useTheme } from '../../providers/theme';
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
@@ -34,7 +35,7 @@ import type {
   ButtonStartContentProps,
 } from './button.types';
 
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+const AnimatedPressable = Animated.createAnimatedComponent(PressableRipple);
 
 const [ButtonProvider, useButtonContext] = createContext<ButtonContextValue>({
   name: 'ButtonContext',
@@ -115,12 +116,18 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     () => animationConfig?.scale?.value ?? 0.995,
     [animationConfig]
   );
+
   const scaleConfig = useMemo(
     () =>
       animationConfig?.scale?.config ?? {
         duration: ANIMATION_DURATION,
         easing: ANIMATION_EASING,
       },
+    [animationConfig]
+  );
+
+  const highlightConfig = useMemo(
+    () => animationConfig?.highlight?.config ?? HIGHLIGHT_CONFIG,
     [animationConfig]
   );
 
@@ -152,29 +159,16 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     return colors[colorKey];
   }, [animationConfig?.highlight?.color, variant, colors]);
 
-  const animatedBackgroundStyle = useAnimatedStyle(() => {
-    return {
-      opacity: highlightOpacityValue.get() * finalHighlightOpacity,
-      backgroundColor: highlightColorValue,
-    };
-  });
+  const highlightColor = useMemo(() => {
+    return colorKit.setAlpha(highlightColorValue, finalHighlightOpacity).hex();
+  }, [highlightColorValue, finalHighlightOpacity]);
 
   const handlePressIn = useCallback(
     (e: GestureResponderEvent) => {
       if (!disableAnimation.scale) {
         scale.set(withTiming(1, scaleConfig));
       }
-      if (!disableAnimation.highlight) {
-        highlightOpacityValue.set(
-          withTiming(
-            1,
-            animationConfig?.highlight?.config || {
-              duration: HIGHLIGHT_CONFIG.duration,
-              easing: HIGHLIGHT_CONFIG.easing,
-            }
-          )
-        );
-      }
+
       if (onPressIn && typeof onPressIn === 'function') {
         onPressIn(e);
       }
@@ -194,17 +188,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
       if (!disableAnimation.scale) {
         scale.set(withTiming(0, scaleConfig));
       }
-      if (!disableAnimation.highlight) {
-        highlightOpacityValue.set(
-          withTiming(
-            0,
-            animationConfig?.highlight?.config || {
-              duration: HIGHLIGHT_CONFIG.duration,
-              easing: HIGHLIGHT_CONFIG.easing,
-            }
-          )
-        );
-      }
+
       if (onPressOut && typeof onPressOut === 'function') {
         onPressOut(e);
       }
@@ -244,6 +228,10 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         className={tvStyles}
         style={[nativeStyles.buttonRoot, animatedContainerStyle, style]}
         disabled={isDisabled}
+        disableRipple={disableAnimation.highlight}
+        rippleColor={highlightColor}
+        rippleDuration={highlightConfig.duration}
+        rippleEasing={highlightConfig.easing}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         onLayout={handleLayout}
@@ -252,7 +240,6 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         {...restProps}
       >
         {backgroundElement}
-        <ButtonBackground style={animatedBackgroundStyle} />
         {startContentElement}
         {labelElement}
         {endContentElement}

@@ -35,11 +35,11 @@ const useDialog = DialogPrimitives.useRootContext;
 // --------------------------------------------------
 
 const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
-  ({ children, open, onOpenChange, closeDelay = 300, ...props }, ref) => {
+  ({ children, isOpen, onOpenChange, closeDelay = 300, ...props }, ref) => {
     return (
       <DialogPrimitives.Root
         ref={ref}
-        open={open}
+        isOpen={isOpen}
         onOpenChange={onOpenChange}
         closeDelay={closeDelay}
         {...props}

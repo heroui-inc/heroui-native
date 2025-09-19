@@ -19,7 +19,7 @@ type DialogState = 'idle' | 'open' | 'close';
  */
 type RootContext = {
   /** Whether the dialog is currently open */
-  open: boolean;
+  isOpen: boolean;
   /** Callback fired when the open state changes */
   onOpenChange: (value: boolean) => void;
   /** Extended internal state for additional control (useful for coordinating animations) */
@@ -29,7 +29,7 @@ type RootContext = {
   /** Delay in milliseconds before the dialog closes */
   closeDelay?: number;
   /** Whether to dismiss the keyboard when the dialog closes */
-  dismissKeyboardOnClose?: boolean;
+  isDismissKeyboardOnClose?: boolean;
 };
 
 /**
@@ -37,15 +37,15 @@ type RootContext = {
  */
 type RootProps = SlottableViewProps & {
   /** The controlled open state of the dialog */
-  open?: boolean;
+  isOpen?: boolean;
   /** The open state of the dialog when initially rendered (uncontrolled) */
-  defaultOpen?: boolean;
+  isDefaultOpen?: boolean;
   /** Event handler called when the open state changes */
   onOpenChange?: (value: boolean) => void;
   /** Delay in milliseconds before the dialog closes (for exit animations) */
   closeDelay?: number;
   /** Whether to dismiss the keyboard when the dialog closes */
-  dismissKeyboardOnClose?: boolean;
+  isDismissKeyboardOnClose?: boolean;
 };
 
 /**
@@ -64,7 +64,7 @@ interface PortalProps extends ForceMountable {
 type OverlayProps = ForceMountable &
   SlottablePressableProps & {
     /** Whether clicking the overlay should close the dialog */
-    closeOnPress?: boolean;
+    isCloseOnPress?: boolean;
   };
 
 /**

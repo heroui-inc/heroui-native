@@ -142,7 +142,7 @@ export default function DialogScreen() {
     <ScreenScrollView contentContainerClassName="gap-12">
       <View />
       {/* Basic Dialog */}
-      <Dialog open={basicDialogOpen} onOpenChange={setBasicDialogOpen}>
+      <Dialog isOpen={basicDialogOpen} onOpenChange={setBasicDialogOpen}>
         <Dialog.Trigger>
           <Button variant="tertiary">Basic Dialog</Button>
         </Dialog.Trigger>
@@ -173,7 +173,7 @@ export default function DialogScreen() {
 
       {/* Dialog with Custom Close Icon */}
       <Dialog
-        open={customCloseDialogOpen}
+        isOpen={customCloseDialogOpen}
         onOpenChange={setCustomCloseDialogOpen}
       >
         <Dialog.Trigger>
@@ -216,7 +216,7 @@ export default function DialogScreen() {
 
       {/* Dialog with Custom Content */}
       <Dialog
-        open={textInputDialogOpen}
+        isOpen={textInputDialogOpen}
         onOpenChange={(isOpen) => {
           setTextInputDialogOpen(isOpen);
           // Reset form and errors when dialog closes
@@ -315,7 +315,7 @@ export default function DialogScreen() {
       </Dialog>
 
       {/* Dialog with Long Content */}
-      <Dialog open={scrollDialogOpen} onOpenChange={setScrollDialogOpen}>
+      <Dialog isOpen={scrollDialogOpen} onOpenChange={setScrollDialogOpen}>
         <Dialog.Trigger>
           <Button variant="tertiary">Scroll Content Dialog</Button>
         </Dialog.Trigger>

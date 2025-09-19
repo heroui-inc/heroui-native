@@ -48,24 +48,24 @@ const Root = forwardRef<RootRef, RootProps>(
   (
     {
       asChild,
-      open: openProp,
-      defaultOpen,
+      isOpen: isOpenProp,
+      isDefaultOpen,
       onOpenChange: onOpenChangeProp,
       closeDelay = 0,
-      dismissKeyboardOnClose = true,
+      isDismissKeyboardOnClose = true,
       ...viewProps
     },
     ref
   ) => {
     const nativeID = useId();
     const [dialogState, setDialogState] = useState<DialogState>(() =>
-      openProp || defaultOpen ? 'open' : 'idle'
+      isOpenProp || isDefaultOpen ? 'open' : 'idle'
     );
     const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
-    const [open = false, onOpenChangeBase] = useControllableState({
-      prop: openProp,
-      defaultProp: defaultOpen,
+    const [isOpen = false, onOpenChangeBase] = useControllableState({
+      prop: isOpenProp,
+      defaultProp: isDefaultOpen,
       onChange: onOpenChangeProp,
     });
 
@@ -84,7 +84,7 @@ const Root = forwardRef<RootRef, RootProps>(
           setDialogState('open');
         } else {
           setDialogState('close');
-          if (dismissKeyboardOnClose) {
+          if (isDismissKeyboardOnClose) {
             Keyboard.dismiss();
           }
           // Wait until the close animation is finished
@@ -103,7 +103,7 @@ const Root = forwardRef<RootRef, RootProps>(
           }
         }
       },
-      [onOpenChangeBase, closeDelay, progress, dismissKeyboardOnClose]
+      [onOpenChangeBase, closeDelay, progress, isDismissKeyboardOnClose]
     );
 
     useEffect(() => {
@@ -118,7 +118,7 @@ const Root = forwardRef<RootRef, RootProps>(
     return (
       <DialogContext.Provider
         value={{
-          open,
+          isOpen,
           onOpenChange,
           nativeID,
           progress,
@@ -148,11 +148,11 @@ Root.displayName = 'HeroUINative.Primitive.Dialog.Root';
 
 const Trigger = forwardRef<TriggerRef, TriggerProps>(
   ({ asChild, onPress: onPressProp, disabled = false, ...props }, ref) => {
-    const { open, onOpenChange } = useRootContext();
+    const { isOpen, onOpenChange } = useRootContext();
 
     function onPress(ev: GestureResponderEvent) {
       if (disabled) return;
-      const newValue = !open;
+      const newValue = !isOpen;
       onOpenChange(newValue);
       onPressProp?.(ev);
     }
@@ -201,17 +201,17 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
     {
       asChild,
       forceMount,
-      closeOnPress = true,
+      isCloseOnPress = true,
       onPress: OnPressProp,
       ...props
     },
     ref
   ) => {
-    const { open, onOpenChange, dialogState } = useRootContext();
+    const { isOpen, onOpenChange, dialogState } = useRootContext();
 
     function onPress(ev: GestureResponderEvent) {
-      if (closeOnPress) {
-        onOpenChange(!open);
+      if (isCloseOnPress) {
+        onOpenChange(!isOpen);
       }
       OnPressProp?.(ev);
     }

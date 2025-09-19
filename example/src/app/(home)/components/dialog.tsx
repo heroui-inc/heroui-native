@@ -2,6 +2,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
+  cn,
   Dialog,
   DropShadowView,
   ScrollShadow,
@@ -17,7 +18,10 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import {
+  KeyboardAvoidingView,
+  KeyboardController,
+} from 'react-native-keyboard-controller';
 import {
   Extrapolation,
   interpolate,
@@ -30,6 +34,8 @@ import { AnimatedBlurView } from '../../../components/animated-blur-view';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
+
+KeyboardController.preload();
 
 const DialogBlurBackdrop = () => {
   const { isDark } = useTheme();
@@ -54,9 +60,20 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
 
   const maxTextInputDialogHeight = (height - insets.top + 12) / 2;
 
-  const { progress, dialogState } = useDialog();
+  const { progress, isDragging, dialogState } = useDialog();
 
   const rContainerStyle = useAnimatedStyle(() => {
+    if (isDragging.get()) {
+      return {
+        borderRadius: interpolate(
+          progress.get(),
+          [1, 1.25],
+          [18, 42],
+          Extrapolation.CLAMP
+        ),
+      };
+    }
+
     return {
       transform: [
         {
@@ -77,7 +94,7 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Dialog.Content
       className="rounded-xl"
-      style={[rContainerStyle, { maxHeight: maxTextInputDialogHeight }]}
+      style={[{ maxHeight: maxTextInputDialogHeight }, rContainerStyle]}
     >
       {children}
     </Dialog.Content>
@@ -96,7 +113,7 @@ export default function DialogScreen() {
 
   const { height } = useWindowDimensions();
 
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
 
   const validateEmail = (emailValue: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -320,7 +337,9 @@ export default function DialogScreen() {
           <Button variant="tertiary">Scroll Content Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Overlay className="bg-stone-100" />
+          <Dialog.Overlay
+            className={cn('bg-stone-100', isDark && 'bg-stone-950')}
+          />
           <DropShadowView shadowSize="xl" asChild>
             <Dialog.Content className="rounded-2xl px-0">
               <Dialog.Close className="mr-4" />

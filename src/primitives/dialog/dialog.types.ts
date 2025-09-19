@@ -26,6 +26,8 @@ type RootContext = {
   dialogState: DialogState;
   /** Animation progress shared value (0=idle, 1=open, 2=close) */
   progress: SharedValue<number>;
+  /** Dragging state shared value */
+  isDragging: SharedValue<boolean>;
   /** Delay in milliseconds before the dialog closes */
   closeDelay?: number;
   /** Whether to dismiss the keyboard when the dialog closes */

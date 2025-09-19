@@ -76,6 +76,7 @@ const Root = forwardRef<RootRef, RootProps>(
     };
 
     const progress = useSharedValue(progressValue[dialogState]);
+    const isDragging = useSharedValue(false);
 
     const onOpenChange = useCallback(
       (value: boolean) => {
@@ -122,6 +123,7 @@ const Root = forwardRef<RootRef, RootProps>(
           onOpenChange,
           nativeID,
           progress,
+          isDragging,
           closeDelay,
           dialogState,
         }}

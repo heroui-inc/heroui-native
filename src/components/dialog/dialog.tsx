@@ -1,10 +1,14 @@
 import { forwardRef, useEffect } from 'react';
+import { useWindowDimensions } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   interpolate,
   useAnimatedStyle,
+  useSharedValue,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { scheduleOnRN } from 'react-native-worklets';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import { cn, useTheme } from '../../providers/theme';
@@ -149,27 +153,88 @@ const DialogOverlay = forwardRef<
 const DialogContent = forwardRef<
   DialogPrimitivesTypes.ContentRef,
   DialogContentProps
->(({ className, style, children, ...props }, ref) => {
-  const { progress } = useDialog();
+>(({ className, style, children, onLayout, ...props }, ref) => {
+  const { progress, isDragging, dialogState, onOpenChange } = useDialog();
+
+  const { height: screenHeight } = useWindowDimensions();
 
   const tvStyles = dialogStyles.content({ className });
 
+  const contentY = useSharedValue(0);
+  const contentHeight = useSharedValue(0);
+  const isOnEndAnimationRunning = useSharedValue(false);
+
+  const panGesture = Gesture.Pan()
+    .enabled(dialogState === 'open')
+    .onStart(() => {
+      if (isOnEndAnimationRunning.get()) return;
+      isDragging.set(true);
+    })
+    .onUpdate((event) => {
+      if (!isDragging.get()) return;
+      const maxDragDistance = screenHeight - contentY.get();
+      if (event.translationY > 0) {
+        progress.set(1 + event.translationY / maxDragDistance);
+      }
+    })
+    .onEnd(() => {
+      isOnEndAnimationRunning.set(true);
+      if (progress.get() > 1.2) {
+        progress.set(
+          withSpring(2, {}, () => {
+            isDragging.set(false);
+            scheduleOnRN(onOpenChange, false);
+            isOnEndAnimationRunning.set(false);
+          })
+        );
+      } else {
+        progress.set(
+          withSpring(1, {}, () => {
+            isDragging.set(false);
+            isOnEndAnimationRunning.set(false);
+          })
+        );
+      }
+    });
+
   const rContainerStyle = useAnimatedStyle(() => {
-    const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
+    if (isDragging.get()) {
+      const maxDragDistance = screenHeight - contentY.get();
+      return {
+        opacity: 1,
+        transform: [
+          {
+            translateY: interpolate(
+              progress.get(),
+              [1, 2],
+              [0, maxDragDistance]
+            ),
+          },
+        ],
+      };
+    }
+
     return {
-      opacity,
+      opacity: interpolate(progress.get(), [0, 1, 2], [0, 1, 0]),
     };
   });
 
   return (
-    <AnimatedContent
-      ref={ref}
-      className={tvStyles}
-      style={[nativeStyles.contentContainer, rContainerStyle, style]}
-      {...props}
-    >
-      {children}
-    </AnimatedContent>
+    <GestureDetector gesture={panGesture}>
+      <AnimatedContent
+        ref={ref}
+        className={tvStyles}
+        style={[nativeStyles.contentContainer, rContainerStyle, style]}
+        onLayout={(event) => {
+          contentY.set(event.nativeEvent.layout.y);
+          contentHeight.set(event.nativeEvent.layout.height);
+          onLayout?.(event);
+        }}
+        {...props}
+      >
+        {children}
+      </AnimatedContent>
+    </GestureDetector>
   );
 });
 

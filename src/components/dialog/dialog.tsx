@@ -1,5 +1,5 @@
 import { forwardRef, useEffect } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { Keyboard, useWindowDimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   Extrapolation,
@@ -165,6 +165,10 @@ const DialogContent = forwardRef<
   const contentHeight = useSharedValue(0);
   const isOnEndAnimationRunning = useSharedValue(false);
 
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   const panGesture = Gesture.Pan()
     .enabled(dialogState === 'open')
     .onStart(() => {
@@ -183,6 +187,7 @@ const DialogContent = forwardRef<
     .onEnd(() => {
       isOnEndAnimationRunning.set(true);
       if (progress.get() > 1.2) {
+        scheduleOnRN(dismissKeyboard);
         progress.set(
           withSpring(2, {}, () => {
             isDragging.set(false);
@@ -227,6 +232,11 @@ const DialogContent = forwardRef<
 
     return {
       opacity: interpolate(progress.get(), [0, 1, 2], [0, 1, 0]),
+      transform: [
+        {
+          scale: interpolate(progress.get(), [0, 1, 2], [0.97, 1, 0.97]),
+        },
+      ],
     };
   });
 

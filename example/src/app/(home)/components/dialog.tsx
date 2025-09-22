@@ -27,7 +27,6 @@ import {
   interpolate,
   useAnimatedStyle,
   useDerivedValue,
-  withSpring,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AnimatedBlurView } from '../../../components/animated-blur-view';
@@ -39,10 +38,16 @@ KeyboardController.preload();
 
 const DialogBlurBackdrop = () => {
   const { isDark } = useTheme();
-  const { progress } = useDialog();
+  const { progress, isDragging } = useDialog();
 
   const blurIntensity = useDerivedValue(() => {
-    return interpolate(progress.get(), [0, 1, 2], [0, isDark ? 75 : 50, 0]);
+    const maxIntensity = isDark ? 75 : 50;
+
+    if (isDragging.get() && progress.get() <= 1) {
+      return maxIntensity;
+    }
+
+    return interpolate(progress.get(), [0, 1, 2], [0, maxIntensity, 0]);
   });
 
   return (
@@ -58,9 +63,10 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
 
-  const maxTextInputDialogHeight = (height - insets.top + 12) / 2;
+  const insetTop = insets.top + 12;
+  const maxTextInputDialogHeight = (height - insetTop) / 2;
 
-  const { progress, isDragging, dialogState } = useDialog();
+  const { progress, isDragging } = useDialog();
 
   const rContainerStyle = useAnimatedStyle(() => {
     if (isDragging.get()) {
@@ -75,15 +81,13 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
     }
 
     return {
+      opacity: interpolate(progress.get(), [0, 1, 2], [0, 1, 0]),
       transform: [
-        {
-          translateY: withSpring(dialogState === 'close' ? 100 : 0),
-        },
         {
           scaleX: interpolate(
             progress.get(),
             [0, 1, 2],
-            [0.95, 1, 0.9],
+            [0.9, 1, 0.9],
             Extrapolation.CLAMP
           ),
         },
@@ -94,7 +98,10 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Dialog.Content
       className="rounded-xl"
-      style={[{ maxHeight: maxTextInputDialogHeight }, rContainerStyle]}
+      style={[
+        { marginTop: insetTop, maxHeight: maxTextInputDialogHeight },
+        rContainerStyle,
+      ]}
     >
       {children}
     </Dialog.Content>
@@ -262,42 +269,48 @@ export default function DialogScreen() {
                 </Dialog.Description>
               </View>
 
-              <ScrollView contentContainerClassName="gap-5">
-                <TextField isRequired isInvalid={!!nameError}>
-                  <TextField.Label isInvalid={false}>Full Name</TextField.Label>
-                  <TextField.Input
-                    placeholder="Enter your name"
-                    value={name}
-                    onChangeText={(text) => {
-                      setName(text);
-                      if (nameError) setNameError('');
-                    }}
-                    autoCapitalize="words"
-                    autoCorrect
-                    autoFocus
-                    isInvalid={false}
-                  />
-                  <TextField.ErrorMessage>{nameError}</TextField.ErrorMessage>
-                </TextField>
+              <View className="h-[200px]">
+                <ScrollView contentContainerClassName="gap-5">
+                  <TextField isRequired isInvalid={!!nameError}>
+                    <TextField.Label isInvalid={false}>
+                      Full Name
+                    </TextField.Label>
+                    <TextField.Input
+                      placeholder="Enter your name"
+                      value={name}
+                      onChangeText={(text) => {
+                        setName(text);
+                        if (nameError) setNameError('');
+                      }}
+                      autoCapitalize="words"
+                      autoCorrect
+                      autoFocus
+                      isInvalid={false}
+                    />
+                    <TextField.ErrorMessage>{nameError}</TextField.ErrorMessage>
+                  </TextField>
 
-                <TextField isRequired isInvalid={!!emailError}>
-                  <TextField.Label isInvalid={false}>
-                    Email Address
-                  </TextField.Label>
-                  <TextField.Input
-                    placeholder="email@example.com"
-                    value={email}
-                    onChangeText={(text) => {
-                      setEmail(text);
-                      if (emailError) setEmailError('');
-                    }}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    isInvalid={false}
-                  />
-                  <TextField.ErrorMessage>{emailError}</TextField.ErrorMessage>
-                </TextField>
-              </ScrollView>
+                  <TextField isRequired isInvalid={!!emailError}>
+                    <TextField.Label isInvalid={false}>
+                      Email Address
+                    </TextField.Label>
+                    <TextField.Input
+                      placeholder="email@example.com"
+                      value={email}
+                      onChangeText={(text) => {
+                        setEmail(text);
+                        if (emailError) setEmailError('');
+                      }}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                      isInvalid={false}
+                    />
+                    <TextField.ErrorMessage>
+                      {emailError}
+                    </TextField.ErrorMessage>
+                  </TextField>
+                </ScrollView>
+              </View>
 
               <View className="flex-row justify-end gap-3">
                 <Dialog.Close asChild>

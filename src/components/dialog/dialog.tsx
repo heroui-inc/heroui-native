@@ -1,5 +1,5 @@
-import { forwardRef, useEffect } from 'react';
-import { Keyboard, useWindowDimensions } from 'react-native';
+import React, { forwardRef, useEffect } from 'react';
+import { Keyboard, Platform, useWindowDimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   Extrapolation,
@@ -10,6 +10,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { FullWindowOverlay as NativeFullWindowOverlay } from 'react-native-screens';
 import { scheduleOnRN } from 'react-native-worklets';
 import { useKeyboardStatus } from '../../helpers/hooks/use-keyboard-status';
 import * as DialogPrimitives from '../../primitives/dialog';
@@ -36,6 +37,9 @@ const AnimatedOverlay = Animated.createAnimatedComponent(
 const AnimatedContent = Animated.createAnimatedComponent(
   DialogPrimitives.Content
 );
+
+const FullWindowOverlay =
+  Platform.OS === 'ios' ? NativeFullWindowOverlay : React.Fragment;
 
 const useDialog = DialogPrimitives.useRootContext;
 
@@ -105,9 +109,11 @@ const DialogPortal = ({
 
   return (
     <DialogPrimitives.Portal {...props}>
-      <Animated.View className={tvStyles} style={style}>
-        {children}
-      </Animated.View>
+      <FullWindowOverlay>
+        <Animated.View className={tvStyles} style={style}>
+          {children}
+        </Animated.View>
+      </FullWindowOverlay>
     </DialogPrimitives.Portal>
   );
 };

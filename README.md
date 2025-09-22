@@ -46,6 +46,7 @@ Want to start building with HeroUI Native immediately? We provide a standalone e
 **[🚀 HeroUI Native Example App](https://github.com/heroui-inc/heroui-native-example)**
 
 This repository contains a pre-configured React Native app with HeroUI Native already set up, including:
+
 - All necessary dependencies installed
 - Nativewind configuration ready
 - Example components showcasing best practices
@@ -64,7 +65,7 @@ npm install heroui-native
 ### 2. Install Mandatory Peer Dependencies
 
 ```bash
-npm install react-native-reanimated@~4.1.0 react-native-safe-area-context@5.6.0 react-native-svg@^15.12.1 tailwind-variants@^3.1.0 tailwind-merge@^3.3.1
+npm install react-native-screens react-native-reanimated@~4.1.0 react-native-safe-area-context@5.6.0 react-native-svg@^15.12.1 tailwind-variants@^3.1.0 tailwind-merge@^3.3.1
 ```
 
 > **Important:** It's recommended to use the exact versions specified above to avoid compatibility issues. Version mismatches may cause unexpected bugs.
@@ -142,6 +143,7 @@ export default function MyComponent() {
 - [Card](./src/components/card/card.md)
 - [Checkbox](./src/components/checkbox/checkbox.md)
 - [Chip](./src/components/chip/chip.md)
+- [Dialog](./src/components/dialog/dialog.md)
 - [Divider](./src/components/divider/divider.md)
 - [Drop Shadow View](./src/components/drop-shadow-view/drop-shadow-view.md)
 - [Error View](./src/components/error-view/error-view.md)

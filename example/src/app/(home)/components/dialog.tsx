@@ -1,4 +1,3 @@
-import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
@@ -30,7 +29,6 @@ import {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AnimatedBlurView } from '../../../components/animated-blur-view';
-import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
@@ -110,7 +108,7 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
 
 export default function DialogScreen() {
   const [basicDialogOpen, setBasicDialogOpen] = useState(false);
-  const [customCloseDialogOpen, setCustomCloseDialogOpen] = useState(false);
+  const [blurBackdropDialogOpen, setBlurBackdropDialogOpen] = useState(false);
   const [scrollDialogOpen, setScrollDialogOpen] = useState(false);
   const [textInputDialogOpen, setTextInputDialogOpen] = useState(false);
   const [name, setName] = useState('');
@@ -120,7 +118,7 @@ export default function DialogScreen() {
 
   const { height } = useWindowDimensions();
 
-  const { colors, isDark } = useTheme();
+  const { isDark } = useTheme();
 
   const validateEmail = (emailValue: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -171,68 +169,56 @@ export default function DialogScreen() {
           <Button variant="tertiary">Basic Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Overlay>
+          <Dialog.Overlay />
+          <Dialog.Content>
+            <Dialog.Close />
+            <View className="mb-5 gap-1.5">
+              <Dialog.Title>Confirm Action</Dialog.Title>
+              <Dialog.Description>
+                Are you sure you want to proceed with this action? This cannot
+                be undone.
+              </Dialog.Description>
+            </View>
+            <View className="flex-row justify-end gap-3">
+              <Dialog.Close asChild>
+                <Button variant="ghost" size="sm">
+                  Cancel
+                </Button>
+              </Dialog.Close>
+              <Button size="sm">Confirm</Button>
+            </View>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog>
+
+      {/* Basic Dialog */}
+      <Dialog
+        isOpen={blurBackdropDialogOpen}
+        onOpenChange={setBlurBackdropDialogOpen}
+      >
+        <Dialog.Trigger>
+          <Button variant="tertiary">Blur Backdrop Dialog</Button>
+        </Dialog.Trigger>
+        <Dialog.Portal>
+          <Dialog.Overlay isAnimationDisabled>
             <DialogBlurBackdrop />
           </Dialog.Overlay>
           <Dialog.Content>
             <Dialog.Close />
             <View className="mb-5 gap-1.5">
-              <Dialog.Title>Dialog Title</Dialog.Title>
-              <Dialog.Description>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam
-                laudantium voluptates suscipit magnam nemo nesciunt repellat,
-                explicabo, beatae nobis maxime, obcaecati non dolorum?
-              </Dialog.Description>
-            </View>
-            <Button
-              size="sm"
-              className="self-end"
-              onPress={() => setBasicDialogOpen(false)}
-            >
-              Confirm
-            </Button>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog>
-
-      {/* Dialog with Custom Close Icon */}
-      <Dialog
-        isOpen={customCloseDialogOpen}
-        onOpenChange={setCustomCloseDialogOpen}
-      >
-        <Dialog.Trigger>
-          <Button variant="tertiary">Custom Close Dialog</Button>
-        </Dialog.Trigger>
-        <Dialog.Portal>
-          <Dialog.Overlay />
-          <Dialog.Content>
-            <Dialog.Close className="flex-row items-center gap-1.5">
-              <AppText className="mb-0.5 text-sm text-foreground">
-                Close
-              </AppText>
-              <AntDesign name="close" size={11} color={colors.foreground} />
-            </Dialog.Close>
-            <View className="mb-5 gap-1.5">
               <Dialog.Title>Confirm Action</Dialog.Title>
               <Dialog.Description>
-                This action cannot be undone. Please confirm to proceed.
+                Are you sure you want to proceed with this action? This cannot
+                be undone.
               </Dialog.Description>
             </View>
             <View className="flex-row justify-end gap-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                onPress={() => setCustomCloseDialogOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="danger"
-                size="sm"
-                onPress={() => setCustomCloseDialogOpen(false)}
-              >
-                Delete
-              </Button>
+              <Dialog.Close asChild>
+                <Button variant="ghost" size="sm">
+                  Cancel
+                </Button>
+              </Dialog.Close>
+              <Button size="sm">Confirm</Button>
             </View>
           </Dialog.Content>
         </Dialog.Portal>
@@ -256,7 +242,7 @@ export default function DialogScreen() {
           <Button variant="tertiary">Text Input Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Overlay>
+          <Dialog.Overlay isAnimationDisabled>
             <DialogBlurBackdrop />
           </Dialog.Overlay>
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
@@ -327,15 +313,7 @@ export default function DialogScreen() {
                     Cancel
                   </Button>
                 </Dialog.Close>
-                <Button
-                  size="sm"
-                  onPress={() => {
-                    const isValid = handleSubmit();
-                    if (isValid) {
-                      setTextInputDialogOpen(false);
-                    }
-                  }}
-                >
+                <Button size="sm" onPress={handleSubmit}>
                   Update Profile
                 </Button>
               </View>
@@ -353,7 +331,7 @@ export default function DialogScreen() {
           <Dialog.Overlay
             className={cn('bg-stone-100', isDark && 'bg-stone-950')}
           />
-          <DropShadowView shadowSize="xl" asChild>
+          <DropShadowView shadowSize={isDark ? 'none' : 'xl'} asChild>
             <Dialog.Content className="rounded-2xl px-0">
               <Dialog.Close className="mr-4" />
               <Dialog.Title className="text-center mb-5">
@@ -408,7 +386,7 @@ export default function DialogScreen() {
               <Button
                 variant="ghost"
                 className="self-center"
-                onPress={() => setScrollDialogOpen(false)}
+                onPress={simulatePress}
               >
                 <Button.LabelContent
                   classNames={{ text: 'text-foreground font-semibold' }}

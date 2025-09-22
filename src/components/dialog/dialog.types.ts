@@ -87,6 +87,11 @@ export interface DialogOverlayProps
    * Additional CSS class for the overlay
    */
   className?: string;
+  /**
+   * Disables overlay animations and makes background transparent
+   * @default false
+   */
+  isAnimationDisabled?: boolean;
 }
 
 /**

@@ -14,7 +14,7 @@ import { scheduleOnRN } from 'react-native-worklets';
 import { useKeyboardStatus } from '../../helpers/hooks/use-keyboard-status';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
-import { cn, useTheme } from '../../providers/theme';
+import { useTheme } from '../../providers/theme';
 import { CloseIcon } from './close-icon';
 import { DISPLAY_NAME } from './dialog.constants';
 import dialogStyles, { nativeStyles } from './dialog.styles';
@@ -117,10 +117,14 @@ const DialogPortal = ({
 const DialogOverlay = forwardRef<
   DialogPrimitivesTypes.OverlayRef,
   DialogOverlayProps
->(({ children, className, ...props }, ref) => {
+>(({ className, style, isAnimationDisabled = false, ...props }, ref) => {
   const { progress, isDragging } = useDialog();
 
   const rContainerStyle = useAnimatedStyle(() => {
+    if (isAnimationDisabled) {
+      return {};
+    }
+
     if (isDragging.get() && progress.get() <= 1) {
       return { opacity: 1 };
     }
@@ -132,25 +136,16 @@ const DialogOverlay = forwardRef<
     };
   });
 
-  const tvStyles = dialogStyles.overlay({ className });
-
-  if (children) {
-    return (
-      <DialogPrimitives.Overlay
-        ref={ref}
-        className={cn(tvStyles, 'bg-transparent')}
-        {...props}
-      >
-        {children}
-      </DialogPrimitives.Overlay>
-    );
-  }
+  const tvStyles = dialogStyles.overlay({
+    className,
+    isAnimationDisabled,
+  });
 
   return (
     <AnimatedOverlay
       ref={ref}
       className={tvStyles}
-      style={rContainerStyle}
+      style={[rContainerStyle, style]}
       {...props}
     />
   );

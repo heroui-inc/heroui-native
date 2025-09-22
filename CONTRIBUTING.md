@@ -10,12 +10,12 @@ We want this community to be friendly and respectful to each other. Please follo
 
 HeroUI Native follows a **strict design system** based on our Figma designs and roadmap. To ensure consistency and quality:
 
-1. **Check the Roadmap**: Before adding new components, check our [Roadmap](https://herouinative.featurebase.app/roadmap) to see if it's already planned
-2. **No Unauthorized Changes**: Do NOT:
-   - Add new variants to existing components without discussion
-   - Change component designs or visual appearance
-   - Modify existing component behavior or API
-   - Add features that aren't in our design specifications
+**No Unauthorized Changes**: Do NOT:
+
+- Add new variants to existing components without discussion
+- Change component designs or visual appearance
+- Modify existing component behavior or API
+- Add features that aren't in our design specifications
 
 ### How to Propose Changes
 
@@ -37,7 +37,6 @@ The best contributions are:
 - **Documentation improvements**
 - **Test coverage improvements**
 - **Performance optimizations** (without changing behavior)
-- **New components** that are on our roadmap
 - **Accessibility improvements**
 
 ## Development workflow

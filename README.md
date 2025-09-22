@@ -182,7 +182,7 @@ Contributions are always welcome! We appreciate your help in making HeroUI Nativ
 ### How to Contribute
 
 - **Bug Fixes**: Check our [GitHub Issues](https://github.com/heroui-inc/heroui-native/issues) for bugs that need fixing
-- **New Components**: Check our [Roadmap](https://herouinative.featurebase.app/roadmap) first to see if it's planned
+- **New Components**: Only core team can add new components. Check our [Roadmap](https://herouinative.featurebase.app/roadmap) to see what's planned
 - **Feature Proposals**: Start a discussion in [GitHub Discussions](https://github.com/heroui-inc/heroui/discussions) before implementing
 
 **Important:** Please do not add new components or variants, change existing designs, or modify component behavior without prior discussion. We follow a strict design system based on our Figma designs and roadmap.

@@ -2,10 +2,6 @@
 
 Coordinates multiple skeleton loading placeholders with centralized animation control.
 
-## Interactive Demo
-
-_Interactive demo will be added here_
-
 ## Imports
 
 Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).

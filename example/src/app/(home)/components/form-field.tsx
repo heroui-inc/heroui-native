@@ -1,11 +1,4 @@
-import {
-  Checkbox,
-  DropShadowView,
-  FormField,
-  Switch,
-  cn,
-  useTheme,
-} from 'heroui-native';
+import { Checkbox, DropShadowView, FormField, Switch } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
@@ -41,8 +34,6 @@ export default function FormFieldScreen() {
   // Different indicator alignments
   const [startAlign, setStartAlign] = React.useState(true);
   const [endAlign, setEndAlign] = React.useState(false);
-
-  const { isDark } = useTheme();
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -309,7 +300,7 @@ export default function FormFieldScreen() {
         <DropShadowView
           shadowSize="xl"
           shadowColor="orange"
-          className={cn('bg-white rounded-xl', isDark && 'bg-black')}
+          className="rounded-xl"
         >
           <FormField
             isSelected={darkMode}

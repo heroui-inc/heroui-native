@@ -9,6 +9,7 @@ import { Slot } from 'expo-router';
 import { HeroUINativeProvider } from 'heroui-native';
 import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import {
   configureReanimatedLogger,
   ReanimatedLogLevel,
@@ -49,9 +50,11 @@ export default function Layout() {
 
   return (
     <GestureHandlerRootView style={styles.root}>
-      <AppThemeProvider>
-        <ThemedLayout />
-      </AppThemeProvider>
+      <KeyboardProvider>
+        <AppThemeProvider>
+          <ThemedLayout />
+        </AppThemeProvider>
+      </KeyboardProvider>
     </GestureHandlerRootView>
   );
 }

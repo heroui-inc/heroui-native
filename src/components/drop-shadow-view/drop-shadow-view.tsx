@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { Platform, View } from 'react-native';
 import Animated from 'react-native-reanimated';
+import * as Slot from '../../primitives/slot';
 import { useTheme } from '../../providers/theme';
 import {
   ANDROID_ELEVATION_MAP,
@@ -17,6 +18,7 @@ const DropShadowViewRoot = forwardRef<View, DropShadowViewProps>(
   (props, ref) => {
     const {
       children,
+      asChild,
       className,
       style,
       shadowSize = 'md',
@@ -27,7 +29,10 @@ const DropShadowViewRoot = forwardRef<View, DropShadowViewProps>(
     } = props;
 
     const { isDark } = useTheme();
-    const tvStyles = dropShadowViewStyles({ className });
+    const tvStyles = dropShadowViewStyles({
+      className,
+      asChild: Boolean(asChild),
+    });
 
     const defaultShadowColor = isDark
       ? DEFAULT_SHADOW_COLORS.DARK
@@ -38,6 +43,10 @@ const DropShadowViewRoot = forwardRef<View, DropShadowViewProps>(
     const iosShadowConfig = IOS_SHADOW_MAP[shadowSize];
     const androidElevation = ANDROID_ELEVATION_MAP[shadowSize];
 
+    const Component = asChild
+      ? Animated.createAnimatedComponent(Slot.View)
+      : Animated.View;
+
     if (Platform.OS === 'android') {
       const androidShadowStyles = {
         shadowColor: currentShadowColor,
@@ -46,14 +55,14 @@ const DropShadowViewRoot = forwardRef<View, DropShadowViewProps>(
       };
 
       return (
-        <Animated.View
+        <Component
           ref={ref}
           className={tvStyles}
           style={[androidShadowStyles, style]}
           {...restProps}
         >
           {children}
-        </Animated.View>
+        </Component>
       );
     }
 
@@ -64,14 +73,14 @@ const DropShadowViewRoot = forwardRef<View, DropShadowViewProps>(
     };
 
     return (
-      <Animated.View
+      <Component
         ref={ref}
         className={tvStyles}
         style={[iosShadowStyles, style]}
         {...restProps}
       >
         {children}
-      </Animated.View>
+      </Component>
     );
   }
 );

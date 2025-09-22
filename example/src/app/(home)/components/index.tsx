@@ -56,6 +56,11 @@ const components: Component[] = [
     path: 'chip',
   },
   {
+    title: 'Dialog',
+    icon: <ComponentIcon />,
+    path: 'dialog',
+  },
+  {
     title: 'Divider',
     icon: <ComponentIcon />,
     path: 'divider',

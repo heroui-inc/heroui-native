@@ -177,9 +177,17 @@ Whether it's a feature request, bug report, or a project to showcase, please get
 
 ## Contributing
 
-Contributions are always welcome!
+Contributions are always welcome! We appreciate your help in making HeroUI Native better.
 
-See [CONTRIBUTING.md](https://github.com/heroui-inc/heroui-native/blob/main/CONTRIBUTING.md) for ways to get started.
+### How to Contribute
+
+- **Bug Fixes**: Check our [GitHub Issues](https://github.com/heroui-inc/heroui-native/issues) for bugs that need fixing
+- **New Components**: Check our [Roadmap](https://herouinative.featurebase.app/roadmap) first to see if it's planned
+- **Feature Proposals**: Start a discussion in [GitHub Discussions](https://github.com/heroui-inc/heroui/discussions) before implementing
+
+**Important:** Please do not add new components or variants, change existing designs, or modify component behavior without prior discussion. We follow a strict design system based on our Figma designs and roadmap.
+
+For detailed guidelines, see [CONTRIBUTING.md](https://github.com/heroui-inc/heroui-native/blob/main/CONTRIBUTING.md).
 
 Please adhere to this project's [CODE_OF_CONDUCT](https://github.com/heroui-inc/heroui-native/blob/main/CODE_OF_CONDUCT.md).
 

@@ -4,6 +4,42 @@ Contributions are always welcome, no matter how large or small!
 
 We want this community to be friendly and respectful to each other. Please follow it in all your interactions with the project. Before contributing, please read the [code of conduct](./CODE_OF_CONDUCT.md).
 
+## Before You Start
+
+### Important Guidelines
+
+HeroUI Native follows a **strict design system** based on our Figma designs and roadmap. To ensure consistency and quality:
+
+1. **Check the Roadmap**: Before adding new components, check our [Roadmap](https://herouinative.featurebase.app/roadmap) to see if it's already planned
+2. **No Unauthorized Changes**: Do NOT:
+   - Add new variants to existing components without discussion
+   - Change component designs or visual appearance
+   - Modify existing component behavior or API
+   - Add features that aren't in our design specifications
+
+### How to Propose Changes
+
+If you want to suggest significant changes or new features:
+
+1. **GitHub Discussions** (Preferred): Start a discussion in [GitHub Discussions](https://github.com/heroui-inc/heroui/discussions)
+   - Use for: Feature proposals, API changes, new component ideas
+   - Include: Use cases, examples, and rationale
+
+2. **Community Channels**: Join our [Discord](https://discord.gg/9b6yyZKmH4) for informal discussions
+
+3. **GitHub Issues**: Use for reporting bugs or problems with existing functionality
+
+### What We're Looking For
+
+The best contributions are:
+
+- **Bug fixes** for existing issues
+- **Documentation improvements**
+- **Test coverage improvements**
+- **Performance optimizations** (without changing behavior)
+- **New components** that are on our roadmap
+- **Accessibility improvements**
+
 ## Development workflow
 
 This project is a monorepo managed using [Yarn workspaces](https://yarnpkg.com/features/workspaces). It contains the following packages:
@@ -202,10 +238,30 @@ For detailed implementation guidance and templates, refer to the `.workflows/add
 
 > **Working on your first pull request?** You can learn how from this _free_ series: [How to Contribute to an Open Source Project on GitHub](https://app.egghead.io/playlists/how-to-contribute-to-an-open-source-project-on-github).
 
+#### Before Opening a PR
+
+1. **Ensure alignment**: Your PR should:
+   - Fix an existing issue OR
+   - Implement a feature from our roadmap OR
+   - Have been discussed and approved in GitHub Discussions
+
+2. **Do NOT open PRs for**:
+   - New component variants not in our design system
+   - Visual/design changes without prior approval
+   - Breaking API changes without discussion
+   - Features not aligned with our roadmap
+
+#### PR Requirements
+
 When you're sending a pull request:
 
-- Prefer small pull requests focused on one change.
-- Verify that linters and tests are passing.
-- Review the documentation to make sure it looks good.
-- Follow the pull request template when opening a pull request.
-- For pull requests that change the API or implementation, discuss with maintainers first by opening an issue.
+- Prefer small pull requests focused on one change
+- Verify that linters and tests are passing
+- Review the documentation to make sure it looks good
+- Follow the pull request template when opening a pull request
+- Include issue number or discussion link in PR description
+- For pull requests that change the API or implementation, you MUST discuss with maintainers first in GitHub Discussions
+
+#### PR Review Process
+
+PRs that don't follow these guidelines may be closed without review. We appreciate your understanding as we maintain consistency and quality in the library.

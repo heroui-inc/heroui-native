@@ -10,13 +10,7 @@ import {
   useTheme,
 } from 'heroui-native';
 import { useState, type FC, type PropsWithChildren } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { Platform, Text, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {
   KeyboardAvoidingView,
@@ -26,37 +20,13 @@ import {
   Extrapolation,
   interpolate,
   useAnimatedStyle,
-  useDerivedValue,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AnimatedBlurView } from '../../../components/animated-blur-view';
+import { DialogBlurBackdrop } from '../../../components/dialog-blur-backdrop';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 KeyboardController.preload();
-
-const DialogBlurBackdrop = () => {
-  const { isDark } = useTheme();
-  const { progress, isDragging } = useDialog();
-
-  const blurIntensity = useDerivedValue(() => {
-    const maxIntensity = isDark ? 75 : 50;
-
-    if (isDragging.get() && progress.get() <= 1) {
-      return maxIntensity;
-    }
-
-    return interpolate(progress.get(), [0, 1, 2], [0, maxIntensity, 0]);
-  });
-
-  return (
-    <AnimatedBlurView
-      blurIntensity={blurIntensity}
-      tint={isDark ? 'dark' : 'systemUltraThinMaterialDark'}
-      style={StyleSheet.absoluteFill}
-    />
-  );
-};
 
 const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
   const { height } = useWindowDimensions();

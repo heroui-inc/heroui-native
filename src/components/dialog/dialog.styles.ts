@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../providers/theme/helpers';
 
 const portal = tv({
-  base: 'absolute inset-0 items-center justify-center p-5',
+  base: 'absolute inset-0 justify-center p-5',
 });
 
 const overlay = tv({

@@ -37,6 +37,21 @@ const data = [
       { name: 'Button', href: '/components/button' },
     ],
   },
+  {
+    imageLight:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcase-paywall.png',
+    imageDark:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcase-paywall.png',
+    title: 'Linear Task',
+    description: 'Linear task with progress bar and animated checkmark.',
+    href: '/showcases/linear-task',
+    components: [
+      { name: 'Switch', href: '/components/switch' },
+      { name: 'FormField', href: '/components/form-field' },
+      { name: 'RadioGroup', href: '/components/radio' },
+      { name: 'Button', href: '/components/button' },
+    ],
+  },
 ];
 
 export default function ScaleCarousel() {

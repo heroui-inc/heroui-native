@@ -1,5 +1,5 @@
 import Feather from '@expo/vector-icons/Feather';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import * as Haptics from 'expo-haptics';
 import { Chip, Dialog, Radio, RadioGroup, useTheme } from 'heroui-native';
 import { useState, type FC } from 'react';
@@ -15,64 +15,64 @@ type PriorityItem = {
 };
 
 export const Priority: FC = () => {
-  const [value, setValue] = useState('todo');
+  const [value, setValue] = useState('high');
 
   const { colors } = useTheme();
 
   const items: PriorityItem[] = [
     {
-      value: 'backlog',
-      label: 'Backlog',
+      value: 'no-priority',
+      label: 'No Priority',
       indicator: (
-        <MaterialCommunityIcons
-          name="circle-opacity"
-          size={13}
-          color={colors.mutedForeground}
-        />
+        <View className="flex-row items-center gap-0.5">
+          <View className="h-[1.5px] w-1 bg-muted-foreground" />
+          <View className="h-[1.5px] w-1 bg-muted-foreground" />
+          <View className="h-[1.5px] w-1 bg-muted-foreground" />
+        </View>
       ),
     },
     {
-      value: 'todo',
-      label: 'Todo',
+      value: 'urgent',
+      label: 'Urgent',
       indicator: (
-        <MaterialCommunityIcons
-          name="circle-outline"
+        <FontAwesome6
+          name="circle-exclamation"
           size={13}
           color={colors.foreground}
         />
       ),
     },
     {
-      value: 'in-progress',
-      label: 'In Progress',
+      value: 'high',
+      label: 'High',
       indicator: (
-        <MaterialCommunityIcons
-          name="circle-slice-4"
-          size={13}
-          color={colors.warning}
-        />
+        <View className="flex-row items-end gap-0.5">
+          <View className="h-1 w-[3px] rounded-[1px] bg-foreground" />
+          <View className="h-2 w-[3px] rounded-[1px] bg-foreground" />
+          <View className="h-3 w-[3px] rounded-[1px] bg-foreground" />
+        </View>
       ),
     },
     {
-      value: 'in-review',
-      label: 'In Review',
+      value: 'medium',
+      label: 'Medium',
       indicator: (
-        <MaterialCommunityIcons
-          name="circle-slice-6"
-          size={13}
-          color={colors.success}
-        />
+        <View className="flex-row items-end gap-0.5">
+          <View className="h-1 w-[3px] rounded-[1px] bg-foreground" />
+          <View className="h-2 w-[3px] rounded-[1px] bg-foreground" />
+          <View className="h-3 w-[3px] rounded-[1px] bg-muted-foreground" />
+        </View>
       ),
     },
     {
-      value: 'done',
-      label: 'Done',
+      value: 'low',
+      label: 'Low',
       indicator: (
-        <MaterialCommunityIcons
-          name="checkbox-marked-circle"
-          size={14}
-          color="#4f46e5"
-        />
+        <View className="flex-row items-end gap-0.5">
+          <View className="h-1 w-[3px] rounded-[1px] bg-foreground" />
+          <View className="h-2 w-[3px] rounded-[1px] bg-muted-foreground" />
+          <View className="h-3 w-[3px] rounded-[1px] bg-muted-foreground" />
+        </View>
       ),
     },
   ];
@@ -116,7 +116,9 @@ export const Priority: FC = () => {
                   }}
                 >
                   <Radio.Content className="flex-row items-center gap-2">
-                    <View className="scale-105">{item.indicator}</View>
+                    <View className="w-7 justify-center">
+                      <View className="scale-105">{item.indicator}</View>
+                    </View>
                     <Radio.Title>{item.label}</Radio.Title>
                   </Radio.Content>
                   <Radio.Indicator

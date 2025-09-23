@@ -137,8 +137,10 @@ export const Status: FC = () => {
                     }
                   }}
                 >
-                  <Radio.Content className="flex-row items-center gap-2">
-                    <View className="scale-105">{item.indicator}</View>
+                  <Radio.Content className="flex-row items-center">
+                    <View className="w-7 justify-center">
+                      <View className="scale-105">{item.indicator}</View>
+                    </View>
                     <Radio.Title>{item.label}</Radio.Title>
                   </Radio.Content>
                   <Radio.Indicator

@@ -71,6 +71,7 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
         { marginTop: insetTop, maxHeight: maxTextInputDialogHeight },
         rContainerStyle,
       ]}
+      isAnimationDisabled
     >
       {children}
     </Dialog.Content>

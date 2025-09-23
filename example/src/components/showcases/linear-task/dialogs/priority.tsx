@@ -15,7 +15,7 @@ type PriorityItem = {
 };
 
 export const Priority: FC = () => {
-  const [value, setValue] = useState('high');
+  const [value, setValue] = useState('medium');
 
   const { colors } = useTheme();
 
@@ -103,7 +103,7 @@ export const Priority: FC = () => {
           <DialogBlurBackdrop />
         </Dialog.Overlay>
         <Dialog.Content className="rounded-2xl border-0">
-          <DialogHeader>Status</DialogHeader>
+          <DialogHeader>Priority</DialogHeader>
           <RadioGroup value={value} onValueChange={setValue} className="gap-5">
             {items.map((item) => (
               <Dialog.Close key={item.value} className="self-stretch" asChild>

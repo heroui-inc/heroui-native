@@ -239,6 +239,7 @@ export default function DialogExample() {
 | `className`             | `string`                             | -       | Additional CSS classes for content container     |
 | `style`                 | `StyleProp<ViewStyle>`               | -       | Additional styles for content container          |
 | `onLayout`              | `(event: LayoutChangeEvent) => void` | -       | Layout event handler                             |
+| `isAnimationDisabled`   | `boolean`                            | `false` | Disables content enter/exit animations           |
 | `forceMount`            | `boolean`                            | -       | Force mount when closed for animation purposes   |
 | `...Animated.ViewProps` | `Animated.ViewProps`                 | -       | All Reanimated Animated.View props are supported |
 

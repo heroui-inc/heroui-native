@@ -107,6 +107,12 @@ export interface DialogContentProps
    * The dialog content
    */
   children?: ReactNode;
+
+  /**
+   * Disables content enter/exit opacity and scale animations
+   * @default false
+   */
+  isAnimationDisabled?: boolean;
 }
 
 /**

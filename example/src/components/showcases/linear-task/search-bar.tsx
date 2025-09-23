@@ -18,7 +18,7 @@ export const SearchBar: FC<SearchBarProps> = ({
 
   return (
     <View className="flex-row items-center gap-2 rounded-md bg-surface-2 px-3 py-3 mb-2">
-      <FontAwesome name="search" size={16} color={colors.mutedForeground} />
+      <FontAwesome name="search" size={14} color={colors.mutedForeground} />
       <TextInput
         value={value}
         onChangeText={onChangeText}

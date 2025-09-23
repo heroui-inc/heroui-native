@@ -377,7 +377,7 @@ export default function DialogScreen() {
           variant="tertiary"
           onPress={() => router.push('components/dialog-native-modal')}
         >
-          Dialog with Native Modal
+          Dialog from Native Modal
         </Button>
       )}
     </ScreenScrollView>

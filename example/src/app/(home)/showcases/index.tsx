@@ -8,17 +8,22 @@ import { Carousel } from '../../../components/showcase-carousel';
 const data = [
   {
     imageLight:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcase-paywall.png',
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/linear-task-light.png',
     imageDark:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcase-paywall.png',
-    title: 'Linear Task',
-    description: 'Linear task with progress bar and animated checkmark.',
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/linear-task-dark.png',
+    title: 'Linear Issue',
+    description:
+      'Interactive task management interface inspired by Linear, featuring dynamic dialogs and status updates.',
     href: '/showcases/linear-task',
     components: [
-      { name: 'Switch', href: '/components/switch' },
-      { name: 'FormField', href: '/components/form-field' },
+      { name: 'Dialog', href: '/components/dialog' },
+      { name: 'Card', href: '/components/card' },
+      { name: 'Chip', href: '/components/chip' },
       { name: 'RadioGroup', href: '/components/radio' },
+      { name: 'FormField', href: '/components/form-field' },
+      { name: 'Checkbox', href: '/components/checkbox' },
       { name: 'Button', href: '/components/button' },
+      { name: 'Avatar', href: '/components/avatar' },
     ],
   },
   {

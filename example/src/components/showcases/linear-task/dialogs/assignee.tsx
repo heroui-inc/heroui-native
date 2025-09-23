@@ -27,7 +27,7 @@ type AssigneeItem = {
 };
 
 export const Assignee: FC = () => {
-  const [value, setValue] = useState('no-assignee');
+  const [value, setValue] = useState('volo');
   const [searchQuery, setSearchQuery] = useState('');
 
   const { colors } = useTheme();
@@ -56,6 +56,11 @@ export const Assignee: FC = () => {
         label: 'Junior',
         indicator: (
           <Avatar alt="volo" className="size-[18px] bg-sky-500">
+            <Avatar.Image
+              source={{
+                uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/junior-avatar.jpg',
+              }}
+            />
             <Avatar.Fallback>
               <AppText className="text-[8px] font-bold text-white">JG</AppText>
             </Avatar.Fallback>
@@ -67,6 +72,11 @@ export const Assignee: FC = () => {
         label: 'volo',
         indicator: (
           <Avatar alt="volo" className="size-[18px] bg-purple-500">
+            <Avatar.Image
+              source={{
+                uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/volo-avatar.png',
+              }}
+            />
             <Avatar.Fallback>
               <AppText className="text-[8px] font-bold text-white">VS</AppText>
             </Avatar.Fallback>
@@ -137,7 +147,7 @@ export const Assignee: FC = () => {
                 <RadioGroup
                   value={value}
                   onValueChange={setValue}
-                  className="gap-5"
+                  className="gap-7"
                 >
                   {filteredItems.map((item) => (
                     <Dialog.Close
@@ -156,7 +166,7 @@ export const Assignee: FC = () => {
                         }}
                       >
                         <Radio.Content className="flex-row items-center gap-2">
-                          <View className="w-7 justify-center">
+                          <View className="w-7 pl-0.5 justify-center">
                             <View className="scale-105">{item.indicator}</View>
                           </View>
                           <Radio.Title>{item.label}</Radio.Title>

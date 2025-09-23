@@ -15,7 +15,7 @@ type StatusItem = {
 };
 
 export const Status: FC = () => {
-  const [value, setValue] = useState('todo');
+  const [value, setValue] = useState('done');
 
   const { colors } = useTheme();
 
@@ -126,7 +126,7 @@ export const Status: FC = () => {
         </Dialog.Overlay>
         <Dialog.Content className="rounded-2xl border-0">
           <DialogHeader>Status</DialogHeader>
-          <RadioGroup value={value} onValueChange={setValue} className="gap-5">
+          <RadioGroup value={value} onValueChange={setValue} className="gap-7">
             {items.map((item) => (
               <Dialog.Close key={item.value} className="self-stretch" asChild>
                 <Radio
@@ -138,8 +138,8 @@ export const Status: FC = () => {
                   }}
                 >
                   <Radio.Content className="flex-row items-center">
-                    <View className="w-7 justify-center">
-                      <View className="scale-105">{item.indicator}</View>
+                    <View className="w-7 pl-0.5 justify-center">
+                      <View className="scale-[1.2]">{item.indicator}</View>
                     </View>
                     <Radio.Title>{item.label}</Radio.Title>
                   </Radio.Content>

@@ -17,7 +17,7 @@ export const SearchBar: FC<SearchBarProps> = ({
   const { colors } = useTheme();
 
   return (
-    <View className="flex-row items-center gap-2 rounded-md bg-surface-2 px-3 py-3 mb-2">
+    <View className="flex-row items-center gap-2 rounded-md bg-surface-2 h-12 px-3 mb-2">
       <FontAwesome name="search" size={14} color={colors.mutedForeground} />
       <TextInput
         value={value}

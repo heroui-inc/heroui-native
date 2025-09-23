@@ -20,7 +20,7 @@ type ProjectItem = {
 };
 
 export const Project: FC = () => {
-  const [value, setValue] = useState('no-project');
+  const [value, setValue] = useState('hero-ui-native');
   const [searchQuery, setSearchQuery] = useState('');
 
   const { colors } = useTheme();
@@ -49,7 +49,7 @@ export const Project: FC = () => {
         label: 'HeroUI Native',
         indicator: (
           <MaterialCommunityIcons
-            name="cellphone-cog"
+            name="arrow-right-drop-circle"
             size={14}
             color={colors.danger}
           />
@@ -67,7 +67,7 @@ export const Project: FC = () => {
         label: 'HeroUI Chat',
         indicator: (
           <MaterialCommunityIcons
-            name="message-cog-outline"
+            name="adjust"
             size={14}
             color={colors.success}
           />
@@ -138,7 +138,7 @@ export const Project: FC = () => {
                 <RadioGroup
                   value={value}
                   onValueChange={setValue}
-                  className="gap-5"
+                  className="gap-7"
                 >
                   {filteredItems.map((item) => (
                     <Dialog.Close
@@ -157,7 +157,7 @@ export const Project: FC = () => {
                         }}
                       >
                         <Radio.Content className="flex-row items-center gap-2">
-                          <View className="w-7 justify-center">
+                          <View className="w-7 pl-0.5 justify-center">
                             <View className="scale-105">{item.indicator}</View>
                           </View>
                           <Radio.Title>{item.label}</Radio.Title>

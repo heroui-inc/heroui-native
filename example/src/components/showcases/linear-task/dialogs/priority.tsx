@@ -15,7 +15,7 @@ type PriorityItem = {
 };
 
 export const Priority: FC = () => {
-  const [value, setValue] = useState('medium');
+  const [value, setValue] = useState('no-priority');
 
   const { colors } = useTheme();
 

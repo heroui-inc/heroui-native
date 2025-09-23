@@ -27,7 +27,7 @@ type AssigneeItem = {
 };
 
 export const Assignee: FC = () => {
-  const [value, setValue] = useState('junior');
+  const [value, setValue] = useState('no-assignee');
   const [searchQuery, setSearchQuery] = useState('');
 
   const { colors } = useTheme();

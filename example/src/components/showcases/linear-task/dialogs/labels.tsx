@@ -20,7 +20,7 @@ type LabelItem = {
 
 export const Labels: FC = () => {
   const [selectedValues, setSelectedValues] = useState<Set<string>>(
-    new Set(['chore'])
+    new Set(['feature'])
   );
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -47,7 +47,7 @@ export const Labels: FC = () => {
       {
         value: 'chore',
         label: 'Chore',
-        indicator: <View className="size-2.5 rounded-full bg-orange-100" />,
+        indicator: <View className="size-2.5 rounded-full bg-orange-200" />,
       },
       {
         value: 'improvement',

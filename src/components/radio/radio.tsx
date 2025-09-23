@@ -235,6 +235,10 @@ const RadioIndicatorBackground = forwardRef<
     danger: themeColors.danger,
   };
 
+  const selectedBackground =
+    colors?.selectedBackground ?? backgroundColorMap[color];
+  const defaultBackground = colors?.defaultBackground ?? 'transparent';
+
   if (children) {
     return (
       <Animated.View ref={ref} className={tvStyles} {...restProps}>
@@ -249,9 +253,7 @@ const RadioIndicatorBackground = forwardRef<
       className={tvStyles}
       style={[
         {
-          backgroundColor: isSelected
-            ? (colors?.selectedBackground ?? backgroundColorMap[color])
-            : (colors?.defaultBackground ?? 'transparent'),
+          backgroundColor: isSelected ? selectedBackground : defaultBackground,
         },
         style,
       ]}

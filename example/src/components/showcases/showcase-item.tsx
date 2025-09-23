@@ -134,7 +134,13 @@ export function ShowcaseItem({
           <AppText className="text-2xl/7 text-foreground font-semibold">
             {item.title}
           </AppText>
-          <Feather name="chevron-right" size={24} color={colors.foreground} />
+          <View className="absolute -right-6">
+            <Feather
+              name="chevron-right"
+              size={20}
+              color={colors.mutedForeground}
+            />
+          </View>
         </Pressable>
         <AnimatedPressable
           entering={

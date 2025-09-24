@@ -12,7 +12,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { FullWindowOverlay as NativeFullWindowOverlay } from 'react-native-screens';
 import { scheduleOnRN } from 'react-native-worklets';
-import { useKeyboardStatus } from '../../helpers/hooks/use-keyboard-status';
+import { useKeyboardStatus } from '../../helpers/hooks';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import { useTheme } from '../../providers/theme';

@@ -1,4 +1,4 @@
-import type { Pressable, Text, View } from 'react-native';
+import type { Pressable, Text, View, ViewStyle } from 'react-native';
 
 // Base utility types
 
@@ -32,9 +32,34 @@ interface ForceMountable {
   forceMount?: true | undefined;
 }
 
+interface Insets {
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+}
+
+/**
+ * Certain props are only available on the native version of the component.
+ * @docs For the web version, see the Radix documentation https://www.radix-ui.com/primitives
+ */
+interface PositionedContentProps {
+  forceMount?: true | undefined;
+  style?: ViewStyle;
+  alignOffset?: number;
+  insets?: Insets;
+  avoidCollisions?: boolean;
+  align?: 'start' | 'center' | 'end';
+  side?: 'top' | 'bottom';
+  sideOffset?: number;
+  disablePositioningStyle?: boolean;
+}
+
 export type {
   ComponentPropsWithAsChild,
   ForceMountable,
+  Insets,
+  PositionedContentProps,
   PressableRef,
   SlottablePressableProps,
   SlottableTextProps,

@@ -56,10 +56,10 @@ const Root = forwardRef<RootRef, RootProps>(
     const [contentLayout, setContentLayout] = useState<LayoutRectangle | null>(
       null
     );
-    const [open, setOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     function onOpenChange(value: boolean) {
-      setOpen(value);
+      setIsOpen(value);
       onOpenChangeProp?.(value);
     }
 
@@ -67,7 +67,7 @@ const Root = forwardRef<RootRef, RootProps>(
     return (
       <RootContext.Provider
         value={{
-          open,
+          isOpen,
           onOpenChange,
           contentLayout,
           nativeID,
@@ -86,7 +86,7 @@ const Root = forwardRef<RootRef, RootProps>(
 
 const Trigger = forwardRef<TriggerRef, TriggerProps>(
   ({ asChild, onPress: onPressProp, disabled = false, ...props }, ref) => {
-    const { onOpenChange, open, setTriggerPosition } = useRootContext();
+    const { onOpenChange, isOpen, setTriggerPosition } = useRootContext();
 
     const augmentedRef = useAugmentedRef({
       ref,
@@ -111,7 +111,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       augmentedRef.current?.measure((_x, _y, width, height, pageX, pageY) => {
         setTriggerPosition({ width, pageX, pageY: pageY, height });
       });
-      onOpenChange(!open);
+      onOpenChange(!isOpen);
       onPressProp?.(ev);
     }
 
@@ -142,7 +142,7 @@ function Portal({ forceMount, hostName, children }: PortalProps) {
   }
 
   if (!forceMount) {
-    if (!value.open) {
+    if (!value.isOpen) {
       return null;
     }
   }
@@ -165,7 +165,7 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
     },
     ref
   ) => {
-    const { open, onOpenChange, setTriggerPosition, setContentLayout } =
+    const { isOpen, onOpenChange, setTriggerPosition, setContentLayout } =
       useRootContext();
 
     function onPress(ev: GestureResponderEvent) {
@@ -178,7 +178,7 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
     }
 
     if (!forceMount) {
-      if (!open) {
+      if (!isOpen) {
         return null;
       }
     }
@@ -212,7 +212,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
     ref
   ) => {
     const {
-      open,
+      isOpen,
       onOpenChange,
       contentLayout,
       nativeID,
@@ -259,7 +259,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
     }
 
     if (!forceMount) {
-      if (!open) {
+      if (!isOpen) {
         return null;
       }
     }

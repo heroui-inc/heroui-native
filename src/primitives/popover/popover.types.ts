@@ -16,7 +16,7 @@ interface IRootContext {
   /**
    * Whether the popover is currently open
    */
-  open: boolean;
+  isOpen: boolean;
   /**
    * Callback to change the open state of the popover
    */

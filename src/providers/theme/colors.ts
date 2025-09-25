@@ -7,8 +7,8 @@ export const colors: Record<ColorScheme, ColorConstants> = {
     foreground: 'hsl(348 0% 4%)',
     panel: 'hsl(300 50% 100%)',
 
-    muted: 'hsl(0 0% 45%)',
-    mutedForeground: 'hsl(0 0% 64%)',
+    muted: 'hsl(348 0% 96%)',
+    mutedForeground: 'hsl(348 0% 46%)',
 
     surface: 'hsl(0 0% 96%)',
     surfaceForeground: 'hsl(348 0% 4%)',
@@ -48,8 +48,8 @@ export const colors: Record<ColorScheme, ColorConstants> = {
     foreground: 'hsl(300 0% 99%)',
     panel: 'hsl(0 0% 10%)',
 
-    muted: 'hsl(0 0% 32%)',
-    mutedForeground: 'hsl(0 0% 45%)',
+    muted: 'hsl(348 0% 12%)',
+    mutedForeground: 'hsl(348 0% 62%)',
 
     surface: 'hsl(0 0% 98%)',
     surfaceForeground: 'hsl(0 0% 25%)',

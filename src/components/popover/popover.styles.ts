@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 
 const portal = tv({
-  base: 'absolute inset-0',
+  base: 'absolute inset-0 p-4',
 });
 
 const overlay = tv({
@@ -19,19 +19,19 @@ const overlay = tv({
 });
 
 const content = tv({
-  base: 'absolute bg-background rounded-lg shadow-lg border border-border p-4 min-w-[200px] max-w-[320px]',
+  base: 'absolute bg-panel rounded-lg border border-border p-5 shadow-md shadow-black/10',
 });
 
 const close = tv({
-  base: 'absolute right-2 top-2 p-1 rounded-md',
+  base: '',
 });
 
 const title = tv({
-  base: 'text-lg font-semibold text-foreground mb-1',
+  base: 'text-lg font-medium text-foreground',
 });
 
 const description = tv({
-  base: 'text-sm text-muted-foreground font-normal',
+  base: 'text-base text-muted-foreground font-normal',
 });
 
 const popoverStyles = {

@@ -52,7 +52,7 @@ export default function PopoverScreen() {
           <Popover.Portal>
             <Popover.Overlay />
             <Popover.Content>
-              <Popover.Close />
+              <Popover.Close className="absolute top-3 right-3 z-50" />
               <Popover.Title>Information</Popover.Title>
               <Popover.Description>
                 This popover includes a title and description to provide more

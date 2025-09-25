@@ -381,7 +381,7 @@ const DialogClose = forwardRef<
       {children || (
         <CloseIcon
           size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? colors.foreground}
+          color={iconProps?.color ?? colors.mutedForeground}
         />
       )}
     </DialogPrimitives.Close>

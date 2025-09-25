@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Text } from '../../helpers/components/text';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
+import { useTheme } from '../../providers/theme';
 import { CloseIcon } from './close-icon';
 import {
   DEFAULT_ALIGN_OFFSET,
@@ -154,15 +155,22 @@ const PopoverContent = forwardRef<
 const PopoverClose = forwardRef<
   PopoverPrimitivesTypes.CloseRef,
   PopoverCloseProps
->(({ className, children, iconProps, ...props }, ref) => {
+>(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
+  const { colors } = useTheme();
   const tvStyles = popoverStyles.close({ className });
 
   return (
-    <PopoverPrimitives.Close ref={ref} className={tvStyles} {...props}>
+    <PopoverPrimitives.Close
+      ref={ref}
+      className={tvStyles}
+      hitSlop={hitSlop}
+      {...props}
+    >
       {children || (
-        <View>
-          <CloseIcon {...iconProps} />
-        </View>
+        <CloseIcon
+          size={iconProps?.size ?? 18}
+          color={iconProps?.color ?? colors.mutedForeground}
+        />
       )}
     </PopoverPrimitives.Close>
   );

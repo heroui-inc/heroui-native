@@ -16,19 +16,19 @@ const overlay = tv({
 });
 
 const content = tv({
-  base: 'bg-background rounded-lg border border-border p-5',
+  base: 'bg-panel rounded-lg border border-border p-5',
 });
 
 const close = tv({
-  base: 'self-end',
+  base: '',
 });
 
 const title = tv({
-  base: 'text-xl font-semibold text-foreground',
+  base: 'text-lg font-medium text-foreground',
 });
 
 const description = tv({
-  base: 'text-base text-foreground/80',
+  base: 'text-base text-muted-foreground font-normal',
 });
 
 const dialogStyles = combineStyles({

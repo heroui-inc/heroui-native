@@ -10,6 +10,11 @@ import type {
 } from '../../helpers/types';
 
 /**
+ * Popover internal state
+ */
+type PopoverState = 'idle' | 'open' | 'close';
+
+/**
  * Internal context interface for managing popover state and positioning
  */
 interface IRootContext {
@@ -21,6 +26,10 @@ interface IRootContext {
    * Callback to change the open state of the popover
    */
   onOpenChange: (open: boolean) => void;
+  /**
+   * Extended internal state for additional control (useful for coordinating animations)
+   */
+  popoverState: PopoverState;
   /**
    * The position of the trigger element relative to the viewport
    */
@@ -41,6 +50,10 @@ interface IRootContext {
    * Unique identifier for the popover instance
    */
   nativeID: string;
+  /**
+   * Delay in milliseconds before the popover closes
+   */
+  closeDelay?: number;
 }
 
 /**
@@ -52,6 +65,11 @@ type RootProps = SlottableViewProps & {
    * @param open - Whether the popover is open or closed
    */
   onOpenChange?: (open: boolean) => void;
+  /**
+   * Delay in milliseconds before the popover closes (for exit animations)
+   * @default 300
+   */
+  closeDelay?: number;
 };
 /**
  * Props for the Popover Portal component
@@ -136,6 +154,7 @@ export type {
   IRootContext,
   OverlayProps,
   OverlayRef,
+  PopoverState,
   PortalProps,
   RootProps,
   RootRef,

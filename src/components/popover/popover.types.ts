@@ -181,6 +181,14 @@ export interface PopoverContextType {
    */
   onOpenChange: ((isOpen: boolean) => void) | undefined;
   /**
+   * Extended internal state for additional control (useful for coordinating animations)
+   */
+  popoverState: PopoverPrimitivesTypes.PopoverState;
+  /**
+   * Delay in milliseconds before the popover closes
+   */
+  closeDelay: number;
+  /**
    * The placement of the popover
    */
   placement: PopoverPlacement;

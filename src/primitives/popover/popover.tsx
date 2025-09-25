@@ -29,6 +29,7 @@ import type {
   IRootContext,
   OverlayProps,
   OverlayRef,
+  PopoverState,
   PortalProps,
   RootProps,
   RootRef,
@@ -49,7 +50,10 @@ const useRootContext = () => {
 };
 
 const Root = forwardRef<RootRef, RootProps>(
-  ({ asChild, onOpenChange: onOpenChangeProp, ...viewProps }, ref) => {
+  (
+    { asChild, onOpenChange: onOpenChangeProp, closeDelay = 300, ...viewProps },
+    ref
+  ) => {
     const nativeID = useId();
     const [triggerPosition, setTriggerPosition] =
       useState<LayoutPosition | null>(null);
@@ -57,9 +61,19 @@ const Root = forwardRef<RootRef, RootProps>(
       null
     );
     const [isOpen, setIsOpen] = useState(false);
+    const [popoverState, setPopoverState] = useState<PopoverState>('idle');
 
     function onOpenChange(value: boolean) {
-      setIsOpen(value);
+      if (value) {
+        setIsOpen(true);
+        setPopoverState('open');
+      } else {
+        setPopoverState('close');
+        setTimeout(() => {
+          setIsOpen(false);
+          setPopoverState('idle');
+        }, closeDelay);
+      }
       onOpenChangeProp?.(value);
     }
 
@@ -69,11 +83,13 @@ const Root = forwardRef<RootRef, RootProps>(
         value={{
           isOpen,
           onOpenChange,
+          popoverState,
           contentLayout,
           nativeID,
           setContentLayout,
           setTriggerPosition,
           triggerPosition,
+          closeDelay,
         }}
       >
         <Component ref={ref} {...viewProps} />

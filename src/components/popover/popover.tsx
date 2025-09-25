@@ -29,6 +29,8 @@ import type {
 const PopoverContext = createContext<PopoverContextType>({
   isOpen: false,
   onOpenChange: () => {},
+  popoverState: 'idle',
+  closeDelay: 300,
   placement: 'bottom',
   align: 'center',
   avoidCollisions: true,
@@ -59,6 +61,7 @@ const PopoverRoot = forwardRef<
       offset = DEFAULT_OFFSET,
       alignOffset = DEFAULT_ALIGN_OFFSET,
       insets = DEFAULT_INSETS,
+      closeDelay = 300,
       ...props
     },
     ref
@@ -81,6 +84,8 @@ const PopoverRoot = forwardRef<
       return {
         isOpen,
         onOpenChange,
+        popoverState: 'idle' as PopoverPrimitivesTypes.PopoverState,
+        closeDelay,
         placement,
         align,
         avoidCollisions,
@@ -91,6 +96,7 @@ const PopoverRoot = forwardRef<
     }, [
       isOpen,
       onOpenChange,
+      closeDelay,
       placement,
       align,
       avoidCollisions,
@@ -100,7 +106,12 @@ const PopoverRoot = forwardRef<
     ]);
 
     return (
-      <PopoverPrimitives.Root ref={ref} onOpenChange={onOpenChange} {...props}>
+      <PopoverPrimitives.Root
+        ref={ref}
+        onOpenChange={onOpenChange}
+        closeDelay={closeDelay}
+        {...props}
+      >
         <PopoverContext value={value}>{children}</PopoverContext>
       </PopoverPrimitives.Root>
     );
@@ -126,11 +137,21 @@ const PopoverPortal = ({
 }: PopoverPortalProps) => {
   const tvStyles = popoverStyles.portal({ className });
 
+  const { popoverState } = PopoverPrimitives.useRootContext();
+
   const contextValue = use(PopoverContext);
+
+  const mergedContextValue = useMemo(
+    () => ({
+      ...contextValue,
+      popoverState,
+    }),
+    [contextValue, popoverState]
+  );
 
   return (
     <PopoverPrimitives.Portal {...props}>
-      <PopoverContext value={contextValue}>
+      <PopoverContext value={mergedContextValue}>
         <View className={tvStyles}>{children}</View>
       </PopoverContext>
     </PopoverPrimitives.Portal>
@@ -159,9 +180,6 @@ const PopoverContent = forwardRef<
   const { placement, align, avoidCollisions, offset, alignOffset, insets } =
     use(PopoverContext);
 
-  // Now all four placements are supported
-  const side = placement;
-
   const tvStyles = popoverStyles.content({ className });
 
   const flatStyle = StyleSheet.flatten([nativeStyles.contentContainer, style]);
@@ -169,7 +187,7 @@ const PopoverContent = forwardRef<
   return (
     <PopoverPrimitives.Content
       ref={ref}
-      side={side as 'top' | 'bottom' | 'left' | 'right'}
+      side={placement}
       align={align}
       sideOffset={offset}
       alignOffset={alignOffset}

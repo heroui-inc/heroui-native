@@ -1,4 +1,5 @@
 import React, { forwardRef, useEffect } from 'react';
+import type { Text as RNText } from 'react-native';
 import { Keyboard, Platform, useWindowDimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
@@ -12,6 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { FullWindowOverlay as NativeFullWindowOverlay } from 'react-native-screens';
 import { scheduleOnRN } from 'react-native-worklets';
+import { Text } from '../../helpers/components/text';
 import { useKeyboardStatus } from '../../helpers/hooks';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
@@ -388,27 +390,46 @@ const DialogClose = forwardRef<
 
 // --------------------------------------------------
 
-const DialogTitle = forwardRef<
-  DialogPrimitivesTypes.TitleRef,
-  DialogTitleProps
->(({ className, ...props }, ref) => {
-  const tvStyles = dialogStyles.title({ className });
+const DialogTitle = forwardRef<RNText, DialogTitleProps>(
+  ({ className, children, ...props }, ref) => {
+    const { nativeID } = useDialog();
+    const tvStyles = dialogStyles.title({ className });
 
-  return <DialogPrimitives.Title ref={ref} className={tvStyles} {...props} />;
-});
+    return (
+      <Text
+        ref={ref}
+        role="heading"
+        accessibilityRole="header"
+        nativeID={`${nativeID}_label`}
+        className={tvStyles}
+        {...props}
+      >
+        {children}
+      </Text>
+    );
+  }
+);
 
 // --------------------------------------------------
 
-const DialogDescription = forwardRef<
-  DialogPrimitivesTypes.DescriptionRef,
-  DialogDescriptionProps
->(({ className, ...props }, ref) => {
-  const tvStyles = dialogStyles.description({ className });
+const DialogDescription = forwardRef<RNText, DialogDescriptionProps>(
+  ({ className, children, ...props }, ref) => {
+    const { nativeID } = useDialog();
+    const tvStyles = dialogStyles.description({ className });
 
-  return (
-    <DialogPrimitives.Description ref={ref} className={tvStyles} {...props} />
-  );
-});
+    return (
+      <Text
+        ref={ref}
+        accessibilityRole="text"
+        nativeID={`${nativeID}_desc`}
+        className={tvStyles}
+        {...props}
+      >
+        {children}
+      </Text>
+    );
+  }
+);
 
 // --------------------------------------------------
 

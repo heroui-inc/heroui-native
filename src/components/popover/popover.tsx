@@ -1,4 +1,5 @@
 import { createContext, forwardRef, use } from 'react';
+import type { Text as RNText } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../../helpers/components/text';
 import * as PopoverPrimitives from '../../primitives/popover';
@@ -169,12 +170,18 @@ const PopoverClose = forwardRef<
 
 // --------------------------------------------------
 
-const PopoverTitle = forwardRef<View, PopoverTitleProps>(
+const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
   ({ className, children, ...props }, ref) => {
     const tvStyles = popoverStyles.title({ className });
 
     return (
-      <Text ref={ref} className={tvStyles} {...props}>
+      <Text
+        ref={ref}
+        role="heading"
+        accessibilityRole="header"
+        className={tvStyles}
+        {...props}
+      >
         {children}
       </Text>
     );
@@ -183,12 +190,12 @@ const PopoverTitle = forwardRef<View, PopoverTitleProps>(
 
 // --------------------------------------------------
 
-const PopoverDescription = forwardRef<View, PopoverDescriptionProps>(
+const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
   ({ className, children, ...props }, ref) => {
     const tvStyles = popoverStyles.description({ className });
 
     return (
-      <Text ref={ref} className={tvStyles} {...props}>
+      <Text ref={ref} accessibilityRole="text" className={tvStyles} {...props}>
         {children}
       </Text>
     );

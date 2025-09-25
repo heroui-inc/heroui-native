@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { TextProps } from 'react-native';
 import type * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 
 /**
@@ -147,29 +148,21 @@ export interface PopoverCloseIconProps {
 /**
  * Popover Title component props
  */
-export interface PopoverTitleProps {
+export interface PopoverTitleProps extends TextProps {
   /**
    * Additional CSS class for the title
    */
   className?: string;
-  /**
-   * Title content
-   */
-  children?: ReactNode;
 }
 
 /**
  * Popover Description component props
  */
-export interface PopoverDescriptionProps {
+export interface PopoverDescriptionProps extends TextProps {
   /**
    * Additional CSS class for the description
    */
   className?: string;
-  /**
-   * Description content
-   */
-  children?: ReactNode;
 }
 
 /**

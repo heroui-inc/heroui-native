@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { StyleProp, ViewStyle } from 'react-native';
+import type { StyleProp, TextProps, ViewStyle } from 'react-native';
 import type {
   WithSpringConfig,
   WithTimingConfig,
@@ -152,28 +152,19 @@ export interface DialogCloseIconProps {
 /**
  * Dialog Title component props
  */
-export interface DialogTitleProps extends DialogPrimitivesTypes.TitleProps {
+export interface DialogTitleProps extends TextProps {
   /**
    * Additional CSS class for the title
    */
   className?: string;
-  /**
-   * Title content
-   */
-  children?: ReactNode;
 }
 
 /**
  * Dialog Description component props
  */
-export interface DialogDescriptionProps
-  extends DialogPrimitivesTypes.DescriptionProps {
+export interface DialogDescriptionProps extends TextProps {
   /**
    * Additional CSS class for the description
    */
   className?: string;
-  /**
-   * Description content
-   */
-  children?: ReactNode;
 }

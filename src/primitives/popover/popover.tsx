@@ -244,7 +244,8 @@ const Content = forwardRef<ContentRef, ContentProps>(
         setContentLayout(null);
         backHandler.remove();
       };
-    }, [onOpenChange, setContentLayout, setTriggerPosition]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const positionStyle = useRelativePosition({
       align,

@@ -1,6 +1,7 @@
 import { createContext, forwardRef, use, useMemo } from 'react';
 import type { Text as RNText } from 'react-native';
 import { StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text } from '../../helpers/components/text';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
@@ -8,6 +9,7 @@ import { useTheme } from '../../providers/theme';
 import { CloseIcon } from './close-icon';
 import {
   DEFAULT_ALIGN_OFFSET,
+  DEFAULT_INSETS,
   DEFAULT_OFFSET,
   DISPLAY_NAME,
 } from './popover.constants';
@@ -32,6 +34,12 @@ const PopoverContext = createContext<PopoverContextType>({
   avoidCollisions: true,
   offset: DEFAULT_OFFSET,
   alignOffset: DEFAULT_ALIGN_OFFSET,
+  insets: {
+    top: DEFAULT_INSETS,
+    right: DEFAULT_INSETS,
+    bottom: DEFAULT_INSETS,
+    left: DEFAULT_INSETS,
+  },
 });
 
 // --------------------------------------------------
@@ -50,10 +58,25 @@ const PopoverRoot = forwardRef<
       avoidCollisions = true,
       offset = DEFAULT_OFFSET,
       alignOffset = DEFAULT_ALIGN_OFFSET,
+      insets = DEFAULT_INSETS,
       ...props
     },
     ref
   ) => {
+    const safeAreaInsets = useSafeAreaInsets();
+
+    const normalizedInsets = useMemo(() => {
+      if (typeof insets === 'number') {
+        return {
+          top: insets + safeAreaInsets.top,
+          right: insets + safeAreaInsets.right,
+          bottom: insets + safeAreaInsets.bottom,
+          left: insets + safeAreaInsets.left,
+        };
+      }
+      return insets;
+    }, [insets, safeAreaInsets]);
+
     const value = useMemo(() => {
       return {
         isOpen,
@@ -63,6 +86,7 @@ const PopoverRoot = forwardRef<
         avoidCollisions,
         offset,
         alignOffset,
+        insets: normalizedInsets,
       };
     }, [
       isOpen,
@@ -72,6 +96,7 @@ const PopoverRoot = forwardRef<
       avoidCollisions,
       offset,
       alignOffset,
+      normalizedInsets,
     ]);
 
     return (
@@ -131,15 +156,11 @@ const PopoverContent = forwardRef<
   PopoverPrimitivesTypes.ContentRef,
   PopoverContentProps
 >(({ className, children, style, ...props }, ref) => {
-  const { placement, align, avoidCollisions, offset, alignOffset } =
+  const { placement, align, avoidCollisions, offset, alignOffset, insets } =
     use(PopoverContext);
 
-  const side =
-    placement === 'top' || placement === 'bottom'
-      ? placement
-      : placement === 'left'
-        ? 'top'
-        : 'bottom';
+  // Now all four placements are supported
+  const side = placement;
 
   const tvStyles = popoverStyles.content({ className });
 
@@ -148,11 +169,12 @@ const PopoverContent = forwardRef<
   return (
     <PopoverPrimitives.Content
       ref={ref}
-      side={side as 'top' | 'bottom'}
+      side={side as 'top' | 'bottom' | 'left' | 'right'}
       align={align}
       sideOffset={offset}
       alignOffset={alignOffset}
       avoidCollisions={avoidCollisions}
+      insets={insets}
       className={tvStyles}
       style={flatStyle}
       {...props}

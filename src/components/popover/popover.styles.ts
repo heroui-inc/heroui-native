@@ -2,15 +2,15 @@ import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 
 const portal = tv({
-  base: 'absolute inset-0 p-4',
+  base: 'absolute inset-0',
 });
 
 const overlay = tv({
-  base: 'absolute inset-0 bg-transparent',
+  base: 'absolute inset-0 bg-foreground/5',
 });
 
 const content = tv({
-  base: 'absolute bg-panel rounded-lg border border-border p-4 shadow-md shadow-black/10',
+  base: 'absolute bg-panel rounded-lg border border-border p-4 shadow-md shadow-foreground/10',
 });
 
 const close = tv({
@@ -22,7 +22,7 @@ const title = tv({
 });
 
 const description = tv({
-  base: 'text-base text-muted-foreground font-normal',
+  base: 'text-base/snug text-muted-foreground font-normal',
 });
 
 const popoverStyles = {

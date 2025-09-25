@@ -118,7 +118,7 @@ interface PositionedContentProps {
    * Preferred side of the trigger element to position against
    * @default 'bottom'
    */
-  side?: 'top' | 'bottom';
+  side?: 'top' | 'bottom' | 'left' | 'right';
   /**
    * Offset from the trigger element in pixels
    * @default 0

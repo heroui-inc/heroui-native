@@ -81,7 +81,7 @@ interface GetPositionArgs {
 }
 
 interface GetSidePositionArgs extends GetPositionArgs {
-  side: 'top' | 'bottom';
+  side: 'top' | 'bottom' | 'left' | 'right';
   sideOffset: number;
 }
 
@@ -96,30 +96,67 @@ function getSidePosition({
 }: GetSidePositionArgs) {
   const insetTop = insets?.top ?? 0;
   const insetBottom = insets?.bottom ?? 0;
-  const positionTop =
-    triggerPosition?.pageY - sideOffset - contentLayout.height;
-  const positionBottom =
-    triggerPosition.pageY + triggerPosition.height + sideOffset;
+  const insetLeft = insets?.left ?? 0;
+  const insetRight = insets?.right ?? 0;
 
-  if (!avoidCollisions) {
-    return {
-      top: side === 'top' ? positionTop : positionBottom,
-    };
-  }
+  // Handle vertical sides (top/bottom)
+  if (side === 'top' || side === 'bottom') {
+    const positionTop =
+      triggerPosition?.pageY - sideOffset - contentLayout.height;
+    const positionBottom =
+      triggerPosition.pageY + triggerPosition.height + sideOffset;
 
-  if (side === 'top') {
+    if (!avoidCollisions) {
+      return {
+        top: side === 'top' ? positionTop : positionBottom,
+      };
+    }
+
+    if (side === 'top') {
+      return {
+        top: Math.min(
+          Math.max(insetTop, positionTop),
+          dimensions.height - insetBottom - contentLayout.height
+        ),
+      };
+    }
+
     return {
       top: Math.min(
-        Math.max(insetTop, positionTop),
-        dimensions.height - insetBottom - contentLayout.height
+        dimensions.height - insetBottom - contentLayout.height,
+        positionBottom
       ),
     };
   }
 
+  // Handle horizontal sides (left/right)
+  const maxContentWidth = dimensions.width - insetLeft - insetRight;
+  const contentWidth = Math.min(contentLayout.width, maxContentWidth);
+
+  const positionLeft = triggerPosition.pageX - sideOffset - contentWidth;
+  const positionRight =
+    triggerPosition.pageX + triggerPosition.width + sideOffset;
+
+  if (!avoidCollisions) {
+    return {
+      left: side === 'left' ? positionLeft : positionRight,
+    };
+  }
+
+  if (side === 'left') {
+    return {
+      left: Math.min(
+        Math.max(insetLeft, positionLeft),
+        dimensions.width - insetRight - contentWidth
+      ),
+    };
+  }
+
+  // For right side, ensure content doesn't go beyond left inset
   return {
-    top: Math.min(
-      dimensions.height - insetBottom - contentLayout.height,
-      positionBottom
+    left: Math.max(
+      insetLeft,
+      Math.min(dimensions.width - insetRight - contentWidth, positionRight)
     ),
   };
 }
@@ -127,6 +164,7 @@ function getSidePosition({
 interface GetAlignPositionArgs extends GetPositionArgs {
   align: 'start' | 'center' | 'end';
   alignOffset: number;
+  side: 'top' | 'bottom' | 'left' | 'right';
 }
 
 function getAlignPosition({
@@ -137,49 +175,96 @@ function getAlignPosition({
   alignOffset,
   insets,
   dimensions,
+  side,
 }: GetAlignPositionArgs) {
   const insetLeft = insets?.left ?? 0;
   const insetRight = insets?.right ?? 0;
+  const insetTop = insets?.top ?? 0;
+  const insetBottom = insets?.bottom ?? 0;
+
+  // For top/bottom sides, align horizontally
+  if (side === 'top' || side === 'bottom') {
+    const maxContentWidth = dimensions.width - insetLeft - insetRight;
+    const contentWidth = Math.min(contentLayout.width, maxContentWidth);
+
+    let left = getHorizontalAlignPosition(
+      align,
+      triggerPosition.pageX,
+      triggerPosition.width,
+      contentWidth,
+      alignOffset,
+      insetLeft,
+      insetRight,
+      dimensions
+    );
+
+    if (avoidCollisions) {
+      const doesCollide =
+        left < insetLeft || left + contentWidth > dimensions.width - insetRight;
+      if (doesCollide) {
+        const spaceLeft = left - insetLeft;
+        const spaceRight =
+          dimensions.width - insetRight - (left + contentWidth);
+
+        if (spaceLeft > spaceRight && spaceLeft >= contentWidth) {
+          left = insetLeft;
+        } else if (spaceRight >= contentWidth) {
+          left = dimensions.width - insetRight - contentWidth;
+        } else {
+          const centeredPosition = Math.max(
+            insetLeft,
+            (dimensions.width - contentWidth - insetRight) / 2
+          );
+          left = centeredPosition;
+        }
+      }
+    }
+
+    return { left, maxWidth: maxContentWidth };
+  }
+
+  // For left/right sides, align vertically and constrain width
+  const maxContentHeight = dimensions.height - insetTop - insetBottom;
   const maxContentWidth = dimensions.width - insetLeft - insetRight;
+  const contentHeight = Math.min(contentLayout.height, maxContentHeight);
 
-  const contentWidth = Math.min(contentLayout.width, maxContentWidth);
-
-  let left = getLeftPosition(
+  let top = getVerticalAlignPosition(
     align,
-    triggerPosition.pageX,
-    triggerPosition.width,
-    contentWidth,
+    triggerPosition.pageY,
+    triggerPosition.height,
+    contentHeight,
     alignOffset,
-    insetLeft,
-    insetRight,
+    insetTop,
+    insetBottom,
     dimensions
   );
 
   if (avoidCollisions) {
     const doesCollide =
-      left < insetLeft || left + contentWidth > dimensions.width - insetRight;
+      top < insetTop || top + contentHeight > dimensions.height - insetBottom;
     if (doesCollide) {
-      const spaceLeft = left - insetLeft;
-      const spaceRight = dimensions.width - insetRight - (left + contentWidth);
+      const spaceTop = top - insetTop;
+      const spaceBottom =
+        dimensions.height - insetBottom - (top + contentHeight);
 
-      if (spaceLeft > spaceRight && spaceLeft >= contentWidth) {
-        left = insetLeft;
-      } else if (spaceRight >= contentWidth) {
-        left = dimensions.width - insetRight - contentWidth;
+      if (spaceTop > spaceBottom && spaceTop >= contentHeight) {
+        top = insetTop;
+      } else if (spaceBottom >= contentHeight) {
+        top = dimensions.height - insetBottom - contentHeight;
       } else {
         const centeredPosition = Math.max(
-          insetLeft,
-          (dimensions.width - contentWidth - insetRight) / 2
+          insetTop,
+          (dimensions.height - contentHeight - insetBottom) / 2
         );
-        left = centeredPosition;
+        top = centeredPosition;
       }
     }
   }
 
-  return { left, maxWidth: maxContentWidth };
+  return { top, maxHeight: maxContentHeight, maxWidth: maxContentWidth };
 }
 
-function getLeftPosition(
+function getHorizontalAlignPosition(
   align: 'start' | 'center' | 'end',
   triggerPageX: number,
   triggerWidth: number,
@@ -202,6 +287,32 @@ function getLeftPosition(
   return Math.max(
     insetLeft,
     Math.min(left + alignOffset, dimensions.width - contentWidth - insetRight)
+  );
+}
+
+function getVerticalAlignPosition(
+  align: 'start' | 'center' | 'end',
+  triggerPageY: number,
+  triggerHeight: number,
+  contentHeight: number,
+  alignOffset: number,
+  insetTop: number,
+  insetBottom: number,
+  dimensions: ScaledSize
+) {
+  let top = 0;
+  if (align === 'start') {
+    top = triggerPageY;
+  }
+  if (align === 'center') {
+    top = triggerPageY + triggerHeight / 2 - contentHeight / 2;
+  }
+  if (align === 'end') {
+    top = triggerPageY + triggerHeight - contentHeight;
+  }
+  return Math.max(
+    insetTop,
+    Math.min(top + alignOffset, dimensions.height - contentHeight - insetBottom)
   );
 }
 
@@ -239,6 +350,7 @@ function getContentStyle({
       alignOffset,
       insets,
       dimensions,
+      side,
     })
   );
 }

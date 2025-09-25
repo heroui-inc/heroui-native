@@ -4,8 +4,6 @@ import type * as PopoverPrimitivesTypes from '../../primitives/popover/popover.t
 
 /**
  * Popover placement options
- * Note: Currently only 'top' and 'bottom' are fully supported.
- * 'left' and 'right' will default to 'bottom' positioning.
  */
 export type PopoverPlacement = 'top' | 'bottom' | 'left' | 'right';
 
@@ -51,6 +49,14 @@ export interface PopoverRootProps extends PopoverPrimitivesTypes.RootProps {
    * @default 0
    */
   alignOffset?: number;
+  /**
+   * Screen edge insets to maintain when positioning the popover
+   * Can be a number for all sides or an object with top/right/bottom/left
+   * @default 12 + safeAreaInset
+   */
+  insets?:
+    | number
+    | { top?: number; right?: number; bottom?: number; left?: number };
 }
 
 /**
@@ -194,4 +200,10 @@ export interface PopoverContextType {
    * The alignment offset
    */
   alignOffset: number;
+  /**
+   * Screen edge insets
+   */
+  insets:
+    | { top?: number; right?: number; bottom?: number; left?: number }
+    | undefined;
 }

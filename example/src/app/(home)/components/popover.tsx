@@ -51,7 +51,7 @@ export default function PopoverScreen() {
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Overlay />
-            <Popover.Content>
+            <Popover.Content className="gap-1">
               <Popover.Close className="absolute top-3 right-3 z-50" />
               <Popover.Title>Information</Popover.Title>
               <Popover.Description>
@@ -94,7 +94,7 @@ export default function PopoverScreen() {
 
       {/* Placements */}
       <SectionTitle title="Placement Options" />
-      <View className="gap-8">
+      <View className="gap-4">
         <View className="flex-row justify-center gap-4">
           <Popover placement="top">
             <Popover.Trigger>
@@ -110,16 +110,16 @@ export default function PopoverScreen() {
             </Popover.Portal>
           </Popover>
 
-          <Popover placement="bottom">
+          <Popover placement="right">
             <Popover.Trigger>
               <Button size="sm" variant="tertiary" className="w-24">
-                Bottom
+                Right
               </Button>
             </Popover.Trigger>
             <Popover.Portal>
               <Popover.Overlay />
               <Popover.Content>
-                <AppText className="text-foreground">Bottom placement</AppText>
+                <AppText className="text-foreground">Right placement</AppText>
               </Popover.Content>
             </Popover.Portal>
           </Popover>
@@ -135,21 +135,21 @@ export default function PopoverScreen() {
             <Popover.Portal>
               <Popover.Overlay />
               <Popover.Content>
-                <AppText className="text-foreground">Left placement</AppText>
+                <AppText className="text-foreground">Left Placement</AppText>
               </Popover.Content>
             </Popover.Portal>
           </Popover>
 
-          <Popover placement="right">
+          <Popover placement="bottom">
             <Popover.Trigger>
               <Button size="sm" variant="tertiary" className="w-24">
-                Right
+                Bottom
               </Button>
             </Popover.Trigger>
             <Popover.Portal>
               <Popover.Overlay />
               <Popover.Content>
-                <AppText className="text-foreground">Right placement</AppText>
+                <AppText className="text-foreground">Bottom placement</AppText>
               </Popover.Content>
             </Popover.Portal>
           </Popover>
@@ -302,42 +302,6 @@ export default function PopoverScreen() {
                   Save
                 </Button>
               </View>
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover>
-      </View>
-
-      {/* Custom Offset */}
-      <SectionTitle title="Custom Offset" />
-      <View className="flex-row justify-center gap-4">
-        <Popover offset={0}>
-          <Popover.Trigger>
-            <Button size="sm" variant="tertiary">
-              No Gap
-            </Button>
-          </Popover.Trigger>
-          <Popover.Portal>
-            <Popover.Overlay />
-            <Popover.Content>
-              <AppText className="text-foreground text-sm">
-                No offset from trigger
-              </AppText>
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover>
-
-        <Popover offset={20}>
-          <Popover.Trigger>
-            <Button size="sm" variant="tertiary">
-              Large Gap
-            </Button>
-          </Popover.Trigger>
-          <Popover.Portal>
-            <Popover.Overlay />
-            <Popover.Content>
-              <AppText className="text-foreground text-sm">
-                20px offset from trigger
-              </AppText>
             </Popover.Content>
           </Popover.Portal>
         </Popover>

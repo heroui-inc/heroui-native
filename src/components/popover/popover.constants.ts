@@ -21,3 +21,8 @@ export const DEFAULT_OFFSET = 8;
  * Default alignment offset
  */
 export const DEFAULT_ALIGN_OFFSET = 0;
+
+/**
+ * Default screen edge insets
+ */
+export const DEFAULT_INSETS = 12;

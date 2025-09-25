@@ -8,6 +8,7 @@ import React, {
 import {
   BackHandler,
   Pressable,
+  StyleSheet,
   View,
   type GestureResponderEvent,
   type LayoutChangeEvent,
@@ -25,6 +26,7 @@ import type {
   CloseRef,
   ContentProps,
   ContentRef,
+  IRootContext,
   OverlayProps,
   OverlayRef,
   PortalProps,
@@ -33,16 +35,6 @@ import type {
   TriggerProps,
   TriggerRef,
 } from './popover.types';
-
-interface IRootContext {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  triggerPosition: LayoutPosition | null;
-  setTriggerPosition: (triggerPosition: LayoutPosition | null) => void;
-  contentLayout: LayoutRectangle | null;
-  setContentLayout: (contentLayout: LayoutRectangle | null) => void;
-  nativeID: string;
-}
 
 const RootContext = React.createContext<IRootContext | null>(null);
 
@@ -259,6 +251,8 @@ const Content = forwardRef<ContentRef, ContentProps>(
       disablePositioningStyle,
     });
 
+    const flatStyle = StyleSheet.flatten([positionStyle, style]);
+
     function onLayout(event: LayoutChangeEvent) {
       setContentLayout(event.nativeEvent.layout);
       onLayoutProp?.(event);
@@ -277,7 +271,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
         role="dialog"
         nativeID={nativeID}
         aria-modal={true}
-        style={[positionStyle, style]}
+        style={flatStyle}
         onLayout={onLayout}
         {...props}
       />

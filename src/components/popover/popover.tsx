@@ -1,5 +1,5 @@
 import { createContext, forwardRef, use } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Text } from '../../helpers/components/text';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
@@ -129,6 +129,8 @@ const PopoverContent = forwardRef<
 
   const tvStyles = popoverStyles.content({ className });
 
+  const flatStyle = StyleSheet.flatten([nativeStyles.contentContainer, style]);
+
   return (
     <PopoverPrimitives.Content
       ref={ref}
@@ -138,8 +140,7 @@ const PopoverContent = forwardRef<
       alignOffset={alignOffset}
       avoidCollisions={avoidCollisions}
       className={tvStyles}
-      // VS ---------------
-      style={[nativeStyles.contentContainer, style] as any}
+      style={flatStyle}
       {...props}
     >
       {children}

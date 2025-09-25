@@ -1,3 +1,5 @@
+import type { LayoutRectangle } from 'react-native';
+import type { LayoutPosition } from '../../helpers/hooks';
 import type {
   ForceMountable,
   PositionedContentProps,
@@ -6,6 +8,40 @@ import type {
   SlottableViewProps,
   ViewRef,
 } from '../../helpers/types';
+
+/**
+ * Internal context interface for managing popover state and positioning
+ */
+interface IRootContext {
+  /**
+   * Whether the popover is currently open
+   */
+  open: boolean;
+  /**
+   * Callback to change the open state of the popover
+   */
+  onOpenChange: (open: boolean) => void;
+  /**
+   * The position of the trigger element relative to the viewport
+   */
+  triggerPosition: LayoutPosition | null;
+  /**
+   * Updates the trigger element's position
+   */
+  setTriggerPosition: (triggerPosition: LayoutPosition | null) => void;
+  /**
+   * The layout measurements of the popover content
+   */
+  contentLayout: LayoutRectangle | null;
+  /**
+   * Updates the content layout measurements
+   */
+  setContentLayout: (contentLayout: LayoutRectangle | null) => void;
+  /**
+   * Unique identifier for the popover instance
+   */
+  nativeID: string;
+}
 
 /**
  * Props for the Popover Root component
@@ -97,6 +133,7 @@ export type {
   CloseRef,
   ContentProps,
   ContentRef,
+  IRootContext,
   OverlayProps,
   OverlayRef,
   PortalProps,

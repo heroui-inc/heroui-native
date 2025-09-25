@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Button, Popover, TextField, useTheme } from 'heroui-native';
+import { Button, Popover, useTheme } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { AppText } from '../../../components/app-text';
@@ -8,7 +8,7 @@ import { SectionTitle } from '../../../components/section-title';
 
 export default function PopoverScreen() {
   const [controlledOpen, setControlledOpen] = useState(false);
-  const [feedbackText, setFeedbackText] = useState('');
+
   const { colors } = useTheme();
 
   return (
@@ -20,7 +20,9 @@ export default function PopoverScreen() {
       <View className="items-center">
         <Popover>
           <Popover.Trigger>
-            <Button variant="secondary">Open Popover</Button>
+            <Button variant="tertiary" size="sm">
+              Open Popover
+            </Button>
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Overlay />
@@ -38,12 +40,12 @@ export default function PopoverScreen() {
       <View className="items-center">
         <Popover>
           <Popover.Trigger>
-            <Button variant="primary">
+            <Button variant="tertiary" size="sm">
               <Button.StartContent>
                 <Ionicons
                   name="information-circle"
                   size={20}
-                  color={colors.accentForeground}
+                  color={colors.mutedForeground}
                 />
               </Button.StartContent>
               <Button.LabelContent>Show Info</Button.LabelContent>
@@ -71,24 +73,22 @@ export default function PopoverScreen() {
         </AppText>
         <Popover isOpen={controlledOpen} onOpenChange={setControlledOpen}>
           <Popover.Trigger>
-            <Button variant="tertiary">
+            <Button variant="tertiary" size="sm">
               {controlledOpen ? 'Close' : 'Open'} Controlled
             </Button>
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Overlay />
-            <Popover.Content className="gap-4">
+            <Popover.Content className="gap-1">
               <Popover.Title>Controlled Popover</Popover.Title>
-              <Popover.Description>
+              <Popover.Description className="mb-8">
                 This popover's state is controlled externally.
               </Popover.Description>
-              <Button
-                size="sm"
-                variant="primary"
-                onPress={() => setControlledOpen(false)}
-              >
-                Close Popover
-              </Button>
+              <Popover.Close asChild>
+                <Button size="sm" variant="primary">
+                  Close Popover
+                </Button>
+              </Popover.Close>
             </Popover.Content>
           </Popover.Portal>
         </Popover>
@@ -100,7 +100,7 @@ export default function PopoverScreen() {
         <View className="flex-row justify-center gap-4">
           <Popover placement="top">
             <Popover.Trigger>
-              <Button size="sm" variant="secondary">
+              <Button size="sm" variant="tertiary" className="w-24">
                 Top
               </Button>
             </Popover.Trigger>
@@ -114,7 +114,7 @@ export default function PopoverScreen() {
 
           <Popover placement="bottom">
             <Popover.Trigger>
-              <Button size="sm" variant="secondary">
+              <Button size="sm" variant="tertiary" className="w-24">
                 Bottom
               </Button>
             </Popover.Trigger>
@@ -130,7 +130,7 @@ export default function PopoverScreen() {
         <View className="flex-row justify-center gap-4">
           <Popover placement="left">
             <Popover.Trigger>
-              <Button size="sm" variant="secondary">
+              <Button size="sm" variant="tertiary" className="w-24">
                 Left
               </Button>
             </Popover.Trigger>
@@ -144,7 +144,7 @@ export default function PopoverScreen() {
 
           <Popover placement="right">
             <Popover.Trigger>
-              <Button size="sm" variant="secondary">
+              <Button size="sm" variant="tertiary" className="w-24">
                 Right
               </Button>
             </Popover.Trigger>
@@ -163,7 +163,7 @@ export default function PopoverScreen() {
       <View className="flex-row justify-center gap-4">
         <Popover align="start">
           <Popover.Trigger>
-            <Button size="sm" variant="ghost">
+            <Button size="sm" variant="tertiary" className="w-24">
               Start
             </Button>
           </Popover.Trigger>
@@ -177,7 +177,7 @@ export default function PopoverScreen() {
 
         <Popover align="center">
           <Popover.Trigger>
-            <Button size="sm" variant="ghost">
+            <Button size="sm" variant="tertiary" className="w-24">
               Center
             </Button>
           </Popover.Trigger>
@@ -191,7 +191,7 @@ export default function PopoverScreen() {
 
         <Popover align="end">
           <Popover.Trigger>
-            <Button size="sm" variant="ghost">
+            <Button size="sm" variant="tertiary" className="w-24">
               End
             </Button>
           </Popover.Trigger>
@@ -209,7 +209,9 @@ export default function PopoverScreen() {
       <View className="items-center">
         <Popover>
           <Popover.Trigger>
-            <Button variant="tertiary">No Overlay</Button>
+            <Button variant="tertiary" size="sm">
+              No Overlay
+            </Button>
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Content>
@@ -229,12 +231,12 @@ export default function PopoverScreen() {
       <View className="items-center">
         <Popover>
           <Popover.Trigger>
-            <Button variant="primary">
+            <Button variant="tertiary" size="sm">
               <Button.StartContent>
                 <Ionicons
                   name="settings"
-                  size={20}
-                  color={colors.accentForeground}
+                  size={16}
+                  color={colors.mutedForeground}
                 />
               </Button.StartContent>
               <Button.LabelContent>Settings</Button.LabelContent>
@@ -307,62 +309,6 @@ export default function PopoverScreen() {
         </Popover>
       </View>
 
-      {/* Interactive Form */}
-      <SectionTitle title="Interactive Form" />
-      <View className="items-center">
-        <Popover>
-          <Popover.Trigger>
-            <Button variant="secondary">
-              <Button.StartContent>
-                <Ionicons
-                  name="chatbubble"
-                  size={18}
-                  color={colors.accentSoftForeground}
-                />
-              </Button.StartContent>
-              <Button.LabelContent>Send Feedback</Button.LabelContent>
-            </Button>
-          </Popover.Trigger>
-          <Popover.Portal>
-            <Popover.Overlay />
-            <Popover.Content className="gap-4 p-6 min-w-[300px]">
-              <View className="gap-2">
-                <Popover.Title>Send Feedback</Popover.Title>
-                <Popover.Description>
-                  We'd love to hear your thoughts
-                </Popover.Description>
-              </View>
-
-              <TextField
-                placeholder="Type your feedback here..."
-                value={feedbackText}
-                onChangeText={setFeedbackText}
-                multiline
-                numberOfLines={3}
-                className="min-h-[80px]"
-              />
-
-              <View className="flex-row gap-2 justify-end">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onPress={() => setFeedbackText('')}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  size="sm"
-                  variant="primary"
-                  isDisabled={!feedbackText.trim()}
-                >
-                  Send
-                </Button>
-              </View>
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover>
-      </View>
-
       {/* Custom Offset */}
       <SectionTitle title="Custom Offset" />
       <View className="flex-row justify-center gap-4">
@@ -398,8 +344,6 @@ export default function PopoverScreen() {
           </Popover.Portal>
         </Popover>
       </View>
-
-      <View className="h-20" />
     </ScreenScrollView>
   );
 }

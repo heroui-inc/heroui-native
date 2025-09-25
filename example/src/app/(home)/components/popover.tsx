@@ -26,7 +26,7 @@ export default function PopoverScreen() {
             <Popover.Overlay />
             <Popover.Content>
               <AppText className="text-foreground">
-                This is a basic popover with simple content.
+                This is a basic popover with simple content
               </AppText>
             </Popover.Content>
           </Popover.Portal>

@@ -91,11 +91,6 @@ export interface PopoverOverlayProps
    * Additional CSS class for the overlay
    */
   className?: string;
-  /**
-   * Whether the overlay is transparent (no background)
-   * @default true
-   */
-  isTransparent?: boolean;
 }
 
 /**

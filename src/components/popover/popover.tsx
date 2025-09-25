@@ -117,8 +117,8 @@ const PopoverPortal = ({
 const PopoverOverlay = forwardRef<
   PopoverPrimitivesTypes.OverlayRef,
   PopoverOverlayProps
->(({ className, isTransparent = true, ...props }, ref) => {
-  const tvStyles = popoverStyles.overlay({ className, isTransparent });
+>(({ className, ...props }, ref) => {
+  const tvStyles = popoverStyles.overlay({ className });
 
   return (
     <PopoverPrimitives.Overlay ref={ref} className={tvStyles} {...props} />

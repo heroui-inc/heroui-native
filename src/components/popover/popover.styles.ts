@@ -6,20 +6,11 @@ const portal = tv({
 });
 
 const overlay = tv({
-  base: 'absolute inset-0',
-  variants: {
-    isTransparent: {
-      true: '',
-      false: 'bg-black/50',
-    },
-  },
-  defaultVariants: {
-    isTransparent: true,
-  },
+  base: 'absolute inset-0 bg-transparent',
 });
 
 const content = tv({
-  base: 'absolute bg-panel rounded-lg border border-border p-5 shadow-md shadow-black/10',
+  base: 'absolute bg-panel rounded-lg border border-border p-4 shadow-md shadow-black/10',
 });
 
 const close = tv({

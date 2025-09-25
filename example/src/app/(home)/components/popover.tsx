@@ -13,8 +13,6 @@ export default function PopoverScreen() {
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
-      <View />
-
       {/* Basic Popover */}
       <SectionTitle title="Basic Usage" />
       <View className="items-center">

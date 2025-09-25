@@ -1,4 +1,4 @@
-import { createContext, forwardRef, use } from 'react';
+import { createContext, forwardRef, use, useMemo } from 'react';
 import type { Text as RNText } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../../helpers/components/text';
@@ -54,21 +54,29 @@ const PopoverRoot = forwardRef<
     },
     ref
   ) => {
+    const value = useMemo(() => {
+      return {
+        isOpen,
+        onOpenChange,
+        placement,
+        align,
+        avoidCollisions,
+        offset,
+        alignOffset,
+      };
+    }, [
+      isOpen,
+      onOpenChange,
+      placement,
+      align,
+      avoidCollisions,
+      offset,
+      alignOffset,
+    ]);
+
     return (
       <PopoverPrimitives.Root ref={ref} onOpenChange={onOpenChange} {...props}>
-        <PopoverContext
-          value={{
-            isOpen,
-            onOpenChange,
-            placement,
-            align,
-            avoidCollisions,
-            offset,
-            alignOffset,
-          }}
-        >
-          {children}
-        </PopoverContext>
+        <PopoverContext value={value}>{children}</PopoverContext>
       </PopoverPrimitives.Root>
     );
   }
@@ -93,9 +101,13 @@ const PopoverPortal = ({
 }: PopoverPortalProps) => {
   const tvStyles = popoverStyles.portal({ className });
 
+  const contextValue = use(PopoverContext);
+
   return (
     <PopoverPrimitives.Portal {...props}>
-      <View className={tvStyles}>{children}</View>
+      <PopoverContext value={contextValue}>
+        <View className={tvStyles}>{children}</View>
+      </PopoverContext>
     </PopoverPrimitives.Portal>
   );
 };

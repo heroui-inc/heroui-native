@@ -4,6 +4,8 @@ import type * as PopoverPrimitivesTypes from '../../primitives/popover/popover.t
 
 /**
  * Popover placement options
+ * Note: Currently only 'top' and 'bottom' are fully supported.
+ * 'left' and 'right' will default to 'bottom' positioning.
  */
 export type PopoverPlacement = 'top' | 'bottom' | 'left' | 'right';
 

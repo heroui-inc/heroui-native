@@ -7,6 +7,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
@@ -89,7 +90,9 @@ const PopoverPortal = ({
 
   return (
     <PopoverPrimitives.Portal {...props}>
-      <View className={tvStyles}>{children}</View>
+      <FullWindowOverlay>
+        <View className={tvStyles}>{children}</View>
+      </FullWindowOverlay>
     </PopoverPrimitives.Portal>
   );
 };

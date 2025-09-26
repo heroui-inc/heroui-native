@@ -1,6 +1,6 @@
-import React, { forwardRef, useEffect } from 'react';
+import { forwardRef, useEffect } from 'react';
 import type { Text as RNText } from 'react-native';
-import { Keyboard, Platform, useWindowDimensions } from 'react-native';
+import { Keyboard, useWindowDimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   Extrapolation,
@@ -11,8 +11,8 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { FullWindowOverlay as NativeFullWindowOverlay } from 'react-native-screens';
 import { scheduleOnRN } from 'react-native-worklets';
+import { FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
 import { useKeyboardStatus } from '../../helpers/hooks';
 import * as DialogPrimitives from '../../primitives/dialog';
@@ -39,9 +39,6 @@ const AnimatedOverlay = Animated.createAnimatedComponent(
 const AnimatedContent = Animated.createAnimatedComponent(
   DialogPrimitives.Content
 );
-
-const FullWindowOverlay =
-  Platform.OS === 'ios' ? NativeFullWindowOverlay : React.Fragment;
 
 const useDialog = DialogPrimitives.useRootContext;
 

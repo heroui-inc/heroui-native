@@ -46,6 +46,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   const {
     children,
     layout = DEFAULT_LAYOUT_TRANSITION,
+    skipLayoutAnimation = false,
     variant = 'primary',
     size = 'md',
     isIconOnly = false,
@@ -240,7 +241,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     <ButtonProvider value={contextValue}>
       <AnimatedPressable
         ref={ref}
-        layout={layout}
+        layout={skipLayoutAnimation ? undefined : layout}
         className={tvStyles}
         style={[nativeStyles.buttonRoot, animatedContainerStyle, style]}
         disabled={isDisabled}

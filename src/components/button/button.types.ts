@@ -119,6 +119,11 @@ export interface ButtonRootProps extends AnimatedProps<PressableProps> {
    * Animation configuration for press states (scale and highlight)
    */
   animationConfig?: AnimationConfig;
+  /**
+   * Whether to skip the layout animation
+   * @default false
+   */
+  skipLayoutAnimation?: boolean;
 }
 
 /**

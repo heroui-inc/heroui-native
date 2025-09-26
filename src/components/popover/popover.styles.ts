@@ -6,11 +6,23 @@ const portal = tv({
 });
 
 const overlay = tv({
-  base: 'absolute inset-0 bg-foreground/5',
+  base: 'absolute inset-0',
+  variants: {
+    isDark: {
+      true: 'bg-black/25',
+      false: 'bg-black/5',
+    },
+  },
 });
 
 const content = tv({
-  base: 'absolute bg-panel rounded-lg border border-border p-4 shadow-md shadow-foreground/10',
+  base: 'absolute bg-panel rounded-lg border border-border p-4',
+  variants: {
+    isDark: {
+      true: '',
+      false: 'shadow-md shadow-foreground/10',
+    },
+  },
 });
 
 const close = tv({

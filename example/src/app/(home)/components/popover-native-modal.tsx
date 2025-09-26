@@ -1,7 +1,10 @@
 import { Button, Popover } from 'heroui-native';
 import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function PopoverNativeModalScreen() {
+  const insets = useSafeAreaInsets();
+
   return (
     <View className="pt-24 px-5">
       <Popover>
@@ -10,7 +13,7 @@ export default function PopoverNativeModalScreen() {
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Overlay />
-          <Popover.Content>
+          <Popover.Content offset={insets.top + 20}>
             <Popover.Close className="self-end -mb-2" />
             <View className="gap-2">
               <Popover.Title>Popover from Modal</Popover.Title>
@@ -19,13 +22,15 @@ export default function PopoverNativeModalScreen() {
                 full window overlay functionality.
               </Popover.Description>
             </View>
-            <View className="flex-row justify-end gap-3 mt-4">
+            <View className="flex-row justify-end gap-3 mt-8">
               <Popover.Close asChild>
-                <Button variant="ghost" size="sm">
+                <Button skipLayoutAnimation variant="ghost" size="sm">
                   Cancel
                 </Button>
               </Popover.Close>
-              <Button size="sm">Confirm</Button>
+              <Button skipLayoutAnimation size="sm">
+                Confirm
+              </Button>
             </View>
           </Popover.Content>
         </Popover.Portal>

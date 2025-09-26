@@ -46,7 +46,7 @@ const usePopover = PopoverPrimitives.useRootContext;
 const PopoverRoot = forwardRef<
   PopoverPrimitivesTypes.RootRef,
   PopoverRootProps
->(({ children, onOpenChange, closeDelay = 500, ...props }, ref) => {
+>(({ children, onOpenChange, closeDelay = 300, ...props }, ref) => {
   return (
     <PopoverPrimitives.Root
       ref={ref}
@@ -103,9 +103,11 @@ const PopoverOverlay = forwardRef<
   PopoverPrimitivesTypes.OverlayRef,
   PopoverOverlayProps
 >(({ className, style, ...props }, ref) => {
+  const { isDark } = useTheme();
+
   const { progress } = usePopover();
 
-  const tvStyles = popoverStyles.overlay({ className });
+  const tvStyles = popoverStyles.overlay({ className, isDark });
 
   const rOverlayStyle = useAnimatedStyle(() => {
     const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
@@ -144,6 +146,8 @@ const PopoverContent = forwardRef<
     },
     ref
   ) => {
+    const { isDark } = useTheme();
+
     const safeAreaInsets = useSafeAreaInsets();
 
     const insets = {
@@ -155,7 +159,7 @@ const PopoverContent = forwardRef<
 
     const { progress } = usePopover();
 
-    const tvStyles = popoverStyles.content({ className });
+    const tvStyles = popoverStyles.content({ className, isDark });
 
     const rContainerStyle = useAnimatedStyle(() => {
       return {

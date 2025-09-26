@@ -25,7 +25,7 @@ export default function PopoverScreen() {
             </Button>
           </Popover.Trigger>
           <Popover.Portal>
-            <Popover.Overlay className="bg-black/50" />
+            <Popover.Overlay />
             <Popover.Content>
               <AppText className="text-foreground">
                 This is a basic popover with simple content

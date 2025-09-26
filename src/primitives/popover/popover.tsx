@@ -246,14 +246,17 @@ const Content = forwardRef<ContentRef, ContentProps>(
       setContentLayout,
       setTriggerPosition,
       triggerPosition,
+      closeDelay,
     } = useRootContext();
 
     useEffect(() => {
       const backHandler = BackHandler.addEventListener(
         'hardwareBackPress',
         () => {
-          setTriggerPosition(null);
-          setContentLayout(null);
+          setTimeout(() => {
+            setTriggerPosition(null);
+            setContentLayout(null);
+          }, closeDelay);
           onOpenChange(false);
           return true;
         }
@@ -292,6 +295,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
     }
 
     const Component = asChild ? Slot.View : View;
+
     return (
       <Component
         ref={ref}

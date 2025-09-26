@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { Button, Popover, useTheme } from 'heroui-native';
 import { useState } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
@@ -10,6 +11,7 @@ export default function PopoverScreen() {
   const [controlledOpen, setControlledOpen] = useState(false);
 
   const { colors } = useTheme();
+  const router = useRouter();
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -23,7 +25,7 @@ export default function PopoverScreen() {
             </Button>
           </Popover.Trigger>
           <Popover.Portal>
-            <Popover.Overlay />
+            <Popover.Overlay className="bg-black/50" />
             <Popover.Content>
               <AppText className="text-foreground">
                 This is a basic popover with simple content
@@ -284,6 +286,22 @@ export default function PopoverScreen() {
           </Popover.Portal>
         </Popover>
       </View>
+
+      {/* Native Modal Navigation */}
+      {Platform.OS === 'ios' && (
+        <>
+          <SectionTitle title="Native Modal Test" />
+          <View className="items-center">
+            <Button
+              variant="tertiary"
+              size="sm"
+              onPress={() => router.push('components/popover-native-modal')}
+            >
+              Popover from Native Modal
+            </Button>
+          </View>
+        </>
+      )}
     </ScreenScrollView>
   );
 }

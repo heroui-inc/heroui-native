@@ -22,8 +22,8 @@ export function useRelativePosition({
   contentLayout,
   alignOffset,
   insets,
-  sideOffset,
-  side,
+  offset,
+  placement,
   disablePositioningStyle,
 }: UseRelativePositionArgs) {
   const dimensions = Dimensions.get('screen');
@@ -44,24 +44,24 @@ export function useRelativePosition({
       align,
       avoidCollisions,
       contentLayout,
-      side,
+      placement,
       triggerPosition,
       alignOffset,
       insets,
-      sideOffset,
+      offset,
       dimensions,
     });
   }, [
     align,
     avoidCollisions,
-    side,
+    placement,
     alignOffset,
     insets,
     triggerPosition,
     contentLayout,
     dimensions,
     disablePositioningStyle,
-    sideOffset,
+    offset,
   ]);
 }
 
@@ -81,15 +81,15 @@ interface GetPositionArgs {
 }
 
 interface GetSidePositionArgs extends GetPositionArgs {
-  side: 'top' | 'bottom' | 'left' | 'right';
-  sideOffset: number;
+  placement: 'top' | 'bottom' | 'left' | 'right';
+  offset: number;
 }
 
 function getSidePosition({
-  side,
+  placement,
   triggerPosition,
   contentLayout,
-  sideOffset,
+  offset,
   insets,
   avoidCollisions,
   dimensions,
@@ -100,19 +100,18 @@ function getSidePosition({
   const insetRight = insets?.right ?? 0;
 
   // Handle vertical sides (top/bottom)
-  if (side === 'top' || side === 'bottom') {
-    const positionTop =
-      triggerPosition?.pageY - sideOffset - contentLayout.height;
+  if (placement === 'top' || placement === 'bottom') {
+    const positionTop = triggerPosition?.pageY - offset - contentLayout.height;
     const positionBottom =
-      triggerPosition.pageY + triggerPosition.height + sideOffset;
+      triggerPosition.pageY + triggerPosition.height + offset;
 
     if (!avoidCollisions) {
       return {
-        top: side === 'top' ? positionTop : positionBottom,
+        top: placement === 'top' ? positionTop : positionBottom,
       };
     }
 
-    if (side === 'top') {
+    if (placement === 'top') {
       return {
         top: Math.min(
           Math.max(insetTop, positionTop),
@@ -133,17 +132,16 @@ function getSidePosition({
   const maxContentWidth = dimensions.width - insetLeft - insetRight;
   const contentWidth = Math.min(contentLayout.width, maxContentWidth);
 
-  const positionLeft = triggerPosition.pageX - sideOffset - contentWidth;
-  const positionRight =
-    triggerPosition.pageX + triggerPosition.width + sideOffset;
+  const positionLeft = triggerPosition.pageX - offset - contentWidth;
+  const positionRight = triggerPosition.pageX + triggerPosition.width + offset;
 
   if (!avoidCollisions) {
     return {
-      left: side === 'left' ? positionLeft : positionRight,
+      left: placement === 'left' ? positionLeft : positionRight,
     };
   }
 
-  if (side === 'left') {
+  if (placement === 'left') {
     return {
       left: Math.min(
         Math.max(insetLeft, positionLeft),
@@ -152,7 +150,7 @@ function getSidePosition({
     };
   }
 
-  // For right side, ensure content doesn't go beyond left inset
+  // For right placement, ensure content doesn't go beyond left inset
   return {
     left: Math.max(
       insetLeft,
@@ -164,7 +162,7 @@ function getSidePosition({
 interface GetAlignPositionArgs extends GetPositionArgs {
   align: 'start' | 'center' | 'end';
   alignOffset: number;
-  side: 'top' | 'bottom' | 'left' | 'right';
+  placement: 'top' | 'bottom' | 'left' | 'right';
 }
 
 function getAlignPosition({
@@ -175,7 +173,7 @@ function getAlignPosition({
   alignOffset,
   insets,
   dimensions,
-  side,
+  placement,
 }: GetAlignPositionArgs) {
   const insetLeft = insets?.left ?? 0;
   const insetRight = insets?.right ?? 0;
@@ -183,7 +181,7 @@ function getAlignPosition({
   const insetBottom = insets?.bottom ?? 0;
 
   // For top/bottom sides, align horizontally
-  if (side === 'top' || side === 'bottom') {
+  if (placement === 'top' || placement === 'bottom') {
     const maxContentWidth = dimensions.width - insetLeft - insetRight;
     const contentWidth = Math.min(contentLayout.width, maxContentWidth);
 
@@ -324,20 +322,20 @@ function getContentStyle({
   align,
   avoidCollisions,
   contentLayout,
-  side,
+  placement,
   triggerPosition,
   alignOffset,
   insets,
-  sideOffset,
+  offset,
   dimensions,
 }: GetContentStyleArgs) {
   return Object.assign(
     { position: 'absolute' } as const,
     getSidePosition({
-      side,
+      placement,
       triggerPosition,
       contentLayout,
-      sideOffset,
+      offset,
       insets,
       avoidCollisions,
       dimensions,
@@ -350,7 +348,7 @@ function getContentStyle({
       alignOffset,
       insets,
       dimensions,
-      side,
+      placement,
     })
   );
 }

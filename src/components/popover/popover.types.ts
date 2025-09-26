@@ -24,39 +24,6 @@ export interface PopoverRootProps extends PopoverPrimitivesTypes.RootProps {
    * Whether the popover is open
    */
   isOpen?: boolean;
-  /**
-   * The preferred placement of the popover
-   * @default 'bottom'
-   */
-  placement?: PopoverPlacement;
-  /**
-   * The alignment of the popover relative to the trigger
-   * @default 'center'
-   */
-  align?: PopoverAlign;
-  /**
-   * Whether to automatically adjust the popover placement to avoid collisions
-   * @default true
-   */
-  avoidCollisions?: boolean;
-  /**
-   * The offset from the trigger element
-   * @default 8
-   */
-  offset?: number;
-  /**
-   * The alignment offset
-   * @default 0
-   */
-  alignOffset?: number;
-  /**
-   * Screen edge insets to maintain when positioning the popover
-   * Can be a number for all sides or an object with top/right/bottom/left
-   * @default 12 + safeAreaInset
-   */
-  insets?:
-    | number
-    | { top?: number; right?: number; bottom?: number; left?: number };
 }
 
 /**
@@ -166,52 +133,4 @@ export interface PopoverDescriptionProps extends TextProps {
    * Additional CSS class for the description
    */
   className?: string;
-}
-
-/**
- * Popover context type
- */
-export interface PopoverContextType {
-  /**
-   * Whether the popover is open
-   */
-  isOpen: boolean | undefined;
-  /**
-   * Callback to change open state
-   */
-  onOpenChange: ((isOpen: boolean) => void) | undefined;
-  /**
-   * Extended internal state for additional control (useful for coordinating animations)
-   */
-  popoverState: PopoverPrimitivesTypes.PopoverState;
-  /**
-   * Delay in milliseconds before the popover closes
-   */
-  closeDelay: number;
-  /**
-   * The placement of the popover
-   */
-  placement: PopoverPlacement;
-  /**
-   * The alignment of the popover
-   */
-  align: PopoverAlign;
-  /**
-   * Whether to avoid collisions
-   */
-  avoidCollisions: boolean;
-  /**
-   * The offset from the trigger
-   */
-  offset: number;
-  /**
-   * The alignment offset
-   */
-  alignOffset: number;
-  /**
-   * Screen edge insets
-   */
-  insets:
-    | { top?: number; right?: number; bottom?: number; left?: number }
-    | undefined;
 }

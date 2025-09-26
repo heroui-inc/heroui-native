@@ -4,7 +4,6 @@ export type {
   PopoverCloseIconProps,
   PopoverCloseProps,
   PopoverContentProps,
-  PopoverContextType,
   PopoverDescriptionProps,
   PopoverOverlayProps,
   PopoverPlacement,

@@ -115,15 +115,15 @@ interface PositionedContentProps {
    */
   align?: 'start' | 'center' | 'end';
   /**
-   * Preferred side of the trigger element to position against
+   * Preferred placement of the trigger element to position against
    * @default 'bottom'
    */
-  side?: 'top' | 'bottom' | 'left' | 'right';
+  placement?: 'top' | 'bottom' | 'left' | 'right';
   /**
    * Offset from the trigger element in pixels
    * @default 0
    */
-  sideOffset?: number;
+  offset?: number;
   /**
    * Whether to disable the automatic positioning styles
    * Useful when you want to handle positioning manually

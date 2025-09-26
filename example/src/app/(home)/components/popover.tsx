@@ -96,7 +96,7 @@ export default function PopoverScreen() {
       <SectionTitle title="Placement Options" />
       <View className="gap-4">
         <View className="flex-row justify-center gap-4">
-          <Popover placement="top">
+          <Popover>
             <Popover.Trigger>
               <Button size="sm" variant="tertiary" className="w-24">
                 Top
@@ -104,13 +104,13 @@ export default function PopoverScreen() {
             </Popover.Trigger>
             <Popover.Portal>
               <Popover.Overlay />
-              <Popover.Content>
+              <Popover.Content placement="top">
                 <AppText className="text-foreground">Top placement</AppText>
               </Popover.Content>
             </Popover.Portal>
           </Popover>
 
-          <Popover placement="right">
+          <Popover>
             <Popover.Trigger>
               <Button size="sm" variant="tertiary" className="w-24">
                 Right
@@ -118,7 +118,7 @@ export default function PopoverScreen() {
             </Popover.Trigger>
             <Popover.Portal>
               <Popover.Overlay />
-              <Popover.Content>
+              <Popover.Content placement="right">
                 <AppText className="text-foreground">Right placement</AppText>
               </Popover.Content>
             </Popover.Portal>
@@ -126,7 +126,7 @@ export default function PopoverScreen() {
         </View>
 
         <View className="flex-row justify-center gap-4">
-          <Popover placement="left">
+          <Popover>
             <Popover.Trigger>
               <Button size="sm" variant="tertiary" className="w-24">
                 Left
@@ -134,13 +134,13 @@ export default function PopoverScreen() {
             </Popover.Trigger>
             <Popover.Portal>
               <Popover.Overlay />
-              <Popover.Content>
+              <Popover.Content placement="left">
                 <AppText className="text-foreground">Left Placement</AppText>
               </Popover.Content>
             </Popover.Portal>
           </Popover>
 
-          <Popover placement="bottom">
+          <Popover>
             <Popover.Trigger>
               <Button size="sm" variant="tertiary" className="w-24">
                 Bottom
@@ -148,7 +148,7 @@ export default function PopoverScreen() {
             </Popover.Trigger>
             <Popover.Portal>
               <Popover.Overlay />
-              <Popover.Content>
+              <Popover.Content placement="bottom">
                 <AppText className="text-foreground">Bottom placement</AppText>
               </Popover.Content>
             </Popover.Portal>
@@ -159,7 +159,7 @@ export default function PopoverScreen() {
       {/* Alignment Options */}
       <SectionTitle title="Alignment Options" />
       <View className="flex-row justify-center gap-4">
-        <Popover align="start">
+        <Popover>
           <Popover.Trigger>
             <Button size="sm" variant="tertiary" className="w-24">
               Start
@@ -167,13 +167,13 @@ export default function PopoverScreen() {
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Overlay />
-            <Popover.Content>
+            <Popover.Content align="start">
               <AppText className="text-foreground">Start aligned</AppText>
             </Popover.Content>
           </Popover.Portal>
         </Popover>
 
-        <Popover align="center">
+        <Popover>
           <Popover.Trigger>
             <Button size="sm" variant="tertiary" className="w-24">
               Center
@@ -181,13 +181,13 @@ export default function PopoverScreen() {
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Overlay />
-            <Popover.Content>
+            <Popover.Content align="center">
               <AppText className="text-foreground">Center aligned</AppText>
             </Popover.Content>
           </Popover.Portal>
         </Popover>
 
-        <Popover align="end">
+        <Popover>
           <Popover.Trigger>
             <Button size="sm" variant="tertiary" className="w-24">
               End
@@ -195,30 +195,8 @@ export default function PopoverScreen() {
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Overlay />
-            <Popover.Content>
+            <Popover.Content align="end">
               <AppText className="text-foreground">End aligned</AppText>
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover>
-      </View>
-
-      {/* Without Overlay */}
-      <SectionTitle title="Without Overlay" />
-      <View className="items-center">
-        <Popover>
-          <Popover.Trigger>
-            <Button variant="tertiary" size="sm">
-              No Overlay
-            </Button>
-          </Popover.Trigger>
-          <Popover.Portal>
-            <Popover.Content>
-              <Popover.Close />
-              <Popover.Title>No Overlay</Popover.Title>
-              <Popover.Description>
-                This popover appears without a background overlay, allowing
-                interaction with the rest of the screen.
-              </Popover.Description>
             </Popover.Content>
           </Popover.Portal>
         </Popover>

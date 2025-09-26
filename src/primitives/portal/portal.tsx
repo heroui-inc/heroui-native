@@ -108,7 +108,7 @@ const WindowOverlay = Platform.OS === "ios" ? FullWindowOverlay : Fragment
  */
 export function useModalPortalRoot() {
   const ref = React.useRef<View>(null);
-  const [sideOffset, setSideOffSet] = React.useState(0);
+  const [offset, setSideOffSet] = React.useState(0);
 
   const onLayout = React.useCallback(() => {
     if (Platform.OS === 'web') return;
@@ -119,7 +119,7 @@ export function useModalPortalRoot() {
 
   return {
     ref,
-    sideOffset,
+    offset,
     onLayout,
     style: ROOT,
   };

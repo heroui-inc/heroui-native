@@ -178,7 +178,7 @@ Trigger.displayName = 'HeroUINative.Primitive.Dialog.Trigger';
 // --------------------------------------------------
 
 /**
- * @warning when using a custom `<PortalHost />`, you might have to adjust the Content's sideOffset to account for nav elements like headers.
+ * @warning when using a custom `<PortalHost />`, you might have to adjust the Content's offset to account for nav elements like headers.
  */
 function Portal({ forceMount, hostName, children }: PortalProps) {
   const value = useRootContext();

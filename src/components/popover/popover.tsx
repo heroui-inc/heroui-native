@@ -1,6 +1,11 @@
-import { createContext, forwardRef, use, useMemo } from 'react';
+import { forwardRef, useEffect } from 'react';
 import type { Text as RNText } from 'react-native';
 import { StyleSheet, View } from 'react-native';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  withSpring,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text } from '../../helpers/components/text';
 import * as PopoverPrimitives from '../../primitives/popover';
@@ -17,7 +22,6 @@ import popoverStyles, { nativeStyles } from './popover.styles';
 import type {
   PopoverCloseProps,
   PopoverContentProps,
-  PopoverContextType,
   PopoverDescriptionProps,
   PopoverOverlayProps,
   PopoverPortalProps,
@@ -26,97 +30,33 @@ import type {
   PopoverTriggerProps,
 } from './popover.types';
 
-const PopoverContext = createContext<PopoverContextType>({
-  isOpen: false,
-  onOpenChange: () => {},
-  popoverState: 'idle',
-  closeDelay: 300,
-  placement: 'bottom',
-  align: 'center',
-  avoidCollisions: true,
-  offset: DEFAULT_OFFSET,
-  alignOffset: DEFAULT_ALIGN_OFFSET,
-  insets: {
-    top: DEFAULT_INSETS,
-    right: DEFAULT_INSETS,
-    bottom: DEFAULT_INSETS,
-    left: DEFAULT_INSETS,
-  },
-});
+const AnimatedOverlay = Animated.createAnimatedComponent(
+  PopoverPrimitives.Overlay
+);
+
+const AnimatedContent = Animated.createAnimatedComponent(
+  PopoverPrimitives.Content
+);
+
+const usePopover = PopoverPrimitives.useRootContext;
 
 // --------------------------------------------------
 
 const PopoverRoot = forwardRef<
   PopoverPrimitivesTypes.RootRef,
   PopoverRootProps
->(
-  (
-    {
-      children,
-      isOpen,
-      onOpenChange,
-      placement = 'bottom',
-      align = 'center',
-      avoidCollisions = true,
-      offset = DEFAULT_OFFSET,
-      alignOffset = DEFAULT_ALIGN_OFFSET,
-      insets = DEFAULT_INSETS,
-      closeDelay = 300,
-      ...props
-    },
-    ref
-  ) => {
-    const safeAreaInsets = useSafeAreaInsets();
-
-    const normalizedInsets = useMemo(() => {
-      if (typeof insets === 'number') {
-        return {
-          top: insets + safeAreaInsets.top,
-          right: insets + safeAreaInsets.right,
-          bottom: insets + safeAreaInsets.bottom,
-          left: insets + safeAreaInsets.left,
-        };
-      }
-      return insets;
-    }, [insets, safeAreaInsets]);
-
-    const value = useMemo(() => {
-      return {
-        isOpen,
-        onOpenChange,
-        popoverState: 'idle' as PopoverPrimitivesTypes.PopoverState,
-        closeDelay,
-        placement,
-        align,
-        avoidCollisions,
-        offset,
-        alignOffset,
-        insets: normalizedInsets,
-      };
-    }, [
-      isOpen,
-      onOpenChange,
-      closeDelay,
-      placement,
-      align,
-      avoidCollisions,
-      offset,
-      alignOffset,
-      normalizedInsets,
-    ]);
-
-    return (
-      <PopoverPrimitives.Root
-        ref={ref}
-        onOpenChange={onOpenChange}
-        closeDelay={closeDelay}
-        {...props}
-      >
-        <PopoverContext value={value}>{children}</PopoverContext>
-      </PopoverPrimitives.Root>
-    );
-  }
-);
+>(({ children, onOpenChange, closeDelay = 500, ...props }, ref) => {
+  return (
+    <PopoverPrimitives.Root
+      ref={ref}
+      onOpenChange={onOpenChange}
+      closeDelay={closeDelay}
+      {...props}
+    >
+      {children}
+    </PopoverPrimitives.Root>
+  );
+});
 
 // --------------------------------------------------
 
@@ -137,23 +77,19 @@ const PopoverPortal = ({
 }: PopoverPortalProps) => {
   const tvStyles = popoverStyles.portal({ className });
 
-  const { popoverState } = PopoverPrimitives.useRootContext();
+  const { popoverState, progress } = usePopover();
 
-  const contextValue = use(PopoverContext);
-
-  const mergedContextValue = useMemo(
-    () => ({
-      ...contextValue,
-      popoverState,
-    }),
-    [contextValue, popoverState]
-  );
+  useEffect(() => {
+    if (popoverState === 'open') {
+      progress.set(withSpring(1));
+    } else if (popoverState === 'close') {
+      progress.set(withSpring(2));
+    }
+  }, [popoverState, progress]);
 
   return (
     <PopoverPrimitives.Portal {...props}>
-      <PopoverContext value={mergedContextValue}>
-        <View className={tvStyles}>{children}</View>
-      </PopoverContext>
+      <View className={tvStyles}>{children}</View>
     </PopoverPrimitives.Portal>
   );
 };
@@ -163,11 +99,25 @@ const PopoverPortal = ({
 const PopoverOverlay = forwardRef<
   PopoverPrimitivesTypes.OverlayRef,
   PopoverOverlayProps
->(({ className, ...props }, ref) => {
+>(({ className, style, ...props }, ref) => {
+  const { progress } = usePopover();
+
   const tvStyles = popoverStyles.overlay({ className });
 
+  const rOverlayStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
+    return {
+      opacity,
+    };
+  });
+
   return (
-    <PopoverPrimitives.Overlay ref={ref} className={tvStyles} {...props} />
+    <AnimatedOverlay
+      ref={ref}
+      className={tvStyles}
+      style={[rOverlayStyle, style]}
+      {...props}
+    />
   );
 });
 
@@ -176,31 +126,69 @@ const PopoverOverlay = forwardRef<
 const PopoverContent = forwardRef<
   PopoverPrimitivesTypes.ContentRef,
   PopoverContentProps
->(({ className, children, style, ...props }, ref) => {
-  const { placement, align, avoidCollisions, offset, alignOffset, insets } =
-    use(PopoverContext);
+>(
+  (
+    {
+      placement = 'bottom',
+      align = 'center',
+      avoidCollisions = true,
+      offset = DEFAULT_OFFSET,
+      alignOffset = DEFAULT_ALIGN_OFFSET,
+      className,
+      children,
+      style,
+      ...props
+    },
+    ref
+  ) => {
+    const safeAreaInsets = useSafeAreaInsets();
 
-  const tvStyles = popoverStyles.content({ className });
+    const insets = {
+      top: DEFAULT_INSETS.top + safeAreaInsets.top,
+      bottom: DEFAULT_INSETS.bottom + safeAreaInsets.bottom,
+      left: DEFAULT_INSETS.left + safeAreaInsets.left,
+      right: DEFAULT_INSETS.right + safeAreaInsets.right,
+    };
 
-  const flatStyle = StyleSheet.flatten([nativeStyles.contentContainer, style]);
+    const { progress } = usePopover();
 
-  return (
-    <PopoverPrimitives.Content
-      ref={ref}
-      side={placement}
-      align={align}
-      sideOffset={offset}
-      alignOffset={alignOffset}
-      avoidCollisions={avoidCollisions}
-      insets={insets}
-      className={tvStyles}
-      style={flatStyle}
-      {...props}
-    >
-      {children}
-    </PopoverPrimitives.Content>
-  );
-});
+    const tvStyles = popoverStyles.content({ className });
+
+    const rContainerStyle = useAnimatedStyle(() => {
+      return {
+        opacity: interpolate(progress.get(), [0, 1, 2], [0.5, 1, 0]),
+        transform: [
+          {
+            scale: interpolate(progress.get(), [0, 1, 2], [0.97, 1, 0.97]),
+          },
+        ],
+      };
+    });
+
+    const flatStyle = StyleSheet.flatten([
+      nativeStyles.contentContainer,
+      rContainerStyle,
+      style,
+    ]);
+
+    return (
+      <AnimatedContent
+        ref={ref}
+        placement={placement}
+        align={align}
+        avoidCollisions={avoidCollisions}
+        offset={offset}
+        alignOffset={alignOffset}
+        insets={insets}
+        className={tvStyles}
+        style={flatStyle}
+        {...props}
+      >
+        {children}
+      </AnimatedContent>
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -264,7 +252,6 @@ const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
 
 // --------------------------------------------------
 
-// Display names
 PopoverRoot.displayName = DISPLAY_NAME.ROOT;
 PopoverTrigger.displayName = DISPLAY_NAME.TRIGGER;
 PopoverPortal.displayName = DISPLAY_NAME.PORTAL;

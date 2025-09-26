@@ -14,6 +14,7 @@ import {
   type LayoutChangeEvent,
   type LayoutRectangle,
 } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
 import {
   useAugmentedRef,
   useRelativePosition,
@@ -51,7 +52,7 @@ const useRootContext = () => {
 
 const Root = forwardRef<RootRef, RootProps>(
   (
-    { asChild, onOpenChange: onOpenChangeProp, closeDelay = 300, ...viewProps },
+    { asChild, onOpenChange: onOpenChangeProp, closeDelay, ...viewProps },
     ref
   ) => {
     const nativeID = useId();
@@ -62,6 +63,8 @@ const Root = forwardRef<RootRef, RootProps>(
     );
     const [isOpen, setIsOpen] = useState(false);
     const [popoverState, setPopoverState] = useState<PopoverState>('idle');
+
+    const progress = useSharedValue(0);
 
     function onOpenChange(value: boolean) {
       if (value) {
@@ -90,6 +93,7 @@ const Root = forwardRef<RootRef, RootProps>(
           setTriggerPosition,
           triggerPosition,
           closeDelay,
+          progress,
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -148,7 +152,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
 // --------------------------------------------------
 
 /**
- * @warning when using a custom `<PortalHost />`, you might have to adjust the Content's sideOffset to account for nav elements like headers.
+ * @warning when using a custom `<PortalHost />`, you might have to adjust the Content's offset to account for nav elements like headers.
  */
 function Portal({ forceMount, hostName, children }: PortalProps) {
   const value = useRootContext();
@@ -181,13 +185,20 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
     },
     ref
   ) => {
-    const { isOpen, onOpenChange, setTriggerPosition, setContentLayout } =
-      useRootContext();
+    const {
+      isOpen,
+      onOpenChange,
+      setTriggerPosition,
+      setContentLayout,
+      closeDelay,
+    } = useRootContext();
 
     function onPress(ev: GestureResponderEvent) {
       if (closeOnPress) {
-        setTriggerPosition(null);
-        setContentLayout(null);
+        setTimeout(() => {
+          setTriggerPosition(null);
+          setContentLayout(null);
+        }, closeDelay);
         onOpenChange(false);
       }
       OnPressProp?.(ev);
@@ -215,8 +226,8 @@ const Content = forwardRef<ContentRef, ContentProps>(
       asChild = false,
       forceMount,
       align = 'start',
-      side = 'bottom',
-      sideOffset = 0,
+      placement = 'bottom',
+      offset = 0,
       alignOffset = 0,
       avoidCollisions = true,
       onLayout: onLayoutProp,
@@ -262,8 +273,8 @@ const Content = forwardRef<ContentRef, ContentProps>(
       contentLayout,
       alignOffset,
       insets,
-      sideOffset,
-      side,
+      offset,
+      placement,
       disablePositioningStyle,
     });
 
@@ -299,13 +310,15 @@ const Content = forwardRef<ContentRef, ContentProps>(
 
 const Close = forwardRef<CloseRef, CloseProps>(
   ({ asChild, onPress: onPressProp, disabled = false, ...props }, ref) => {
-    const { onOpenChange, setContentLayout, setTriggerPosition } =
+    const { onOpenChange, setContentLayout, setTriggerPosition, closeDelay } =
       useRootContext();
 
     function onPress(ev: GestureResponderEvent) {
       if (disabled) return;
-      setTriggerPosition(null);
-      setContentLayout(null);
+      setTimeout(() => {
+        setTriggerPosition(null);
+        setContentLayout(null);
+      }, closeDelay);
       onOpenChange(false);
       onPressProp?.(ev);
     }

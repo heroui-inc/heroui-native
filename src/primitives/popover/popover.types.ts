@@ -1,4 +1,5 @@
 import type { LayoutRectangle } from 'react-native';
+import type { SharedValue } from 'react-native-reanimated';
 import type { LayoutPosition } from '../../helpers/hooks';
 import type {
   ForceMountable,
@@ -50,6 +51,10 @@ interface IRootContext {
    * Unique identifier for the popover instance
    */
   nativeID: string;
+  /**
+   * Progress value for the popover animation
+   */
+  progress: SharedValue<number>;
   /**
    * Delay in milliseconds before the popover closes
    */

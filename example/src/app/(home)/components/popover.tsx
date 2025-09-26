@@ -53,7 +53,7 @@ export default function PopoverScreen() {
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Overlay />
-            <Popover.Content className="gap-1">
+            <Popover.Content className="gap-1 w-[320px] rounded-xl px-6 py-4">
               <Popover.Close className="absolute top-3 right-3 z-50" />
               <Popover.Title>Information</Popover.Title>
               <Popover.Description>
@@ -97,7 +97,7 @@ export default function PopoverScreen() {
       {/* Placements */}
       <SectionTitle title="Placement Options" />
       <View className="gap-4">
-        <View className="flex-row justify-center gap-4">
+        <View className="flex-row justify-between gap-4">
           <Popover>
             <Popover.Trigger>
               <Button size="sm" variant="tertiary" className="w-24">
@@ -115,22 +115,6 @@ export default function PopoverScreen() {
           <Popover>
             <Popover.Trigger>
               <Button size="sm" variant="tertiary" className="w-24">
-                Right
-              </Button>
-            </Popover.Trigger>
-            <Popover.Portal>
-              <Popover.Overlay />
-              <Popover.Content placement="right">
-                <AppText className="text-foreground">Right placement</AppText>
-              </Popover.Content>
-            </Popover.Portal>
-          </Popover>
-        </View>
-
-        <View className="flex-row justify-center gap-4">
-          <Popover>
-            <Popover.Trigger>
-              <Button size="sm" variant="tertiary" className="w-24">
                 Left
               </Button>
             </Popover.Trigger>
@@ -138,6 +122,22 @@ export default function PopoverScreen() {
               <Popover.Overlay />
               <Popover.Content placement="left">
                 <AppText className="text-foreground">Left Placement</AppText>
+              </Popover.Content>
+            </Popover.Portal>
+          </Popover>
+        </View>
+
+        <View className="flex-row justify-between gap-4">
+          <Popover>
+            <Popover.Trigger>
+              <Button size="sm" variant="tertiary" className="w-24">
+                Right
+              </Button>
+            </Popover.Trigger>
+            <Popover.Portal>
+              <Popover.Overlay />
+              <Popover.Content placement="right">
+                <AppText className="text-foreground">Right placement</AppText>
               </Popover.Content>
             </Popover.Portal>
           </Popover>
@@ -199,89 +199,6 @@ export default function PopoverScreen() {
             <Popover.Overlay />
             <Popover.Content align="end">
               <AppText className="text-foreground">End aligned</AppText>
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover>
-      </View>
-
-      {/* Custom Content */}
-      <SectionTitle title="Custom Content" />
-      <View className="items-center">
-        <Popover>
-          <Popover.Trigger>
-            <Button variant="tertiary" size="sm">
-              <Button.StartContent>
-                <Ionicons
-                  name="settings"
-                  size={16}
-                  color={colors.mutedForeground}
-                />
-              </Button.StartContent>
-              <Button.LabelContent>Settings</Button.LabelContent>
-            </Button>
-          </Popover.Trigger>
-          <Popover.Portal>
-            <Popover.Overlay />
-            <Popover.Content className="gap-4 p-6">
-              <View className="gap-2">
-                <AppText className="text-lg font-semibold text-foreground">
-                  Quick Settings
-                </AppText>
-                <AppText className="text-sm text-muted-foreground">
-                  Adjust your preferences
-                </AppText>
-              </View>
-
-              <View className="h-px bg-border" />
-
-              <View className="gap-3">
-                <View className="flex-row items-center justify-between">
-                  <View className="flex-row items-center gap-2">
-                    <Ionicons
-                      name="notifications"
-                      size={16}
-                      color={colors.mutedForeground}
-                    />
-                    <AppText className="text-foreground">Notifications</AppText>
-                  </View>
-                  <AppText className="text-accent">On</AppText>
-                </View>
-
-                <View className="flex-row items-center justify-between">
-                  <View className="flex-row items-center gap-2">
-                    <Ionicons
-                      name="moon"
-                      size={16}
-                      color={colors.mutedForeground}
-                    />
-                    <AppText className="text-foreground">Dark Mode</AppText>
-                  </View>
-                  <AppText className="text-accent">Auto</AppText>
-                </View>
-
-                <View className="flex-row items-center justify-between">
-                  <View className="flex-row items-center gap-2">
-                    <Ionicons
-                      name="language"
-                      size={16}
-                      color={colors.mutedForeground}
-                    />
-                    <AppText className="text-foreground">Language</AppText>
-                  </View>
-                  <AppText className="text-accent">English</AppText>
-                </View>
-              </View>
-
-              <View className="h-px bg-border" />
-
-              <View className="flex-row gap-2">
-                <Button size="sm" variant="ghost" className="flex-1">
-                  Cancel
-                </Button>
-                <Button size="sm" variant="primary" className="flex-1">
-                  Save
-                </Button>
-              </View>
             </Popover.Content>
           </Popover.Portal>
         </Popover>

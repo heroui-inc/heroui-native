@@ -82,9 +82,11 @@ const PopoverPortal = ({
 
   useEffect(() => {
     if (popoverState === 'open') {
-      progress.set(withSpring(1));
+      progress.set(withSpring(1, { mass: 2, damping: 100, stiffness: 1600 }));
     } else if (popoverState === 'close') {
-      progress.set(withSpring(2));
+      progress.set(withSpring(2, { mass: 2, damping: 100, stiffness: 1600 }));
+    } else {
+      progress.set(0);
     }
   }, [popoverState, progress]);
 
@@ -162,11 +164,39 @@ const PopoverContent = forwardRef<
     const tvStyles = popoverStyles.content({ className, isDark });
 
     const rContainerStyle = useAnimatedStyle(() => {
+      // Calculate translation based on placement
+      let translateX = 0;
+      let translateY = 0;
+
+      if (placement === 'top') {
+        // Content appears above trigger, animate from bottom to top
+        translateY = interpolate(progress.get(), [0, 1, 2], [8, 0, 8]);
+      } else if (placement === 'bottom') {
+        // Content appears below trigger, animate from top to bottom
+        translateY = interpolate(progress.get(), [0, 1, 2], [-8, 0, -8]);
+      } else if (placement === 'left') {
+        // Content appears to the left of trigger, animate from right to left
+        translateX = interpolate(progress.get(), [0, 1, 2], [8, 0, 8]);
+      } else if (placement === 'right') {
+        // Content appears to the right of trigger, animate from left to right
+        translateX = interpolate(progress.get(), [0, 1, 2], [-8, 0, -8]);
+      }
+
       return {
-        opacity: interpolate(progress.get(), [0, 1, 2], [0.5, 1, 0]),
+        opacity: interpolate(
+          progress.get(),
+          [0, 1, 1.75, 2],
+          [0.75, 1, 0.75, 0]
+        ),
         transform: [
           {
-            scale: interpolate(progress.get(), [0, 1, 2], [0.97, 1, 0.97]),
+            translateX,
+          },
+          {
+            translateY,
+          },
+          {
+            scale: interpolate(progress.get(), [0, 1, 2], [0.95, 1, 0.95]),
           },
         ],
       };

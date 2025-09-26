@@ -16,11 +16,11 @@ const overlay = tv({
 });
 
 const content = tv({
-  base: 'absolute bg-panel rounded-lg border border-border p-4',
+  base: 'absolute bg-panel rounded-lg border border-border p-3 px-4',
   variants: {
     isDark: {
       true: '',
-      false: 'shadow-md shadow-foreground/10',
+      false: 'shadow-md shadow-black/5',
     },
   },
 });

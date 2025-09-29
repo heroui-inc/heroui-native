@@ -15,7 +15,7 @@ const overlay = tv({
   },
 });
 
-const content = tv({
+const popoverContent = tv({
   base: 'absolute bg-panel rounded-lg border border-border p-3 px-4',
   variants: {
     isDark: {
@@ -23,6 +23,10 @@ const content = tv({
       false: 'shadow-md shadow-black/5',
     },
   },
+});
+
+const bottomSheetView = tv({
+  base: 'flex-1 p-5',
 });
 
 const close = tv({
@@ -40,7 +44,8 @@ const description = tv({
 const popoverStyles = {
   portal,
   overlay,
-  content,
+  popoverContent,
+  bottomSheetView,
   close,
   title,
   description,

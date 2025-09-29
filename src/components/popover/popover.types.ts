@@ -1,6 +1,13 @@
+import type BottomSheet from '@gorhom/bottom-sheet';
+import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
+
+/**
+ * Presentation mode for the popover content
+ */
+export type PopoverPresentation = 'popover' | 'bottom-sheet';
 
 /**
  * Popover placement options
@@ -67,9 +74,9 @@ export interface PopoverOverlayProps
 }
 
 /**
- * Popover Content component props
+ * Popover Content props for 'popover' presentation
  */
-export interface PopoverContentProps
+export interface PopoverContentPopoverProps
   extends PopoverPrimitivesTypes.ContentProps {
   /**
    * Additional CSS class for the content container
@@ -79,7 +86,37 @@ export interface PopoverContentProps
    * The popover content
    */
   children?: ReactNode;
+  /**
+   * Presentation mode for the popover
+   */
+  presentation?: 'popover';
 }
+
+/**
+ * Popover Content props for 'bottom-sheet' presentation
+ */
+export interface PopoverContentBottomSheetProps
+  extends Partial<React.ComponentProps<typeof BottomSheet>> {
+  /**
+   * Presentation mode for the popover
+   */
+  presentation: 'bottom-sheet';
+  /**
+   * Additional CSS class for the bottom sheet view
+   */
+  bottomSheetViewClassName?: string;
+  /**
+   * Props for the bottom sheet view
+   */
+  bottomSheetViewProps?: BottomSheetViewProps;
+}
+
+/**
+ * Popover Content component props
+ */
+export type PopoverContentProps =
+  | PopoverContentPopoverProps
+  | PopoverContentBottomSheetProps;
 
 /**
  * Popover Close component props

@@ -1,15 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Button, Popover, useTheme } from 'heroui-native';
-import { useState } from 'react';
-import { Platform, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
 export default function PopoverScreen() {
-  const [controlledOpen, setControlledOpen] = useState(false);
-
   const { colors } = useTheme();
   const router = useRouter();
 
@@ -66,29 +63,54 @@ export default function PopoverScreen() {
       </View>
 
       {/* Controlled State */}
-      <SectionTitle title="Controlled State" />
-      <View className="items-center gap-4">
-        <AppText className="text-sm text-muted-foreground mb-2">
-          Popover is {controlledOpen ? 'open' : 'closed'}
-        </AppText>
-        <Popover isOpen={controlledOpen} onOpenChange={setControlledOpen}>
+      <SectionTitle title="Presentation" />
+      <View className="flex-row items-center justify-center gap-4">
+        <Popover>
           <Popover.Trigger>
             <Button variant="tertiary" size="sm">
-              {controlledOpen ? 'Close' : 'Open'} Controlled
+              Popover
             </Button>
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Overlay />
-            <Popover.Content className="gap-1">
-              <Popover.Title>Controlled Popover</Popover.Title>
-              <Popover.Description className="mb-8">
-                This popover's state is controlled externally.
-              </Popover.Description>
+            <Popover.Content
+              className="gap-2 w-[280px] items-center"
+              presentation="popover"
+            >
+              <View className="mb-6 items-center">
+                <Text className="text-5xl">💥</Text>
+                <Popover.Title>Boom</Popover.Title>
+                <Popover.Description className="text-center">
+                  This popover uses the popover presentation.
+                </Popover.Description>
+              </View>
               <Popover.Close asChild>
-                <Button size="sm" variant="primary">
+                <Button size="sm" className="self-stretch">
                   Close Popover
                 </Button>
               </Popover.Close>
+            </Popover.Content>
+          </Popover.Portal>
+        </Popover>
+        <Popover>
+          <Popover.Trigger>
+            <Button variant="tertiary" size="sm">
+              Bottom Sheet
+            </Button>
+          </Popover.Trigger>
+          <Popover.Portal>
+            <Popover.Overlay className="bg-black/30" />
+            <Popover.Content presentation="bottom-sheet">
+              <View className="items-center">
+                <Text className="text-5xl">🎇</Text>
+                <Popover.Title>Badaboom</Popover.Title>
+                <Popover.Description className="mb-8 text-center">
+                  This popover uses the bottom sheet presentation.
+                </Popover.Description>
+                <Popover.Close asChild>
+                  <Button className="self-stretch">Close Bottom Sheet</Button>
+                </Popover.Close>
+              </View>
             </Popover.Content>
           </Popover.Portal>
         </Popover>

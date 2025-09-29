@@ -1,9 +1,12 @@
-import { forwardRef, useEffect } from 'react';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import { forwardRef, useEffect, useRef } from 'react';
 import type { Text as RNText } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
+  useAnimatedReaction,
   useAnimatedStyle,
+  useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -22,6 +25,8 @@ import {
 import popoverStyles, { nativeStyles } from './popover.styles';
 import type {
   PopoverCloseProps,
+  PopoverContentBottomSheetProps,
+  PopoverContentPopoverProps,
   PopoverContentProps,
   PopoverDescriptionProps,
   PopoverOverlayProps,
@@ -109,7 +114,10 @@ const PopoverOverlay = forwardRef<
 
   const { progress } = usePopover();
 
-  const tvStyles = popoverStyles.overlay({ className, isDark });
+  const tvStyles = popoverStyles.overlay({
+    className,
+    isDark,
+  });
 
   const rOverlayStyle = useAnimatedStyle(() => {
     const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
@@ -130,9 +138,9 @@ const PopoverOverlay = forwardRef<
 
 // --------------------------------------------------
 
-const PopoverContent = forwardRef<
+const PopoverContentPopover = forwardRef<
   PopoverPrimitivesTypes.ContentRef,
-  PopoverContentProps
+  PopoverContentProps & { presentation?: 'popover' }
 >(
   (
     {
@@ -149,7 +157,6 @@ const PopoverContent = forwardRef<
     ref
   ) => {
     const { isDark } = useTheme();
-
     const safeAreaInsets = useSafeAreaInsets();
 
     const insets = {
@@ -160,25 +167,19 @@ const PopoverContent = forwardRef<
     };
 
     const { progress } = usePopover();
-
-    const tvStyles = popoverStyles.content({ className, isDark });
+    const tvStyles = popoverStyles.popoverContent({ className, isDark });
 
     const rContainerStyle = useAnimatedStyle(() => {
-      // Calculate translation based on placement
       let translateX = 0;
       let translateY = 0;
 
       if (placement === 'top') {
-        // Content appears above trigger, animate from bottom to top
         translateY = interpolate(progress.get(), [0, 1, 2], [8, 0, 8]);
       } else if (placement === 'bottom') {
-        // Content appears below trigger, animate from top to bottom
         translateY = interpolate(progress.get(), [0, 1, 2], [-8, 0, -8]);
       } else if (placement === 'left') {
-        // Content appears to the left of trigger, animate from right to left
         translateX = interpolate(progress.get(), [0, 1, 2], [8, 0, 8]);
       } else if (placement === 'right') {
-        // Content appears to the right of trigger, animate from left to right
         translateX = interpolate(progress.get(), [0, 1, 2], [-8, 0, -8]);
       }
 
@@ -189,15 +190,9 @@ const PopoverContent = forwardRef<
           [0.75, 1, 0.75, 0]
         ),
         transform: [
-          {
-            translateX,
-          },
-          {
-            translateY,
-          },
-          {
-            scale: interpolate(progress.get(), [0, 1, 2], [0.95, 1, 0.95]),
-          },
+          { translateX },
+          { translateY },
+          { scale: interpolate(progress.get(), [0, 1, 2], [0.95, 1, 0.95]) },
         ],
       };
     });
@@ -226,6 +221,118 @@ const PopoverContent = forwardRef<
     );
   }
 );
+
+// --------------------------------------------------
+
+const PopoverContentBottomSheet = forwardRef<
+  BottomSheet,
+  PopoverContentProps & { presentation: 'bottom-sheet' }
+>(
+  (
+    { children, bottomSheetViewClassName, bottomSheetViewProps, ...restProps },
+    ref
+  ) => {
+    const insets = useSafeAreaInsets();
+
+    const bottomSheetRef = useRef<BottomSheet>(null);
+
+    const { popoverState, onOpenChange, progress } = usePopover();
+
+    const { colors } = useTheme();
+
+    const tvStyles = popoverStyles.bottomSheetView({
+      className: bottomSheetViewClassName,
+    });
+
+    useEffect(() => {
+      if (popoverState === 'open') {
+        bottomSheetRef.current?.expand();
+      } else if (popoverState === 'close') {
+        bottomSheetRef.current?.close();
+      }
+    }, [popoverState]);
+
+    useEffect(() => {
+      if (ref && bottomSheetRef.current) {
+        if (typeof ref === 'function') {
+          ref(bottomSheetRef.current);
+        } else {
+          ref.current = bottomSheetRef.current;
+        }
+      }
+    }, [ref]);
+
+    const onClose = () => {
+      onOpenChange(false);
+      restProps.onClose?.();
+    };
+
+    const animatedIndex = useSharedValue(0);
+
+    useAnimatedReaction(
+      () => animatedIndex.get(),
+      (value) => {
+        if (popoverState === 'open' && value <= 0) {
+          progress.set(interpolate(animatedIndex.get(), [0, -1], [1, 2]));
+        }
+      }
+    );
+
+    return (
+      <BottomSheet
+        ref={bottomSheetRef}
+        backgroundStyle={[
+          { backgroundColor: colors.panel },
+          restProps.backgroundStyle,
+        ]}
+        handleIndicatorStyle={[
+          { backgroundColor: colors.mutedForeground },
+          restProps.handleIndicatorStyle,
+        ]}
+        enablePanDownToClose={restProps.enablePanDownToClose ?? true}
+        animatedIndex={animatedIndex ?? restProps.animatedIndex}
+        onClose={onClose}
+        {...restProps}
+      >
+        <BottomSheetView
+          className={tvStyles}
+          style={[
+            { paddingBottom: insets.bottom + 12 },
+            bottomSheetViewProps?.style,
+          ]}
+          {...bottomSheetViewProps}
+        >
+          {children}
+        </BottomSheetView>
+      </BottomSheet>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const PopoverContent = forwardRef<
+  PopoverPrimitivesTypes.ContentRef | BottomSheet,
+  PopoverContentProps
+>((props, ref) => {
+  const presentation = props.presentation || 'popover';
+
+  if (presentation === 'bottom-sheet') {
+    return (
+      <PopoverContentBottomSheet
+        ref={ref as React.Ref<BottomSheet>}
+        {...(props as PopoverContentBottomSheetProps)}
+      />
+    );
+  }
+
+  return (
+    <PopoverContentPopover
+      ref={ref as React.Ref<PopoverPrimitivesTypes.ContentRef>}
+      {...(props as PopoverContentPopoverProps)}
+    />
+  );
+});
 
 // --------------------------------------------------
 

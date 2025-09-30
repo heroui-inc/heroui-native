@@ -28,7 +28,7 @@ const title = tv({
 });
 
 const description = tv({
-  base: 'text-base text-muted-foreground font-normal',
+  base: 'text-base text-muted font-normal',
 });
 
 const dialogStyles = combineStyles({

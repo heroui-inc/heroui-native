@@ -19,7 +19,7 @@ const label = tv({
     isDisabled: {
       true: {
         text: '',
-        asterisk: 'text-muted-foreground',
+        asterisk: 'text-muted',
       },
     },
     isInvalid: {
@@ -55,7 +55,7 @@ const inputEndContent = tv({
 });
 
 const description = tv({
-  base: 'm-1 text-sm text-muted-foreground font-normal',
+  base: 'm-1 text-sm text-muted font-normal',
 });
 
 const errorMessage = tv({

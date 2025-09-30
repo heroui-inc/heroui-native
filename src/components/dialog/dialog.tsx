@@ -1,5 +1,6 @@
-import React, { forwardRef, useEffect } from 'react';
-import { Keyboard, Platform, useWindowDimensions } from 'react-native';
+import { forwardRef, useEffect } from 'react';
+import type { Text as RNText } from 'react-native';
+import { Keyboard, useWindowDimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   Extrapolation,
@@ -10,9 +11,10 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { FullWindowOverlay as NativeFullWindowOverlay } from 'react-native-screens';
 import { scheduleOnRN } from 'react-native-worklets';
-import { useKeyboardStatus } from '../../helpers/hooks/use-keyboard-status';
+import { FullWindowOverlay } from '../../helpers/components';
+import { Text } from '../../helpers/components/text';
+import { useKeyboardStatus } from '../../helpers/hooks';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import { useTheme } from '../../providers/theme';
@@ -37,9 +39,6 @@ const AnimatedOverlay = Animated.createAnimatedComponent(
 const AnimatedContent = Animated.createAnimatedComponent(
   DialogPrimitives.Content
 );
-
-const FullWindowOverlay =
-  Platform.OS === 'ios' ? NativeFullWindowOverlay : React.Fragment;
 
 const useDialog = DialogPrimitives.useRootContext;
 
@@ -123,11 +122,11 @@ const DialogPortal = ({
 const DialogOverlay = forwardRef<
   DialogPrimitivesTypes.OverlayRef,
   DialogOverlayProps
->(({ className, style, isAnimationDisabled = false, ...props }, ref) => {
+>(({ className, style, isDefaultAnimationDisabled = false, ...props }, ref) => {
   const { progress, isDragging } = useDialog();
 
   const rContainerStyle = useAnimatedStyle(() => {
-    if (isAnimationDisabled) {
+    if (isDefaultAnimationDisabled) {
       return {};
     }
 
@@ -144,7 +143,7 @@ const DialogOverlay = forwardRef<
 
   const tvStyles = dialogStyles.overlay({
     className,
-    isAnimationDisabled,
+    isDefaultAnimationDisabled,
   });
 
   return (
@@ -169,7 +168,7 @@ const DialogContent = forwardRef<
       style,
       children,
       onLayout,
-      isAnimationDisabled = false,
+      isDefaultAnimationDisabled = false,
       ...props
     },
     ref
@@ -321,7 +320,7 @@ const DialogContent = forwardRef<
         return { opacity: 1 };
       }
 
-      if (isAnimationDisabled) {
+      if (isDefaultAnimationDisabled) {
         return {};
       }
 
@@ -379,7 +378,7 @@ const DialogClose = forwardRef<
       {children || (
         <CloseIcon
           size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? colors.foreground}
+          color={iconProps?.color ?? colors.muted}
         />
       )}
     </DialogPrimitives.Close>
@@ -388,27 +387,46 @@ const DialogClose = forwardRef<
 
 // --------------------------------------------------
 
-const DialogTitle = forwardRef<
-  DialogPrimitivesTypes.TitleRef,
-  DialogTitleProps
->(({ className, ...props }, ref) => {
-  const tvStyles = dialogStyles.title({ className });
+const DialogTitle = forwardRef<RNText, DialogTitleProps>(
+  ({ className, children, ...props }, ref) => {
+    const { nativeID } = useDialog();
+    const tvStyles = dialogStyles.title({ className });
 
-  return <DialogPrimitives.Title ref={ref} className={tvStyles} {...props} />;
-});
+    return (
+      <Text
+        ref={ref}
+        role="heading"
+        accessibilityRole="header"
+        nativeID={`${nativeID}_label`}
+        className={tvStyles}
+        {...props}
+      >
+        {children}
+      </Text>
+    );
+  }
+);
 
 // --------------------------------------------------
 
-const DialogDescription = forwardRef<
-  DialogPrimitivesTypes.DescriptionRef,
-  DialogDescriptionProps
->(({ className, ...props }, ref) => {
-  const tvStyles = dialogStyles.description({ className });
+const DialogDescription = forwardRef<RNText, DialogDescriptionProps>(
+  ({ className, children, ...props }, ref) => {
+    const { nativeID } = useDialog();
+    const tvStyles = dialogStyles.description({ className });
 
-  return (
-    <DialogPrimitives.Description ref={ref} className={tvStyles} {...props} />
-  );
-});
+    return (
+      <Text
+        ref={ref}
+        accessibilityRole="text"
+        nativeID={`${nativeID}_desc`}
+        className={tvStyles}
+        {...props}
+      >
+        {children}
+      </Text>
+    );
+  }
+);
 
 // --------------------------------------------------
 

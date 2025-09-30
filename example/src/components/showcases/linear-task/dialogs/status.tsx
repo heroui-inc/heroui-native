@@ -121,7 +121,7 @@ export const Status: FC = () => {
         </Chip>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay isAnimationDisabled>
+        <Dialog.Overlay isDefaultAnimationDisabled>
           <DialogBlurBackdrop />
         </Dialog.Overlay>
         <Dialog.Content className="rounded-2xl border-0">

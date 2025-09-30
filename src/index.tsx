@@ -9,6 +9,7 @@ export * from './components/divider';
 export * from './components/drop-shadow-view';
 export * from './components/error-view';
 export * from './components/form-field';
+export * from './components/popover';
 export * from './components/radio';
 export * from './components/radio-group';
 export * from './components/scroll-shadow';

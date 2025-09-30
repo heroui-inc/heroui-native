@@ -71,7 +71,7 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
         { marginTop: insetTop, maxHeight: maxTextInputDialogHeight },
         rContainerStyle,
       ]}
-      isAnimationDisabled
+      isDefaultAnimationDisabled
     >
       {children}
     </Dialog.Content>
@@ -145,7 +145,7 @@ export default function DialogScreen() {
         <Dialog.Portal>
           <Dialog.Overlay />
           <Dialog.Content>
-            <Dialog.Close />
+            <Dialog.Close className="self-end -mb-2" />
             <View className="mb-5 gap-1.5">
               <Dialog.Title>Confirm Action</Dialog.Title>
               <Dialog.Description>
@@ -175,11 +175,11 @@ export default function DialogScreen() {
             <Button variant="tertiary">Blur Backdrop Dialog</Button>
           </Dialog.Trigger>
           <Dialog.Portal>
-            <Dialog.Overlay isAnimationDisabled>
+            <Dialog.Overlay isDefaultAnimationDisabled>
               <DialogBlurBackdrop />
             </Dialog.Overlay>
             <Dialog.Content>
-              <Dialog.Close />
+              <Dialog.Close className="self-end -mb-2" />
               <View className="mb-5 gap-1.5">
                 <Dialog.Title>Confirm Action</Dialog.Title>
                 <Dialog.Description>
@@ -218,12 +218,12 @@ export default function DialogScreen() {
           <Button variant="tertiary">Text Input Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Overlay isAnimationDisabled>
+          <Dialog.Overlay isDefaultAnimationDisabled>
             <DialogBlurBackdrop />
           </Dialog.Overlay>
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
             <CustomAnimatedContent>
-              <Dialog.Close />
+              <Dialog.Close className="self-end" />
               <View className="mb-6 gap-1.5">
                 <Dialog.Title>Update Profile</Dialog.Title>
                 <Dialog.Description>
@@ -308,7 +308,7 @@ export default function DialogScreen() {
             className={cn('bg-stone-100', isDark && 'bg-stone-950')}
           />
           <Dialog.Content className="rounded-2xl px-0 shadow-2xl shadow-black/10">
-            <Dialog.Close className="mr-4" />
+            <Dialog.Close className="self-end mr-4" />
             <Dialog.Title className="text-center mb-5">
               Upload Audio
             </Dialog.Title>

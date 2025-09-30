@@ -81,6 +81,11 @@ const components: Component[] = [
     path: 'form-field',
   },
   {
+    title: 'Popover',
+    icon: <ComponentIcon />,
+    path: 'popover',
+  },
+  {
     title: 'Radio Group',
     icon: <ComponentIcon />,
     path: 'radio',

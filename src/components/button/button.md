@@ -154,6 +154,7 @@ export default function ButtonExample() {
 | `className`                  | `string`                                                        | Additional CSS classes                                               |
 | `disableAnimation`           | `DisableAnimation`                                              | Whether to disable the animation (scale and/or highlight)            |
 | `animationConfig`            | `AnimationConfig`                                               | Animation configuration for press states (scale and highlight)       |
+| `skipLayoutAnimation`        | `boolean`                                                       | Whether to skip the layout animation                                 |
 | `...Animated.PressableProps` | `Animated.PressableProps`                                       | All Reanimated AnimatedPressable props are supported                 |
 
 #### DisableAnimation

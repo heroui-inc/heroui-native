@@ -14,7 +14,7 @@ export default function DialogNativeModalScreen() {
         <Dialog.Portal>
           <Dialog.Overlay />
           <Dialog.Content>
-            <Dialog.Close />
+            <Dialog.Close className="self-end -mb-2" />
             <View className="mb-5 gap-1.5">
               <Dialog.Title>Confirm Action</Dialog.Title>
               <Dialog.Description>

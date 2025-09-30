@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { StyleProp, ViewStyle } from 'react-native';
+import type { StyleProp, TextProps, ViewStyle } from 'react-native';
 import type {
   WithSpringConfig,
   WithTimingConfig,
@@ -45,7 +45,7 @@ interface TimingAnimationConfig {
 /**
  * Progress animation configuration
  */
-export interface ProgressAnimationConfigs {
+export interface DialogProgressAnimationConfigs {
   /**
    * Animation configuration for opening
    */
@@ -75,7 +75,7 @@ export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
   /**
    * Animation configurations for open/close progress animations
    */
-  progressAnimationConfigs?: ProgressAnimationConfigs;
+  progressAnimationConfigs?: DialogProgressAnimationConfigs;
 }
 
 /**
@@ -88,10 +88,11 @@ export interface DialogOverlayProps
    */
   className?: string;
   /**
-   * Disables overlay animations and makes background transparent
+   * Whether to disable the default opacity animation
+   * Use this when you want to animate opacity using your own Reanimated useAnimatedStyle
    * @default false
    */
-  isAnimationDisabled?: boolean;
+  isDefaultAnimationDisabled?: boolean;
 }
 
 /**
@@ -107,12 +108,12 @@ export interface DialogContentProps
    * The dialog content
    */
   children?: ReactNode;
-
   /**
-   * Disables content enter/exit opacity and scale animations
+   * Whether to disable the default animations (opacity, scale)
+   * Use this when you want to animate these properties using your own Reanimated useAnimatedStyle
    * @default false
    */
-  isAnimationDisabled?: boolean;
+  isDefaultAnimationDisabled?: boolean;
 }
 
 /**
@@ -152,28 +153,19 @@ export interface DialogCloseIconProps {
 /**
  * Dialog Title component props
  */
-export interface DialogTitleProps extends DialogPrimitivesTypes.TitleProps {
+export interface DialogTitleProps extends TextProps {
   /**
    * Additional CSS class for the title
    */
   className?: string;
-  /**
-   * Title content
-   */
-  children?: ReactNode;
 }
 
 /**
  * Dialog Description component props
  */
-export interface DialogDescriptionProps
-  extends DialogPrimitivesTypes.DescriptionProps {
+export interface DialogDescriptionProps extends TextProps {
   /**
    * Additional CSS class for the description
    */
   className?: string;
-  /**
-   * Description content
-   */
-  children?: ReactNode;
 }

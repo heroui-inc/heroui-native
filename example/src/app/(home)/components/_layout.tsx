@@ -74,6 +74,11 @@ export default function Layout() {
       />
       <Stack.Screen name="error-view" options={{ title: 'Error View' }} />
       <Stack.Screen name="form-field" options={{ title: 'Form Field' }} />
+      <Stack.Screen name="popover" options={{ title: 'Popover' }} />
+      <Stack.Screen
+        name="popover-native-modal"
+        options={{ title: 'Popover Native Modal', presentation: 'formSheet' }}
+      />
       <Stack.Screen name="radio" options={{ title: 'Radio' }} />
       <Stack.Screen name="scroll-shadow" options={{ title: 'Scroll Shadow' }} />
       <Stack.Screen name="skeleton" options={{ title: 'Skeleton' }} />

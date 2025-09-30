@@ -116,7 +116,7 @@ export const Assignee: FC = () => {
         </Chip>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay isAnimationDisabled>
+        <Dialog.Overlay isDefaultAnimationDisabled>
           <DialogBlurBackdrop />
         </Dialog.Overlay>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>

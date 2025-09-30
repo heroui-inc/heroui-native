@@ -78,7 +78,6 @@ export default function PopoverScreen() {
               className="gap-2 w-[280px] items-center"
               presentation="popover"
             >
-              <Popover.Arrow />
               <View className="mb-6 items-center">
                 <Text className="text-5xl">💥</Text>
                 <Popover.Title>Boom</Popover.Title>
@@ -146,7 +145,7 @@ export default function PopoverScreen() {
             <Popover.Portal>
               <Popover.Overlay />
               <Popover.Content placement="left">
-                <Popover.Arrow placement="left" />
+                <Popover.Arrow />
                 <AppText className="text-foreground">Left Placement</AppText>
               </Popover.Content>
             </Popover.Portal>
@@ -163,7 +162,7 @@ export default function PopoverScreen() {
             <Popover.Portal>
               <Popover.Overlay />
               <Popover.Content placement="right">
-                <Popover.Arrow placement="right" />
+                <Popover.Arrow />
                 <AppText className="text-foreground">Right placement</AppText>
               </Popover.Content>
             </Popover.Portal>
@@ -178,7 +177,7 @@ export default function PopoverScreen() {
             <Popover.Portal>
               <Popover.Overlay />
               <Popover.Content placement="bottom">
-                <Popover.Arrow placement="bottom" />
+                <Popover.Arrow />
                 <AppText className="text-foreground">Bottom placement</AppText>
               </Popover.Content>
             </Popover.Portal>

@@ -1,5 +1,5 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { forwardRef, useEffect, useRef } from 'react';
+import { createContext, forwardRef, use, useEffect, useRef } from 'react';
 import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
@@ -27,6 +27,7 @@ import type {
   PopoverArrowProps,
   PopoverCloseProps,
   PopoverContentBottomSheetProps,
+  PopoverContentContextValue,
   PopoverContentPopoverProps,
   PopoverContentProps,
   PopoverDescriptionProps,
@@ -46,6 +47,10 @@ const AnimatedContent = Animated.createAnimatedComponent(
 );
 
 const usePopover = PopoverPrimitives.useRootContext;
+
+const PopoverContentContext = createContext<PopoverContentContextValue>({
+  placement: undefined,
+});
 
 // --------------------------------------------------
 
@@ -205,20 +210,22 @@ const PopoverContentPopover = forwardRef<
     ]);
 
     return (
-      <AnimatedContent
-        ref={ref}
-        placement={placement}
-        align={align}
-        avoidCollisions={avoidCollisions}
-        offset={offset}
-        alignOffset={alignOffset}
-        insets={insets}
-        className={tvStyles}
-        style={flatStyle}
-        {...props}
-      >
-        {children}
-      </AnimatedContent>
+      <PopoverContentContext value={{ placement }}>
+        <AnimatedContent
+          ref={ref}
+          placement={placement}
+          align={align}
+          avoidCollisions={avoidCollisions}
+          offset={offset}
+          alignOffset={alignOffset}
+          insets={insets}
+          className={tvStyles}
+          style={flatStyle}
+          {...props}
+        >
+          {children}
+        </AnimatedContent>
+      </PopoverContentContext>
     );
   }
 );
@@ -280,32 +287,34 @@ const PopoverContentBottomSheet = forwardRef<
     );
 
     return (
-      <BottomSheet
-        ref={bottomSheetRef}
-        backgroundStyle={[
-          { backgroundColor: colors.panel },
-          restProps.backgroundStyle,
-        ]}
-        handleIndicatorStyle={[
-          { backgroundColor: colors.mutedForeground },
-          restProps.handleIndicatorStyle,
-        ]}
-        enablePanDownToClose={restProps.enablePanDownToClose ?? true}
-        animatedIndex={animatedIndex ?? restProps.animatedIndex}
-        onClose={onClose}
-        {...restProps}
-      >
-        <BottomSheetView
-          className={tvStyles}
-          style={[
-            { paddingBottom: insets.bottom + 12 },
-            bottomSheetViewProps?.style,
+      <PopoverContentContext value={{ placement: 'bottom' }}>
+        <BottomSheet
+          ref={bottomSheetRef}
+          backgroundStyle={[
+            { backgroundColor: colors.panel },
+            restProps.backgroundStyle,
           ]}
-          {...bottomSheetViewProps}
+          handleIndicatorStyle={[
+            { backgroundColor: colors.mutedForeground },
+            restProps.handleIndicatorStyle,
+          ]}
+          enablePanDownToClose={restProps.enablePanDownToClose ?? true}
+          animatedIndex={animatedIndex ?? restProps.animatedIndex}
+          onClose={onClose}
+          {...restProps}
         >
-          {children}
-        </BottomSheetView>
-      </BottomSheet>
+          <BottomSheetView
+            className={tvStyles}
+            style={[
+              { paddingBottom: insets.bottom + 12 },
+              bottomSheetViewProps?.style,
+            ]}
+            {...bottomSheetViewProps}
+          >
+            {children}
+          </BottomSheetView>
+        </BottomSheet>
+      </PopoverContentContext>
     );
   }
 );
@@ -399,11 +408,21 @@ const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
 
 const PopoverArrow = forwardRef<View, PopoverArrowProps>(
   (
-    { className, size = 8, width = 16, color, placement = 'bottom', ...props },
+    {
+      className,
+      height = 8,
+      width = 16,
+      color,
+      placement: placementLocal,
+      ...props
+    },
     ref
   ) => {
     const { colors } = useTheme();
     const { triggerPosition, contentLayout } = usePopover();
+    const { placement: placementContext } = use(PopoverContentContext);
+
+    const placement = placementLocal || placementContext;
 
     const tvStyles = popoverStyles.arrow({ className });
 
@@ -428,14 +447,14 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'top':
           return {
             ...baseStyle,
-            bottom: -size,
+            bottom: -height,
             left: Math.min(
               Math.max(12, triggerCenterX - contentLayout.x - width / 2),
               contentLayout.width - width - 12
             ),
             borderLeftWidth: width / 2,
             borderRightWidth: width / 2,
-            borderTopWidth: size,
+            borderTopWidth: height,
             borderBottomWidth: 0,
             borderLeftColor: 'transparent',
             borderRightColor: 'transparent',
@@ -446,7 +465,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'bottom':
           return {
             ...baseStyle,
-            top: -size,
+            top: -height,
             left: Math.min(
               Math.max(12, triggerCenterX - contentLayout.x - width / 2),
               contentLayout.width - width - 12
@@ -454,7 +473,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
             borderLeftWidth: width / 2,
             borderRightWidth: width / 2,
             borderTopWidth: 0,
-            borderBottomWidth: size,
+            borderBottomWidth: height,
             borderLeftColor: 'transparent',
             borderRightColor: 'transparent',
             borderTopColor: 'transparent',
@@ -464,14 +483,14 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'left':
           return {
             ...baseStyle,
-            right: -size,
+            right: -height,
             top: Math.min(
               Math.max(12, triggerCenterY - contentLayout.y - width / 2),
               contentLayout.height - width - 12
             ),
             borderTopWidth: width / 2,
             borderBottomWidth: width / 2,
-            borderLeftWidth: size,
+            borderLeftWidth: height,
             borderRightWidth: 0,
             borderTopColor: 'transparent',
             borderBottomColor: 'transparent',
@@ -482,7 +501,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'right':
           return {
             ...baseStyle,
-            left: -size,
+            left: -height,
             top: Math.min(
               Math.max(12, triggerCenterY - contentLayout.y - width / 2),
               contentLayout.height - width - 12
@@ -490,7 +509,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
             borderTopWidth: width / 2,
             borderBottomWidth: width / 2,
             borderLeftWidth: 0,
-            borderRightWidth: size,
+            borderRightWidth: height,
             borderTopColor: 'transparent',
             borderBottomColor: 'transparent',
             borderLeftColor: 'transparent',

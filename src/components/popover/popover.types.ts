@@ -20,6 +20,16 @@ export type PopoverPlacement = 'top' | 'bottom' | 'left' | 'right';
 export type PopoverAlign = 'start' | 'center' | 'end';
 
 /**
+ * Popover context value with presentation and placement
+ */
+export interface PopoverContentContextValue {
+  /**
+   * Current placement of the popover
+   */
+  placement?: PopoverPlacement;
+}
+
+/**
  * Popover Root component props
  */
 export interface PopoverRootProps extends PopoverPrimitivesTypes.RootProps {
@@ -181,10 +191,10 @@ export interface PopoverArrowProps {
    */
   className?: string;
   /**
-   * Size of the arrow in pixels
+   * Height of the arrow in pixels
    * @default 8
    */
-  size?: number;
+  height?: number;
   /**
    * Width of the arrow in pixels
    * @default 16
@@ -195,15 +205,7 @@ export interface PopoverArrowProps {
    */
   color?: string;
   /**
-   * Border color of the arrow (defaults to content border)
-   */
-  borderColor?: string;
-  /**
    * Placement of the popover (inherited from content)
    */
   placement?: PopoverPlacement;
-  /**
-   * Alignment of the popover (inherited from content)
-   */
-  align?: PopoverAlign;
 }

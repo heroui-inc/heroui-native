@@ -148,6 +148,7 @@ export default function MyComponent() {
 - [Drop Shadow View](./src/components/drop-shadow-view/drop-shadow-view.md)
 - [Error View](./src/components/error-view/error-view.md)
 - [Form Field](./src/components/form-field/form-field.md)
+- [Popover](./src/components/popover/popover.md)
 - [Radio](./src/components/radio/radio.md)
 - [Radio Group](./src/components/radio-group/radio-group.md)
 - [Scroll Shadow](./src/components/scroll-shadow/scroll-shadow.md)

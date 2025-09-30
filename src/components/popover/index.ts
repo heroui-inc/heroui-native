@@ -13,4 +13,5 @@ export type {
   PopoverRootProps,
   PopoverTitleProps,
   PopoverTriggerProps,
+  PopoverTriggerRef,
 } from './popover.types';

@@ -9,6 +9,11 @@ import type {
 import type * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 
 /**
+ * Ref type for the Popover Trigger component
+ */
+export type PopoverTriggerRef = PopoverPrimitivesTypes.TriggerRef;
+
+/**
  * Presentation mode for the popover content
  */
 export type PopoverPresentation = 'popover' | 'bottom-sheet';

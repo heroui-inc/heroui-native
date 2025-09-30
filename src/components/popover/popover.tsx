@@ -585,8 +585,12 @@ PopoverArrow.displayName = DISPLAY_NAME.ARROW;
  * @component Popover.Overlay - Optional background overlay. Can be transparent or
  * semi-transparent to capture outside clicks.
  *
- * @component Popover.Content - Container for popover content with positioning,
- * styling, and collision detection.
+ * @component Popover.Content - Container for popover content with two presentation modes:
+ * default floating popover with positioning and collision detection, or bottom sheet modal.
+ * Supports arrow indicators and custom animations.
+ *
+ * @component Popover.Arrow - Optional arrow indicator pointing to the trigger element.
+ * Automatically positions itself based on popover placement.
  *
  * @component Popover.Close - Close button that dismisses the popover when pressed.
  * Renders a default X icon if no children provided.

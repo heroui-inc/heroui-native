@@ -10,6 +10,7 @@ export const DISPLAY_NAME = {
   CLOSE: 'HeroUINative.Popover.Close',
   TITLE: 'HeroUINative.Popover.Title',
   DESCRIPTION: 'HeroUINative.Popover.Description',
+  ARROW: 'HeroUINative.Popover.Arrow',
 };
 
 /**

@@ -1,6 +1,6 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { forwardRef, useEffect, useRef } from 'react';
-import type { Text as RNText } from 'react-native';
+import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
@@ -24,6 +24,7 @@ import {
 } from './popover.constants';
 import popoverStyles, { nativeStyles } from './popover.styles';
 import type {
+  PopoverArrowProps,
   PopoverCloseProps,
   PopoverContentBottomSheetProps,
   PopoverContentPopoverProps,
@@ -396,6 +397,125 @@ const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
 
 // --------------------------------------------------
 
+const PopoverArrow = forwardRef<View, PopoverArrowProps>(
+  (
+    { className, size = 8, width = 16, color, placement = 'bottom', ...props },
+    ref
+  ) => {
+    const { colors } = useTheme();
+    const { triggerPosition, contentLayout } = usePopover();
+
+    const tvStyles = popoverStyles.arrow({ className });
+
+    if (!triggerPosition || !contentLayout) {
+      return null;
+    }
+
+    const getArrowStyle = () => {
+      const arrowColor = color || colors.panel;
+
+      const triggerCenterX = triggerPosition.pageX + triggerPosition.width / 2;
+      const triggerCenterY = triggerPosition.pageY + triggerPosition.height / 2;
+
+      const baseStyle: StyleProp<ViewStyle> = {
+        width: 0,
+        height: 0,
+        borderStyle: 'solid',
+        position: 'absolute',
+      };
+
+      switch (placement) {
+        case 'top':
+          return {
+            ...baseStyle,
+            bottom: -size,
+            left: Math.min(
+              Math.max(12, triggerCenterX - contentLayout.x - width / 2),
+              contentLayout.width - width - 12
+            ),
+            borderLeftWidth: width / 2,
+            borderRightWidth: width / 2,
+            borderTopWidth: size,
+            borderBottomWidth: 0,
+            borderLeftColor: 'transparent',
+            borderRightColor: 'transparent',
+            borderTopColor: arrowColor,
+            borderBottomColor: 'transparent',
+          };
+
+        case 'bottom':
+          return {
+            ...baseStyle,
+            top: -size,
+            left: Math.min(
+              Math.max(12, triggerCenterX - contentLayout.x - width / 2),
+              contentLayout.width - width - 12
+            ),
+            borderLeftWidth: width / 2,
+            borderRightWidth: width / 2,
+            borderTopWidth: 0,
+            borderBottomWidth: size,
+            borderLeftColor: 'transparent',
+            borderRightColor: 'transparent',
+            borderTopColor: 'transparent',
+            borderBottomColor: arrowColor,
+          };
+
+        case 'left':
+          return {
+            ...baseStyle,
+            right: -size,
+            top: Math.min(
+              Math.max(12, triggerCenterY - contentLayout.y - width / 2),
+              contentLayout.height - width - 12
+            ),
+            borderTopWidth: width / 2,
+            borderBottomWidth: width / 2,
+            borderLeftWidth: size,
+            borderRightWidth: 0,
+            borderTopColor: 'transparent',
+            borderBottomColor: 'transparent',
+            borderLeftColor: arrowColor,
+            borderRightColor: 'transparent',
+          };
+
+        case 'right':
+          return {
+            ...baseStyle,
+            left: -size,
+            top: Math.min(
+              Math.max(12, triggerCenterY - contentLayout.y - width / 2),
+              contentLayout.height - width - 12
+            ),
+            borderTopWidth: width / 2,
+            borderBottomWidth: width / 2,
+            borderLeftWidth: 0,
+            borderRightWidth: size,
+            borderTopColor: 'transparent',
+            borderBottomColor: 'transparent',
+            borderLeftColor: 'transparent',
+            borderRightColor: arrowColor,
+          };
+
+        default:
+          return baseStyle;
+      }
+    };
+
+    return (
+      <View
+        ref={ref}
+        className={tvStyles}
+        style={getArrowStyle()}
+        pointerEvents="none"
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 PopoverRoot.displayName = DISPLAY_NAME.ROOT;
 PopoverTrigger.displayName = DISPLAY_NAME.TRIGGER;
 PopoverPortal.displayName = DISPLAY_NAME.PORTAL;
@@ -404,6 +524,7 @@ PopoverContent.displayName = DISPLAY_NAME.CONTENT;
 PopoverClose.displayName = DISPLAY_NAME.CLOSE;
 PopoverTitle.displayName = DISPLAY_NAME.TITLE;
 PopoverDescription.displayName = DISPLAY_NAME.DESCRIPTION;
+PopoverArrow.displayName = DISPLAY_NAME.ARROW;
 
 /**
  * Compound Popover component with sub-components
@@ -440,6 +561,7 @@ const Popover = Object.assign(PopoverRoot, {
   Portal: PopoverPortal,
   Overlay: PopoverOverlay,
   Content: PopoverContent,
+  Arrow: PopoverArrow,
   Close: PopoverClose,
   Title: PopoverTitle,
   Description: PopoverDescription,

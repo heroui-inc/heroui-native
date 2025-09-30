@@ -171,3 +171,39 @@ export interface PopoverDescriptionProps extends TextProps {
    */
   className?: string;
 }
+
+/**
+ * Popover Arrow component props
+ */
+export interface PopoverArrowProps {
+  /**
+   * Additional CSS class for the arrow
+   */
+  className?: string;
+  /**
+   * Size of the arrow in pixels
+   * @default 8
+   */
+  size?: number;
+  /**
+   * Width of the arrow in pixels
+   * @default 16
+   */
+  width?: number;
+  /**
+   * Color of the arrow (defaults to content background)
+   */
+  color?: string;
+  /**
+   * Border color of the arrow (defaults to content border)
+   */
+  borderColor?: string;
+  /**
+   * Placement of the popover (inherited from content)
+   */
+  placement?: PopoverPlacement;
+  /**
+   * Alignment of the popover (inherited from content)
+   */
+  align?: PopoverAlign;
+}

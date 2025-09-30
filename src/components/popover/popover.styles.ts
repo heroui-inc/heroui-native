@@ -41,6 +41,10 @@ const description = tv({
   base: 'text-base/snug text-muted-foreground font-normal',
 });
 
+const arrow = tv({
+  base: 'absolute',
+});
+
 const popoverStyles = {
   portal,
   overlay,
@@ -49,6 +53,7 @@ const popoverStyles = {
   close,
   title,
   description,
+  arrow,
 };
 
 export type RootSlots = keyof typeof popoverStyles;

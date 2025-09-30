@@ -8,6 +8,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FullWindowOverlay } from '../../helpers/components';
@@ -20,6 +21,7 @@ import {
   DEFAULT_ALIGN_OFFSET,
   DEFAULT_INSETS,
   DEFAULT_OFFSET,
+  DEFAULT_SPRING_CONFIG,
   DISPLAY_NAME,
 } from './popover.constants';
 import popoverStyles, { nativeStyles } from './popover.styles';
@@ -57,7 +59,7 @@ const PopoverContentContext = createContext<PopoverContentContextValue>({
 const PopoverRoot = forwardRef<
   PopoverPrimitivesTypes.RootRef,
   PopoverRootProps
->(({ children, onOpenChange, closeDelay = 300, ...props }, ref) => {
+>(({ children, onOpenChange, closeDelay = 400, ...props }, ref) => {
   return (
     <PopoverPrimitives.Root
       ref={ref}
@@ -85,6 +87,7 @@ const PopoverTrigger = forwardRef<
 const PopoverPortal = ({
   className,
   children,
+  progressAnimationConfigs,
   ...props
 }: PopoverPortalProps) => {
   const tvStyles = popoverStyles.portal({ className });
@@ -93,13 +96,27 @@ const PopoverPortal = ({
 
   useEffect(() => {
     if (popoverState === 'open') {
-      progress.set(withSpring(1, { mass: 2, damping: 100, stiffness: 1600 }));
+      const openConfig = progressAnimationConfigs?.onOpen;
+      if (openConfig?.animationType === 'spring') {
+        progress.set(withSpring(1, openConfig.animationConfig));
+      } else if (openConfig?.animationType === 'timing') {
+        progress.set(withTiming(1, openConfig.animationConfig));
+      } else {
+        progress.set(withSpring(1, DEFAULT_SPRING_CONFIG));
+      }
     } else if (popoverState === 'close') {
-      progress.set(withSpring(2, { mass: 2, damping: 100, stiffness: 1600 }));
+      const closeConfig = progressAnimationConfigs?.onClose;
+      if (closeConfig?.animationType === 'spring') {
+        progress.set(withSpring(2, closeConfig.animationConfig));
+      } else if (closeConfig?.animationType === 'timing') {
+        progress.set(withTiming(2, closeConfig.animationConfig));
+      } else {
+        progress.set(withSpring(2, DEFAULT_SPRING_CONFIG));
+      }
     } else {
       progress.set(0);
     }
-  }, [popoverState, progress]);
+  }, [popoverState, progress, progressAnimationConfigs]);
 
   return (
     <PopoverPrimitives.Portal {...props}>
@@ -115,7 +132,7 @@ const PopoverPortal = ({
 const PopoverOverlay = forwardRef<
   PopoverPrimitivesTypes.OverlayRef,
   PopoverOverlayProps
->(({ className, style, ...props }, ref) => {
+>(({ className, style, isDefaultAnimationDisabled, ...props }, ref) => {
   const { isDark } = useTheme();
 
   const { progress } = usePopover();
@@ -126,6 +143,9 @@ const PopoverOverlay = forwardRef<
   });
 
   const rOverlayStyle = useAnimatedStyle(() => {
+    if (isDefaultAnimationDisabled) {
+      return {};
+    }
     const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
     return {
       opacity,
@@ -158,6 +178,7 @@ const PopoverContentPopover = forwardRef<
       className,
       children,
       style,
+      isDefaultAnimationDisabled,
       ...props
     },
     ref
@@ -176,6 +197,10 @@ const PopoverContentPopover = forwardRef<
     const tvStyles = popoverStyles.popoverContent({ className, isDark });
 
     const rContainerStyle = useAnimatedStyle(() => {
+      if (isDefaultAnimationDisabled) {
+        return {};
+      }
+
       let translateX = 0;
       let translateY = 0;
 
@@ -193,7 +218,7 @@ const PopoverContentPopover = forwardRef<
         opacity: interpolate(
           progress.get(),
           [0, 1, 1.75, 2],
-          [0.75, 1, 0.75, 0]
+          [0.5, 1, 0.75, 0]
         ),
         transform: [
           { translateX },

@@ -32,3 +32,12 @@ export const DEFAULT_INSETS = {
   left: 12,
   right: 12,
 };
+
+/**
+ * Default spring animation configuration
+ */
+export const DEFAULT_SPRING_CONFIG = {
+  mass: 2,
+  damping: 100,
+  stiffness: 900,
+};

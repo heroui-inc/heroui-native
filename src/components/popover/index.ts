@@ -1,6 +1,7 @@
 export { default as Popover } from './popover';
 export type {
   PopoverAlign,
+  PopoverArrowProps,
   PopoverCloseIconProps,
   PopoverCloseProps,
   PopoverContentProps,
@@ -8,6 +9,7 @@ export type {
   PopoverOverlayProps,
   PopoverPlacement,
   PopoverPortalProps,
+  PopoverProgressAnimationConfigs,
   PopoverRootProps,
   PopoverTitleProps,
   PopoverTriggerProps,

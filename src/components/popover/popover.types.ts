@@ -2,6 +2,10 @@ import type BottomSheet from '@gorhom/bottom-sheet';
 import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
+import type {
+  WithSpringConfig,
+  WithTimingConfig,
+} from 'react-native-reanimated';
 import type * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 
 /**
@@ -27,6 +31,36 @@ export interface PopoverContentContextValue {
    * Current placement of the popover
    */
   placement?: PopoverPlacement;
+}
+
+/**
+ * Spring animation configuration
+ */
+interface SpringAnimationConfig {
+  animationType: 'spring';
+  animationConfig?: WithSpringConfig;
+}
+
+/**
+ * Timing animation configuration
+ */
+interface TimingAnimationConfig {
+  animationType: 'timing';
+  animationConfig?: WithTimingConfig;
+}
+
+/**
+ * Progress animation configuration for popover transitions
+ */
+export interface PopoverProgressAnimationConfigs {
+  /**
+   * Animation configuration for opening
+   */
+  onOpen?: SpringAnimationConfig | TimingAnimationConfig;
+  /**
+   * Animation configuration for closing
+   */
+  onClose?: SpringAnimationConfig | TimingAnimationConfig;
 }
 
 /**
@@ -70,6 +104,10 @@ export interface PopoverPortalProps extends PopoverPrimitivesTypes.PortalProps {
    * The portal content
    */
   children: ReactNode;
+  /**
+   * Animation configurations for open/close progress animations
+   */
+  progressAnimationConfigs?: PopoverProgressAnimationConfigs;
 }
 
 /**
@@ -81,6 +119,12 @@ export interface PopoverOverlayProps
    * Additional CSS class for the overlay
    */
   className?: string;
+  /**
+   * Whether to disable the default opacity animation
+   * Use this when you want to animate opacity using your own Reanimated useAnimatedStyle
+   * @default false
+   */
+  isDefaultAnimationDisabled?: boolean;
 }
 
 /**
@@ -100,6 +144,12 @@ export interface PopoverContentPopoverProps
    * Presentation mode for the popover
    */
   presentation?: 'popover';
+  /**
+   * Whether to disable the default animations (opacity, scale, translate)
+   * Use this when you want to animate these properties using your own Reanimated useAnimatedStyle
+   * @default false
+   */
+  isDefaultAnimationDisabled?: boolean;
 }
 
 /**

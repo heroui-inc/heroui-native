@@ -472,7 +472,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'top':
           return {
             ...baseStyle,
-            bottom: -height,
+            bottom: -height + 1,
             left: Math.min(
               Math.max(12, triggerCenterX - contentLayout.x - width / 2),
               contentLayout.width - width - 12
@@ -490,7 +490,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'bottom':
           return {
             ...baseStyle,
-            top: -height,
+            top: -height + 1,
             left: Math.min(
               Math.max(12, triggerCenterX - contentLayout.x - width / 2),
               contentLayout.width - width - 12
@@ -508,7 +508,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'left':
           return {
             ...baseStyle,
-            right: -height,
+            right: -height + 1,
             top: Math.min(
               Math.max(12, triggerCenterY - contentLayout.y - width / 2),
               contentLayout.height - width - 12
@@ -526,7 +526,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'right':
           return {
             ...baseStyle,
-            left: -height,
+            left: -height + 1,
             top: Math.min(
               Math.max(12, triggerCenterY - contentLayout.y - width / 2),
               contentLayout.height - width - 12

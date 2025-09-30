@@ -195,7 +195,7 @@ export default function PopoverScreen() {
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Overlay />
-            <Popover.Content align="start">
+            <Popover.Content placement="top" align="start">
               <AppText className="text-foreground">Start aligned</AppText>
             </Popover.Content>
           </Popover.Portal>
@@ -209,7 +209,7 @@ export default function PopoverScreen() {
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Overlay />
-            <Popover.Content align="center">
+            <Popover.Content placement="top" align="center">
               <AppText className="text-foreground">Center aligned</AppText>
             </Popover.Content>
           </Popover.Portal>
@@ -223,7 +223,7 @@ export default function PopoverScreen() {
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Overlay />
-            <Popover.Content align="end">
+            <Popover.Content placement="top" align="end">
               <AppText className="text-foreground">End aligned</AppText>
             </Popover.Content>
           </Popover.Portal>

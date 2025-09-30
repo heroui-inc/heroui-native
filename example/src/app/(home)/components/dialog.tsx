@@ -71,7 +71,7 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
         { marginTop: insetTop, maxHeight: maxTextInputDialogHeight },
         rContainerStyle,
       ]}
-      isAnimationDisabled
+      isDefaultAnimationDisabled
     >
       {children}
     </Dialog.Content>
@@ -175,7 +175,7 @@ export default function DialogScreen() {
             <Button variant="tertiary">Blur Backdrop Dialog</Button>
           </Dialog.Trigger>
           <Dialog.Portal>
-            <Dialog.Overlay isAnimationDisabled>
+            <Dialog.Overlay isDefaultAnimationDisabled>
               <DialogBlurBackdrop />
             </Dialog.Overlay>
             <Dialog.Content>
@@ -218,7 +218,7 @@ export default function DialogScreen() {
           <Button variant="tertiary">Text Input Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Overlay isAnimationDisabled>
+          <Dialog.Overlay isDefaultAnimationDisabled>
             <DialogBlurBackdrop />
           </Dialog.Overlay>
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>

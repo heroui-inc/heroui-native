@@ -6,8 +6,8 @@ export type {
   DialogDescriptionProps,
   DialogOverlayProps,
   DialogPortalProps,
+  DialogProgressAnimationConfigs,
   DialogRootProps,
   DialogTitleProps,
   DialogTriggerProps,
-  ProgressAnimationConfigs,
 } from './dialog.types';

@@ -45,7 +45,7 @@ interface TimingAnimationConfig {
 /**
  * Progress animation configuration
  */
-export interface ProgressAnimationConfigs {
+export interface DialogProgressAnimationConfigs {
   /**
    * Animation configuration for opening
    */
@@ -75,7 +75,7 @@ export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
   /**
    * Animation configurations for open/close progress animations
    */
-  progressAnimationConfigs?: ProgressAnimationConfigs;
+  progressAnimationConfigs?: DialogProgressAnimationConfigs;
 }
 
 /**
@@ -88,10 +88,11 @@ export interface DialogOverlayProps
    */
   className?: string;
   /**
-   * Disables overlay animations and makes background transparent
+   * Whether to disable the default opacity animation
+   * Use this when you want to animate opacity using your own Reanimated useAnimatedStyle
    * @default false
    */
-  isAnimationDisabled?: boolean;
+  isDefaultAnimationDisabled?: boolean;
 }
 
 /**
@@ -108,10 +109,11 @@ export interface DialogContentProps
    */
   children?: ReactNode;
   /**
-   * Disables content enter/exit opacity and scale animations
+   * Whether to disable the default animations (opacity, scale)
+   * Use this when you want to animate these properties using your own Reanimated useAnimatedStyle
    * @default false
    */
-  isAnimationDisabled?: boolean;
+  isDefaultAnimationDisabled?: boolean;
 }
 
 /**

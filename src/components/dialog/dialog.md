@@ -204,16 +204,16 @@ export default function DialogExample() {
 
 ### Dialog.Portal
 
-| prop                       | type                       | default | description                                        |
-| -------------------------- | -------------------------- | ------- | -------------------------------------------------- |
-| `children`                 | `React.ReactNode`          | -       | Portal content (overlay and dialog)                |
-| `className`                | `string`                   | -       | Additional CSS classes for portal container        |
-| `style`                    | `StyleProp<ViewStyle>`     | -       | Additional styles for portal container             |
-| `progressAnimationConfigs` | `ProgressAnimationConfigs` | -       | Animation configuration for open/close transitions |
-| `hostName`                 | `string`                   | -       | Optional portal host name for specific container   |
-| `forceMount`               | `boolean`                  | -       | Force mount when closed for animation purposes     |
+| prop                       | type                             | default | description                                        |
+| -------------------------- | -------------------------------- | ------- | -------------------------------------------------- |
+| `children`                 | `React.ReactNode`                | -       | Portal content (overlay and dialog)                |
+| `className`                | `string`                         | -       | Additional CSS classes for portal container        |
+| `style`                    | `StyleProp<ViewStyle>`           | -       | Additional styles for portal container             |
+| `progressAnimationConfigs` | `DialogProgressAnimationConfigs` | -       | Animation configuration for open/close transitions |
+| `hostName`                 | `string`                         | -       | Optional portal host name for specific container   |
+| `forceMount`               | `boolean`                        | -       | Force mount when closed for animation purposes     |
 
-#### ProgressAnimationConfigs
+#### DialogProgressAnimationConfigs
 
 | prop      | type                                             | description                         |
 | --------- | ------------------------------------------------ | ----------------------------------- |
@@ -222,26 +222,26 @@ export default function DialogExample() {
 
 ### Dialog.Overlay
 
-| prop                  | type              | default | description                                                  |
-| --------------------- | ----------------- | ------- | ------------------------------------------------------------ |
-| `children`            | `React.ReactNode` | -       | Custom overlay content                                       |
-| `className`           | `string`          | -       | Additional CSS classes for overlay                           |
-| `isAnimationDisabled` | `boolean`         | `false` | Disables overlay animations and makes background transparent |
-| `isCloseOnPress`      | `boolean`         | `true`  | Whether pressing overlay closes dialog                       |
-| `forceMount`          | `boolean`         | -       | Force mount when closed for animation purposes               |
-| `...PressableProps`   | `PressableProps`  | -       | All standard React Native Pressable props are supported      |
+| prop                         | type              | default | description                                                                         |
+| ---------------------------- | ----------------- | ------- | ----------------------------------------------------------------------------------- |
+| `children`                   | `React.ReactNode` | -       | Custom overlay content                                                              |
+| `className`                  | `string`          | -       | Additional CSS classes for overlay                                                  |
+| `isDefaultAnimationDisabled` | `boolean`         | `false` | Disables default opacity animation. Use when animating with custom useAnimatedStyle |
+| `isCloseOnPress`             | `boolean`         | `true`  | Whether pressing overlay closes dialog                                              |
+| `forceMount`                 | `boolean`         | -       | Force mount when closed for animation purposes                                      |
+| `...PressableProps`          | `PressableProps`  | -       | All standard React Native Pressable props are supported                             |
 
 ### Dialog.Content
 
-| prop                    | type                                 | default | description                                      |
-| ----------------------- | ------------------------------------ | ------- | ------------------------------------------------ |
-| `children`              | `React.ReactNode`                    | -       | Dialog content                                   |
-| `className`             | `string`                             | -       | Additional CSS classes for content container     |
-| `style`                 | `StyleProp<ViewStyle>`               | -       | Additional styles for content container          |
-| `onLayout`              | `(event: LayoutChangeEvent) => void` | -       | Layout event handler                             |
-| `isAnimationDisabled`   | `boolean`                            | `false` | Disables content enter/exit animations           |
-| `forceMount`            | `boolean`                            | -       | Force mount when closed for animation purposes   |
-| `...Animated.ViewProps` | `Animated.ViewProps`                 | -       | All Reanimated Animated.View props are supported |
+| prop                         | type                                 | default | description                                                                                   |
+| ---------------------------- | ------------------------------------ | ------- | --------------------------------------------------------------------------------------------- |
+| `children`                   | `React.ReactNode`                    | -       | Dialog content                                                                                |
+| `className`                  | `string`                             | -       | Additional CSS classes for content container                                                  |
+| `style`                      | `StyleProp<ViewStyle>`               | -       | Additional styles for content container                                                       |
+| `onLayout`                   | `(event: LayoutChangeEvent) => void` | -       | Layout event handler                                                                          |
+| `isDefaultAnimationDisabled` | `boolean`                            | `false` | Disables default animations (opacity, scale). Use when animating with custom useAnimatedStyle |
+| `forceMount`                 | `boolean`                            | -       | Force mount when closed for animation purposes                                                |
+| `...Animated.ViewProps`      | `Animated.ViewProps`                 | -       | All Reanimated Animated.View props are supported                                              |
 
 ### Dialog.Close
 

@@ -122,11 +122,11 @@ const DialogPortal = ({
 const DialogOverlay = forwardRef<
   DialogPrimitivesTypes.OverlayRef,
   DialogOverlayProps
->(({ className, style, isAnimationDisabled = false, ...props }, ref) => {
+>(({ className, style, isDefaultAnimationDisabled = false, ...props }, ref) => {
   const { progress, isDragging } = useDialog();
 
   const rContainerStyle = useAnimatedStyle(() => {
-    if (isAnimationDisabled) {
+    if (isDefaultAnimationDisabled) {
       return {};
     }
 
@@ -143,7 +143,7 @@ const DialogOverlay = forwardRef<
 
   const tvStyles = dialogStyles.overlay({
     className,
-    isAnimationDisabled,
+    isDefaultAnimationDisabled,
   });
 
   return (
@@ -168,7 +168,7 @@ const DialogContent = forwardRef<
       style,
       children,
       onLayout,
-      isAnimationDisabled = false,
+      isDefaultAnimationDisabled = false,
       ...props
     },
     ref
@@ -320,7 +320,7 @@ const DialogContent = forwardRef<
         return { opacity: 1 };
       }
 
-      if (isAnimationDisabled) {
+      if (isDefaultAnimationDisabled) {
         return {};
       }
 

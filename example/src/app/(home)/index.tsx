@@ -1,5 +1,6 @@
+/* eslint-disable no-unreachable */
 import Feather from '@expo/vector-icons/Feather';
-import { useRouter } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import { Card, Chip, useTheme } from 'heroui-native';
 import type { FC } from 'react';
 import { Image, Pressable, View } from 'react-native';
@@ -83,6 +84,9 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
       opacity: isDark ? withTiming(0.4) : 0,
     };
   });
+
+  // VS -------------
+  return <Redirect href="/showcases/cooking-onboarding" />;
 
   return (
     <AnimatedPressable

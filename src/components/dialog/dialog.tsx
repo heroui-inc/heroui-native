@@ -338,6 +338,7 @@ const DialogContent = forwardRef<
       <GestureDetector gesture={panGesture}>
         <Animated.View
           style={rDragContainerStyle}
+          className="pointer-events-box-none"
           onLayout={(event) => {
             contentY.set(event.nativeEvent.layout.y);
             contentHeight.set(event.nativeEvent.layout.height);

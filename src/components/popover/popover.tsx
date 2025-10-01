@@ -77,9 +77,8 @@ const PopoverRoot = forwardRef<
 const PopoverTrigger = forwardRef<
   PopoverPrimitivesTypes.TriggerRef,
   PopoverTriggerProps
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
->(({ className, ...props }, ref) => {
-  return <PopoverPrimitives.Trigger ref={ref} asChild {...props} />;
+>((props, ref) => {
+  return <PopoverPrimitives.Trigger ref={ref} {...props} />;
 });
 
 // --------------------------------------------------

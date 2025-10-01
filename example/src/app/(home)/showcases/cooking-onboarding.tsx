@@ -2,17 +2,22 @@ import Feather from '@expo/vector-icons/Feather';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRouter } from 'expo-router';
-import { colorKit, useTheme } from 'heroui-native';
-import { useCallback, useEffect } from 'react';
+import { colorKit, useTheme, type PopoverTriggerRef } from 'heroui-native';
+import { useCallback, useEffect, useRef } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import BgImage from '../../../../assets/images/pancakes.jpg';
 import ParallaxScrollView from '../../../components/showcases/cooking-onboarding/parallax-scroll-view';
+import { Save } from '../../../components/showcases/cooking-onboarding/save';
+import { Share } from '../../../components/showcases/cooking-onboarding/share';
 
 export default function CookingOnboardingScreen() {
   const { colors } = useTheme();
 
   const navigation = useNavigation();
   const router = useRouter();
+
+  const shareTriggerRef = useRef<PopoverTriggerRef>(null);
+  const saveTriggerRef = useRef<PopoverTriggerRef>(null);
 
   const _renderHeaderLeft = useCallback(
     () => (
@@ -26,21 +31,11 @@ export default function CookingOnboardingScreen() {
   const _renderHeaderRight = useCallback(
     () => (
       <View className="flex-row gap-2">
-        <Pressable
-          className="bg-surface-2 w-10 h-10 rounded-md justify-center items-center"
-          onPress={router.back}
-        >
-          <Feather name="share" size={16} color={colors.foreground} />
-        </Pressable>
-        <Pressable
-          className="bg-surface-2 w-10 h-10 rounded-md justify-center items-center"
-          onPress={router.back}
-        >
-          <Feather name="heart" size={16} color={colors.foreground} />
-        </Pressable>
+        <Share isOnboardingDone={false} triggerRef={shareTriggerRef} />
+        <Save isOnboardingDone={false} triggerRef={saveTriggerRef} />
       </View>
     ),
-    [router.back, colors.foreground]
+    []
   );
 
   useEffect(() => {

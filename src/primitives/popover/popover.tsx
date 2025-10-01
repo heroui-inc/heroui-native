@@ -136,6 +136,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
     }
 
     const Component = asChild ? Slot.Pressable : Pressable;
+
     return (
       <Component
         ref={augmentedRef}

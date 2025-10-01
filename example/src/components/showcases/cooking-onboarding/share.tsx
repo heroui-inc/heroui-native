@@ -27,7 +27,7 @@ export const Share: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
         </Pressable>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Overlay />
+        {/* <Popover.Overlay /> */}
         <Popover.Content offset={insets.top + 45}>
           <Popover.Arrow />
           <AppText className="text-foreground">

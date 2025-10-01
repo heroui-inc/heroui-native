@@ -3,12 +3,57 @@ import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRouter } from 'expo-router';
 import { colorKit, useTheme, type PopoverTriggerRef } from 'heroui-native';
-import { useCallback, useEffect, useRef } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  type RefObject,
+} from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import BgImage from '../../../../assets/images/pancakes.jpg';
 import ParallaxScrollView from '../../../components/showcases/cooking-onboarding/parallax-scroll-view';
 import { Save } from '../../../components/showcases/cooking-onboarding/save';
 import { Share } from '../../../components/showcases/cooking-onboarding/share';
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+type OnboardingStep = {
+  ref: RefObject<PopoverTriggerRef | null>;
+  delay?: number;
+};
+
+type OnboardingState = {
+  currentStepIndex: number;
+  isComplete: boolean;
+  isActive: boolean;
+};
+
+type OnboardingAction =
+  | { type: 'START_ONBOARDING' }
+  | { type: 'NEXT_STEP' }
+  | { type: 'COMPLETE_ONBOARDING' }
+  | { type: 'RESET_ONBOARDING' };
+
+function onboardingReducer(
+  state: OnboardingState,
+  action: OnboardingAction
+): OnboardingState {
+  switch (action.type) {
+    case 'START_ONBOARDING':
+      return { ...state, isActive: true, currentStepIndex: 0 };
+    case 'NEXT_STEP':
+      return { ...state, currentStepIndex: state.currentStepIndex + 1 };
+    case 'COMPLETE_ONBOARDING':
+      return { ...state, isComplete: true, isActive: false };
+    case 'RESET_ONBOARDING':
+      return { currentStepIndex: 0, isComplete: false, isActive: false };
+    default:
+      return state;
+  }
+}
 
 export default function CookingOnboardingScreen() {
   const { colors } = useTheme();
@@ -18,6 +63,20 @@ export default function CookingOnboardingScreen() {
 
   const shareTriggerRef = useRef<PopoverTriggerRef>(null);
   const saveTriggerRef = useRef<PopoverTriggerRef>(null);
+
+  const [onboardingState, dispatch] = useReducer(onboardingReducer, {
+    currentStepIndex: 0,
+    isComplete: false,
+    isActive: false,
+  });
+
+  const onboardingSteps = useMemo<OnboardingStep[]>(
+    () => [
+      { ref: shareTriggerRef, delay: 1000 },
+      { ref: saveTriggerRef, delay: 300 },
+    ],
+    []
+  );
 
   const _renderHeaderLeft = useCallback(
     () => (
@@ -31,11 +90,17 @@ export default function CookingOnboardingScreen() {
   const _renderHeaderRight = useCallback(
     () => (
       <View className="flex-row gap-2">
-        <Share isOnboardingDone={false} triggerRef={shareTriggerRef} />
-        <Save isOnboardingDone={false} triggerRef={saveTriggerRef} />
+        <Share
+          isOnboardingDone={onboardingState.isComplete}
+          triggerRef={shareTriggerRef}
+        />
+        <Save
+          isOnboardingDone={onboardingState.isComplete}
+          triggerRef={saveTriggerRef}
+        />
       </View>
     ),
-    []
+    [onboardingState.isComplete]
   );
 
   useEffect(() => {
@@ -44,6 +109,49 @@ export default function CookingOnboardingScreen() {
       headerRight: _renderHeaderRight,
     });
   }, [navigation, _renderHeaderLeft, _renderHeaderRight]);
+
+  // Start onboarding when component mounts
+  useEffect(() => {
+    dispatch({ type: 'START_ONBOARDING' });
+  }, []);
+
+  // Handle onboarding step progression
+  useEffect(() => {
+    if (!onboardingState.isActive) return;
+
+    const currentStep = onboardingSteps[onboardingState.currentStepIndex];
+
+    if (!currentStep) {
+      // No more steps, close the last popover and complete onboarding
+      const lastStep = onboardingSteps[onboardingState.currentStepIndex - 1];
+      lastStep?.ref.current?.close();
+      dispatch({ type: 'COMPLETE_ONBOARDING' });
+      return;
+    }
+
+    // Close previous step's popover if it exists
+    if (onboardingState.currentStepIndex > 0) {
+      const prevStep = onboardingSteps[onboardingState.currentStepIndex - 1];
+      prevStep?.ref.current?.close();
+    }
+
+    // Open current step's popover after delay
+    const timer = setTimeout(() => {
+      currentStep.ref.current?.open();
+    }, currentStep.delay ?? 0);
+
+    return () => clearTimeout(timer);
+  }, [
+    onboardingState.currentStepIndex,
+    onboardingState.isActive,
+    onboardingSteps,
+  ]);
+
+  const handleOverlayPress = useCallback(() => {
+    if (onboardingState.isActive) {
+      dispatch({ type: 'NEXT_STEP' });
+    }
+  }, [onboardingState.isActive]);
 
   return (
     <View className="flex-1 bg-background">
@@ -60,6 +168,15 @@ export default function CookingOnboardingScreen() {
         ]}
         style={styles.topGradient}
       />
+      {onboardingState.isActive && (
+        <AnimatedPressable
+          entering={FadeIn}
+          exiting={FadeOut}
+          style={StyleSheet.absoluteFill}
+          onPress={handleOverlayPress}
+          className="bg-background/10"
+        />
+      )}
     </View>
   );
 }

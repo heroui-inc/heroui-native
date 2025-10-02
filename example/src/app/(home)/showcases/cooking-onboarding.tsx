@@ -167,7 +167,10 @@ export default function CookingOnboardingScreen() {
   }, [onboardingState.isActive]);
 
   return (
-    <View className="flex-1 bg-background">
+    <Animated.View
+      entering={FadeIn.delay(300)}
+      className="flex-1 bg-background"
+    >
       <ParallaxScrollView
         headerImage={<Image source={BgImage} style={styles.image} />}
       >
@@ -213,14 +216,14 @@ export default function CookingOnboardingScreen() {
       />
       {onboardingState.isActive && (
         <AnimatedPressable
-          entering={FadeIn}
+          entering={FadeIn.delay(1000)}
           exiting={FadeOut}
           style={StyleSheet.absoluteFill}
-          onPress={handleOverlayPress}
+          onPressIn={handleOverlayPress}
           className="bg-black/25"
         />
       )}
-    </View>
+    </Animated.View>
   );
 }
 

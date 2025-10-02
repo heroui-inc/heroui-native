@@ -8,22 +8,18 @@ import { Carousel } from '../../../components/showcase-carousel';
 const data = [
   {
     imageLight:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/linear-task-light.png',
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/cooking-onboarding-light-1.png',
     imageDark:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/linear-task-dark.png',
-    title: 'Linear Issue',
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/cooking-onboarding-dark-1.png',
+    title: 'Cooking Onboarding',
     description:
-      'Interactive task management interface inspired by Linear, featuring dynamic dialogs and status updates.',
+      'Multi-step onboarding experience with automated popover sequences, state management, and interactive recipe features.',
     href: '/showcases/cooking-onboarding',
     components: [
-      { name: 'Dialog', href: '/components/dialog' },
-      { name: 'Card', href: '/components/card' },
-      { name: 'Chip', href: '/components/chip' },
-      { name: 'RadioGroup', href: '/components/radio' },
-      { name: 'FormField', href: '/components/form-field' },
-      { name: 'Checkbox', href: '/components/checkbox' },
-      { name: 'Button', href: '/components/button' },
+      { name: 'Popover', href: '/components/popover' },
       { name: 'Avatar', href: '/components/avatar' },
+      { name: 'Button', href: '/components/button' },
+      { name: 'Divider', href: '/components/divider' },
     ],
   },
   {

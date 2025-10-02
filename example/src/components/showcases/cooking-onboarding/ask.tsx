@@ -27,7 +27,9 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
           onPress={isOnboardingDone ? simulatePress : undefined}
         >
           <Ionicons name="sparkles-sharp" size={14} color="#fdba74" />
-          <AppText className="text-lg text-white font-semibold">Ask</AppText>
+          <AppText className="text-lg text-foreground font-semibold">
+            Ask
+          </AppText>
         </Pressable>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>

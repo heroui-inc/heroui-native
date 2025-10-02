@@ -27,7 +27,9 @@ export const Plan: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
           onPress={isOnboardingDone ? simulatePress : undefined}
         >
           <Entypo name="plus" size={16} color="#fdba74" />
-          <AppText className="text-lg text-white font-semibold">Plan</AppText>
+          <AppText className="text-lg text-foreground font-semibold">
+            Plan
+          </AppText>
         </Pressable>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>

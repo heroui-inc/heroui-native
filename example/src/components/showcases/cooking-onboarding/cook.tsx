@@ -5,6 +5,7 @@ import { Pressable, StyleSheet } from 'react-native';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
 import { progressAnimationConfigs } from './constants';
+import { className } from './styles';
 
 type Props = {
   isOnboardingDone: boolean;
@@ -27,9 +28,9 @@ export const Cook: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
         </Pressable>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
-        <Popover.Content className="bg-surface-3" placement="top">
-          <Popover.Arrow color={colors.surface3} />
-          <AppText className="text-foreground">
+        <Popover.Content className={className.popoverContent} placement="top">
+          <Popover.Arrow color={colors.foreground} />
+          <AppText className={className.popoverText}>
             Start cooking with step-by-step instructions
           </AppText>
         </Popover.Content>

@@ -33,9 +33,12 @@ export const Save: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
         </Pressable>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
-        <Popover.Content offset={insets.top + 45} className="bg-surface-3">
-          <Popover.Arrow color={colors.surface3} />
-          <AppText className="text-foreground">
+        <Popover.Content
+          offset={insets.top + 45}
+          className={className.popoverContent}
+        >
+          <Popover.Arrow color={colors.foreground} />
+          <AppText className={className.popoverText}>
             Save your favorite recipes to your collection
           </AppText>
         </Popover.Content>

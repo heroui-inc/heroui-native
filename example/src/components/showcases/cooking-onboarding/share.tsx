@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import { cn, Popover, useTheme, type PopoverTriggerRef } from 'heroui-native';
 import { type FC, type RefObject } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { Platform, Pressable, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
@@ -34,7 +34,7 @@ export const Share: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
         <Popover.Content
-          offset={insets.top + 47}
+          offset={insets.top + (Platform.OS === 'ios' ? 47 : 65)}
           className={className.popoverContent}
         >
           <Popover.Arrow stroke={colors.foreground} fill={colors.foreground} />

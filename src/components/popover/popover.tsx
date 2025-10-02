@@ -17,6 +17,7 @@ import { Text } from '../../helpers/components/text';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import { useTheme } from '../../providers/theme';
+import { ArrowSvg } from './arrow-svg';
 import { CloseIcon } from './close-icon';
 import {
   DEFAULT_ALIGN_OFFSET,
@@ -449,7 +450,9 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
       className,
       height = 8,
       width = 16,
-      color,
+      fill,
+      stroke,
+      strokeWidth = 1,
       placement: placementLocal,
       ...props
     },
@@ -463,20 +466,18 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
 
     const tvStyles = popoverStyles.arrow({ className });
 
-    if (!triggerPosition || !contentLayout) {
+    if (!triggerPosition || !contentLayout || !placement) {
       return null;
     }
 
-    const getArrowStyle = () => {
-      const arrowColor = color || colors.panel;
+    const arrowFill = fill || colors.panel;
+    const arrowStroke = stroke || colors.border;
 
+    const getArrowPosition = (): StyleProp<ViewStyle> => {
       const triggerCenterX = triggerPosition.pageX + triggerPosition.width / 2;
       const triggerCenterY = triggerPosition.pageY + triggerPosition.height / 2;
 
-      const baseStyle: StyleProp<ViewStyle> = {
-        width: 0,
-        height: 0,
-        borderStyle: 'solid',
+      const baseStyle: ViewStyle = {
         position: 'absolute',
       };
 
@@ -484,73 +485,41 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'top':
           return {
             ...baseStyle,
-            bottom: -height + 1,
+            bottom: -height + 0.75,
             left: Math.min(
               Math.max(12, triggerCenterX - contentLayout.x - width / 2),
               contentLayout.width - width - 12
             ),
-            borderLeftWidth: width / 2,
-            borderRightWidth: width / 2,
-            borderTopWidth: height,
-            borderBottomWidth: 0,
-            borderLeftColor: 'transparent',
-            borderRightColor: 'transparent',
-            borderTopColor: arrowColor,
-            borderBottomColor: 'transparent',
           };
 
         case 'bottom':
           return {
             ...baseStyle,
-            top: -height + 1,
+            top: -height + 0.75,
             left: Math.min(
               Math.max(12, triggerCenterX - contentLayout.x - width / 2),
               contentLayout.width - width - 12
             ),
-            borderLeftWidth: width / 2,
-            borderRightWidth: width / 2,
-            borderTopWidth: 0,
-            borderBottomWidth: height,
-            borderLeftColor: 'transparent',
-            borderRightColor: 'transparent',
-            borderTopColor: 'transparent',
-            borderBottomColor: arrowColor,
           };
 
         case 'left':
           return {
             ...baseStyle,
-            right: -height + 1,
+            right: -height + 0.75,
             top: Math.min(
               Math.max(12, triggerCenterY - contentLayout.y - width / 2),
               contentLayout.height - width - 12
             ),
-            borderTopWidth: width / 2,
-            borderBottomWidth: width / 2,
-            borderLeftWidth: height,
-            borderRightWidth: 0,
-            borderTopColor: 'transparent',
-            borderBottomColor: 'transparent',
-            borderLeftColor: arrowColor,
-            borderRightColor: 'transparent',
           };
 
         case 'right':
           return {
             ...baseStyle,
-            left: -height + 1,
+            left: -height + 0.75,
             top: Math.min(
               Math.max(12, triggerCenterY - contentLayout.y - width / 2),
               contentLayout.height - width - 12
             ),
-            borderTopWidth: width / 2,
-            borderBottomWidth: width / 2,
-            borderLeftWidth: 0,
-            borderRightWidth: height,
-            borderTopColor: 'transparent',
-            borderBottomColor: 'transparent',
-            borderLeftColor: 'transparent',
-            borderRightColor: arrowColor,
           };
 
         default:
@@ -562,10 +531,19 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
       <View
         ref={ref}
         className={tvStyles}
-        style={getArrowStyle()}
+        style={getArrowPosition()}
         pointerEvents="none"
         {...props}
-      />
+      >
+        <ArrowSvg
+          width={width}
+          height={height}
+          placement={placement}
+          fill={arrowFill}
+          stroke={arrowStroke}
+          strokeWidth={strokeWidth}
+        />
+      </View>
     );
   }
 );

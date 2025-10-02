@@ -128,9 +128,19 @@ export default function PopoverScreen() {
             </Popover.Trigger>
             <Popover.Portal>
               <Popover.Overlay />
-              <Popover.Content placement="top">
-                <Popover.Arrow placement="top" />
-                <AppText className="text-foreground">Top placement</AppText>
+              <Popover.Content
+                placement="top"
+                offset={18}
+                className="bg-pink-100 border-pink-200 border-[2px]"
+              >
+                <Popover.Arrow
+                  width={14}
+                  height={20}
+                  stroke="#fbcfe8"
+                  strokeWidth={2}
+                  fill="#fce7f3"
+                />
+                <AppText className="text-pink-800">Top placement</AppText>
               </Popover.Content>
             </Popover.Portal>
           </Popover>
@@ -143,8 +153,8 @@ export default function PopoverScreen() {
             </Popover.Trigger>
             <Popover.Portal>
               <Popover.Overlay />
-              <Popover.Content placement="left">
-                <Popover.Arrow />
+              <Popover.Content placement="left" offset={18}>
+                <Popover.Arrow width={12} height={20} />
                 <AppText className="text-foreground">Left Placement</AppText>
               </Popover.Content>
             </Popover.Portal>
@@ -160,8 +170,8 @@ export default function PopoverScreen() {
             </Popover.Trigger>
             <Popover.Portal>
               <Popover.Overlay />
-              <Popover.Content placement="right">
-                <Popover.Arrow />
+              <Popover.Content placement="right" offset={18}>
+                <Popover.Arrow width={12} height={20} />
                 <AppText className="text-foreground">Right placement</AppText>
               </Popover.Content>
             </Popover.Portal>
@@ -175,8 +185,8 @@ export default function PopoverScreen() {
             </Popover.Trigger>
             <Popover.Portal>
               <Popover.Overlay />
-              <Popover.Content placement="bottom">
-                <Popover.Arrow />
+              <Popover.Content placement="bottom" offset={18}>
+                <Popover.Arrow width={12} height={20} />
                 <AppText className="text-foreground">Bottom placement</AppText>
               </Popover.Content>
             </Popover.Portal>

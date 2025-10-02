@@ -256,9 +256,18 @@ export interface PopoverArrowProps {
    */
   width?: number;
   /**
-   * Color of the arrow (defaults to content background)
+   * Fill color of the arrow (defaults to content background)
    */
-  color?: string;
+  fill?: string;
+  /**
+   * Stroke (border) color of the arrow (defaults to content border color)
+   */
+  stroke?: string;
+  /**
+   * Stroke width of the arrow border in pixels
+   * @default 1
+   */
+  strokeWidth?: number;
   /**
    * Placement of the popover (inherited from content)
    */

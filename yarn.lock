@@ -8763,6 +8763,7 @@ __metadata:
     tailwindcss: ^3.4.17
     typescript: ^5.8.3
   peerDependencies:
+    "@gorhom/bottom-sheet": ^5
     nativewind: 4.2.1
     react: "*"
     react-native: "*"

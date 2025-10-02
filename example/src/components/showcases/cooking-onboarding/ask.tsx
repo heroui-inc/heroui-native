@@ -31,10 +31,10 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
         </Pressable>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
-        <Popover.Content className="bg-surface-3">
+        <Popover.Content className="w-[240px] bg-surface-3" placement="top">
           <Popover.Arrow color={colors.surface3} />
           <AppText className="text-foreground">
-            This is a basic popover with simple content
+            Chat with AI to get recipe suggestions and cooking tips
           </AppText>
         </Popover.Content>
       </Popover.Portal>

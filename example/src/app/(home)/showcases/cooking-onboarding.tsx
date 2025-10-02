@@ -3,8 +3,8 @@ import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRouter } from 'expo-router';
 import {
-  Avatar,
   colorKit,
+  Divider,
   useTheme,
   type PopoverTriggerRef,
 } from 'heroui-native';
@@ -21,12 +21,14 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import BgImage from '../../../../assets/images/pancakes.jpg';
 import { AppText } from '../../../components/app-text';
 import { Ask } from '../../../components/showcases/cooking-onboarding/ask';
+import { Author } from '../../../components/showcases/cooking-onboarding/author';
 import { Cook } from '../../../components/showcases/cooking-onboarding/cook';
+import { Highlights } from '../../../components/showcases/cooking-onboarding/highlights';
+import { Ingridients } from '../../../components/showcases/cooking-onboarding/ingridients';
 import ParallaxScrollView from '../../../components/showcases/cooking-onboarding/parallax-scroll-view';
 import { Plan } from '../../../components/showcases/cooking-onboarding/plan';
 import { Save } from '../../../components/showcases/cooking-onboarding/save';
 import { Share } from '../../../components/showcases/cooking-onboarding/share';
-import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -86,10 +88,10 @@ export default function CookingOnboardingScreen() {
   const onboardingSteps = useMemo<OnboardingStep[]>(
     () => [
       { ref: shareTriggerRef, delay: 1000 },
-      { ref: saveTriggerRef, delay: 300 },
-      { ref: cookTriggerRef, delay: 300 },
-      { ref: planTriggerRef, delay: 300 },
-      { ref: askTriggerRef, delay: 300 },
+      { ref: saveTriggerRef, delay: 400 },
+      { ref: cookTriggerRef, delay: 400 },
+      { ref: planTriggerRef, delay: 400 },
+      { ref: askTriggerRef, delay: 400 },
     ],
     []
   );
@@ -126,32 +128,27 @@ export default function CookingOnboardingScreen() {
     });
   }, [navigation, _renderHeaderLeft, _renderHeaderRight]);
 
-  // Start onboarding when component mounts
   useEffect(() => {
     dispatch({ type: 'START_ONBOARDING' });
   }, []);
 
-  // Handle onboarding step progression
   useEffect(() => {
     if (!onboardingState.isActive) return;
 
     const currentStep = onboardingSteps[onboardingState.currentStepIndex];
 
     if (!currentStep) {
-      // No more steps, close the last popover and complete onboarding
       const lastStep = onboardingSteps[onboardingState.currentStepIndex - 1];
       lastStep?.ref.current?.close();
       dispatch({ type: 'COMPLETE_ONBOARDING' });
       return;
     }
 
-    // Close previous step's popover if it exists
     if (onboardingState.currentStepIndex > 0) {
       const prevStep = onboardingSteps[onboardingState.currentStepIndex - 1];
       prevStep?.ref.current?.close();
     }
 
-    // Open current step's popover after delay
     const timer = setTimeout(() => {
       currentStep.ref.current?.open();
     }, currentStep.delay ?? 0);
@@ -177,35 +174,11 @@ export default function CookingOnboardingScreen() {
         <AppText className="text-foreground text-4xl font-semibold mb-2">
           Blueberry Pancakes
         </AppText>
-        <Pressable
-          className="flex-row items-center mb-6"
-          onPress={simulatePress}
-        >
-          <Avatar
-            alt="junior"
-            size="sm"
-            className="size-8 border-foreground/20"
-          >
-            <Avatar.Image
-              source={{
-                uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/junior-avatar.jpg',
-              }}
-            />
-            <Avatar.Fallback>
-              <AppText className="text-[8px] font-bold text-white">JG</AppText>
-            </Avatar.Fallback>
-          </Avatar>
-          <AppText className="text-base text-foreground ml-2">
-            Junior Garcia
-          </AppText>
-          <View className="mt-0.5">
-            <Feather name="chevron-right" size={16} color={colors.foreground} />
-          </View>
-        </Pressable>
+        <Author />
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          className="-mx-4"
+          className="-mx-4 mb-6"
           contentContainerClassName="px-4 gap-2"
         >
           <Cook
@@ -221,6 +194,15 @@ export default function CookingOnboardingScreen() {
             triggerRef={askTriggerRef}
           />
         </ScrollView>
+        <AppText className="text-foreground text-base">
+          Blueberry pancakes are a delicious and healthy breakfast option. They
+          are made with blueberries, flour, butter, and eggs. Blueberries are a
+          great source of antioxidants and fiber, making them a healthy choice
+          for breakfast.
+        </AppText>
+        <Divider className="my-5" />
+        <Highlights />
+        <Ingridients />
       </ParallaxScrollView>
       <LinearGradient
         colors={[
@@ -235,7 +217,7 @@ export default function CookingOnboardingScreen() {
           exiting={FadeOut}
           style={StyleSheet.absoluteFill}
           onPress={handleOverlayPress}
-          className="bg-black/15"
+          className="bg-black/20"
         />
       )}
     </View>
@@ -251,7 +233,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 200,
+    height: 300,
     pointerEvents: 'none',
   },
 });

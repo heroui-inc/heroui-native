@@ -8,6 +8,7 @@ import Animated, {
   useAnimatedStyle,
   useScrollOffset,
 } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Props = PropsWithChildren<{
   headerImage: ReactElement;
@@ -17,6 +18,7 @@ export default function ParallaxScrollView({ children, headerImage }: Props) {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollOffset(scrollRef);
 
+  const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
 
   const { colors } = useTheme();
@@ -25,6 +27,11 @@ export default function ParallaxScrollView({ children, headerImage }: Props) {
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
+      opacity: interpolate(
+        scrollOffset.get(),
+        [-headerHeight, 0, headerHeight / 2],
+        [1, 1, 0]
+      ),
       transform: [
         {
           translateY: interpolate(
@@ -49,6 +56,7 @@ export default function ParallaxScrollView({ children, headerImage }: Props) {
       ref={scrollRef}
       scrollEventThrottle={16}
       showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: insets.bottom + 12 }}
     >
       <Animated.View
         className="overflow-hidden"

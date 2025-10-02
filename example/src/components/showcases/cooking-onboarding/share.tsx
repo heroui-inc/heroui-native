@@ -36,7 +36,7 @@ export const Share: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
         <Popover.Content offset={insets.top + 45} className="bg-surface-3">
           <Popover.Arrow color={colors.surface3} />
           <AppText className="text-foreground">
-            This is a basic popover with simple content
+            Share your recipes with friends and family
           </AppText>
         </Popover.Content>
       </Popover.Portal>

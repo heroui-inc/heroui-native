@@ -27,10 +27,10 @@ export const Cook: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
         </Pressable>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
-        <Popover.Content className="bg-surface-3">
+        <Popover.Content className="bg-surface-3" placement="top">
           <Popover.Arrow color={colors.surface3} />
           <AppText className="text-foreground">
-            This is a basic popover with simple content
+            Start cooking with step-by-step instructions
           </AppText>
         </Popover.Content>
       </Popover.Portal>

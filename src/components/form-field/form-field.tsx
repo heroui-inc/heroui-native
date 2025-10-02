@@ -14,6 +14,7 @@ import {
 import Animated from 'react-native-reanimated';
 import type { PressableRef } from '../../helpers/types';
 import type { ViewRef } from '../../helpers/types/primitives';
+import { useTheme } from '../../providers/theme';
 import { ErrorView } from '../error-view';
 import type { ErrorViewRootProps } from '../error-view/error-view.types';
 import { DISPLAY_NAME } from './form-field.constants';
@@ -165,8 +166,11 @@ const FormFieldDescription = forwardRef<Text, FormFieldDescriptionProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
+    const { isDark } = useTheme();
+
     const tvStyles = formFieldStyles.description({
       className,
+      isDark,
     });
 
     return (

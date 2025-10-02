@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import { View } from 'react-native';
 import { Text } from '../../helpers/components';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
+import { useTheme } from '../../providers/theme';
 import { Surface } from '../surface';
 import { DISPLAY_NAME } from './card.constants';
 import cardStyles from './card.styles';
@@ -95,7 +96,9 @@ const CardDescription = forwardRef<TextRef, CardDescriptionProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
-    const tvStyles = cardStyles.description({ className });
+    const { isDark } = useTheme();
+
+    const tvStyles = cardStyles.description({ className, isDark });
 
     return (
       <Text ref={ref} className={tvStyles} {...restProps}>

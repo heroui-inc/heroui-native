@@ -34,11 +34,17 @@ const content = tv({
 });
 
 const title = tv({
-  base: 'text-foreground font-medium text-base',
+  base: 'text-foreground font-medium text-lg',
 });
 
 const description = tv({
-  base: 'text-muted text-sm font-normal',
+  base: 'text-base font-normal',
+  variants: {
+    isDark: {
+      true: 'text-muted-foreground',
+      false: 'text-muted',
+    },
+  },
 });
 
 const indicator = tv({

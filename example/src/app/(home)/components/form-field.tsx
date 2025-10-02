@@ -308,7 +308,7 @@ export default function FormFieldScreen() {
             className="bg-accent/10 p-4 rounded-xl"
           >
             <FormField.Content className="gap-1.5">
-              <FormField.Title className="text-accent font-bold">
+              <FormField.Title className="text-accent font-semibold">
                 Highlighted Option
               </FormField.Title>
               <FormField.Description className="text-amber-600">

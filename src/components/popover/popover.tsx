@@ -382,7 +382,10 @@ const PopoverClose = forwardRef<
   PopoverPrimitivesTypes.CloseRef,
   PopoverCloseProps
 >(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
+
+  const defaultIconColor = isDark ? colors.mutedForeground : colors.muted;
+
   const tvStyles = popoverStyles.close({ className });
 
   return (
@@ -395,7 +398,7 @@ const PopoverClose = forwardRef<
       {children || (
         <CloseIcon
           size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? colors.muted}
+          color={iconProps?.color ?? defaultIconColor}
         />
       )}
     </PopoverPrimitives.Close>
@@ -426,7 +429,9 @@ const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
 
 const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
   ({ className, children, ...props }, ref) => {
-    const tvStyles = popoverStyles.description({ className });
+    const { isDark } = useTheme();
+
+    const tvStyles = popoverStyles.description({ className, isDark });
 
     return (
       <Text ref={ref} accessibilityRole="text" className={tvStyles} {...props}>

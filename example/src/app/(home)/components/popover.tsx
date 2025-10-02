@@ -16,7 +16,7 @@ export default function PopoverScreen() {
       <SectionTitle title="Basic Usage" />
       <View className="items-center">
         <Popover>
-          <Popover.Trigger>
+          <Popover.Trigger asChild>
             <Button variant="tertiary" size="sm">
               Open Popover
             </Button>
@@ -36,7 +36,7 @@ export default function PopoverScreen() {
       <SectionTitle title="With Title & Description" />
       <View className="items-center">
         <Popover>
-          <Popover.Trigger>
+          <Popover.Trigger asChild>
             <Button variant="tertiary" size="sm">
               <Button.StartContent>
                 <Ionicons
@@ -66,7 +66,7 @@ export default function PopoverScreen() {
       <SectionTitle title="Presentation" />
       <View className="flex-row items-center justify-center gap-4">
         <Popover>
-          <Popover.Trigger>
+          <Popover.Trigger asChild>
             <Button variant="tertiary" size="sm">
               Popover
             </Button>
@@ -93,7 +93,7 @@ export default function PopoverScreen() {
           </Popover.Portal>
         </Popover>
         <Popover>
-          <Popover.Trigger>
+          <Popover.Trigger asChild>
             <Button variant="tertiary" size="sm">
               Bottom Sheet
             </Button>
@@ -121,7 +121,7 @@ export default function PopoverScreen() {
       <View className="gap-4">
         <View className="flex-row justify-between gap-4">
           <Popover>
-            <Popover.Trigger>
+            <Popover.Trigger asChild>
               <Button size="sm" variant="tertiary" className="w-24">
                 Top
               </Button>
@@ -136,7 +136,7 @@ export default function PopoverScreen() {
           </Popover>
 
           <Popover>
-            <Popover.Trigger>
+            <Popover.Trigger asChild>
               <Button size="sm" variant="tertiary" className="w-24">
                 Left
               </Button>
@@ -153,7 +153,7 @@ export default function PopoverScreen() {
 
         <View className="flex-row justify-between gap-4">
           <Popover>
-            <Popover.Trigger>
+            <Popover.Trigger asChild>
               <Button size="sm" variant="tertiary" className="w-24">
                 Right
               </Button>
@@ -168,7 +168,7 @@ export default function PopoverScreen() {
           </Popover>
 
           <Popover>
-            <Popover.Trigger>
+            <Popover.Trigger asChild>
               <Button size="sm" variant="tertiary" className="w-24">
                 Bottom
               </Button>
@@ -188,7 +188,7 @@ export default function PopoverScreen() {
       <SectionTitle title="Alignment Options" />
       <View className="flex-row justify-center gap-4">
         <Popover>
-          <Popover.Trigger>
+          <Popover.Trigger asChild>
             <Button size="sm" variant="tertiary" className="w-24">
               Start
             </Button>
@@ -202,7 +202,7 @@ export default function PopoverScreen() {
         </Popover>
 
         <Popover>
-          <Popover.Trigger>
+          <Popover.Trigger asChild>
             <Button size="sm" variant="tertiary" className="w-24">
               Center
             </Button>
@@ -216,7 +216,7 @@ export default function PopoverScreen() {
         </Popover>
 
         <Popover>
-          <Popover.Trigger>
+          <Popover.Trigger asChild>
             <Button size="sm" variant="tertiary" className="w-24">
               End
             </Button>

@@ -39,5 +39,5 @@ export const DEFAULT_INSETS = {
 export const DEFAULT_SPRING_CONFIG = {
   mass: 2,
   damping: 100,
-  stiffness: 900,
+  stiffness: 1200,
 };

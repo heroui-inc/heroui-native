@@ -1,39 +1,33 @@
-import Feather from '@expo/vector-icons/Feather';
-import { cn, Popover, useTheme, type PopoverTriggerRef } from 'heroui-native';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import { Popover, useTheme, type PopoverTriggerRef } from 'heroui-native';
 import { type FC, type RefObject } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
 import { progressAnimationConfigs } from './constants';
-import { className } from './styles';
 
 type Props = {
   isOnboardingDone: boolean;
   triggerRef: RefObject<PopoverTriggerRef | null>;
 };
 
-export const Save: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
-  const insets = useSafeAreaInsets();
-
+export const Cook: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
   const { colors } = useTheme();
 
   return (
     <Popover>
       <Popover.Trigger ref={triggerRef}>
         <Pressable
-          className={cn(
-            className.buttonSecondarySquare,
-            className.buttonSecondaryColors
-          )}
+          className="h-12 px-4 rounded-[14px] flex-row items-center gap-1 bg-orange-300"
           style={styles.borderCurve}
           onPress={isOnboardingDone ? simulatePress : undefined}
         >
-          <Feather name="heart" size={16} color={colors.foreground} />
+          <AntDesign name="fire" size={16} color="black" />
+          <AppText className="text-lg text-black font-semibold">Cook</AppText>
         </Pressable>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
-        <Popover.Content offset={insets.top + 45} className="bg-surface-3">
+        <Popover.Content className="bg-surface-3">
           <Popover.Arrow color={colors.surface3} />
           <AppText className="text-foreground">
             This is a basic popover with simple content

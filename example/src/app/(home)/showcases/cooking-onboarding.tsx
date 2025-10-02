@@ -2,7 +2,12 @@ import Feather from '@expo/vector-icons/Feather';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRouter } from 'expo-router';
-import { colorKit, useTheme, type PopoverTriggerRef } from 'heroui-native';
+import {
+  Avatar,
+  colorKit,
+  useTheme,
+  type PopoverTriggerRef,
+} from 'heroui-native';
 import {
   useCallback,
   useEffect,
@@ -11,12 +16,17 @@ import {
   useRef,
   type RefObject,
 } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import BgImage from '../../../../assets/images/pancakes.jpg';
+import { AppText } from '../../../components/app-text';
+import { Ask } from '../../../components/showcases/cooking-onboarding/ask';
+import { Cook } from '../../../components/showcases/cooking-onboarding/cook';
 import ParallaxScrollView from '../../../components/showcases/cooking-onboarding/parallax-scroll-view';
+import { Plan } from '../../../components/showcases/cooking-onboarding/plan';
 import { Save } from '../../../components/showcases/cooking-onboarding/save';
 import { Share } from '../../../components/showcases/cooking-onboarding/share';
+import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -63,6 +73,9 @@ export default function CookingOnboardingScreen() {
 
   const shareTriggerRef = useRef<PopoverTriggerRef>(null);
   const saveTriggerRef = useRef<PopoverTriggerRef>(null);
+  const cookTriggerRef = useRef<PopoverTriggerRef>(null);
+  const planTriggerRef = useRef<PopoverTriggerRef>(null);
+  const askTriggerRef = useRef<PopoverTriggerRef>(null);
 
   const [onboardingState, dispatch] = useReducer(onboardingReducer, {
     currentStepIndex: 0,
@@ -74,6 +87,9 @@ export default function CookingOnboardingScreen() {
     () => [
       { ref: shareTriggerRef, delay: 1000 },
       { ref: saveTriggerRef, delay: 300 },
+      { ref: cookTriggerRef, delay: 300 },
+      { ref: planTriggerRef, delay: 300 },
+      { ref: askTriggerRef, delay: 300 },
     ],
     []
   );
@@ -158,8 +174,53 @@ export default function CookingOnboardingScreen() {
       <ParallaxScrollView
         headerImage={<Image source={BgImage} style={styles.image} />}
       >
-        <Text className="text-white text-2xl font-bold">Hello</Text>
-        <View className="h-[1000px]" />
+        <AppText className="text-foreground text-4xl font-semibold mb-2">
+          Blueberry Pancakes
+        </AppText>
+        <Pressable
+          className="flex-row items-center mb-6"
+          onPress={simulatePress}
+        >
+          <Avatar
+            alt="junior"
+            size="sm"
+            className="size-8 border-foreground/20"
+          >
+            <Avatar.Image
+              source={{
+                uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/junior-avatar.jpg',
+              }}
+            />
+            <Avatar.Fallback>
+              <AppText className="text-[8px] font-bold text-white">JG</AppText>
+            </Avatar.Fallback>
+          </Avatar>
+          <AppText className="text-base text-foreground ml-2">
+            Junior Garcia
+          </AppText>
+          <View className="mt-0.5">
+            <Feather name="chevron-right" size={16} color={colors.foreground} />
+          </View>
+        </Pressable>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          className="-mx-4"
+          contentContainerClassName="px-4 gap-2"
+        >
+          <Cook
+            isOnboardingDone={onboardingState.isComplete}
+            triggerRef={cookTriggerRef}
+          />
+          <Plan
+            isOnboardingDone={onboardingState.isComplete}
+            triggerRef={planTriggerRef}
+          />
+          <Ask
+            isOnboardingDone={onboardingState.isComplete}
+            triggerRef={askTriggerRef}
+          />
+        </ScrollView>
       </ParallaxScrollView>
       <LinearGradient
         colors={[
@@ -174,7 +235,7 @@ export default function CookingOnboardingScreen() {
           exiting={FadeOut}
           style={StyleSheet.absoluteFill}
           onPress={handleOverlayPress}
-          className="bg-background/10"
+          className="bg-black/15"
         />
       )}
     </View>

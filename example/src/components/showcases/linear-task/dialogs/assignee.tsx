@@ -55,7 +55,7 @@ export const Assignee: FC = () => {
         value: 'junior',
         label: 'Junior',
         indicator: (
-          <Avatar alt="volo" className="size-[18px] bg-sky-500">
+          <Avatar alt="junior" className="size-[18px] bg-sky-500">
             <Avatar.Image
               source={{
                 uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/junior-avatar.jpg',

@@ -1,10 +1,12 @@
 import Feather from '@expo/vector-icons/Feather';
-import { Popover, useTheme, type PopoverTriggerRef } from 'heroui-native';
+import { cn, Popover, useTheme, type PopoverTriggerRef } from 'heroui-native';
 import { type FC, type RefObject } from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
+import { progressAnimationConfigs } from './constants';
+import { className } from './styles';
 
 type Props = {
   isOnboardingDone: boolean;
@@ -20,16 +22,19 @@ export const Share: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
     <Popover>
       <Popover.Trigger ref={triggerRef}>
         <Pressable
-          className="bg-surface-2 w-10 h-10 rounded-md justify-center items-center"
-          onPress={isOnboardingDone ? simulatePress : triggerRef.current?.open}
+          className={cn(
+            className.buttonSecondarySquare,
+            className.buttonSecondaryColors
+          )}
+          style={styles.borderCurve}
+          onPress={isOnboardingDone ? simulatePress : undefined}
         >
           <Feather name="share" size={16} color={colors.foreground} />
         </Pressable>
       </Popover.Trigger>
-      <Popover.Portal>
-        {/* <Popover.Overlay /> */}
-        <Popover.Content offset={insets.top + 45}>
-          <Popover.Arrow />
+      <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
+        <Popover.Content offset={insets.top + 45} className="bg-surface-3">
+          <Popover.Arrow color={colors.surface3} />
           <AppText className="text-foreground">
             This is a basic popover with simple content
           </AppText>
@@ -38,3 +43,9 @@ export const Share: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
     </Popover>
   );
 };
+
+const styles = StyleSheet.create({
+  borderCurve: {
+    borderCurve: 'continuous',
+  },
+});

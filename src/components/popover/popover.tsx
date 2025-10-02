@@ -3,6 +3,7 @@ import { createContext, forwardRef, use, useEffect, useRef } from 'react';
 import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
+  Extrapolation,
   interpolate,
   useAnimatedReaction,
   useAnimatedStyle,
@@ -200,25 +201,32 @@ const PopoverContentPopover = forwardRef<
         return {};
       }
 
+      let transformOrigin = 'top';
       let translateX = 0;
       let translateY = 0;
 
       if (placement === 'top') {
-        translateY = interpolate(progress.get(), [0, 1, 2], [8, 0, 8]);
+        transformOrigin = 'bottom';
+        translateY = interpolate(progress.get(), [0, 1, 2], [4, 0, 4]);
       } else if (placement === 'bottom') {
-        translateY = interpolate(progress.get(), [0, 1, 2], [-8, 0, -8]);
+        transformOrigin = 'top';
+        translateY = interpolate(progress.get(), [0, 1, 2], [-4, 0, -4]);
       } else if (placement === 'left') {
-        translateX = interpolate(progress.get(), [0, 1, 2], [8, 0, 8]);
+        transformOrigin = 'right';
+        translateX = interpolate(progress.get(), [0, 1, 2], [4, 0, 4]);
       } else if (placement === 'right') {
-        translateX = interpolate(progress.get(), [0, 1, 2], [-8, 0, -8]);
+        transformOrigin = 'left';
+        translateX = interpolate(progress.get(), [0, 1, 2], [-4, 0, -4]);
       }
 
       return {
         opacity: interpolate(
           progress.get(),
           [0, 1, 1.75, 2],
-          [0.5, 1, 0.75, 0]
+          [0.25, 1, 0.75, 0],
+          Extrapolation.CLAMP
         ),
+        transformOrigin,
         transform: [
           { translateX },
           { translateY },

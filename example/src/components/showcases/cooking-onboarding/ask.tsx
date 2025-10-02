@@ -1,8 +1,7 @@
-import Feather from '@expo/vector-icons/Feather';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { cn, Popover, useTheme, type PopoverTriggerRef } from 'heroui-native';
 import { type FC, type RefObject } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
 import { progressAnimationConfigs } from './constants';
@@ -13,9 +12,7 @@ type Props = {
   triggerRef: RefObject<PopoverTriggerRef | null>;
 };
 
-export const Save: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
-  const insets = useSafeAreaInsets();
-
+export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
   const { colors } = useTheme();
 
   return (
@@ -23,17 +20,18 @@ export const Save: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
       <Popover.Trigger ref={triggerRef}>
         <Pressable
           className={cn(
-            className.buttonSecondarySquare,
+            className.buttonSecondaryLayout,
             className.buttonSecondaryColors
           )}
           style={styles.borderCurve}
           onPress={isOnboardingDone ? simulatePress : undefined}
         >
-          <Feather name="heart" size={16} color={colors.foreground} />
+          <Ionicons name="sparkles-sharp" size={14} color="#fdba74" />
+          <AppText className="text-lg text-white font-semibold">Ask</AppText>
         </Pressable>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
-        <Popover.Content offset={insets.top + 45} className="bg-surface-3">
+        <Popover.Content className="bg-surface-3">
           <Popover.Arrow color={colors.surface3} />
           <AppText className="text-foreground">
             This is a basic popover with simple content

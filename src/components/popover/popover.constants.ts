@@ -36,8 +36,14 @@ export const DEFAULT_INSETS = {
 /**
  * Default spring animation configuration
  */
-export const DEFAULT_SPRING_CONFIG = {
+export const SPRING_CONFIG_OPEN = {
   mass: 2,
   damping: 100,
-  stiffness: 900,
+  stiffness: 1200,
+};
+
+export const SPRING_CONFIG_CLOSE = {
+  mass: 1,
+  damping: 80,
+  stiffness: 1800,
 };

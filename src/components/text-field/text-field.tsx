@@ -315,7 +315,9 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
     const isInvalid =
       localIsInvalid !== undefined ? localIsInvalid : contextIsInvalid;
 
-    const tvStyles = textFieldStyles.description({ className });
+    const { isDark } = useTheme();
+
+    const tvStyles = textFieldStyles.description({ className, isDark });
 
     if (isInvalid) return null;
 

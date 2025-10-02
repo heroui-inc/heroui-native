@@ -106,7 +106,8 @@ const Root = forwardRef<RootRef, RootProps>(
 
 const Trigger = forwardRef<TriggerRef, TriggerProps>(
   ({ asChild, onPress: onPressProp, disabled = false, ...props }, ref) => {
-    const { onOpenChange, isOpen, setTriggerPosition } = useRootContext();
+    const { onOpenChange, isOpen, setTriggerPosition, closeDelay } =
+      useRootContext();
 
     const augmentedRef = useAugmentedRef({
       ref,
@@ -120,8 +121,10 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
           );
         },
         close: () => {
-          setTriggerPosition(null);
           onOpenChange(false);
+          setTimeout(() => {
+            setTriggerPosition(null);
+          }, closeDelay);
         },
       },
     });
@@ -136,6 +139,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
     }
 
     const Component = asChild ? Slot.Pressable : Pressable;
+
     return (
       <Component
         ref={augmentedRef}

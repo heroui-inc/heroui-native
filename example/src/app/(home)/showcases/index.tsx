@@ -8,6 +8,22 @@ import { Carousel } from '../../../components/showcase-carousel';
 const data = [
   {
     imageLight:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/cooking-onboarding-light-1.png',
+    imageDark:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/cooking-onboarding-dark-1.png',
+    title: 'Cooking Onboarding',
+    description:
+      'Multi-step onboarding experience with automated popover sequences, state management, and interactive recipe features.',
+    href: '/showcases/cooking-onboarding',
+    components: [
+      { name: 'Popover', href: '/components/popover' },
+      { name: 'Avatar', href: '/components/avatar' },
+      { name: 'Button', href: '/components/button' },
+      { name: 'Divider', href: '/components/divider' },
+    ],
+  },
+  {
+    imageLight:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/linear-task-light.png',
     imageDark:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/linear-task-dark.png',

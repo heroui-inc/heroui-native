@@ -15,7 +15,7 @@ import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
 export default function CardScreen() {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
 
   const { width } = useWindowDimensions();
 
@@ -45,7 +45,7 @@ export default function CardScreen() {
                 <Ionicons
                   name="basket-outline"
                   size={16}
-                  color={colors.mutedForeground}
+                  color={isDark ? colors.muted : colors.mutedForeground}
                 />
               </Button.EndContent>
             </Button>

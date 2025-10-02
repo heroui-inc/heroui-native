@@ -16,6 +16,15 @@ export default function Layout() {
           backgroundColor: colors.background,
         },
       }}
-    />
+    >
+      <Stack.Screen
+        name="cooking-onboarding"
+        options={{
+          headerShown: true,
+          headerTransparent: true,
+          title: '',
+        }}
+      />
+    </Stack>
   );
 }

@@ -28,7 +28,13 @@ const title = tv({
 });
 
 const description = tv({
-  base: 'text-base text-muted font-normal',
+  base: 'text-base font-normal',
+  variants: {
+    isDark: {
+      true: 'text-muted-foreground',
+      false: 'text-muted',
+    },
+  },
 });
 
 const dialogStyles = combineStyles({

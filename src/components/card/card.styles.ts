@@ -22,7 +22,13 @@ const title = tv({
 });
 
 const description = tv({
-  base: 'text-muted text-base font-normal',
+  base: 'text-base font-normal',
+  variants: {
+    isDark: {
+      true: 'text-muted-foreground',
+      false: 'text-muted',
+    },
+  },
 });
 
 const cardStyles = combineStyles({

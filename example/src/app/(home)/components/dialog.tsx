@@ -66,7 +66,7 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <Dialog.Content
-      className="rounded-xl"
+      className="bg-surface-1 rounded-xl"
       style={[
         { marginTop: insetTop, maxHeight: maxTextInputDialogHeight },
         rContainerStyle,
@@ -90,7 +90,7 @@ export default function DialogScreen() {
 
   const { height } = useWindowDimensions();
 
-  const { isDark } = useTheme();
+  const { colors, isDark } = useTheme();
 
   const router = useRouter();
 
@@ -145,7 +145,7 @@ export default function DialogScreen() {
         <Dialog.Portal>
           <Dialog.Overlay />
           <Dialog.Content>
-            <Dialog.Close className="self-end -mb-2" />
+            <Dialog.Close className="self-end -mb-2 z-50" />
             <View className="mb-5 gap-1.5">
               <Dialog.Title>Confirm Action</Dialog.Title>
               <Dialog.Description>
@@ -178,8 +178,8 @@ export default function DialogScreen() {
             <Dialog.Overlay isDefaultAnimationDisabled>
               <DialogBlurBackdrop />
             </Dialog.Overlay>
-            <Dialog.Content>
-              <Dialog.Close className="self-end -mb-2" />
+            <Dialog.Content className="bg-surface-1 border-0 rounded-xl">
+              <Dialog.Close className="self-end -mb-2 z-50" />
               <View className="mb-5 gap-1.5">
                 <Dialog.Title>Confirm Action</Dialog.Title>
                 <Dialog.Description>
@@ -315,6 +315,7 @@ export default function DialogScreen() {
             <ScrollShadow
               LinearGradientComponent={LinearGradient}
               style={{ height: height * 0.35 }}
+              color={colors.panel}
             >
               <ScrollView contentContainerClassName="px-6">
                 <Text className="text-foreground/80 text-center">

@@ -8,30 +8,18 @@ export default function PopoverNativeModalScreen() {
   return (
     <View className="pt-24 px-5">
       <Popover>
-        <Popover.Trigger>
+        <Popover.Trigger asChild>
           <Button variant="tertiary">Basic Popover</Button>
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Overlay />
-          <Popover.Content offset={insets.top + 20}>
-            <Popover.Close className="self-end -mb-2" />
-            <View className="gap-2">
-              <Popover.Title>Popover from Modal</Popover.Title>
-              <Popover.Description>
-                This popover is rendered from a native modal screen, testing the
-                full window overlay functionality.
-              </Popover.Description>
-            </View>
-            <View className="flex-row justify-end gap-3 mt-8">
-              <Popover.Close asChild>
-                <Button skipLayoutAnimation variant="ghost" size="sm">
-                  Cancel
-                </Button>
-              </Popover.Close>
-              <Button skipLayoutAnimation size="sm">
-                Confirm
-              </Button>
-            </View>
+          <Popover.Content offset={insets.top + 20} className="pb-6">
+            <Popover.Close className="self-end -mb-2 z-50" />
+            <Popover.Title>Popover from Modal</Popover.Title>
+            <Popover.Description>
+              This popover is rendered from a native modal screen, testing the
+              full window overlay functionality.
+            </Popover.Description>
           </Popover.Content>
         </Popover.Portal>
       </Popover>

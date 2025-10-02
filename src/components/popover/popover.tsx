@@ -3,6 +3,7 @@ import { createContext, forwardRef, use, useEffect, useRef } from 'react';
 import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
+  Extrapolation,
   interpolate,
   useAnimatedReaction,
   useAnimatedStyle,
@@ -16,13 +17,15 @@ import { Text } from '../../helpers/components/text';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import { useTheme } from '../../providers/theme';
+import { ArrowSvg } from './arrow-svg';
 import { CloseIcon } from './close-icon';
 import {
   DEFAULT_ALIGN_OFFSET,
   DEFAULT_INSETS,
   DEFAULT_OFFSET,
-  DEFAULT_SPRING_CONFIG,
   DISPLAY_NAME,
+  SPRING_CONFIG_CLOSE,
+  SPRING_CONFIG_OPEN,
 } from './popover.constants';
 import popoverStyles, { nativeStyles } from './popover.styles';
 import type {
@@ -77,9 +80,8 @@ const PopoverRoot = forwardRef<
 const PopoverTrigger = forwardRef<
   PopoverPrimitivesTypes.TriggerRef,
   PopoverTriggerProps
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
->(({ className, ...props }, ref) => {
-  return <PopoverPrimitives.Trigger ref={ref} asChild {...props} />;
+>((props, ref) => {
+  return <PopoverPrimitives.Trigger ref={ref} {...props} />;
 });
 
 // --------------------------------------------------
@@ -102,7 +104,7 @@ const PopoverPortal = ({
       } else if (openConfig?.animationType === 'timing') {
         progress.set(withTiming(1, openConfig.animationConfig));
       } else {
-        progress.set(withSpring(1, DEFAULT_SPRING_CONFIG));
+        progress.set(withSpring(1, SPRING_CONFIG_OPEN));
       }
     } else if (popoverState === 'close') {
       const closeConfig = progressAnimationConfigs?.onClose;
@@ -111,7 +113,7 @@ const PopoverPortal = ({
       } else if (closeConfig?.animationType === 'timing') {
         progress.set(withTiming(2, closeConfig.animationConfig));
       } else {
-        progress.set(withSpring(2, DEFAULT_SPRING_CONFIG));
+        progress.set(withSpring(2, SPRING_CONFIG_CLOSE));
       }
     } else {
       progress.set(0);
@@ -201,25 +203,32 @@ const PopoverContentPopover = forwardRef<
         return {};
       }
 
+      let transformOrigin = 'top';
       let translateX = 0;
       let translateY = 0;
 
       if (placement === 'top') {
-        translateY = interpolate(progress.get(), [0, 1, 2], [8, 0, 8]);
+        transformOrigin = 'bottom';
+        translateY = interpolate(progress.get(), [0, 1, 2], [4, 0, 4]);
       } else if (placement === 'bottom') {
-        translateY = interpolate(progress.get(), [0, 1, 2], [-8, 0, -8]);
+        transformOrigin = 'top';
+        translateY = interpolate(progress.get(), [0, 1, 2], [-4, 0, -4]);
       } else if (placement === 'left') {
-        translateX = interpolate(progress.get(), [0, 1, 2], [8, 0, 8]);
+        transformOrigin = 'right';
+        translateX = interpolate(progress.get(), [0, 1, 2], [4, 0, 4]);
       } else if (placement === 'right') {
-        translateX = interpolate(progress.get(), [0, 1, 2], [-8, 0, -8]);
+        transformOrigin = 'left';
+        translateX = interpolate(progress.get(), [0, 1, 2], [-4, 0, -4]);
       }
 
       return {
         opacity: interpolate(
           progress.get(),
           [0, 1, 1.75, 2],
-          [0.5, 1, 0.75, 0]
+          [0.25, 1, 0.75, 0],
+          Extrapolation.CLAMP
         ),
+        transformOrigin,
         transform: [
           { translateX },
           { translateY },
@@ -375,7 +384,10 @@ const PopoverClose = forwardRef<
   PopoverPrimitivesTypes.CloseRef,
   PopoverCloseProps
 >(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
+
+  const defaultIconColor = isDark ? colors.mutedForeground : colors.muted;
+
   const tvStyles = popoverStyles.close({ className });
 
   return (
@@ -388,7 +400,7 @@ const PopoverClose = forwardRef<
       {children || (
         <CloseIcon
           size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? colors.muted}
+          color={iconProps?.color ?? defaultIconColor}
         />
       )}
     </PopoverPrimitives.Close>
@@ -419,7 +431,9 @@ const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
 
 const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
   ({ className, children, ...props }, ref) => {
-    const tvStyles = popoverStyles.description({ className });
+    const { isDark } = useTheme();
+
+    const tvStyles = popoverStyles.description({ className, isDark });
 
     return (
       <Text ref={ref} accessibilityRole="text" className={tvStyles} {...props}>
@@ -434,12 +448,16 @@ const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
 const PopoverArrow = forwardRef<View, PopoverArrowProps>(
   (
     {
+      children,
+      style,
       className,
-      height = 8,
+      height = 10,
       width = 16,
-      color,
+      fill,
+      stroke,
+      strokeWidth = 1,
       placement: placementLocal,
-      ...props
+      strokeBaselineInset = 1,
     },
     ref
   ) => {
@@ -451,20 +469,18 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
 
     const tvStyles = popoverStyles.arrow({ className });
 
-    if (!triggerPosition || !contentLayout) {
+    if (!triggerPosition || !contentLayout || !placement) {
       return null;
     }
 
-    const getArrowStyle = () => {
-      const arrowColor = color || colors.panel;
+    const arrowFill = fill || colors.panel;
+    const arrowStroke = stroke || colors.border;
 
+    const getArrowPosition = (): StyleProp<ViewStyle> => {
       const triggerCenterX = triggerPosition.pageX + triggerPosition.width / 2;
       const triggerCenterY = triggerPosition.pageY + triggerPosition.height / 2;
 
-      const baseStyle: StyleProp<ViewStyle> = {
-        width: 0,
-        height: 0,
-        borderStyle: 'solid',
+      const baseStyle: ViewStyle = {
         position: 'absolute',
       };
 
@@ -472,73 +488,41 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'top':
           return {
             ...baseStyle,
-            bottom: -height + 1,
+            bottom: -height + strokeBaselineInset,
             left: Math.min(
               Math.max(12, triggerCenterX - contentLayout.x - width / 2),
               contentLayout.width - width - 12
             ),
-            borderLeftWidth: width / 2,
-            borderRightWidth: width / 2,
-            borderTopWidth: height,
-            borderBottomWidth: 0,
-            borderLeftColor: 'transparent',
-            borderRightColor: 'transparent',
-            borderTopColor: arrowColor,
-            borderBottomColor: 'transparent',
           };
 
         case 'bottom':
           return {
             ...baseStyle,
-            top: -height + 1,
+            top: -height + strokeBaselineInset,
             left: Math.min(
               Math.max(12, triggerCenterX - contentLayout.x - width / 2),
               contentLayout.width - width - 12
             ),
-            borderLeftWidth: width / 2,
-            borderRightWidth: width / 2,
-            borderTopWidth: 0,
-            borderBottomWidth: height,
-            borderLeftColor: 'transparent',
-            borderRightColor: 'transparent',
-            borderTopColor: 'transparent',
-            borderBottomColor: arrowColor,
           };
 
         case 'left':
           return {
             ...baseStyle,
-            right: -height + 1,
+            right: -height + strokeBaselineInset,
             top: Math.min(
               Math.max(12, triggerCenterY - contentLayout.y - width / 2),
               contentLayout.height - width - 12
             ),
-            borderTopWidth: width / 2,
-            borderBottomWidth: width / 2,
-            borderLeftWidth: height,
-            borderRightWidth: 0,
-            borderTopColor: 'transparent',
-            borderBottomColor: 'transparent',
-            borderLeftColor: arrowColor,
-            borderRightColor: 'transparent',
           };
 
         case 'right':
           return {
             ...baseStyle,
-            left: -height + 1,
+            left: -height + strokeBaselineInset,
             top: Math.min(
               Math.max(12, triggerCenterY - contentLayout.y - width / 2),
               contentLayout.height - width - 12
             ),
-            borderTopWidth: width / 2,
-            borderBottomWidth: width / 2,
-            borderLeftWidth: 0,
-            borderRightWidth: height,
-            borderTopColor: 'transparent',
-            borderBottomColor: 'transparent',
-            borderLeftColor: 'transparent',
-            borderRightColor: arrowColor,
           };
 
         default:
@@ -550,10 +534,22 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
       <View
         ref={ref}
         className={tvStyles}
-        style={getArrowStyle()}
+        style={[getArrowPosition(), style]}
         pointerEvents="none"
-        {...props}
-      />
+      >
+        {children ? (
+          children
+        ) : (
+          <ArrowSvg
+            width={width}
+            height={height}
+            placement={placement}
+            fill={arrowFill}
+            stroke={arrowStroke}
+            strokeWidth={strokeWidth}
+          />
+        )}
+      </View>
     );
   }
 );

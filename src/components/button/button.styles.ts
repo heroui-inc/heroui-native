@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../providers/theme/helpers';
 
 const root = tv({
-  base: 'flex-row items-center justify-center',
+  base: 'flex-row items-center justify-center overflow-hidden',
   variants: {
     variant: {
       primary: 'bg-accent',

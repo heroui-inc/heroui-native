@@ -55,7 +55,13 @@ const inputEndContent = tv({
 });
 
 const description = tv({
-  base: 'm-1 text-sm text-muted font-normal',
+  base: 'm-1 text-sm font-normal',
+  variants: {
+    isDark: {
+      true: 'text-muted-foreground',
+      false: 'text-muted',
+    },
+  },
 });
 
 const errorMessage = tv({

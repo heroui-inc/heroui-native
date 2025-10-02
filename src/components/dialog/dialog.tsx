@@ -338,6 +338,7 @@ const DialogContent = forwardRef<
       <GestureDetector gesture={panGesture}>
         <Animated.View
           style={rDragContainerStyle}
+          className="pointer-events-box-none"
           onLayout={(event) => {
             contentY.set(event.nativeEvent.layout.y);
             contentHeight.set(event.nativeEvent.layout.height);
@@ -364,7 +365,9 @@ const DialogClose = forwardRef<
   DialogPrimitivesTypes.CloseRef,
   DialogCloseProps
 >(({ className, iconProps, hitSlop = 12, children, ...props }, ref) => {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
+
+  const defaultIconColor = isDark ? colors.mutedForeground : colors.muted;
 
   const tvStyles = dialogStyles.close({ className });
 
@@ -378,7 +381,7 @@ const DialogClose = forwardRef<
       {children || (
         <CloseIcon
           size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? colors.muted}
+          color={iconProps?.color ?? defaultIconColor}
         />
       )}
     </DialogPrimitives.Close>
@@ -412,7 +415,10 @@ const DialogTitle = forwardRef<RNText, DialogTitleProps>(
 const DialogDescription = forwardRef<RNText, DialogDescriptionProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useDialog();
-    const tvStyles = dialogStyles.description({ className });
+
+    const { isDark } = useTheme();
+
+    const tvStyles = dialogStyles.description({ className, isDark });
 
     return (
       <Text

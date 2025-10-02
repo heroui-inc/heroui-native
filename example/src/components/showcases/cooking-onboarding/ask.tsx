@@ -35,7 +35,7 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
           className={cn(className.popoverContent, 'w-[240px]')}
           placement="top"
         >
-          <Popover.Arrow color={colors.foreground} />
+          <Popover.Arrow stroke={colors.foreground} fill={colors.foreground} />
           <AppText className={className.popoverText}>
             Chat with AI to get recipe suggestions and cooking tips
           </AppText>

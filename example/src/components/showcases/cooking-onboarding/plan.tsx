@@ -32,7 +32,7 @@ export const Plan: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
         <Popover.Content className={className.popoverContent} placement="top">
-          <Popover.Arrow color={colors.foreground} />
+          <Popover.Arrow stroke={colors.foreground} fill={colors.foreground} />
           <AppText className={className.popoverText}>
             Create and organize your meal plans
           </AppText>

@@ -217,7 +217,7 @@ export default function CookingOnboardingScreen() {
           exiting={FadeOut}
           style={StyleSheet.absoluteFill}
           onPress={handleOverlayPress}
-          className="bg-black/10"
+          className="bg-black/25"
         />
       )}
     </View>

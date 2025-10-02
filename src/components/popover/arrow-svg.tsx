@@ -23,32 +23,35 @@ export const ArrowSvg = ({
   style,
   svgProps,
 }: ArrowSvgProps) => {
-  const getPathAndViewBox = () => {
-    // Add small padding for stroke to prevent clipping
+  const getPaths = () => {
     const strokePadding = strokeWidth / 2;
-    // Corner radius for the tip (subtle rounding)
     const cornerRadius = 2;
+    const baselineInset = strokeWidth;
 
     switch (placement) {
       case 'top': {
-        // Arrow pointing down (at bottom of popover content)
         const tipX = width / 2;
         const tipY = height - strokePadding;
-        const leftX = strokePadding;
-        const leftY = strokePadding;
-        const rightX = width - strokePadding;
-        const rightY = strokePadding;
 
-        // Calculate points near the tip for the arc
+        const fillLeftX = strokePadding;
+        const fillLeftY = strokePadding;
+        const fillRightX = width - strokePadding;
+        const fillRightY = strokePadding;
+        const fillPath = `M ${fillLeftX} ${fillLeftY} L ${tipX} ${tipY} L ${fillRightX} ${fillRightY} Z`;
+
+        const strokeLeftX = strokePadding;
+        const strokeLeftY = strokePadding + baselineInset;
+        const strokeRightX = width - strokePadding;
+        const strokeRightY = strokePadding + baselineInset;
         const leftTipX = tipX - cornerRadius;
         const leftTipY = tipY - cornerRadius * 0.8;
         const rightTipX = tipX + cornerRadius;
         const rightTipY = tipY - cornerRadius * 0.8;
+        const strokePath = `M ${strokeLeftX} ${strokeLeftY} L ${leftTipX} ${leftTipY} Q ${tipX} ${tipY} ${rightTipX} ${rightTipY} L ${strokeRightX} ${strokeRightY}`;
 
-        // Draw with smooth arc at the tip
-        const path = `M ${leftX} ${leftY} L ${leftTipX} ${leftTipY} Q ${tipX} ${tipY} ${rightTipX} ${rightTipY} L ${rightX} ${rightY}`;
         return {
-          path,
+          fillPath,
+          strokePath,
           viewBox: `0 0 ${width} ${height}`,
           svgWidth: width,
           svgHeight: height,
@@ -56,22 +59,28 @@ export const ArrowSvg = ({
       }
 
       case 'bottom': {
-        // Arrow pointing up (at top of popover content)
         const tipX = width / 2;
         const tipY = strokePadding;
-        const leftX = strokePadding;
-        const leftY = height - strokePadding;
-        const rightX = width - strokePadding;
-        const rightY = height - strokePadding;
 
+        const fillLeftX = strokePadding;
+        const fillLeftY = height - strokePadding;
+        const fillRightX = width - strokePadding;
+        const fillRightY = height - strokePadding;
+        const fillPath = `M ${fillLeftX} ${fillLeftY} L ${tipX} ${tipY} L ${fillRightX} ${fillRightY} Z`;
+
+        const strokeLeftX = strokePadding;
+        const strokeLeftY = height - strokePadding - baselineInset;
+        const strokeRightX = width - strokePadding;
+        const strokeRightY = height - strokePadding - baselineInset;
         const leftTipX = tipX - cornerRadius;
         const leftTipY = tipY + cornerRadius * 0.8;
         const rightTipX = tipX + cornerRadius;
         const rightTipY = tipY + cornerRadius * 0.8;
+        const strokePath = `M ${strokeLeftX} ${strokeLeftY} L ${leftTipX} ${leftTipY} Q ${tipX} ${tipY} ${rightTipX} ${rightTipY} L ${strokeRightX} ${strokeRightY}`;
 
-        const path = `M ${leftX} ${leftY} L ${leftTipX} ${leftTipY} Q ${tipX} ${tipY} ${rightTipX} ${rightTipY} L ${rightX} ${rightY}`;
         return {
-          path,
+          fillPath,
+          strokePath,
           viewBox: `0 0 ${width} ${height}`,
           svgWidth: width,
           svgHeight: height,
@@ -79,22 +88,28 @@ export const ArrowSvg = ({
       }
 
       case 'left': {
-        // Arrow pointing right (at right side of popover content)
         const tipX = height - strokePadding;
         const tipY = width / 2;
-        const topX = strokePadding;
-        const topY = strokePadding;
-        const bottomX = strokePadding;
-        const bottomY = width - strokePadding;
 
+        const fillTopX = strokePadding;
+        const fillTopY = strokePadding;
+        const fillBottomX = strokePadding;
+        const fillBottomY = width - strokePadding;
+        const fillPath = `M ${fillTopX} ${fillTopY} L ${tipX} ${tipY} L ${fillBottomX} ${fillBottomY} Z`;
+
+        const strokeTopX = strokePadding + baselineInset;
+        const strokeTopY = strokePadding;
+        const strokeBottomX = strokePadding + baselineInset;
+        const strokeBottomY = width - strokePadding;
         const topTipX = tipX - cornerRadius * 0.8;
         const topTipY = tipY - cornerRadius;
         const bottomTipX = tipX - cornerRadius * 0.8;
         const bottomTipY = tipY + cornerRadius;
+        const strokePath = `M ${strokeTopX} ${strokeTopY} L ${topTipX} ${topTipY} Q ${tipX} ${tipY} ${bottomTipX} ${bottomTipY} L ${strokeBottomX} ${strokeBottomY}`;
 
-        const path = `M ${topX} ${topY} L ${topTipX} ${topTipY} Q ${tipX} ${tipY} ${bottomTipX} ${bottomTipY} L ${bottomX} ${bottomY}`;
         return {
-          path,
+          fillPath,
+          strokePath,
           viewBox: `0 0 ${height} ${width}`,
           svgWidth: height,
           svgHeight: width,
@@ -102,22 +117,28 @@ export const ArrowSvg = ({
       }
 
       case 'right': {
-        // Arrow pointing left (at left side of popover content)
         const tipX = strokePadding;
         const tipY = width / 2;
-        const topX = height - strokePadding;
-        const topY = strokePadding;
-        const bottomX = height - strokePadding;
-        const bottomY = width - strokePadding;
 
+        const fillTopX = height - strokePadding;
+        const fillTopY = strokePadding;
+        const fillBottomX = height - strokePadding;
+        const fillBottomY = width - strokePadding;
+        const fillPath = `M ${fillTopX} ${fillTopY} L ${tipX} ${tipY} L ${fillBottomX} ${fillBottomY} Z`;
+
+        const strokeTopX = height - strokePadding - baselineInset;
+        const strokeTopY = strokePadding;
+        const strokeBottomX = height - strokePadding - baselineInset;
+        const strokeBottomY = width - strokePadding;
         const topTipX = tipX + cornerRadius * 0.8;
         const topTipY = tipY - cornerRadius;
         const bottomTipX = tipX + cornerRadius * 0.8;
         const bottomTipY = tipY + cornerRadius;
+        const strokePath = `M ${strokeTopX} ${strokeTopY} L ${topTipX} ${topTipY} Q ${tipX} ${tipY} ${bottomTipX} ${bottomTipY} L ${strokeBottomX} ${strokeBottomY}`;
 
-        const path = `M ${topX} ${topY} L ${topTipX} ${topTipY} Q ${tipX} ${tipY} ${bottomTipX} ${bottomTipY} L ${bottomX} ${bottomY}`;
         return {
-          path,
+          fillPath,
+          strokePath,
           viewBox: `0 0 ${height} ${width}`,
           svgWidth: height,
           svgHeight: width,
@@ -126,7 +147,8 @@ export const ArrowSvg = ({
 
       default:
         return {
-          path: '',
+          fillPath: '',
+          strokePath: '',
           viewBox: '0 0 0 0',
           svgWidth: 0,
           svgHeight: 0,
@@ -134,7 +156,7 @@ export const ArrowSvg = ({
     }
   };
 
-  const { path, viewBox, svgWidth, svgHeight } = getPathAndViewBox();
+  const { fillPath, strokePath, viewBox, svgWidth, svgHeight } = getPaths();
 
   return (
     <Svg
@@ -144,9 +166,10 @@ export const ArrowSvg = ({
       style={style}
       {...svgProps}
     >
+      <Path d={fillPath} fill={fill} stroke="none" />
       <Path
-        d={path}
-        fill={fill}
+        d={strokePath}
+        fill="none"
         stroke={stroke}
         strokeWidth={strokeWidth}
         strokeLinecap="round"

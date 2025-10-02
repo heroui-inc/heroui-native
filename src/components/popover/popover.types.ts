@@ -1,7 +1,7 @@
 import type BottomSheet from '@gorhom/bottom-sheet';
 import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
-import type { TextProps } from 'react-native';
+import type { StyleProp, TextProps, ViewStyle } from 'react-native';
 import type {
   WithSpringConfig,
   WithTimingConfig,
@@ -242,6 +242,14 @@ export interface PopoverDescriptionProps extends TextProps {
  */
 export interface PopoverArrowProps {
   /**
+   * The arrow content
+   */
+  children?: ReactNode;
+  /**
+   * Style for the arrow
+   */
+  style?: StyleProp<ViewStyle>;
+  /**
    * Additional CSS class for the arrow
    */
   className?: string;
@@ -268,6 +276,13 @@ export interface PopoverArrowProps {
    * @default 1
    */
   strokeWidth?: number;
+  /**
+   * Baseline inset in pixels for stroke alignment (defaults to 1)
+   * Set this to match the popover's border width so the arrow stroke
+   * aligns seamlessly with the popover border. For example, if your
+   * popover has a 2px border, set this to 2
+   */
+  strokeBaselineInset?: number;
   /**
    * Placement of the popover (inherited from content)
    */

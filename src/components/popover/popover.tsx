@@ -447,14 +447,16 @@ const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
 const PopoverArrow = forwardRef<View, PopoverArrowProps>(
   (
     {
+      children,
+      style,
       className,
-      height = 8,
+      height = 10,
       width = 16,
       fill,
       stroke,
       strokeWidth = 1,
       placement: placementLocal,
-      ...props
+      strokeBaselineInset = 1,
     },
     ref
   ) => {
@@ -485,7 +487,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'top':
           return {
             ...baseStyle,
-            bottom: -height + 0.75,
+            bottom: -height + strokeBaselineInset,
             left: Math.min(
               Math.max(12, triggerCenterX - contentLayout.x - width / 2),
               contentLayout.width - width - 12
@@ -495,7 +497,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'bottom':
           return {
             ...baseStyle,
-            top: -height + 0.75,
+            top: -height + strokeBaselineInset,
             left: Math.min(
               Math.max(12, triggerCenterX - contentLayout.x - width / 2),
               contentLayout.width - width - 12
@@ -505,7 +507,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'left':
           return {
             ...baseStyle,
-            right: -height + 0.75,
+            right: -height + strokeBaselineInset,
             top: Math.min(
               Math.max(12, triggerCenterY - contentLayout.y - width / 2),
               contentLayout.height - width - 12
@@ -515,7 +517,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
         case 'right':
           return {
             ...baseStyle,
-            left: -height + 0.75,
+            left: -height + strokeBaselineInset,
             top: Math.min(
               Math.max(12, triggerCenterY - contentLayout.y - width / 2),
               contentLayout.height - width - 12
@@ -531,18 +533,21 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
       <View
         ref={ref}
         className={tvStyles}
-        style={getArrowPosition()}
+        style={[getArrowPosition(), style]}
         pointerEvents="none"
-        {...props}
       >
-        <ArrowSvg
-          width={width}
-          height={height}
-          placement={placement}
-          fill={arrowFill}
-          stroke={arrowStroke}
-          strokeWidth={strokeWidth}
-        />
+        {children ? (
+          children
+        ) : (
+          <ArrowSvg
+            width={width}
+            height={height}
+            placement={placement}
+            fill={arrowFill}
+            stroke={arrowStroke}
+            strokeWidth={strokeWidth}
+          />
+        )}
       </View>
     );
   }

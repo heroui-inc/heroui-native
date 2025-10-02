@@ -23,8 +23,9 @@ import {
   DEFAULT_ALIGN_OFFSET,
   DEFAULT_INSETS,
   DEFAULT_OFFSET,
-  DEFAULT_SPRING_CONFIG,
   DISPLAY_NAME,
+  SPRING_CONFIG_CLOSE,
+  SPRING_CONFIG_OPEN,
 } from './popover.constants';
 import popoverStyles, { nativeStyles } from './popover.styles';
 import type {
@@ -103,7 +104,7 @@ const PopoverPortal = ({
       } else if (openConfig?.animationType === 'timing') {
         progress.set(withTiming(1, openConfig.animationConfig));
       } else {
-        progress.set(withSpring(1, DEFAULT_SPRING_CONFIG));
+        progress.set(withSpring(1, SPRING_CONFIG_OPEN));
       }
     } else if (popoverState === 'close') {
       const closeConfig = progressAnimationConfigs?.onClose;
@@ -112,7 +113,7 @@ const PopoverPortal = ({
       } else if (closeConfig?.animationType === 'timing') {
         progress.set(withTiming(2, closeConfig.animationConfig));
       } else {
-        progress.set(withSpring(2, DEFAULT_SPRING_CONFIG));
+        progress.set(withSpring(2, SPRING_CONFIG_CLOSE));
       }
     } else {
       progress.set(0);

@@ -3,7 +3,6 @@ import {
   Button,
   Card,
   cn,
-  Radio,
   RadioGroup,
   Skeleton,
   SkeletonGroup,
@@ -258,21 +257,21 @@ export default function SkeletonScreen() {
             }
             orientation="horizontal"
           >
-            <Radio value="shimmer" alignIndicator="start">
-              <Radio.Content>
-                <Radio.Title>Shimmer</Radio.Title>
-              </Radio.Content>
-            </Radio>
-            <Radio value="pulse" alignIndicator="start">
-              <Radio.Content>
-                <Radio.Title>Pulse</Radio.Title>
-              </Radio.Content>
-            </Radio>
-            <Radio value="none" alignIndicator="start">
-              <Radio.Content>
-                <Radio.Title>None</Radio.Title>
-              </Radio.Content>
-            </Radio>
+            <RadioGroup.Item value="shimmer" alignIndicator="start">
+              <RadioGroup.ItemContent>
+                <RadioGroup.ItemTitle>Shimmer</RadioGroup.ItemTitle>
+              </RadioGroup.ItemContent>
+            </RadioGroup.Item>
+            <RadioGroup.Item value="pulse" alignIndicator="start">
+              <RadioGroup.ItemContent>
+                <RadioGroup.ItemTitle>Pulse</RadioGroup.ItemTitle>
+              </RadioGroup.ItemContent>
+            </RadioGroup.Item>
+            <RadioGroup.Item value="none" alignIndicator="start">
+              <RadioGroup.ItemContent>
+                <RadioGroup.ItemTitle>None</RadioGroup.ItemTitle>
+              </RadioGroup.ItemContent>
+            </RadioGroup.Item>
           </RadioGroup>
           <Button onPress={() => setIsLoading(!isLoading)} size="sm">
             {isLoading ? 'Loading...' : 'Loaded'}

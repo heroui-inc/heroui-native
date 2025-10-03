@@ -1,7 +1,7 @@
 import {
   cn,
   colorKit,
-  Radio,
+  RadioGroup,
   useRadioGroupContext,
   useTheme,
 } from 'heroui-native';
@@ -42,36 +42,44 @@ export const StyledRadio: FC<Props> = ({
       )}
     >
       <BlurContainer>
-        <Radio value={value} className="flex-1 px-6" alignIndicator="start">
-          <Radio.Content className="">
+        <RadioGroup.Item
+          value={value}
+          className="flex-1 px-6"
+          alignIndicator="start"
+        >
+          <RadioGroup.ItemContent className="">
             <View className="flex-row items-center justify-between gap-3">
               <View>
-                <Radio.Title className={className.title}>{title1}</Radio.Title>
-                <Radio.Description className={className.description}>
+                <RadioGroup.ItemTitle className={className.title}>
+                  {title1}
+                </RadioGroup.ItemTitle>
+                <RadioGroup.ItemDescription className={className.description}>
                   {description1}
-                </Radio.Description>
+                </RadioGroup.ItemDescription>
               </View>
               <View>
-                <Radio.Title className={className.title}>{title2}</Radio.Title>
-                <Radio.Description className={className.description}>
+                <RadioGroup.ItemTitle className={className.title}>
+                  {title2}
+                </RadioGroup.ItemTitle>
+                <RadioGroup.ItemDescription className={className.description}>
                   {description2}
-                </Radio.Description>
+                </RadioGroup.ItemDescription>
               </View>
             </View>
-          </Radio.Content>
-          <Radio.Indicator
+          </RadioGroup.ItemContent>
+          <RadioGroup.ItemIndicator
             colors={{
               defaultBorder: colorKit.setAlpha('#fff', 0.25).hex(),
             }}
           >
-            <Radio.IndicatorBackground
+            <RadioGroup.ItemIndicatorBackground
               colors={{
                 defaultBackground: colors.default,
               }}
             />
-            <Radio.IndicatorThumb className="size-2.5" />
-          </Radio.Indicator>
-        </Radio>
+            <RadioGroup.ItemIndicatorThumb className="size-2.5" />
+          </RadioGroup.ItemIndicator>
+        </RadioGroup.Item>
       </BlurContainer>
     </View>
   );

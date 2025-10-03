@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, Radio, RadioGroup, useTheme } from 'heroui-native';
+import { Chip, Dialog, RadioGroup, useTheme } from 'heroui-native';
 import { useState, type FC } from 'react';
 import { Platform, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
@@ -129,7 +129,7 @@ export const Status: FC = () => {
           <RadioGroup value={value} onValueChange={setValue} className="gap-7">
             {items.map((item) => (
               <Dialog.Close key={item.value} className="self-stretch" asChild>
-                <Radio
+                <RadioGroup.Item
                   value={item.value}
                   onPress={() => {
                     if (Platform.OS === 'ios') {
@@ -137,25 +137,25 @@ export const Status: FC = () => {
                     }
                   }}
                 >
-                  <Radio.Content className="flex-row items-center">
+                  <RadioGroup.ItemContent className="flex-row items-center">
                     <View className="w-7 pl-0.5 justify-center">
                       <View className="scale-[1.2]">{item.indicator}</View>
                     </View>
-                    <Radio.Title>{item.label}</Radio.Title>
-                  </Radio.Content>
-                  <Radio.Indicator
+                    <RadioGroup.ItemTitle>{item.label}</RadioGroup.ItemTitle>
+                  </RadioGroup.ItemContent>
+                  <RadioGroup.ItemIndicator
                     colors={{
                       defaultBorder: 'transparent',
                       selectedBorder: 'transparent',
                     }}
                   >
-                    <Radio.IndicatorBackground
+                    <RadioGroup.ItemIndicatorBackground
                       colors={{
                         defaultBackground: 'transparent',
                         selectedBackground: 'transparent',
                       }}
                     />
-                    <Radio.IndicatorThumb>
+                    <RadioGroup.ItemIndicatorThumb>
                       {value === item.value && (
                         <Animated.View
                           key={item.value}
@@ -168,9 +168,9 @@ export const Status: FC = () => {
                           />
                         </Animated.View>
                       )}
-                    </Radio.IndicatorThumb>
-                  </Radio.Indicator>
-                </Radio>
+                    </RadioGroup.ItemIndicatorThumb>
+                  </RadioGroup.ItemIndicator>
+                </RadioGroup.Item>
               </Dialog.Close>
             ))}
           </RadioGroup>

@@ -147,7 +147,6 @@ module.exports = {
     './app/**/*.{js,jsx,ts,tsx}',
     './node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}',
   ],
-  presets: [require('nativewind/preset')],
   theme: {
     extend: {
       fontFamily: {

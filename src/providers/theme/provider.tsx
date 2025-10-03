@@ -7,7 +7,6 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { View } from 'react-native';
 import { colors as defaultColors } from './colors';
 import { deepMerge } from './helpers';
 import {
@@ -152,6 +151,7 @@ export const ThemeProvider = ({
    *
    * @returns {Object} CSS variables for light and dark themes
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const themes = useMemo(() => {
     if (!customTheme) {
       return defaultThemes;
@@ -274,11 +274,7 @@ export const ThemeProvider = ({
    * within the tree (e.g., 'bg-primary', 'text-muted-foreground')
    */
   return (
-    <ThemeContext.Provider value={value}>
-      <View style={themes[currentTheme]} className="flex-1 bg-background">
-        {children}
-      </View>
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 };
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-unreachable */
 import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
 import { Card, Chip, useTheme } from 'heroui-native';
@@ -146,9 +145,7 @@ export default function App() {
   return (
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
-        <AppText className="text-muted-foreground text-base">
-          v1.0.0-alpha.14
-        </AppText>
+        <AppText className="text-success text-base">v1.0.0-alpha.14</AppText>
       </View>
 
       <View className="gap-6">

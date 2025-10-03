@@ -106,12 +106,11 @@
     "react-native-worklets": "^0.5.1",
     "tailwind-merge": "^3.3.1",
     "tailwind-variants": "^3.1.0",
-    "tailwindcss": "^3.4.17",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "uniwind": "beta"
   },
   "peerDependencies": {
     "@gorhom/bottom-sheet": "^5",
-    "nativewind": "4.2.1",
     "react": "*",
     "react-native": "*",
     "react-native-reanimated": "~4.1.0",

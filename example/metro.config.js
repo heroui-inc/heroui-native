@@ -3,7 +3,7 @@ const exampleNodeModules = path.join(__dirname, 'node_modules'); // Example's no
 const escape = require('escape-string-regexp');
 const exclusionList = require('metro-config/private/defaults/exclusionList');
 const rootPkg = require('../package.json');
-const { withNativeWind } = require('nativewind/metro');
+const { withUniwindConfig } = require('uniwind/metro');
 const { getDefaultConfig } = require('@expo/metro-config');
 const {
   wrapWithReanimatedMetroConfig,
@@ -54,6 +54,7 @@ const config = {
   ...configObj,
 };
 
-module.exports = withNativeWind(wrapWithReanimatedMetroConfig(config), {
-  input: './global.css',
+module.exports = withUniwindConfig(wrapWithReanimatedMetroConfig(config), {
+  cssEntryFile: './global.css',
+  dtsFile: './src/uniwind.d.ts',
 });

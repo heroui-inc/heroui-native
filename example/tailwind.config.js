@@ -1,5 +1,3 @@
-// For development only
-import heroUINativePlugin from '../src/providers/theme/plugin';
 // In production use this
 // import heroUINativePlugin from 'heroui-native/tailwind-plugin';
 
@@ -12,7 +10,6 @@ module.exports = {
     // Library's source files (for development only)
     '../src/**/*.{js,jsx,ts,tsx}',
   ],
-  presets: [require('nativewind/preset')],
   theme: {
     extend: {
       fontFamily: {
@@ -23,5 +20,4 @@ module.exports = {
       },
     },
   },
-  plugins: [heroUINativePlugin],
 };

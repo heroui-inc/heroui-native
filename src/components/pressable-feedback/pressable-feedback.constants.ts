@@ -1,5 +1,4 @@
 import { Easing } from 'react-native-reanimated';
-import type { PressableFeedbackPlatformDefaults } from './pressable-feedback.types';
 
 /**
  * Display names for PressableFeedback components
@@ -13,19 +12,18 @@ export const DISPLAY_NAME = {
 /**
  * Default platform-specific variants
  */
-export const DEFAULT_PRESSABLE_FEEDBACK_PLATFORM: PressableFeedbackPlatformDefaults =
-  {
-    ios: 'highlight',
-    android: 'ripple',
-  } as const;
+export const DEFAULT_PRESSABLE_FEEDBACK_PLATFORM = {
+  ios: 'highlight',
+  android: 'ripple',
+} as const;
 
 /**
  * Default ripple animation configuration
  */
 export const DEFAULT_PRESSABLE_FEEDBACK_RIPPLE = {
-  color: 'rgba(0, 0, 0, 0.2)' as const,
-  duration: 400,
+  duration: 250,
   easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+  opacity: 0.2,
   disabled: false,
 } as const;
 
@@ -33,9 +31,13 @@ export const DEFAULT_PRESSABLE_FEEDBACK_RIPPLE = {
  * Default highlight animation configuration
  */
 export const DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT = {
-  color: 'rgba(0, 0, 0, 0.1)' as const,
-  duration: 200,
+  duration: 100,
   easing: Easing.inOut(Easing.quad),
-  opacity: 0.7,
+  opacity: 0.2,
   disabled: false,
+} as const;
+
+export const DEFAULT_PRESSABLE_FEEDBACK_COLORS = {
+  LIGHT: 'black',
+  DARK: 'white',
 } as const;

@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 import type {
-    HighlightAnimationConfig,
-  PressableFeedbackLayoutInfo,
+  HighlightAnimationConfig,
+  LayoutInfo,
   PressableFeedbackPlatformDefaults,
   PressableFeedbackVariant,
   RippleAnimationConfig,
@@ -26,36 +26,19 @@ export function getDefaultVariant(
 /**
  * Calculates the maximum ripple radius from a touch point within a container
  * @param layout - Layout information of the container
- * @param centerX - X coordinate of the touch point
- * @param centerY - Y coordinate of the touch point
+ * @param locationX - X coordinate of the touch point
+ * @param locationY - Y coordinate of the touch point
  * @returns The calculated ripple radius
  */
 export function calculateRippleRadius(
-  layout: PressableFeedbackLayoutInfo,
-  centerX: number,
-  centerY: number
+  layout: LayoutInfo,
+  locationX: number,
+  locationY: number
 ): number {
   const { width, height } = layout;
-  const maxX = Math.max(centerX, width - centerX);
-  const maxY = Math.max(centerY, height - centerY);
+  const maxX = Math.max(locationX, width - locationX);
+  const maxY = Math.max(locationY, height - locationY);
   return Math.sqrt(maxX * maxX + maxY * maxY);
-}
-
-
-/**
- * Validates ripple configuration and applies defaults
- * @param config - Partial ripple configuration
- * @returns Validated ripple configuration with defaults applied
- */
-export function validateRippleConfig(
-  config?: Partial<RippleAnimationConfig>
-): RippleAnimationConfig {
-  return {
-    color: config?.color ?? 'rgba(0, 0, 0, 0.2)',
-    duration: config?.duration ?? 400,
-    easing: config?.easing ?? undefined,
-    disabled: config?.disabled ?? false,
-  };
 }
 
 /**

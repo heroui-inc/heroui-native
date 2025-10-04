@@ -1,16 +1,9 @@
-import type {
-  ColorValue,
-  EasingFunction,
-  PressableStateCallbackType,
-  PressableProps as RNPressableProps,
-} from 'react-native';
-import type {
-  EasingFunctionFactory,
-  SharedValue,
-} from 'react-native-reanimated';
+import type { PressableProps as RNPressableProps, ViewProps } from 'react-native';
+import type { AnimatedProps } from 'react-native-reanimated';
+import type { SharedValue, EasingFunction, EasingFunctionFactory } from 'react-native-reanimated';
 
 /**
- * Variant types for PressableFeedback component
+ * Variant types for the PressableFeedback component
  */
 export type PressableFeedbackVariant = 'highlight' | 'ripple';
 
@@ -31,189 +24,167 @@ export interface PressableFeedbackPlatformDefaults {
 }
 
 /**
- * Ripple animation configuration
+ * Configuration for ripple animation
  */
 export interface RippleAnimationConfig {
   /**
-   * Color of the ripple effect
-   * @default 'rgba(0, 0, 0, 0.2)'
-   */
-  color?: ColorValue;
-  /**
-   * Duration of the ripple animation in milliseconds
-   * @default 400
+   * Duration of ripple animation in milliseconds
+   * @default 250
    */
   duration?: number;
   /**
-   * Easing function for the ripple animation
+   * Easing function for ripple animation
    * @default Easing.bezier(0.25, 0.1, 0.25, 1)
    */
   easing?: EasingFunction | EasingFunctionFactory;
   /**
-   * Whether to disable the ripple effect
+   * Opacity when the component is pressed
+   * @default 0.2
+   */
+  opacity?: number;
+  /**
+   * Color of the ripple effect
+   * @default 'black' for light theme, 'white' for dark theme
+   */
+  color?: string;
+  /**
+   * Whether the ripple effect is disabled
    * @default false
    */
   disabled?: boolean;
 }
 
 /**
- * Highlight animation configuration
+ * Configuration for highlight animation
  */
 export interface HighlightAnimationConfig {
   /**
-   * Color of the highlight effect
-   * @default 'rgba(0, 0, 0, 0.1)'
-   */
-  color?: ColorValue;
-  /**
-   * Duration of the highlight animation in milliseconds
-   * @default 200
+   * Duration of highlight animation in milliseconds
+   * @default 100
    */
   duration?: number;
   /**
-   * Easing function for the highlight animation
+   * Easing function for highlight animation
    * @default Easing.inOut(Easing.quad)
    */
   easing?: EasingFunction | EasingFunctionFactory;
   /**
-   * Opacity value when highlighted
-   * @default 0.7
+   * Opacity when the component is pressed
+   * @default 0.2
    */
   opacity?: number;
   /**
-   * Whether to disable the highlight effect
+   * Color of the highlight effect
+   * @default 'black' for light theme, 'white' for dark theme
+   */
+  color?: string;
+  /**
+   * Whether the highlight effect is disabled
    * @default false
    */
   disabled?: boolean;
 }
 
 /**
- * Union type for animation configurations based on variant
+ * Common props shared by both ripple and highlight variants
  */
-export type PressableFeedbackAnimationConfig =
-  | ({ variant: 'ripple' } & RippleAnimationConfig)
-  | ({ variant: 'highlight' } & HighlightAnimationConfig);
-
-/**
- * Props for the PressableFeedback component
- */
-export interface PressableFeedbackProps
-  extends Omit<RNPressableProps, 'children' | 'disabled'> {
+export interface PressableFeedbackCommonProps extends Omit<RNPressableProps, 'children' | 'disabled'>  {
   /**
-   * The feedback variant to use
-   * @default 'highlight' on iOS, 'ripple' on Android
-   */
-  variant?: PressableFeedbackVariant;
-
-  /**
-   * Animation configuration based on the selected variant
-   */
-  animationConfig?: PressableFeedbackAnimationConfig;
-
-  /**
-   * Whether the pressable is disabled
+   * Whether the pressable component is disabled
    * @default false
    */
   isDisabled?: boolean;
-
   /**
-   * Children elements to be rendered inside the pressable area
+   * Color used for ripple or highlight effect
+   * @default 'black' for light theme, 'white' for dark theme
    */
-  children?:
-    | React.ReactNode
-    | ((state: PressableFeedbackState) => React.ReactNode);
+  color?: string;
+  /**
+   * Children elements or a function that receives pressable state
+   */
+  children?: React.ReactNode | ((state: PressableFeedbackState) => React.ReactNode);
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
 }
 
 /**
- * State object passed to children render function
+ * Props for PressableFeedback component
  */
-export interface PressableFeedbackState extends PressableStateCallbackType {
+export type PressableFeedbackProps =
+  | (PressableFeedbackCommonProps & {
+      /**
+       * Variant to use ripple effect
+       */
+      variant?: 'ripple';
+      /**
+       * Configuration for ripple animation
+       */
+      animationConfig?: RippleAnimationConfig;
+    })
+  | (PressableFeedbackCommonProps & {
+      /**
+       * Variant to use highlight effect
+       */
+      variant?: 'highlight';
+      /**
+       * Configuration for highlight animation
+       */
+      animationConfig?: HighlightAnimationConfig;
+    });
+
+/**
+ * State passed to children render function
+ */
+export interface PressableFeedbackState {
   /**
-   * Whether the component is currently hovered
+   * True if component is hovered
    */
   hovered: boolean;
   /**
-   * Whether the component is currently pressed
+   * True if component is pressed
    */
   pressed: boolean;
 }
 
 /**
- * Layout information for positioning calculations
+ * Internal Layout information for ripple or highlight positioning
  */
-export interface PressableFeedbackLayoutInfo {
-  /**
-   * Width of the component
-   */
+export interface LayoutInfo {
   width: number;
-  /**
-   * Height of the component
-   */
   height: number;
-  /**
-   * X position of the component
-   */
   x: number;
-  /**
-   * Y position of the component
-   */
   y: number;
 }
 
 /**
- * Props for the RippleComponent
+ * Internal Props for RippleComponent
  */
-export interface RippleComponentProps {
-  /**
-   * Ripple value object
-   */
+export interface RippleComponentProps extends AnimatedProps<ViewProps> {
+  color: string;
   ripple: RippleValue;
-  /**
-   * Ripple animation configuration
-   */
-  config: RippleAnimationConfig;
 }
 
 /**
- * Props for the HighlightComponent
+ * Internal Props for HighlightComponent
  */
-export interface HighlightComponentProps {
-  /**
-   * Shared value for the pressed state
-   */
+export interface HighlightComponentProps extends AnimatedProps<ViewProps> {
+  color: string;
+  opacity: number;
+  duration: number;
+  easing: EasingFunction | EasingFunctionFactory;
   pressed: SharedValue<boolean>;
-  /**
-   * Highlight animation configuration
-   */
-  config: HighlightAnimationConfig;
 }
 
 /**
- * Internal ripple value structure for animation management
+ * Internal ripple animation values
  */
 export interface RippleValue {
-  /**
-   * Scale animation value
-   */
   scale: SharedValue<number>;
-  /**
-   * Opacity animation value
-   */
   opacity: SharedValue<number>;
-  /**
-   * X coordinate of ripple center
-   */
-  centerX: SharedValue<number>;
-  /**
-   * Y coordinate of ripple center
-   */
-  centerY: SharedValue<number>;
-  /**
-   * Radius of the ripple effect
-   */
+  locationX: SharedValue<number>;
+  locationY: SharedValue<number>;
   radius: SharedValue<number>;
-  /**
-   * Whether the ripple is currently active
-   */
   active: SharedValue<number>;
 }

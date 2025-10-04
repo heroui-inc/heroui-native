@@ -1,8 +1,10 @@
 import {
   forwardRef,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
+  useState,
   type FC,
 } from 'react';
 import {
@@ -23,7 +25,7 @@ import type { PressableRef } from '../../helpers/types';
 import {
   type PressableFeedbackProps,
   type PressableFeedbackState,
-  type PressableFeedbackLayoutInfo,
+  type LayoutInfo,
   type HighlightComponentProps,
   type RippleComponentProps,
 } from './pressable-feedback.types';
@@ -32,6 +34,7 @@ import {
   DEFAULT_PRESSABLE_FEEDBACK_PLATFORM,
   DEFAULT_PRESSABLE_FEEDBACK_RIPPLE,
   DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT,
+  DEFAULT_PRESSABLE_FEEDBACK_COLORS,
 } from './pressable-feedback.constants';
 import pressableFeedbackStyles from './pressable-feedback.styles';
 import {
@@ -40,52 +43,69 @@ import {
   isRippleConfig,
   isHighlightConfig,
 } from './pressable-feedback.utils';
-import { useRippleValue } from './pressable-feedback.hooks';
+import { useRipplePool } from './pressable-feedback.hooks';
+import { useTheme } from '../../providers/theme';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
 // --------------------------------------------------
 
-const HighlightComponent: FC<HighlightComponentProps> = ({ pressed, config }) => {
-  const highlightStyle = useAnimatedStyle(() => {
-    const isActive = pressed.value;
+const HighlightComponent: FC<HighlightComponentProps> = ({
+  pressed,
+  color,
+  opacity,
+  duration,
+  easing
+}) => {
 
-    return {
-      ...pressableFeedbackStyles.highlightLayer,
-      backgroundColor: config.color ?? DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT.color,
-      opacity: withTiming(
-        isActive ? (config.opacity ?? DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT.opacity) : 0,
-        {
-          duration: config.duration ?? DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT.duration,
-          easing: config.easing ?? DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT.easing,
-        }
-      ),
-    };
-  });
+  const style = useAnimatedStyle(() => ({
+    backgroundColor: color,
+    opacity: withTiming(
+      pressed.value ? opacity : 0,
+      { duration, easing }
+    ),
+  }));
 
-  return <AnimatedView pointerEvents="none" style={highlightStyle} />;
+  const tvStyle = pressableFeedbackStyles.highlight();
+
+  return (
+    <AnimatedView
+      pointerEvents="none"
+      style={style}
+      className={tvStyle}
+    />
+  );
 };
 
 // --------------------------------------------------
 
-const RippleComponent: FC<RippleComponentProps> = ({ ripple, config }) => {
-  const rippleStyle = useAnimatedStyle(() => {
+const RippleComponent: FC<RippleComponentProps> = ({
+  ripple,
+  color
+}) => {
+  const style = useAnimatedStyle(() => {
     const diameter = ripple.radius.value * 2;
-
     return {
-      ...pressableFeedbackStyles.rippleLayer,
-      top: ripple.centerY.value - ripple.radius.value,
-      left: ripple.centerX.value - ripple.radius.value,
+      top: ripple.locationY.value - ripple.radius.value,
+      left: ripple.locationX.value - ripple.radius.value,
       width: diameter,
       height: diameter,
       borderRadius: ripple.radius.value,
-      backgroundColor: config.color ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.color,
+      backgroundColor: color,
       transform: [{ scale: ripple.scale.value }],
       opacity: ripple.opacity.value,
     };
   });
 
-  return <AnimatedView pointerEvents="none" style={rippleStyle} />;
+  const tvStyle = pressableFeedbackStyles.ripple();
+
+  return (
+    <AnimatedView
+      pointerEvents="none"
+      style={style}
+      className={tvStyle}
+    />
+  );
 };
 
 // --------------------------------------------------
@@ -93,12 +113,10 @@ const RippleComponent: FC<RippleComponentProps> = ({ ripple, config }) => {
 const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
   (props, ref) => {
     const {
-      // Feedback props
+      color,
       variant,
       animationConfig,
       isDisabled = false,
-
-      // Pressable props
       className,
       children,
       onPress,
@@ -110,74 +128,84 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       ...restProps
     } = props;
 
-    // State management
+    const { isDark } = useTheme();
+
     const hovered = useSharedValue(false);
     const pressed = useSharedValue(false);
-    const layoutRef = useRef<PressableFeedbackLayoutInfo>({ width: 0, height: 0, x: 0, y: 0 });
 
-    // Ripple management
-    const ripplePool = useMemo(
-      () => [useRippleValue(), useRippleValue(), useRippleValue()],
-      []
+    const [hoveredState, setHoveredState] = useState(hovered.value);
+    const [pressedState, setPressedState] = useState(pressed.value);
+
+    const layoutRef = useRef<LayoutInfo>({
+      width: 0,
+      height: 0,
+      x: 0,
+      y: 0
+    });
+
+    const ripplePool = useRipplePool();
+
+    useEffect(() => {
+      return () => {
+        ripplePool.forEach((ripple) => {
+          cancelAnimation(ripple.scale);
+          cancelAnimation(ripple.opacity);
+          ripple.scale.value = 0;
+          ripple.opacity.value = 0;
+          ripple.active.value = 0;
+        });
+      };
+    }, [ripplePool]);
+
+    const activeVariant = useMemo(() =>
+      variant || getDefaultVariant(DEFAULT_PRESSABLE_FEEDBACK_PLATFORM),
+      [variant]
     );
 
-    // Determine active variant and config
-    const activeVariant = useMemo(() => {
-      return variant || getDefaultVariant(DEFAULT_PRESSABLE_FEEDBACK_PLATFORM);
-    }, [variant]);
-
     const activeConfig = useMemo(() => {
-      if (animationConfig) {
-        return animationConfig;
-      }
-
-      return activeVariant === 'ripple'
-        ? { variant: 'ripple' as const, ...DEFAULT_PRESSABLE_FEEDBACK_RIPPLE }
-        : { variant: 'highlight' as const, ...DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT };
+      const baseConfig =
+        activeVariant === 'ripple'
+          ? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE
+          : DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT;
+      return {
+        variant: activeVariant,
+        ...baseConfig,
+        ...animationConfig,
+      };
     }, [animationConfig, activeVariant]);
 
-    // Event handlers
+
     const handlePressIn = useCallback((event: GestureResponderEvent) => {
       if (isDisabled) return;
-
       pressed.value = true;
+      setPressedState(true);
       onPressIn?.(event);
-
-      // Handle ripple effect
       if (isRippleConfig(activeConfig) && !activeConfig.disabled) {
-        const locationX = event.nativeEvent.locationX;
-        const locationY = event.nativeEvent.locationY;
-
+        const { locationX, locationY } = event.nativeEvent;
         const radius = calculateRippleRadius(layoutRef.current, locationX, locationY);
         const inactiveRipple = ripplePool.find((r) => r.active.value === 0);
-
         if (inactiveRipple) {
           cancelAnimation(inactiveRipple.scale);
           cancelAnimation(inactiveRipple.opacity);
-
-          inactiveRipple.centerX.value = locationX;
-          inactiveRipple.centerY.value = locationY;
+          inactiveRipple.locationX.value = locationX;
+          inactiveRipple.locationY.value = locationY;
           inactiveRipple.radius.value = radius;
           inactiveRipple.active.value = 1;
           inactiveRipple.scale.value = 0;
-          inactiveRipple.opacity.value = 1;
 
-          // Start scale animation
+          const rippleDuration = activeConfig.duration ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.duration;
+          const rippleEasing = activeConfig.easing ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.easing;
+          const rippleOpacity = activeConfig.opacity ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.opacity;
+
+          inactiveRipple.opacity.value = rippleOpacity;
           inactiveRipple.scale.value = withTiming(
             1,
-            {
-              duration: activeConfig.duration ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.duration,
-              easing: activeConfig.easing ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.easing,
-            },
+            { duration: rippleDuration, easing: rippleEasing },
             (finished) => {
-              if (finished) {
-                // Fade out after expansion
+              if (finished && !pressed.value) {
                 inactiveRipple.opacity.value = withTiming(
                   0,
-                  {
-                    duration: activeConfig.duration ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.duration,
-                    easing: activeConfig.easing ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.easing,
-                  },
+                  { duration: rippleDuration, easing: rippleEasing },
                   (done) => {
                     if (done) {
                       inactiveRipple.scale.value = 0;
@@ -190,53 +218,77 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
           );
         }
       }
-    }, [isDisabled, pressed, onPressIn, activeConfig, ripplePool]);
+    }, [isDisabled, pressed, onPressIn, pressedState, activeConfig, ripplePool]);
 
     const handlePressOut = useCallback((event: GestureResponderEvent) => {
       if (isDisabled) return;
 
       pressed.value = false;
+      setPressedState(false);
       onPressOut?.(event);
-    }, [isDisabled, pressed, onPressOut]);
+
+      if (isRippleConfig(activeConfig) && !activeConfig.disabled) {
+        ripplePool.forEach((ripple) => {
+          if (ripple.active.value === 1 && ripple.scale.value === 1) {
+            const rippleDuration = activeConfig.duration ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.duration;
+            const rippleEasing = activeConfig.easing ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.easing;
+
+            ripple.opacity.value = withTiming(
+              0,
+              { duration: rippleDuration, easing: rippleEasing },
+              (done) => {
+                if (done) {
+                  ripple.scale.value = 0;
+                  ripple.active.value = 0;
+                }
+              }
+            );
+          }
+        });
+      }
+    }, [isDisabled, pressed, onPressOut, pressedState, activeConfig, ripplePool]);
 
     const handleHoverIn = useCallback((event: any) => {
       if (isDisabled) return;
       hovered.value = true;
+      setHoveredState(true);
       onHoverIn?.(event);
-    }, [isDisabled, hovered, onHoverIn]);
+    }, [isDisabled, hovered, onHoverIn, hoveredState]);
 
     const handleHoverOut = useCallback((event: any) => {
       if (isDisabled) return;
       hovered.value = false;
+      setHoveredState(false);
       onHoverOut?.(event);
-    }, [isDisabled, hovered, onHoverOut]);
+    }, [isDisabled, hovered, onHoverOut, hoveredState]);
 
     const handleLayout = useCallback((event: LayoutChangeEvent) => {
-      layoutRef.current = {
-        width: event.nativeEvent.layout.width,
-        height: event.nativeEvent.layout.height,
-        x: event.nativeEvent.layout.x,
-        y: event.nativeEvent.layout.y,
-      };
+      const { width, height, x, y } = event.nativeEvent.layout;
+      layoutRef.current = { width, height, x, y };
       onLayout?.(event);
     }, [onLayout]);
 
-    // Container styles
-    const tvStyles = pressableFeedbackStyles.root({
-      className,
-    })
+    const tvStyles = pressableFeedbackStyles.root({ className });
 
-    // Render children with state
-    const renderChildren = useCallback(() => {
+    const renderChildren = useMemo(() => {
       const state: PressableFeedbackState = {
-        hovered: hovered.value,
-        pressed: pressed.value,
+        hovered: hoveredState,
+        pressed: pressedState,
       };
+      return typeof children === 'function' ? children(state) : children;
+    }, [children, hoveredState, pressedState]);
 
-      return typeof children === 'function'
-        ? children(state)
-        : children;
-    }, [children, hovered.value, pressed.value]);
+    const showRipple = isRippleConfig(activeConfig) &&
+      !activeConfig.disabled &&
+      !isDisabled;
+
+    const showHighlight = isHighlightConfig(activeConfig) &&
+      !activeConfig.disabled &&
+      !isDisabled;
+
+    const activeColor = useMemo(() => {
+      return color ?? DEFAULT_PRESSABLE_FEEDBACK_COLORS[isDark ? 'DARK' : 'LIGHT'];
+    }, [color, isDark]);
 
     return (
       <Pressable
@@ -251,25 +303,23 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
         onLayout={handleLayout}
         {...restProps}
       >
-        {renderChildren()}
+        {renderChildren}
 
-        {/* Feedback layers */}
-        {isRippleConfig(activeConfig) && !activeConfig.disabled && !isDisabled && (
-          <>
-            {ripplePool.map((ripple, index) => (
-              <RippleComponent
-                key={index}
-                ripple={ripple}
-                config={activeConfig}
-              />
-            ))}
-          </>
-        )}
+        {showRipple && ripplePool.map((ripple, index) => (
+          <RippleComponent
+            key={index}
+            ripple={ripple}
+            color={activeColor}
+          />
+        ))}
 
-        {isHighlightConfig(activeConfig) && !activeConfig.disabled && !isDisabled && (
+        {showHighlight && (
           <HighlightComponent
             pressed={pressed}
-            config={activeConfig}
+            color={activeColor}
+            opacity={activeConfig.opacity ?? DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT.opacity}
+            duration={activeConfig.duration ?? DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT.duration}
+            easing={activeConfig.easing ?? DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT.easing}
           />
         )}
       </Pressable>
@@ -284,36 +334,11 @@ RippleComponent.displayName = DISPLAY_NAME.RIPPLE;
 PressableFeedback.displayName = DISPLAY_NAME.ROOT;
 
 /**
- * PressableFeedback component with visual feedback for user interactions.
- * Supports both ripple and highlight variants with platform-specific defaults.
- * 
- * @component PressableFeedback - Main pressable container that handles visual feedback
- * for user interactions. Provides ripple effect on Android and highlight effect on iOS by default.
- * 
- * The component can be used as a standalone pressable area or integrated into other components
- * like Button, Card, or Accordion for consistent feedback behavior.
- * 
- * @example
- * ```tsx
- * // Basic usage with platform defaults
- * <PressableFeedback>
- *   <Text>Press me!</Text>
- * </PressableFeedback>
- * 
- * // Custom configuration
- * <PressableFeedback
- *   variant="ripple"
- *   isDisabled={true}
- *   animationConfig={{
- *     variant: 'ripple',
- *     color: 'rgba(255, 0, 0, 0.3)',
- *     duration: 500,
- *   }}
- * >
- *   <Text>Custom Ripple</Text>
- * </PressableFeedback>
- * ```
- * 
- * @see Full documentation: https://heroui.com/components/pressable-feedback
+ * PressableFeedback component
+ *
+ * @component PressableFeedback - Container component that provides visual feedback
+ * for user interactions. Shows a ripple effect on Android and a highlight effect on iOS.
+ * Can be used standalone or as part of other components like Button, Card, or Accordion
+ * for consistent interaction feedback.
  */
 export default PressableFeedback;

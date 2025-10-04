@@ -1,4 +1,3 @@
-import { type ViewStyle } from 'react-native';
 import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../providers/theme/helpers';
 
@@ -6,24 +5,18 @@ const root = tv({
   base: 'relative overflow-hidden',
 });
 
-const rippleLayer: ViewStyle = {
-  position: 'absolute',
-  zIndex: -1,
-  pointerEvents: 'none',
-} as const;
+const ripple = tv({
+  base: 'absolute -z-10 pointer-events-none',
+});
 
-const highlightLayer: ViewStyle = {
-  ...rippleLayer,
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-} as const;
+const highlight = tv({
+  base: 'absolute -z-10 pointer-events-none inset-0',
+});
 
 const pressableFeedbackStyles = combineStyles({
   root,
-  rippleLayer,
-  highlightLayer,
+  ripple,
+  highlight,
 });
 
 export default pressableFeedbackStyles;

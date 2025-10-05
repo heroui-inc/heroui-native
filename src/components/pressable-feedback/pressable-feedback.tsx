@@ -2,6 +2,7 @@ import {
   forwardRef,
   useCallback,
   useEffect,
+  useImperativeHandle,
   useMemo,
   useRef,
   useState,
@@ -128,6 +129,9 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       ...restProps
     } = props;
 
+    const internalRef = useRef<PressableRef>(null);
+    useImperativeHandle(ref, () => internalRef.current as PressableRef);
+    
     const { isDark } = useTheme();
 
     const hovered = useSharedValue(false);
@@ -174,42 +178,54 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       };
     }, [animationConfig, activeVariant]);
 
+    const getAvailableRipple = useCallback(() => {
+      const inactiveRipple = ripplePool.find((r) => r.active.value === 0);
+      if (inactiveRipple) return inactiveRipple;
+      return null;
+    }, [ripplePool]);
 
     const handlePressIn = useCallback((event: GestureResponderEvent) => {
       if (isDisabled) return;
       pressed.value = true;
       setPressedState(true);
       onPressIn?.(event);
+      
       if (isRippleConfig(activeConfig) && !activeConfig.disabled) {
-        const { locationX, locationY } = event.nativeEvent;
+        const { pageX, pageY } = event.nativeEvent;
+        const { x, y } = layoutRef.current;
+        const locationX = pageX - x;
+        const locationY = pageY - y;
+
         const radius = calculateRippleRadius(layoutRef.current, locationX, locationY);
-        const inactiveRipple = ripplePool.find((r) => r.active.value === 0);
-        if (inactiveRipple) {
-          cancelAnimation(inactiveRipple.scale);
-          cancelAnimation(inactiveRipple.opacity);
-          inactiveRipple.locationX.value = locationX;
-          inactiveRipple.locationY.value = locationY;
-          inactiveRipple.radius.value = radius;
-          inactiveRipple.active.value = 1;
-          inactiveRipple.scale.value = 0;
+        const ripple = getAvailableRipple();
+        
+        if (ripple) {
+          cancelAnimation(ripple.scale);
+          cancelAnimation(ripple.opacity);
+          
+          ripple.locationX.value = locationX;
+          ripple.locationY.value = locationY;
+          ripple.radius.value = radius;
+          ripple.active.value = 1;
+          ripple.scale.value = 0;
 
           const rippleDuration = activeConfig.duration ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.duration;
           const rippleEasing = activeConfig.easing ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.easing;
           const rippleOpacity = activeConfig.opacity ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.opacity;
 
-          inactiveRipple.opacity.value = rippleOpacity;
-          inactiveRipple.scale.value = withTiming(
+          ripple.opacity.value = rippleOpacity;
+          ripple.scale.value = withTiming(
             1,
             { duration: rippleDuration, easing: rippleEasing },
             (finished) => {
               if (finished && !pressed.value) {
-                inactiveRipple.opacity.value = withTiming(
+                ripple.opacity.value = withTiming(
                   0,
                   { duration: rippleDuration, easing: rippleEasing },
                   (done) => {
                     if (done) {
-                      inactiveRipple.scale.value = 0;
-                      inactiveRipple.active.value = 0;
+                      ripple.scale.value = 0;
+                      ripple.active.value = 0;
                     }
                   }
                 );
@@ -218,7 +234,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
           );
         }
       }
-    }, [isDisabled, pressed, onPressIn, pressedState, activeConfig, ripplePool]);
+    }, [isDisabled, pressed, onPressIn, activeConfig, ripplePool, getAvailableRipple, layoutRef]);
 
     const handlePressOut = useCallback((event: GestureResponderEvent) => {
       if (isDisabled) return;
@@ -246,27 +262,28 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
           }
         });
       }
-    }, [isDisabled, pressed, onPressOut, pressedState, activeConfig, ripplePool]);
+    }, [isDisabled, pressed, onPressOut, activeConfig, ripplePool]);
 
     const handleHoverIn = useCallback((event: any) => {
       if (isDisabled) return;
       hovered.value = true;
       setHoveredState(true);
       onHoverIn?.(event);
-    }, [isDisabled, hovered, onHoverIn, hoveredState]);
+    }, [isDisabled, hovered, onHoverIn, setHoveredState]);
 
     const handleHoverOut = useCallback((event: any) => {
       if (isDisabled) return;
       hovered.value = false;
       setHoveredState(false);
       onHoverOut?.(event);
-    }, [isDisabled, hovered, onHoverOut, hoveredState]);
+    }, [isDisabled, hovered, onHoverOut, setHoveredState]);
 
     const handleLayout = useCallback((event: LayoutChangeEvent) => {
-      const { width, height, x, y } = event.nativeEvent.layout;
-      layoutRef.current = { width, height, x, y };
+      internalRef.current?.measure((_, __, width, height, pageX, pageY) => {
+        layoutRef.current = { x: pageX, y: pageY, width, height };
+      });
       onLayout?.(event);
-    }, [onLayout]);
+    }, [internalRef, onLayout]);
 
     const tvStyles = pressableFeedbackStyles.root({ className });
 
@@ -292,7 +309,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
 
     return (
       <Pressable
-        ref={ref}
+        ref={internalRef}
         disabled={isDisabled}
         className={tvStyles}
         onPress={onPress}

@@ -27,8 +27,6 @@ export function useRippleValue(): RippleValue {
  * Hook to create and manage a ripple pool
  */
 export function useRipplePool(): RippleValue[] {
-    const ripple1 = useRippleValue();
-    const ripple2 = useRippleValue();
-    const ripple3 = useRippleValue();
-    return useMemo(() => [ripple1, ripple2, ripple3], [ripple1, ripple2, ripple3]);
+    const ripplePool = [useRippleValue(), useRippleValue(), useRippleValue()];
+    return useMemo(() => ripplePool, ripplePool);
 }

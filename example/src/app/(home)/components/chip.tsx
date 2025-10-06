@@ -96,19 +96,19 @@ export default function ChipScreen() {
             <Chip.StartContent>
               <AppText className="text-xs">📌</AppText>
             </Chip.StartContent>
-            <Chip.LabelContent>Featured</Chip.LabelContent>
+            <Chip.Label>Featured</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="success">
             <Chip.StartContent>
               <Ionicons name="add" size={16} color="#10B981" />
             </Chip.StartContent>
-            <Chip.LabelContent>New</Chip.LabelContent>
+            <Chip.Label>New</Chip.Label>
           </Chip>
           <Chip size="lg" variant="tertiary" color="warning">
             <Chip.StartContent className="pr-1">
               <Ionicons name="star" size={12} color="#F59E0B" />
             </Chip.StartContent>
-            <Chip.LabelContent>Premium</Chip.LabelContent>
+            <Chip.Label>Premium</Chip.Label>
           </Chip>
         </View>
 
@@ -117,25 +117,25 @@ export default function ChipScreen() {
             <Chip.StartContent>
               <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-accent" />
             </Chip.StartContent>
-            <Chip.LabelContent>Information</Chip.LabelContent>
+            <Chip.Label>Information</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="success">
             <Chip.StartContent>
               <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-success" />
             </Chip.StartContent>
-            <Chip.LabelContent>Completed</Chip.LabelContent>
+            <Chip.Label>Completed</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="warning">
             <Chip.StartContent>
               <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-warning" />
             </Chip.StartContent>
-            <Chip.LabelContent>Pending</Chip.LabelContent>
+            <Chip.Label>Pending</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="danger">
             <Chip.StartContent>
               <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-danger" />
             </Chip.StartContent>
-            <Chip.LabelContent>Failed</Chip.LabelContent>
+            <Chip.Label>Failed</Chip.Label>
           </Chip>
         </View>
       </View>
@@ -143,19 +143,19 @@ export default function ChipScreen() {
       <SectionTitle title="With End Content" />
       <View className="flex-row gap-4 justify-center">
         <Chip size="sm" variant="secondary">
-          <Chip.LabelContent>Close</Chip.LabelContent>
+          <Chip.Label>Close</Chip.Label>
           <Chip.EndContent>
             <Ionicons name="close" size={12} color="#6B7280" />
           </Chip.EndContent>
         </Chip>
         <Chip size="md" variant="primary" color="danger" className="pr-1.5">
-          <Chip.LabelContent>Remove</Chip.LabelContent>
+          <Chip.Label>Remove</Chip.Label>
           <Chip.EndContent>
             <Ionicons name="close" size={16} color="white" />
           </Chip.EndContent>
         </Chip>
         <Chip size="lg" variant="tertiary" color="accent" className="pr-1.5">
-          <Chip.LabelContent>Clear</Chip.LabelContent>
+          <Chip.Label>Clear</Chip.Label>
           <Chip.EndContent className="ml-1">
             <View
               className={cn(
@@ -176,17 +176,15 @@ export default function ChipScreen() {
       <SectionTitle title="Custom Styling" />
       <View className="flex-row gap-4 justify-center">
         <Chip className="bg-purple-600 px-6">
-          <Chip.LabelContent className="text-background text-base">
-            Custom
-          </Chip.LabelContent>
+          <Chip.Label className="text-background text-base">Custom</Chip.Label>
         </Chip>
         <Chip
           variant="secondary"
           className="border-purple-600 bg-purple-100 rounded-sm"
         >
-          <Chip.LabelContent classNames={{ text: 'text-purple-800' }}>
+          <Chip.Label classNames={{ text: 'text-purple-800' }}>
             Purple
-          </Chip.LabelContent>
+          </Chip.Label>
         </Chip>
       </View>
 
@@ -201,9 +199,7 @@ export default function ChipScreen() {
               style={{ flex: 1 }}
             />
           </Chip.Background>
-          <Chip.LabelContent className="text-white font-semibold">
-            Gradient
-          </Chip.LabelContent>
+          <Chip.Label className="text-white font-semibold">Gradient</Chip.Label>
         </Chip>
 
         <Chip className="border-0 pl-2" size="lg">
@@ -218,9 +214,7 @@ export default function ChipScreen() {
           <Chip.StartContent>
             <Ionicons name="star" size={16} color="white" />
           </Chip.StartContent>
-          <Chip.LabelContent className="text-white font-bold">
-            Premium
-          </Chip.LabelContent>
+          <Chip.Label className="text-white font-bold">Premium</Chip.Label>
         </Chip>
 
         <Chip className="border-0">
@@ -232,7 +226,7 @@ export default function ChipScreen() {
               style={{ flex: 1 }}
             />
           </Chip.Background>
-          <Chip.LabelContent>Hot</Chip.LabelContent>
+          <Chip.Label>Hot</Chip.Label>
           <Chip.EndContent>
             <AppText className="text-white text-xs">🔥</AppText>
           </Chip.EndContent>
@@ -256,7 +250,7 @@ export default function ChipScreen() {
                 )}
               />
             </Chip.StartContent>
-            <Chip.LabelContent>Notifications</Chip.LabelContent>
+            <Chip.Label>Notifications</Chip.Label>
             <Chip.EndContent>
               <AppText className="text-accent text-xs font-bold">
                 {hasNotification ? 'ON' : 'OFF'}
@@ -267,7 +261,7 @@ export default function ChipScreen() {
 
         <View className="flex-row gap-4 justify-center">
           <Chip variant="primary" color="accent">
-            <Chip.LabelContent>Items</Chip.LabelContent>
+            <Chip.Label>Items</Chip.Label>
             <Chip.EndContent>
               <View className="ml-1 w-5 h-5 bg-default/10 rounded-full items-center justify-center">
                 <AppText className="text-background text-xs font-bold">
@@ -278,7 +272,7 @@ export default function ChipScreen() {
           </Chip>
 
           <Chip variant="secondary" onPress={() => setChipCount(chipCount + 1)}>
-            <Chip.LabelContent>Add Item</Chip.LabelContent>
+            <Chip.Label>Add Item</Chip.Label>
             <Chip.EndContent>
               <Ionicons name="add" size={14} color="#6B7280" />
             </Chip.EndContent>
@@ -288,7 +282,7 @@ export default function ChipScreen() {
             variant="secondary"
             onPress={() => setChipCount(Math.max(0, chipCount - 1))}
           >
-            <Chip.LabelContent>Remove</Chip.LabelContent>
+            <Chip.Label>Remove</Chip.Label>
             <Chip.EndContent>
               <Ionicons name="close" size={14} color="#EF4444" />
             </Chip.EndContent>

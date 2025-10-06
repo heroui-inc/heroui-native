@@ -20,7 +20,7 @@ Add label with string or compound structure.
 <Chip>Basic Chip</Chip>
 
 <Chip>
-  <Chip.LabelContent>Basic Chip</Chip.LabelContent>
+  <Chip.Label>Basic Chip</Chip.Label>
 </Chip>
 ```
 
@@ -31,7 +31,7 @@ Add icons or visual elements at the start of the chip.
 ```tsx
 <Chip>
   <Chip.StartContent>...</Chip.StartContent>
-  <Chip.LabelContent>Featured</Chip.LabelContent>
+  <Chip.Label>Featured</Chip.Label>
 </Chip>
 ```
 
@@ -41,7 +41,7 @@ Add icons or interactive elements at the end of the chip.
 
 ```tsx
 <Chip>
-  <Chip.LabelContent>Remove</Chip.LabelContent>
+  <Chip.Label>Remove</Chip.Label>
   <Chip.EndContent>...</Chip.EndContent>
 </Chip>
 ```
@@ -53,7 +53,7 @@ Combine start and end content for complex chips.
 ```tsx
 <Chip>
   <Chip.StartContent>...</Chip.StartContent>
-  <Chip.LabelContent>Status</Chip.LabelContent>
+  <Chip.Label>Status</Chip.Label>
   <Chip.EndContent>...</Chip.EndContent>
 </Chip>
 ```
@@ -67,7 +67,7 @@ Add custom background like gradients using absolute positioned background.
   <Chip.Background>
     <LinearGradient colors={['#FF6B6B', '#4ECDC4']} style={{ flex: 1 }} />
   </Chip.Background>
-  <Chip.LabelContent>Gradient</Chip.LabelContent>
+  <Chip.Label>Gradient</Chip.Label>
 </Chip>
 ```
 
@@ -117,18 +117,18 @@ export default function ChipExample() {
         <Chip.StartContent>
           <View className="w-1.5 h-1.5 mr-1.5 rounded-full bg-success" />
         </Chip.StartContent>
-        <Chip.LabelContent>Completed</Chip.LabelContent>
+        <Chip.Label>Completed</Chip.Label>
       </Chip>
 
       <Chip variant="primary" color="warning">
         <Chip.StartContent className="pr-1">
           <Ionicons name="star" size={12} color="#F59E0B" />
         </Chip.StartContent>
-        <Chip.LabelContent>Premium</Chip.LabelContent>
+        <Chip.Label>Premium</Chip.Label>
       </Chip>
 
       <Chip variant="tertiary" color="danger">
-        <Chip.LabelContent>Remove</Chip.LabelContent>
+        <Chip.Label>Remove</Chip.Label>
         <Chip.EndContent>
           <Ionicons name="close" size={16} color="#EF4444" />
         </Chip.EndContent>
@@ -144,7 +144,7 @@ export default function ChipExample() {
 <Chip>
   <Chip.Background>...</Chip.Background>
   <Chip.StartContent>...</Chip.StartContent>
-  <Chip.LabelContent>...</Chip.LabelContent>
+  <Chip.Label>...</Chip.Label>
   <Chip.EndContent>...</Chip.EndContent>
 </Chip>
 ```
@@ -152,7 +152,7 @@ export default function ChipExample() {
 - **Chip**: Main container that displays a compact element. Accepts string children directly or compound components for custom layouts.
 - **Chip.Background**: Optional background element with absolute positioning. Rendered beneath all other content for gradients or custom backgrounds.
 - **Chip.StartContent**: Optional leading content displayed before the label. Use for icons or other visual elements at the start of the chip.
-- **Chip.LabelContent**: Text content of the chip. When string is provided, renders as Text. Otherwise renders children as-is.
+- **Chip.Label**: Text content of the chip. When string is provided, renders as Text. Otherwise renders children as-is.
 - **Chip.EndContent**: Optional trailing content displayed after the label. Use for icons, badges, or interactive elements at the end of the chip.
 
 ## API Reference
@@ -184,7 +184,7 @@ export default function ChipExample() {
 | `className`        | `string`                   | -       | Custom class name for the start content           |
 | `...AnimatedProps` | `AnimatedProps<ViewProps>` | -       | All Reanimated Animated.View props are supported  |
 
-### Chip.LabelContent
+### Chip.Label
 
 | prop               | type                       | default | description                                                                         |
 | ------------------ | -------------------------- | ------- | ----------------------------------------------------------------------------------- |

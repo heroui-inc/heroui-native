@@ -15,7 +15,7 @@ import type {
   ChipBackgroundProps,
   ChipContextValue,
   ChipEndContentProps,
-  ChipLabelContentProps,
+  ChipLabelProps,
   ChipProps,
   ChipStartContentProps,
 } from './chip.types';
@@ -57,9 +57,9 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
       children,
       DISPLAY_NAME.CHIP_LABEL_CONTENT,
       stringifiedChildren ? (
-        <ChipLabelContent>{stringifiedChildren}</ChipLabelContent>
+        <ChipLabel>{stringifiedChildren}</ChipLabel>
       ) : (
-        <ChipLabelContent />
+        <ChipLabel />
       )
     );
   }, [children]);
@@ -154,50 +154,35 @@ const ChipStartContent = forwardRef<View, ChipStartContentProps>(
 
 // --------------------------------------------------
 
-const ChipLabelContent = forwardRef<View, ChipLabelContentProps>(
-  (props, ref) => {
-    const { size, variant, color, layout: contextLayout } = useChipContext();
+const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
+  const { size, variant, color, layout: contextLayout } = useChipContext();
 
-    const {
-      children,
-      layout: layoutProp,
-      className,
-      classNames,
-      textProps,
-      ...restProps
-    } = props;
+  const {
+    children,
+    layout: layoutProp,
+    className,
+    classNames,
+    textProps,
+    ...restProps
+  } = props;
 
-    const { text, container } = chipStyles.labelContent({
-      size,
-      variant,
-      color,
-    });
+  const { text, container } = chipStyles.labelContent({
+    size,
+    variant,
+    color,
+  });
 
-    const tvContainerStyles = container({
-      className: [className, classNames?.container],
-    });
+  const tvContainerStyles = container({
+    className: [className, classNames?.container],
+  });
 
-    const tvTextStyles = text({
-      className: [classNames?.text, textProps?.className],
-    });
+  const tvTextStyles = text({
+    className: [classNames?.text, textProps?.className],
+  });
 
-    const stringifiedChildren = childrenToString(children);
+  const stringifiedChildren = childrenToString(children);
 
-    if (stringifiedChildren) {
-      return (
-        <Animated.View
-          ref={ref}
-          layout={layoutProp || contextLayout}
-          className={tvContainerStyles}
-          {...restProps}
-        >
-          <Text className={tvTextStyles} {...textProps}>
-            {stringifiedChildren}
-          </Text>
-        </Animated.View>
-      );
-    }
-
+  if (stringifiedChildren) {
     return (
       <Animated.View
         ref={ref}
@@ -205,11 +190,24 @@ const ChipLabelContent = forwardRef<View, ChipLabelContentProps>(
         className={tvContainerStyles}
         {...restProps}
       >
-        {children}
+        <Text className={tvTextStyles} {...textProps}>
+          {stringifiedChildren}
+        </Text>
       </Animated.View>
     );
   }
-);
+
+  return (
+    <Animated.View
+      ref={ref}
+      layout={layoutProp || contextLayout}
+      className={tvContainerStyles}
+      {...restProps}
+    >
+      {children}
+    </Animated.View>
+  );
+});
 
 // --------------------------------------------------
 
@@ -239,7 +237,7 @@ const ChipEndContent = forwardRef<View, ChipEndContentProps>((props, ref) => {
 Chip.displayName = DISPLAY_NAME.CHIP_ROOT;
 ChipBackground.displayName = DISPLAY_NAME.CHIP_BACKGROUND;
 ChipStartContent.displayName = DISPLAY_NAME.CHIP_START_CONTENT;
-ChipLabelContent.displayName = DISPLAY_NAME.CHIP_LABEL_CONTENT;
+ChipLabel.displayName = DISPLAY_NAME.CHIP_LABEL_CONTENT;
 ChipEndContent.displayName = DISPLAY_NAME.CHIP_END_CONTENT;
 
 /**
@@ -254,7 +252,7 @@ ChipEndContent.displayName = DISPLAY_NAME.CHIP_END_CONTENT;
  * @component Chip.StartContent - Optional leading content displayed before the label.
  * Use for icons or other visual elements at the start of the chip.
  *
- * @component Chip.LabelContent - Text content of the chip. When string is provided,
+ * @component Chip.Label - Text content of the chip. When string is provided,
  * it renders as Text. Otherwise renders children as-is.
  *
  * @component Chip.EndContent - Optional trailing content displayed after the label.
@@ -271,7 +269,7 @@ const CompoundChip = Object.assign(Chip, {
   /** @optional Leading content like icons */
   StartContent: ChipStartContent,
   /** Chip label - renders text or custom content */
-  LabelContent: ChipLabelContent,
+  Label: ChipLabel,
   /** @optional Trailing content like icons or badges */
   EndContent: ChipEndContent,
 });

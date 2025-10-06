@@ -65,9 +65,9 @@ export interface ChipStartContentProps extends AnimatedProps<ViewProps> {
 }
 
 /**
- * Props for the ChipLabelContent component
+ * Props for the ChipLabel component
  */
-export interface ChipLabelContentProps extends AnimatedProps<ViewProps> {
+export interface ChipLabelProps extends AnimatedProps<ViewProps> {
   /** Child elements to render as the label. If string, will be wrapped in Text component */
   children?: React.ReactNode;
 

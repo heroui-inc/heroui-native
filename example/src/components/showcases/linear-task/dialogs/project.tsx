@@ -99,11 +99,9 @@ export const Project: FC = () => {
           <Chip.StartContent>
             {items.find((item) => item.value === value)?.indicator}
           </Chip.StartContent>
-          <Chip.LabelContent
-            classNames={{ text: 'text-foreground font-medium' }}
-          >
+          <Chip.Label classNames={{ text: 'text-foreground font-medium' }}>
             {items.find((item) => item.value === value)?.label}
-          </Chip.LabelContent>
+          </Chip.Label>
         </Chip>
       </Dialog.Trigger>
       <Dialog.Portal>

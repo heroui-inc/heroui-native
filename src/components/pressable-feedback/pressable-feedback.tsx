@@ -10,7 +10,6 @@ import {
 } from 'react';
 import {
   Pressable,
-  type LayoutChangeEvent,
   type GestureResponderEvent,
   View,
 } from 'react-native';
@@ -26,7 +25,6 @@ import type { PressableRef } from '../../helpers/types';
 import {
   type PressableFeedbackProps,
   type PressableFeedbackState,
-  type LayoutInfo,
   type HighlightComponentProps,
   type RippleComponentProps,
 } from './pressable-feedback.types';
@@ -125,7 +123,6 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       onPressOut,
       onHoverIn,
       onHoverOut,
-      onLayout,
       ...restProps
     } = props;
 
@@ -139,13 +136,6 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
 
     const [hoveredState, setHoveredState] = useState(hovered.value);
     const [pressedState, setPressedState] = useState(pressed.value);
-
-    const layoutRef = useRef<LayoutInfo>({
-      width: 0,
-      height: 0,
-      x: 0,
-      y: 0
-    });
 
     const ripplePool = useRipplePool();
 
@@ -192,49 +182,51 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       
       if (isRippleConfig(activeConfig) && !activeConfig.disabled) {
         const { pageX, pageY } = event.nativeEvent;
-        const { x, y } = layoutRef.current;
-        const locationX = pageX - x;
-        const locationY = pageY - y;
 
-        const radius = calculateRippleRadius(layoutRef.current, locationX, locationY);
-        const ripple = getAvailableRipple();
-        
-        if (ripple) {
-          cancelAnimation(ripple.scale);
-          cancelAnimation(ripple.opacity);
+        internalRef.current?.measure((_, __, width, height, px, py) => {
+          const locationX = pageX - px;
+          const locationY = pageY - py;
+
+          const radius = calculateRippleRadius({ width, height, x: px, y: py }, locationX, locationY);
+          const ripple = getAvailableRipple();
           
-          ripple.locationX.value = locationX;
-          ripple.locationY.value = locationY;
-          ripple.radius.value = radius;
-          ripple.active.value = 1;
-          ripple.scale.value = 0;
+          if (ripple) {
+            cancelAnimation(ripple.scale);
+            cancelAnimation(ripple.opacity);
+            
+            ripple.locationX.value = locationX;
+            ripple.locationY.value = locationY;
+            ripple.radius.value = radius;
+            ripple.active.value = 1;
+            ripple.scale.value = 0;
 
-          const rippleDuration = activeConfig.duration ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.duration;
-          const rippleEasing = activeConfig.easing ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.easing;
-          const rippleOpacity = activeConfig.opacity ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.opacity;
+            const rippleDuration = activeConfig.duration ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.duration;
+            const rippleEasing = activeConfig.easing ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.easing;
+            const rippleOpacity = activeConfig.opacity ?? DEFAULT_PRESSABLE_FEEDBACK_RIPPLE.opacity;
 
-          ripple.opacity.value = rippleOpacity;
-          ripple.scale.value = withTiming(
-            1,
-            { duration: rippleDuration, easing: rippleEasing },
-            (finished) => {
-              if (finished && !pressed.value) {
-                ripple.opacity.value = withTiming(
-                  0,
-                  { duration: rippleDuration, easing: rippleEasing },
-                  (done) => {
-                    if (done) {
-                      ripple.scale.value = 0;
-                      ripple.active.value = 0;
+            ripple.opacity.value = rippleOpacity;
+            ripple.scale.value = withTiming(
+              1,
+              { duration: rippleDuration, easing: rippleEasing },
+              (finished) => {
+                if (finished && !pressed.value) {
+                  ripple.opacity.value = withTiming(
+                    0,
+                    { duration: rippleDuration, easing: rippleEasing },
+                    (done) => {
+                      if (done) {
+                        ripple.scale.value = 0;
+                        ripple.active.value = 0;
+                      }
                     }
-                  }
-                );
+                  );
+                }
               }
-            }
-          );
-        }
+            );
+          }
+        });
       }
-    }, [isDisabled, pressed, onPressIn, activeConfig, ripplePool, getAvailableRipple, layoutRef]);
+    }, [isDisabled, pressed, onPressIn, activeConfig, ripplePool, getAvailableRipple, internalRef]);
 
     const handlePressOut = useCallback((event: GestureResponderEvent) => {
       if (isDisabled) return;
@@ -278,13 +270,6 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       onHoverOut?.(event);
     }, [isDisabled, hovered, onHoverOut, setHoveredState]);
 
-    const handleLayout = useCallback((event: LayoutChangeEvent) => {
-      internalRef.current?.measure((_, __, width, height, pageX, pageY) => {
-        layoutRef.current = { x: pageX, y: pageY, width, height };
-      });
-      onLayout?.(event);
-    }, [internalRef, onLayout]);
-
     const tvStyles = pressableFeedbackStyles.root({ className });
 
     const renderChildren = useMemo(() => {
@@ -317,7 +302,6 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
         onPressOut={handlePressOut}
         onHoverIn={handleHoverIn}
         onHoverOut={handleHoverOut}
-        onLayout={handleLayout}
         {...restProps}
       >
         {renderChildren}

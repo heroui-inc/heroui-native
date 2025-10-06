@@ -18,11 +18,41 @@ const item = tv({
 });
 
 const itemIndicator = tv({
-  base: 'rounded-full border items-center justify-center h-6 w-6',
-});
-
-const itemIndicatorBackground = tv({
-  base: 'absolute inset-0 rounded-full',
+  base: 'size-6 rounded-full border items-center justify-center overflow-hidden',
+  variants: {
+    color: {
+      default: '',
+      success: '',
+      warning: '',
+      danger: '',
+    },
+    isSelected: {
+      true: '',
+      false: 'bg-transparent border-border',
+    },
+  },
+  compoundVariants: [
+    {
+      color: 'default',
+      isSelected: true,
+      className: 'bg-accent border-accent',
+    },
+    {
+      color: 'success',
+      isSelected: true,
+      className: 'bg-success border-success',
+    },
+    {
+      color: 'warning',
+      isSelected: true,
+      className: 'bg-warning border-warning',
+    },
+    {
+      color: 'danger',
+      isSelected: true,
+      className: 'bg-danger border-danger',
+    },
+  ],
 });
 
 const itemIndicatorThumb = tv({
@@ -44,7 +74,6 @@ const radioGroupStyles = combineStyles({
   errorMessage,
   item,
   itemIndicator,
-  itemIndicatorBackground,
   itemIndicatorThumb,
 });
 

@@ -6,7 +6,6 @@ export {
 export type {
   RadioGroupDescriptionProps,
   RadioGroupErrorMessageProps,
-  RadioGroupIndicatorBackgroundProps,
   RadioGroupIndicatorProps,
   RadioGroupIndicatorThumbProps,
   RadioGroupItemColor,

@@ -1,6 +1,6 @@
 import type { ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
-import type { SpringConfig, TimingConfig } from '../../helpers/types';
+import type { SpringConfig } from '../../helpers/types';
 import type { ItemProps, RootProps } from '../../primitives/radio-group';
 import type { ErrorViewRootProps } from '../error-view/error-view.types';
 import type {
@@ -17,11 +17,6 @@ export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
   /** Custom class name */
   className?: string;
 }
-
-/**
- * Props for RadioGroup.ErrorMessage component
- */
-export interface RadioGroupErrorMessageProps extends ErrorViewRootProps {}
 
 /**
  * RadioGroupItem color variant
@@ -79,26 +74,6 @@ export interface RadioGroupIndicatorProps extends AnimatedProps<ViewProps> {
   children?: React.ReactNode;
   /** Custom class name */
   className?: string;
-  /** Custom border colors */
-  colors?: Pick<RadioGroupItemColors, 'defaultBorder' | 'selectedBorder'>;
-  /** Animation configuration */
-  animationConfig?: TimingConfig;
-}
-
-/**
- * Props for RadioGroup.IndicatorBackground component
- */
-export interface RadioGroupIndicatorBackgroundProps
-  extends AnimatedProps<ViewProps> {
-  /** Background content */
-  children?: React.ReactNode;
-  /** Custom class name */
-  className?: string;
-  /** Custom background colors */
-  colors?: Pick<
-    RadioGroupItemColors,
-    'defaultBackground' | 'selectedBackground'
-  >;
 }
 
 /**
@@ -125,3 +100,8 @@ export interface RadioGroupTitleProps extends FormFieldTitleProps {}
  * Props for RadioGroup.Description component
  */
 export interface RadioGroupDescriptionProps extends FormFieldDescriptionProps {}
+
+/**
+ * Props for RadioGroup.ErrorMessage component
+ */
+export interface RadioGroupErrorMessageProps extends ErrorViewRootProps {}

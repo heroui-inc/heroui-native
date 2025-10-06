@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { RadioGroup, Surface, useTheme } from 'heroui-native';
+import { cn, RadioGroup, Surface, useTheme } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
@@ -43,7 +43,7 @@ export default function RadioGroupScreen() {
     <ScreenScrollView contentContainerClassName="gap-16">
       <SectionTitle title="Basic RadioGroup" />
       <RadioGroup value={basicSelection} onValueChange={setBasicSelection}>
-        <RadioGroup.Item value="option1">
+        <RadioGroup.Item value="option1" color="danger">
           <RadioGroup.Title>Option 1</RadioGroup.Title>
           <RadioGroup.Indicator />
         </RadioGroup.Item>
@@ -162,61 +162,49 @@ export default function RadioGroupScreen() {
       <SectionTitle title="Custom Indicator Background" />
       <RadioGroup value={customIndicator} onValueChange={setCustomIndicator}>
         <RadioGroup.Item value="custom1">
+          <RadioGroup.Title>Purple Background</RadioGroup.Title>
           <RadioGroup.Indicator
-            className="w-8 h-8"
-            colors={{
-              selectedBorder: '#a855f7',
-            }}
+            className={cn(
+              'size-8',
+              customIndicator === 'custom1' && 'bg-purple-500 border-purple-600'
+            )}
           >
-            <RadioGroup.IndicatorBackground>
-              {customIndicator === 'custom1' && (
-                <View className="absolute inset-0 rounded-full bg-purple-500" />
-              )}
-            </RadioGroup.IndicatorBackground>
             <RadioGroup.IndicatorThumb
-              className="w-3.5 h-3.5"
+              className="size-3.5"
               colors={{ selectedThumb: '#f3e8ff' }}
             />
           </RadioGroup.Indicator>
-          <RadioGroup.Title>Purple Background</RadioGroup.Title>
         </RadioGroup.Item>
 
         <RadioGroup.Item value="custom2">
+          <RadioGroup.Title>Blue Background</RadioGroup.Title>
           <RadioGroup.Indicator
-            className="w-8 h-8"
-            colors={{
-              selectedBorder: '#3b82f6',
-            }}
+            className={cn(
+              'size-8',
+              customIndicator === 'custom2' && 'bg-blue-500 border-blue-600'
+            )}
           >
-            <RadioGroup.IndicatorBackground
-              colors={{ selectedBackground: '#3b82f6' }}
-            />
             <RadioGroup.IndicatorThumb
-              className="w-3.5 h-3.5"
+              className="size-3.5"
               colors={{ selectedThumb: '#dbeafe' }}
             />
           </RadioGroup.Indicator>
-          <RadioGroup.Title>Blue Background</RadioGroup.Title>
         </RadioGroup.Item>
 
         <RadioGroup.Item value="custom3">
+          <RadioGroup.Title>Green Background</RadioGroup.Title>
           <RadioGroup.Indicator
-            className="w-8 h-8"
-            colors={{
-              selectedBorder: '#10b981',
-            }}
+            className={cn(
+              'size-8',
+              customIndicator === 'custom3' &&
+                'bg-emerald-500 border-emerald-600'
+            )}
           >
-            <RadioGroup.IndicatorBackground>
-              {customIndicator === 'custom3' && (
-                <View className="absolute inset-0 rounded-full bg-emerald-500" />
-              )}
-            </RadioGroup.IndicatorBackground>
             <RadioGroup.IndicatorThumb
-              className="w-3.5 h-3.5"
+              className="size-3.5"
               colors={{ selectedThumb: '#d1fae5' }}
             />
           </RadioGroup.Indicator>
-          <RadioGroup.Title>Green Background</RadioGroup.Title>
         </RadioGroup.Item>
       </RadioGroup>
 

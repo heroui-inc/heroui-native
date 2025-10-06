@@ -3,18 +3,16 @@ import { StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   withSpring,
-  withTiming,
 } from 'react-native-reanimated';
 
 import type { TextRef, ViewRef } from '../../helpers/types';
 import { createContext, getElementWithDefault } from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
-import { colorKit, useTheme } from '../../providers/theme';
+import { useTheme } from '../../providers/theme';
 import { ErrorView } from '../error-view';
 import { FormField } from '../form-field';
 import {
   DEFAULT_HIT_SLOP,
-  DEFAULT_INDICATOR_BORDER_COLOR_TIMING_CONFIG,
   DEFAULT_INDICATOR_THUMB_SPRING_CONFIG,
   DISPLAY_NAME,
 } from './radio-group.constants';
@@ -22,10 +20,8 @@ import radioGroupStyles from './radio-group.styles';
 import type {
   RadioGroupDescriptionProps,
   RadioGroupErrorMessageProps,
-  RadioGroupIndicatorBackgroundProps,
   RadioGroupIndicatorProps,
   RadioGroupIndicatorThumbProps,
-  RadioGroupItemColor,
   RadioGroupItemContextValue,
   RadioGroupItemProps,
   RadioGroupProps,
@@ -133,28 +129,9 @@ const RadioGroupItem = forwardRef<
 
 const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
   (props, ref) => {
-    const {
-      children,
-      colors,
-      animationConfig,
-      className,
-      style,
-      ...restProps
-    } = props;
+    const { children, className, style, ...restProps } = props;
 
     const { color, isSelected } = useRadioGroupItemContext();
-
-    const { colors: themeColors } = useTheme();
-
-    const backgroundElement = useMemo(
-      () =>
-        getElementWithDefault(
-          children,
-          DISPLAY_NAME.RADIO_GROUP_INDICATOR_BACKGROUND,
-          <RadioGroupIndicatorBackground />
-        ),
-      [children]
-    );
 
     const thumbElement = useMemo(
       () =>
@@ -167,45 +144,19 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
     );
 
     const tvStyles = radioGroupStyles.itemIndicator({
+      color,
+      isSelected,
       className,
-    });
-
-    const borderColorMap: Record<RadioGroupItemColor, string> = {
-      default: isSelected ? themeColors.accent : themeColors.border,
-      success: isSelected
-        ? themeColors.success
-        : colorKit.setAlpha(themeColors.success, 0.4).hex(),
-      warning: isSelected
-        ? themeColors.warning
-        : colorKit.setAlpha(themeColors.warning, 0.4).hex(),
-      danger: isSelected
-        ? themeColors.danger
-        : colorKit.setAlpha(themeColors.danger, 0.4).hex(),
-    };
-
-    const timingConfig =
-      animationConfig ?? DEFAULT_INDICATOR_BORDER_COLOR_TIMING_CONFIG;
-
-    const indicatorAnimatedStyle = useAnimatedStyle(() => {
-      return {
-        borderColor: withTiming(
-          isSelected
-            ? (colors?.selectedBorder ?? borderColorMap[color])
-            : (colors?.defaultBorder ?? borderColorMap[color]),
-          timingConfig
-        ),
-      };
     });
 
     return (
       <AnimatedRadioIndicator
         ref={ref}
         className={tvStyles}
-        style={[indicatorAnimatedStyle, styles.indicatorRoot, style]}
+        style={[styles.indicatorRoot, style]}
         {...restProps}
       >
-        {backgroundElement}
-        {thumbElement}
+        {children ?? thumbElement}
       </AnimatedRadioIndicator>
     );
   }
@@ -215,55 +166,6 @@ const styles = StyleSheet.create({
   indicatorRoot: {
     borderCurve: 'continuous',
   },
-});
-
-// --------------------------------------------------
-
-const RadioGroupIndicatorBackground = forwardRef<
-  View,
-  RadioGroupIndicatorBackgroundProps
->((props, ref) => {
-  const { children, colors, className, style, ...restProps } = props;
-
-  const { color, isSelected } = useRadioGroupItemContext();
-  const { colors: themeColors } = useTheme();
-
-  const tvStyles = radioGroupStyles.itemIndicatorBackground({
-    className,
-  });
-
-  const backgroundColorMap: Record<RadioGroupItemColor, string> = {
-    default: themeColors.accent,
-    success: themeColors.success,
-    warning: themeColors.warning,
-    danger: themeColors.danger,
-  };
-
-  const selectedBackground =
-    colors?.selectedBackground ?? backgroundColorMap[color];
-  const defaultBackground = colors?.defaultBackground ?? 'transparent';
-
-  if (children) {
-    return (
-      <Animated.View ref={ref} className={tvStyles} {...restProps}>
-        {children}
-      </Animated.View>
-    );
-  }
-
-  return (
-    <Animated.View
-      ref={ref}
-      className={tvStyles}
-      style={[
-        {
-          backgroundColor: isSelected ? selectedBackground : defaultBackground,
-        },
-        style,
-      ]}
-      {...restProps}
-    />
-  );
 });
 
 // --------------------------------------------------
@@ -352,8 +254,6 @@ const RadioGroupErrorMessage = forwardRef<ViewRef, RadioGroupErrorMessageProps>(
 RadioGroupRoot.displayName = DISPLAY_NAME.RADIO_GROUP_ROOT;
 RadioGroupItem.displayName = DISPLAY_NAME.RADIO_GROUP_ITEM;
 RadioGroupIndicator.displayName = DISPLAY_NAME.RADIO_GROUP_INDICATOR;
-RadioGroupIndicatorBackground.displayName =
-  DISPLAY_NAME.RADIO_GROUP_INDICATOR_BACKGROUND;
 RadioGroupIndicatorThumb.displayName = DISPLAY_NAME.RADIO_GROUP_INDICATOR_THUMB;
 RadioGroupTitle.displayName = DISPLAY_NAME.RADIO_GROUP_TITLE;
 RadioGroupDescription.displayName = DISPLAY_NAME.RADIO_GROUP_DESCRIPTION;
@@ -374,9 +274,6 @@ RadioGroupErrorMessage.displayName = DISPLAY_NAME.RADIO_GROUP_ERROR_MESSAGE;
  *
  * @component RadioGroup.Indicator - Optional container for the radio circle. Renders default background
  * and thumb if no children provided. Manages the visual selection state.
- *
- * @component RadioGroup.IndicatorBackground - Optional background of the radio circle. Animates background
- * color based on selection state. Can be customized with different colors and animations.
  *
  * @component RadioGroup.IndicatorThumb - Optional inner circle that appears when selected. Animates
  * scale based on selection. Can be replaced with custom content.
@@ -399,8 +296,6 @@ const CompoundRadioGroup = Object.assign(RadioGroupRoot, {
   Item: RadioGroupItem,
   /** @optional Custom radio indicator container */
   Indicator: RadioGroupIndicator,
-  /** @optional Custom indicator background with border animations */
-  IndicatorBackground: RadioGroupIndicatorBackground,
   /** @optional Custom indicator thumb that appears when selected */
   IndicatorThumb: RadioGroupIndicatorThumb,
   /** @optional Clickable text title */

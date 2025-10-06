@@ -255,22 +255,19 @@ export default function SkeletonScreen() {
             onValueChange={(value) =>
               setAnimationType(value as SkeletonAnimation)
             }
-            orientation="horizontal"
+            className="flex-row justify-center gap-5"
           >
-            <RadioGroup.Item value="shimmer" alignIndicator="start">
-              <RadioGroup.ItemContent>
-                <RadioGroup.ItemTitle>Shimmer</RadioGroup.ItemTitle>
-              </RadioGroup.ItemContent>
+            <RadioGroup.Item value="shimmer">
+              <RadioGroup.Indicator />
+              <RadioGroup.Title>Shimmer</RadioGroup.Title>
             </RadioGroup.Item>
-            <RadioGroup.Item value="pulse" alignIndicator="start">
-              <RadioGroup.ItemContent>
-                <RadioGroup.ItemTitle>Pulse</RadioGroup.ItemTitle>
-              </RadioGroup.ItemContent>
+            <RadioGroup.Item value="pulse">
+              <RadioGroup.Indicator />
+              <RadioGroup.Title>Pulse</RadioGroup.Title>
             </RadioGroup.Item>
-            <RadioGroup.Item value="none" alignIndicator="start">
-              <RadioGroup.ItemContent>
-                <RadioGroup.ItemTitle>None</RadioGroup.ItemTitle>
-              </RadioGroup.ItemContent>
+            <RadioGroup.Item value="none">
+              <RadioGroup.Indicator />
+              <RadioGroup.Title>None</RadioGroup.Title>
             </RadioGroup.Item>
           </RadioGroup>
           <Button onPress={() => setIsLoading(!isLoading)} size="sm">

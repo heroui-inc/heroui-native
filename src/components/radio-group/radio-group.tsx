@@ -1,9 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 import { forwardRef, useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  withSpring,
-} from 'react-native-reanimated';
+import { View } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import type { TextRef, ViewRef } from '../../helpers/types';
 import { createContext, getElementWithDefault } from '../../helpers/utils';
@@ -11,12 +9,8 @@ import * as RadioGroupPrimitives from '../../primitives/radio-group';
 import { useTheme } from '../../providers/theme';
 import { ErrorView } from '../error-view';
 import { FormField } from '../form-field';
-import {
-  DEFAULT_HIT_SLOP,
-  DEFAULT_INDICATOR_THUMB_SPRING_CONFIG,
-  DISPLAY_NAME,
-} from './radio-group.constants';
-import radioGroupStyles from './radio-group.styles';
+import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './radio-group.constants';
+import radioGroupStyles, { stylesheet } from './radio-group.styles';
 import type {
   RadioGroupDescriptionProps,
   RadioGroupErrorMessageProps,
@@ -41,9 +35,9 @@ const [RadioGroupItemProvider, useRadioGroupItemContext] =
     name: 'RadioGroupItemContext',
   });
 
-// --------------------------------------------------
-
 const useRadioGroupContext = RadioGroupPrimitives.useRadioGroupContext;
+
+// --------------------------------------------------
 
 const RadioGroupRoot = forwardRef<
   RadioGroupPrimitives.RootRef,
@@ -73,11 +67,11 @@ const RadioGroupItem = forwardRef<
 >((props, ref) => {
   const {
     children,
+    value,
     color = 'default',
     isDisabled,
     isInvalid,
     className,
-    value,
     ...restProps
   } = props;
 
@@ -112,8 +106,8 @@ const RadioGroupItem = forwardRef<
     <RadioGroupItemProvider value={contextValue}>
       <AnimatedRadioItem
         ref={ref}
-        className={tvStyles}
         value={value}
+        className={tvStyles}
         isDisabled={isDisabledValue}
         hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
         {...restProps}
@@ -160,7 +154,7 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
       <AnimatedRadioIndicator
         ref={ref}
         className={tvStyles}
-        style={[styles.indicatorRoot, style]}
+        style={[stylesheet.borderCurve, style]}
         {...restProps}
       >
         {children ?? thumbElement}
@@ -169,52 +163,41 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
   }
 );
 
-const styles = StyleSheet.create({
-  indicatorRoot: {
-    borderCurve: 'continuous',
-  },
-});
-
 // --------------------------------------------------
 
 const RadioGroupIndicatorThumb = forwardRef<
   View,
   RadioGroupIndicatorThumbProps
 >((props, ref) => {
-  const { children, colors, className, style, animationConfig, ...restProps } =
-    props;
+  const { className, style, ...restProps } = props;
 
   const { isSelected } = useRadioGroupItemContext();
-  const { theme, colors: themeColors } = useTheme();
+
+  const { theme } = useTheme();
 
   const tvStyles = radioGroupStyles.itemIndicatorThumb({
+    isSelected,
     isDark: theme === 'dark',
     className,
   });
-
-  const springConfig = animationConfig ?? DEFAULT_INDICATOR_THUMB_SPRING_CONFIG;
-
-  const thumbAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      opacity: withSpring(isSelected ? 1 : 0, springConfig),
-      transform: [
-        {
-          scale: withSpring(isSelected ? 1 : 0.6, springConfig),
-        },
-      ],
-      backgroundColor: colors?.selectedThumb ?? themeColors.background,
-    };
-  });
-
-  if (children) {
-    return children;
-  }
 
   return (
     <Animated.View
       ref={ref}
       className={tvStyles}
-      style={[thumbAnimatedStyle, style]}
+      style={[
+        {
+          transitionProperty: ['transform'],
+          transitionDuration: 300,
+          transitionTimingFunction: 'ease-out',
+          transform: [
+            {
+              scale: isSelected ? 1 : 0.5,
+            },
+          ],
+        },
+        style,
+      ]}
       {...restProps}
     />
   );
@@ -240,8 +223,9 @@ const RadioGroupDescription = forwardRef<TextRef, RadioGroupDescriptionProps>(
 
 const RadioGroupErrorMessage = forwardRef<ViewRef, RadioGroupErrorMessageProps>(
   (props, ref) => {
-    const { isInvalid } = useRadioGroupContext();
     const { className, ...restProps } = props;
+
+    const { isInvalid } = useRadioGroupContext();
 
     const tvStyles = radioGroupStyles.errorMessage({
       className,

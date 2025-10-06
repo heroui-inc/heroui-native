@@ -9,7 +9,6 @@ export type {
   RadioGroupIndicatorProps,
   RadioGroupIndicatorThumbProps,
   RadioGroupItemColor,
-  RadioGroupItemColors,
   RadioGroupItemProps,
   RadioGroupProps,
   RadioGroupTitleProps,

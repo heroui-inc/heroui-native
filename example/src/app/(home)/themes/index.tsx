@@ -345,21 +345,9 @@ export default function Themes() {
               Radio Group
             </Text>
             <RadioGroup value={radioValue} onValueChange={setRadioValue}>
-              <RadioGroup.Item value="option1">
-                <RadioGroup.ItemContent>
-                  <RadioGroup.ItemTitle>Option 1</RadioGroup.ItemTitle>
-                </RadioGroup.ItemContent>
-              </RadioGroup.Item>
-              <RadioGroup.Item value="option2">
-                <RadioGroup.ItemContent>
-                  <RadioGroup.ItemTitle>Option 2</RadioGroup.ItemTitle>
-                </RadioGroup.ItemContent>
-              </RadioGroup.Item>
-              <RadioGroup.Item value="option3">
-                <RadioGroup.ItemContent>
-                  <RadioGroup.ItemTitle>Option 3</RadioGroup.ItemTitle>
-                </RadioGroup.ItemContent>
-              </RadioGroup.Item>
+              <RadioGroup.Item value="option1">Option 1</RadioGroup.Item>
+              <RadioGroup.Item value="option2">Option 2</RadioGroup.Item>
+              <RadioGroup.Item value="option3">Option 3</RadioGroup.Item>
             </RadioGroup>
           </View>
         </View>

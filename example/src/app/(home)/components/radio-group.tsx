@@ -167,10 +167,7 @@ export default function RadioGroupScreen() {
               customIndicator === 'custom1' && 'bg-purple-500 border-purple-600'
             )}
           >
-            <RadioGroup.IndicatorThumb
-              className="size-3.5"
-              colors={{ selectedThumb: '#f3e8ff' }}
-            />
+            <RadioGroup.IndicatorThumb className="size-3.5 bg-purple-200" />
           </RadioGroup.Indicator>
         </RadioGroup.Item>
 
@@ -182,10 +179,7 @@ export default function RadioGroupScreen() {
               customIndicator === 'custom2' && 'bg-blue-500 border-blue-600'
             )}
           >
-            <RadioGroup.IndicatorThumb
-              className="size-3.5"
-              colors={{ selectedThumb: '#dbeafe' }}
-            />
+            <RadioGroup.IndicatorThumb className="size-3.5 bg-blue-200" />
           </RadioGroup.Indicator>
         </RadioGroup.Item>
 
@@ -198,10 +192,7 @@ export default function RadioGroupScreen() {
                 'bg-emerald-500 border-emerald-600'
             )}
           >
-            <RadioGroup.IndicatorThumb
-              className="size-3.5"
-              colors={{ selectedThumb: '#d1fae5' }}
-            />
+            <RadioGroup.IndicatorThumb className="size-3.5 bg-emerald-200" />
           </RadioGroup.Indicator>
         </RadioGroup.Item>
       </RadioGroup>
@@ -210,45 +201,39 @@ export default function RadioGroupScreen() {
       <RadioGroup value={customThumb} onValueChange={setCustomThumb}>
         <RadioGroup.Item value="icon" className="justify-start">
           <RadioGroup.Indicator>
-            <RadioGroup.IndicatorThumb>
-              {customThumb === 'icon' && (
-                <AnimatedView entering={FadeIn.duration(200)}>
-                  <FontAwesome
-                    name="check"
-                    size={12}
-                    color={colors.accentForeground}
-                  />
-                </AnimatedView>
-              )}
-            </RadioGroup.IndicatorThumb>
+            {customThumb === 'icon' && (
+              <AnimatedView entering={FadeIn.duration(200)}>
+                <FontAwesome
+                  name="check"
+                  size={12}
+                  color={colors.accentForeground}
+                />
+              </AnimatedView>
+            )}
           </RadioGroup.Indicator>
           <RadioGroup.Title>Checkmark Icon</RadioGroup.Title>
         </RadioGroup.Item>
 
         <RadioGroup.Item value="zap" className="justify-start">
           <RadioGroup.Indicator>
-            <RadioGroup.IndicatorThumb>
-              {customThumb === 'zap' && (
-                <AnimatedView entering={FadeIn.duration(200)}>
-                  <Ionicons name="flash" size={12} color={colors.background} />
-                </AnimatedView>
-              )}
-            </RadioGroup.IndicatorThumb>
+            {customThumb === 'zap' && (
+              <AnimatedView entering={FadeIn.duration(200)}>
+                <Ionicons name="flash" size={12} color={colors.background} />
+              </AnimatedView>
+            )}
           </RadioGroup.Indicator>
           <RadioGroup.Title>Lightning Icon</RadioGroup.Title>
         </RadioGroup.Item>
 
         <RadioGroup.Item value="square" className="justify-start">
           <RadioGroup.Indicator>
-            <RadioGroup.IndicatorThumb>
-              {customThumb === 'square' && (
-                <AnimatedView
-                  key="square"
-                  entering={ZoomIn.springify()}
-                  className="h-2.5 w-2.5 bg-accent-foreground"
-                />
-              )}
-            </RadioGroup.IndicatorThumb>
+            {customThumb === 'square' && (
+              <AnimatedView
+                key="square"
+                entering={ZoomIn.springify()}
+                className="h-2.5 w-2.5 bg-accent-foreground"
+              />
+            )}
           </RadioGroup.Indicator>
           <RadioGroup.Title>Square Thumb</RadioGroup.Title>
         </RadioGroup.Item>

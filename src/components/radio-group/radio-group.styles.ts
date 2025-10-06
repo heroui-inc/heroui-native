@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../providers/theme/helpers';
 
@@ -65,10 +66,14 @@ const itemIndicator = tv({
 });
 
 const itemIndicatorThumb = tv({
-  base: 'rounded-full h-2.5 w-2.5',
+  base: 'size-2.5 rounded-full bg-background',
   variants: {
+    isSelected: {
+      true: 'opacity-100',
+      false: 'opacity-0',
+    },
     isDark: {
-      true: 'h-3 w-3',
+      true: 'size-3',
       false: '',
     },
   },
@@ -84,6 +89,12 @@ const radioGroupStyles = combineStyles({
   item,
   itemIndicator,
   itemIndicatorThumb,
+});
+
+export const stylesheet = StyleSheet.create({
+  borderCurve: {
+    borderCurve: 'continuous',
+  },
 });
 
 export default radioGroupStyles;

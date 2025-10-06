@@ -137,39 +137,26 @@ export const Status: FC = () => {
                     }
                   }}
                 >
-                  <RadioGroup.ItemContent className="flex-row items-center">
+                  <View className="flex-row items-center">
                     <View className="w-7 pl-0.5 justify-center">
                       <View className="scale-[1.2]">{item.indicator}</View>
                     </View>
-                    <RadioGroup.ItemTitle>{item.label}</RadioGroup.ItemTitle>
-                  </RadioGroup.ItemContent>
-                  <RadioGroup.ItemIndicator
-                    colors={{
-                      defaultBorder: 'transparent',
-                      selectedBorder: 'transparent',
-                    }}
-                  >
-                    <RadioGroup.ItemIndicatorBackground
-                      colors={{
-                        defaultBackground: 'transparent',
-                        selectedBackground: 'transparent',
-                      }}
-                    />
-                    <RadioGroup.ItemIndicatorThumb>
-                      {value === item.value && (
-                        <Animated.View
-                          key={item.value}
-                          entering={FadeIn.duration(200)}
-                        >
-                          <Feather
-                            name="check"
-                            size={18}
-                            color={colors.foreground}
-                          />
-                        </Animated.View>
-                      )}
-                    </RadioGroup.ItemIndicatorThumb>
-                  </RadioGroup.ItemIndicator>
+                    <RadioGroup.Title>{item.label}</RadioGroup.Title>
+                  </View>
+                  <RadioGroup.Indicator className="border-0 bg-transparent">
+                    {value === item.value && (
+                      <Animated.View
+                        key={item.value}
+                        entering={FadeIn.duration(200)}
+                      >
+                        <Feather
+                          name="check"
+                          size={18}
+                          color={colors.foreground}
+                        />
+                      </Animated.View>
+                    )}
+                  </RadioGroup.Indicator>
                 </RadioGroup.Item>
               </Dialog.Close>
             ))}

@@ -1,6 +1,5 @@
 import type { ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
-import type { SpringConfig } from '../../helpers/types';
 import type { ItemProps, RootProps } from '../../primitives/radio-group';
 import type { ErrorViewRootProps } from '../error-view/error-view.types';
 import type {
@@ -22,22 +21,6 @@ export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
   children?: React.ReactNode;
   /** Custom class name */
   className?: string;
-}
-
-/**
- * Custom color configuration for RadioGroupItem
- */
-export interface RadioGroupItemColors {
-  /** Border color when not selected */
-  defaultBorder?: string;
-  /** Border color when selected */
-  selectedBorder?: string;
-  /** Background color when not selected */
-  defaultBackground?: string;
-  /** Background color when selected */
-  selectedBackground?: string;
-  /** Thumb color when selected */
-  selectedThumb?: string;
 }
 
 /**
@@ -82,15 +65,9 @@ export interface RadioGroupIndicatorProps extends AnimatedProps<ViewProps> {
  * Props for RadioGroup.IndicatorThumb component
  */
 export interface RadioGroupIndicatorThumbProps
-  extends AnimatedProps<ViewProps> {
-  /** Thumb content */
-  children?: React.ReactNode;
+  extends Omit<AnimatedProps<ViewProps>, 'children'> {
   /** Custom class name */
   className?: string;
-  /** Custom thumb colors */
-  colors?: Pick<RadioGroupItemColors, 'selectedThumb'>;
-  /** Animation configuration */
-  animationConfig?: SpringConfig;
 }
 
 /**

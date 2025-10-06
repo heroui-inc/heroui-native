@@ -135,14 +135,9 @@ const label = tv({
   },
 });
 
-const background = tv({
-  base: 'absolute inset-0 rounded-full',
-});
-
 const chipStyles = combineStyles({
   root,
   label,
-  background,
 });
 
 export const stylesheet = StyleSheet.create({

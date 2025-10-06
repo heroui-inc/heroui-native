@@ -1,4 +1,4 @@
-import type { PressableProps, TextProps, ViewProps } from 'react-native';
+import type { PressableProps, TextProps } from 'react-native';
 import type {
   AnimatedProps,
   BaseAnimationBuilder,
@@ -37,17 +37,6 @@ export interface ChipProps extends AnimatedProps<PressableProps> {
   color?: ChipColor;
 
   /** Custom class name for the chip */
-  className?: string;
-}
-
-/**
- * Props for the ChipBackground component
- */
-export interface ChipBackgroundProps extends AnimatedProps<ViewProps> {
-  /** Content to be rendered as the chip background */
-  children?: React.ReactNode;
-
-  /** Custom class name for the background */
   className?: string;
 }
 

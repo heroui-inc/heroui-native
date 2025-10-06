@@ -5,12 +5,7 @@ import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
 import { DEFAULT_LAYOUT_TRANSITION, DISPLAY_NAME } from './chip.constants';
 import chipStyles, { stylesheet } from './chip.styles';
-import type {
-  ChipBackgroundProps,
-  ChipContextValue,
-  ChipLabelProps,
-  ChipProps,
-} from './chip.types';
+import type { ChipContextValue, ChipLabelProps, ChipProps } from './chip.types';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -72,29 +67,6 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const ChipBackground = forwardRef<View, ChipBackgroundProps>((props, ref) => {
-  const { layout: contextLayout } = useChipContext();
-
-  const { children, layout: layoutProp, className, ...restProps } = props;
-
-  const tvStyles = chipStyles.background({
-    className,
-  });
-
-  return (
-    <Animated.View
-      ref={ref}
-      layout={layoutProp || contextLayout}
-      className={tvStyles}
-      {...restProps}
-    >
-      {children}
-    </Animated.View>
-  );
-});
-
-// --------------------------------------------------
-
 const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
   const { children, layout: layoutProp, className, ...restProps } = props;
 
@@ -122,7 +94,6 @@ const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
 // --------------------------------------------------
 
 Chip.displayName = DISPLAY_NAME.CHIP_ROOT;
-ChipBackground.displayName = DISPLAY_NAME.CHIP_BACKGROUND;
 ChipLabel.displayName = DISPLAY_NAME.CHIP_LABEL_CONTENT;
 
 /**
@@ -130,9 +101,6 @@ ChipLabel.displayName = DISPLAY_NAME.CHIP_LABEL_CONTENT;
  *
  * @component Chip - Main container that displays a compact element. Renders with
  * string children as label or accepts compound components for custom layouts.
- *
- * @component Chip.Background - Optional background element with absolute positioning.
- * Rendered beneath all other content. Use for gradients or custom backgrounds.
  *
  * @component Chip.Label - Text content of the chip. When string is provided,
  * it renders as Text. Otherwise renders children as-is.
@@ -143,8 +111,6 @@ ChipLabel.displayName = DISPLAY_NAME.CHIP_LABEL_CONTENT;
  * @see Full documentation: https://heroui.com/components/chip
  */
 const CompoundChip = Object.assign(Chip, {
-  /** @optional Background element - absolute positioned beneath content */
-  Background: ChipBackground,
   /** Chip label - renders text or custom content */
   Label: ChipLabel,
 });

@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { LinearGradient } from 'expo-linear-gradient';
 import { Chip } from 'heroui-native';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
@@ -98,38 +98,32 @@ export default function ChipScreen() {
       <SectionTitle title="Gradient Background" />
       <View className="flex-row flex-wrap gap-4 justify-center">
         <Chip className="border-0">
-          <Chip.Background>
-            <LinearGradient
-              colors={['#ec4899', '#8b5cf6']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={{ flex: 1 }}
-            />
-          </Chip.Background>
+          <LinearGradient
+            colors={['#ec4899', '#8b5cf6']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={StyleSheet.absoluteFill}
+          />
           <Chip.Label className="text-white font-semibold">Gradient</Chip.Label>
         </Chip>
 
         <Chip className="border-0" size="lg">
-          <Chip.Background>
-            <LinearGradient
-              colors={['#10b981', '#3b82f6']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={{ flex: 1 }}
-            />
-          </Chip.Background>
+          <LinearGradient
+            colors={['#10b981', '#3b82f6']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={StyleSheet.absoluteFill}
+          />
           <Chip.Label className="text-white font-bold">Premium</Chip.Label>
         </Chip>
 
         <Chip className="border-0">
-          <Chip.Background>
-            <LinearGradient
-              colors={['#f59e0b', '#ef4444']}
-              start={{ x: 0, y: 0.5 }}
-              end={{ x: 1, y: 0.5 }}
-              style={{ flex: 1 }}
-            />
-          </Chip.Background>
+          <LinearGradient
+            colors={['#f59e0b', '#ef4444']}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+            style={StyleSheet.absoluteFill}
+          />
           <Chip.Label className="text-white font-semibold">Hot</Chip.Label>
         </Chip>
       </View>

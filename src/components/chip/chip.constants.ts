@@ -6,7 +6,6 @@ import { LinearTransition } from 'react-native-reanimated';
 export const DISPLAY_NAME = {
   CHIP_ROOT: 'HeroUINative.Chip.Root',
   CHIP_LABEL_CONTENT: 'HeroUINative.Chip.Label',
-  CHIP_BACKGROUND: 'HeroUINative.Chip.Background',
 } as const;
 
 /**

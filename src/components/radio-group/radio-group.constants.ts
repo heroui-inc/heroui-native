@@ -5,14 +5,12 @@ export const DISPLAY_NAME = {
   RADIO_GROUP_ROOT: 'HeroUINative.RadioGroup.Root',
   RADIO_GROUP_ERROR_MESSAGE: 'HeroUINative.RadioGroup.ErrorMessage',
   RADIO_GROUP_ITEM: 'HeroUINative.RadioGroup.Item',
-  RADIO_GROUP_ITEM_INDICATOR: 'HeroUINative.RadioGroup.ItemIndicator',
-  RADIO_GROUP_ITEM_INDICATOR_BACKGROUND:
-    'HeroUINative.RadioGroup.ItemIndicatorBackground',
-  RADIO_GROUP_ITEM_INDICATOR_THUMB:
-    'HeroUINative.RadioGroup.ItemIndicatorThumb',
-  RADIO_GROUP_ITEM_CONTENT: 'HeroUINative.RadioGroup.ItemContent',
-  RADIO_GROUP_ITEM_TITLE: 'HeroUINative.RadioGroup.ItemTitle',
-  RADIO_GROUP_ITEM_DESCRIPTION: 'HeroUINative.RadioGroup.ItemDescription',
+  RADIO_GROUP_INDICATOR: 'HeroUINative.RadioGroup.Indicator',
+  RADIO_GROUP_INDICATOR_BACKGROUND:
+    'HeroUINative.RadioGroup.IndicatorBackground',
+  RADIO_GROUP_INDICATOR_THUMB: 'HeroUINative.RadioGroup.IndicatorThumb',
+  RADIO_GROUP_TITLE: 'HeroUINative.RadioGroup.Title',
+  RADIO_GROUP_DESCRIPTION: 'HeroUINative.RadioGroup.Description',
 } as const;
 
 export const DEFAULT_INDICATOR_BORDER_COLOR_TIMING_CONFIG = {

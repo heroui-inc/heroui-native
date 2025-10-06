@@ -7,11 +7,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import type { TextRef, ViewRef } from '../../helpers/types';
-import {
-  createContext,
-  getElementByDisplayName,
-  getElementWithDefault,
-} from '../../helpers/utils';
+import { createContext, getElementWithDefault } from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
 import { colorKit, useTheme } from '../../providers/theme';
 import { ErrorView } from '../error-view';
@@ -24,17 +20,16 @@ import {
 } from './radio-group.constants';
 import radioGroupStyles from './radio-group.styles';
 import type {
+  RadioGroupDescriptionProps,
   RadioGroupErrorMessageProps,
+  RadioGroupIndicatorBackgroundProps,
+  RadioGroupIndicatorProps,
+  RadioGroupIndicatorThumbProps,
   RadioGroupItemColor,
-  RadioGroupItemContentProps,
   RadioGroupItemContextValue,
-  RadioGroupItemDescriptionProps,
-  RadioGroupItemIndicatorBackgroundProps,
-  RadioGroupItemIndicatorProps,
-  RadioGroupItemIndicatorThumbProps,
   RadioGroupItemProps,
-  RadioGroupItemTitleProps,
   RadioGroupProps,
+  RadioGroupTitleProps,
 } from './radio-group.types';
 
 const AnimatedRadioItem = Animated.createAnimatedComponent(
@@ -58,15 +53,9 @@ const RadioGroupRoot = forwardRef<
   RadioGroupPrimitives.RootRef,
   RadioGroupProps
 >((props, ref) => {
-  const {
-    className,
-    orientation = 'vertical',
-    isInvalid = false,
-    ...restProps
-  } = props;
+  const { className, isInvalid = false, ...restProps } = props;
 
   const tvStyles = radioGroupStyles.root({
-    orientation,
     className,
   });
 
@@ -74,40 +63,11 @@ const RadioGroupRoot = forwardRef<
     <RadioGroupPrimitives.Root
       ref={ref}
       className={tvStyles}
-      orientation={orientation}
       isInvalid={isInvalid}
       {...restProps}
     />
   );
 });
-
-// --------------------------------------------------
-
-const RadioGroupErrorMessage = forwardRef<ViewRef, RadioGroupErrorMessageProps>(
-  (props, ref) => {
-    const { isInvalid, orientation } = useRadioGroupContext();
-    const { className, ...restProps } = props;
-
-    const tvStyles = radioGroupStyles.errorMessage({
-      orientation,
-      className,
-    });
-
-    return (
-      <ErrorView
-        ref={ref}
-        isInvalid={isInvalid}
-        className={tvStyles}
-        {...restProps}
-      />
-    );
-  }
-);
-
-// --------------------------------------------------
-
-RadioGroupRoot.displayName = DISPLAY_NAME.RADIO_GROUP_ROOT;
-RadioGroupErrorMessage.displayName = DISPLAY_NAME.RADIO_GROUP_ERROR_MESSAGE;
 
 // --------------------------------------------------
 
@@ -118,11 +78,9 @@ const RadioGroupItem = forwardRef<
   const {
     children,
     color = 'default',
-    alignIndicator = 'end',
     isDisabled,
     isInvalid,
     className,
-    style,
     value,
     ...restProps
   } = props;
@@ -140,23 +98,6 @@ const RadioGroupItem = forwardRef<
   const effectiveIsInvalid = isInvalid ?? groupIsInvalid ?? false;
 
   const effectiveColor = effectiveIsInvalid ? 'danger' : color;
-
-  const indicatorElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.RADIO_GROUP_ITEM_INDICATOR,
-        <RadioGroupItemIndicator />
-      ),
-    [children]
-  );
-
-  const contentElement = useMemo(() => {
-    return getElementByDisplayName(
-      children,
-      DISPLAY_NAME.RADIO_GROUP_ITEM_CONTENT
-    );
-  }, [children]);
 
   const tvStyles = radioGroupStyles.item({
     isDisabled: isDisabledValue,
@@ -177,15 +118,12 @@ const RadioGroupItem = forwardRef<
       <AnimatedRadioItem
         ref={ref}
         className={tvStyles}
-        style={style}
         value={value}
         isDisabled={isDisabledValue}
         hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
         {...restProps}
       >
-        {alignIndicator === 'start' && indicatorElement}
-        {contentElement}
-        {alignIndicator === 'end' && indicatorElement}
+        {children}
       </AnimatedRadioItem>
     </RadioGroupItemProvider>
   );
@@ -193,79 +131,85 @@ const RadioGroupItem = forwardRef<
 
 // --------------------------------------------------
 
-const RadioGroupItemIndicator = forwardRef<
-  Animated.View,
-  RadioGroupItemIndicatorProps
->((props, ref) => {
-  const { children, colors, animationConfig, className, style, ...restProps } =
-    props;
+const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
+  (props, ref) => {
+    const {
+      children,
+      colors,
+      animationConfig,
+      className,
+      style,
+      ...restProps
+    } = props;
 
-  const { color, isSelected } = useRadioGroupItemContext();
-  const { colors: themeColors } = useTheme();
+    const { color, isSelected } = useRadioGroupItemContext();
 
-  const backgroundElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.RADIO_GROUP_ITEM_INDICATOR_BACKGROUND,
-        <RadioGroupItemIndicatorBackground />
-      ),
-    [children]
-  );
+    const { colors: themeColors } = useTheme();
 
-  const thumbElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.RADIO_GROUP_ITEM_INDICATOR_THUMB,
-        <RadioGroupItemIndicatorThumb />
-      ),
-    [children]
-  );
+    const backgroundElement = useMemo(
+      () =>
+        getElementWithDefault(
+          children,
+          DISPLAY_NAME.RADIO_GROUP_INDICATOR_BACKGROUND,
+          <RadioGroupIndicatorBackground />
+        ),
+      [children]
+    );
 
-  const tvStyles = radioGroupStyles.indicator({
-    className,
-  });
+    const thumbElement = useMemo(
+      () =>
+        getElementWithDefault(
+          children,
+          DISPLAY_NAME.RADIO_GROUP_INDICATOR_THUMB,
+          <RadioGroupIndicatorThumb />
+        ),
+      [children]
+    );
 
-  const borderColorMap: Record<RadioGroupItemColor, string> = {
-    default: isSelected ? themeColors.accent : themeColors.border,
-    success: isSelected
-      ? themeColors.success
-      : colorKit.setAlpha(themeColors.success, 0.4).hex(),
-    warning: isSelected
-      ? themeColors.warning
-      : colorKit.setAlpha(themeColors.warning, 0.4).hex(),
-    danger: isSelected
-      ? themeColors.danger
-      : colorKit.setAlpha(themeColors.danger, 0.4).hex(),
-  };
+    const tvStyles = radioGroupStyles.itemIndicator({
+      className,
+    });
 
-  const timingConfig =
-    animationConfig ?? DEFAULT_INDICATOR_BORDER_COLOR_TIMING_CONFIG;
-
-  const indicatorAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      borderColor: withTiming(
-        isSelected
-          ? (colors?.selectedBorder ?? borderColorMap[color])
-          : (colors?.defaultBorder ?? borderColorMap[color]),
-        timingConfig
-      ),
+    const borderColorMap: Record<RadioGroupItemColor, string> = {
+      default: isSelected ? themeColors.accent : themeColors.border,
+      success: isSelected
+        ? themeColors.success
+        : colorKit.setAlpha(themeColors.success, 0.4).hex(),
+      warning: isSelected
+        ? themeColors.warning
+        : colorKit.setAlpha(themeColors.warning, 0.4).hex(),
+      danger: isSelected
+        ? themeColors.danger
+        : colorKit.setAlpha(themeColors.danger, 0.4).hex(),
     };
-  });
 
-  return (
-    <AnimatedRadioIndicator
-      ref={ref}
-      className={tvStyles}
-      style={[indicatorAnimatedStyle, styles.indicatorRoot, style]}
-      {...restProps}
-    >
-      {backgroundElement}
-      {thumbElement}
-    </AnimatedRadioIndicator>
-  );
-});
+    const timingConfig =
+      animationConfig ?? DEFAULT_INDICATOR_BORDER_COLOR_TIMING_CONFIG;
+
+    const indicatorAnimatedStyle = useAnimatedStyle(() => {
+      return {
+        borderColor: withTiming(
+          isSelected
+            ? (colors?.selectedBorder ?? borderColorMap[color])
+            : (colors?.defaultBorder ?? borderColorMap[color]),
+          timingConfig
+        ),
+      };
+    });
+
+    return (
+      <AnimatedRadioIndicator
+        ref={ref}
+        className={tvStyles}
+        style={[indicatorAnimatedStyle, styles.indicatorRoot, style]}
+        {...restProps}
+      >
+        {backgroundElement}
+        {thumbElement}
+      </AnimatedRadioIndicator>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   indicatorRoot: {
@@ -275,16 +219,16 @@ const styles = StyleSheet.create({
 
 // --------------------------------------------------
 
-const RadioGroupItemIndicatorBackground = forwardRef<
+const RadioGroupIndicatorBackground = forwardRef<
   View,
-  RadioGroupItemIndicatorBackgroundProps
+  RadioGroupIndicatorBackgroundProps
 >((props, ref) => {
   const { children, colors, className, style, ...restProps } = props;
 
   const { color, isSelected } = useRadioGroupItemContext();
   const { colors: themeColors } = useTheme();
 
-  const tvStyles = radioGroupStyles.indicatorBackground({
+  const tvStyles = radioGroupStyles.itemIndicatorBackground({
     className,
   });
 
@@ -324,9 +268,9 @@ const RadioGroupItemIndicatorBackground = forwardRef<
 
 // --------------------------------------------------
 
-const RadioGroupItemIndicatorThumb = forwardRef<
+const RadioGroupIndicatorThumb = forwardRef<
   View,
-  RadioGroupItemIndicatorThumbProps
+  RadioGroupIndicatorThumbProps
 >((props, ref) => {
   const { children, colors, className, style, animationConfig, ...restProps } =
     props;
@@ -334,7 +278,7 @@ const RadioGroupItemIndicatorThumb = forwardRef<
   const { isSelected } = useRadioGroupItemContext();
   const { theme, colors: themeColors } = useTheme();
 
-  const tvStyles = radioGroupStyles.indicatorThumb({
+  const tvStyles = radioGroupStyles.itemIndicatorThumb({
     isDark: theme === 'dark',
     className,
   });
@@ -369,28 +313,7 @@ const RadioGroupItemIndicatorThumb = forwardRef<
 
 // --------------------------------------------------
 
-const RadioGroupItemContent = forwardRef<View, RadioGroupItemContentProps>(
-  (props, ref) => {
-    const { children, className, style, ...restProps } = props;
-
-    const { orientation } = useRadioGroupContext();
-
-    const tvStyles = radioGroupStyles.itemContent({
-      orientation,
-      className,
-    });
-
-    return (
-      <View ref={ref} className={tvStyles} style={style} {...restProps}>
-        {children}
-      </View>
-    );
-  }
-);
-
-// --------------------------------------------------
-
-const RadioGroupItemTitle = forwardRef<TextRef, RadioGroupItemTitleProps>(
+const RadioGroupTitle = forwardRef<TextRef, RadioGroupTitleProps>(
   (props, ref) => {
     return <FormField.Title ref={ref} {...props} />;
   }
@@ -398,25 +321,43 @@ const RadioGroupItemTitle = forwardRef<TextRef, RadioGroupItemTitleProps>(
 
 // --------------------------------------------------
 
-const RadioGroupItemDescription = forwardRef<
-  TextRef,
-  RadioGroupItemDescriptionProps
->((props, ref) => {
-  return <FormField.Description ref={ref} {...props} />;
-});
+const RadioGroupDescription = forwardRef<TextRef, RadioGroupDescriptionProps>(
+  (props, ref) => {
+    return <FormField.Description ref={ref} {...props} />;
+  }
+);
 
 // --------------------------------------------------
 
+const RadioGroupErrorMessage = forwardRef<ViewRef, RadioGroupErrorMessageProps>(
+  (props, ref) => {
+    const { isInvalid } = useRadioGroupContext();
+    const { className, ...restProps } = props;
+
+    const tvStyles = radioGroupStyles.errorMessage({
+      className,
+    });
+
+    return (
+      <ErrorView
+        ref={ref}
+        isInvalid={isInvalid}
+        className={tvStyles}
+        {...restProps}
+      />
+    );
+  }
+);
+
+RadioGroupRoot.displayName = DISPLAY_NAME.RADIO_GROUP_ROOT;
 RadioGroupItem.displayName = DISPLAY_NAME.RADIO_GROUP_ITEM;
-RadioGroupItemIndicator.displayName = DISPLAY_NAME.RADIO_GROUP_ITEM_INDICATOR;
-RadioGroupItemIndicatorBackground.displayName =
-  DISPLAY_NAME.RADIO_GROUP_ITEM_INDICATOR_BACKGROUND;
-RadioGroupItemIndicatorThumb.displayName =
-  DISPLAY_NAME.RADIO_GROUP_ITEM_INDICATOR_THUMB;
-RadioGroupItemContent.displayName = DISPLAY_NAME.RADIO_GROUP_ITEM_CONTENT;
-RadioGroupItemTitle.displayName = DISPLAY_NAME.RADIO_GROUP_ITEM_TITLE;
-RadioGroupItemDescription.displayName =
-  DISPLAY_NAME.RADIO_GROUP_ITEM_DESCRIPTION;
+RadioGroupIndicator.displayName = DISPLAY_NAME.RADIO_GROUP_INDICATOR;
+RadioGroupIndicatorBackground.displayName =
+  DISPLAY_NAME.RADIO_GROUP_INDICATOR_BACKGROUND;
+RadioGroupIndicatorThumb.displayName = DISPLAY_NAME.RADIO_GROUP_INDICATOR_THUMB;
+RadioGroupTitle.displayName = DISPLAY_NAME.RADIO_GROUP_TITLE;
+RadioGroupDescription.displayName = DISPLAY_NAME.RADIO_GROUP_DESCRIPTION;
+RadioGroupErrorMessage.displayName = DISPLAY_NAME.RADIO_GROUP_ERROR_MESSAGE;
 
 /**
  * Compound RadioGroup component with sub-components
@@ -431,22 +372,19 @@ RadioGroupItemDescription.displayName =
  * Handles selection state and renders default indicator if no children provided. Animates border
  * color based on selection state.
  *
- * @component RadioGroup.ItemIndicator - Optional container for the radio circle. Renders default background
+ * @component RadioGroup.Indicator - Optional container for the radio circle. Renders default background
  * and thumb if no children provided. Manages the visual selection state.
  *
- * @component RadioGroup.ItemIndicatorBackground - Optional background of the radio circle. Animates background
+ * @component RadioGroup.IndicatorBackground - Optional background of the radio circle. Animates background
  * color based on selection state. Can be customized with different colors and animations.
  *
- * @component RadioGroup.ItemIndicatorThumb - Optional inner circle that appears when selected. Animates
+ * @component RadioGroup.IndicatorThumb - Optional inner circle that appears when selected. Animates
  * scale based on selection. Can be replaced with custom content.
  *
- * @component RadioGroup.ItemContent - Optional container for label and description. Provides consistent
- * layout and spacing. Only renders if label or description exist.
- *
- * @component RadioGroup.ItemTitle - Optional text title for the radio option. Clickable by default and
+ * @component RadioGroup.Title - Optional text title for the radio option. Clickable by default and
  * linked to the radio for accessibility.
  *
- * @component RadioGroup.ItemDescription - Optional secondary text below the label. Provides additional
+ * @component RadioGroup.Description - Optional secondary text below the label. Provides additional
  * context about the radio option.
  *
  * Props flow from RadioGroup to RadioGroupItem to sub-components via context (color, value, isSelected).
@@ -460,17 +398,15 @@ const CompoundRadioGroup = Object.assign(RadioGroupRoot, {
   /** Individual radio option within a RadioGroup */
   Item: RadioGroupItem,
   /** @optional Custom radio indicator container */
-  ItemIndicator: RadioGroupItemIndicator,
+  Indicator: RadioGroupIndicator,
   /** @optional Custom indicator background with border animations */
-  ItemIndicatorBackground: RadioGroupItemIndicatorBackground,
+  IndicatorBackground: RadioGroupIndicatorBackground,
   /** @optional Custom indicator thumb that appears when selected */
-  ItemIndicatorThumb: RadioGroupItemIndicatorThumb,
-  /** @optional Container for label and description */
-  ItemContent: RadioGroupItemContent,
+  IndicatorThumb: RadioGroupIndicatorThumb,
   /** @optional Clickable text title */
-  ItemTitle: RadioGroupItemTitle,
+  Title: RadioGroupTitle,
   /** @optional Secondary descriptive text */
-  ItemDescription: RadioGroupItemDescription,
+  Description: RadioGroupDescription,
 });
 
 export default CompoundRadioGroup;

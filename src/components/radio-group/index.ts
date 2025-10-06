@@ -4,15 +4,14 @@ export {
   useRadioGroupItemContext,
 } from './radio-group';
 export type {
+  RadioGroupDescriptionProps,
   RadioGroupErrorMessageProps,
+  RadioGroupIndicatorBackgroundProps,
+  RadioGroupIndicatorProps,
+  RadioGroupIndicatorThumbProps,
   RadioGroupItemColor,
   RadioGroupItemColors,
-  RadioGroupItemContentProps,
-  RadioGroupItemDescriptionProps,
-  RadioGroupItemIndicatorBackgroundProps,
-  RadioGroupItemIndicatorProps,
-  RadioGroupItemIndicatorThumbProps,
   RadioGroupItemProps,
-  RadioGroupItemTitleProps,
   RadioGroupProps,
+  RadioGroupTitleProps,
 } from './radio-group.types';

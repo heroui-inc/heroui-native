@@ -65,8 +65,6 @@ export interface RadioGroupItemProps extends ItemProps {
   children?: React.ReactNode;
   /** Color variant */
   color?: RadioGroupItemColor;
-  /** Alignment of the indicator */
-  alignIndicator?: 'start' | 'end';
   /** Whether the radio item is invalid @default false */
   isInvalid?: boolean;
   /** Custom class name */
@@ -74,9 +72,9 @@ export interface RadioGroupItemProps extends ItemProps {
 }
 
 /**
- * Props for RadioGroupItem.Indicator component
+ * Props for RadioGroup.Indicator component
  */
-export interface RadioGroupItemIndicatorProps extends AnimatedProps<ViewProps> {
+export interface RadioGroupIndicatorProps extends AnimatedProps<ViewProps> {
   /** Indicator content */
   children?: React.ReactNode;
   /** Custom class name */
@@ -88,9 +86,9 @@ export interface RadioGroupItemIndicatorProps extends AnimatedProps<ViewProps> {
 }
 
 /**
- * Props for RadioGroupItem.IndicatorBackground component
+ * Props for RadioGroup.IndicatorBackground component
  */
-export interface RadioGroupItemIndicatorBackgroundProps
+export interface RadioGroupIndicatorBackgroundProps
   extends AnimatedProps<ViewProps> {
   /** Background content */
   children?: React.ReactNode;
@@ -104,9 +102,9 @@ export interface RadioGroupItemIndicatorBackgroundProps
 }
 
 /**
- * Props for RadioGroupItem.IndicatorThumb component
+ * Props for RadioGroup.IndicatorThumb component
  */
-export interface RadioGroupItemIndicatorThumbProps
+export interface RadioGroupIndicatorThumbProps
   extends AnimatedProps<ViewProps> {
   /** Thumb content */
   children?: React.ReactNode;
@@ -119,22 +117,11 @@ export interface RadioGroupItemIndicatorThumbProps
 }
 
 /**
- * Props for RadioGroupItem.Content component
+ * Props for RadioGroup.Title component
  */
-export interface RadioGroupItemContentProps extends ViewProps {
-  /** Content children */
-  children?: React.ReactNode;
-  /** Custom class name */
-  className?: string;
-}
+export interface RadioGroupTitleProps extends FormFieldTitleProps {}
 
 /**
- * Props for RadioGroupItem.Title component
+ * Props for RadioGroup.Description component
  */
-export interface RadioGroupItemTitleProps extends FormFieldTitleProps {}
-
-/**
- * Props for RadioGroupItem.Description component
- */
-export interface RadioGroupItemDescriptionProps
-  extends FormFieldDescriptionProps {}
+export interface RadioGroupDescriptionProps extends FormFieldDescriptionProps {}

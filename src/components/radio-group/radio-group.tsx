@@ -263,8 +263,8 @@ RadioGroupErrorMessage.displayName = DISPLAY_NAME.RADIO_GROUP_ERROR_MESSAGE;
  * Handles selection state and renders default indicator if no children provided. Animates border
  * color based on selection state.
  *
- * @component RadioGroup.Indicator - Optional container for the radio circle. Renders default background
- * and thumb if no children provided. Manages the visual selection state.
+ * @component RadioGroup.Indicator - Optional container for the radio circle. Renders default thumb
+ * if no children provided. Manages the visual selection state.
  *
  * @component RadioGroup.IndicatorThumb - Optional inner circle that appears when selected. Animates
  * scale based on selection. Can be replaced with custom content.

@@ -93,8 +93,6 @@ const RadioGroupItem = forwardRef<
 
   const effectiveIsInvalid = isInvalid ?? groupIsInvalid ?? false;
 
-  const effectiveColor = effectiveIsInvalid ? 'danger' : color;
-
   const tvStyles = radioGroupStyles.item({
     isDisabled: isDisabledValue,
     className,
@@ -102,11 +100,12 @@ const RadioGroupItem = forwardRef<
 
   const contextValue = useMemo(
     () => ({
-      color: effectiveColor,
+      color,
       isSelected,
       isDisabled: isDisabledValue,
+      isInvalid: effectiveIsInvalid,
     }),
-    [effectiveColor, isSelected, isDisabledValue]
+    [color, isSelected, isDisabledValue, effectiveIsInvalid]
   );
 
   return (
@@ -138,7 +137,7 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
   (props, ref) => {
     const { children, className, style, ...restProps } = props;
 
-    const { color, isSelected } = useRadioGroupItemContext();
+    const { color, isSelected, isInvalid } = useRadioGroupItemContext();
 
     const thumbElement = useMemo(
       () =>
@@ -153,6 +152,7 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
     const tvStyles = radioGroupStyles.itemIndicator({
       color,
       isSelected,
+      isInvalid,
       className,
     });
 

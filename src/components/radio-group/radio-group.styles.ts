@@ -30,6 +30,10 @@ const itemIndicator = tv({
       true: '',
       false: 'bg-transparent border-border',
     },
+    isInvalid: {
+      true: 'border-[1.5px] border-danger/30',
+      false: '',
+    },
   },
   compoundVariants: [
     {
@@ -49,6 +53,11 @@ const itemIndicator = tv({
     },
     {
       color: 'danger',
+      isSelected: true,
+      className: 'bg-danger border-danger',
+    },
+    {
+      isInvalid: true,
       isSelected: true,
       className: 'bg-danger border-danger',
     },

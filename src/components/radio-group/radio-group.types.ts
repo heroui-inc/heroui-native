@@ -9,6 +9,12 @@ import type {
 } from '../form-field';
 
 /**
+ * RadioGroupItem color variant
+ * @default 'default'
+ */
+export type RadioGroupItemColor = 'default' | 'success' | 'warning' | 'danger';
+
+/**
  * Props for RadioGroup root component
  */
 export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
@@ -17,12 +23,6 @@ export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
   /** Custom class name */
   className?: string;
 }
-
-/**
- * RadioGroupItem color variant
- * @default 'default'
- */
-export type RadioGroupItemColor = 'default' | 'success' | 'warning' | 'danger';
 
 /**
  * Custom color configuration for RadioGroupItem
@@ -50,6 +50,8 @@ export interface RadioGroupItemContextValue {
   isSelected: boolean;
   /** Whether the radio item is disabled */
   isDisabled?: boolean;
+  /** Whether the radio item is invalid */
+  isInvalid?: boolean;
 }
 
 /**

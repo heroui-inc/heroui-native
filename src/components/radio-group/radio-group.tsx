@@ -119,7 +119,14 @@ const RadioGroupItem = forwardRef<
         hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
         {...restProps}
       >
-        {children}
+        {typeof children === 'string' ? (
+          <>
+            <RadioGroupTitle>{children}</RadioGroupTitle>
+            <RadioGroupIndicator />
+          </>
+        ) : (
+          children
+        )}
       </AnimatedRadioItem>
     </RadioGroupItemProvider>
   );

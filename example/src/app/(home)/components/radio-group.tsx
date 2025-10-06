@@ -15,16 +15,13 @@ export default function RadioGroupScreen() {
   const [basicSelection, setBasicSelection] = React.useState('option1');
 
   // Color variants
-  const [selectedColor, setSelectedColor] = React.useState('default');
+  const [selectedColor, setSelectedColor] = React.useState('success');
 
   // With descriptions
   const [withDescSelection, setWithDescSelection] = React.useState('desc1');
 
   // Indicator alignment
   const [alignmentSelection, setAlignmentSelection] = React.useState('end');
-
-  // States
-  const [disabledState, setDisabledState] = React.useState('option1');
 
   // Validation
   const [validationSelection, setValidationSelection] = React.useState('');
@@ -43,18 +40,9 @@ export default function RadioGroupScreen() {
     <ScreenScrollView contentContainerClassName="gap-16">
       <SectionTitle title="Basic RadioGroup" />
       <RadioGroup value={basicSelection} onValueChange={setBasicSelection}>
-        <RadioGroup.Item value="option1" color="danger">
-          <RadioGroup.Title>Option 1</RadioGroup.Title>
-          <RadioGroup.Indicator />
-        </RadioGroup.Item>
-        <RadioGroup.Item value="option2">
-          <RadioGroup.Title>Option 2</RadioGroup.Title>
-          <RadioGroup.Indicator />
-        </RadioGroup.Item>
-        <RadioGroup.Item value="option3">
-          <RadioGroup.Title>Option 3</RadioGroup.Title>
-          <RadioGroup.Indicator />
-        </RadioGroup.Item>
+        <RadioGroup.Item value="option1">Option 1</RadioGroup.Item>
+        <RadioGroup.Item value="option2">Option 2</RadioGroup.Item>
+        <RadioGroup.Item value="option3">Option 3</RadioGroup.Item>
       </RadioGroup>
 
       <SectionTitle title="With Descriptions" />
@@ -63,41 +51,48 @@ export default function RadioGroupScreen() {
         onValueChange={setWithDescSelection}
       >
         <RadioGroup.Item value="desc1">
-          <RadioGroup.Title>Standard Shipping</RadioGroup.Title>
-          <RadioGroup.Description>
-            Delivered in 5-7 business days
-          </RadioGroup.Description>
+          <View>
+            <RadioGroup.Title>Standard Shipping</RadioGroup.Title>
+            <RadioGroup.Description>
+              Delivered in 5-7 business days
+            </RadioGroup.Description>
+          </View>
+          <RadioGroup.Indicator />
         </RadioGroup.Item>
         <RadioGroup.Item value="desc2">
-          <RadioGroup.Title>Express Shipping</RadioGroup.Title>
-          <RadioGroup.Description>
-            Delivered in 2-3 business days
-          </RadioGroup.Description>
+          <View>
+            <RadioGroup.Title>Express Shipping</RadioGroup.Title>
+            <RadioGroup.Description>
+              Delivered in 2-3 business days
+            </RadioGroup.Description>
+          </View>
+          <RadioGroup.Indicator />
         </RadioGroup.Item>
         <RadioGroup.Item value="desc3">
-          <RadioGroup.Title>Overnight Shipping</RadioGroup.Title>
-          <RadioGroup.Description>
-            Delivered next business day
-          </RadioGroup.Description>
+          <View>
+            <RadioGroup.Title>Overnight Shipping</RadioGroup.Title>
+            <RadioGroup.Description>
+              Delivered next business day
+            </RadioGroup.Description>
+          </View>
+          <RadioGroup.Indicator />
         </RadioGroup.Item>
       </RadioGroup>
 
       <SectionTitle title="Color Variants" />
       <RadioGroup value={selectedColor} onValueChange={setSelectedColor}>
-        <View className="gap-8">
-          <RadioGroup.Item value="default" color="default">
-            <RadioGroup.Title>Default Color</RadioGroup.Title>
-          </RadioGroup.Item>
-          <RadioGroup.Item value="success" color="success">
-            <RadioGroup.Title>Success Color</RadioGroup.Title>
-          </RadioGroup.Item>
-          <RadioGroup.Item value="warning" color="warning">
-            <RadioGroup.Title>Warning Color</RadioGroup.Title>
-          </RadioGroup.Item>
-          <RadioGroup.Item value="danger" color="danger">
-            <RadioGroup.Title>Danger Color</RadioGroup.Title>
-          </RadioGroup.Item>
-        </View>
+        <RadioGroup.Item value="default" color="default">
+          Default Color
+        </RadioGroup.Item>
+        <RadioGroup.Item value="success" color="success">
+          Success Color
+        </RadioGroup.Item>
+        <RadioGroup.Item value="warning" color="warning">
+          Warning Color
+        </RadioGroup.Item>
+        <RadioGroup.Item value="danger" color="danger">
+          Danger Color
+        </RadioGroup.Item>
       </RadioGroup>
 
       <SectionTitle title="Indicator Alignment" />
@@ -106,36 +101,33 @@ export default function RadioGroupScreen() {
         onValueChange={setAlignmentSelection}
         className="gap-8"
       >
-        <RadioGroup.Item value="start">
-          <RadioGroup.Title>Indicator on Start (Left)</RadioGroup.Title>
-          <RadioGroup.Description>
-            The radio button appears on the left side
-          </RadioGroup.Description>
+        <RadioGroup.Item value="start" className="justify-start">
+          <RadioGroup.Indicator />
+          <View>
+            <RadioGroup.Title>Indicator on Start (Left)</RadioGroup.Title>
+            <RadioGroup.Description>
+              The radio button appears on the left side
+            </RadioGroup.Description>
+          </View>
         </RadioGroup.Item>
         <RadioGroup.Item value="end">
-          <RadioGroup.Title>Indicator on End (Right)</RadioGroup.Title>
-          <RadioGroup.Description>
-            The radio button appears on the right side (default)
-          </RadioGroup.Description>
+          <View>
+            <RadioGroup.Title>Indicator on End (Right)</RadioGroup.Title>
+            <RadioGroup.Description>
+              The radio button appears on the right side (default)
+            </RadioGroup.Description>
+          </View>
+          <RadioGroup.Indicator />
         </RadioGroup.Item>
       </RadioGroup>
 
-      <SectionTitle title="Disabled & Read-Only States" />
-      <View className="gap-8">
-        <AppText className="text-sm text-muted-foreground">
-          Disabled RadioGroup
-        </AppText>
-        <RadioGroup
-          value={disabledState}
-          onValueChange={setDisabledState}
-          isDisabled
-        >
-          <RadioGroup.Item value="option1">
-            <RadioGroup.Title>Disabled Option 1</RadioGroup.Title>
-          </RadioGroup.Item>
-          <RadioGroup.Item value="option2">
-            <RadioGroup.Title>Disabled Option 2</RadioGroup.Title>
-          </RadioGroup.Item>
+      <SectionTitle title="Default & Disabled States" />
+      <View className="gap-4">
+        <RadioGroup value="option1" onValueChange={() => {}}>
+          <RadioGroup.Item value="option1">Default Option</RadioGroup.Item>
+        </RadioGroup>
+        <RadioGroup value="option2" onValueChange={() => {}} isDisabled>
+          <RadioGroup.Item value="option2">Disabled Option</RadioGroup.Item>
         </RadioGroup>
       </View>
 
@@ -146,17 +138,23 @@ export default function RadioGroupScreen() {
         isInvalid={!validationSelection}
       >
         <RadioGroup.Item value="agree">
-          <RadioGroup.Title>I agree to the terms</RadioGroup.Title>
-          <RadioGroup.Description>
-            You must select this option to continue
-          </RadioGroup.Description>
+          <View>
+            <RadioGroup.Title>I agree to the terms</RadioGroup.Title>
+            <RadioGroup.Description>
+              You must select this option to continue
+            </RadioGroup.Description>
+          </View>
+          <RadioGroup.Indicator />
         </RadioGroup.Item>
         <RadioGroup.Item value="disagree">
-          <RadioGroup.Title>I do not agree</RadioGroup.Title>
+          <View>
+            <RadioGroup.Title>I do not agree</RadioGroup.Title>
+            <RadioGroup.ErrorMessage>
+              Please select an option to continue
+            </RadioGroup.ErrorMessage>
+          </View>
+          <RadioGroup.Indicator />
         </RadioGroup.Item>
-        <RadioGroup.ErrorMessage>
-          Please select an option to continue
-        </RadioGroup.ErrorMessage>
       </RadioGroup>
 
       <SectionTitle title="Custom Indicator Background" />
@@ -210,7 +208,7 @@ export default function RadioGroupScreen() {
 
       <SectionTitle title="Custom Indicator Thumb" />
       <RadioGroup value={customThumb} onValueChange={setCustomThumb}>
-        <RadioGroup.Item value="icon">
+        <RadioGroup.Item value="icon" className="justify-start">
           <RadioGroup.Indicator>
             <RadioGroup.IndicatorThumb>
               {customThumb === 'icon' && (
@@ -227,7 +225,7 @@ export default function RadioGroupScreen() {
           <RadioGroup.Title>Checkmark Icon</RadioGroup.Title>
         </RadioGroup.Item>
 
-        <RadioGroup.Item value="zap">
+        <RadioGroup.Item value="zap" className="justify-start">
           <RadioGroup.Indicator>
             <RadioGroup.IndicatorThumb>
               {customThumb === 'zap' && (
@@ -240,7 +238,7 @@ export default function RadioGroupScreen() {
           <RadioGroup.Title>Lightning Icon</RadioGroup.Title>
         </RadioGroup.Item>
 
-        <RadioGroup.Item value="square">
+        <RadioGroup.Item value="square" className="justify-start">
           <RadioGroup.Indicator>
             <RadioGroup.IndicatorThumb>
               {customThumb === 'square' && (
@@ -259,27 +257,40 @@ export default function RadioGroupScreen() {
       <SectionTitle title="Payment Method Example" />
       <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
         <RadioGroup.Item value="card">
-          <View className="flex-row items-center gap-1.5">
-            <Ionicons name="card-outline" size={16} color={colors.foreground} />
-            <RadioGroup.Title>Credit/Debit Card</RadioGroup.Title>
+          <View>
+            <View className="flex-row items-center gap-1.5">
+              <Ionicons
+                name="card-outline"
+                size={16}
+                color={colors.foreground}
+              />
+              <RadioGroup.Title>Credit/Debit Card</RadioGroup.Title>
+            </View>
+            <RadioGroup.Description>
+              Pay securely with your credit or debit card
+            </RadioGroup.Description>
           </View>
-          <RadioGroup.Description>
-            Pay securely with your credit or debit card
-          </RadioGroup.Description>
+          <RadioGroup.Indicator />
         </RadioGroup.Item>
 
         <RadioGroup.Item value="paypal">
-          <RadioGroup.Title>PayPal</RadioGroup.Title>
-          <RadioGroup.Description>
-            Fast and secure payment with PayPal
-          </RadioGroup.Description>
+          <View>
+            <RadioGroup.Title>PayPal</RadioGroup.Title>
+            <RadioGroup.Description>
+              Fast and secure payment with PayPal
+            </RadioGroup.Description>
+          </View>
+          <RadioGroup.Indicator />
         </RadioGroup.Item>
 
         <RadioGroup.Item value="bank">
-          <RadioGroup.Title>Bank Transfer</RadioGroup.Title>
-          <RadioGroup.Description>
-            Direct transfer from your bank account
-          </RadioGroup.Description>
+          <View>
+            <RadioGroup.Title>Bank Transfer</RadioGroup.Title>
+            <RadioGroup.Description>
+              Direct transfer from your bank account
+            </RadioGroup.Description>
+          </View>
+          <RadioGroup.Indicator />
         </RadioGroup.Item>
       </RadioGroup>
 
@@ -289,64 +300,65 @@ export default function RadioGroupScreen() {
         onValueChange={setShippingSpeed}
         className="gap-4"
       >
-        <Surface>
-          <RadioGroup.Item value="standard">
-            <View className="flex-row items-center justify-between">
-              <View className="flex-1">
-                <RadioGroup.Title>Standard Shipping</RadioGroup.Title>
-                <RadioGroup.Description>
-                  5-7 business days
-                </RadioGroup.Description>
-              </View>
-              <AppText className="text-foreground font-semibold">Free</AppText>
+        <RadioGroup.Item value="standard">
+          <Surface
+            variant={shippingSpeed === 'standard' ? '2' : '1'}
+            className="flex-row items-center justify-between gap-3"
+          >
+            <RadioGroup.Indicator />
+            <View className="flex-1">
+              <RadioGroup.Title>Standard Shipping</RadioGroup.Title>
+              <RadioGroup.Description>5-7 business days</RadioGroup.Description>
             </View>
-          </RadioGroup.Item>
-        </Surface>
+            <AppText className="text-foreground font-semibold">Free</AppText>
+          </Surface>
+        </RadioGroup.Item>
 
-        <Surface>
-          <RadioGroup.Item value="express">
-            <View className="flex-row items-center justify-between">
-              <View className="flex-1">
-                <RadioGroup.Title>Express Shipping</RadioGroup.Title>
-                <RadioGroup.Description>
-                  2-3 business days
-                </RadioGroup.Description>
-              </View>
-              <AppText className="text-foreground font-semibold">$9.99</AppText>
+        <RadioGroup.Item value="express">
+          <Surface
+            variant={shippingSpeed === 'express' ? '2' : '1'}
+            className="flex-row items-center justify-between gap-3"
+          >
+            <RadioGroup.Indicator />
+            <View className="flex-1">
+              <RadioGroup.Title>Express Shipping</RadioGroup.Title>
+              <RadioGroup.Description>2-3 business days</RadioGroup.Description>
             </View>
-          </RadioGroup.Item>
-        </Surface>
+            <AppText className="text-foreground font-semibold">$9.99</AppText>
+          </Surface>
+        </RadioGroup.Item>
 
-        <Surface>
-          <RadioGroup.Item value="overnight">
-            <View className="flex-row items-center justify-between">
-              <View className="flex-1">
-                <RadioGroup.Title>Overnight Shipping</RadioGroup.Title>
-                <RadioGroup.Description>
-                  Next business day
-                </RadioGroup.Description>
-              </View>
-              <AppText className="text-foreground font-semibold">
-                $24.99
-              </AppText>
+        <RadioGroup.Item value="overnight">
+          <Surface
+            variant={shippingSpeed === 'overnight' ? '2' : '1'}
+            className="flex-row items-center justify-between gap-3"
+          >
+            <RadioGroup.Indicator />
+            <View className="flex-1">
+              <RadioGroup.Title>Overnight Shipping</RadioGroup.Title>
+              <RadioGroup.Description>Next business day</RadioGroup.Description>
             </View>
-          </RadioGroup.Item>
-        </Surface>
+            <AppText className="text-foreground font-semibold">$24.99</AppText>
+          </Surface>
+        </RadioGroup.Item>
       </RadioGroup>
 
       <SectionTitle title="Inline Radio Options" />
       <RadioGroup
         value={basicSelection}
         onValueChange={setBasicSelection}
-        className="self-center gap-10"
+        className="flex-row justify-center gap-6"
       >
         <RadioGroup.Item value="option1">
+          <RadioGroup.Indicator />
           <RadioGroup.Title>Small</RadioGroup.Title>
         </RadioGroup.Item>
         <RadioGroup.Item value="option2">
+          <RadioGroup.Indicator />
           <RadioGroup.Title>Medium</RadioGroup.Title>
         </RadioGroup.Item>
         <RadioGroup.Item value="option3">
+          <RadioGroup.Indicator />
           <RadioGroup.Title>Large</RadioGroup.Title>
         </RadioGroup.Item>
       </RadioGroup>

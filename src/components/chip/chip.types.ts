@@ -4,8 +4,6 @@ import type {
   BaseAnimationBuilder,
   LayoutAnimationFunction,
 } from 'react-native-reanimated';
-import type { ElementSlots } from '../../providers/theme';
-import type { LabelContentSlots } from './chip.styles';
 
 /**
  * Chip size variants
@@ -54,41 +52,13 @@ export interface ChipBackgroundProps extends AnimatedProps<ViewProps> {
 }
 
 /**
- * Props for the ChipStartContent component
- */
-export interface ChipStartContentProps extends AnimatedProps<ViewProps> {
-  /** Child elements to render inside the start content */
-  children?: React.ReactNode;
-
-  /** Custom class name for the start content */
-  className?: string;
-}
-
-/**
  * Props for the ChipLabel component
  */
-export interface ChipLabelProps extends AnimatedProps<ViewProps> {
+export interface ChipLabelProps extends AnimatedProps<TextProps> {
   /** Child elements to render as the label. If string, will be wrapped in Text component */
   children?: React.ReactNode;
 
   /** Custom class name for the label */
-  className?: string;
-
-  /** Additional CSS classes for the different parts of the label */
-  classNames?: ElementSlots<LabelContentSlots>;
-
-  /** Additional props to pass to the Text component when children is a string */
-  textProps?: TextProps;
-}
-
-/**
- * Props for the ChipEndContent component
- */
-export interface ChipEndContentProps extends AnimatedProps<ViewProps> {
-  /** Child elements to render inside the end content */
-  children?: React.ReactNode;
-
-  /** Custom class name for the end content */
   className?: string;
 }
 

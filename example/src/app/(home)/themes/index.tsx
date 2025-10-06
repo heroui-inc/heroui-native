@@ -5,7 +5,6 @@ import {
   Checkbox,
   Chip,
   Divider,
-  Radio,
   RadioGroup,
   Spinner,
   Surface,
@@ -346,21 +345,9 @@ export default function Themes() {
               Radio Group
             </Text>
             <RadioGroup value={radioValue} onValueChange={setRadioValue}>
-              <Radio value="option1">
-                <Radio.Content>
-                  <Radio.Title>Option 1</Radio.Title>
-                </Radio.Content>
-              </Radio>
-              <Radio value="option2">
-                <Radio.Content>
-                  <Radio.Title>Option 2</Radio.Title>
-                </Radio.Content>
-              </Radio>
-              <Radio value="option3">
-                <Radio.Content>
-                  <Radio.Title>Option 3</Radio.Title>
-                </Radio.Content>
-              </Radio>
+              <RadioGroup.Item value="option1">Option 1</RadioGroup.Item>
+              <RadioGroup.Item value="option2">Option 2</RadioGroup.Item>
+              <RadioGroup.Item value="option3">Option 3</RadioGroup.Item>
             </RadioGroup>
           </View>
         </View>

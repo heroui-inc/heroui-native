@@ -94,7 +94,7 @@ export interface FormFieldDescriptionProps extends AnimatedProps<TextProps> {
  * Props for the FormFieldIndicator component
  */
 export interface FormFieldIndicatorProps extends AnimatedProps<ViewProps> {
-  /** Control component to render (Switch, Checkbox, Radio) */
+  /** Control component to render (Switch, Checkbox) */
   children?: React.ReactNode;
 
   /** Custom class name for the indicator element */

@@ -3,7 +3,6 @@ import {
   Button,
   Card,
   cn,
-  Radio,
   RadioGroup,
   Skeleton,
   SkeletonGroup,
@@ -256,23 +255,20 @@ export default function SkeletonScreen() {
             onValueChange={(value) =>
               setAnimationType(value as SkeletonAnimation)
             }
-            orientation="horizontal"
+            className="flex-row justify-center gap-5"
           >
-            <Radio value="shimmer" alignIndicator="start">
-              <Radio.Content>
-                <Radio.Title>Shimmer</Radio.Title>
-              </Radio.Content>
-            </Radio>
-            <Radio value="pulse" alignIndicator="start">
-              <Radio.Content>
-                <Radio.Title>Pulse</Radio.Title>
-              </Radio.Content>
-            </Radio>
-            <Radio value="none" alignIndicator="start">
-              <Radio.Content>
-                <Radio.Title>None</Radio.Title>
-              </Radio.Content>
-            </Radio>
+            <RadioGroup.Item value="shimmer">
+              <RadioGroup.Indicator />
+              <RadioGroup.Title>Shimmer</RadioGroup.Title>
+            </RadioGroup.Item>
+            <RadioGroup.Item value="pulse">
+              <RadioGroup.Indicator />
+              <RadioGroup.Title>Pulse</RadioGroup.Title>
+            </RadioGroup.Item>
+            <RadioGroup.Item value="none">
+              <RadioGroup.Indicator />
+              <RadioGroup.Title>None</RadioGroup.Title>
+            </RadioGroup.Item>
           </RadioGroup>
           <Button onPress={() => setIsLoading(!isLoading)} size="sm">
             {isLoading ? 'Loading...' : 'Loaded'}

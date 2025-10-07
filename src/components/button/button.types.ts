@@ -74,7 +74,7 @@ export interface ButtonRootProps extends AnimatedProps<PressableProps> {
    */
   className?: string;
   /**
-   * Animation configuration for press states
+   * Scale on press animation configuration
    */
   animationConfig?: AnimationConfig;
   /**

@@ -1,11 +1,14 @@
-/* eslint-disable react-native/no-inline-styles */
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Chip } from 'heroui-native';
+import { Chip, cn, useTheme } from 'heroui-native';
 import { StyleSheet, View } from 'react-native';
+import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
 export default function ChipScreen() {
+  const { isDark } = useTheme();
+
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
       <SectionTitle title="Basic Usage" />
@@ -79,6 +82,75 @@ export default function ChipScreen() {
         </Chip>
         <Chip variant="tertiary" color="danger">
           Danger
+        </Chip>
+      </View>
+
+      <SectionTitle title="With Start Content" />
+      <View className="gap-8">
+        <View className="flex-row flex-wrap gap-4 justify-center">
+          <Chip size="sm" variant="primary">
+            <AppText className="text-xs">📌</AppText>
+            <Chip.Label>Featured</Chip.Label>
+          </Chip>
+          <Chip size="md" variant="secondary" color="success">
+            <Ionicons name="add" size={16} color="#10B981" />
+            <Chip.Label>New</Chip.Label>
+          </Chip>
+          <Chip size="lg" variant="tertiary" color="warning">
+            <Ionicons name="star" size={12} color="#F59E0B" />
+            <Chip.Label>Premium</Chip.Label>
+          </Chip>
+        </View>
+
+        <View className="flex-row flex-wrap gap-4 justify-center">
+          <Chip size="md" variant="secondary">
+            <View className="size-1.5 mr-1.5 rounded-full bg-accent" />
+            <Chip.Label>Information</Chip.Label>
+          </Chip>
+          <Chip size="md" variant="secondary" color="success">
+            <View className="size-1.5 mr-1.5 rounded-full bg-success" />
+            <Chip.Label>Completed</Chip.Label>
+          </Chip>
+          <Chip size="md" variant="secondary" color="warning">
+            <View className="size-1.5 mr-1.5 rounded-full bg-warning" />
+            <Chip.Label>Pending</Chip.Label>
+          </Chip>
+          <Chip size="md" variant="secondary" color="danger">
+            <View className="size-1.5 mr-1.5 rounded-full bg-danger" />
+            <Chip.Label>Failed</Chip.Label>
+          </Chip>
+        </View>
+      </View>
+
+      <SectionTitle title="With End Content" />
+      <View className="flex-row gap-4 justify-center">
+        <Chip size="sm" variant="secondary">
+          <Chip.Label>Close</Chip.Label>
+          <Ionicons name="close" size={12} color="#6B7280" />
+        </Chip>
+        <Chip size="md" variant="primary" color="danger" className="pr-1.5">
+          <Chip.Label>Remove</Chip.Label>
+          <Ionicons name="close" size={16} color="white" />
+        </Chip>
+        <Chip
+          size="lg"
+          variant="tertiary"
+          color="accent"
+          className="pr-1.5 p-0.5 pl-2 gap-2"
+        >
+          <Chip.Label>Clear</Chip.Label>
+          <View
+            className={cn(
+              'rounded-full p-1',
+              isDark ? 'bg-neutral-700' : 'bg-neutral-200'
+            )}
+          >
+            <Ionicons
+              name="close"
+              size={12}
+              color={isDark ? 'white' : 'black'}
+            />
+          </View>
         </Chip>
       </View>
 

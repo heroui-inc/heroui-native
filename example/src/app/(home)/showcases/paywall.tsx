@@ -91,11 +91,9 @@ export default function Paywall() {
               size="sm"
               className="absolute -top-2.5 right-6 bg-rose-600 z-50"
             >
-              <Chip.LabelContent
-                classNames={{ text: 'text-white uppercase font-medium' }}
-              >
+              <Chip.Label className="text-white uppercase font-medium">
                 Best offer
-              </Chip.LabelContent>
+              </Chip.Label>
             </Chip>
             <StyledRadio
               value="yearly"

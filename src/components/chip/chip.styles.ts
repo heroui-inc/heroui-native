@@ -58,54 +58,25 @@ const root = tv({
   },
 });
 
-const startContent = tv({
-  base: 'items-center justify-center',
-});
-
-const labelContent = tv({
-  slots: {
-    container: 'items-center justify-center',
-    text: 'font-medium',
-  },
+const label = tv({
+  base: 'font-medium',
   variants: {
     variant: {
-      primary: {
-        text: '',
-      },
-      secondary: {
-        text: '',
-      },
-      tertiary: {
-        text: '',
-      },
+      primary: '',
+      secondary: '',
+      tertiary: '',
     },
     size: {
-      sm: {
-        text: 'text-xs',
-      },
-      md: {
-        text: 'text-sm',
-      },
-      lg: {
-        text: 'text-base',
-      },
+      sm: 'text-xs',
+      md: 'text-sm',
+      lg: 'text-base',
     },
     color: {
-      accent: {
-        text: '',
-      },
-      default: {
-        text: '',
-      },
-      success: {
-        text: '',
-      },
-      warning: {
-        text: '',
-      },
-      danger: {
-        text: '',
-      },
+      accent: '',
+      default: '',
+      success: '',
+      warning: '',
+      danger: '',
     },
   },
   compoundVariants: [
@@ -113,66 +84,48 @@ const labelContent = tv({
     {
       variant: 'primary',
       color: 'accent',
-      className: {
-        text: 'text-accent-foreground',
-      },
+      className: 'text-accent-foreground',
     },
     {
       variant: 'primary',
       color: 'default',
-      className: {
-        text: 'text-default-foreground',
-      },
+      className: 'text-default-foreground',
     },
     {
       variant: 'primary',
       color: 'success',
-      className: {
-        text: 'text-success-foreground',
-      },
+      className: 'text-success-foreground',
     },
     {
       variant: 'primary',
       color: 'warning',
-      className: {
-        text: 'text-warning-foreground',
-      },
+      className: 'text-warning-foreground',
     },
     {
       variant: 'primary',
       color: 'danger',
-      className: {
-        text: 'text-danger-foreground',
-      },
+      className: 'text-danger-foreground',
     },
     // Secondary & Tertiary variant text colors
     {
       variant: ['secondary', 'tertiary'],
       color: ['accent', 'default'],
-      className: {
-        text: 'text-foreground',
-      },
+      className: 'text-foreground',
     },
     {
       variant: ['secondary', 'tertiary'],
       color: 'success',
-      className: {
-        text: 'text-success',
-      },
+      className: 'text-success',
     },
     {
       variant: ['secondary', 'tertiary'],
       color: 'warning',
-      className: {
-        text: 'text-warning',
-      },
+      className: 'text-warning',
     },
     {
       variant: ['secondary', 'tertiary'],
       color: 'danger',
-      className: {
-        text: 'text-danger',
-      },
+      className: 'text-danger',
     },
   ],
   defaultVariants: {
@@ -182,27 +135,16 @@ const labelContent = tv({
   },
 });
 
-const endContent = tv({
-  base: 'items-center justify-center',
+const chipStyles = combineStyles({
+  root,
+  label,
 });
 
-const background = tv({
-  base: 'absolute inset-0 rounded-full',
-});
-
-export const nativeStyles = StyleSheet.create({
+export const stylesheet = StyleSheet.create({
   root: {
     borderCurve: 'continuous',
   },
 });
 
-const chipStyles = combineStyles({
-  root,
-  startContent,
-  labelContent,
-  endContent,
-  background,
-});
-
-export type LabelContentSlots = keyof ReturnType<typeof labelContent>;
+export type LabelContentSlots = keyof ReturnType<typeof label>;
 export default chipStyles;

@@ -4,7 +4,7 @@ import Animated from 'react-native-reanimated';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
 import { DEFAULT_LAYOUT_TRANSITION, DISPLAY_NAME } from './chip.constants';
-import chipStyles, { stylesheet } from './chip.styles';
+import chipStyles, { styleSheet } from './chip.styles';
 import type { ChipContextValue, ChipLabelProps, ChipProps } from './chip.types';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -52,7 +52,7 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
         ref={ref}
         layout={layout}
         className={tvStyles}
-        style={[stylesheet.root, style]}
+        style={[styleSheet.root, style]}
         {...restProps}
       >
         {stringifiedChildren ? (

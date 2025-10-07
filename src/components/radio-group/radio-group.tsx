@@ -10,7 +10,7 @@ import { useTheme } from '../../providers/theme';
 import { ErrorView } from '../error-view';
 import { FormField } from '../form-field';
 import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './radio-group.constants';
-import radioGroupStyles, { stylesheet } from './radio-group.styles';
+import radioGroupStyles, { styleSheet } from './radio-group.styles';
 import type {
   RadioGroupDescriptionProps,
   RadioGroupErrorMessageProps,
@@ -154,7 +154,7 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
       <AnimatedRadioIndicator
         ref={ref}
         className={tvStyles}
-        style={[stylesheet.borderCurve, style]}
+        style={[styleSheet.borderCurve, style]}
         {...restProps}
       >
         {children ?? thumbElement}

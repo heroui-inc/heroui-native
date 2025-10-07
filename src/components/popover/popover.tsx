@@ -27,7 +27,7 @@ import {
   SPRING_CONFIG_CLOSE,
   SPRING_CONFIG_OPEN,
 } from './popover.constants';
-import popoverStyles, { nativeStyles } from './popover.styles';
+import popoverStyles, { styleSheet } from './popover.styles';
 import type {
   PopoverArrowProps,
   PopoverCloseProps,
@@ -238,7 +238,7 @@ const PopoverContentPopover = forwardRef<
     });
 
     const flatStyle = StyleSheet.flatten([
-      nativeStyles.contentContainer,
+      styleSheet.contentContainer,
       rContainerStyle,
       style,
     ]);

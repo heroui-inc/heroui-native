@@ -1,6 +1,4 @@
 import { Easing, LinearTransition } from 'react-native-reanimated';
-import type { ColorConstants } from '../../providers/theme/types';
-import type { ButtonVariant } from './button.types';
 
 /**
  * Display names for Button components
@@ -8,7 +6,6 @@ import type { ButtonVariant } from './button.types';
 export const DISPLAY_NAME = {
   BUTTON_ROOT: 'HeroUINative.Button.Root',
   BUTTON_LABEL: 'HeroUINative.Button.Label',
-  BACKGROUND: 'HeroUINative.Button.Background',
 };
 
 /**
@@ -20,45 +17,5 @@ export const ANIMATION_DURATION = 125;
  * Default animation easing function
  */
 export const ANIMATION_EASING = Easing.bezier(0.25, 0.1, 0.25, 1);
-
-/**
- * Highlight animation configuration
- */
-export const HIGHLIGHT_CONFIG = {
-  duration: ANIMATION_DURATION,
-  easing: ANIMATION_EASING,
-};
-
-/**
- * Alpha values for highlight effect based on theme and variant
- */
-export const OPACITY_ALPHA_MAP = {
-  light: {
-    primary: 0.1,
-    secondary: 0.05,
-    tertiary: 0.02,
-    ghost: 0.03,
-    danger: 0.12,
-  },
-  dark: {
-    primary: 0.07,
-    secondary: 0.08,
-    tertiary: 0.03,
-    ghost: 0.05,
-    danger: 0.1,
-  },
-} as const;
-
-/**
- * Map of button variant to theme color property
- */
-export const VARIANT_TO_COLOR_MAP: Record<ButtonVariant, keyof ColorConstants> =
-  {
-    primary: 'accentForeground',
-    secondary: 'accentSoftForeground',
-    tertiary: 'defaultForeground',
-    ghost: 'foreground',
-    danger: 'dangerForeground',
-  };
 
 export const DEFAULT_LAYOUT_TRANSITION = LinearTransition.springify();

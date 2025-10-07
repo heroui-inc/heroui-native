@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Spinner, useTheme } from 'heroui-native';
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { FadeIn } from 'react-native-reanimated';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
@@ -138,14 +138,12 @@ export default function ButtonScreen() {
           </Button.Label>
         </Button>
         <Button>
-          <Button.Background>
-            <LinearGradient
-              colors={['#9333ea', '#ec4899']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={{ flex: 1 }}
-            />
-          </Button.Background>
+          <LinearGradient
+            colors={['#9333ea', '#ec4899']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={StyleSheet.absoluteFill}
+          />
           <Button.Label className="text-white font-bold">Gradient</Button.Label>
         </Button>
       </View>
@@ -171,36 +169,6 @@ export default function ButtonScreen() {
           'Download now'
         )}
       </Button>
-
-      <SectionTitle title="Custom Animation" />
-      <View className="gap-8">
-        <Button
-          animationConfig={{
-            highlight: {
-              config: {
-                duration: 10,
-              },
-            },
-          }}
-          onPress={() => console.log('Fast animation')}
-        >
-          <Button.Label>Fast Highlight Animation</Button.Label>
-        </Button>
-        <Button
-          animationConfig={{
-            scale: {
-              value: 0.9,
-              config: {
-                duration: 500,
-              },
-            },
-          }}
-          variant="secondary"
-          onPress={() => console.log('Slow animation')}
-        >
-          <Button.Label>Slow Scale Animation</Button.Label>
-        </Button>
-      </View>
     </ScreenScrollView>
   );
 }

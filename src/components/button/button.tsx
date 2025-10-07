@@ -8,20 +8,14 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
-import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
-import { useTheme } from '../../providers/theme';
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
   DEFAULT_LAYOUT_TRANSITION,
   DISPLAY_NAME,
-  HIGHLIGHT_CONFIG,
-  OPACITY_ALPHA_MAP,
-  VARIANT_TO_COLOR_MAP,
 } from './button.constants';
-import buttonStyles, { nativeStyles } from './button.styles';
+import buttonStyles, { styleSheet } from './button.styles';
 import type {
-  ButtonBackgroundProps,
   ButtonContextValue,
   ButtonLabelProps,
   ButtonRootProps,
@@ -46,10 +40,6 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     isDisabled = false,
     className,
     style,
-    disableAnimation = {
-      scale: false,
-      highlight: false,
-    },
     animationConfig,
     onPressIn,
     onPressOut,
@@ -58,18 +48,6 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   } = props;
 
   const stringifiedChildren = childrenToString(children);
-
-  const backgroundElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.BACKGROUND,
-        <ButtonBackground />
-      ),
-    [children]
-  );
-
-  const { isDark, colors } = useTheme();
 
   const tvStyles = buttonStyles.root({
     variant,
@@ -80,16 +58,18 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   });
 
   const scale = useSharedValue(0);
-  const highlightOpacityValue = useSharedValue(0);
   const btnWidth = useSharedValue(0);
 
+  const isAnimationDisabled = animationConfig?.isAnimationDisabled ?? false;
+
   const scaleValue = useMemo(
-    () => animationConfig?.scale?.value ?? 0.995,
+    () => animationConfig?.targetScaleValue ?? 0.995,
     [animationConfig]
   );
+
   const scaleConfig = useMemo(
     () =>
-      animationConfig?.scale?.config ?? {
+      animationConfig?.timingConfig ?? {
         duration: ANIMATION_DURATION,
         easing: ANIMATION_EASING,
       },
@@ -110,85 +90,28 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     };
   });
 
-  const defaultOpacity = useMemo(() => {
-    return OPACITY_ALPHA_MAP[isDark ? 'dark' : 'light'][variant];
-  }, [variant, isDark]);
-
-  const finalHighlightOpacity =
-    animationConfig?.highlight?.opacity ?? defaultOpacity;
-
-  const highlightColorValue = useMemo(() => {
-    if (animationConfig?.highlight?.color)
-      return animationConfig?.highlight?.color;
-    const colorKey = VARIANT_TO_COLOR_MAP[variant];
-    return colors[colorKey];
-  }, [animationConfig?.highlight?.color, variant, colors]);
-
-  const animatedBackgroundStyle = useAnimatedStyle(() => {
-    return {
-      opacity: highlightOpacityValue.get() * finalHighlightOpacity,
-      backgroundColor: highlightColorValue,
-    };
-  });
-
   const handlePressIn = useCallback(
     (e: GestureResponderEvent) => {
-      if (!disableAnimation.scale) {
+      if (!isAnimationDisabled) {
         scale.set(withTiming(1, scaleConfig));
-      }
-      if (!disableAnimation.highlight) {
-        highlightOpacityValue.set(
-          withTiming(
-            1,
-            animationConfig?.highlight?.config || {
-              duration: HIGHLIGHT_CONFIG.duration,
-              easing: HIGHLIGHT_CONFIG.easing,
-            }
-          )
-        );
       }
       if (onPressIn && typeof onPressIn === 'function') {
         onPressIn(e);
       }
     },
-    [
-      scale,
-      scaleConfig,
-      onPressIn,
-      disableAnimation,
-      animationConfig,
-      highlightOpacityValue,
-    ]
+    [scale, scaleConfig, onPressIn, isAnimationDisabled]
   );
 
   const handlePressOut = useCallback(
     (e: GestureResponderEvent) => {
-      if (!disableAnimation.scale) {
+      if (!isAnimationDisabled) {
         scale.set(withTiming(0, scaleConfig));
-      }
-      if (!disableAnimation.highlight) {
-        highlightOpacityValue.set(
-          withTiming(
-            0,
-            animationConfig?.highlight?.config || {
-              duration: HIGHLIGHT_CONFIG.duration,
-              easing: HIGHLIGHT_CONFIG.easing,
-            }
-          )
-        );
       }
       if (onPressOut && typeof onPressOut === 'function') {
         onPressOut(e);
       }
     },
-    [
-      scale,
-      scaleConfig,
-      onPressOut,
-      disableAnimation,
-      animationConfig,
-      highlightOpacityValue,
-    ]
+    [scale, scaleConfig, onPressOut, isAnimationDisabled]
   );
 
   const contextValue = useMemo(
@@ -214,7 +137,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         ref={ref}
         layout={skipLayoutAnimation ? undefined : layout}
         className={tvStyles}
-        style={[nativeStyles.buttonRoot, animatedContainerStyle, style]}
+        style={[styleSheet.buttonRoot, animatedContainerStyle, style]}
         disabled={isDisabled}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
@@ -223,8 +146,6 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         accessibilityState={{ disabled: isDisabled }}
         {...restProps}
       >
-        {backgroundElement}
-        <ButtonBackground style={animatedBackgroundStyle} />
         {stringifiedChildren ? (
           <ButtonLabel>{stringifiedChildren}</ButtonLabel>
         ) : (
@@ -262,42 +183,8 @@ const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const ButtonBackground = forwardRef<View, ButtonBackgroundProps>(
-  (props, ref) => {
-    const { size, layout: contextLayout } = useButtonContext();
-
-    const {
-      children,
-      layout: layoutProp,
-      className,
-      style,
-      ...restProps
-    } = props;
-
-    const tvStyles = buttonStyles.background({
-      size,
-      className,
-    });
-
-    return (
-      <Animated.View
-        ref={ref}
-        layout={layoutProp || contextLayout}
-        className={tvStyles}
-        style={[nativeStyles.background, style]}
-        {...restProps}
-      >
-        {children}
-      </Animated.View>
-    );
-  }
-);
-
-// --------------------------------------------------
-
 ButtonRoot.displayName = DISPLAY_NAME.BUTTON_ROOT;
 ButtonLabel.displayName = DISPLAY_NAME.BUTTON_LABEL;
-ButtonBackground.displayName = DISPLAY_NAME.BACKGROUND;
 
 /**
  * Compound Button component with sub-components
@@ -308,9 +195,6 @@ ButtonBackground.displayName = DISPLAY_NAME.BACKGROUND;
  * @component Button.Label - Text content of the button. When string is provided,
  * it renders as Text. Otherwise renders children as-is.
  *
- * @component Button.Background - Optional background element with absolute positioning.
- * Rendered beneath all other content. Use for gradients or custom backgrounds.
- *
  * Props flow from Button to sub-components via context (size, variant, isDisabled).
  * All components use animated views with layout transitions for smooth animations.
  *
@@ -319,8 +203,6 @@ ButtonBackground.displayName = DISPLAY_NAME.BACKGROUND;
 const CompoundButton = Object.assign(ButtonRoot, {
   /** Button label - renders text or custom content */
   Label: ButtonLabel,
-  /** @optional Background element - absolute positioned beneath content */
-  Background: ButtonBackground,
 });
 
 export { useButtonContext };

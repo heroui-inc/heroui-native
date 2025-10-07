@@ -22,58 +22,23 @@ export type ButtonVariant =
   | 'danger';
 
 /**
- * Configuration for disabling button animations
- */
-export interface DisableAnimation {
-  /**
-   * Whether to disable the scale animation
-   * @default false
-   */
-  scale?: boolean;
-  /**
-   * Whether to disable the highlight animation
-   * @default false
-   */
-  highlight?: boolean;
-}
-
-/**
  * Configuration for button animations
  */
 export interface AnimationConfig {
   /**
-   * Animation configuration for scale
+   * Whether to disable the animation
+   * @default false
    */
-  scale?: {
-    /**
-     * Animation target value for scale
-     * @default 0.995
-     */
-    value?: number;
-    /**
-     * Animation configuration for scale
-     */
-    config?: TimingConfig;
-  };
+  isAnimationDisabled?: boolean;
   /**
-   * Animation configuration for highlight
+   * Animation target value for scale
+   * @default 0.995
    */
-  highlight?: {
-    /**
-     * Animation target color for highlight
-     * @default 'transparent'
-     */
-    color?: string;
-    /**
-     * Animation target opacity for highlight
-     * @default varies by variant and theme
-     */
-    opacity?: number;
-    /**
-     * Animation configuration for highlight
-     */
-    config?: TimingConfig;
-  };
+  targetScaleValue?: number;
+  /**
+   * Animation timing configuration
+   */
+  timingConfig?: TimingConfig;
 }
 
 /**
@@ -109,12 +74,7 @@ export interface ButtonRootProps extends AnimatedProps<PressableProps> {
    */
   className?: string;
   /**
-   * Whether to disable the animation (scale and/or highlight)
-   * @default false
-   */
-  disableAnimation?: DisableAnimation;
-  /**
-   * Animation configuration for press states (scale and highlight)
+   * Animation configuration for press states
    */
   animationConfig?: AnimationConfig;
   /**
@@ -122,20 +82,6 @@ export interface ButtonRootProps extends AnimatedProps<PressableProps> {
    * @default false
    */
   skipLayoutAnimation?: boolean;
-}
-
-/**
- * Props for the Button.Background component
- */
-export interface ButtonBackgroundProps extends AnimatedProps<ViewProps> {
-  /**
-   * Content to be rendered as the button background
-   */
-  children?: React.ReactNode;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
 }
 
 /**

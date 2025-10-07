@@ -91,7 +91,7 @@ const radioGroupStyles = combineStyles({
   itemIndicatorThumb,
 });
 
-export const stylesheet = StyleSheet.create({
+export const styleSheet = StyleSheet.create({
   borderCurve: {
     borderCurve: 'continuous',
   },

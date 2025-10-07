@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { View } from 'react-native';
 import type { ViewRef } from '../../helpers/types/primitives';
 import { DISPLAY_NAME } from './surface.constants';
-import surfaceStyles, { nativeStyles } from './surface.styles';
+import surfaceStyles, { styleSheet } from './surface.styles';
 import type { SurfaceRootProps } from './surface.types';
 
 const Surface = forwardRef<ViewRef, SurfaceRootProps>(
@@ -13,7 +13,7 @@ const Surface = forwardRef<ViewRef, SurfaceRootProps>(
       <View
         ref={ref}
         className={tvStyles}
-        style={[nativeStyles.surfaceRoot, style]}
+        style={[styleSheet.surfaceRoot, style]}
         {...props}
       >
         {children}

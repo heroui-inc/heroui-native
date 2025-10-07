@@ -140,7 +140,7 @@ const chipStyles = combineStyles({
   label,
 });
 
-export const stylesheet = StyleSheet.create({
+export const styleSheet = StyleSheet.create({
   root: {
     borderCurve: 'continuous',
   },

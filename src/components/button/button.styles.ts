@@ -54,25 +54,8 @@ const label = tv({
   },
 });
 
-const background = tv({
-  base: 'absolute inset-0 overflow-hidden',
-  variants: {
-    size: {
-      sm: 'rounded-md',
-      md: 'rounded-lg',
-      lg: 'rounded-lg',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-});
-
-export const nativeStyles = StyleSheet.create({
+export const styleSheet = StyleSheet.create({
   buttonRoot: {
-    borderCurve: 'continuous',
-  },
-  background: {
     borderCurve: 'continuous',
   },
 });
@@ -80,7 +63,6 @@ export const nativeStyles = StyleSheet.create({
 const buttonStyles = combineStyles({
   root,
   label,
-  background,
 });
 
 export default buttonStyles;

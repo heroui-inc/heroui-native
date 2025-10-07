@@ -20,7 +20,7 @@ import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import { useTheme } from '../../providers/theme';
 import { CloseIcon } from './close-icon';
 import { DISPLAY_NAME } from './dialog.constants';
-import dialogStyles, { nativeStyles } from './dialog.styles';
+import dialogStyles, { styleSheet } from './dialog.styles';
 import type {
   DialogCloseProps,
   DialogContentProps,
@@ -348,7 +348,7 @@ const DialogContent = forwardRef<
           <AnimatedContent
             ref={ref}
             className={tvStyles}
-            style={[nativeStyles.contentContainer, rContainerStyle, style]}
+            style={[styleSheet.contentContainer, rContainerStyle, style]}
             {...props}
           >
             {children}

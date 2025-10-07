@@ -1,0 +1,156 @@
+# Chip
+
+Displays a compact element in a capsule shape.
+
+## Imports
+
+Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+
+```tsx
+import { Chip } from 'heroui-native';
+```
+
+## Usage
+
+### Basic Usage
+
+The Chip component displays text or custom content in a capsule shape.
+
+```tsx
+<Chip>Basic Chip</Chip>
+```
+
+### Sizes
+
+Control the chip size with the `size` prop.
+
+```tsx
+<Chip size="sm">Small</Chip>
+<Chip size="md">Medium</Chip>
+<Chip size="lg">Large</Chip>
+```
+
+### Variants
+
+Choose between different visual styles with the `variant` prop.
+
+```tsx
+<Chip variant="primary">Primary</Chip>
+<Chip variant="secondary">Secondary</Chip>
+<Chip variant="tertiary">Tertiary</Chip>
+```
+
+### Colors
+
+Apply different color themes with the `color` prop.
+
+```tsx
+<Chip color="accent">Accent</Chip>
+<Chip color="default">Default</Chip>
+<Chip color="success">Success</Chip>
+<Chip color="warning">Warning</Chip>
+<Chip color="danger">Danger</Chip>
+```
+
+### With Icons
+
+Add icons or custom content alongside text using compound components.
+
+```tsx
+<Chip>
+  <Icon name="star" size={12} />
+  <Chip.Label>Featured</Chip.Label>
+</Chip>
+
+<Chip>
+  <Chip.Label>Close</Chip.Label>
+  <Icon name="close" size={12} />
+</Chip>
+```
+
+### Custom Styling
+
+Apply custom styles using className or style props.
+
+```tsx
+<Chip className="bg-purple-600 px-6">
+  <Chip.Label className="text-white">Custom</Chip.Label>
+</Chip>
+```
+
+## Example
+
+```tsx
+import { Chip } from 'heroui-native';
+import { View, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+export default function ChipExample() {
+  return (
+    <View className="gap-4 p-4">
+      <View className="flex-row flex-wrap gap-2">
+        <Chip size="sm">Small</Chip>
+        <Chip size="md">Medium</Chip>
+        <Chip size="lg">Large</Chip>
+      </View>
+
+      <View className="flex-row flex-wrap gap-2">
+        <Chip variant="primary" color="accent">
+          Primary
+        </Chip>
+        <Chip variant="secondary" color="success">
+          <View className="size-1.5 rounded-full bg-success" />
+          <Chip.Label>Success</Chip.Label>
+        </Chip>
+        <Chip variant="tertiary" color="warning">
+          <Ionicons name="star" size={12} color="#F59E0B" />
+          <Chip.Label>Premium</Chip.Label>
+        </Chip>
+      </View>
+
+      <View className="flex-row gap-2">
+        <Chip variant="secondary">
+          <Chip.Label>Remove</Chip.Label>
+          <Ionicons name="close" size={14} color="#6B7280" />
+        </Chip>
+        <Chip className="bg-purple-600">
+          <Chip.Label className="text-white font-semibold">Custom</Chip.Label>
+        </Chip>
+      </View>
+    </View>
+  );
+}
+```
+
+## Anatomy
+
+```tsx
+<Chip>
+  <Chip.Label>...</Chip.Label>
+</Chip>
+```
+
+- **Chip**: Main container that displays a compact element
+- **Chip.Label**: Text content of the chip
+
+## API Reference
+
+### Chip
+
+| prop                         | type                                                          | default                        | description                                          |
+| ---------------------------- | ------------------------------------------------------------- | ------------------------------ | ---------------------------------------------------- |
+| `children`                   | `React.ReactNode`                                             | -                              | Content to render inside the chip                    |
+| `size`                       | `'sm' \| 'md' \| 'lg'`                                        | `'md'`                         | Size of the chip                                     |
+| `variant`                    | `'primary' \| 'secondary' \| 'tertiary'`                      | `'primary'`                    | Visual variant of the chip                           |
+| `color`                      | `'accent' \| 'default' \| 'success' \| 'warning' \| 'danger'` | `'accent'`                     | Color theme of the chip                              |
+| `className`                  | `string`                                                      | -                              | Additional CSS classes to apply                      |
+| `layout`                     | `BaseAnimationBuilder \| LayoutAnimationFunction`             | `LinearTransition.springify()` | Layout transition for animated components            |
+| `...Animated.PressableProps` | `Animated.PressableProps`                                     | -                              | All Reanimated AnimatedPressable props are supported |
+
+### Chip.Label
+
+| prop                    | type                 | default | description                                     |
+| ----------------------- | -------------------- | ------- | ----------------------------------------------- |
+| `children`              | `React.ReactNode`    | -       | Text or content to render as the label          |
+| `className`             | `string`             | -       | Additional CSS classes to apply                 |
+| `...Animated.TextProps` | `Animated.TextProps` | -       | All Reanimated AnimatedText props are supported |

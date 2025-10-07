@@ -6,10 +6,8 @@ import type { ButtonVariant } from './button.types';
  * Display names for Button components
  */
 export const DISPLAY_NAME = {
-  ROOT: 'HeroUINative.Button.Root',
-  LABEL_CONTENT: 'HeroUINative.Button.LabelContent',
-  START_CONTENT: 'HeroUINative.Button.StartContent',
-  END_CONTENT: 'HeroUINative.Button.EndContent',
+  BUTTON_ROOT: 'HeroUINative.Button.Root',
+  BUTTON_LABEL: 'HeroUINative.Button.Label',
   BACKGROUND: 'HeroUINative.Button.Background',
 };
 

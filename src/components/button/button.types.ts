@@ -1,12 +1,10 @@
-import type { PressableProps, TextProps, ViewProps } from 'react-native';
+import type { PressableProps, ViewProps } from 'react-native';
 import type {
   AnimatedProps,
   BaseAnimationBuilder,
   LayoutAnimationFunction,
 } from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
-import type { ElementSlots } from '../../providers/theme';
-import type { LabelContentSlots } from './button.styles';
 
 /**
  * Size variants for the Button component
@@ -141,47 +139,11 @@ export interface ButtonBackgroundProps extends AnimatedProps<ViewProps> {
 }
 
 /**
- * Props for the Button.StartContent component
+ * Props for the Button.Label component
  */
-export interface ButtonStartContentProps extends AnimatedProps<ViewProps> {
+export interface ButtonLabelProps extends AnimatedProps<ViewProps> {
   /**
-   * Content to be rendered at the start of the button
-   */
-  children?: React.ReactNode;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-}
-
-/**
- * Props for the Button.LabelContent component
- */
-export interface ButtonLabelContentProps extends AnimatedProps<ViewProps> {
-  /**
-   * Content to be rendered as label. If string, will be wrapped in Text component
-   */
-  children?: React.ReactNode;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-  /**
-   * Additional CSS classes for the different parts of the label
-   */
-  classNames?: ElementSlots<LabelContentSlots>;
-  /**
-   * Additional props to pass to the Text component when children is a string
-   */
-  textProps?: TextProps;
-}
-
-/**
- * Props for the Button.EndContent component
- */
-export interface ButtonEndContentProps extends AnimatedProps<ViewProps> {
-  /**
-   * Content to be rendered at the end of the button
+   * Content to be rendered as label
    */
   children?: React.ReactNode;
   /**

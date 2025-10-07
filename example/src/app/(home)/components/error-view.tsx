@@ -168,9 +168,7 @@ export default function ErrorViewScreen() {
           size="sm"
           className="self-start"
         >
-          <Button.LabelContent>
-            {showMultipleErrors ? 'Hide All Errors' : 'Show All Errors'}
-          </Button.LabelContent>
+          {showMultipleErrors ? 'Hide All Errors' : 'Show All Errors'}
         </Button>
         <View className="gap-2">
           <TextField>

@@ -469,7 +469,13 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
 
     const tvStyles = popoverStyles.arrow({ className });
 
-    if (!triggerPosition || !contentLayout || !placement) {
+    if (
+      !triggerPosition ||
+      !contentLayout ||
+      contentLayout.x === 0 ||
+      contentLayout.y === 0 ||
+      !placement
+    ) {
       return null;
     }
 
@@ -494,7 +500,6 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
               contentLayout.width - width - 12
             ),
           };
-
         case 'bottom':
           return {
             ...baseStyle,
@@ -524,17 +529,18 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
               contentLayout.height - width - 12
             ),
           };
-
         default:
           return baseStyle;
       }
     };
 
+    const arrowPositionStyle = getArrowPosition();
+
     return (
-      <View
+      <Animated.View
         ref={ref}
         className={tvStyles}
-        style={[getArrowPosition(), style]}
+        style={[arrowPositionStyle, style]}
         pointerEvents="none"
       >
         {children ? (
@@ -549,7 +555,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
             strokeWidth={strokeWidth}
           />
         )}
-      </View>
+      </Animated.View>
     );
   }
 );

@@ -1,10 +1,8 @@
 export { default as Button, useButtonContext } from './button';
 export type {
   ButtonContextValue,
-  ButtonEndContentProps,
-  ButtonLabelContentProps,
+  ButtonLabelProps,
   ButtonRootProps,
   ButtonSize,
-  ButtonStartContentProps,
   ButtonVariant,
 } from './button.types';

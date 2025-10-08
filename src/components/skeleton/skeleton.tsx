@@ -36,7 +36,7 @@ import {
   DEFAULT_SPEED,
   DISPLAY_NAME,
 } from './skeleton.constants';
-import skeletonStyles, { nativeStyles } from './skeleton.styles';
+import styleSheet, { nativeStyles } from './skeleton.styles';
 import type { SkeletonContextValue, SkeletonProps } from './skeleton.types';
 
 const [SkeletonProvider, useSkeletonContext] =
@@ -152,7 +152,7 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
   const pulseDuration = pulseConfig?.duration ?? DEFAULT_PULSE_DURATION;
   const pulseEasing = pulseConfig?.easing ?? Easing.inOut(Easing.ease);
 
-  const tvStyles = skeletonStyles.skeleton({ className });
+  const tvStyles = styleSheet.skeleton({ className });
 
   useEffect(() => {
     if (isLoading && animationType !== 'none') {

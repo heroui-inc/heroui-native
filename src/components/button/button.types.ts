@@ -1,12 +1,10 @@
-import type { PressableProps, TextProps, ViewProps } from 'react-native';
+import type { PressableProps, ViewProps } from 'react-native';
 import type {
   AnimatedProps,
   BaseAnimationBuilder,
   LayoutAnimationFunction,
 } from 'react-native-reanimated';
 import type { TimingConfig } from '../../helpers/types';
-import type { ElementSlots } from '../../providers/theme';
-import type { LabelContentSlots } from './button.styles';
 
 /**
  * Size variants for the Button component
@@ -24,58 +22,23 @@ export type ButtonVariant =
   | 'danger';
 
 /**
- * Configuration for disabling button animations
- */
-export interface DisableAnimation {
-  /**
-   * Whether to disable the scale animation
-   * @default false
-   */
-  scale?: boolean;
-  /**
-   * Whether to disable the highlight animation
-   * @default false
-   */
-  highlight?: boolean;
-}
-
-/**
  * Configuration for button animations
  */
 export interface AnimationConfig {
   /**
-   * Animation configuration for scale
+   * Whether to disable the animation
+   * @default false
    */
-  scale?: {
-    /**
-     * Animation target value for scale
-     * @default 0.995
-     */
-    value?: number;
-    /**
-     * Animation configuration for scale
-     */
-    config?: TimingConfig;
-  };
+  isAnimationDisabled?: boolean;
   /**
-   * Animation configuration for highlight
+   * Animation target value for scale
+   * @default 0.995
    */
-  highlight?: {
-    /**
-     * Animation target color for highlight
-     * @default 'transparent'
-     */
-    color?: string;
-    /**
-     * Animation target opacity for highlight
-     * @default varies by variant and theme
-     */
-    opacity?: number;
-    /**
-     * Animation configuration for highlight
-     */
-    config?: TimingConfig;
-  };
+  targetScaleValue?: number;
+  /**
+   * Animation timing configuration
+   */
+  timingConfig?: TimingConfig;
 }
 
 /**
@@ -111,12 +74,7 @@ export interface ButtonRootProps extends AnimatedProps<PressableProps> {
    */
   className?: string;
   /**
-   * Whether to disable the animation (scale and/or highlight)
-   * @default false
-   */
-  disableAnimation?: DisableAnimation;
-  /**
-   * Animation configuration for press states (scale and highlight)
+   * Scale on press animation configuration
    */
   animationConfig?: AnimationConfig;
   /**
@@ -127,61 +85,11 @@ export interface ButtonRootProps extends AnimatedProps<PressableProps> {
 }
 
 /**
- * Props for the Button.Background component
+ * Props for the Button.Label component
  */
-export interface ButtonBackgroundProps extends AnimatedProps<ViewProps> {
+export interface ButtonLabelProps extends AnimatedProps<ViewProps> {
   /**
-   * Content to be rendered as the button background
-   */
-  children?: React.ReactNode;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-}
-
-/**
- * Props for the Button.StartContent component
- */
-export interface ButtonStartContentProps extends AnimatedProps<ViewProps> {
-  /**
-   * Content to be rendered at the start of the button
-   */
-  children?: React.ReactNode;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-}
-
-/**
- * Props for the Button.LabelContent component
- */
-export interface ButtonLabelContentProps extends AnimatedProps<ViewProps> {
-  /**
-   * Content to be rendered as label. If string, will be wrapped in Text component
-   */
-  children?: React.ReactNode;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-  /**
-   * Additional CSS classes for the different parts of the label
-   */
-  classNames?: ElementSlots<LabelContentSlots>;
-  /**
-   * Additional props to pass to the Text component when children is a string
-   */
-  textProps?: TextProps;
-}
-
-/**
- * Props for the Button.EndContent component
- */
-export interface ButtonEndContentProps extends AnimatedProps<ViewProps> {
-  /**
-   * Content to be rendered at the end of the button
+   * Content to be rendered as label
    */
   children?: React.ReactNode;
   /**

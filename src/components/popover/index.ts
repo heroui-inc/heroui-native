@@ -1,4 +1,4 @@
-export { default as Popover } from './popover';
+export { default as Popover, usePopover } from './popover';
 export type {
   PopoverAlign,
   PopoverArrowProps,

@@ -89,7 +89,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
         className={containerStyles}
         style={
           variant === 'border'
-            ? accordionStyles.nativeStyles.borderContainer
+            ? accordionStyles.styleSheet.borderContainer
             : undefined
         }
         layout={layout}

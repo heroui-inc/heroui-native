@@ -6,32 +6,19 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { Text } from '../../helpers/components';
 import type { PressableRef } from '../../helpers/types';
-import {
-  childrenToString,
-  createContext,
-  getElementByDisplayName,
-} from '../../helpers/utils';
-import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
-import { useTheme } from '../../providers/theme';
+import { childrenToString, createContext } from '../../helpers/utils';
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
   DEFAULT_LAYOUT_TRANSITION,
   DISPLAY_NAME,
-  HIGHLIGHT_CONFIG,
-  OPACITY_ALPHA_MAP,
-  VARIANT_TO_COLOR_MAP,
 } from './button.constants';
-import buttonStyles, { nativeStyles } from './button.styles';
+import buttonStyles, { styleSheet } from './button.styles';
 import type {
-  ButtonBackgroundProps,
   ButtonContextValue,
-  ButtonEndContentProps,
-  ButtonLabelContentProps,
+  ButtonLabelProps,
   ButtonRootProps,
-  ButtonStartContentProps,
 } from './button.types';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -53,10 +40,6 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     isDisabled = false,
     className,
     style,
-    disableAnimation = {
-      scale: false,
-      highlight: false,
-    },
     animationConfig,
     onPressIn,
     onPressOut,
@@ -64,41 +47,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const startContentElement = useMemo(
-    () => getElementByDisplayName(children, DISPLAY_NAME.START_CONTENT),
-    [children]
-  );
-
-  const labelElement = useMemo(() => {
-    const stringifiedChildren = childrenToString(children);
-
-    return getElementWithDefault(
-      children,
-      DISPLAY_NAME.LABEL_CONTENT,
-      stringifiedChildren ? (
-        <ButtonLabelContent>{stringifiedChildren}</ButtonLabelContent>
-      ) : (
-        <ButtonLabelContent />
-      )
-    );
-  }, [children]);
-
-  const endContentElement = useMemo(
-    () => getElementByDisplayName(children, DISPLAY_NAME.END_CONTENT),
-    [children]
-  );
-
-  const backgroundElement = useMemo(
-    () =>
-      getElementWithDefault(
-        children,
-        DISPLAY_NAME.BACKGROUND,
-        <ButtonBackground />
-      ),
-    [children]
-  );
-
-  const { isDark, colors } = useTheme();
+  const stringifiedChildren = childrenToString(children);
 
   const tvStyles = buttonStyles.root({
     variant,
@@ -109,16 +58,18 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   });
 
   const scale = useSharedValue(0);
-  const highlightOpacityValue = useSharedValue(0);
   const btnWidth = useSharedValue(0);
 
+  const isAnimationDisabled = animationConfig?.isAnimationDisabled ?? false;
+
   const scaleValue = useMemo(
-    () => animationConfig?.scale?.value ?? 0.995,
+    () => animationConfig?.targetScaleValue ?? 0.995,
     [animationConfig]
   );
+
   const scaleConfig = useMemo(
     () =>
-      animationConfig?.scale?.config ?? {
+      animationConfig?.timingConfig ?? {
         duration: ANIMATION_DURATION,
         easing: ANIMATION_EASING,
       },
@@ -139,85 +90,28 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     };
   });
 
-  const defaultOpacity = useMemo(() => {
-    return OPACITY_ALPHA_MAP[isDark ? 'dark' : 'light'][variant];
-  }, [variant, isDark]);
-
-  const finalHighlightOpacity =
-    animationConfig?.highlight?.opacity ?? defaultOpacity;
-
-  const highlightColorValue = useMemo(() => {
-    if (animationConfig?.highlight?.color)
-      return animationConfig?.highlight?.color;
-    const colorKey = VARIANT_TO_COLOR_MAP[variant];
-    return colors[colorKey];
-  }, [animationConfig?.highlight?.color, variant, colors]);
-
-  const animatedBackgroundStyle = useAnimatedStyle(() => {
-    return {
-      opacity: highlightOpacityValue.get() * finalHighlightOpacity,
-      backgroundColor: highlightColorValue,
-    };
-  });
-
   const handlePressIn = useCallback(
     (e: GestureResponderEvent) => {
-      if (!disableAnimation.scale) {
+      if (!isAnimationDisabled) {
         scale.set(withTiming(1, scaleConfig));
-      }
-      if (!disableAnimation.highlight) {
-        highlightOpacityValue.set(
-          withTiming(
-            1,
-            animationConfig?.highlight?.config || {
-              duration: HIGHLIGHT_CONFIG.duration,
-              easing: HIGHLIGHT_CONFIG.easing,
-            }
-          )
-        );
       }
       if (onPressIn && typeof onPressIn === 'function') {
         onPressIn(e);
       }
     },
-    [
-      scale,
-      scaleConfig,
-      onPressIn,
-      disableAnimation,
-      animationConfig,
-      highlightOpacityValue,
-    ]
+    [scale, scaleConfig, onPressIn, isAnimationDisabled]
   );
 
   const handlePressOut = useCallback(
     (e: GestureResponderEvent) => {
-      if (!disableAnimation.scale) {
+      if (!isAnimationDisabled) {
         scale.set(withTiming(0, scaleConfig));
-      }
-      if (!disableAnimation.highlight) {
-        highlightOpacityValue.set(
-          withTiming(
-            0,
-            animationConfig?.highlight?.config || {
-              duration: HIGHLIGHT_CONFIG.duration,
-              easing: HIGHLIGHT_CONFIG.easing,
-            }
-          )
-        );
       }
       if (onPressOut && typeof onPressOut === 'function') {
         onPressOut(e);
       }
     },
-    [
-      scale,
-      scaleConfig,
-      onPressOut,
-      disableAnimation,
-      animationConfig,
-      highlightOpacityValue,
-    ]
+    [scale, scaleConfig, onPressOut, isAnimationDisabled]
   );
 
   const contextValue = useMemo(
@@ -243,7 +137,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         ref={ref}
         layout={skipLayoutAnimation ? undefined : layout}
         className={tvStyles}
-        style={[nativeStyles.buttonRoot, animatedContainerStyle, style]}
+        style={[styleSheet.buttonRoot, animatedContainerStyle, style]}
         disabled={isDisabled}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
@@ -252,11 +146,11 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         accessibilityState={{ disabled: isDisabled }}
         {...restProps}
       >
-        {backgroundElement}
-        <ButtonBackground style={animatedBackgroundStyle} />
-        {startContentElement}
-        {labelElement}
-        {endContentElement}
+        {stringifiedChildren ? (
+          <ButtonLabel>{stringifiedChildren}</ButtonLabel>
+        ) : (
+          children
+        )}
       </AnimatedPressable>
     </ButtonProvider>
   );
@@ -264,186 +158,52 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const ButtonStartContent = forwardRef<View, ButtonStartContentProps>(
-  (props, ref) => {
-    const { layout: contextLayout } = useButtonContext();
+const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
+  const { children, layout: layoutProp, className, ...restProps } = props;
 
-    const { children, layout: layoutProp, className, ...restProps } = props;
+  const { size, variant, layout: contextLayout } = useButtonContext();
 
-    const tvStyles = buttonStyles.startContent({
-      className,
-    });
+  const tvStyles = buttonStyles.label({
+    size,
+    variant,
+    className,
+  });
 
-    return (
-      <Animated.View
-        ref={ref}
-        layout={layoutProp || contextLayout}
-        className={tvStyles}
-        {...restProps}
-      >
-        {children}
-      </Animated.View>
-    );
-  }
-);
-
-// --------------------------------------------------
-
-const ButtonLabelContent = forwardRef<View, ButtonLabelContentProps>(
-  (props, ref) => {
-    const { size, variant, layout: contextLayout } = useButtonContext();
-
-    const {
-      children,
-      layout: layoutProp,
-      className,
-      classNames,
-      textProps,
-      ...restProps
-    } = props;
-
-    const { text, container } = buttonStyles.labelContent({
-      size,
-      variant,
-    });
-
-    const tvContainerStyles = container({
-      className: [className, classNames?.container],
-    });
-
-    const tvTextStyles = text({
-      className: [classNames?.text, textProps?.className],
-    });
-
-    const stringifiedChildren = childrenToString(children);
-
-    if (stringifiedChildren) {
-      return (
-        <Animated.View
-          ref={ref}
-          layout={layoutProp || contextLayout}
-          className={tvContainerStyles}
-          {...restProps}
-        >
-          <Text className={tvTextStyles} {...textProps}>
-            {stringifiedChildren}
-          </Text>
-        </Animated.View>
-      );
-    }
-
-    return (
-      <Animated.View
-        ref={ref}
-        layout={layoutProp || contextLayout}
-        className={tvContainerStyles}
-        {...restProps}
-      >
-        {children}
-      </Animated.View>
-    );
-  }
-);
+  return (
+    <Animated.Text
+      ref={ref}
+      layout={layoutProp || contextLayout}
+      className={tvStyles}
+      {...restProps}
+    >
+      {children}
+    </Animated.Text>
+  );
+});
 
 // --------------------------------------------------
 
-const ButtonEndContent = forwardRef<View, ButtonEndContentProps>(
-  (props, ref) => {
-    const { layout: contextLayout } = useButtonContext();
-
-    const { children, layout: layoutProp, className, ...restProps } = props;
-
-    const tvStyles = buttonStyles.endContent({
-      className,
-    });
-
-    return (
-      <Animated.View
-        ref={ref}
-        layout={layoutProp || contextLayout}
-        className={tvStyles}
-        {...restProps}
-      >
-        {children}
-      </Animated.View>
-    );
-  }
-);
-
-// --------------------------------------------------
-
-const ButtonBackground = forwardRef<View, ButtonBackgroundProps>(
-  (props, ref) => {
-    const { size, layout: contextLayout } = useButtonContext();
-
-    const {
-      children,
-      layout: layoutProp,
-      className,
-      style,
-      ...restProps
-    } = props;
-
-    const tvStyles = buttonStyles.background({
-      size,
-      className,
-    });
-
-    return (
-      <Animated.View
-        ref={ref}
-        layout={layoutProp || contextLayout}
-        className={tvStyles}
-        style={[nativeStyles.background, style]}
-        {...restProps}
-      >
-        {children}
-      </Animated.View>
-    );
-  }
-);
-
-// --------------------------------------------------
-
-ButtonRoot.displayName = DISPLAY_NAME.ROOT;
-ButtonStartContent.displayName = DISPLAY_NAME.START_CONTENT;
-ButtonLabelContent.displayName = DISPLAY_NAME.LABEL_CONTENT;
-ButtonEndContent.displayName = DISPLAY_NAME.END_CONTENT;
-ButtonBackground.displayName = DISPLAY_NAME.BACKGROUND;
+ButtonRoot.displayName = DISPLAY_NAME.BUTTON_ROOT;
+ButtonLabel.displayName = DISPLAY_NAME.BUTTON_LABEL;
 
 /**
  * Compound Button component with sub-components
  *
  * @component Button - Main button container that handles press interactions, animations, and variants.
- * Provides sensible defaults when sub-components are omitted.
+ * Renders with string children as label or accepts compound components for custom layouts.
  *
- * @component Button.StartContent - Optional content displayed at the start of the button.
- * Use for icons or other elements before the label.
+ * @component Button.Label - Text content of the button. When string is provided,
+ * it renders as Text. Otherwise renders children as-is.
  *
- * @component Button.LabelContent - Button label that displays text or custom content.
- * When string is provided, it renders as Text. Otherwise renders children as-is.
- *
- * @component Button.EndContent - Optional content displayed at the end of the button.
- * Use for icons or other elements after the label.
- *
- * @component Button.Background - Optional background element with absolute positioning.
- * Rendered beneath all other content. Use for gradients or custom backgrounds.
- *
- * Props flow from Button to sub-components via context (size, variant, isDisabled, animationConfig).
- * The button scales down slightly when pressed for visual feedback.
+ * Props flow from Button to sub-components via context (size, variant, isDisabled).
+ * All components use animated views with layout transitions for smooth animations.
  *
  * @see Full documentation: https://heroui.com/components/button
  */
 const CompoundButton = Object.assign(ButtonRoot, {
-  /** @optional Content displayed at the start of the button */
-  StartContent: ButtonStartContent,
-  /** @optional Button label - renders text or custom content */
-  LabelContent: ButtonLabelContent,
-  /** @optional Content displayed at the end of the button */
-  EndContent: ButtonEndContent,
-  /** @optional Background element - absolute positioned beneath content */
-  Background: ButtonBackground,
+  /** Button label - renders text or custom content */
+  Label: ButtonLabel,
 });
 
-export default CompoundButton;
 export { useButtonContext };
+export default CompoundButton;

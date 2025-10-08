@@ -19,7 +19,6 @@ const Root = forwardRef<RootRef, RootProps>(
       value,
       onValueChange,
       isDisabled = false,
-      orientation = 'vertical',
       isInvalid = false,
       ...viewProps
     },
@@ -33,7 +32,6 @@ const Root = forwardRef<RootRef, RootProps>(
           value,
           isDisabled,
           onValueChange,
-          orientation,
           isInvalid,
         }}
       >

@@ -74,7 +74,7 @@ const avatarFallback = tv({
 /**
  * Native styles for border curves
  */
-export const avatarNativeStyles = StyleSheet.create({
+export const styleSheet = StyleSheet.create({
   borderCurve: {
     borderCurve: 'continuous',
   },

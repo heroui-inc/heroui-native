@@ -173,6 +173,7 @@ export default function CookingOnboardingScreen() {
     >
       <ParallaxScrollView
         headerImage={<Image source={BgImage} style={styles.image} />}
+        scrollEnabled={onboardingState.isComplete}
       >
         <AppText className="text-foreground text-4xl font-semibold mb-2">
           Blueberry Pancakes

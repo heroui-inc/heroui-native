@@ -254,7 +254,7 @@ export default function FormFieldExample() {
 
 | prop                  | type                       | default | description                                           |
 | --------------------- | -------------------------- | ------- | ----------------------------------------------------- |
-| children              | `React.ReactNode`          | -       | Control component to render (Switch, Checkbox, Radio) |
+| children              | `React.ReactNode`          | -       | Control component to render (Switch, Checkbox) |
 | className             | `string`                   | -       | Custom class name for the indicator element           |
 | ...Animated.ViewProps | `AnimatedProps<ViewProps>` | -       | All Reanimated Animated.View props are supported      |
 

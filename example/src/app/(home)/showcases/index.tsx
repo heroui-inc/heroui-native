@@ -35,7 +35,7 @@ const data = [
       { name: 'Dialog', href: '/components/dialog' },
       { name: 'Card', href: '/components/card' },
       { name: 'Chip', href: '/components/chip' },
-      { name: 'RadioGroup', href: '/components/radio' },
+      { name: 'RadioGroup', href: '/components/radio-group' },
       { name: 'FormField', href: '/components/form-field' },
       { name: 'Checkbox', href: '/components/checkbox' },
       { name: 'Button', href: '/components/button' },
@@ -54,7 +54,7 @@ const data = [
     components: [
       { name: 'Switch', href: '/components/switch' },
       { name: 'FormField', href: '/components/form-field' },
-      { name: 'RadioGroup', href: '/components/radio' },
+      { name: 'RadioGroup', href: '/components/radio-group' },
       { name: 'Button', href: '/components/button' },
     ],
   },

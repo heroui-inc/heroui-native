@@ -46,7 +46,7 @@ const dialogStyles = combineStyles({
   description,
 });
 
-export const nativeStyles = StyleSheet.create({
+export const styleSheet = StyleSheet.create({
   contentContainer: {
     borderCurve: 'continuous',
   },

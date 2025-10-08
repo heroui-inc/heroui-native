@@ -28,9 +28,9 @@ export const nativeStyles = StyleSheet.create({
 /**
  * Combined skeleton styles
  */
-const skeletonStyles = combineStyles({
+const styleSheet = combineStyles({
   skeleton,
   gradientWrapper,
 });
 
-export default skeletonStyles;
+export default styleSheet;

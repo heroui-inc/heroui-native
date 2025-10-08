@@ -112,9 +112,9 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
         <View className="gap-4">
           <Card.Header className="p-3">
             <Chip size="sm" className="bg-background/25">
-              <Chip.LabelContent classNames={{ text: 'text-foreground/85' }}>
+              <Chip.Label className="text-foreground/85">
                 {`${count} total`}
-              </Chip.LabelContent>
+              </Chip.Label>
             </Chip>
           </Card.Header>
           <Card.Body className="h-16" />

@@ -32,39 +32,20 @@ const root = tv({
   },
 });
 
-const labelContent = tv({
-  slots: {
-    container: 'items-center justify-center',
-    text: 'font-medium',
-  },
+const label = tv({
+  base: 'font-medium',
   variants: {
     variant: {
-      primary: {
-        text: 'text-accent-foreground',
-      },
-      secondary: {
-        text: 'text-accent-soft-foreground',
-      },
-      tertiary: {
-        text: 'text-default-foreground',
-      },
-      ghost: {
-        text: 'text-default-foreground',
-      },
-      danger: {
-        text: 'text-danger-foreground',
-      },
+      primary: 'text-accent-foreground',
+      secondary: 'text-accent-soft-foreground',
+      tertiary: 'text-default-foreground',
+      ghost: 'text-default-foreground',
+      danger: 'text-danger-foreground',
     },
     size: {
-      sm: {
-        text: 'text-sm',
-      },
-      md: {
-        text: 'text-base',
-      },
-      lg: {
-        text: 'text-lg',
-      },
+      sm: 'text-sm',
+      md: 'text-base',
+      lg: 'text-lg',
     },
   },
   defaultVariants: {
@@ -73,44 +54,15 @@ const labelContent = tv({
   },
 });
 
-const startContent = tv({
-  base: 'items-center justify-center',
-});
-
-const endContent = tv({
-  base: 'items-center justify-center',
-});
-
-const background = tv({
-  base: 'absolute inset-0 overflow-hidden',
-  variants: {
-    size: {
-      sm: 'rounded-md',
-      md: 'rounded-lg',
-      lg: 'rounded-lg',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-});
-
-export const nativeStyles = StyleSheet.create({
+export const styleSheet = StyleSheet.create({
   buttonRoot: {
-    borderCurve: 'continuous',
-  },
-  background: {
     borderCurve: 'continuous',
   },
 });
 
 const buttonStyles = combineStyles({
   root,
-  startContent,
-  labelContent,
-  endContent,
-  background,
+  label,
 });
 
-export type LabelContentSlots = keyof ReturnType<typeof labelContent>;
 export default buttonStyles;

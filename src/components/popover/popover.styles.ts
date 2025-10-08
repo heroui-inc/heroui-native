@@ -64,7 +64,7 @@ const popoverStyles = {
 
 export type RootSlots = keyof typeof popoverStyles;
 
-export const nativeStyles = StyleSheet.create({
+export const styleSheet = StyleSheet.create({
   contentContainer: {
     borderCurve: 'continuous',
   },

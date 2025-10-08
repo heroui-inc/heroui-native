@@ -30,13 +30,7 @@ const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
           className="rounded-full"
           onPress={simulatePress}
         >
-          <Button.LabelContent>
-            <Ionicons
-              name="sparkles-sharp"
-              size={14}
-              color={colors.foreground}
-            />
-          </Button.LabelContent>
+          <Ionicons name="sparkles-sharp" size={14} color={colors.foreground} />
         </Button>
         <Button
           variant="secondary"
@@ -45,9 +39,7 @@ const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
           className="rounded-full"
           onPress={simulatePress}
         >
-          <Button.LabelContent>
-            <Entypo name="plus" size={16} color={colors.foreground} />
-          </Button.LabelContent>
+          <Entypo name="plus" size={16} color={colors.foreground} />
         </Button>
       </View>
     </View>

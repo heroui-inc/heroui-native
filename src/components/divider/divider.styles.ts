@@ -20,7 +20,7 @@ const root = tv({
   },
 });
 
-export const nativeStyles = StyleSheet.create({
+export const styleSheet = StyleSheet.create({
   hairlineWidth: {
     height: StyleSheet.hairlineWidth,
   },

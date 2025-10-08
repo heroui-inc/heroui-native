@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, Radio, RadioGroup, useTheme } from 'heroui-native';
+import { Chip, Dialog, RadioGroup, useTheme } from 'heroui-native';
 import { useState, type FC } from 'react';
 import { Platform, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
@@ -88,14 +88,10 @@ export const Priority: FC = () => {
             }
           }}
         >
-          <Chip.StartContent>
-            {items.find((item) => item.value === value)?.indicator}
-          </Chip.StartContent>
-          <Chip.LabelContent
-            classNames={{ text: 'text-foreground font-medium' }}
-          >
+          {items.find((item) => item.value === value)?.indicator}
+          <Chip.Label className="text-foreground font-medium">
             {items.find((item) => item.value === value)?.label}
-          </Chip.LabelContent>
+          </Chip.Label>
         </Chip>
       </Dialog.Trigger>
       <Dialog.Portal>
@@ -107,7 +103,7 @@ export const Priority: FC = () => {
           <RadioGroup value={value} onValueChange={setValue} className="gap-7">
             {items.map((item) => (
               <Dialog.Close key={item.value} className="self-stretch" asChild>
-                <Radio
+                <RadioGroup.Item
                   value={item.value}
                   onPress={() => {
                     if (Platform.OS === 'ios') {
@@ -115,40 +111,27 @@ export const Priority: FC = () => {
                     }
                   }}
                 >
-                  <Radio.Content className="flex-row items-center gap-2">
+                  <View className="flex-row items-center gap-2">
                     <View className="w-7 pl-0.5 justify-center">
                       <View className="scale-105">{item.indicator}</View>
                     </View>
-                    <Radio.Title>{item.label}</Radio.Title>
-                  </Radio.Content>
-                  <Radio.Indicator
-                    colors={{
-                      defaultBorder: 'transparent',
-                      selectedBorder: 'transparent',
-                    }}
-                  >
-                    <Radio.IndicatorBackground
-                      colors={{
-                        defaultBackground: 'transparent',
-                        selectedBackground: 'transparent',
-                      }}
-                    />
-                    <Radio.IndicatorThumb>
-                      {value === item.value && (
-                        <Animated.View
-                          key={item.value}
-                          entering={FadeIn.duration(200)}
-                        >
-                          <Feather
-                            name="check"
-                            size={18}
-                            color={colors.foreground}
-                          />
-                        </Animated.View>
-                      )}
-                    </Radio.IndicatorThumb>
-                  </Radio.Indicator>
-                </Radio>
+                    <RadioGroup.Title>{item.label}</RadioGroup.Title>
+                  </View>
+                  <RadioGroup.Indicator className="border-0 bg-transparent">
+                    {value === item.value && (
+                      <Animated.View
+                        key={item.value}
+                        entering={FadeIn.duration(200)}
+                      >
+                        <Feather
+                          name="check"
+                          size={18}
+                          color={colors.foreground}
+                        />
+                      </Animated.View>
+                    )}
+                  </RadioGroup.Indicator>
+                </RadioGroup.Item>
               </Dialog.Close>
             ))}
           </RadioGroup>

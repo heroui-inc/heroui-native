@@ -71,13 +71,11 @@ const OnboardingScreen = () => {
           isIconOnly
           onPress={router.back}
         >
-          <Button.LabelContent>
-            <Feather
-              name="chevron-left"
-              size={24}
-              color={isDark ? 'black' : 'white'}
-            />
-          </Button.LabelContent>
+          <Feather
+            name="chevron-left"
+            size={24}
+            color={isDark ? 'black' : 'white'}
+          />
         </Button>
         <Button
           size="sm"
@@ -85,9 +83,7 @@ const OnboardingScreen = () => {
           isIconOnly
           onPress={router.back}
         >
-          <Button.LabelContent>
-            <Feather name="x" size={24} color={isDark ? 'black' : 'white'} />
-          </Button.LabelContent>
+          <Feather name="x" size={24} color={isDark ? 'black' : 'white'} />
         </Button>
       </AnimatedView>
 
@@ -118,11 +114,9 @@ const OnboardingScreen = () => {
           onPress={() => console.log('Next pressed')}
           className="mx-8 rounded-full bg-[#F8DD00]"
         >
-          <Button.LabelContent
-            classNames={{ text: 'text-lg font-semibold text-black' }}
-          >
+          <Button.Label className="text-lg font-semibold text-black">
             Next
-          </Button.LabelContent>
+          </Button.Label>
         </Button>
       </AnimatedView>
     </View>

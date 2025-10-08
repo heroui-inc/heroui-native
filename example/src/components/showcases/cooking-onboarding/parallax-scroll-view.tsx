@@ -12,9 +12,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Props = PropsWithChildren<{
   headerImage: ReactElement;
+  scrollEnabled?: boolean;
 }>;
 
-export default function ParallaxScrollView({ children, headerImage }: Props) {
+export default function ParallaxScrollView({
+  children,
+  headerImage,
+  scrollEnabled,
+}: Props) {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollOffset(scrollRef);
 
@@ -57,6 +62,7 @@ export default function ParallaxScrollView({ children, headerImage }: Props) {
       scrollEventThrottle={16}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ paddingBottom: insets.bottom + 12 }}
+      scrollEnabled={scrollEnabled}
     >
       <Animated.View
         className="overflow-hidden"

@@ -611,4 +611,5 @@ const Popover = Object.assign(PopoverRoot, {
   Description: PopoverDescription,
 });
 
+export { usePopover };
 export default Popover;

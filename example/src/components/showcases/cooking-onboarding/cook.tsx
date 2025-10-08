@@ -1,7 +1,11 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { Popover, useTheme, type PopoverTriggerRef } from 'heroui-native';
+import {
+  Button,
+  Popover,
+  useTheme,
+  type PopoverTriggerRef,
+} from 'heroui-native';
 import { type FC, type RefObject } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
 import { progressAnimationConfigs } from './constants';
@@ -18,14 +22,13 @@ export const Cook: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
   return (
     <Popover>
       <Popover.Trigger ref={triggerRef}>
-        <Pressable
+        <Button
           className="h-12 px-4 rounded-[14px] flex-row items-center gap-1 bg-orange-300"
-          style={styles.borderCurve}
           onPress={isOnboardingDone ? simulatePress : undefined}
         >
           <AntDesign name="fire" size={16} color="black" />
           <AppText className="text-lg text-black font-semibold">Cook</AppText>
-        </Pressable>
+        </Button>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
         <Popover.Content className={className.popoverContent} placement="top">
@@ -38,9 +41,3 @@ export const Cook: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
     </Popover>
   );
 };
-
-const styles = StyleSheet.create({
-  borderCurve: {
-    borderCurve: 'continuous',
-  },
-});

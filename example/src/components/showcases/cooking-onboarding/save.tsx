@@ -1,7 +1,13 @@
 import Feather from '@expo/vector-icons/Feather';
-import { cn, Popover, useTheme, type PopoverTriggerRef } from 'heroui-native';
+import {
+  Button,
+  cn,
+  Popover,
+  useTheme,
+  type PopoverTriggerRef,
+} from 'heroui-native';
 import { type FC, type RefObject } from 'react';
-import { Platform, Pressable, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
@@ -21,16 +27,16 @@ export const Save: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
   return (
     <Popover>
       <Popover.Trigger ref={triggerRef}>
-        <Pressable
+        <Button
           className={cn(
             className.buttonSecondarySquare,
             className.buttonSecondaryColors
           )}
-          style={styles.borderCurve}
           onPress={isOnboardingDone ? simulatePress : undefined}
+          isIconOnly
         >
           <Feather name="heart" size={16} color={colors.foreground} />
-        </Pressable>
+        </Button>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
         <Popover.Content
@@ -46,9 +52,3 @@ export const Save: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
     </Popover>
   );
 };
-
-const styles = StyleSheet.create({
-  borderCurve: {
-    borderCurve: 'continuous',
-  },
-});

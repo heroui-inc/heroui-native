@@ -15,7 +15,5 @@ module.exports = {
         },
       },
     ],
-    'uniwind/babel',
-    'react-native-worklets/plugin',
   ],
 };

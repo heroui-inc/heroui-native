@@ -142,7 +142,7 @@ const AccordionScreen = () => {
   const classNames = {
     triggerContentContainer: 'flex-row items-center flex-1 gap-3',
     triggerTitle: 'text-foreground text-base flex-1',
-    contentText: 'text-muted-foreground text-base/relaxed px-[25px]',
+    contentText: 'text-muted text-base/relaxed px-[25px]',
   };
 
   return (

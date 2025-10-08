@@ -7,6 +7,7 @@ import {
   useMemo,
   useState,
 } from 'react';
+import { Uniwind } from 'uniwind';
 import { colors as defaultColors } from './colors';
 import { deepMerge } from './helpers';
 import {
@@ -211,10 +212,8 @@ export const ThemeProvider = ({
   const setTheme = useCallback(
     (theme: ColorScheme) => {
       setColors(mergedColors[theme]); // Update runtime colors
-      colorSchemeNativeWind.set(theme); // NativeWind system integration
-      setTimeout(() => {
-        setCurrentTheme(theme); // Delayed to ensure NativeWind cache flush
-      }, 10);
+      Uniwind.setTheme(theme);
+      setCurrentTheme(theme);
     },
     [mergedColors]
   );

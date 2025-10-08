@@ -80,7 +80,7 @@ export default function Layout() {
         name="popover-native-modal"
         options={{ title: 'Popover Native Modal', presentation: 'formSheet' }}
       />
-      <Stack.Screen name="radio" options={{ title: 'Radio' }} />
+      <Stack.Screen name="radio-group" options={{ title: 'Radio Group' }} />
       <Stack.Screen name="scroll-shadow" options={{ title: 'Scroll Shadow' }} />
       <Stack.Screen name="skeleton" options={{ title: 'Skeleton' }} />
       <Stack.Screen name="spinner" options={{ title: 'Spinner' }} />

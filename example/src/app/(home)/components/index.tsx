@@ -93,7 +93,7 @@ const components: Component[] = [
   {
     title: 'Radio Group',
     icon: <ComponentIcon />,
-    path: 'radio',
+    path: 'radio-group',
   },
   {
     title: 'Scroll Shadow',

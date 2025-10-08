@@ -16,7 +16,7 @@ const root = tv({
   },
 });
 
-export const nativeStyles = StyleSheet.create({
+export const styleSheet = StyleSheet.create({
   surfaceRoot: {
     borderCurve: 'continuous',
   },

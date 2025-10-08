@@ -4,7 +4,7 @@ Interactive component that triggers an action when pressed.
 
 ## Imports
 
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../README.md).
 
 ```tsx
 import { Button } from 'heroui-native';
@@ -95,7 +95,10 @@ Transform button to loading state with spinner animation.
   className="self-center"
 >
   {isDownloading ? (
-    <Spinner entering={FadeIn.delay(50)} color={colors.accentForeground} />
+    <Spinner
+      entering={FadeIn.delay(50)}
+      color={colors.accentForeground}
+    />
   ) : (
     'Download now'
   )}
@@ -147,7 +150,11 @@ export default function ButtonExample() {
           />
         </Button>
         <Button size="sm" variant="danger" isIconOnly>
-          <Ionicons name="trash" size={16} color={colors.dangerForeground} />
+          <Ionicons
+            name="trash"
+            size={16}
+            color={colors.dangerForeground}
+          />
         </Button>
       </View>
 
@@ -179,30 +186,41 @@ export default function ButtonExample() {
 
 ### Button
 
-| prop                         | type                                                            | default     | description                                                    |
-| ---------------------------- | --------------------------------------------------------------- | ----------- | -------------------------------------------------------------- |
-| `children`                   | `React.ReactNode`                                               | -           | Content to be rendered inside the button                       |
-| `variant`                    | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'danger'` | `'primary'` | Visual variant of the button                                   |
-| `size`                       | `'sm' \| 'md' \| 'lg'`                                          | `'md'`      | Size of the button                                             |
-| `isIconOnly`                 | `boolean`                                                       | `false`     | Whether the button displays an icon only (square aspect ratio) |
-| `isDisabled`                 | `boolean`                                                       | `false`     | Whether the button is disabled                                 |
-| `className`                  | `string`                                                        | -           | Additional CSS classes                                         |
-| `animationConfig`            | `AnimationConfig`                                               | -           | Scale on press animation configuration                         |
-| `skipLayoutAnimation`        | `boolean`                                                       | `false`     | Whether to skip the layout animation                           |
-| `...Animated.PressableProps` | `Animated.PressableProps`                                       | -           | All Reanimated AnimatedPressable props are supported           |
+| prop | type | default | description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - | Content to be rendered inside the button |
+| `variant` | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'danger'` | `'primary'` | Visual variant of the button |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size of the button |
+| `isIconOnly` | `boolean` | `false` | Whether the button displays an icon only (square aspect ratio) |
+| `isDisabled` | `boolean` | `false` | Whether the button is disabled |
+| `className` | `string` | - | Additional CSS classes |
+| `animationConfig` | `AnimationConfig` | - | Scale on press animation configuration |
+| `skipLayoutAnimation` | `boolean` | `false` | Whether to skip the layout animation |
+| `onPress` | `(event: GestureResponderEvent) => void` | - | Called when button is pressed |
+| `onPressIn` | `(event: GestureResponderEvent) => void` | - | Called when press gesture starts |
+| `onPressOut` | `(event: GestureResponderEvent) => void` | - | Called when press gesture ends |
+| `onLongPress` | `(event: GestureResponderEvent) => void` | - | Called when button is long pressed |
+| `...PressableProps` | `PressableProps` | - | All standard React Native Pressable props are supported |
 
 #### AnimationConfig
 
-| prop                  | type           | description                      |
-| --------------------- | -------------- | -------------------------------- |
-| `isAnimationDisabled` | `boolean`      | Whether to disable the animation |
-| `targetScaleValue`    | `number`       | Animation target value for scale |
-| `timingConfig`        | `TimingConfig` | Animation timing configuration   |
+| prop | type | description |
+| --- | --- | --- |
+| `isAnimationDisabled` | `boolean` | Whether to disable the animation |
+| `targetScaleValue` | `number` | Animation target value for scale |
+| `timingConfig` | `TimingConfig` | Animation timing configuration |
+
+#### TimingConfig
+
+| prop | type | description |
+| --- | --- | --- |
+| `duration` | `number` | Duration of the animation in milliseconds |
+| `easing` | `EasingFunction \| EasingFunctionFactory` | Easing function to control the animation curve |
 
 ### Button.Label
 
-| prop                    | type                 | default | description                                      |
-| ----------------------- | -------------------- | ------- | ------------------------------------------------ |
-| `children`              | `React.ReactNode`    | -       | Content to be rendered as label                  |
-| `className`             | `string`             | -       | Additional CSS classes                           |
-| `...Animated.TextProps` | `Animated.TextProps` | -       | All Reanimated Animated.Text props are supported |
+| prop | type | default | description |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | - | Content to be rendered as label |
+| `className` | `string` | - | Additional CSS classes |
+| `...Animated.TextProps` | `Animated.TextProps` | - | All Reanimated Animated.Text props are supported |

@@ -58,7 +58,7 @@ const content = tv({
   },
 });
 
-const nativeStyles = StyleSheet.create({
+const styleSheet = StyleSheet.create({
   borderContainer: {
     borderCurve: 'continuous',
   },
@@ -70,7 +70,7 @@ const accordionStyles = combineStyles({
   trigger,
   indicator,
   content,
-  nativeStyles,
+  styleSheet,
 });
 
 export type RootSlots = keyof ReturnType<typeof root>;

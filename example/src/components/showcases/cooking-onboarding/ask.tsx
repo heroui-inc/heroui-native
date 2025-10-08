@@ -1,7 +1,12 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { cn, Popover, useTheme, type PopoverTriggerRef } from 'heroui-native';
+import {
+  Button,
+  cn,
+  Popover,
+  useTheme,
+  type PopoverTriggerRef,
+} from 'heroui-native';
 import { type FC, type RefObject } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
 import { progressAnimationConfigs } from './constants';
@@ -18,19 +23,18 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
   return (
     <Popover>
       <Popover.Trigger ref={triggerRef}>
-        <Pressable
+        <Button
           className={cn(
             className.buttonSecondaryLayout,
             className.buttonSecondaryColors
           )}
-          style={styles.borderCurve}
           onPress={isOnboardingDone ? simulatePress : undefined}
         >
           <Ionicons name="sparkles-sharp" size={14} color="#fdba74" />
           <AppText className="text-lg text-foreground font-semibold">
             Ask
           </AppText>
-        </Pressable>
+        </Button>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
         <Popover.Content
@@ -46,9 +50,3 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
     </Popover>
   );
 };
-
-const styles = StyleSheet.create({
-  borderCurve: {
-    borderCurve: 'continuous',
-  },
-});

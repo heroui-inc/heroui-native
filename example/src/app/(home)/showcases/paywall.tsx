@@ -122,9 +122,7 @@ export default function Paywall() {
           className="rounded-full bg-white mb-5"
           onPress={simulatePress}
         >
-          <Button.LabelContent classNames={{ text: 'text-black' }}>
-            Continue
-          </Button.LabelContent>
+          <Button.Label className="text-black">Continue</Button.Label>
         </Button>
         <View className="flex-row items-center justify-center">
           <Pressable onPress={simulatePress}>

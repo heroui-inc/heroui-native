@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { View } from 'react-native';
 import { DISPLAY_NAME, THICK_VARIANT_HEIGHT } from './divider.constants';
-import dividerStyles, { nativeStyles } from './divider.styles';
+import dividerStyles, { styleSheet } from './divider.styles';
 import type { DividerProps } from './divider.types';
 
 // --------------------------------------------------
@@ -31,8 +31,8 @@ const DividerRoot = forwardRef<View, DividerProps>((props, ref) => {
 
     if (variant === 'thin') {
       return orientation === 'horizontal'
-        ? nativeStyles.hairlineWidth
-        : nativeStyles.hairlineWidthVertical;
+        ? styleSheet.hairlineWidth
+        : styleSheet.hairlineWidthVertical;
     }
 
     if (variant === 'thick') {

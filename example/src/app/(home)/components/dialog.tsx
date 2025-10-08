@@ -364,11 +364,9 @@ export default function DialogScreen() {
               className="self-center"
               onPress={simulatePress}
             >
-              <Button.LabelContent
-                classNames={{ text: 'text-foreground font-semibold' }}
-              >
+              <Button.Label className="text-foreground font-semibold">
                 Agree to Terms
-              </Button.LabelContent>
+              </Button.Label>
             </Button>
           </Dialog.Content>
         </Dialog.Portal>

@@ -10,7 +10,7 @@ import {
   AVATAR_DISPLAY_NAME,
   AVATAR_ENTERING_ANIMATION,
 } from './avatar.constants';
-import avatarStyles, { avatarNativeStyles } from './avatar.styles';
+import avatarStyles, { styleSheet } from './avatar.styles';
 import type {
   AvatarColor,
   AvatarContextValue,
@@ -63,7 +63,7 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
       <AvatarPrimitives.Root
         ref={ref}
         className={tvStyles}
-        style={[avatarNativeStyles.borderCurve, style]}
+        style={[styleSheet.borderCurve, style]}
         {...restProps}
       >
         {children}
@@ -200,7 +200,7 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
         ref={ref}
         entering={entering}
         className={tvContainerStyles}
-        style={[avatarNativeStyles.borderCurve, style]}
+        style={[styleSheet.borderCurve, style]}
         {...restProps}
       >
         {children ? (

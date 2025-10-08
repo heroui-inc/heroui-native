@@ -38,14 +38,12 @@ export default function PopoverScreen() {
         <Popover>
           <Popover.Trigger asChild>
             <Button variant="tertiary" size="sm">
-              <Button.StartContent>
-                <Ionicons
-                  name="information-circle"
-                  size={20}
-                  color={colors.mutedForeground}
-                />
-              </Button.StartContent>
-              <Button.LabelContent>Show Info</Button.LabelContent>
+              <Ionicons
+                name="information-circle"
+                size={20}
+                color={colors.mutedForeground}
+              />
+              <Button.Label>Show Info</Button.Label>
             </Button>
           </Popover.Trigger>
           <Popover.Portal>

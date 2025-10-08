@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Spinner, useTheme } from 'heroui-native';
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { FadeIn } from 'react-native-reanimated';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
@@ -37,68 +37,52 @@ export default function ButtonScreen() {
       <SectionTitle title="With Icons" />
       <View className="gap-8">
         <Button variant="primary">
-          <Button.StartContent>
-            <Ionicons name="add" size={20} color={colors.accentForeground} />
-          </Button.StartContent>
-          <Button.LabelContent>Add Item</Button.LabelContent>
+          <Ionicons name="add" size={20} color={colors.accentForeground} />
+          <Button.Label>Add Item</Button.Label>
         </Button>
 
         <Button variant="secondary">
-          <Button.LabelContent>Download</Button.LabelContent>
-          <Button.EndContent>
-            <Ionicons
-              name="download"
-              size={18}
-              color={colors.accentSoftForeground}
-            />
-          </Button.EndContent>
+          <Button.Label>Download</Button.Label>
+          <Ionicons
+            name="download"
+            size={18}
+            color={colors.accentSoftForeground}
+          />
         </Button>
 
         <Button variant="tertiary">
-          <Button.StartContent>
-            <Ionicons name="heart" size={14} color={colors.defaultForeground} />
-          </Button.StartContent>
-          <Button.LabelContent>Favorite</Button.LabelContent>
-          <Button.EndContent>
-            <Ionicons
-              name="chevron-forward"
-              size={18}
-              color={colors.defaultForeground}
-            />
-          </Button.EndContent>
+          <Ionicons name="heart" size={14} color={colors.defaultForeground} />
+          <Button.Label>Favorite</Button.Label>
+          <Ionicons
+            name="chevron-forward"
+            size={18}
+            color={colors.defaultForeground}
+          />
         </Button>
 
         <Button variant="danger" size="sm">
-          <Button.StartContent>
-            <Ionicons name="trash" size={14} color={colors.dangerForeground} />
-          </Button.StartContent>
-          <Button.LabelContent>Delete</Button.LabelContent>
+          <Ionicons name="trash" size={14} color={colors.dangerForeground} />
+          <Button.Label>Delete</Button.Label>
         </Button>
       </View>
 
       <SectionTitle title="Disabled State" />
       <View className="gap-8">
         <Button isDisabled>
-          <Button.StartContent>
-            <Spinner color={isDark ? 'black' : 'white'} size="sm" />
-          </Button.StartContent>
-          <Button.LabelContent>Loading</Button.LabelContent>
+          <Spinner color={isDark ? 'black' : 'white'} size="sm" />
+          <Button.Label>Loading</Button.Label>
         </Button>
         <Button variant="secondary" isDisabled>
-          <Button.StartContent>
-            <Spinner size="sm" color={isDark ? 'black' : 'default'} />
-          </Button.StartContent>
-          <Button.LabelContent>Loading</Button.LabelContent>
+          <Spinner size="sm" color={isDark ? 'black' : 'default'} />
+          <Button.Label>Loading</Button.Label>
         </Button>
         <Button variant="tertiary" isDisabled>
-          <Button.StartContent>
-            <Ionicons
-              name="alert-circle"
-              size={16}
-              color={colors.defaultForeground}
-            />
-          </Button.StartContent>
-          <Button.LabelContent>Access Denied</Button.LabelContent>
+          <Ionicons
+            name="alert-circle"
+            size={16}
+            color={colors.defaultForeground}
+          />
+          <Button.Label>Access Denied</Button.Label>
         </Button>
       </View>
 
@@ -121,54 +105,46 @@ export default function ButtonScreen() {
       <SectionTitle title="Icon Only Buttons" />
       <View className="self-center flex-row gap-8">
         <Button size="sm" isIconOnly>
-          <Button.LabelContent>
+          <Button.Label>
             <Ionicons name="add" size={16} color={colors.accentForeground} />
-          </Button.LabelContent>
+          </Button.Label>
         </Button>
         <Button size="md" variant="secondary" isIconOnly>
-          <Button.LabelContent>
+          <Button.Label>
             <Ionicons name="heart" size={18} color="#ec4899" />
-          </Button.LabelContent>
+          </Button.Label>
         </Button>
         <Button size="lg" variant="danger" isIconOnly>
-          <Button.LabelContent>
+          <Button.Label>
             <Ionicons name="trash" size={20} color={colors.dangerForeground} />
-          </Button.LabelContent>
+          </Button.Label>
         </Button>
       </View>
 
       <SectionTitle title="Custom Styling" />
       <View className="gap-8">
         <Button className="bg-purple-600">
-          <Button.LabelContent
-            classNames={{ text: 'text-white font-semibold' }}
-          >
+          <Button.Label className="text-white font-semibold">
             Custom Purple
-          </Button.LabelContent>
+          </Button.Label>
         </Button>
         <Button
           variant="tertiary"
           className="border-purple-600/30 bg-purple-50"
         >
-          <Button.StartContent>
-            <Ionicons name="checkmark" size={18} color="#9333ea" />
-          </Button.StartContent>
-          <Button.LabelContent classNames={{ text: 'text-purple-600' }}>
+          <Ionicons name="checkmark" size={18} color="#9333ea" />
+          <Button.Label className="text-purple-600">
             Purple Tertiary
-          </Button.LabelContent>
+          </Button.Label>
         </Button>
         <Button>
-          <Button.Background>
-            <LinearGradient
-              colors={['#9333ea', '#ec4899']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={{ flex: 1 }}
-            />
-          </Button.Background>
-          <Button.LabelContent classNames={{ text: 'text-white font-bold' }}>
-            Gradient
-          </Button.LabelContent>
+          <LinearGradient
+            colors={['#9333ea', '#ec4899']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={StyleSheet.absoluteFill}
+          />
+          <Button.Label className="text-white font-bold">Gradient</Button.Label>
         </Button>
       </View>
 
@@ -184,47 +160,15 @@ export default function ButtonScreen() {
         isIconOnly={isDownloading}
         className="self-center"
       >
-        <Button.LabelContent>
-          {isDownloading ? (
-            <Spinner
-              entering={FadeIn.delay(50)}
-              color={colors.accentForeground}
-            />
-          ) : (
-            'Download now'
-          )}
-        </Button.LabelContent>
+        {isDownloading ? (
+          <Spinner
+            entering={FadeIn.delay(50)}
+            color={colors.accentForeground}
+          />
+        ) : (
+          'Download now'
+        )}
       </Button>
-
-      <SectionTitle title="Custom Animation" />
-      <View className="gap-8">
-        <Button
-          animationConfig={{
-            highlight: {
-              config: {
-                duration: 10,
-              },
-            },
-          }}
-          onPress={() => console.log('Fast animation')}
-        >
-          <Button.LabelContent>Fast Highlight Animation</Button.LabelContent>
-        </Button>
-        <Button
-          animationConfig={{
-            scale: {
-              value: 0.9,
-              config: {
-                duration: 500,
-              },
-            },
-          }}
-          variant="secondary"
-          onPress={() => console.log('Slow animation')}
-        >
-          <Button.LabelContent>Slow Scale Animation</Button.LabelContent>
-        </Button>
-      </View>
     </ScreenScrollView>
   );
 }

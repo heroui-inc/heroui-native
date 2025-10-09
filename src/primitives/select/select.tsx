@@ -30,13 +30,13 @@ import type {
   IRootContext,
   OverlayProps,
   OverlayRef,
-  PopoverState,
   PortalProps,
   RootProps,
   RootRef,
+  SelectState,
   TriggerProps,
   TriggerRef,
-} from './popover.types';
+} from './select.types';
 
 const RootContext = React.createContext<IRootContext | null>(null);
 
@@ -44,7 +44,7 @@ const useRootContext = () => {
   const context = useContext(RootContext);
   if (!context) {
     throw new Error(
-      'Popover compound components cannot be rendered outside the Popover component'
+      'Select compound components cannot be rendered outside the Select component'
     );
   }
   return context;
@@ -52,7 +52,13 @@ const useRootContext = () => {
 
 const Root = forwardRef<RootRef, RootProps>(
   (
-    { asChild, onOpenChange: onOpenChangeProp, closeDelay, ...viewProps },
+    {
+      asChild,
+      onOpenChange: onOpenChangeProp,
+      closeDelay,
+      isDisabled,
+      ...viewProps
+    },
     ref
   ) => {
     const nativeID = useId();
@@ -62,19 +68,19 @@ const Root = forwardRef<RootRef, RootProps>(
       null
     );
     const [isOpen, setIsOpen] = useState(false);
-    const [popoverState, setPopoverState] = useState<PopoverState>('idle');
+    const [selectState, setSelectState] = useState<SelectState>('idle');
 
     const progress = useSharedValue(0);
 
     function onOpenChange(value: boolean) {
       if (value) {
         setIsOpen(true);
-        setPopoverState('open');
+        setSelectState('open');
       } else {
-        setPopoverState('close');
+        setSelectState('close');
         setTimeout(() => {
           setIsOpen(false);
-          setPopoverState('idle');
+          setSelectState('idle');
         }, closeDelay);
       }
       onOpenChangeProp?.(value);
@@ -86,7 +92,8 @@ const Root = forwardRef<RootRef, RootProps>(
         value={{
           isOpen,
           onOpenChange,
-          popoverState,
+          selectState,
+          isDisabled,
           contentLayout,
           nativeID,
           setContentLayout,
@@ -105,9 +112,16 @@ const Root = forwardRef<RootRef, RootProps>(
 // --------------------------------------------------
 
 const Trigger = forwardRef<TriggerRef, TriggerProps>(
-  ({ asChild, onPress: onPressProp, disabled = false, ...props }, ref) => {
-    const { onOpenChange, isOpen, setTriggerPosition, closeDelay } =
-      useRootContext();
+  ({ asChild, onPress: onPressProp, isDisabled = false, ...props }, ref) => {
+    const {
+      onOpenChange,
+      isOpen,
+      isDisabled: isDisabledRoot,
+      setTriggerPosition,
+      closeDelay,
+    } = useRootContext();
+
+    const isDisabledValue = isDisabled ?? isDisabledRoot ?? undefined;
 
     const augmentedRef = useAugmentedRef({
       ref,
@@ -130,7 +144,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
     });
 
     function onPress(ev: GestureResponderEvent) {
-      if (disabled) return;
+      if (isDisabledValue) return;
       augmentedRef.current?.measure((_x, _y, width, height, pageX, pageY) => {
         setTriggerPosition({ width, pageX, pageY: pageY, height });
       });
@@ -143,10 +157,10 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
     return (
       <Component
         ref={augmentedRef}
-        aria-disabled={disabled ?? undefined}
-        role="button"
+        aria-disabled={isDisabledValue}
+        role="combobox"
         onPress={onPress}
-        disabled={disabled ?? undefined}
+        disabled={isDisabledValue}
         {...props}
       />
     );
@@ -350,10 +364,10 @@ const Close = forwardRef<CloseRef, CloseProps>(
 
 // --------------------------------------------------
 
-Root.displayName = 'HeroUINative.Popover.Root';
-Trigger.displayName = 'HeroUINative.Popover.Trigger';
-Overlay.displayName = 'HeroUINative.Popover.Overlay';
-Content.displayName = 'HeroUINative.Popover.Content';
-Close.displayName = 'HeroUINative.Popover.Close';
+Root.displayName = 'HeroUINative.Select.Root';
+Trigger.displayName = 'HeroUINative.Select.Trigger';
+Overlay.displayName = 'HeroUINative.Select.Overlay';
+Content.displayName = 'HeroUINative.Select.Content';
+Close.displayName = 'HeroUINative.Select.Close';
 
 export { Close, Content, Overlay, Portal, Root, Trigger, useRootContext };

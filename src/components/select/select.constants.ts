@@ -1,0 +1,48 @@
+/**
+ * Display names for the Select components
+ */
+export const DISPLAY_NAME = {
+  ROOT: 'HeroUINative.Select.Root',
+  TRIGGER: 'HeroUINative.Select.Trigger',
+  PORTAL: 'HeroUINative.Select.Portal',
+  OVERLAY: 'HeroUINative.Select.Overlay',
+  CONTENT: 'HeroUINative.Select.Content',
+  CLOSE: 'HeroUINative.Select.Close',
+  TITLE: 'HeroUINative.Select.Title',
+  DESCRIPTION: 'HeroUINative.Select.Description',
+};
+
+/**
+ * Default offset from trigger element
+ */
+export const DEFAULT_OFFSET = 8;
+
+/**
+ * Default alignment offset
+ */
+export const DEFAULT_ALIGN_OFFSET = 0;
+
+/**
+ * Default screen edge insets
+ */
+export const DEFAULT_INSETS = {
+  top: 12,
+  bottom: 12,
+  left: 12,
+  right: 12,
+};
+
+/**
+ * Default spring animation configuration
+ */
+export const SPRING_CONFIG_OPEN = {
+  mass: 2,
+  damping: 100,
+  stiffness: 1200,
+};
+
+export const SPRING_CONFIG_CLOSE = {
+  mass: 1,
+  damping: 80,
+  stiffness: 1800,
+};

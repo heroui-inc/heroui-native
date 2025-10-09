@@ -52,7 +52,13 @@ const useRootContext = () => {
 
 const Root = forwardRef<RootRef, RootProps>(
   (
-    { asChild, onOpenChange: onOpenChangeProp, closeDelay, ...viewProps },
+    {
+      asChild,
+      onOpenChange: onOpenChangeProp,
+      closeDelay,
+      isDisabled,
+      ...viewProps
+    },
     ref
   ) => {
     const nativeID = useId();
@@ -87,6 +93,7 @@ const Root = forwardRef<RootRef, RootProps>(
           isOpen,
           onOpenChange,
           popoverState,
+          isDisabled,
           contentLayout,
           nativeID,
           setContentLayout,
@@ -105,9 +112,16 @@ const Root = forwardRef<RootRef, RootProps>(
 // --------------------------------------------------
 
 const Trigger = forwardRef<TriggerRef, TriggerProps>(
-  ({ asChild, onPress: onPressProp, disabled = false, ...props }, ref) => {
-    const { onOpenChange, isOpen, setTriggerPosition, closeDelay } =
-      useRootContext();
+  ({ asChild, onPress: onPressProp, isDisabled = false, ...props }, ref) => {
+    const {
+      onOpenChange,
+      isOpen,
+      isDisabled: isDisabledRoot,
+      setTriggerPosition,
+      closeDelay,
+    } = useRootContext();
+
+    const isDisabledValue = isDisabled ?? isDisabledRoot ?? undefined;
 
     const augmentedRef = useAugmentedRef({
       ref,
@@ -130,7 +144,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
     });
 
     function onPress(ev: GestureResponderEvent) {
-      if (disabled) return;
+      if (isDisabledValue) return;
       augmentedRef.current?.measure((_x, _y, width, height, pageX, pageY) => {
         setTriggerPosition({ width, pageX, pageY: pageY, height });
       });
@@ -143,10 +157,10 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
     return (
       <Component
         ref={augmentedRef}
-        aria-disabled={disabled ?? undefined}
+        aria-disabled={isDisabledValue}
         role="button"
         onPress={onPress}
-        disabled={disabled ?? undefined}
+        disabled={isDisabledValue}
         {...props}
       />
     );

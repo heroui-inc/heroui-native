@@ -13,13 +13,12 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FullWindowOverlay } from '../../helpers/components';
+import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
 import { useDialogContentAnimation } from '../../helpers/hooks';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import { useTheme } from '../../providers/theme';
-import { CloseIcon } from './close-icon';
 import {
   DEFAULT_ALIGN_OFFSET,
   DEFAULT_INSETS,

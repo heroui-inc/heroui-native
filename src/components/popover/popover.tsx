@@ -12,13 +12,12 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FullWindowOverlay } from '../../helpers/components';
+import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import { useTheme } from '../../providers/theme';
 import { ArrowSvg } from './arrow-svg';
-import { CloseIcon } from './close-icon';
 import {
   DEFAULT_ALIGN_OFFSET,
   DEFAULT_INSETS,

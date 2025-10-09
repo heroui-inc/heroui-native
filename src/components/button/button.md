@@ -1,6 +1,6 @@
 # Button
 
-Interactive component that triggers an action when pressed.
+A pressable component that triggers actions with customizable variants, sizes, and animations.
 
 ## Imports
 
@@ -14,150 +14,109 @@ import { Button } from 'heroui-native';
 
 ### Basic Usage
 
-The Button component accepts string children that automatically render as label.
+The Button component accepts string children or compound parts for flexible layouts.
 
 ```tsx
 <Button>Basic Button</Button>
 ```
 
-### With Compound Parts
-
-Use Button.Label for explicit control over the label component.
-
-```tsx
-<Button>
-  <Button.Label>Click me</Button.Label>
-</Button>
-```
-
 ### With Icons
 
-Combine icons with labels for enhanced visual communication.
+Add icons to the start or end of the button using compound parts.
 
 ```tsx
 <Button>
-  <Icon name="add" size={20} />
-  <Button.Label>Add Item</Button.Label>
+  <Button.StartContent>...</Button.StartContent>
+  <Button.LabelContent>...</Button.LabelContent>
 </Button>
 
 <Button>
-  <Button.Label>Download</Button.Label>
-  <Icon name="download" size={18} />
+  <Button.LabelContent>...</Button.LabelContent>
+  <Button.EndContent>...</Button.EndContent>
 </Button>
 ```
 
-### Icon Only
+### With Both Start and End Content
 
-Create square icon-only buttons using the isIconOnly prop.
+Combine multiple parts for complex button layouts.
+
+```tsx
+<Button>
+  <Button.StartContent>...</Button.StartContent>
+  <Button.LabelContent>...</Button.LabelContent>
+  <Button.EndContent>...</Button.EndContent>
+</Button>
+```
+
+### Icon Only Button
+
+Create square icon buttons with proper aspect ratio.
 
 ```tsx
 <Button isIconOnly>
-  <Icon name="heart" size={18} />
+  <Button.LabelContent>...</Button.LabelContent>
 </Button>
 ```
 
-### Sizes
+### Custom Background
 
-Control button dimensions with three size options.
-
-```tsx
-<Button size="sm">Small</Button>
-<Button size="md">Medium</Button>
-<Button size="lg">Large</Button>
-```
-
-### Variants
-
-Choose from five visual variants for different emphasis levels.
-
-```tsx
-<Button variant="primary">Primary</Button>
-<Button variant="secondary">Secondary</Button>
-<Button variant="tertiary">Tertiary</Button>
-<Button variant="ghost">Ghost</Button>
-<Button variant="danger">Danger</Button>
-```
-
-### Loading State with Spinner
-
-Transform button to loading state with spinner animation.
-
-```tsx
-<Button
-  variant="primary"
-  onPress={() => {
-    setIsDownloading(true);
-    setTimeout(() => {
-      setIsDownloading(false);
-    }, 3000);
-  }}
-  isIconOnly={isDownloading}
-  className="self-center"
->
-  {isDownloading ? (
-    <Spinner entering={FadeIn.delay(50)} color={colors.accentForeground} />
-  ) : (
-    'Download now'
-  )}
-</Button>
-```
-
-### Custom Background with LinearGradient
-
-Add gradient backgrounds using absolute positioned elements.
+Add gradients or custom backgrounds using the Background component.
 
 ```tsx
 <Button>
-  <LinearGradient
-    colors={['#9333ea', '#ec4899']}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-    style={StyleSheet.absoluteFill}
-  />
-  <Button.Label className="text-white font-bold">Gradient</Button.Label>
+  <Button.Background>...</Button.Background>
+  <Button.LabelContent>...</Button.LabelContent>
 </Button>
 ```
 
 ## Example
 
 ```tsx
-import { Button, useTheme } from 'heroui-native';
+import { Button } from 'heroui-native';
 import { Ionicons } from '@expo/vector-icons';
-import { View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { View, StyleSheet } from 'react-native';
 
 export default function ButtonExample() {
   const { colors } = useTheme();
 
   return (
-    <View className="gap-4 p-4">
-      <Button variant="primary">
-        <Ionicons name="add" size={20} color={colors.accentForeground} />
-        <Button.Label>Add Item</Button.Label>
+    <View className="gap-4">
+      <Button variant="primary" onPress={() => console.log('Download pressed')}>
+        <Button.StartContent>
+          <Ionicons name="download" size={18} color={colors.accentForeground} />
+        </Button.StartContent>
+        <Button.LabelContent>Download File</Button.LabelContent>
       </Button>
 
-      <View className="flex-row gap-4">
-        <Button size="sm" isIconOnly>
-          <Ionicons name="heart" size={16} color={colors.accentForeground} />
-        </Button>
-        <Button size="sm" variant="secondary" isIconOnly>
+      <Button>
+        <Button.Background>
+          <LinearGradient
+            colors={['#9333ea', '#ec4899']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={StyleSheet.absoluteFill}
+          />
+        </Button.Background>
+        <Button.LabelContent classNames={{ text: 'text-white font-bold' }}>
+          Gradient Button
+        </Button.LabelContent>
+      </Button>
+
+      <Button
+        variant="secondary"
+        size="sm"
+        isFullWidth={false}
+        className="self-end"
+      >
+        <Button.LabelContent>Like</Button.LabelContent>
+        <Button.EndContent>
           <Ionicons
-            name="bookmark"
+            name="heart"
             size={16}
             color={colors.accentSoftForeground}
           />
-        </Button>
-        <Button size="sm" variant="danger" isIconOnly>
-          <Ionicons name="trash" size={16} color={colors.dangerForeground} />
-        </Button>
-      </View>
-
-      <Button variant="tertiary">
-        <Button.Label>Learn More</Button.Label>
-        <Ionicons
-          name="chevron-forward"
-          size={18}
-          color={colors.defaultForeground}
-        />
+        </Button.EndContent>
       </Button>
     </View>
   );
@@ -168,41 +127,94 @@ export default function ButtonExample() {
 
 ```tsx
 <Button>
-  <Button.Label>...</Button.Label>
+  <Button.Background>...</Button.Background>
+  <Button.StartContent>...</Button.StartContent>
+  <Button.LabelContent>...</Button.LabelContent>
+  <Button.EndContent>...</Button.EndContent>
 </Button>
 ```
 
-- **Button**: Main container that handles press interactions, animations, and variants. Renders string children as label or accepts compound components for custom layouts.
-- **Button.Label**: Text content of the button. Inherits size and variant styling from parent Button context.
+- **Button**: Main container that handles press interactions, animations, and variants. Provides sensible defaults when sub-components are omitted.
+- **Button.Background**: Optional background element with absolute positioning. Rendered beneath all other content. Use for gradients or custom backgrounds.
+- **Button.StartContent**: Optional content displayed at the start of the button. Use for icons or other elements before the label.
+- **Button.LabelContent**: Optional label that displays text or custom content. When string is provided, it renders as Text. Otherwise renders children as-is.
+- **Button.EndContent**: Optional content displayed at the end of the button. Use for icons or other elements after the label.
 
 ## API Reference
 
 ### Button
 
-| prop                         | type                                                            | default     | description                                                    |
-| ---------------------------- | --------------------------------------------------------------- | ----------- | -------------------------------------------------------------- |
-| `children`                   | `React.ReactNode`                                               | -           | Content to be rendered inside the button                       |
-| `variant`                    | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'danger'` | `'primary'` | Visual variant of the button                                   |
-| `size`                       | `'sm' \| 'md' \| 'lg'`                                          | `'md'`      | Size of the button                                             |
-| `isIconOnly`                 | `boolean`                                                       | `false`     | Whether the button displays an icon only (square aspect ratio) |
-| `isDisabled`                 | `boolean`                                                       | `false`     | Whether the button is disabled                                 |
-| `className`                  | `string`                                                        | -           | Additional CSS classes                                         |
-| `animationConfig`            | `AnimationConfig`                                               | -           | Scale on press animation configuration                         |
-| `skipLayoutAnimation`        | `boolean`                                                       | `false`     | Whether to skip the layout animation                           |
-| `...Animated.PressableProps` | `Animated.PressableProps`                                       | -           | All Reanimated AnimatedPressable props are supported           |
+| prop                         | type                                                            | description                                                          |
+| ---------------------------- | --------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `children`                   | `React.ReactNode`                                               | Children elements to be rendered inside the button                   |
+| `variant`                    | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'danger'` | Visual variant of the button                                         |
+| `size`                       | `'sm' \| 'md' \| 'lg'`                                          | Size of the button                                                   |
+| `isIconOnly`                 | `boolean`                                                       | Whether the button displays an icon only (needed for correct layout) |
+| `isDisabled`                 | `boolean`                                                       | Whether the button is disabled                                       |
+| `className`                  | `string`                                                        | Additional CSS classes                                               |
+| `disableAnimation`           | `DisableAnimation`                                              | Whether to disable the animation (scale and/or highlight)            |
+| `animationConfig`            | `AnimationConfig`                                               | Animation configuration for press states (scale and highlight)       |
+| `skipLayoutAnimation`        | `boolean`                                                       | Whether to skip the layout animation                                 |
+| `...Animated.PressableProps` | `Animated.PressableProps`                                       | All Reanimated AnimatedPressable props are supported                 |
+
+#### DisableAnimation
+
+| prop        | type      | description                                |
+| ----------- | --------- | ------------------------------------------ |
+| `scale`     | `boolean` | Whether to disable the scale animation     |
+| `highlight` | `boolean` | Whether to disable the highlight animation |
 
 #### AnimationConfig
 
-| prop                  | type           | description                      |
-| --------------------- | -------------- | -------------------------------- |
-| `isAnimationDisabled` | `boolean`      | Whether to disable the animation |
-| `targetScaleValue`    | `number`       | Animation target value for scale |
-| `timingConfig`        | `TimingConfig` | Animation timing configuration   |
+| prop        | type                                                          | description                           |
+| ----------- | ------------------------------------------------------------- | ------------------------------------- |
+| `scale`     | `{ value?: number, config?: TimingConfig }`                   | Animation configuration for scale     |
+| `highlight` | `{ color?: string, opacity?: number, config?: TimingConfig }` | Animation configuration for highlight |
 
-### Button.Label
+#### TimingConfig
 
-| prop                    | type                 | default | description                                      |
-| ----------------------- | -------------------- | ------- | ------------------------------------------------ |
-| `children`              | `React.ReactNode`    | -       | Content to be rendered as label                  |
-| `className`             | `string`             | -       | Additional CSS classes                           |
-| `...Animated.TextProps` | `Animated.TextProps` | -       | All Reanimated Animated.Text props are supported |
+| prop       | type                                      | description                                    |
+| ---------- | ----------------------------------------- | ---------------------------------------------- |
+| `duration` | `number`                                  | Duration of the animation in milliseconds      |
+| `easing`   | `EasingFunction \| EasingFunctionFactory` | Easing function to control the animation curve |
+
+### Button.Background
+
+| prop                    | type                 | description                                      |
+| ----------------------- | -------------------- | ------------------------------------------------ |
+| `children`              | `React.ReactNode`    | Content to be rendered as the button background  |
+| `className`             | `string`             | Additional CSS classes                           |
+| `...Animated.ViewProps` | `Animated.ViewProps` | All Reanimated Animated.View props are supported |
+
+### Button.StartContent
+
+| prop                    | type                 | description                                       |
+| ----------------------- | -------------------- | ------------------------------------------------- |
+| `children`              | `React.ReactNode`    | Content to be rendered at the start of the button |
+| `className`             | `string`             | Additional CSS classes                            |
+| `...Animated.ViewProps` | `Animated.ViewProps` | All Reanimated Animated.View props are supported  |
+
+### Button.LabelContent
+
+| prop                    | type                       | description                                                                   |
+| ----------------------- | -------------------------- | ----------------------------------------------------------------------------- |
+| `children`              | `React.ReactNode`          | Content to be rendered as label. If string, will be wrapped in Text component |
+| `className`             | `string`                   | Additional CSS classes for container                                          |
+| `classNames`            | `ElementSlots<LabelSlots>` | Additional CSS classes for the different parts of the label                   |
+| `textProps`             | `TextProps`                | Additional props to pass to the Text component when children is a string      |
+| `...Animated.ViewProps` | `Animated.ViewProps`       | All Reanimated Animated.View props are supported                              |
+
+#### ElementSlots<LabelSlots>
+
+| prop        | type     | description                                  |
+| ----------- | -------- | -------------------------------------------- |
+| `container` | `string` | Custom class name for the label container    |
+| `text`      | `string` | Custom class name for the label text element |
+
+### Button.EndContent
+
+| prop                    | type                 | description                                      |
+| ----------------------- | -------------------- | ------------------------------------------------ |
+| `children`              | `React.ReactNode`    | Content to be rendered at the end of the button  |
+| `className`             | `string`             | Additional CSS classes                           |
+| `...Animated.ViewProps` | `Animated.ViewProps` | All Reanimated Animated.View props are supported |

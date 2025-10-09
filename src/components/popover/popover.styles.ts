@@ -25,7 +25,7 @@ const popoverContent = tv({
   },
 });
 
-const bottomSheetView = tv({
+const bottomSheetContent = tv({
   base: 'flex-1 p-5',
 });
 
@@ -55,14 +55,12 @@ const popoverStyles = {
   portal,
   overlay,
   popoverContent,
-  bottomSheetView,
+  bottomSheetContent,
   close,
   title,
   description,
   arrow,
 };
-
-export type RootSlots = keyof typeof popoverStyles;
 
 export const styleSheet = StyleSheet.create({
   contentContainer: {

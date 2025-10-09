@@ -15,8 +15,8 @@ const overlay = tv({
   },
 });
 
-const selectContent = tv({
-  base: 'absolute bg-panel rounded-lg border border-border p-3 px-4',
+const popoverContent = tv({
+  base: 'bg-panel rounded-lg border border-border p-3 px-4',
   variants: {
     isDark: {
       true: '',
@@ -25,8 +25,15 @@ const selectContent = tv({
   },
 });
 
-const bottomSheetView = tv({
+const bottomSheetContent = tv({
   base: 'flex-1 p-5',
+});
+
+const dialogContent = tv({
+  slots: {
+    wrapper: 'absolute inset-0 justify-center p-5',
+    content: 'bg-panel rounded-lg border border-border p-5',
+  },
 });
 
 const close = tv({
@@ -50,14 +57,15 @@ const description = tv({
 const selectStyles = {
   portal,
   overlay,
-  selectContent,
-  bottomSheetView,
+  popoverContent,
+  bottomSheetContent,
+  dialogContent,
   close,
   title,
   description,
 };
 
-export type RootSlots = keyof typeof selectStyles;
+export type DialogContentFallbackSlots = keyof ReturnType<typeof dialogContent>;
 
 export const styleSheet = StyleSheet.create({
   contentContainer: {

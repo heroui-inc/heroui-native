@@ -282,7 +282,7 @@ const PopoverContentBottomSheet = forwardRef<
 
     const { colors } = useTheme();
 
-    const tvStyles = popoverStyles.bottomSheetView({
+    const tvStyles = popoverStyles.bottomSheetContent({
       className: bottomSheetViewClassName,
     });
 

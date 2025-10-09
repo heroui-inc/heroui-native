@@ -72,8 +72,10 @@ export default function PopoverScreen() {
           <Select.Portal>
             <Select.Overlay />
             <Select.Content
-              className="gap-2 w-[280px] items-center"
+              className="gap-2 w-[280px] items-center translate-x-6"
               presentation="popover"
+              align="start"
+              alignOffset={-20}
             >
               <View className="mb-6 items-center">
                 <Text className="text-5xl">💥</Text>
@@ -90,6 +92,37 @@ export default function PopoverScreen() {
             </Select.Content>
           </Select.Portal>
         </Select>
+
+        <Select>
+          <Select.Trigger asChild>
+            <Button variant="tertiary" size="sm">
+              Dialog
+            </Button>
+          </Select.Trigger>
+          <Select.Portal>
+            <Select.Overlay />
+            <Select.Content
+              classNames={{
+                content: 'gap-2 items-center',
+              }}
+              presentation="dialog"
+            >
+              <View className="mb-6 items-center">
+                <Text className="text-5xl">💥</Text>
+                <Select.Title>Babam</Select.Title>
+                <Select.Description className="text-center">
+                  This select uses the dialog presentation.
+                </Select.Description>
+              </View>
+              <Select.Close asChild>
+                <Button size="sm" className="self-stretch">
+                  Close Select
+                </Button>
+              </Select.Close>
+            </Select.Content>
+          </Select.Portal>
+        </Select>
+
         <Select>
           <Select.Trigger asChild>
             <Button variant="tertiary" size="sm">

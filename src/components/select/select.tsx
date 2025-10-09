@@ -1,19 +1,23 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { createContext, forwardRef, useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 import type { Text as RNText } from 'react-native';
-import { StyleSheet, View } from 'react-native';
+import { Keyboard, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   Extrapolation,
   interpolate,
   useAnimatedReaction,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { scheduleOnRN } from 'react-native-worklets';
 import { FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
+import { useKeyboardStatus } from '../../helpers/hooks';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import { useTheme } from '../../providers/theme';
@@ -30,7 +34,7 @@ import selectStyles, { styleSheet } from './select.styles';
 import type {
   SelectCloseProps,
   SelectContentBottomSheetProps,
-  SelectContentContextValue,
+  SelectContentDialogProps,
   SelectContentPopoverProps,
   SelectContentProps,
   SelectDescriptionProps,
@@ -45,15 +49,15 @@ const AnimatedOverlay = Animated.createAnimatedComponent(
   SelectPrimitives.Overlay
 );
 
-const AnimatedContent = Animated.createAnimatedComponent(
-  SelectPrimitives.Content
+const AnimatedPopoverContent = Animated.createAnimatedComponent(
+  SelectPrimitives.PopoverContent
+);
+
+const AnimatedDialogContent = Animated.createAnimatedComponent(
+  SelectPrimitives.DialogContent
 );
 
 const useSelect = SelectPrimitives.useRootContext;
-
-const SelectContentContext = createContext<SelectContentContextValue>({
-  placement: undefined,
-});
 
 // --------------------------------------------------
 
@@ -193,7 +197,7 @@ const SelectContentPopover = forwardRef<
     };
 
     const { progress } = useSelect();
-    const tvStyles = selectStyles.selectContent({ className, isDark });
+    const tvStyles = selectStyles.popoverContent({ className, isDark });
 
     const rContainerStyle = useAnimatedStyle(() => {
       if (isDefaultAnimationDisabled) {
@@ -241,22 +245,20 @@ const SelectContentPopover = forwardRef<
     ]);
 
     return (
-      <SelectContentContext value={{ placement }}>
-        <AnimatedContent
-          ref={ref}
-          placement={placement}
-          align={align}
-          avoidCollisions={avoidCollisions}
-          offset={offset}
-          alignOffset={alignOffset}
-          insets={insets}
-          className={tvStyles}
-          style={flatStyle}
-          {...props}
-        >
-          {children}
-        </AnimatedContent>
-      </SelectContentContext>
+      <AnimatedPopoverContent
+        ref={ref}
+        placement={placement}
+        align={align}
+        avoidCollisions={avoidCollisions}
+        offset={offset}
+        alignOffset={alignOffset}
+        insets={insets}
+        className={tvStyles}
+        style={flatStyle}
+        {...props}
+      >
+        {children}
+      </AnimatedPopoverContent>
     );
   }
 );
@@ -279,7 +281,7 @@ const SelectContentBottomSheet = forwardRef<
 
     const { colors } = useTheme();
 
-    const tvStyles = selectStyles.bottomSheetView({
+    const tvStyles = selectStyles.bottomSheetContent({
       className: bottomSheetViewClassName,
     });
 
@@ -318,34 +320,240 @@ const SelectContentBottomSheet = forwardRef<
     );
 
     return (
-      <SelectContentContext value={{ placement: 'bottom' }}>
-        <BottomSheet
-          ref={bottomSheetRef}
-          backgroundStyle={[
-            { backgroundColor: colors.panel },
-            restProps.backgroundStyle,
+      <BottomSheet
+        ref={bottomSheetRef}
+        backgroundStyle={[
+          { backgroundColor: colors.panel },
+          restProps.backgroundStyle,
+        ]}
+        handleIndicatorStyle={[
+          { backgroundColor: colors.mutedForeground },
+          restProps.handleIndicatorStyle,
+        ]}
+        enablePanDownToClose={restProps.enablePanDownToClose ?? true}
+        animatedIndex={animatedIndex ?? restProps.animatedIndex}
+        onClose={onClose}
+        {...restProps}
+      >
+        <BottomSheetView
+          className={tvStyles}
+          style={[
+            { paddingBottom: insets.bottom + 12 },
+            bottomSheetViewProps?.style,
           ]}
-          handleIndicatorStyle={[
-            { backgroundColor: colors.mutedForeground },
-            restProps.handleIndicatorStyle,
-          ]}
-          enablePanDownToClose={restProps.enablePanDownToClose ?? true}
-          animatedIndex={animatedIndex ?? restProps.animatedIndex}
-          onClose={onClose}
-          {...restProps}
+          {...bottomSheetViewProps}
         >
-          <BottomSheetView
-            className={tvStyles}
-            style={[
-              { paddingBottom: insets.bottom + 12 },
-              bottomSheetViewProps?.style,
-            ]}
-            {...bottomSheetViewProps}
+          {children}
+        </BottomSheetView>
+      </BottomSheet>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const SelectContentDialog = forwardRef<
+  SelectPrimitivesTypes.ContentRef,
+  SelectContentProps & { presentation: 'dialog' }
+>(
+  (
+    {
+      classNames,
+      style,
+      children,
+      onLayout,
+      isDefaultAnimationDisabled = false,
+      ...props
+    },
+    ref
+  ) => {
+    const { progress, isDragging, selectState, onOpenChange } = useSelect();
+
+    const { height: screenHeight } = useWindowDimensions();
+
+    const isKeyboardOpen = useKeyboardStatus();
+
+    const { wrapper, content } = selectStyles.dialogContent();
+
+    const wrapperStyles = wrapper({ className: classNames?.wrapper });
+    const contentStyles = content({ className: classNames?.content });
+
+    const contentY = useSharedValue(0);
+    const contentHeight = useSharedValue(0);
+    const isOnEndAnimationRunning = useSharedValue(false);
+    const progressAnchor = useSharedValue(1);
+    const contentTranslateYAnchor = useSharedValue(0);
+    const contentScaleAnchor = useSharedValue(1);
+
+    const dismissKeyboard = () => {
+      Keyboard.dismiss();
+    };
+
+    const contentTranslateY = useDerivedValue(() => {
+      const maxDragDistance = screenHeight - contentY.get();
+
+      return interpolate(
+        progress.get(),
+        [0, 1, 2],
+        [-maxDragDistance * 0.1, 0, maxDragDistance],
+        Extrapolation.CLAMP
+      );
+    });
+
+    const contentScale = useDerivedValue(() => {
+      return interpolate(
+        progress.get(),
+        [1, 2],
+        [1, 0.95],
+        Extrapolation.CLAMP
+      );
+    });
+
+    const panGesture = Gesture.Pan()
+      .enabled(selectState === 'open')
+      .onStart(() => {
+        if (isOnEndAnimationRunning.get()) return;
+        isDragging.set(true);
+      })
+      .onUpdate((event) => {
+        if (!isDragging.get()) return;
+
+        const maxDragDistance = screenHeight - contentY.get();
+
+        if (event.translationY > 0) {
+          const progressValue = 1 + event.translationY / maxDragDistance;
+          progress.set(progressValue);
+        } else if (event.translationY < 0 && !isKeyboardOpen) {
+          const progressValue =
+            1 - Math.abs(event.translationY) / contentY.get();
+          progress.set(progressValue);
+        }
+      })
+      .onEnd(() => {
+        progressAnchor.set(progress.get());
+        contentTranslateYAnchor.set(contentTranslateY.get());
+        contentScaleAnchor.set(contentScale.get());
+
+        if (progress.get() > 1.1) {
+          isOnEndAnimationRunning.set(true);
+          scheduleOnRN(dismissKeyboard);
+          progress.set(
+            withSpring(
+              2,
+              {
+                mass: 4,
+                damping: 120,
+                stiffness: 900,
+                overshootClamping: false,
+              },
+              () => {
+                isOnEndAnimationRunning.set(false);
+                isDragging.set(false);
+              }
+            )
+          );
+          setTimeout(() => {
+            scheduleOnRN(onOpenChange, false);
+          }, 300);
+        } else {
+          progress.set(
+            withSpring(1, {}, () => {
+              isDragging.set(false);
+            })
+          );
+        }
+      });
+
+    const rDragContainerStyle = useAnimatedStyle(() => {
+      if (!isDragging.get()) {
+        return {};
+      }
+
+      if (isOnEndAnimationRunning.get()) {
+        return {
+          opacity: interpolate(
+            progress.get(),
+            [1, progressAnchor.get(), 1.5, 1.75],
+            [1, 1, 1, 0]
+          ),
+          transform: [
+            {
+              translateY: interpolate(
+                progress.get(),
+                [1, progressAnchor.get(), progressAnchor.get() + 0.1, 2],
+                [
+                  0,
+                  contentTranslateYAnchor.get(),
+                  contentTranslateYAnchor.get() + 50,
+                  contentTranslateYAnchor.get() - 150,
+                ]
+              ),
+            },
+            {
+              scale: interpolate(
+                progress.get(),
+                [1, progressAnchor.get(), 2],
+                [1, contentScaleAnchor.get(), 0.75]
+              ),
+            },
+          ],
+        };
+      }
+
+      return {
+        transform: [
+          {
+            translateY: contentTranslateY.get(),
+          },
+          {
+            scale: contentScale.get(),
+          },
+        ],
+      };
+    });
+
+    const rContainerStyle = useAnimatedStyle(() => {
+      if (isDragging.get()) {
+        return { opacity: 1 };
+      }
+
+      if (isDefaultAnimationDisabled) {
+        return {};
+      }
+
+      return {
+        opacity: interpolate(progress.get(), [0, 1, 2], [0, 1, 0]),
+        transform: [
+          {
+            scale: interpolate(progress.get(), [0, 1, 2], [0.97, 1, 0.97]),
+          },
+        ],
+      };
+    });
+
+    return (
+      <View className={wrapperStyles}>
+        <GestureDetector gesture={panGesture}>
+          <Animated.View
+            style={rDragContainerStyle}
+            className="pointer-events-box-none"
+            onLayout={(event) => {
+              contentY.set(event.nativeEvent.layout.y);
+              contentHeight.set(event.nativeEvent.layout.height);
+              onLayout?.(event);
+            }}
           >
-            {children}
-          </BottomSheetView>
-        </BottomSheet>
-      </SelectContentContext>
+            <AnimatedDialogContent
+              ref={ref}
+              className={contentStyles}
+              style={[styleSheet.contentContainer, rContainerStyle, style]}
+              {...props}
+            >
+              {children}
+            </AnimatedDialogContent>
+          </Animated.View>
+        </GestureDetector>
+      </View>
     );
   }
 );
@@ -363,6 +571,15 @@ const SelectContent = forwardRef<
       <SelectContentBottomSheet
         ref={ref as React.Ref<BottomSheet>}
         {...(props as SelectContentBottomSheetProps)}
+      />
+    );
+  }
+
+  if (presentation === 'dialog') {
+    return (
+      <SelectContentDialog
+        ref={ref as React.Ref<SelectPrimitivesTypes.ContentRef>}
+        {...(props as SelectContentDialogProps)}
       />
     );
   }

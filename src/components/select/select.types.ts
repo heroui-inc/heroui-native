@@ -7,6 +7,8 @@ import type {
   WithTimingConfig,
 } from 'react-native-reanimated';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
+import type { ElementSlots } from '../../providers/theme';
+import type { DialogContentFallbackSlots } from './select.styles';
 
 /**
  * Ref type for the Select Trigger component
@@ -16,7 +18,7 @@ export type SelectTriggerRef = SelectPrimitivesTypes.TriggerRef;
 /**
  * Presentation mode for the select content
  */
-export type SelectPresentation = 'popover' | 'bottom-sheet';
+export type SelectPresentation = 'popover' | 'bottom-sheet' | 'dialog';
 
 /**
  * Select placement options
@@ -27,16 +29,6 @@ export type SelectPlacement = 'top' | 'bottom' | 'left' | 'right';
  * Select alignment options
  */
 export type SelectAlign = 'start' | 'center' | 'end';
-
-/**
- * Select context value with presentation and placement
- */
-export interface SelectContentContextValue {
-  /**
-   * Current placement of the select
-   */
-  placement?: SelectPlacement;
-}
 
 /**
  * Spring animation configuration
@@ -134,7 +126,7 @@ export interface SelectOverlayProps extends SelectPrimitivesTypes.OverlayProps {
  * Select Content props for 'popover' presentation
  */
 export interface SelectContentPopoverProps
-  extends SelectPrimitivesTypes.ContentProps {
+  extends SelectPrimitivesTypes.PopoverContentProps {
   /**
    * Additional CSS class for the content container
    */
@@ -175,11 +167,37 @@ export interface SelectContentBottomSheetProps
 }
 
 /**
+ * Select Content props for 'dialog' presentation
+ */
+export interface SelectContentDialogProps
+  extends SelectPrimitivesTypes.DialogContentProps {
+  /**
+   * Additional CSS classes for the content container
+   */
+  classNames?: ElementSlots<DialogContentFallbackSlots>;
+  /**
+   * The select content
+   */
+  children?: ReactNode;
+  /**
+   * Presentation mode for the select
+   */
+  presentation: 'dialog';
+  /**
+   * Whether to disable the default animations (opacity, scale, translate)
+   * Use this when you want to animate these properties using your own Reanimated useAnimatedStyle
+   * @default false
+   */
+  isDefaultAnimationDisabled?: boolean;
+}
+
+/**
  * Select Content component props
  */
 export type SelectContentProps =
   | SelectContentPopoverProps
-  | SelectContentBottomSheetProps;
+  | SelectContentBottomSheetProps
+  | SelectContentDialogProps;
 
 /**
  * Select Close component props

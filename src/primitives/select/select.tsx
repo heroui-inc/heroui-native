@@ -25,11 +25,12 @@ import * as Slot from '../slot';
 import type {
   CloseProps,
   CloseRef,
-  ContentProps,
   ContentRef,
+  DialogContentProps,
   IRootContext,
   OverlayProps,
   OverlayRef,
+  PopoverContentProps,
   PortalProps,
   RootProps,
   RootRef,
@@ -71,6 +72,7 @@ const Root = forwardRef<RootRef, RootProps>(
     const [selectState, setSelectState] = useState<SelectState>('idle');
 
     const progress = useSharedValue(0);
+    const isDragging = useSharedValue(false);
 
     function onOpenChange(value: boolean) {
       if (value) {
@@ -101,6 +103,7 @@ const Root = forwardRef<RootRef, RootProps>(
           triggerPosition,
           closeDelay,
           progress,
+          isDragging,
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -240,7 +243,7 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
 /**
  * @info `position`, `top`, `left`, and `maxWidth` style properties are controlled internally. Opt out of this behavior by setting `disablePositioningStyle` to `true`.
  */
-const Content = forwardRef<ContentRef, ContentProps>(
+const PopoverContent = forwardRef<ContentRef, PopoverContentProps>(
   (
     {
       asChild = false,
@@ -332,6 +335,49 @@ const Content = forwardRef<ContentRef, ContentProps>(
 
 // --------------------------------------------------
 
+const DialogContent = forwardRef<ContentRef, DialogContentProps>(
+  ({ asChild, forceMount, ...props }, ref) => {
+    const { selectState, nativeID, onOpenChange } = useRootContext();
+
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => {
+          onOpenChange(false);
+          return true;
+        }
+      );
+
+      return () => {
+        backHandler.remove();
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    if (!forceMount) {
+      if (selectState === 'idle') {
+        return null;
+      }
+    }
+
+    const Component = asChild ? Slot.View : View;
+
+    return (
+      <Component
+        ref={ref}
+        role="dialog"
+        nativeID={nativeID}
+        aria-labelledby={`${nativeID}_label`}
+        aria-describedby={`${nativeID}_desc`}
+        aria-modal={true}
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const Close = forwardRef<CloseRef, CloseProps>(
   ({ asChild, onPress: onPressProp, disabled = false, ...props }, ref) => {
     const { onOpenChange, setContentLayout, setTriggerPosition, closeDelay } =
@@ -367,7 +413,17 @@ const Close = forwardRef<CloseRef, CloseProps>(
 Root.displayName = 'HeroUINative.Select.Root';
 Trigger.displayName = 'HeroUINative.Select.Trigger';
 Overlay.displayName = 'HeroUINative.Select.Overlay';
-Content.displayName = 'HeroUINative.Select.Content';
+PopoverContent.displayName = 'HeroUINative.Select.PopoverContent';
+DialogContent.displayName = 'HeroUINative.Primitive.Select.DialogContent';
 Close.displayName = 'HeroUINative.Select.Close';
 
-export { Close, Content, Overlay, Portal, Root, Trigger, useRootContext };
+export {
+  Close,
+  DialogContent,
+  Overlay,
+  PopoverContent,
+  Portal,
+  Root,
+  Trigger,
+  useRootContext,
+};

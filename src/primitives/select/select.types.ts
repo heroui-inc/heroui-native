@@ -60,6 +60,10 @@ interface IRootContext {
    */
   progress: SharedValue<number>;
   /**
+   * Whether the select content (dialog) is currently dragging
+   */
+  isDragging: SharedValue<boolean>;
+  /**
    * Delay in milliseconds before the select closes
    */
   closeDelay?: number;
@@ -120,7 +124,12 @@ type TriggerProps = Omit<SlottablePressableProps, 'disabled'> & {
 /**
  * Props for the Select Content component
  */
-type ContentProps = SlottableViewProps & PositionedContentProps;
+type PopoverContentProps = SlottableViewProps & PositionedContentProps;
+
+/**
+ * Props for the dialog content component
+ */
+type DialogContentProps = ForceMountable & SlottableViewProps;
 
 /**
  * Props for the Select Close component
@@ -164,11 +173,12 @@ type TriggerRef = PressableRef & {
 export type {
   CloseProps,
   CloseRef,
-  ContentProps,
   ContentRef,
+  DialogContentProps,
   IRootContext,
   OverlayProps,
   OverlayRef,
+  PopoverContentProps,
   PortalProps,
   RootProps,
   RootRef,

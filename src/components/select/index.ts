@@ -1,10 +1,15 @@
-export { default as Select, useSelect } from './select';
+export { default as Select, useSelect, useSelectItem } from './select';
 export type {
   SelectAlign,
   SelectCloseIconProps,
   SelectCloseProps,
   SelectContentProps,
   SelectDescriptionProps,
+  SelectGroupLabelProps,
+  SelectGroupProps,
+  SelectItemIndicatorProps,
+  SelectItemLabelProps,
+  SelectItemProps,
   SelectOverlayProps,
   SelectPlacement,
   SelectPortalProps,
@@ -13,4 +18,5 @@ export type {
   SelectTitleProps,
   SelectTriggerProps,
   SelectTriggerRef,
+  SelectValueProps,
 } from './select.types';

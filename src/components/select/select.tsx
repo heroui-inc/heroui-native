@@ -35,11 +35,17 @@ import type {
   SelectContentPopoverProps,
   SelectContentProps,
   SelectDescriptionProps,
+  SelectGroupLabelProps,
+  SelectGroupProps,
+  SelectItemIndicatorProps,
+  SelectItemLabelProps,
+  SelectItemProps,
   SelectOverlayProps,
   SelectPortalProps,
   SelectRootProps,
   SelectTitleProps,
   SelectTriggerProps,
+  SelectValueProps,
 } from './select.types';
 
 const AnimatedOverlay = Animated.createAnimatedComponent(
@@ -55,6 +61,8 @@ const AnimatedDialogContent = Animated.createAnimatedComponent(
 );
 
 const useSelect = SelectPrimitives.useRootContext;
+
+const useSelectItem = SelectPrimitives.useItemContext;
 
 // --------------------------------------------------
 
@@ -80,6 +88,17 @@ const SelectTrigger = forwardRef<
   SelectTriggerProps
 >((props, ref) => {
   return <SelectPrimitives.Trigger ref={ref} {...props} />;
+});
+
+// --------------------------------------------------
+
+const SelectValue = forwardRef<
+  SelectPrimitivesTypes.ValueRef,
+  SelectValueProps
+>(({ className, ...props }, ref) => {
+  const tvStyles = selectStyles.value({ className });
+
+  return <SelectPrimitives.Value ref={ref} className={tvStyles} {...props} />;
 });
 
 // --------------------------------------------------
@@ -477,6 +496,7 @@ const SelectClose = forwardRef<
 
 // --------------------------------------------------
 
+// VS -----------
 const SelectTitle = forwardRef<RNText, SelectTitleProps>(
   ({ className, children, ...props }, ref) => {
     const tvStyles = selectStyles.title({ className });
@@ -497,6 +517,7 @@ const SelectTitle = forwardRef<RNText, SelectTitleProps>(
 
 // --------------------------------------------------
 
+// VS -----------
 const SelectDescription = forwardRef<RNText, SelectDescriptionProps>(
   ({ className, children, ...props }, ref) => {
     const { isDark } = useTheme();
@@ -513,6 +534,68 @@ const SelectDescription = forwardRef<RNText, SelectDescriptionProps>(
 
 // --------------------------------------------------
 
+const SelectItem = forwardRef<SelectPrimitivesTypes.ItemRef, SelectItemProps>(
+  ({ className, ...props }, ref) => {
+    const tvStyles = selectStyles.item({ className });
+
+    return <SelectPrimitives.Item ref={ref} className={tvStyles} {...props} />;
+  }
+);
+
+// --------------------------------------------------
+
+const SelectItemLabel = forwardRef<
+  SelectPrimitivesTypes.ItemLabelRef,
+  SelectItemLabelProps
+>(({ className, ...props }, ref) => {
+  const tvStyles = selectStyles.itemLabel({ className });
+
+  return (
+    <SelectPrimitives.ItemLabel ref={ref} className={tvStyles} {...props} />
+  );
+});
+
+// --------------------------------------------------
+
+const SelectItemIndicator = forwardRef<
+  SelectPrimitivesTypes.ItemIndicatorRef,
+  SelectItemIndicatorProps
+>(({ className, ...props }, ref) => {
+  const tvStyles = selectStyles.itemIndicator({ className });
+
+  return (
+    <SelectPrimitives.ItemIndicator ref={ref} className={tvStyles} {...props} />
+  );
+});
+
+// --------------------------------------------------
+
+const SelectGroup = forwardRef<
+  SelectPrimitivesTypes.GroupRef,
+  SelectGroupProps
+>(({ className, ...props }, ref) => {
+  const tvStyles = selectStyles.group({ className });
+
+  return <SelectPrimitives.Group ref={ref} className={tvStyles} {...props} />;
+});
+
+// --------------------------------------------------
+
+const SelectGroupLabel = forwardRef<
+  SelectPrimitivesTypes.GroupLabelRef,
+  SelectGroupLabelProps
+>(({ className, ...props }, ref) => {
+  const { isDark } = useTheme();
+
+  const tvStyles = selectStyles.groupLabel({ className, isDark });
+
+  return (
+    <SelectPrimitives.GroupLabel ref={ref} className={tvStyles} {...props} />
+  );
+});
+
+// --------------------------------------------------
+
 SelectRoot.displayName = DISPLAY_NAME.ROOT;
 SelectTrigger.displayName = DISPLAY_NAME.TRIGGER;
 SelectPortal.displayName = DISPLAY_NAME.PORTAL;
@@ -521,15 +604,24 @@ SelectContent.displayName = DISPLAY_NAME.CONTENT;
 SelectClose.displayName = DISPLAY_NAME.CLOSE;
 SelectTitle.displayName = DISPLAY_NAME.TITLE;
 SelectDescription.displayName = DISPLAY_NAME.DESCRIPTION;
+SelectValue.displayName = DISPLAY_NAME.VALUE;
+SelectItem.displayName = DISPLAY_NAME.ITEM;
+SelectItemLabel.displayName = DISPLAY_NAME.ITEM_LABEL;
+SelectItemIndicator.displayName = DISPLAY_NAME.ITEM_INDICATOR;
+SelectGroup.displayName = DISPLAY_NAME.GROUP;
+SelectGroupLabel.displayName = DISPLAY_NAME.GROUP_LABEL;
 
 /**
  * Compound Select component with sub-components
  *
  * @component Select - Main container that manages open/close state, positioning,
- * and provides context to child components. Handles placement, alignment, and collision detection.
+ * value selection and provides context to child components. Handles placement, alignment, and collision detection.
  *
  * @component Select.Trigger - Clickable element that toggles the select visibility.
  * Wraps any child element with press handlers.
+ *
+ * @component Select.Value - Displays the selected value or placeholder text.
+ * Automatically updates when selection changes.
  *
  * @component Select.Portal - Renders select content in a portal layer above other content.
  * Ensures proper stacking and positioning.
@@ -537,9 +629,19 @@ SelectDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  * @component Select.Overlay - Optional background overlay. Can be transparent or
  * semi-transparent to capture outside clicks.
  *
- * @component Select.Content - Container for select content with two presentation modes:
- * default floating popover with positioning and collision detection, or bottom sheet modal.
- * Supports arrow indicators and custom animations.
+ * @component Select.Content - Container for select content with three presentation modes:
+ * popover (default floating with positioning and collision detection), bottom sheet modal, or dialog modal.
+ * Supports custom animations.
+ *
+ * @component Select.Item - Selectable option item. Handles selection state and press events.
+ *
+ * @component Select.ItemLabel - Displays the label text for an item.
+ *
+ * @component Select.ItemIndicator - Optional indicator shown for selected items.
+ *
+ * @component Select.Group - Groups related items together.
+ *
+ * @component Select.GroupLabel - Label for a group of items.
  *
  * @component Select.Close - Close button that dismisses the select when pressed.
  * Renders a default X icon if no children provided.
@@ -548,20 +650,26 @@ SelectDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  *
  * @component Select.Description - Optional description text with muted styling.
  *
- * Props flow from Select to sub-components via context (placement, align, offset, etc.).
+ * Props flow from Select to sub-components via context (placement, align, offset, value, etc.).
  * The select automatically positions itself relative to the trigger element.
  *
  * @see Full documentation: https://heroui.com/components/select
  */
 const Select = Object.assign(SelectRoot, {
   Trigger: SelectTrigger,
+  Value: SelectValue,
   Portal: SelectPortal,
   Overlay: SelectOverlay,
   Content: SelectContent,
+  Item: SelectItem,
+  ItemLabel: SelectItemLabel,
+  ItemIndicator: SelectItemIndicator,
+  Group: SelectGroup,
+  GroupLabel: SelectGroupLabel,
   Close: SelectClose,
   Title: SelectTitle,
   Description: SelectDescription,
 });
 
-export { useSelect };
+export { useSelect, useSelectItem };
 export default Select;

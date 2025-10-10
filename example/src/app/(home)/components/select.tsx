@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { Button, Select } from 'heroui-native';
-import { Platform, Text, View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
@@ -21,11 +21,7 @@ export default function PopoverScreen() {
           </Select.Trigger>
           <Select.Portal>
             <Select.Overlay />
-            <Select.Content>
-              <AppText className="text-foreground">
-                This is a basic select with simple content
-              </AppText>
-            </Select.Content>
+            <Select.Content>{/* Content */}</Select.Content>
           </Select.Portal>
         </Select>
       </View>
@@ -47,18 +43,7 @@ export default function PopoverScreen() {
               align="start"
               alignOffset={-20}
             >
-              <View className="mb-6 items-center">
-                <Text className="text-5xl">💥</Text>
-                <Select.Title>Boom</Select.Title>
-                <Select.Description className="text-center">
-                  This select uses the popover presentation.
-                </Select.Description>
-              </View>
-              <Select.Close asChild>
-                <Button size="sm" className="self-stretch">
-                  Close Select
-                </Button>
-              </Select.Close>
+              {/* Content */}
             </Select.Content>
           </Select.Portal>
         </Select>
@@ -77,18 +62,7 @@ export default function PopoverScreen() {
               }}
               presentation="dialog"
             >
-              <View className="mb-6 items-center">
-                <Text className="text-5xl">💥</Text>
-                <Select.Title>Babam</Select.Title>
-                <Select.Description className="text-center">
-                  This select uses the dialog presentation.
-                </Select.Description>
-              </View>
-              <Select.Close asChild>
-                <Button size="sm" className="self-stretch">
-                  Close Select
-                </Button>
-              </Select.Close>
+              {/* Content */}
             </Select.Content>
           </Select.Portal>
         </Select>
@@ -102,16 +76,7 @@ export default function PopoverScreen() {
           <Select.Portal>
             <Select.Overlay className="bg-black/30" />
             <Select.Content presentation="bottom-sheet">
-              <View className="items-center">
-                <Text className="text-5xl">🎇</Text>
-                <Select.Title>Badaboom</Select.Title>
-                <Select.Description className="mb-8 text-center">
-                  This select uses the bottom sheet presentation.
-                </Select.Description>
-                <Select.Close asChild>
-                  <Button className="self-stretch">Close Bottom Sheet</Button>
-                </Select.Close>
-              </View>
+              {/* Content */}
             </Select.Content>
           </Select.Portal>
         </Select>

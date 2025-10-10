@@ -1,6 +1,10 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 
+const value = tv({
+  base: 'text-base text-foreground font-normal',
+});
+
 const portal = tv({
   base: 'absolute inset-0',
 });
@@ -54,6 +58,32 @@ const description = tv({
   },
 });
 
+const item = tv({
+  base: 'flex-row items-center gap-2 px-2 py-2.5',
+});
+
+const itemLabel = tv({
+  base: 'flex-1 text-base text-foreground font-medium',
+});
+
+const itemIndicator = tv({
+  base: 'size-5 items-center justify-center bg-red-500',
+});
+
+const group = tv({
+  base: 'gap-3',
+});
+
+const groupLabel = tv({
+  base: 'text-sm font-medium px-2 py-1.5',
+  variants: {
+    isDark: {
+      true: 'text-muted-foreground',
+      false: 'text-muted',
+    },
+  },
+});
+
 const selectStyles = {
   portal,
   overlay,
@@ -63,6 +93,12 @@ const selectStyles = {
   close,
   title,
   description,
+  value,
+  item,
+  itemLabel,
+  itemIndicator,
+  group,
+  groupLabel,
 };
 
 export type DialogContentFallbackSlots = keyof ReturnType<typeof dialogContent>;

@@ -252,3 +252,66 @@ export interface SelectDescriptionProps extends TextProps {
    */
   className?: string;
 }
+
+/**
+ * Select Value component props
+ */
+export interface SelectValueProps extends SelectPrimitivesTypes.ValueProps {
+  /**
+   * Additional CSS class for the value
+   */
+  className?: string;
+}
+
+/**
+ * Select Item component props
+ */
+export interface SelectItemProps extends SelectPrimitivesTypes.ItemProps {
+  /**
+   * Additional CSS class for the item
+   */
+  className?: string;
+}
+
+/**
+ * Select Item Label component props
+ */
+export interface SelectItemLabelProps
+  extends SelectPrimitivesTypes.ItemLabelProps {
+  /**
+   * Additional CSS class for the item label
+   */
+  className?: string;
+}
+
+/**
+ * Select Item Indicator component props
+ */
+export interface SelectItemIndicatorProps
+  extends SelectPrimitivesTypes.ItemIndicatorProps {
+  /**
+   * Additional CSS class for the item indicator
+   */
+  className?: string;
+}
+
+/**
+ * Select Group component props
+ */
+export interface SelectGroupProps extends SelectPrimitivesTypes.GroupProps {
+  /**
+   * Additional CSS class for the group
+   */
+  className?: string;
+}
+
+/**
+ * Select Group Label component props
+ */
+export interface SelectGroupLabelProps
+  extends SelectPrimitivesTypes.GroupLabelProps {
+  /**
+   * Additional CSS class for the group label
+   */
+  className?: string;
+}

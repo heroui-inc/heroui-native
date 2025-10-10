@@ -1,13 +1,11 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { Button, Select, useTheme } from 'heroui-native';
+import { Button, Select } from 'heroui-native';
 import { Platform, Text, View } from 'react-native';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
 export default function PopoverScreen() {
-  const { colors } = useTheme();
   const router = useRouter();
 
   return (
@@ -32,35 +30,7 @@ export default function PopoverScreen() {
         </Select>
       </View>
 
-      {/* With Title and Description */}
-      <SectionTitle title="With Title & Description" />
-      <View className="items-center">
-        <Select>
-          <Select.Trigger asChild>
-            <Button variant="tertiary" size="sm">
-              <Ionicons
-                name="information-circle"
-                size={20}
-                color={colors.mutedForeground}
-              />
-              <Button.Label>Show Info</Button.Label>
-            </Button>
-          </Select.Trigger>
-          <Select.Portal>
-            <Select.Overlay />
-            <Select.Content className="gap-1 w-[320px] rounded-xl px-6 py-4">
-              <Select.Close className="absolute top-3 right-3 z-50" />
-              <Select.Title>Information</Select.Title>
-              <Select.Description>
-                This select includes a title and description to provide more
-                structured information to users.
-              </Select.Description>
-            </Select.Content>
-          </Select.Portal>
-        </Select>
-      </View>
-
-      {/* Controlled State */}
+      {/* Presentation */}
       <SectionTitle title="Presentation" />
       <View className="flex-row items-center justify-center gap-4">
         <Select>

@@ -6,7 +6,9 @@ import type {
   PositionedContentProps,
   PressableRef,
   SlottablePressableProps,
+  SlottableTextProps,
   SlottableViewProps,
+  TextRef,
   ViewRef,
 } from '../../helpers/types';
 
@@ -14,6 +16,16 @@ import type {
  * Select internal state
  */
 type SelectState = 'idle' | 'open' | 'close';
+
+/**
+ * Select option type
+ */
+type SelectOption =
+  | {
+      value: string;
+      label: string;
+    }
+  | undefined;
 
 /**
  * Internal context interface for managing select state and positioning
@@ -67,12 +79,33 @@ interface IRootContext {
    * Delay in milliseconds before the select closes
    */
   closeDelay?: number;
+  /**
+   * The currently selected option
+   */
+  value: SelectOption;
+  /**
+   * Callback fired when the selected value changes
+   */
+  onValueChange: (option: SelectOption) => void;
 }
 
 /**
  * Props for the Select Root component
  */
 type RootProps = SlottableViewProps & {
+  /**
+   * The controlled selected value of the select
+   */
+  value?: SelectOption;
+  /**
+   * The default selected value (uncontrolled)
+   */
+  defaultValue?: SelectOption;
+  /**
+   * Callback fired when the selected value changes
+   * @param option - The newly selected option
+   */
+  onValueChange?: (option: SelectOption) => void;
   /**
    * Callback fired when the select open state changes
    * @param open - Whether the select is open or closed
@@ -137,6 +170,55 @@ type DialogContentProps = ForceMountable & SlottableViewProps;
 type CloseProps = SlottablePressableProps;
 
 /**
+ * Props for the Select Value component
+ */
+type ValueProps = SlottableTextProps & {
+  /**
+   * Placeholder text to show when no value is selected
+   */
+  placeholder: string;
+};
+
+/**
+ * Props for the Select Item component
+ */
+type ItemProps = SlottablePressableProps & {
+  /**
+   * The value of this item
+   */
+  value: string;
+  /**
+   * The label to display for this item
+   */
+  label: string;
+  /**
+   * Whether to close the select when this item is pressed
+   * @default true
+   */
+  closeOnPress?: boolean;
+};
+
+/**
+ * Props for the Select Item Label component
+ */
+type ItemLabelProps = Omit<SlottableTextProps, 'children'>;
+
+/**
+ * Props for the Select Item Indicator component
+ */
+type ItemIndicatorProps = SlottableViewProps & ForceMountable;
+
+/**
+ * Props for the Select Group component
+ */
+type GroupProps = SlottableViewProps;
+
+/**
+ * Props for the Select Group Label component
+ */
+type GroupLabelProps = SlottableTextProps;
+
+/**
  * Ref type for the Select Close component
  */
 type CloseRef = PressableRef;
@@ -170,19 +252,62 @@ type TriggerRef = PressableRef & {
   close: () => void;
 };
 
+/**
+ * Ref type for the Select Value component
+ */
+type ValueRef = TextRef;
+
+/**
+ * Ref type for the Select Item component
+ */
+type ItemRef = PressableRef;
+
+/**
+ * Ref type for the Select Item Label component
+ */
+type ItemLabelRef = TextRef;
+
+/**
+ * Ref type for the Select Item Indicator component
+ */
+type ItemIndicatorRef = ViewRef;
+
+/**
+ * Ref type for the Select Group component
+ */
+type GroupRef = ViewRef;
+
+/**
+ * Ref type for the Select Group Label component
+ */
+type GroupLabelRef = TextRef;
+
 export type {
   CloseProps,
   CloseRef,
   ContentRef,
   DialogContentProps,
+  GroupLabelProps,
+  GroupLabelRef,
+  GroupProps,
+  GroupRef,
   IRootContext,
+  ItemIndicatorProps,
+  ItemIndicatorRef,
+  ItemLabelProps,
+  ItemLabelRef,
+  ItemProps,
+  ItemRef,
   OverlayProps,
   OverlayRef,
   PopoverContentProps,
   PortalProps,
   RootProps,
   RootRef,
+  SelectOption,
   SelectState,
   TriggerProps,
   TriggerRef,
+  ValueProps,
+  ValueRef,
 };

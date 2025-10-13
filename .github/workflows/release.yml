@@ -49,3 +49,15 @@ jobs:
         run: npx changelogithub
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Trigger MCP Extraction
+        if: success()
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.MCP_DISPATCH_TOKEN }}
+          repository: heroui-inc/heroui-mcp
+          event-type: native-version-bump
+          client-payload: |
+            {
+              "triggered_by": "release"
+            }

@@ -15,7 +15,7 @@ export const CloseIcon: React.FC<CloseIconProps> = ({ size = 16, color }) => {
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      fill={color ?? colors.mutedForeground}
+      fill={color ?? colors.foreground}
     >
       <Path
         fillRule="evenodd"

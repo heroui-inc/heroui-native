@@ -13,7 +13,11 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
+import {
+  CheckIcon,
+  CloseIcon,
+  FullWindowOverlay,
+} from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
 import { useDialogContentAnimation } from '../../helpers/hooks';
 import * as SelectPrimitives from '../../primitives/select';
@@ -543,11 +547,18 @@ const SelectItemDescription = forwardRef<RNText, SelectItemDescriptionProps>(
 const SelectItemIndicator = forwardRef<
   SelectPrimitivesTypes.ItemIndicatorRef,
   SelectItemIndicatorProps
->(({ className, ...props }, ref) => {
+>(({ className, children, iconProps, ...props }, ref) => {
+  const { colors } = useTheme();
+
+  const iconSize = iconProps?.size ?? 16;
+  const iconColor = iconProps?.color ?? colors.muted;
+
   const tvStyles = selectStyles.itemIndicator({ className });
 
   return (
-    <SelectPrimitives.ItemIndicator ref={ref} className={tvStyles} {...props} />
+    <SelectPrimitives.ItemIndicator ref={ref} className={tvStyles} {...props}>
+      {children || <CheckIcon size={iconSize} color={iconColor} />}
+    </SelectPrimitives.ItemIndicator>
   );
 });
 

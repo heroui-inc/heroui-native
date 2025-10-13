@@ -284,6 +284,21 @@ export interface SelectItemDescriptionProps extends TextProps {
 }
 
 /**
+ * Select Item Indicator Icon props
+ */
+export interface SelectItemIndicatorIconProps {
+  /**
+   * Size of the check icon
+   * @default 16
+   */
+  size?: number;
+  /**
+   * Color of the check icon
+   */
+  color?: string;
+}
+
+/**
  * Select Item Indicator component props
  */
 export interface SelectItemIndicatorProps
@@ -292,4 +307,8 @@ export interface SelectItemIndicatorProps
    * Additional CSS class for the item indicator
    */
   className?: string;
+  /**
+   * Check icon props
+   */
+  iconProps?: SelectItemIndicatorIconProps;
 }

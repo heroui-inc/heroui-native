@@ -5,6 +5,7 @@ export type {
   SelectCloseProps,
   SelectContentProps,
   SelectItemDescriptionProps,
+  SelectItemIndicatorIconProps,
   SelectItemIndicatorProps,
   SelectItemLabelProps,
   SelectItemProps,

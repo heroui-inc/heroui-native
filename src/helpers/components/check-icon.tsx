@@ -1,20 +1,20 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
 import { useTheme } from '../../providers/theme';
-import { DEFAULT_CHECK_ICON_SIZE, DISPLAY_NAME } from './checkbox.constants';
-import type { CheckboxIndicatorIconProps } from './checkbox.types';
+interface CheckIconProps {
+  size?: number;
+  color?: string;
+}
 
-export const CheckIcon: React.FC<CheckboxIndicatorIconProps> = (props) => {
+export const CheckIcon: React.FC<CheckIconProps> = ({ size = 16, color }) => {
   const { colors } = useTheme();
-
-  const iconSize = DEFAULT_CHECK_ICON_SIZE;
 
   return (
     <Svg
-      width={props.size ?? iconSize}
-      height={props.size ?? iconSize}
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
-      fill={props.color ?? colors.accentForeground}
+      fill={color ?? colors.foreground}
     >
       <Path
         fillRule="evenodd"
@@ -25,4 +25,4 @@ export const CheckIcon: React.FC<CheckboxIndicatorIconProps> = (props) => {
   );
 };
 
-CheckIcon.displayName = DISPLAY_NAME.CHECKBOX_CHECK_ICON;
+CheckIcon.displayName = 'HeroUINative.CheckIcon';

@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-import { FontAwesome6 } from '@expo/vector-icons';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
@@ -99,7 +98,7 @@ export default function PopoverScreen() {
                     className="px-4"
                   >
                     <Select.ItemLabel />
-                    <Select.ItemIndicator className="size-1.5 rounded-full bg-muted" />
+                    <Select.ItemIndicator />
                   </Select.Item>
                   {index < 5 && <Divider />}
                 </React.Fragment>
@@ -156,9 +155,7 @@ export default function PopoverScreen() {
                       {country.label}
                     </AppText>
                   </View>
-                  <Select.ItemIndicator>
-                    <FontAwesome6 name="check" size={16} color="#10b981" />
-                  </Select.ItemIndicator>
+                  <Select.ItemIndicator />
                 </Select.Item>
               ))}
             </Select.Content>
@@ -214,9 +211,7 @@ export default function PopoverScreen() {
                       {country.label}
                     </AppText>
                   </View>
-                  <Select.ItemIndicator>
-                    <FontAwesome6 name="check" size={16} color="#10b981" />
-                  </Select.ItemIndicator>
+                  <Select.ItemIndicator />
                 </Select.Item>
               ))}
             </Select.Content>
@@ -292,13 +287,7 @@ export default function PopoverScreen() {
                           {country.label}
                         </AppText>
                       </View>
-                      <Select.ItemIndicator>
-                        <FontAwesome6
-                          name="check"
-                          size={16}
-                          color={colors.muted}
-                        />
-                      </Select.ItemIndicator>
+                      <Select.ItemIndicator />
                     </Select.Item>
                     {index < COUNTRIES.length - 1 && <Divider />}
                   </React.Fragment>
@@ -342,9 +331,7 @@ export default function PopoverScreen() {
                   label={state.label}
                 >
                   <Select.ItemLabel />
-                  <Select.ItemIndicator>
-                    <FontAwesome6 name="check" size={16} color="#10b981" />
-                  </Select.ItemIndicator>
+                  <Select.ItemIndicator />
                 </Select.Item>
               ))}
             </Select.Content>
@@ -371,9 +358,7 @@ export default function PopoverScreen() {
                   label={state.label}
                 >
                   <Select.ItemLabel />
-                  <Select.ItemIndicator>
-                    <FontAwesome6 name="check" size={16} color="#10b981" />
-                  </Select.ItemIndicator>
+                  <Select.ItemIndicator />
                 </Select.Item>
               ))}
             </Select.Content>
@@ -396,9 +381,7 @@ export default function PopoverScreen() {
                   label={state.label}
                 >
                   <Select.ItemLabel />
-                  <Select.ItemIndicator>
-                    <FontAwesome6 name="check" size={16} color="#10b981" />
-                  </Select.ItemIndicator>
+                  <Select.ItemIndicator />
                 </Select.Item>
               ))}
             </Select.Content>

@@ -490,15 +490,23 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
       setContentLayout,
       closeDelay,
     } = useRootContext();
+
+    const baseOnCloseDelay = 150; // This delay is needed to see change of indicator position first
+
     function onPress(ev: GestureResponderEvent) {
       onValueChange({ value: itemValue, label });
 
       if (closeOnPress) {
+        setTimeout(
+          () => {
+            setTriggerPosition(null);
+            setContentLayout(null);
+          },
+          baseOnCloseDelay + (closeDelay ?? 0)
+        );
         setTimeout(() => {
-          setTriggerPosition(null);
-          setContentLayout(null);
-        }, closeDelay);
-        onOpenChange(false);
+          onOpenChange(false);
+        }, baseOnCloseDelay);
       }
 
       onPressProp?.(ev);

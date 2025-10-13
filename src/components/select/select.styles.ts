@@ -30,7 +30,7 @@ const popoverContent = tv({
 });
 
 const bottomSheetContent = tv({
-  base: 'flex-1 p-5',
+  base: 'p-5',
 });
 
 const dialogContent = tv({
@@ -59,7 +59,7 @@ const description = tv({
 });
 
 const item = tv({
-  base: 'flex-row items-center gap-2 px-2 py-2.5',
+  base: 'flex-row items-center gap-2 px-2 py-3',
 });
 
 const itemLabel = tv({
@@ -67,11 +67,11 @@ const itemLabel = tv({
 });
 
 const itemIndicator = tv({
-  base: 'size-5 items-center justify-center bg-red-500',
+  base: 'size-5 items-center justify-center',
 });
 
 const group = tv({
-  base: 'gap-3',
+  base: '',
 });
 
 const groupLabel = tv({

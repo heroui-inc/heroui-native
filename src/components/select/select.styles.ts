@@ -70,10 +70,6 @@ const itemIndicator = tv({
   base: 'size-5 items-center justify-center',
 });
 
-const group = tv({
-  base: '',
-});
-
 const groupLabel = tv({
   base: 'text-sm font-medium px-2 py-1.5',
   variants: {
@@ -97,7 +93,6 @@ const selectStyles = {
   item,
   itemLabel,
   itemIndicator,
-  group,
   groupLabel,
 };
 

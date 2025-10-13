@@ -36,7 +36,6 @@ import type {
   SelectContentProps,
   SelectDescriptionProps,
   SelectGroupLabelProps,
-  SelectGroupProps,
   SelectItemIndicatorProps,
   SelectItemLabelProps,
   SelectItemProps,
@@ -570,17 +569,6 @@ const SelectItemIndicator = forwardRef<
 
 // --------------------------------------------------
 
-const SelectGroup = forwardRef<
-  SelectPrimitivesTypes.GroupRef,
-  SelectGroupProps
->(({ className, ...props }, ref) => {
-  const tvStyles = selectStyles.group({ className });
-
-  return <SelectPrimitives.Group ref={ref} className={tvStyles} {...props} />;
-});
-
-// --------------------------------------------------
-
 const SelectGroupLabel = forwardRef<
   SelectPrimitivesTypes.GroupLabelRef,
   SelectGroupLabelProps
@@ -608,7 +596,6 @@ SelectValue.displayName = DISPLAY_NAME.VALUE;
 SelectItem.displayName = DISPLAY_NAME.ITEM;
 SelectItemLabel.displayName = DISPLAY_NAME.ITEM_LABEL;
 SelectItemIndicator.displayName = DISPLAY_NAME.ITEM_INDICATOR;
-SelectGroup.displayName = DISPLAY_NAME.GROUP;
 SelectGroupLabel.displayName = DISPLAY_NAME.GROUP_LABEL;
 
 /**
@@ -639,8 +626,6 @@ SelectGroupLabel.displayName = DISPLAY_NAME.GROUP_LABEL;
  *
  * @component Select.ItemIndicator - Optional indicator shown for selected items.
  *
- * @component Select.Group - Groups related items together.
- *
  * @component Select.GroupLabel - Label for a group of items.
  *
  * @component Select.Close - Close button that dismisses the select when pressed.
@@ -664,7 +649,6 @@ const Select = Object.assign(SelectRoot, {
   Item: SelectItem,
   ItemLabel: SelectItemLabel,
   ItemIndicator: SelectItemIndicator,
-  Group: SelectGroup,
   GroupLabel: SelectGroupLabel,
   Close: SelectClose,
   Title: SelectTitle,

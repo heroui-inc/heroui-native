@@ -6,7 +6,6 @@ export type {
   SelectContentProps,
   SelectDescriptionProps,
   SelectGroupLabelProps,
-  SelectGroupProps,
   SelectItemIndicatorProps,
   SelectItemLabelProps,
   SelectItemProps,

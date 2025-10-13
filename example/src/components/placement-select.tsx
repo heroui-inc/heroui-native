@@ -1,4 +1,3 @@
-import { FontAwesome6 } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
@@ -82,12 +81,7 @@ const PlacementContentList: FC<PlacementContentListProps> = memo(
               style={{
                 height: ITEM_HEIGHT,
               }}
-            >
-              <Select.ItemLabel />
-              <Select.ItemIndicator>
-                <FontAwesome6 name="check" size={14} color={colors.muted} />
-              </Select.ItemIndicator>
-            </Select.Item>
+            />
           )}
         />
       </ScrollShadow>

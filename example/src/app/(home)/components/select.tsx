@@ -96,10 +96,7 @@ export default function PopoverScreen() {
                     value={state.value}
                     label={state.label}
                     className="px-4"
-                  >
-                    <Select.ItemLabel />
-                    <Select.ItemIndicator />
-                  </Select.Item>
+                  />
                   {index < 5 && <Divider />}
                 </React.Fragment>
               ))}
@@ -329,10 +326,7 @@ export default function PopoverScreen() {
                   key={state.value}
                   value={state.value}
                   label={state.label}
-                >
-                  <Select.ItemLabel />
-                  <Select.ItemIndicator />
-                </Select.Item>
+                />
               ))}
             </Select.Content>
           </Select.Portal>
@@ -356,10 +350,7 @@ export default function PopoverScreen() {
                   key={state.value}
                   value={state.value}
                   label={state.label}
-                >
-                  <Select.ItemLabel />
-                  <Select.ItemIndicator />
-                </Select.Item>
+                />
               ))}
             </Select.Content>
           </Select.Portal>
@@ -379,10 +370,7 @@ export default function PopoverScreen() {
                   key={state.value}
                   value={state.value}
                   label={state.label}
-                >
-                  <Select.ItemLabel />
-                  <Select.ItemIndicator />
-                </Select.Item>
+                />
               ))}
             </Select.Content>
           </Select.Portal>

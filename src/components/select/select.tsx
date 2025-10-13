@@ -499,10 +499,19 @@ const SelectClose = forwardRef<
 // --------------------------------------------------
 
 const SelectItem = forwardRef<SelectPrimitivesTypes.ItemRef, SelectItemProps>(
-  ({ className, ...props }, ref) => {
+  ({ children, className, ...props }, ref) => {
     const tvStyles = selectStyles.item({ className });
 
-    return <SelectPrimitives.Item ref={ref} className={tvStyles} {...props} />;
+    return (
+      <SelectPrimitives.Item ref={ref} className={tvStyles} {...props}>
+        {children || (
+          <>
+            <SelectItemLabel />
+            <SelectItemIndicator />
+          </>
+        )}
+      </SelectPrimitives.Item>
+    );
   }
 );
 

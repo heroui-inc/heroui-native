@@ -24,7 +24,7 @@ const popoverContent = tv({
   variants: {
     isDark: {
       true: '',
-      false: 'shadow-md shadow-black/5',
+      false: 'shadow-lg shadow-black/10',
     },
   },
 });

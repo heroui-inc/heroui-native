@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from '../../../components/app-text';
 import { PlacementSelect } from '../../../components/placement-select';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { SearchableSelect } from '../../../components/searchable-select';
 import { SectionTitle } from '../../../components/section-title';
 
 type SelectOption = {
@@ -63,8 +64,14 @@ export default function PopoverScreen() {
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
-      {/* Basic Select */}
-      <SectionTitle title="Basic Usage" />
+      {/* Basic Select With Text Input */}
+      <SectionTitle title="Basic Usage With Text Input" />
+      <View className="items-center">
+        <SearchableSelect />
+      </View>
+
+      {/* Basic Select With Button Trigger */}
+      <SectionTitle title="Basic Usage With Button Trigger" />
       <View className="items-center">
         <Select
           value={basicValue}
@@ -78,26 +85,28 @@ export default function PopoverScreen() {
           </Select.Trigger>
           <Select.Portal>
             <Select.Overlay className="bg-transparent" />
-            <Select.Content className="w-[240px] px-0 bg-transparent overflow-hidden border border-border">
-              <BlurView
-                tint={
-                  isDark
-                    ? 'systemThickMaterialDark'
-                    : 'systemThickMaterialLight'
-                }
-                style={StyleSheet.absoluteFill}
-              />
+            <Select.Content className="w-[240px] bg-panel/5 px-0 border border-border rounded-xl">
+              <View className="absolute inset-0 rounded-xl overflow-hidden">
+                <BlurView
+                  tint={
+                    isDark
+                      ? 'systemThickMaterialDark'
+                      : 'systemThickMaterialLight'
+                  }
+                  style={StyleSheet.absoluteFill}
+                />
+              </View>
               <Select.ListLabel className="px-4 mb-2">
                 Choose a state
               </Select.ListLabel>
-              {US_STATES.slice(0, 6).map((state, index) => (
+              {US_STATES.slice(0, 5).map((state, index) => (
                 <React.Fragment key={state.value}>
                   <Select.Item
                     value={state.value}
                     label={state.label}
                     className="px-4"
                   />
-                  {index < 5 && <Divider />}
+                  {index < 4 && <Divider />}
                 </React.Fragment>
               ))}
             </Select.Content>

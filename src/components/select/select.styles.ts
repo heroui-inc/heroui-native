@@ -70,7 +70,7 @@ const itemIndicator = tv({
   base: 'size-5 items-center justify-center',
 });
 
-const groupLabel = tv({
+const listLabel = tv({
   base: 'text-sm font-medium px-2 py-1.5',
   variants: {
     isDark: {
@@ -93,7 +93,7 @@ const selectStyles = {
   item,
   itemLabel,
   itemIndicator,
-  groupLabel,
+  listLabel,
 };
 
 export type DialogContentFallbackSlots = keyof ReturnType<typeof dialogContent>;

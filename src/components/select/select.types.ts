@@ -296,12 +296,12 @@ export interface SelectItemIndicatorProps
 }
 
 /**
- * Select Group Label component props
+ * Select List Label component props
  */
-export interface SelectGroupLabelProps
+export interface SelectListLabelProps
   extends SelectPrimitivesTypes.GroupLabelProps {
   /**
-   * Additional CSS class for the group label
+   * Additional CSS class for the list label
    */
   className?: string;
 }

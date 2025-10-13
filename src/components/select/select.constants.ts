@@ -11,7 +11,7 @@ export const DISPLAY_NAME = {
   ITEM: 'HeroUINative.Select.Item',
   ITEM_LABEL: 'HeroUINative.Select.ItemLabel',
   ITEM_INDICATOR: 'HeroUINative.Select.ItemIndicator',
-  GROUP_LABEL: 'HeroUINative.Select.GroupLabel',
+  LIST_LABEL: 'HeroUINative.Select.ListLabel',
   CLOSE: 'HeroUINative.Select.Close',
   TITLE: 'HeroUINative.Select.Title',
   DESCRIPTION: 'HeroUINative.Select.Description',

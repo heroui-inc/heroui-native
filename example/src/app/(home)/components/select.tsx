@@ -88,9 +88,9 @@ export default function PopoverScreen() {
                 }
                 style={StyleSheet.absoluteFill}
               />
-              <Select.GroupLabel className="px-4 mb-2">
+              <Select.ListLabel className="px-4 mb-2">
                 Choose a state
-              </Select.GroupLabel>
+              </Select.ListLabel>
               {US_STATES.slice(0, 6).map((state, index) => (
                 <React.Fragment key={state.value}>
                   <Select.Item
@@ -196,7 +196,7 @@ export default function PopoverScreen() {
               presentation="dialog"
             >
               <View className="flex-row items-center justify-between mb-2">
-                <Select.GroupLabel>Select Country</Select.GroupLabel>
+                <Select.ListLabel>Select Country</Select.ListLabel>
                 <Select.Close />
               </View>
               {COUNTRIES.slice(0, 5).map((country) => (

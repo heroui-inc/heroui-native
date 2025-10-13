@@ -35,10 +35,10 @@ import type {
   SelectContentPopoverProps,
   SelectContentProps,
   SelectDescriptionProps,
-  SelectGroupLabelProps,
   SelectItemIndicatorProps,
   SelectItemLabelProps,
   SelectItemProps,
+  SelectListLabelProps,
   SelectOverlayProps,
   SelectPortalProps,
   SelectRootProps,
@@ -569,16 +569,21 @@ const SelectItemIndicator = forwardRef<
 
 // --------------------------------------------------
 
-const SelectGroupLabel = forwardRef<
+const SelectListLabel = forwardRef<
   SelectPrimitivesTypes.GroupLabelRef,
-  SelectGroupLabelProps
+  SelectListLabelProps
 >(({ className, ...props }, ref) => {
   const { isDark } = useTheme();
 
-  const tvStyles = selectStyles.groupLabel({ className, isDark });
+  const tvStyles = selectStyles.listLabel({ className, isDark });
 
   return (
-    <SelectPrimitives.GroupLabel ref={ref} className={tvStyles} {...props} />
+    <Text
+      ref={ref}
+      className={tvStyles}
+      accessibilityRole="header"
+      {...props}
+    />
   );
 });
 
@@ -596,7 +601,7 @@ SelectValue.displayName = DISPLAY_NAME.VALUE;
 SelectItem.displayName = DISPLAY_NAME.ITEM;
 SelectItemLabel.displayName = DISPLAY_NAME.ITEM_LABEL;
 SelectItemIndicator.displayName = DISPLAY_NAME.ITEM_INDICATOR;
-SelectGroupLabel.displayName = DISPLAY_NAME.GROUP_LABEL;
+SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
 
 /**
  * Compound Select component with sub-components
@@ -626,7 +631,7 @@ SelectGroupLabel.displayName = DISPLAY_NAME.GROUP_LABEL;
  *
  * @component Select.ItemIndicator - Optional indicator shown for selected items.
  *
- * @component Select.GroupLabel - Label for a group of items.
+ * @component Select.ListLabel - Label for the list of items.
  *
  * @component Select.Close - Close button that dismisses the select when pressed.
  * Renders a default X icon if no children provided.
@@ -649,7 +654,7 @@ const Select = Object.assign(SelectRoot, {
   Item: SelectItem,
   ItemLabel: SelectItemLabel,
   ItemIndicator: SelectItemIndicator,
-  GroupLabel: SelectGroupLabel,
+  ListLabel: SelectListLabel,
   Close: SelectClose,
   Title: SelectTitle,
   Description: SelectDescription,

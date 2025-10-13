@@ -234,31 +234,21 @@ export interface SelectCloseIconProps {
 }
 
 /**
- * Select Title component props
- */
-export interface SelectTitleProps extends TextProps {
-  /**
-   * Additional CSS class for the title
-   */
-  className?: string;
-}
-
-/**
- * Select Description component props
- */
-export interface SelectDescriptionProps extends TextProps {
-  /**
-   * Additional CSS class for the description
-   */
-  className?: string;
-}
-
-/**
  * Select Value component props
  */
 export interface SelectValueProps extends SelectPrimitivesTypes.ValueProps {
   /**
    * Additional CSS class for the value
+   */
+  className?: string;
+}
+
+/**
+ * Select List Label component props
+ */
+export interface SelectListLabelProps extends TextProps {
+  /**
+   * Additional CSS class for the list label
    */
   className?: string;
 }
@@ -276,10 +266,19 @@ export interface SelectItemProps extends SelectPrimitivesTypes.ItemProps {
 /**
  * Select Item Label component props
  */
-export interface SelectItemLabelProps
-  extends SelectPrimitivesTypes.ItemLabelProps {
+export interface SelectItemLabelProps extends Omit<TextProps, 'children'> {
   /**
    * Additional CSS class for the item label
+   */
+  className?: string;
+}
+
+/**
+ * Select Item Description component props
+ */
+export interface SelectItemDescriptionProps extends TextProps {
+  /**
+   * Additional CSS class for the item description
    */
   className?: string;
 }
@@ -291,17 +290,6 @@ export interface SelectItemIndicatorProps
   extends SelectPrimitivesTypes.ItemIndicatorProps {
   /**
    * Additional CSS class for the item indicator
-   */
-  className?: string;
-}
-
-/**
- * Select List Label component props
- */
-export interface SelectListLabelProps
-  extends SelectPrimitivesTypes.GroupLabelProps {
-  /**
-   * Additional CSS class for the list label
    */
   className?: string;
 }

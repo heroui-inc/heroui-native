@@ -10,11 +10,10 @@ export const DISPLAY_NAME = {
   CONTENT: 'HeroUINative.Select.Content',
   ITEM: 'HeroUINative.Select.Item',
   ITEM_LABEL: 'HeroUINative.Select.ItemLabel',
+  ITEM_DESCRIPTION: 'HeroUINative.Select.ItemDescription',
   ITEM_INDICATOR: 'HeroUINative.Select.ItemIndicator',
   LIST_LABEL: 'HeroUINative.Select.ListLabel',
   CLOSE: 'HeroUINative.Select.Close',
-  TITLE: 'HeroUINative.Select.Title',
-  DESCRIPTION: 'HeroUINative.Select.Description',
 };
 
 /**

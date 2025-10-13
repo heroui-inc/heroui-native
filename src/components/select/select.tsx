@@ -34,7 +34,7 @@ import type {
   SelectContentDialogProps,
   SelectContentPopoverProps,
   SelectContentProps,
-  SelectDescriptionProps,
+  SelectItemDescriptionProps,
   SelectItemIndicatorProps,
   SelectItemLabelProps,
   SelectItemProps,
@@ -42,7 +42,6 @@ import type {
   SelectOverlayProps,
   SelectPortalProps,
   SelectRootProps,
-  SelectTitleProps,
   SelectTriggerProps,
   SelectValueProps,
 } from './select.types';
@@ -495,44 +494,6 @@ const SelectClose = forwardRef<
 
 // --------------------------------------------------
 
-// VS -----------
-const SelectTitle = forwardRef<RNText, SelectTitleProps>(
-  ({ className, children, ...props }, ref) => {
-    const tvStyles = selectStyles.title({ className });
-
-    return (
-      <Text
-        ref={ref}
-        role="heading"
-        accessibilityRole="header"
-        className={tvStyles}
-        {...props}
-      >
-        {children}
-      </Text>
-    );
-  }
-);
-
-// --------------------------------------------------
-
-// VS -----------
-const SelectDescription = forwardRef<RNText, SelectDescriptionProps>(
-  ({ className, children, ...props }, ref) => {
-    const { isDark } = useTheme();
-
-    const tvStyles = selectStyles.description({ className, isDark });
-
-    return (
-      <Text ref={ref} accessibilityRole="text" className={tvStyles} {...props}>
-        {children}
-      </Text>
-    );
-  }
-);
-
-// --------------------------------------------------
-
 const SelectItem = forwardRef<SelectPrimitivesTypes.ItemRef, SelectItemProps>(
   ({ className, ...props }, ref) => {
     const tvStyles = selectStyles.item({ className });
@@ -547,12 +508,35 @@ const SelectItemLabel = forwardRef<
   SelectPrimitivesTypes.ItemLabelRef,
   SelectItemLabelProps
 >(({ className, ...props }, ref) => {
+  const { label } = useSelectItem();
+
   const tvStyles = selectStyles.itemLabel({ className });
 
   return (
-    <SelectPrimitives.ItemLabel ref={ref} className={tvStyles} {...props} />
+    <Text ref={ref} accessibilityRole="text" className={tvStyles} {...props}>
+      {label}
+    </Text>
   );
 });
+
+// --------------------------------------------------
+
+const SelectItemDescription = forwardRef<RNText, SelectItemDescriptionProps>(
+  ({ className, ...props }, ref) => {
+    const { isDark } = useTheme();
+
+    const tvStyles = selectStyles.itemDescription({ className, isDark });
+
+    return (
+      <Text
+        ref={ref}
+        accessibilityRole="summary"
+        className={tvStyles}
+        {...props}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -595,8 +579,7 @@ SelectPortal.displayName = DISPLAY_NAME.PORTAL;
 SelectOverlay.displayName = DISPLAY_NAME.OVERLAY;
 SelectContent.displayName = DISPLAY_NAME.CONTENT;
 SelectClose.displayName = DISPLAY_NAME.CLOSE;
-SelectTitle.displayName = DISPLAY_NAME.TITLE;
-SelectDescription.displayName = DISPLAY_NAME.DESCRIPTION;
+SelectItemDescription.displayName = DISPLAY_NAME.ITEM_DESCRIPTION;
 SelectValue.displayName = DISPLAY_NAME.VALUE;
 SelectItem.displayName = DISPLAY_NAME.ITEM;
 SelectItemLabel.displayName = DISPLAY_NAME.ITEM_LABEL;
@@ -636,9 +619,7 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
  * @component Select.Close - Close button that dismisses the select when pressed.
  * Renders a default X icon if no children provided.
  *
- * @component Select.Title - Optional title text with pre-styled typography.
- *
- * @component Select.Description - Optional description text with muted styling.
+ * @component Select.ItemDescription - Optional description text for items with muted styling.
  *
  * Props flow from Select to sub-components via context (placement, align, offset, value, etc.).
  * The select automatically positions itself relative to the trigger element.
@@ -653,11 +634,10 @@ const Select = Object.assign(SelectRoot, {
   Content: SelectContent,
   Item: SelectItem,
   ItemLabel: SelectItemLabel,
+  ItemDescription: SelectItemDescription,
   ItemIndicator: SelectItemIndicator,
   ListLabel: SelectListLabel,
   Close: SelectClose,
-  Title: SelectTitle,
-  Description: SelectDescription,
 });
 
 export { useSelect, useSelectItem };

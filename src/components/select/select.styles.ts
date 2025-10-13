@@ -44,12 +44,8 @@ const close = tv({
   base: '',
 });
 
-const title = tv({
-  base: 'text-lg font-medium text-foreground',
-});
-
-const description = tv({
-  base: 'text-base/snug font-normal',
+const listLabel = tv({
+  base: 'text-sm font-medium px-2 py-1.5',
   variants: {
     isDark: {
       true: 'text-muted-foreground',
@@ -66,18 +62,18 @@ const itemLabel = tv({
   base: 'flex-1 text-base text-foreground font-medium',
 });
 
-const itemIndicator = tv({
-  base: 'size-5 items-center justify-center',
-});
-
-const listLabel = tv({
-  base: 'text-sm font-medium px-2 py-1.5',
+const itemDescription = tv({
+  base: 'text-sm/snug font-normal',
   variants: {
     isDark: {
       true: 'text-muted-foreground',
       false: 'text-muted',
     },
   },
+});
+
+const itemIndicator = tv({
+  base: 'size-5 items-center justify-center',
 });
 
 const selectStyles = {
@@ -87,11 +83,10 @@ const selectStyles = {
   bottomSheetContent,
   dialogContent,
   close,
-  title,
-  description,
   value,
   item,
   itemLabel,
+  itemDescription,
   itemIndicator,
   listLabel,
 };

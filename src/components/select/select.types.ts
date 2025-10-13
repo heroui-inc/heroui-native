@@ -163,7 +163,7 @@ export interface SelectContentBottomSheetProps
   /**
    * Props for the bottom sheet view
    */
-  bottomSheetViewProps?: BottomSheetViewProps;
+  bottomSheetViewProps?: Omit<BottomSheetViewProps, 'children'>;
 }
 
 /**

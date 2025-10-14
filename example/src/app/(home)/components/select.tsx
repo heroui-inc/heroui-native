@@ -1,10 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
 import { Button, Divider, Select, useTheme } from 'heroui-native';
 import React, { useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from '../../../components/app-text';
 import { PlacementSelect } from '../../../components/placement-select';
@@ -12,6 +11,7 @@ import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SearchableDialogSelect } from '../../../components/searchable-dialog-select';
 import { SearchableSelect } from '../../../components/searchable-select';
 import { SectionTitle } from '../../../components/section-title';
+import { SelectButtonTrigger } from '../../../components/select-button-trigger';
 
 type SelectOption = {
   value: string;
@@ -52,7 +52,6 @@ const COUNTRIES: CountryOption[] = [
 
 export default function PopoverScreen() {
   const router = useRouter();
-  const [basicValue, setBasicValue] = useState<SelectOption | undefined>();
   const [popoverValue, setPopoverValue] = useState<CountryOption | undefined>();
   const [bottomSheetValue, setBottomSheetValue] = useState<
     CountryOption | undefined
@@ -60,7 +59,7 @@ export default function PopoverScreen() {
 
   const insets = useSafeAreaInsets();
 
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -73,45 +72,7 @@ export default function PopoverScreen() {
       {/* Basic Select With Button Trigger */}
       <SectionTitle title="Basic Usage With Button Trigger" />
       <View className="items-center">
-        <Select
-          value={basicValue}
-          onValueChange={setBasicValue}
-          defaultValue={US_STATES[1]}
-        >
-          <Select.Trigger asChild>
-            <Button variant="tertiary" size="sm" className="w-48">
-              <Select.Value placeholder="Select a state" />
-            </Button>
-          </Select.Trigger>
-          <Select.Portal>
-            <Select.Overlay className="bg-transparent" />
-            <Select.Content className="w-[240px] bg-panel/5 px-0 border border-border rounded-xl">
-              <View className="absolute inset-0 rounded-xl overflow-hidden">
-                <BlurView
-                  tint={
-                    isDark
-                      ? 'systemThickMaterialDark'
-                      : 'systemThickMaterialLight'
-                  }
-                  style={StyleSheet.absoluteFill}
-                />
-              </View>
-              <Select.ListLabel className="px-4 mb-2">
-                Choose a state
-              </Select.ListLabel>
-              {US_STATES.slice(0, 5).map((state, index) => (
-                <React.Fragment key={state.value}>
-                  <Select.Item
-                    value={state.value}
-                    label={state.label}
-                    className="px-4"
-                  />
-                  {index < 4 && <Divider />}
-                </React.Fragment>
-              ))}
-            </Select.Content>
-          </Select.Portal>
-        </Select>
+        <SelectButtonTrigger />
       </View>
 
       {/* Presentation */}

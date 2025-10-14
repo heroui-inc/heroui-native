@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from '../../../components/app-text';
 import { PlacementSelect } from '../../../components/placement-select';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { SearchableDialogSelect } from '../../../components/searchable-dialog-select';
 import { SearchableSelect } from '../../../components/searchable-select';
 import { SectionTitle } from '../../../components/section-title';
 
@@ -53,7 +54,6 @@ export default function PopoverScreen() {
   const router = useRouter();
   const [basicValue, setBasicValue] = useState<SelectOption | undefined>();
   const [popoverValue, setPopoverValue] = useState<CountryOption | undefined>();
-  const [dialogValue, setDialogValue] = useState<CountryOption | undefined>();
   const [bottomSheetValue, setBottomSheetValue] = useState<
     CountryOption | undefined
   >();
@@ -168,61 +168,7 @@ export default function PopoverScreen() {
           </Select.Portal>
         </Select>
 
-        <Select
-          value={dialogValue}
-          onValueChange={(value) => {
-            const country = COUNTRIES.find((c) => c.value === value?.value);
-            setDialogValue(country);
-          }}
-        >
-          <Select.Trigger asChild>
-            <Button variant="tertiary" size="sm" className="min-w-28">
-              {dialogValue ? (
-                <View className="flex-row items-center gap-2">
-                  <AppText className="text-base">{dialogValue.flag}</AppText>
-                  <AppText className="text-sm text-foreground">
-                    {dialogValue.code}
-                  </AppText>
-                </View>
-              ) : (
-                <AppText className="text-foreground">Dialog</AppText>
-              )}
-            </Button>
-          </Select.Trigger>
-          <Select.Portal>
-            <Select.Overlay />
-            <Select.Content
-              classNames={{
-                wrapper: 'items-center',
-                content: 'gap-2 w-[320px] rounded-2xl',
-              }}
-              presentation="dialog"
-            >
-              <View className="flex-row items-center justify-between mb-2">
-                <Select.ListLabel>Select Country</Select.ListLabel>
-                <Select.Close />
-              </View>
-              {COUNTRIES.slice(0, 5).map((country) => (
-                <Select.Item
-                  key={country.value}
-                  value={country.value}
-                  label={country.label}
-                >
-                  <View className="flex-row items-center gap-3 flex-1">
-                    <AppText className="text-2xl">{country.flag}</AppText>
-                    <AppText className="text-sm text-muted w-10">
-                      {country.code}
-                    </AppText>
-                    <AppText className="text-base text-foreground flex-1">
-                      {country.label}
-                    </AppText>
-                  </View>
-                  <Select.ItemIndicator />
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select.Portal>
-        </Select>
+        <SearchableDialogSelect />
 
         <Select
           value={bottomSheetValue}

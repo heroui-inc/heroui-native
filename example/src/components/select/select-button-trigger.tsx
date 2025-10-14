@@ -79,11 +79,7 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
   const { isDark } = useTheme();
 
   return (
-    <Select
-      value={basicValue}
-      onValueChange={setBasicValue}
-      defaultValue={US_STATES[1]}
-    >
+    <Select value={basicValue} onValueChange={setBasicValue}>
       <Select.Trigger>
         <AnimatedTrigger />
       </Select.Trigger>

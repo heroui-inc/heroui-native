@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import Feather from '@expo/vector-icons/Feather';
 import { BlurView } from 'expo-blur';
-import { Divider, Select, useSelect, useTheme } from 'heroui-native';
+import { cn, Divider, Select, useSelect, useTheme } from 'heroui-native';
 import React, { useState, type FC } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -56,7 +56,7 @@ const AnimatedTrigger: FC = () => {
     >
       <Animated.View
         style={[rContainerStyle, styles.borderCurve]}
-        className="absolute -inset-1.5 border-[2.5px] border-border rounded-[16px] pointer-events-none"
+        className="absolute -inset-[5px] border-[2.5px] border-border rounded-[16px] pointer-events-none"
       />
       <Select.Value placeholder="Select a state" />
       <Animated.View style={rChevronStyle} className="absolute right-3">
@@ -87,15 +87,22 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
         <Select.Overlay className="bg-transparent" />
         <Select.Content
           offset={contentOffset}
-          className="w-[256px] bg-panel/5 px-0 border border-border rounded-xl"
+          className={cn(
+            'w-[256px] px-0 border border-border rounded-xl',
+            Platform.OS === 'ios' && 'bg-panel/5'
+          )}
         >
           <View className="absolute inset-0 rounded-xl overflow-hidden">
-            <BlurView
-              tint={
-                isDark ? 'systemThickMaterialDark' : 'systemThickMaterialLight'
-              }
-              style={StyleSheet.absoluteFill}
-            />
+            {Platform.OS === 'ios' && (
+              <BlurView
+                tint={
+                  isDark
+                    ? 'systemThickMaterialDark'
+                    : 'systemThickMaterialLight'
+                }
+                style={StyleSheet.absoluteFill}
+              />
+            )}
           </View>
           <Select.ListLabel className="px-4 mb-2">
             Choose a state

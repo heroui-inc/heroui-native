@@ -12,6 +12,7 @@ import { KeyboardController } from 'react-native-keyboard-controller';
 import Animated, {
   interpolate,
   useAnimatedStyle,
+  withTiming,
 } from 'react-native-reanimated';
 import { AppText } from '../app-text';
 
@@ -57,6 +58,12 @@ export function SearchableSelect() {
 
   const triggerRef = useRef<SelectTriggerRef>(null);
 
+  const rTextInputStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: withTiming(isFocused ? colors.panel : colors.default),
+    };
+  });
+
   return (
     <Select
       value={value}
@@ -76,12 +83,7 @@ export function SearchableSelect() {
           }
           placeholderTextColor={isDark ? colors.mutedForeground : colors.muted}
           className="w-[256px] h-11 px-3 rounded-lg border border-border bg-default flex-row items-center text-foreground"
-          style={{
-            color: colors.foreground,
-            transitionProperty: 'backgroundColor',
-            transitionDuration: 400,
-            backgroundColor: isFocused ? colors.panel : colors.default,
-          }}
+          style={rTextInputStyle}
           onFocus={() => {
             setIsFocused(true);
             triggerRef.current?.open();

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   Divider,
   Select,
@@ -13,6 +14,8 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 import { AppText } from './app-text';
+
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 type SelectOption = {
   value: string;
@@ -65,15 +68,20 @@ export function SearchableSelect() {
     >
       <Select.Trigger ref={triggerRef}>
         <AnimatedTextInputBorder />
-        <TextInput
+        <AnimatedTextInput
           value={isFocused ? searchQuery : searchQuery || value?.label}
           onChangeText={setSearchQuery}
           placeholder={
             isFocused ? (value?.label ?? 'Select a state') : 'Search states...'
           }
           placeholderTextColor={isDark ? colors.mutedForeground : colors.muted}
-          className="w-[256px] h-11 px-3 rounded-lg border border-border bg-panel flex-row items-center text-foreground"
-          style={{ color: colors.foreground }}
+          className="w-[256px] h-11 px-3 rounded-lg border border-border bg-default flex-row items-center text-foreground"
+          style={{
+            color: colors.foreground,
+            transitionProperty: 'backgroundColor',
+            transitionDuration: 400,
+            backgroundColor: isFocused ? colors.panel : colors.default,
+          }}
           onFocus={() => {
             setIsFocused(true);
             triggerRef.current?.open();
@@ -90,7 +98,7 @@ export function SearchableSelect() {
           className="bg-transparent"
           onPress={() => KeyboardController.dismiss()}
         />
-        <Select.Content className="w-[265px] px-0 border border-border rounded-xl">
+        <Select.Content className="w-[256px] px-0 border border-border rounded-xl">
           {US_STATES.filter((state) =>
             state.label.toLowerCase().includes(searchQuery.toLowerCase())
           ).map((state, index, filteredArray) => (

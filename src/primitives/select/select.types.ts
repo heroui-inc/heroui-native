@@ -87,6 +87,10 @@ interface IRootContext {
    * Callback fired when the selected value changes
    */
   onValueChange: (option: SelectOption) => void;
+  /**
+   * Whether to dismiss the keyboard when the select closes
+   */
+  isDismissKeyboardOnClose?: boolean;
 }
 
 /**
@@ -120,6 +124,10 @@ type RootProps = SlottableViewProps & {
    * Whether the select is disabled
    */
   isDisabled?: boolean;
+  /**
+   * Whether to dismiss the keyboard when the select closes
+   */
+  isDismissKeyboardOnClose?: boolean;
 };
 /**
  * Props for the Select Portal component

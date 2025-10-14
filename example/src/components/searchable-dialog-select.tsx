@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   KeyboardController,
 } from 'react-native-keyboard-controller';
+import { Easing } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from './app-text';
 import { SelectBlurBackdrop } from './select-blur-backdrop';
@@ -56,6 +57,7 @@ export function SearchableDialogSelect() {
         setValue(country);
         setSearchQuery('');
       }}
+      closeDelay={300}
     >
       <Select.Trigger asChild>
         <Button variant="tertiary" size="sm" className="min-w-28">
@@ -71,7 +73,17 @@ export function SearchableDialogSelect() {
           )}
         </Button>
       </Select.Trigger>
-      <Select.Portal>
+      <Select.Portal
+        progressAnimationConfigs={{
+          onClose: {
+            animationType: 'timing',
+            animationConfig: {
+              duration: 250,
+              easing: Easing.out(Easing.quad),
+            },
+          },
+        }}
+      >
         <Select.Overlay className="bg-transparent" isDefaultAnimationDisabled>
           <SelectBlurBackdrop />
         </Select.Overlay>

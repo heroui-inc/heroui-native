@@ -70,7 +70,11 @@ const AnimatedTrigger: FC = () => {
   );
 };
 
-export function SelectButtonTrigger() {
+type Props = {
+  contentOffset?: number;
+};
+
+export function SelectButtonTrigger({ contentOffset }: Props) {
   const [basicValue, setBasicValue] = useState<SelectOption | undefined>();
   const { isDark } = useTheme();
 
@@ -85,7 +89,10 @@ export function SelectButtonTrigger() {
       </Select.Trigger>
       <Select.Portal>
         <Select.Overlay className="bg-transparent" />
-        <Select.Content className="w-[256px] bg-panel/5 px-0 border border-border rounded-xl">
+        <Select.Content
+          offset={contentOffset}
+          className="w-[256px] bg-panel/5 px-0 border border-border rounded-xl"
+        >
           <View className="absolute inset-0 rounded-xl overflow-hidden">
             <BlurView
               tint={

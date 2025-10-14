@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import {
   BackHandler,
+  Keyboard,
   Pressable,
   StyleSheet,
   Text,
@@ -76,6 +77,7 @@ const Root = forwardRef<RootRef, RootProps>(
       onOpenChange: onOpenChangeProp,
       closeDelay,
       isDisabled,
+      isDismissKeyboardOnClose = true,
       ...viewProps
     },
     ref
@@ -104,6 +106,9 @@ const Root = forwardRef<RootRef, RootProps>(
         setSelectState('open');
       } else {
         setSelectState('close');
+        if (isDismissKeyboardOnClose) {
+          Keyboard.dismiss();
+        }
         setTimeout(() => {
           setIsOpen(false);
           setSelectState('idle');
@@ -130,6 +135,7 @@ const Root = forwardRef<RootRef, RootProps>(
           closeDelay,
           progress,
           isDragging,
+          isDismissKeyboardOnClose,
         }}
       >
         <Component ref={ref} {...viewProps} />

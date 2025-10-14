@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { Button, Divider, Select, useTheme } from 'heroui-native';
 import React, { useState } from 'react';
 import { Platform, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from '../../../components/app-text';
 import { PlacementSelect } from '../../../components/placement-select';
@@ -102,29 +103,32 @@ export default function PopoverScreen() {
           <Select.Portal>
             <Select.Overlay />
             <Select.Content
-              className="w-[280px]"
+              className="w-[280px] aspect-square rounded-2xl"
               presentation="popover"
+              placement="top"
               align="start"
               alignOffset={-20}
             >
-              {COUNTRIES.slice(0, 5).map((country) => (
-                <Select.Item
-                  key={country.value}
-                  value={country.value}
-                  label={country.label}
-                >
-                  <View className="flex-row items-center gap-3 flex-1">
-                    <AppText className="text-2xl">{country.flag}</AppText>
-                    <AppText className="text-sm text-muted w-10">
-                      {country.code}
-                    </AppText>
-                    <AppText className="text-base text-foreground flex-1">
-                      {country.label}
-                    </AppText>
-                  </View>
-                  <Select.ItemIndicator />
-                </Select.Item>
-              ))}
+              <ScrollView>
+                {COUNTRIES.map((country) => (
+                  <Select.Item
+                    key={country.value}
+                    value={country.value}
+                    label={country.label}
+                  >
+                    <View className="flex-row items-center gap-3 flex-1">
+                      <AppText className="text-2xl">{country.flag}</AppText>
+                      <AppText className="text-sm text-muted w-10">
+                        {country.code}
+                      </AppText>
+                      <AppText className="text-base text-foreground flex-1">
+                        {country.label}
+                      </AppText>
+                    </View>
+                    <Select.ItemIndicator />
+                  </Select.Item>
+                ))}
+              </ScrollView>
             </Select.Content>
           </Select.Portal>
         </Select>
@@ -181,7 +185,7 @@ export default function PopoverScreen() {
               bottomInset={insets.bottom + 8}
             >
               <BottomSheetScrollView
-                contentContainerClassName="py-4"
+                contentContainerClassName="py-4 px-8"
                 showsVerticalScrollIndicator={false}
               >
                 {COUNTRIES.map((country, index) => (
@@ -189,7 +193,7 @@ export default function PopoverScreen() {
                     <Select.Item
                       value={country.value}
                       label={country.label}
-                      className="py-5 px-8"
+                      className="py-5 px-3"
                     >
                       <View className="flex-row items-center gap-3 flex-1">
                         <AppText className="text-2xl">{country.flag}</AppText>

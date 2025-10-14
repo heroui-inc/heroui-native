@@ -1,6 +1,15 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 
+const trigger = tv({
+  base: '',
+  variants: {
+    isDisabled: {
+      true: 'opacity-disabled',
+    },
+  },
+});
+
 const value = tv({
   base: 'text-base text-foreground font-normal',
 });
@@ -77,6 +86,7 @@ const itemIndicator = tv({
 });
 
 const selectStyles = {
+  trigger,
   portal,
   overlay,
   popoverContent,

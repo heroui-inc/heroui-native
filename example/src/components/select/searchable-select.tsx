@@ -72,7 +72,7 @@ export function SearchableSelect() {
           value={isFocused ? searchQuery : searchQuery || value?.label}
           onChangeText={setSearchQuery}
           placeholder={
-            isFocused ? (value?.label ?? 'Select a state') : 'Search states...'
+            isFocused ? (value?.label ?? 'Search state...') : 'Search state...'
           }
           placeholderTextColor={isDark ? colors.mutedForeground : colors.muted}
           className="w-[256px] h-11 px-3 rounded-lg border border-border bg-default flex-row items-center text-foreground"

@@ -83,7 +83,6 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
       value={basicValue}
       onValueChange={setBasicValue}
       defaultValue={US_STATES[1]}
-      isDisabled
     >
       <Select.Trigger>
         <AnimatedTrigger />

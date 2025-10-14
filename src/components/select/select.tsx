@@ -89,7 +89,15 @@ const SelectTrigger = forwardRef<
   SelectPrimitivesTypes.TriggerRef,
   SelectTriggerProps
 >((props, ref) => {
-  return <SelectPrimitives.Trigger ref={ref} {...props} />;
+  const { isDisabled: isDisabledProp } = props;
+
+  const { isDisabled } = useSelect();
+
+  const tvStyles = selectStyles.trigger({
+    isDisabled: isDisabledProp || isDisabled,
+  });
+
+  return <SelectPrimitives.Trigger ref={ref} className={tvStyles} {...props} />;
 });
 
 // --------------------------------------------------

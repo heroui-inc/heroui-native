@@ -156,7 +156,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       closeDelay,
     } = useRootContext();
 
-    const isDisabledValue = isDisabled ?? isDisabledRoot ?? undefined;
+    const isDisabledValue = isDisabled || isDisabledRoot;
 
     const augmentedRef = useAugmentedRef({
       ref,

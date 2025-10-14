@@ -1,7 +1,7 @@
-/* eslint-disable react-native/no-inline-styles */
-import { HeaderBackButton } from '@react-navigation/elements';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
-import { Platform, View } from 'react-native';
+import { useTheme } from 'heroui-native';
+import { Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Carousel } from '../../../components/showcase-carousel';
 
@@ -80,21 +80,24 @@ export default function ScaleCarousel() {
 
   const insets = useSafeAreaInsets();
 
+  const { colors, isDark } = useTheme();
+
   return (
     <View className="flex-1 bg-background">
-      {Platform.OS === 'android' && (
-        <HeaderBackButton
-          displayMode="minimal"
-          onPress={router.back}
-          pressColor="transparent"
-          style={{
-            position: 'absolute',
-            top: insets.top + 12,
-            left: 16,
-            zIndex: 99,
-          }}
+      <Pressable
+        onPress={router.back}
+        className="absolute right-3 p-1 rounded-full bg-foreground/10 z-50"
+        style={{
+          top: insets.top + 12,
+        }}
+        hitSlop={12}
+      >
+        <Ionicons
+          name="close"
+          size={20}
+          color={isDark ? colors.mutedForeground : colors.muted}
         />
-      )}
+      </Pressable>
       <Carousel data={data} />
     </View>
   );

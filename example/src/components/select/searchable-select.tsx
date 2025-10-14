@@ -13,7 +13,7 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import { AppText } from './app-text';
+import { AppText } from '../app-text';
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 

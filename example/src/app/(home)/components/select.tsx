@@ -9,10 +9,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from '../../../components/app-text';
 import { PlacementSelect } from '../../../components/placement-select';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
-import { SearchableDialogSelect } from '../../../components/searchable-dialog-select';
-import { SearchableSelect } from '../../../components/searchable-select';
 import { SectionTitle } from '../../../components/section-title';
-import { SelectButtonTrigger } from '../../../components/select-button-trigger';
+import { SearchableDialogSelect } from '../../../components/select/searchable-dialog-select';
+import { SearchableSelect } from '../../../components/select/searchable-select';
+import { SelectButtonTrigger } from '../../../components/select/select-button-trigger';
 
 type SelectOption = {
   value: string;

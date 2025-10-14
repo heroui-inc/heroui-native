@@ -9,7 +9,7 @@ import {
 } from 'react-native-keyboard-controller';
 import { Easing } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AppText } from './app-text';
+import { AppText } from '../app-text';
 import { SelectBlurBackdrop } from './select-blur-backdrop';
 
 KeyboardController.preload();

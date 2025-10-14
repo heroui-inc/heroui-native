@@ -1,7 +1,7 @@
 import { useSelect, useTheme } from 'heroui-native';
 import { StyleSheet } from 'react-native';
 import { interpolate, useDerivedValue } from 'react-native-reanimated';
-import { AnimatedBlurView } from './animated-blur-view';
+import { AnimatedBlurView } from '../animated-blur-view';
 
 export const SelectBlurBackdrop = () => {
   const { isDark } = useTheme();

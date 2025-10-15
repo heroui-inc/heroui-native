@@ -172,7 +172,7 @@ export default function PopoverExample() {
 
   return (
     <Popover>
-      <Popover.Trigger>
+      <Popover.Trigger asChild>
         <Button variant="tertiary" size="sm">
           <Button.StartContent>
             <Ionicons

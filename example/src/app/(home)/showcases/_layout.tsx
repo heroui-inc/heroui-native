@@ -1,3 +1,4 @@
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
 import { useTheme } from 'heroui-native';
 
@@ -10,21 +11,12 @@ export default function Layout() {
         headerShown: false,
         gestureEnabled: true,
         gestureDirection: 'horizontal',
-        fullScreenGestureEnabled: true,
+        fullScreenGestureEnabled: isLiquidGlassAvailable() ? false : true,
         animation: 'none',
         contentStyle: {
           backgroundColor: colors.background,
         },
       }}
-    >
-      <Stack.Screen
-        name="cooking-onboarding"
-        options={{
-          headerShown: true,
-          headerTransparent: true,
-          title: '',
-        }}
-      />
-    </Stack>
+    />
   );
 }

@@ -1,3 +1,4 @@
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
 import { useTheme } from 'heroui-native';
 import { useCallback } from 'react';
@@ -44,13 +45,18 @@ export default function Layout() {
         headerBackButtonDisplayMode: 'generic',
         gestureEnabled: true,
         gestureDirection: 'horizontal',
-        fullScreenGestureEnabled: true,
+        fullScreenGestureEnabled: isLiquidGlassAvailable() ? false : true,
         contentStyle: {
           backgroundColor: colors.background,
         },
       }}
     >
-      <Stack.Screen name="index" options={{ headerTitle: _renderTitle }} />
+      <Stack.Screen
+        name="index"
+        options={{
+          headerTitle: _renderTitle,
+        }}
+      />
       <Stack.Screen
         name="components/index"
         options={{ headerTitle: 'Components' }}
@@ -133,6 +139,7 @@ export default function Layout() {
 
 const styles = StyleSheet.create({
   logo: {
+    width: 80,
     height: 24,
   },
 });

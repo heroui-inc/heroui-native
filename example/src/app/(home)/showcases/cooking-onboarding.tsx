@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import {
   colorKit,
   Divider,
@@ -18,6 +18,7 @@ import {
 } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import BgImage from '../../../../assets/images/pancakes.jpg';
 import { AppText } from '../../../components/app-text';
 import { Ask } from '../../../components/showcases/cooking-onboarding/ask';
@@ -70,8 +71,9 @@ function onboardingReducer(
 export default function CookingOnboardingScreen() {
   const { colors } = useTheme();
 
-  const navigation = useNavigation();
   const router = useRouter();
+
+  const insets = useSafeAreaInsets();
 
   const shareTriggerRef = useRef<PopoverTriggerRef>(null);
   const saveTriggerRef = useRef<PopoverTriggerRef>(null);
@@ -95,38 +97,6 @@ export default function CookingOnboardingScreen() {
     ],
     []
   );
-
-  const _renderHeaderLeft = useCallback(
-    () => (
-      <Pressable onPress={router.back}>
-        <Feather name="chevron-left" size={24} color={colors.foreground} />
-      </Pressable>
-    ),
-    [router.back, colors.foreground]
-  );
-
-  const _renderHeaderRight = useCallback(
-    () => (
-      <View className="flex-row gap-2">
-        <Share
-          isOnboardingDone={onboardingState.isComplete}
-          triggerRef={shareTriggerRef}
-        />
-        <Save
-          isOnboardingDone={onboardingState.isComplete}
-          triggerRef={saveTriggerRef}
-        />
-      </View>
-    ),
-    [onboardingState.isComplete]
-  );
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: _renderHeaderLeft,
-      headerRight: _renderHeaderRight,
-    });
-  }, [navigation, _renderHeaderLeft, _renderHeaderRight]);
 
   useEffect(() => {
     dispatch({ type: 'START_ONBOARDING' });
@@ -171,6 +141,24 @@ export default function CookingOnboardingScreen() {
       entering={FadeIn.delay(300)}
       className="flex-1 bg-background"
     >
+      <View
+        className="flex-row items-center justify-between absolute left-5 right-5 z-50"
+        style={{ top: insets.top + 8 }}
+      >
+        <Pressable onPress={router.back}>
+          <Feather name="chevron-left" size={26} color={colors.foreground} />
+        </Pressable>
+        <View className="flex-row gap-2">
+          <Share
+            isOnboardingDone={onboardingState.isComplete}
+            triggerRef={shareTriggerRef}
+          />
+          <Save
+            isOnboardingDone={onboardingState.isComplete}
+            triggerRef={saveTriggerRef}
+          />
+        </View>
+      </View>
       <ParallaxScrollView
         headerImage={<Image source={BgImage} style={styles.image} />}
         scrollEnabled={onboardingState.isComplete}

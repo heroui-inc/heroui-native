@@ -79,7 +79,7 @@ export const Priority: FC = () => {
 
   return (
     <Dialog>
-      <Dialog.Trigger>
+      <Dialog.Trigger asChild>
         <Chip
           className="h-7 bg-surface-3 px-2"
           onPress={() => {

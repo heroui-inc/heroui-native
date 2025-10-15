@@ -89,7 +89,7 @@ export const Assignee: FC = () => {
 
   return (
     <Dialog>
-      <Dialog.Trigger>
+      <Dialog.Trigger asChild>
         <Chip
           className="h-7 bg-surface-3 pl-1 pr-2"
           onPress={() => {

@@ -60,7 +60,7 @@ const DialogTrigger = forwardRef<
   DialogPrimitivesTypes.TriggerRef,
   DialogTriggerProps
 >((props, ref) => {
-  return <DialogPrimitives.Trigger ref={ref} asChild {...props} />;
+  return <DialogPrimitives.Trigger ref={ref} {...props} />;
 });
 
 // --------------------------------------------------

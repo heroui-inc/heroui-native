@@ -147,7 +147,7 @@ popoverRef.current?.close();
 
 // Full example
 <Popover>
-  <Popover.Trigger ref={popoverRef}>
+  <Popover.Trigger ref={popoverRef} asChild>
     <Button>Trigger</Button>
   </Popover.Trigger>
   <Popover.Portal>

@@ -1,6 +1,14 @@
-import type { PressableProps as RNPressableProps, ViewProps } from 'react-native';
-import type { AnimatedProps } from 'react-native-reanimated';
-import type { SharedValue, EasingFunction, EasingFunctionFactory } from 'react-native-reanimated';
+import type {
+  PressableProps as RNPressableProps,
+  ViewProps,
+} from 'react-native';
+import type {
+  AnimatedProps,
+  EasingFunction,
+  EasingFunctionFactory,
+  SharedValue,
+  WithTimingConfig,
+} from 'react-native-reanimated';
 
 /**
  * Variant types for the PressableFeedback component
@@ -51,23 +59,13 @@ export interface RippleAnimationConfig {
    * Whether the ripple effect is disabled
    * @default false
    */
-  disabled?: boolean;
+  isDisabled?: boolean;
 }
 
 /**
  * Configuration for highlight animation
  */
 export interface HighlightAnimationConfig {
-  /**
-   * Duration of highlight animation in milliseconds
-   * @default 100
-   */
-  duration?: number;
-  /**
-   * Easing function for highlight animation
-   * @default Easing.inOut(Easing.quad)
-   */
-  easing?: EasingFunction | EasingFunctionFactory;
   /**
    * Opacity when the component is pressed
    * @default 0.2
@@ -79,30 +77,32 @@ export interface HighlightAnimationConfig {
    */
   color?: string;
   /**
+   * Configuration for highlight animation
+   */
+  config?: WithTimingConfig;
+  /**
    * Whether the highlight effect is disabled
    * @default false
    */
-  disabled?: boolean;
+  isDisabled?: boolean;
 }
 
 /**
  * Common props shared by both ripple and highlight variants
  */
-export interface PressableFeedbackCommonProps extends Omit<RNPressableProps, 'children' | 'disabled'>  {
+export interface PressableFeedbackCommonProps
+  extends AnimatedProps<Omit<RNPressableProps, 'children' | 'disabled'>> {
   /**
    * Whether the pressable component is disabled
    * @default false
    */
   isDisabled?: boolean;
   /**
-   * Color used for ripple or highlight effect
-   * @default 'black' for light theme, 'white' for dark theme
-   */
-  color?: string;
-  /**
    * Children elements or a function that receives pressable state
    */
-  children?: React.ReactNode | ((state: PressableFeedbackState) => React.ReactNode);
+  children?:
+    | React.ReactNode
+    | ((state: PressableFeedbackState) => React.ReactNode);
   /**
    * Additional CSS classes
    */
@@ -141,11 +141,11 @@ export interface PressableFeedbackState {
   /**
    * True if component is hovered
    */
-  hovered: boolean;
+  isHovered: boolean;
   /**
    * True if component is pressed
    */
-  pressed: boolean;
+  isPressed: boolean;
 }
 
 /**
@@ -170,11 +170,8 @@ export interface RippleComponentProps extends AnimatedProps<ViewProps> {
  * Internal Props for HighlightComponent
  */
 export interface HighlightComponentProps extends AnimatedProps<ViewProps> {
-  color: string;
-  opacity: number;
-  duration: number;
-  easing: EasingFunction | EasingFunctionFactory;
-  pressed: SharedValue<boolean>;
+  animationConfig: HighlightAnimationConfig;
+  isPressed: SharedValue<boolean>;
 }
 
 /**

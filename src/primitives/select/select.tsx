@@ -1,4 +1,5 @@
 import React, {
+  createContext,
   forwardRef,
   useContext,
   useEffect,
@@ -7,8 +8,10 @@ import React, {
 } from 'react';
 import {
   BackHandler,
+  Keyboard,
   Pressable,
   StyleSheet,
+  Text,
   View,
   type GestureResponderEvent,
   type LayoutChangeEvent,
@@ -17,6 +20,7 @@ import {
 import { useSharedValue } from 'react-native-reanimated';
 import {
   useAugmentedRef,
+  useControllableState,
   useRelativePosition,
   type LayoutPosition,
 } from '../../helpers/hooks';
@@ -25,26 +29,39 @@ import * as Slot from '../slot';
 import type {
   CloseProps,
   CloseRef,
-  ContentProps,
   ContentRef,
+  DialogContentProps,
+  GroupLabelProps,
+  GroupLabelRef,
+  GroupProps,
+  GroupRef,
   IRootContext,
+  ItemIndicatorProps,
+  ItemIndicatorRef,
+  ItemLabelProps,
+  ItemLabelRef,
+  ItemProps,
+  ItemRef,
   OverlayProps,
   OverlayRef,
-  PopoverState,
+  PopoverContentProps,
   PortalProps,
   RootProps,
   RootRef,
+  SelectState,
   TriggerProps,
   TriggerRef,
-} from './popover.types';
+  ValueProps,
+  ValueRef,
+} from './select.types';
 
-const RootContext = React.createContext<IRootContext | null>(null);
+const RootContext = createContext<IRootContext | null>(null);
 
 const useRootContext = () => {
   const context = useContext(RootContext);
   if (!context) {
     throw new Error(
-      'Popover compound components cannot be rendered outside the Popover component'
+      'Select compound components cannot be rendered outside the Select component'
     );
   }
   return context;
@@ -54,45 +71,61 @@ const Root = forwardRef<RootRef, RootProps>(
   (
     {
       asChild,
+      value: valueProp,
+      defaultValue,
+      onValueChange: onValueChangeProp,
       onOpenChange: onOpenChangeProp,
       closeDelay,
       isDisabled,
+      isDismissKeyboardOnClose = true,
       ...viewProps
     },
     ref
   ) => {
     const nativeID = useId();
+
+    const [value, onValueChange] = useControllableState({
+      prop: valueProp,
+      defaultProp: defaultValue,
+      onChange: onValueChangeProp,
+    });
     const [triggerPosition, setTriggerPosition] =
       useState<LayoutPosition | null>(null);
     const [contentLayout, setContentLayout] = useState<LayoutRectangle | null>(
       null
     );
     const [isOpen, setIsOpen] = useState(false);
-    const [popoverState, setPopoverState] = useState<PopoverState>('idle');
+    const [selectState, setSelectState] = useState<SelectState>('idle');
 
     const progress = useSharedValue(0);
+    const isDragging = useSharedValue(false);
 
-    function onOpenChange(value: boolean) {
-      if (value) {
+    function onOpenChange(isOpenValue: boolean) {
+      if (isOpenValue) {
         setIsOpen(true);
-        setPopoverState('open');
+        setSelectState('open');
       } else {
-        setPopoverState('close');
+        setSelectState('close');
+        if (isDismissKeyboardOnClose) {
+          Keyboard.dismiss();
+        }
         setTimeout(() => {
           setIsOpen(false);
-          setPopoverState('idle');
+          setSelectState('idle');
         }, closeDelay);
       }
-      onOpenChangeProp?.(value);
+      onOpenChangeProp?.(isOpenValue);
     }
 
     const Component = asChild ? Slot.View : View;
     return (
       <RootContext.Provider
         value={{
+          value,
+          onValueChange,
           isOpen,
           onOpenChange,
-          popoverState,
+          selectState,
           isDisabled,
           contentLayout,
           nativeID,
@@ -101,6 +134,8 @@ const Root = forwardRef<RootRef, RootProps>(
           triggerPosition,
           closeDelay,
           progress,
+          isDragging,
+          isDismissKeyboardOnClose,
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -121,7 +156,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       closeDelay,
     } = useRootContext();
 
-    const isDisabledValue = isDisabled ?? isDisabledRoot ?? undefined;
+    const isDisabledValue = isDisabled || isDisabledRoot;
 
     const augmentedRef = useAugmentedRef({
       ref,
@@ -158,11 +193,27 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       <Component
         ref={augmentedRef}
         aria-disabled={isDisabledValue}
-        role="button"
+        role="combobox"
         onPress={onPress}
         disabled={isDisabledValue}
         {...props}
       />
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const Value = React.forwardRef<ValueRef, ValueProps>(
+  ({ asChild, placeholder, ...props }, ref) => {
+    const { value } = useRootContext();
+
+    const Component = asChild ? Slot.Text : Text;
+
+    return (
+      <Component ref={ref} {...props}>
+        {value?.label ?? placeholder}
+      </Component>
     );
   }
 );
@@ -240,7 +291,7 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
 /**
  * @info `position`, `top`, `left`, and `maxWidth` style properties are controlled internally. Opt out of this behavior by setting `disablePositioningStyle` to `true`.
  */
-const Content = forwardRef<ContentRef, ContentProps>(
+const PopoverContent = forwardRef<ContentRef, PopoverContentProps>(
   (
     {
       asChild = false,
@@ -332,6 +383,49 @@ const Content = forwardRef<ContentRef, ContentProps>(
 
 // --------------------------------------------------
 
+const DialogContent = forwardRef<ContentRef, DialogContentProps>(
+  ({ asChild, forceMount, ...props }, ref) => {
+    const { selectState, nativeID, onOpenChange } = useRootContext();
+
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => {
+          onOpenChange(false);
+          return true;
+        }
+      );
+
+      return () => {
+        backHandler.remove();
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    if (!forceMount) {
+      if (selectState === 'idle') {
+        return null;
+      }
+    }
+
+    const Component = asChild ? Slot.View : View;
+
+    return (
+      <Component
+        ref={ref}
+        role="dialog"
+        nativeID={nativeID}
+        aria-labelledby={`${nativeID}_label`}
+        aria-describedby={`${nativeID}_desc`}
+        aria-modal={true}
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const Close = forwardRef<CloseRef, CloseProps>(
   ({ asChild, onPress: onPressProp, disabled = false, ...props }, ref) => {
     const { onOpenChange, setContentLayout, setTriggerPosition, closeDelay } =
@@ -364,10 +458,172 @@ const Close = forwardRef<CloseRef, CloseProps>(
 
 // --------------------------------------------------
 
-Root.displayName = 'HeroUINative.Popover.Root';
-Trigger.displayName = 'HeroUINative.Popover.Trigger';
-Overlay.displayName = 'HeroUINative.Popover.Overlay';
-Content.displayName = 'HeroUINative.Popover.Content';
-Close.displayName = 'HeroUINative.Popover.Close';
+const ItemContext = createContext<{
+  itemValue: string;
+  label: string;
+} | null>(null);
 
-export { Close, Content, Overlay, Portal, Root, Trigger, useRootContext };
+function useItemContext() {
+  const context = useContext(ItemContext);
+  if (!context) {
+    throw new Error(
+      'Item compound components cannot be rendered outside of an Item component'
+    );
+  }
+  return context;
+}
+
+// --------------------------------------------------
+
+const Item = React.forwardRef<ItemRef, ItemProps>(
+  (
+    {
+      asChild,
+      value: itemValue,
+      label,
+      onPress: onPressProp,
+      disabled = false,
+      closeOnPress = true,
+      ...props
+    },
+    ref
+  ) => {
+    const {
+      onOpenChange,
+      value,
+      onValueChange,
+      setTriggerPosition,
+      setContentLayout,
+      closeDelay,
+    } = useRootContext();
+
+    const baseOnCloseDelay = 150; // This delay is needed to see change of indicator position first
+
+    function onPress(ev: GestureResponderEvent) {
+      onValueChange({ value: itemValue, label });
+
+      if (closeOnPress) {
+        setTimeout(
+          () => {
+            setTriggerPosition(null);
+            setContentLayout(null);
+          },
+          baseOnCloseDelay + (closeDelay ?? 0)
+        );
+        setTimeout(() => {
+          onOpenChange(false);
+        }, baseOnCloseDelay);
+      }
+
+      onPressProp?.(ev);
+    }
+
+    const Component = asChild ? Slot.Pressable : Pressable;
+
+    return (
+      <ItemContext.Provider value={{ itemValue, label }}>
+        <Component
+          ref={ref}
+          role="option"
+          onPress={onPress}
+          disabled={disabled}
+          aria-checked={value?.value === itemValue}
+          aria-valuetext={label}
+          aria-disabled={!!disabled}
+          accessibilityState={{
+            disabled: !!disabled,
+            checked: value?.value === itemValue,
+          }}
+          {...props}
+        />
+      </ItemContext.Provider>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const ItemLabel = React.forwardRef<ItemLabelRef, ItemLabelProps>(
+  ({ asChild, ...props }, ref) => {
+    const { label } = useItemContext();
+
+    const Component = asChild ? Slot.Text : Text;
+
+    return (
+      <Component ref={ref} {...props}>
+        {label}
+      </Component>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const ItemIndicator = React.forwardRef<ItemIndicatorRef, ItemIndicatorProps>(
+  ({ asChild, forceMount, ...props }, ref) => {
+    const { itemValue } = useItemContext();
+    const { value } = useRootContext();
+
+    if (!forceMount) {
+      if (value?.value !== itemValue) {
+        return null;
+      }
+    }
+    const Component = asChild ? Slot.View : View;
+
+    return <Component ref={ref} role="presentation" {...props} />;
+  }
+);
+
+// --------------------------------------------------
+
+const Group = React.forwardRef<GroupRef, GroupProps>(
+  ({ asChild, ...props }, ref) => {
+    const Component = asChild ? Slot.View : View;
+
+    return <Component ref={ref} role="group" {...props} />;
+  }
+);
+
+// --------------------------------------------------
+
+const GroupLabel = React.forwardRef<GroupLabelRef, GroupLabelProps>(
+  ({ asChild, ...props }, ref) => {
+    const Component = asChild ? Slot.Text : Text;
+
+    return <Component ref={ref} {...props} />;
+  }
+);
+
+// --------------------------------------------------
+
+Root.displayName = 'HeroUINative.Primitive.Select.Root';
+Trigger.displayName = 'HeroUINative.Primitive.Select.Trigger';
+Value.displayName = 'HeroUINative.Primitive.Select.Value';
+Overlay.displayName = 'HeroUINative.Primitive.Select.Overlay';
+PopoverContent.displayName = 'HeroUINative.Primitive.Select.PopoverContent';
+DialogContent.displayName = 'HeroUINative.Primitive.Select.DialogContent';
+Close.displayName = 'HeroUINative.Primitive.Select.Close';
+Item.displayName = 'HeroUINative.Primitive.Select.Item';
+ItemLabel.displayName = 'HeroUINative.Primitive.Select.ItemLabel';
+ItemIndicator.displayName = 'HeroUINative.Primitive.Select.ItemIndicator';
+Group.displayName = 'HeroUINative.Primitive.Select.Group';
+GroupLabel.displayName = 'HeroUINative.Primitive.Select.GroupLabel';
+
+export {
+  Close,
+  DialogContent,
+  Group,
+  GroupLabel,
+  Item,
+  ItemIndicator,
+  ItemLabel,
+  Overlay,
+  PopoverContent,
+  Portal,
+  Root,
+  Trigger,
+  useItemContext,
+  useRootContext,
+  Value,
+};

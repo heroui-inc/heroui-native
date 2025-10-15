@@ -1,11 +1,9 @@
-import Feather from '@expo/vector-icons/Feather';
 import { Image as ExpoImage } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { Chip, DropShadowView, Surface, useTheme } from 'heroui-native';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import Animated, {
   Extrapolation,
-  FadeInRight,
   interpolate,
   type SharedValue,
   useAnimatedStyle,
@@ -45,7 +43,7 @@ export function ShowcaseItem({
 }: ShowcaseItemProps) {
   const router = useRouter();
 
-  const { colors, isDark } = useTheme();
+  const { isDark } = useTheme();
 
   const animatedIndex = useDerivedValue(() => {
     return scrollY.get() / itemSize;
@@ -127,27 +125,12 @@ export function ShowcaseItem({
         className="flex-1 items-center justify-center p-8"
         style={[rContainerStyle]}
       >
-        <Pressable
-          className="flex-row items-center gap-1 mb-5"
-          onPress={() => router.push(item.href)}
-        >
+        <Pressable className="mb-5" onPress={() => router.push(item.href)}>
           <AppText className="text-2xl/7 text-foreground font-semibold">
             {item.title}
           </AppText>
-          <View className="absolute -right-6">
-            <Feather
-              name="chevron-right"
-              size={20}
-              color={colors.mutedForeground}
-            />
-          </View>
         </Pressable>
-        <AnimatedPressable
-          entering={
-            index === 0 ? FadeInRight.springify().delay(300) : undefined
-          }
-          onPress={() => router.push(item.href)}
-        >
+        <AnimatedPressable onPress={() => router.push(item.href)}>
           <DropShadowView
             shadowSize={isDark ? 'none' : 'xl'}
             className="w-[62%] aspect-[1/2] rounded-2xl"

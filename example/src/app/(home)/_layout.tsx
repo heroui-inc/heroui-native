@@ -1,4 +1,5 @@
-import { Stack, usePathname } from 'expo-router';
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
+import { Stack } from 'expo-router';
 import { useTheme } from 'heroui-native';
 import { useCallback } from 'react';
 import { Image, Platform, StyleSheet } from 'react-native';
@@ -8,8 +9,6 @@ import { ThemeToggle } from '../../components/theme-toggle';
 
 export default function Layout() {
   const { theme, colors, isDark } = useTheme();
-
-  const pathname = usePathname();
 
   const _renderTitle = () => {
     return (
@@ -26,7 +25,6 @@ export default function Layout() {
   return (
     <Stack
       screenOptions={{
-        headerShown: false,
         headerTitleAlign: 'center',
         headerTransparent: Platform.select({
           ios: true,
@@ -44,10 +42,10 @@ export default function Layout() {
           fontFamily: 'Inter_600SemiBold',
         },
         headerRight: _renderThemeToggle,
-        headerBackButtonDisplayMode: 'minimal',
+        headerBackButtonDisplayMode: 'generic',
         gestureEnabled: true,
         gestureDirection: 'horizontal',
-        fullScreenGestureEnabled: true,
+        fullScreenGestureEnabled: isLiquidGlassAvailable() ? false : true,
         contentStyle: {
           backgroundColor: colors.background,
         },
@@ -55,19 +53,84 @@ export default function Layout() {
     >
       <Stack.Screen
         name="index"
-        options={{ headerShown: true, headerTitle: _renderTitle }}
+        options={{
+          headerTitle: _renderTitle,
+        }}
       />
-      <Stack.Screen name="components" />
       <Stack.Screen
-        name="themes/index"
-        options={{ headerShown: true, headerTitle: 'Themes' }}
+        name="components/index"
+        options={{ headerTitle: 'Components' }}
       />
+      <Stack.Screen
+        name="components/accordion"
+        options={{ title: 'Accordion' }}
+      />
+      <Stack.Screen name="components/avatar" options={{ title: 'Avatar' }} />
+      <Stack.Screen name="components/button" options={{ title: 'Button' }} />
+      <Stack.Screen name="components/card" options={{ title: 'Card' }} />
+      <Stack.Screen
+        name="components/checkbox"
+        options={{ title: 'Checkbox' }}
+      />
+      <Stack.Screen name="components/chip" options={{ title: 'Chip' }} />
+      <Stack.Screen name="components/dialog" options={{ title: 'Dialog' }} />
+      <Stack.Screen
+        name="components/dialog-native-modal"
+        options={{ title: 'Dialog Native Modal', presentation: 'formSheet' }}
+      />
+      <Stack.Screen name="components/divider" options={{ title: 'Divider' }} />
+      <Stack.Screen
+        name="components/drop-shadow-view"
+        options={{ title: 'Drop Shadow View' }}
+      />
+      <Stack.Screen
+        name="components/error-view"
+        options={{ title: 'Error View' }}
+      />
+      <Stack.Screen
+        name="components/form-field"
+        options={{ title: 'Form Field' }}
+      />
+      <Stack.Screen name="components/popover" options={{ title: 'Popover' }} />
+      <Stack.Screen
+        name="components/pressable-feedback"
+        options={{ title: 'Pressable Feedback' }}
+      />
+      <Stack.Screen
+        name="components/popover-native-modal"
+        options={{ title: 'Popover Native Modal', presentation: 'formSheet' }}
+      />
+      <Stack.Screen
+        name="components/radio-group"
+        options={{ title: 'Radio Group' }}
+      />
+      <Stack.Screen
+        name="components/scroll-shadow"
+        options={{ title: 'Scroll Shadow' }}
+      />
+      <Stack.Screen
+        name="components/select-native-modal"
+        options={{ title: 'Select Native Modal', presentation: 'formSheet' }}
+      />
+      <Stack.Screen name="components/select" options={{ title: 'Select' }} />
+      <Stack.Screen
+        name="components/skeleton"
+        options={{ title: 'Skeleton' }}
+      />
+      <Stack.Screen name="components/spinner" options={{ title: 'Spinner' }} />
+      <Stack.Screen name="components/surface" options={{ title: 'Surface' }} />
+      <Stack.Screen name="components/switch" options={{ title: 'Switch' }} />
+      <Stack.Screen
+        name="components/text-field"
+        options={{ title: 'TextField' }}
+      />
+      <Stack.Screen name="themes/index" options={{ headerTitle: 'Themes' }} />
       <Stack.Screen
         name="showcases"
         options={{
-          headerShown:
-            Platform.OS === 'ios' ? pathname === '/showcases' : false,
-          headerTitle: 'Showcases',
+          headerShown: false,
+          animation: 'slide_from_bottom',
+          animationDuration: 300,
         }}
       />
     </Stack>
@@ -76,6 +139,7 @@ export default function Layout() {
 
 const styles = StyleSheet.create({
   logo: {
+    width: 80,
     height: 24,
   },
 });

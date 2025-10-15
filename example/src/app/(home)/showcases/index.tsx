@@ -1,10 +1,10 @@
-/* eslint-disable react-native/no-inline-styles */
-import { HeaderBackButton } from '@react-navigation/elements';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
 import { useRouter } from 'expo-router';
-import { Platform, View } from 'react-native';
+import { useTheme } from 'heroui-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Carousel } from '../../../components/showcase-carousel';
-
 const data = [
   {
     imageLight:
@@ -80,22 +80,50 @@ export default function ScaleCarousel() {
 
   const insets = useSafeAreaInsets();
 
+  const { colors, isDark } = useTheme();
+
   return (
     <View className="flex-1 bg-background">
-      {Platform.OS === 'android' && (
-        <HeaderBackButton
-          displayMode="minimal"
-          onPress={router.back}
-          pressColor="transparent"
+      {isLiquidGlassAvailable() ? (
+        <Pressable
+          className="absolute right-4 rounded-full z-50"
           style={{
-            position: 'absolute',
             top: insets.top + 12,
-            left: 16,
-            zIndex: 99,
           }}
-        />
+          onPress={router.back}
+        >
+          <GlassView style={styles.glassView} isInteractive>
+            <Ionicons
+              name="close"
+              size={24}
+              color={isDark ? colors.mutedForeground : colors.muted}
+            />
+          </GlassView>
+        </Pressable>
+      ) : (
+        <Pressable
+          onPress={router.back}
+          className="absolute right-3 p-1 rounded-full bg-foreground/10 z-50"
+          style={{
+            top: insets.top + 12,
+          }}
+          hitSlop={12}
+        >
+          <Ionicons
+            name="close"
+            size={20}
+            color={isDark ? colors.mutedForeground : colors.muted}
+          />
+        </Pressable>
       )}
       <Carousel data={data} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  glassView: {
+    borderRadius: 99,
+    padding: 8,
+  },
+});

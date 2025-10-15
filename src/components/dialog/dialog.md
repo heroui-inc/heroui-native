@@ -18,7 +18,7 @@ Simple dialog with title, description, and close button.
 
 ```tsx
 <Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
-  <Dialog.Trigger>
+  <Dialog.Trigger asChild>
     <Button>Open Dialog</Button>
   </Dialog.Trigger>
   <Dialog.Portal>
@@ -126,7 +126,7 @@ export default function DialogExample() {
 
   return (
     <Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
-      <Dialog.Trigger>
+      <Dialog.Trigger asChild>
         <Button variant="primary">Open Dialog</Button>
       </Dialog.Trigger>
       <Dialog.Portal>

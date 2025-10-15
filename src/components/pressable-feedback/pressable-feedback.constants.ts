@@ -24,20 +24,15 @@ export const DEFAULT_PRESSABLE_FEEDBACK_RIPPLE = {
   duration: 250,
   easing: Easing.bezier(0.25, 0.1, 0.25, 1),
   opacity: 0.2,
-  disabled: false,
+  isDisabled: false,
 } as const;
 
 /**
  * Default highlight animation configuration
  */
 export const DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT = {
-  duration: 100,
+  duration: 200,
   easing: Easing.inOut(Easing.quad),
-  opacity: 0.2,
-  disabled: false,
-} as const;
-
-export const DEFAULT_PRESSABLE_FEEDBACK_COLORS = {
-  LIGHT: 'black',
-  DARK: 'white',
+  opacity: 0.1,
+  isDisabled: false,
 } as const;

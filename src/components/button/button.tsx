@@ -1,5 +1,5 @@
 import { forwardRef, useCallback, useMemo } from 'react';
-import { Pressable, View, type GestureResponderEvent } from 'react-native';
+import { View, type GestureResponderEvent } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -8,6 +8,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
+import { colorKit, useTheme } from '../../providers/theme';
+import { PressableFeedback } from '../pressable-feedback';
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
@@ -20,8 +22,6 @@ import type {
   ButtonLabelProps,
   ButtonRootProps,
 } from './button.types';
-
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 const [ButtonProvider, useButtonContext] = createContext<ButtonContextValue>({
   name: 'ButtonContext',
@@ -47,6 +47,8 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     ...restProps
   } = props;
 
+  const { colors } = useTheme();
+
   const stringifiedChildren = childrenToString(children);
 
   const tvStyles = buttonStyles.root({
@@ -57,19 +59,38 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     className,
   });
 
+  const getColor = (color: string) => {
+    return colorKit.invert(color).hex();
+  };
+
+  const highlightColorMap = useMemo(() => {
+    switch (variant) {
+      case 'primary':
+        return getColor(colors.accent);
+      case 'secondary':
+        return getColor(colors.accentSoft);
+      case 'tertiary':
+        return getColor(colors.default);
+      case 'ghost':
+        return getColor(colors.background);
+      case 'danger':
+        return getColor(colors.danger);
+    }
+  }, [variant, colors]);
+
   const scale = useSharedValue(0);
   const btnWidth = useSharedValue(0);
 
-  const isAnimationDisabled = animationConfig?.isAnimationDisabled ?? false;
+  const isScaleAnimationDisabled = animationConfig?.scale?.isDisabled ?? false;
 
   const scaleValue = useMemo(
-    () => animationConfig?.targetScaleValue ?? 0.995,
+    () => animationConfig?.scale?.scale ?? 0.995,
     [animationConfig]
   );
 
   const scaleConfig = useMemo(
     () =>
-      animationConfig?.timingConfig ?? {
+      animationConfig?.scale?.config ?? {
         duration: ANIMATION_DURATION,
         easing: ANIMATION_EASING,
       },
@@ -92,26 +113,26 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
 
   const handlePressIn = useCallback(
     (e: GestureResponderEvent) => {
-      if (!isAnimationDisabled) {
+      if (!isScaleAnimationDisabled) {
         scale.set(withTiming(1, scaleConfig));
       }
       if (onPressIn && typeof onPressIn === 'function') {
         onPressIn(e);
       }
     },
-    [scale, scaleConfig, onPressIn, isAnimationDisabled]
+    [scale, scaleConfig, onPressIn, isScaleAnimationDisabled]
   );
 
   const handlePressOut = useCallback(
     (e: GestureResponderEvent) => {
-      if (!isAnimationDisabled) {
+      if (!isScaleAnimationDisabled) {
         scale.set(withTiming(0, scaleConfig));
       }
       if (onPressOut && typeof onPressOut === 'function') {
         onPressOut(e);
       }
     },
-    [scale, scaleConfig, onPressOut, isAnimationDisabled]
+    [scale, scaleConfig, onPressOut, isScaleAnimationDisabled]
   );
 
   const contextValue = useMemo(
@@ -133,17 +154,22 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
 
   return (
     <ButtonProvider value={contextValue}>
-      <AnimatedPressable
+      <PressableFeedback
         ref={ref}
         layout={skipLayoutAnimation ? undefined : layout}
         className={tvStyles}
         style={[styleSheet.buttonRoot, animatedContainerStyle, style]}
-        disabled={isDisabled}
+        isDisabled={isDisabled}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         onLayout={handleLayout}
         accessibilityRole={accessibilityRole}
         accessibilityState={{ disabled: isDisabled }}
+        variant="highlight"
+        animationConfig={{
+          color: highlightColorMap,
+          ...animationConfig?.highlight,
+        }}
         {...restProps}
       >
         {stringifiedChildren ? (
@@ -151,7 +177,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         ) : (
           children
         )}
-      </AnimatedPressable>
+      </PressableFeedback>
     </ButtonProvider>
   );
 });

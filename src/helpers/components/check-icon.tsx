@@ -1,13 +1,12 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
 import { useTheme } from '../../providers/theme';
-
-interface CloseIconProps {
+interface CheckIconProps {
   size?: number;
   color?: string;
 }
 
-export const CloseIcon: React.FC<CloseIconProps> = ({ size = 16, color }) => {
+export const CheckIcon: React.FC<CheckIconProps> = ({ size = 16, color }) => {
   const { colors } = useTheme();
 
   return (
@@ -15,13 +14,15 @@ export const CloseIcon: React.FC<CloseIconProps> = ({ size = 16, color }) => {
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      fill={color ?? colors.mutedForeground}
+      fill={color ?? colors.foreground}
     >
       <Path
         fillRule="evenodd"
-        d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+        d="M20.732 4.645a1.5 1.5 0 0 1 .163 2.116l-9 10.5a1.5 1.5 0 0 1-2.2.084l-5.25-5.25a1.5 1.5 0 0 1 2.121-2.121l3.892 3.891 7.96-9.287a1.5 1.5 0 0 1 2.114-.163"
         clipRule="evenodd"
       />
     </Svg>
   );
 };
+
+CheckIcon.displayName = 'HeroUINative.CheckIcon';

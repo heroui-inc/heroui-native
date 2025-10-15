@@ -7,8 +7,6 @@ import {
   type PopoverTriggerRef,
 } from 'heroui-native';
 import { type FC, type RefObject } from 'react';
-import { Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
 import { progressAnimationConfigs } from './constants';
@@ -20,8 +18,6 @@ type Props = {
 };
 
 export const Save: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
-  const insets = useSafeAreaInsets();
-
   const { colors } = useTheme();
 
   return (
@@ -39,10 +35,7 @@ export const Save: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
         </Button>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
-        <Popover.Content
-          offset={insets.top + (Platform.OS === 'ios' ? 47 : 65)}
-          className={className.popoverContent}
-        >
+        <Popover.Content className={className.popoverContent}>
           <Popover.Arrow stroke={colors.foreground} fill={colors.foreground} />
           <AppText className={className.popoverText}>
             Save your favorite recipes to your collection

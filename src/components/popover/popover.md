@@ -147,7 +147,7 @@ popoverRef.current?.close();
 
 // Full example
 <Popover>
-  <Popover.Trigger ref={popoverRef}>
+  <Popover.Trigger ref={popoverRef} asChild>
     <Button>Trigger</Button>
   </Popover.Trigger>
   <Popover.Portal>
@@ -172,7 +172,7 @@ export default function PopoverExample() {
 
   return (
     <Popover>
-      <Popover.Trigger>
+      <Popover.Trigger asChild>
         <Button variant="tertiary" size="sm">
           <Button.StartContent>
             <Ionicons

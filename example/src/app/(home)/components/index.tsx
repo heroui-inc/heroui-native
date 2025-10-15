@@ -86,11 +86,6 @@ const components: Component[] = [
     path: 'popover',
   },
   {
-    title: 'Pressable Feedback',
-    icon: <ComponentIcon />,
-    path: 'pressable-feedback',
-  },
-  {
     title: 'Radio Group',
     icon: <ComponentIcon />,
     path: 'radio-group',

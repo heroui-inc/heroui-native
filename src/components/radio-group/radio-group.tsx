@@ -192,7 +192,7 @@ const RadioGroupIndicatorThumb = forwardRef<
           transitionTimingFunction: 'ease-out',
           transform: [
             {
-              scale: isSelected ? 1 : 0.5,
+              scale: isSelected ? 1 : 1.5,
             },
           ],
         },

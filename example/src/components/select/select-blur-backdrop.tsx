@@ -20,7 +20,7 @@ export const SelectBlurBackdrop = () => {
   return (
     <AnimatedBlurView
       blurIntensity={blurIntensity}
-      tint={isDark ? 'dark' : 'systemUltraThinMaterialDark'}
+      tint={isDark ? 'dark' : 'systemUltraThinMaterialLight'}
       style={StyleSheet.absoluteFill}
     />
   );

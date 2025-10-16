@@ -12,6 +12,7 @@
     "@expo-google-fonts/inter": "^0.4.1",
     "@expo/metro-runtime": "~6.1.1",
     "@gorhom/bottom-sheet": "^5",
+    "@react-native-masked-view/masked-view": "0.3.2",
     "@shopify/flash-list": "2.0.3",
     "clsx": "^2.1.1",
     "expo": "^54.0.0",

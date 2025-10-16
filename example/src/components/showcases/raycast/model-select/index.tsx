@@ -1,8 +1,8 @@
 import Feather from '@expo/vector-icons/Feather';
 import * as Haptics from 'expo-haptics';
 import { Button, Select, useTheme } from 'heroui-native';
-import { useState } from 'react';
-import { Pressable, useWindowDimensions, View } from 'react-native';
+import { Platform, Pressable, useWindowDimensions, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { Easing, SlideInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { simulatePress } from '../../../../helpers/utils/simulate-press';
@@ -13,25 +13,15 @@ import { SelectContentContainer } from './select-content-container';
 import { SelectItem } from './select-item';
 import { type ModelOption } from './types';
 
-const MODELS: ModelOption[] = [
-  { value: 'raycast', label: 'Raycast AI', flag: '🇺🇸' },
-  { value: 'chatgpt', label: 'ChatGPT', flag: '🇬🇧' },
-  { value: 'claude', label: 'Claude', flag: '🇨🇦' },
-  { value: 'gemini', label: 'Gemini', flag: '🇦🇺' },
-  { value: 'perplexity', label: 'Perplexity', flag: '🇩🇪' },
-  { value: 'deepseek', label: 'DeepSeek', flag: '🇫🇷' },
-  { value: 'llama', label: 'Llama', flag: '🇯🇵' },
-  { value: 'grok', label: 'Grok', flag: '🇨🇳' },
-  { value: 'mistral', label: 'Mistral', flag: '🇮🇳' },
-  { value: 'moonshot', label: 'Moonshot AI', flag: '🇧🇷' },
-  { value: 'qwen', label: 'Qwen', flag: '🇧🇷' },
-];
+const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
-export const ModelSelect = () => {
-  const [bottomSheetValue, setBottomSheetValue] = useState<
-    ModelOption | undefined
-  >();
+type Props = {
+  data: ModelOption[];
+  model: ModelOption;
+  setModel: (model: ModelOption) => void;
+};
 
+export const ModelSelect = ({ data, model, setModel }: Props) => {
   const insets = useSafeAreaInsets();
   const { height: screenHeight } = useWindowDimensions();
 
@@ -39,29 +29,27 @@ export const ModelSelect = () => {
 
   return (
     <Select
-      value={bottomSheetValue}
+      value={model}
       onValueChange={(value) => {
-        const country = MODELS.find((c) => c.value === value?.value);
-        setBottomSheetValue(country);
+        const modelValue = data.find((m) => m.value === value?.value);
+        setModel(modelValue!);
       }}
-      defaultValue={MODELS[0]}
+      defaultValue={data[0]}
     >
       <Select.Trigger asChild>
         <Button
           variant="tertiary"
           size="sm"
-          className="min-w-28"
+          className="rounded-full px-4 h-11 bg-transparent border border-neutral-400/25 dark:border-neutral-600/25"
           onPress={() => {
+            if (Platform.OS === 'android') return;
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
           }}
         >
-          {bottomSheetValue ? (
-            <View className="flex-row items-center gap-2">
-              <AppText className="text-base">{bottomSheetValue.flag}</AppText>
-            </View>
-          ) : (
-            <AppText className="text-foreground">Sheet</AppText>
-          )}
+          <AppText className="text-foreground">{model.emoji}</AppText>
+          <AppText className="text-foreground font-medium">
+            {model.label}
+          </AppText>
         </Button>
       </Select.Trigger>
       <Select.Portal
@@ -82,9 +70,14 @@ export const ModelSelect = () => {
           },
         }}
       >
-        <Select.Overlay className="bg-transparent" isDefaultAnimationDisabled>
-          <SelectBlurBackdrop />
-        </Select.Overlay>
+        {Platform.OS === 'android' ? (
+          <Select.Overlay className="bg-background" />
+        ) : (
+          <Select.Overlay className="bg-transparent" isDefaultAnimationDisabled>
+            <SelectBlurBackdrop />
+          </Select.Overlay>
+        )}
+
         <SelectContentContainer>
           <View
             className="absolute left-0 right-0 flex-row items-center justify-center px-8 py-2 z-50"
@@ -97,7 +90,7 @@ export const ModelSelect = () => {
             </Pressable>
             <View className="flex-1" />
             <Pressable className="absolute" onPress={simulatePress}>
-              <AppText className="text-xl font-bold text-foreground">
+              <AppText className="text-xl font-semibold dark:font-bold text-foreground">
                 Presets
               </AppText>
             </Pressable>
@@ -108,7 +101,7 @@ export const ModelSelect = () => {
             </Pressable>
           </View>
 
-          <Animated.ScrollView
+          <AnimatedScrollView
             entering={SlideInDown.withInitialValues({
               originY: 100,
             })
@@ -122,10 +115,10 @@ export const ModelSelect = () => {
             <Select.Close>
               <View style={{ height: insets.top + screenHeight * 0.25 }} />
             </Select.Close>
-            {MODELS.map((country) => (
-              <SelectItem key={country.value} data={country} />
+            {data.map((m) => (
+              <SelectItem key={m.value} data={m} />
             ))}
-          </Animated.ScrollView>
+          </AnimatedScrollView>
 
           <ProgressiveBlurView height={insets.top + 150} />
           <ProgressiveBlurView position="bottom" />

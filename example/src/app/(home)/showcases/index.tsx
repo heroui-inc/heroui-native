@@ -8,6 +8,21 @@ import { Carousel } from '../../../components/showcase-carousel';
 const data = [
   {
     imageLight:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/raycast-showcase-light.png',
+    imageDark:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/raycast-showcase-dark.png',
+    title: 'Raycast Model Select',
+    description:
+      'AI model selector with animated blur backdrop, progressive blurs, and smooth spring transitions inspired by Raycast.',
+    href: '/showcases/raycast',
+    components: [
+      { name: 'Select', href: '/components/select' },
+      { name: 'Button', href: '/components/button' },
+      { name: 'Avatar', href: '/components/avatar' },
+    ],
+  },
+  {
+    imageLight:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/cooking-onboarding-light-1.png',
     imageDark:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/cooking-onboarding-dark-1.png',

@@ -17,6 +17,8 @@ export default function Layout() {
           backgroundColor: colors.background,
         },
       }}
-    />
+    >
+      <Stack.Screen name="raycast" options={{ animation: 'fade' }} />
+    </Stack>
   );
 }

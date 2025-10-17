@@ -2,7 +2,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import {
   Button,
   Popover,
-  useTheme,
+  useThemeColor,
   type PopoverTriggerRef,
 } from 'heroui-native';
 import { type FC, type RefObject } from 'react';
@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const Cook: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor<string>('foreground');
 
   return (
     <Popover>
@@ -32,7 +32,10 @@ export const Cook: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
         <Popover.Content className={className.popoverContent} placement="top">
-          <Popover.Arrow stroke={colors.foreground} fill={colors.foreground} />
+          <Popover.Arrow
+            stroke={themeColorForeground}
+            fill={themeColorForeground}
+          />
           <AppText className={className.popoverText}>
             Start cooking with step-by-step instructions
           </AppText>

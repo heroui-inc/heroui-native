@@ -1,6 +1,6 @@
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { BlurView } from 'expo-blur';
-import { cn, Select, useSelect, useTheme } from 'heroui-native';
+import { cn, Select, useSelect, useTheme, useThemeColor } from 'heroui-native';
 import { type FC } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { AppText } from '../../../app-text';
@@ -11,7 +11,8 @@ type Props = {
 };
 
 export const SelectItem: FC<Props> = ({ data }) => {
-  const { colors, isDark } = useTheme();
+  const { isDark } = useTheme();
+  const themeColorBackground = useThemeColor<string>('background');
 
   const { value: selectedValue } = useSelect();
 
@@ -50,7 +51,7 @@ export const SelectItem: FC<Props> = ({ data }) => {
         </AppText>
       </View>
       <Select.ItemIndicator className="size-5 rounded-full items-center justify-center bg-muted dark:bg-foreground">
-        <FontAwesome5 name="check" size={10} color={colors.background} />
+        <FontAwesome5 name="check" size={10} color={themeColorBackground} />
       </Select.ItemIndicator>
     </Select.Item>
   );

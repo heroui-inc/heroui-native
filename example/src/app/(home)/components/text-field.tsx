@@ -1,12 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Button, TextField, useTheme } from 'heroui-native';
+import { Button, TextField, useTheme, useThemeColor } from 'heroui-native';
 import { useState } from 'react';
 import { KeyboardAvoidingView, View } from 'react-native';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
 export default function TextFieldScreen() {
-  const { colors, isDark } = useTheme();
+  const { isDark } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
 
   const [isTestFieldInvalid, setIsTestFieldInvalid] = useState(false);
   const [testFieldValue, setTestFieldValue] = useState('');
@@ -52,15 +53,11 @@ export default function TextFieldScreen() {
               <Ionicons
                 name="lock-closed-outline"
                 size={16}
-                color={colors.mutedForeground}
+                color={themeColorMuted}
               />
             </TextField.InputStartContent>
             <TextField.InputEndContent className="pointer-events-none">
-              <Ionicons
-                name="eye-outline"
-                size={16}
-                color={colors.mutedForeground}
-              />
+              <Ionicons name="eye-outline" size={16} color={themeColorMuted} />
             </TextField.InputEndContent>
           </TextField.Input>
         </TextField>

@@ -1,7 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import Feather from '@expo/vector-icons/Feather';
 import { BlurView } from 'expo-blur';
-import { cn, Divider, Select, useSelect, useTheme } from 'heroui-native';
+import {
+  cn,
+  Divider,
+  Select,
+  useSelect,
+  useTheme,
+  useThemeColor,
+} from 'heroui-native';
 import React, { useState, type FC } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import Animated, {
@@ -25,7 +32,10 @@ const US_STATES: SelectOption[] = [
 const AnimatedTrigger: FC = () => {
   const { progress, selectState } = useSelect();
 
-  const { colors, isDark } = useTheme();
+  const { isDark } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
+  const themeColorDefault = useThemeColor<string>('default');
+  const themeColorPanel = useThemeColor<string>('panel');
 
   const rContainerStyle = useAnimatedStyle(() => {
     const opacity = interpolate(progress.value, [0, 1, 2], [0, 1, 0]);
@@ -50,7 +60,7 @@ const AnimatedTrigger: FC = () => {
           transitionProperty: 'backgroundColor',
           transitionDuration: 400,
           backgroundColor:
-            selectState === 'open' ? colors.panel : colors.default,
+            selectState === 'open' ? themeColorPanel : themeColorDefault,
         },
       ]}
     >
@@ -63,7 +73,7 @@ const AnimatedTrigger: FC = () => {
         <Feather
           name="chevron-down"
           size={18}
-          color={isDark ? colors.mutedForeground : colors.muted}
+          color={isDark ? themeColorMuted : themeColorMuted}
         />
       </Animated.View>
     </Animated.View>

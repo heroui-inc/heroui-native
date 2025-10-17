@@ -10,7 +10,7 @@ import {
   Surface,
   Switch,
   TextField,
-  useTheme,
+  useThemeColor,
 } from 'heroui-native';
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
@@ -24,7 +24,7 @@ const ThemeCircle: React.FC<{
   isActive: boolean;
   onPress: () => void;
 }> = ({ colors, isActive, onPress, themeName }) => {
-  const { colors: themeColors } = useTheme();
+  const themeColorAccent = useThemeColor('accent');
 
   return (
     <Pressable onPress={onPress} className="items-center">
@@ -38,7 +38,7 @@ const ThemeCircle: React.FC<{
               height: 68,
               borderRadius: 34,
               borderWidth: 2,
-              borderColor: themeColors.accent,
+              borderColor: themeColorAccent,
               top: 0,
               left: 0,
             }}

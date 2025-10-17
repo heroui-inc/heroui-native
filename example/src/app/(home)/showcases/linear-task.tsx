@@ -1,6 +1,6 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useRouter } from 'expo-router';
-import { Avatar, Card, Divider, useTheme } from 'heroui-native';
+import { Avatar, Card, Divider, useThemeColor } from 'heroui-native';
 import { Pressable, View } from 'react-native';
 import { KeyboardController } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
@@ -17,7 +17,7 @@ KeyboardController.preload();
 
 export default function LinearTaskScreen() {
   const insets = useSafeAreaInsets();
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   const router = useRouter();
 
@@ -36,7 +36,7 @@ export default function LinearTaskScreen() {
           <MaterialCommunityIcons
             name="arrow-left"
             size={16}
-            color={colors.foreground}
+            color={themeColorForeground}
           />
           <AppText className="text-lg font-medium text-foreground">
             Back
@@ -77,7 +77,7 @@ export default function LinearTaskScreen() {
               <MaterialCommunityIcons
                 name="github"
                 size={20}
-                color={colors.foreground}
+                color={themeColorForeground}
               />
               <AppText className="text-base font-semibold text-foreground">
                 feat/dialog-component

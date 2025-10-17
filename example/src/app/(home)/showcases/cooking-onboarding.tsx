@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import {
   colorKit,
   Divider,
-  useTheme,
+  useThemeColor,
   type PopoverTriggerRef,
 } from 'heroui-native';
 import {
@@ -69,7 +69,8 @@ function onboardingReducer(
 }
 
 export default function CookingOnboardingScreen() {
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
+  const themeColorBackground = useThemeColor<string>('background');
 
   const router = useRouter();
 
@@ -146,7 +147,7 @@ export default function CookingOnboardingScreen() {
         style={{ top: insets.top + 8 }}
       >
         <Pressable onPress={router.back}>
-          <Feather name="chevron-left" size={26} color={colors.foreground} />
+          <Feather name="chevron-left" size={26} color={themeColorForeground} />
         </Pressable>
         <View className="flex-row gap-2">
           <Share
@@ -198,8 +199,8 @@ export default function CookingOnboardingScreen() {
       </ParallaxScrollView>
       <LinearGradient
         colors={[
-          colors.background,
-          colorKit.setAlpha(colors.background, 0).hex(),
+          themeColorBackground,
+          colorKit.setAlpha(themeColorBackground, 0).hex(),
         ]}
         style={styles.topGradient}
       />

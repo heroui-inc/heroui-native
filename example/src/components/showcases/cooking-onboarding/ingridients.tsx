@@ -1,6 +1,6 @@
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Button, Divider, useTheme } from 'heroui-native';
+import { Button, Divider, useThemeColor } from 'heroui-native';
 import { type FC } from 'react';
 import { View } from 'react-native';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
@@ -12,7 +12,7 @@ type IngredientItemProps = {
 };
 
 const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <View className="flex-row items-center justify-between py-3">
@@ -30,7 +30,11 @@ const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
           className="rounded-full"
           onPress={simulatePress}
         >
-          <Ionicons name="sparkles-sharp" size={14} color={colors.foreground} />
+          <Ionicons
+            name="sparkles-sharp"
+            size={14}
+            color={themeColorForeground}
+          />
         </Button>
         <Button
           variant="secondary"
@@ -39,7 +43,7 @@ const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
           className="rounded-full"
           onPress={simulatePress}
         >
-          <Entypo name="plus" size={16} color={colors.foreground} />
+          <Entypo name="plus" size={16} color={themeColorForeground} />
         </Button>
       </View>
     </View>

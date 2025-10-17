@@ -1,5 +1,11 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, ScrollShadow, Select, useTheme } from 'heroui-native';
+import {
+  Button,
+  ScrollShadow,
+  Select,
+  useTheme,
+  useThemeColor,
+} from 'heroui-native';
 import { useState } from 'react';
 import { TextInput, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -38,7 +44,11 @@ export function SearchableDialogSelect() {
   const [value, setValue] = useState<CountryOption | undefined>();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { colors, isDark } = useTheme();
+  const { isDark } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
+  const themeColorPanel = useThemeColor('panel');
+  const themeColorSurface1 = useThemeColor('surface-1');
+
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
 
@@ -105,7 +115,7 @@ export function SearchableDialogSelect() {
                 value={searchQuery}
                 onChangeText={setSearchQuery}
                 placeholder="Search country..."
-                placeholderTextColor={colors.mutedForeground}
+                placeholderTextColor={themeColorMuted}
                 className="p-3 rounded-md bg-surface-3/60 dark:bg-surface-2 text-foreground"
                 autoFocus
               />
@@ -113,7 +123,7 @@ export function SearchableDialogSelect() {
             <ScrollShadow
               className="flex-1"
               LinearGradientComponent={LinearGradient}
-              color={isDark ? colors.surface1 : colors.panel}
+              color={isDark ? themeColorSurface1 : themeColorPanel}
             >
               <ScrollView keyboardShouldPersistTaps="handled">
                 {filteredCountries.map((country) => (

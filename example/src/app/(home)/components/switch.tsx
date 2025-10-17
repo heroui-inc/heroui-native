@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Switch, useTheme } from 'heroui-native';
+import { Switch, useTheme, useThemeColor } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -24,7 +24,9 @@ export default function SwitchScreen() {
   const [contentText, setContentText] = React.useState(true);
   const [custom1, setCustom1] = React.useState(true);
 
-  const { theme, colors } = useTheme();
+  const { theme } = useTheme();
+  const themeColorAccent = useThemeColor('accent');
+  const themeColorDefault = useThemeColor('default');
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -87,11 +89,11 @@ export default function SwitchScreen() {
         <Switch.Thumb>
           {icon ? (
             <Animated.View key="check" entering={ZoomIn}>
-              <Ionicons name="checkmark" size={12} color={colors.accent} />
+              <Ionicons name="checkmark" size={12} color={themeColorAccent} />
             </Animated.View>
           ) : (
             <Animated.View key="x" entering={ZoomIn}>
-              <Ionicons name="close" size={14} color={colors.default} />
+              <Ionicons name="close" size={14} color={themeColorDefault} />
             </Animated.View>
           )}
         </Switch.Thumb>

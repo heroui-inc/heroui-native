@@ -3,7 +3,7 @@ import {
   Button,
   cn,
   Popover,
-  useTheme,
+  useThemeColor,
   type PopoverTriggerRef,
 } from 'heroui-native';
 import { type FC, type RefObject } from 'react';
@@ -18,7 +18,7 @@ type Props = {
 };
 
 export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor<string>('foreground');
 
   return (
     <Popover>
@@ -41,7 +41,10 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
           className={cn(className.popoverContent, 'w-[240px]')}
           placement="top"
         >
-          <Popover.Arrow stroke={colors.foreground} fill={colors.foreground} />
+          <Popover.Arrow
+            stroke={themeColorForeground}
+            fill={themeColorForeground}
+          />
           <AppText className={className.popoverText}>
             Chat with AI to get recipe suggestions and cooking tips
           </AppText>

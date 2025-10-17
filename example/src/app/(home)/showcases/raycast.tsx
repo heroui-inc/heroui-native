@@ -2,7 +2,7 @@ import Feather from '@expo/vector-icons/Feather';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
-import { Avatar, cn, useTheme } from 'heroui-native';
+import { Avatar, cn, useThemeColor } from 'heroui-native';
 import { useState, type FC } from 'react';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -52,7 +52,8 @@ export default function Raycast() {
 
   const insets = useSafeAreaInsets();
 
-  const { colors, isDark } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
+  const themeColorMuted = useThemeColor('muted');
 
   const router = useRouter();
 
@@ -66,18 +67,14 @@ export default function Raycast() {
           className="w-20 items-center justify-center opacity-80"
           onPress={router.back}
         >
-          <Feather name="chevron-left" size={32} color={colors.foreground} />
+          <Feather name="chevron-left" size={32} color={themeColorForeground} />
         </Pressable>
         <Pressable
           className="flex-1 flex-row items-center gap-2 px-3 py-2.5 rounded-[14px] bg-surface-3/70"
           style={styles.borderCurve}
           onPress={simulatePress}
         >
-          <Feather
-            name="search"
-            size={18}
-            color={isDark ? colors.mutedForeground : colors.muted}
-          />
+          <Feather name="search" size={18} color={themeColorMuted} />
           <AppText className="text-lg text-muted dark:text-muted-foreground">
             Search Raycast
           </AppText>
@@ -126,11 +123,7 @@ export default function Raycast() {
             <AppText className="text-lg text-neutral-800 dark:text-neutral-300">
               Auto
             </AppText>
-            <Ionicons
-              name="chevron-expand"
-              size={16}
-              color={isDark ? colors.mutedForeground : colors.muted}
-            />
+            <Ionicons name="chevron-expand" size={16} color={themeColorMuted} />
           </Pressable>
         </View>
         <View className="flex-row items-center gap-3">
@@ -138,7 +131,7 @@ export default function Raycast() {
             <FontAwesome6
               name="paperclip"
               size={20}
-              color={colors.foreground}
+              color={themeColorForeground}
             />
           </Pressable>
           <Pressable className="flex-1" onPress={simulatePress}>

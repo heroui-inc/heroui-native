@@ -1,7 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
 import { useRouter } from 'expo-router';
-import { useTheme } from 'heroui-native';
+import { useThemeColor } from 'heroui-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Carousel } from '../../../components/showcase-carousel';
@@ -95,7 +95,7 @@ export default function ScaleCarousel() {
 
   const insets = useSafeAreaInsets();
 
-  const { colors, isDark } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
 
   return (
     <View className="flex-1 bg-background">
@@ -108,11 +108,7 @@ export default function ScaleCarousel() {
           onPress={router.back}
         >
           <GlassView style={styles.glassView} isInteractive>
-            <Ionicons
-              name="close"
-              size={24}
-              color={isDark ? colors.mutedForeground : colors.muted}
-            />
+            <Ionicons name="close" size={24} color={themeColorMuted} />
           </GlassView>
         </Pressable>
       ) : (
@@ -124,11 +120,7 @@ export default function ScaleCarousel() {
           }}
           hitSlop={12}
         >
-          <Ionicons
-            name="close"
-            size={20}
-            color={isDark ? colors.mutedForeground : colors.muted}
-          />
+          <Ionicons name="close" size={20} color={themeColorMuted} />
         </Pressable>
       )}
       <Carousel data={data} />

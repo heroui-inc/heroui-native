@@ -3,7 +3,7 @@ import {
   Divider,
   Select,
   useSelect,
-  useTheme,
+  useThemeColor,
   type SelectTriggerRef,
 } from 'heroui-native';
 import React, { useRef, useState, type FC } from 'react';
@@ -54,13 +54,17 @@ export function SearchableSelect() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
-  const { colors, isDark } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
+  const themeColorPanel = useThemeColor<string>('panel');
+  const themeColorDefault = useThemeColor<string>('default');
 
   const triggerRef = useRef<SelectTriggerRef>(null);
 
   const rTextInputStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: withTiming(isFocused ? colors.panel : colors.default),
+      backgroundColor: withTiming(
+        isFocused ? themeColorPanel : themeColorDefault
+      ),
     };
   });
 
@@ -81,7 +85,7 @@ export function SearchableSelect() {
           placeholder={
             isFocused ? (value?.label ?? 'Search state...') : 'Search state...'
           }
-          placeholderTextColor={isDark ? colors.mutedForeground : colors.muted}
+          placeholderTextColor={themeColorMuted}
           className="w-[256px] h-11 px-3 rounded-lg border border-border bg-default flex-row items-center text-foreground"
           style={rTextInputStyle}
           onFocus={() => {
@@ -92,7 +96,7 @@ export function SearchableSelect() {
             setIsFocused(false);
             triggerRef.current?.close();
           }}
-          selectionColor={isFocused ? colors.muted : 'transparent'}
+          selectionColor={isFocused ? themeColorMuted : 'transparent'}
         />
       </Select.Trigger>
       <Select.Portal>

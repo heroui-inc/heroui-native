@@ -1,10 +1,14 @@
-import type { PressableProps, ViewProps } from 'react-native';
+import type { ViewProps } from 'react-native';
 import type {
   AnimatedProps,
   BaseAnimationBuilder,
   LayoutAnimationFunction,
+  WithTimingConfig,
 } from 'react-native-reanimated';
-import type { TimingConfig } from '../../helpers/types';
+import type {
+  HighlightAnimationConfig,
+  PressableFeedbackProps,
+} from '../pressable-feedback';
 
 /**
  * Size variants for the Button component
@@ -25,26 +29,32 @@ export type ButtonVariant =
  * Configuration for button animations
  */
 export interface AnimationConfig {
-  /**
-   * Whether to disable the animation
-   * @default false
-   */
-  isAnimationDisabled?: boolean;
-  /**
-   * Animation target value for scale
-   * @default 0.995
-   */
-  targetScaleValue?: number;
-  /**
-   * Animation timing configuration
-   */
-  timingConfig?: TimingConfig;
+  highlight?: HighlightAnimationConfig;
+  scale?: {
+    /**
+     * Animation target value for scale
+     * @default 0.995
+     */
+    scale?: number;
+    /**
+     * Animation timing configuration
+     */
+    config?: WithTimingConfig;
+    /**
+     * Whether to disable the animation
+     * @default false
+     */
+    isDisabled?: boolean;
+  };
 }
 
 /**
  * Props for the Button.Root component
  */
-export interface ButtonRootProps extends AnimatedProps<PressableProps> {
+export type ButtonRootProps = Omit<
+  PressableFeedbackProps,
+  'variant' | 'animationConfig'
+> & {
   /**
    * Children elements to be rendered inside the button
    */
@@ -65,11 +75,6 @@ export interface ButtonRootProps extends AnimatedProps<PressableProps> {
    */
   isIconOnly?: boolean;
   /**
-   * Whether the button is disabled
-   * @default false
-   */
-  isDisabled?: boolean;
-  /**
    * Additional CSS classes
    */
   className?: string;
@@ -82,7 +87,7 @@ export interface ButtonRootProps extends AnimatedProps<PressableProps> {
    * @default false
    */
   skipLayoutAnimation?: boolean;
-}
+};
 
 /**
  * Props for the Button.Label component

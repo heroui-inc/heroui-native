@@ -3502,6 +3502,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-masked-view/masked-view@npm:0.3.2":
+  version: 0.3.2
+  resolution: "@react-native-masked-view/masked-view@npm:0.3.2"
+  peerDependencies:
+    react: ">=16"
+    react-native: ">=0.57"
+  checksum: e35ab882148df3f9b71f04355d2fb1b24d6f2aaf29043f80758f398bdf905eed67734b36b072fa8b934923ff4e3d80ccb5e37d8376cb1825272078b96a21dadc
+  languageName: node
+  linkType: hard
+
 "@react-native/assets-registry@npm:0.79.4":
   version: 0.79.4
   resolution: "@react-native/assets-registry@npm:0.79.4"
@@ -7724,6 +7734,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-glass-effect@npm:~0.1.4":
+  version: 0.1.4
+  resolution: "expo-glass-effect@npm:0.1.4"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 07d40128ff4cb060207b120f222ceceabb375759bf9029ed4816d9a9cfb6ecbb50a062a2789a357cf165131a7b00e87b69d29870370e99421246153c82791ecb
+  languageName: node
+  linkType: hard
+
 "expo-haptics@npm:~15.0.6":
   version: 15.0.7
   resolution: "expo-haptics@npm:15.0.7"
@@ -8864,6 +8885,7 @@ __metadata:
     "@expo-google-fonts/inter": ^0.4.1
     "@expo/metro-runtime": ~6.1.1
     "@gorhom/bottom-sheet": ^5
+    "@react-native-masked-view/masked-view": 0.3.2
     "@shopify/flash-list": 2.0.3
     babel-plugin-module-resolver: ^5.0.2
     clsx: ^2.1.1
@@ -8871,6 +8893,7 @@ __metadata:
     expo-blur: ~15.0.6
     expo-constants: ~18.0.8
     expo-font: ~14.0.7
+    expo-glass-effect: ~0.1.4
     expo-haptics: ~15.0.6
     expo-image: ~3.0.7
     expo-linear-gradient: ~15.0.6

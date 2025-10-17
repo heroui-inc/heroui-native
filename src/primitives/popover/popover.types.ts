@@ -32,6 +32,10 @@ interface IRootContext {
    */
   popoverState: PopoverState;
   /**
+   * Whether the popover is disabled
+   */
+  isDisabled?: boolean;
+  /**
    * The position of the trigger element relative to the viewport
    */
   triggerPosition: LayoutPosition | null;
@@ -75,6 +79,10 @@ type RootProps = SlottableViewProps & {
    * @default 300
    */
   closeDelay?: number;
+  /**
+   * Whether the popover is disabled
+   */
+  isDisabled?: boolean;
 };
 /**
  * Props for the Popover Portal component
@@ -105,7 +113,9 @@ type OverlayProps = ForceMountable &
 /**
  * Props for the Popover Trigger component
  */
-type TriggerProps = SlottablePressableProps;
+type TriggerProps = Omit<SlottablePressableProps, 'disabled'> & {
+  isDisabled?: boolean;
+};
 
 /**
  * Props for the Popover Content component

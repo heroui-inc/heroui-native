@@ -4,13 +4,14 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+import { CheckIcon } from '../../helpers/components';
 import { createContext } from '../../helpers/utils';
 import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 import { colorKit, useTheme } from '../../providers/theme';
-import { CheckIcon } from './check-icon';
 import {
+  DEFAULT_CHECK_ICON_SIZE,
   DEFAULT_HIT_SLOP,
   DEFAULT_TIMING_CONFIG,
   DISPLAY_NAME,
@@ -217,6 +218,11 @@ const CheckboxIndicator = forwardRef<
 
   const { isSelected } = useCheckboxContext();
 
+  const { colors } = useTheme();
+
+  const iconSize = iconProps?.size ?? DEFAULT_CHECK_ICON_SIZE;
+  const iconColor = iconProps?.color ?? colors.accentForeground;
+
   const tvStyles = checkboxStyles.indicator({
     className,
   });
@@ -238,7 +244,7 @@ const CheckboxIndicator = forwardRef<
     >
       {children ?? (
         <Animated.View style={indicatorAnimatedStyle}>
-          <CheckIcon {...iconProps} />
+          <CheckIcon size={iconSize} color={iconColor} />
         </Animated.View>
       )}
     </CheckboxPrimitives.Indicator>

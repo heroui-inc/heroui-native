@@ -12,6 +12,7 @@ export * from './components/form-field';
 export * from './components/popover';
 export * from './components/radio-group';
 export * from './components/scroll-shadow';
+export * from './components/select';
 export * from './components/skeleton';
 export * from './components/skeleton-group';
 export * from './components/spinner';

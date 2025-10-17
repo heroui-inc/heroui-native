@@ -139,7 +139,7 @@ export default function DialogScreen() {
       <View />
       {/* Basic Dialog */}
       <Dialog isOpen={basicDialogOpen} onOpenChange={setBasicDialogOpen}>
-        <Dialog.Trigger>
+        <Dialog.Trigger asChild>
           <Button variant="tertiary">Basic Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
@@ -171,7 +171,7 @@ export default function DialogScreen() {
           isOpen={blurBackdropDialogOpen}
           onOpenChange={setBlurBackdropDialogOpen}
         >
-          <Dialog.Trigger>
+          <Dialog.Trigger asChild>
             <Button variant="tertiary">Blur Backdrop Dialog</Button>
           </Dialog.Trigger>
           <Dialog.Portal>
@@ -214,7 +214,7 @@ export default function DialogScreen() {
           }
         }}
       >
-        <Dialog.Trigger>
+        <Dialog.Trigger asChild>
           <Button variant="tertiary">Text Input Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
@@ -300,7 +300,7 @@ export default function DialogScreen() {
 
       {/* Dialog with Long Content */}
       <Dialog isOpen={scrollDialogOpen} onOpenChange={setScrollDialogOpen}>
-        <Dialog.Trigger>
+        <Dialog.Trigger asChild>
           <Button variant="tertiary">Scroll Content Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>

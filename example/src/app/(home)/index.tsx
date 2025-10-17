@@ -33,7 +33,7 @@ const cards: HomeCardProps[] = [
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-components-light.png',
     imageDark:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-components-dark.png',
-    count: 19,
+    count: 20,
     footer: 'Explore all components',
     path: 'components',
   },
@@ -53,7 +53,7 @@ const cards: HomeCardProps[] = [
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-showcases-light.png',
     imageDark:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-showcases-dark-1.png',
-    count: 4,
+    count: 5,
     footer: 'View components in action',
     path: 'showcases',
   },
@@ -145,7 +145,9 @@ export default function App() {
   return (
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
-        <AppText className="text-success text-base">v1.0.0-alpha.14</AppText>
+        <AppText className="text-muted-foreground text-base">
+          v1.0.0-alpha.15
+        </AppText>
       </View>
 
       <View className="gap-6">

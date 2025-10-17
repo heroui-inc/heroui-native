@@ -193,11 +193,29 @@ export default function ButtonExample() {
 
 #### AnimationConfig
 
-| prop                  | type           | description                      |
-| --------------------- | -------------- | -------------------------------- |
-| `isAnimationDisabled` | `boolean`      | Whether to disable the animation |
-| `targetScaleValue`    | `number`       | Animation target value for scale |
-| `timingConfig`        | `TimingConfig` | Animation timing configuration   |
+Configuration object for button press animations including scale and highlight effects.
+
+| prop        | type                        | description                                         |
+| ----------- | --------------------------- | --------------------------------------------------- |
+| `scale`     | `ScaleAnimationConfig`      | Configuration for scale animation on press          |
+| `highlight` | `HighlightAnimationConfig`  | Configuration for highlight/overlay animation       |
+
+##### ScaleAnimationConfig
+
+| prop         | type             | default | description                                      |
+| ------------ | ---------------- | ------- | ------------------------------------------------ |
+| `scale`      | `number`         | `0.995` | Target scale value when button is pressed        |
+| `config`     | `WithTimingConfig` | -     | Reanimated timing configuration for animation    |
+| `isDisabled` | `boolean`        | `false` | Whether to disable the scale animation           |
+
+##### HighlightAnimationConfig
+
+| prop         | type             | default | description                                      |
+| ------------ | ---------------- | ------- | ------------------------------------------------ |
+| `opacity`    | `number`         | `0.2`   | Opacity of the highlight overlay when pressed    |
+| `color`      | `string`         | auto    | Color of the highlight overlay (auto-calculated based on variant) |
+| `config`     | `WithTimingConfig` | -     | Reanimated timing configuration for animation    |
+| `isDisabled` | `boolean`        | `false` | Whether to disable the highlight animation       |
 
 ### Button.Label
 

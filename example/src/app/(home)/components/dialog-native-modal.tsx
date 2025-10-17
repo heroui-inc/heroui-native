@@ -8,7 +8,7 @@ export default function DialogNativeModalScreen() {
   return (
     <View className="pt-24 px-5">
       <Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
-        <Dialog.Trigger>
+        <Dialog.Trigger asChild>
           <Button variant="tertiary">Basic Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>

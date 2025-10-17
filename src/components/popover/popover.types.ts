@@ -173,7 +173,7 @@ export interface PopoverContentBottomSheetProps
   /**
    * Props for the bottom sheet view
    */
-  bottomSheetViewProps?: BottomSheetViewProps;
+  bottomSheetViewProps?: Omit<BottomSheetViewProps, 'children'>;
 }
 
 /**

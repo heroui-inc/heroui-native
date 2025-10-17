@@ -96,6 +96,11 @@ const components: Component[] = [
     path: 'scroll-shadow',
   },
   {
+    title: 'Select',
+    icon: <ComponentIcon />,
+    path: 'select',
+  },
+  {
     title: 'Skeleton',
     icon: <ComponentIcon />,
     path: 'skeleton',

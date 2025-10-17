@@ -4,7 +4,7 @@ import {
   ScrollShadow,
   Select,
   useSelect,
-  useTheme,
+  useThemeColor,
 } from 'heroui-native';
 import { type FC, memo, useEffect, useMemo, useRef } from 'react';
 import { FlatList } from 'react-native';
@@ -33,7 +33,7 @@ type PlacementContentListProps = {
 
 const PlacementContentList: FC<PlacementContentListProps> = memo(
   ({ valueIndex }) => {
-    const { colors } = useTheme();
+    const themeColorPanel = useThemeColor<string>('panel');
 
     const listRef = useRef<FlatList>(null);
 
@@ -61,7 +61,7 @@ const PlacementContentList: FC<PlacementContentListProps> = memo(
     return (
       <ScrollShadow
         LinearGradientComponent={LinearGradient}
-        color={colors.panel}
+        color={themeColorPanel}
       >
         <FlatList
           ref={listRef}

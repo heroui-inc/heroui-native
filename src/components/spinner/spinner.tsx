@@ -11,7 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { createContext, getElementWithDefault } from '../../helpers/utils';
 import * as ActivityIndicatorPrimitives from '../../primitives/activity-indicator';
-import { useTheme } from '../../providers/theme';
+import { useThemeColor } from '../../providers/theme';
 import { SpinnerIcon } from './spinner-icon';
 import {
   DEFAULT_ROTATION_DURATION,
@@ -111,7 +111,10 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
 
     const { size, color, isLoading } = useSpinnerContext();
 
-    const { colors: themeColors } = useTheme();
+    const themeColorForeground = useThemeColor<string>('foreground');
+    const themeColorSuccess = useThemeColor<string>('success');
+    const themeColorWarning = useThemeColor<string>('warning');
+    const themeColorDanger = useThemeColor<string>('danger');
 
     const tvStyles = spinnerStyles.indicator({
       className,
@@ -120,10 +123,10 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
     const iconSize = SPINNER_SIZE_MAP[size];
 
     const colorMap: Record<string, string> = {
-      default: themeColors.foreground,
-      success: themeColors.success,
-      warning: themeColors.warning,
-      danger: themeColors.danger,
+      default: themeColorForeground,
+      success: themeColorSuccess,
+      warning: themeColorWarning,
+      danger: themeColorDanger,
     };
 
     const iconColor = colorMap[color] || color;

@@ -1,6 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import * as Haptics from 'expo-haptics';
-import { Button, Select, useTheme } from 'heroui-native';
+import { Button, Select, useThemeColor } from 'heroui-native';
 import { Platform, Pressable, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { Easing, SlideInDown } from 'react-native-reanimated';
@@ -25,7 +25,7 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
   const insets = useSafeAreaInsets();
   const { height: screenHeight } = useWindowDimensions();
 
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <Select
@@ -96,7 +96,7 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
             </Pressable>
             <Pressable onPress={simulatePress}>
               <AppText className="text-medium text-foreground">
-                <Feather name="plus" size={20} color={colors.foreground} />
+                <Feather name="plus" size={20} color={themeColorForeground} />
               </AppText>
             </Pressable>
           </View>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { useTheme } from '../../providers/theme';
+import { useThemeColor } from '../../providers/theme';
 
 interface CloseIconProps {
   size?: number;
@@ -8,14 +8,14 @@ interface CloseIconProps {
 }
 
 export const CloseIcon: React.FC<CloseIconProps> = ({ size = 16, color }) => {
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <Svg
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      fill={color ?? colors.foreground}
+      fill={color ?? themeColorForeground}
     >
       <Path
         fillRule="evenodd"

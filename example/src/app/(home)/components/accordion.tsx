@@ -3,7 +3,7 @@ import {
   Accordion,
   AccordionLayoutTransition,
   useAccordionItemContext,
-  useTheme,
+  useThemeColor,
 } from 'heroui-native';
 import { View } from 'react-native';
 import Animated, {
@@ -30,7 +30,7 @@ const CUSTOM_INDICATOR_EXITING = ZoomOut.duration(200).easing(
 
 const CustomIndicator = () => {
   const { isExpanded } = useAccordionItemContext();
-  const { colors } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
 
   return (
     <View className="w-5 h-5 items-center justify-center">
@@ -40,7 +40,7 @@ const CustomIndicator = () => {
           entering={CUSTOM_INDICATOR_ENTERING}
           exiting={CUSTOM_INDICATOR_EXITING}
         >
-          <Ionicons name="remove" size={16} color={colors.mutedForeground} />
+          <Ionicons name="remove" size={16} color={themeColorMuted} />
         </Animated.View>
       ) : (
         <Animated.View
@@ -48,7 +48,7 @@ const CustomIndicator = () => {
           entering={CUSTOM_INDICATOR_ENTERING}
           exiting={CUSTOM_INDICATOR_EXITING}
         >
-          <Ionicons name="add" size={16} color={colors.mutedForeground} />
+          <Ionicons name="add" size={16} color={themeColorMuted} />
         </Animated.View>
       )}
     </View>
@@ -56,18 +56,14 @@ const CustomIndicator = () => {
 };
 
 const AccordionScreen = () => {
-  const { colors } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
 
   const accordionData = [
     {
       id: '1',
       title: 'How do I place an order?',
       icon: (
-        <Ionicons
-          name="bag-outline"
-          size={ICON_SIZE}
-          color={colors.mutedForeground}
-        />
+        <Ionicons name="bag-outline" size={ICON_SIZE} color={themeColorMuted} />
       ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
@@ -79,7 +75,7 @@ const AccordionScreen = () => {
         <Ionicons
           name="receipt-outline"
           size={ICON_SIZE}
-          color={colors.mutedForeground}
+          color={themeColorMuted}
         />
       ),
       content:
@@ -92,7 +88,7 @@ const AccordionScreen = () => {
         <Ionicons
           name="card-outline"
           size={ICON_SIZE}
-          color={colors.mutedForeground}
+          color={themeColorMuted}
         />
       ),
       content:
@@ -105,7 +101,7 @@ const AccordionScreen = () => {
         <MaterialIcons
           name="inventory-2"
           size={ICON_SIZE}
-          color={colors.mutedForeground}
+          color={themeColorMuted}
         />
       ),
       content:
@@ -118,7 +114,7 @@ const AccordionScreen = () => {
         <Ionicons
           name="globe-outline"
           size={ICON_SIZE}
-          color={colors.mutedForeground}
+          color={themeColorMuted}
         />
       ),
       content:
@@ -128,11 +124,7 @@ const AccordionScreen = () => {
       id: '6',
       title: 'How do I request a refund?',
       icon: (
-        <Ionicons
-          name="refresh"
-          size={ICON_SIZE}
-          color={colors.mutedForeground}
-        />
+        <Ionicons name="refresh" size={ICON_SIZE} color={themeColorMuted} />
       ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',

@@ -1,6 +1,6 @@
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
-import { useTheme } from 'heroui-native';
+import { useTheme, useThemeColor } from 'heroui-native';
 import { useCallback } from 'react';
 import { Image, Platform, StyleSheet } from 'react-native';
 import LogoDark from '../../../assets/logo-dark.png';
@@ -8,7 +8,9 @@ import LogoLight from '../../../assets/logo-light.png';
 import { ThemeToggle } from '../../components/theme-toggle';
 
 export default function Layout() {
-  const { theme, colors, isDark } = useTheme();
+  const { theme, isDark } = useTheme();
+  const themeColorForeground = useThemeColor<string>('foreground');
+  const themeColorBackground = useThemeColor<string>('background');
 
   const _renderTitle = () => {
     return (
@@ -31,11 +33,11 @@ export default function Layout() {
           android: false,
         }),
         headerBlurEffect: theme === 'dark' ? 'dark' : 'light',
-        headerTintColor: colors.foreground,
+        headerTintColor: themeColorForeground,
         headerStyle: {
           backgroundColor: Platform.select({
             ios: undefined,
-            android: colors.background,
+            android: themeColorBackground,
           }),
         },
         headerTitleStyle: {
@@ -47,7 +49,7 @@ export default function Layout() {
         gestureDirection: 'horizontal',
         fullScreenGestureEnabled: isLiquidGlassAvailable() ? false : true,
         contentStyle: {
-          backgroundColor: colors.background,
+          backgroundColor: themeColorBackground,
         },
       }}
     >

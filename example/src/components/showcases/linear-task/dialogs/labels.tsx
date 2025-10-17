@@ -1,6 +1,12 @@
 import Feather from '@expo/vector-icons/Feather';
 import * as Haptics from 'expo-haptics';
-import { Checkbox, Chip, Dialog, FormField, useTheme } from 'heroui-native';
+import {
+  Checkbox,
+  Chip,
+  Dialog,
+  FormField,
+  useThemeColor,
+} from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -24,7 +30,7 @@ export const Labels: FC = () => {
   );
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -212,7 +218,7 @@ export const Labels: FC = () => {
                                   <Feather
                                     name="check"
                                     size={18}
-                                    color={colors.foreground}
+                                    color={themeColorForeground}
                                   />
                                 </Animated.View>
                               )}

@@ -9,7 +9,7 @@ import { createContext } from '../../helpers/utils';
 import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
-import { colorKit, useTheme } from '../../providers/theme';
+import { colorKit, useThemeColor } from '../../providers/theme';
 import {
   DEFAULT_CHECK_ICON_SIZE,
   DEFAULT_HIT_SLOP,
@@ -72,7 +72,11 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       [children]
     );
 
-    const { colors: themeColors } = useTheme();
+    const themeColorAccent = useThemeColor<string>('accent');
+    const themeColorBorder = useThemeColor<string>('border');
+    const themeColorSuccess = useThemeColor<string>('success');
+    const themeColorWarning = useThemeColor<string>('warning');
+    const themeColorDanger = useThemeColor<string>('danger');
 
     const tvStyles = checkboxStyles.root({
       isDisabled,
@@ -82,16 +86,16 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
     const effectiveColor = isInvalid ? 'danger' : color;
 
     const borderColorMap: Record<CheckboxColor, string> = {
-      default: isSelected ? themeColors.accent : themeColors.border,
+      default: isSelected ? themeColorAccent : themeColorBorder,
       success: isSelected
-        ? themeColors.success
-        : colorKit.setAlpha(themeColors.success, 0.4).hex(),
+        ? themeColorSuccess
+        : colorKit.setAlpha(themeColorSuccess, 0.4).hex(),
       warning: isSelected
-        ? themeColors.warning
-        : colorKit.setAlpha(themeColors.warning, 0.4).hex(),
+        ? themeColorWarning
+        : colorKit.setAlpha(themeColorWarning, 0.4).hex(),
       danger: isSelected
-        ? themeColors.danger
-        : colorKit.setAlpha(themeColors.danger, 0.4).hex(),
+        ? themeColorDanger
+        : colorKit.setAlpha(themeColorDanger, 0.4).hex(),
     };
 
     const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
@@ -156,17 +160,20 @@ const CheckboxBackground = forwardRef<View, CheckboxBackgroundProps>(
 
     const { color, isSelected } = useCheckboxContext();
 
-    const { colors: themeColors } = useTheme();
+    const themeColorAccent = useThemeColor<string>('accent');
+    const themeColorSuccess = useThemeColor<string>('success');
+    const themeColorWarning = useThemeColor<string>('warning');
+    const themeColorDanger = useThemeColor<string>('danger');
 
     const tvStyles = checkboxStyles.background({
       className,
     });
 
     const backgroundColorMap: Record<CheckboxColor, string> = {
-      default: themeColors.accent,
-      success: themeColors.success,
-      warning: themeColors.warning,
-      danger: themeColors.danger,
+      default: themeColorAccent,
+      success: themeColorSuccess,
+      warning: themeColorWarning,
+      danger: themeColorDanger,
     };
 
     const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
@@ -218,10 +225,10 @@ const CheckboxIndicator = forwardRef<
 
   const { isSelected } = useCheckboxContext();
 
-  const { colors } = useTheme();
+  const themeColorAccentForeground = useThemeColor<string>('accent-foreground');
 
   const iconSize = iconProps?.size ?? DEFAULT_CHECK_ICON_SIZE;
-  const iconColor = iconProps?.color ?? colors.accentForeground;
+  const iconColor = iconProps?.color ?? themeColorAccentForeground;
 
   const tvStyles = checkboxStyles.indicator({
     className,

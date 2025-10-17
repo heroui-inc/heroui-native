@@ -12,7 +12,7 @@ import { Text } from '../../helpers/components/text';
 import { useDialogContentAnimation } from '../../helpers/hooks';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
-import { useTheme } from '../../providers/theme';
+import { useTheme, useThemeColor } from '../../providers/theme';
 import { DISPLAY_NAME } from './dialog.constants';
 import dialogStyles, { styleSheet } from './dialog.styles';
 import type {
@@ -216,9 +216,8 @@ const DialogClose = forwardRef<
   DialogPrimitivesTypes.CloseRef,
   DialogCloseProps
 >(({ className, iconProps, hitSlop = 12, children, ...props }, ref) => {
-  const { colors, isDark } = useTheme();
-
-  const defaultIconColor = isDark ? colors.mutedForeground : colors.muted;
+  const themeColorMuted = useThemeColor<string>('muted');
+  const defaultIconColor = themeColorMuted;
 
   const tvStyles = dialogStyles.close({ className });
 

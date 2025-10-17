@@ -8,7 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
-import { colorKit, useTheme } from '../../providers/theme';
+import { colorKit, useThemeColor } from '../../providers/theme';
 import { PressableFeedback } from '../pressable-feedback';
 import {
   ANIMATION_DURATION,
@@ -47,7 +47,11 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const { colors } = useTheme();
+  const themeColorAccent = useThemeColor<string>('accent');
+  const themeColorAccentSoft = useThemeColor<string>('accent-soft');
+  const themeColorDefault = useThemeColor<string>('default');
+  const themeColorBackground = useThemeColor<string>('background');
+  const themeColorDanger = useThemeColor<string>('danger');
 
   const stringifiedChildren = childrenToString(children);
 
@@ -66,17 +70,24 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   const highlightColorMap = useMemo(() => {
     switch (variant) {
       case 'primary':
-        return getColor(colors.accent);
+        return getColor(themeColorAccent);
       case 'secondary':
-        return getColor(colors.accentSoft);
+        return getColor(themeColorAccentSoft);
       case 'tertiary':
-        return getColor(colors.default);
+        return getColor(themeColorDefault);
       case 'ghost':
-        return getColor(colors.background);
+        return getColor(themeColorBackground);
       case 'danger':
-        return getColor(colors.danger);
+        return getColor(themeColorDanger);
     }
-  }, [variant, colors]);
+  }, [
+    variant,
+    themeColorAccent,
+    themeColorAccentSoft,
+    themeColorDefault,
+    themeColorBackground,
+    themeColorDanger,
+  ]);
 
   const scale = useSharedValue(0);
   const btnWidth = useSharedValue(0);

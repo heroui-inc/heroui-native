@@ -15,7 +15,7 @@ import Animated, {
 import { Text } from '../../helpers/components';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
-import { useTheme } from '../../providers/theme';
+import { useTheme, useThemeColor } from '../../providers/theme';
 import { ErrorView } from '../error-view';
 import {
   ANIMATION_DURATION,
@@ -149,7 +149,12 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       DISPLAY_NAME.INPUT_END_CONTENT
     );
 
-    const { colors, theme } = useTheme();
+    const { theme } = useTheme();
+    const themeColorDefault = useThemeColor<string>('default');
+    const themeColorBackground = useThemeColor<string>('background');
+    const themeColorBorder = useThemeColor<string>('border');
+    const themeColorMuted = useThemeColor<string>('muted');
+    const themeColorDanger = useThemeColor<string>('danger');
 
     const tvStyles = textFieldStyles.input({
       isMultiline: Boolean(restProps.multiline),
@@ -161,12 +166,13 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
 
     const inputStyles = tvStyles.input({ className: classNames?.input });
 
-    const blurBackground = customColors?.blurBackground || colors.default;
-    const focusBackground = customColors?.focusBackground || colors.background;
+    const blurBackground = customColors?.blurBackground || themeColorDefault;
+    const focusBackground =
+      customColors?.focusBackground || themeColorBackground;
     const errorBackground = customColors?.errorBackground;
-    const blurBorder = customColors?.blurBorder || colors.border;
-    const focusBorder = customColors?.focusBorder || colors.mutedForeground;
-    const errorBorder = customColors?.errorBorder || colors.danger;
+    const blurBorder = customColors?.blurBorder || themeColorBorder;
+    const focusBorder = customColors?.focusBorder || themeColorMuted;
+    const errorBorder = customColors?.errorBorder || themeColorDanger;
 
     const isFocused = useSharedValue(0);
     const isError = useSharedValue(0);
@@ -245,12 +251,10 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
         <TextInput
           ref={ref}
           className={inputStyles}
-          placeholderTextColor={placeholderTextColor || colors.mutedForeground}
-          selectionColor={
-            props.colors?.focusBackground || colors.mutedForeground
-          }
+          placeholderTextColor={placeholderTextColor || themeColorMuted}
+          selectionColor={props.colors?.focusBackground || themeColorMuted}
           selectionHandleColor={
-            props.colors?.focusBackground || colors.mutedForeground
+            props.colors?.focusBackground || themeColorMuted
           }
           onFocus={handleFocus}
           onBlur={handleBlur}

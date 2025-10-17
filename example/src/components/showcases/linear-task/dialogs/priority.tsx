@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, RadioGroup, useTheme } from 'heroui-native';
+import { Chip, Dialog, RadioGroup, useThemeColor } from 'heroui-native';
 import { useState, type FC } from 'react';
 import { Platform, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
@@ -17,7 +17,7 @@ type PriorityItem = {
 export const Priority: FC = () => {
   const [value, setValue] = useState('high');
 
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   const items: PriorityItem[] = [
     {
@@ -38,7 +38,7 @@ export const Priority: FC = () => {
         <FontAwesome6
           name="circle-exclamation"
           size={13}
-          color={colors.foreground}
+          color={themeColorForeground}
         />
       ),
     },
@@ -126,7 +126,7 @@ export const Priority: FC = () => {
                         <Feather
                           name="check"
                           size={18}
-                          color={colors.foreground}
+                          color={themeColorForeground}
                         />
                       </Animated.View>
                     )}

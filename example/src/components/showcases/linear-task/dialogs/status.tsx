@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, RadioGroup, useTheme } from 'heroui-native';
+import { Chip, Dialog, RadioGroup, useThemeColor } from 'heroui-native';
 import { useState, type FC } from 'react';
 import { Platform, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
@@ -17,7 +17,10 @@ type StatusItem = {
 export const Status: FC = () => {
   const [value, setValue] = useState('done');
 
-  const { colors } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
+  const themeColorForeground = useThemeColor('foreground');
+  const themeColorWarning = useThemeColor('warning');
+  const themeColorSuccess = useThemeColor('success');
 
   const items: StatusItem[] = [
     {
@@ -27,7 +30,7 @@ export const Status: FC = () => {
         <MaterialCommunityIcons
           name="circle-opacity"
           size={13}
-          color={colors.mutedForeground}
+          color={themeColorMuted}
         />
       ),
     },
@@ -38,7 +41,7 @@ export const Status: FC = () => {
         <MaterialCommunityIcons
           name="circle-outline"
           size={13}
-          color={colors.foreground}
+          color={themeColorForeground}
         />
       ),
     },
@@ -49,7 +52,7 @@ export const Status: FC = () => {
         <MaterialCommunityIcons
           name="circle-slice-4"
           size={13}
-          color={colors.warning}
+          color={themeColorWarning}
         />
       ),
     },
@@ -60,7 +63,7 @@ export const Status: FC = () => {
         <MaterialCommunityIcons
           name="circle-slice-6"
           size={13}
-          color={colors.success}
+          color={themeColorSuccess}
         />
       ),
     },
@@ -82,7 +85,7 @@ export const Status: FC = () => {
         <MaterialCommunityIcons
           name="close-circle"
           size={13}
-          color={colors.mutedForeground}
+          color={themeColorMuted}
         />
       ),
     },
@@ -93,7 +96,7 @@ export const Status: FC = () => {
         <MaterialCommunityIcons
           name="close-circle"
           size={13}
-          color={colors.mutedForeground}
+          color={themeColorMuted}
         />
       ),
     },
@@ -148,7 +151,7 @@ export const Status: FC = () => {
                         <Feather
                           name="check"
                           size={18}
-                          color={colors.foreground}
+                          color={themeColorForeground}
                         />
                       </Animated.View>
                     )}

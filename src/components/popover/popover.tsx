@@ -16,7 +16,7 @@ import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
-import { useTheme } from '../../providers/theme';
+import { useTheme, useThemeColor } from '../../providers/theme';
 import { ArrowSvg } from './arrow-svg';
 import {
   DEFAULT_ALIGN_OFFSET,
@@ -279,7 +279,8 @@ const PopoverContentBottomSheet = forwardRef<
 
     const { popoverState, onOpenChange, progress } = usePopover();
 
-    const { colors } = useTheme();
+    const themeColorPanel = useThemeColor('panel');
+    const themeColorMuted = useThemeColor('muted');
 
     const tvStyles = popoverStyles.bottomSheetContent({
       className: bottomSheetViewClassName,
@@ -324,11 +325,11 @@ const PopoverContentBottomSheet = forwardRef<
         <BottomSheet
           ref={bottomSheetRef}
           backgroundStyle={[
-            { backgroundColor: colors.panel },
+            { backgroundColor: themeColorPanel },
             restProps.backgroundStyle,
           ]}
           handleIndicatorStyle={[
-            { backgroundColor: colors.mutedForeground },
+            { backgroundColor: themeColorMuted },
             restProps.handleIndicatorStyle,
           ]}
           enablePanDownToClose={restProps.enablePanDownToClose ?? true}
@@ -383,9 +384,8 @@ const PopoverClose = forwardRef<
   PopoverPrimitivesTypes.CloseRef,
   PopoverCloseProps
 >(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
-  const { colors, isDark } = useTheme();
-
-  const defaultIconColor = isDark ? colors.mutedForeground : colors.muted;
+  const themeColorMuted = useThemeColor<string>('muted');
+  const defaultIconColor = themeColorMuted;
 
   const tvStyles = popoverStyles.close({ className });
 
@@ -460,7 +460,8 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
     },
     ref
   ) => {
-    const { colors } = useTheme();
+    const themeColorPanel = useThemeColor<string>('panel');
+    const themeColorBorder = useThemeColor<string>('border');
     const { triggerPosition, contentLayout } = usePopover();
     const { placement: placementContext } = use(PopoverContentContext);
 
@@ -478,8 +479,8 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
       return null;
     }
 
-    const arrowFill = fill || colors.panel;
-    const arrowStroke = stroke || colors.border;
+    const arrowFill = fill || themeColorPanel;
+    const arrowStroke = stroke || themeColorBorder;
 
     const getArrowPosition = (): StyleProp<ViewStyle> => {
       const triggerCenterX = triggerPosition.pageX + triggerPosition.width / 2;

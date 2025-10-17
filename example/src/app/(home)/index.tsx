@@ -10,12 +10,15 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 const AnimatedView = Animated.createAnimatedComponent(View);
+
+const StyledFeather = withUniwind(Feather);
 
 type HomeCardProps = {
   title: string;
@@ -70,7 +73,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
 }) => {
   const router = useRouter();
 
-  const { colors, isDark } = useTheme();
+  const { isDark } = useTheme();
 
   const rLightImageStyle = useAnimatedStyle(() => {
     return {
@@ -128,10 +131,10 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
               </Card.Description>
             </View>
             <View className="w-9 h-9 rounded-full bg-background/25 items-center justify-center">
-              <Feather
+              <StyledFeather
                 name="arrow-up-right"
                 size={20}
-                color={colors.foreground}
+                className="text-foreground"
               />
             </View>
           </Card.Footer>

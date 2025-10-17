@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, RadioGroup, useTheme } from 'heroui-native';
+import { Chip, Dialog, RadioGroup, useThemeColor } from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -23,7 +23,11 @@ export const Project: FC = () => {
   const [value, setValue] = useState('hero-ui-native');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { colors } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
+  const themeColorDanger = useThemeColor('danger');
+  const themeColorWarning = useThemeColor('warning');
+  const themeColorSuccess = useThemeColor('success');
+  const themeColorForeground = useThemeColor('foreground');
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -40,7 +44,7 @@ export const Project: FC = () => {
           <MaterialCommunityIcons
             name="cube-outline"
             size={14}
-            color={colors.mutedForeground}
+            color={themeColorMuted}
           />
         ),
       },
@@ -51,7 +55,7 @@ export const Project: FC = () => {
           <MaterialCommunityIcons
             name="arrow-right-drop-circle"
             size={14}
-            color={colors.danger}
+            color={themeColorDanger}
           />
         ),
       },
@@ -59,7 +63,11 @@ export const Project: FC = () => {
         value: 'hero-ui-web',
         label: 'HeroUI Web',
         indicator: (
-          <MaterialCommunityIcons name="web" size={14} color={colors.warning} />
+          <MaterialCommunityIcons
+            name="web"
+            size={14}
+            color={themeColorWarning}
+          />
         ),
       },
       {
@@ -69,7 +77,7 @@ export const Project: FC = () => {
           <MaterialCommunityIcons
             name="adjust"
             size={14}
-            color={colors.success}
+            color={themeColorSuccess}
           />
         ),
       },
@@ -167,7 +175,7 @@ export const Project: FC = () => {
                               <Feather
                                 name="check"
                                 size={18}
-                                color={colors.foreground}
+                                color={themeColorForeground}
                               />
                             </Animated.View>
                           )}

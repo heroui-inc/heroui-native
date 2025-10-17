@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Avatar, Chip, Dialog, RadioGroup, useTheme } from 'heroui-native';
+import { Avatar, Chip, Dialog, RadioGroup, useThemeColor } from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -23,7 +23,8 @@ export const Assignee: FC = () => {
   const [value, setValue] = useState('volo');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { colors } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
+  const themeColorForeground = useThemeColor('foreground');
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -40,7 +41,7 @@ export const Assignee: FC = () => {
           <MaterialCommunityIcons
             name="account-circle"
             size={18}
-            color={colors.mutedForeground}
+            color={themeColorMuted}
           />
         ),
       },
@@ -77,7 +78,7 @@ export const Assignee: FC = () => {
         ),
       },
     ],
-    [colors.mutedForeground]
+    [themeColorMuted]
   );
 
   const filteredItems = useMemo(() => {
@@ -169,7 +170,7 @@ export const Assignee: FC = () => {
                               <Feather
                                 name="check"
                                 size={18}
-                                color={colors.foreground}
+                                color={themeColorForeground}
                               />
                             </Animated.View>
                           )}

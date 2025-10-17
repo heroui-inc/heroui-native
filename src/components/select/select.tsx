@@ -22,7 +22,7 @@ import { Text } from '../../helpers/components/text';
 import { useDialogContentAnimation } from '../../helpers/hooks';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
-import { useTheme } from '../../providers/theme';
+import { useTheme, useThemeColor } from '../../providers/theme';
 import {
   DEFAULT_ALIGN_OFFSET,
   DEFAULT_INSETS,
@@ -305,7 +305,8 @@ const SelectContentBottomSheet = forwardRef<
 
     const { selectState, onOpenChange, progress } = useSelect();
 
-    const { colors } = useTheme();
+    const themeColorPanel = useThemeColor('panel');
+    const themeColorMuted = useThemeColor('muted');
 
     const tvStyles = selectStyles.bottomSheetContent({
       className: bottomSheetViewClassName,
@@ -349,11 +350,11 @@ const SelectContentBottomSheet = forwardRef<
       <BottomSheet
         ref={bottomSheetRef}
         backgroundStyle={[
-          { backgroundColor: colors.panel },
+          { backgroundColor: themeColorPanel },
           restProps.backgroundStyle,
         ]}
         handleIndicatorStyle={[
-          { backgroundColor: colors.mutedForeground },
+          { backgroundColor: themeColorMuted },
           restProps.handleIndicatorStyle,
         ]}
         enablePanDownToClose={restProps.enablePanDownToClose ?? true}
@@ -481,9 +482,8 @@ const SelectClose = forwardRef<
   SelectPrimitivesTypes.CloseRef,
   SelectCloseProps
 >(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
-  const { colors, isDark } = useTheme();
-
-  const defaultIconColor = isDark ? colors.mutedForeground : colors.muted;
+  const themeColorMuted = useThemeColor<string>('muted');
+  const defaultIconColor = themeColorMuted;
 
   const tvStyles = selectStyles.close({ className });
 
@@ -565,10 +565,10 @@ const SelectItemIndicator = forwardRef<
   SelectPrimitivesTypes.ItemIndicatorRef,
   SelectItemIndicatorProps
 >(({ className, children, iconProps, ...props }, ref) => {
-  const { colors } = useTheme();
+  const themeColorMuted = useThemeColor<string>('muted');
 
   const iconSize = iconProps?.size ?? 16;
-  const iconColor = iconProps?.color ?? colors.muted;
+  const iconColor = iconProps?.color ?? themeColorMuted;
 
   const tvStyles = selectStyles.itemIndicator({ className });
 

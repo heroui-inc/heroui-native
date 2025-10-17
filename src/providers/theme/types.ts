@@ -83,6 +83,34 @@ type ColorVariableKeys =
   | '--link';
 
 /**
+ * Theme colors
+ */
+type ThemeColor =
+  | 'background'
+  | 'foreground'
+  | 'panel'
+  | 'panel-foreground'
+  | 'muted'
+  | 'default'
+  | 'default-foreground'
+  | 'surface-1'
+  | 'surface-2'
+  | 'surface-3'
+  | 'accent'
+  | 'accent-foreground'
+  | 'accent-soft'
+  | 'accent-soft-foreground'
+  | 'success'
+  | 'success-foreground'
+  | 'warning'
+  | 'warning-foreground'
+  | 'danger'
+  | 'danger-foreground'
+  | 'border'
+  | 'divider'
+  | 'link';
+
+/**
  * Type for color constants object for runtime usage
  * Example: 'background', 'foreground', 'mutedForeground', etc.
  * Values are color strings in any format supported by color-kit
@@ -205,6 +233,7 @@ export type {
   ElementSlots,
   NonColorVariables,
   NonColorVariablesCSS,
+  ThemeColor,
   ThemeConfig,
   ThemeContextType,
   ThemeExtension,

@@ -29,7 +29,7 @@ const item = tv({
 });
 
 const trigger = tv({
-  base: 'flex-row items-center justify-between py-4 px-4 bg-background z-10 overflow-hidden',
+  base: 'flex-row items-center justify-between p-4 bg-background z-10 overflow-hidden',
   variants: {
     variant: {
       default: '',

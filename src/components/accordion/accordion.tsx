@@ -10,7 +10,7 @@ import Animated, {
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as AccordionPrimitive from '../../primitives/accordion';
-import { useTheme } from '../../providers/theme';
+import { useThemeColor } from '../../providers/theme/hooks';
 import {
   ACCORDION_LAYOUT_TRANSITION,
   DEFAULT_CONTENT_ENTERING,
@@ -144,7 +144,7 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 
   const { variant } = useAccordionContext();
 
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   const tvStyles = accordionStyles.trigger({
     variant,
@@ -185,7 +185,7 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 
   const animatedHighlightStyle = useAnimatedStyle(() => ({
     opacity: highlightOpacity.get() * highlightOpacityProp,
-    backgroundColor: highlightColor || colors.foreground,
+    backgroundColor: highlightColor || themeColorForeground,
   }));
 
   return (
@@ -215,7 +215,7 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
 
   const { isExpanded } = useAccordionItemContext();
 
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   const tvStyles = accordionStyles.indicator({ className });
 
@@ -254,7 +254,7 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
     >
       <ChevronDownIcon
         size={iconProps?.size ?? DEFAULT_ICON_SIZE}
-        color={iconProps?.color ?? colors.foreground}
+        color={iconProps?.color ?? themeColorForeground}
       />
     </AnimatedIndicator>
   );

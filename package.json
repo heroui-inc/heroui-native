@@ -106,6 +106,7 @@
     "react-native-worklets": "^0.5.1",
     "tailwind-merge": "^3.3.1",
     "tailwind-variants": "^3.1.0",
+    "tailwindcss": "^4.1.14",
     "typescript": "^5.8.3",
     "uniwind": "beta"
   },

@@ -2856,13 +2856,13 @@ __metadata:
   linkType: hard
 
 "@napi-rs/wasm-runtime@npm:^1.0.5":
-  version: 1.0.6
-  resolution: "@napi-rs/wasm-runtime@npm:1.0.6"
+  version: 1.0.7
+  resolution: "@napi-rs/wasm-runtime@npm:1.0.7"
   dependencies:
     "@emnapi/core": ^1.5.0
     "@emnapi/runtime": ^1.5.0
     "@tybys/wasm-util": ^0.10.1
-  checksum: 18ed24ce35d4f1211e7ea6f9fec292dda9c0b95b9853af07a04cf9ad00cbfd29b5e3a8f48bf109c2d6f99207c358bbba2266f917fb4b614bd099a4c44bcca4f1
+  checksum: 9b59bd8b7310936ed163935befae0613dfffd563e7ff021d4f1b62b419fb0e3395f7206b17460a91db555bea6c471408f3472455e4e2ca9f5a0bff4468fa38d0
   languageName: node
   linkType: hard
 
@@ -8894,6 +8894,7 @@ __metadata:
     react-native-worklets: ^0.5.1
     tailwind-merge: ^3.3.1
     tailwind-variants: ^3.1.0
+    tailwindcss: ^4.1.14
     uniwind: beta
   languageName: unknown
   linkType: soft
@@ -8938,6 +8939,7 @@ __metadata:
     react-native-worklets: ^0.5.1
     tailwind-merge: ^3.3.1
     tailwind-variants: ^3.1.0
+    tailwindcss: ^4.1.14
     typescript: ^5.8.3
     uniwind: beta
   peerDependencies:
@@ -15075,7 +15077,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:4.1.14":
+"tailwindcss@npm:4.1.14, tailwindcss@npm:^4.1.14":
   version: 4.1.14
   resolution: "tailwindcss@npm:4.1.14"
   checksum: 055ce9ebd099284509546320df215800170f3475349464721af04b97ff631f547b85b113ccf5f193ef9b05239f8670201515e2530db99e0bf70fb2b35bfa1a6c
@@ -15605,8 +15607,8 @@ __metadata:
   linkType: hard
 
 "uniwind@npm:beta":
-  version: 1.0.0-beta.5
-  resolution: "uniwind@npm:1.0.0-beta.5"
+  version: 1.0.0-beta.8
+  resolution: "uniwind@npm:1.0.0-beta.8"
   dependencies:
     "@tailwindcss/node": 4.1.14
     "@tailwindcss/oxide": 4.1.14
@@ -15619,7 +15621,7 @@ __metadata:
     react: ">=19.0.0"
     react-native: ">=0.81.0"
     tailwindcss: ">=4"
-  checksum: 4fa26180742bc4d9f332bd77c3545e717392670a31d08fc79ec32f40a4cf10a0a08acf1eb9da1dc55cbc7b58b94d1a3244ff5ab63421d4a52d275b639e6e0d3b
+  checksum: 96991071660bca9a64e98571fd6e68676c4d590153de7f1c1b9e86c6bd6d30850031441af88faab01355ff0b300c3fbe3ac68577c9939a6175630b1f855f92f4
   languageName: node
   linkType: hard
 

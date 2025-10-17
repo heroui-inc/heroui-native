@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Spinner, cn, useTheme } from 'heroui-native';
+import { Spinner, cn, useTheme, useThemeColor } from 'heroui-native';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { AppText } from '../../../components/app-text';
@@ -8,7 +8,8 @@ import { SectionTitle } from '../../../components/section-title';
 
 export default function SpinnerScreen() {
   const [isLoading, setIsLoading] = React.useState(true);
-  const { theme, colors } = useTheme();
+  const { theme } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   const isDark = theme === 'dark';
 
@@ -72,7 +73,7 @@ export default function SpinnerScreen() {
       <View className="flex-row gap-4 self-center">
         <Spinner size="md" color="default">
           <Spinner.Indicator speed={0.7}>
-            <Ionicons name="reload" size={24} color={colors.foreground} />
+            <Ionicons name="reload" size={24} color={themeColorForeground} />
           </Spinner.Indicator>
         </Spinner>
         <Spinner size="lg" color="default">

@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { cn, RadioGroup, Surface, useTheme } from 'heroui-native';
+import { cn, RadioGroup, Surface, useThemeColor } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
@@ -34,7 +34,9 @@ export default function RadioGroupScreen() {
   const [paymentMethod, setPaymentMethod] = React.useState('card');
   const [shippingSpeed, setShippingSpeed] = React.useState('standard');
 
-  const { colors } = useTheme();
+  const themeColorAccentForeground = useThemeColor('accent-foreground');
+  const themeColorBackground = useThemeColor('background');
+  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -206,7 +208,7 @@ export default function RadioGroupScreen() {
                 <FontAwesome
                   name="check"
                   size={12}
-                  color={colors.accentForeground}
+                  color={themeColorAccentForeground}
                 />
               </AnimatedView>
             )}
@@ -218,7 +220,7 @@ export default function RadioGroupScreen() {
           <RadioGroup.Indicator>
             {customThumb === 'zap' && (
               <AnimatedView entering={FadeIn.duration(200)}>
-                <Ionicons name="flash" size={12} color={colors.background} />
+                <Ionicons name="flash" size={12} color={themeColorBackground} />
               </AnimatedView>
             )}
           </RadioGroup.Indicator>
@@ -247,7 +249,7 @@ export default function RadioGroupScreen() {
               <Ionicons
                 name="card-outline"
                 size={16}
-                color={colors.foreground}
+                color={themeColorForeground}
               />
               <RadioGroup.Title>Credit/Debit Card</RadioGroup.Title>
             </View>

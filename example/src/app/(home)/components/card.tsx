@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, Card, useTheme } from 'heroui-native';
+import { Button, Card, useThemeColor } from 'heroui-native';
 import {
   Image,
   Pressable,
@@ -15,7 +15,8 @@ import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
 export default function CardScreen() {
-  const { colors, isDark } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
+  const themeColorForeground = useThemeColor('foreground');
 
   const { width } = useWindowDimensions();
 
@@ -44,7 +45,7 @@ export default function CardScreen() {
               <Ionicons
                 name="basket-outline"
                 size={16}
-                color={isDark ? colors.muted : colors.mutedForeground}
+                color={themeColorMuted}
               />
             </Button>
           </Card.Footer>
@@ -159,7 +160,7 @@ export default function CardScreen() {
                 <Ionicons
                   name="open-outline"
                   size={12}
-                  color={colors.foreground}
+                  color={themeColorForeground}
                 />
               </Pressable>
             </Card.Footer>
@@ -192,7 +193,7 @@ export default function CardScreen() {
                 <Ionicons
                   name="open-outline"
                   size={12}
-                  color={colors.foreground}
+                  color={themeColorForeground}
                 />
               </Pressable>
             </Card.Footer>
@@ -256,7 +257,7 @@ export default function CardScreen() {
                 <Ionicons
                   name="people-outline"
                   size={20}
-                  color={colors.foreground}
+                  color={themeColorForeground}
                 />
               </View>
               <Card.Title className="text-center">
@@ -283,7 +284,7 @@ export default function CardScreen() {
                 <Ionicons
                   name="checkmark"
                   size={28}
-                  color={colors.foreground}
+                  color={themeColorForeground}
                 />
               </View>
               <Card.Title className="text-center">Create thread</Card.Title>
@@ -314,7 +315,7 @@ export default function CardScreen() {
                 <Ionicons
                   name="checkmark"
                   size={28}
-                  color={colors.foreground}
+                  color={themeColorForeground}
                 />
               </View>
               <Card.Title className="text-center">Add profile photo</Card.Title>

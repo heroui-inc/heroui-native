@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Checkbox, cn, useTheme } from 'heroui-native';
+import { Checkbox, cn, useThemeColor } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -31,7 +31,9 @@ export default function CheckboxScreen() {
   const [customIndicator, setCustomIndicator] = React.useState(true);
   const [customBoth, setCustomBoth] = React.useState(true);
 
-  const { colors } = useTheme();
+  const themeColorAccentForeground = useThemeColor('accent-foreground');
+  const themeColorAccent = useThemeColor('accent');
+  const themeColorBackground = useThemeColor<string>('background');
 
   const rThemeToggleStyle = useAnimatedStyle(() => {
     return {
@@ -133,7 +135,7 @@ export default function CheckboxScreen() {
                 <Ionicons
                   name="remove"
                   size={16}
-                  color={colors.accentForeground}
+                  color={themeColorAccentForeground}
                 />
               </Animated.View>
             ) : (
@@ -142,7 +144,7 @@ export default function CheckboxScreen() {
                 entering={ZoomInDown.springify().damping(130).stiffness(1300)}
               >
                 <Animated.View key="default-2" entering={ZoomIn.duration(175)}>
-                  <Ionicons name="add" size={16} color={colors.accent} />
+                  <Ionicons name="add" size={16} color={themeColorAccent} />
                 </Animated.View>
               </Animated.View>
             )}
@@ -157,8 +159,8 @@ export default function CheckboxScreen() {
         onSelectedChange={setCustomBoth}
         className="w-12 h-12 rounded-full self-center"
         colors={{
-          defaultBorder: colors.background,
-          selectedBorder: colors.background,
+          defaultBorder: themeColorBackground,
+          selectedBorder: themeColorBackground,
         }}
       >
         <Checkbox.Background className="items-center justify-center">

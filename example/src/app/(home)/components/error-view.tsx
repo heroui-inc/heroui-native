@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Button, ErrorView, TextField, useTheme } from 'heroui-native';
+import { Button, ErrorView, TextField, useThemeColor } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 import {
@@ -14,7 +14,9 @@ import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
 export default function ErrorViewScreen() {
-  const { colors } = useTheme();
+  const themeColorDanger = useThemeColor('danger');
+  const themeColorWarning = useThemeColor('warning');
+  const themeColorAccent = useThemeColor('accent');
 
   // Basic error states
   const [basicError, setBasicError] = useState(true);
@@ -47,7 +49,7 @@ export default function ErrorViewScreen() {
       <View className="gap-4">
         <ErrorView isInvalid={true}>
           <View className="flex-row items-center gap-2">
-            <Ionicons name="close-circle" size={16} color={colors.danger} />
+            <Ionicons name="close-circle" size={16} color={themeColorDanger} />
             <AppText className="text-danger text-sm">
               Critical error occurred
             </AppText>
@@ -56,7 +58,7 @@ export default function ErrorViewScreen() {
 
         <ErrorView isInvalid={true}>
           <View className="flex-row items-center gap-2">
-            <Ionicons name="warning" size={16} color={colors.warning} />
+            <Ionicons name="warning" size={16} color={themeColorWarning} />
             <AppText className="text-warning text-sm">
               Warning: Check your input
             </AppText>
@@ -68,7 +70,7 @@ export default function ErrorViewScreen() {
             <Ionicons
               name="information-circle"
               size={16}
-              color={colors.accent}
+              color={themeColorAccent}
             />
             <AppText className="text-accent text-sm">
               Information: Field requires attention
@@ -230,7 +232,7 @@ export default function ErrorViewScreen() {
           </TextField>
           <ErrorView isInvalid={true}>
             <View className="flex-row items-center gap-1">
-              <Ionicons name="warning" size={14} color={colors.danger} />
+              <Ionicons name="warning" size={14} color={themeColorDanger} />
               <AppText className="text-danger text-xs">Required</AppText>
             </View>
           </ErrorView>

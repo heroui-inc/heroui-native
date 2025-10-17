@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useRouter } from 'expo-router';
-import { Button, Divider, Select, useTheme } from 'heroui-native';
+import { Button, Divider, Select, useThemeColor } from 'heroui-native';
 import React, { useState } from 'react';
 import { Platform, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -60,7 +60,7 @@ export default function PopoverScreen() {
 
   const insets = useSafeAreaInsets();
 
-  const { colors } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -174,7 +174,7 @@ export default function PopoverScreen() {
               }}
               handleIndicatorStyle={{
                 width: 42,
-                backgroundColor: colors.muted,
+                backgroundColor: themeColorMuted,
               }}
               bottomSheetViewClassName="h-full mx-4 rounded-3xl border border-border bg-panel overflow-hidden"
               bottomSheetViewProps={{

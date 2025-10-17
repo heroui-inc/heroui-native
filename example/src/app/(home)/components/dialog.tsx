@@ -8,6 +8,7 @@ import {
   TextField,
   useDialog,
   useTheme,
+  useThemeColor,
 } from 'heroui-native';
 import { useState, type FC, type PropsWithChildren } from 'react';
 import { Platform, Text, useWindowDimensions, View } from 'react-native';
@@ -90,7 +91,8 @@ export default function DialogScreen() {
 
   const { height } = useWindowDimensions();
 
-  const { colors, isDark } = useTheme();
+  const { isDark } = useTheme();
+  const themeColorPanel = useThemeColor<string>('panel');
 
   const router = useRouter();
 
@@ -315,7 +317,7 @@ export default function DialogScreen() {
             <ScrollShadow
               LinearGradientComponent={LinearGradient}
               style={{ height: height * 0.35 }}
-              color={colors.panel}
+              color={themeColorPanel}
             >
               <ScrollView contentContainerClassName="px-6">
                 <Text className="text-foreground/80 text-center">

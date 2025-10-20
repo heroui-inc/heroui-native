@@ -87,27 +87,7 @@ import type { HeroUINativeProviderProps } from './types';
  * </HeroUINativeProvider>
  * ```
  *
- * @example
- * Accessing theme in child components:
- * ```tsx
- * import { useTheme } from '@heroui/native';
- *
- * function MyComponent() {
- *   const { theme, isDark, toggleTheme, colors } = useTheme();
- *
- *   return (
- *     <View>
- *       <Text>Current theme: {theme}</Text>
- *       <Button onPress={toggleTheme}>
- *         Toggle Theme
- *       </Button>
- *     </View>
- *   );
- * }
- * ```
- *
  * @see {@link ThemeProvider} - The underlying theme provider
- * @see {@link useTheme} - Hook to access theme context
  * @see {@link HeroUINativeConfig} - Configuration options
  */
 export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({

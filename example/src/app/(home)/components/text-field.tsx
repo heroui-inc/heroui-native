@@ -1,15 +1,16 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Button, TextField, useTheme } from 'heroui-native';
+import { Button, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { KeyboardAvoidingView, View } from 'react-native';
-import { withUniwind } from 'uniwind';
+import { useUniwind, withUniwind } from 'uniwind';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
 const StyledIonicons = withUniwind(Ionicons);
 
 export default function TextFieldScreen() {
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
+  const isDark = theme === 'dark';
 
   const [isTestFieldInvalid, setIsTestFieldInvalid] = useState(false);
   const [testFieldValue, setTestFieldValue] = useState('');

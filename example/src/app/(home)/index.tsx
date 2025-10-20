@@ -131,7 +131,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
                 {footer}
               </Card.Description>
             </View>
-            <View className="w-9 h-9 rounded-full bg-background/25 items-center justify-center">
+            <View className="size-9 rounded-full bg-background/25 items-center justify-center">
               <StyledFeather
                 name="arrow-up-right"
                 size={20}
@@ -149,9 +149,7 @@ export default function App() {
   return (
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
-        <AppText className="text-muted-foreground text-base">
-          v1.0.0-alpha.15
-        </AppText>
+        <AppText className="text-muted text-base">v1.0.0-alpha.15</AppText>
       </View>
 
       <View className="gap-6">

@@ -276,22 +276,3 @@ export const ThemeProvider = ({
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 };
-
-/**
- * useTheme Hook
- *
- * Provides access to the theme context
- *
- * @returns {ThemeContextType} Theme state and utilities
- * @throws {Error} If used outside of ThemeProvider
- *
- * @example
- * const { theme, isDark, colors, toggleTheme } = useTheme();
- */
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-};

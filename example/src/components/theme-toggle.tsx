@@ -1,14 +1,21 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from 'heroui-native';
 import { type FC } from 'react';
 import { Pressable } from 'react-native';
 import Animated, { FadeOut, ZoomIn } from 'react-native-reanimated';
-import { withUniwind } from 'uniwind';
+import { Uniwind, useUniwind, withUniwind } from 'uniwind';
 
 const StyledIonicons = withUniwind(Ionicons);
 
 export const ThemeToggle: FC = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useUniwind();
+
+  const toggleTheme = () => {
+    if (theme === 'light') {
+      Uniwind.setTheme('dark');
+    } else {
+      Uniwind.setTheme('light');
+    }
+  };
 
   return (
     <Pressable onPress={toggleTheme} className="px-2.5">

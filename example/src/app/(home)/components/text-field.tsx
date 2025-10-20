@@ -1,13 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Button, TextField, useTheme, useThemeColor } from 'heroui-native';
+import { Button, TextField, useTheme } from 'heroui-native';
 import { useState } from 'react';
 import { KeyboardAvoidingView, View } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
+const StyledIonicons = withUniwind(Ionicons);
+
 export default function TextFieldScreen() {
   const { isDark } = useTheme();
-  const themeColorMuted = useThemeColor('muted');
 
   const [isTestFieldInvalid, setIsTestFieldInvalid] = useState(false);
   const [testFieldValue, setTestFieldValue] = useState('');
@@ -50,14 +52,18 @@ export default function TextFieldScreen() {
           <TextField.Label>Password</TextField.Label>
           <TextField.Input placeholder="Enter your password" secureTextEntry>
             <TextField.InputStartContent className="pointer-events-none">
-              <Ionicons
+              <StyledIonicons
                 name="lock-closed-outline"
                 size={16}
-                color={themeColorMuted}
+                className="text-muted"
               />
             </TextField.InputStartContent>
             <TextField.InputEndContent className="pointer-events-none">
-              <Ionicons name="eye-outline" size={16} color={themeColorMuted} />
+              <StyledIonicons
+                name="eye-outline"
+                size={16}
+                className="text-muted"
+              />
             </TextField.InputEndContent>
           </TextField.Input>
         </TextField>

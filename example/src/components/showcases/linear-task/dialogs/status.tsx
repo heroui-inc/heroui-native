@@ -1,12 +1,16 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, RadioGroup, useThemeColor } from 'heroui-native';
+import { Chip, Dialog, RadioGroup } from 'heroui-native';
 import { useState, type FC } from 'react';
 import { Platform, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
 import { DialogHeader } from '../dialog-header';
+
+const StyledFeather = withUniwind(Feather);
+const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
 
 type StatusItem = {
   value: string;
@@ -17,20 +21,15 @@ type StatusItem = {
 export const Status: FC = () => {
   const [value, setValue] = useState('done');
 
-  const themeColorMuted = useThemeColor('muted');
-  const themeColorForeground = useThemeColor('foreground');
-  const themeColorWarning = useThemeColor('warning');
-  const themeColorSuccess = useThemeColor('success');
-
   const items: StatusItem[] = [
     {
       value: 'backlog',
       label: 'Backlog',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="circle-opacity"
           size={13}
-          color={themeColorMuted}
+          className="text-muted"
         />
       ),
     },
@@ -38,10 +37,10 @@ export const Status: FC = () => {
       value: 'todo',
       label: 'Todo',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="circle-outline"
           size={13}
-          color={themeColorForeground}
+          className="text-foreground"
         />
       ),
     },
@@ -49,10 +48,10 @@ export const Status: FC = () => {
       value: 'in-progress',
       label: 'In Progress',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="circle-slice-4"
           size={13}
-          color={themeColorWarning}
+          className="text-warning"
         />
       ),
     },
@@ -60,10 +59,10 @@ export const Status: FC = () => {
       value: 'in-review',
       label: 'In Review',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="circle-slice-6"
           size={13}
-          color={themeColorSuccess}
+          className="text-success"
         />
       ),
     },
@@ -71,10 +70,10 @@ export const Status: FC = () => {
       value: 'done',
       label: 'Done',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="checkbox-marked-circle"
           size={14}
-          color="#4f46e5"
+          className="text-[#4f46e5]"
         />
       ),
     },
@@ -82,10 +81,10 @@ export const Status: FC = () => {
       value: 'cancelled',
       label: 'Cancelled',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="close-circle"
           size={13}
-          color={themeColorMuted}
+          className="text-muted"
         />
       ),
     },
@@ -93,10 +92,10 @@ export const Status: FC = () => {
       value: 'duplicate',
       label: 'Duplicate',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="close-circle"
           size={13}
-          color={themeColorMuted}
+          className="text-muted"
         />
       ),
     },
@@ -148,10 +147,10 @@ export const Status: FC = () => {
                         key={item.value}
                         entering={FadeIn.duration(200)}
                       >
-                        <Feather
+                        <StyledFeather
                           name="check"
                           size={18}
-                          color={themeColorForeground}
+                          className="text-foreground"
                         />
                       </Animated.View>
                     )}

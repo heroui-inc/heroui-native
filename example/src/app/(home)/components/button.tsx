@@ -1,23 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, Spinner, useTheme, useThemeColor } from 'heroui-native';
+import { Button, Spinner, useTheme } from 'heroui-native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FadeIn } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
+
+const StyledIonicons = withUniwind(Ionicons);
 
 export default function ButtonScreen() {
   const [isDownloading, setIsDownloading] = React.useState(false);
 
   const { isDark } = useTheme();
-  const themeColorAccentForeground = useThemeColor<string>('accent-foreground');
-  const themeColorAccentSoftForeground = useThemeColor(
-    'accent-soft-foreground'
-  );
-  const themeColorDefaultForeground = useThemeColor('default-foreground');
-  const themeColorDangerForeground = useThemeColor('danger-foreground');
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -43,35 +40,43 @@ export default function ButtonScreen() {
       <SectionTitle title="With Icons" />
       <View className="gap-8">
         <Button variant="primary">
-          <Ionicons name="add" size={20} color={themeColorAccentForeground} />
+          <StyledIonicons
+            name="add"
+            size={20}
+            className="text-accent-foreground"
+          />
           <Button.Label>Add Item</Button.Label>
         </Button>
 
         <Button variant="secondary">
           <Button.Label>Download</Button.Label>
-          <Ionicons
+          <StyledIonicons
             name="download"
             size={18}
-            color={themeColorAccentSoftForeground}
+            className="text-accent-soft-foreground"
           />
         </Button>
 
         <Button variant="tertiary">
-          <Ionicons
+          <StyledIonicons
             name="heart"
             size={14}
-            color={themeColorDefaultForeground}
+            className="text-default-foreground"
           />
           <Button.Label>Favorite</Button.Label>
-          <Ionicons
+          <StyledIonicons
             name="chevron-forward"
             size={18}
-            color={themeColorDefaultForeground}
+            className="text-default-foreground"
           />
         </Button>
 
         <Button variant="danger" size="sm">
-          <Ionicons name="trash" size={14} color={themeColorDangerForeground} />
+          <StyledIonicons
+            name="trash"
+            size={14}
+            className="text-danger-foreground"
+          />
           <Button.Label>Delete</Button.Label>
         </Button>
       </View>
@@ -87,10 +92,10 @@ export default function ButtonScreen() {
           <Button.Label>Loading</Button.Label>
         </Button>
         <Button variant="tertiary" isDisabled>
-          <Ionicons
+          <StyledIonicons
             name="alert-circle"
             size={16}
-            color={themeColorDefaultForeground}
+            className="text-default-foreground"
           />
           <Button.Label>Access Denied</Button.Label>
         </Button>
@@ -116,20 +121,24 @@ export default function ButtonScreen() {
       <View className="self-center flex-row gap-8">
         <Button size="sm" isIconOnly>
           <Button.Label>
-            <Ionicons name="add" size={16} color={themeColorAccentForeground} />
+            <StyledIonicons
+              name="add"
+              size={16}
+              className="text-accent-foreground"
+            />
           </Button.Label>
         </Button>
         <Button size="md" variant="secondary" isIconOnly>
           <Button.Label>
-            <Ionicons name="heart" size={18} color="#ec4899" />
+            <StyledIonicons name="heart" size={18} className="text-[#ec4899]" />
           </Button.Label>
         </Button>
         <Button size="lg" variant="danger" isIconOnly>
           <Button.Label>
-            <Ionicons
+            <StyledIonicons
               name="trash"
               size={20}
-              color={themeColorDangerForeground}
+              className="text-danger-foreground"
             />
           </Button.Label>
         </Button>
@@ -146,7 +155,11 @@ export default function ButtonScreen() {
           variant="tertiary"
           className="border-purple-600/30 bg-purple-50"
         >
-          <Ionicons name="checkmark" size={18} color="#9333ea" />
+          <StyledIonicons
+            name="checkmark"
+            size={18}
+            className="text-[#9333ea]"
+          />
           <Button.Label className="text-purple-600">
             Purple Tertiary
           </Button.Label>
@@ -175,10 +188,7 @@ export default function ButtonScreen() {
         className="self-center"
       >
         {isDownloading ? (
-          <Spinner
-            entering={FadeIn.delay(50)}
-            color={themeColorAccentForeground}
-          />
+          <Spinner entering={FadeIn.delay(50)} color="white" />
         ) : (
           'Download now'
         )}

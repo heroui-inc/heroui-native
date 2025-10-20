@@ -1,10 +1,11 @@
 import Feather from '@expo/vector-icons/Feather';
 import * as Haptics from 'expo-haptics';
-import { Button, Select, useThemeColor } from 'heroui-native';
+import { Button, Select } from 'heroui-native';
 import { Platform, Pressable, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { Easing, SlideInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import { simulatePress } from '../../../../helpers/utils/simulate-press';
 import { AppText } from '../../../app-text';
 import { SelectBlurBackdrop } from '../../../select/select-blur-backdrop';
@@ -14,6 +15,7 @@ import { SelectItem } from './select-item';
 import { type ModelOption } from './types';
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
+const StyledFeather = withUniwind(Feather);
 
 type Props = {
   data: ModelOption[];
@@ -24,8 +26,6 @@ type Props = {
 export const ModelSelect = ({ data, model, setModel }: Props) => {
   const insets = useSafeAreaInsets();
   const { height: screenHeight } = useWindowDimensions();
-
-  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <Select
@@ -96,7 +96,11 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
             </Pressable>
             <Pressable onPress={simulatePress}>
               <AppText className="text-medium text-foreground">
-                <Feather name="plus" size={20} color={themeColorForeground} />
+                <StyledFeather
+                  name="plus"
+                  size={20}
+                  className="text-foreground"
+                />
               </AppText>
             </Pressable>
           </View>

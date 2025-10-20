@@ -15,6 +15,9 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
+
+const StyledFeather = withUniwind(Feather);
 
 type SelectOption = {
   value: string;
@@ -32,8 +35,6 @@ const US_STATES: SelectOption[] = [
 const AnimatedTrigger: FC = () => {
   const { progress, selectState } = useSelect();
 
-  const { isDark } = useTheme();
-  const themeColorMuted = useThemeColor('muted');
   const themeColorDefault = useThemeColor<string>('default');
   const themeColorPanel = useThemeColor<string>('panel');
 
@@ -70,11 +71,7 @@ const AnimatedTrigger: FC = () => {
       />
       <Select.Value placeholder="Select a state" />
       <Animated.View style={rChevronStyle} className="absolute right-3">
-        <Feather
-          name="chevron-down"
-          size={18}
-          color={isDark ? themeColorMuted : themeColorMuted}
-        />
+        <StyledFeather name="chevron-down" size={18} className="text-muted" />
       </Animated.View>
     </Animated.View>
   );

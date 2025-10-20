@@ -1,16 +1,22 @@
 import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useRouter } from 'expo-router';
-import { Accordion, useThemeColor } from 'heroui-native';
+import { Accordion } from 'heroui-native';
 import { View } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 
-const ComponentIcon = () => {
-  const themeColorMuted = useThemeColor('muted');
+const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
+const StyledIonicons = withUniwind(Ionicons);
 
+const ComponentIcon = () => {
   return (
-    <MaterialCommunityIcons name="atom" size={16} color={themeColorMuted} />
+    <StyledMaterialCommunityIcons
+      name="atom"
+      size={16}
+      className="text-muted"
+    />
   );
 };
 
@@ -126,8 +132,6 @@ const components: Component[] = [
 export default function App() {
   const router = useRouter();
 
-  const themeColorMuted = useThemeColor('muted');
-
   return (
     <ScreenScrollView>
       <View className="h-5" />
@@ -145,10 +149,10 @@ export default function App() {
                 </AppText>
               </View>
               <Accordion.Indicator>
-                <Ionicons
+                <StyledIonicons
                   name="chevron-forward"
                   size={16}
-                  color={themeColorMuted}
+                  className="text-muted"
                 />
               </Accordion.Indicator>
             </Accordion.Trigger>

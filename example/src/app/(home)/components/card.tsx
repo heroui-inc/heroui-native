@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, Card, useThemeColor } from 'heroui-native';
+import { Button, Card } from 'heroui-native';
 import {
   Image,
   Pressable,
@@ -10,14 +10,14 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
-export default function CardScreen() {
-  const themeColorMuted = useThemeColor('muted');
-  const themeColorForeground = useThemeColor('foreground');
+const StyledIonicons = withUniwind(Ionicons);
 
+export default function CardScreen() {
   const { width } = useWindowDimensions();
 
   return (
@@ -42,10 +42,10 @@ export default function CardScreen() {
             <Button variant="primary">Buy now</Button>
             <Button variant="ghost">
               <Button.Label>Add to cart</Button.Label>
-              <Ionicons
+              <StyledIonicons
                 name="basket-outline"
                 size={16}
-                color={themeColorMuted}
+                className="text-muted"
               />
             </Button>
           </Card.Footer>
@@ -157,10 +157,10 @@ export default function CardScreen() {
                 <AppText className="text-sm font-medium text-foreground">
                   View Details
                 </AppText>
-                <Ionicons
+                <StyledIonicons
                   name="open-outline"
                   size={12}
-                  color={themeColorForeground}
+                  className="text-foreground"
                 />
               </Pressable>
             </Card.Footer>
@@ -190,10 +190,10 @@ export default function CardScreen() {
                 <AppText className="text-sm font-medium text-foreground">
                   View Details
                 </AppText>
-                <Ionicons
+                <StyledIonicons
                   name="open-outline"
                   size={12}
-                  color={themeColorForeground}
+                  className="text-foreground"
                 />
               </Pressable>
             </Card.Footer>
@@ -254,10 +254,10 @@ export default function CardScreen() {
           <View className="gap-4">
             <Card.Body className="items-center mb-2">
               <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
-                <Ionicons
+                <StyledIonicons
                   name="people-outline"
                   size={20}
-                  color={themeColorForeground}
+                  className="text-foreground"
                 />
               </View>
               <Card.Title className="text-center">
@@ -281,10 +281,10 @@ export default function CardScreen() {
           <View className="gap-4">
             <Card.Body className="items-center mb-2">
               <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
-                <Ionicons
+                <StyledIonicons
                   name="checkmark"
                   size={28}
-                  color={themeColorForeground}
+                  className="text-foreground"
                 />
               </View>
               <Card.Title className="text-center">Create thread</Card.Title>
@@ -312,10 +312,10 @@ export default function CardScreen() {
           <View className="gap-4">
             <Card.Body className="items-center mb-2">
               <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
-                <Ionicons
+                <StyledIonicons
                   name="checkmark"
                   size={28}
-                  color={themeColorForeground}
+                  className="text-foreground"
                 />
               </View>
               <Card.Title className="text-center">Add profile photo</Card.Title>

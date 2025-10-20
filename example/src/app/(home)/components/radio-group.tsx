@@ -1,14 +1,17 @@
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { cn, RadioGroup, Surface, useThemeColor } from 'heroui-native';
+import { cn, RadioGroup, Surface } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
+const StyledIonicons = withUniwind(Ionicons);
+const StyledFontAwesome = withUniwind(FontAwesome);
 
 export default function RadioGroupScreen() {
   // Basic radio states
@@ -33,10 +36,6 @@ export default function RadioGroupScreen() {
   // Real-world examples
   const [paymentMethod, setPaymentMethod] = React.useState('card');
   const [shippingSpeed, setShippingSpeed] = React.useState('standard');
-
-  const themeColorAccentForeground = useThemeColor('accent-foreground');
-  const themeColorBackground = useThemeColor('background');
-  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -205,10 +204,10 @@ export default function RadioGroupScreen() {
           <RadioGroup.Indicator>
             {customThumb === 'icon' && (
               <AnimatedView entering={FadeIn.duration(200)}>
-                <FontAwesome
+                <StyledFontAwesome
                   name="check"
                   size={12}
-                  color={themeColorAccentForeground}
+                  className="text-accent-foreground"
                 />
               </AnimatedView>
             )}
@@ -220,7 +219,11 @@ export default function RadioGroupScreen() {
           <RadioGroup.Indicator>
             {customThumb === 'zap' && (
               <AnimatedView entering={FadeIn.duration(200)}>
-                <Ionicons name="flash" size={12} color={themeColorBackground} />
+                <StyledIonicons
+                  name="flash"
+                  size={12}
+                  className="text-background"
+                />
               </AnimatedView>
             )}
           </RadioGroup.Indicator>
@@ -246,10 +249,10 @@ export default function RadioGroupScreen() {
         <RadioGroup.Item value="card">
           <View>
             <View className="flex-row items-center gap-1.5">
-              <Ionicons
+              <StyledIonicons
                 name="card-outline"
                 size={16}
-                color={themeColorForeground}
+                className="text-foreground"
               />
               <RadioGroup.Title>Credit/Debit Card</RadioGroup.Title>
             </View>

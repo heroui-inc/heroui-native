@@ -7,10 +7,13 @@ import {
   type PopoverTriggerRef,
 } from 'heroui-native';
 import { type FC, type RefObject } from 'react';
+import { withUniwind } from 'uniwind';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
 import { progressAnimationConfigs } from './constants';
 import { className } from './styles';
+
+const StyledIonicons = withUniwind(Ionicons);
 
 type Props = {
   isOnboardingDone: boolean;
@@ -30,7 +33,11 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
           )}
           onPress={isOnboardingDone ? simulatePress : undefined}
         >
-          <Ionicons name="sparkles-sharp" size={14} color="#fdba74" />
+          <StyledIonicons
+            name="sparkles-sharp"
+            size={14}
+            className="text-orange-300"
+          />
           <AppText className="text-lg text-foreground font-semibold">
             Ask
           </AppText>

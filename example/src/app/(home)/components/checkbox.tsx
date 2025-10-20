@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Checkbox, cn, useThemeColor } from 'heroui-native';
+import { Checkbox, cn } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -14,11 +14,13 @@ import Animated, {
   ZoomIn,
   ZoomInDown,
 } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
+const StyledIonicons = withUniwind(Ionicons);
 
 export default function CheckboxScreen() {
   const [defaultCheck, setDefaultCheck] = React.useState(true);
@@ -31,10 +33,6 @@ export default function CheckboxScreen() {
   const [customIndicator, setCustomIndicator] = React.useState(true);
   const [customBoth, setCustomBoth] = React.useState(true);
 
-  const themeColorAccentForeground = useThemeColor('accent-foreground');
-  const themeColorAccent = useThemeColor('accent');
-  const themeColorBackground = useThemeColor<string>('background');
-
   const rThemeToggleStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -46,7 +44,7 @@ export default function CheckboxScreen() {
         },
       ],
     };
-  });
+  }, [customBoth]);
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -132,10 +130,10 @@ export default function CheckboxScreen() {
           <View>
             {customIndicator ? (
               <Animated.View key="selected" entering={ZoomIn}>
-                <Ionicons
+                <StyledIonicons
                   name="remove"
                   size={16}
-                  color={themeColorAccentForeground}
+                  className="text-accent-foreground"
                 />
               </Animated.View>
             ) : (
@@ -144,7 +142,11 @@ export default function CheckboxScreen() {
                 entering={ZoomInDown.springify().damping(130).stiffness(1300)}
               >
                 <Animated.View key="default-2" entering={ZoomIn.duration(175)}>
-                  <Ionicons name="add" size={16} color={themeColorAccent} />
+                  <StyledIonicons
+                    name="add"
+                    size={16}
+                    className="text-accent"
+                  />
                 </Animated.View>
               </Animated.View>
             )}
@@ -159,8 +161,8 @@ export default function CheckboxScreen() {
         onSelectedChange={setCustomBoth}
         className="w-12 h-12 rounded-full self-center"
         colors={{
-          defaultBorder: themeColorBackground,
-          selectedBorder: themeColorBackground,
+          defaultBorder: 'transparent',
+          selectedBorder: 'transparent',
         }}
       >
         <Checkbox.Background className="items-center justify-center">
@@ -199,13 +201,21 @@ export default function CheckboxScreen() {
           {customBoth ? (
             <AnimatedView key="check" entering={FadeInLeft.springify()}>
               <Animated.View entering={ZoomIn.springify()}>
-                <Ionicons name="sunny" size={24} color="#0f172a" />
+                <StyledIonicons
+                  name="sunny"
+                  size={24}
+                  className="text-[#0f172a]"
+                />
               </Animated.View>
             </AnimatedView>
           ) : (
             <AnimatedView key="x" entering={FadeInRight.springify()}>
               <Animated.View entering={ZoomIn.springify()}>
-                <Ionicons name="moon" size={20} color="#e2e8f0" />
+                <StyledIonicons
+                  name="moon"
+                  size={20}
+                  className="text-[#e2e8f0]"
+                />
               </Animated.View>
             </AnimatedView>
           )}

@@ -3,7 +3,6 @@ import {
   Accordion,
   AccordionLayoutTransition,
   useAccordionItemContext,
-  useThemeColor,
 } from 'heroui-native';
 import { View } from 'react-native';
 import Animated, {
@@ -13,11 +12,14 @@ import Animated, {
   ZoomIn,
   ZoomOut,
 } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
+const StyledIonicons = withUniwind(Ionicons);
+const StyledMaterialIcons = withUniwind(MaterialIcons);
 
 const ICON_SIZE = 16;
 
@@ -30,7 +32,6 @@ const CUSTOM_INDICATOR_EXITING = ZoomOut.duration(200).easing(
 
 const CustomIndicator = () => {
   const { isExpanded } = useAccordionItemContext();
-  const themeColorMuted = useThemeColor('muted');
 
   return (
     <View className="w-5 h-5 items-center justify-center">
@@ -40,7 +41,7 @@ const CustomIndicator = () => {
           entering={CUSTOM_INDICATOR_ENTERING}
           exiting={CUSTOM_INDICATOR_EXITING}
         >
-          <Ionicons name="remove" size={16} color={themeColorMuted} />
+          <StyledIonicons name="remove" size={16} className="text-muted" />
         </Animated.View>
       ) : (
         <Animated.View
@@ -48,7 +49,7 @@ const CustomIndicator = () => {
           entering={CUSTOM_INDICATOR_ENTERING}
           exiting={CUSTOM_INDICATOR_EXITING}
         >
-          <Ionicons name="add" size={16} color={themeColorMuted} />
+          <StyledIonicons name="add" size={16} className="text-muted" />
         </Animated.View>
       )}
     </View>
@@ -56,14 +57,16 @@ const CustomIndicator = () => {
 };
 
 const AccordionScreen = () => {
-  const themeColorMuted = useThemeColor('muted');
-
   const accordionData = [
     {
       id: '1',
       title: 'How do I place an order?',
       icon: (
-        <Ionicons name="bag-outline" size={ICON_SIZE} color={themeColorMuted} />
+        <StyledIonicons
+          name="bag-outline"
+          size={ICON_SIZE}
+          className="text-muted"
+        />
       ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
@@ -72,10 +75,10 @@ const AccordionScreen = () => {
       id: '2',
       title: 'Can I modify or cancel my order?',
       icon: (
-        <Ionicons
+        <StyledIonicons
           name="receipt-outline"
           size={ICON_SIZE}
-          color={themeColorMuted}
+          className="text-muted"
         />
       ),
       content:
@@ -85,10 +88,10 @@ const AccordionScreen = () => {
       id: '3',
       title: 'What payment methods do you accept?',
       icon: (
-        <Ionicons
+        <StyledIonicons
           name="card-outline"
           size={ICON_SIZE}
-          color={themeColorMuted}
+          className="text-muted"
         />
       ),
       content:
@@ -98,10 +101,10 @@ const AccordionScreen = () => {
       id: '4',
       title: 'How much does shipping cost?',
       icon: (
-        <MaterialIcons
+        <StyledMaterialIcons
           name="inventory-2"
           size={ICON_SIZE}
-          color={themeColorMuted}
+          className="text-muted"
         />
       ),
       content:
@@ -111,10 +114,10 @@ const AccordionScreen = () => {
       id: '5',
       title: 'Do you ship internationally?',
       icon: (
-        <Ionicons
+        <StyledIonicons
           name="globe-outline"
           size={ICON_SIZE}
-          color={themeColorMuted}
+          className="text-muted"
         />
       ),
       content:
@@ -124,7 +127,11 @@ const AccordionScreen = () => {
       id: '6',
       title: 'How do I request a refund?',
       icon: (
-        <Ionicons name="refresh" size={ICON_SIZE} color={themeColorMuted} />
+        <StyledIonicons
+          name="refresh"
+          size={ICON_SIZE}
+          className="text-muted"
+        />
       ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',

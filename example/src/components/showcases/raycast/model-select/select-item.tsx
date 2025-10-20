@@ -1,10 +1,13 @@
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { BlurView } from 'expo-blur';
-import { cn, Select, useSelect, useTheme, useThemeColor } from 'heroui-native';
+import { cn, Select, useSelect, useTheme } from 'heroui-native';
 import { type FC } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../app-text';
 import { type ModelOption } from './types';
+
+const StyledFontAwesome5 = withUniwind(FontAwesome5);
 
 type Props = {
   data: ModelOption;
@@ -12,7 +15,6 @@ type Props = {
 
 export const SelectItem: FC<Props> = ({ data }) => {
   const { isDark } = useTheme();
-  const themeColorBackground = useThemeColor<string>('background');
 
   const { value: selectedValue } = useSelect();
 
@@ -51,7 +53,11 @@ export const SelectItem: FC<Props> = ({ data }) => {
         </AppText>
       </View>
       <Select.ItemIndicator className="size-5 rounded-full items-center justify-center bg-muted dark:bg-foreground">
-        <FontAwesome5 name="check" size={10} color={themeColorBackground} />
+        <StyledFontAwesome5
+          name="check"
+          size={10}
+          className="text-background"
+        />
       </Select.ItemIndicator>
     </Select.Item>
   );

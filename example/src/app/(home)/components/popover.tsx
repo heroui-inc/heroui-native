@@ -1,13 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { Button, Popover, useThemeColor } from 'heroui-native';
+import { Button, Popover } from 'heroui-native';
 import { Platform, Text, View } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
+const StyledIonicons = withUniwind(Ionicons);
+
 export default function PopoverScreen() {
-  const themeColorMuted = useThemeColor('muted');
   const router = useRouter();
 
   return (
@@ -38,10 +40,10 @@ export default function PopoverScreen() {
         <Popover>
           <Popover.Trigger asChild>
             <Button variant="tertiary" size="sm">
-              <Ionicons
+              <StyledIonicons
                 name="information-circle"
                 size={20}
-                color={themeColorMuted}
+                className="text-muted"
               />
               <Button.Label>Show Info</Button.Label>
             </Button>

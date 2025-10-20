@@ -1,17 +1,21 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, RadioGroup, useThemeColor } from 'heroui-native';
+import { Chip, Dialog, RadioGroup } from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../app-text';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
 import { DialogHeader } from '../dialog-header';
 import { SearchBar } from '../search-bar';
+
+const StyledFeather = withUniwind(Feather);
+const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
 
 type ProjectItem = {
   value: string;
@@ -22,12 +26,6 @@ type ProjectItem = {
 export const Project: FC = () => {
   const [value, setValue] = useState('hero-ui-native');
   const [searchQuery, setSearchQuery] = useState('');
-
-  const themeColorMuted = useThemeColor('muted');
-  const themeColorDanger = useThemeColor('danger');
-  const themeColorWarning = useThemeColor('warning');
-  const themeColorSuccess = useThemeColor('success');
-  const themeColorForeground = useThemeColor('foreground');
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -41,10 +39,10 @@ export const Project: FC = () => {
         value: 'no-project',
         label: 'No Project',
         indicator: (
-          <MaterialCommunityIcons
+          <StyledMaterialCommunityIcons
             name="cube-outline"
             size={14}
-            color={themeColorMuted}
+            className="text-muted"
           />
         ),
       },
@@ -52,10 +50,10 @@ export const Project: FC = () => {
         value: 'hero-ui-native',
         label: 'HeroUI Native',
         indicator: (
-          <MaterialCommunityIcons
+          <StyledMaterialCommunityIcons
             name="arrow-right-drop-circle"
             size={14}
-            color={themeColorDanger}
+            className="text-danger"
           />
         ),
       },
@@ -63,10 +61,10 @@ export const Project: FC = () => {
         value: 'hero-ui-web',
         label: 'HeroUI Web',
         indicator: (
-          <MaterialCommunityIcons
+          <StyledMaterialCommunityIcons
             name="web"
             size={14}
-            color={themeColorWarning}
+            className="text-warning"
           />
         ),
       },
@@ -74,15 +72,14 @@ export const Project: FC = () => {
         value: 'hero-ui-chat',
         label: 'HeroUI Chat',
         indicator: (
-          <MaterialCommunityIcons
+          <StyledMaterialCommunityIcons
             name="adjust"
             size={14}
-            color={themeColorSuccess}
+            className="text-success"
           />
         ),
       },
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -172,10 +169,10 @@ export const Project: FC = () => {
                               key={item.value}
                               entering={FadeIn.duration(200)}
                             >
-                              <Feather
+                              <StyledFeather
                                 name="check"
                                 size={18}
-                                color={themeColorForeground}
+                                className="text-foreground"
                               />
                             </Animated.View>
                           )}

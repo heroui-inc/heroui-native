@@ -2,9 +2,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Chip, cn, useTheme } from 'heroui-native';
 import { StyleSheet, View } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
+
+const StyledIonicons = withUniwind(Ionicons);
 
 export default function ChipScreen() {
   const { isDark } = useTheme();
@@ -93,11 +96,11 @@ export default function ChipScreen() {
             <Chip.Label>Featured</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="success">
-            <Ionicons name="add" size={16} color="#10B981" />
+            <StyledIonicons name="add" size={16} className="text-[#10B981]" />
             <Chip.Label>New</Chip.Label>
           </Chip>
           <Chip size="lg" variant="tertiary" color="warning">
-            <Ionicons name="star" size={12} color="#F59E0B" />
+            <StyledIonicons name="star" size={12} className="text-[#F59E0B]" />
             <Chip.Label>Premium</Chip.Label>
           </Chip>
         </View>
@@ -126,11 +129,11 @@ export default function ChipScreen() {
       <View className="flex-row gap-4 justify-center">
         <Chip size="sm" variant="secondary">
           <Chip.Label>Close</Chip.Label>
-          <Ionicons name="close" size={12} color="#6B7280" />
+          <StyledIonicons name="close" size={12} className="text-[#6B7280]" />
         </Chip>
         <Chip size="md" variant="primary" color="danger" className="pr-1.5">
           <Chip.Label>Remove</Chip.Label>
-          <Ionicons name="close" size={16} color="white" />
+          <StyledIonicons name="close" size={16} className="text-white" />
         </Chip>
         <Chip
           size="lg"
@@ -145,10 +148,10 @@ export default function ChipScreen() {
               isDark ? 'bg-neutral-700' : 'bg-neutral-200'
             )}
           >
-            <Ionicons
+            <StyledIonicons
               name="close"
               size={12}
-              color={isDark ? 'white' : 'black'}
+              className={isDark ? 'text-white' : 'text-black'}
             />
           </View>
         </Chip>

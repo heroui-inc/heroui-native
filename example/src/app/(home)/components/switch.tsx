@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Switch, useTheme, useThemeColor } from 'heroui-native';
+import { Switch, useTheme } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -7,9 +7,12 @@ import Animated, {
   FadeInRight,
   ZoomIn,
 } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
+
+const StyledIonicons = withUniwind(Ionicons);
 
 export default function SwitchScreen() {
   const [defaultSwitch, setDefaultSwitch] = React.useState(true);
@@ -25,8 +28,6 @@ export default function SwitchScreen() {
   const [custom1, setCustom1] = React.useState(true);
 
   const { theme } = useTheme();
-  const themeColorAccent = useThemeColor('accent');
-  const themeColorDefault = useThemeColor('default');
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -89,11 +90,15 @@ export default function SwitchScreen() {
         <Switch.Thumb>
           {icon ? (
             <Animated.View key="check" entering={ZoomIn}>
-              <Ionicons name="checkmark" size={12} color={themeColorAccent} />
+              <StyledIonicons
+                name="checkmark"
+                size={12}
+                className="text-accent"
+              />
             </Animated.View>
           ) : (
             <Animated.View key="x" entering={ZoomIn}>
-              <Ionicons name="close" size={14} color={themeColorDefault} />
+              <StyledIonicons name="close" size={14} className="text-default" />
             </Animated.View>
           )}
         </Switch.Thumb>
@@ -132,14 +137,22 @@ export default function SwitchScreen() {
           <Switch.StartContent className="left-0.5">
             {contentIcon && (
               <Animated.View key="sun" entering={ZoomIn.springify()}>
-                <Ionicons name="sunny" size={16} color="#854d0e" />
+                <StyledIonicons
+                  name="sunny"
+                  size={16}
+                  className="text-[#854d0e]"
+                />
               </Animated.View>
             )}
           </Switch.StartContent>
           <Switch.EndContent className="right-0.5">
             {!contentIcon && (
               <Animated.View key="moon" entering={ZoomIn.springify()}>
-                <Ionicons name="moon" size={16} color="#dbeafe" />
+                <StyledIonicons
+                  name="moon"
+                  size={16}
+                  className="text-[#dbeafe]"
+                />
               </Animated.View>
             )}
           </Switch.EndContent>

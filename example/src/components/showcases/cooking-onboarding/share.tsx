@@ -7,10 +7,13 @@ import {
   type PopoverTriggerRef,
 } from 'heroui-native';
 import { type FC, type RefObject } from 'react';
+import { withUniwind } from 'uniwind';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
 import { progressAnimationConfigs } from './constants';
 import { className } from './styles';
+
+const StyledFeather = withUniwind(Feather);
 
 type Props = {
   isOnboardingDone: boolean;
@@ -31,7 +34,7 @@ export const Share: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
           onPress={isOnboardingDone ? simulatePress : undefined}
           isIconOnly
         >
-          <Feather name="share" size={16} color={themeColorForeground} />
+          <StyledFeather name="share" size={16} className="text-foreground" />
         </Button>
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>

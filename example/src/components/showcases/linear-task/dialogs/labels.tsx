@@ -1,22 +1,19 @@
 import Feather from '@expo/vector-icons/Feather';
 import * as Haptics from 'expo-haptics';
-import {
-  Checkbox,
-  Chip,
-  Dialog,
-  FormField,
-  useThemeColor,
-} from 'heroui-native';
+import { Checkbox, Chip, Dialog, FormField } from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../app-text';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
 import { DialogHeader } from '../dialog-header';
 import { SearchBar } from '../search-bar';
+
+const StyledFeather = withUniwind(Feather);
 
 type LabelItem = {
   value: string;
@@ -29,8 +26,6 @@ export const Labels: FC = () => {
     new Set(['feature'])
   );
   const [searchQuery, setSearchQuery] = useState('');
-
-  const themeColorForeground = useThemeColor('foreground');
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -215,10 +210,10 @@ export const Labels: FC = () => {
                                   key={`${item.value}-check`}
                                   entering={FadeIn.duration(200)}
                                 >
-                                  <Feather
+                                  <StyledFeather
                                     name="check"
                                     size={18}
-                                    color={themeColorForeground}
+                                    className="text-foreground"
                                   />
                                 </Animated.View>
                               )}

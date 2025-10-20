@@ -1,10 +1,14 @@
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Button, Divider, useThemeColor } from 'heroui-native';
+import { Button, Divider } from 'heroui-native';
 import { type FC } from 'react';
 import { View } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
+
+const StyledEntypo = withUniwind(Entypo);
+const StyledIonicons = withUniwind(Ionicons);
 
 type IngredientItemProps = {
   name: string;
@@ -12,8 +16,6 @@ type IngredientItemProps = {
 };
 
 const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
-  const themeColorForeground = useThemeColor('foreground');
-
   return (
     <View className="flex-row items-center justify-between py-3">
       <View className="flex-col flex-1">
@@ -30,10 +32,10 @@ const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
           className="rounded-full"
           onPress={simulatePress}
         >
-          <Ionicons
+          <StyledIonicons
             name="sparkles-sharp"
             size={14}
-            color={themeColorForeground}
+            className="text-foreground"
           />
         </Button>
         <Button
@@ -43,7 +45,7 @@ const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
           className="rounded-full"
           onPress={simulatePress}
         >
-          <Entypo name="plus" size={16} color={themeColorForeground} />
+          <StyledEntypo name="plus" size={16} className="text-foreground" />
         </Button>
       </View>
     </View>

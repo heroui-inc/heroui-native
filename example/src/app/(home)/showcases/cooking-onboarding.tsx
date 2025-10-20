@@ -19,6 +19,7 @@ import {
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import BgImage from '../../../../assets/images/pancakes.jpg';
 import { AppText } from '../../../components/app-text';
 import { Ask } from '../../../components/showcases/cooking-onboarding/ask';
@@ -30,6 +31,8 @@ import ParallaxScrollView from '../../../components/showcases/cooking-onboarding
 import { Plan } from '../../../components/showcases/cooking-onboarding/plan';
 import { Save } from '../../../components/showcases/cooking-onboarding/save';
 import { Share } from '../../../components/showcases/cooking-onboarding/share';
+
+const StyledFeather = withUniwind(Feather);
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -69,7 +72,6 @@ function onboardingReducer(
 }
 
 export default function CookingOnboardingScreen() {
-  const themeColorForeground = useThemeColor('foreground');
   const themeColorBackground = useThemeColor<string>('background');
 
   const router = useRouter();
@@ -147,7 +149,11 @@ export default function CookingOnboardingScreen() {
         style={{ top: insets.top + 8 }}
       >
         <Pressable onPress={router.back}>
-          <Feather name="chevron-left" size={26} color={themeColorForeground} />
+          <StyledFeather
+            name="chevron-left"
+            size={26}
+            className="text-foreground"
+          />
         </Pressable>
         <View className="flex-row gap-2">
           <Share

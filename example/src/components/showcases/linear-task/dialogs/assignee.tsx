@@ -1,17 +1,21 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Avatar, Chip, Dialog, RadioGroup, useThemeColor } from 'heroui-native';
+import { Avatar, Chip, Dialog, RadioGroup } from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../app-text';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
 import { DialogHeader } from '../dialog-header';
 import { SearchBar } from '../search-bar';
+
+const StyledFeather = withUniwind(Feather);
+const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
 
 type AssigneeItem = {
   value: string;
@@ -22,9 +26,6 @@ type AssigneeItem = {
 export const Assignee: FC = () => {
   const [value, setValue] = useState('volo');
   const [searchQuery, setSearchQuery] = useState('');
-
-  const themeColorMuted = useThemeColor('muted');
-  const themeColorForeground = useThemeColor('foreground');
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -38,10 +39,10 @@ export const Assignee: FC = () => {
         value: 'no-assignee',
         label: 'No Assignee',
         indicator: (
-          <MaterialCommunityIcons
+          <StyledMaterialCommunityIcons
             name="account-circle"
             size={18}
-            color={themeColorMuted}
+            className="text-muted"
           />
         ),
       },
@@ -78,7 +79,7 @@ export const Assignee: FC = () => {
         ),
       },
     ],
-    [themeColorMuted]
+    []
   );
 
   const filteredItems = useMemo(() => {
@@ -167,10 +168,10 @@ export const Assignee: FC = () => {
                               key={item.value}
                               entering={FadeIn.duration(200)}
                             >
-                              <Feather
+                              <StyledFeather
                                 name="check"
                                 size={18}
-                                color={themeColorForeground}
+                                className="text-foreground"
                               />
                             </Animated.View>
                           )}

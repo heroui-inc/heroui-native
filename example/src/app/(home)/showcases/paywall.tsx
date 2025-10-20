@@ -13,6 +13,7 @@ import Animated, {
   FadeInUp,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import BG from '../../../../assets/images/paywall-showcase-bg.jpeg';
 import LogoDark from '../../../../assets/logo-dark.png';
 import { AppText } from '../../../components/app-text';
@@ -21,6 +22,8 @@ import { StyledRadio } from '../../../components/showcases/paywall/styled-radio'
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
+const StyledFeather = withUniwind(Feather);
+const StyledIonicons = withUniwind(Ionicons);
 
 export default function Paywall() {
   const [isFreeTrialEnabled, setIsFreeTrialEnabled] = useState(false);
@@ -63,7 +66,11 @@ export default function Paywall() {
             onPress={router.back}
             hitSlop={16}
           >
-            <Feather name="chevron-left" size={28} color="black" />
+            <StyledFeather
+              name="chevron-left"
+              size={28}
+              className="text-black"
+            />
           </Pressable>
           <Image source={LogoDark} style={styles.logo} contentFit="contain" />
         </View>
@@ -112,7 +119,11 @@ export default function Paywall() {
           />
         </RadioGroup>
         <View className="flex-row items-center justify-center gap-2 mb-6">
-          <Ionicons name="shield-checkmark" size={20} color="#f9fafb" />
+          <StyledIonicons
+            name="shield-checkmark"
+            size={20}
+            className="text-[#f9fafb]"
+          />
           <AppText className="text-base text-gray-50">
             Secure payment with Stripe
           </AppText>

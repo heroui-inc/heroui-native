@@ -1,10 +1,11 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useRouter } from 'expo-router';
-import { Avatar, Card, Divider, useThemeColor } from 'heroui-native';
+import { Avatar, Card, Divider } from 'heroui-native';
 import { Pressable, View } from 'react-native';
 import { KeyboardController } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { Assignee } from '../../../components/showcases/linear-task/dialogs/assignee';
 import { Labels } from '../../../components/showcases/linear-task/dialogs/labels';
@@ -13,11 +14,12 @@ import { Project } from '../../../components/showcases/linear-task/dialogs/proje
 import { Status } from '../../../components/showcases/linear-task/dialogs/status';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
+const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
+
 KeyboardController.preload();
 
 export default function LinearTaskScreen() {
   const insets = useSafeAreaInsets();
-  const themeColorForeground = useThemeColor('foreground');
 
   const router = useRouter();
 
@@ -33,10 +35,10 @@ export default function LinearTaskScreen() {
           className="flex-row items-center gap-1"
           onPress={router.back}
         >
-          <MaterialCommunityIcons
+          <StyledMaterialCommunityIcons
             name="arrow-left"
             size={16}
-            color={themeColorForeground}
+            className="text-foreground"
           />
           <AppText className="text-lg font-medium text-foreground">
             Back
@@ -74,10 +76,10 @@ export default function LinearTaskScreen() {
         <Card className="mb-6 border-0 bg-surface-2 rounded-xl p-4">
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center gap-3">
-              <MaterialCommunityIcons
+              <StyledMaterialCommunityIcons
                 name="github"
                 size={20}
-                color={themeColorForeground}
+                className="text-foreground"
               />
               <AppText className="text-base font-semibold text-foreground">
                 feat/dialog-component
@@ -85,10 +87,10 @@ export default function LinearTaskScreen() {
             </View>
             <View className="flex-row items-center gap-2">
               <AppText className="text-base text-muted-foreground">#26</AppText>
-              <MaterialCommunityIcons
+              <StyledMaterialCommunityIcons
                 name="source-branch"
                 size={20}
-                color="#c084fc"
+                className="text-purple-400"
               />
             </View>
           </View>

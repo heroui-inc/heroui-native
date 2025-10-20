@@ -4,12 +4,14 @@ import { Button, cn, Divider, useTheme } from 'heroui-native';
 import { View } from 'react-native';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import MarqueeCarousel, {
   type CardProps,
 } from '../../../components/showcases/onboarding/marquee-carousel';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
+const StyledFeather = withUniwind(Feather);
 
 const cards: CardProps[] = [
   {
@@ -71,10 +73,10 @@ const OnboardingScreen = () => {
           isIconOnly
           onPress={router.back}
         >
-          <Feather
+          <StyledFeather
             name="chevron-left"
             size={24}
-            color={isDark ? 'black' : 'white'}
+            className={isDark ? 'text-black' : 'text-white'}
           />
         </Button>
         <Button
@@ -83,7 +85,11 @@ const OnboardingScreen = () => {
           isIconOnly
           onPress={router.back}
         >
-          <Feather name="x" size={24} color={isDark ? 'black' : 'white'} />
+          <StyledFeather
+            name="x"
+            size={24}
+            className={isDark ? 'text-black' : 'text-white'}
+          />
         </Button>
       </AnimatedView>
 

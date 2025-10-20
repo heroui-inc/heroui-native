@@ -4,8 +4,11 @@ import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, cn } from 'heroui-native';
 import { StyleSheet, Text, View } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
+
+const StyledIonicons = withUniwind(Ionicons);
 
 type User = {
   id: number;
@@ -115,7 +118,7 @@ export default function AvatarScreen() {
         </Avatar>
         <Avatar alt="User">
           <Avatar.Fallback>
-            <Ionicons name="person" size={18} color="#666" />
+            <StyledIonicons name="person" size={18} className="text-[#666]" />
           </Avatar.Fallback>
         </Avatar>
         <Avatar alt="Delayed Avatar">

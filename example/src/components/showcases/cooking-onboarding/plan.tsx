@@ -7,10 +7,13 @@ import {
   type PopoverTriggerRef,
 } from 'heroui-native';
 import { type FC, type RefObject } from 'react';
+import { withUniwind } from 'uniwind';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
 import { progressAnimationConfigs } from './constants';
 import { className } from './styles';
+
+const StyledEntypo = withUniwind(Entypo);
 
 type Props = {
   isOnboardingDone: boolean;
@@ -30,7 +33,7 @@ export const Plan: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
           )}
           onPress={isOnboardingDone ? simulatePress : undefined}
         >
-          <Entypo name="plus" size={16} color="#fdba74" />
+          <StyledEntypo name="plus" size={16} className="text-orange-300" />
           <AppText className="text-lg text-foreground font-semibold">
             Plan
           </AppText>

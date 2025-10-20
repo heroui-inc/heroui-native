@@ -13,6 +13,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useUniwind } from 'uniwind';
 import {
   CheckIcon,
   CloseIcon,
@@ -22,7 +23,7 @@ import { Text } from '../../helpers/components/text';
 import { useDialogContentAnimation } from '../../helpers/hooks';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
-import { useTheme, useThemeColor } from '../../providers/theme';
+import { useThemeColor } from '../../providers/theme';
 import {
   DEFAULT_ALIGN_OFFSET,
   DEFAULT_INSETS,
@@ -162,13 +163,13 @@ const SelectOverlay = forwardRef<
   SelectPrimitivesTypes.OverlayRef,
   SelectOverlayProps
 >(({ className, style, isDefaultAnimationDisabled, ...props }, ref) => {
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
 
   const { progress } = useSelect();
 
   const tvStyles = selectStyles.overlay({
     className,
-    isDark,
+    isDark: theme === 'dark',
   });
 
   const rOverlayStyle = useAnimatedStyle(() => {
@@ -212,7 +213,7 @@ const SelectContentPopover = forwardRef<
     },
     ref
   ) => {
-    const { isDark } = useTheme();
+    const { theme } = useUniwind();
     const safeAreaInsets = useSafeAreaInsets();
 
     const insets = {
@@ -223,7 +224,10 @@ const SelectContentPopover = forwardRef<
     };
 
     const { progress } = useSelect();
-    const tvStyles = selectStyles.popoverContent({ className, isDark });
+    const tvStyles = selectStyles.popoverContent({
+      className,
+      isDark: theme === 'dark',
+    });
 
     const rContainerStyle = useAnimatedStyle(() => {
       if (isDefaultAnimationDisabled) {
@@ -544,9 +548,12 @@ const SelectItemLabel = forwardRef<
 
 const SelectItemDescription = forwardRef<RNText, SelectItemDescriptionProps>(
   ({ className, ...props }, ref) => {
-    const { isDark } = useTheme();
+    const { theme } = useUniwind();
 
-    const tvStyles = selectStyles.itemDescription({ className, isDark });
+    const tvStyles = selectStyles.itemDescription({
+      className,
+      isDark: theme === 'dark',
+    });
 
     return (
       <Text
@@ -585,9 +592,12 @@ const SelectListLabel = forwardRef<
   SelectPrimitivesTypes.GroupLabelRef,
   SelectListLabelProps
 >(({ className, ...props }, ref) => {
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
 
-  const tvStyles = selectStyles.listLabel({ className, isDark });
+  const tvStyles = selectStyles.listLabel({
+    className,
+    isDark: theme === 'dark',
+  });
 
   return (
     <Text

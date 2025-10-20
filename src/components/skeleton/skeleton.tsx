@@ -23,8 +23,9 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { useUniwind } from 'uniwind';
 import { createContext } from '../../helpers/utils';
-import { colorKit, useTheme, useThemeColor } from '../../providers/theme';
+import { colorKit, useThemeColor } from '../../providers/theme';
 
 import LinearGradientComponent from './linear-gradient';
 import {
@@ -50,22 +51,23 @@ const ShimmerAnimation: React.FC = () => {
   const { shimmerConfig, componentWidth, offset, progress, screenWidth } =
     useSkeletonContext();
 
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
   const themeColorBackground = useThemeColor<string>('background');
 
-  const defaultHighlightColor = isDark
-    ? colorKit
-        .setAlpha(
-          colorKit.increaseBrightness(themeColorBackground, 10).hex(),
-          0.5
-        )
-        .hex()
-    : colorKit
-        .setAlpha(
-          colorKit.decreaseBrightness(themeColorBackground, 5).hex(),
-          0.5
-        )
-        .hex();
+  const defaultHighlightColor =
+    theme === 'dark'
+      ? colorKit
+          .setAlpha(
+            colorKit.increaseBrightness(themeColorBackground, 10).hex(),
+            0.5
+          )
+          .hex()
+      : colorKit
+          .setAlpha(
+            colorKit.decreaseBrightness(themeColorBackground, 5).hex(),
+            0.5
+          )
+          .hex();
 
   const highlightColor = shimmerConfig?.highlightColor ?? defaultHighlightColor;
 

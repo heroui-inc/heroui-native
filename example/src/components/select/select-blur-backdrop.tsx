@@ -1,14 +1,15 @@
-import { useSelect, useTheme } from 'heroui-native';
+import { useSelect } from 'heroui-native';
 import { StyleSheet } from 'react-native';
 import { interpolate, useDerivedValue } from 'react-native-reanimated';
+import { useUniwind } from 'uniwind';
 import { AnimatedBlurView } from '../animated-blur-view';
 
 export const SelectBlurBackdrop = () => {
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
   const { progress, isDragging } = useSelect();
 
   const blurIntensity = useDerivedValue(() => {
-    const maxIntensity = isDark ? 75 : 50;
+    const maxIntensity = theme === 'dark' ? 75 : 50;
 
     if (isDragging.get() && progress.get() <= 1) {
       return maxIntensity;
@@ -20,7 +21,7 @@ export const SelectBlurBackdrop = () => {
   return (
     <AnimatedBlurView
       blurIntensity={blurIntensity}
-      tint={isDark ? 'dark' : 'systemUltraThinMaterialLight'}
+      tint={theme === 'dark' ? 'dark' : 'systemUltraThinMaterialLight'}
       style={StyleSheet.absoluteFill}
     />
   );

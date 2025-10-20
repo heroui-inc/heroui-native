@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 import { View } from 'react-native';
+import { useUniwind } from 'uniwind';
 import { Text } from '../../helpers/components';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
-import { useTheme } from '../../providers/theme';
 import { Surface } from '../surface';
 import { DISPLAY_NAME } from './card.constants';
 import cardStyles from './card.styles';
@@ -96,9 +96,12 @@ const CardDescription = forwardRef<TextRef, CardDescriptionProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
-    const { isDark } = useTheme();
+    const { theme } = useUniwind();
 
-    const tvStyles = cardStyles.description({ className, isDark });
+    const tvStyles = cardStyles.description({
+      className,
+      isDark: theme === 'dark',
+    });
 
     return (
       <Text ref={ref} className={tvStyles} {...restProps}>

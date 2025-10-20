@@ -11,7 +11,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { easeGradient } from '../../helpers/utils';
-import { colorKit, useTheme } from '../../providers/theme';
+import { colorKit, useThemeColor } from '../../providers/theme';
 import {
   DEFAULT_SCROLL_EVENT_THROTTLE,
   DEFAULT_SHADOW_SIZE,
@@ -35,8 +35,8 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const theme = useTheme();
-  const shadowColor = color || theme.colors.background;
+  const themeColorBackground = useThemeColor<string>('background');
+  const shadowColor = color || themeColorBackground;
 
   const containerStyles = scrollShadowStyles({ className });
 

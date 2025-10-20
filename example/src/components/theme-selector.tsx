@@ -1,7 +1,7 @@
-import { useTheme } from 'heroui-native';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
+import { useUniwind } from 'uniwind';
 import { useAppTheme } from '../contexts/app-theme-context';
 import type { ThemeId } from '../themes/pastel-themes';
 
@@ -22,7 +22,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   isActive,
   onPress,
 }) => {
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
 
   // Create pie chart paths
   const radius = 28;
@@ -66,7 +66,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
               cy={centerY}
               r={radius + 4}
               fill="none"
-              stroke={isDark ? '#ffffff' : '#000000'}
+              stroke={theme === 'dark' ? '#ffffff' : '#000000'}
               strokeWidth={3}
               opacity={0.8}
             />

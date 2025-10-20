@@ -1,21 +1,22 @@
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
-import { useTheme, useThemeColor } from 'heroui-native';
+import { useThemeColor } from 'heroui-native';
 import { useCallback } from 'react';
 import { Image, Platform, StyleSheet } from 'react-native';
+import { useUniwind } from 'uniwind';
 import LogoDark from '../../../assets/logo-dark.png';
 import LogoLight from '../../../assets/logo-light.png';
 import { ThemeToggle } from '../../components/theme-toggle';
 
 export default function Layout() {
-  const { theme, isDark } = useTheme();
+  const { theme } = useUniwind();
   const themeColorForeground = useThemeColor<string>('foreground');
   const themeColorBackground = useThemeColor<string>('background');
 
   const _renderTitle = () => {
     return (
       <Image
-        source={isDark ? LogoLight : LogoDark}
+        source={theme === 'dark' ? LogoLight : LogoDark}
         style={styles.logo}
         resizeMode="contain"
       />

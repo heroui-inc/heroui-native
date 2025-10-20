@@ -1,6 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
-import { Button, cn, Divider, useTheme } from 'heroui-native';
+import { Button, Divider } from 'heroui-native';
 import { View } from 'react-native';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -49,8 +49,6 @@ const cards: CardProps[] = [
 ];
 
 const OnboardingScreen = () => {
-  const { isDark } = useTheme();
-
   const router = useRouter();
 
   const insets = useSafeAreaInsets();
@@ -69,26 +67,26 @@ const OnboardingScreen = () => {
       >
         <Button
           size="sm"
-          className={cn('rounded-full bg-black/20', isDark && 'bg-white/20')}
+          className="rounded-full bg-black/20 dark:bg-white/20"
           isIconOnly
           onPress={router.back}
         >
           <StyledFeather
             name="chevron-left"
             size={24}
-            className={isDark ? 'text-black' : 'text-white'}
+            className="text-black dark:text-white"
           />
         </Button>
         <Button
           size="sm"
-          className={cn('rounded-full bg-black/20', isDark && 'bg-white/20')}
+          className="rounded-full bg-black/20 dark:bg-white/20"
           isIconOnly
           onPress={router.back}
         >
           <StyledFeather
             name="x"
             size={24}
-            className={isDark ? 'text-black' : 'text-white'}
+            className="text-black dark:text-white"
           />
         </Button>
       </AnimatedView>

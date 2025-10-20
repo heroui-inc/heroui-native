@@ -3,10 +3,10 @@ import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
+import { useUniwind } from 'uniwind';
 import type { TextRef, ViewRef } from '../../helpers/types';
 import { createContext, getElementWithDefault } from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
-import { useTheme } from '../../providers/theme';
 import { ErrorView } from '../error-view';
 import { FormField } from '../form-field';
 import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './radio-group.constants';
@@ -173,7 +173,7 @@ const RadioGroupIndicatorThumb = forwardRef<
 
   const { isSelected } = useRadioGroupItemContext();
 
-  const { theme } = useTheme();
+  const { theme } = useUniwind();
 
   const tvStyles = radioGroupStyles.itemIndicatorThumb({
     isSelected,

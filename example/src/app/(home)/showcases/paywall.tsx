@@ -3,7 +3,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import { Button, Chip, RadioGroup, useTheme } from 'heroui-native';
+import { Button, Chip, RadioGroup } from 'heroui-native';
 import { useCallback, useRef, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, {
@@ -13,7 +13,7 @@ import Animated, {
   FadeInUp,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { withUniwind } from 'uniwind';
+import { Uniwind, useUniwind, withUniwind } from 'uniwind';
 import BG from '../../../../assets/images/paywall-showcase-bg.jpeg';
 import LogoDark from '../../../../assets/logo-dark.png';
 import { AppText } from '../../../components/app-text';
@@ -33,16 +33,16 @@ export default function Paywall() {
 
   const insets = useSafeAreaInsets();
 
-  const { theme, setTheme } = useTheme();
+  const { theme } = useUniwind();
 
   const prevTheme = useRef(theme);
 
   useFocusEffect(
     useCallback(() => {
       prevTheme.current = theme;
-      setTheme('dark');
+      Uniwind.setTheme('dark');
       return () => {
-        setTheme(prevTheme.current);
+        Uniwind.setTheme(prevTheme.current);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

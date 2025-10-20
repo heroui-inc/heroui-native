@@ -1,7 +1,8 @@
 import { LinearGradient, type LinearGradientProps } from 'expo-linear-gradient';
-import { cn, useTheme } from 'heroui-native';
+import { cn } from 'heroui-native';
 import { type FC } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useUniwind } from 'uniwind';
 import { AppText } from './app-text';
 
 type Props = {
@@ -10,11 +11,12 @@ type Props = {
 };
 
 export const SectionTitle: FC<Props> = ({ title, className }) => {
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
 
-  const gradientColors: LinearGradientProps['colors'] = isDark
-    ? ['rgba(15, 15, 15, 0.95)', 'rgba(25, 25, 25, 0.85)']
-    : ['rgba(250, 250, 250, 0.95)', 'rgba(245, 245, 245, 0.9)'];
+  const gradientColors: LinearGradientProps['colors'] =
+    theme === 'dark'
+      ? ['rgba(15, 15, 15, 0.95)', 'rgba(25, 25, 25, 0.85)']
+      : ['rgba(250, 250, 250, 0.95)', 'rgba(245, 245, 245, 0.9)'];
 
   return (
     <View className={cn('overflow-hidden -mx-5', className)}>
@@ -24,28 +26,13 @@ export const SectionTitle: FC<Props> = ({ title, className }) => {
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
       >
-        <View
-          className={cn(
-            'absolute left-0 top-0 h-hairline w-full',
-            isDark ? 'bg-neutral-800' : 'bg-neutral-300'
-          )}
-        />
+        <View className="absolute left-0 top-0 h-hairline w-full bg-neutral-300 dark:bg-neutral-800" />
 
-        <AppText
-          className={cn(
-            'text-sm font-medium tracking-wide uppercase',
-            isDark ? 'text-neutral-400' : 'text-neutral-600'
-          )}
-        >
+        <AppText className="text-sm font-medium tracking-wide uppercase text-neutral-600 dark:text-neutral-400">
           {title}
         </AppText>
 
-        <View
-          className={cn(
-            'absolute left-0 bottom-0 h-hairline w-full',
-            isDark ? 'bg-neutral-800' : 'bg-neutral-300'
-          )}
-        />
+        <View className="absolute left-0 bottom-0 h-hairline w-full bg-neutral-300 dark:bg-neutral-800" />
       </LinearGradient>
     </View>
   );

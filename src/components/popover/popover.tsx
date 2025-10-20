@@ -12,11 +12,12 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useUniwind } from 'uniwind';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
-import { useTheme, useThemeColor } from '../../providers/theme';
+import { useThemeColor } from '../../providers/theme';
 import { ArrowSvg } from './arrow-svg';
 import {
   DEFAULT_ALIGN_OFFSET,
@@ -134,13 +135,13 @@ const PopoverOverlay = forwardRef<
   PopoverPrimitivesTypes.OverlayRef,
   PopoverOverlayProps
 >(({ className, style, isDefaultAnimationDisabled, ...props }, ref) => {
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
 
   const { progress } = usePopover();
 
   const tvStyles = popoverStyles.overlay({
     className,
-    isDark,
+    isDark: theme === 'dark',
   });
 
   const rOverlayStyle = useAnimatedStyle(() => {
@@ -184,7 +185,7 @@ const PopoverContentPopover = forwardRef<
     },
     ref
   ) => {
-    const { isDark } = useTheme();
+    const { theme } = useUniwind();
     const safeAreaInsets = useSafeAreaInsets();
 
     const insets = {
@@ -195,7 +196,10 @@ const PopoverContentPopover = forwardRef<
     };
 
     const { progress } = usePopover();
-    const tvStyles = popoverStyles.popoverContent({ className, isDark });
+    const tvStyles = popoverStyles.popoverContent({
+      className,
+      isDark: theme === 'dark',
+    });
 
     const rContainerStyle = useAnimatedStyle(() => {
       if (isDefaultAnimationDisabled) {
@@ -430,9 +434,12 @@ const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
 
 const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
   ({ className, children, ...props }, ref) => {
-    const { isDark } = useTheme();
+    const { theme } = useUniwind();
 
-    const tvStyles = popoverStyles.description({ className, isDark });
+    const tvStyles = popoverStyles.description({
+      className,
+      isDark: theme === 'dark',
+    });
 
     return (
       <Text ref={ref} accessibilityRole="text" className={tvStyles} {...props}>

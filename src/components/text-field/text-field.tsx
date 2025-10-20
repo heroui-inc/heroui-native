@@ -12,10 +12,11 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { useUniwind } from 'uniwind';
 import { Text } from '../../helpers/components';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
-import { useTheme, useThemeColor } from '../../providers/theme';
+import { useThemeColor } from '../../providers/theme';
 import { ErrorView } from '../error-view';
 import {
   ANIMATION_DURATION,
@@ -149,7 +150,7 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       DISPLAY_NAME.INPUT_END_CONTENT
     );
 
-    const { theme } = useTheme();
+    const { theme } = useUniwind();
     const themeColorDefault = useThemeColor<string>('default');
     const themeColorBackground = useThemeColor<string>('background');
     const themeColorBorder = useThemeColor<string>('border');
@@ -319,9 +320,12 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
     const isInvalid =
       localIsInvalid !== undefined ? localIsInvalid : contextIsInvalid;
 
-    const { isDark } = useTheme();
+    const { theme } = useUniwind();
 
-    const tvStyles = textFieldStyles.description({ className, isDark });
+    const tvStyles = textFieldStyles.description({
+      className,
+      isDark: theme === 'dark',
+    });
 
     if (isInvalid) return null;
 

@@ -320,9 +320,9 @@ const AccordionScreen = () => {
         <Accordion isDividerVisible={false}>
           {accordionData.slice(0, 4).map((item) => (
             <Accordion.Item key={item.id} value={item.id} className="mb-1">
-              <Accordion.Trigger className="bg-surface-2 rounded-xl border border-border/50 shadow-sm">
+              <Accordion.Trigger className="bg-surface-2 rounded-xl border border-border/10 shadow-sm">
                 <View className="flex-1 flex-row items-center gap-4">
-                  <View className="w-10 h-10 rounded-full bg-accent/5 items-center justify-center">
+                  <View className="size-8 rounded-full bg-accent/5 items-center justify-center">
                     {item.icon}
                   </View>
                   <AppText className="text-foreground text-base font-medium flex-1">
@@ -333,7 +333,7 @@ const AccordionScreen = () => {
                   <CustomIndicator />
                 </Accordion.Indicator>
               </Accordion.Trigger>
-              <Accordion.Content className="mt-1 bg-surface-2 rounded-xl px-5 py-4 border border-border/50">
+              <Accordion.Content className="mt-1 bg-surface-2 rounded-xl px-5 py-4 border border-border/10">
                 <AppText className="text-muted text-base/relaxed">
                   {item.content}
                 </AppText>

@@ -1974,6 +1974,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@expo-google-fonts/allan@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "@expo-google-fonts/allan@npm:0.4.1"
+  checksum: ee92dcf35401cda356d8832a92edd589dda7b367b536fe4eaac7832188a32f74417e3b1c548d9e21f83b86018ca6f3f7c24fdece68536dd66a94be089f84e654
+  languageName: node
+  linkType: hard
+
 "@expo-google-fonts/inter@npm:^0.4.1":
   version: 0.4.2
   resolution: "@expo-google-fonts/inter@npm:0.4.2"
@@ -8882,6 +8889,7 @@ __metadata:
   resolution: "heroui-native-example@workspace:example"
   dependencies:
     "@babel/core": ^7.20.0
+    "@expo-google-fonts/allan": ^0.4.1
     "@expo-google-fonts/inter": ^0.4.1
     "@expo/metro-runtime": ~6.1.1
     "@gorhom/bottom-sheet": ^5

@@ -5,6 +5,12 @@
 
 @layer theme {
   :root {
+    /* App Fonts */
+    --font-normal: 'Inter_400Regular';
+    --font-medium: 'Inter_500Medium';
+    --font-semibold: 'Inter_600SemiBold';
+    --font-bold: 'Inter_700Bold';
+
     /* Primitive Colors (Do not change between light and dark) */
     --color-white: oklch(100% 0 0);
     --color-black: oklch(0% 0 0);

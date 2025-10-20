@@ -9,6 +9,7 @@
     "web": "expo start --web -c"
   },
   "dependencies": {
+    "@expo-google-fonts/allan": "^0.4.1",
     "@expo-google-fonts/inter": "^0.4.1",
     "@expo/metro-runtime": "~6.1.1",
     "@gorhom/bottom-sheet": "^5",

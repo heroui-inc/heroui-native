@@ -151,7 +151,6 @@ export default function App() {
       <View className="items-center justify-center my-4">
         <AppText className="text-muted text-base">v1.0.0-alpha.15</AppText>
       </View>
-
       <View className="gap-6">
         {cards.map((card, index) => (
           <HomeCard

@@ -20,10 +20,8 @@
     /* Border */
     --border-width: 1px;
 
-    /* Panel specific radius */
+    /* Base radius */
     --radius: 12px;
-    --radius-panel: 8px;
-    --radius-panel-inner: calc(var(--radius-panel) * 0.5);
 
     /* Border Radius Scale */
     --radius-xs: var(--radius) * 0.25;
@@ -48,8 +46,8 @@
 
       --color-muted: var(--color-neutral-500);
 
-      --color-default: var(--color-white);
-      --color-default-foreground: var(--color-neutral-600);
+      --color-default: var(--color-neutral-50);
+      --color-default-foreground: var(--color-eclipse);
 
       --color-surface-1: var(--color-background);
       --color-surface-2: var(--color-neutral-100);
@@ -60,6 +58,12 @@
 
       --color-accent-soft: var(--color-neutral-200);
       --color-accent-soft-foreground: var(--color-neutral-900);
+
+      /* Form Field Defaults */
+      --color-field-background: var(--color-default);
+      --color-field-foreground: var(--color-foreground);
+      --color-field-placeholder: var(--color-muted);
+      --color-field-border: var(--color-border);
 
       /* Status Colors */
       --color-success: oklch(0.5503 0.1244 153.56);
@@ -88,17 +92,23 @@
       --color-muted: var(--color-neutral-400);
 
       --color-default: var(--color-neutral-900);
-      --color-default-foreground: var(--color-neutral-200);
+      --color-default-foreground: var(--snow);
 
       --color-surface-1: var(--color-background);
       --color-surface-2: var(--color-neutral-900);
       --color-surface-3: var(--color-neutral-800);
 
       --color-accent: var(--color-neutral-50);
-      --color-accent-foreground: var(--color-neutral-900);
+      --color-accent-foreground: var(--eclipse);
 
       --color-accent-soft: var(--color-neutral-800);
       --color-accent-soft-foreground: var(--color-neutral-200);
+
+      /* Form Field Defaults */
+      --color-field-background: var(--color-default);
+      --color-field-foreground: var(--color-foreground);
+      --color-field-placeholder: var(--color-muted);
+      --color-field-border: var(--color-border);
 
       /* Status Colors */
       --color-success: oklch(0.5503 0.1244 153.56);

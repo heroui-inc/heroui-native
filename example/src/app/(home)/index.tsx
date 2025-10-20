@@ -95,7 +95,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
         .easing(Easing.out(Easing.ease))}
       onPress={() => router.push(path)}
     >
-      <Card className="p-0 rounded-xl">
+      <Card className="p-0 rounded-panel">
         <AnimatedView
           entering={FadeIn}
           className="absolute inset-0 w-full h-full"

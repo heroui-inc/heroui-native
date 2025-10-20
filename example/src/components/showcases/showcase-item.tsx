@@ -1,6 +1,6 @@
 import { Image as ExpoImage } from 'expo-image';
 import { useRouter } from 'expo-router';
-import { Chip, DropShadowView, Surface, useTheme } from 'heroui-native';
+import { Chip, DropShadowView, Surface } from 'heroui-native';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import Animated, {
   Extrapolation,
@@ -9,6 +9,7 @@ import Animated, {
   useAnimatedStyle,
   useDerivedValue,
 } from 'react-native-reanimated';
+import { useUniwind } from 'uniwind';
 import { AppText } from '../app-text';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
@@ -43,7 +44,8 @@ export function ShowcaseItem({
 }: ShowcaseItemProps) {
   const router = useRouter();
 
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
+  const isDark = theme === 'dark';
 
   const animatedIndex = useDerivedValue(() => {
     return scrollY.get() / itemSize;

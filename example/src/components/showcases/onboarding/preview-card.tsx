@@ -1,10 +1,11 @@
-import { Card, Chip, cn, DropShadowView, useTheme } from 'heroui-native';
+import { Card, Chip, DropShadowView } from 'heroui-native';
 import { type FC } from 'react';
 import { Image, useWindowDimensions, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   type SharedValue,
 } from 'react-native-reanimated';
+import { useUniwind } from 'uniwind';
 import { AppText } from '../../app-text';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
@@ -32,7 +33,8 @@ export const PreviewCard: FC<PreviewCardProps> = ({
   allItemsWidth,
   scrollOffsetX,
 }) => {
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
+  const isDark = theme === 'dark';
   const { width: screenWidth } = useWindowDimensions();
 
   const shift = (allItemsWidth - screenWidth) / 2;
@@ -62,10 +64,7 @@ export const PreviewCard: FC<PreviewCardProps> = ({
         shadowColor={isDark ? '#00000000' : 'black'}
       >
         <Card
-          className={cn(
-            'flex-1 border-0 rounded-xl',
-            isDark && 'border border-border/70'
-          )}
+          className="flex-1 border-0 rounded-xl dark:border dark:border-border/70"
           surfaceVariant={isDark ? '2' : 'none'}
         >
           <Card.Body className="flex-1 p-2 mb-4">

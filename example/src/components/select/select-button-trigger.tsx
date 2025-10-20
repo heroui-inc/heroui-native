@@ -1,21 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import Feather from '@expo/vector-icons/Feather';
 import { BlurView } from 'expo-blur';
-import {
-  cn,
-  Divider,
-  Select,
-  useSelect,
-  useTheme,
-  useThemeColor,
-} from 'heroui-native';
+import { cn, Divider, Select, useSelect, useThemeColor } from 'heroui-native';
 import React, { useState, type FC } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import { withUniwind } from 'uniwind';
+import { useUniwind, withUniwind } from 'uniwind';
 
 const StyledFeather = withUniwind(Feather);
 
@@ -83,7 +76,8 @@ type Props = {
 
 export function SelectButtonTrigger({ contentOffset }: Props) {
   const [basicValue, setBasicValue] = useState<SelectOption | undefined>();
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
+  const isDark = theme === 'dark';
 
   return (
     <Select value={basicValue} onValueChange={setBasicValue}>

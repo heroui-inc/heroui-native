@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, Spinner, useTheme } from 'heroui-native';
+import { Button, Spinner } from 'heroui-native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FadeIn } from 'react-native-reanimated';
-import { withUniwind } from 'uniwind';
+import { useUniwind, withUniwind } from 'uniwind';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
@@ -14,7 +14,8 @@ const StyledIonicons = withUniwind(Ionicons);
 export default function ButtonScreen() {
   const [isDownloading, setIsDownloading] = React.useState(false);
 
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
+  const isDark = theme === 'dark';
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -130,7 +131,7 @@ export default function ButtonScreen() {
         </Button>
         <Button size="md" variant="secondary" isIconOnly>
           <Button.Label>
-            <StyledIonicons name="heart" size={18} className="text-[#ec4899]" />
+            <StyledIonicons name="heart" size={18} className="text-pink-500" />
           </Button.Label>
         </Button>
         <Button size="lg" variant="danger" isIconOnly>
@@ -158,7 +159,7 @@ export default function ButtonScreen() {
           <StyledIonicons
             name="checkmark"
             size={18}
-            className="text-[#9333ea]"
+            className="text-purple-600"
           />
           <Button.Label className="text-purple-600">
             Purple Tertiary

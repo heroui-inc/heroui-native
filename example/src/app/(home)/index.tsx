@@ -1,6 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
-import { Card, Chip, useTheme } from 'heroui-native';
+import { Card, Chip } from 'heroui-native';
 import type { FC } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import Animated, {
@@ -10,7 +10,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { withUniwind } from 'uniwind';
+import { useUniwind, withUniwind } from 'uniwind';
 import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 
@@ -73,7 +73,8 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
 }) => {
   const router = useRouter();
 
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
+  const isDark = theme === 'dark';
 
   const rLightImageStyle = useAnimatedStyle(() => {
     return {

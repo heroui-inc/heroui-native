@@ -1,11 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import {
-  Button,
-  ScrollShadow,
-  Select,
-  useTheme,
-  useThemeColor,
-} from 'heroui-native';
+import { Button, ScrollShadow, Select, useThemeColor } from 'heroui-native';
 import { useState } from 'react';
 import { TextInput, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -15,6 +9,7 @@ import {
 } from 'react-native-keyboard-controller';
 import { Easing } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useUniwind } from 'uniwind';
 import { AppText } from '../app-text';
 import { SelectBlurBackdrop } from './select-blur-backdrop';
 
@@ -44,10 +39,11 @@ export function SearchableDialogSelect() {
   const [value, setValue] = useState<CountryOption | undefined>();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { isDark } = useTheme();
-  const themeColorMuted = useThemeColor('muted');
-  const themeColorPanel = useThemeColor('panel');
-  const themeColorSurface1 = useThemeColor('surface-1');
+  const { theme } = useUniwind();
+  const isDark = theme === 'dark';
+  const themeColorMuted = useThemeColor<string>('muted');
+  const themeColorPanel = useThemeColor<string>('panel');
+  const themeColorSurface1 = useThemeColor<string>('surface-1');
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();

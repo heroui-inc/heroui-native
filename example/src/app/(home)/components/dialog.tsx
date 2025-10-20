@@ -7,7 +7,6 @@ import {
   ScrollShadow,
   TextField,
   useDialog,
-  useTheme,
   useThemeColor,
 } from 'heroui-native';
 import { useState, type FC, type PropsWithChildren } from 'react';
@@ -23,6 +22,7 @@ import {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useUniwind } from 'uniwind';
 import { DialogBlurBackdrop } from '../../../components/dialog-blur-backdrop';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
@@ -91,7 +91,8 @@ export default function DialogScreen() {
 
   const { height } = useWindowDimensions();
 
-  const { isDark } = useTheme();
+  const { theme } = useUniwind();
+  const isDark = theme === 'dark';
   const themeColorPanel = useThemeColor<string>('panel');
 
   const router = useRouter();

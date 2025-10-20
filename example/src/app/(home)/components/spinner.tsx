@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Spinner, cn, useTheme } from 'heroui-native';
+import { Spinner } from 'heroui-native';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { withUniwind } from 'uniwind';
@@ -11,10 +11,6 @@ const StyledIonicons = withUniwind(Ionicons);
 
 export default function SpinnerScreen() {
   const [isLoading, setIsLoading] = React.useState(true);
-  const { theme } = useTheme();
-
-  const isDark = theme === 'dark';
-
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
       <SectionTitle title="Sizes" />
@@ -92,10 +88,7 @@ export default function SpinnerScreen() {
       <SectionTitle title="Different Use Cases" />
       <View className="gap-8">
         <View
-          className={cn(
-            'flex-row items-center gap-2 p-4 rounded-lg',
-            isDark ? 'bg-stone-800' : 'bg-stone-200'
-          )}
+          className="flex-row items-center gap-2 p-4 rounded-lg bg-stone-200 dark:bg-stone-800"
           style={styles.borderCurve}
         >
           <Spinner size="sm" color="default" />
@@ -103,10 +96,7 @@ export default function SpinnerScreen() {
         </View>
 
         <View
-          className={cn(
-            'items-center p-8 rounded-2xl',
-            isDark ? 'bg-stone-800' : 'bg-stone-200'
-          )}
+          className="items-center p-8 rounded-2xl bg-stone-200 dark:bg-stone-800"
           style={styles.borderCurve}
         >
           <Spinner size="lg" color="success" />

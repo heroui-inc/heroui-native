@@ -23,13 +23,17 @@ configureReanimatedLogger({
 });
 
 export default function Layout() {
-  useFonts({
+  const fonts = useFonts({
     Inter_400Regular,
     Inter_500Medium,
     Inter_600SemiBold,
     Inter_700Bold,
     Allan_700Bold,
   });
+
+  if (!fonts) {
+    return null;
+  }
 
   return (
     <GestureHandlerRootView style={styles.root}>

@@ -117,3 +117,15 @@
     }
   }
 }
+
+@layer utilities {
+  .h-hairline {
+    height: hairlineWidth();
+  }
+  .w-hairline {
+    width: calc(hairlineWidth());
+  }
+  .border-hairline {
+    border-width: calc(hairlineWidth());
+  }
+}

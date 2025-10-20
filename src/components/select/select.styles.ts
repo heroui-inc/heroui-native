@@ -19,23 +19,11 @@ const portal = tv({
 });
 
 const overlay = tv({
-  base: 'absolute inset-0',
-  variants: {
-    isDark: {
-      true: 'bg-black/25',
-      false: 'bg-black/5',
-    },
-  },
+  base: 'absolute inset-0 bg-black/5 dark:bg-black/25',
 });
 
 const popoverContent = tv({
-  base: 'bg-panel rounded-lg border border-border p-3 px-4',
-  variants: {
-    isDark: {
-      true: '',
-      false: 'shadow-lg shadow-black/10',
-    },
-  },
+  base: 'bg-panel rounded-lg border border-border p-3 px-4 shadow-lg shadow-black/10 dark:shadow-none',
 });
 
 const bottomSheetContent = tv({
@@ -54,13 +42,7 @@ const close = tv({
 });
 
 const listLabel = tv({
-  base: 'text-sm font-medium px-2 py-1.5',
-  variants: {
-    isDark: {
-      true: 'text-muted-foreground',
-      false: 'text-muted',
-    },
-  },
+  base: 'text-sm text-muted font-medium px-2 py-1.5',
 });
 
 const item = tv({
@@ -72,13 +54,7 @@ const itemLabel = tv({
 });
 
 const itemDescription = tv({
-  base: 'text-sm/snug font-normal',
-  variants: {
-    isDark: {
-      true: 'text-muted-foreground',
-      false: 'text-muted',
-    },
-  },
+  base: 'text-sm/snug text-muted font-normal',
 });
 
 const itemIndicator = tv({

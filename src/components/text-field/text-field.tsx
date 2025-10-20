@@ -320,11 +320,8 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
     const isInvalid =
       localIsInvalid !== undefined ? localIsInvalid : contextIsInvalid;
 
-    const { theme } = useUniwind();
-
     const tvStyles = textFieldStyles.description({
       className,
-      isDark: theme === 'dark',
     });
 
     if (isInvalid) return null;

@@ -3,7 +3,6 @@ import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import { useUniwind } from 'uniwind';
 import type { TextRef, ViewRef } from '../../helpers/types';
 import { createContext, getElementWithDefault } from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
@@ -173,11 +172,8 @@ const RadioGroupIndicatorThumb = forwardRef<
 
   const { isSelected } = useRadioGroupItemContext();
 
-  const { theme } = useUniwind();
-
   const tvStyles = radioGroupStyles.itemIndicatorThumb({
     isSelected,
-    isDark: theme === 'dark',
     className,
   });
 

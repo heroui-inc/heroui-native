@@ -6,23 +6,11 @@ const portal = tv({
 });
 
 const overlay = tv({
-  base: 'absolute inset-0',
-  variants: {
-    isDark: {
-      true: 'bg-black/25',
-      false: 'bg-black/5',
-    },
-  },
+  base: 'absolute inset-0 bg-black/5 dark:bg-black/25',
 });
 
 const popoverContent = tv({
-  base: 'absolute bg-panel rounded-lg border border-border p-3 px-4',
-  variants: {
-    isDark: {
-      true: '',
-      false: 'shadow-md shadow-black/5',
-    },
-  },
+  base: 'absolute bg-panel rounded-lg border border-border p-3 px-4 shadow-md shadow-black/5 dark:shadow-none',
 });
 
 const bottomSheetContent = tv({
@@ -38,13 +26,7 @@ const title = tv({
 });
 
 const description = tv({
-  base: 'text-base/snug font-normal',
-  variants: {
-    isDark: {
-      true: 'text-muted-foreground',
-      false: 'text-muted',
-    },
-  },
+  base: 'text-base/snug font-normal text-muted',
 });
 
 const arrow = tv({

@@ -12,7 +12,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useUniwind } from 'uniwind';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
 import * as PopoverPrimitives from '../../primitives/popover';
@@ -135,13 +134,10 @@ const PopoverOverlay = forwardRef<
   PopoverPrimitivesTypes.OverlayRef,
   PopoverOverlayProps
 >(({ className, style, isDefaultAnimationDisabled, ...props }, ref) => {
-  const { theme } = useUniwind();
-
   const { progress } = usePopover();
 
   const tvStyles = popoverStyles.overlay({
     className,
-    isDark: theme === 'dark',
   });
 
   const rOverlayStyle = useAnimatedStyle(() => {
@@ -185,7 +181,6 @@ const PopoverContentPopover = forwardRef<
     },
     ref
   ) => {
-    const { theme } = useUniwind();
     const safeAreaInsets = useSafeAreaInsets();
 
     const insets = {
@@ -196,9 +191,9 @@ const PopoverContentPopover = forwardRef<
     };
 
     const { progress } = usePopover();
+
     const tvStyles = popoverStyles.popoverContent({
       className,
-      isDark: theme === 'dark',
     });
 
     const rContainerStyle = useAnimatedStyle(() => {
@@ -434,11 +429,8 @@ const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
 
 const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
   ({ className, children, ...props }, ref) => {
-    const { theme } = useUniwind();
-
     const tvStyles = popoverStyles.description({
       className,
-      isDark: theme === 'dark',
     });
 
     return (

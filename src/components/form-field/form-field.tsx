@@ -12,7 +12,6 @@ import {
 } from '../../helpers/utils';
 
 import Animated from 'react-native-reanimated';
-import { useUniwind } from 'uniwind';
 import type { PressableRef } from '../../helpers/types';
 import type { ViewRef } from '../../helpers/types/primitives';
 import { ErrorView } from '../error-view';
@@ -166,11 +165,8 @@ const FormFieldDescription = forwardRef<Text, FormFieldDescriptionProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
-    const { theme } = useUniwind();
-
     const tvStyles = formFieldStyles.description({
       className,
-      isDark: theme === 'dark',
     });
 
     return (

@@ -1,8 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Chip, cn } from 'heroui-native';
+import { Chip } from 'heroui-native';
 import { StyleSheet, View } from 'react-native';
-import { useUniwind, withUniwind } from 'uniwind';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
@@ -10,9 +10,6 @@ import { SectionTitle } from '../../../components/section-title';
 const StyledIonicons = withUniwind(Ionicons);
 
 export default function ChipScreen() {
-  const { theme } = useUniwind();
-  const isDark = theme === 'dark';
-
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
       <SectionTitle title="Basic Usage" />
@@ -143,16 +140,11 @@ export default function ChipScreen() {
           className="pr-1.5 p-0.5 pl-2 gap-2"
         >
           <Chip.Label>Clear</Chip.Label>
-          <View
-            className={cn(
-              'rounded-full p-1',
-              isDark ? 'bg-neutral-700' : 'bg-neutral-200'
-            )}
-          >
+          <View className="rounded-full p-1 bg-neutral-200 dark:bg-neutral-700">
             <StyledIonicons
               name="close"
               size={12}
-              className={isDark ? 'text-white' : 'text-black'}
+              className="text-neutral-200 dark:text-neutral-700"
             />
           </View>
         </Chip>

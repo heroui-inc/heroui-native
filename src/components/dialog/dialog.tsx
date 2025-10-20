@@ -7,7 +7,6 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { useUniwind } from 'uniwind';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
 import { useDialogContentAnimation } from '../../helpers/hooks';
@@ -267,11 +266,8 @@ const DialogDescription = forwardRef<RNText, DialogDescriptionProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useDialog();
 
-    const { theme } = useUniwind();
-
     const tvStyles = dialogStyles.description({
       className,
-      isDark: theme === 'dark',
     });
 
     return (

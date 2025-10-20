@@ -66,15 +66,11 @@ const itemIndicator = tv({
 });
 
 const itemIndicatorThumb = tv({
-  base: 'size-2.5 rounded-full bg-background',
+  base: 'size-2.5 dark:size-3 rounded-full bg-background',
   variants: {
     isSelected: {
       true: 'opacity-100',
       false: 'opacity-0',
-    },
-    isDark: {
-      true: 'size-3',
-      false: '',
     },
   },
 });

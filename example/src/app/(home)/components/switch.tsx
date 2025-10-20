@@ -69,7 +69,7 @@ export default function SwitchScreen() {
             isSelected={defaultState}
             onSelectedChange={setDefaultState}
           />
-          <AppText className="text-xs text-muted-foreground">Default</AppText>
+          <AppText className="text-xs text-muted">Default</AppText>
         </View>
         <View className="items-center gap-2">
           <Switch
@@ -77,7 +77,7 @@ export default function SwitchScreen() {
             onSelectedChange={setDisabled}
             isDisabled={true}
           />
-          <AppText className="text-xs text-muted-foreground">Disabled</AppText>
+          <AppText className="text-xs text-muted">Disabled</AppText>
         </View>
       </View>
 

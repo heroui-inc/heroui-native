@@ -132,7 +132,7 @@ export default function SkeletonGroupExample() {
                 <Text className="font-semibold text-foreground">John Doe</Text>
               </SkeletonGroup.Item>
               <SkeletonGroup.Item className="h-3 w-24 rounded-md">
-                <Text className="text-sm text-muted-foreground">@johndoe</Text>
+                <Text className="text-sm text-muted">@johndoe</Text>
               </SkeletonGroup.Item>
             </View>
           </View>

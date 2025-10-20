@@ -10,16 +10,14 @@ export default function DividerScreen() {
       <SectionTitle title="Orientation" />
       <View className="gap-8">
         <View>
-          <AppText className="text-sm text-muted-foreground mb-2">
+          <AppText className="text-sm text-muted mb-2">
             Horizontal (default)
           </AppText>
           <Divider />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted-foreground mb-2">
-            Vertical
-          </AppText>
+          <AppText className="text-sm text-muted mb-2">Vertical</AppText>
           <View className="h-20 w-full flex-row justify-center">
             <Divider orientation="vertical" />
           </View>
@@ -29,16 +27,12 @@ export default function DividerScreen() {
       <SectionTitle title="Variants" />
       <View className="gap-8">
         <View>
-          <AppText className="text-sm text-muted-foreground mb-2">
-            Thin (default)
-          </AppText>
+          <AppText className="text-sm text-muted mb-2">Thin (default)</AppText>
           <Divider variant="thin" />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted-foreground mb-2">
-            Thick
-          </AppText>
+          <AppText className="text-sm text-muted mb-2">Thick</AppText>
           <Divider variant="thick" />
         </View>
       </View>
@@ -46,22 +40,22 @@ export default function DividerScreen() {
       <SectionTitle title="Custom Thickness" />
       <View className="gap-8">
         <View>
-          <AppText className="text-sm text-muted-foreground mb-2">1px</AppText>
+          <AppText className="text-sm text-muted mb-2">1px</AppText>
           <Divider thickness={1} />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted-foreground mb-2">2px</AppText>
+          <AppText className="text-sm text-muted mb-2">2px</AppText>
           <Divider thickness={2} />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted-foreground mb-2">5px</AppText>
+          <AppText className="text-sm text-muted mb-2">5px</AppText>
           <Divider thickness={5} />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted-foreground mb-2">10px</AppText>
+          <AppText className="text-sm text-muted mb-2">10px</AppText>
           <Divider thickness={10} />
         </View>
       </View>
@@ -69,30 +63,24 @@ export default function DividerScreen() {
       <SectionTitle title="Custom Styling" />
       <View className="gap-8">
         <View>
-          <AppText className="text-sm text-muted-foreground mb-2">
+          <AppText className="text-sm text-muted mb-2">
             Custom Background Color
           </AppText>
           <Divider className="bg-accent" thickness={2} />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted-foreground mb-2">
-            Success Color
-          </AppText>
+          <AppText className="text-sm text-muted mb-2">Success Color</AppText>
           <Divider className="bg-success" thickness={2} />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted-foreground mb-2">
-            Warning Color
-          </AppText>
+          <AppText className="text-sm text-muted mb-2">Warning Color</AppText>
           <Divider className="bg-warning" thickness={2} />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted-foreground mb-2">
-            Danger Color
-          </AppText>
+          <AppText className="text-sm text-muted mb-2">Danger Color</AppText>
           <Divider className="bg-danger" thickness={2} />
         </View>
       </View>
@@ -102,7 +90,7 @@ export default function DividerScreen() {
         <AppText className="text-base font-medium text-foreground">
           HeroUI Native
         </AppText>
-        <AppText className="text-sm text-muted-foreground">
+        <AppText className="text-sm text-muted">
           A modern React Native component library.
         </AppText>
         <Divider className="my-4" />

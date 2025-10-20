@@ -59,7 +59,7 @@ export default function SurfaceScreen() {
             <AppText className="text-lg font-semibold text-foreground">
               Card Title
             </AppText>
-            <AppText className="text-muted-foreground">
+            <AppText className="text-muted">
               This is a card-like surface component that can contain any content
               with consistent padding and styling.
             </AppText>

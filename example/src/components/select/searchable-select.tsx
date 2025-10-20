@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {
   Divider,
   Select,
@@ -125,7 +124,7 @@ export function SearchableSelect() {
             state.label.toLowerCase().includes(searchQuery.toLowerCase())
           ).length === 0 && (
             <View className="py-6 items-center">
-              <AppText className="text-muted dark:text-muted-foreground">
+              <AppText className="text-muted dark:text-muted">
                 No states found
               </AppText>
             </View>

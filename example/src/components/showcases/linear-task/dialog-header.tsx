@@ -8,9 +8,7 @@ export const DialogHeader: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <View className="mb-5 flex-row items-center justify-between">
-      <AppText className="font-semibold text-lg text-muted-foreground">
-        {children}
-      </AppText>
+      <AppText className="font-semibold text-lg text-muted">{children}</AppText>
       <Dialog.Close
         className="rounded-full bg-surface-2 p-1"
         iconProps={{ size: 14, color: themeColorMuted }}

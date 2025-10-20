@@ -81,7 +81,7 @@ export default function CheckboxScreen() {
             isSelected={defaultState}
             onSelectedChange={setDefaultState}
           />
-          <AppText className="text-xs text-muted-foreground">Default</AppText>
+          <AppText className="text-xs text-muted">Default</AppText>
         </View>
         <View className="items-center gap-2">
           <Checkbox
@@ -89,7 +89,7 @@ export default function CheckboxScreen() {
             onSelectedChange={setDisabled}
             isDisabled={true}
           />
-          <AppText className="text-xs text-muted-foreground">Disabled</AppText>
+          <AppText className="text-xs text-muted">Disabled</AppText>
         </View>
       </View>
 

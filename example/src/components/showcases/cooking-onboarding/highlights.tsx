@@ -10,7 +10,7 @@ type HighlightItemProps = {
 const HighlightItem: FC<HighlightItemProps> = ({ label, value }) => {
   return (
     <View>
-      <AppText className="text-base text-muted-foreground">{label}</AppText>
+      <AppText className="text-base text-muted">{label}</AppText>
       <AppText className="text-base font-semibold text-foreground">
         {value}
       </AppText>

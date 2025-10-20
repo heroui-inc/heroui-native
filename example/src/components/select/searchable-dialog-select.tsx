@@ -142,7 +142,7 @@ export function SearchableDialogSelect() {
                   </Select.Item>
                 ))}
                 {filteredCountries.length === 0 && (
-                  <AppText className="text-muted dark:text-muted-foreground text-center mt-8">
+                  <AppText className="text-muted dark:text-muted text-center mt-8">
                     No countries found
                   </AppText>
                 )}

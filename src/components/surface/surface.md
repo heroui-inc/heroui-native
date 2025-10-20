@@ -84,7 +84,7 @@ export default function SurfaceExample() {
           <Text className="text-lg font-semibold text-foreground">
             Card Title
           </Text>
-          <Text className="text-muted-foreground">
+          <Text className="text-muted">
             This is a surface component that provides consistent elevation and
             styling for content containers.
           </Text>

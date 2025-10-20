@@ -223,7 +223,7 @@ export default function Themes() {
               <Text className="text-foreground font-medium mb-2">
                 Bordered Card Variant
               </Text>
-              <Text className="text-muted-foreground">
+              <Text className="text-muted">
                 This card uses the bordered variant for a subtle outline.
               </Text>
             </Card.Body>
@@ -458,8 +458,8 @@ export default function Themes() {
             </Text>
             <Text className="text-lg text-foreground">Body Large</Text>
             <Text className="text-base text-foreground">Body Regular</Text>
-            <Text className="text-sm text-muted-foreground">Body Small</Text>
-            <Text className="text-xs text-muted-foreground">Caption</Text>
+            <Text className="text-sm text-muted">Body Small</Text>
+            <Text className="text-xs text-muted">Caption</Text>
             <Text className="text-base text-link underline">Link Text</Text>
             <Text className="text-base text-success">Success Text</Text>
             <Text className="text-base text-warning">Warning Text</Text>

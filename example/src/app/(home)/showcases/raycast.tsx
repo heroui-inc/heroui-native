@@ -81,7 +81,7 @@ export default function Raycast() {
           onPress={simulatePress}
         >
           <StyledFeather name="search" size={18} className="text-muted" />
-          <AppText className="text-lg text-muted dark:text-muted-foreground">
+          <AppText className="text-lg text-muted dark:text-muted">
             Search Raycast
           </AppText>
         </Pressable>
@@ -145,7 +145,7 @@ export default function Raycast() {
             />
           </Pressable>
           <Pressable className="flex-1" onPress={simulatePress}>
-            <AppText className="text-lg text-muted dark:text-muted-foreground">
+            <AppText className="text-lg text-muted dark:text-muted">
               Ask {model.label}...
             </AppText>
           </Pressable>

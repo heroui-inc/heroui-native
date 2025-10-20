@@ -124,7 +124,7 @@ export const Project: FC = () => {
             />
             {filteredItems.length === 0 && (
               <View className="flex-1 items-center justify-center">
-                <AppText className="text-base font-medium text-muted-foreground">
+                <AppText className="text-base font-medium text-muted">
                   No results
                 </AppText>
               </View>

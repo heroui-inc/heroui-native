@@ -16,50 +16,38 @@ export default function DropShadowViewScreen() {
           shadowSize="none"
         >
           <AppText className="text-foreground font-semibold">No Shadow</AppText>
-          <AppText className="text-muted-foreground text-sm">
-            shadowSize="none"
-          </AppText>
+          <AppText className="text-muted text-sm">shadowSize="none"</AppText>
         </DropShadowView>
 
         <DropShadowView className="bg-surface-1 p-4 rounded-lg" shadowSize="xs">
           <AppText className="text-foreground font-semibold">
             Extra Small
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
-            shadowSize="xs"
-          </AppText>
+          <AppText className="text-muted text-sm">shadowSize="xs"</AppText>
         </DropShadowView>
 
         <DropShadowView className="bg-surface-1 p-4 rounded-lg" shadowSize="sm">
           <AppText className="text-foreground font-semibold">Small</AppText>
-          <AppText className="text-muted-foreground text-sm">
-            shadowSize="sm"
-          </AppText>
+          <AppText className="text-muted text-sm">shadowSize="sm"</AppText>
         </DropShadowView>
 
         <DropShadowView className="bg-surface-1 p-4 rounded-lg" shadowSize="md">
           <AppText className="text-foreground font-semibold">
             Medium (Default)
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
-            shadowSize="md"
-          </AppText>
+          <AppText className="text-muted text-sm">shadowSize="md"</AppText>
         </DropShadowView>
 
         <DropShadowView className="bg-surface-1 p-4 rounded-lg" shadowSize="lg">
           <AppText className="text-foreground font-semibold">Large</AppText>
-          <AppText className="text-muted-foreground text-sm">
-            shadowSize="lg"
-          </AppText>
+          <AppText className="text-muted text-sm">shadowSize="lg"</AppText>
         </DropShadowView>
 
         <DropShadowView className="bg-surface-1 p-4 rounded-lg" shadowSize="xl">
           <AppText className="text-foreground font-semibold">
             Extra Large
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
-            shadowSize="xl"
-          </AppText>
+          <AppText className="text-muted text-sm">shadowSize="xl"</AppText>
         </DropShadowView>
       </View>
 
@@ -131,10 +119,10 @@ export default function DropShadowViewScreen() {
           <AppText className="text-foreground font-semibold">
             Custom iOS & Android
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
+          <AppText className="text-muted text-sm">
             iOS: offset 4x4, opacity 0.3, radius 8
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
+          <AppText className="text-muted text-sm">
             Android: elevation 10
           </AppText>
         </DropShadowView>
@@ -154,7 +142,7 @@ export default function DropShadowViewScreen() {
           <AppText className="text-foreground font-semibold">
             Dramatic Shadow
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
+          <AppText className="text-muted text-sm">
             Semi-transparent blue shadow with custom platform styles
           </AppText>
         </DropShadowView>
@@ -181,7 +169,7 @@ export default function DropShadowViewScreen() {
           <AppText className="text-lg font-semibold text-foreground mb-2">
             Card Component
           </AppText>
-          <AppText className="text-muted-foreground mb-4">
+          <AppText className="text-muted mb-4">
             This is a card-like component with a drop shadow that automatically
             adapts to the current theme (light/dark).
           </AppText>
@@ -206,16 +194,16 @@ export default function DropShadowViewScreen() {
           <AppText className="text-foreground font-semibold mb-2">
             iOS Shadow Properties
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
+          <AppText className="text-muted text-sm">
             • shadowColor - Full color support
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
+          <AppText className="text-muted text-sm">
             • shadowOffset - Direction and distance
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
+          <AppText className="text-muted text-sm">
             • shadowOpacity - Transparency control
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
+          <AppText className="text-muted text-sm">
             • shadowRadius - Blur amount
           </AppText>
         </DropShadowView>
@@ -224,16 +212,16 @@ export default function DropShadowViewScreen() {
           <AppText className="text-foreground font-semibold mb-2">
             Android Shadow Properties
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
+          <AppText className="text-muted text-sm">
             • shadowColor - Works with elevation
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
+          <AppText className="text-muted text-sm">
             • elevation - Material Design shadow depth
           </AppText>
-          <AppText className="text-muted-foreground text-sm">
+          <AppText className="text-muted text-sm">
             Note: Other shadow properties are ignored on Android
           </AppText>
-          <AppText className="text-muted-foreground text-sm font-semibold mt-2">
+          <AppText className="text-muted text-sm font-semibold mt-2">
             ⚠️ Android requires background color for shadows
           </AppText>
         </DropShadowView>

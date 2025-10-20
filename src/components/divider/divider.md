@@ -69,7 +69,7 @@ export default function DividerExample() {
       <Text className="text-base font-medium text-foreground">
         HeroUI Native
       </Text>
-      <Text className="text-sm text-muted-foreground">
+      <Text className="text-sm text-muted">
         A modern React Native component library.
       </Text>
 

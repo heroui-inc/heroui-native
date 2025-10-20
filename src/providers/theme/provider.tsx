@@ -2,7 +2,6 @@ import { colorScheme as colorSchemeNativeWind, vars } from 'nativewind';
 import {
   createContext,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
@@ -270,7 +269,7 @@ export const ThemeProvider = ({
    *
    * The CSS variables from themes[currentTheme] are injected into
    * the View's style, making them available to all NativeWind classes
-   * within the tree (e.g., 'bg-primary', 'text-muted-foreground')
+   * within the tree (e.g., 'bg-primary', 'text-muted')
    */
   return (
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>

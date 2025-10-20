@@ -25,9 +25,9 @@ The theme system can be customized through the `HeroUINativeProvider`'s config p
 Set the initial theme mode:
 
 ```tsx
-<HeroUINativeProvider 
-  config={{ 
-    colorScheme: 'light' | 'dark' | 'system' 
+<HeroUINativeProvider
+  config={{
+    colorScheme: 'light' | 'dark' | 'system',
   }}
 />
 ```
@@ -385,7 +385,7 @@ const customTheme = {
 
 <HeroUINativeProvider config={{ theme: customTheme }}>
   {/* Your app */}
-</HeroUINativeProvider>
+</HeroUINativeProvider>;
 ```
 
 ### Advanced Customization
@@ -421,14 +421,14 @@ const customTheme = {
   },
 };
 
-<HeroUINativeProvider 
-  config={{ 
-    theme: customTheme, 
-    colorScheme: 'system' 
+<HeroUINativeProvider
+  config={{
+    theme: customTheme,
+    colorScheme: 'system',
   }}
 >
   {/* Your app */}
-</HeroUINativeProvider>
+</HeroUINativeProvider>;
 ```
 
 ### Color Format Support
@@ -586,7 +586,7 @@ export function Card({ title, children }) {
     `}
     >
       <Text className="text-foreground text-lg font-bold mb-2">{title}</Text>
-      <View className="text-muted-foreground">{children}</View>
+      <View className="text-muted">{children}</View>
     </View>
   );
 }

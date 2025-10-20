@@ -179,7 +179,7 @@ export default function AccordionExample() {
             <Accordion.Indicator />
           </Accordion.Trigger>
           <Accordion.Content>
-            <Text className="text-muted-foreground text-base/relaxed px-[25px]">
+            <Text className="text-muted text-base/relaxed px-[25px]">
               {item.content}
             </Text>
           </Accordion.Content>

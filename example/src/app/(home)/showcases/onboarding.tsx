@@ -97,7 +97,7 @@ const OnboardingScreen = () => {
         className="items-center gap-2 px-8"
         entering={FadeInDown.delay(300).springify()}
       >
-        <AppText className="text-muted-foreground text-sm font-semibold uppercase tracking-wider">
+        <AppText className="text-muted text-sm font-semibold uppercase tracking-wider">
           Lesson 1
         </AppText>
         <AppText className="text-4xl font-semibold text-foreground">

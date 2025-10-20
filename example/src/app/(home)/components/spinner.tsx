@@ -41,19 +41,19 @@ export default function SpinnerScreen() {
           <Spinner size="md" color="default">
             <Spinner.Indicator speed={0.5} />
           </Spinner>
-          <AppText className="text-xs text-muted-foreground mt-2">0.5x</AppText>
+          <AppText className="text-xs text-muted mt-2">0.5x</AppText>
         </View>
         <View className="items-center">
           <Spinner size="md" color="default">
             <Spinner.Indicator speed={1} />
           </Spinner>
-          <AppText className="text-xs text-muted-foreground mt-2">1x</AppText>
+          <AppText className="text-xs text-muted mt-2">1x</AppText>
         </View>
         <View className="items-center">
           <Spinner size="md" color="default">
             <Spinner.Indicator speed={2} />
           </Spinner>
-          <AppText className="text-xs text-muted-foreground mt-2">2x</AppText>
+          <AppText className="text-xs text-muted mt-2">2x</AppText>
         </View>
       </View>
 

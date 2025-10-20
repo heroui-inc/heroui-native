@@ -20,9 +20,7 @@ const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
     <View className="flex-row items-center justify-between py-3">
       <View className="flex-col flex-1">
         <AppText className="text-base text-foreground">{name}</AppText>
-        <AppText className="text-sm text-muted-foreground">
-          {description}
-        </AppText>
+        <AppText className="text-sm text-muted">{description}</AppText>
       </View>
       <View className="flex-row gap-2">
         <Button

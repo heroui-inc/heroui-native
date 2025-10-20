@@ -44,9 +44,7 @@ export default function LinearTaskScreen() {
             Back
           </AppText>
         </Pressable>
-        <AppText className="text-base font-medium text-muted-foreground">
-          DEV-37
-        </AppText>
+        <AppText className="text-base font-medium text-muted">DEV-37</AppText>
       </View>
 
       <AppText className="text-2xl font-bold text-foreground mb-4">
@@ -86,7 +84,7 @@ export default function LinearTaskScreen() {
               </AppText>
             </View>
             <View className="flex-row items-center gap-2">
-              <AppText className="text-base text-muted-foreground">#26</AppText>
+              <AppText className="text-base text-muted">#26</AppText>
               <StyledMaterialCommunityIcons
                 name="source-branch"
                 size={20}
@@ -101,7 +99,7 @@ export default function LinearTaskScreen() {
 
       <View className="mb-8">
         <View className="flex-row items-center justify-between mb-4">
-          <AppText className="text-lg font-semibold text-muted-foreground">
+          <AppText className="text-lg font-semibold text-muted">
             Activity
           </AppText>
           <View className="flex-row items-center">

@@ -197,7 +197,7 @@ export default function PopoverScreen() {
                     >
                       <View className="flex-row items-center gap-3 flex-1">
                         <AppText className="text-2xl">{country.flag}</AppText>
-                        <AppText className="text-sm text-muted dark:text-muted-foreground font-medium w-10">
+                        <AppText className="text-sm text-muted dark:text-muted font-medium w-10">
                           {country.code}
                         </AppText>
                         <AppText className="text-base text-foreground flex-1">

@@ -334,7 +334,7 @@ const AccordionScreen = () => {
                 </Accordion.Indicator>
               </Accordion.Trigger>
               <Accordion.Content className="mt-1 bg-surface-2 rounded-xl px-5 py-4 border border-border/50">
-                <AppText className="text-muted-foreground text-base/relaxed">
+                <AppText className="text-muted text-base/relaxed">
                   {item.content}
                 </AppText>
               </Accordion.Content>

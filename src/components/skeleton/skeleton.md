@@ -129,7 +129,7 @@ export default function SkeletonExample() {
             <Text className="font-semibold text-foreground">John Doe</Text>
           </Skeleton>
           <Skeleton isLoading={isLoading} className="h-3 w-24 rounded-md">
-            <Text className="text-sm text-muted-foreground">@johndoe</Text>
+            <Text className="text-sm text-muted">@johndoe</Text>
           </Skeleton>
         </View>
       </View>

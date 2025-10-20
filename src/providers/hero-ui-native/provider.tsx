@@ -1,7 +1,6 @@
 import React from 'react';
 import { PortalHost } from '../../primitives/portal';
 import { TextComponentProvider } from '../text-component/provider';
-import { ThemeProvider } from '../theme/provider';
 import type { HeroUINativeProviderProps } from './types';
 
 /**
@@ -9,15 +8,12 @@ import type { HeroUINativeProviderProps } from './types';
  *
  * @description
  * Main provider component for HeroUI Native that configures the application
- * with theme settings and other global configurations. This component should
- * wrap your entire application or the section where you want to use HeroUI
- * Native components.
+ * with global settings. This component should wrap your entire application
+ * or the section where you want to use HeroUI Native components.
  *
  * Currently provides:
- * - Theme management (light/dark mode)
- * - Custom theme configuration
- * - Color scheme preferences
  * - Global text component configuration
+ * - Portal management for overlays
  *
  * @param {HeroUINativeProviderProps} props - Provider configuration props
  * @param {ReactNode} props.children - Child components to wrap
@@ -38,44 +34,10 @@ import type { HeroUINativeProviderProps } from './types';
  * ```
  *
  * @example
- * With dark mode enabled:
- * ```tsx
- * <HeroUINativeProvider config={{ colorScheme: 'dark' }}>
- *   <YourApp />
- * </HeroUINativeProvider>
- * ```
- *
- * @example
- * With custom theme configuration:
+ * With text component configuration:
  * ```tsx
  * <HeroUINativeProvider
  *   config={{
- *     colorScheme: 'system',
- *     theme: {
- *       light: {
- *         colors: {
- *           accent: '#007AFF',
- *           success: '#34C759',
- *           warning: '#FF9500',
- *           danger: '#FF3B30'
- *         },
- *         borderRadius: {
- *           DEFAULT: '16px',
- *           panel: '12px',
- *           'panel-inner': '6px'
- *         },
- *         opacity: {
- *           disabled: 0.4
- *         }
- *       },
- *       dark: {
- *         colors: {
- *           background: '#000000',
- *           foreground: '#FFFFFF',
- *           accent: '#0A84FF'
- *         }
- *       }
- *     },
  *     textProps: {
  *       allowFontScaling: false,
  *       adjustsFontSizeToFit: false,
@@ -87,22 +49,19 @@ import type { HeroUINativeProviderProps } from './types';
  * </HeroUINativeProvider>
  * ```
  *
- * @see {@link ThemeProvider} - The underlying theme provider
  * @see {@link HeroUINativeConfig} - Configuration options
  */
 export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   children,
   config = {},
 }) => {
-  const { colorScheme, theme, textProps } = config;
+  const { textProps } = config;
 
   return (
-    <ThemeProvider colorScheme={colorScheme} theme={theme}>
-      <TextComponentProvider value={{ textProps }}>
-        {children}
-        <PortalHost />
-      </TextComponentProvider>
-    </ThemeProvider>
+    <TextComponentProvider value={{ textProps }}>
+      {children}
+      <PortalHost />
+    </TextComponentProvider>
   );
 };
 

@@ -54,7 +54,7 @@ const HighlightComponent: FC<HighlightComponentProps> = ({
   isPressed,
 }) => {
   const { theme } = useUniwind();
-  const themeColorBackground = useThemeColor<string>('background');
+  const themeColorBackground = useThemeColor('background');
 
   const defaultColor =
     theme === 'dark'

@@ -26,7 +26,7 @@ export default function ParallaxScrollView({
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
 
-  const themeColorBackground = useThemeColor<string>('background');
+  const themeColorBackground = useThemeColor('background');
 
   const headerHeight = height * 0.6;
 

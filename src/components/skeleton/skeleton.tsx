@@ -52,7 +52,7 @@ const ShimmerAnimation: React.FC = () => {
     useSkeletonContext();
 
   const { theme } = useUniwind();
-  const themeColorBackground = useThemeColor<string>('background');
+  const themeColorBackground = useThemeColor('background');
 
   const defaultHighlightColor =
     theme === 'dark'

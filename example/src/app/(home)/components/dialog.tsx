@@ -89,7 +89,7 @@ export default function DialogScreen() {
 
   const { height } = useWindowDimensions();
 
-  const themeColorPanel = useThemeColor<string>('panel');
+  const themeColorPanel = useThemeColor('panel');
 
   const router = useRouter();
 

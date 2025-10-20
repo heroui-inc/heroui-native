@@ -41,9 +41,9 @@ export function SearchableDialogSelect() {
 
   const { theme } = useUniwind();
   const isDark = theme === 'dark';
-  const themeColorMuted = useThemeColor<string>('muted');
-  const themeColorPanel = useThemeColor<string>('panel');
-  const themeColorSurface1 = useThemeColor<string>('surface-1');
+  const themeColorMuted = useThemeColor('muted');
+  const themeColorPanel = useThemeColor('panel');
+  const themeColorSurface1 = useThemeColor('surface-1');
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();

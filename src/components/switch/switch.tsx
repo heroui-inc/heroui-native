@@ -55,12 +55,12 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       ...restProps
     } = props;
 
-    const themeColorAccent = useThemeColor<string>('accent');
-    const themeColorSuccess = useThemeColor<string>('success');
-    const themeColorWarning = useThemeColor<string>('warning');
-    const themeColorDanger = useThemeColor<string>('danger');
-    const themeColorDefault = useThemeColor<string>('default');
-    const themeColorBorder = useThemeColor<string>('border');
+    const themeColorAccent = useThemeColor('accent');
+    const themeColorSuccess = useThemeColor('success');
+    const themeColorWarning = useThemeColor('warning');
+    const themeColorDanger = useThemeColor('danger');
+    const themeColorDefault = useThemeColor('default');
+    const themeColorBorder = useThemeColor('border');
 
     const { container, contentPaddingContainer, contentContainer } =
       switchStyles.root({
@@ -173,8 +173,8 @@ const SwitchThumb = forwardRef<
 
   const { isSelected, contentContainerWidth } = useSwitchContext();
 
-  const themeColorBackground = useThemeColor<string>('background');
-  const themeColorMuted = useThemeColor<string>('muted');
+  const themeColorBackground = useThemeColor('background');
+  const themeColorMuted = useThemeColor('muted');
 
   const tvStyles = switchStyles.thumb({
     className,

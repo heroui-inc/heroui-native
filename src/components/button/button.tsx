@@ -47,11 +47,11 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const themeColorAccent = useThemeColor<string>('accent');
-  const themeColorAccentSoft = useThemeColor<string>('accent-soft');
-  const themeColorDefault = useThemeColor<string>('default');
-  const themeColorBackground = useThemeColor<string>('background');
-  const themeColorDanger = useThemeColor<string>('danger');
+  const themeColorAccent = useThemeColor('accent');
+  const themeColorAccentSoft = useThemeColor('accent-soft');
+  const themeColorDefault = useThemeColor('default');
+  const themeColorBackground = useThemeColor('background');
+  const themeColorDanger = useThemeColor('danger');
 
   const stringifiedChildren = childrenToString(children);
 

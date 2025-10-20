@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { AppText } from '../../app-text';
 
 export const DialogHeader: FC<PropsWithChildren> = ({ children }) => {
-  const themeColorMuted = useThemeColor<string>('muted');
+  const themeColorMuted = useThemeColor('muted');
 
   return (
     <View className="mb-5 flex-row items-center justify-between">

@@ -111,10 +111,10 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
 
     const { size, color, isLoading } = useSpinnerContext();
 
-    const themeColorForeground = useThemeColor<string>('foreground');
-    const themeColorSuccess = useThemeColor<string>('success');
-    const themeColorWarning = useThemeColor<string>('warning');
-    const themeColorDanger = useThemeColor<string>('danger');
+    const themeColorForeground = useThemeColor('foreground');
+    const themeColorSuccess = useThemeColor('success');
+    const themeColorWarning = useThemeColor('warning');
+    const themeColorDanger = useThemeColor('danger');
 
     const tvStyles = spinnerStyles.indicator({
       className,

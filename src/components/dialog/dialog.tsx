@@ -216,7 +216,7 @@ const DialogClose = forwardRef<
   DialogPrimitivesTypes.CloseRef,
   DialogCloseProps
 >(({ className, iconProps, hitSlop = 12, children, ...props }, ref) => {
-  const themeColorMuted = useThemeColor<string>('muted');
+  const themeColorMuted = useThemeColor('muted');
   const defaultIconColor = themeColorMuted;
 
   const tvStyles = dialogStyles.close({ className });

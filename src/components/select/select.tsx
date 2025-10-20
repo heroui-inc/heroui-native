@@ -480,7 +480,7 @@ const SelectClose = forwardRef<
   SelectPrimitivesTypes.CloseRef,
   SelectCloseProps
 >(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
-  const themeColorMuted = useThemeColor<string>('muted');
+  const themeColorMuted = useThemeColor('muted');
   const defaultIconColor = themeColorMuted;
 
   const tvStyles = selectStyles.close({ className });
@@ -563,7 +563,7 @@ const SelectItemIndicator = forwardRef<
   SelectPrimitivesTypes.ItemIndicatorRef,
   SelectItemIndicatorProps
 >(({ className, children, iconProps, ...props }, ref) => {
-  const themeColorMuted = useThemeColor<string>('muted');
+  const themeColorMuted = useThemeColor('muted');
 
   const iconSize = iconProps?.size ?? 16;
   const iconColor = iconProps?.color ?? themeColorMuted;

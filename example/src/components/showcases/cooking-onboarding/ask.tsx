@@ -21,7 +21,7 @@ type Props = {
 };
 
 export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
-  const themeColorForeground = useThemeColor<string>('foreground');
+  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <Popover>

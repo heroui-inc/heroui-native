@@ -35,7 +35,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const themeColorBackground = useThemeColor<string>('background');
+  const themeColorBackground = useThemeColor('background');
   const shadowColor = color || themeColorBackground;
 
   const containerStyles = scrollShadowStyles({ className });

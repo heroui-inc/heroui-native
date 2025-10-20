@@ -21,7 +21,7 @@ type Props = {
 };
 
 export const Share: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
-  const themeColorForeground = useThemeColor<string>('foreground');
+  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <Popover>

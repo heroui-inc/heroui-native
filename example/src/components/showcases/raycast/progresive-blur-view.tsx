@@ -17,7 +17,7 @@ export const ProgressiveBlurView: FC<Props> = ({
   height = 100,
   blurViewProps,
 }) => {
-  const themeColorBackground = useThemeColor<string>('background');
+  const themeColorBackground = useThemeColor('background');
 
   return (
     <View

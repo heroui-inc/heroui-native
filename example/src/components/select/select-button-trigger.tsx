@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import Feather from '@expo/vector-icons/Feather';
 import { BlurView } from 'expo-blur';
-import { cn, Divider, Select, useSelect, useThemeColor } from 'heroui-native';
+import { Divider, Select, useSelect, useThemeColor } from 'heroui-native';
 import React, { useState, type FC } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import Animated, {
@@ -28,8 +28,8 @@ const US_STATES: SelectOption[] = [
 const AnimatedTrigger: FC = () => {
   const { progress, selectState } = useSelect();
 
-  const themeColorDefault = useThemeColor<string>('default');
-  const themeColorPanel = useThemeColor<string>('panel');
+  const themeColorDefault = useThemeColor('default');
+  const themeColorPanel = useThemeColor('panel');
 
   const rContainerStyle = useAnimatedStyle(() => {
     const opacity = interpolate(progress.value, [0, 1, 2], [0, 1, 0]);
@@ -88,10 +88,7 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
         <Select.Overlay className="bg-transparent" />
         <Select.Content
           offset={contentOffset}
-          className={cn(
-            'w-[256px] px-0 border border-border rounded-xl',
-            Platform.OS === 'ios' && 'bg-panel/5'
-          )}
+          className="w-[256px] px-0 border border-border rounded-xl ios:bg-panel/5"
         >
           <View className="absolute inset-0 rounded-xl overflow-hidden">
             {Platform.OS === 'ios' && (

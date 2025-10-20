@@ -151,11 +151,11 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     );
 
     const { theme } = useUniwind();
-    const themeColorDefault = useThemeColor<string>('default');
-    const themeColorBackground = useThemeColor<string>('background');
-    const themeColorBorder = useThemeColor<string>('border');
-    const themeColorMuted = useThemeColor<string>('muted');
-    const themeColorDanger = useThemeColor<string>('danger');
+    const themeColorDefault = useThemeColor('default');
+    const themeColorBackground = useThemeColor('background');
+    const themeColorBorder = useThemeColor('border');
+    const themeColorMuted = useThemeColor('muted');
+    const themeColorDanger = useThemeColor('danger');
 
     const tvStyles = textFieldStyles.input({
       isMultiline: Boolean(restProps.multiline),

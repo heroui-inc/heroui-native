@@ -55,8 +55,8 @@ export function SearchableSelect() {
   const [isFocused, setIsFocused] = useState(false);
 
   const themeColorMuted = useThemeColor('muted');
-  const themeColorPanel = useThemeColor<string>('panel');
-  const themeColorDefault = useThemeColor<string>('default');
+  const themeColorPanel = useThemeColor('panel');
+  const themeColorDefault = useThemeColor('default');
 
   const triggerRef = useRef<SelectTriggerRef>(null);
 

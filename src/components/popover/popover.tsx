@@ -383,7 +383,7 @@ const PopoverClose = forwardRef<
   PopoverPrimitivesTypes.CloseRef,
   PopoverCloseProps
 >(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
-  const themeColorMuted = useThemeColor<string>('muted');
+  const themeColorMuted = useThemeColor('muted');
   const defaultIconColor = themeColorMuted;
 
   const tvStyles = popoverStyles.close({ className });
@@ -459,8 +459,8 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
     },
     ref
   ) => {
-    const themeColorPanel = useThemeColor<string>('panel');
-    const themeColorBorder = useThemeColor<string>('border');
+    const themeColorPanel = useThemeColor('panel');
+    const themeColorBorder = useThemeColor('border');
     const { triggerPosition, contentLayout } = usePopover();
     const { placement: placementContext } = use(PopoverContentContext);
 

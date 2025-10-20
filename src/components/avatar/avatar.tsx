@@ -123,12 +123,11 @@ const DefaultFallbackIcon: React.FC<{
   colorVariant: AvatarColor;
   iconProps?: PersonIconProps;
 }> = ({ sizeVariant, colorVariant, iconProps }) => {
-  const themeColorDefaultForeground =
-    useThemeColor<string>('default-foreground');
-  const themeColorAccent = useThemeColor<string>('accent');
-  const themeColorSuccess = useThemeColor<string>('success');
-  const themeColorWarning = useThemeColor<string>('warning');
-  const themeColorDanger = useThemeColor<string>('danger');
+  const themeColorDefaultForeground = useThemeColor('default-foreground');
+  const themeColorAccent = useThemeColor('accent');
+  const themeColorSuccess = useThemeColor('success');
+  const themeColorWarning = useThemeColor('warning');
+  const themeColorDanger = useThemeColor('danger');
 
   const iconSize = iconProps?.size ?? AVATAR_DEFAULT_ICON_SIZE[sizeVariant];
 

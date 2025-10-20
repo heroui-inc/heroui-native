@@ -72,7 +72,7 @@ function onboardingReducer(
 }
 
 export default function CookingOnboardingScreen() {
-  const themeColorBackground = useThemeColor<string>('background');
+  const themeColorBackground = useThemeColor('background');
 
   const router = useRouter();
 

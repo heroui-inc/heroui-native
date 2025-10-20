@@ -72,11 +72,11 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       [children]
     );
 
-    const themeColorAccent = useThemeColor<string>('accent');
-    const themeColorBorder = useThemeColor<string>('border');
-    const themeColorSuccess = useThemeColor<string>('success');
-    const themeColorWarning = useThemeColor<string>('warning');
-    const themeColorDanger = useThemeColor<string>('danger');
+    const themeColorAccent = useThemeColor('accent');
+    const themeColorBorder = useThemeColor('border');
+    const themeColorSuccess = useThemeColor('success');
+    const themeColorWarning = useThemeColor('warning');
+    const themeColorDanger = useThemeColor('danger');
 
     const tvStyles = checkboxStyles.root({
       isDisabled,
@@ -160,10 +160,10 @@ const CheckboxBackground = forwardRef<View, CheckboxBackgroundProps>(
 
     const { color, isSelected } = useCheckboxContext();
 
-    const themeColorAccent = useThemeColor<string>('accent');
-    const themeColorSuccess = useThemeColor<string>('success');
-    const themeColorWarning = useThemeColor<string>('warning');
-    const themeColorDanger = useThemeColor<string>('danger');
+    const themeColorAccent = useThemeColor('accent');
+    const themeColorSuccess = useThemeColor('success');
+    const themeColorWarning = useThemeColor('warning');
+    const themeColorDanger = useThemeColor('danger');
 
     const tvStyles = checkboxStyles.background({
       className,
@@ -225,7 +225,7 @@ const CheckboxIndicator = forwardRef<
 
   const { isSelected } = useCheckboxContext();
 
-  const themeColorAccentForeground = useThemeColor<string>('accent-foreground');
+  const themeColorAccentForeground = useThemeColor('accent-foreground');
 
   const iconSize = iconProps?.size ?? DEFAULT_CHECK_ICON_SIZE;
   const iconColor = iconProps?.color ?? themeColorAccentForeground;

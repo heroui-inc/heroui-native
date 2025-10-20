@@ -10,8 +10,8 @@ import { ThemeToggle } from '../../components/theme-toggle';
 
 export default function Layout() {
   const { theme } = useUniwind();
-  const themeColorForeground = useThemeColor<string>('foreground');
-  const themeColorBackground = useThemeColor<string>('background');
+  const themeColorForeground = useThemeColor('foreground');
+  const themeColorBackground = useThemeColor('background');
 
   const _renderTitle = () => {
     return (

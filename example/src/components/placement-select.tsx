@@ -33,7 +33,7 @@ type PlacementContentListProps = {
 
 const PlacementContentList: FC<PlacementContentListProps> = memo(
   ({ valueIndex }) => {
-    const themeColorPanel = useThemeColor<string>('panel');
+    const themeColorPanel = useThemeColor('panel');
 
     const listRef = useRef<FlatList>(null);
 

@@ -84,6 +84,7 @@ Update your `tailwind.config.js` to include the HeroUI Native plugin:
 import heroUINativePlugin from 'heroui-native/tailwind-plugin';
 
 module.exports = {
+  darkMode: 'class',
   content: [
     './app/**/*.{js,jsx,ts,tsx}',
     './node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}',
@@ -99,6 +100,32 @@ module.exports = {
 > **Important:** Import the tailwind plugin from `heroui-native/tailwind-plugin` and not from `heroui-native`.
 
 > **Important:** The `'./node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}'` path is crucial for Tailwind to process the library's component styles. Without it, HeroUI Native components won't be styled correctly.
+
+#### Running on Web (Expo)
+
+> **Note:** We are currently focusing on the mobile version. Using HeroUI Native on web is not recommended at this time.
+
+If you're using Expo and want to run your app on web, follow these additional steps:
+
+1. **Install web dependencies:**
+
+```bash
+npx expo install react-dom react-native-web @expo/metro-runtime
+```
+
+2. **Update your `app.json`:**
+
+```json
+{
+  "expo": {
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
+```
+
+3. **Add `darkMode: 'class'` to your `tailwind.config.js`** (already included in the configuration above)
 
 ### 5. Wrap Your App with Provider
 

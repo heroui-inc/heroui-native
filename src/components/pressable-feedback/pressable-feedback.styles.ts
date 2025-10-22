@@ -7,7 +7,7 @@ const root = tv({
 });
 
 const ripple = tv({
-  base: 'absolute pointer-events-none',
+  base: 'absolute pointer-events-none rounded-full',
 });
 
 const pressableFeedbackStyles = combineStyles({

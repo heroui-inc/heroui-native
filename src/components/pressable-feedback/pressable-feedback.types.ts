@@ -4,8 +4,6 @@ import type {
 } from 'react-native';
 import type {
   AnimatedProps,
-  EasingFunction,
-  EasingFunctionFactory,
   SharedValue,
   WithTimingConfig,
 } from 'react-native-reanimated';
@@ -36,16 +34,6 @@ export interface PressableFeedbackPlatformDefaults {
  */
 export interface RippleAnimationConfig {
   /**
-   * Duration of ripple animation in milliseconds
-   * @default 250
-   */
-  duration?: number;
-  /**
-   * Easing function for ripple animation
-   * @default Easing.bezier(0.25, 0.1, 0.25, 1)
-   */
-  easing?: EasingFunction | EasingFunctionFactory;
-  /**
    * Opacity when the component is pressed
    * @default 0.2
    */
@@ -55,6 +43,10 @@ export interface RippleAnimationConfig {
    * @default 'black' for light theme, 'white' for dark theme
    */
   color?: string;
+  /**
+   * Configuration for ripple animation
+   */
+  config?: WithTimingConfig;
   /**
    * Whether the ripple effect is disabled
    * @default false
@@ -159,11 +151,22 @@ export interface LayoutInfo {
 }
 
 /**
+ * Internal Ripple Item for RippleComponent
+ */
+export interface RippleItem {
+  key: number;
+  x: number;
+  y: number;
+  size: number;
+}
+
+/**
  * Internal Props for RippleComponent
  */
 export interface RippleComponentProps extends AnimatedProps<ViewProps> {
-  color: string;
-  ripple: RippleValue;
+  animationConfig: RippleAnimationConfig;
+  ripple: RippleItem;
+  onRippleEnd: () => void;
 }
 
 /**
@@ -172,16 +175,4 @@ export interface RippleComponentProps extends AnimatedProps<ViewProps> {
 export interface HighlightComponentProps extends AnimatedProps<ViewProps> {
   animationConfig: HighlightAnimationConfig;
   isPressed: SharedValue<boolean>;
-}
-
-/**
- * Internal ripple animation values
- */
-export interface RippleValue {
-  scale: SharedValue<number>;
-  opacity: SharedValue<number>;
-  locationX: SharedValue<number>;
-  locationY: SharedValue<number>;
-  radius: SharedValue<number>;
-  active: SharedValue<number>;
 }

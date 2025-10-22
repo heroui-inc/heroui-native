@@ -18,21 +18,33 @@ export const DEFAULT_PRESSABLE_FEEDBACK_PLATFORM = {
 } as const;
 
 /**
- * Default ripple animation configuration
+ * Default ripple configuration
  */
 export const DEFAULT_PRESSABLE_FEEDBACK_RIPPLE = {
-  duration: 250,
-  easing: Easing.bezier(0.25, 0.1, 0.25, 1),
   opacity: 0.2,
   isDisabled: false,
 } as const;
 
 /**
- * Default highlight animation configuration
+ * Default ripple timing configuration
+ */
+export const DEFAULT_PRESSABLE_FEEDBACK_RIPPLE_TIMING_CONFIG = {
+  duration: 400,
+  easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+} as const;
+
+/**
+ * Default highlight configuration
  */
 export const DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT = {
-  duration: 200,
-  easing: Easing.inOut(Easing.quad),
   opacity: 0.1,
   isDisabled: false,
+} as const;
+
+/**
+ * Default highlight timing configuration
+ */
+export const DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT_TIMING_CONFIG = {
+  duration: 200,
+  easing: Easing.inOut(Easing.quad),
 } as const;

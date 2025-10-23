@@ -1,8 +1,23 @@
-import { forwardRef } from 'react';
-import type { ViewStyle } from 'react-native';
+import {
+  createContext,
+  forwardRef,
+  useCallback,
+  useContext,
+  useState,
+} from 'react';
+import type { LayoutChangeEvent, ViewStyle } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
 import * as TabsPrimitives from '../../primitives/tabs';
 import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
-import { DISPLAY_NAME } from './tabs.constants';
+import {
+  DEFAULT_INDICATOR_SPRING_CONFIG,
+  DISPLAY_NAME,
+} from './tabs.constants';
 import tabsStyles from './tabs.styles';
 import type {
   TabsContentProps,
@@ -15,22 +30,69 @@ import type {
 
 // --------------------------------------------------
 
+type ItemMeasurements = {
+  width: number;
+  height: number;
+  x: number;
+};
+
+type MeasurementsContextValue = {
+  measurements: Record<string, ItemMeasurements>;
+  setMeasurements: (key: string, measurements: ItemMeasurements) => void;
+};
+
+const MeasurementsContext = createContext<MeasurementsContextValue | null>(
+  null
+);
+
+function useMeasurementsContext() {
+  const context = useContext(MeasurementsContext);
+  if (!context) {
+    throw new Error(
+      'Tabs measurement components must be used within Tabs component'
+    );
+  }
+  return context;
+}
+
+const AnimatedIndicator = Animated.createAnimatedComponent(
+  TabsPrimitives.Indicator
+);
+
+// --------------------------------------------------
+
 const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
   (props, ref) => {
     const { children, value, onValueChange, className, ...restProps } = props;
 
+    const [measurements, setMeasurementsState] = useState<
+      Record<string, ItemMeasurements>
+    >({});
+
+    const setMeasurements = useCallback(
+      (key: string, newMeasurements: ItemMeasurements) => {
+        setMeasurementsState((prev) => ({
+          ...prev,
+          [key]: newMeasurements,
+        }));
+      },
+      []
+    );
+
     const tvStyles = tabsStyles.root({ className });
 
     return (
-      <TabsPrimitives.Root
-        ref={ref}
-        value={value}
-        onValueChange={onValueChange}
-        className={tvStyles}
-        {...restProps}
-      >
-        {children}
-      </TabsPrimitives.Root>
+      <MeasurementsContext.Provider value={{ measurements, setMeasurements }}>
+        <TabsPrimitives.Root
+          ref={ref}
+          value={value}
+          onValueChange={onValueChange}
+          className={tvStyles}
+          {...restProps}
+        >
+          {children}
+        </TabsPrimitives.Root>
+      </MeasurementsContext.Provider>
     );
   }
 );
@@ -70,10 +132,17 @@ const TabsTrigger = forwardRef<
     style,
     ...restProps
   } = props;
-  const { value: selectedValue } = TabsPrimitives.useRootContext();
+  const { setMeasurements } = useMeasurementsContext();
 
-  const isSelected = selectedValue === value;
-  const tvStyles = tabsStyles.trigger({ isSelected, isDisabled, className });
+  const tvStyles = tabsStyles.trigger({ isDisabled, className });
+
+  const handleLayout = useCallback(
+    (event: LayoutChangeEvent) => {
+      const { width, height, x } = event.nativeEvent.layout;
+      setMeasurements(value, { width, height, x });
+    },
+    [value, setMeasurements]
+  );
 
   return (
     <TabsPrimitives.Trigger
@@ -82,6 +151,7 @@ const TabsTrigger = forwardRef<
       disabled={isDisabled}
       className={tvStyles}
       style={[tabsStyles.styleSheet.triggerRoot, style as ViewStyle]}
+      onLayout={handleLayout}
       {...restProps}
     >
       {children}
@@ -111,14 +181,73 @@ const TabsIndicator = forwardRef<
   TabsPrimitivesTypes.IndicatorRef,
   TabsIndicatorProps
 >((props, ref) => {
-  const { children, className, ...restProps } = props;
+  const {
+    children,
+    className,
+    style,
+    animationConfig = {
+      type: 'spring',
+      config: DEFAULT_INDICATOR_SPRING_CONFIG,
+    },
+    ...restProps
+  } = props;
+
+  const { value } = TabsPrimitives.useRootContext();
+  const { measurements } = useMeasurementsContext();
+
+  const activeMeasurements = measurements[value];
+  const hasMeasured = useSharedValue(false);
+
+  const reanimatedConfig = animationConfig?.config;
+
+  const animatedStyle = useAnimatedStyle(() => {
+    if (!activeMeasurements) {
+      return {
+        width: 0,
+        height: 0,
+        left: 0,
+        opacity: 0,
+      };
+    }
+
+    if (!hasMeasured.value) {
+      hasMeasured.value = true;
+      return {
+        width: activeMeasurements.width,
+        height: activeMeasurements.height,
+        left: activeMeasurements.x,
+        opacity: 1,
+      };
+    }
+
+    return {
+      width:
+        animationConfig?.type === 'timing'
+          ? withTiming(activeMeasurements.width, reanimatedConfig)
+          : withSpring(activeMeasurements.width, reanimatedConfig),
+      height:
+        animationConfig?.type === 'timing'
+          ? withTiming(activeMeasurements.height, reanimatedConfig)
+          : withSpring(activeMeasurements.height, reanimatedConfig),
+      left:
+        animationConfig?.type === 'timing'
+          ? withTiming(activeMeasurements.x, reanimatedConfig)
+          : withSpring(activeMeasurements.x, reanimatedConfig),
+      opacity: 1,
+    };
+  }, [activeMeasurements]);
 
   const tvStyles = tabsStyles.indicator({ className });
 
   return (
-    <TabsPrimitives.Indicator ref={ref} className={tvStyles} {...restProps}>
+    <AnimatedIndicator
+      ref={ref}
+      className={tvStyles}
+      style={[animatedStyle, style as ViewStyle]}
+      {...restProps}
+    >
       {children}
-    </TabsPrimitives.Indicator>
+    </AnimatedIndicator>
   );
 });
 

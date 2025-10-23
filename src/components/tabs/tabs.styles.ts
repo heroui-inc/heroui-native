@@ -13,17 +13,12 @@ const list = tv({
 const trigger = tv({
   base: 'flex-row items-center justify-center px-3 py-1.5 gap-1.5',
   variants: {
-    isSelected: {
-      true: 'bg-background border-border',
-      false: '',
-    },
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',
       false: '',
     },
   },
   defaultVariants: {
-    isSelected: false,
     isDisabled: false,
   },
 });
@@ -33,7 +28,7 @@ const label = tv({
 });
 
 const indicator = tv({
-  base: 'absolute bottom-0 left-0 h-0.5 bg-primary rounded-full',
+  base: 'absolute rounded-[10px] border-[0.5px] border-border shadow-sm dark:shadow-none shadow-black/[0.08] bg-background',
 });
 
 const content = tv({

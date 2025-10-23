@@ -1,3 +1,7 @@
+import type {
+  WithSpringConfig,
+  WithTimingConfig,
+} from 'react-native-reanimated';
 import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
 
 /**
@@ -74,6 +78,19 @@ export interface TabsLabelProps extends TabsPrimitivesTypes.LabelProps {
 }
 
 /**
+ * Animation configuration for the Tabs indicator
+ */
+export type TabsIndicatorAnimationConfig =
+  | {
+      type: 'spring';
+      config?: WithSpringConfig;
+    }
+  | {
+      type: 'timing';
+      config?: WithTimingConfig;
+    };
+
+/**
  * Props for the TabsIndicator component
  */
 export interface TabsIndicatorProps extends TabsPrimitivesTypes.IndicatorProps {
@@ -85,6 +102,11 @@ export interface TabsIndicatorProps extends TabsPrimitivesTypes.IndicatorProps {
    * React children elements
    */
   children?: React.ReactNode;
+  /**
+   * Animation configuration for the indicator
+   * @default { type: 'spring' }
+   */
+  animationConfig?: TabsIndicatorAnimationConfig;
 }
 
 /**

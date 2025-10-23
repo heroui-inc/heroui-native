@@ -1,3 +1,5 @@
+import type { WithSpringConfig } from 'react-native-reanimated';
+
 export const DISPLAY_NAME = {
   ROOT: 'HeroUINative.Tabs.Root',
   LIST: 'HeroUINative.Tabs.List',
@@ -6,3 +8,8 @@ export const DISPLAY_NAME = {
   INDICATOR: 'HeroUINative.Tabs.Indicator',
   CONTENT: 'HeroUINative.Tabs.Content',
 } as const;
+
+export const DEFAULT_INDICATOR_SPRING_CONFIG: WithSpringConfig = {
+  stiffness: 1200,
+  damping: 120,
+};

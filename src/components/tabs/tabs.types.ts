@@ -60,6 +60,20 @@ export interface TabsTriggerProps extends TabsPrimitivesTypes.TriggerProps {
 }
 
 /**
+ * Props for the TabsLabel component
+ */
+export interface TabsLabelProps extends TabsPrimitivesTypes.LabelProps {
+  /**
+   * Additional CSS classes for the label element
+   */
+  className?: string;
+  /**
+   * React children elements
+   */
+  children?: React.ReactNode;
+}
+
+/**
  * Props for the TabsContent component
  */
 export interface TabsContentProps extends TabsPrimitivesTypes.ContentProps {

@@ -2,7 +2,9 @@ import type {
   ForceMountable,
   PressableRef,
   SlottablePressableProps,
+  SlottableTextProps,
   SlottableViewProps,
+  TextRef,
   ViewRef,
 } from '../../helpers/types';
 
@@ -35,6 +37,13 @@ type TriggerProps = SlottablePressableProps & {
 type TriggerRef = PressableRef;
 
 /**
+ * Props for tab trigger labels
+ */
+type LabelProps = SlottableTextProps;
+/** Ref type for tab label */
+type LabelRef = TextRef;
+
+/**
  * Props for tab content panels
  */
 type ContentProps = SlottableViewProps &
@@ -48,6 +57,8 @@ type ContentRef = ViewRef;
 export type {
   ContentProps,
   ContentRef,
+  LabelProps,
+  LabelRef,
   ListProps,
   ListRef,
   RootProps,

@@ -7,14 +7,14 @@ const root = tv({
 });
 
 const list = tv({
-  base: 'flex-row items-center justify-center rounded-lg bg-muted p-[3px] mr-auto',
+  base: 'flex-row items-center justify-center rounded-[12px] bg-surface-2 p-[3px] gap-1 mr-auto',
 });
 
 const trigger = tv({
-  base: 'flex-row items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1',
+  base: 'flex-row items-center justify-center px-3 py-1.5 gap-1.5 rounded-[10px] border-[0.5px] border-transparent shadow-sm dark:shadow-none shadow-black/[0.08]',
   variants: {
     isSelected: {
-      true: 'bg-background border-foreground/10',
+      true: 'bg-background border-border',
       false: '',
     },
     isDisabled: {
@@ -26,6 +26,10 @@ const trigger = tv({
     isSelected: false,
     isDisabled: false,
   },
+});
+
+const label = tv({
+  base: 'text-base font-medium text-foreground',
 });
 
 const content = tv({
@@ -45,6 +49,7 @@ const tabsStyles = combineStyles({
   root,
   list,
   trigger,
+  label,
   content,
   styleSheet,
 });

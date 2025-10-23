@@ -1,7 +1,8 @@
 import { Tabs } from 'heroui-native';
 import { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import { AppText } from '../../../components/app-text';
+import { ScreenScrollView } from '../../../components/screen-scroll-view';
 
 export default function TabsScreen() {
   const [tab1, setTab1] = useState('account');
@@ -9,11 +10,7 @@ export default function TabsScreen() {
   const [tab3, setTab3] = useState('home');
 
   return (
-    <ScrollView
-      className="bg-background"
-      contentContainerClassName="items-center justify-center p-4"
-      contentInsetAdjustmentBehavior="automatic"
-    >
+    <ScreenScrollView>
       <AppText className="text-lg font-bold text-muted-foreground mb-4">
         Basic Tabs
       </AppText>
@@ -21,14 +18,10 @@ export default function TabsScreen() {
       <Tabs value={tab1} onValueChange={setTab1} className="mb-6">
         <Tabs.List>
           <Tabs.Trigger value="account">
-            <AppText className="text-sm font-medium text-foreground">
-              Account
-            </AppText>
+            <Tabs.Label>Account</Tabs.Label>
           </Tabs.Trigger>
           <Tabs.Trigger value="password">
-            <AppText className="text-sm font-medium text-foreground">
-              Password
-            </AppText>
+            <Tabs.Label>Password</Tabs.Label>
           </Tabs.Trigger>
         </Tabs.List>
 
@@ -56,19 +49,13 @@ export default function TabsScreen() {
       <Tabs value={tab2} onValueChange={setTab2} className="mb-6">
         <Tabs.List>
           <Tabs.Trigger value="profile">
-            <AppText className="text-sm font-medium text-foreground">
-              Profile
-            </AppText>
+            <Tabs.Label>Profile</Tabs.Label>
           </Tabs.Trigger>
           <Tabs.Trigger value="settings">
-            <AppText className="text-sm font-medium text-foreground">
-              Settings
-            </AppText>
+            <Tabs.Label>Settings</Tabs.Label>
           </Tabs.Trigger>
           <Tabs.Trigger value="notifications">
-            <AppText className="text-sm font-medium text-foreground">
-              Notifications
-            </AppText>
+            <Tabs.Label>Notifications</Tabs.Label>
           </Tabs.Trigger>
         </Tabs.List>
 
@@ -104,19 +91,13 @@ export default function TabsScreen() {
       <Tabs value={tab3} onValueChange={setTab3} className="mb-6">
         <Tabs.List>
           <Tabs.Trigger value="home">
-            <AppText className="text-sm font-medium text-foreground">
-              Home
-            </AppText>
+            <Tabs.Label>Home</Tabs.Label>
           </Tabs.Trigger>
           <Tabs.Trigger value="disabled" isDisabled>
-            <AppText className="text-sm font-medium text-foreground">
-              Disabled
-            </AppText>
+            <Tabs.Label>Disabled</Tabs.Label>
           </Tabs.Trigger>
           <Tabs.Trigger value="about">
-            <AppText className="text-sm font-medium text-foreground">
-              About
-            </AppText>
+            <Tabs.Label>About</Tabs.Label>
           </Tabs.Trigger>
         </Tabs.List>
 
@@ -144,6 +125,6 @@ export default function TabsScreen() {
           </View>
         </Tabs.Content>
       </Tabs>
-    </ScrollView>
+    </ScreenScrollView>
   );
 }

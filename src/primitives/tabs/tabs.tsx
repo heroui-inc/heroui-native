@@ -1,9 +1,16 @@
 import { createContext, forwardRef, useContext, useId } from 'react';
-import { Pressable, View, type GestureResponderEvent } from 'react-native';
+import {
+  Pressable,
+  Text,
+  View,
+  type GestureResponderEvent,
+} from 'react-native';
 import * as Slot from '../slot';
 import type {
   ContentProps,
   ContentRef,
+  LabelProps,
+  LabelRef,
   ListProps,
   ListRef,
   RootProps,
@@ -64,6 +71,7 @@ List.displayName = 'HeroUINative.Primitive.Tabs.List';
 
 type TriggerContext = {
   value: string;
+  nativeID: string;
 };
 
 const TriggerContext = createContext<TriggerContext | null>(null);
@@ -82,12 +90,15 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
     }
 
     const Component = asChild ? Slot.Pressable : Pressable;
+    const tabNativeID = `${nativeID}-tab-${tabValue}`;
 
     return (
-      <TriggerContext.Provider value={{ value: tabValue }}>
+      <TriggerContext.Provider
+        value={{ value: tabValue, nativeID: tabNativeID }}
+      >
         <Component
           ref={ref}
-          nativeID={`${nativeID}-tab-${tabValue}`}
+          nativeID={tabNativeID}
           aria-disabled={!!disabled}
           aria-selected={rootValue === tabValue}
           role="tab"
@@ -120,6 +131,23 @@ function useTriggerContext() {
 
 // --------------------------------------------------
 
+const Label = forwardRef<LabelRef, LabelProps>(({ asChild, ...props }, ref) => {
+  const { nativeID } = useTriggerContext();
+  const Component = asChild ? Slot.Text : Text;
+  return (
+    <Component
+      ref={ref}
+      nativeID={`${nativeID}-label`}
+      aria-labelledby={nativeID}
+      {...props}
+    />
+  );
+});
+
+Label.displayName = 'HeroUINative.Primitive.Tabs.Label';
+
+// --------------------------------------------------
+
 const Content = forwardRef<ContentRef, ContentProps>(
   ({ asChild, forceMount, value: tabValue, ...props }, ref) => {
     const { value: rootValue, nativeID } = useRootContext();
@@ -145,4 +173,12 @@ const Content = forwardRef<ContentRef, ContentProps>(
 
 Content.displayName = 'HeroUINative.Primitive.Tabs.Content';
 
-export { Content, List, Root, Trigger, useRootContext, useTriggerContext };
+export {
+  Content,
+  Label,
+  List,
+  Root,
+  Trigger,
+  useRootContext,
+  useTriggerContext,
+};

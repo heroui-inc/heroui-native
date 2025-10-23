@@ -1,10 +1,12 @@
 import { forwardRef } from 'react';
+import type { ViewStyle } from 'react-native';
 import * as TabsPrimitives from '../../primitives/tabs';
 import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
 import { DISPLAY_NAME } from './tabs.constants';
 import tabsStyles from './tabs.styles';
 import type {
   TabsContentProps,
+  TabsLabelProps,
   TabsListProps,
   TabsProps,
   TabsTriggerProps,
@@ -78,13 +80,29 @@ const TabsTrigger = forwardRef<
       value={value}
       disabled={isDisabled}
       className={tvStyles}
-      style={[tabsStyles.styleSheet.triggerRoot, style]}
+      style={[tabsStyles.styleSheet.triggerRoot, style as ViewStyle]}
       {...restProps}
     >
       {children}
     </TabsPrimitives.Trigger>
   );
 });
+
+// --------------------------------------------------
+
+const TabsLabel = forwardRef<TabsPrimitivesTypes.LabelRef, TabsLabelProps>(
+  (props, ref) => {
+    const { children, className, ...restProps } = props;
+
+    const tvStyles = tabsStyles.label({ className });
+
+    return (
+      <TabsPrimitives.Label ref={ref} className={tvStyles} {...restProps}>
+        {children}
+      </TabsPrimitives.Label>
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -113,6 +131,7 @@ const TabsContent = forwardRef<
 TabsRoot.displayName = DISPLAY_NAME.ROOT;
 TabsList.displayName = DISPLAY_NAME.LIST;
 TabsTrigger.displayName = DISPLAY_NAME.TRIGGER;
+TabsLabel.displayName = DISPLAY_NAME.LABEL;
 TabsContent.displayName = DISPLAY_NAME.CONTENT;
 
 /**
@@ -123,6 +142,8 @@ TabsContent.displayName = DISPLAY_NAME.CONTENT;
  * @component Tabs.List - Container for tab triggers
  *
  * @component Tabs.Trigger - Individual tab button
+ *
+ * @component Tabs.Label - Label text for tab triggers
  *
  * @component Tabs.Content - Content panel for each tab
  *
@@ -135,6 +156,8 @@ const Tabs = Object.assign(TabsRoot, {
   List: TabsList,
   /** Individual tab button */
   Trigger: TabsTrigger,
+  /** Label text for tab triggers */
+  Label: TabsLabel,
   /** Content panel for each tab */
   Content: TabsContent,
 });

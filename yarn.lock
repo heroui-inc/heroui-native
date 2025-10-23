@@ -8926,7 +8926,7 @@ __metadata:
     tailwind-merge: ^3.3.1
     tailwind-variants: ^3.1.0
     tailwindcss: ^4.1.14
-    uniwind: v1.0.0-rc.2
+    uniwind: v1.0.0-rc.4
   languageName: unknown
   linkType: soft
 
@@ -8972,7 +8972,7 @@ __metadata:
     tailwind-variants: ^3.1.0
     tailwindcss: ^4.1.14
     typescript: ^5.8.3
-    uniwind: v1.0.0-rc.2
+    uniwind: v1.0.0-rc.4
   peerDependencies:
     "@gorhom/bottom-sheet": ^5
     react: "*"
@@ -15637,9 +15637,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uniwind@npm:v1.0.0-rc.2":
-  version: 1.0.0-rc.2
-  resolution: "uniwind@npm:1.0.0-rc.2"
+"uniwind@npm:v1.0.0-rc.4":
+  version: 1.0.0-rc.4
+  resolution: "uniwind@npm:1.0.0-rc.4"
   dependencies:
     "@tailwindcss/node": 4.1.14
     "@tailwindcss/oxide": 4.1.14
@@ -15652,7 +15652,7 @@ __metadata:
     react: ">=19.0.0"
     react-native: ">=0.81.0"
     tailwindcss: ">=4"
-  checksum: 7df644eddf7e4be26c0543b90efa3e11861da9f87209835eb82c452681720572a6783815f7c69ed1782625986b2d01a8c39c2338a8e091fd0033cf90c24fff88
+  checksum: a609b3ae52e586a6b9634836a3918985dd0c65f0d4e3b02a8c248fb275db8b6f3bdc46b550929ab3af6cd98092023b01992bd1a7366f0a31a6499bd74427a299
   languageName: node
   linkType: hard
 

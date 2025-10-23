@@ -103,7 +103,7 @@
     "tailwind-variants": "^3.1.0",
     "tailwindcss": "^4.1.14",
     "typescript": "^5.8.3",
-    "uniwind": "v1.0.0-rc.2"
+    "uniwind": "v1.0.0-rc.4"
   },
   "peerDependencies": {
     "@gorhom/bottom-sheet": "^5",

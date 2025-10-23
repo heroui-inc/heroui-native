@@ -87,6 +87,7 @@ Indicator.displayName = 'HeroUINative.Primitive.Tabs.Indicator';
 type TriggerContext = {
   value: string;
   nativeID: string;
+  isSelected: boolean;
 };
 
 const TriggerContext = createContext<TriggerContext | null>(null);
@@ -106,20 +107,21 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
 
     const Component = asChild ? Slot.Pressable : Pressable;
     const tabNativeID = `${nativeID}-tab-${tabValue}`;
+    const isSelected = rootValue === tabValue;
 
     return (
       <TriggerContext.Provider
-        value={{ value: tabValue, nativeID: tabNativeID }}
+        value={{ value: tabValue, nativeID: tabNativeID, isSelected }}
       >
         <Component
           ref={ref}
           nativeID={tabNativeID}
           aria-disabled={!!disabled}
-          aria-selected={rootValue === tabValue}
+          aria-selected={isSelected}
           role="tab"
           onPress={onPress}
           accessibilityState={{
-            selected: rootValue === tabValue,
+            selected: isSelected,
             disabled: !!disabled,
           }}
           disabled={!!disabled}

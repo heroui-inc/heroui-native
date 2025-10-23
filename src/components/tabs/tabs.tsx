@@ -28,6 +28,13 @@ import type {
   TabsTriggerProps,
 } from './tabs.types';
 
+const AnimatedIndicator = Animated.createAnimatedComponent(
+  TabsPrimitives.Indicator
+);
+
+const useTabs = TabsPrimitives.useRootContext;
+const useTabsTrigger = TabsPrimitives.useTriggerContext;
+
 // --------------------------------------------------
 
 type ItemMeasurements = {
@@ -55,10 +62,6 @@ function useMeasurementsContext() {
   }
   return context;
 }
-
-const AnimatedIndicator = Animated.createAnimatedComponent(
-  TabsPrimitives.Indicator
-);
 
 // --------------------------------------------------
 
@@ -203,7 +206,7 @@ const TabsIndicator = forwardRef<
     ...restProps
   } = props;
 
-  const { value } = TabsPrimitives.useRootContext();
+  const { value } = useTabs();
   const { measurements, variant } = useMeasurementsContext();
 
   const activeMeasurements = measurements[value];
@@ -325,4 +328,5 @@ const Tabs = Object.assign(TabsRoot, {
   Content: TabsContent,
 });
 
+export { useTabs, useTabsTrigger };
 export default Tabs;

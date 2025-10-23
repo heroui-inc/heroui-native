@@ -9,14 +9,6 @@ import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
  */
 export interface TabsProps extends TabsPrimitivesTypes.RootProps {
   /**
-   * The currently selected tab value
-   */
-  value: string;
-  /**
-   * Callback when the selected tab changes
-   */
-  onValueChange: (value: string) => void;
-  /**
    * Additional CSS classes for the root element
    */
   className?: string;
@@ -24,6 +16,11 @@ export interface TabsProps extends TabsPrimitivesTypes.RootProps {
    * React children elements
    */
   children?: React.ReactNode;
+  /**
+   * Visual variant of the tabs
+   * @default 'pill'
+   */
+  variant?: 'pill' | 'line';
 }
 
 /**

@@ -39,6 +39,7 @@ type ItemMeasurements = {
 type MeasurementsContextValue = {
   measurements: Record<string, ItemMeasurements>;
   setMeasurements: (key: string, measurements: ItemMeasurements) => void;
+  variant: 'pill' | 'line';
 };
 
 const MeasurementsContext = createContext<MeasurementsContextValue | null>(
@@ -63,7 +64,14 @@ const AnimatedIndicator = Animated.createAnimatedComponent(
 
 const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
   (props, ref) => {
-    const { children, value, onValueChange, className, ...restProps } = props;
+    const {
+      children,
+      value,
+      onValueChange,
+      className,
+      variant = 'pill',
+      ...restProps
+    } = props;
 
     const [measurements, setMeasurementsState] = useState<
       Record<string, ItemMeasurements>
@@ -82,7 +90,9 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
     const tvStyles = tabsStyles.root({ className });
 
     return (
-      <MeasurementsContext.Provider value={{ measurements, setMeasurements }}>
+      <MeasurementsContext.Provider
+        value={{ measurements, setMeasurements, variant }}
+      >
         <TabsPrimitives.Root
           ref={ref}
           value={value}
@@ -102,8 +112,9 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
 const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
   (props, ref) => {
     const { children, className, style, ...restProps } = props;
+    const { variant } = useMeasurementsContext();
 
-    const tvStyles = tabsStyles.list({ className });
+    const tvStyles = tabsStyles.list({ variant, className });
 
     return (
       <TabsPrimitives.List
@@ -193,7 +204,7 @@ const TabsIndicator = forwardRef<
   } = props;
 
   const { value } = TabsPrimitives.useRootContext();
-  const { measurements } = useMeasurementsContext();
+  const { measurements, variant } = useMeasurementsContext();
 
   const activeMeasurements = measurements[value];
   const hasMeasured = useSharedValue(false);
@@ -237,7 +248,7 @@ const TabsIndicator = forwardRef<
     };
   }, [activeMeasurements]);
 
-  const tvStyles = tabsStyles.indicator({ className });
+  const tvStyles = tabsStyles.indicator({ variant, className });
 
   return (
     <AnimatedIndicator

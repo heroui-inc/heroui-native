@@ -47,16 +47,21 @@ export default function TabsScreen() {
         Multiple Tabs
       </AppText>
 
-      <Tabs value={tab2} onValueChange={setTab2} className="mb-6">
-        <Tabs.List>
+      <Tabs
+        variant="line"
+        value={tab2}
+        onValueChange={setTab2}
+        className="mb-6"
+      >
+        <Tabs.List className="mr-0 w-full">
           <Tabs.Indicator />
-          <Tabs.Trigger value="profile">
+          <Tabs.Trigger value="profile" className="flex-1">
             <Tabs.Label>Profile</Tabs.Label>
           </Tabs.Trigger>
-          <Tabs.Trigger value="settings">
+          <Tabs.Trigger value="settings" className="flex-1">
             <Tabs.Label>Settings</Tabs.Label>
           </Tabs.Trigger>
-          <Tabs.Trigger value="notifications">
+          <Tabs.Trigger value="notifications" className="flex-1">
             <Tabs.Label>Notifications</Tabs.Label>
           </Tabs.Trigger>
         </Tabs.List>

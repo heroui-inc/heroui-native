@@ -7,7 +7,16 @@ const root = tv({
 });
 
 const list = tv({
-  base: 'flex-row items-center justify-center rounded-[12px] bg-surface-2 p-[3px] gap-1 mr-auto',
+  base: 'flex-row items-center justify-center gap-1 mr-auto',
+  variants: {
+    variant: {
+      pill: 'rounded-[12px] bg-surface-2 p-[3px]',
+      line: 'border-b border-border',
+    },
+  },
+  defaultVariants: {
+    variant: 'pill',
+  },
 });
 
 const trigger = tv({
@@ -28,7 +37,16 @@ const label = tv({
 });
 
 const indicator = tv({
-  base: 'absolute rounded-[10px] border-[0.5px] border-border shadow-sm dark:shadow-none shadow-black/[0.08] bg-background',
+  base: 'absolute',
+  variants: {
+    variant: {
+      pill: 'rounded-[10px] border-[0.5px] border-border shadow-sm dark:shadow-none shadow-black/[0.08] bg-background',
+      line: 'border-b-2 border-foreground bottom-0',
+    },
+  },
+  defaultVariants: {
+    variant: 'pill',
+  },
 });
 
 const content = tv({

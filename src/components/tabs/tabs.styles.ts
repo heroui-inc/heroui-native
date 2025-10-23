@@ -11,7 +11,7 @@ const list = tv({
 });
 
 const trigger = tv({
-  base: 'flex-row items-center justify-center px-3 py-1.5 gap-1.5 rounded-[10px] border-[0.5px] border-transparent shadow-sm dark:shadow-none shadow-black/[0.08]',
+  base: 'flex-row items-center justify-center px-3 py-1.5 gap-1.5',
   variants: {
     isSelected: {
       true: 'bg-background border-border',
@@ -32,6 +32,10 @@ const label = tv({
   base: 'text-base font-medium text-foreground',
 });
 
+const indicator = tv({
+  base: 'absolute bottom-0 left-0 h-0.5 bg-primary rounded-full',
+});
+
 const content = tv({
   base: '',
 });
@@ -50,6 +54,7 @@ const tabsStyles = combineStyles({
   list,
   trigger,
   label,
+  indicator,
   content,
   styleSheet,
 });

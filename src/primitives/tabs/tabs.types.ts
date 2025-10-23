@@ -44,6 +44,13 @@ type LabelProps = SlottableTextProps;
 type LabelRef = TextRef;
 
 /**
+ * Props for tab indicator
+ */
+type IndicatorProps = SlottableViewProps;
+/** Ref type for tab indicator */
+type IndicatorRef = ViewRef;
+
+/**
  * Props for tab content panels
  */
 type ContentProps = SlottableViewProps &
@@ -57,6 +64,8 @@ type ContentRef = ViewRef;
 export type {
   ContentProps,
   ContentRef,
+  IndicatorProps,
+  IndicatorRef,
   LabelProps,
   LabelRef,
   ListProps,

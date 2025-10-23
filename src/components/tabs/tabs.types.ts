@@ -74,6 +74,20 @@ export interface TabsLabelProps extends TabsPrimitivesTypes.LabelProps {
 }
 
 /**
+ * Props for the TabsIndicator component
+ */
+export interface TabsIndicatorProps extends TabsPrimitivesTypes.IndicatorProps {
+  /**
+   * Additional CSS classes for the indicator element
+   */
+  className?: string;
+  /**
+   * React children elements
+   */
+  children?: React.ReactNode;
+}
+
+/**
  * Props for the TabsContent component
  */
 export interface TabsContentProps extends TabsPrimitivesTypes.ContentProps {

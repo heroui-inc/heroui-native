@@ -9,6 +9,8 @@ import * as Slot from '../slot';
 import type {
   ContentProps,
   ContentRef,
+  IndicatorProps,
+  IndicatorRef,
   LabelProps,
   LabelRef,
   ListProps,
@@ -66,6 +68,19 @@ const List = forwardRef<ListRef, ListProps>(({ asChild, ...props }, ref) => {
 });
 
 List.displayName = 'HeroUINative.Primitive.Tabs.List';
+
+// --------------------------------------------------
+
+const Indicator = forwardRef<IndicatorRef, IndicatorProps>(
+  ({ asChild, ...props }, ref) => {
+    const Component = asChild ? Slot.View : View;
+    return (
+      <Component ref={ref} role="presentation" aria-hidden={true} {...props} />
+    );
+  }
+);
+
+Indicator.displayName = 'HeroUINative.Primitive.Tabs.Indicator';
 
 // --------------------------------------------------
 
@@ -175,6 +190,7 @@ Content.displayName = 'HeroUINative.Primitive.Tabs.Content';
 
 export {
   Content,
+  Indicator,
   Label,
   List,
   Root,

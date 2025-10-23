@@ -6,6 +6,7 @@ import { DISPLAY_NAME } from './tabs.constants';
 import tabsStyles from './tabs.styles';
 import type {
   TabsContentProps,
+  TabsIndicatorProps,
   TabsLabelProps,
   TabsListProps,
   TabsProps,
@@ -106,6 +107,23 @@ const TabsLabel = forwardRef<TabsPrimitivesTypes.LabelRef, TabsLabelProps>(
 
 // --------------------------------------------------
 
+const TabsIndicator = forwardRef<
+  TabsPrimitivesTypes.IndicatorRef,
+  TabsIndicatorProps
+>((props, ref) => {
+  const { children, className, ...restProps } = props;
+
+  const tvStyles = tabsStyles.indicator({ className });
+
+  return (
+    <TabsPrimitives.Indicator ref={ref} className={tvStyles} {...restProps}>
+      {children}
+    </TabsPrimitives.Indicator>
+  );
+});
+
+// --------------------------------------------------
+
 const TabsContent = forwardRef<
   TabsPrimitivesTypes.ContentRef,
   TabsContentProps
@@ -132,6 +150,7 @@ TabsRoot.displayName = DISPLAY_NAME.ROOT;
 TabsList.displayName = DISPLAY_NAME.LIST;
 TabsTrigger.displayName = DISPLAY_NAME.TRIGGER;
 TabsLabel.displayName = DISPLAY_NAME.LABEL;
+TabsIndicator.displayName = DISPLAY_NAME.INDICATOR;
 TabsContent.displayName = DISPLAY_NAME.CONTENT;
 
 /**
@@ -144,6 +163,8 @@ TabsContent.displayName = DISPLAY_NAME.CONTENT;
  * @component Tabs.Trigger - Individual tab button
  *
  * @component Tabs.Label - Label text for tab triggers
+ *
+ * @component Tabs.Indicator - Visual indicator for active tab
  *
  * @component Tabs.Content - Content panel for each tab
  *
@@ -158,6 +179,8 @@ const Tabs = Object.assign(TabsRoot, {
   Trigger: TabsTrigger,
   /** Label text for tab triggers */
   Label: TabsLabel,
+  /** Visual indicator for active tab */
+  Indicator: TabsIndicator,
   /** Content panel for each tab */
   Content: TabsContent,
 });

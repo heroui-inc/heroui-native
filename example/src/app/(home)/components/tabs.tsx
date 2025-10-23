@@ -17,6 +17,7 @@ export default function TabsScreen() {
 
       <Tabs value={tab1} onValueChange={setTab1} className="mb-6">
         <Tabs.List>
+          <Tabs.Indicator />
           <Tabs.Trigger value="account">
             <Tabs.Label>Account</Tabs.Label>
           </Tabs.Trigger>
@@ -48,6 +49,7 @@ export default function TabsScreen() {
 
       <Tabs value={tab2} onValueChange={setTab2} className="mb-6">
         <Tabs.List>
+          <Tabs.Indicator />
           <Tabs.Trigger value="profile">
             <Tabs.Label>Profile</Tabs.Label>
           </Tabs.Trigger>
@@ -90,6 +92,7 @@ export default function TabsScreen() {
 
       <Tabs value={tab3} onValueChange={setTab3} className="mb-6">
         <Tabs.List>
+          <Tabs.Indicator />
           <Tabs.Trigger value="home">
             <Tabs.Label>Home</Tabs.Label>
           </Tabs.Trigger>

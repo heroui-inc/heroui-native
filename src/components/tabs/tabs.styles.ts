@@ -7,11 +7,20 @@ const root = tv({
 });
 
 const list = tv({
-  base: 'flex-row items-center justify-center gap-1 mr-auto',
+  slots: {
+    container: 'self-start flex-row items-center gap-1',
+    scrollView: '',
+    scrollViewContentContainer: '',
+  },
   variants: {
     variant: {
-      pill: 'rounded-[12px] bg-surface-2 p-[3px]',
-      line: 'border-b border-border',
+      pill: {
+        container: 'rounded-[12px] bg-surface-2 p-[3px]',
+      },
+      line: {
+        container: 'border-b border-border',
+        scrollViewContentContainer: 'px-4',
+      },
     },
   },
   defaultVariants: {
@@ -72,6 +81,6 @@ const tabsStyles = combineStyles({
   styleSheet,
 });
 
-export type RootSlots = keyof ReturnType<typeof root>;
+export type ListSlots = keyof ReturnType<typeof list>;
 
 export default tabsStyles;

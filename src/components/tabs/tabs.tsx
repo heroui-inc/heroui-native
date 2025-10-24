@@ -3,9 +3,16 @@ import {
   forwardRef,
   useCallback,
   useContext,
+  useEffect,
+  useRef,
   useState,
 } from 'react';
-import type { LayoutChangeEvent, ViewStyle } from 'react-native';
+import {
+  ScrollView,
+  useWindowDimensions,
+  type LayoutChangeEvent,
+  type ViewStyle,
+} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -53,7 +60,7 @@ const MeasurementsContext = createContext<MeasurementsContextValue | null>(
   null
 );
 
-function useMeasurementsContext() {
+function useTabsMeasurements() {
   const context = useContext(MeasurementsContext);
   if (!context) {
     throw new Error(
@@ -114,19 +121,91 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
 
 const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
   (props, ref) => {
-    const { children, className, style, ...restProps } = props;
-    const { variant } = useMeasurementsContext();
+    const {
+      children,
+      className,
+      classNames,
+      style,
+      isScrollable = false,
+      scrollAlign = 'center',
+      scrollViewProps,
+      ...restProps
+    } = props;
+    const {
+      showsHorizontalScrollIndicator,
+      className: scrollViewClassName,
+      contentContainerClassName: scrollViewContentContainerClassName,
+      ...restScrollViewProps
+    } = scrollViewProps || {};
 
-    const tvStyles = tabsStyles.list({ variant, className });
+    const { variant, measurements } = useTabsMeasurements();
+    const { value } = TabsPrimitives.useRootContext();
+    const { width: screenWidth } = useWindowDimensions();
+
+    const { container, scrollView, scrollViewContentContainer } =
+      tabsStyles.list();
+    const containerStyles = container({
+      variant,
+      className: [className, classNames?.container],
+    });
+    const scrollViewStyles = scrollView({
+      className: [classNames?.scrollView, scrollViewClassName],
+    });
+    const scrollViewContentContainerStyles = scrollViewContentContainer({
+      variant,
+      className: [
+        classNames?.scrollViewContentContainer,
+        scrollViewContentContainerClassName,
+      ],
+    });
+
+    const scrollRef = useRef<ScrollView>(null);
+
+    useEffect(() => {
+      if (!isScrollable || scrollAlign === 'none' || !measurements[value])
+        return;
+
+      const itemMeasurement = measurements[value];
+      let scrollToX = 0;
+
+      if (scrollAlign === 'start') {
+        scrollToX = itemMeasurement.x;
+      } else if (scrollAlign === 'center') {
+        const itemCenter = itemMeasurement.x + itemMeasurement.width / 2;
+        scrollToX = itemCenter - screenWidth / 2;
+      } else if (scrollAlign === 'end') {
+        scrollToX = itemMeasurement.x + itemMeasurement.width - screenWidth;
+      }
+
+      scrollRef.current?.scrollTo({
+        x: Math.max(0, scrollToX),
+        animated: true,
+      });
+    }, [value, measurements, isScrollable, scrollAlign, screenWidth]);
 
     return (
       <TabsPrimitives.List
         ref={ref}
-        className={tvStyles}
+        className={containerStyles}
         style={[tabsStyles.styleSheet.listRoot, style]}
         {...restProps}
       >
-        {children}
+        {isScrollable ? (
+          <ScrollView
+            ref={scrollRef}
+            horizontal
+            showsHorizontalScrollIndicator={
+              showsHorizontalScrollIndicator ?? false
+            }
+            className={scrollViewStyles}
+            contentContainerClassName={scrollViewContentContainerStyles}
+            {...restScrollViewProps}
+          >
+            {children}
+          </ScrollView>
+        ) : (
+          children
+        )}
       </TabsPrimitives.List>
     );
   }
@@ -146,7 +225,7 @@ const TabsTrigger = forwardRef<
     style,
     ...restProps
   } = props;
-  const { setMeasurements } = useMeasurementsContext();
+  const { setMeasurements } = useTabsMeasurements();
 
   const tvStyles = tabsStyles.trigger({ isDisabled, className });
 
@@ -207,7 +286,7 @@ const TabsIndicator = forwardRef<
   } = props;
 
   const { value } = useTabs();
-  const { measurements, variant } = useMeasurementsContext();
+  const { measurements, variant } = useTabsMeasurements();
 
   const activeMeasurements = measurements[value];
   const hasMeasured = useSharedValue(false);
@@ -328,5 +407,5 @@ const Tabs = Object.assign(TabsRoot, {
   Content: TabsContent,
 });
 
-export { useTabs, useTabsTrigger };
+export { useTabs, useTabsMeasurements, useTabsTrigger };
 export default Tabs;

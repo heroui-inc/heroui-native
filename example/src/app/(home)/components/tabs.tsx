@@ -1,145 +1,396 @@
-import { Chip, Tabs } from 'heroui-native';
+import {
+  Button,
+  Checkbox,
+  cn,
+  FormField,
+  RadioGroup,
+  Switch,
+  Tabs,
+  TextField,
+} from 'heroui-native';
 import { useState } from 'react';
-import { View } from 'react-native';
-import Animated, { FadeInDown } from 'react-native-reanimated';
-import { AppText } from '../../../components/app-text';
+import { StyleSheet, View } from 'react-native';
+import Animated, {
+  FadeIn,
+  FadeOut,
+  LinearTransition,
+} from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 
+const DURATION = 200;
+
+const AnimatedContentContainer = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => (
+  <Animated.View
+    entering={FadeIn.duration(DURATION)}
+    exiting={FadeOut.duration(DURATION)}
+    className="gap-6"
+  >
+    {children}
+  </Animated.View>
+);
+
+interface FormErrors {
+  name?: string;
+  username?: string;
+}
+
 export default function TabsScreen() {
-  const [tab1, setTab1] = useState('one');
-  const [tab2, setTab2] = useState('profile');
-  const [tab3, setTab3] = useState('home');
+  const [activeTab, setActiveTab] = useState('general');
+  const [variant, setVariant] = useState<'pill' | 'line'>('pill');
+
+  // General Tab State
+  const [homepage] = useState('heroui.com');
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [showStatusBar, setShowStatusBar] = useState(false);
+
+  // Appearance Tab State
+  const [theme, setTheme] = useState('auto');
+  const [fontSize, setFontSize] = useState('medium');
+
+  // Notifications Tab State
+  const [accountActivity, setAccountActivity] = useState(true);
+  const [mentions, setMentions] = useState(true);
+  const [directMessages, setDirectMessages] = useState(false);
+  const [marketingEmail, setMarketingEmail] = useState(false);
+
+  // Profile Tab State
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  const insets = useSafeAreaInsets();
+
+  const validateProfile = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+
+    if (!username.trim()) {
+      newErrors.username = 'Username is required';
+    } else if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+      newErrors.username =
+        'Username must be 3-20 characters (letters, numbers, underscore only)';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleUpdateProfile = () => {
+    if (validateProfile()) {
+      // Profile update logic here
+      console.log('Profile updated:', { name, username });
+    }
+  };
 
   return (
-    <ScreenScrollView>
-      <AppText className="text-lg font-bold text-muted-foreground mb-4">
-        Basic Tabs
-      </AppText>
+    <>
+      <ScreenScrollView>
+        <View className="h-6" />
 
-      <Tabs value={tab1} onValueChange={setTab1} className="mb-6">
-        <Tabs.List isScrollable>
-          <Tabs.Indicator />
-          {['one', 'two', 'three', 'four', 'five', 'six'].map((value) => (
-            <Tabs.Trigger key={value} value={value} className="px-12">
-              <Tabs.Label>{value}</Tabs.Label>
-            </Tabs.Trigger>
-          ))}
-        </Tabs.List>
-
-        {['one', 'two', 'three', 'four', 'five', 'six'].map((value) => (
-          <Tabs.Content key={value} value={value}>
-            <Animated.View
-              entering={FadeInDown}
-              className="px-2 py-4 gap-2 bg-panel rounded-lg"
-            >
-              <Chip>{value}</Chip>
-              <AppText className="text-foreground">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste
-                alias illum vitae unde rem ut laboriosam molestiae tenetur
-                ratione eum culpa nostrum ullam eius vero, consequatur quo?
-                Officiis, doloribus ratione.
-              </AppText>
-            </Animated.View>
-          </Tabs.Content>
-        ))}
-      </Tabs>
-
-      <AppText className="text-lg font-bold text-muted-foreground mb-4">
-        Multiple Tabs
-      </AppText>
-
-      <Tabs
-        variant="line"
-        value={tab2}
-        onValueChange={setTab2}
-        className="mb-6"
-      >
-        <Tabs.List className="mr-0 w-full">
-          <Tabs.Indicator />
-          <Tabs.Trigger value="profile" className="flex-1">
-            <Tabs.Label>Profile</Tabs.Label>
-          </Tabs.Trigger>
-          <Tabs.Trigger value="settings" className="flex-1">
-            <Tabs.Label>Settings</Tabs.Label>
-          </Tabs.Trigger>
-          <Tabs.Trigger value="notifications" className="flex-1">
-            <Tabs.Label>Notifications</Tabs.Label>
-          </Tabs.Trigger>
-        </Tabs.List>
-
-        <Tabs.Content value="profile">
-          <View className="p-4 bg-panel rounded-lg">
-            <AppText className="text-foreground">
-              Your profile information appears here.
-            </AppText>
-          </View>
-        </Tabs.Content>
-
-        <Tabs.Content value="settings">
-          <View className="p-4 bg-panel rounded-lg">
-            <AppText className="text-foreground">
-              Adjust your settings here.
-            </AppText>
-          </View>
-        </Tabs.Content>
-
-        <Tabs.Content value="notifications">
-          <View className="p-4 bg-panel rounded-lg">
-            <AppText className="text-foreground">
-              Manage your notifications here.
-            </AppText>
-          </View>
-        </Tabs.Content>
-      </Tabs>
-
-      <AppText className="text-lg font-bold text-muted-foreground mb-4">
-        Disabled State
-      </AppText>
-
-      <Tabs value={tab3} onValueChange={setTab3} className="mb-6">
-        <Tabs.List className="rounded-xl">
-          <Tabs.Indicator
-            className="rounded-[14px]"
-            animationConfig={{
-              type: 'spring',
-              config: { stiffness: 1200, damping: 100 },
+        <Tabs
+          variant={variant}
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className={cn('gap-1.5', variant === 'line' && 'gap-0')}
+        >
+          <Tabs.List
+            isScrollable
+            classNames={{
+              container: 'border-b-0',
+              scrollViewContentContainer: 'gap-6',
             }}
-          />
-          <Tabs.Trigger value="home" className="py-3 px-6">
-            <Tabs.Label>Home</Tabs.Label>
-          </Tabs.Trigger>
-          <Tabs.Trigger value="disabled" isDisabled>
-            <Tabs.Label>Disabled</Tabs.Label>
-          </Tabs.Trigger>
-          <Tabs.Trigger value="about" className="py-3 px-6">
-            <Tabs.Label>About</Tabs.Label>
-          </Tabs.Trigger>
-        </Tabs.List>
+          >
+            <Tabs.Indicator />
+            <Tabs.Trigger value="general">
+              <Tabs.Label>General</Tabs.Label>
+            </Tabs.Trigger>
+            <Tabs.Trigger value="appearance">
+              <Tabs.Label>Appearance</Tabs.Label>
+            </Tabs.Trigger>
+            <Tabs.Trigger value="notifications">
+              <Tabs.Label>Notifications</Tabs.Label>
+            </Tabs.Trigger>
+            <Tabs.Trigger value="profile">
+              <Tabs.Label>Profile</Tabs.Label>
+            </Tabs.Trigger>
+          </Tabs.List>
+          <Animated.View
+            layout={LinearTransition.duration(DURATION)}
+            className={cn(
+              'px-4 py-6 border border-border rounded-xl',
+              variant === 'line' && 'rounded-lg'
+            )}
+            style={styles.borderCurve}
+          >
+            {/* General Tab Content */}
+            <Tabs.Content value="general">
+              <AnimatedContentContainer>
+                {/* Homepage Field */}
+                <TextField>
+                  <TextField.Label>Homepage</TextField.Label>
+                  <TextField.Input value={homepage} />
+                </TextField>
 
-        <Tabs.Content value="home">
-          <View className="p-4 bg-panel rounded-lg">
-            <AppText className="text-foreground">
-              Welcome to the home tab.
-            </AppText>
-          </View>
-        </Tabs.Content>
+                {/* Show Sidebar Checkbox */}
+                <FormField
+                  isSelected={showSidebar}
+                  onSelectedChange={setShowSidebar}
+                  alignIndicator="start"
+                >
+                  <FormField.Indicator>
+                    <Checkbox />
+                  </FormField.Indicator>
+                  <FormField.Content>
+                    <FormField.Title>Show sidebar</FormField.Title>
+                    <FormField.Description>
+                      Display the sidebar navigation panel
+                    </FormField.Description>
+                  </FormField.Content>
+                </FormField>
 
-        <Tabs.Content value="disabled">
-          <View className="p-4 bg-panel rounded-lg">
-            <AppText className="text-foreground">
-              This content is disabled.
-            </AppText>
-          </View>
-        </Tabs.Content>
+                {/* Show Status Bar Checkbox */}
+                <FormField
+                  isSelected={showStatusBar}
+                  onSelectedChange={setShowStatusBar}
+                  alignIndicator="start"
+                >
+                  <FormField.Indicator>
+                    <Checkbox />
+                  </FormField.Indicator>
+                  <FormField.Content>
+                    <FormField.Title>Show status bar</FormField.Title>
+                    <FormField.Description>
+                      Display the status bar at the bottom
+                    </FormField.Description>
+                  </FormField.Content>
+                </FormField>
+              </AnimatedContentContainer>
+            </Tabs.Content>
 
-        <Tabs.Content value="about">
-          <View className="p-4 bg-panel rounded-lg">
-            <AppText className="text-foreground">
-              About section content.
-            </AppText>
-          </View>
-        </Tabs.Content>
-      </Tabs>
-    </ScreenScrollView>
+            {/* Appearance Tab Content */}
+            <Tabs.Content value="appearance">
+              <AnimatedContentContainer>
+                {/* Theme Radio Group */}
+                <RadioGroup
+                  value={theme}
+                  onValueChange={setTheme}
+                  className="mb-6"
+                >
+                  <View className="mb-2">
+                    <FormField.Title>Theme</FormField.Title>
+                    <FormField.Description>
+                      Select your preferred color theme
+                    </FormField.Description>
+                  </View>
+                  <View className="gap-3">
+                    <RadioGroup.Item value="auto" className="self-start">
+                      <RadioGroup.Indicator />
+                      <RadioGroup.Title>Auto</RadioGroup.Title>
+                    </RadioGroup.Item>
+                    <RadioGroup.Item value="light" className="self-start">
+                      <RadioGroup.Indicator />
+                      <RadioGroup.Title>Light</RadioGroup.Title>
+                    </RadioGroup.Item>
+                    <RadioGroup.Item value="dark" className="self-start">
+                      <RadioGroup.Indicator />
+                      <RadioGroup.Title>Dark</RadioGroup.Title>
+                    </RadioGroup.Item>
+                  </View>
+                </RadioGroup>
+
+                {/* Font Size Radio Group */}
+                <RadioGroup value={fontSize} onValueChange={setFontSize}>
+                  <View className="mb-2">
+                    <FormField.Title>Font Size</FormField.Title>
+                    <FormField.Description>
+                      Adjust the text size throughout the app
+                    </FormField.Description>
+                  </View>
+                  <View className="gap-3">
+                    <RadioGroup.Item value="small" className="self-start">
+                      <RadioGroup.Indicator />
+                      <RadioGroup.Title>Small</RadioGroup.Title>
+                    </RadioGroup.Item>
+                    <RadioGroup.Item value="medium" className="self-start">
+                      <RadioGroup.Indicator />
+                      <RadioGroup.Title>Medium</RadioGroup.Title>
+                    </RadioGroup.Item>
+                    <RadioGroup.Item value="large" className="self-start">
+                      <RadioGroup.Indicator />
+                      <RadioGroup.Title>Large</RadioGroup.Title>
+                    </RadioGroup.Item>
+                  </View>
+                </RadioGroup>
+              </AnimatedContentContainer>
+            </Tabs.Content>
+
+            {/* Notifications Tab Content */}
+            <Tabs.Content value="notifications">
+              <AnimatedContentContainer>
+                {/* Account Activity Checkbox */}
+                <FormField
+                  isSelected={accountActivity}
+                  onSelectedChange={setAccountActivity}
+                  alignIndicator="start"
+                >
+                  <FormField.Indicator>
+                    <Checkbox />
+                  </FormField.Indicator>
+                  <FormField.Content>
+                    <FormField.Title>Account activity</FormField.Title>
+                    <FormField.Description>
+                      Notifications about your account activity
+                    </FormField.Description>
+                  </FormField.Content>
+                </FormField>
+
+                {/* Mentions Checkbox */}
+                <FormField
+                  isSelected={mentions}
+                  onSelectedChange={setMentions}
+                  alignIndicator="start"
+                >
+                  <FormField.Indicator>
+                    <Checkbox />
+                  </FormField.Indicator>
+                  <FormField.Content>
+                    <FormField.Title>Mentions</FormField.Title>
+                    <FormField.Description>
+                      When someone mentions you in a comment
+                    </FormField.Description>
+                  </FormField.Content>
+                </FormField>
+
+                {/* Direct Messages Checkbox */}
+                <FormField
+                  isSelected={directMessages}
+                  onSelectedChange={setDirectMessages}
+                  alignIndicator="start"
+                >
+                  <FormField.Indicator>
+                    <Checkbox />
+                  </FormField.Indicator>
+                  <FormField.Content>
+                    <FormField.Title>Direct messages</FormField.Title>
+                    <FormField.Description>
+                      Notifications for new direct messages
+                    </FormField.Description>
+                  </FormField.Content>
+                </FormField>
+
+                {/* Marketing Email Checkbox */}
+                <FormField
+                  isSelected={marketingEmail}
+                  onSelectedChange={setMarketingEmail}
+                  alignIndicator="start"
+                >
+                  <FormField.Indicator>
+                    <Checkbox />
+                  </FormField.Indicator>
+                  <FormField.Content>
+                    <FormField.Title>Marketing email</FormField.Title>
+                    <FormField.Description>
+                      Receive emails about new features and updates
+                    </FormField.Description>
+                  </FormField.Content>
+                </FormField>
+              </AnimatedContentContainer>
+            </Tabs.Content>
+
+            {/* Profile Tab Content */}
+            <Tabs.Content value="profile">
+              <AnimatedContentContainer>
+                {/* Name Field */}
+                <TextField isRequired isInvalid={!!errors.name}>
+                  <TextField.Label>Name</TextField.Label>
+                  <TextField.Input
+                    value={name}
+                    onChangeText={(text) => {
+                      setName(text);
+                      if (errors.name) {
+                        setErrors((prev) => ({ ...prev, name: undefined }));
+                      }
+                    }}
+                    placeholder="Enter your full name"
+                  />
+                  <TextField.ErrorMessage>{errors.name}</TextField.ErrorMessage>
+                </TextField>
+
+                {/* Username Field */}
+                <TextField isRequired isInvalid={!!errors.username}>
+                  <TextField.Label>Username</TextField.Label>
+                  <TextField.Input
+                    value={username}
+                    onChangeText={(text) => {
+                      setUsername(text);
+                      if (errors.username) {
+                        setErrors((prev) => ({ ...prev, username: undefined }));
+                      }
+                    }}
+                    placeholder="Enter username"
+                    autoCapitalize="none"
+                  />
+                  <TextField.Description>
+                    3-20 characters, letters, numbers, and underscore only
+                  </TextField.Description>
+                  <TextField.ErrorMessage>
+                    {errors.username}
+                  </TextField.ErrorMessage>
+                </TextField>
+
+                {/* Update Profile Button */}
+                <Button
+                  size="sm"
+                  className="self-start px-6"
+                  onPress={handleUpdateProfile}
+                >
+                  <Button.Label className="text-base">
+                    Update profile
+                  </Button.Label>
+                </Button>
+              </AnimatedContentContainer>
+            </Tabs.Content>
+          </Animated.View>
+        </Tabs>
+      </ScreenScrollView>
+
+      <View
+        className="absolute left-8 right-8"
+        style={{
+          bottom: insets.bottom + 40,
+        }}
+      >
+        <FormField
+          isSelected={variant === 'line'}
+          onSelectedChange={(selected) =>
+            setVariant(selected ? 'line' : 'pill')
+          }
+        >
+          <FormField.Content>
+            <FormField.Title>Tabs variant</FormField.Title>
+            <FormField.Description>
+              Toggle between pill and line variants
+            </FormField.Description>
+          </FormField.Content>
+          <FormField.Indicator>
+            <Switch />
+          </FormField.Indicator>
+        </FormField>
+      </View>
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+  borderCurve: {
+    borderCurve: 'continuous',
+  },
+});

@@ -43,7 +43,7 @@ const label = tv({
       danger: 'text-danger-foreground',
     },
     size: {
-      sm: 'text-sm',
+      sm: 'text-base',
       md: 'text-base',
       lg: 'text-lg',
     },

@@ -32,6 +32,7 @@ import type {
   TabsLabelProps,
   TabsListProps,
   TabsProps,
+  TabsScrollViewProps,
   TabsTriggerProps,
 } from './tabs.types';
 
@@ -121,49 +122,52 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
 
 const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
   (props, ref) => {
+    const { children, className, style, ...restProps } = props;
+
+    const { variant } = useTabsMeasurements();
+
+    const tvStyles = tabsStyles.list({ variant, className });
+
+    return (
+      <TabsPrimitives.List
+        ref={ref}
+        className={tvStyles}
+        style={[tabsStyles.styleSheet.listRoot, style]}
+        {...restProps}
+      >
+        {children}
+      </TabsPrimitives.List>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const TabsScrollView = forwardRef<ScrollView, TabsScrollViewProps>(
+  (props, ref) => {
     const {
       children,
       className,
-      classNames,
-      style,
-      isScrollable = false,
+      contentContainerClassName,
+      showsHorizontalScrollIndicator = false,
       scrollAlign = 'center',
-      scrollViewProps,
       ...restProps
     } = props;
-    const {
-      showsHorizontalScrollIndicator,
-      className: scrollViewClassName,
-      contentContainerClassName: scrollViewContentContainerClassName,
-      ...restScrollViewProps
-    } = scrollViewProps || {};
 
-    const { variant, measurements } = useTabsMeasurements();
     const { value } = TabsPrimitives.useRootContext();
+    const { measurements, variant } = useTabsMeasurements();
     const { width: screenWidth } = useWindowDimensions();
 
-    const { container, scrollView, scrollViewContentContainer } =
-      tabsStyles.list();
-    const containerStyles = container({
+    const scrollViewStyles = tabsStyles.scrollView({ className });
+    const contentContainerStyles = tabsStyles.scrollViewContentContainer({
       variant,
-      className: [className, classNames?.container],
-    });
-    const scrollViewStyles = scrollView({
-      className: [classNames?.scrollView, scrollViewClassName],
-    });
-    const scrollViewContentContainerStyles = scrollViewContentContainer({
-      variant,
-      className: [
-        classNames?.scrollViewContentContainer,
-        scrollViewContentContainerClassName,
-      ],
+      className: contentContainerClassName,
     });
 
     const scrollRef = useRef<ScrollView>(null);
 
     useEffect(() => {
-      if (!isScrollable || scrollAlign === 'none' || !measurements[value])
-        return;
+      if (scrollAlign === 'none' || !measurements[value]) return;
 
       const itemMeasurement = measurements[value];
       let scrollToX = 0;
@@ -181,32 +185,26 @@ const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
         x: Math.max(0, scrollToX),
         animated: true,
       });
-    }, [value, measurements, isScrollable, scrollAlign, screenWidth]);
+    }, [value, measurements, scrollAlign, screenWidth]);
 
     return (
-      <TabsPrimitives.List
-        ref={ref}
-        className={containerStyles}
-        style={[tabsStyles.styleSheet.listRoot, style]}
+      <ScrollView
+        ref={(instance) => {
+          scrollRef.current = instance;
+          if (typeof ref === 'function') {
+            ref(instance);
+          } else if (ref) {
+            ref.current = instance;
+          }
+        }}
+        horizontal
+        showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
+        className={scrollViewStyles}
+        contentContainerClassName={contentContainerStyles}
         {...restProps}
       >
-        {isScrollable ? (
-          <ScrollView
-            ref={scrollRef}
-            horizontal
-            showsHorizontalScrollIndicator={
-              showsHorizontalScrollIndicator ?? false
-            }
-            className={scrollViewStyles}
-            contentContainerClassName={scrollViewContentContainerStyles}
-            {...restScrollViewProps}
-          >
-            {children}
-          </ScrollView>
-        ) : (
-          children
-        )}
-      </TabsPrimitives.List>
+        {children}
+      </ScrollView>
     );
   }
 );
@@ -370,6 +368,7 @@ const TabsContent = forwardRef<
 
 TabsRoot.displayName = DISPLAY_NAME.ROOT;
 TabsList.displayName = DISPLAY_NAME.LIST;
+TabsScrollView.displayName = DISPLAY_NAME.SCROLL_VIEW;
 TabsTrigger.displayName = DISPLAY_NAME.TRIGGER;
 TabsLabel.displayName = DISPLAY_NAME.LABEL;
 TabsIndicator.displayName = DISPLAY_NAME.INDICATOR;
@@ -381,6 +380,8 @@ TabsContent.displayName = DISPLAY_NAME.CONTENT;
  * @component Tabs - Main container for the tabs system
  *
  * @component Tabs.List - Container for tab triggers
+ *
+ * @component Tabs.ScrollView - Scrollable wrapper for tab triggers
  *
  * @component Tabs.Trigger - Individual tab button
  *
@@ -397,6 +398,8 @@ TabsContent.displayName = DISPLAY_NAME.CONTENT;
 const Tabs = Object.assign(TabsRoot, {
   /** Container for tab triggers */
   List: TabsList,
+  /** Scrollable wrapper for tab triggers */
+  ScrollView: TabsScrollView,
   /** Individual tab button */
   Trigger: TabsTrigger,
   /** Label text for tab triggers */

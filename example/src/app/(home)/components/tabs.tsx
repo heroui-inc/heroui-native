@@ -101,26 +101,22 @@ export default function TabsScreen() {
           onValueChange={setActiveTab}
           className={cn('gap-1.5', variant === 'line' && 'gap-0')}
         >
-          <Tabs.List
-            isScrollable
-            classNames={{
-              container: 'border-b-0',
-              scrollViewContentContainer: 'gap-6',
-            }}
-          >
-            <Tabs.Indicator />
-            <Tabs.Trigger value="general">
-              <Tabs.Label>General</Tabs.Label>
-            </Tabs.Trigger>
-            <Tabs.Trigger value="appearance">
-              <Tabs.Label>Appearance</Tabs.Label>
-            </Tabs.Trigger>
-            <Tabs.Trigger value="notifications">
-              <Tabs.Label>Notifications</Tabs.Label>
-            </Tabs.Trigger>
-            <Tabs.Trigger value="profile">
-              <Tabs.Label>Profile</Tabs.Label>
-            </Tabs.Trigger>
+          <Tabs.List className={variant === 'line' ? 'border-b-0' : undefined}>
+            <Tabs.ScrollView contentContainerClassName="gap-6">
+              <Tabs.Indicator />
+              <Tabs.Trigger value="general">
+                <Tabs.Label>General</Tabs.Label>
+              </Tabs.Trigger>
+              <Tabs.Trigger value="appearance">
+                <Tabs.Label>Appearance</Tabs.Label>
+              </Tabs.Trigger>
+              <Tabs.Trigger value="notifications">
+                <Tabs.Label>Notifications</Tabs.Label>
+              </Tabs.Trigger>
+              <Tabs.Trigger value="profile">
+                <Tabs.Label>Profile</Tabs.Label>
+              </Tabs.Trigger>
+            </Tabs.ScrollView>
           </Tabs.List>
           <Animated.View
             layout={LinearTransition.duration(DURATION)}

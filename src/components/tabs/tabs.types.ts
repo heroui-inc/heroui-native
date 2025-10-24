@@ -4,8 +4,6 @@ import type {
   WithTimingConfig,
 } from 'react-native-reanimated';
 import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
-import type { ElementSlots } from '../../providers/theme';
-import type { ListSlots } from './tabs.styles';
 
 /**
  * Props for the Tabs root component
@@ -35,27 +33,32 @@ export interface TabsListProps extends TabsPrimitivesTypes.ListProps {
    */
   className?: string;
   /**
-   * Additional CSS classes for the list element slots
+   * React children elements
    */
-  classNames?: ElementSlots<ListSlots>;
+  children?: React.ReactNode;
+}
+
+/**
+ * Props for the TabsScrollView component
+ */
+export interface TabsScrollViewProps extends ScrollViewProps {
+  /**
+   * Additional CSS classes for the scroll view
+   */
+  className?: string;
+  /**
+   * Additional CSS classes for the content container
+   */
+  contentContainerClassName?: string;
   /**
    * React children elements
    */
   children?: React.ReactNode;
   /**
-   * Whether the list should be scrollable horizontally
-   * @default false
-   */
-  isScrollable?: boolean;
-  /**
    * Scroll alignment variant for the selected item
    * @default 'center'
    */
   scrollAlign?: 'start' | 'center' | 'end' | 'none';
-  /**
-   * Additional props for the ScrollView (only applies when isScrollable is true)
-   */
-  scrollViewProps?: ScrollViewProps;
 }
 
 /**

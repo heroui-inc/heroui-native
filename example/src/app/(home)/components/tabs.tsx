@@ -1,16 +1,14 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
   Checkbox,
   cn,
   FormField,
   RadioGroup,
-  ScrollShadow,
   Switch,
   Tabs,
   TextField,
 } from 'heroui-native';
-import { memo, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   FadeIn,
@@ -19,38 +17,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
-
-const TabsTriggers = () => (
-  <Tabs.ScrollView contentContainerClassName="gap-6">
-    <Tabs.Indicator />
-    <Tabs.Trigger value="general">
-      <Tabs.Label>General</Tabs.Label>
-    </Tabs.Trigger>
-    <Tabs.Trigger value="appearance">
-      <Tabs.Label>Appearance</Tabs.Label>
-    </Tabs.Trigger>
-    <Tabs.Trigger value="notifications">
-      <Tabs.Label>Notifications</Tabs.Label>
-    </Tabs.Trigger>
-    <Tabs.Trigger value="profile">
-      <Tabs.Label>Profile</Tabs.Label>
-    </Tabs.Trigger>
-  </Tabs.ScrollView>
-);
-
-const TabsListLineVariant = memo(() => (
-  <Tabs.List className="border-b-0">
-    <ScrollShadow LinearGradientComponent={LinearGradient} color="blue">
-      <TabsTriggers />
-    </ScrollShadow>
-  </Tabs.List>
-));
-
-const TabsListPillVariant = () => (
-  <Tabs.List>
-    <TabsTriggers />
-  </Tabs.List>
-);
 
 const DURATION = 200;
 
@@ -134,11 +100,23 @@ export default function TabsScreen() {
           onValueChange={setActiveTab}
           className={cn('gap-1.5', variant === 'line' && 'gap-0')}
         >
-          {variant === 'line' ? (
-            <TabsListLineVariant />
-          ) : (
-            <TabsListPillVariant />
-          )}
+          <Tabs.List className="border-b-0">
+            <Tabs.ScrollView contentContainerClassName="gap-4">
+              <Tabs.Indicator />
+              <Tabs.Trigger value="general">
+                <Tabs.Label>General</Tabs.Label>
+              </Tabs.Trigger>
+              <Tabs.Trigger value="appearance">
+                <Tabs.Label>Appearance</Tabs.Label>
+              </Tabs.Trigger>
+              <Tabs.Trigger value="notifications">
+                <Tabs.Label>Notifications</Tabs.Label>
+              </Tabs.Trigger>
+              <Tabs.Trigger value="profile">
+                <Tabs.Label>Profile</Tabs.Label>
+              </Tabs.Trigger>
+            </Tabs.ScrollView>
+          </Tabs.List>
           <Animated.View
             layout={LinearTransition.duration(DURATION)}
             className={cn(

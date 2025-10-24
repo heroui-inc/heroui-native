@@ -184,6 +184,7 @@ export default function MyComponent() {
 - [Spinner](./src/components/spinner/spinner.md)
 - [Surface](./src/components/surface/surface.md)
 - [Switch](./src/components/switch/switch.md)
+- [Tabs](./src/components/tabs/tabs.md)
 - [Text Field](./src/components/text-field/text-field.md)
 
 ## Changelog

@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SelectButtonTrigger } from '../../../components/select/select-button-trigger';
 
-export default function PopoverNativeModalScreen() {
+export default function SelectNativeModalScreen() {
   const insets = useSafeAreaInsets();
 
   return (

@@ -104,7 +104,7 @@ export default function RadioGroupScreen() {
       >
         <RadioGroup.Item value="start" className="justify-start">
           <RadioGroup.Indicator />
-          <View>
+          <View className="flex-1">
             <RadioGroup.Title>Indicator on Start (Left)</RadioGroup.Title>
             <RadioGroup.Description>
               The radio button appears on the left side
@@ -112,7 +112,7 @@ export default function RadioGroupScreen() {
           </View>
         </RadioGroup.Item>
         <RadioGroup.Item value="end">
-          <View>
+          <View className="flex-1">
             <RadioGroup.Title>Indicator on End (Right)</RadioGroup.Title>
             <RadioGroup.Description>
               The radio button appears on the right side (default)

@@ -140,12 +140,8 @@ export default function ChipScreen() {
           className="pr-1.5 p-0.5 pl-2 gap-2"
         >
           <Chip.Label>Clear</Chip.Label>
-          <View className="rounded-full p-1 bg-neutral-200 dark:bg-neutral-700">
-            <StyledIonicons
-              name="close"
-              size={12}
-              className="text-neutral-200 dark:text-neutral-700"
-            />
+          <View className="rounded-full p-1 bg-muted/20">
+            <StyledIonicons name="close" size={12} className="text-muted" />
           </View>
         </Chip>
       </View>

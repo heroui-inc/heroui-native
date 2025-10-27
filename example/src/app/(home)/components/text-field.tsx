@@ -96,6 +96,7 @@ export default function TextFieldScreen() {
           <TextField.Input
             placeholder="Custom colors"
             className="border-[2px]"
+            selectionColor="#2563eb"
             colors={{
               blurBorder: isDark ? '#2563eb' : '#2563eb',
               focusBorder: isDark ? '#2563eb' : '#2563eb',

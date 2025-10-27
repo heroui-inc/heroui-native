@@ -79,7 +79,7 @@
 
       /* Misc Colors */
       --color-border: var(--color-neutral-200);
-      --color-divider: var(--color-neutral-200);
+      --color-divider: var(--color-neutral-400);
       --color-link: var(--color-foreground);
     }
 
@@ -124,7 +124,7 @@
 
       /* Misc Colors */
       --color-border: var(--color-neutral-800);
-      --color-divider: var(--color-neutral-800);
+      --color-divider: var(--color-neutral-600);
       --color-link: var(--color-foreground);
     }
   }

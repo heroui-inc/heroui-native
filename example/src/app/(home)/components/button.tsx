@@ -106,13 +106,13 @@ export default function ButtonScreen() {
       <View className="gap-8">
         <Button>Full Width Button</Button>
         <View>
-          <Button variant="secondary" className="self-start">
+          <Button variant="secondary" size="sm" className="self-start">
             Start
           </Button>
-          <Button variant="secondary" className="self-center">
+          <Button variant="secondary" size="sm" className="self-center">
             Center
           </Button>
-          <Button variant="secondary" className="self-end">
+          <Button variant="secondary" size="sm" className="self-end">
             End
           </Button>
         </View>

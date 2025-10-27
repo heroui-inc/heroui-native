@@ -8,7 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
-import { colorKit, useThemeColor } from '../../providers/theme';
+import { useThemeColor } from '../../providers/theme';
 import { PressableFeedback } from '../pressable-feedback';
 import {
   ANIMATION_DURATION,
@@ -47,11 +47,13 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const themeColorAccent = useThemeColor('accent');
-  const themeColorAccentSoft = useThemeColor('accent-soft');
-  const themeColorDefault = useThemeColor('default');
-  const themeColorBackground = useThemeColor('background');
-  const themeColorDanger = useThemeColor('danger');
+  const themeColorAccentForeground = useThemeColor('accent-foreground');
+  const themeColorAccentSoftForeground = useThemeColor(
+    'accent-soft-foreground'
+  );
+  const themeColorDefaultForeground = useThemeColor('default-foreground');
+  const themeColorForeground = useThemeColor('foreground');
+  const themeColorDangerForeground = useThemeColor('danger-foreground');
 
   const stringifiedChildren = childrenToString(children);
 
@@ -63,30 +65,26 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     className,
   });
 
-  const getColor = (color: string) => {
-    return colorKit.invert(color).hex();
-  };
-
   const highlightColorMap = useMemo(() => {
     switch (variant) {
       case 'primary':
-        return getColor(themeColorAccent);
+        return themeColorAccentForeground;
       case 'secondary':
-        return getColor(themeColorAccentSoft);
+        return themeColorAccentSoftForeground;
       case 'tertiary':
-        return getColor(themeColorDefault);
+        return themeColorDefaultForeground;
       case 'ghost':
-        return getColor(themeColorBackground);
+        return themeColorForeground;
       case 'danger':
-        return getColor(themeColorDanger);
+        return themeColorDangerForeground;
     }
   }, [
     variant,
-    themeColorAccent,
-    themeColorAccentSoft,
-    themeColorDefault,
-    themeColorBackground,
-    themeColorDanger,
+    themeColorAccentForeground,
+    themeColorAccentSoftForeground,
+    themeColorDefaultForeground,
+    themeColorForeground,
+    themeColorDangerForeground,
   ]);
 
   const scale = useSharedValue(0);

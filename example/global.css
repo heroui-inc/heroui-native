@@ -33,7 +33,7 @@
   --radius-4xl: var(--radius) * 4;
 
   /* Opacity */
-  --disabled-opacity: 0.5;
+  --opacity-disabled: 0.5;
 }
 
 @layer theme {

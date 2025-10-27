@@ -27,9 +27,9 @@ export const Priority: FC = () => {
       label: 'No Priority',
       indicator: (
         <View className="flex-row items-center gap-0.5">
-          <View className="h-[1.5px] w-1 bg-muted-foreground" />
-          <View className="h-[1.5px] w-1 bg-muted-foreground" />
-          <View className="h-[1.5px] w-1 bg-muted-foreground" />
+          <View className="h-[1.5px] w-1 bg-muted/50" />
+          <View className="h-[1.5px] w-1 bg-muted/50" />
+          <View className="h-[1.5px] w-1 bg-muted/50" />
         </View>
       ),
     },
@@ -62,7 +62,7 @@ export const Priority: FC = () => {
         <View className="flex-row items-end gap-0.5">
           <View className="h-1 w-[3px] rounded-[1px] bg-foreground" />
           <View className="h-2 w-[3px] rounded-[1px] bg-foreground" />
-          <View className="h-3 w-[3px] rounded-[1px] bg-muted-foreground" />
+          <View className="h-3 w-[3px] rounded-[1px] bg-muted/50" />
         </View>
       ),
     },
@@ -72,8 +72,8 @@ export const Priority: FC = () => {
       indicator: (
         <View className="flex-row items-end gap-0.5">
           <View className="h-1 w-[3px] rounded-[1px] bg-foreground" />
-          <View className="h-2 w-[3px] rounded-[1px] bg-muted-foreground" />
-          <View className="h-3 w-[3px] rounded-[1px] bg-muted-foreground" />
+          <View className="h-2 w-[3px] rounded-[1px] bg-muted/50" />
+          <View className="h-3 w-[3px] rounded-[1px] bg-muted/50" />
         </View>
       ),
     },

@@ -54,7 +54,7 @@ export default function CardScreen() {
       <Card>
         <View className="gap-4">
           <Card.Header>
-            <View className="bg-accent rounded-full w-12 h-12 items-center justify-center">
+            <View className="bg-accent rounded-full size-12 items-center justify-center">
               <AppText className="text-accent-foreground font-bold text-xl">
                 $
               </AppText>
@@ -296,7 +296,7 @@ export default function CardScreen() {
               <Button
                 size="sm"
                 variant="ghost"
-                className="border border-muted-foreground/50"
+                className="border border-border"
               >
                 Done
               </Button>
@@ -327,7 +327,7 @@ export default function CardScreen() {
               <Button
                 size="sm"
                 variant="ghost"
-                className="border border-muted-foreground/50"
+                className="border border-border"
               >
                 Done
               </Button>

@@ -219,7 +219,7 @@ export default function SwitchScreen() {
       >
         <Switch.Thumb
           width={20}
-          className="border-[1.5px] border-muted-foreground"
+          className="border-[1.5px] border-border"
           colors={{
             defaultBackground: 'black',
             selectedBackground: 'black',

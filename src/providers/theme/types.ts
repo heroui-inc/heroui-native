@@ -16,31 +16,38 @@ type CombinedStyles<T extends Record<string, any>> = {
 };
 
 /**
- * Theme colors
+ * Theme colors as const array for efficient mapping
  */
-type ThemeColor =
-  | 'background'
-  | 'foreground'
-  | 'panel'
-  | 'panel-foreground'
-  | 'muted'
-  | 'default'
-  | 'default-foreground'
-  | 'surface-1'
-  | 'surface-2'
-  | 'surface-3'
-  | 'accent'
-  | 'accent-foreground'
-  | 'accent-soft'
-  | 'accent-soft-foreground'
-  | 'success'
-  | 'success-foreground'
-  | 'warning'
-  | 'warning-foreground'
-  | 'danger'
-  | 'danger-foreground'
-  | 'border'
-  | 'divider'
-  | 'link';
+const THEME_COLORS = [
+  'background',
+  'foreground',
+  'panel',
+  'panel-foreground',
+  'muted',
+  'default',
+  'default-foreground',
+  'surface-1',
+  'surface-2',
+  'surface-3',
+  'accent',
+  'accent-foreground',
+  'accent-soft',
+  'accent-soft-foreground',
+  'success',
+  'success-foreground',
+  'warning',
+  'warning-foreground',
+  'danger',
+  'danger-foreground',
+  'border',
+  'divider',
+  'link',
+] as const;
 
+/**
+ * Theme colors type derived from THEME_COLORS array
+ */
+type ThemeColor = (typeof THEME_COLORS)[number];
+
+export { THEME_COLORS };
 export type { CombinedStyles, ElementSlots, ThemeColor };

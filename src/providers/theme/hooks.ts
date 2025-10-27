@@ -1,12 +1,9 @@
-import { useResolveClassNames } from 'uniwind';
+import { useCSSVariable } from 'uniwind';
 import type { ThemeColor } from './types';
 
-export const useThemeColor = (color: ThemeColor): string => {
-  const targetColor = `text-${color}`;
-
-  const styles = useResolveClassNames(targetColor);
-
-  const colorValue = styles.color ?? 'red';
-
+export const useThemeColor = (themeColor: ThemeColor): string => {
+  const cssVariable = `--color-${themeColor}`;
+  const resolvedColor = useCSSVariable(cssVariable);
+  const colorValue = resolvedColor ?? 'red';
   return colorValue as string;
 };

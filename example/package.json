@@ -42,7 +42,7 @@
     "tailwind-merge": "^3.3.1",
     "tailwind-variants": "^3.1.0",
     "tailwindcss": "^4.1.14",
-    "uniwind": "v1.0.0-rc.5"
+    "uniwind": "v1.0.0-rc.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

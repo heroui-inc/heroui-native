@@ -28,6 +28,15 @@ type SelectOption =
   | undefined;
 
 /**
+ * Content sizing strategy
+ * - 'content-fit': Auto-size to content width (default)
+ * - 'trigger': Match trigger width exactly
+ * - 'full': 100% width
+ * - number: Fixed width in pixels
+ */
+type ContentSizing = 'trigger' | 'content-fit' | 'full' | number;
+
+/**
  * Internal context interface for managing select state and positioning
  */
 interface IRootContext {
@@ -165,7 +174,18 @@ type TriggerProps = Omit<SlottablePressableProps, 'disabled'> & {
 /**
  * Props for the Select Content component
  */
-type PopoverContentProps = SlottableViewProps & PositionedContentProps;
+type PopoverContentProps = SlottableViewProps &
+  PositionedContentProps & {
+    /**
+     * Content width sizing strategy
+     * - 'content-fit': Auto-size to content width (default)
+     * - 'trigger': Match trigger width exactly
+     * - 'full': 100% width
+     * - number: Fixed width in pixels
+     * @default 'content-fit'
+     */
+    width?: ContentSizing;
+  };
 
 /**
  * Props for the dialog content component
@@ -294,6 +314,7 @@ export type {
   CloseProps,
   CloseRef,
   ContentRef,
+  ContentSizing,
   DialogContentProps,
   GroupLabelProps,
   GroupLabelRef,

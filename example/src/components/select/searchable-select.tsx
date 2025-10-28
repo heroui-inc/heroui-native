@@ -103,7 +103,10 @@ export function SearchableSelect() {
           className="bg-transparent"
           onPress={() => KeyboardController.dismiss()}
         />
-        <Select.Content className="w-[256px] px-0 border border-border rounded-xl">
+        <Select.Content
+          width="trigger"
+          className="px-0 border border-border rounded-xl"
+        >
           {US_STATES.filter((state) =>
             state.label.toLowerCase().includes(searchQuery.toLowerCase())
           ).map((state, index, filteredArray) => (
@@ -113,10 +116,7 @@ export function SearchableSelect() {
                 label={state.label}
                 className="px-4"
                 onPress={() => KeyboardController.dismiss()}
-              >
-                <Select.ItemLabel />
-                <Select.ItemIndicator />
-              </Select.Item>
+              />
               {index < filteredArray.length - 1 && <Divider />}
             </React.Fragment>
           ))}

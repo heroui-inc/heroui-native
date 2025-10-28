@@ -1,3 +1,29 @@
+## 1.0.0-alpha.16 (2025-10-28)
+
+* chore: type version to v1.0.0-alpha.16 ([2d0693c](https://github.com/heroui-inc/heroui-native/commit/2d0693c))
+* chore(tabs): update example ([f7d62e6](https://github.com/heroui-inc/heroui-native/commit/f7d62e6))
+* docs: add tabs doc file ([299e8e4](https://github.com/heroui-inc/heroui-native/commit/299e8e4))
+* docs: correct @gorhom/bottom-sheet version syntax ([3829e77](https://github.com/heroui-inc/heroui-native/commit/3829e77))
+* docs: upd popover and select doc files with content width info ([66c7217](https://github.com/heroui-inc/heroui-native/commit/66c7217))
+* docs: update readme with running on web info ([7c19b2d](https://github.com/heroui-inc/heroui-native/commit/7c19b2d))
+* refactor(popover): improve popover content width handling ([c98ece1](https://github.com/heroui-inc/heroui-native/commit/c98ece1))
+* refactor(select): improve select content width handling ([7593d9d](https://github.com/heroui-inc/heroui-native/commit/7593d9d))
+* feat(showcase): add model-select components ([102b876](https://github.com/heroui-inc/heroui-native/commit/102b876))
+* feat(showcase): handle raycast screen components ([1328a8e](https://github.com/heroui-inc/heroui-native/commit/1328a8e))
+* feat(tabs): add initial tabs src components ([e36f0a0](https://github.com/heroui-inc/heroui-native/commit/e36f0a0))
+* feat(tabs): add primitives ([8da19be](https://github.com/heroui-inc/heroui-native/commit/8da19be))
+* feat(tabs): add tabs example ([3ee2749](https://github.com/heroui-inc/heroui-native/commit/3ee2749))
+* feat(tabs): add tabs indicator primitive ([2718867](https://github.com/heroui-inc/heroui-native/commit/2718867))
+* feat(tabs): add tabs label ([1c3f179](https://github.com/heroui-inc/heroui-native/commit/1c3f179))
+* feat(tabs): add tabs scrollview compound part ([645126f](https://github.com/heroui-inc/heroui-native/commit/645126f))
+* feat(tabs): export tabs hooks ([21d7d8a](https://github.com/heroui-inc/heroui-native/commit/21d7d8a))
+* feat(tabs): handle indicator animation ([80f530a](https://github.com/heroui-inc/heroui-native/commit/80f530a))
+* feat(tabs): handle line variant ([38422fe](https://github.com/heroui-inc/heroui-native/commit/38422fe))
+* feat(tabs): handle scrollable ([502b576](https://github.com/heroui-inc/heroui-native/commit/502b576))
+* fix: remove pressable-feedback route from layout ([21c0e83](https://github.com/heroui-inc/heroui-native/commit/21c0e83))
+
+
+
 ## 1.0.0-alpha.15 (2025-10-15)
 
 * fix(dialog): asChild issue ([0ce397d](https://github.com/heroui-inc/heroui-native/commit/0ce397d))

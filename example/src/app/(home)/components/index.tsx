@@ -123,6 +123,11 @@ const components: Component[] = [
     path: 'switch',
   },
   {
+    title: 'Tabs',
+    icon: <ComponentIcon />,
+    path: 'tabs',
+  },
+  {
     title: 'Text Field',
     icon: <ComponentIcon />,
     path: 'text-field',

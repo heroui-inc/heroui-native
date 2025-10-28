@@ -48,7 +48,7 @@ export default function PopoverScreen() {
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Overlay />
-            <Popover.Content className="gap-1 w-[320px] rounded-xl px-6 py-4">
+            <Popover.Content width={320} className="gap-1 rounded-xl px-6 py-4">
               <Popover.Close className="absolute top-3 right-3 z-50" />
               <Popover.Title>Information</Popover.Title>
               <Popover.Description>
@@ -72,7 +72,8 @@ export default function PopoverScreen() {
           <Popover.Portal>
             <Popover.Overlay />
             <Popover.Content
-              className="gap-2 w-[280px] items-center"
+              width={280}
+              className="gap-2 items-center"
               presentation="popover"
             >
               <View className="mb-6 items-center">

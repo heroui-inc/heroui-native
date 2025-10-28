@@ -13,7 +13,11 @@ export default function PopoverNativeModalScreen() {
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Overlay />
-          <Popover.Content offset={insets.top + 20} className="pb-6">
+          <Popover.Content
+            width="trigger"
+            offset={insets.top + 20}
+            className="pb-6"
+          >
             <Popover.Close className="self-end -mb-2 z-50" />
             <Popover.Title>Popover from Modal</Popover.Title>
             <Popover.Description>

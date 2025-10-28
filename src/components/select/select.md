@@ -66,6 +66,64 @@ Use popover presentation for floating content with automatic positioning.
 </Select>
 ```
 
+### Width Control
+
+Control the width of the select content using the `width` prop. This only works with popover presentation.
+
+```tsx
+{
+  /* Fixed width in pixels */
+}
+<Select>
+  <Select.Trigger>...</Select.Trigger>
+  <Select.Portal>
+    <Select.Overlay />
+    <Select.Content width={280} presentation="popover">
+      <Select.Item value="1" label="Item 1" />
+    </Select.Content>
+  </Select.Portal>
+</Select>;
+
+{
+  /* Match trigger width */
+}
+<Select>
+  <Select.Trigger>...</Select.Trigger>
+  <Select.Portal>
+    <Select.Overlay />
+    <Select.Content width="trigger" presentation="popover">
+      <Select.Item value="1" label="Item 1" />
+    </Select.Content>
+  </Select.Portal>
+</Select>;
+
+{
+  /* Full width (100%) */
+}
+<Select>
+  <Select.Trigger>...</Select.Trigger>
+  <Select.Portal>
+    <Select.Overlay />
+    <Select.Content width="full" presentation="popover">
+      <Select.Item value="1" label="Item 1" />
+    </Select.Content>
+  </Select.Portal>
+</Select>;
+
+{
+  /* Auto-size to content (default) */
+}
+<Select>
+  <Select.Trigger>...</Select.Trigger>
+  <Select.Portal>
+    <Select.Overlay />
+    <Select.Content width="content-fit" presentation="popover">
+      <Select.Item value="1" label="Item 1" />
+    </Select.Content>
+  </Select.Portal>
+</Select>;
+```
+
 ### Bottom Sheet Presentation
 
 Use bottom sheet for mobile-optimized selection experience.
@@ -229,7 +287,7 @@ export default function SelectExample() {
       </Select.Trigger>
       <Select.Portal>
         <Select.Overlay />
-        <Select.Content className="w-[280px] rounded-2xl" placement="bottom">
+        <Select.Content width={280} className="rounded-2xl" placement="bottom">
           <ScrollView>
             {COUNTRIES.map((item) => (
               <Select.Item
@@ -356,22 +414,23 @@ export default function SelectExample() {
 
 ### Select.Content (Popover Presentation)
 
-| prop                         | type                                     | default     | description                                            |
-| ---------------------------- | ---------------------------------------- | ----------- | ------------------------------------------------------ |
-| `children`                   | `ReactNode`                              | -           | The select content                                     |
-| `presentation`               | `'popover'`                              | `'popover'` | Presentation mode for the select                       |
-| `placement`                  | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'`  | Placement of the content relative to trigger           |
-| `align`                      | `'start' \| 'center' \| 'end'`           | `'center'`  | Alignment along the placement axis                     |
-| `avoidCollisions`            | `boolean`                                | `true`      | Whether to flip placement when close to viewport edges |
-| `offset`                     | `number`                                 | `8`         | Distance from trigger element in pixels                |
-| `alignOffset`                | `number`                                 | `0`         | Offset along the alignment axis in pixels              |
-| `className`                  | `string`                                 | -           | Additional CSS classes for the content container       |
-| `isDefaultAnimationDisabled` | `boolean`                                | `false`     | Whether to disable the default animations              |
-| `disablePositioningStyle`    | `boolean`                                | `false`     | Whether to disable automatic positioning styles        |
-| `forceMount`                 | `boolean`                                | -           | Whether to force mount the component in the DOM        |
-| `insets`                     | `Insets`                                 | -           | Screen edge insets to respect when positioning         |
-| `asChild`                    | `boolean`                                | `false`     | Whether to render as a child element                   |
-| `...Animated.ViewProps`      | `Animated.ViewProps`                     | -           | All Reanimated Animated.View props are supported       |
+| prop                         | type                                             | default         | description                                            |
+| ---------------------------- | ------------------------------------------------ | --------------- | ------------------------------------------------------ |
+| `children`                   | `ReactNode`                                      | -               | The select content                                     |
+| `width`                      | `number \| 'trigger' \| 'content-fit' \| 'full'` | `'content-fit'` | Width sizing strategy for the content                  |
+| `presentation`               | `'popover'`                                      | `'popover'`     | Presentation mode for the select                       |
+| `placement`                  | `'top' \| 'bottom' \| 'left' \| 'right'`         | `'bottom'`      | Placement of the content relative to trigger           |
+| `align`                      | `'start' \| 'center' \| 'end'`                   | `'center'`      | Alignment along the placement axis                     |
+| `avoidCollisions`            | `boolean`                                        | `true`          | Whether to flip placement when close to viewport edges |
+| `offset`                     | `number`                                         | `8`             | Distance from trigger element in pixels                |
+| `alignOffset`                | `number`                                         | `0`             | Offset along the alignment axis in pixels              |
+| `className`                  | `string`                                         | -               | Additional CSS classes for the content container       |
+| `isDefaultAnimationDisabled` | `boolean`                                        | `false`         | Whether to disable the default animations              |
+| `disablePositioningStyle`    | `boolean`                                        | `false`         | Whether to disable automatic positioning styles        |
+| `forceMount`                 | `boolean`                                        | -               | Whether to force mount the component in the DOM        |
+| `insets`                     | `Insets`                                         | -               | Screen edge insets to respect when positioning         |
+| `asChild`                    | `boolean`                                        | `false`         | Whether to render as a child element                   |
+| `...Animated.ViewProps`      | `Animated.ViewProps`                             | -               | All Reanimated Animated.View props are supported       |
 
 ### Select.Content (Bottom Sheet Presentation)
 

@@ -103,7 +103,8 @@ export default function PopoverScreen() {
           <Select.Portal>
             <Select.Overlay />
             <Select.Content
-              className="w-[280px] aspect-square rounded-2xl"
+              width={200}
+              className="aspect-square rounded-2xl"
               presentation="popover"
               placement="top"
               align="start"
@@ -116,7 +117,7 @@ export default function PopoverScreen() {
                     value={country.value}
                     label={country.label}
                   >
-                    <View className="flex-row items-center gap-3 flex-1">
+                    <View className="flex-row items-center gap-3">
                       <AppText className="text-2xl">{country.flag}</AppText>
                       <AppText className="text-sm text-muted w-10">
                         {country.code}
@@ -240,7 +241,7 @@ export default function PopoverScreen() {
           </Select.Trigger>
           <Select.Portal>
             <Select.Overlay />
-            <Select.Content placement="top" align="start" className="w-[200px]">
+            <Select.Content width={200} placement="top" align="start">
               {US_STATES.slice(0, 3).map((state) => (
                 <Select.Item
                   key={state.value}
@@ -260,11 +261,7 @@ export default function PopoverScreen() {
           </Select.Trigger>
           <Select.Portal>
             <Select.Overlay />
-            <Select.Content
-              placement="top"
-              align="center"
-              className="w-[200px]"
-            >
+            <Select.Content width={200} placement="top" align="center">
               {US_STATES.slice(0, 3).map((state) => (
                 <Select.Item
                   key={state.value}
@@ -284,7 +281,7 @@ export default function PopoverScreen() {
           </Select.Trigger>
           <Select.Portal>
             <Select.Overlay />
-            <Select.Content placement="top" align="end" className="w-[200px]">
+            <Select.Content width={200} placement="top" align="end">
               {US_STATES.slice(0, 3).map((state) => (
                 <Select.Item
                   key={state.value}

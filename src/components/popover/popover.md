@@ -61,6 +61,56 @@ Add an arrow pointing to the trigger element for better visual connection.
 </Popover>
 ```
 
+### Width Control
+
+Control the width of the popover content using the `width` prop.
+
+```tsx
+{
+  /* Fixed width in pixels */
+}
+<Popover>
+  <Popover.Trigger>...</Popover.Trigger>
+  <Popover.Portal>
+    <Popover.Overlay />
+    <Popover.Content width={320}>...</Popover.Content>
+  </Popover.Portal>
+</Popover>;
+
+{
+  /* Match trigger width */
+}
+<Popover>
+  <Popover.Trigger>...</Popover.Trigger>
+  <Popover.Portal>
+    <Popover.Overlay />
+    <Popover.Content width="trigger">...</Popover.Content>
+  </Popover.Portal>
+</Popover>;
+
+{
+  /* Full width (100%) */
+}
+<Popover>
+  <Popover.Trigger>...</Popover.Trigger>
+  <Popover.Portal>
+    <Popover.Overlay />
+    <Popover.Content width="full">...</Popover.Content>
+  </Popover.Portal>
+</Popover>;
+
+{
+  /* Auto-size to content (default) */
+}
+<Popover>
+  <Popover.Trigger>...</Popover.Trigger>
+  <Popover.Portal>
+    <Popover.Overlay />
+    <Popover.Content width="content-fit">...</Popover.Content>
+  </Popover.Portal>
+</Popover>;
+```
+
 ### Bottom Sheet Presentation
 
 Use bottom sheet presentation for mobile-optimized interaction patterns.
@@ -186,7 +236,7 @@ export default function PopoverExample() {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Overlay />
-        <Popover.Content className="gap-1 w-[320px] rounded-xl px-6 py-4">
+        <Popover.Content width={320} className="gap-1 rounded-xl px-6 py-4">
           <Popover.Close className="absolute top-3 right-3 z-50" />
           <Popover.Title>Information</Popover.Title>
           <Popover.Description>
@@ -280,22 +330,23 @@ export default function PopoverExample() {
 
 ### Popover.Content (Popover Presentation)
 
-| prop                         | type                                     | default    | description                                            |
-| ---------------------------- | ---------------------------------------- | ---------- | ------------------------------------------------------ |
-| `children`                   | `ReactNode`                              | -          | The popover content                                    |
-| `placement`                  | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` | Placement of the popover relative to trigger           |
-| `align`                      | `'start' \| 'center' \| 'end'`           | `'start'`  | Alignment along the placement axis                     |
-| `avoidCollisions`            | `boolean`                                | `true`     | Whether to flip placement when close to viewport edges |
-| `offset`                     | `number`                                 | `0`        | Distance from trigger element in pixels                |
-| `alignOffset`                | `number`                                 | `0`        | Offset along the alignment axis in pixels              |
-| `disablePositioningStyle`    | `boolean`                                | `false`    | Whether to disable automatic positioning styles        |
-| `forceMount`                 | `boolean`                                | -          | Whether to force mount the component in the DOM        |
-| `insets`                     | `Insets`                                 | -          | Screen edge insets to respect when positioning         |
-| `className`                  | `string`                                 | -          | Additional CSS classes for the content container       |
-| `presentation`               | `'popover'`                              | -          | Presentation mode for the popover                      |
-| `isDefaultAnimationDisabled` | `boolean`                                | `false`    | Whether to disable the default animations              |
-| `asChild`                    | `boolean`                                | `false`    | Whether to render as a child element                   |
-| `...Animated.ViewProps`      | `Animated.ViewProps`                     | -          | All Reanimated Animated.View props are supported       |
+| prop                         | type                                             | default         | description                                            |
+| ---------------------------- | ------------------------------------------------ | --------------- | ------------------------------------------------------ |
+| `children`                   | `ReactNode`                                      | -               | The popover content                                    |
+| `width`                      | `number \| 'trigger' \| 'content-fit' \| 'full'` | `'content-fit'` | Width sizing strategy for the content                  |
+| `placement`                  | `'top' \| 'bottom' \| 'left' \| 'right'`         | `'bottom'`      | Placement of the popover relative to trigger           |
+| `align`                      | `'start' \| 'center' \| 'end'`                   | `'start'`       | Alignment along the placement axis                     |
+| `avoidCollisions`            | `boolean`                                        | `true`          | Whether to flip placement when close to viewport edges |
+| `offset`                     | `number`                                         | `0`             | Distance from trigger element in pixels                |
+| `alignOffset`                | `number`                                         | `0`             | Offset along the alignment axis in pixels              |
+| `disablePositioningStyle`    | `boolean`                                        | `false`         | Whether to disable automatic positioning styles        |
+| `forceMount`                 | `boolean`                                        | -               | Whether to force mount the component in the DOM        |
+| `insets`                     | `Insets`                                         | -               | Screen edge insets to respect when positioning         |
+| `className`                  | `string`                                         | -               | Additional CSS classes for the content container       |
+| `presentation`               | `'popover'`                                      | -               | Presentation mode for the popover                      |
+| `isDefaultAnimationDisabled` | `boolean`                                        | `false`         | Whether to disable the default animations              |
+| `asChild`                    | `boolean`                                        | `false`         | Whether to render as a child element                   |
+| `...Animated.ViewProps`      | `Animated.ViewProps`                             | -               | All Reanimated Animated.View props are supported       |
 
 ### Popover.Content (Bottom Sheet Presentation)
 

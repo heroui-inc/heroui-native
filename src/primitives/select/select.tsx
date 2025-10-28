@@ -305,6 +305,7 @@ const PopoverContent = forwardRef<ContentRef, PopoverContentProps>(
       insets,
       style,
       disablePositioningStyle,
+      width = 'content-fit',
       ...props
     },
     ref
@@ -352,7 +353,18 @@ const PopoverContent = forwardRef<ContentRef, PopoverContentProps>(
       disablePositioningStyle,
     });
 
-    const flatStyle = StyleSheet.flatten([positionStyle, style]);
+    // Calculate content width based on width prop
+    const widthStyle: { width?: number | `${number}%` } = {};
+    if (width === 'trigger' && triggerPosition) {
+      widthStyle.width = triggerPosition.width;
+    } else if (width === 'full') {
+      widthStyle.width = '100%';
+    } else if (typeof width === 'number') {
+      widthStyle.width = width;
+    }
+    // 'content-fit' is default - no explicit width set
+
+    const flatStyle = StyleSheet.flatten([positionStyle, widthStyle, style]);
 
     function onLayout(event: LayoutChangeEvent) {
       setContentLayout(event.nativeEvent.layout);

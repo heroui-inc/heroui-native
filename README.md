@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  v1.0.0-alpha.15
+  v1.0.0-alpha.16
 </p>
 
 ## Preview App
@@ -184,6 +184,7 @@ export default function MyComponent() {
 - [Spinner](./src/components/spinner/spinner.md)
 - [Surface](./src/components/surface/surface.md)
 - [Switch](./src/components/switch/switch.md)
+- [Tabs](./src/components/tabs/tabs.md)
 - [Text Field](./src/components/text-field/text-field.md)
 
 ## Changelog

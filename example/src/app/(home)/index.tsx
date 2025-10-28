@@ -33,7 +33,7 @@ const cards: HomeCardProps[] = [
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-components-light.png',
     imageDark:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-components-dark.png',
-    count: 20,
+    count: 21,
     footer: 'Explore all components',
     path: 'components',
   },
@@ -146,7 +146,7 @@ export default function App() {
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
         <AppText className="text-muted-foreground text-base">
-          v1.0.0-alpha.15
+          v1.0.0-alpha.16
         </AppText>
       </View>
 

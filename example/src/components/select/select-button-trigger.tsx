@@ -86,9 +86,10 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
       <Select.Portal>
         <Select.Overlay className="bg-transparent" />
         <Select.Content
+          width="trigger"
           offset={contentOffset}
           className={cn(
-            'w-[256px] px-0 border border-border rounded-xl',
+            'px-0 border border-border rounded-xl',
             Platform.OS === 'ios' && 'bg-panel/5'
           )}
         >

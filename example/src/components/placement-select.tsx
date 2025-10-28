@@ -117,8 +117,9 @@ export const PlacementSelect: FC<Props> = ({ placeholder, placement }) => {
       <Select.Portal>
         <Select.Overlay />
         <Select.Content
+          width={200}
           placement={placement}
-          className="w-[200px] h-[150px] rounded-xl"
+          className="h-[150px] rounded-xl"
         >
           <PlacementContent />
         </Select.Content>

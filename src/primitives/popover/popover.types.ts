@@ -16,6 +16,15 @@ import type {
 type PopoverState = 'idle' | 'open' | 'close';
 
 /**
+ * Content sizing strategy
+ * - 'content-fit': Auto-size to content width (default)
+ * - 'trigger': Match trigger width exactly
+ * - 'full': 100% width
+ * - number: Fixed width in pixels
+ */
+type ContentSizing = 'trigger' | 'content-fit' | 'full' | number;
+
+/**
  * Internal context interface for managing popover state and positioning
  */
 interface IRootContext {
@@ -120,7 +129,18 @@ type TriggerProps = Omit<SlottablePressableProps, 'disabled'> & {
 /**
  * Props for the Popover Content component
  */
-type ContentProps = SlottableViewProps & PositionedContentProps;
+type ContentProps = SlottableViewProps &
+  PositionedContentProps & {
+    /**
+     * Content width sizing strategy
+     * - 'content-fit': Auto-size to content width (default)
+     * - 'trigger': Match trigger width exactly
+     * - 'full': 100% width
+     * - number: Fixed width in pixels
+     * @default 'content-fit'
+     */
+    width?: ContentSizing;
+  };
 
 /**
  * Props for the Popover Close component
@@ -166,6 +186,7 @@ export type {
   CloseRef,
   ContentProps,
   ContentRef,
+  ContentSizing,
   IRootContext,
   OverlayProps,
   OverlayRef,

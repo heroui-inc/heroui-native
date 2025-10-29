@@ -11,6 +11,7 @@
       "types": "./lib/typescript/src/index.d.ts",
       "default": "./lib/module/index.js"
     },
+    "./styles": "./src/styles/index.css",
     "./package.json": "./package.json"
   },
   "files": [

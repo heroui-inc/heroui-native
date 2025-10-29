@@ -103,10 +103,8 @@ export default function CardExample() {
         <Card.Footer className="gap-3">
           <Button variant="primary">Buy now</Button>
           <Button variant="ghost">
-            <Button.LabelContent>Add to cart</Button.LabelContent>
-            <Button.EndContent>
-              <Ionicons name="bag-outline" size={16} />
-            </Button.EndContent>
+            <Button.Label>Add to cart</Button.Label>
+            <Ionicons name="bag-outline" size={16} />
           </Button>
         </Card.Footer>
       </View>

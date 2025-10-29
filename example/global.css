@@ -2,9 +2,7 @@
 @import 'uniwind';
 
 /* Inside example app */
-@import './styles/index.css';
-
-/* Inside src */
-/* @import '../src/styles/index.css'; */
+@import './styles/theme.css' layer(theme);
+@import './styles/variants.css' layer(theme);
 
 @source '../src';

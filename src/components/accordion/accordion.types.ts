@@ -5,6 +5,7 @@ import type {
   LayoutAnimationFunction,
   WithSpringConfig,
 } from 'react-native-reanimated';
+import type { ElementSlots } from '../../helpers/theme/types';
 import type { TimingConfig } from '../../helpers/types';
 import type {
   ContentProps as PrimitiveContentProps,
@@ -13,7 +14,6 @@ import type {
   RootProps as PrimitiveRootProps,
   TriggerProps as PrimitiveTriggerProps,
 } from '../../primitives/accordion';
-import type { ElementSlots } from '../../providers/theme';
 import type { RootSlots } from './accordion.styles';
 
 /**

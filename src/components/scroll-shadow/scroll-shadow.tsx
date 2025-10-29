@@ -10,8 +10,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { colorKit, useThemeColor } from '../../helpers/theme';
 import { easeGradient } from '../../helpers/utils';
-import { colorKit, useThemeColor } from '../../providers/theme';
 import {
   DEFAULT_SCROLL_EVENT_THROTTLE,
   DEFAULT_SHADOW_SIZE,

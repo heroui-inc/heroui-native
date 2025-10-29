@@ -22,8 +22,8 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { useUniwind } from 'uniwind';
+import { colorKit, useThemeColor } from '../../helpers/theme';
 import type { PressableRef } from '../../helpers/types';
-import { colorKit, useThemeColor } from '../../providers/theme';
 import {
   DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT,
   DEFAULT_PRESSABLE_FEEDBACK_PLATFORM,

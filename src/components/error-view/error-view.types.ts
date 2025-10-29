@@ -1,6 +1,6 @@
 import type { TextProps, ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
-import type { ElementSlots } from '../../providers/theme';
+import type { ElementSlots } from '../../helpers/theme/types';
 import type { ErrorViewSlots } from './error-view.styles';
 
 /**

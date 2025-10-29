@@ -2,9 +2,9 @@ import { forwardRef, useEffect, useMemo, useState } from 'react';
 import type { ImageSourcePropType } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
+import { useThemeColor } from '../../helpers/theme';
 import { childrenToString, createContext } from '../../helpers/utils';
 import * as AvatarPrimitives from '../../primitives/avatar';
-import { useThemeColor } from '../../providers/theme';
 import {
   AVATAR_DEFAULT_ICON_SIZE,
   AVATAR_DISPLAY_NAME,

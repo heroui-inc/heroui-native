@@ -1,7 +1,7 @@
 import type { SharedValue } from 'react-native-reanimated';
+import type { ElementSlots } from '../../helpers/theme/types';
 import type { SpringConfig, TimingConfig } from '../../helpers/types';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
-import type { ElementSlots } from '../../providers/theme';
 import type { RootSlots } from './switch.styles';
 
 /**

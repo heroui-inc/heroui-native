@@ -1,4 +1,4 @@
-import type { CombinedStyles } from './types';
+import type { CombinedStyles } from '../types';
 
 /**
  * Helper function to combine style objects with proper type inference

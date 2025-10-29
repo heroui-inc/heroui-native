@@ -95,7 +95,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
         .easing(Easing.out(Easing.ease))}
       onPress={() => router.push(path)}
     >
-      <Card className="p-0 rounded-2xl border-border">
+      <Card className="p-0 rounded-2xl">
         <AnimatedView
           entering={FadeIn}
           className="absolute inset-0 w-full h-full"
@@ -149,9 +149,7 @@ export default function App() {
   return (
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
-        <AppText className="text-muted-foreground text-base">
-          v1.0.0-alpha.16
-        </AppText>
+        <AppText className="text-muted text-base">v1.0.0-alpha.16</AppText>
       </View>
       <View className="gap-6">
         {cards.map((card, index) => (

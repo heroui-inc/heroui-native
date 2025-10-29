@@ -1,5 +1,5 @@
 import { useCSSVariable } from 'uniwind';
-import type { ThemeColor } from './types';
+import type { ThemeColor } from '../types';
 
 export const useThemeColor = (themeColor: ThemeColor): string => {
   const cssVariable = `--color-${themeColor}`;

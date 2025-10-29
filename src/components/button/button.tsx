@@ -6,9 +6,9 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { useThemeColor } from '../../helpers/theme';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
-import { useThemeColor } from '../../providers/theme';
 import { PressableFeedback } from '../pressable-feedback';
 import {
   ANIMATION_DURATION,

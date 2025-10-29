@@ -1,3 +1,4 @@
+// Components
 export * from './components/accordion';
 export * from './components/avatar';
 export * from './components/button';
@@ -20,5 +21,9 @@ export * from './components/surface';
 export * from './components/switch';
 export * from './components/tabs';
 export * from './components/text-field';
+
+// Theme helpers
+export * from './helpers/theme';
+
+// Provider
 export * from './providers/hero-ui-native';
-export * from './providers/theme';

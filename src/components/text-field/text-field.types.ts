@@ -1,7 +1,7 @@
 import type { TextInputProps, TextProps, ViewProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
+import type { ElementSlots } from '../../helpers/theme/types';
 import type { TimingConfig } from '../../helpers/types';
-import type { ElementSlots } from '../../providers/theme';
 import type { ErrorViewRootProps } from '../error-view';
 import type { InputSlots, LabelSlots } from './text-field.styles';
 

@@ -24,8 +24,8 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { useUniwind } from 'uniwind';
+import { colorKit, useThemeColor } from '../../helpers/theme';
 import { createContext } from '../../helpers/utils';
-import { colorKit, useThemeColor } from '../../providers/theme';
 
 import LinearGradientComponent from './linear-gradient';
 import {

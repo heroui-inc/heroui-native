@@ -20,9 +20,9 @@ import {
 } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
 import { useDialogContentAnimation } from '../../helpers/hooks';
+import { useThemeColor } from '../../helpers/theme';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
-import { useThemeColor } from '../../providers/theme';
 import {
   DEFAULT_ALIGN_OFFSET,
   DEFAULT_INSETS,

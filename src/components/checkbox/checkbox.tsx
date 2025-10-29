@@ -5,11 +5,11 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { CheckIcon } from '../../helpers/components';
+import { colorKit, useThemeColor } from '../../helpers/theme';
 import { createContext } from '../../helpers/utils';
 import { getElementWithDefault } from '../../helpers/utils/get-element-with-default';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
-import { colorKit, useThemeColor } from '../../providers/theme';
 import {
   DEFAULT_CHECK_ICON_SIZE,
   DEFAULT_HIT_SLOP,

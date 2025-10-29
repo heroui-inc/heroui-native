@@ -14,9 +14,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useUniwind } from 'uniwind';
 import { Text } from '../../helpers/components';
+import { useThemeColor } from '../../helpers/theme';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
-import { useThemeColor } from '../../providers/theme';
 import { ErrorView } from '../error-view';
 import {
   ANIMATION_DURATION,

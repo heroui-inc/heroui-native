@@ -1,6 +1,6 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { useThemeColor } from '../../providers/theme';
+import { useThemeColor } from '../theme';
 
 interface CloseIconProps {
   size?: number;

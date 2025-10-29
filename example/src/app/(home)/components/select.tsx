@@ -103,7 +103,7 @@ export default function PopoverScreen() {
           <Select.Portal>
             <Select.Overlay />
             <Select.Content
-              width={200}
+              width={300}
               className="aspect-square rounded-2xl"
               presentation="popover"
               placement="top"

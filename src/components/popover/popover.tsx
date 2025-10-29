@@ -14,9 +14,9 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
+import { useThemeColor } from '../../helpers/theme';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
-import { useThemeColor } from '../../providers/theme';
 import { ArrowSvg } from './arrow-svg';
 import {
   DEFAULT_ALIGN_OFFSET,

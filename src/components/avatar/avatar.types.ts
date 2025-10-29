@@ -1,5 +1,6 @@
 import type { ImageProps, TextProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
+import type { ElementSlots } from '../../helpers/theme/types';
 import type {
   FallbackProps as PrimitiveFallbackProps,
   FallbackRef as PrimitiveFallbackRef,
@@ -8,7 +9,6 @@ import type {
   RootProps as PrimitiveRootProps,
   RootRef as PrimitiveRootRef,
 } from '../../primitives/avatar';
-import type { ElementSlots } from '../../providers/theme';
 import type { AvatarFallbackSlots } from './avatar.styles';
 import type { PersonIconProps } from './person-icon';
 

@@ -70,9 +70,11 @@ Customize the rotation speed using the compound Indicator component.
 Replace the default spinner icon with custom content.
 
 ```tsx
+const themeColorForeground = useThemeColor('foreground')
+
 <Spinner>
   <Spinner.Indicator>
-    <Ionicons name="refresh" size={24} color={colors.foreground} />
+    <Ionicons name="refresh" size={24} color={themeColorForeground} />
   </Spinner.Indicator>
 </Spinner>
 
@@ -86,7 +88,7 @@ Replace the default spinner icon with custom content.
 ## Example
 
 ```tsx
-import { Spinner, useTheme } from 'heroui-native';
+import { Spinner } from 'heroui-native';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';

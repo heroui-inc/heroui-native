@@ -120,19 +120,19 @@ Hide the dividers between accordion items.
 ## Example
 
 ```tsx
-import { Accordion, useTheme } from 'heroui-native';
+import { Accordion, useThemeColor } from 'heroui-native';
 import { Ionicons } from '@expo/vector-icons';
 import { View, Text } from 'react-native';
 
 export default function AccordionExample() {
-  const { colors } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
 
   const accordionData = [
     {
       id: '1',
       title: 'How do I place an order?',
       icon: (
-        <Ionicons name="bag-outline" size={16} color={colors.mutedForeground} />
+        <Ionicons name="bag-outline" size={16} color={themeColorMuted} />
       ),
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
@@ -144,7 +144,7 @@ export default function AccordionExample() {
         <Ionicons
           name="card-outline"
           size={16}
-          color={colors.mutedForeground}
+          color={themeColorMuted}
         />
       ),
       content:
@@ -157,7 +157,7 @@ export default function AccordionExample() {
         <Ionicons
           name="cube-outline"
           size={16}
-          color={colors.mutedForeground}
+          color={themeColorMuted}
         />
       ),
       content:

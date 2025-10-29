@@ -243,7 +243,7 @@ const [isOpen, setIsOpen] = useState(false);
 ## Example
 
 ```tsx
-import { Button, Select, useTheme } from 'heroui-native';
+import { Button, Select } from 'heroui-native';
 import { useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
@@ -263,7 +263,6 @@ const COUNTRIES: CountryOption[] = [
 
 export default function SelectExample() {
   const [country, setCountry] = useState<CountryOption>();
-  const { colors } = useTheme();
 
   return (
     <Select
@@ -465,10 +464,10 @@ export default function SelectExample() {
 
 #### SelectCloseIconProps
 
-| prop    | type     | default                        | description       |
-| ------- | -------- | ------------------------------ | ----------------- |
-| `size`  | `number` | `18`                           | Size of the icon  |
-| `color` | `string` | `theme.colors.mutedForeground` | Color of the icon |
+| prop    | type     | default          | description       |
+| ------- | -------- | ---------------- | ----------------- |
+| `size`  | `number` | `18`             | Size of the icon  |
+| `color` | `string` | `--colors-muted` | Color of the icon |
 
 ### Select.ListLabel
 
@@ -515,10 +514,10 @@ export default function SelectExample() {
 
 #### SelectItemIndicatorIconProps
 
-| prop    | type     | default              | description       |
-| ------- | -------- | -------------------- | ----------------- |
-| `size`  | `number` | `16`                 | Size of the icon  |
-| `color` | `string` | `theme.colors.muted` | Color of the icon |
+| prop    | type     | default          | description       |
+| ------- | -------- | ---------------- | ----------------- |
+| `size`  | `number` | `16`             | Size of the icon  |
+| `color` | `string` | `--colors-muted` | Color of the icon |
 
 ## Hooks
 

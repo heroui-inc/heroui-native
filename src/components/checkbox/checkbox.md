@@ -54,7 +54,7 @@ Combine custom background and indicator for fully customized checkboxes.
 ## Example
 
 ```tsx
-import { Checkbox, useTheme } from 'heroui-native';
+import { Checkbox, useThemeColor } from 'heroui-native';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View } from 'react-native';
@@ -67,7 +67,8 @@ export default function CheckboxExample() {
   const [danger, setDanger] = React.useState(true);
   const [custom, setCustom] = React.useState(true);
 
-  const { colors } = useTheme();
+  const themeColorAccentForeground = useThemeColor('accent-foreground');
+  const themeColorAccent = useThemeColor('accent');
 
   return (
     <View className="flex-row gap-4">
@@ -102,12 +103,12 @@ export default function CheckboxExample() {
               <Ionicons
                 name="remove"
                 size={16}
-                color={colors.accentForeground}
+                color={themeColorAccentForeground}
               />
             </Animated.View>
           ) : (
             <Animated.View key="unselected" entering={ZoomIn}>
-              <Ionicons name="add" size={16} color={colors.accent} />
+              <Ionicons name="add" size={16} color={themeColorAccent} />
             </Animated.View>
           )}
         </Checkbox.Indicator>

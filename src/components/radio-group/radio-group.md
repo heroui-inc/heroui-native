@@ -87,7 +87,7 @@ Display validation errors below the radio group.
 ## Example
 
 ```tsx
-import { RadioGroup, Surface, useTheme } from 'heroui-native';
+import { RadioGroup, Surface, useThemeColor } from 'heroui-native';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View } from 'react-native';
@@ -95,14 +95,14 @@ import { AppText } from '../components/app-text';
 
 export default function PaymentMethodExample() {
   const [paymentMethod, setPaymentMethod] = React.useState('card');
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
       <RadioGroup.Item value="card">
         <View>
           <View className="flex-row items-center gap-1.5">
-            <Ionicons name="card-outline" size={16} color={colors.foreground} />
+            <Ionicons name="card-outline" size={16} color={themeColorForeground} />
             <RadioGroup.Title>Credit/Debit Card</RadioGroup.Title>
           </View>
           <RadioGroup.Description>

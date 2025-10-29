@@ -83,6 +83,8 @@ Choose from five visual variants for different emphasis levels.
 Transform button to loading state with spinner animation.
 
 ```tsx
+const themeColorAccentForeground = useThemeColor('accent-foreground');
+
 <Button
   variant="primary"
   onPress={() => {
@@ -95,11 +97,11 @@ Transform button to loading state with spinner animation.
   className="self-center"
 >
   {isDownloading ? (
-    <Spinner entering={FadeIn.delay(50)} color={colors.accentForeground} />
+    <Spinner entering={FadeIn.delay(50)} color={themeColorAccentForeground} />
   ) : (
     'Download now'
   )}
-</Button>
+</Button>;
 ```
 
 ### Custom Background with LinearGradient
@@ -121,33 +123,38 @@ Add gradient backgrounds using absolute positioned elements.
 ## Example
 
 ```tsx
-import { Button, useTheme } from 'heroui-native';
+import { Button, useThemeColor } from 'heroui-native';
 import { Ionicons } from '@expo/vector-icons';
 import { View } from 'react-native';
 
 export default function ButtonExample() {
-  const { colors } = useTheme();
+  const themeColorAccentForeground = useThemeColor('accent-foreground');
+  const themeColorAccentSoftForeground = useThemeColor(
+    'accent-soft-foreground'
+  );
+  const themeColorDangerForeground = useThemeColor('danger-foreground');
+  const themeColorDefaultForeground = useThemeColor('default-foreground');
 
   return (
     <View className="gap-4 p-4">
       <Button variant="primary">
-        <Ionicons name="add" size={20} color={colors.accentForeground} />
+        <Ionicons name="add" size={20} color={themeColorAccentForeground} />
         <Button.Label>Add Item</Button.Label>
       </Button>
 
       <View className="flex-row gap-4">
         <Button size="sm" isIconOnly>
-          <Ionicons name="heart" size={16} color={colors.accentForeground} />
+          <Ionicons name="heart" size={16} color={themeColorAccentForeground} />
         </Button>
         <Button size="sm" variant="secondary" isIconOnly>
           <Ionicons
             name="bookmark"
             size={16}
-            color={colors.accentSoftForeground}
+            color={themeColorAccentSoftForeground}
           />
         </Button>
         <Button size="sm" variant="danger" isIconOnly>
-          <Ionicons name="trash" size={16} color={colors.dangerForeground} />
+          <Ionicons name="trash" size={16} color={themeColorDangerForeground} />
         </Button>
       </View>
 
@@ -156,7 +163,7 @@ export default function ButtonExample() {
         <Ionicons
           name="chevron-forward"
           size={18}
-          color={colors.defaultForeground}
+          color={themeColorDefaultForeground}
         />
       </Button>
     </View>
@@ -195,27 +202,27 @@ export default function ButtonExample() {
 
 Configuration object for button press animations including scale and highlight effects.
 
-| prop        | type                        | description                                         |
-| ----------- | --------------------------- | --------------------------------------------------- |
-| `scale`     | `ScaleAnimationConfig`      | Configuration for scale animation on press          |
-| `highlight` | `HighlightAnimationConfig`  | Configuration for highlight/overlay animation       |
+| prop        | type                       | description                                   |
+| ----------- | -------------------------- | --------------------------------------------- |
+| `scale`     | `ScaleAnimationConfig`     | Configuration for scale animation on press    |
+| `highlight` | `HighlightAnimationConfig` | Configuration for highlight/overlay animation |
 
 ##### ScaleAnimationConfig
 
-| prop         | type             | default | description                                      |
-| ------------ | ---------------- | ------- | ------------------------------------------------ |
-| `scale`      | `number`         | `0.995` | Target scale value when button is pressed        |
-| `config`     | `WithTimingConfig` | -     | Reanimated timing configuration for animation    |
-| `isDisabled` | `boolean`        | `false` | Whether to disable the scale animation           |
+| prop         | type               | default | description                                   |
+| ------------ | ------------------ | ------- | --------------------------------------------- |
+| `scale`      | `number`           | `0.995` | Target scale value when button is pressed     |
+| `config`     | `WithTimingConfig` | -       | Reanimated timing configuration for animation |
+| `isDisabled` | `boolean`          | `false` | Whether to disable the scale animation        |
 
 ##### HighlightAnimationConfig
 
-| prop         | type             | default | description                                      |
-| ------------ | ---------------- | ------- | ------------------------------------------------ |
-| `opacity`    | `number`         | `0.2`   | Opacity of the highlight overlay when pressed    |
-| `color`      | `string`         | auto    | Color of the highlight overlay (auto-calculated based on variant) |
-| `config`     | `WithTimingConfig` | -     | Reanimated timing configuration for animation    |
-| `isDisabled` | `boolean`        | `false` | Whether to disable the highlight animation       |
+| prop         | type               | default | description                                                       |
+| ------------ | ------------------ | ------- | ----------------------------------------------------------------- |
+| `opacity`    | `number`           | `0.2`   | Opacity of the highlight overlay when pressed                     |
+| `color`      | `string`           | auto    | Color of the highlight overlay (auto-calculated based on variant) |
+| `config`     | `WithTimingConfig` | -       | Reanimated timing configuration for animation                     |
+| `isDisabled` | `boolean`          | `false` | Whether to disable the highlight animation                        |
 
 ### Button.Label
 

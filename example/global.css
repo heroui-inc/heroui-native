@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 @import 'uniwind';
 
-/* Inside example app */
 @import './styles/theme.css' layer(theme);
 @import './styles/variants.css' layer(theme);
 

@@ -228,7 +228,7 @@ export interface SelectCloseIconProps {
   size?: number;
   /**
    * Color of the close icon
-   * @default theme.colors.foreground
+   * @default --colors-foreground
    */
   color?: string;
 }

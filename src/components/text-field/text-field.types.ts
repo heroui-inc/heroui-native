@@ -11,32 +11,32 @@ import type { InputSlots, LabelSlots } from './text-field.styles';
 export interface TextFieldInputColors {
   /**
    * Background color when input is blurred
-   * @default colors.default
+   * @default --colors-default
    */
   blurBackground?: string;
   /**
    * Background color when input is focused
-   * @default colors.background
+   * @default --colors-background
    */
   focusBackground?: string;
   /**
    * Background color when input is invalid
-   * @default colors.default (same as blurBackground)
+   * @default --colors-default (same as blurBackground)
    */
   errorBackground?: string;
   /**
    * Border color when input is blurred
-   * @default colors.border
+   * @default --colors-border
    */
   blurBorder?: string;
   /**
    * Border color when input is focused
-   * @default colors.mutedForeground
+   * @default --colors-muted
    */
   focusBorder?: string;
   /**
    * Border color when input is invalid
-   * @default colors.danger
+   * @default --colors-danger
    */
   errorBorder?: string;
 }

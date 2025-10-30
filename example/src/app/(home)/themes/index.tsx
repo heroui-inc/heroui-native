@@ -17,13 +17,66 @@ import { Pressable, Text, View } from 'react-native';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { useAppTheme } from '../../../contexts/app-theme-context';
 
-const ThemeCircle: React.FC<{
-  themeId: string;
-  themeName: string;
+type ThemeOption = {
+  id: string;
+  name: string;
+  lightVariant: string;
+  darkVariant: string;
   colors: { primary: string; secondary: string; tertiary: string };
+};
+
+const availableThemes: ThemeOption[] = [
+  {
+    id: 'default',
+    name: 'Default',
+    lightVariant: 'light',
+    darkVariant: 'dark',
+    colors: {
+      primary: '#006FEE',
+      secondary: '#17C964',
+      tertiary: '#F5A524',
+    },
+  },
+  {
+    id: 'lavender',
+    name: 'Lavender',
+    lightVariant: 'lavender-light',
+    darkVariant: 'lavender-dark',
+    colors: {
+      primary: 'hsl(270 50% 75%)',
+      secondary: 'hsl(160 40% 70%)',
+      tertiary: 'hsl(45 55% 75%)',
+    },
+  },
+  {
+    id: 'mint',
+    name: 'Mint',
+    lightVariant: 'mint-light',
+    darkVariant: 'mint-dark',
+    colors: {
+      primary: 'hsl(165 45% 70%)',
+      secondary: 'hsl(145 50% 68%)',
+      tertiary: 'hsl(55 60% 75%)',
+    },
+  },
+  {
+    id: 'sky',
+    name: 'Sky',
+    lightVariant: 'sky-light',
+    darkVariant: 'sky-dark',
+    colors: {
+      primary: 'hsl(200 50% 72%)',
+      secondary: 'hsl(175 45% 70%)',
+      tertiary: 'hsl(48 58% 75%)',
+    },
+  },
+];
+
+const ThemeCircle: React.FC<{
+  theme: ThemeOption;
   isActive: boolean;
   onPress: () => void;
-}> = ({ colors, isActive, onPress, themeName }) => {
+}> = ({ theme, isActive, onPress }) => {
   const themeColorAccent = useThemeColor('accent');
 
   return (
@@ -60,7 +113,7 @@ const ThemeCircle: React.FC<{
               position: 'absolute',
               width: '100%',
               height: '100%',
-              backgroundColor: colors.primary,
+              backgroundColor: theme.colors.primary,
             }}
           />
 
@@ -70,7 +123,7 @@ const ThemeCircle: React.FC<{
               position: 'absolute',
               width: '100%',
               height: '50%',
-              backgroundColor: colors.secondary,
+              backgroundColor: theme.colors.secondary,
               bottom: 0,
             }}
           />
@@ -81,7 +134,7 @@ const ThemeCircle: React.FC<{
               position: 'absolute',
               width: '50%',
               height: '50%',
-              backgroundColor: colors.tertiary,
+              backgroundColor: theme.colors.tertiary,
               bottom: 0,
               right: 0,
             }}
@@ -89,35 +142,30 @@ const ThemeCircle: React.FC<{
         </View>
       </View>
       <Text className="text-xs mt-2 text-foreground font-medium">
-        {themeName}
+        {theme.name}
       </Text>
     </Pressable>
   );
 };
 
 export default function Themes() {
-  const { currentThemeId, setThemeById, availableThemes } = useAppTheme();
+  const { currentTheme, setTheme, isLight } = useAppTheme();
   const [switchValue, setSwitchValue] = React.useState(false);
   const [checkboxValue, setCheckboxValue] = React.useState(false);
   const [radioValue, setRadioValue] = React.useState('option1');
   const [textValue, setTextValue] = React.useState('');
 
-  // Extract colors from current theme for the circles
-  const getThemeColors = (theme: (typeof availableThemes)[number]) => {
-    if (theme.id === 'default') {
-      // Use HeroUI's default theme colors
-      return {
-        primary: '#006FEE', // HeroUI default primary/accent
-        secondary: '#17C964', // HeroUI default success
-        tertiary: '#F5A524', // HeroUI default warning
-      };
-    }
-    const lightColors = theme.config?.light?.colors;
-    return {
-      primary: lightColors?.accent || '#000',
-      secondary: lightColors?.success || '#000',
-      tertiary: lightColors?.warning || '#000',
-    };
+  const getCurrentThemeId = () => {
+    if (currentTheme === 'light' || currentTheme === 'dark') return 'default';
+    if (currentTheme.startsWith('lavender')) return 'lavender';
+    if (currentTheme.startsWith('mint')) return 'mint';
+    if (currentTheme.startsWith('sky')) return 'sky';
+    return 'default';
+  };
+
+  const handleThemeSelect = (theme: ThemeOption) => {
+    const variant = isLight ? theme.lightVariant : theme.darkVariant;
+    setTheme(variant as any);
   };
 
   return (
@@ -131,15 +179,9 @@ export default function Themes() {
           {availableThemes.map((theme) => (
             <ThemeCircle
               key={theme.id}
-              themeId={theme.id}
-              themeName={
-                theme.id === 'default'
-                  ? 'Default'
-                  : (theme.name.split(' ')[0] as string)
-              }
-              colors={getThemeColors(theme)}
-              isActive={currentThemeId === theme.id}
-              onPress={() => setThemeById(theme.id)}
+              theme={theme}
+              isActive={getCurrentThemeId() === theme.id}
+              onPress={() => handleThemeSelect(theme)}
             />
           ))}
         </View>

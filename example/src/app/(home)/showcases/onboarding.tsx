@@ -1,6 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
-import { Button, Divider } from 'heroui-native';
+import { Button, cn, Divider } from 'heroui-native';
 import { View } from 'react-native';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -9,6 +9,7 @@ import { AppText } from '../../../components/app-text';
 import MarqueeCarousel, {
   type CardProps,
 } from '../../../components/showcases/onboarding/marquee-carousel';
+import { useAppTheme } from '../../../contexts/app-theme-context';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 const StyledFeather = withUniwind(Feather);
@@ -53,6 +54,8 @@ const OnboardingScreen = () => {
 
   const insets = useSafeAreaInsets();
 
+  const { isDark } = useAppTheme();
+
   return (
     <View
       className="flex-1 bg-background"
@@ -67,26 +70,26 @@ const OnboardingScreen = () => {
       >
         <Button
           size="sm"
-          className="rounded-full bg-black/20 dark:bg-white/20"
+          className={cn('rounded-full bg-black/20', isDark && 'bg-white/20')}
           isIconOnly
           onPress={router.back}
         >
           <StyledFeather
             name="chevron-left"
             size={24}
-            className="text-black dark:text-white"
+            className={cn('text-black', isDark && 'text-white')}
           />
         </Button>
         <Button
           size="sm"
-          className="rounded-full bg-black/20 dark:bg-white/20"
+          className={cn('rounded-full bg-black/20', isDark && 'bg-white/20')}
           isIconOnly
           onPress={router.back}
         >
           <StyledFeather
             name="x"
             size={24}
-            className="text-black dark:text-white"
+            className={cn('text-black', isDark && 'text-white')}
           />
         </Button>
       </AnimatedView>

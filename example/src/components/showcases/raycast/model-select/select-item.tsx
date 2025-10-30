@@ -20,6 +20,7 @@ export const SelectItem: FC<Props> = ({ data }) => {
   const { value: selectedValue } = useSelect();
 
   const isSelected = selectedValue?.value === data.value;
+  const isSelectedAndroid = isSelected && Platform.OS === 'android';
 
   return (
     <Select.Item
@@ -28,9 +29,8 @@ export const SelectItem: FC<Props> = ({ data }) => {
       label={data.label}
       className={cn(
         'pl-4 pr-3 py-4 rounded-xl overflow-hidden',
-        isSelected &&
-          Platform.OS === 'android' &&
-          'bg-neutral-400/40 dark:bg-neutral-800/40'
+        isSelectedAndroid && 'bg-neutral-400/40',
+        isSelectedAndroid && isDark && 'bg-neutral-800/40'
       )}
       style={styles.container}
     >
@@ -53,7 +53,12 @@ export const SelectItem: FC<Props> = ({ data }) => {
           {data.label}
         </AppText>
       </View>
-      <Select.ItemIndicator className="size-5 rounded-full items-center justify-center bg-muted dark:bg-foreground">
+      <Select.ItemIndicator
+        className={cn(
+          'size-5 rounded-full items-center justify-center bg-muted',
+          isDark && 'bg-foreground'
+        )}
+      >
         <StyledFontAwesome5
           name="check"
           size={10}

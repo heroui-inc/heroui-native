@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, ScrollShadow, Select, useThemeColor } from 'heroui-native';
+import { Button, cn, ScrollShadow, Select, useThemeColor } from 'heroui-native';
 import { useState } from 'react';
 import { TextInput, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -97,7 +97,7 @@ export function SearchableDialogSelect() {
           <Select.Content
             classNames={{
               wrapper: 'justify-center',
-              content: 'gap-2 rounded-2xl dark:bg-surface-1',
+              content: cn('gap-2 rounded-2xl', isDark && 'bg-surface-1'),
             }}
             style={{ marginTop: insetTop, height: maxDialogHeight }}
             presentation="dialog"
@@ -112,7 +112,10 @@ export function SearchableDialogSelect() {
                 onChangeText={setSearchQuery}
                 placeholder="Search country..."
                 placeholderTextColor={themeColorMuted}
-                className="p-3 rounded-md bg-surface-3/60 dark:bg-surface-2 text-foreground"
+                className={cn(
+                  'p-3 rounded-md bg-surface-3/60 text-foreground',
+                  isDark && 'bg-surface-2'
+                )}
                 autoFocus
               />
             </View>
@@ -142,7 +145,7 @@ export function SearchableDialogSelect() {
                   </Select.Item>
                 ))}
                 {filteredCountries.length === 0 && (
-                  <AppText className="text-muted dark:text-muted text-center mt-8">
+                  <AppText className="text-muted text-center mt-8">
                     No countries found
                   </AppText>
                 )}

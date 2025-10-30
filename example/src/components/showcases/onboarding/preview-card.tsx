@@ -1,4 +1,4 @@
-import { Card, Chip, DropShadowView } from 'heroui-native';
+import { Card, Chip, cn, DropShadowView } from 'heroui-native';
 import { type FC } from 'react';
 import { Image, useWindowDimensions, View } from 'react-native';
 import Animated, {
@@ -63,7 +63,10 @@ export const PreviewCard: FC<PreviewCardProps> = ({
         shadowColor={isDark ? '#00000000' : 'black'}
       >
         <Card
-          className="flex-1 border-0 rounded-xl dark:border dark:border-border/70"
+          className={cn(
+            'flex-1 border-0 rounded-xl',
+            isDark && 'border border-border/70'
+          )}
           surfaceVariant={isDark ? '2' : 'none'}
         >
           <Card.Body className="flex-1 p-2 mb-4">

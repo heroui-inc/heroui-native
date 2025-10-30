@@ -2,6 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import {
   Button,
+  cn,
   Dialog,
   ScrollShadow,
   TextField,
@@ -23,6 +24,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DialogBlurBackdrop } from '../../../components/dialog-blur-backdrop';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
+import { useAppTheme } from '../../../contexts/app-theme-context';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 KeyboardController.preload();
@@ -89,6 +91,7 @@ export default function DialogScreen() {
 
   const { height } = useWindowDimensions();
 
+  const { isDark } = useAppTheme();
   const themeColorPanel = useThemeColor('panel');
 
   const router = useRouter();
@@ -303,7 +306,9 @@ export default function DialogScreen() {
           <Button variant="tertiary">Scroll Content Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Overlay className="bg-stone-100 dark:bg-stone-950" />
+          <Dialog.Overlay
+            className={cn('bg-stone-100', isDark && 'bg-stone-950')}
+          />
           <Dialog.Content className="rounded-2xl px-0 shadow-2xl shadow-black/10">
             <Dialog.Close className="self-end mr-4" />
             <Dialog.Title className="text-center mb-5">

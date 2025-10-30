@@ -2,6 +2,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import {
   Accordion,
   AccordionLayoutTransition,
+  cn,
   useAccordionItemContext,
 } from 'heroui-native';
 import { StyleSheet, View } from 'react-native';
@@ -16,6 +17,7 @@ import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
+import { useAppTheme } from '../../../contexts/app-theme-context';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 const StyledIonicons = withUniwind(Ionicons);
@@ -57,6 +59,8 @@ const CustomIndicator = () => {
 };
 
 const AccordionScreen = () => {
+  const { isDark } = useAppTheme();
+
   const accordionData = [
     {
       id: '1',
@@ -321,7 +325,10 @@ const AccordionScreen = () => {
           {accordionData.slice(0, 4).map((item) => (
             <Accordion.Item key={item.id} value={item.id} className="mb-1">
               <Accordion.Trigger
-                className="bg-surface-2 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80"
+                className={cn(
+                  'bg-surface-2 rounded-xl border border-neutral-200/80',
+                  isDark && 'border-neutral-800/80'
+                )}
                 style={styles.borderCurve}
               >
                 <View className="flex-1 flex-row items-center gap-4">
@@ -337,7 +344,10 @@ const AccordionScreen = () => {
                 </Accordion.Indicator>
               </Accordion.Trigger>
               <Accordion.Content
-                className="mt-1 bg-surface-2 rounded-xl px-5 py-4 border border-neutral-200/80 dark:border-neutral-800/80"
+                className={cn(
+                  'mt-1 bg-surface-2 rounded-xl px-5 py-4 border border-neutral-200/80',
+                  isDark && 'border-neutral-800/80'
+                )}
                 style={styles.borderCurve}
               >
                 <AppText className="text-muted text-base/relaxed">

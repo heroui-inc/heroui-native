@@ -25,13 +25,28 @@ export const SectionTitle: FC<Props> = ({ title, className }) => {
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
       >
-        <View className="absolute left-0 top-0 h-hairline w-full bg-neutral-300 dark:bg-neutral-800" />
+        <View
+          className={cn(
+            'absolute left-0 top-0 h-hairline w-full bg-neutral-300',
+            isDark && 'bg-neutral-800'
+          )}
+        />
 
-        <AppText className="text-sm font-medium tracking-wide uppercase text-neutral-600 dark:text-neutral-400">
+        <AppText
+          className={cn(
+            'text-sm font-medium tracking-wide uppercase text-neutral-600',
+            isDark && 'text-neutral-400'
+          )}
+        >
           {title}
         </AppText>
 
-        <View className="absolute left-0 bottom-0 h-hairline w-full bg-neutral-300 dark:bg-neutral-800" />
+        <View
+          className={cn(
+            'absolute left-0 bottom-0 h-hairline w-full bg-neutral-300',
+            isDark && 'bg-neutral-800'
+          )}
+        />
       </LinearGradient>
     </View>
   );

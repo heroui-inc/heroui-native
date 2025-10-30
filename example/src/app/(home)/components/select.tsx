@@ -7,9 +7,9 @@ import { Platform, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from '../../../components/app-text';
-import { PlacementSelect } from '../../../components/placement-select';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
+import { PlacementSelect } from '../../../components/select/placement-select';
 import { SearchableDialogSelect } from '../../../components/select/searchable-dialog-select';
 import { SearchableSelect } from '../../../components/select/searchable-select';
 import { SelectButtonTrigger } from '../../../components/select/select-button-trigger';
@@ -198,7 +198,7 @@ export default function PopoverScreen() {
                     >
                       <View className="flex-row items-center gap-3 flex-1">
                         <AppText className="text-2xl">{country.flag}</AppText>
-                        <AppText className="text-sm text-muted dark:text-muted font-medium w-10">
+                        <AppText className="text-sm text-muted font-medium w-10">
                           {country.code}
                         </AppText>
                         <AppText className="text-base text-foreground flex-1">

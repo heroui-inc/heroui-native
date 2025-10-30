@@ -1,11 +1,12 @@
 import Feather from '@expo/vector-icons/Feather';
 import * as Haptics from 'expo-haptics';
-import { Button, Select } from 'heroui-native';
+import { Button, cn, Select } from 'heroui-native';
 import { Platform, Pressable, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { Easing, SlideInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
+import { useAppTheme } from '../../../../contexts/app-theme-context';
 import { simulatePress } from '../../../../helpers/utils/simulate-press';
 import { AppText } from '../../../app-text';
 import { SelectBlurBackdrop } from '../../../select/select-blur-backdrop';
@@ -27,6 +28,8 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
   const insets = useSafeAreaInsets();
   const { height: screenHeight } = useWindowDimensions();
 
+  const { isDark } = useAppTheme();
+
   return (
     <Select
       value={model}
@@ -40,7 +43,10 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
         <Button
           variant="tertiary"
           size="sm"
-          className="rounded-full px-4 h-11 bg-transparent border border-neutral-400/25 dark:border-neutral-600/25"
+          className={cn(
+            'rounded-full px-4 h-11 bg-transparent border border-neutral-400/25',
+            isDark && 'border-neutral-600/25'
+          )}
           onPress={() => {
             if (Platform.OS === 'android') return;
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
@@ -90,7 +96,12 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
             </Pressable>
             <View className="flex-1" />
             <Pressable className="absolute" onPress={simulatePress}>
-              <AppText className="text-xl font-semibold dark:font-bold text-foreground">
+              <AppText
+                className={cn(
+                  'text-xl font-semibold text-foreground',
+                  isDark && 'font-bold'
+                )}
+              >
                 Presets
               </AppText>
             </Pressable>

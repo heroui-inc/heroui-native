@@ -10,6 +10,7 @@ import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ModelSelect } from '../../../components/showcases/raycast/model-select';
 import type { ModelOption } from '../../../components/showcases/raycast/model-select/types';
+import { useAppTheme } from '../../../contexts/app-theme-context';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 const StyledFeather = withUniwind(Feather);
@@ -57,6 +58,8 @@ export default function Raycast() {
 
   const insets = useSafeAreaInsets();
 
+  const { isDark } = useAppTheme();
+
   const router = useRouter();
 
   return (
@@ -81,9 +84,7 @@ export default function Raycast() {
           onPress={simulatePress}
         >
           <StyledFeather name="search" size={18} className="text-muted" />
-          <AppText className="text-lg text-muted dark:text-muted">
-            Search Raycast
-          </AppText>
+          <AppText className="text-lg text-muted">Search Raycast</AppText>
         </Pressable>
         <Pressable
           className="w-20 items-center justify-center"
@@ -117,7 +118,10 @@ export default function Raycast() {
         </View>
       </View>
       <View
-        className="p-2 bg-surface-3/70 rounded-2xl border border-neutral-400/20 dark:border-neutral-600/20 gap-7"
+        className={cn(
+          'p-2 bg-surface-3/70 rounded-2xl border border-neutral-400/20 gap-7',
+          isDark && 'border-neutral-600/20'
+        )}
         style={styles.borderCurve}
       >
         <View className="flex-row items-center justify-between pr-1">
@@ -126,7 +130,12 @@ export default function Raycast() {
             className="flex-row items-center gap-1.5"
             onPress={() => Alert.alert('Coming soon!')}
           >
-            <AppText className="text-lg text-neutral-800 dark:text-neutral-300">
+            <AppText
+              className={cn(
+                'text-lg text-neutral-800',
+                isDark && 'text-neutral-300'
+              )}
+            >
               Auto
             </AppText>
             <StyledIonicons
@@ -145,12 +154,15 @@ export default function Raycast() {
             />
           </Pressable>
           <Pressable className="flex-1" onPress={simulatePress}>
-            <AppText className="text-lg text-muted dark:text-muted">
+            <AppText className="text-lg text-muted">
               Ask {model.label}...
             </AppText>
           </Pressable>
           <Pressable
-            className="flex-row items-center justify-center gap-1 px-7 py-4 rounded-[16px] bg-neutral-300/50 dark:bg-neutral-700/50 border border-neutral-400/30 dark:border-neutral-600/30"
+            className={cn(
+              'flex-row items-center justify-center gap-1 px-7 py-4 rounded-[16px] bg-neutral-300/50 border border-neutral-400/30',
+              isDark && 'bg-neutral-700/50 border-neutral-600/30'
+            )}
             style={styles.borderCurve}
             onPress={simulatePress}
           >

@@ -3,19 +3,20 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
-  base: 'flex-row items-center justify-center overflow-hidden',
+  base: 'flex-row items-center justify-center rounded-full overflow-hidden',
   variants: {
     variant: {
       primary: 'bg-accent',
       secondary: 'bg-accent-soft',
       tertiary: 'bg-default border border-border',
       ghost: 'bg-transparent',
-      danger: 'bg-danger',
+      destructive: 'bg-danger',
+      ['destructive-soft']: 'bg-default border border-border',
     },
     size: {
-      sm: 'h-[36px] px-3 gap-1.5 rounded-md',
-      md: 'h-[48px] px-4 gap-2 rounded-lg',
-      lg: 'h-[56px] px-5 gap-2.5 rounded-lg',
+      sm: 'h-[36px] px-3 gap-1.5',
+      md: 'h-[48px] px-4 gap-2',
+      lg: 'h-[56px] px-5 gap-2.5',
     },
     isIconOnly: {
       true: 'p-0 aspect-square',
@@ -40,7 +41,8 @@ const label = tv({
       secondary: 'text-accent-soft-foreground',
       tertiary: 'text-default-foreground',
       ghost: 'text-default-foreground',
-      danger: 'text-danger-foreground',
+      destructive: 'text-danger-foreground',
+      ['destructive-soft']: 'text-danger',
     },
     size: {
       sm: 'text-base',

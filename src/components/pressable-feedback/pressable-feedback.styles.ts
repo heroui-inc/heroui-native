@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
-  base: 'relative overflow-hidden',
+  base: 'overflow-hidden',
 });
 
 const ripple = tv({

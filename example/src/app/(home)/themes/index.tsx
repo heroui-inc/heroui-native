@@ -295,7 +295,7 @@ export default function Themes() {
               <Button variant="ghost" size="md">
                 Ghost
               </Button>
-              <Button variant="danger" size="md">
+              <Button variant="destructive" size="md">
                 Danger
               </Button>
             </View>

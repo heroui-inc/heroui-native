@@ -34,7 +34,8 @@ export default function ButtonScreen() {
         <Button variant="secondary">Secondary</Button>
         <Button variant="tertiary">Tertiary</Button>
         <Button variant="ghost">Ghost</Button>
-        <Button variant="danger">Danger</Button>
+        <Button variant="destructive">Destructive</Button>
+        <Button variant="destructive-soft">Destructive Soft</Button>
       </View>
 
       <SectionTitle title="With Icons" />
@@ -71,7 +72,7 @@ export default function ButtonScreen() {
           />
         </Button>
 
-        <Button variant="danger" size="sm">
+        <Button variant="destructive" size="sm">
           <StyledIonicons
             name="trash"
             size={14}
@@ -133,7 +134,7 @@ export default function ButtonScreen() {
             <StyledIonicons name="heart" size={18} className="text-pink-500" />
           </Button.Label>
         </Button>
-        <Button size="lg" variant="danger" isIconOnly>
+        <Button size="lg" variant="destructive" isIconOnly>
           <Button.Label>
             <StyledIonicons
               name="trash"
@@ -152,8 +153,8 @@ export default function ButtonScreen() {
           </Button.Label>
         </Button>
         <Button
-          variant="tertiary"
-          className="border-purple-600/30 bg-purple-50"
+          className="border-purple-600 bg-purple-50"
+          animationConfig={{ highlight: { isDisabled: true } }}
         >
           <StyledIonicons
             name="checkmark"

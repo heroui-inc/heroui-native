@@ -68,14 +68,16 @@ Control button dimensions with three size options.
 
 ### Variants
 
-Choose from five visual variants for different emphasis levels.
+Choose from six visual variants for different emphasis levels.
 
 ```tsx
 <Button variant="primary">Primary</Button>
 <Button variant="secondary">Secondary</Button>
 <Button variant="tertiary">Tertiary</Button>
 <Button variant="ghost">Ghost</Button>
-<Button variant="danger">Danger</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="destructive-soft">Destructive Soft</Button>
+
 ```
 
 ### Loading State with Spinner
@@ -153,7 +155,7 @@ export default function ButtonExample() {
             color={themeColorAccentSoftForeground}
           />
         </Button>
-        <Button size="sm" variant="danger" isIconOnly>
+        <Button size="sm" variant="destructive" isIconOnly>
           <Ionicons name="trash" size={16} color={themeColorDangerForeground} />
         </Button>
       </View>
@@ -186,17 +188,17 @@ export default function ButtonExample() {
 
 ### Button
 
-| prop                         | type                                                            | default     | description                                                    |
-| ---------------------------- | --------------------------------------------------------------- | ----------- | -------------------------------------------------------------- |
-| `children`                   | `React.ReactNode`                                               | -           | Content to be rendered inside the button                       |
-| `variant`                    | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'danger'` | `'primary'` | Visual variant of the button                                   |
-| `size`                       | `'sm' \| 'md' \| 'lg'`                                          | `'md'`      | Size of the button                                             |
-| `isIconOnly`                 | `boolean`                                                       | `false`     | Whether the button displays an icon only (square aspect ratio) |
-| `isDisabled`                 | `boolean`                                                       | `false`     | Whether the button is disabled                                 |
-| `className`                  | `string`                                                        | -           | Additional CSS classes                                         |
-| `animationConfig`            | `AnimationConfig`                                               | -           | Scale on press animation configuration                         |
-| `skipLayoutAnimation`        | `boolean`                                                       | `false`     | Whether to skip the layout animation                           |
-| `...Animated.PressableProps` | `Animated.PressableProps`                                       | -           | All Reanimated AnimatedPressable props are supported           |
+| prop                         | type                                                                                       | default     | description                                                    |
+| ---------------------------- | ------------------------------------------------------------------------------------------ | ----------- | -------------------------------------------------------------- |
+| `children`                   | `React.ReactNode`                                                                          | -           | Content to be rendered inside the button                       |
+| `variant`                    | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'destructive' \| 'destructive-soft'` | `'primary'` | Visual variant of the button                                   |
+| `size`                       | `'sm' \| 'md' \| 'lg'`                                                                     | `'md'`      | Size of the button                                             |
+| `isIconOnly`                 | `boolean`                                                                                  | `false`     | Whether the button displays an icon only (square aspect ratio) |
+| `isDisabled`                 | `boolean`                                                                                  | `false`     | Whether the button is disabled                                 |
+| `className`                  | `string`                                                                                   | -           | Additional CSS classes                                         |
+| `animationConfig`            | `AnimationConfig`                                                                          | -           | Scale on press animation configuration                         |
+| `skipLayoutAnimation`        | `boolean`                                                                                  | `false`     | Whether to skip the layout animation                           |
+| `...Animated.PressableProps` | `Animated.PressableProps`                                                                  | -           | All Reanimated AnimatedPressable props are supported           |
 
 #### AnimationConfig
 

@@ -4,17 +4,17 @@ import { Button, Spinner } from 'heroui-native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FadeIn } from 'react-native-reanimated';
-import { useUniwind, withUniwind } from 'uniwind';
+import { withUniwind } from 'uniwind';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
+import { useAppTheme } from '../../../contexts/app-theme-context';
 
 const StyledIonicons = withUniwind(Ionicons);
 
 export default function ButtonScreen() {
   const [isDownloading, setIsDownloading] = React.useState(false);
 
-  const { theme } = useUniwind();
-  const isDark = theme === 'dark';
+  const { isDark } = useAppTheme();
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">

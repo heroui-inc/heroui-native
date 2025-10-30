@@ -8,7 +8,8 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import { useUniwind, withUniwind } from 'uniwind';
+import { withUniwind } from 'uniwind';
+import { useAppTheme } from '../../contexts/app-theme-context';
 
 const StyledFeather = withUniwind(Feather);
 
@@ -76,8 +77,8 @@ type Props = {
 
 export function SelectButtonTrigger({ contentOffset }: Props) {
   const [basicValue, setBasicValue] = useState<SelectOption | undefined>();
-  const { theme } = useUniwind();
-  const isDark = theme === 'dark';
+
+  const { isDark } = useAppTheme();
 
   return (
     <Select value={basicValue} onValueChange={setBasicValue}>

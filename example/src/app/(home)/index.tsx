@@ -10,9 +10,10 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { useUniwind, withUniwind } from 'uniwind';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
+import { useAppTheme } from '../../contexts/app-theme-context';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const AnimatedImage = Animated.createAnimatedComponent(Image);
@@ -73,8 +74,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
 }) => {
   const router = useRouter();
 
-  const { theme } = useUniwind();
-  const isDark = theme === 'dark';
+  const { isDark } = useAppTheme();
 
   const rLightImageStyle = useAnimatedStyle(() => {
     return {

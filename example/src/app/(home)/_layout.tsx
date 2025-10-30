@@ -3,20 +3,20 @@ import { Stack } from 'expo-router';
 import { useThemeColor } from 'heroui-native';
 import { useCallback } from 'react';
 import { Image, Platform, StyleSheet } from 'react-native';
-import { useUniwind } from 'uniwind';
 import LogoDark from '../../../assets/logo-dark.png';
 import LogoLight from '../../../assets/logo-light.png';
 import { ThemeToggle } from '../../components/theme-toggle';
+import { useAppTheme } from '../../contexts/app-theme-context';
 
 export default function Layout() {
-  const { theme } = useUniwind();
+  const { isDark } = useAppTheme();
   const themeColorForeground = useThemeColor('foreground');
   const themeColorBackground = useThemeColor('background');
 
   const _renderTitle = () => {
     return (
       <Image
-        source={theme === 'dark' ? LogoLight : LogoDark}
+        source={isDark ? LogoLight : LogoDark}
         style={styles.logo}
         resizeMode="contain"
       />
@@ -33,7 +33,7 @@ export default function Layout() {
           ios: true,
           android: false,
         }),
-        headerBlurEffect: theme === 'dark' ? 'dark' : 'light',
+        headerBlurEffect: isDark ? 'dark' : 'light',
         headerTintColor: themeColorForeground,
         headerStyle: {
           backgroundColor: Platform.select({

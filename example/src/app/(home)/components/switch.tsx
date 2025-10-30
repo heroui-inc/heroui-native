@@ -7,10 +7,11 @@ import Animated, {
   FadeInRight,
   ZoomIn,
 } from 'react-native-reanimated';
-import { useUniwind, withUniwind } from 'uniwind';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
+import { useAppTheme } from '../../../contexts/app-theme-context';
 
 const StyledIonicons = withUniwind(Ionicons);
 
@@ -27,7 +28,7 @@ export default function SwitchScreen() {
   const [contentText, setContentText] = React.useState(true);
   const [custom1, setCustom1] = React.useState(true);
 
-  const { theme } = useUniwind();
+  const { isDark } = useAppTheme();
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
@@ -213,7 +214,7 @@ export default function SwitchScreen() {
         }}
         colors={{
           defaultBackground: 'darkgray',
-          selectedBackground: theme === 'dark' ? 'darkgray' : 'black',
+          selectedBackground: isDark ? 'darkgray' : 'black',
         }}
         hitSlop={20}
       >

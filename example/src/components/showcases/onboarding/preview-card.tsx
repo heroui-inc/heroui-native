@@ -5,7 +5,7 @@ import Animated, {
   useAnimatedStyle,
   type SharedValue,
 } from 'react-native-reanimated';
-import { useUniwind } from 'uniwind';
+import { useAppTheme } from '../../../contexts/app-theme-context';
 import { AppText } from '../../app-text';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
@@ -33,8 +33,7 @@ export const PreviewCard: FC<PreviewCardProps> = ({
   allItemsWidth,
   scrollOffsetX,
 }) => {
-  const { theme } = useUniwind();
-  const isDark = theme === 'dark';
+  const { isDark } = useAppTheme();
   const { width: screenWidth } = useWindowDimensions();
 
   const shift = (allItemsWidth - screenWidth) / 2;

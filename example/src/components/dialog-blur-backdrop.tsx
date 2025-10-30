@@ -1,15 +1,15 @@
 import { useDialog } from 'heroui-native';
 import { StyleSheet } from 'react-native';
 import { interpolate, useDerivedValue } from 'react-native-reanimated';
-import { useUniwind } from 'uniwind';
+import { useAppTheme } from '../contexts/app-theme-context';
 import { AnimatedBlurView } from './animated-blur-view';
 
 export const DialogBlurBackdrop = () => {
-  const { theme } = useUniwind();
+  const { isDark } = useAppTheme();
   const { progress, isDragging } = useDialog();
 
   const blurIntensity = useDerivedValue(() => {
-    const maxIntensity = theme === 'dark' ? 75 : 50;
+    const maxIntensity = isDark ? 75 : 50;
 
     if (isDragging.get() && progress.get() <= 1) {
       return maxIntensity;
@@ -21,7 +21,7 @@ export const DialogBlurBackdrop = () => {
   return (
     <AnimatedBlurView
       blurIntensity={blurIntensity}
-      tint={theme === 'dark' ? 'dark' : 'systemUltraThinMaterialDark'}
+      tint={isDark ? 'dark' : 'systemUltraThinMaterialDark'}
       style={StyleSheet.absoluteFill}
     />
   );

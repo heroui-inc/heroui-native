@@ -9,7 +9,7 @@ import Animated, {
   useAnimatedStyle,
   useDerivedValue,
 } from 'react-native-reanimated';
-import { useUniwind } from 'uniwind';
+import { useAppTheme } from '../../contexts/app-theme-context';
 import { AppText } from '../app-text';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
@@ -44,8 +44,7 @@ export function ShowcaseItem({
 }: ShowcaseItemProps) {
   const router = useRouter();
 
-  const { theme } = useUniwind();
-  const isDark = theme === 'dark';
+  const { isDark } = useAppTheme();
 
   const animatedIndex = useDerivedValue(() => {
     return scrollY.get() / itemSize;

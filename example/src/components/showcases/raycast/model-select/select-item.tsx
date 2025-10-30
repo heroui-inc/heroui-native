@@ -3,7 +3,8 @@ import { BlurView } from 'expo-blur';
 import { cn, Select, useSelect } from 'heroui-native';
 import { type FC } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
-import { useUniwind, withUniwind } from 'uniwind';
+import { withUniwind } from 'uniwind';
+import { useAppTheme } from '../../../../contexts/app-theme-context';
 import { AppText } from '../../../app-text';
 import { type ModelOption } from './types';
 
@@ -14,8 +15,7 @@ type Props = {
 };
 
 export const SelectItem: FC<Props> = ({ data }) => {
-  const { theme } = useUniwind();
-  const isDark = theme === 'dark';
+  const { isDark } = useAppTheme();
 
   const { value: selectedValue } = useSelect();
 

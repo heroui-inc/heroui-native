@@ -9,7 +9,7 @@ import {
 } from 'react-native-keyboard-controller';
 import { Easing } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useUniwind } from 'uniwind';
+import { useAppTheme } from '../../contexts/app-theme-context';
 import { AppText } from '../app-text';
 import { SelectBlurBackdrop } from './select-blur-backdrop';
 
@@ -39,8 +39,8 @@ export function SearchableDialogSelect() {
   const [value, setValue] = useState<CountryOption | undefined>();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { theme } = useUniwind();
-  const isDark = theme === 'dark';
+  const { isDark } = useAppTheme();
+
   const themeColorMuted = useThemeColor('muted');
   const themeColorPanel = useThemeColor('panel');
   const themeColorSurface1 = useThemeColor('surface-1');

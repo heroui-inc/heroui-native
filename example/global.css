@@ -2,6 +2,375 @@
 @import 'uniwind';
 
 @import './styles/theme.css' layer(theme);
-@import './styles/variants.css' layer(theme);
+
+@layer theme {
+  :root {
+    @variant light {
+      /* Base Colors */
+      --color-background: var(--color-white);
+      --color-foreground: var(--color-eclipse);
+
+      --color-panel: var(--color-white);
+      --color-panel-foreground: var(--color-foreground);
+
+      --color-muted: var(--color-neutral-500);
+
+      --color-default: var(--color-neutral-50);
+      --color-default-foreground: var(--color-eclipse);
+
+      --color-surface-1: var(--color-background);
+      --color-surface-2: var(--color-neutral-100);
+      --color-surface-3: var(--color-neutral-200);
+
+      --color-accent: var(--color-neutral-950);
+      --color-accent-foreground: var(--color-snow);
+
+      --color-accent-soft: var(--color-neutral-200);
+      --color-accent-soft-foreground: var(--color-neutral-900);
+
+      /* Form Field Defaults */
+      --color-field-background: var(--color-default);
+      --color-field-foreground: var(--color-foreground);
+      --color-field-placeholder: var(--color-muted);
+      --color-field-border: var(--color-border);
+
+      /* Status Colors */
+      --color-success: oklch(0.5503 0.1244 153.56);
+      --color-success-foreground: var(--color-snow);
+
+      --color-warning: oklch(0.7186 0.1521 64.85);
+      --color-warning-foreground: var(--color-eclipse);
+
+      --color-danger: oklch(0.6259 0.1908 29.19);
+      --color-danger-foreground: var(--color-snow);
+
+      /* Misc Colors */
+      --color-border: var(--color-neutral-200);
+      --color-divider: var(--color-neutral-400);
+      --color-link: var(--color-foreground);
+    }
+
+    @variant dark {
+      /* Base Colors */
+      --color-background: var(--color-black);
+      --color-foreground: var(--color-snow);
+
+      --color-panel: var(--color-eclipse);
+      --color-panel-foreground: var(--color-foreground);
+
+      --color-muted: var(--color-neutral-400);
+
+      --color-default: var(--color-neutral-900);
+      --color-default-foreground: var(--color-snow);
+
+      --color-surface-1: var(--color-background);
+      --color-surface-2: var(--color-neutral-900);
+      --color-surface-3: var(--color-neutral-800);
+
+      --color-accent: var(--color-neutral-50);
+      --color-accent-foreground: var(--color-eclipse);
+
+      --color-accent-soft: var(--color-neutral-800);
+      --color-accent-soft-foreground: var(--color-neutral-200);
+
+      /* Form Field Defaults */
+      --color-field-background: var(--color-default);
+      --color-field-foreground: var(--color-foreground);
+      --color-field-placeholder: var(--color-muted);
+      --color-field-border: var(--color-border);
+
+      /* Status Colors */
+      --color-success: oklch(0.5503 0.1244 153.56);
+      --color-success-foreground: var(--color-snow);
+
+      --color-warning: oklch(85% 0.1414 77.88);
+      --color-warning-foreground: var(--color-eclipse);
+
+      --color-danger: oklch(0.5798 0.1635 30.83);
+      --color-danger-foreground: var(--color-snow);
+
+      /* Misc Colors */
+      --color-border: var(--color-neutral-800);
+      --color-divider: var(--color-neutral-600);
+      --color-link: var(--color-foreground);
+    }
+
+    /* Lavender Dream Theme - Light */
+    @variant lavender-light {
+      /* Base Colors */
+      --color-background: hsl(280 25% 98%);
+      --color-foreground: hsl(280 30% 15%);
+
+      --color-panel: hsl(280 20% 96%);
+      --color-panel-foreground: hsl(280 30% 20%);
+
+      --color-muted: hsl(280 15% 45%);
+
+      --color-default: hsl(280 15% 97%);
+      --color-default-foreground: hsl(280 20% 35%);
+
+      --color-surface-1: hsl(280 25% 98%);
+      --color-surface-2: hsl(280 20% 95%);
+      --color-surface-3: hsl(280 18% 92%);
+
+      --color-accent: hsl(270 50% 75%);
+      --color-accent-foreground: hsl(280 30% 15%);
+
+      --color-accent-soft: hsl(270 30% 90%);
+      --color-accent-soft-foreground: hsl(270 40% 40%);
+
+      /* Form Field Defaults */
+      --color-field-background: var(--color-default);
+      --color-field-foreground: var(--color-foreground);
+      --color-field-placeholder: var(--color-muted);
+      --color-field-border: var(--color-border);
+
+      /* Status Colors */
+      --color-success: hsl(160 40% 70%);
+      --color-success-foreground: hsl(160 50% 15%);
+
+      --color-warning: hsl(45 55% 75%);
+      --color-warning-foreground: hsl(45 60% 20%);
+
+      --color-danger: hsl(350 50% 75%);
+      --color-danger-foreground: hsl(350 40% 20%);
+
+      /* Misc Colors */
+      --color-border: hsl(270 20% 88%);
+      --color-divider: hsl(270 15% 82%);
+      --color-link: hsl(270 50% 65%);
+    }
+
+    /* Lavender Dream Theme - Dark */
+    @variant lavender-dark {
+      /* Base Colors */
+      --color-background: hsl(280 20% 12%);
+      --color-foreground: hsl(280 10% 92%);
+
+      --color-panel: hsl(280 18% 15%);
+      --color-panel-foreground: hsl(280 10% 85%);
+
+      --color-muted: hsl(280 10% 40%);
+
+      --color-default: hsl(280 15% 20%);
+      --color-default-foreground: hsl(280 10% 80%);
+
+      --color-surface-1: hsl(280 20% 12%);
+      --color-surface-2: hsl(280 18% 15%);
+      --color-surface-3: hsl(280 16% 18%);
+
+      --color-accent: hsl(270 45% 70%);
+      --color-accent-foreground: hsl(280 10% 10%);
+
+      --color-accent-soft: hsl(270 25% 30%);
+      --color-accent-soft-foreground: hsl(270 35% 75%);
+
+      /* Form Field Defaults */
+      --color-field-background: var(--color-default);
+      --color-field-foreground: var(--color-foreground);
+      --color-field-placeholder: var(--color-muted);
+      --color-field-border: var(--color-border);
+
+      /* Status Colors */
+      --color-success: hsl(160 35% 55%);
+      --color-success-foreground: hsl(160 10% 90%);
+
+      --color-warning: hsl(45 50% 60%);
+      --color-warning-foreground: hsl(45 10% 10%);
+
+      --color-danger: hsl(350 45% 60%);
+      --color-danger-foreground: hsl(350 10% 90%);
+
+      /* Misc Colors */
+      --color-border: hsl(270 15% 25%);
+      --color-divider: hsl(270 12% 30%);
+      --color-link: hsl(270 45% 70%);
+    }
+
+    /* Mint Garden Theme - Light */
+    @variant mint-light {
+      /* Base Colors */
+      --color-background: hsl(160 30% 98%);
+      --color-foreground: hsl(160 35% 12%);
+
+      --color-panel: hsl(160 25% 96%);
+      --color-panel-foreground: hsl(160 35% 18%);
+
+      --color-muted: hsl(160 15% 45%);
+
+      --color-default: hsl(160 18% 97%);
+      --color-default-foreground: hsl(160 25% 32%);
+
+      --color-surface-1: hsl(160 30% 98%);
+      --color-surface-2: hsl(160 25% 95%);
+      --color-surface-3: hsl(160 22% 92%);
+
+      --color-accent: hsl(165 45% 70%);
+      --color-accent-foreground: hsl(165 40% 15%);
+
+      --color-accent-soft: hsl(165 30% 90%);
+      --color-accent-soft-foreground: hsl(165 40% 35%);
+
+      /* Form Field Defaults */
+      --color-field-background: var(--color-default);
+      --color-field-foreground: var(--color-foreground);
+      --color-field-placeholder: var(--color-muted);
+      --color-field-border: var(--color-border);
+
+      /* Status Colors */
+      --color-success: hsl(145 50% 68%);
+      --color-success-foreground: hsl(145 45% 15%);
+
+      --color-warning: hsl(55 60% 75%);
+      --color-warning-foreground: hsl(55 50% 20%);
+
+      --color-danger: hsl(10 55% 75%);
+      --color-danger-foreground: hsl(10 45% 20%);
+
+      /* Misc Colors */
+      --color-border: hsl(165 20% 88%);
+      --color-divider: hsl(165 15% 82%);
+      --color-link: hsl(165 45% 60%);
+    }
+
+    /* Mint Garden Theme - Dark */
+    @variant mint-dark {
+      /* Base Colors */
+      --color-background: hsl(160 20% 10%);
+      --color-foreground: hsl(160 10% 92%);
+
+      --color-panel: hsl(160 18% 13%);
+      --color-panel-foreground: hsl(160 10% 85%);
+
+      --color-muted: hsl(160 10% 38%);
+
+      --color-default: hsl(160 15% 18%);
+      --color-default-foreground: hsl(160 10% 80%);
+
+      --color-surface-1: hsl(160 20% 10%);
+      --color-surface-2: hsl(160 18% 13%);
+      --color-surface-3: hsl(160 16% 16%);
+
+      --color-accent: hsl(165 40% 60%);
+      --color-accent-foreground: hsl(165 10% 10%);
+
+      --color-accent-soft: hsl(165 25% 28%);
+      --color-accent-soft-foreground: hsl(165 35% 70%);
+
+      /* Form Field Defaults */
+      --color-field-background: var(--color-default);
+      --color-field-foreground: var(--color-foreground);
+      --color-field-placeholder: var(--color-muted);
+      --color-field-border: var(--color-border);
+
+      /* Status Colors */
+      --color-success: hsl(145 40% 50%);
+      --color-success-foreground: hsl(145 10% 90%);
+
+      --color-warning: hsl(55 50% 60%);
+      --color-warning-foreground: hsl(55 10% 10%);
+
+      --color-danger: hsl(10 45% 60%);
+      --color-danger-foreground: hsl(10 10% 90%);
+
+      /* Misc Colors */
+      --color-border: hsl(165 15% 22%);
+      --color-divider: hsl(165 12% 28%);
+      --color-link: hsl(165 40% 65%);
+    }
+
+    /* Sky Dream Theme - Light */
+    @variant sky-light {
+      /* Base Colors */
+      --color-background: hsl(210 40% 98%);
+      --color-foreground: hsl(210 35% 12%);
+
+      --color-panel: hsl(210 30% 96%);
+      --color-panel-foreground: hsl(210 35% 18%);
+
+      --color-muted: hsl(210 18% 45%);
+
+      --color-default: hsl(210 22% 97%);
+      --color-default-foreground: hsl(210 28% 32%);
+
+      --color-surface-1: hsl(210 40% 98%);
+      --color-surface-2: hsl(210 30% 95%);
+      --color-surface-3: hsl(210 28% 92%);
+
+      --color-accent: hsl(200 50% 72%);
+      --color-accent-foreground: hsl(200 40% 15%);
+
+      --color-accent-soft: hsl(200 32% 90%);
+      --color-accent-soft-foreground: hsl(200 42% 35%);
+
+      /* Form Field Defaults */
+      --color-field-background: var(--color-default);
+      --color-field-foreground: var(--color-foreground);
+      --color-field-placeholder: var(--color-muted);
+      --color-field-border: var(--color-border);
+
+      /* Status Colors */
+      --color-success: hsl(175 45% 70%);
+      --color-success-foreground: hsl(175 40% 18%);
+
+      --color-warning: hsl(48 58% 75%);
+      --color-warning-foreground: hsl(48 48% 20%);
+
+      --color-danger: hsl(340 52% 75%);
+      --color-danger-foreground: hsl(340 42% 20%);
+
+      /* Misc Colors */
+      --color-border: hsl(200 22% 88%);
+      --color-divider: hsl(200 18% 82%);
+      --color-link: hsl(200 50% 62%);
+    }
+
+    /* Sky Dream Theme - Dark */
+    @variant sky-dark {
+      /* Base Colors */
+      --color-background: hsl(210 25% 10%);
+      --color-foreground: hsl(210 10% 92%);
+
+      --color-panel: hsl(210 22% 13%);
+      --color-panel-foreground: hsl(210 10% 85%);
+
+      --color-muted: hsl(210 12% 38%);
+
+      --color-default: hsl(210 18% 18%);
+      --color-default-foreground: hsl(210 10% 80%);
+
+      --color-surface-1: hsl(210 25% 10%);
+      --color-surface-2: hsl(210 22% 13%);
+      --color-surface-3: hsl(210 20% 16%);
+
+      --color-accent: hsl(200 42% 62%);
+      --color-accent-foreground: hsl(200 10% 10%);
+
+      --color-accent-soft: hsl(200 26% 28%);
+      --color-accent-soft-foreground: hsl(200 36% 70%);
+
+      /* Form Field Defaults */
+      --color-field-background: var(--color-default);
+      --color-field-foreground: var(--color-foreground);
+      --color-field-placeholder: var(--color-muted);
+      --color-field-border: var(--color-border);
+
+      /* Status Colors */
+      --color-success: hsl(175 38% 55%);
+      --color-success-foreground: hsl(175 10% 90%);
+
+      --color-warning: hsl(48 48% 60%);
+      --color-warning-foreground: hsl(48 10% 10%);
+
+      --color-danger: hsl(340 42% 60%);
+      --color-danger-foreground: hsl(340 10% 90%);
+
+      /* Misc Colors */
+      --color-border: hsl(200 16% 22%);
+      --color-divider: hsl(200 14% 28%);
+      --color-link: hsl(200 42% 65%);
+    }
+  }
+}
 
 @source '../src';

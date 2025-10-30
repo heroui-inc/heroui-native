@@ -2,7 +2,7 @@ import { LinearGradient, type LinearGradientProps } from 'expo-linear-gradient';
 import { cn } from 'heroui-native';
 import { type FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useUniwind } from 'uniwind';
+import { useAppTheme } from '../contexts/app-theme-context';
 import { AppText } from './app-text';
 
 type Props = {
@@ -11,12 +11,11 @@ type Props = {
 };
 
 export const SectionTitle: FC<Props> = ({ title, className }) => {
-  const { theme } = useUniwind();
+  const { isDark } = useAppTheme();
 
-  const gradientColors: LinearGradientProps['colors'] =
-    theme === 'dark'
-      ? ['rgba(15, 15, 15, 0.95)', 'rgba(25, 25, 25, 0.85)']
-      : ['rgba(250, 250, 250, 0.95)', 'rgba(245, 245, 245, 0.9)'];
+  const gradientColors: LinearGradientProps['colors'] = isDark
+    ? ['rgba(15, 15, 15, 0.95)', 'rgba(25, 25, 25, 0.85)']
+    : ['rgba(250, 250, 250, 0.95)', 'rgba(245, 245, 245, 0.9)'];
 
   return (
     <View className={cn('overflow-hidden -mx-5', className)}>

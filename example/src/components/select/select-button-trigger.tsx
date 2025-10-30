@@ -30,7 +30,7 @@ const AnimatedTrigger: FC = () => {
   const { progress, selectState } = useSelect();
 
   const themeColorDefault = useThemeColor('default');
-  const themeColorPanel = useThemeColor('panel');
+  const themeColorSurface = useThemeColor('surface');
 
   const rContainerStyle = useAnimatedStyle(() => {
     const opacity = interpolate(progress.value, [0, 1, 2], [0, 1, 0]);
@@ -55,7 +55,7 @@ const AnimatedTrigger: FC = () => {
           transitionProperty: 'backgroundColor',
           transitionDuration: 400,
           backgroundColor:
-            selectState === 'open' ? themeColorPanel : themeColorDefault,
+            selectState === 'open' ? themeColorSurface : themeColorDefault,
         },
       ]}
     >
@@ -90,7 +90,7 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
         <Select.Content
           width="trigger"
           offset={contentOffset}
-          className="w-[256px] px-0 border border-border rounded-xl ios:bg-panel/5"
+          className="w-[256px] px-0 border border-border rounded-xl ios:bg-overlay/5"
         >
           <View className="absolute inset-0 rounded-xl overflow-hidden">
             {Platform.OS === 'ios' && (

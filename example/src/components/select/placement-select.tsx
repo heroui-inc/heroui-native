@@ -33,7 +33,7 @@ type PlacementContentListProps = {
 
 const PlacementContentList: FC<PlacementContentListProps> = memo(
   ({ valueIndex }) => {
-    const themeColorPanel = useThemeColor('panel');
+    const themeColorOverlay = useThemeColor('overlay');
 
     const listRef = useRef<FlatList>(null);
 
@@ -61,7 +61,7 @@ const PlacementContentList: FC<PlacementContentListProps> = memo(
     return (
       <ScrollShadow
         LinearGradientComponent={LinearGradient}
-        color={themeColorPanel}
+        color={themeColorOverlay}
       >
         <FlatList
           ref={listRef}

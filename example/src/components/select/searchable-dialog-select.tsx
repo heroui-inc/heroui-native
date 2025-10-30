@@ -42,8 +42,8 @@ export function SearchableDialogSelect() {
   const { isDark } = useAppTheme();
 
   const themeColorMuted = useThemeColor('muted');
-  const themeColorPanel = useThemeColor('panel');
-  const themeColorSurface1 = useThemeColor('surface-1');
+  const themeColorOverlay = useThemeColor('overlay');
+  const themeColorSurface = useThemeColor('surface');
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -122,7 +122,7 @@ export function SearchableDialogSelect() {
             <ScrollShadow
               className="flex-1"
               LinearGradientComponent={LinearGradient}
-              color={isDark ? themeColorSurface1 : themeColorPanel}
+              color={isDark ? themeColorSurface : themeColorOverlay}
             >
               <ScrollView keyboardShouldPersistTaps="handled">
                 {filteredCountries.map((country) => (

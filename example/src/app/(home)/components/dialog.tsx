@@ -92,7 +92,7 @@ export default function DialogScreen() {
   const { height } = useWindowDimensions();
 
   const { isDark } = useAppTheme();
-  const themeColorPanel = useThemeColor('panel');
+  const themeColorOverlay = useThemeColor('overlay');
 
   const router = useRouter();
 
@@ -317,7 +317,7 @@ export default function DialogScreen() {
             <ScrollShadow
               LinearGradientComponent={LinearGradient}
               style={{ height: height * 0.35 }}
-              color={themeColorPanel}
+              color={themeColorOverlay}
             >
               <ScrollView contentContainerClassName="px-6">
                 <Text className="text-foreground/80 text-center">

@@ -278,7 +278,7 @@ const PopoverContentBottomSheet = forwardRef<
 
     const { popoverState, onOpenChange, progress } = usePopover();
 
-    const themeColorPanel = useThemeColor('panel');
+    const themeColorOverlay = useThemeColor('overlay');
     const themeColorMuted = useThemeColor('muted');
 
     const tvStyles = popoverStyles.bottomSheetContent({
@@ -324,7 +324,7 @@ const PopoverContentBottomSheet = forwardRef<
         <BottomSheet
           ref={bottomSheetRef}
           backgroundStyle={[
-            { backgroundColor: themeColorPanel },
+            { backgroundColor: themeColorOverlay },
             restProps.backgroundStyle,
           ]}
           handleIndicatorStyle={[
@@ -459,7 +459,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
     },
     ref
   ) => {
-    const themeColorPanel = useThemeColor('panel');
+    const themeColorOverlay = useThemeColor('overlay');
     const themeColorBorder = useThemeColor('border');
     const { triggerPosition, contentLayout } = usePopover();
     const { placement: placementContext } = use(PopoverContentContext);
@@ -478,7 +478,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
       return null;
     }
 
-    const arrowFill = fill || themeColorPanel;
+    const arrowFill = fill || themeColorOverlay;
     const arrowStroke = stroke || themeColorBorder;
 
     const getArrowPosition = (): StyleProp<ViewStyle> => {

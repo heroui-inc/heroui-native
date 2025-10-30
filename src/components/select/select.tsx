@@ -303,7 +303,7 @@ const SelectContentBottomSheet = forwardRef<
 
     const { selectState, onOpenChange, progress } = useSelect();
 
-    const themeColorPanel = useThemeColor('panel');
+    const themeColorOverlay = useThemeColor('overlay');
     const themeColorMuted = useThemeColor('muted');
 
     const tvStyles = selectStyles.bottomSheetContent({
@@ -348,7 +348,7 @@ const SelectContentBottomSheet = forwardRef<
       <BottomSheet
         ref={bottomSheetRef}
         backgroundStyle={[
-          { backgroundColor: themeColorPanel },
+          { backgroundColor: themeColorOverlay },
           restProps.backgroundStyle,
         ]}
         handleIndicatorStyle={[

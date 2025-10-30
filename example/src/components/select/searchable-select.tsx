@@ -54,7 +54,7 @@ export function SearchableSelect() {
   const [isFocused, setIsFocused] = useState(false);
 
   const themeColorMuted = useThemeColor('muted');
-  const themeColorPanel = useThemeColor('panel');
+  const themeColorOverlay = useThemeColor('overlay');
   const themeColorDefault = useThemeColor('default');
 
   const triggerRef = useRef<SelectTriggerRef>(null);
@@ -62,7 +62,7 @@ export function SearchableSelect() {
   const rTextInputStyle = useAnimatedStyle(() => {
     return {
       backgroundColor: withTiming(
-        isFocused ? themeColorPanel : themeColorDefault
+        isFocused ? themeColorOverlay : themeColorDefault
       ),
     };
   });

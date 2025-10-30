@@ -9,6 +9,7 @@ const root = tv({
       primary: 'border-0',
       secondary: 'border border-border bg-default',
       tertiary: 'border border-border bg-transparent',
+      soft: 'border-0',
     },
     size: {
       sm: 'px-2 h-5',
@@ -50,6 +51,32 @@ const root = tv({
       color: 'danger',
       className: 'bg-danger',
     },
+    // Soft variant colors
+    {
+      variant: 'soft',
+      color: 'accent',
+      className: 'bg-accent/15',
+    },
+    {
+      variant: 'soft',
+      color: 'default',
+      className: 'bg-default/15',
+    },
+    {
+      variant: 'soft',
+      color: 'success',
+      className: 'bg-success/15',
+    },
+    {
+      variant: 'soft',
+      color: 'warning',
+      className: 'bg-warning/15',
+    },
+    {
+      variant: 'soft',
+      color: 'danger',
+      className: 'bg-danger/15',
+    },
   ],
   defaultVariants: {
     size: 'md',
@@ -65,6 +92,7 @@ const label = tv({
       primary: '',
       secondary: '',
       tertiary: '',
+      soft: '',
     },
     size: {
       sm: 'text-xs',
@@ -155,6 +183,32 @@ const label = tv({
     },
     {
       variant: 'tertiary',
+      color: 'danger',
+      className: 'text-danger',
+    },
+    // Soft variant text colors
+    {
+      variant: 'soft',
+      color: 'accent',
+      className: 'text-accent',
+    },
+    {
+      variant: 'soft',
+      color: 'default',
+      className: 'text-default-foreground',
+    },
+    {
+      variant: 'soft',
+      color: 'success',
+      className: 'text-success',
+    },
+    {
+      variant: 'soft',
+      color: 'warning',
+      className: 'text-warning',
+    },
+    {
+      variant: 'soft',
       color: 'danger',
       className: 'text-danger',
     },

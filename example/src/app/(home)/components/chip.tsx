@@ -86,6 +86,25 @@ export default function ChipScreen() {
         </Chip>
       </View>
 
+      <SectionTitle title="Colors - Soft Variant" />
+      <View className="flex-row flex-wrap gap-4 justify-center">
+        <Chip variant="soft" color="accent">
+          Accent
+        </Chip>
+        <Chip variant="soft" color="default">
+          Default
+        </Chip>
+        <Chip variant="soft" color="success">
+          Success
+        </Chip>
+        <Chip variant="soft" color="warning">
+          Warning
+        </Chip>
+        <Chip variant="soft" color="danger">
+          Danger
+        </Chip>
+      </View>
+
       <SectionTitle title="With Start Content" />
       <View className="gap-8">
         <View className="flex-row flex-wrap gap-4 justify-center">

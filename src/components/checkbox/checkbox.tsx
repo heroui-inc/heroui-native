@@ -49,12 +49,12 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       className,
     });
 
-    const themeColorBackgroundTertiary = useThemeColor('background-tertiary');
+    const themeColorBackgroundSecondary = useThemeColor('background-secondary');
     const themeColorAccent = useThemeColor('accent');
     const themeColorDanger = useThemeColor('danger');
 
     const backgroundColorDefault =
-      animatedColors?.backgroundColor?.default ?? themeColorBackgroundTertiary;
+      animatedColors?.backgroundColor?.default ?? themeColorBackgroundSecondary;
     const backgroundColorSelected =
       animatedColors?.backgroundColor?.selected ?? themeColorAccent;
     const backgroundColorDefaultInvalid =
@@ -65,7 +65,7 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
     const borderColorDefault =
       animatedColors?.borderColor?.default ??
       animatedColors?.backgroundColor?.default ??
-      themeColorBackgroundTertiary;
+      themeColorBackgroundSecondary;
     const borderColorSelected =
       animatedColors?.borderColor?.selected ??
       animatedColors?.backgroundColor?.selected ??

@@ -102,7 +102,11 @@ export default function PaymentMethodExample() {
       <RadioGroup.Item value="card">
         <View>
           <View className="flex-row items-center gap-1.5">
-            <Ionicons name="card-outline" size={16} color={themeColorForeground} />
+            <Ionicons
+              name="card-outline"
+              size={16}
+              color={themeColorForeground}
+            />
             <RadioGroup.Label>Credit/Debit Card</RadioGroup.Label>
           </View>
           <RadioGroup.Description>
@@ -175,15 +179,14 @@ export default function PaymentMethodExample() {
 
 ### RadioGroup.Item
 
-| prop                | type                                              | default     | description                                                               |
-| ------------------- | ------------------------------------------------- | ----------- | ------------------------------------------------------------------------- |
-| `children`          | `React.ReactNode`                                 | `undefined` | Radio item content                                                        |
-| `value`             | `string`                                          | `undefined` | The value associated with this radio item                                 |
-| `color`             | `'default' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Color variant                                                             |
-| `isDisabled`        | `boolean`                                         | `false`     | Whether this specific radio item is disabled                              |
-| `isInvalid`         | `boolean`                                         | `false`     | Whether the radio item is invalid                                         |
-| `className`         | `string`                                          | `undefined` | Custom class name                                                         |
-| `...PressableProps` | `PressableProps`                                  | -           | All standard React Native Pressable props are supported (except disabled) |
+| prop                | type              | default     | description                                                               |
+| ------------------- | ----------------- | ----------- | ------------------------------------------------------------------------- |
+| `children`          | `React.ReactNode` | `undefined` | Radio item content                                                        |
+| `value`             | `string`          | `undefined` | The value associated with this radio item                                 |
+| `isDisabled`        | `boolean`         | `false`     | Whether this specific radio item is disabled                              |
+| `isInvalid`         | `boolean`         | `false`     | Whether the radio item is invalid                                         |
+| `className`         | `string`          | `undefined` | Custom class name                                                         |
+| `...PressableProps` | `PressableProps`  | -           | All standard React Native Pressable props are supported (except disabled) |
 
 ### RadioGroup.Indicator
 
@@ -244,9 +247,8 @@ export default function PaymentMethodExample() {
 
 **Returns:**
 
-| Property     | Type                                              | Description                        |
-| ------------ | ------------------------------------------------- | ---------------------------------- |
-| `color`      | `'default' \| 'success' \| 'warning' \| 'danger'` | Current color variant              |
-| `isSelected` | `boolean`                                         | Whether the radio item is selected |
-| `isDisabled` | `boolean`                                         | Whether the radio item is disabled |
-| `isInvalid`  | `boolean`                                         | Whether the radio item is invalid  |
+| Property     | Type      | Description                        |
+| ------------ | --------- | ---------------------------------- |
+| `isSelected` | `boolean` | Whether the radio item is selected |
+| `isDisabled` | `boolean` | Whether the radio item is disabled |
+| `isInvalid`  | `boolean` | Whether the radio item is invalid  |

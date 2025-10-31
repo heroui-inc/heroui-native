@@ -51,9 +51,6 @@ export interface CheckboxProps
     | React.ReactNode
     | ((props: CheckboxRenderProps) => React.ReactNode);
 
-  /** Whether the checkbox is invalid @default false */
-  isInvalid?: boolean;
-
   /** Custom class name for the checkbox */
   className?: string;
 

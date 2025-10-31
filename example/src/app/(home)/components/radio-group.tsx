@@ -17,9 +17,6 @@ export default function RadioGroupScreen() {
   // Basic radio states
   const [basicSelection, setBasicSelection] = React.useState('option1');
 
-  // Color variants
-  const [selectedColor, setSelectedColor] = React.useState('success');
-
   // With descriptions
   const [withDescSelection, setWithDescSelection] = React.useState('desc1');
 
@@ -77,22 +74,6 @@ export default function RadioGroupScreen() {
             </RadioGroup.Description>
           </View>
           <RadioGroup.Indicator />
-        </RadioGroup.Item>
-      </RadioGroup>
-
-      <SectionTitle title="Color Variants" />
-      <RadioGroup value={selectedColor} onValueChange={setSelectedColor}>
-        <RadioGroup.Item value="default" color="default">
-          Default Color
-        </RadioGroup.Item>
-        <RadioGroup.Item value="success" color="success">
-          Success Color
-        </RadioGroup.Item>
-        <RadioGroup.Item value="warning" color="warning">
-          Warning Color
-        </RadioGroup.Item>
-        <RadioGroup.Item value="danger" color="danger">
-          Danger Color
         </RadioGroup.Item>
       </RadioGroup>
 

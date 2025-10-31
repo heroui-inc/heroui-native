@@ -8,12 +8,6 @@ import type {
 } from '../form-field';
 
 /**
- * RadioGroupItem color variant
- * @default 'default'
- */
-export type RadioGroupItemColor = 'default' | 'success' | 'warning' | 'danger';
-
-/**
  * Props for RadioGroup root component
  */
 export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
@@ -27,8 +21,6 @@ export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
  * Context values shared between RadioGroupItem compound components
  */
 export interface RadioGroupItemContextValue {
-  /** Current color variant */
-  color: RadioGroupItemColor;
   /** Whether the radio item is selected */
   isSelected: boolean;
   /** Whether the radio item is disabled */
@@ -43,8 +35,6 @@ export interface RadioGroupItemContextValue {
 export interface RadioGroupItemProps extends ItemProps {
   /** Radio item content */
   children?: React.ReactNode;
-  /** Color variant */
-  color?: RadioGroupItemColor;
   /** Whether the radio item is invalid @default false */
   isInvalid?: boolean;
   /** Custom class name */

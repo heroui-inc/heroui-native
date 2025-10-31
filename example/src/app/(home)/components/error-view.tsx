@@ -33,7 +33,6 @@ export default function ErrorViewScreen() {
       <View className="flex-row items-center gap-4">
         <Button
           onPress={() => setBasicError(!basicError)}
-          variant="tertiary"
           size="sm"
           className="self-start"
         >
@@ -86,7 +85,6 @@ export default function ErrorViewScreen() {
       <View className="gap-8">
         <Button
           onPress={() => setSlideError(!slideError)}
-          variant="tertiary"
           size="sm"
           className="self-start"
         >
@@ -111,7 +109,6 @@ export default function ErrorViewScreen() {
       <View className="gap-8">
         <Button
           onPress={() => setZoomError(!zoomError)}
-          variant="tertiary"
           size="sm"
           className="self-start"
         >
@@ -169,7 +166,6 @@ export default function ErrorViewScreen() {
       <View className="gap-8">
         <Button
           onPress={() => setShowMultipleErrors(!showMultipleErrors)}
-          variant={showMultipleErrors ? 'danger' : 'primary'}
           size="sm"
           className="self-start"
         >

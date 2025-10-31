@@ -45,7 +45,7 @@ const label = tv({
       ['destructive-soft']: 'text-danger',
     },
     size: {
-      sm: 'text-base',
+      sm: 'text-sm',
       md: 'text-base',
       lg: 'text-lg',
     },

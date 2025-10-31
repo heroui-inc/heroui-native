@@ -10,7 +10,7 @@ const list = tv({
   base: 'self-start flex-row items-center gap-1',
   variants: {
     variant: {
-      pill: 'rounded-[12px] bg-surface-2 p-[3px]',
+      pill: 'rounded-[12px] bg-segment p-[3px]',
       line: 'border-b border-border',
     },
   },
@@ -58,7 +58,7 @@ const indicator = tv({
   variants: {
     variant: {
       pill: 'rounded-[10px] border-[0.5px] border-border shadow-sm dark:shadow-none shadow-black/[0.08] bg-background',
-      line: 'border-b-2 border-foreground bottom-0',
+      line: 'border-b-2 border-accent bottom-0',
     },
   },
   defaultVariants: {

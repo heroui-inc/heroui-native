@@ -39,14 +39,17 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
   const {
     children,
     size = 'md',
-    color = 'default',
+    variant = 'default',
+    color = 'accent',
     className,
     style,
     ...restProps
   } = props;
 
   const tvStyles = avatarStyles.root({
+    variant,
     size,
+    color,
     className,
   });
 

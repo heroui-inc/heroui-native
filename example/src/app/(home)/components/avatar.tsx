@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, cn } from 'heroui-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { withUniwind } from 'uniwind';
+import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
 
@@ -65,49 +66,116 @@ export default function AvatarScreen() {
 
       <SectionTitle title="Colors" />
       <View className="gap-8">
-        <View className="flex-row items-center justify-center gap-4">
-          <Avatar color="default" alt="Default">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback />
-          </Avatar>
-          <Avatar color="accent" alt="Accent">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback />
-          </Avatar>
-          <Avatar color="success" alt="Success">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback />
-          </Avatar>
-          <Avatar color="warning" alt="Warning">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback />
-          </Avatar>
-          <Avatar color="danger" alt="Danger">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback />
-          </Avatar>
+        <View className="gap-3">
+          <AppText className="text-sm text-muted text-center">
+            Default variant with text fallback
+          </AppText>
+          <View className="flex-row items-center justify-center gap-4">
+            <Avatar color="accent" alt="Accent">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>AC</Avatar.Fallback>
+            </Avatar>
+            <Avatar color="default" alt="Default">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>DF</Avatar.Fallback>
+            </Avatar>
+            <Avatar color="success" alt="Success">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>SC</Avatar.Fallback>
+            </Avatar>
+            <Avatar color="warning" alt="Warning">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>WR</Avatar.Fallback>
+            </Avatar>
+            <Avatar color="danger" alt="Danger">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>DG</Avatar.Fallback>
+            </Avatar>
+          </View>
         </View>
-        <View className="flex-row items-center justify-center gap-4">
-          <Avatar color="default" alt="Default">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback />
-          </Avatar>
-          <Avatar color="accent" alt="Accent">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback>AC</Avatar.Fallback>
-          </Avatar>
-          <Avatar color="success" alt="Success">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback>SC</Avatar.Fallback>
-          </Avatar>
-          <Avatar color="warning" alt="Warning">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback>WR</Avatar.Fallback>
-          </Avatar>
-          <Avatar color="danger" alt="Danger">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback>DG</Avatar.Fallback>
-          </Avatar>
+
+        <View className="gap-3">
+          <AppText className="text-sm text-muted text-center">
+            Soft variant with text fallback
+          </AppText>
+          <View className="flex-row items-center justify-center gap-4">
+            <Avatar variant="soft" color="accent" alt="Accent">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>AC</Avatar.Fallback>
+            </Avatar>
+            <Avatar variant="soft" color="default" alt="Default">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>DF</Avatar.Fallback>
+            </Avatar>
+            <Avatar variant="soft" color="success" alt="Success">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>SC</Avatar.Fallback>
+            </Avatar>
+            <Avatar variant="soft" color="warning" alt="Warning">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>WR</Avatar.Fallback>
+            </Avatar>
+            <Avatar variant="soft" color="danger" alt="Danger">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>DG</Avatar.Fallback>
+            </Avatar>
+          </View>
+        </View>
+
+        <View className="gap-3">
+          <AppText className="text-sm text-muted text-center">
+            Default variant with icon fallback
+          </AppText>
+          <View className="flex-row items-center justify-center gap-4">
+            <Avatar color="accent" alt="Accent">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar color="default" alt="Default">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar color="success" alt="Success">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar color="warning" alt="Warning">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar color="danger" alt="Danger">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+          </View>
+        </View>
+
+        <View className="gap-3">
+          <AppText className="text-sm text-muted text-center">
+            Soft variant with icon fallback
+          </AppText>
+          <View className="flex-row items-center justify-center gap-4">
+            <Avatar variant="soft" color="accent" alt="Accent">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar variant="soft" color="default" alt="Default">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar variant="soft" color="success" alt="Success">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar variant="soft" color="warning" alt="Warning">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar variant="soft" color="danger" alt="Danger">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+          </View>
         </View>
       </View>
 

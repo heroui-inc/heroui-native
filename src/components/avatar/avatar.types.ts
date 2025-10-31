@@ -18,11 +18,16 @@ import type { PersonIconProps } from './person-icon';
 export type AvatarSize = 'sm' | 'md' | 'lg';
 
 /**
+ * Available variants for the Avatar component
+ */
+export type AvatarVariant = 'default' | 'soft';
+
+/**
  * Available color variants for the Avatar component
  */
 export type AvatarColor =
-  | 'default'
   | 'accent'
+  | 'default'
   | 'success'
   | 'warning'
   | 'danger';
@@ -37,10 +42,14 @@ export interface AvatarRootProps extends PrimitiveRootProps {
    * @default 'md'
    */
   size?: AvatarSize;
-
+  /**
+   * Visual variant of the avatar
+   * @default 'default'
+   */
+  variant?: AvatarVariant;
   /**
    * Color variant of the avatar
-   * @default 'default'
+   * @default 'accent'
    */
   color?: AvatarColor;
 

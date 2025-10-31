@@ -1,7 +1,7 @@
 export {
   default as RadioGroup,
-  useRadioGroupContext,
-  useRadioGroupItemContext,
+  useRadioGroup,
+  useRadioGroupItem,
 } from './radio-group';
 export type {
   RadioGroupDescriptionProps,

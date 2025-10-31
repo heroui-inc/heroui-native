@@ -1,4 +1,4 @@
-import { cn, RadioGroup, useRadioGroupContext } from 'heroui-native';
+import { cn, RadioGroup, useRadioGroup } from 'heroui-native';
 import { type FC } from 'react';
 import { View } from 'react-native';
 import { BlurContainer } from './blur-container';
@@ -23,7 +23,7 @@ export const StyledRadio: FC<Props> = ({
   title2,
   description2,
 }) => {
-  const { value: selectedValue } = useRadioGroupContext();
+  const { value: selectedValue } = useRadioGroup();
   const isSelected = selectedValue === value;
 
   return (

@@ -29,12 +29,12 @@ const AnimatedRadioIndicator = Animated.createAnimatedComponent(
   RadioGroupPrimitives.Indicator
 );
 
-const [RadioGroupItemProvider, useRadioGroupItemContext] =
+const [RadioGroupItemProvider, useRadioGroupItem] =
   createContext<RadioGroupItemContextValue>({
     name: 'RadioGroupItemContext',
   });
 
-const useRadioGroupContext = RadioGroupPrimitives.useRadioGroupContext;
+const useRadioGroup = RadioGroupPrimitives.useRadioGroupContext;
 
 // --------------------------------------------------
 
@@ -71,7 +71,7 @@ const RadioGroupItem = forwardRef<
     value: groupValue,
     isInvalid: groupIsInvalid,
     isDisabled: groupIsDisabled,
-  } = useRadioGroupContext();
+  } = useRadioGroup();
 
   const isSelected = groupValue === value;
 
@@ -122,7 +122,7 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
   (props, ref) => {
     const { children, className, style, ...restProps } = props;
 
-    const { isSelected, isInvalid } = useRadioGroupItemContext();
+    const { isSelected, isInvalid } = useRadioGroupItem();
 
     const thumbElement = useMemo(
       () =>
@@ -161,7 +161,7 @@ const RadioGroupIndicatorThumb = forwardRef<
 >((props, ref) => {
   const { className, style, ...restProps } = props;
 
-  const { isSelected } = useRadioGroupItemContext();
+  const { isSelected } = useRadioGroupItem();
 
   const tvStyles = radioGroupStyles.itemIndicatorThumb({
     isSelected,
@@ -212,7 +212,7 @@ const RadioGroupErrorMessage = forwardRef<ViewRef, RadioGroupErrorMessageProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
 
-    const { isInvalid } = useRadioGroupContext();
+    const { isInvalid } = useRadioGroup();
 
     const tvStyles = radioGroupStyles.errorMessage({
       className,
@@ -283,4 +283,4 @@ const CompoundRadioGroup = Object.assign(RadioGroupRoot, {
 });
 
 export default CompoundRadioGroup;
-export { useRadioGroupContext, useRadioGroupItemContext };
+export { useRadioGroup, useRadioGroupItem };

@@ -232,7 +232,7 @@ export default function PaymentMethodExample() {
 
 ## Hooks
 
-### useRadioGroupContext
+### useRadioGroup
 
 **Returns:**
 
@@ -243,7 +243,7 @@ export default function PaymentMethodExample() {
 | `isInvalid`     | `boolean`                 | Whether the radio group is in an invalid state |
 | `onValueChange` | `(value: string) => void` | Function to change the selected value          |
 
-### useRadioGroupItemContext
+### useRadioGroupItem
 
 **Returns:**
 

@@ -563,10 +563,10 @@ const SelectItemIndicator = forwardRef<
   SelectPrimitivesTypes.ItemIndicatorRef,
   SelectItemIndicatorProps
 >(({ className, children, iconProps, ...props }, ref) => {
-  const themeColorMuted = useThemeColor('muted');
+  const themeColorAccent = useThemeColor('accent');
 
   const iconSize = iconProps?.size ?? 16;
-  const iconColor = iconProps?.color ?? themeColorMuted;
+  const iconColor = iconProps?.color ?? themeColorAccent;
 
   const tvStyles = selectStyles.itemIndicator({ className });
 

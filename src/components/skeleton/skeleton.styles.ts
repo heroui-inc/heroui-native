@@ -6,7 +6,7 @@ import { combineStyles } from '../../helpers/theme/utils/combine-styles';
  * Main skeleton component styles
  */
 const skeleton = tv({
-  base: 'bg-muted/60 overflow-hidden',
+  base: 'bg-muted/30 overflow-hidden',
 });
 
 /**

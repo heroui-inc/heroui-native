@@ -111,7 +111,7 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
 
     const { size, color, isLoading } = useSpinnerContext();
 
-    const themeColorForeground = useThemeColor('foreground');
+    const themeColorAccent = useThemeColor('accent');
     const themeColorSuccess = useThemeColor('success');
     const themeColorWarning = useThemeColor('warning');
     const themeColorDanger = useThemeColor('danger');
@@ -123,7 +123,7 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
     const iconSize = SPINNER_SIZE_MAP[size];
 
     const colorMap: Record<string, string> = {
-      default: themeColorForeground,
+      default: themeColorAccent,
       success: themeColorSuccess,
       warning: themeColorWarning,
       danger: themeColorDanger,

@@ -5,9 +5,9 @@ const root = tv({
   base: 'items-center justify-center',
   variants: {
     size: {
-      sm: 'w-4 h-4',
-      md: 'w-6 h-6',
-      lg: 'w-8 h-8',
+      sm: 'size-4',
+      md: 'size-6',
+      lg: 'size-8',
     },
   },
   defaultVariants: {
@@ -16,7 +16,7 @@ const root = tv({
 });
 
 const indicator = tv({
-  base: 'items-center justify-center w-full h-full',
+  base: 'size-full items-center justify-center',
 });
 
 const spinnerStyles = combineStyles({

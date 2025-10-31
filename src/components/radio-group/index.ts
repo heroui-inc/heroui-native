@@ -11,6 +11,6 @@ export type {
   RadioGroupItemColor,
   RadioGroupItemContextValue,
   RadioGroupItemProps,
+  RadioGroupLabelProps,
   RadioGroupProps,
-  RadioGroupTitleProps,
 } from './radio-group.types';

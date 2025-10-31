@@ -257,15 +257,15 @@ export default function SkeletonScreen() {
           >
             <RadioGroup.Item value="shimmer">
               <RadioGroup.Indicator />
-              <RadioGroup.Title>Shimmer</RadioGroup.Title>
+              <RadioGroup.Label>Shimmer</RadioGroup.Label>
             </RadioGroup.Item>
             <RadioGroup.Item value="pulse">
               <RadioGroup.Indicator />
-              <RadioGroup.Title>Pulse</RadioGroup.Title>
+              <RadioGroup.Label>Pulse</RadioGroup.Label>
             </RadioGroup.Item>
             <RadioGroup.Item value="none">
               <RadioGroup.Indicator />
-              <RadioGroup.Title>None</RadioGroup.Title>
+              <RadioGroup.Label>None</RadioGroup.Label>
             </RadioGroup.Item>
           </RadioGroup>
           <Button onPress={() => setIsLoading(!isLoading)} size="sm">

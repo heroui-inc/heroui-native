@@ -188,15 +188,15 @@ export default function TabsScreen() {
                   <View className="gap-3">
                     <RadioGroup.Item value="auto" className="self-start">
                       <RadioGroup.Indicator />
-                      <RadioGroup.Title>Auto</RadioGroup.Title>
+                      <RadioGroup.Label>Auto</RadioGroup.Label>
                     </RadioGroup.Item>
                     <RadioGroup.Item value="light" className="self-start">
                       <RadioGroup.Indicator />
-                      <RadioGroup.Title>Light</RadioGroup.Title>
+                      <RadioGroup.Label>Light</RadioGroup.Label>
                     </RadioGroup.Item>
                     <RadioGroup.Item value="dark" className="self-start">
                       <RadioGroup.Indicator />
-                      <RadioGroup.Title>Dark</RadioGroup.Title>
+                      <RadioGroup.Label>Dark</RadioGroup.Label>
                     </RadioGroup.Item>
                   </View>
                 </RadioGroup>
@@ -212,15 +212,15 @@ export default function TabsScreen() {
                   <View className="gap-3">
                     <RadioGroup.Item value="small" className="self-start">
                       <RadioGroup.Indicator />
-                      <RadioGroup.Title>Small</RadioGroup.Title>
+                      <RadioGroup.Label>Small</RadioGroup.Label>
                     </RadioGroup.Item>
                     <RadioGroup.Item value="medium" className="self-start">
                       <RadioGroup.Indicator />
-                      <RadioGroup.Title>Medium</RadioGroup.Title>
+                      <RadioGroup.Label>Medium</RadioGroup.Label>
                     </RadioGroup.Item>
                     <RadioGroup.Item value="large" className="self-start">
                       <RadioGroup.Indicator />
-                      <RadioGroup.Title>Large</RadioGroup.Title>
+                      <RadioGroup.Label>Large</RadioGroup.Label>
                     </RadioGroup.Item>
                   </View>
                 </RadioGroup>

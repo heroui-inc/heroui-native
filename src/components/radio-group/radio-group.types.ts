@@ -71,9 +71,9 @@ export interface RadioGroupIndicatorThumbProps
 }
 
 /**
- * Props for RadioGroup.Title component
+ * Props for RadioGroup.Label component
  */
-export interface RadioGroupTitleProps extends FormFieldTitleProps {}
+export interface RadioGroupLabelProps extends FormFieldTitleProps {}
 
 /**
  * Props for RadioGroup.Description component

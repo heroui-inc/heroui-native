@@ -53,7 +53,7 @@ export default function RadioGroupScreen() {
       >
         <RadioGroup.Item value="desc1">
           <View>
-            <RadioGroup.Title>Standard Shipping</RadioGroup.Title>
+            <RadioGroup.Label>Standard Shipping</RadioGroup.Label>
             <RadioGroup.Description>
               Delivered in 5-7 business days
             </RadioGroup.Description>
@@ -62,7 +62,7 @@ export default function RadioGroupScreen() {
         </RadioGroup.Item>
         <RadioGroup.Item value="desc2">
           <View>
-            <RadioGroup.Title>Express Shipping</RadioGroup.Title>
+            <RadioGroup.Label>Express Shipping</RadioGroup.Label>
             <RadioGroup.Description>
               Delivered in 2-3 business days
             </RadioGroup.Description>
@@ -71,7 +71,7 @@ export default function RadioGroupScreen() {
         </RadioGroup.Item>
         <RadioGroup.Item value="desc3">
           <View>
-            <RadioGroup.Title>Overnight Shipping</RadioGroup.Title>
+            <RadioGroup.Label>Overnight Shipping</RadioGroup.Label>
             <RadioGroup.Description>
               Delivered next business day
             </RadioGroup.Description>
@@ -105,7 +105,7 @@ export default function RadioGroupScreen() {
         <RadioGroup.Item value="start" className="justify-start">
           <RadioGroup.Indicator />
           <View className="flex-1">
-            <RadioGroup.Title>Indicator on Start (Left)</RadioGroup.Title>
+            <RadioGroup.Label>Indicator on Start (Left)</RadioGroup.Label>
             <RadioGroup.Description>
               The radio button appears on the left side
             </RadioGroup.Description>
@@ -113,7 +113,7 @@ export default function RadioGroupScreen() {
         </RadioGroup.Item>
         <RadioGroup.Item value="end">
           <View className="flex-1">
-            <RadioGroup.Title>Indicator on End (Right)</RadioGroup.Title>
+            <RadioGroup.Label>Indicator on End (Right)</RadioGroup.Label>
             <RadioGroup.Description>
               The radio button appears on the right side (default)
             </RadioGroup.Description>
@@ -140,7 +140,7 @@ export default function RadioGroupScreen() {
       >
         <RadioGroup.Item value="agree">
           <View>
-            <RadioGroup.Title>I agree to the terms</RadioGroup.Title>
+            <RadioGroup.Label>I agree to the terms</RadioGroup.Label>
             <RadioGroup.Description>
               You must select this option to continue
             </RadioGroup.Description>
@@ -149,7 +149,7 @@ export default function RadioGroupScreen() {
         </RadioGroup.Item>
         <RadioGroup.Item value="disagree">
           <View>
-            <RadioGroup.Title>I do not agree</RadioGroup.Title>
+            <RadioGroup.Label>I do not agree</RadioGroup.Label>
             <RadioGroup.ErrorMessage>
               Please select an option to continue
             </RadioGroup.ErrorMessage>
@@ -161,7 +161,7 @@ export default function RadioGroupScreen() {
       <SectionTitle title="Custom Indicator Background" />
       <RadioGroup value={customIndicator} onValueChange={setCustomIndicator}>
         <RadioGroup.Item value="custom1">
-          <RadioGroup.Title>Purple Background</RadioGroup.Title>
+          <RadioGroup.Label>Purple Background</RadioGroup.Label>
           <RadioGroup.Indicator
             className={cn(
               'size-8',
@@ -173,7 +173,7 @@ export default function RadioGroupScreen() {
         </RadioGroup.Item>
 
         <RadioGroup.Item value="custom2">
-          <RadioGroup.Title>Blue Background</RadioGroup.Title>
+          <RadioGroup.Label>Blue Background</RadioGroup.Label>
           <RadioGroup.Indicator
             className={cn(
               'size-8',
@@ -185,7 +185,7 @@ export default function RadioGroupScreen() {
         </RadioGroup.Item>
 
         <RadioGroup.Item value="custom3">
-          <RadioGroup.Title>Green Background</RadioGroup.Title>
+          <RadioGroup.Label>Green Background</RadioGroup.Label>
           <RadioGroup.Indicator
             className={cn(
               'size-8',
@@ -212,7 +212,7 @@ export default function RadioGroupScreen() {
               </AnimatedView>
             )}
           </RadioGroup.Indicator>
-          <RadioGroup.Title>Checkmark Icon</RadioGroup.Title>
+          <RadioGroup.Label>Checkmark Icon</RadioGroup.Label>
         </RadioGroup.Item>
 
         <RadioGroup.Item value="zap" className="justify-start">
@@ -227,7 +227,7 @@ export default function RadioGroupScreen() {
               </AnimatedView>
             )}
           </RadioGroup.Indicator>
-          <RadioGroup.Title>Lightning Icon</RadioGroup.Title>
+          <RadioGroup.Label>Lightning Icon</RadioGroup.Label>
         </RadioGroup.Item>
 
         <RadioGroup.Item value="square" className="justify-start">
@@ -240,7 +240,7 @@ export default function RadioGroupScreen() {
               />
             )}
           </RadioGroup.Indicator>
-          <RadioGroup.Title>Square Thumb</RadioGroup.Title>
+          <RadioGroup.Label>Square Thumb</RadioGroup.Label>
         </RadioGroup.Item>
       </RadioGroup>
 
@@ -254,7 +254,7 @@ export default function RadioGroupScreen() {
                 size={16}
                 className="text-foreground"
               />
-              <RadioGroup.Title>Credit/Debit Card</RadioGroup.Title>
+              <RadioGroup.Label>Credit/Debit Card</RadioGroup.Label>
             </View>
             <RadioGroup.Description>
               Pay securely with your credit or debit card
@@ -265,7 +265,7 @@ export default function RadioGroupScreen() {
 
         <RadioGroup.Item value="paypal">
           <View>
-            <RadioGroup.Title>PayPal</RadioGroup.Title>
+            <RadioGroup.Label>PayPal</RadioGroup.Label>
             <RadioGroup.Description>
               Fast and secure payment with PayPal
             </RadioGroup.Description>
@@ -275,7 +275,7 @@ export default function RadioGroupScreen() {
 
         <RadioGroup.Item value="bank">
           <View>
-            <RadioGroup.Title>Bank Transfer</RadioGroup.Title>
+            <RadioGroup.Label>Bank Transfer</RadioGroup.Label>
             <RadioGroup.Description>
               Direct transfer from your bank account
             </RadioGroup.Description>
@@ -297,7 +297,7 @@ export default function RadioGroupScreen() {
           >
             <RadioGroup.Indicator />
             <View className="flex-1">
-              <RadioGroup.Title>Standard Shipping</RadioGroup.Title>
+              <RadioGroup.Label>Standard Shipping</RadioGroup.Label>
               <RadioGroup.Description>5-7 business days</RadioGroup.Description>
             </View>
             <AppText className="text-foreground font-semibold">Free</AppText>
@@ -311,7 +311,7 @@ export default function RadioGroupScreen() {
           >
             <RadioGroup.Indicator />
             <View className="flex-1">
-              <RadioGroup.Title>Express Shipping</RadioGroup.Title>
+              <RadioGroup.Label>Express Shipping</RadioGroup.Label>
               <RadioGroup.Description>2-3 business days</RadioGroup.Description>
             </View>
             <AppText className="text-foreground font-semibold">$9.99</AppText>
@@ -325,7 +325,7 @@ export default function RadioGroupScreen() {
           >
             <RadioGroup.Indicator />
             <View className="flex-1">
-              <RadioGroup.Title>Overnight Shipping</RadioGroup.Title>
+              <RadioGroup.Label>Overnight Shipping</RadioGroup.Label>
               <RadioGroup.Description>Next business day</RadioGroup.Description>
             </View>
             <AppText className="text-foreground font-semibold">$24.99</AppText>
@@ -341,15 +341,15 @@ export default function RadioGroupScreen() {
       >
         <RadioGroup.Item value="option1">
           <RadioGroup.Indicator />
-          <RadioGroup.Title>Small</RadioGroup.Title>
+          <RadioGroup.Label>Small</RadioGroup.Label>
         </RadioGroup.Item>
         <RadioGroup.Item value="option2">
           <RadioGroup.Indicator />
-          <RadioGroup.Title>Medium</RadioGroup.Title>
+          <RadioGroup.Label>Medium</RadioGroup.Label>
         </RadioGroup.Item>
         <RadioGroup.Item value="option3">
           <RadioGroup.Indicator />
-          <RadioGroup.Title>Large</RadioGroup.Title>
+          <RadioGroup.Label>Large</RadioGroup.Label>
         </RadioGroup.Item>
       </RadioGroup>
     </ScreenScrollView>

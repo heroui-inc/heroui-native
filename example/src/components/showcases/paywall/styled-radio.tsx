@@ -38,17 +38,17 @@ export const StyledRadio: FC<Props> = ({
           <RadioGroup.Indicator className="border-white/25" />
           <View className="flex-1 flex-row items-center justify-between gap-3">
             <View>
-              <RadioGroup.Title className={className.title}>
+              <RadioGroup.Label className={className.title}>
                 {title1}
-              </RadioGroup.Title>
+              </RadioGroup.Label>
               <RadioGroup.Description className={className.description}>
                 {description1}
               </RadioGroup.Description>
             </View>
             <View>
-              <RadioGroup.Title className={className.title}>
+              <RadioGroup.Label className={className.title}>
                 {title2}
-              </RadioGroup.Title>
+              </RadioGroup.Label>
               <RadioGroup.Description className={className.description}>
                 {description2}
               </RadioGroup.Description>

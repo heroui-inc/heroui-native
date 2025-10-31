@@ -17,8 +17,8 @@ import type {
   RadioGroupIndicatorThumbProps,
   RadioGroupItemContextValue,
   RadioGroupItemProps,
+  RadioGroupLabelProps,
   RadioGroupProps,
-  RadioGroupTitleProps,
 } from './radio-group.types';
 
 const AnimatedRadioItem = Animated.createAnimatedComponent(
@@ -113,7 +113,7 @@ const RadioGroupItem = forwardRef<
       >
         {typeof children === 'string' ? (
           <>
-            <RadioGroupTitle>{children}</RadioGroupTitle>
+            <RadioGroupLabel>{children}</RadioGroupLabel>
             <RadioGroupIndicator />
           </>
         ) : (
@@ -201,7 +201,7 @@ const RadioGroupIndicatorThumb = forwardRef<
 
 // --------------------------------------------------
 
-const RadioGroupTitle = forwardRef<TextRef, RadioGroupTitleProps>(
+const RadioGroupLabel = forwardRef<TextRef, RadioGroupLabelProps>(
   (props, ref) => {
     return <FormField.Title ref={ref} {...props} />;
   }
@@ -242,7 +242,7 @@ RadioGroupRoot.displayName = DISPLAY_NAME.RADIO_GROUP_ROOT;
 RadioGroupItem.displayName = DISPLAY_NAME.RADIO_GROUP_ITEM;
 RadioGroupIndicator.displayName = DISPLAY_NAME.RADIO_GROUP_INDICATOR;
 RadioGroupIndicatorThumb.displayName = DISPLAY_NAME.RADIO_GROUP_INDICATOR_THUMB;
-RadioGroupTitle.displayName = DISPLAY_NAME.RADIO_GROUP_TITLE;
+RadioGroupLabel.displayName = DISPLAY_NAME.RADIO_GROUP_TITLE;
 RadioGroupDescription.displayName = DISPLAY_NAME.RADIO_GROUP_DESCRIPTION;
 RadioGroupErrorMessage.displayName = DISPLAY_NAME.RADIO_GROUP_ERROR_MESSAGE;
 
@@ -265,7 +265,7 @@ RadioGroupErrorMessage.displayName = DISPLAY_NAME.RADIO_GROUP_ERROR_MESSAGE;
  * @component RadioGroup.IndicatorThumb - Optional inner circle that appears when selected. Animates
  * scale based on selection. Can be replaced with custom content.
  *
- * @component RadioGroup.Title - Optional text title for the radio option. Clickable by default and
+ * @component RadioGroup.Label - Optional text label for the radio option. Clickable by default and
  * linked to the radio for accessibility.
  *
  * @component RadioGroup.Description - Optional secondary text below the label. Provides additional
@@ -285,8 +285,8 @@ const CompoundRadioGroup = Object.assign(RadioGroupRoot, {
   Indicator: RadioGroupIndicator,
   /** @optional Custom indicator thumb that appears when selected */
   IndicatorThumb: RadioGroupIndicatorThumb,
-  /** @optional Clickable text title */
-  Title: RadioGroupTitle,
+  /** @optional Clickable text label */
+  Label: RadioGroupLabel,
   /** @optional Secondary descriptive text */
   Description: RadioGroupDescription,
 });

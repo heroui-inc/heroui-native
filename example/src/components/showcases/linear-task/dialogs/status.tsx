@@ -139,7 +139,7 @@ export const Status: FC = () => {
                     <View className="w-7 pl-0.5 justify-center">
                       <View className="scale-[1.2]">{item.indicator}</View>
                     </View>
-                    <RadioGroup.Title>{item.label}</RadioGroup.Title>
+                    <RadioGroup.Label>{item.label}</RadioGroup.Label>
                   </View>
                   <RadioGroup.Indicator className="border-0 bg-transparent">
                     {value === item.value && (

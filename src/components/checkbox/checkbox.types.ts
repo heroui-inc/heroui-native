@@ -1,30 +1,22 @@
-import type { ViewProps } from 'react-native';
 import type { TimingConfig } from '../../helpers/types';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 
 /**
- * Base checkbox color variants
- */
-export type CheckboxColor = 'default' | 'success' | 'warning' | 'danger';
-
-/**
- * Custom colors for checkbox border states
- */
-export interface CheckboxBorderColors {
-  /** Border color when checkbox is not selected */
-  defaultBorder?: string;
-  /** Border color when checkbox is selected */
-  selectedBorder?: string;
-}
-
-/**
  * Custom colors for checkbox background states
  */
-export interface CheckboxBackgroundColors {
-  /** Background color when checkbox is not selected */
-  defaultBackground?: string;
-  /** Background color when checkbox is selected */
-  selectedBackground?: string;
+export interface CheckboxAnimatedColors {
+  backgroundColor?: {
+    default?: string;
+    selected?: string;
+    defaultInvalid?: string;
+    selectedInvalid?: string;
+  };
+  borderColor?: {
+    default?: string;
+    selected?: string;
+    defaultInvalid?: string;
+    selectedInvalid?: string;
+  };
 }
 
 /**
@@ -38,14 +30,26 @@ export interface CheckboxIndicatorIconProps {
 }
 
 /**
+ * Render function props for checkbox children
+ */
+export interface CheckboxRenderProps {
+  /** Whether the checkbox is selected */
+  isSelected?: boolean;
+  /** Whether the checkbox is invalid */
+  isInvalid: boolean;
+  /** Whether the checkbox is disabled */
+  isDisabled: boolean;
+}
+
+/**
  * Props for the main Checkbox component
  */
-export interface CheckboxProps extends CheckboxPrimitivesTypes.RootProps {
-  /** Child elements to render inside the checkbox */
-  children?: React.ReactNode;
-
-  /** Color theme of the checkbox @default 'default' */
-  color?: CheckboxColor;
+export interface CheckboxProps
+  extends Omit<CheckboxPrimitivesTypes.RootProps, 'children'> {
+  /** Child elements to render inside the checkbox, or a render function */
+  children?:
+    | React.ReactNode
+    | ((props: CheckboxRenderProps) => React.ReactNode);
 
   /** Whether the checkbox is invalid @default false */
   isInvalid?: boolean;
@@ -53,35 +57,20 @@ export interface CheckboxProps extends CheckboxPrimitivesTypes.RootProps {
   /** Custom class name for the checkbox */
   className?: string;
 
-  /** Custom colors for different checkbox states */
-  colors?: CheckboxBorderColors;
-
-  /** Animation configuration for checkbox border color transition */
-  animationConfig?: TimingConfig;
-}
-
-/**
- * Props for the CheckboxBackground component
- */
-export interface CheckboxBackgroundProps extends ViewProps {
-  /** Child elements to render inside the background */
-  children?: React.ReactNode;
-
-  /** Custom class name for the background */
-  className?: string;
-
-  /** Custom colors for different checkbox background states */
-  colors?: CheckboxBackgroundColors;
-
-  /** Animation configuration for checkbox background color transition */
-  animationConfig?: TimingConfig;
+  /** Animated colors for different checkbox states */
+  animatedColors?: CheckboxAnimatedColors;
 }
 
 /**
  * Props for the CheckboxIndicator component
  */
 export interface CheckboxIndicatorProps
-  extends CheckboxPrimitivesTypes.IndicatorProps {
+  extends Omit<CheckboxPrimitivesTypes.IndicatorProps, 'children'> {
+  /** Child elements to render inside the indicator, or a render function */
+  children?:
+    | React.ReactNode
+    | ((props: CheckboxRenderProps) => React.ReactNode);
+
   /** Custom class name for the indicator */
   className?: string;
 
@@ -90,13 +79,4 @@ export interface CheckboxIndicatorProps
 
   /** Animation configuration for checkbox indicator scale transition */
   animationConfig?: TimingConfig;
-}
-
-/**
- * Context value for checkbox components
- */
-export interface CheckboxContextValue
-  extends Pick<CheckboxProps, 'isSelected'> {
-  /** Color theme of the checkbox */
-  color: CheckboxColor;
 }

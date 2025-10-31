@@ -20,7 +20,14 @@ const CheckboxContext = createContext<RootContext | null>(null);
 
 const Root = forwardRef<RootRef, RootProps>(
   (
-    { isDisabled = false, isSelected, onSelectedChange, nativeID, ...props },
+    {
+      isDisabled = false,
+      isSelected,
+      onSelectedChange,
+      isInvalid = false,
+      nativeID,
+      ...props
+    },
     ref
   ) => {
     return (
@@ -29,6 +36,7 @@ const Root = forwardRef<RootRef, RootProps>(
           isDisabled,
           isSelected,
           onSelectedChange,
+          isInvalid,
           nativeID,
         }}
       >
@@ -108,4 +116,4 @@ const Indicator = forwardRef<IndicatorRef, IndicatorProps>(
 
 Indicator.displayName = 'HeroUINative.Primitive.Checkbox.Indicator';
 
-export { Indicator, Root };
+export { Indicator, Root, useCheckboxContext };

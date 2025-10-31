@@ -34,7 +34,7 @@ const content = tv({
 });
 
 const title = tv({
-  base: 'text-foreground font-medium text-lg',
+  base: 'text-base font-medium text-foreground',
 });
 
 const description = tv({

@@ -10,6 +10,7 @@ export type {
   RadioGroupIndicatorThumbProps,
   RadioGroupItemContextValue,
   RadioGroupItemProps,
+  RadioGroupItemRenderProps,
   RadioGroupLabelProps,
   RadioGroupProps,
 } from './radio-group.types';

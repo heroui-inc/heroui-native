@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { cn, RadioGroup, Surface } from 'heroui-native';
+import { cn, RadioGroup } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
@@ -24,7 +24,7 @@ export default function RadioGroupScreen() {
   const [alignmentSelection, setAlignmentSelection] = React.useState('end');
 
   // Validation
-  const [validationSelection, setValidationSelection] = React.useState('');
+  const [withStateSelection, setWithStateSelection] = React.useState('default');
 
   // Custom indicator
   const [customIndicator, setCustomIndicator] = React.useState('custom1');
@@ -77,21 +77,32 @@ export default function RadioGroupScreen() {
         </RadioGroup.Item>
       </RadioGroup>
 
+      <SectionTitle title="Different States" />
+      <View className="gap-4">
+        <RadioGroup
+          value={withStateSelection}
+          onValueChange={setWithStateSelection}
+          isInvalid={withStateSelection === 'invalid'}
+        >
+          <RadioGroup.Item value="default">Default Option</RadioGroup.Item>
+          <RadioGroup.Item value="disabled" isDisabled>
+            Disabled Option
+          </RadioGroup.Item>
+          <RadioGroup.Item value="invalid" isInvalid>
+            Invalid Option
+          </RadioGroup.Item>
+          <RadioGroup.ErrorMessage>
+            This option is invalid
+          </RadioGroup.ErrorMessage>
+        </RadioGroup>
+      </View>
+
       <SectionTitle title="Indicator Alignment" />
       <RadioGroup
         value={alignmentSelection}
         onValueChange={setAlignmentSelection}
         className="gap-8"
       >
-        <RadioGroup.Item value="start" className="justify-start">
-          <RadioGroup.Indicator />
-          <View className="flex-1">
-            <RadioGroup.Label>Indicator on Start (Left)</RadioGroup.Label>
-            <RadioGroup.Description>
-              The radio button appears on the left side
-            </RadioGroup.Description>
-          </View>
-        </RadioGroup.Item>
         <RadioGroup.Item value="end">
           <View className="flex-1">
             <RadioGroup.Label>Indicator on End (Right)</RadioGroup.Label>
@@ -101,41 +112,14 @@ export default function RadioGroupScreen() {
           </View>
           <RadioGroup.Indicator />
         </RadioGroup.Item>
-      </RadioGroup>
-
-      <SectionTitle title="Default & Disabled States" />
-      <View className="gap-4">
-        <RadioGroup value="option1" onValueChange={() => {}}>
-          <RadioGroup.Item value="option1">Default Option</RadioGroup.Item>
-        </RadioGroup>
-        <RadioGroup value="option2" onValueChange={() => {}} isDisabled>
-          <RadioGroup.Item value="option2">Disabled Option</RadioGroup.Item>
-        </RadioGroup>
-      </View>
-
-      <SectionTitle title="Validation & Error States" />
-      <RadioGroup
-        value={validationSelection}
-        onValueChange={setValidationSelection}
-        isInvalid={!validationSelection}
-      >
-        <RadioGroup.Item value="agree">
-          <View>
-            <RadioGroup.Label>I agree to the terms</RadioGroup.Label>
+        <RadioGroup.Item value="start" className="justify-start">
+          <RadioGroup.Indicator />
+          <View className="flex-1">
+            <RadioGroup.Label>Indicator on Start (Left)</RadioGroup.Label>
             <RadioGroup.Description>
-              You must select this option to continue
+              The radio button appears on the left side
             </RadioGroup.Description>
           </View>
-          <RadioGroup.Indicator />
-        </RadioGroup.Item>
-        <RadioGroup.Item value="disagree">
-          <View>
-            <RadioGroup.Label>I do not agree</RadioGroup.Label>
-            <RadioGroup.ErrorMessage>
-              Please select an option to continue
-            </RadioGroup.ErrorMessage>
-          </View>
-          <RadioGroup.Indicator />
         </RadioGroup.Item>
       </RadioGroup>
 
@@ -272,45 +256,65 @@ export default function RadioGroupScreen() {
         className="gap-4"
       >
         <RadioGroup.Item value="standard">
-          <Surface
-            variant={shippingSpeed === 'standard' ? '2' : '1'}
-            className="flex-row items-center justify-between gap-3"
-          >
-            <RadioGroup.Indicator />
-            <View className="flex-1">
-              <RadioGroup.Label>Standard Shipping</RadioGroup.Label>
-              <RadioGroup.Description>5-7 business days</RadioGroup.Description>
+          {({ isSelected }) => (
+            <View
+              className={cn(
+                'flex-row items-center justify-between gap-3 p-3 rounded-xl border border-background-secondary shadow-lg shadow-foreground/5',
+                isSelected && 'bg-surface'
+              )}
+            >
+              <RadioGroup.Indicator />
+              <View className="flex-1">
+                <RadioGroup.Label>Standard Shipping</RadioGroup.Label>
+                <RadioGroup.Description>
+                  5-7 business days
+                </RadioGroup.Description>
+              </View>
+              <AppText className="text-foreground font-semibold">Free</AppText>
             </View>
-            <AppText className="text-foreground font-semibold">Free</AppText>
-          </Surface>
+          )}
         </RadioGroup.Item>
 
         <RadioGroup.Item value="express">
-          <Surface
-            variant={shippingSpeed === 'express' ? '2' : '1'}
-            className="flex-row items-center justify-between gap-3"
-          >
-            <RadioGroup.Indicator />
-            <View className="flex-1">
-              <RadioGroup.Label>Express Shipping</RadioGroup.Label>
-              <RadioGroup.Description>2-3 business days</RadioGroup.Description>
+          {({ isSelected }) => (
+            <View
+              className={cn(
+                'flex-row items-center justify-between gap-3 p-3 rounded-xl border border-background-secondary shadow-lg shadow-foreground/5',
+                isSelected && 'bg-surface'
+              )}
+            >
+              <RadioGroup.Indicator />
+              <View className="flex-1">
+                <RadioGroup.Label>Express Shipping</RadioGroup.Label>
+                <RadioGroup.Description>
+                  2-3 business days
+                </RadioGroup.Description>
+              </View>
+              <AppText className="text-foreground font-semibold">$9.99</AppText>
             </View>
-            <AppText className="text-foreground font-semibold">$9.99</AppText>
-          </Surface>
+          )}
         </RadioGroup.Item>
 
         <RadioGroup.Item value="overnight">
-          <Surface
-            variant={shippingSpeed === 'overnight' ? '2' : '1'}
-            className="flex-row items-center justify-between gap-3"
-          >
-            <RadioGroup.Indicator />
-            <View className="flex-1">
-              <RadioGroup.Label>Overnight Shipping</RadioGroup.Label>
-              <RadioGroup.Description>Next business day</RadioGroup.Description>
+          {({ isSelected }) => (
+            <View
+              className={cn(
+                'flex-row items-center justify-between gap-3 p-3 rounded-xl border border-background-secondary shadow-lg shadow-foreground/5',
+                isSelected && 'bg-surface'
+              )}
+            >
+              <RadioGroup.Indicator />
+              <View className="flex-1">
+                <RadioGroup.Label>Overnight Shipping</RadioGroup.Label>
+                <RadioGroup.Description>
+                  Next business day
+                </RadioGroup.Description>
+              </View>
+              <AppText className="text-foreground font-semibold">
+                $24.99
+              </AppText>
             </View>
-            <AppText className="text-foreground font-semibold">$24.99</AppText>
-          </Surface>
+          )}
         </RadioGroup.Item>
       </RadioGroup>
 

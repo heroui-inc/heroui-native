@@ -30,11 +30,25 @@ export interface RadioGroupItemContextValue {
 }
 
 /**
+ * Render function props for RadioGroupItem children
+ */
+export interface RadioGroupItemRenderProps {
+  /** Whether the radio item is selected */
+  isSelected: boolean;
+  /** Whether the radio item is disabled */
+  isDisabled: boolean;
+  /** Whether the radio item is invalid */
+  isInvalid: boolean;
+}
+
+/**
  * Props for the RadioGroupItem component
  */
-export interface RadioGroupItemProps extends ItemProps {
-  /** Radio item content */
-  children?: React.ReactNode;
+export interface RadioGroupItemProps extends Omit<ItemProps, 'children'> {
+  /** Radio item content, or a render function */
+  children?:
+    | React.ReactNode
+    | ((props: RadioGroupItemRenderProps) => React.ReactNode);
   /** Whether the radio item is invalid @default false */
   isInvalid?: boolean;
   /** Custom class name */

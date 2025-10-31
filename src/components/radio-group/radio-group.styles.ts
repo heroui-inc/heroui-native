@@ -26,7 +26,7 @@ const itemIndicator = tv({
       false: 'bg-background-secondary border-border',
     },
     isInvalid: {
-      true: 'border-[1.5px] border-danger/30',
+      true: 'bg-transparent border-danger',
       false: '',
     },
   },

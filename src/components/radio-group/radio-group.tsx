@@ -4,7 +4,11 @@ import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import type { TextRef, ViewRef } from '../../helpers/types';
-import { createContext, getElementWithDefault } from '../../helpers/utils';
+import {
+  childrenToString,
+  createContext,
+  getElementWithDefault,
+} from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
 import { ErrorView } from '../error-view';
 import { FormField } from '../form-field';
@@ -17,6 +21,7 @@ import type {
   RadioGroupIndicatorThumbProps,
   RadioGroupItemContextValue,
   RadioGroupItemProps,
+  RadioGroupItemRenderProps,
   RadioGroupLabelProps,
   RadioGroupProps,
 } from './radio-group.types';
@@ -67,6 +72,11 @@ const RadioGroupItem = forwardRef<
   const { children, value, isDisabled, isInvalid, className, ...restProps } =
     props;
 
+  const stringifiedChildren =
+    typeof children === 'function'
+      ? null
+      : childrenToString(children as React.ReactNode);
+
   const {
     value: groupValue,
     isInvalid: groupIsInvalid,
@@ -93,6 +103,23 @@ const RadioGroupItem = forwardRef<
     [isSelected, isDisabledValue, effectiveIsInvalid]
   );
 
+  const renderProps: RadioGroupItemRenderProps = {
+    isSelected,
+    isDisabled: isDisabledValue,
+    isInvalid: effectiveIsInvalid,
+  };
+
+  const content = stringifiedChildren ? (
+    <>
+      <RadioGroupLabel>{stringifiedChildren}</RadioGroupLabel>
+      <RadioGroupIndicator />
+    </>
+  ) : typeof children === 'function' ? (
+    children(renderProps)
+  ) : (
+    children
+  );
+
   return (
     <RadioGroupItemProvider value={contextValue}>
       <AnimatedRadioItem
@@ -103,14 +130,7 @@ const RadioGroupItem = forwardRef<
         hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
         {...restProps}
       >
-        {typeof children === 'string' ? (
-          <>
-            <RadioGroupLabel>{children}</RadioGroupLabel>
-            <RadioGroupIndicator />
-          </>
-        ) : (
-          children
-        )}
+        {content}
       </AnimatedRadioItem>
     </RadioGroupItemProvider>
   );

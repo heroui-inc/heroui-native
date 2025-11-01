@@ -1,8 +1,12 @@
-import { useCallback, useRef, useState } from 'react';
+import { memo, useCallback, useRef, useState } from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
 import Animated, {
+  Extrapolation,
+  interpolate,
   useAnimatedScrollHandler,
+  useAnimatedStyle,
   useSharedValue,
+  type SharedValue,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PaginationIndicator } from './pagination-indicator';
@@ -12,6 +16,48 @@ import { UsageVariantsSelect } from './usage-variants-select';
 interface UsageVariantFlatListProps {
   data: UsageVariant[];
 }
+
+type VariantItemProps = {
+  item: UsageVariant;
+  index: number;
+  scrollY: SharedValue<number>;
+  itemHeight: number;
+  width: number;
+  height: number;
+};
+
+const VariantItem = memo(
+  ({ item, index, scrollY, itemHeight, width, height }: VariantItemProps) => {
+    const animatedStyle = useAnimatedStyle(() => {
+      return {
+        opacity: interpolate(
+          scrollY.value / itemHeight,
+          [index - 0.5, index, index + 0.5],
+          [0, 1, 0],
+          Extrapolation.CLAMP
+        ),
+        transform: [
+          {
+            scale: interpolate(
+              scrollY.value / itemHeight,
+              [index - 0.5, index, index + 0.5],
+              [0.9, 1, 0.9],
+              Extrapolation.CLAMP
+            ),
+          },
+        ],
+      };
+    });
+
+    return (
+      <Animated.View style={[{ width, height }, animatedStyle]}>
+        {item.content}
+      </Animated.View>
+    );
+  }
+);
+
+VariantItem.displayName = 'VariantItem';
 
 export const UsageVariantFlatList = ({ data }: UsageVariantFlatListProps) => {
   const [currentVariant, setCurrentVariant] = useState<UsageVariant>(data[0]!);
@@ -48,9 +94,16 @@ export const UsageVariantFlatList = ({ data }: UsageVariantFlatListProps) => {
       <Animated.FlatList
         ref={listRef}
         data={data}
-        renderItem={({ item }) => {
-          return <View style={{ width, height }}>{item.content}</View>;
-        }}
+        renderItem={({ item, index }) => (
+          <VariantItem
+            item={item}
+            index={index}
+            scrollY={scrollY}
+            itemHeight={itemHeight}
+            width={width}
+            height={height}
+          />
+        )}
         keyExtractor={(item) => item.value}
         getItemLayout={(_, index) => ({
           length: itemHeight,

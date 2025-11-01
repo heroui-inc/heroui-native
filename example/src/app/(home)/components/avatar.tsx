@@ -48,8 +48,8 @@ const AVATAR_VARIANTS: UsageVariant[] = [
     ),
   },
   {
-    value: 'default-colors',
-    label: 'Default Colors',
+    value: 'default-text-fallback',
+    label: 'Default Text Fallback',
     content: (
       <View className="flex-1">
         <View className="flex-1 items-center justify-center">
@@ -82,8 +82,8 @@ const AVATAR_VARIANTS: UsageVariant[] = [
     ),
   },
   {
-    value: 'soft-colors',
-    label: 'Soft Colors',
+    value: 'soft-text-fallback',
+    label: 'Soft Text Fallback',
     content: (
       <View className="flex-1 items-center justify-center">
         <View className="gap-3">
@@ -114,26 +114,79 @@ const AVATAR_VARIANTS: UsageVariant[] = [
     ),
   },
   {
-    value: 'fallback-content',
-    label: 'Fallback Content',
+    value: 'default-icon-fallback',
+    label: 'Default Icon Fallback',
+    content: (
+      <View className="flex-1">
+        <View className="flex-1 items-center justify-center">
+          <View className="gap-3">
+            <View className="flex-row items-center justify-center gap-4">
+              <Avatar color="accent" alt="Accent">
+                <Avatar.Image source={undefined} />
+                <Avatar.Fallback />
+              </Avatar>
+              <Avatar color="default" alt="Default">
+                <Avatar.Image source={undefined} />
+                <Avatar.Fallback />
+              </Avatar>
+              <Avatar color="success" alt="Success">
+                <Avatar.Image source={undefined} />
+                <Avatar.Fallback />
+              </Avatar>
+              <Avatar color="warning" alt="Warning">
+                <Avatar.Image source={undefined} />
+                <Avatar.Fallback />
+              </Avatar>
+              <Avatar color="danger" alt="Danger">
+                <Avatar.Image source={undefined} />
+                <Avatar.Fallback />
+              </Avatar>
+            </View>
+          </View>
+        </View>
+      </View>
+    ),
+  },
+  {
+    value: 'soft-icon-fallback',
+    label: 'Soft Icon Fallback',
+    content: (
+      <View className="flex-1 items-center justify-center">
+        <View className="gap-3">
+          <View className="flex-row items-center justify-center gap-4">
+            <Avatar variant="soft" color="accent" alt="Accent">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar variant="soft" color="default" alt="Default">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar variant="soft" color="success" alt="Success">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar variant="soft" color="warning" alt="Warning">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar variant="soft" color="danger" alt="Danger">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+          </View>
+        </View>
+      </View>
+    ),
+  },
+  {
+    value: 'custom-fallback',
+    label: 'Custom Fallback',
     content: (
       <View className="flex-1 items-center justify-center">
         <View className="flex-row items-center justify-center gap-4">
           <Avatar alt="John Doe">
-            <Avatar.Fallback>JD</Avatar.Fallback>
-          </Avatar>
-          <Avatar alt="User">
-            <Avatar.Fallback>
-              <StyledIonicons name="person" size={18} className="text-[#666]" />
-            </Avatar.Fallback>
-          </Avatar>
-          <Avatar alt="Delayed Avatar">
-            <Avatar.Image
-              source={{
-                uri: 'https://invalid-url-to-show-fallback.com/image.jpg',
-              }}
-            />
-            <Avatar.Fallback delayMs={600}>NA</Avatar.Fallback>
+            <Avatar.Fallback>🎉</Avatar.Fallback>
           </Avatar>
           <Avatar alt="Custom">
             <Avatar.Fallback>
@@ -151,6 +204,11 @@ const AVATAR_VARIANTS: UsageVariant[] = [
               >
                 <Text className="text-white font-medium">GB</Text>
               </LinearGradient>
+            </Avatar.Fallback>
+          </Avatar>
+          <Avatar alt="User">
+            <Avatar.Fallback>
+              <StyledIonicons name="person" size={18} className="text-[#666]" />
             </Avatar.Fallback>
           </Avatar>
         </View>
@@ -233,7 +291,7 @@ const AVATAR_VARIANTS: UsageVariant[] = [
             />
             <Avatar.Fallback className="rounded-lg">SQ</Avatar.Fallback>
           </Avatar>
-          <Avatar className="p-0.5" size="lg" alt="Gradient Border">
+          <Avatar className="p-[2.5px]" size="lg" alt="Gradient Border">
             <LinearGradient
               colors={['#ec4899', '#f59e0b']}
               start={{ x: 0, y: 0 }}
@@ -272,11 +330,5 @@ const AVATAR_VARIANTS: UsageVariant[] = [
 ];
 
 export default function AvatarScreen() {
-  return (
-    <UsageVariantFlatList
-      data={AVATAR_VARIANTS}
-      keyExtractor={(item) => item.value}
-      renderItem={({ item }) => item.content}
-    />
-  );
+  return <UsageVariantFlatList data={AVATAR_VARIANTS} />;
 }

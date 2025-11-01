@@ -124,7 +124,7 @@ export const UsageVariantFlatList = ({ data }: UsageVariantFlatListProps) => {
         style={{ bottom: insets.bottom + 32 }}
         pointerEvents="none"
       >
-        <View className="gap-1.5">
+        <View className="gap-1">
           {data.map((item, index) => (
             <PaginationIndicator
               key={index}

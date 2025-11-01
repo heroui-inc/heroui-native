@@ -3,88 +3,57 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, cn } from 'heroui-native';
-import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { withUniwind } from 'uniwind';
-import { AppText } from '../../../components/app-text';
-import { UsageVariantsSelect } from '../../../components/component-presentation/usage-variants-select';
-import type { ModelOption } from '../../../components/component-presentation/usage-variants-select/types';
-import { ScreenScrollView } from '../../../components/screen-scroll-view';
-import { SectionTitle } from '../../../components/section-title';
+import type { UsageVariant } from '../../../components/component-presentation/types';
+import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
 const StyledIonicons = withUniwind(Ionicons);
 
-const MODELS: ModelOption[] = [
-  { value: 'sizes', label: 'Sizes' },
-  { value: 'default-colors', label: 'Default Colors' },
-  { value: 'soft-colors', label: 'Soft Colors' },
-  { value: 'fallback-content', label: 'Fallback Content' },
-  { value: 'avatar-group', label: 'Avatar Group' },
-  { value: 'custom-styles', label: 'Custom Styles' },
-];
-
-type User = {
-  id: number;
-  image: string;
-  name: string;
-};
-
-const users: User[] = [
+const AVATAR_VARIANTS: UsageVariant[] = [
   {
-    id: 1,
-    image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
-    name: 'John Doe',
-  },
-  {
-    id: 2,
-    image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
-    name: 'Kate Wilson',
-  },
-  {
-    id: 3,
-    image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
-    name: 'Emily Chen',
-  },
-  {
-    id: 4,
-    image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=23',
-    name: 'Michael Brown',
-  },
-  {
-    id: 5,
-    image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=16',
-    name: 'Olivia Davis',
-  },
-];
-
-export default function AvatarScreen() {
-  const [model, setModel] = useState<ModelOption>(MODELS[0]!);
-
-  return (
-    <>
-      <ScreenScrollView contentContainerClassName="gap-16">
-        <SectionTitle title="Sizes" />
-        <View className="flex-row items-center justify-center gap-4">
-          <Avatar size="sm" alt="Small Avatar">
-            <Avatar.Image source={{ uri: users[0]?.image }} />
-            <Avatar.Fallback />
-          </Avatar>
-          <Avatar size="md" alt="Medium Avatar">
-            <Avatar.Image source={{ uri: users[1]?.image }} />
-            <Avatar.Fallback>MD</Avatar.Fallback>
-          </Avatar>
-          <Avatar size="lg" alt="Large Avatar">
-            <Avatar.Image source={{ uri: users[2]?.image }} />
-            <Avatar.Fallback>LG</Avatar.Fallback>
-          </Avatar>
+    value: 'sizes',
+    label: 'Sizes',
+    content: (
+      <View className="flex-1">
+        <View className="flex-1 items-center justify-center">
+          <View className="flex-row items-center justify-center gap-4">
+            <Avatar size="sm" alt="Small Avatar">
+              <Avatar.Image
+                source={{
+                  uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
+                }}
+              />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar size="md" alt="Medium Avatar">
+              <Avatar.Image
+                source={{
+                  uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
+                }}
+              />
+              <Avatar.Fallback>MD</Avatar.Fallback>
+            </Avatar>
+            <Avatar size="lg" alt="Large Avatar">
+              <Avatar.Image
+                source={{
+                  uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
+                }}
+              />
+              <Avatar.Fallback>LG</Avatar.Fallback>
+            </Avatar>
+          </View>
         </View>
-
-        <SectionTitle title="Colors" />
-        <View className="gap-8">
+      </View>
+    ),
+  },
+  {
+    value: 'default-colors',
+    label: 'Default Colors',
+    content: (
+      <View className="flex-1">
+        <View className="flex-1 items-center justify-center">
           <View className="gap-3">
-            <AppText className="text-sm text-muted text-center">
-              Default variant with text fallback
-            </AppText>
             <View className="flex-row items-center justify-center gap-4">
               <Avatar color="accent" alt="Accent">
                 <Avatar.Image source={undefined} />
@@ -108,93 +77,47 @@ export default function AvatarScreen() {
               </Avatar>
             </View>
           </View>
-
-          <View className="gap-3">
-            <AppText className="text-sm text-muted text-center">
-              Soft variant with text fallback
-            </AppText>
-            <View className="flex-row items-center justify-center gap-4">
-              <Avatar variant="soft" color="accent" alt="Accent">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback>AC</Avatar.Fallback>
-              </Avatar>
-              <Avatar variant="soft" color="default" alt="Default">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback>DF</Avatar.Fallback>
-              </Avatar>
-              <Avatar variant="soft" color="success" alt="Success">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback>SC</Avatar.Fallback>
-              </Avatar>
-              <Avatar variant="soft" color="warning" alt="Warning">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback>WR</Avatar.Fallback>
-              </Avatar>
-              <Avatar variant="soft" color="danger" alt="Danger">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback>DG</Avatar.Fallback>
-              </Avatar>
-            </View>
-          </View>
-
-          <View className="gap-3">
-            <AppText className="text-sm text-muted text-center">
-              Default variant with icon fallback
-            </AppText>
-            <View className="flex-row items-center justify-center gap-4">
-              <Avatar color="accent" alt="Accent">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-              <Avatar color="default" alt="Default">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-              <Avatar color="success" alt="Success">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-              <Avatar color="warning" alt="Warning">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-              <Avatar color="danger" alt="Danger">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-            </View>
-          </View>
-
-          <View className="gap-3">
-            <AppText className="text-sm text-muted text-center">
-              Soft variant with icon fallback
-            </AppText>
-            <View className="flex-row items-center justify-center gap-4">
-              <Avatar variant="soft" color="accent" alt="Accent">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-              <Avatar variant="soft" color="default" alt="Default">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-              <Avatar variant="soft" color="success" alt="Success">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-              <Avatar variant="soft" color="warning" alt="Warning">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-              <Avatar variant="soft" color="danger" alt="Danger">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-            </View>
+        </View>
+      </View>
+    ),
+  },
+  {
+    value: 'soft-colors',
+    label: 'Soft Colors',
+    content: (
+      <View className="flex-1 items-center justify-center">
+        <View className="gap-3">
+          <View className="flex-row items-center justify-center gap-4">
+            <Avatar variant="soft" color="accent" alt="Accent">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>AC</Avatar.Fallback>
+            </Avatar>
+            <Avatar variant="soft" color="default" alt="Default">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>DF</Avatar.Fallback>
+            </Avatar>
+            <Avatar variant="soft" color="success" alt="Success">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>SC</Avatar.Fallback>
+            </Avatar>
+            <Avatar variant="soft" color="warning" alt="Warning">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>WR</Avatar.Fallback>
+            </Avatar>
+            <Avatar variant="soft" color="danger" alt="Danger">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback>DG</Avatar.Fallback>
+            </Avatar>
           </View>
         </View>
-
-        <SectionTitle title="Fallback Content" />
+      </View>
+    ),
+  },
+  {
+    value: 'fallback-content',
+    label: 'Fallback Content',
+    content: (
+      <View className="flex-1 items-center justify-center">
         <View className="flex-row items-center justify-center gap-4">
           <Avatar alt="John Doe">
             <Avatar.Fallback>JD</Avatar.Fallback>
@@ -212,7 +135,6 @@ export default function AvatarScreen() {
             />
             <Avatar.Fallback delayMs={600}>NA</Avatar.Fallback>
           </Avatar>
-
           <Avatar alt="Custom">
             <Avatar.Fallback>
               <LinearGradient
@@ -232,48 +154,85 @@ export default function AvatarScreen() {
             </Avatar.Fallback>
           </Avatar>
         </View>
-
-        <SectionTitle title="Avatar Group" />
-        <View className="gap-6 items-center justify-center">
-          <View className="flex-row">
-            {users.slice(0, 4).map((user, index) => (
-              <Avatar
-                key={user.id}
-                className={cn(
-                  'border-background border-[2px]',
-                  index !== 0 && '-ml-3'
-                )}
-                alt={user.name}
+      </View>
+    ),
+  },
+  {
+    value: 'avatar-group',
+    label: 'Avatar Group',
+    content: (
+      <View className="flex-1 items-center justify-center">
+        <View className="flex-row">
+          {[
+            {
+              id: 1,
+              image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
+              name: 'John Doe',
+            },
+            {
+              id: 2,
+              image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
+              name: 'Kate Wilson',
+            },
+            {
+              id: 3,
+              image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
+              name: 'Emily Chen',
+            },
+            {
+              id: 4,
+              image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=23',
+              name: 'Michael Brown',
+            },
+          ].map((user, index) => (
+            <Avatar
+              key={user.id}
+              className={cn(
+                'border-background border-[2px]',
+                index !== 0 && '-ml-3'
+              )}
+              alt={user.name}
+            >
+              <Avatar.Image source={{ uri: user.image }} />
+              <Avatar.Fallback
+                classNames={{
+                  container: 'bg-warning',
+                  text: 'text-warning-foreground',
+                }}
               >
-                <Avatar.Image source={{ uri: user.image }} />
-                <Avatar.Fallback
-                  classNames={{
-                    container: 'bg-warning',
-                    text: 'text-warning-foreground',
-                  }}
-                >
-                  {user.name
-                    .split(' ')
-                    .map((n) => n[0])
-                    .join('')}
-                </Avatar.Fallback>
-              </Avatar>
-            ))}
-          </View>
+                {user.name
+                  .split(' ')
+                  .map((n) => n[0])
+                  .join('')}
+              </Avatar.Fallback>
+            </Avatar>
+          ))}
         </View>
-
-        <SectionTitle title="Custom Styles" />
+      </View>
+    ),
+  },
+  {
+    value: 'custom-styles',
+    label: 'Custom Styles',
+    content: (
+      <View className="flex-1 items-center justify-center">
         <View className="flex-row items-center justify-center gap-4">
           <Avatar className="h-16 w-16" alt="Extra Large">
-            <Avatar.Image source={{ uri: users[0]?.image }} />
+            <Avatar.Image
+              source={{
+                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
+              }}
+            />
             <Avatar.Fallback>XL</Avatar.Fallback>
           </Avatar>
-
           <Avatar className="rounded-lg" alt="Square Avatar">
-            <Avatar.Image source={{ uri: users[1]?.image }} />
+            <Avatar.Image
+              source={{
+                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
+              }}
+            />
             <Avatar.Fallback className="rounded-lg">SQ</Avatar.Fallback>
           </Avatar>
-
           <Avatar className="p-0.5" size="lg" alt="Gradient Border">
             <LinearGradient
               colors={['#ec4899', '#f59e0b']}
@@ -283,14 +242,20 @@ export default function AvatarScreen() {
             />
             <Avatar.Image
               className="border-[0.5px] border-background rounded-full"
-              source={{ uri: users[2]?.image }}
+              source={{
+                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
+              }}
             />
             <Avatar.Fallback className="border-none">GB</Avatar.Fallback>
           </Avatar>
-
           <View className="relative">
             <Avatar size="lg" alt="Online User">
-              <Avatar.Image source={{ uri: users[3]?.image }} asChild>
+              <Avatar.Image
+                source={{
+                  uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=23',
+                }}
+                asChild
+              >
                 <Image
                   style={{ width: '100%', height: '100%' }}
                   contentFit="cover"
@@ -301,8 +266,17 @@ export default function AvatarScreen() {
             <View className="absolute bottom-0.5 right-0.5 size-3.5 rounded-full bg-green-500 border border-background" />
           </View>
         </View>
-      </ScreenScrollView>
-      <UsageVariantsSelect data={MODELS} model={model} setModel={setModel} />
-    </>
+      </View>
+    ),
+  },
+];
+
+export default function AvatarScreen() {
+  return (
+    <UsageVariantFlatList
+      data={AVATAR_VARIANTS}
+      keyExtractor={(item) => item.value}
+      renderItem={({ item }) => item.content}
+    />
   );
 }

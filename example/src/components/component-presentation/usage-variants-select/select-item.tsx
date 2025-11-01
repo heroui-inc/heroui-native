@@ -2,7 +2,7 @@ import { Select, useSelect } from 'heroui-native';
 import { type FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { AppText } from '../../app-text';
-import { type ModelOption } from './types';
+import { type ModelOption } from '../types';
 
 type Props = {
   data: ModelOption;

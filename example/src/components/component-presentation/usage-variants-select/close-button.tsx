@@ -69,7 +69,7 @@ export const CloseButton = () => {
       isIconOnly
       onPress={() => {
         if (Platform.OS === 'ios') {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         }
         onOpenChange(false);
       }}

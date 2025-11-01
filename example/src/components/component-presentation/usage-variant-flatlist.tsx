@@ -1,17 +1,29 @@
+import { BlurView } from 'expo-blur';
+import * as Haptics from 'expo-haptics';
 import { memo, useCallback, useRef, useState } from 'react';
-import { FlatList, useWindowDimensions, View } from 'react-native';
+import {
+  FlatList,
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import Animated, {
   Extrapolation,
   interpolate,
+  useAnimatedProps,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
   type SharedValue,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useAppTheme } from '../../contexts/app-theme-context';
 import { PaginationIndicator } from './pagination-indicator';
 import type { UsageVariant } from './types';
 import { UsageVariantsSelect } from './usage-variants-select';
+
+const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 
 interface UsageVariantFlatListProps {
   data: UsageVariant[];
@@ -30,16 +42,19 @@ const VariantItem = memo(
   ({ item, index, scrollY, itemHeight, width, height }: VariantItemProps) => {
     const animatedStyle = useAnimatedStyle(() => {
       return {
-        opacity: interpolate(
-          scrollY.value / itemHeight,
-          [index - 0.5, index, index + 0.5],
-          [0, 1, 0],
-          Extrapolation.CLAMP
-        ),
+        opacity:
+          Platform.OS === 'android'
+            ? interpolate(
+                scrollY.get() / itemHeight,
+                [index - 0.5, index, index + 0.5],
+                [0, 1, 0],
+                Extrapolation.CLAMP
+              )
+            : 1,
         transform: [
           {
             scale: interpolate(
-              scrollY.value / itemHeight,
+              scrollY.get() / itemHeight,
               [index - 0.5, index, index + 0.5],
               [0.9, 1, 0.9],
               Extrapolation.CLAMP
@@ -62,6 +77,8 @@ VariantItem.displayName = 'VariantItem';
 export const UsageVariantFlatList = ({ data }: UsageVariantFlatListProps) => {
   const [currentVariant, setCurrentVariant] = useState<UsageVariant>(data[0]!);
 
+  const { isDark } = useAppTheme();
+
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
   const itemHeight = height;
@@ -71,6 +88,9 @@ export const UsageVariantFlatList = ({ data }: UsageVariantFlatListProps) => {
   const handleViewableItemsChanged = useCallback(
     ({ viewableItems }: { viewableItems: Array<{ item: UsageVariant }> }) => {
       if (viewableItems.length > 0 && viewableItems[0]) {
+        if (Platform.OS === 'ios') {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        }
         setCurrentVariant(viewableItems[0].item);
       }
     },
@@ -87,6 +107,29 @@ export const UsageVariantFlatList = ({ data }: UsageVariantFlatListProps) => {
     onScroll: (event) => {
       scrollY.set(event.contentOffset.y);
     },
+  });
+
+  const animatedProps = useAnimatedProps(() => {
+    const inputRange: number[] = [];
+    const outputRange: number[] = [];
+
+    for (let i = 0; i < data.length; i++) {
+      inputRange.push(i);
+      outputRange.push(0);
+
+      if (i < data.length - 1) {
+        inputRange.push(i + 0.5);
+        outputRange.push(30);
+      }
+    }
+
+    return {
+      intensity: interpolate(
+        scrollY.get() / itemHeight,
+        inputRange,
+        outputRange
+      ),
+    };
   });
 
   return (
@@ -119,6 +162,18 @@ export const UsageVariantFlatList = ({ data }: UsageVariantFlatListProps) => {
         onScroll={scrollHandler}
         scrollEventThrottle={16}
       />
+      {Platform.OS === 'ios' && (
+        <AnimatedBlurView
+          pointerEvents="none"
+          style={StyleSheet.absoluteFill}
+          animatedProps={animatedProps}
+          tint={
+            isDark
+              ? 'systemUltraThinMaterialDark'
+              : 'systemUltraThinMaterialLight'
+          }
+        />
+      )}
       <View
         className="absolute left-6"
         style={{ bottom: insets.bottom + 32 }}

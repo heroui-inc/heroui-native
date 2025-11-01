@@ -10,322 +10,354 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 
 const StyledIonicons = withUniwind(Ionicons);
 
-const AVATAR_VARIANTS: UsageVariant[] = [
-  {
-    value: 'sizes',
-    label: 'Sizes',
-    content: (
-      <View className="flex-1">
-        <View className="flex-1 items-center justify-center">
-          <View className="flex-row items-center justify-center gap-4">
-            <Avatar size="sm" alt="Small Avatar">
-              <Avatar.Image
-                source={{
-                  uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
-                }}
-              />
-              <Avatar.Fallback />
-            </Avatar>
-            <Avatar size="md" alt="Medium Avatar">
-              <Avatar.Image
-                source={{
-                  uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
-                }}
-              />
-              <Avatar.Fallback>MD</Avatar.Fallback>
-            </Avatar>
-            <Avatar size="lg" alt="Large Avatar">
-              <Avatar.Image
-                source={{
-                  uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
-                }}
-              />
-              <Avatar.Fallback>LG</Avatar.Fallback>
-            </Avatar>
-          </View>
+const SizesContent = () => {
+  return (
+    <View className="flex-1">
+      <View className="flex-1 items-center justify-center">
+        <View className="flex-row items-center justify-center gap-4">
+          <Avatar size="sm" alt="Small Avatar">
+            <Avatar.Image
+              source={{
+                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
+              }}
+            />
+            <Avatar.Fallback />
+          </Avatar>
+          <Avatar size="md" alt="Medium Avatar">
+            <Avatar.Image
+              source={{
+                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
+              }}
+            />
+            <Avatar.Fallback>MD</Avatar.Fallback>
+          </Avatar>
+          <Avatar size="lg" alt="Large Avatar">
+            <Avatar.Image
+              source={{
+                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
+              }}
+            />
+            <Avatar.Fallback>LG</Avatar.Fallback>
+          </Avatar>
         </View>
       </View>
-    ),
-  },
-  {
-    value: 'default-text-fallback',
-    label: 'Default Text Fallback',
-    content: (
-      <View className="flex-1">
-        <View className="flex-1 items-center justify-center">
-          <View className="gap-3">
-            <View className="flex-row items-center justify-center gap-4">
-              <Avatar color="accent" alt="Accent">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback>AC</Avatar.Fallback>
-              </Avatar>
-              <Avatar color="default" alt="Default">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback>DF</Avatar.Fallback>
-              </Avatar>
-              <Avatar color="success" alt="Success">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback>SC</Avatar.Fallback>
-              </Avatar>
-              <Avatar color="warning" alt="Warning">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback>WR</Avatar.Fallback>
-              </Avatar>
-              <Avatar color="danger" alt="Danger">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback>DG</Avatar.Fallback>
-              </Avatar>
-            </View>
-          </View>
-        </View>
-      </View>
-    ),
-  },
-  {
-    value: 'soft-text-fallback',
-    label: 'Soft Text Fallback',
-    content: (
+    </View>
+  );
+};
+
+const DefaultTextFallbackContent = () => {
+  return (
+    <View className="flex-1">
       <View className="flex-1 items-center justify-center">
         <View className="gap-3">
           <View className="flex-row items-center justify-center gap-4">
-            <Avatar variant="soft" color="accent" alt="Accent">
+            <Avatar color="accent" alt="Accent">
               <Avatar.Image source={undefined} />
               <Avatar.Fallback>AC</Avatar.Fallback>
             </Avatar>
-            <Avatar variant="soft" color="default" alt="Default">
+            <Avatar color="default" alt="Default">
               <Avatar.Image source={undefined} />
               <Avatar.Fallback>DF</Avatar.Fallback>
             </Avatar>
-            <Avatar variant="soft" color="success" alt="Success">
+            <Avatar color="success" alt="Success">
               <Avatar.Image source={undefined} />
               <Avatar.Fallback>SC</Avatar.Fallback>
             </Avatar>
-            <Avatar variant="soft" color="warning" alt="Warning">
+            <Avatar color="warning" alt="Warning">
               <Avatar.Image source={undefined} />
               <Avatar.Fallback>WR</Avatar.Fallback>
             </Avatar>
-            <Avatar variant="soft" color="danger" alt="Danger">
+            <Avatar color="danger" alt="Danger">
               <Avatar.Image source={undefined} />
               <Avatar.Fallback>DG</Avatar.Fallback>
             </Avatar>
           </View>
         </View>
       </View>
-    ),
+    </View>
+  );
+};
+
+const SoftTextFallbackContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center">
+      <View className="gap-3">
+        <View className="flex-row items-center justify-center gap-4">
+          <Avatar variant="soft" color="accent" alt="Accent">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>AC</Avatar.Fallback>
+          </Avatar>
+          <Avatar variant="soft" color="default" alt="Default">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>DF</Avatar.Fallback>
+          </Avatar>
+          <Avatar variant="soft" color="success" alt="Success">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>SC</Avatar.Fallback>
+          </Avatar>
+          <Avatar variant="soft" color="warning" alt="Warning">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>WR</Avatar.Fallback>
+          </Avatar>
+          <Avatar variant="soft" color="danger" alt="Danger">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback>DG</Avatar.Fallback>
+          </Avatar>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const DefaultIconFallbackContent = () => {
+  return (
+    <View className="flex-1">
+      <View className="flex-1 items-center justify-center">
+        <View className="gap-3">
+          <View className="flex-row items-center justify-center gap-4">
+            <Avatar color="accent" alt="Accent">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar color="default" alt="Default">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar color="success" alt="Success">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar color="warning" alt="Warning">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+            <Avatar color="danger" alt="Danger">
+              <Avatar.Image source={undefined} />
+              <Avatar.Fallback />
+            </Avatar>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const SoftIconFallbackContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center">
+      <View className="gap-3">
+        <View className="flex-row items-center justify-center gap-4">
+          <Avatar variant="soft" color="accent" alt="Accent">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+          <Avatar variant="soft" color="default" alt="Default">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+          <Avatar variant="soft" color="success" alt="Success">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+          <Avatar variant="soft" color="warning" alt="Warning">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+          <Avatar variant="soft" color="danger" alt="Danger">
+            <Avatar.Image source={undefined} />
+            <Avatar.Fallback />
+          </Avatar>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const CustomFallbackContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center">
+      <View className="flex-row items-center justify-center gap-4">
+        <Avatar alt="John Doe">
+          <Avatar.Fallback>🎉</Avatar.Fallback>
+        </Avatar>
+        <Avatar alt="Custom">
+          <Avatar.Fallback>
+            <LinearGradient
+              colors={['#ec4899', '#a855f7']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={{
+                flex: 1,
+                width: '100%',
+                height: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text className="text-white font-medium">GB</Text>
+            </LinearGradient>
+          </Avatar.Fallback>
+        </Avatar>
+        <Avatar alt="User">
+          <Avatar.Fallback>
+            <StyledIonicons name="person" size={18} className="text-[#666]" />
+          </Avatar.Fallback>
+        </Avatar>
+      </View>
+    </View>
+  );
+};
+
+const AvatarGroupContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center">
+      <View className="flex-row">
+        {[
+          {
+            id: 1,
+            image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
+            name: 'John Doe',
+          },
+          {
+            id: 2,
+            image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
+            name: 'Kate Wilson',
+          },
+          {
+            id: 3,
+            image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
+            name: 'Emily Chen',
+          },
+          {
+            id: 4,
+            image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=23',
+            name: 'Michael Brown',
+          },
+        ].map((user, index) => (
+          <Avatar
+            key={user.id}
+            className={cn(
+              'border-background border-[2px]',
+              index !== 0 && '-ml-3'
+            )}
+            alt={user.name}
+          >
+            <Avatar.Image source={{ uri: user.image }} />
+            <Avatar.Fallback
+              classNames={{
+                container: 'bg-warning',
+                text: 'text-warning-foreground',
+              }}
+            >
+              {user.name
+                .split(' ')
+                .map((n) => n[0])
+                .join('')}
+            </Avatar.Fallback>
+          </Avatar>
+        ))}
+      </View>
+    </View>
+  );
+};
+
+const CustomStylesContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center">
+      <View className="flex-row items-center justify-center gap-4">
+        <Avatar className="h-16 w-16" alt="Extra Large">
+          <Avatar.Image
+            source={{
+              uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
+            }}
+          />
+          <Avatar.Fallback>XL</Avatar.Fallback>
+        </Avatar>
+        <Avatar className="rounded-lg" alt="Square Avatar">
+          <Avatar.Image
+            source={{
+              uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
+            }}
+          />
+          <Avatar.Fallback className="rounded-lg">SQ</Avatar.Fallback>
+        </Avatar>
+        <Avatar className="p-[2.5px]" size="lg" alt="Gradient Border">
+          <LinearGradient
+            colors={['#ec4899', '#f59e0b']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={StyleSheet.absoluteFill}
+          />
+          <Avatar.Image
+            className="border-[0.5px] border-background rounded-full"
+            source={{
+              uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
+            }}
+          />
+          <Avatar.Fallback className="border-none">GB</Avatar.Fallback>
+        </Avatar>
+        <View className="relative">
+          <Avatar size="lg" alt="Online User">
+            <Avatar.Image
+              source={{
+                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=23',
+              }}
+              asChild
+            >
+              <Image
+                style={{ width: '100%', height: '100%' }}
+                contentFit="cover"
+              />
+            </Avatar.Image>
+            <Avatar.Fallback>ON</Avatar.Fallback>
+          </Avatar>
+          <View className="absolute bottom-0.5 right-0.5 size-3.5 rounded-full bg-green-500 border border-background" />
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const AVATAR_VARIANTS: UsageVariant[] = [
+  {
+    value: 'sizes',
+    label: 'Sizes',
+    content: <SizesContent />,
+  },
+  {
+    value: 'default-text-fallback',
+    label: 'Default Text Fallback',
+    content: <DefaultTextFallbackContent />,
+  },
+  {
+    value: 'soft-text-fallback',
+    label: 'Soft Text Fallback',
+    content: <SoftTextFallbackContent />,
   },
   {
     value: 'default-icon-fallback',
     label: 'Default Icon Fallback',
-    content: (
-      <View className="flex-1">
-        <View className="flex-1 items-center justify-center">
-          <View className="gap-3">
-            <View className="flex-row items-center justify-center gap-4">
-              <Avatar color="accent" alt="Accent">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-              <Avatar color="default" alt="Default">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-              <Avatar color="success" alt="Success">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-              <Avatar color="warning" alt="Warning">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-              <Avatar color="danger" alt="Danger">
-                <Avatar.Image source={undefined} />
-                <Avatar.Fallback />
-              </Avatar>
-            </View>
-          </View>
-        </View>
-      </View>
-    ),
+    content: <DefaultIconFallbackContent />,
   },
   {
     value: 'soft-icon-fallback',
     label: 'Soft Icon Fallback',
-    content: (
-      <View className="flex-1 items-center justify-center">
-        <View className="gap-3">
-          <View className="flex-row items-center justify-center gap-4">
-            <Avatar variant="soft" color="accent" alt="Accent">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback />
-            </Avatar>
-            <Avatar variant="soft" color="default" alt="Default">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback />
-            </Avatar>
-            <Avatar variant="soft" color="success" alt="Success">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback />
-            </Avatar>
-            <Avatar variant="soft" color="warning" alt="Warning">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback />
-            </Avatar>
-            <Avatar variant="soft" color="danger" alt="Danger">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback />
-            </Avatar>
-          </View>
-        </View>
-      </View>
-    ),
+    content: <SoftIconFallbackContent />,
   },
   {
     value: 'custom-fallback',
     label: 'Custom Fallback',
-    content: (
-      <View className="flex-1 items-center justify-center">
-        <View className="flex-row items-center justify-center gap-4">
-          <Avatar alt="John Doe">
-            <Avatar.Fallback>🎉</Avatar.Fallback>
-          </Avatar>
-          <Avatar alt="Custom">
-            <Avatar.Fallback>
-              <LinearGradient
-                colors={['#ec4899', '#a855f7']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={{
-                  flex: 1,
-                  width: '100%',
-                  height: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Text className="text-white font-medium">GB</Text>
-              </LinearGradient>
-            </Avatar.Fallback>
-          </Avatar>
-          <Avatar alt="User">
-            <Avatar.Fallback>
-              <StyledIonicons name="person" size={18} className="text-[#666]" />
-            </Avatar.Fallback>
-          </Avatar>
-        </View>
-      </View>
-    ),
+    content: <CustomFallbackContent />,
   },
   {
     value: 'avatar-group',
     label: 'Avatar Group',
-    content: (
-      <View className="flex-1 items-center justify-center">
-        <View className="flex-row">
-          {[
-            {
-              id: 1,
-              image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
-              name: 'John Doe',
-            },
-            {
-              id: 2,
-              image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
-              name: 'Kate Wilson',
-            },
-            {
-              id: 3,
-              image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
-              name: 'Emily Chen',
-            },
-            {
-              id: 4,
-              image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=23',
-              name: 'Michael Brown',
-            },
-          ].map((user, index) => (
-            <Avatar
-              key={user.id}
-              className={cn(
-                'border-background border-[2px]',
-                index !== 0 && '-ml-3'
-              )}
-              alt={user.name}
-            >
-              <Avatar.Image source={{ uri: user.image }} />
-              <Avatar.Fallback
-                classNames={{
-                  container: 'bg-warning',
-                  text: 'text-warning-foreground',
-                }}
-              >
-                {user.name
-                  .split(' ')
-                  .map((n) => n[0])
-                  .join('')}
-              </Avatar.Fallback>
-            </Avatar>
-          ))}
-        </View>
-      </View>
-    ),
+    content: <AvatarGroupContent />,
   },
   {
     value: 'custom-styles',
     label: 'Custom Styles',
-    content: (
-      <View className="flex-1 items-center justify-center">
-        <View className="flex-row items-center justify-center gap-4">
-          <Avatar className="h-16 w-16" alt="Extra Large">
-            <Avatar.Image
-              source={{
-                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
-              }}
-            />
-            <Avatar.Fallback>XL</Avatar.Fallback>
-          </Avatar>
-          <Avatar className="rounded-lg" alt="Square Avatar">
-            <Avatar.Image
-              source={{
-                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
-              }}
-            />
-            <Avatar.Fallback className="rounded-lg">SQ</Avatar.Fallback>
-          </Avatar>
-          <Avatar className="p-[2.5px]" size="lg" alt="Gradient Border">
-            <LinearGradient
-              colors={['#ec4899', '#f59e0b']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={StyleSheet.absoluteFill}
-            />
-            <Avatar.Image
-              className="border-[0.5px] border-background rounded-full"
-              source={{
-                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
-              }}
-            />
-            <Avatar.Fallback className="border-none">GB</Avatar.Fallback>
-          </Avatar>
-          <View className="relative">
-            <Avatar size="lg" alt="Online User">
-              <Avatar.Image
-                source={{
-                  uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=23',
-                }}
-                asChild
-              >
-                <Image
-                  style={{ width: '100%', height: '100%' }}
-                  contentFit="cover"
-                />
-              </Avatar.Image>
-              <Avatar.Fallback>ON</Avatar.Fallback>
-            </Avatar>
-            <View className="absolute bottom-0.5 right-0.5 size-3.5 rounded-full bg-green-500 border border-background" />
-          </View>
-        </View>
-      </View>
-    ),
+    content: <CustomStylesContent />,
   },
 ];
 

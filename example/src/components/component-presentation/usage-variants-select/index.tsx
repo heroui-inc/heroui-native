@@ -10,6 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { Easing, SlideInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SelectBlurBackdrop } from '../../select/select-blur-backdrop';
 import type { UsageVariant } from '../types';
@@ -53,7 +54,13 @@ export const UsageVariantsSelect = ({
       }}
       defaultValue={data[0]}
     >
-      <Select.Trigger>
+      <Select.Trigger
+        onPress={() => {
+          if (Platform.OS === 'ios') {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          }
+        }}
+      >
         <TriggerButton />
       </Select.Trigger>
       <Select.Portal
@@ -128,11 +135,13 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
+    pointerEvents: 'none',
   },
   bottomGradient: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
+    pointerEvents: 'none',
   },
 });

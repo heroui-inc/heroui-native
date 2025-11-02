@@ -27,6 +27,7 @@ const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 
 interface UsageVariantFlatListProps {
   data: UsageVariant[];
+  scrollEnabled?: boolean;
 }
 
 type VariantItemProps = {
@@ -74,7 +75,10 @@ const VariantItem = memo(
 
 VariantItem.displayName = 'VariantItem';
 
-export const UsageVariantFlatList = ({ data }: UsageVariantFlatListProps) => {
+export const UsageVariantFlatList = ({
+  data,
+  scrollEnabled = true,
+}: UsageVariantFlatListProps) => {
   const [currentVariant, setCurrentVariant] = useState<UsageVariant>(data[0]!);
 
   const { isDark } = useAppTheme();
@@ -167,6 +171,7 @@ export const UsageVariantFlatList = ({ data }: UsageVariantFlatListProps) => {
         viewabilityConfig={viewabilityConfig}
         onScroll={scrollHandler}
         scrollEventThrottle={16}
+        scrollEnabled={scrollEnabled}
       />
       {Platform.OS === 'ios' && (
         <AnimatedBlurView

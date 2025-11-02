@@ -1,37 +1,24 @@
 /* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, Card } from 'heroui-native';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { Button, Card, type CardRootProps } from 'heroui-native';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
-import { ScreenScrollView } from '../../../components/screen-scroll-view';
-import { SectionTitle } from '../../../components/section-title';
+import type { UsageVariant } from '../../../components/component-presentation/types';
+import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
 const StyledIonicons = withUniwind(Ionicons);
 
-export default function CardScreen() {
-  const { width } = useWindowDimensions();
-
+const BasicCardContent = () => {
   return (
-    <ScreenScrollView contentContainerClassName="gap-16">
-      <SectionTitle title="Basic Card" />
+    <View className="flex-1 items-center justify-center px-5">
       <Card>
         <View className="gap-4">
           <Card.Body className="mb-4">
             <View className="gap-1 mb-2">
               <Card.Title className="text-pink-400">$450</Card.Title>
-              <Card.Title>
-                Living room Sofa <AppText className="text-sm">✦</AppText>{' '}
-                Collection 2025
-              </Card.Title>
+              <Card.Title>Living room Sofa</Card.Title>
             </View>
             <Card.Description>
               This sofa is perfect for modern tropical spaces, baroque inspired
@@ -51,33 +38,15 @@ export default function CardScreen() {
           </Card.Footer>
         </View>
       </Card>
-      <Card>
-        <View className="gap-4">
-          <Card.Header>
-            <View className="bg-accent rounded-full size-12 items-center justify-center">
-              <AppText className="text-accent-foreground font-bold text-xl">
-                $
-              </AppText>
-            </View>
-          </Card.Header>
-          <Card.Body>
-            <Card.Title>Premium Plan</Card.Title>
-            <Card.Description className="mb-4">
-              Get access to all premium features and priority support.
-            </Card.Description>
-            <AppText className="text-2xl font-bold text-foreground">
-              $29.99/month
-            </AppText>
-          </Card.Body>
-          <Card.Footer>
-            <Button>Subscribe Now</Button>
-          </Card.Footer>
-        </View>
-      </Card>
+    </View>
+  );
+};
 
-      <SectionTitle title="Card with Image" />
+const CardWithImageContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
       <View className="flex-row gap-4">
-        <Card surfaceVariant="2" className="flex-1 rounded-xl">
+        <Card variant="tertiary" className="flex-1 rounded-2xl">
           <View className="gap-4">
             <Card.Header>
               <Image
@@ -96,14 +65,14 @@ export default function CardScreen() {
               <Card.Description className="mb-4">148 members</Card.Description>
             </Card.Body>
             <Card.Footer className="flex-row items-center gap-2">
-              <View className="w-4 h-4 rounded-full bg-rose-400" />
+              <View className="size-3 rounded-full bg-rose-400" />
               <AppText className="text-sm font-medium text-foreground">
                 @indiehackers
               </AppText>
             </Card.Footer>
           </View>
         </Card>
-        <Card surfaceVariant="2" className="flex-1 rounded-xl">
+        <Card variant="tertiary" className="flex-1 rounded-2xl">
           <View className="gap-4">
             <Card.Header>
               <Image
@@ -122,7 +91,7 @@ export default function CardScreen() {
               <Card.Description className="mb-4">362 members</Card.Description>
             </Card.Body>
             <Card.Footer className="flex-row items-center gap-2">
-              <View className="w-4 h-4 rounded-full bg-emerald-400" />
+              <View className="size-3 rounded-full bg-emerald-400" />
               <AppText className="text-sm font-medium text-foreground">
                 @aibuilders
               </AppText>
@@ -130,10 +99,15 @@ export default function CardScreen() {
           </View>
         </Card>
       </View>
+    </View>
+  );
+};
 
-      <SectionTitle title="Horizontal Card With Image" />
-      <View className="gap-8">
-        <Card className="flex-row rounded-xl gap-4 p-4" surfaceVariant="2">
+const HorizontalCardWithImageContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <View className="gap-4">
+        <Card className="flex-row rounded-2xl gap-4 p-4" variant="tertiary">
           <Image
             source={{
               uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/robot2.jpg',
@@ -146,27 +120,27 @@ export default function CardScreen() {
             resizeMode="cover"
           />
           <View className="gap-4">
-            <Card.Body className="mb-2">
-              <Card.Title className="mb-1">Bringing the future</Card.Title>
+            <Card.Body className="flex-1">
+              <Card.Title>Bringing the future</Card.Title>
               <Card.Description numberOfLines={2}>
                 Today, 6:30 PM
               </Card.Description>
             </Card.Body>
             <Card.Footer>
               <Pressable className="flex-row items-center gap-1">
-                <AppText className="text-sm font-medium text-foreground">
+                <AppText className="text-sm font-medium text-accent">
                   View Details
                 </AppText>
                 <StyledIonicons
                   name="open-outline"
                   size={12}
-                  className="text-foreground"
+                  className="text-accent"
                 />
               </Pressable>
             </Card.Footer>
           </View>
         </Card>
-        <Card className="flex-row rounded-xl gap-4 p-4" surfaceVariant="2">
+        <Card className="flex-row rounded-2xl gap-4 p-4" variant="tertiary">
           <Image
             source={{
               uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/car1.jpg',
@@ -179,30 +153,35 @@ export default function CardScreen() {
             resizeMode="cover"
           />
           <View className="gap-4">
-            <Card.Body className="mb-2">
-              <Card.Title className="mb-1">Marketing Conf</Card.Title>
+            <Card.Body className="flex-1">
+              <Card.Title>Marketing Conf</Card.Title>
               <Card.Description numberOfLines={2}>
                 Wed, 4:30 PM
               </Card.Description>
             </Card.Body>
             <Card.Footer>
               <Pressable className="flex-row items-center gap-1">
-                <AppText className="text-sm font-medium text-foreground">
+                <AppText className="text-sm font-medium text-accent">
                   View Details
                 </AppText>
                 <StyledIonicons
                   name="open-outline"
                   size={12}
-                  className="text-foreground"
+                  className="text-accent"
                 />
               </Pressable>
             </Card.Footer>
           </View>
         </Card>
       </View>
+    </View>
+  );
+};
 
-      <SectionTitle title="Background Image Card" />
-      <Card className="aspect-square rounded-2xl">
+const BackgroundImageCardContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Card className="w-full aspect-square">
         <Image
           source={{
             uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/dog1.jpg',
@@ -214,8 +193,8 @@ export default function CardScreen() {
           colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.8)']}
           style={StyleSheet.absoluteFill}
         />
-        <View className="gap-4 justify-end h-full">
-          <Card.Body>
+        <View className="flex-1 gap-4">
+          <Card.Body className="flex-1">
             <Card.Title className="text-base text-white uppercase mb-0.5">
               Pet health
             </Card.Title>
@@ -238,152 +217,87 @@ export default function CardScreen() {
           </Card.Footer>
         </View>
       </Card>
-
-      <SectionTitle title="Profile Onboarding Cards" />
-      <ScrollView
-        horizontal
-        className="-mx-5"
-        contentContainerClassName="gap-2 px-5"
-        showsHorizontalScrollIndicator={false}
-      >
-        <Card
-          surfaceVariant="2"
-          style={{ width: width / 1.6 }}
-          className="border-0"
-        >
-          <View className="gap-4">
-            <Card.Body className="items-center mb-2">
-              <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
-                <StyledIonicons
-                  name="people-outline"
-                  size={20}
-                  className="text-foreground"
-                />
-              </View>
-              <Card.Title className="text-center">
-                Follow 10 profiles
-              </Card.Title>
-              <Card.Description className="text-center">
-                Fill your feed with threads that interest you.
-              </Card.Description>
-            </Card.Body>
-            <Card.Footer>
-              <Button size="sm">See profiles</Button>
-            </Card.Footer>
-          </View>
-        </Card>
-
-        <Card
-          surfaceVariant="2"
-          style={{ width: width / 1.5 }}
-          className="border-0"
-        >
-          <View className="gap-4">
-            <Card.Body className="items-center mb-2">
-              <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
-                <StyledIonicons
-                  name="checkmark"
-                  size={28}
-                  className="text-foreground"
-                />
-              </View>
-              <Card.Title className="text-center">Create thread</Card.Title>
-              <Card.Description className="text-center">
-                Say what's on your mind or share a recent highlight.
-              </Card.Description>
-            </Card.Body>
-            <Card.Footer>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="border border-border"
-              >
-                Done
-              </Button>
-            </Card.Footer>
-          </View>
-        </Card>
-
-        <Card
-          surfaceVariant="2"
-          style={{ width: width / 1.5 }}
-          className="border-0"
-        >
-          <View className="gap-4">
-            <Card.Body className="items-center mb-2">
-              <View className="w-16 h-16 mb-3 rounded-full items-center justify-center bg-background border border-border">
-                <StyledIonicons
-                  name="checkmark"
-                  size={28}
-                  className="text-foreground"
-                />
-              </View>
-              <Card.Title className="text-center">Add profile photo</Card.Title>
-              <Card.Description className="text-center">
-                Make it easier for people to recognize you.
-              </Card.Description>
-            </Card.Body>
-            <Card.Footer>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="border border-border"
-              >
-                Done
-              </Button>
-            </Card.Footer>
-          </View>
-        </Card>
-      </ScrollView>
-
-      <SectionTitle title="Surface Variants" />
-
-      <View className="gap-8">
-        <Card surfaceVariant="none">
-          <View className="gap-4">
-            <Card.Body>
-              <Card.Title>Transparent Card</Card.Title>
-              <Card.Description>
-                This card uses surfaceVariant="none" for a transparent
-                background.
-              </Card.Description>
-            </Card.Body>
-          </View>
-        </Card>
-
-        <Card surfaceVariant="1">
-          <View className="gap-4">
-            <Card.Body>
-              <Card.Title>Surface 1 Card</Card.Title>
-              <Card.Description>
-                This is the default card appearance with surfaceVariant="1".
-              </Card.Description>
-            </Card.Body>
-          </View>
-        </Card>
-
-        <Card surfaceVariant="2">
-          <View className="gap-4">
-            <Card.Body>
-              <Card.Title>Surface 2 Card</Card.Title>
-              <Card.Description>
-                This card uses surfaceVariant="2" for a different surface color.
-              </Card.Description>
-            </Card.Body>
-          </View>
-        </Card>
-
-        <Card surfaceVariant="3">
-          <View className="gap-4">
-            <Card.Body>
-              <Card.Title>Surface 3 Card</Card.Title>
-              <Card.Description>
-                This card uses surfaceVariant="3" for the deepest surface color.
-              </Card.Description>
-            </Card.Body>
-          </View>
-        </Card>
-      </View>
-    </ScreenScrollView>
+    </View>
   );
+};
+
+type CardItemProps = {
+  variant: CardRootProps['variant'];
+  title: string;
+  description: string;
+};
+
+const CardItem = ({ variant, title, description }: CardItemProps) => {
+  return (
+    <Card variant={variant} className="gap-2">
+      <AppText className="text-foreground font-medium">{title}</AppText>
+      <AppText className="text-muted">{description}</AppText>
+    </Card>
+  );
+};
+
+const VariantsContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center">
+      <View className="gap-2 w-full px-5">
+        <CardItem
+          variant="transparent"
+          title="Transparent"
+          description="Minimal prominence with transparent background. Use for less important content or nested cards."
+        />
+        <CardItem
+          variant="default"
+          title="Default"
+          description="Standard card appearance (surface-secondary). The default card variant for most use cases"
+        />
+        <CardItem
+          variant="secondary"
+          title="Secondary"
+          description="Medium prominence (surface-tertiary). Use to draw moderate attention."
+        />
+        <CardItem
+          variant="tertiary"
+          title="Tertiary"
+          description="Higher prominence (surface-quaternary). Use for important content."
+        />
+        <CardItem
+          variant="quaternary"
+          title="Quaternary"
+          description="Highest prominence (surface-quaternary). Use for critical content."
+        />
+      </View>
+    </View>
+  );
+};
+
+const CARD_VARIANTS: UsageVariant[] = [
+  {
+    value: 'basic-card',
+    label: 'Basic Card',
+    content: <BasicCardContent />,
+  },
+  {
+    value: 'card-with-image',
+    label: 'Card with Image',
+    content: <CardWithImageContent />,
+  },
+  {
+    value: 'horizontal-card-with-image',
+    label: 'Horizontal Card With Image',
+    content: <HorizontalCardWithImageContent />,
+  },
+  {
+    value: 'background-image-card',
+    label: 'Background Image Card',
+    content: <BackgroundImageCardContent />,
+  },
+  {
+    value: 'variants',
+    label: 'Variants',
+    content: <VariantsContent />,
+  },
+];
+
+export default function CardScreen() {
+  return <UsageVariantFlatList data={CARD_VARIANTS} />;
 }

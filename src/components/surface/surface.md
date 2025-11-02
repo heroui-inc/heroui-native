@@ -121,9 +121,9 @@ export default function SurfaceExample() {
 
 ### Surface
 
-| prop           | type                                                     | default     | description                                            |
-| -------------- | -------------------------------------------------------- | ----------- | ------------------------------------------------------ |
-| `variant`      | `'default' \| 'secondary' \| 'tertiary' \| 'quaternary'` | `'default'` | Visual variant controlling background color and border |
-| `children`     | `React.ReactNode`                                        | -           | Content to be rendered inside the surface              |
-| `className`    | `string`                                                 | -           | Additional CSS classes to apply                        |
-| `...ViewProps` | `ViewProps`                                              | -           | All standard React Native View props are supported     |
+| prop           | type                                                                      | default     | description                                            |
+| -------------- | ------------------------------------------------------------------------- | ----------- | ------------------------------------------------------ |
+| `variant`      | `'default' \| 'secondary' \| 'tertiary' \| 'quaternary' \| 'transparent'` | `'default'` | Visual variant controlling background color and border |
+| `children`     | `React.ReactNode`                                                         | -           | Content to be rendered inside the surface              |
+| `className`    | `string`                                                                  | -           | Additional CSS classes to apply                        |
+| `...ViewProps` | `ViewProps`                                                               | -           | All standard React Native View props are supported     |

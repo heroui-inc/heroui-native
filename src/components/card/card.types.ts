@@ -4,13 +4,7 @@ import type { SurfaceRootProps } from '../surface/surface.types';
 /**
  * Props for the Card.Root component
  */
-export interface CardRootProps extends Omit<SurfaceRootProps, 'variant'> {
-  /**
-   * Visual variant of the card surface
-   * @default 'default'
-   */
-  surfaceVariant?: SurfaceRootProps['variant'];
-}
+export interface CardRootProps extends SurfaceRootProps {}
 
 /**
  * Props for the Card.Header component

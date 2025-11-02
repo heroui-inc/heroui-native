@@ -7,7 +7,8 @@ export type SurfaceVariant =
   | 'default'
   | 'secondary'
   | 'tertiary'
-  | 'quaternary';
+  | 'quaternary'
+  | 'transparent';
 
 /**
  * Props for the Surface.Root component

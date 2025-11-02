@@ -1,6 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
-import { Card, Chip } from 'heroui-native';
+import { Card, Chip, cn } from 'heroui-native';
 import type { FC } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import Animated, {
@@ -95,7 +95,12 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
         .easing(Easing.out(Easing.ease))}
       onPress={() => router.push(path)}
     >
-      <Card className="p-0 rounded-3xl">
+      <Card
+        className={cn(
+          'p-0 border border-zinc-200',
+          isDark && 'border-zinc-900'
+        )}
+      >
         <AnimatedView
           entering={FadeIn}
           className="absolute inset-0 w-full h-full"

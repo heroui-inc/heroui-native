@@ -52,7 +52,7 @@ export default function LinearTaskScreen() {
       </AppText>
 
       <Card
-        surfaceVariant="tertiary"
+        variant="tertiary"
         className="flex-row flex-wrap gap-x-2 gap-y-3 border-0 rounded-2xl mb-6 -mx-3"
       >
         <Status />

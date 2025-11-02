@@ -216,7 +216,7 @@ const InlineLayoutCompactContent = () => {
 
   return (
     <View className="flex-1 items-center justify-center px-5">
-      <View className="flex-row flex-wrap gap-x-6 gap-y-4 w-full">
+      <View className="flex-row flex-wrap gap-4 w-full">
         {(Object.keys(filters) as Array<keyof typeof filters>).map((key) => (
           <InlineFilter
             key={key}
@@ -280,7 +280,10 @@ const ValidationErrorStatesContent = () => {
 
   return (
     <View className="flex-1 items-center justify-center px-5">
-      <Animated.View className="gap-8 w-full" layout={LinearTransition}>
+      <Animated.View
+        className="gap-8 w-full h-[350px]"
+        layout={LinearTransition}
+      >
         <FormField
           isSelected={terms}
           onSelectedChange={setTerms}

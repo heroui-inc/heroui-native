@@ -48,8 +48,8 @@ const CardWithImageContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="flex-row gap-4">
-        <Card variant="tertiary" className="flex-1 rounded-2xl">
-          <View className="gap-4">
+        <Card variant="tertiary" className="flex-1 aspect-[1/1.3] rounded-2xl">
+          <View className="flex-1 gap-4">
             <Card.Header>
               <Image
                 source={{
@@ -62,9 +62,11 @@ const CardWithImageContent = () => {
                 }}
               />
             </Card.Header>
-            <Card.Body>
+            <Card.Body className="flex-1">
               <Card.Title>Indie Hackers</Card.Title>
-              <Card.Description className="mb-4">148 members</Card.Description>
+              <Card.Description className="text-sm">
+                148 members
+              </Card.Description>
             </Card.Body>
             <Card.Footer className="flex-row items-center gap-2">
               <View className="size-3 rounded-full bg-rose-400" />
@@ -74,8 +76,8 @@ const CardWithImageContent = () => {
             </Card.Footer>
           </View>
         </Card>
-        <Card variant="tertiary" className="flex-1 rounded-2xl">
-          <View className="gap-4">
+        <Card variant="tertiary" className="flex-1 aspect-[1/1.3] rounded-2xl">
+          <View className="flex-1 gap-4">
             <Card.Header>
               <Image
                 source={{
@@ -88,9 +90,11 @@ const CardWithImageContent = () => {
                 }}
               />
             </Card.Header>
-            <Card.Body>
+            <Card.Body className="flex-1">
               <Card.Title>AI Builders</Card.Title>
-              <Card.Description className="mb-4">362 members</Card.Description>
+              <Card.Description className="text-sm">
+                362 members
+              </Card.Description>
             </Card.Body>
             <Card.Footer className="flex-row items-center gap-2">
               <View className="size-3 rounded-full bg-emerald-400" />
@@ -126,7 +130,7 @@ const HorizontalCardWithImageContent = () => {
           <View className="gap-4">
             <Card.Body className="flex-1">
               <Card.Title>Bringing the future</Card.Title>
-              <Card.Description numberOfLines={2}>
+              <Card.Description numberOfLines={2} className="text-sm">
                 Today, 6:30 PM
               </Card.Description>
             </Card.Body>
@@ -159,7 +163,7 @@ const HorizontalCardWithImageContent = () => {
           <View className="gap-4">
             <Card.Body className="flex-1">
               <Card.Title>Marketing Conf</Card.Title>
-              <Card.Description numberOfLines={2}>
+              <Card.Description numberOfLines={2} className="text-sm">
                 Wed, 4:30 PM
               </Card.Description>
             </Card.Body>

@@ -138,7 +138,7 @@ export default function App() {
   const router = useRouter();
 
   return (
-    <ScreenScrollView>
+    <ScreenScrollView contentContainerClassName="px-3">
       <View className="h-5" />
       <Accordion isCollapsible={false} variant="surface">
         {components.map((item) => (

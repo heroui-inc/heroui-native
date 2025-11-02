@@ -60,7 +60,7 @@
 
       /* Misc Colors */
       --border: oklch(0 0 0 / 0%);
-      --divider: oklch(92% 0.004 286.32);
+      --divider: oklch(57% 0.004 286.32);
       --link: var(--foreground);
     }
 
@@ -109,7 +109,7 @@
 
       /* Misc Colors */
       --border: oklch(1 0 0 / 0%);
-      --divider: oklch(27.4% 0.006 286.033);
+      --divider: oklch(47% 0.006 286.033);
       --link: var(--foreground);
     }
   }

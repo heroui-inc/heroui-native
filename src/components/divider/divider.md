@@ -65,25 +65,19 @@ import { Text, View } from 'react-native';
 
 export default function DividerExample() {
   return (
-    <Surface variant="2">
+    <Surface variant="secondary" className="px-6 py-7">
       <Text className="text-base font-medium text-foreground">
         HeroUI Native
       </Text>
       <Text className="text-sm text-muted">
         A modern React Native component library.
       </Text>
-
       <Divider className="my-4" />
-
       <View className="flex-row items-center h-5">
         <Text className="text-sm text-foreground">Components</Text>
-
         <Divider orientation="vertical" className="mx-3" />
-
         <Text className="text-sm text-foreground">Themes</Text>
-
         <Divider orientation="vertical" className="mx-3" />
-
         <Text className="text-sm text-foreground">Examples</Text>
       </View>
     </Surface>

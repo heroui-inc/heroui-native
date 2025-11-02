@@ -5,7 +5,7 @@ import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 const root = tv({
   slots: {
     container: 'flex-col overflow-hidden',
-    divider: 'h-px bg-border',
+    divider: 'h-hairline bg-divider',
   },
   variants: {
     variant: {

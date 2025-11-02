@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useRouter } from 'expo-router';
-import { Accordion } from 'heroui-native';
+import { Accordion, Card } from 'heroui-native';
 import { View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
@@ -140,27 +140,33 @@ export default function App() {
   return (
     <ScreenScrollView>
       <View className="h-5" />
-      <Accordion variant="border" isCollapsible={false} className="rounded-3xl">
-        {components.map((item) => (
-          <Accordion.Item key={item.title} value={item.title}>
-            <Accordion.Trigger
-              className="bg-surface py-3.5"
-              onPress={() => router.push(`/components/${item.path}`)}
-            >
-              <AppText className="text-foreground text-base ml-1">
-                {item.title}
-              </AppText>
-              <Accordion.Indicator>
-                <StyledIonicons
-                  name="chevron-forward"
-                  size={16}
-                  className="text-muted"
-                />
-              </Accordion.Indicator>
-            </Accordion.Trigger>
-          </Accordion.Item>
-        ))}
-      </Accordion>
+      <Card>
+        <Accordion
+          variant="border"
+          isCollapsible={false}
+          className="rounded-3xl"
+        >
+          {components.map((item) => (
+            <Accordion.Item key={item.title} value={item.title}>
+              <Accordion.Trigger
+                className="bg-transparent py-3.5"
+                onPress={() => router.push(`/components/${item.path}`)}
+              >
+                <AppText className="text-foreground text-base ml-1">
+                  {item.title}
+                </AppText>
+                <Accordion.Indicator>
+                  <StyledIonicons
+                    name="chevron-forward"
+                    size={16}
+                    className="text-muted"
+                  />
+                </Accordion.Indicator>
+              </Accordion.Trigger>
+            </Accordion.Item>
+          ))}
+        </Accordion>
+      </Card>
     </ScreenScrollView>
   );
 }

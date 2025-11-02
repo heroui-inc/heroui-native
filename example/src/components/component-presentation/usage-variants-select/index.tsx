@@ -96,7 +96,7 @@ export const UsageVariantsSelect = ({
               originY: 100,
             })
               .springify()
-              .damping(70)
+              .damping(80)
               .stiffness(1000)}
             showsVerticalScrollIndicator={false}
             contentContainerClassName="gap-2 px-4"

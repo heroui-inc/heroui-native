@@ -13,7 +13,7 @@ const Surface = forwardRef<ViewRef, SurfaceRootProps>(
       <View
         ref={ref}
         className={tvStyles}
-        style={[styleSheet.surfaceRoot, style]}
+        style={[styleSheet.root, style]}
         {...props}
       >
         {children}

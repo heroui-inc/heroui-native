@@ -142,7 +142,7 @@ export default function SkeletonExample() {
           speed: 1,
         }}
       >
-        <View className="h-48 bg-surface-3 rounded-lg overflow-hidden">
+        <View className="h-48 bg-surface-tertiary rounded-lg overflow-hidden">
           <Image
             source={{
               uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/car1.jpg',

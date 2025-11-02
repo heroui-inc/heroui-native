@@ -38,7 +38,7 @@ const title = tv({
 });
 
 const description = tv({
-  base: 'text-base font-normal text-muted',
+  base: 'text-sm font-normal text-muted',
 });
 
 const indicator = tv({

@@ -75,7 +75,7 @@ export default function SkeletonScreen() {
               </Card.Header>
 
               <SkeletonGroup.Item className="h-48 w-full rounded-lg">
-                <View className="h-48 bg-surface-3 rounded-lg overflow-hidden">
+                <View className="h-48 bg-surface-secondary rounded-lg overflow-hidden">
                   <Image
                     source={{
                       uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/car1.jpg',

@@ -17,7 +17,12 @@ import type {
 // --------------------------------------------------
 
 const CardRoot = forwardRef<ViewRef, CardRootProps>((props, ref) => {
-  const { children, surfaceVariant = '1', className, ...restProps } = props;
+  const {
+    children,
+    surfaceVariant = 'default',
+    className,
+    ...restProps
+  } = props;
 
   const tvStyles = cardStyles.root({ className });
 

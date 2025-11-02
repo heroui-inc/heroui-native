@@ -110,6 +110,12 @@ export const UsageVariantFlatList = ({ data }: UsageVariantFlatListProps) => {
   });
 
   const animatedProps = useAnimatedProps(() => {
+    if (data.length === 1) {
+      return {
+        intensity: 0,
+      };
+    }
+
     const inputRange: number[] = [];
     const outputRange: number[] = [];
 
@@ -176,7 +182,7 @@ export const UsageVariantFlatList = ({ data }: UsageVariantFlatListProps) => {
       )}
       <View
         className="absolute left-6"
-        style={{ bottom: insets.bottom + 32 }}
+        style={{ bottom: insets.bottom + 34 }}
         pointerEvents="none"
       >
         <View className="gap-1">

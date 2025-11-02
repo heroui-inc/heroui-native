@@ -34,7 +34,7 @@ export default function ScrollShadowScreen() {
           horizontal
           data={HORIZONTAL_ITEMS}
           renderItem={({ item: _item }) => (
-            <Surface variant="2" className="w-32 h-16" />
+            <Surface variant="secondary" className="w-32 h-16" />
           )}
           ItemSeparatorComponent={HorizontalSeparator}
           contentContainerStyle={styles.horizontalContent}

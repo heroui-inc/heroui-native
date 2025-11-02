@@ -29,10 +29,7 @@ export default function Layout() {
     <Stack
       screenOptions={{
         headerTitleAlign: 'center',
-        headerTransparent: Platform.select({
-          ios: true,
-          android: false,
-        }),
+        headerTransparent: true,
         headerBlurEffect: isDark ? 'dark' : 'light',
         headerTintColor: themeColorForeground,
         headerStyle: {

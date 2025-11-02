@@ -86,7 +86,7 @@ export default function DividerScreen() {
       </View>
 
       <SectionTitle title="Layout Examples" />
-      <Surface variant="2">
+      <Surface variant="secondary">
         <AppText className="text-base font-medium text-foreground">
           HeroUI Native
         </AppText>

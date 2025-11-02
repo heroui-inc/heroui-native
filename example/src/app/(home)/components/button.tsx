@@ -29,7 +29,7 @@ const VariantsContent = () => {
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
-        <View className="gap-8 w-full px-8">
+        <View className="gap-6 w-full px-8">
           <Button variant="primary">Primary</Button>
           <Button variant="secondary">Secondary</Button>
           <Button variant="tertiary">Tertiary</Button>

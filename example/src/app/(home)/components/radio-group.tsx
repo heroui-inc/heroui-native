@@ -259,7 +259,7 @@ export default function RadioGroupScreen() {
           {({ isSelected }) => (
             <View
               className={cn(
-                'flex-row items-center justify-between gap-3 p-3 rounded-xl border border-background-secondary shadow-lg shadow-foreground/5',
+                'flex-row items-center justify-between gap-3 p-3 rounded-2xl bg-surface-secondary',
                 isSelected && 'bg-surface'
               )}
             >
@@ -279,7 +279,7 @@ export default function RadioGroupScreen() {
           {({ isSelected }) => (
             <View
               className={cn(
-                'flex-row items-center justify-between gap-3 p-3 rounded-xl border border-background-secondary shadow-lg shadow-foreground/5',
+                'flex-row items-center justify-between gap-3 p-3 rounded-2xl bg-surface-secondary',
                 isSelected && 'bg-surface'
               )}
             >
@@ -299,7 +299,7 @@ export default function RadioGroupScreen() {
           {({ isSelected }) => (
             <View
               className={cn(
-                'flex-row items-center justify-between gap-3 p-3 rounded-xl border border-background-secondary shadow-lg shadow-foreground/5',
+                'flex-row items-center justify-between gap-3 p-3 rounded-2xl bg-surface-secondary',
                 isSelected && 'bg-surface'
               )}
             >

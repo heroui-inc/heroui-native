@@ -282,13 +282,11 @@ export default function FormFieldScreen() {
         <FormField
           isSelected={notifications}
           onSelectedChange={setNotifications}
-          className="bg-surface-2 p-4 rounded-lg border border-border"
+          className="bg-surface p-4 rounded-2xl gap-8"
         >
           <FormField.Content>
-            <FormField.Title className="text-lg font-semibold">
-              Premium Feature
-            </FormField.Title>
-            <FormField.Description className="text-sm">
+            <FormField.Title>Premium Feature</FormField.Title>
+            <FormField.Description>
               This is a premium feature with custom styling
             </FormField.Description>
           </FormField.Content>
@@ -305,18 +303,18 @@ export default function FormFieldScreen() {
           <FormField
             isSelected={darkMode}
             onSelectedChange={setDarkMode}
-            className="bg-accent/10 p-4 rounded-xl"
+            className="bg-surface p-4 rounded-2xl gap-8"
           >
-            <FormField.Content className="gap-1.5">
-              <FormField.Title className="text-accent font-semibold">
-                Highlighted Option
-              </FormField.Title>
+            <FormField.Content className="gap-1">
+              <FormField.Title>Highlighted Option</FormField.Title>
               <FormField.Description className="text-amber-600">
                 This option has custom background and text colors
               </FormField.Description>
             </FormField.Content>
             <FormField.Indicator>
-              <Checkbox color="warning" />
+              <Checkbox
+                animatedColors={{ backgroundColor: { selected: '#d97706' } }}
+              />
             </FormField.Indicator>
           </FormField>
         </DropShadowView>

@@ -7,7 +7,7 @@ import type { SurfaceRootProps } from '../surface/surface.types';
 export interface CardRootProps extends Omit<SurfaceRootProps, 'variant'> {
   /**
    * Visual variant of the card surface
-   * @default '1'
+   * @default 'default'
    */
   surfaceVariant?: SurfaceRootProps['variant'];
 }

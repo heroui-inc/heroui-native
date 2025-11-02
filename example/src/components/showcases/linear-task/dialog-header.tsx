@@ -10,7 +10,7 @@ export const DialogHeader: FC<PropsWithChildren> = ({ children }) => {
     <View className="mb-5 flex-row items-center justify-between">
       <AppText className="font-semibold text-lg text-muted">{children}</AppText>
       <Dialog.Close
-        className="rounded-full bg-surface-2 p-1"
+        className="rounded-full bg-surface-secondary p-1"
         iconProps={{ size: 14, color: themeColorMuted }}
       />
     </View>

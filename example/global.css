@@ -9,7 +9,7 @@
   --eclipse: oklch(0.2103 0.0059 285.89);
 
   /* Base radius */
-  --radius: 12px;
+  --radius: 0.5rem;
 
   /* Opacity */
   --opacity-disabled: 0.5;

@@ -140,19 +140,16 @@ export default function App() {
   return (
     <ScreenScrollView>
       <View className="h-5" />
-      <Accordion variant="border" isCollapsible={false}>
+      <Accordion variant="border" isCollapsible={false} className="rounded-3xl">
         {components.map((item) => (
           <Accordion.Item key={item.title} value={item.title}>
             <Accordion.Trigger
-              className="bg-surface-2"
+              className="bg-surface py-3.5"
               onPress={() => router.push(`/components/${item.path}`)}
             >
-              <View className="flex-row items-center flex-1 gap-3">
-                {item.icon}
-                <AppText className="text-foreground text-base flex-1">
-                  {item.title}
-                </AppText>
-              </View>
+              <AppText className="text-foreground text-base ml-1">
+                {item.title}
+              </AppText>
               <Accordion.Indicator>
                 <StyledIonicons
                   name="chevron-forward"

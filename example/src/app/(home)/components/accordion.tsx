@@ -2,7 +2,6 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import {
   Accordion,
   AccordionLayoutTransition,
-  cn,
   useAccordionItemContext,
 } from 'heroui-native';
 import { StyleSheet, View } from 'react-native';
@@ -17,7 +16,6 @@ import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { SectionTitle } from '../../../components/section-title';
-import { useAppTheme } from '../../../contexts/app-theme-context';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 const StyledIonicons = withUniwind(Ionicons);
@@ -36,14 +34,14 @@ const CustomIndicator = () => {
   const { isExpanded } = useAccordionItemContext();
 
   return (
-    <View className="w-5 h-5 items-center justify-center">
+    <View className="size-5 items-center justify-center">
       {isExpanded ? (
         <Animated.View
           key="minus"
           entering={CUSTOM_INDICATOR_ENTERING}
           exiting={CUSTOM_INDICATOR_EXITING}
         >
-          <StyledIonicons name="remove" size={16} className="text-muted" />
+          <StyledIonicons name="remove" size={18} className="text-muted" />
         </Animated.View>
       ) : (
         <Animated.View
@@ -51,7 +49,7 @@ const CustomIndicator = () => {
           entering={CUSTOM_INDICATOR_ENTERING}
           exiting={CUSTOM_INDICATOR_EXITING}
         >
-          <StyledIonicons name="add" size={16} className="text-muted" />
+          <StyledIonicons name="add" size={18} className="text-muted" />
         </Animated.View>
       )}
     </View>
@@ -59,8 +57,6 @@ const CustomIndicator = () => {
 };
 
 const AccordionScreen = () => {
-  const { isDark } = useAppTheme();
-
   const accordionData = [
     {
       id: '1',
@@ -325,14 +321,11 @@ const AccordionScreen = () => {
           {accordionData.slice(0, 4).map((item) => (
             <Accordion.Item key={item.id} value={item.id} className="mb-1">
               <Accordion.Trigger
-                className={cn(
-                  'bg-surface-2 rounded-xl border border-neutral-200/80',
-                  isDark && 'border-neutral-800/80'
-                )}
+                className="bg-surface rounded-2xl"
                 style={styles.borderCurve}
               >
                 <View className="flex-1 flex-row items-center gap-4">
-                  <View className="size-8 rounded-full bg-accent/5 items-center justify-center">
+                  <View className="size-8 rounded-full bg-surface-secondary/50 items-center justify-center">
                     {item.icon}
                   </View>
                   <AppText className="text-foreground text-base font-medium flex-1">
@@ -344,10 +337,7 @@ const AccordionScreen = () => {
                 </Accordion.Indicator>
               </Accordion.Trigger>
               <Accordion.Content
-                className={cn(
-                  'mt-1 bg-surface-2 rounded-xl px-5 py-4 border border-neutral-200/80',
-                  isDark && 'border-neutral-800/80'
-                )}
+                className="mt-1 bg-surface rounded-2xl px-5 py-4"
                 style={styles.borderCurve}
               >
                 <AppText className="text-muted text-base/relaxed">

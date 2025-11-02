@@ -1,4 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useThemeColor } from 'heroui-native';
 import { type FC } from 'react';
 import { TextInput, View } from 'react-native';
 import { withUniwind } from 'uniwind';
@@ -16,15 +17,17 @@ export const SearchBar: FC<SearchBarProps> = ({
   onChangeText,
   placeholder = 'Search...',
 }) => {
+  const themeColorMuted = useThemeColor('muted');
+
   return (
-    <View className="flex-row items-center gap-2 rounded-md bg-surface-2 h-12 px-3 mb-2">
+    <View className="flex-row items-center gap-2 rounded-lg bg-surface-secondary h-12 px-3 mb-2">
       <StyledFontAwesome name="search" size={14} className="text-muted" />
       <TextInput
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColorClassName="text-muted"
-        selectionColorClassName="text-muted"
+        placeholderTextColor={themeColorMuted}
+        selectionColor={themeColorMuted}
         className="flex-1 font-medium text-foreground"
         autoFocus
       />

@@ -93,7 +93,7 @@ export const Assignee: FC = () => {
     <Dialog>
       <Dialog.Trigger asChild>
         <Chip
-          className="h-7 bg-surface-3 pl-1 pr-2"
+          className="h-7 bg-surface-quaternary pl-1 pr-2"
           onPress={() => {
             if (Platform.OS === 'ios') {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);

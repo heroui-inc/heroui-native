@@ -447,14 +447,17 @@ export default function Themes() {
             Surfaces
           </Text>
           <View className="gap-4">
-            <Surface variant="1" className="p-5">
-              <Text className="text-foreground">Surface Variant 1</Text>
+            <Surface variant="default" className="p-5">
+              <Text className="text-foreground">Surface Default</Text>
             </Surface>
-            <Surface variant="2" className="p-5">
-              <Text className="text-foreground">Surface Variant 2</Text>
+            <Surface variant="secondary" className="p-5">
+              <Text className="text-foreground">Surface Secondary</Text>
             </Surface>
-            <Surface variant="3" className="p-5">
-              <Text className="text-foreground">Surface Variant 3</Text>
+            <Surface variant="tertiary" className="p-5">
+              <Text className="text-foreground">Surface Tertiary</Text>
+            </Surface>
+            <Surface variant="quaternary" className="p-5">
+              <Text className="text-foreground">Surface Quaternary</Text>
             </Surface>
           </View>
         </View>

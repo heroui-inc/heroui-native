@@ -97,7 +97,7 @@ export function SearchableDialogSelect() {
           <Select.Content
             classNames={{
               wrapper: 'justify-center',
-              content: cn('gap-2 rounded-2xl', isDark && 'bg-surface-1'),
+              content: cn('gap-2 rounded-3xl', isDark && 'bg-surface'),
             }}
             style={{ marginTop: insetTop, height: maxDialogHeight }}
             presentation="dialog"
@@ -112,10 +112,7 @@ export function SearchableDialogSelect() {
                 onChangeText={setSearchQuery}
                 placeholder="Search country..."
                 placeholderTextColor={themeColorMuted}
-                className={cn(
-                  'p-3 rounded-md bg-surface-3/60 text-foreground',
-                  isDark && 'bg-surface-2'
-                )}
+                className="p-3 rounded-xl bg-surface-secondary/80 text-foreground"
                 autoFocus
               />
             </View>

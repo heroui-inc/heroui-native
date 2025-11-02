@@ -3,7 +3,11 @@ import type { ViewProps } from 'react-native';
 /**
  * Variant options for the Surface component
  */
-export type SurfaceVariant = 'none' | '1' | '2' | '3';
+export type SurfaceVariant =
+  | 'default'
+  | 'secondary'
+  | 'tertiary'
+  | 'quaternary';
 
 /**
  * Props for the Surface.Root component
@@ -15,7 +19,7 @@ export interface SurfaceRootProps extends ViewProps {
   children?: React.ReactNode;
   /**
    * Visual variant of the surface
-   * @default 'none'
+   * @default 'default'
    */
   variant?: SurfaceVariant;
   /**

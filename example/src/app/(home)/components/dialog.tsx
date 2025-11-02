@@ -67,7 +67,7 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <Dialog.Content
-      className="bg-surface-1 rounded-xl"
+      className="bg-surface rounded-3xl"
       style={[
         { marginTop: insetTop, maxHeight: maxTextInputDialogHeight },
         rContainerStyle,
@@ -180,9 +180,9 @@ export default function DialogScreen() {
             <Dialog.Overlay isDefaultAnimationDisabled>
               <DialogBlurBackdrop />
             </Dialog.Overlay>
-            <Dialog.Content className="bg-surface-1 border-0 rounded-xl">
+            <Dialog.Content className="bg-surface border-0 rounded-3xl">
               <Dialog.Close className="self-end -mb-2 z-50" />
-              <View className="mb-5 gap-1.5">
+              <View className="mb-5 gap-1">
                 <Dialog.Title>Confirm Action</Dialog.Title>
                 <Dialog.Description>
                   Are you sure you want to proceed with this action? This cannot

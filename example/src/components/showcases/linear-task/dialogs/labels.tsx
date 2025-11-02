@@ -105,7 +105,7 @@ export const Labels: FC = () => {
           return (
             <View
               key={item.value}
-              className="rounded-full border border-surface-2"
+              className="rounded-full border border-surface-tertiary"
               style={{ marginLeft, zIndex }}
             >
               {item.indicator}
@@ -130,7 +130,7 @@ export const Labels: FC = () => {
     <Dialog>
       <Dialog.Trigger asChild>
         <Chip
-          className="h-7 bg-surface-3 px-2"
+          className="h-7 bg-surface-quaternary px-2"
           onPress={() => {
             if (Platform.OS === 'ios') {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -193,17 +193,13 @@ export const Labels: FC = () => {
                         <FormField.Indicator>
                           <Checkbox
                             isSelected={isSelected}
-                            colors={{
-                              defaultBorder: 'transparent',
-                              selectedBorder: 'transparent',
+                            animatedColors={{
+                              backgroundColor: {
+                                default: 'transparent',
+                                selected: 'transparent',
+                              },
                             }}
                           >
-                            <Checkbox.Background
-                              colors={{
-                                defaultBackground: 'transparent',
-                                selectedBackground: 'transparent',
-                              }}
-                            />
                             <Checkbox.Indicator>
                               {isSelected && (
                                 <Animated.View

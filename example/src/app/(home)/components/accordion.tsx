@@ -51,6 +51,8 @@ const CustomIndicator = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const accordionData = [
   {
     id: '1',
@@ -106,11 +108,15 @@ const accordionData = [
   },
 ];
 
+// ------------------------------------------------------------------------------
+
 const classNames = {
   triggerContentContainer: 'flex-row items-center flex-1 gap-3',
   triggerTitle: 'text-foreground text-base flex-1',
   contentText: 'text-muted text-base/relaxed px-[28px]',
 };
+
+// ------------------------------------------------------------------------------
 
 const DefaultVariantContent = () => {
   return (
@@ -139,6 +145,8 @@ const DefaultVariantContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const SurfaceVariantContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
@@ -165,6 +173,8 @@ const SurfaceVariantContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const MultipleSelectionContent = () => {
   return (
@@ -198,6 +208,8 @@ const MultipleSelectionContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const WithoutDividersContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
@@ -224,6 +236,8 @@ const WithoutDividersContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const CustomIndicatorContent = () => {
   return (
@@ -253,6 +267,8 @@ const CustomIndicatorContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const CustomEnteringAnimationContent = () => {
   return (
@@ -297,6 +313,8 @@ const CustomEnteringAnimationContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const CustomStylesContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
@@ -333,6 +351,8 @@ const CustomStylesContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const ACCORDION_VARIANTS: UsageVariant[] = [
   {

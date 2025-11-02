@@ -48,6 +48,8 @@ const VariantsContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const SURFACE_VARIANTS: UsageVariant[] = [
   {
     value: 'variants',

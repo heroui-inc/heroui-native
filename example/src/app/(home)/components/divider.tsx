@@ -27,6 +27,8 @@ const DividerInActionContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const VariantsContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
@@ -44,6 +46,8 @@ const VariantsContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const OrientationContent = () => {
   return (
@@ -66,6 +70,8 @@ const OrientationContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const CustomThicknessContent = () => {
   return (
@@ -102,6 +108,8 @@ const CustomThicknessContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const CustomColorsContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
@@ -131,6 +139,8 @@ const CustomColorsContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const DIVIDER_VARIANTS: UsageVariant[] = [
   {

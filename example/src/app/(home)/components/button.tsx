@@ -25,6 +25,8 @@ const SizesContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const VariantsContent = () => {
   return (
     <View className="flex-1">
@@ -41,6 +43,8 @@ const VariantsContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const DisabledStateContent = () => {
   const { isDark } = useAppTheme();
@@ -71,6 +75,8 @@ const DisabledStateContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const WidthAlignmentContent = () => {
   return (
     <View className="flex-1">
@@ -93,6 +99,8 @@ const WidthAlignmentContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const WithIconsContent = () => {
   return (
@@ -145,6 +153,8 @@ const WithIconsContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const IconOnlyContent = () => {
   return (
     <View className="flex-1">
@@ -182,6 +192,8 @@ const IconOnlyContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const CustomStylingContent = () => {
   const { isDark } = useAppTheme();
@@ -234,6 +246,8 @@ const CustomStylingContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const LayoutTransitionsContent = () => {
   const [isDownloading, setIsDownloading] = React.useState(false);
 
@@ -260,6 +274,8 @@ const LayoutTransitionsContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const BUTTON_VARIANTS: UsageVariant[] = [
   {

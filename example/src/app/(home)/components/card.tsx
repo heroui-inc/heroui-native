@@ -42,6 +42,8 @@ const BasicCardContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const CardWithImageContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
@@ -102,6 +104,8 @@ const CardWithImageContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const HorizontalCardWithImageContent = () => {
   return (
@@ -178,6 +182,8 @@ const HorizontalCardWithImageContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const BackgroundImageCardContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
@@ -220,6 +226,8 @@ const BackgroundImageCardContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 type CardItemProps = {
   variant: CardRootProps['variant'];
@@ -269,6 +277,8 @@ const VariantsContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const CARD_VARIANTS: UsageVariant[] = [
   {

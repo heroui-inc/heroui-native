@@ -45,6 +45,8 @@ const SizesContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const DefaultTextFallbackContent = () => {
   return (
     <View className="flex-1">
@@ -78,6 +80,8 @@ const DefaultTextFallbackContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const SoftTextFallbackContent = () => {
   return (
     <View className="flex-1 items-center justify-center">
@@ -108,6 +112,8 @@ const SoftTextFallbackContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const DefaultIconFallbackContent = () => {
   return (
@@ -142,6 +148,8 @@ const DefaultIconFallbackContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const SoftIconFallbackContent = () => {
   return (
     <View className="flex-1 items-center justify-center">
@@ -172,6 +180,8 @@ const SoftIconFallbackContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const CustomFallbackContent = () => {
   return (
@@ -207,6 +217,8 @@ const CustomFallbackContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const AvatarGroupContent = () => {
   return (
@@ -260,6 +272,8 @@ const AvatarGroupContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const CustomStylesContent = () => {
   return (
@@ -317,6 +331,8 @@ const CustomStylesContent = () => {
     </View>
   );
 };
+
+// ------------------------------------------------------------------------------
 
 const AVATAR_VARIANTS: UsageVariant[] = [
   {

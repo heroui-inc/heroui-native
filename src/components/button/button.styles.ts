@@ -7,7 +7,7 @@ const root = tv({
   variants: {
     variant: {
       primary: 'bg-accent',
-      secondary: 'bg-accent-soft',
+      secondary: 'bg-default',
       tertiary: 'bg-default border border-border',
       ghost: 'bg-transparent',
       destructive: 'bg-danger',

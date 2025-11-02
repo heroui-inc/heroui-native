@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, Spinner } from 'heroui-native';
+import { Button, cn, Spinner } from 'heroui-native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FadeIn } from 'react-native-reanimated';
@@ -18,9 +18,6 @@ export default function ButtonScreen() {
 
   return (
     <ScreenScrollView contentContainerClassName="gap-16">
-      <SectionTitle title="Basic Usage" />
-      <Button>Basic Button</Button>
-
       <SectionTitle title="Sizes" />
       <View className="gap-8">
         <Button size="sm">Small Button</Button>
@@ -36,6 +33,42 @@ export default function ButtonScreen() {
         <Button variant="ghost">Ghost</Button>
         <Button variant="destructive">Destructive</Button>
         <Button variant="destructive-soft">Destructive Soft</Button>
+      </View>
+
+      <SectionTitle title="Disabled State" />
+      <View className="gap-8">
+        <Button isDisabled>
+          <Spinner color={isDark ? 'black' : 'white'} size="sm" />
+          <Button.Label>Loading</Button.Label>
+        </Button>
+        <Button variant="secondary" isDisabled>
+          <Spinner size="sm" color={isDark ? 'black' : 'default'} />
+          <Button.Label>Loading</Button.Label>
+        </Button>
+        <Button variant="tertiary" isDisabled>
+          <StyledIonicons
+            name="alert-circle"
+            size={16}
+            className="text-default-foreground"
+          />
+          <Button.Label>Access Denied</Button.Label>
+        </Button>
+      </View>
+
+      <SectionTitle title="Width/Alignment Control" />
+      <View className="gap-8">
+        <Button>Full Width Button</Button>
+        <View>
+          <Button variant="secondary" size="sm" className="self-start">
+            Start
+          </Button>
+          <Button variant="secondary" size="sm" className="self-center">
+            Center
+          </Button>
+          <Button variant="secondary" size="sm" className="self-end">
+            End
+          </Button>
+        </View>
       </View>
 
       <SectionTitle title="With Icons" />
@@ -82,43 +115,7 @@ export default function ButtonScreen() {
         </Button>
       </View>
 
-      <SectionTitle title="Disabled State" />
-      <View className="gap-8">
-        <Button isDisabled>
-          <Spinner color={isDark ? 'black' : 'white'} size="sm" />
-          <Button.Label>Loading</Button.Label>
-        </Button>
-        <Button variant="secondary" isDisabled>
-          <Spinner size="sm" color={isDark ? 'black' : 'default'} />
-          <Button.Label>Loading</Button.Label>
-        </Button>
-        <Button variant="tertiary" isDisabled>
-          <StyledIonicons
-            name="alert-circle"
-            size={16}
-            className="text-default-foreground"
-          />
-          <Button.Label>Access Denied</Button.Label>
-        </Button>
-      </View>
-
-      <SectionTitle title="Width/Alignment Control" />
-      <View className="gap-8">
-        <Button>Full Width Button</Button>
-        <View>
-          <Button variant="secondary" size="sm" className="self-start">
-            Start
-          </Button>
-          <Button variant="secondary" size="sm" className="self-center">
-            Center
-          </Button>
-          <Button variant="secondary" size="sm" className="self-end">
-            End
-          </Button>
-        </View>
-      </View>
-
-      <SectionTitle title="Icon Only Buttons" />
+      <SectionTitle title="Icon Only" />
       <View className="self-center flex-row gap-8">
         <Button size="sm" isIconOnly>
           <Button.Label>
@@ -147,32 +144,41 @@ export default function ButtonScreen() {
 
       <SectionTitle title="Custom Styling" />
       <View className="gap-8">
-        <Button className="bg-purple-600">
+        <Button
+          className="bg-purple-600"
+          animationConfig={{ highlight: { color: '#c084fc' } }}
+        >
           <Button.Label className="text-white font-semibold">
             Custom Purple
           </Button.Label>
         </Button>
-        <Button
-          className="border-purple-600 bg-purple-50"
-          animationConfig={{ highlight: { isDisabled: true } }}
-        >
-          <StyledIonicons
-            name="checkmark"
-            size={18}
-            className="text-purple-600"
-          />
-          <Button.Label className="text-purple-600">
-            Purple Tertiary
-          </Button.Label>
-        </Button>
+
         <Button>
           <LinearGradient
-            colors={['#9333ea', '#ec4899']}
+            colors={['#0d9488', '#ec4899']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={StyleSheet.absoluteFill}
           />
           <Button.Label className="text-white font-bold">Gradient</Button.Label>
+        </Button>
+        <Button
+          className={cn(
+            'bg-neutral-950 rounded-none',
+            isDark && 'bg-neutral-50'
+          )}
+          animationConfig={{ highlight: { isDisabled: true } }}
+        >
+          <StyledIonicons
+            name="cart-outline"
+            size={18}
+            className={cn('text-neutral-50', isDark && 'text-neutral-950')}
+          />
+          <Button.Label
+            className={cn('text-neutral-50', isDark && 'text-neutral-950')}
+          >
+            Add to Cart
+          </Button.Label>
         </Button>
       </View>
 

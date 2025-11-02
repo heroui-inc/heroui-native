@@ -48,7 +48,6 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   } = props;
 
   const themeColorAccentHover = useThemeColor('accent-hover');
-  const themeColorAccentSoftHover = useThemeColor('accent-soft-hover');
   const themeColorDefaultHover = useThemeColor('default-hover');
   const themeColorDangerHover = useThemeColor('danger-hover');
 
@@ -67,11 +66,11 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
       case 'primary':
         return themeColorAccentHover;
       case 'secondary':
-        return themeColorAccentSoftHover;
+        return themeColorDefaultHover;
       case 'tertiary':
         return themeColorDefaultHover;
       case 'ghost':
-        return colorKit.setAlpha(themeColorDefaultHover, 0.25).hex();
+        return colorKit.setAlpha(themeColorDefaultHover, 0.3).hex();
       case 'destructive':
         return themeColorDangerHover;
       case 'destructive-soft':
@@ -80,7 +79,6 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   }, [
     variant,
     themeColorAccentHover,
-    themeColorAccentSoftHover,
     themeColorDefaultHover,
     themeColorDangerHover,
   ]);

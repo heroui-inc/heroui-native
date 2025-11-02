@@ -76,7 +76,7 @@ export function PaginationIndicator({
         ]}
       />
       <Animated.View className="absolute left-8" style={rLabelStyle}>
-        <AppText className="text-foreground text-lg font-medium">
+        <AppText className="text-foreground text-lg font-normal">
           {label}
         </AppText>
       </Animated.View>

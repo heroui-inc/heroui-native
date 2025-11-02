@@ -150,7 +150,7 @@ export const ThemeSelectorBar: React.FC = () => {
   };
 
   return (
-    <View className="flex-row justify-around items-center py-4 px-6 bg-panel rounded-2xl mx-4 mb-6">
+    <View className="flex-row justify-around items-center py-4 px-6 bg-overlay rounded-2xl mx-4 mb-6">
       {availableThemes.map((theme) => (
         <ThemeSelector
           key={theme.id}

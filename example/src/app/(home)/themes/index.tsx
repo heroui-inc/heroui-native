@@ -171,7 +171,7 @@ export default function Themes() {
   return (
     <ScreenScrollView contentContainerClassName="px-0">
       {/* Theme Selector */}
-      <View className="px-5 py-8 bg-panel border-b border-divider">
+      <View className="px-5 py-8 bg-overlay border-b border-divider">
         <Text className="text-lg font-bold text-foreground mb-4">
           Select Theme
         </Text>
@@ -199,7 +199,7 @@ export default function Themes() {
               <View className="flex-1 h-16 bg-background border border-border rounded-lg items-center justify-center">
                 <Text className="text-xs text-foreground">Background</Text>
               </View>
-              <View className="flex-1 h-16 bg-panel rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-overlay rounded-lg items-center justify-center">
                 <Text className="text-xs text-foreground">Panel</Text>
               </View>
             </View>

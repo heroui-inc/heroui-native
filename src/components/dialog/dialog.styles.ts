@@ -16,7 +16,7 @@ const overlay = tv({
 });
 
 const content = tv({
-  base: 'bg-panel rounded-lg border border-border p-5',
+  base: 'bg-overlay rounded-lg border border-border p-5',
 });
 
 const close = tv({

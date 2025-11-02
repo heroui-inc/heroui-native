@@ -10,7 +10,7 @@ const overlay = tv({
 });
 
 const popoverContent = tv({
-  base: 'absolute bg-panel rounded-lg border border-border p-3 px-4 shadow-md shadow-black/5 dark:shadow-none',
+  base: 'absolute bg-overlay rounded-lg border border-border p-3 px-4 shadow-md shadow-black/5 dark:shadow-none',
 });
 
 const bottomSheetContent = tv({

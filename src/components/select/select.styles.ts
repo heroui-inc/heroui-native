@@ -23,7 +23,7 @@ const overlay = tv({
 });
 
 const popoverContent = tv({
-  base: 'bg-panel rounded-lg border border-border p-3 px-4 shadow-lg shadow-black/10 dark:shadow-none',
+  base: 'bg-overlay rounded-lg border border-border p-3 px-4 shadow-lg shadow-black/10 dark:shadow-none',
 });
 
 const bottomSheetContent = tv({
@@ -33,7 +33,7 @@ const bottomSheetContent = tv({
 const dialogContent = tv({
   slots: {
     wrapper: 'absolute inset-0 justify-center p-5',
-    content: 'bg-panel rounded-lg border border-border p-5',
+    content: 'bg-overlay rounded-lg border border-border p-5',
   },
 });
 

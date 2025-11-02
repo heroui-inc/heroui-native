@@ -177,7 +177,7 @@ export default function PopoverScreen() {
                 width: 42,
                 backgroundColor: themeColorMuted,
               }}
-              bottomSheetViewClassName="h-full mx-4 rounded-3xl border border-border bg-panel overflow-hidden"
+              bottomSheetViewClassName="h-full mx-4 rounded-3xl border border-border bg-overlay overflow-hidden"
               bottomSheetViewProps={{
                 style: {
                   padding: 0,

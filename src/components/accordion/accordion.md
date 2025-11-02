@@ -66,12 +66,12 @@ Allow multiple items to be expanded simultaneously.
 </Accordion>
 ```
 
-### Border Variant
+### Surface Variant
 
-Apply a bordered container style to the accordion.
+Apply a surface container style to the accordion.
 
 ```tsx
-<Accordion selectionMode="single" variant="border">
+<Accordion selectionMode="single" variant="surface">
   <Accordion.Item value="1">
     <Accordion.Trigger>
       ...
@@ -131,42 +131,28 @@ export default function AccordionExample() {
     {
       id: '1',
       title: 'How do I place an order?',
-      icon: (
-        <Ionicons name="bag-outline" size={16} color={themeColorMuted} />
-      ),
+      icon: <Ionicons name="bag-outline" size={16} color={themeColorMuted} />,
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
     },
     {
       id: '2',
       title: 'What payment methods do you accept?',
-      icon: (
-        <Ionicons
-          name="card-outline"
-          size={16}
-          color={themeColorMuted}
-        />
-      ),
+      icon: <Ionicons name="card-outline" size={16} color={themeColorMuted} />,
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
     },
     {
       id: '3',
       title: 'How much does shipping cost?',
-      icon: (
-        <Ionicons
-          name="cube-outline"
-          size={16}
-          color={themeColorMuted}
-        />
-      ),
+      icon: <Ionicons name="cube-outline" size={16} color={themeColorMuted} />,
       content:
         'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
     },
   ];
 
   return (
-    <Accordion selectionMode="single" variant="border" defaultValue="2">
+    <Accordion selectionMode="single" variant="surface" defaultValue="2">
       {accordionData.map((item) => (
         <Accordion.Item key={item.id} value={item.id}>
           <Accordion.Trigger>
@@ -204,7 +190,7 @@ export default function AccordionExample() {
 </Accordion>
 ```
 
-- **Accordion**: Main container that manages the accordion state and behavior. Controls expansion/collapse of items, supports single or multiple selection modes, and provides variant styling (default or border).
+- **Accordion**: Main container that manages the accordion state and behavior. Controls expansion/collapse of items, supports single or multiple selection modes, and provides variant styling (default or surface).
 - **Accordion.Item**: Container for individual accordion items. Wraps the trigger and content, managing the expanded state for each item.
 - **Accordion.Trigger**: Interactive element that toggles item expansion. Built on Header and Trigger primitives, includes press feedback animation.
 - **Accordion.Indicator**: Optional visual indicator showing expansion state. Defaults to an animated chevron icon that rotates based on item state.
@@ -218,7 +204,7 @@ export default function AccordionExample() {
 | ----------------------- | -------------------------------------------------- | ----------- | ----------------------------------------------------------------- |
 | `children`              | `React.ReactNode`                                  | -           | Children elements to be rendered inside the accordion             |
 | `selectionMode`         | `'single' \| 'multiple'`                           | -           | Whether the accordion allows single or multiple expanded items    |
-| `variant`               | `'default' \| 'border'`                            | `'default'` | Visual variant of the accordion                                   |
+| `variant`               | `'default' \| 'surface'`                           | `'default'` | Visual variant of the accordion                                   |
 | `isDividerVisible`      | `boolean`                                          | `true`      | Whether to display a divider at the bottom of each accordion item |
 | `defaultValue`          | `string \| string[] \| undefined`                  | -           | Default expanded item(s) in uncontrolled mode                     |
 | `value`                 | `string \| string[] \| undefined`                  | -           | Controlled expanded item(s)                                       |
@@ -253,7 +239,7 @@ export default function AccordionExample() {
 | `children`              | `React.ReactNode` | -       | Children elements to be rendered inside the trigger     |
 | `className`             | `string`          | -       | Additional CSS classes                                  |
 | `highlightColor`        | `string`          | -       | Custom highlight color for press feedback               |
-| `highlightOpacity`      | `number`          | `0.03`  | Custom highlight opacity for press feedback             |
+| `highlightOpacity`      | `number`          | `0.5`   | Custom highlight opacity for press feedback             |
 | `highlightTimingConfig` | `TimingConfig`    | -       | Custom timing config for highlight animation            |
 | `isHighlightVisible`    | `boolean`         | `true`  | Whether to show the highlight on press                  |
 | `isDisabled`            | `boolean`         | -       | Whether the trigger is disabled                         |

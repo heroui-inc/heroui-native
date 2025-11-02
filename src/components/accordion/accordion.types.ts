@@ -19,7 +19,7 @@ import type { RootSlots } from './accordion.styles';
 /**
  * Variant types for the Accordion component
  */
-export type AccordionVariant = 'default' | 'border';
+export type AccordionVariant = 'default' | 'surface';
 
 /**
  * Icon props for the Accordion.Indicator component
@@ -97,7 +97,7 @@ export interface AccordionTriggerProps extends PrimitiveTriggerProps {
   highlightColor?: string;
   /**
    * Custom highlight opacity for press feedback
-   * @default 0.03
+   * @default 0.5
    */
   highlightOpacity?: number;
   /**

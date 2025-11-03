@@ -19,11 +19,11 @@ const portal = tv({
 });
 
 const overlay = tv({
-  base: 'absolute inset-0 bg-black/5 dark:bg-black/25',
+  base: 'absolute inset-0',
 });
 
 const popoverContent = tv({
-  base: 'bg-overlay rounded-lg border border-border p-3 px-4 shadow-lg shadow-black/10 dark:shadow-none',
+  base: 'bg-overlay rounded-3xl border border-border p-3 px-4 shadow-lg shadow-black/5 dark:shadow-none',
 });
 
 const bottomSheetContent = tv({

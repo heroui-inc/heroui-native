@@ -66,16 +66,16 @@ export function SearchableDialogSelect() {
       closeDelay={300}
     >
       <Select.Trigger asChild>
-        <Button variant="tertiary" size="sm" className="min-w-28">
+        <Button variant="tertiary" className="min-w-28">
           {value ? (
             <View className="flex-row items-center gap-2">
               <AppText className="text-base">{value.flag}</AppText>
-              <AppText className="text-sm text-foreground">
+              <AppText className="text-sm text-accent font-medium">
                 {value.code}
               </AppText>
             </View>
           ) : (
-            <AppText className="text-foreground">Dialog</AppText>
+            <AppText className="text-accent">Dialog</AppText>
           )}
         </Button>
       </Select.Trigger>

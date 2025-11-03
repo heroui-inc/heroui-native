@@ -1,17 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useRouter } from 'expo-router';
 import { Button, Divider, Select, useThemeColor } from 'heroui-native';
 import React, { useState } from 'react';
 import { Platform, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from '../../../components/app-text';
-import { ScreenScrollView } from '../../../components/screen-scroll-view';
-import { SectionTitle } from '../../../components/section-title';
+import type { UsageVariant } from '../../../components/component-presentation/types';
+import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 import { PlacementSelect } from '../../../components/select/placement-select';
 import { SearchableDialogSelect } from '../../../components/select/searchable-dialog-select';
-import { SearchableSelect } from '../../../components/select/searchable-select';
 import { SelectButtonTrigger } from '../../../components/select/select-button-trigger';
 
 type SelectOption = {
@@ -51,33 +49,29 @@ const COUNTRIES: CountryOption[] = [
   { value: 'BR', label: 'Brazil', flag: '🇧🇷', code: '+55' },
 ];
 
-export default function PopoverScreen() {
-  const router = useRouter();
+// ------------------------------------------------------------------------------
+
+const BasicUsageWithButtonTriggerContent = () => {
+  return (
+    <View className="flex-1 px-5 items-center justify-center">
+      <SelectButtonTrigger />
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const PresentationContent = () => {
   const [popoverValue, setPopoverValue] = useState<CountryOption | undefined>();
   const [bottomSheetValue, setBottomSheetValue] = useState<
     CountryOption | undefined
   >();
 
   const insets = useSafeAreaInsets();
-
   const themeColorMuted = useThemeColor('muted');
 
   return (
-    <ScreenScrollView contentContainerClassName="gap-16">
-      {/* Basic Select With Text Input */}
-      <SectionTitle title="Basic Usage With Text Input" />
-      <View className="items-center">
-        <SearchableSelect />
-      </View>
-
-      {/* Basic Select With Button Trigger */}
-      <SectionTitle title="Basic Usage With Button Trigger" />
-      <View className="items-center">
-        <SelectButtonTrigger />
-      </View>
-
-      {/* Presentation */}
-      <SectionTitle title="Presentation - Country Picker" />
+    <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-4">
         <Select
           value={popoverValue}
@@ -87,16 +81,16 @@ export default function PopoverScreen() {
           }}
         >
           <Select.Trigger asChild>
-            <Button variant="tertiary" size="sm" className="min-w-28">
+            <Button variant="secondary" className="min-w-28">
               {popoverValue ? (
                 <View className="flex-row items-center gap-2">
                   <AppText className="text-base">{popoverValue.flag}</AppText>
-                  <AppText className="text-sm text-foreground">
+                  <AppText className="text-sm text-accent font-medium">
                     {popoverValue.code}
                   </AppText>
                 </View>
               ) : (
-                <AppText className="text-foreground">Popover</AppText>
+                <AppText className="text-accent">Popover</AppText>
               )}
             </Button>
           </Select.Trigger>
@@ -104,7 +98,7 @@ export default function PopoverScreen() {
             <Select.Overlay />
             <Select.Content
               width={300}
-              className="aspect-square rounded-2xl"
+              className="aspect-[1.2]"
               presentation="popover"
               placement="top"
               align="start"
@@ -144,18 +138,18 @@ export default function PopoverScreen() {
           }}
         >
           <Select.Trigger asChild>
-            <Button variant="tertiary" size="sm" className="min-w-28">
+            <Button variant="secondary" className="min-w-28">
               {bottomSheetValue ? (
                 <View className="flex-row items-center gap-2">
                   <AppText className="text-base">
                     {bottomSheetValue.flag}
                   </AppText>
-                  <AppText className="text-sm text-foreground">
+                  <AppText className="text-sm text-accent font-medium">
                     {bottomSheetValue.code}
                   </AppText>
                 </View>
               ) : (
-                <AppText className="text-foreground">Sheet</AppText>
+                <AppText className="text-accent">Sheet</AppText>
               )}
             </Button>
           </Select.Trigger>
@@ -177,13 +171,13 @@ export default function PopoverScreen() {
                 width: 42,
                 backgroundColor: themeColorMuted,
               }}
-              bottomSheetViewClassName="h-full mx-4 rounded-3xl border border-border bg-overlay overflow-hidden"
+              bottomSheetViewClassName="h-full mx-3 rounded-[32px] border border-divider/20 bg-overlay overflow-hidden"
               bottomSheetViewProps={{
                 style: {
                   padding: 0,
                 },
               }}
-              bottomInset={insets.bottom + 8}
+              bottomInset={insets.bottom + 4}
             >
               <BottomSheetScrollView
                 contentContainerClassName="py-4 px-8"
@@ -215,10 +209,16 @@ export default function PopoverScreen() {
           </Select.Portal>
         </Select>
       </View>
+    </View>
+  );
+};
 
-      {/* Placements */}
-      <SectionTitle title="Placement Options" />
-      <View className="gap-4">
+// ------------------------------------------------------------------------------
+
+const PlacementOptionsContent = () => {
+  return (
+    <View className="flex-1 px-5 items-center justify-center">
+      <View className="w-full gap-4">
         <View className="flex-row justify-between gap-4">
           <PlacementSelect placeholder="Top" placement="top" />
           <PlacementSelect placeholder="Left" placement="left" />
@@ -229,14 +229,24 @@ export default function PopoverScreen() {
           <PlacementSelect placeholder="Bottom" placement="bottom" />
         </View>
       </View>
+    </View>
+  );
+};
 
-      {/* Alignment Options */}
-      <SectionTitle title="Alignment Options" />
+// ------------------------------------------------------------------------------
+
+const AlignmentOptionsContent = () => {
+  return (
+    <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row justify-center gap-4">
         <Select>
           <Select.Trigger asChild>
-            <Button size="sm" variant="tertiary" className="w-24">
-              <Select.Value placeholder="Start" numberOfLines={1} />
+            <Button variant="secondary" className="w-24">
+              <Select.Value
+                placeholder="Start"
+                numberOfLines={1}
+                className="text-accent"
+              />
             </Button>
           </Select.Trigger>
           <Select.Portal>
@@ -255,8 +265,12 @@ export default function PopoverScreen() {
 
         <Select>
           <Select.Trigger asChild>
-            <Button size="sm" variant="tertiary" className="w-24">
-              <Select.Value placeholder="Center" numberOfLines={1} />
+            <Button variant="secondary" className="w-24">
+              <Select.Value
+                placeholder="Center"
+                numberOfLines={1}
+                className="text-accent"
+              />
             </Button>
           </Select.Trigger>
           <Select.Portal>
@@ -275,8 +289,12 @@ export default function PopoverScreen() {
 
         <Select>
           <Select.Trigger asChild>
-            <Button size="sm" variant="tertiary" className="w-24">
-              <Select.Value placeholder="End" numberOfLines={1} />
+            <Button variant="secondary" className="w-24">
+              <Select.Value
+                placeholder="End"
+                numberOfLines={1}
+                className="text-accent"
+              />
             </Button>
           </Select.Trigger>
           <Select.Portal>
@@ -293,22 +311,60 @@ export default function PopoverScreen() {
           </Select.Portal>
         </Select>
       </View>
-
-      {/* Native Modal Navigation */}
-      {Platform.OS === 'ios' && (
-        <>
-          <SectionTitle title="Native Modal Test" />
-          <View className="items-center">
-            <Button
-              variant="tertiary"
-              size="sm"
-              onPress={() => router.push('components/select-native-modal')}
-            >
-              Select from Native Modal
-            </Button>
-          </View>
-        </>
-      )}
-    </ScreenScrollView>
+    </View>
   );
+};
+
+// ------------------------------------------------------------------------------
+
+const NativeModalTestContent = () => {
+  const router = require('expo-router').useRouter();
+
+  return (
+    <View className="flex-1 px-5 items-center justify-center">
+      <Button
+        variant="secondary"
+        onPress={() => router.push('components/select-native-modal')}
+      >
+        Select from Native Modal
+      </Button>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const SELECT_VARIANTS: UsageVariant[] = [
+  {
+    value: 'basic-usage-button-trigger',
+    label: 'Select with indicator',
+    content: <BasicUsageWithButtonTriggerContent />,
+  },
+  {
+    value: 'presentation',
+    label: 'Presentation variants',
+    content: <PresentationContent />,
+  },
+  {
+    value: 'placement-options',
+    label: 'Placement options',
+    content: <PlacementOptionsContent />,
+  },
+  {
+    value: 'alignment-options',
+    label: 'Alignment options',
+    content: <AlignmentOptionsContent />,
+  },
+];
+
+if (Platform.OS === 'ios') {
+  SELECT_VARIANTS.push({
+    value: 'native-modal-test',
+    label: 'Native modal test',
+    content: <NativeModalTestContent />,
+  });
+}
+
+export default function SelectScreen() {
+  return <UsageVariantFlatList data={SELECT_VARIANTS} />;
 }

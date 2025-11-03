@@ -80,10 +80,6 @@ export default function Layout() {
       />
       <Stack.Screen name="components/divider" options={{ title: 'Divider' }} />
       <Stack.Screen
-        name="components/drop-shadow-view"
-        options={{ title: 'Drop Shadow View' }}
-      />
-      <Stack.Screen
         name="components/error-view"
         options={{ title: 'Error View' }}
       />

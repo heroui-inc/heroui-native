@@ -109,21 +109,18 @@ const PresentationVariantsContent = () => {
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Overlay className="bg-black/15" />
-          <Popover.Content
-            presentation="bottom-sheet"
-            backgroundStyle={{ borderRadius: 32 }}
-          >
+          <Popover.Content presentation="bottom-sheet">
             <View className="gap-4">
               <View className="mb-2">
-                <Popover.Title className="text-center">
+                <Popover.Title className="text-center text-foreground">
                   Share Options
                 </Popover.Title>
-                <Popover.Description className="text-center">
+                <Popover.Description className="text-center text-muted">
                   Choose how you'd like to share this content
                 </Popover.Description>
               </View>
               <View className="gap-2">
-                <View className="flex-row items-center gap-3 p-3 active:bg-muted/10 rounded-lg">
+                <View className="flex-row items-center gap-3 p-3 rounded-lg">
                   <View className="size-10 items-center justify-center rounded-full bg-accent/10">
                     <StyledIonicons
                       name="share-social"
@@ -132,7 +129,7 @@ const PresentationVariantsContent = () => {
                     />
                   </View>
                   <View className="flex-1">
-                    <AppText className="text-base font-medium">
+                    <AppText className="text-base font-medium text-foreground">
                       Share Link
                     </AppText>
                     <AppText className="text-xs text-muted">
@@ -140,7 +137,7 @@ const PresentationVariantsContent = () => {
                     </AppText>
                   </View>
                 </View>
-                <View className="flex-row items-center gap-3 p-3 active:bg-muted/10 rounded-lg">
+                <View className="flex-row items-center gap-3 p-3 rounded-lg">
                   <View className="size-10 items-center justify-center rounded-full bg-warning/10">
                     <StyledIonicons
                       name="copy-outline"
@@ -149,7 +146,7 @@ const PresentationVariantsContent = () => {
                     />
                   </View>
                   <View className="flex-1">
-                    <AppText className="text-base font-medium">
+                    <AppText className="text-base font-medium text-foreground">
                       Copy Link
                     </AppText>
                     <AppText className="text-xs text-muted">
@@ -157,7 +154,7 @@ const PresentationVariantsContent = () => {
                     </AppText>
                   </View>
                 </View>
-                <View className="flex-row items-center gap-3 p-3 active:bg-muted/10 rounded-lg">
+                <View className="flex-row items-center gap-3 p-3 rounded-lg">
                   <View className="size-10 items-center justify-center rounded-full bg-success/10">
                     <StyledIonicons
                       name="download-outline"
@@ -166,7 +163,7 @@ const PresentationVariantsContent = () => {
                     />
                   </View>
                   <View className="flex-1">
-                    <AppText className="text-base font-medium">
+                    <AppText className="text-base font-medium text-foreground">
                       Save Offline
                     </AppText>
                     <AppText className="text-xs text-muted">
@@ -176,7 +173,11 @@ const PresentationVariantsContent = () => {
                 </View>
               </View>
               <Popover.Close asChild>
-                <Button variant="secondary" className="self-stretch mt-2">
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  className="self-stretch mt-2"
+                >
                   Cancel
                 </Button>
               </Popover.Close>

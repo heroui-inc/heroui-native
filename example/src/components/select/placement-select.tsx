@@ -110,17 +110,17 @@ export const PlacementSelect: FC<Props> = ({ placeholder, placement }) => {
   return (
     <Select>
       <Select.Trigger asChild>
-        <Button size="sm" variant="tertiary" className="w-24">
-          <Select.Value placeholder={placeholder} numberOfLines={1} />
+        <Button variant="secondary" className="w-32">
+          <Select.Value
+            placeholder={placeholder}
+            numberOfLines={1}
+            className="text-accent"
+          />
         </Button>
       </Select.Trigger>
       <Select.Portal>
         <Select.Overlay />
-        <Select.Content
-          width={200}
-          placement={placement}
-          className="h-[150px] rounded-xl"
-        >
+        <Select.Content width={200} placement={placement} className="h-[150px]">
           <PlacementContent />
         </Select.Content>
       </Select.Portal>

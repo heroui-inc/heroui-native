@@ -1,15 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import Feather from '@expo/vector-icons/Feather';
-import { BlurView } from 'expo-blur';
-import { Divider, Select, useSelect, useThemeColor } from 'heroui-native';
+import { Divider, Select, useSelect } from 'heroui-native';
 import React, { useState, type FC } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
-import { useAppTheme } from '../../contexts/app-theme-context';
 
 const StyledFeather = withUniwind(Feather);
 
@@ -23,14 +21,10 @@ const US_STATES: SelectOption[] = [
   { value: 'NY', label: 'New York' },
   { value: 'TX', label: 'Texas' },
   { value: 'FL', label: 'Florida' },
-  { value: 'IL', label: 'Illinois' },
 ];
 
 const AnimatedTrigger: FC = () => {
-  const { progress, selectState } = useSelect();
-
-  const themeColorDefault = useThemeColor('default');
-  const themeColorSurface = useThemeColor('surface');
+  const { progress } = useSelect();
 
   const rContainerStyle = useAnimatedStyle(() => {
     const opacity = interpolate(progress.value, [0, 1, 2], [0, 1, 0]);
@@ -47,27 +41,19 @@ const AnimatedTrigger: FC = () => {
   });
 
   return (
-    <Animated.View
-      className="bg-default border border-border rounded-lg h-11 w-[256px] px-3 justify-center"
-      style={[
-        styles.borderCurve,
-        {
-          transitionProperty: 'backgroundColor',
-          transitionDuration: 400,
-          backgroundColor:
-            selectState === 'open' ? themeColorSurface : themeColorDefault,
-        },
-      ]}
+    <View
+      className="bg-surface h-[48px] w-[256px] px-3 rounded-2xl justify-center shadow-md shadow-black/5"
+      style={styles.borderCurve}
     >
       <Animated.View
         style={[rContainerStyle, styles.borderCurve]}
-        className="absolute -inset-[5px] border-[2.5px] border-border rounded-[16px] pointer-events-none"
+        className="absolute -inset-1 border-[2.5px] border-accent rounded-[19px] pointer-events-none"
       />
       <Select.Value placeholder="Select a state" />
       <Animated.View style={rChevronStyle} className="absolute right-3">
         <StyledFeather name="chevron-down" size={18} className="text-muted" />
       </Animated.View>
-    </Animated.View>
+    </View>
   );
 };
 
@@ -78,42 +64,22 @@ type Props = {
 export function SelectButtonTrigger({ contentOffset }: Props) {
   const [basicValue, setBasicValue] = useState<SelectOption | undefined>();
 
-  const { isDark } = useAppTheme();
-
   return (
     <Select value={basicValue} onValueChange={setBasicValue}>
       <Select.Trigger>
         <AnimatedTrigger />
       </Select.Trigger>
       <Select.Portal>
-        <Select.Overlay className="bg-transparent" />
+        <Select.Overlay />
         <Select.Content
           width="trigger"
           offset={contentOffset}
-          className="w-[256px] px-0 border border-border rounded-xl ios:bg-overlay/5"
+          className="w-[256px]"
         >
-          <View className="absolute inset-0 rounded-xl overflow-hidden">
-            {Platform.OS === 'ios' && (
-              <BlurView
-                tint={
-                  isDark
-                    ? 'systemThickMaterialDark'
-                    : 'systemThickMaterialLight'
-                }
-                style={StyleSheet.absoluteFill}
-              />
-            )}
-          </View>
-          <Select.ListLabel className="px-4 mb-2">
-            Choose a state
-          </Select.ListLabel>
+          <Select.ListLabel className="mb-2">Choose a state</Select.ListLabel>
           {US_STATES.map((state, index) => (
             <React.Fragment key={state.value}>
-              <Select.Item
-                value={state.value}
-                label={state.label}
-                className="px-4"
-              />
+              <Select.Item value={state.value} label={state.label} />
               {index < US_STATES.length - 1 && <Divider />}
             </React.Fragment>
           ))}

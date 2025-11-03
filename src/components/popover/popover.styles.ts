@@ -14,7 +14,7 @@ const popoverContent = tv({
 });
 
 const bottomSheetContent = tv({
-  base: 'flex-1 p-5',
+  base: 'flex-1 p-5 bg-transparent',
 });
 
 const close = tv({

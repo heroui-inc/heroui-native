@@ -18,7 +18,7 @@ export const SelectItem: FC<Props> = ({ data }) => {
       key={data.value}
       value={data.value}
       label={data.label}
-      className="pl-4 pr-3 py-3 gap-3 rounded-xl overflow-hidden self-start"
+      className="pl-4 pr-3 py-3 gap-3 rounded-2xl overflow-hidden self-start"
       style={styles.container}
     >
       {isSelected && <View className="absolute inset-0 bg-surface shadow-md" />}

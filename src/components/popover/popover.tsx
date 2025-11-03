@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { createContext, forwardRef, use, useEffect, useRef } from 'react';
 import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
@@ -285,6 +286,11 @@ const PopoverContentBottomSheet = forwardRef<
       className: bottomSheetViewClassName,
     });
 
+    const handleIndicatorStyle = StyleSheet.flatten([
+      { backgroundColor: themeColorMuted },
+      restProps.handleIndicatorStyle,
+    ]);
+
     useEffect(() => {
       if (popoverState === 'open') {
         bottomSheetRef.current?.expand();
@@ -324,13 +330,13 @@ const PopoverContentBottomSheet = forwardRef<
         <BottomSheet
           ref={bottomSheetRef}
           backgroundStyle={[
-            { backgroundColor: themeColorOverlay },
+            {
+              backgroundColor: themeColorOverlay,
+              borderRadius: 32,
+            },
             restProps.backgroundStyle,
           ]}
-          handleIndicatorStyle={[
-            { backgroundColor: themeColorMuted },
-            restProps.handleIndicatorStyle,
-          ]}
+          handleIndicatorStyle={handleIndicatorStyle}
           enablePanDownToClose={restProps.enablePanDownToClose ?? true}
           animatedIndex={animatedIndex ?? restProps.animatedIndex}
           onClose={onClose}

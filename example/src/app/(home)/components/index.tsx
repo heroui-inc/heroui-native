@@ -68,11 +68,6 @@ const components: Component[] = [
     path: 'divider',
   },
   {
-    title: 'Drop Shadow View',
-    icon: <ComponentIcon />,
-    path: 'drop-shadow-view',
-  },
-  {
     title: 'Error View',
     icon: <ComponentIcon />,
     path: 'error-view',

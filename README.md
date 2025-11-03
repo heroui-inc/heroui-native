@@ -172,7 +172,6 @@ export default function MyComponent() {
 - [Chip](./src/components/chip/chip.md)
 - [Dialog](./src/components/dialog/dialog.md)
 - [Divider](./src/components/divider/divider.md)
-- [Drop Shadow View](./src/components/drop-shadow-view/drop-shadow-view.md)
 - [Error View](./src/components/error-view/error-view.md)
 - [Form Field](./src/components/form-field/form-field.md)
 - [Popover](./src/components/popover/popover.md)

@@ -60,7 +60,7 @@ const root = tv({
     {
       variant: 'soft',
       color: 'default',
-      className: 'bg-default/15',
+      className: 'bg-default',
     },
     {
       variant: 'soft',

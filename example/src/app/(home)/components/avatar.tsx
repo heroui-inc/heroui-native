@@ -12,34 +12,32 @@ const StyledIonicons = withUniwind(Ionicons);
 
 const SizesContent = () => {
   return (
-    <View className="flex-1">
-      <View className="flex-1 items-center justify-center">
-        <View className="flex-row items-center justify-center gap-4">
-          <Avatar size="sm" alt="Small Avatar">
-            <Avatar.Image
-              source={{
-                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
-              }}
-            />
-            <Avatar.Fallback />
-          </Avatar>
-          <Avatar size="md" alt="Medium Avatar">
-            <Avatar.Image
-              source={{
-                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
-              }}
-            />
-            <Avatar.Fallback>MD</Avatar.Fallback>
-          </Avatar>
-          <Avatar size="lg" alt="Large Avatar">
-            <Avatar.Image
-              source={{
-                uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
-              }}
-            />
-            <Avatar.Fallback>LG</Avatar.Fallback>
-          </Avatar>
-        </View>
+    <View className="flex-1 px-5 items-center justify-center">
+      <View className="flex-row items-center justify-center gap-4">
+        <Avatar size="sm" alt="Small Avatar">
+          <Avatar.Image
+            source={{
+              uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
+            }}
+          />
+          <Avatar.Fallback />
+        </Avatar>
+        <Avatar size="md" alt="Medium Avatar">
+          <Avatar.Image
+            source={{
+              uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
+            }}
+          />
+          <Avatar.Fallback>MD</Avatar.Fallback>
+        </Avatar>
+        <Avatar size="lg" alt="Large Avatar">
+          <Avatar.Image
+            source={{
+              uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
+            }}
+          />
+          <Avatar.Fallback>LG</Avatar.Fallback>
+        </Avatar>
       </View>
     </View>
   );
@@ -49,32 +47,28 @@ const SizesContent = () => {
 
 const DefaultTextFallbackContent = () => {
   return (
-    <View className="flex-1">
-      <View className="flex-1 items-center justify-center">
-        <View className="gap-3">
-          <View className="flex-row items-center justify-center gap-4">
-            <Avatar color="accent" alt="Accent">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback>AC</Avatar.Fallback>
-            </Avatar>
-            <Avatar color="default" alt="Default">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback>DF</Avatar.Fallback>
-            </Avatar>
-            <Avatar color="success" alt="Success">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback>SC</Avatar.Fallback>
-            </Avatar>
-            <Avatar color="warning" alt="Warning">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback>WR</Avatar.Fallback>
-            </Avatar>
-            <Avatar color="danger" alt="Danger">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback>DG</Avatar.Fallback>
-            </Avatar>
-          </View>
-        </View>
+    <View className="flex-1 px-5 items-center justify-center">
+      <View className="flex-row items-center justify-center gap-3">
+        <Avatar color="accent" alt="Accent">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback>AC</Avatar.Fallback>
+        </Avatar>
+        <Avatar color="default" alt="Default">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback>DF</Avatar.Fallback>
+        </Avatar>
+        <Avatar color="success" alt="Success">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback>SC</Avatar.Fallback>
+        </Avatar>
+        <Avatar color="warning" alt="Warning">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback>WR</Avatar.Fallback>
+        </Avatar>
+        <Avatar color="danger" alt="Danger">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback>DG</Avatar.Fallback>
+        </Avatar>
       </View>
     </View>
   );
@@ -84,30 +78,28 @@ const DefaultTextFallbackContent = () => {
 
 const SoftTextFallbackContent = () => {
   return (
-    <View className="flex-1 items-center justify-center">
-      <View className="gap-3">
-        <View className="flex-row items-center justify-center gap-4">
-          <Avatar variant="soft" color="accent" alt="Accent">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback>AC</Avatar.Fallback>
-          </Avatar>
-          <Avatar variant="soft" color="default" alt="Default">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback>DF</Avatar.Fallback>
-          </Avatar>
-          <Avatar variant="soft" color="success" alt="Success">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback>SC</Avatar.Fallback>
-          </Avatar>
-          <Avatar variant="soft" color="warning" alt="Warning">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback>WR</Avatar.Fallback>
-          </Avatar>
-          <Avatar variant="soft" color="danger" alt="Danger">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback>DG</Avatar.Fallback>
-          </Avatar>
-        </View>
+    <View className="flex-1 px-5 items-center justify-center">
+      <View className="flex-row items-center justify-center gap-3">
+        <Avatar variant="soft" color="accent" alt="Accent">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback>AC</Avatar.Fallback>
+        </Avatar>
+        <Avatar variant="soft" color="default" alt="Default">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback>DF</Avatar.Fallback>
+        </Avatar>
+        <Avatar variant="soft" color="success" alt="Success">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback>SC</Avatar.Fallback>
+        </Avatar>
+        <Avatar variant="soft" color="warning" alt="Warning">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback>WR</Avatar.Fallback>
+        </Avatar>
+        <Avatar variant="soft" color="danger" alt="Danger">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback>DG</Avatar.Fallback>
+        </Avatar>
       </View>
     </View>
   );
@@ -117,32 +109,28 @@ const SoftTextFallbackContent = () => {
 
 const DefaultIconFallbackContent = () => {
   return (
-    <View className="flex-1">
-      <View className="flex-1 items-center justify-center">
-        <View className="gap-3">
-          <View className="flex-row items-center justify-center gap-4">
-            <Avatar color="accent" alt="Accent">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback />
-            </Avatar>
-            <Avatar color="default" alt="Default">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback />
-            </Avatar>
-            <Avatar color="success" alt="Success">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback />
-            </Avatar>
-            <Avatar color="warning" alt="Warning">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback />
-            </Avatar>
-            <Avatar color="danger" alt="Danger">
-              <Avatar.Image source={undefined} />
-              <Avatar.Fallback />
-            </Avatar>
-          </View>
-        </View>
+    <View className="flex-1 px-5 items-center justify-center">
+      <View className="flex-row items-center justify-center gap-3">
+        <Avatar color="accent" alt="Accent">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback />
+        </Avatar>
+        <Avatar color="default" alt="Default">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback />
+        </Avatar>
+        <Avatar color="success" alt="Success">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback />
+        </Avatar>
+        <Avatar color="warning" alt="Warning">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback />
+        </Avatar>
+        <Avatar color="danger" alt="Danger">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback />
+        </Avatar>
       </View>
     </View>
   );
@@ -152,30 +140,28 @@ const DefaultIconFallbackContent = () => {
 
 const SoftIconFallbackContent = () => {
   return (
-    <View className="flex-1 items-center justify-center">
-      <View className="gap-3">
-        <View className="flex-row items-center justify-center gap-4">
-          <Avatar variant="soft" color="accent" alt="Accent">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback />
-          </Avatar>
-          <Avatar variant="soft" color="default" alt="Default">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback />
-          </Avatar>
-          <Avatar variant="soft" color="success" alt="Success">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback />
-          </Avatar>
-          <Avatar variant="soft" color="warning" alt="Warning">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback />
-          </Avatar>
-          <Avatar variant="soft" color="danger" alt="Danger">
-            <Avatar.Image source={undefined} />
-            <Avatar.Fallback />
-          </Avatar>
-        </View>
+    <View className="flex-1 px-5 items-center justify-center">
+      <View className="flex-row items-center justify-center gap-3">
+        <Avatar variant="soft" color="accent" alt="Accent">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback />
+        </Avatar>
+        <Avatar variant="soft" color="default" alt="Default">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback />
+        </Avatar>
+        <Avatar variant="soft" color="success" alt="Success">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback />
+        </Avatar>
+        <Avatar variant="soft" color="warning" alt="Warning">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback />
+        </Avatar>
+        <Avatar variant="soft" color="danger" alt="Danger">
+          <Avatar.Image source={undefined} />
+          <Avatar.Fallback />
+        </Avatar>
       </View>
     </View>
   );
@@ -185,7 +171,7 @@ const SoftIconFallbackContent = () => {
 
 const CustomFallbackContent = () => {
   return (
-    <View className="flex-1 items-center justify-center">
+    <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-4">
         <Avatar alt="John Doe">
           <Avatar.Fallback>🎉</Avatar.Fallback>
@@ -222,7 +208,7 @@ const CustomFallbackContent = () => {
 
 const AvatarGroupContent = () => {
   return (
-    <View className="flex-1 items-center justify-center">
+    <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row">
         {[
           {
@@ -277,7 +263,7 @@ const AvatarGroupContent = () => {
 
 const CustomStylesContent = () => {
   return (
-    <View className="flex-1 items-center justify-center">
+    <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-4">
         <Avatar className="h-16 w-16" alt="Extra Large">
           <Avatar.Image

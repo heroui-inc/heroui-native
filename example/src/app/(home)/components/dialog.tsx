@@ -117,7 +117,6 @@ const BasicDialogContent = () => {
                   <Button
                     variant="tertiary"
                     className="bg-overlay-foreground/5"
-                    size="sm"
                   >
                     Confirm
                   </Button>

@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import Feather from '@expo/vector-icons/Feather';
 import { Divider, Select, useSelect } from 'heroui-native';
 import React, { useState, type FC } from 'react';

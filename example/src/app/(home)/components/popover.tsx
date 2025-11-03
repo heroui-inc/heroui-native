@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Button, Popover } from 'heroui-native';

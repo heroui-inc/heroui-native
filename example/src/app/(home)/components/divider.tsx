@@ -145,7 +145,7 @@ const CustomColorsContent = () => {
 const DIVIDER_VARIANTS: UsageVariant[] = [
   {
     value: 'divider-in-action',
-    label: 'Divider In Action',
+    label: 'Divider in action',
     content: <DividerInActionContent />,
   },
   {
@@ -160,12 +160,12 @@ const DIVIDER_VARIANTS: UsageVariant[] = [
   },
   {
     value: 'custom-thickness',
-    label: 'Custom Thickness',
+    label: 'Custom thickness',
     content: <CustomThicknessContent />,
   },
   {
     value: 'custom-colors',
-    label: 'Custom Colors',
+    label: 'Custom colors',
     content: <CustomColorsContent />,
   },
 ];

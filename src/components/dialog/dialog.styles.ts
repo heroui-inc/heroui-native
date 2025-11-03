@@ -7,7 +7,7 @@ const portal = tv({
 });
 
 const overlay = tv({
-  base: 'absolute inset-0 bg-black/50',
+  base: 'absolute inset-0 bg-black/30',
   variants: {
     isDefaultAnimationDisabled: {
       true: 'bg-transparent',
@@ -16,7 +16,7 @@ const overlay = tv({
 });
 
 const content = tv({
-  base: 'bg-overlay rounded-lg border border-border p-5',
+  base: 'bg-overlay rounded-3xl border border-border p-5',
 });
 
 const close = tv({

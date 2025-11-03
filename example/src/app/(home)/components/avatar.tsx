@@ -342,37 +342,37 @@ const AVATAR_VARIANTS: UsageVariant[] = [
   },
   {
     value: 'default-text-fallback',
-    label: 'Default Text Fallback',
+    label: 'Default text fallback',
     content: <DefaultTextFallbackContent />,
   },
   {
     value: 'soft-text-fallback',
-    label: 'Soft Text Fallback',
+    label: 'Soft text fallback',
     content: <SoftTextFallbackContent />,
   },
   {
     value: 'default-icon-fallback',
-    label: 'Default Icon Fallback',
+    label: 'Default icon fallback',
     content: <DefaultIconFallbackContent />,
   },
   {
     value: 'soft-icon-fallback',
-    label: 'Soft Icon Fallback',
+    label: 'Soft icon fallback',
     content: <SoftIconFallbackContent />,
   },
   {
     value: 'custom-fallback',
-    label: 'Custom Fallback',
+    label: 'Custom fallback',
     content: <CustomFallbackContent />,
   },
   {
     value: 'avatar-group',
-    label: 'Avatar Group',
+    label: 'Avatar group',
     content: <AvatarGroupContent />,
   },
   {
     value: 'custom-styles',
-    label: 'Custom Styles',
+    label: 'Custom styles',
     content: <CustomStylesContent />,
   },
 ];

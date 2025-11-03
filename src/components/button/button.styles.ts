@@ -14,7 +14,7 @@ const root = tv({
       ['destructive-soft']: 'bg-default border border-border',
     },
     size: {
-      sm: 'h-[36px] px-3 gap-1.5',
+      sm: 'h-[36px] px-3.5 gap-1.5',
       md: 'h-[48px] px-4 gap-2',
       lg: 'h-[56px] px-5 gap-2.5',
     },

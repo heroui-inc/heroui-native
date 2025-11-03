@@ -86,7 +86,7 @@ const CustomTextWithIconsContent = () => {
 const CustomStylingContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
-      <View className="gap-4 w-full">
+      <View className="gap-4">
         <ErrorView
           isInvalid={true}
           className="bg-danger/10 p-3 rounded-xl border border-danger/20"
@@ -227,22 +227,22 @@ const ERROR_VIEW_VARIANTS: UsageVariant[] = [
   },
   {
     value: 'custom-text-with-icons',
-    label: 'Custom Text with Icons',
+    label: 'Custom text with icons',
     content: <CustomTextWithIconsContent />,
   },
   {
     value: 'custom-styling',
-    label: 'Custom Styling',
+    label: 'Custom styling',
     content: <CustomStylingContent />,
   },
   {
     value: 'inline-error-messages',
-    label: 'Inline Error Messages',
+    label: 'Inline error messages',
     content: <InlineErrorMessagesContent />,
   },
   {
     value: 'multiple-errors',
-    label: 'Multiple Errors',
+    label: 'Multiple errors',
     content: <MultipleErrorsContent />,
   },
 ];

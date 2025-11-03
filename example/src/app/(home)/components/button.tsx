@@ -290,32 +290,32 @@ const BUTTON_VARIANTS: UsageVariant[] = [
   },
   {
     value: 'disabled-state',
-    label: 'Disabled State',
+    label: 'Disabled state',
     content: <DisabledStateContent />,
   },
   {
     value: 'width-alignment',
-    label: 'Width/Alignment Control',
+    label: 'Width/alignment control',
     content: <WidthAlignmentContent />,
   },
   {
     value: 'with-icons',
-    label: 'With Icons',
+    label: 'With icons',
     content: <WithIconsContent />,
   },
   {
     value: 'icon-only',
-    label: 'Icon Only',
+    label: 'Icon only',
     content: <IconOnlyContent />,
   },
   {
     value: 'custom-styling',
-    label: 'Custom Styling',
+    label: 'Custom styling',
     content: <CustomStylingContent />,
   },
   {
     value: 'layout-transitions',
-    label: 'Layout Transitions Demo',
+    label: 'Layout transitions demo',
     content: <LayoutTransitionsContent />,
   },
 ];

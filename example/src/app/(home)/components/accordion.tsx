@@ -357,37 +357,37 @@ const CustomStylesContent = () => {
 const ACCORDION_VARIANTS: UsageVariant[] = [
   {
     value: 'default-variant',
-    label: 'Default Variant',
+    label: 'Default variant',
     content: <DefaultVariantContent />,
   },
   {
     value: 'surface-variant',
-    label: 'Surface Variant',
+    label: 'Surface variant',
     content: <SurfaceVariantContent />,
   },
   {
     value: 'multiple-selection',
-    label: 'Multiple Selection',
+    label: 'Multiple selection',
     content: <MultipleSelectionContent />,
   },
   {
     value: 'without-dividers',
-    label: 'Without Dividers',
+    label: 'Without dividers',
     content: <WithoutDividersContent />,
   },
   {
     value: 'custom-indicator',
-    label: 'Custom Indicator',
+    label: 'Custom indicator',
     content: <CustomIndicatorContent />,
   },
   {
     value: 'custom-entering-animation',
-    label: 'Custom Entering Animation',
+    label: 'Custom entering animation',
     content: <CustomEnteringAnimationContent />,
   },
   {
     value: 'custom-styles',
-    label: 'Custom Styles',
+    label: 'Custom styles',
     content: <CustomStylesContent />,
   },
 ];

@@ -359,27 +359,27 @@ const ValidationErrorStatesContent = () => {
 const FORM_FIELD_VARIANTS: UsageVariant[] = [
   {
     value: 'switch-form-field-set',
-    label: 'Switch FormField Set',
+    label: 'Switch FormField set',
     content: <SwitchFormFieldSetContent />,
   },
   {
     value: 'checkbox-form-field-set',
-    label: 'Checkbox FormField Set',
+    label: 'Checkbox FormField set',
     content: <CheckboxFormFieldSetContent />,
   },
   {
     value: 'inline-layout-compact',
-    label: 'Inline Layout (Compact)',
+    label: 'Inline compact layout',
     content: <InlineLayoutCompactContent />,
   },
   {
     value: 'disabled-state',
-    label: 'Disabled State',
+    label: 'Disabled state',
     content: <DisabledStateContent />,
   },
   {
     value: 'validation-error-states',
-    label: 'Validation & Error States',
+    label: 'Validation & error states',
     content: <ValidationErrorStatesContent />,
   },
 ];

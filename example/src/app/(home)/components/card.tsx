@@ -287,22 +287,22 @@ const VariantsContent = () => {
 const CARD_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-card',
-    label: 'Basic Card',
+    label: 'Basic card',
     content: <BasicCardContent />,
   },
   {
     value: 'card-with-image',
-    label: 'Card with Image',
+    label: 'Card with image',
     content: <CardWithImageContent />,
   },
   {
     value: 'horizontal-card-with-image',
-    label: 'Horizontal Card With Image',
+    label: 'Horizontal card with image',
     content: <HorizontalCardWithImageContent />,
   },
   {
     value: 'background-image-card',
-    label: 'Background Image Card',
+    label: 'Background image card',
     content: <BackgroundImageCardContent />,
   },
   {

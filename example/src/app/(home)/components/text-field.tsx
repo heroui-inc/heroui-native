@@ -212,7 +212,7 @@ const TEXT_FIELD_VARIANTS: UsageVariant[] = [
   },
   {
     value: 'text-field-with-icons',
-    label: 'TextField with Icons',
+    label: 'TextField with icons',
     content: <TextFieldWithIconsContent />,
   },
   {
@@ -227,12 +227,12 @@ const TEXT_FIELD_VARIANTS: UsageVariant[] = [
   },
   {
     value: 'text-field-with-validation',
-    label: 'TextField With Validation',
+    label: 'TextField with validation',
     content: <TextFieldWithValidationContent />,
   },
   {
     value: 'text-field-with-custom-styles',
-    label: 'TextField with Custom Styles',
+    label: 'TextField with custom styles',
     content: <TextFieldWithCustomStylesContent />,
   },
 ];

@@ -10,7 +10,7 @@ const list = tv({
   base: 'self-start flex-row items-center gap-1',
   variants: {
     variant: {
-      pill: 'rounded-[12px] bg-segment p-[3px]',
+      pill: 'rounded-full bg-default p-1',
       line: 'border-b border-border',
     },
   },
@@ -50,14 +50,14 @@ const trigger = tv({
 });
 
 const label = tv({
-  base: 'text-base font-medium text-foreground',
+  base: 'text-base font-medium text-segment-foreground',
 });
 
 const indicator = tv({
   base: 'absolute',
   variants: {
     variant: {
-      pill: 'rounded-[10px] border-[0.5px] border-border shadow-sm dark:shadow-none shadow-black/[0.08] bg-background',
+      pill: 'rounded-full shadow-sm dark:shadow-none shadow-black/5 bg-segment',
       line: 'border-b-2 border-accent bottom-0',
     },
   },

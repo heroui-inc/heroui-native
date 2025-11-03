@@ -28,6 +28,7 @@ const BasicErrorViewContent = () => {
           </TextField.ErrorMessage>
         </TextField>
         <Button
+          variant="secondary"
           onPress={() => setSlideError(!slideError)}
           size="sm"
           className="self-start"
@@ -206,6 +207,7 @@ const MultipleErrorsContent = () => {
           </View>
         </View>
         <Button
+          variant="secondary"
           onPress={() => setShowMultipleErrors(!showMultipleErrors)}
           size="sm"
           className="self-start"

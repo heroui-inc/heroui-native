@@ -172,6 +172,7 @@ export const UsageVariantFlatList = ({
         onScroll={scrollHandler}
         scrollEventThrottle={16}
         scrollEnabled={scrollEnabled}
+        keyboardShouldPersistTaps="handled"
       />
       {Platform.OS === 'ios' && (
         <AnimatedBlurView

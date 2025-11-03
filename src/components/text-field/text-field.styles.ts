@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
@@ -33,7 +34,7 @@ const label = tv({
 const input = tv({
   slots: {
     container:
-      'h-[44px] px-3 rounded-lg border-[1.5px] flex-row items-center gap-3',
+      'h-[48px] px-3 rounded-2xl border-[1.5px] flex-row items-center gap-3',
     input: 'flex-1 h-full text-foreground font-normal',
   },
   variants: {
@@ -60,6 +61,12 @@ const description = tv({
 
 const errorMessage = tv({
   base: 'p-1',
+});
+
+export const styleSheet = StyleSheet.create({
+  borderCurve: {
+    borderCurve: 'continuous',
+  },
 });
 
 const textFieldStyles = combineStyles({

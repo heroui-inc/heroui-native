@@ -25,7 +25,7 @@ import {
   ENTERING_ANIMATION_CONFIG,
   EXITING_ANIMATION_CONFIG,
 } from './text-field.constants';
-import textFieldStyles from './text-field.styles';
+import textFieldStyles, { styleSheet } from './text-field.styles';
 import type {
   TextFieldContextValue,
   TextFieldDescriptionProps,
@@ -129,6 +129,7 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       children,
       className,
       classNames,
+      style,
       placeholderTextColor,
       colors: customColors,
       animationConfig,
@@ -151,9 +152,13 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     );
 
     const { theme } = useUniwind();
-    const themeColorDefault = useThemeColor('default');
-    const themeColorBackground = useThemeColor('background');
-    const themeColorBorder = useThemeColor('border');
+
+    const themeColorFieldBackground = useThemeColor('field');
+    const themeColorFieldFocusBackground = useThemeColor('field-focus');
+    const themeColorFieldBlurBorder = useThemeColor('field-border');
+    const themeColorFieldFocusBorder = useThemeColor('accent');
+    const themeColorFieldPlaceholder = useThemeColor('field-placeholder');
+
     const themeColorMuted = useThemeColor('muted');
     const themeColorDanger = useThemeColor('danger');
 
@@ -167,12 +172,13 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
 
     const inputStyles = tvStyles.input({ className: classNames?.input });
 
-    const blurBackground = customColors?.blurBackground || themeColorDefault;
+    const blurBackground =
+      customColors?.blurBackground || themeColorFieldBackground;
     const focusBackground =
-      customColors?.focusBackground || themeColorBackground;
+      customColors?.focusBackground || themeColorFieldFocusBackground;
     const errorBackground = customColors?.errorBackground;
-    const blurBorder = customColors?.blurBorder || themeColorBorder;
-    const focusBorder = customColors?.focusBorder || themeColorMuted;
+    const blurBorder = customColors?.blurBorder || themeColorFieldBlurBorder;
+    const focusBorder = customColors?.focusBorder || themeColorFieldFocusBorder;
     const errorBorder = customColors?.errorBorder || themeColorDanger;
 
     const isFocused = useSharedValue(0);
@@ -247,12 +253,18 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     };
 
     return (
-      <Animated.View className={containerStyles} style={animatedContainerStyle}>
+      <Animated.View
+        className={containerStyles}
+        style={[animatedContainerStyle, styleSheet.borderCurve]}
+      >
         {startContent}
         <TextInput
           ref={ref}
           className={inputStyles}
-          placeholderTextColor={placeholderTextColor || themeColorMuted}
+          style={[styleSheet.borderCurve, style]}
+          placeholderTextColor={
+            placeholderTextColor || themeColorFieldPlaceholder
+          }
           selectionColor={props.colors?.focusBackground || themeColorMuted}
           selectionHandleColor={
             props.colors?.focusBackground || themeColorMuted

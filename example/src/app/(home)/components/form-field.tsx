@@ -284,65 +284,71 @@ const ValidationErrorStatesContent = () => {
         className="gap-8 w-full h-[350px]"
         layout={LinearTransition}
       >
-        <FormField
-          isSelected={terms}
-          onSelectedChange={setTerms}
-          isInvalid={!terms}
-        >
-          <FormField.Content>
-            <FormField.Title>
-              I agree to the terms and conditions
-            </FormField.Title>
-            <FormField.Description>
-              By checking this box, you agree to our Terms of Service and
-              Privacy Policy
-            </FormField.Description>
-          </FormField.Content>
-          <FormField.Indicator>
-            <Checkbox />
-          </FormField.Indicator>
-          <FormField.ErrorMessage>
-            You must accept the terms to continue
-          </FormField.ErrorMessage>
-        </FormField>
+        <Animated.View layout={LinearTransition}>
+          <FormField
+            isSelected={terms}
+            onSelectedChange={setTerms}
+            isInvalid={!terms}
+          >
+            <FormField.Content>
+              <FormField.Title>
+                I agree to the terms and conditions
+              </FormField.Title>
+              <FormField.Description>
+                By checking this box, you agree to our Terms of Service and
+                Privacy Policy
+              </FormField.Description>
+            </FormField.Content>
+            <FormField.Indicator>
+              <Checkbox />
+            </FormField.Indicator>
+            <FormField.ErrorMessage>
+              You must accept the terms to continue
+            </FormField.ErrorMessage>
+          </FormField>
+        </Animated.View>
 
-        <FormField
-          isSelected={privacyAccepted}
-          onSelectedChange={setPrivacyAccepted}
-          isInvalid={!privacyAccepted}
-        >
-          <FormField.Content>
-            <FormField.Title>Accept Privacy Policy</FormField.Title>
-            <FormField.Description>
-              You must accept our privacy policy to create an account
-            </FormField.Description>
-          </FormField.Content>
-          <FormField.Indicator>
-            <Checkbox isInvalid={false} />
-          </FormField.Indicator>
-          <FormField.ErrorMessage>
-            Please accept the privacy policy to continue
-          </FormField.ErrorMessage>
-        </FormField>
+        <Animated.View layout={LinearTransition}>
+          <FormField
+            isSelected={privacyAccepted}
+            onSelectedChange={setPrivacyAccepted}
+            isInvalid={!privacyAccepted}
+          >
+            <FormField.Content>
+              <FormField.Title>Accept Privacy Policy</FormField.Title>
+              <FormField.Description>
+                You must accept our privacy policy to create an account
+              </FormField.Description>
+            </FormField.Content>
+            <FormField.Indicator>
+              <Checkbox isInvalid={false} />
+            </FormField.Indicator>
+            <FormField.ErrorMessage>
+              Please accept the privacy policy to continue
+            </FormField.ErrorMessage>
+          </FormField>
+        </Animated.View>
 
-        <FormField
-          isSelected={dataSharing}
-          onSelectedChange={setDataSharing}
-          isInvalid={dataSharing}
-        >
-          <FormField.Content>
-            <FormField.Title>Share usage data</FormField.Title>
-            <FormField.Description>
-              Help improve our product by sharing anonymous usage data
-            </FormField.Description>
-          </FormField.Content>
-          <FormField.Indicator>
-            <Switch />
-          </FormField.Indicator>
-          <FormField.ErrorMessage>
-            Warning: This will share your usage patterns
-          </FormField.ErrorMessage>
-        </FormField>
+        <Animated.View layout={LinearTransition}>
+          <FormField
+            isSelected={dataSharing}
+            onSelectedChange={setDataSharing}
+            isInvalid={dataSharing}
+          >
+            <FormField.Content>
+              <FormField.Title>Share usage data</FormField.Title>
+              <FormField.Description>
+                Help improve our product by sharing anonymous usage data
+              </FormField.Description>
+            </FormField.Content>
+            <FormField.Indicator>
+              <Switch />
+            </FormField.Indicator>
+            <FormField.ErrorMessage>
+              Warning: This will share your usage patterns
+            </FormField.ErrorMessage>
+          </FormField>
+        </Animated.View>
       </Animated.View>
     </View>
   );

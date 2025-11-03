@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Switch } from 'heroui-native';
+import { Divider, FormField, Surface, Switch } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -9,104 +9,174 @@ import Animated, {
 } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
-import { ScreenScrollView } from '../../../components/screen-scroll-view';
-import { SectionTitle } from '../../../components/section-title';
-import { useAppTheme } from '../../../contexts/app-theme-context';
+import type { UsageVariant } from '../../../components/component-presentation/types';
+import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
 const StyledIonicons = withUniwind(Ionicons);
 
-export default function SwitchScreen() {
-  const [defaultSwitch, setDefaultSwitch] = React.useState(true);
-  const [defaultColor, setDefaultColor] = React.useState(true);
-  const [success, setSuccess] = React.useState(true);
-  const [warning, setWarning] = React.useState(true);
-  const [danger, setDanger] = React.useState(true);
-  const [defaultState, setDefaultState] = React.useState(true);
-  const [disabled, setDisabled] = React.useState(true);
+interface SwitchFieldProps {
+  isSelected: boolean;
+  onSelectedChange: (value: boolean) => void;
+  title: string;
+  description: string;
+}
+
+const SwitchField: React.FC<SwitchFieldProps> = ({
+  isSelected,
+  onSelectedChange,
+  title,
+  description,
+}) => (
+  <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
+    <FormField.Content>
+      <FormField.Title>{title}</FormField.Title>
+      <FormField.Description>{description}</FormField.Description>
+    </FormField.Content>
+    <FormField.Indicator>
+      <Switch />
+    </FormField.Indicator>
+  </FormField>
+);
+
+const DefaultContent = () => {
+  const [fields, setFields] = React.useState({
+    notifications: false,
+    darkMode: false,
+    autoUpdate: true,
+  });
+
+  const fieldConfigs: Record<
+    keyof typeof fields,
+    { title: string; description: string }
+  > = {
+    notifications: {
+      title: 'Enable notifications',
+      description: 'Receive push notifications about your account activity',
+    },
+    darkMode: {
+      title: 'Dark mode',
+      description: 'Switch between light and dark theme',
+    },
+    autoUpdate: {
+      title: 'Auto-update',
+      description: 'Automatically download and install updates',
+    },
+  };
+
+  const handleFieldChange = (key: keyof typeof fields) => (value: boolean) => {
+    setFields((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const fieldKeys = Object.keys(fields) as Array<keyof typeof fields>;
+
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Surface className="py-5 w-full">
+        {fieldKeys.map((key, index) => (
+          <React.Fragment key={key}>
+            {index > 0 && <Divider className="my-4" />}
+            <SwitchField
+              isSelected={fields[key]}
+              onSelectedChange={handleFieldChange(key)}
+              title={fieldConfigs[key].title}
+              description={fieldConfigs[key].description}
+            />
+          </React.Fragment>
+        ))}
+      </Surface>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const StatesContent = () => {
+  const [fields, setFields] = React.useState({
+    emailNotifications: true,
+    pushNotifications: false,
+  });
+
+  const fieldConfigs: Record<
+    keyof typeof fields,
+    { title: string; description: string; disabled?: boolean }
+  > = {
+    emailNotifications: {
+      title: 'Email notifications',
+      description: 'Receive notifications via email',
+    },
+    pushNotifications: {
+      title: 'Push notifications',
+      description: 'This feature is currently unavailable',
+      disabled: true,
+    },
+  };
+
+  const handleFieldChange = (key: keyof typeof fields) => (value: boolean) => {
+    setFields((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const fieldKeys = Object.keys(fields) as Array<keyof typeof fields>;
+
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Surface className="py-5 w-full">
+        {fieldKeys.map((key, index) => (
+          <React.Fragment key={key}>
+            {index > 0 && <Divider className="my-4" />}
+            <FormField
+              isSelected={fields[key]}
+              onSelectedChange={handleFieldChange(key)}
+              isDisabled={fieldConfigs[key].disabled}
+            >
+              <FormField.Content>
+                <FormField.Title>{fieldConfigs[key].title}</FormField.Title>
+                <FormField.Description>
+                  {fieldConfigs[key].description}
+                </FormField.Description>
+              </FormField.Content>
+              <FormField.Indicator>
+                <Switch />
+              </FormField.Indicator>
+            </FormField>
+          </React.Fragment>
+        ))}
+      </Surface>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const CustomStylesContent = () => {
   const [icon, setIcon] = React.useState(true);
   const [contentIcon, setContentIcon] = React.useState(true);
   const [contentText, setContentText] = React.useState(true);
-  const [custom1, setCustom1] = React.useState(true);
-
-  const { isDark } = useAppTheme();
 
   return (
-    <ScreenScrollView contentContainerClassName="gap-16">
-      <SectionTitle title="Default" />
-      <Switch
-        isSelected={defaultSwitch}
-        onSelectedChange={setDefaultSwitch}
-        className="self-center"
-      />
+    <View className="flex-1 px-5 items-center justify-center">
+      <View className="gap-16 items-center">
+        <Switch isSelected={icon} onSelectedChange={setIcon}>
+          <Switch.Thumb>
+            {icon ? (
+              <Animated.View key="check" entering={ZoomIn}>
+                <StyledIonicons
+                  name="checkmark"
+                  size={12}
+                  className="text-accent"
+                />
+              </Animated.View>
+            ) : (
+              <Animated.View key="x" entering={ZoomIn}>
+                <StyledIonicons
+                  name="close"
+                  size={14}
+                  className="text-default"
+                />
+              </Animated.View>
+            )}
+          </Switch.Thumb>
+        </Switch>
 
-      <SectionTitle title="Colors" />
-      <View className="flex-row gap-4 self-center">
-        <Switch
-          isSelected={defaultColor}
-          onSelectedChange={setDefaultColor}
-          color="default"
-        />
-        <Switch
-          isSelected={success}
-          onSelectedChange={setSuccess}
-          color="success"
-        />
-        <Switch
-          isSelected={warning}
-          onSelectedChange={setWarning}
-          color="warning"
-        />
-        <Switch
-          isSelected={danger}
-          onSelectedChange={setDanger}
-          color="danger"
-        />
-      </View>
-
-      <SectionTitle title="States" />
-      <View className="flex-row gap-8 self-center">
-        <View className="items-center gap-2">
-          <Switch
-            isSelected={defaultState}
-            onSelectedChange={setDefaultState}
-          />
-          <AppText className="text-xs text-muted">Default</AppText>
-        </View>
-        <View className="items-center gap-2">
-          <Switch
-            isSelected={disabled}
-            onSelectedChange={setDisabled}
-            isDisabled={true}
-          />
-          <AppText className="text-xs text-muted">Disabled</AppText>
-        </View>
-      </View>
-
-      <SectionTitle title="Custom Thumb" />
-      <Switch
-        isSelected={icon}
-        onSelectedChange={setIcon}
-        className="self-center"
-      >
-        <Switch.Thumb>
-          {icon ? (
-            <Animated.View key="check" entering={ZoomIn}>
-              <StyledIonicons
-                name="checkmark"
-                size={12}
-                className="text-accent"
-              />
-            </Animated.View>
-          ) : (
-            <Animated.View key="x" entering={ZoomIn}>
-              <StyledIonicons name="close" size={14} className="text-default" />
-            </Animated.View>
-          )}
-        </Switch.Thumb>
-      </Switch>
-
-      <SectionTitle title="With Start & End Content" />
-      <View className="gap-8 items-center">
         <Switch
           isSelected={contentIcon}
           onSelectedChange={setContentIcon}
@@ -202,31 +272,30 @@ export default function SwitchScreen() {
           </Switch.EndContent>
         </Switch>
       </View>
-
-      <SectionTitle title="Custom Style" />
-      <Switch
-        isSelected={custom1}
-        onSelectedChange={setCustom1}
-        className="self-center"
-        classNames={{
-          container: 'w-[40px] h-[8px]',
-          contentPaddingContainer: 'p-0 overflow-visible',
-        }}
-        colors={{
-          defaultBackground: 'darkgray',
-          selectedBackground: isDark ? 'darkgray' : 'black',
-        }}
-        hitSlop={20}
-      >
-        <Switch.Thumb
-          width={20}
-          className="border-[1.5px] border-border"
-          colors={{
-            defaultBackground: 'black',
-            selectedBackground: 'black',
-          }}
-        />
-      </Switch>
-    </ScreenScrollView>
+    </View>
   );
+};
+
+// ------------------------------------------------------------------------------
+
+const SWITCH_VARIANTS: UsageVariant[] = [
+  {
+    value: 'default',
+    label: 'Default',
+    content: <DefaultContent />,
+  },
+  {
+    value: 'states',
+    label: 'States',
+    content: <StatesContent />,
+  },
+  {
+    value: 'custom-styles',
+    label: 'Custom styles',
+    content: <CustomStylesContent />,
+  },
+];
+
+export default function SwitchScreen() {
+  return <UsageVariantFlatList data={SWITCH_VARIANTS} />;
 }

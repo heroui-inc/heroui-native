@@ -59,8 +59,8 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
     const themeColorSuccess = useThemeColor('success');
     const themeColorWarning = useThemeColor('warning');
     const themeColorDanger = useThemeColor('danger');
-    const themeColorDefault = useThemeColor('default');
     const themeColorBorder = useThemeColor('border');
+    const themeColorSurfaceQuaternary = useThemeColor('surface-quaternary');
 
     const { container, contentPaddingContainer, contentContainer } =
       switchStyles.root({
@@ -103,7 +103,7 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
         backgroundColor: withTiming(
           isSelected
             ? (colors?.selectedBackground ?? backgroundColorMap[color])
-            : (colors?.defaultBackground ?? themeColorDefault),
+            : (colors?.defaultBackground ?? themeColorSurfaceQuaternary),
           timingConfig
         ),
         borderColor: withTiming(
@@ -173,8 +173,7 @@ const SwitchThumb = forwardRef<
 
   const { isSelected, contentContainerWidth } = useSwitchContext();
 
-  const themeColorBackground = useThemeColor('background');
-  const themeColorMuted = useThemeColor('muted');
+  const themeColorAccentForeground = useThemeColor('accent-foreground');
 
   const tvStyles = switchStyles.thumb({
     className,
@@ -197,12 +196,13 @@ const SwitchThumb = forwardRef<
       if (isSelected) {
         return {
           right: 0,
-          backgroundColor: colors?.selectedBackground ?? themeColorBackground,
+          backgroundColor:
+            colors?.selectedBackground ?? themeColorAccentForeground,
         };
       }
       return {
         left: 0,
-        backgroundColor: colors?.defaultBackground ?? themeColorMuted,
+        backgroundColor: colors?.defaultBackground ?? 'white',
       };
     }
 
@@ -213,8 +213,8 @@ const SwitchThumb = forwardRef<
       ),
       backgroundColor: withTiming(
         isSelected
-          ? (colors?.selectedBackground ?? themeColorBackground)
-          : (colors?.defaultBackground ?? themeColorMuted),
+          ? (colors?.selectedBackground ?? themeColorAccentForeground)
+          : (colors?.defaultBackground ?? 'white'),
         timingConfig
       ),
     };

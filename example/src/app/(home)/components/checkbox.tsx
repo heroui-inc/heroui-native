@@ -1,5 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Checkbox, cn, useThemeColor } from 'heroui-native';
+import {
+  Checkbox,
+  cn,
+  Divider,
+  FormField,
+  Surface,
+  useThemeColor,
+} from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -16,47 +23,112 @@ import Animated, {
 } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
-import { ScreenScrollView } from '../../../components/screen-scroll-view';
-import { SectionTitle } from '../../../components/section-title';
+import type { UsageVariant } from '../../../components/component-presentation/types';
+import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 const StyledIonicons = withUniwind(Ionicons);
 
-export default function CheckboxScreen() {
-  const [defaultCheck, setDefaultCheck] = React.useState(true);
+interface CheckboxFieldProps {
+  isSelected: boolean;
+  onSelectedChange: (value: boolean) => void;
+  title: string;
+  description: string;
+}
+
+const CheckboxField: React.FC<CheckboxFieldProps> = ({
+  isSelected,
+  onSelectedChange,
+  title,
+  description,
+}) => {
+  const themeColorSurfaceTertiary = useThemeColor('surface-tertiary');
+
+  return (
+    <FormField
+      isSelected={isSelected}
+      onSelectedChange={onSelectedChange}
+      alignIndicator="start"
+      className="items-start"
+    >
+      <FormField.Indicator>
+        <Checkbox
+          className="mt-0.5"
+          animatedColors={{
+            backgroundColor: { default: themeColorSurfaceTertiary },
+          }}
+        />
+      </FormField.Indicator>
+      <FormField.Content>
+        <FormField.Title className="text-lg">{title}</FormField.Title>
+        <FormField.Description className="text-base">
+          {description}
+        </FormField.Description>
+      </FormField.Content>
+    </FormField>
+  );
+};
+
+const BasicUsage = () => {
+  const [fields, setFields] = React.useState({
+    newsletter: true,
+    marketing: false,
+    terms: false,
+  });
+
+  const fieldConfigs: Record<
+    keyof typeof fields,
+    { title: string; description: string }
+  > = {
+    newsletter: {
+      title: 'Subscribe to newsletter',
+      description: 'Get weekly updates about new features and tips',
+    },
+    marketing: {
+      title: 'Marketing communications',
+      description: 'Receive promotional emails and special offers',
+    },
+    terms: {
+      title: 'Accept terms and conditions',
+      description: 'Agree to our Terms of Service and Privacy Policy',
+    },
+  };
+
+  const handleFieldChange = (key: keyof typeof fields) => (value: boolean) => {
+    setFields((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const fieldKeys = Object.keys(fields) as Array<keyof typeof fields>;
+
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Surface className="py-5 w-full">
+        {fieldKeys.map((key, index) => (
+          <React.Fragment key={key}>
+            {index > 0 && <Divider className="my-4" />}
+            <CheckboxField
+              isSelected={fields[key]}
+              onSelectedChange={handleFieldChange(key)}
+              title={fieldConfigs[key].title}
+              description={fieldConfigs[key].description}
+            />
+          </React.Fragment>
+        ))}
+      </Surface>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const StatesContent = () => {
   const [defaultState, setDefaultState] = React.useState(true);
   const [invalid, setInvalid] = React.useState(true);
   const [disabled, setDisabled] = React.useState(true);
-  const [customBackground, setCustomBackground] = React.useState(true);
-  const [customIndicator, setCustomIndicator] = React.useState(true);
-  const [customBoth, setCustomBoth] = React.useState(true);
-
-  const themeColorBackground = useThemeColor('background');
-
-  const rThemeToggleStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateX: withTiming(customBoth ? 24.5 : -24.5, {
-            duration: 200,
-            easing: Easing.out(Easing.ease),
-          }),
-        },
-      ],
-    };
-  }, [customBoth]);
 
   return (
-    <ScreenScrollView contentContainerClassName="gap-16">
-      <SectionTitle title="Default" />
-      <Checkbox
-        isSelected={defaultCheck}
-        onSelectedChange={setDefaultCheck}
-        className="self-center"
-      />
-
-      <SectionTitle title="States" />
-      <View className="flex-row gap-8 self-center">
+    <View className="flex-1 px-5 items-center justify-center">
+      <View className="flex-row gap-8">
         <View className="items-center gap-2">
           <Checkbox
             isSelected={defaultState}
@@ -81,37 +153,37 @@ export default function CheckboxScreen() {
           <AppText className="text-xs text-muted">Disabled</AppText>
         </View>
       </View>
+    </View>
+  );
+};
 
-      <SectionTitle title="Custom Background" />
+// ------------------------------------------------------------------------------
 
-      <Checkbox
-        isSelected={customBackground}
-        onSelectedChange={setCustomBackground}
-        className="size-10 rounded-lg self-center"
-        animatedColors={{
-          backgroundColor: {
-            selected: '#3730a3',
-          },
-        }}
-      >
-        <View className="absolute inset-0 bg-indigo-300" />
-        {customBackground && (
-          <AnimatedView
-            key="unselected"
-            entering={FadeInDown.duration(150).easing(Easing.out(Easing.ease))}
-            exiting={FadeOutDown.duration(150).easing(Easing.in(Easing.ease))}
-            className="absolute size-12 bg-indigo-700/80 rounded-full"
-          />
-        )}
-        <Checkbox.Indicator iconProps={{ size: 18 }} />
-      </Checkbox>
+const CustomStylesContent = () => {
+  const [customBackground, setCustomBackground] = React.useState(true);
+  const [customIndicator, setCustomIndicator] = React.useState(true);
+  const [customBoth, setCustomBoth] = React.useState(true);
 
-      <SectionTitle title="Custom Indicator" />
+  const themeColorBackground = useThemeColor('background');
 
+  const rThemeToggleStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: withTiming(customBoth ? 24.5 : -24.5, {
+            duration: 200,
+            easing: Easing.out(Easing.ease),
+          }),
+        },
+      ],
+    };
+  }, [customBoth]);
+
+  return (
+    <View className="flex-1 px-5 items-center justify-center gap-12">
       <Checkbox
         isSelected={customIndicator}
         onSelectedChange={setCustomIndicator}
-        className="self-center"
       >
         {({ isSelected }) => {
           return isSelected ? (
@@ -135,12 +207,32 @@ export default function CheckboxScreen() {
         }}
       </Checkbox>
 
-      <SectionTitle title="Custom Background & Indicator" />
+      <Checkbox
+        isSelected={customBackground}
+        onSelectedChange={setCustomBackground}
+        className="size-8 rounded-xl"
+        animatedColors={{
+          backgroundColor: {
+            selected: '#3730a3',
+          },
+        }}
+      >
+        <View className="absolute inset-0 bg-indigo-300 rounded-xl" />
+        {customBackground && (
+          <AnimatedView
+            key="unselected"
+            entering={FadeInDown.duration(150).easing(Easing.out(Easing.ease))}
+            exiting={FadeOutDown.duration(150).easing(Easing.in(Easing.ease))}
+            className="absolute size-12 bg-indigo-700/80 rounded-full"
+          />
+        )}
+        <Checkbox.Indicator iconProps={{ size: 18 }} />
+      </Checkbox>
 
       <Checkbox
         isSelected={customBoth}
         onSelectedChange={setCustomBoth}
-        className="w-12 h-12 rounded-full self-center"
+        className="w-12 h-12 rounded-full"
         animatedColors={{
           borderColor: {
             default: themeColorBackground,
@@ -206,6 +298,30 @@ export default function CheckboxScreen() {
           </>
         )}
       </Checkbox>
-    </ScreenScrollView>
+    </View>
   );
+};
+
+// ------------------------------------------------------------------------------
+
+const CHECKBOX_VARIANTS: UsageVariant[] = [
+  {
+    value: 'basic-usage',
+    label: 'Basic usage',
+    content: <BasicUsage />,
+  },
+  {
+    value: 'states',
+    label: 'States',
+    content: <StatesContent />,
+  },
+  {
+    value: 'custom-styles',
+    label: 'Custom styles',
+    content: <CustomStylesContent />,
+  },
+];
+
+export default function CheckboxScreen() {
+  return <UsageVariantFlatList data={CHECKBOX_VARIANTS} />;
 }

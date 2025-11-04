@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, cn, Spinner } from 'heroui-native';
+import { Button, cn, Spinner, useThemeColor } from 'heroui-native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FadeIn } from 'react-native-reanimated';
@@ -47,25 +47,25 @@ const VariantsContent = () => {
 // ------------------------------------------------------------------------------
 
 const DisabledStateContent = () => {
-  const { isDark } = useAppTheme();
+  const themeColorMuted = useThemeColor('muted');
 
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
         <View className="gap-8 w-full px-8">
           <Button isDisabled>
-            <Spinner color={isDark ? 'black' : 'white'} size="sm" />
+            <Spinner color={themeColorMuted} size="sm" />
             <Button.Label>Loading</Button.Label>
           </Button>
           <Button variant="secondary" isDisabled>
-            <Spinner size="sm" color={isDark ? 'black' : 'default'} />
+            <Spinner size="sm" color={themeColorMuted} />
             <Button.Label>Loading</Button.Label>
           </Button>
           <Button variant="tertiary" isDisabled>
             <StyledIonicons
               name="alert-circle"
               size={16}
-              className="text-default-foreground"
+              className="text-muted"
             />
             <Button.Label>Access Denied</Button.Label>
           </Button>

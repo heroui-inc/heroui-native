@@ -9,9 +9,9 @@
     ".": {
       "source": "./src/index.tsx",
       "types": "./lib/typescript/src/index.d.ts",
-      "default": "./lib/module/index.js"
+      "default": "./lib/module/index.js",
+      "style": "./src/styles/index.css"
     },
-    "./styles": "./src/styles/index.css",
     "./package.json": "./package.json"
   },
   "files": [

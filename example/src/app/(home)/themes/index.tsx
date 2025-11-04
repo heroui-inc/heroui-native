@@ -196,31 +196,31 @@ export default function Themes() {
           </Text>
           <View className="gap-4">
             <View className="flex-row gap-3">
-              <View className="flex-1 h-16 bg-background border border-border rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-background border border-border rounded-2xl items-center justify-center">
                 <Text className="text-xs text-foreground">Background</Text>
               </View>
-              <View className="flex-1 h-16 bg-overlay rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-overlay rounded-2xl items-center justify-center">
                 <Text className="text-xs text-foreground">Panel</Text>
               </View>
             </View>
             <View className="flex-row gap-3">
-              <View className="flex-1 h-16 bg-accent rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-accent rounded-2xl items-center justify-center">
                 <Text className="text-xs text-accent-foreground">Accent</Text>
               </View>
-              <View className="flex-1 h-16 bg-accent-soft rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-accent-soft rounded-2xl items-center justify-center">
                 <Text className="text-xs text-accent-soft-foreground">
                   Accent Soft
                 </Text>
               </View>
             </View>
             <View className="flex-row gap-3">
-              <View className="flex-1 h-16 bg-success rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-success rounded-2xl items-center justify-center">
                 <Text className="text-xs text-success-foreground">Success</Text>
               </View>
-              <View className="flex-1 h-16 bg-warning rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-warning rounded-2xl items-center justify-center">
                 <Text className="text-xs text-warning-foreground">Warning</Text>
               </View>
-              <View className="flex-1 h-16 bg-danger rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-danger rounded-2xl items-center justify-center">
                 <Text className="text-xs text-danger-foreground">Danger</Text>
               </View>
             </View>

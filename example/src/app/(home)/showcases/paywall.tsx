@@ -132,6 +132,7 @@ export default function Paywall() {
           size="lg"
           className="rounded-full bg-white mb-5"
           onPress={simulatePress}
+          animationConfig={{ highlight: { isDisabled: true } }}
         >
           <Button.Label className="text-black">Continue</Button.Label>
         </Button>

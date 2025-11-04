@@ -73,6 +73,7 @@ const OnboardingScreen = () => {
           className={cn('rounded-full bg-black/10', isDark && 'bg-white/20')}
           isIconOnly
           onPress={router.back}
+          animationConfig={{ highlight: { isDisabled: true } }}
         >
           <StyledFeather
             name="chevron-left"
@@ -85,6 +86,7 @@ const OnboardingScreen = () => {
           className={cn('rounded-full bg-black/10', isDark && 'bg-white/20')}
           isIconOnly
           onPress={router.back}
+          animationConfig={{ highlight: { isDisabled: true } }}
         >
           <StyledFeather
             name="x"

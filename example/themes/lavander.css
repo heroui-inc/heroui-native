@@ -2,92 +2,96 @@
   :root {
     @variant lavender-light {
       /* Base Colors */
-      --color-background: hsl(280 25% 98%);
-      --color-foreground: hsl(280 30% 15%);
+      --background: hsl(280 25% 98%);
+      --foreground: hsl(280 30% 15%);
 
-      --color-panel: hsl(280 20% 96%);
-      --color-panel-foreground: hsl(280 30% 20%);
+      /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
+      --surface: hsl(280 20% 96%);
+      --surface-foreground: hsl(280 30% 20%);
 
-      --color-muted: hsl(280 15% 45%);
+      /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
+      --overlay: hsl(280 20% 96%);
+      --overlay-foreground: hsl(280 30% 20%);
 
-      --color-default: hsl(280 15% 97%);
-      --color-default-foreground: hsl(280 20% 35%);
+      --muted: hsl(280 15% 45%);
 
-      --color-surface-1: hsl(280 25% 98%);
-      --color-surface-2: hsl(280 20% 95%);
-      --color-surface-3: hsl(280 18% 92%);
+      --default: hsl(280 15% 97%);
+      --default-foreground: hsl(280 20% 35%);
 
-      --color-accent: hsl(270 50% 75%);
-      --color-accent-foreground: hsl(280 30% 15%);
+      --accent: hsl(270 50% 75%);
+      --accent-foreground: hsl(280 30% 15%);
 
-      --color-accent-soft: hsl(270 30% 90%);
-      --color-accent-soft-foreground: hsl(270 40% 40%);
-
-      /* Form Field Defaults */
-      --color-field-background: var(--color-default);
-      --color-field-foreground: var(--color-foreground);
-      --color-field-placeholder: var(--color-muted);
-      --color-field-border: var(--color-border);
+      /* Form Field Defaults - Colors */
+      --field-background: hsl(280 20% 96%);
+      --field-foreground: hsl(280 30% 15%);
+      --field-placeholder: var(--muted);
+      --field-border: transparent;
 
       /* Status Colors */
-      --color-success: hsl(160 40% 70%);
-      --color-success-foreground: hsl(160 50% 15%);
+      --success: hsl(160 40% 70%);
+      --success-foreground: hsl(160 50% 15%);
 
-      --color-warning: hsl(45 55% 75%);
-      --color-warning-foreground: hsl(45 60% 20%);
+      --warning: hsl(45 55% 75%);
+      --warning-foreground: hsl(45 60% 20%);
 
-      --color-danger: hsl(350 50% 75%);
-      --color-danger-foreground: hsl(350 40% 20%);
+      --danger: hsl(350 50% 75%);
+      --danger-foreground: hsl(350 40% 20%);
+
+      /* Component Colors */
+      --segment: hsl(280 20% 96%);
+      --segment-foreground: hsl(280 30% 15%);
 
       /* Misc Colors */
-      --color-border: hsl(270 20% 88%);
-      --color-divider: hsl(270 15% 82%);
-      --color-link: hsl(270 50% 65%);
+      --border: hsl(270 20% 88%);
+      --divider: hsl(270 15% 82%);
+      --link: hsl(270 50% 65%);
     }
 
     @variant lavender-dark {
       /* Base Colors */
-      --color-background: hsl(280 20% 12%);
-      --color-foreground: hsl(280 10% 92%);
+      --background: hsl(280 20% 12%);
+      --foreground: hsl(280 10% 92%);
 
-      --color-panel: hsl(280 18% 15%);
-      --color-panel-foreground: hsl(280 10% 85%);
+      /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
+      --surface: hsl(280 18% 15%);
+      --surface-foreground: hsl(280 10% 85%);
 
-      --color-muted: hsl(280 10% 40%);
+      /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
+      --overlay: hsl(280 16% 18%);
+      --overlay-foreground: hsl(280 10% 85%);
 
-      --color-default: hsl(280 15% 20%);
-      --color-default-foreground: hsl(280 10% 80%);
+      --muted: hsl(280 10% 40%);
 
-      --color-surface-1: hsl(280 20% 12%);
-      --color-surface-2: hsl(280 18% 15%);
-      --color-surface-3: hsl(280 16% 18%);
+      --default: hsl(280 15% 20%);
+      --default-foreground: hsl(280 10% 80%);
 
-      --color-accent: hsl(270 45% 70%);
-      --color-accent-foreground: hsl(280 10% 10%);
+      --accent: hsl(270 45% 70%);
+      --accent-foreground: hsl(280 10% 10%);
 
-      --color-accent-soft: hsl(270 25% 30%);
-      --color-accent-soft-foreground: hsl(270 35% 75%);
-
-      /* Form Field Defaults */
-      --color-field-background: var(--color-default);
-      --color-field-foreground: var(--color-foreground);
-      --color-field-placeholder: var(--color-muted);
-      --color-field-border: var(--color-border);
+      /* Form Field Defaults - Colors */
+      --field-background: var(--default);
+      --field-foreground: var(--foreground);
+      --field-placeholder: var(--muted);
+      --field-border: transparent;
 
       /* Status Colors */
-      --color-success: hsl(160 35% 55%);
-      --color-success-foreground: hsl(160 10% 90%);
+      --success: hsl(160 35% 55%);
+      --success-foreground: hsl(160 10% 90%);
 
-      --color-warning: hsl(45 50% 60%);
-      --color-warning-foreground: hsl(45 10% 10%);
+      --warning: hsl(45 50% 60%);
+      --warning-foreground: hsl(45 10% 10%);
 
-      --color-danger: hsl(350 45% 60%);
-      --color-danger-foreground: hsl(350 10% 90%);
+      --danger: hsl(350 45% 60%);
+      --danger-foreground: hsl(350 10% 90%);
+
+      /* Component Colors */
+      --segment: hsl(280 18% 18%);
+      --segment-foreground: hsl(280 10% 85%);
 
       /* Misc Colors */
-      --color-border: hsl(270 15% 25%);
-      --color-divider: hsl(270 12% 30%);
-      --color-link: hsl(270 45% 70%);
+      --border: hsl(270 15% 25%);
+      --divider: hsl(270 12% 30%);
+      --link: hsl(270 45% 70%);
     }
   }
 }

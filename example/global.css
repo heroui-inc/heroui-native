@@ -1,6 +1,10 @@
 @import 'tailwindcss';
 @import 'uniwind';
 
+@import './themes/lavander.css';
+@import './themes/mint.css';
+@import './themes/sky.css';
+
 @theme {
   /* Primitive Colors (Do not change between light and dark) */
   --white: oklch(100% 0 0);
@@ -26,7 +30,7 @@
       --surface: var(--white);
       --surface-foreground: var(--foreground);
 
-      /* Overlay: Used for floating/overlay components (tooltips, popovers, modals, menus) */
+      /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
       --overlay: var(--white);
       --overlay-foreground: var(--foreground);
 
@@ -73,7 +77,7 @@
       --surface: oklch(0.2103 0.0059 285.89);
       --surface-foreground: var(--foreground);
 
-      /* Overlay: Used for floating/overlay components (tooltips, popovers, modals, menus) - lighter for contrast */
+      /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) - lighter for contrast */
       --overlay: oklch(
         0.2563 0.0058 271.19
       ); /* Lighter than surface for visibility in dark mode */

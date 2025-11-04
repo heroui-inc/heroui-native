@@ -264,6 +264,8 @@ function App() {
 
 For complete custom theme documentation, see [Uniwind Custom Themes Guide](https://docs.uniwind.dev/theming/custom-themes).
 
+> **Note:** If you need the color scheme from the alpha version of HeroUI Native, you can find it in [example/themes/alpha.css](../../example/themes/alpha.css).
+
 ### Radius Customization
 
 Change the global border radius scale:

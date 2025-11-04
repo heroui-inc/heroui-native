@@ -81,7 +81,7 @@ const PresentationContent = () => {
           }}
         >
           <Select.Trigger asChild>
-            <Button variant="secondary" className="min-w-28">
+            <Button variant="secondary">
               {popoverValue ? (
                 <View className="flex-row items-center gap-2">
                   <AppText className="text-base">{popoverValue.flag}</AppText>
@@ -138,7 +138,7 @@ const PresentationContent = () => {
           }}
         >
           <Select.Trigger asChild>
-            <Button variant="secondary" className="min-w-28">
+            <Button variant="secondary">
               {bottomSheetValue ? (
                 <View className="flex-row items-center gap-2">
                   <AppText className="text-base">

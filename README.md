@@ -90,6 +90,8 @@ Inside your `global.css` file add the following imports:
 @source './node_modules/heroui-native/lib';
 ```
 
+> **Note:** If you need the color scheme from the alpha version of HeroUI Native, you can find it in [example/themes/alpha.css](./example/themes/alpha.css).
+
 #### Running on Web (Expo)
 
 > **Note:** We are currently focusing on the mobile version. Using HeroUI Native on web is not recommended at this time.

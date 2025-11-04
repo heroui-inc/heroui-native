@@ -66,7 +66,7 @@ export function SearchableDialogSelect() {
       closeDelay={300}
     >
       <Select.Trigger asChild>
-        <Button variant="tertiary" className="min-w-28">
+        <Button variant="tertiary">
           {value ? (
             <View className="flex-row items-center gap-2">
               <AppText className="text-base">{value.flag}</AppText>

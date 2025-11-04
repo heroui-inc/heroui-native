@@ -9,7 +9,7 @@ import {
   TextField,
 } from 'heroui-native';
 import { useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, {
   FadeIn,
   FadeOut,
@@ -332,13 +332,8 @@ const TabsContent = ({ variant }: TabsContentProps) => {
 const PillVariantContent = () => {
   const headerHeight = useHeaderHeight();
 
-  const paddingTop = Platform.select({
-    ios: headerHeight + 20,
-    android: 20,
-  });
-
   return (
-    <View className="flex-1 px-5" style={{ paddingTop }}>
+    <View className="flex-1 px-5" style={{ paddingTop: headerHeight + 20 }}>
       <TabsContent variant="pill" />
     </View>
   );
@@ -349,13 +344,8 @@ const PillVariantContent = () => {
 const LineVariantContent = () => {
   const headerHeight = useHeaderHeight();
 
-  const paddingTop = Platform.select({
-    ios: headerHeight + 20,
-    android: 20,
-  });
-
   return (
-    <View className="flex-1 px-5" style={{ paddingTop }}>
+    <View className="flex-1 px-5" style={{ paddingTop: headerHeight + 20 }}>
       <TabsContent variant="line" />
     </View>
   );

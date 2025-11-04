@@ -468,7 +468,7 @@ const NativeModalDialogContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const DIALOG_VARIANTS: UsageVariant[] = [
+const DIALOG_VARIANTS_IOS: UsageVariant[] = [
   {
     value: 'basic-dialog',
     label: 'Basic dialog',
@@ -496,6 +496,30 @@ const DIALOG_VARIANTS: UsageVariant[] = [
   },
 ];
 
+const DIALOG_VARIANTS_ANDROID: UsageVariant[] = [
+  {
+    value: 'basic-dialog',
+    label: 'Basic dialog',
+    content: <BasicDialogContent />,
+  },
+  {
+    value: 'text-input-dialog',
+    label: 'Dialog with text input',
+    content: <TextInputDialogContent />,
+  },
+  {
+    value: 'long-content-dialog',
+    label: 'Dialog with long content',
+    content: <LongContentDialogContent />,
+  },
+];
+
 export default function DialogScreen() {
-  return <UsageVariantFlatList data={DIALOG_VARIANTS} />;
+  return (
+    <UsageVariantFlatList
+      data={
+        Platform.OS === 'ios' ? DIALOG_VARIANTS_IOS : DIALOG_VARIANTS_ANDROID
+      }
+    />
+  );
 }

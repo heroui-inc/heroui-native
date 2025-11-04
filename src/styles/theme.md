@@ -18,7 +18,7 @@ Inside your `global.css` file add the following imports:
 @import 'tailwindcss';
 @import 'uniwind';
 
-@import 'heroui-native';
+@import 'heroui-native/styles';
 
 // Path to the heroui-native lib inside node_modules from the root of your project
 @source './node_modules/heroui-native/lib';

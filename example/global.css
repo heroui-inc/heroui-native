@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 @import 'uniwind';
 
-/* Development only: In your app, use @import 'heroui-native' instead */
+/* Development only: In your app, use @import 'heroui-native/styles' instead */
 @import '../src/styles/index.css';
 
 @import './themes/lavander.css';

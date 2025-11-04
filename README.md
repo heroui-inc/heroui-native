@@ -17,7 +17,7 @@ Experience HeroUI Native components in action with our preview app! You can expl
 
 ### Prerequisites
 
-Make sure you have the latest version of [Expo Go](https://expo.dev/go) installed on your mobile device.
+Make sure you have the latest version of [Expo Go](https://expo.dev/go) installed on your mobile device
 
 ### How to Access
 

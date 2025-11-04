@@ -1,19 +1,28 @@
 import Feather from '@expo/vector-icons/Feather';
 import * as Haptics from 'expo-haptics';
-import { Button, Select, useTheme } from 'heroui-native';
-import { Platform, Pressable, useWindowDimensions, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Button, cn, colorKit, Select, useThemeColor } from 'heroui-native';
+import {
+  Platform,
+  Pressable,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { Easing, SlideInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
+import { useAppTheme } from '../../../../contexts/app-theme-context';
 import { simulatePress } from '../../../../helpers/utils/simulate-press';
 import { AppText } from '../../../app-text';
 import { SelectBlurBackdrop } from '../../../select/select-blur-backdrop';
-import { ProgressiveBlurView } from '../progresive-blur-view';
 import { SelectContentContainer } from './select-content-container';
 import { SelectItem } from './select-item';
 import { type ModelOption } from './types';
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
+const StyledFeather = withUniwind(Feather);
 
 type Props = {
   data: ModelOption[];
@@ -25,7 +34,9 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
   const insets = useSafeAreaInsets();
   const { height: screenHeight } = useWindowDimensions();
 
-  const { colors } = useTheme();
+  const { isDark } = useAppTheme();
+
+  const themeColorSurface = useThemeColor('surface');
 
   return (
     <Select
@@ -40,7 +51,10 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
         <Button
           variant="tertiary"
           size="sm"
-          className="rounded-full px-4 h-11 bg-transparent border border-neutral-400/25 dark:border-neutral-600/25"
+          className={cn(
+            'rounded-full px-4 h-11 bg-transparent border border-neutral-400/25',
+            isDark && 'border-neutral-600/25'
+          )}
           onPress={() => {
             if (Platform.OS === 'android') return;
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
@@ -90,13 +104,22 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
             </Pressable>
             <View className="flex-1" />
             <Pressable className="absolute" onPress={simulatePress}>
-              <AppText className="text-xl font-semibold dark:font-bold text-foreground">
+              <AppText
+                className={cn(
+                  'text-xl font-semibold text-foreground',
+                  isDark && 'font-bold'
+                )}
+              >
                 Presets
               </AppText>
             </Pressable>
             <Pressable onPress={simulatePress}>
               <AppText className="text-medium text-foreground">
-                <Feather name="plus" size={20} color={colors.foreground} />
+                <StyledFeather
+                  name="plus"
+                  size={20}
+                  className="text-foreground"
+                />
               </AppText>
             </Pressable>
           </View>
@@ -119,11 +142,39 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
               <SelectItem key={m.value} data={m} />
             ))}
           </AnimatedScrollView>
-
-          <ProgressiveBlurView height={insets.top + 150} />
-          <ProgressiveBlurView position="bottom" />
+          <LinearGradient
+            colors={[
+              themeColorSurface,
+              colorKit.setAlpha(themeColorSurface, 0).hex(),
+            ]}
+            style={[styles.topGradient, { height: insets.top + 100 }]}
+          />
+          <LinearGradient
+            colors={[
+              colorKit.setAlpha(themeColorSurface, 0).hex(),
+              themeColorSurface,
+            ]}
+            style={[styles.bottomGradient, { height: insets.bottom + 100 }]}
+          />
         </SelectContentContainer>
       </Select.Portal>
     </Select>
   );
 };
+
+const styles = StyleSheet.create({
+  topGradient: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    pointerEvents: 'none',
+  },
+  bottomGradient: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    pointerEvents: 'none',
+  },
+});

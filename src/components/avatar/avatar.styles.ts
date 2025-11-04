@@ -1,20 +1,60 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../providers/theme/helpers';
+import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 /**
  * Avatar root styles
  */
 const avatarRoot = tv({
-  base: 'items-center justify-center overflow-hidden rounded-full border border-border bg-default',
+  base: 'items-center justify-center overflow-hidden rounded-full',
   variants: {
+    variant: {
+      default: 'bg-default',
+      soft: '',
+    },
     size: {
       sm: 'size-10',
       md: 'size-12',
       lg: 'size-16',
     },
+    color: {
+      accent: '',
+      default: '',
+      success: '',
+      warning: '',
+      danger: '',
+    },
   },
+  compoundVariants: [
+    // Soft variant colors
+    {
+      variant: 'soft',
+      color: 'accent',
+      className: 'bg-accent/15',
+    },
+    {
+      variant: 'soft',
+      color: 'default',
+      className: 'bg-default',
+    },
+    {
+      variant: 'soft',
+      color: 'success',
+      className: 'bg-success/15',
+    },
+    {
+      variant: 'soft',
+      color: 'warning',
+      className: 'bg-warning/15',
+    },
+    {
+      variant: 'soft',
+      color: 'danger',
+      className: 'bg-danger/15',
+    },
+  ],
   defaultVariants: {
+    variant: 'default',
     size: 'md',
     color: 'default',
   },

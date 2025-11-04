@@ -10,9 +10,9 @@ import Animated, {
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
 import { useDialogContentAnimation } from '../../helpers/hooks';
+import { useThemeColor } from '../../helpers/theme';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
-import { useTheme } from '../../providers/theme';
 import { DISPLAY_NAME } from './dialog.constants';
 import dialogStyles, { styleSheet } from './dialog.styles';
 import type {
@@ -216,9 +216,8 @@ const DialogClose = forwardRef<
   DialogPrimitivesTypes.CloseRef,
   DialogCloseProps
 >(({ className, iconProps, hitSlop = 12, children, ...props }, ref) => {
-  const { colors, isDark } = useTheme();
-
-  const defaultIconColor = isDark ? colors.mutedForeground : colors.muted;
+  const themeColorMuted = useThemeColor('muted');
+  const defaultIconColor = themeColorMuted;
 
   const tvStyles = dialogStyles.close({ className });
 
@@ -267,9 +266,9 @@ const DialogDescription = forwardRef<RNText, DialogDescriptionProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useDialog();
 
-    const { isDark } = useTheme();
-
-    const tvStyles = dialogStyles.description({ className, isDark });
+    const tvStyles = dialogStyles.description({
+      className,
+    });
 
     return (
       <Text

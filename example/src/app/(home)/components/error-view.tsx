@@ -1,241 +1,252 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Button, ErrorView, TextField, useTheme } from 'heroui-native';
+import { Button, ErrorView, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
-import {
-  FadeInDown,
-  FadeInLeft,
-  FadeOutLeft,
-  ZoomIn,
-  ZoomOut,
-} from 'react-native-reanimated';
+import { FadeInDown } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
-import { ScreenScrollView } from '../../../components/screen-scroll-view';
-import { SectionTitle } from '../../../components/section-title';
+import type { UsageVariant } from '../../../components/component-presentation/types';
+import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
-export default function ErrorViewScreen() {
-  const { colors } = useTheme();
+const StyledIonicons = withUniwind(Ionicons);
 
-  // Basic error states
-  const [basicError, setBasicError] = useState(true);
-
-  // Multiple errors state
-  const [showMultipleErrors, setShowMultipleErrors] = useState(false);
-
-  // Custom animation states
+const BasicErrorViewContent = () => {
   const [slideError, setSlideError] = useState(false);
-  const [zoomError, setZoomError] = useState(false);
 
   return (
-    <ScreenScrollView contentContainerClassName="gap-16">
-      <SectionTitle title="Basic ErrorView" />
-      <View className="flex-row items-center gap-4">
+    <View className="flex-1 items-center justify-center px-5">
+      <View className="w-full h-[160px] justify-between">
+        <TextField isInvalid={slideError} isRequired>
+          <TextField.Label isInvalid={false}>Username</TextField.Label>
+          <TextField.Input
+            placeholder="Enter username"
+            editable={false}
+            isInvalid={false}
+          />
+          <TextField.ErrorMessage>
+            Username is already taken
+          </TextField.ErrorMessage>
+        </TextField>
         <Button
-          onPress={() => setBasicError(!basicError)}
-          variant="tertiary"
+          variant="secondary"
+          onPress={() => setSlideError(!slideError)}
           size="sm"
           className="self-start"
         >
           Toggle Error
         </Button>
-        <ErrorView isInvalid={basicError}>
-          This is a basic error message
-        </ErrorView>
       </View>
+    </View>
+  );
+};
 
-      <SectionTitle title="Custom Content with Icons" />
+const CustomTextWithIconsContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
       <View className="gap-4">
         <ErrorView isInvalid={true}>
           <View className="flex-row items-center gap-2">
-            <Ionicons name="close-circle" size={16} color={colors.danger} />
+            <StyledIonicons
+              name="close-circle"
+              size={16}
+              className="text-danger"
+            />
             <AppText className="text-danger text-sm">
-              Critical error occurred
+              Payment method declined
             </AppText>
           </View>
         </ErrorView>
 
         <ErrorView isInvalid={true}>
           <View className="flex-row items-center gap-2">
-            <Ionicons name="warning" size={16} color={colors.warning} />
+            <StyledIonicons name="warning" size={16} className="text-warning" />
             <AppText className="text-warning text-sm">
-              Warning: Check your input
+              Account verification pending
             </AppText>
           </View>
         </ErrorView>
 
         <ErrorView isInvalid={true}>
           <View className="flex-row items-center gap-2">
-            <Ionicons
+            <StyledIonicons
               name="information-circle"
               size={16}
-              color={colors.accent}
+              className="text-foreground"
             />
-            <AppText className="text-accent text-sm">
-              Information: Field requires attention
+            <AppText className="text-foreground text-sm">
+              Profile completion required
             </AppText>
           </View>
         </ErrorView>
       </View>
+    </View>
+  );
+};
 
-      <SectionTitle title="Custom Animations - Slide" />
-      <View className="gap-8">
-        <Button
-          onPress={() => setSlideError(!slideError)}
-          variant="tertiary"
-          size="sm"
-          className="self-start"
-        >
-          Toggle Slide Error
-        </Button>
-        <TextField isInvalid={slideError}>
-          <TextField.Label>Field with Slide Animation</TextField.Label>
-          <TextField.Input
-            placeholder="Toggle to see slide animation"
-            editable={false}
-          />
-          <TextField.ErrorMessage
-            entering={FadeInLeft.duration(200)}
-            exiting={FadeOutLeft.duration(100)}
-          >
-            This error slides in from the left
-          </TextField.ErrorMessage>
-        </TextField>
-      </View>
-
-      <SectionTitle title="Custom Animations - Zoom" />
-      <View className="gap-8">
-        <Button
-          onPress={() => setZoomError(!zoomError)}
-          variant="tertiary"
-          size="sm"
-          className="self-start"
-        >
-          Toggle Zoom Error
-        </Button>
-        <TextField isInvalid={zoomError}>
-          <TextField.Label>Field with Zoom Animation</TextField.Label>
-          <TextField.Input
-            placeholder="Toggle to see zoom animation"
-            editable={false}
-          />
-          <TextField.ErrorMessage
-            entering={ZoomIn.duration(300)}
-            exiting={ZoomOut.duration(200)}
-          >
-            This error zooms in and out
-          </TextField.ErrorMessage>
-        </TextField>
-      </View>
-
-      <SectionTitle title="Custom Styling" />
+const CustomStylingContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
       <View className="gap-4">
         <ErrorView
           isInvalid={true}
-          className="bg-danger/10 p-3 rounded-lg border border-danger/20"
+          className="bg-danger/10 p-3 rounded-xl border border-danger/20"
           classNames={{
             text: 'text-danger font-semibold text-sm',
           }}
         >
-          Styled error with background and border
+          Server connection failed. Please try again.
         </ErrorView>
 
         <ErrorView
           isInvalid={true}
-          className="bg-warning/10 p-2 rounded"
+          className="bg-amber-500/10 p-2 rounded"
           classNames={{
-            text: 'text-warning text-xs italic',
+            text: 'text-amber-600 text-xs italic',
           }}
         >
-          Warning styled error message
+          Session will expire in 5 minutes
         </ErrorView>
 
         <ErrorView
           isInvalid={true}
-          className="border-l-4 border-danger pl-3"
+          className="border-l-4 border-danger pl-2"
           classNames={{
             text: 'text-danger text-sm',
           }}
         >
-          Error with left border accent
+          Invalid credentials provided
         </ErrorView>
       </View>
+    </View>
+  );
+};
 
-      <SectionTitle title="Multiple Errors Example" />
-      <View className="gap-8">
-        <Button
-          onPress={() => setShowMultipleErrors(!showMultipleErrors)}
-          variant={showMultipleErrors ? 'danger' : 'primary'}
-          size="sm"
-          className="self-start"
-        >
-          {showMultipleErrors ? 'Hide All Errors' : 'Show All Errors'}
-        </Button>
+const InlineErrorMessagesContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <View className="gap-4 w-full">
+        <TextField>
+          <TextField.Label>Email Address</TextField.Label>
+          <View className="flex-row items-center gap-2">
+            <TextField.Input
+              placeholder="user@example"
+              value="user@example"
+              editable={false}
+              className="flex-1"
+            />
+            <ErrorView isInvalid={true}>
+              <AppText className="text-danger text-xs">Invalid email</AppText>
+            </ErrorView>
+          </View>
+        </TextField>
+
+        <TextField>
+          <TextField.Label>Phone Number</TextField.Label>
+          <View className="flex-row items-center gap-2">
+            <TextField.Input
+              placeholder="+1 (555) 000-0000"
+              value=""
+              editable={false}
+              className="flex-1"
+            />
+            <ErrorView isInvalid={true}>
+              <View className="flex-row items-center gap-1">
+                <StyledIonicons
+                  name="warning"
+                  size={14}
+                  className="text-danger"
+                />
+                <AppText className="text-danger text-xs">Required</AppText>
+              </View>
+            </ErrorView>
+          </View>
+        </TextField>
+      </View>
+    </View>
+  );
+};
+
+const MultipleErrorsContent = () => {
+  const [showMultipleErrors, setShowMultipleErrors] = useState(false);
+
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <View className="w-full h-[240px] justify-between">
         <View className="gap-2">
           <TextField>
-            <TextField.Label>Form Field</TextField.Label>
+            <TextField.Label>Create Password</TextField.Label>
             <TextField.Input
-              placeholder="This field has multiple validation rules"
+              placeholder="Enter your password"
+              secureTextEntry
               editable={false}
             />
           </TextField>
 
           <View className="gap-2">
             <ErrorView isInvalid={showMultipleErrors}>
-              • Field cannot be empty
+              • At least 8 characters long
             </ErrorView>
             <ErrorView
               isInvalid={showMultipleErrors}
               entering={FadeInDown.delay(100)}
             >
-              • Must contain only alphanumeric characters
+              • At least one uppercase letter
             </ErrorView>
             <ErrorView
               isInvalid={showMultipleErrors}
               entering={FadeInDown.delay(200)}
             >
-              • Length must be between 5 and 50 characters
+              • At least one number
             </ErrorView>
             <ErrorView
               isInvalid={showMultipleErrors}
               entering={FadeInDown.delay(300)}
             >
-              • Cannot contain special characters
+              • At least one special character (!@#$%^&*)
             </ErrorView>
           </View>
         </View>
+        <Button
+          variant="secondary"
+          onPress={() => setShowMultipleErrors(!showMultipleErrors)}
+          size="sm"
+          className="self-start"
+        >
+          {showMultipleErrors ? 'Hide Errors' : 'Validate Password'}
+        </Button>
       </View>
-
-      <SectionTitle title="Inline Error Messages" />
-      <View className="gap-4">
-        <View className="flex-row items-center gap-4">
-          <TextField className="flex-1">
-            <TextField.Input
-              placeholder="Inline error example"
-              value="Invalid"
-              editable={false}
-            />
-          </TextField>
-          <ErrorView isInvalid={true}>
-            <AppText className="text-danger text-xs">Invalid format</AppText>
-          </ErrorView>
-        </View>
-
-        <View className="flex-row items-center gap-4">
-          <TextField className="flex-1">
-            <TextField.Input
-              placeholder="Another inline example"
-              value="Error"
-              editable={false}
-            />
-          </TextField>
-          <ErrorView isInvalid={true}>
-            <View className="flex-row items-center gap-1">
-              <Ionicons name="warning" size={14} color={colors.danger} />
-              <AppText className="text-danger text-xs">Required</AppText>
-            </View>
-          </ErrorView>
-        </View>
-      </View>
-    </ScreenScrollView>
+    </View>
   );
+};
+
+const ERROR_VIEW_VARIANTS: UsageVariant[] = [
+  {
+    value: 'basic-error-view',
+    label: 'Basic ErrorView',
+    content: <BasicErrorViewContent />,
+  },
+  {
+    value: 'custom-text-with-icons',
+    label: 'Custom text with icons',
+    content: <CustomTextWithIconsContent />,
+  },
+  {
+    value: 'custom-styling',
+    label: 'Custom styling',
+    content: <CustomStylingContent />,
+  },
+  {
+    value: 'inline-error-messages',
+    label: 'Inline error messages',
+    content: <InlineErrorMessagesContent />,
+  },
+  {
+    value: 'multiple-errors',
+    label: 'Multiple errors',
+    content: <MultipleErrorsContent />,
+  },
+];
+
+export default function ErrorViewScreen() {
+  return <UsageVariantFlatList data={ERROR_VIEW_VARIANTS} />;
 }

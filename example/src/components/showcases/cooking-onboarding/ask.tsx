@@ -3,14 +3,17 @@ import {
   Button,
   cn,
   Popover,
-  useTheme,
+  useThemeColor,
   type PopoverTriggerRef,
 } from 'heroui-native';
 import { type FC, type RefObject } from 'react';
+import { withUniwind } from 'uniwind';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
 import { progressAnimationConfigs } from './constants';
 import { className } from './styles';
+
+const StyledIonicons = withUniwind(Ionicons);
 
 type Props = {
   isOnboardingDone: boolean;
@@ -18,7 +21,7 @@ type Props = {
 };
 
 export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <Popover>
@@ -30,7 +33,11 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
           )}
           onPress={isOnboardingDone ? simulatePress : undefined}
         >
-          <Ionicons name="sparkles-sharp" size={14} color="#fdba74" />
+          <StyledIonicons
+            name="sparkles-sharp"
+            size={14}
+            className="text-orange-300"
+          />
           <AppText className="text-lg text-foreground font-semibold">
             Ask
           </AppText>
@@ -41,7 +48,10 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
           className={cn(className.popoverContent, 'w-[240px]')}
           placement="top"
         >
-          <Popover.Arrow stroke={colors.foreground} fill={colors.foreground} />
+          <Popover.Arrow
+            stroke={themeColorForeground}
+            fill={themeColorForeground}
+          />
           <AppText className={className.popoverText}>
             Chat with AI to get recipe suggestions and cooking tips
           </AppText>

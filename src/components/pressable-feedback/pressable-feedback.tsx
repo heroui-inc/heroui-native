@@ -21,8 +21,9 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { useUniwind } from 'uniwind';
+import { colorKit, useThemeColor } from '../../helpers/theme';
 import type { PressableRef } from '../../helpers/types';
-import { colorKit, useTheme } from '../../providers/theme';
 import {
   DEFAULT_PRESSABLE_FEEDBACK_HIGHLIGHT,
   DEFAULT_PRESSABLE_FEEDBACK_PLATFORM,
@@ -52,11 +53,13 @@ const HighlightComponent: FC<HighlightComponentProps> = ({
   animationConfig,
   isPressed,
 }) => {
-  const { colors, isDark } = useTheme();
+  const { theme } = useUniwind();
+  const themeColorBackground = useThemeColor('background');
 
-  const defaultColor = isDark
-    ? colorKit.brighten(colors.background, 0.05).hex()
-    : colorKit.darken(colors.background, 0.05).hex();
+  const defaultColor =
+    theme === 'dark'
+      ? colorKit.brighten(themeColorBackground, 0.05).hex()
+      : colorKit.darken(themeColorBackground, 0.05).hex();
 
   const rContainerStyle = useAnimatedStyle(() => {
     const backgroundColor = animationConfig?.color ?? defaultColor;

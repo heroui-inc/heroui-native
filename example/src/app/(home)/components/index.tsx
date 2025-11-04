@@ -1,19 +1,21 @@
 import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useRouter } from 'expo-router';
-import { Accordion, useTheme } from 'heroui-native';
+import { Accordion } from 'heroui-native';
 import { View } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 
-const ComponentIcon = () => {
-  const { colors } = useTheme();
+const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
+const StyledIonicons = withUniwind(Ionicons);
 
+const ComponentIcon = () => {
   return (
-    <MaterialCommunityIcons
+    <StyledMaterialCommunityIcons
       name="atom"
       size={16}
-      color={colors.mutedForeground}
+      className="text-muted"
     />
   );
 };
@@ -64,11 +66,6 @@ const components: Component[] = [
     title: 'Divider',
     icon: <ComponentIcon />,
     path: 'divider',
-  },
-  {
-    title: 'Drop Shadow View',
-    icon: <ComponentIcon />,
-    path: 'drop-shadow-view',
   },
   {
     title: 'Error View',
@@ -135,29 +132,24 @@ const components: Component[] = [
 export default function App() {
   const router = useRouter();
 
-  const { colors } = useTheme();
-
   return (
-    <ScreenScrollView>
+    <ScreenScrollView contentContainerClassName="px-4">
       <View className="h-5" />
-      <Accordion variant="border" isCollapsible={false}>
+      <Accordion isCollapsible={false} variant="surface">
         {components.map((item) => (
           <Accordion.Item key={item.title} value={item.title}>
             <Accordion.Trigger
-              className="bg-surface-2"
+              highlightOpacity={0.25}
               onPress={() => router.push(`/components/${item.path}`)}
             >
-              <View className="flex-row items-center flex-1 gap-3">
-                {item.icon}
-                <AppText className="text-foreground text-base flex-1">
-                  {item.title}
-                </AppText>
-              </View>
+              <AppText className="text-foreground text-base ml-1">
+                {item.title}
+              </AppText>
               <Accordion.Indicator>
-                <Ionicons
+                <StyledIonicons
                   name="chevron-forward"
                   size={16}
-                  color={colors.mutedForeground}
+                  className="text-muted"
                 />
               </Accordion.Indicator>
             </Accordion.Trigger>

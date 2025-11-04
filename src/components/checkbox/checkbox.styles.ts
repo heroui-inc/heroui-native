@@ -1,8 +1,9 @@
+import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../providers/theme/helpers';
+import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
-  base: 'relative border items-center justify-center overflow-hidden w-6 h-6 rounded-[6px]',
+  base: 'size-6 border rounded-[8px] items-center justify-center overflow-hidden',
   variants: {
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',
@@ -13,18 +14,19 @@ const root = tv({
   },
 });
 
-const background = tv({
-  base: 'absolute inset-0 rounded-[5px]',
-});
-
 const indicator = tv({
   base: 'absolute inset-0 items-center justify-center',
 });
 
 const checkboxStyles = combineStyles({
   root,
-  background,
   indicator,
+});
+
+export const styleSheet = StyleSheet.create({
+  root: {
+    borderCurve: 'continuous',
+  },
 });
 
 export default checkboxStyles;

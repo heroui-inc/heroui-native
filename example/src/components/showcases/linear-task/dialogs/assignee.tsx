@@ -1,17 +1,21 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Avatar, Chip, Dialog, RadioGroup, useTheme } from 'heroui-native';
+import { Avatar, Chip, Dialog, RadioGroup } from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../app-text';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
 import { DialogHeader } from '../dialog-header';
 import { SearchBar } from '../search-bar';
+
+const StyledFeather = withUniwind(Feather);
+const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
 
 type AssigneeItem = {
   value: string;
@@ -22,8 +26,6 @@ type AssigneeItem = {
 export const Assignee: FC = () => {
   const [value, setValue] = useState('volo');
   const [searchQuery, setSearchQuery] = useState('');
-
-  const { colors } = useTheme();
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -37,10 +39,10 @@ export const Assignee: FC = () => {
         value: 'no-assignee',
         label: 'No Assignee',
         indicator: (
-          <MaterialCommunityIcons
+          <StyledMaterialCommunityIcons
             name="account-circle"
             size={18}
-            color={colors.mutedForeground}
+            className="text-muted"
           />
         ),
       },
@@ -77,7 +79,7 @@ export const Assignee: FC = () => {
         ),
       },
     ],
-    [colors.mutedForeground]
+    []
   );
 
   const filteredItems = useMemo(() => {
@@ -91,7 +93,7 @@ export const Assignee: FC = () => {
     <Dialog>
       <Dialog.Trigger asChild>
         <Chip
-          className="h-7 bg-surface-3 pl-1 pr-2"
+          className="h-7 bg-surface-quaternary pl-1 pr-2"
           onPress={() => {
             if (Platform.OS === 'ios') {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -110,7 +112,6 @@ export const Assignee: FC = () => {
         </Dialog.Overlay>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
           <Dialog.Content
-            className="rounded-2xl border-0"
             style={{ marginTop: insetTop, height: dialogContentHeight }}
           >
             <DialogHeader>Assignee</DialogHeader>
@@ -121,7 +122,7 @@ export const Assignee: FC = () => {
             />
             {filteredItems.length === 0 && (
               <View className="flex-1 items-center justify-center">
-                <AppText className="text-base font-medium text-muted-foreground">
+                <AppText className="text-base font-medium text-muted">
                   No results
                 </AppText>
               </View>
@@ -158,7 +159,7 @@ export const Assignee: FC = () => {
                           <View className="w-7 pl-0.5 justify-center">
                             <View className="scale-105">{item.indicator}</View>
                           </View>
-                          <RadioGroup.Title>{item.label}</RadioGroup.Title>
+                          <RadioGroup.Label>{item.label}</RadioGroup.Label>
                         </View>
                         <RadioGroup.Indicator className="border-0 bg-transparent">
                           {value === item.value && (
@@ -166,10 +167,10 @@ export const Assignee: FC = () => {
                               key={item.value}
                               entering={FadeIn.duration(200)}
                             >
-                              <Feather
+                              <StyledFeather
                                 name="check"
                                 size={18}
-                                color={colors.foreground}
+                                className="text-foreground"
                               />
                             </Animated.View>
                           )}

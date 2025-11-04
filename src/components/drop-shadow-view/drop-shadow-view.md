@@ -81,7 +81,7 @@ export default function DropShadowViewExample() {
       <View className="gap-4">
         <DropShadowView className="bg-surface-1 p-4 rounded-lg" shadowSize="sm">
           <Text className="text-foreground font-semibold">Small Shadow</Text>
-          <Text className="text-muted-foreground text-sm">
+          <Text className="text-muted text-sm">
             Subtle elevation for cards and containers
           </Text>
         </DropShadowView>
@@ -90,7 +90,7 @@ export default function DropShadowViewExample() {
           <Text className="text-lg font-semibold text-foreground mb-2">
             Card Component
           </Text>
-          <Text className="text-muted-foreground mb-4">
+          <Text className="text-muted mb-4">
             This card uses medium shadow for standard elevation.
           </Text>
           <View className="flex-row gap-2">

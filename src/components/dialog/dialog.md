@@ -255,10 +255,10 @@ export default function DialogExample() {
 
 #### DialogCloseIconProps
 
-| prop    | type     | description                                   |
-| ------- | -------- | --------------------------------------------- |
-| `size`  | `number` | Icon size (default: 18)                       |
-| `color` | `string` | Icon color (default: theme.colors.foreground) |
+| prop    | type     | description                                 |
+| ------- | -------- | ------------------------------------------- |
+| `size`  | `number` | Icon size (default: 18)                     |
+| `color` | `string` | Icon color (default: '--colors-foreground') |
 
 ### Dialog.Title
 

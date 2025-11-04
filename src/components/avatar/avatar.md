@@ -73,6 +73,20 @@ Control the avatar size with the size prop.
 </Avatar>
 ```
 
+### Variants
+
+Choose between different visual styles with the `variant` prop.
+
+```tsx
+<Avatar variant="default">
+  <Avatar.Fallback>DF</Avatar.Fallback>
+</Avatar>
+
+<Avatar variant="soft">
+  <Avatar.Fallback>SF</Avatar.Fallback>
+</Avatar>
+```
+
 ### Colors
 
 Apply different color variants to the avatar.
@@ -177,7 +191,8 @@ export default function AvatarExample() {
 | -------------- | ------------------------------------------------------------- | ----------- | -------------------------------------------------- |
 | `children`     | `React.ReactNode`                                             | -           | Avatar content (Image and/or Fallback components)  |
 | `size`         | `'sm' \| 'md' \| 'lg'`                                        | `'md'`      | Size of the avatar                                 |
-| `color`        | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Color variant of the avatar                        |
+| `variant`      | `'default' \| 'soft'`                                         | `'default'` | Visual variant of the avatar                       |
+| `color`        | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'` | `'accent'`  | Color variant of the avatar                        |
 | `className`    | `string`                                                      | -           | Additional CSS classes to apply                    |
 | `alt`          | `string`                                                      | -           | Alternative text description for accessibility     |
 | `...ViewProps` | `ViewProps`                                                   | -           | All standard React Native View props are supported |
@@ -185,19 +200,20 @@ export default function AvatarExample() {
 ### Avatar.Image
 
 Props extend different base types depending on the `asChild` prop value:
+
 - When `asChild={false}` (default): extends `AnimatedProps<ImageProps>` from React Native Reanimated
 - When `asChild={true}`: extends primitive image props for custom image components
 
 **Note:** When using `asChild={true}` with custom image components, the `className` prop may not be applied in some cases depending on the custom component's implementation. Ensure your custom component properly handles style props.
 
-| prop                    | type                                                                                                     | default                | description                                                          |
-| ----------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------- | -------------------------------------------------------------------- |
-| `source`                | `ImageSourcePropType`                                                                                    | -                      | Image source (required)                                              |
-| `asChild`               | `boolean`                                                                                                | `false`                | Whether to use a custom image component as child                     |
-| `className`             | `string`                                                                                                 | -                      | Additional CSS classes to apply                                      |
-| `entering`              | `BaseAnimationBuilder \| typeof BaseAnimationBuilder \| EntryExitAnimationFunction \| AnimationFunction` | `FadeIn.duration(200)` | Reanimated entering animation (only when `asChild={false}`)          |
-| `onLoadingStatusChange` | `(status: 'loading' \| 'loaded' \| 'error') => void`                                                     | -                      | Callback fired when the loading status changes                       |
-| `...AnimatedProps`      | `AnimatedProps<ImageProps>` or primitive props                                                          | -                      | Additional props based on `asChild` value                            |
+| prop                    | type                                                                                                     | default                | description                                                 |
+| ----------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------- | ----------------------------------------------------------- |
+| `source`                | `ImageSourcePropType`                                                                                    | -                      | Image source (required)                                     |
+| `asChild`               | `boolean`                                                                                                | `false`                | Whether to use a custom image component as child            |
+| `className`             | `string`                                                                                                 | -                      | Additional CSS classes to apply                             |
+| `entering`              | `BaseAnimationBuilder \| typeof BaseAnimationBuilder \| EntryExitAnimationFunction \| AnimationFunction` | `FadeIn.duration(200)` | Reanimated entering animation (only when `asChild={false}`) |
+| `onLoadingStatusChange` | `(status: 'loading' \| 'loaded' \| 'error') => void`                                                     | -                      | Callback fired when the loading status changes              |
+| `...AnimatedProps`      | `AnimatedProps<ImageProps>` or primitive props                                                           | -                      | Additional props based on `asChild` value                   |
 
 ### Avatar.Fallback
 

@@ -1,12 +1,16 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, RadioGroup, useTheme } from 'heroui-native';
+import { Chip, Dialog, RadioGroup } from 'heroui-native';
 import { useState, type FC } from 'react';
 import { Platform, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
 import { DialogHeader } from '../dialog-header';
+
+const StyledFeather = withUniwind(Feather);
+const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
 
 type StatusItem = {
   value: string;
@@ -17,17 +21,15 @@ type StatusItem = {
 export const Status: FC = () => {
   const [value, setValue] = useState('done');
 
-  const { colors } = useTheme();
-
   const items: StatusItem[] = [
     {
       value: 'backlog',
       label: 'Backlog',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="circle-opacity"
           size={13}
-          color={colors.mutedForeground}
+          className="text-muted"
         />
       ),
     },
@@ -35,10 +37,10 @@ export const Status: FC = () => {
       value: 'todo',
       label: 'Todo',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="circle-outline"
           size={13}
-          color={colors.foreground}
+          className="text-foreground"
         />
       ),
     },
@@ -46,10 +48,10 @@ export const Status: FC = () => {
       value: 'in-progress',
       label: 'In Progress',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="circle-slice-4"
           size={13}
-          color={colors.warning}
+          className="text-warning"
         />
       ),
     },
@@ -57,10 +59,10 @@ export const Status: FC = () => {
       value: 'in-review',
       label: 'In Review',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="circle-slice-6"
           size={13}
-          color={colors.success}
+          className="text-success"
         />
       ),
     },
@@ -68,10 +70,10 @@ export const Status: FC = () => {
       value: 'done',
       label: 'Done',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="checkbox-marked-circle"
           size={14}
-          color="#4f46e5"
+          className="text-[#4f46e5]"
         />
       ),
     },
@@ -79,10 +81,10 @@ export const Status: FC = () => {
       value: 'cancelled',
       label: 'Cancelled',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="close-circle"
           size={13}
-          color={colors.mutedForeground}
+          className="text-muted"
         />
       ),
     },
@@ -90,10 +92,10 @@ export const Status: FC = () => {
       value: 'duplicate',
       label: 'Duplicate',
       indicator: (
-        <MaterialCommunityIcons
+        <StyledMaterialCommunityIcons
           name="close-circle"
           size={13}
-          color={colors.mutedForeground}
+          className="text-muted"
         />
       ),
     },
@@ -103,7 +105,7 @@ export const Status: FC = () => {
     <Dialog>
       <Dialog.Trigger asChild>
         <Chip
-          className="h-7 bg-surface-3 px-2"
+          className="h-7 bg-surface-quaternary px-2"
           onPress={() => {
             if (Platform.OS === 'ios') {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -120,7 +122,7 @@ export const Status: FC = () => {
         <Dialog.Overlay isDefaultAnimationDisabled>
           <DialogBlurBackdrop />
         </Dialog.Overlay>
-        <Dialog.Content className="rounded-2xl border-0">
+        <Dialog.Content>
           <DialogHeader>Status</DialogHeader>
           <RadioGroup value={value} onValueChange={setValue} className="gap-7">
             {items.map((item) => (
@@ -137,7 +139,7 @@ export const Status: FC = () => {
                     <View className="w-7 pl-0.5 justify-center">
                       <View className="scale-[1.2]">{item.indicator}</View>
                     </View>
-                    <RadioGroup.Title>{item.label}</RadioGroup.Title>
+                    <RadioGroup.Label>{item.label}</RadioGroup.Label>
                   </View>
                   <RadioGroup.Indicator className="border-0 bg-transparent">
                     {value === item.value && (
@@ -145,10 +147,10 @@ export const Status: FC = () => {
                         key={item.value}
                         entering={FadeIn.duration(200)}
                       >
-                        <Feather
+                        <StyledFeather
                           name="check"
                           size={18}
-                          color={colors.foreground}
+                          className="text-foreground"
                         />
                       </Animated.View>
                     )}

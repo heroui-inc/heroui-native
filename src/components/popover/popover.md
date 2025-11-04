@@ -214,11 +214,11 @@ popoverRef.current?.close();
 
 ```tsx
 import { Ionicons } from '@expo/vector-icons';
-import { Button, Popover, useTheme } from 'heroui-native';
+import { Button, Popover, useThemeColor } from 'heroui-native';
 import { Text, View } from 'react-native';
 
 export default function PopoverExample() {
-  const { colors } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
 
   return (
     <Popover>
@@ -228,7 +228,7 @@ export default function PopoverExample() {
             <Ionicons
               name="information-circle"
               size={20}
-              color={colors.mutedForeground}
+              color={themeColorMuted}
             />
           </Button.StartContent>
           <Button.LabelContent>Show Info</Button.LabelContent>
@@ -388,7 +388,7 @@ export default function PopoverExample() {
 | prop    | type     | default              | description       |
 | ------- | -------- | -------------------- | ----------------- |
 | `size`  | `number` | `18`                 | Size of the icon  |
-| `color` | `string` | `theme.colors.muted` | Color of the icon |
+| `color` | `string` | `--colors.muted` | Color of the icon |
 
 ### Popover.Title
 

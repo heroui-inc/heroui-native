@@ -1,0 +1,97 @@
+@layer theme {
+  :root {
+    @variant alpha-light {
+      /* Base Colors */
+      --background: var(--white);
+      --foreground: var(--eclipse);
+
+      /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
+      --surface: var(--white);
+      --surface-foreground: var(--foreground);
+
+      /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
+      --overlay: var(--white);
+      --overlay-foreground: var(--foreground);
+
+      --muted: var(--color-neutral-500);
+
+      --default: var(--color-neutral-50);
+      --default-foreground: var(--eclipse);
+
+      --accent: var(--color-neutral-950);
+      --accent-foreground: var(--snow);
+
+      /* Form Field Defaults - Colors */
+      --field-background: var(--default);
+      --field-foreground: var(--foreground);
+      --field-placeholder: var(--muted);
+      --field-border: transparent;
+
+      /* Status Colors */
+      --success: oklch(0.5503 0.1244 153.56);
+      --success-foreground: var(--snow);
+
+      --warning: oklch(0.7186 0.1521 64.85);
+      --warning-foreground: var(--eclipse);
+
+      --danger: oklch(0.6259 0.1908 29.19);
+      --danger-foreground: var(--snow);
+
+      /* Component Colors */
+      --segment: var(--white);
+      --segment-foreground: var(--eclipse);
+
+      /* Misc Colors */
+      --border: var(--color-neutral-200);
+      --divider: var(--color-neutral-400);
+      --link: var(--foreground);
+    }
+
+    @variant alpha-dark {
+      /* Base Colors */
+      --background: var(--black);
+      --foreground: var(--snow);
+
+      /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
+      --surface: var(--eclipse);
+      --surface-foreground: var(--foreground);
+
+      /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
+      --overlay: var(--color-neutral-800);
+      --overlay-foreground: var(--foreground);
+
+      --muted: var(--color-neutral-400);
+
+      --default: var(--color-neutral-900);
+      --default-foreground: var(--snow);
+
+      --accent: var(--color-neutral-50);
+      --accent-foreground: var(--eclipse);
+
+      /* Form Field Defaults - Colors */
+      --field-background: var(--default);
+      --field-foreground: var(--foreground);
+      --field-placeholder: var(--muted);
+      --field-border: transparent;
+
+      /* Status Colors */
+      --success: oklch(0.5503 0.1244 153.56);
+      --success-foreground: var(--snow);
+
+      --warning: oklch(85% 0.1414 77.88);
+      --warning-foreground: var(--eclipse);
+
+      --danger: oklch(0.5798 0.1635 30.83);
+      --danger-foreground: var(--snow);
+
+      /* Component Colors */
+      --segment: var(--color-neutral-900);
+      --segment-foreground: var(--foreground);
+
+      /* Misc Colors */
+      --border: var(--color-neutral-800);
+      --divider: var(--color-neutral-600);
+      --link: var(--foreground);
+    }
+  }
+}

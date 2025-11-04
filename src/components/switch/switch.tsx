@@ -6,10 +6,10 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { useThemeColor } from '../../helpers/theme';
 import { createContext } from '../../helpers/utils';
 import * as SwitchPrimitives from '../../primitives/switch';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
-import { useTheme } from '../../providers/theme';
 import {
   DEFAULT_SPRING_CONFIG,
   DEFAULT_THUMB_WIDTH,
@@ -55,7 +55,12 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       ...restProps
     } = props;
 
-    const { colors: themeColors } = useTheme();
+    const themeColorAccent = useThemeColor('accent');
+    const themeColorSuccess = useThemeColor('success');
+    const themeColorWarning = useThemeColor('warning');
+    const themeColorDanger = useThemeColor('danger');
+    const themeColorBorder = useThemeColor('border');
+    const themeColorSurfaceQuaternary = useThemeColor('surface-quaternary');
 
     const { container, contentPaddingContainer, contentContainer } =
       switchStyles.root({
@@ -75,17 +80,17 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
     });
 
     const backgroundColorMap: Record<SwitchColor, string> = {
-      default: themeColors.accent,
-      success: themeColors.success,
-      warning: themeColors.warning,
-      danger: themeColors.danger,
+      default: themeColorAccent,
+      success: themeColorSuccess,
+      warning: themeColorWarning,
+      danger: themeColorDanger,
     };
 
     const borderColorMap: Record<SwitchColor, string> = {
-      default: themeColors.accent,
-      success: themeColors.success,
-      warning: themeColors.warning,
-      danger: themeColors.danger,
+      default: themeColorAccent,
+      success: themeColorSuccess,
+      warning: themeColorWarning,
+      danger: themeColorDanger,
     };
 
     const contentContainerWidth = useSharedValue(0);
@@ -98,13 +103,13 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
         backgroundColor: withTiming(
           isSelected
             ? (colors?.selectedBackground ?? backgroundColorMap[color])
-            : (colors?.defaultBackground ?? themeColors.default),
+            : (colors?.defaultBackground ?? themeColorSurfaceQuaternary),
           timingConfig
         ),
         borderColor: withTiming(
           isSelected
             ? (colors?.selectedBorder ?? borderColorMap[color])
-            : (colors?.defaultBorder ?? themeColors.border),
+            : (colors?.defaultBorder ?? themeColorBorder),
           timingConfig
         ),
       };
@@ -168,7 +173,7 @@ const SwitchThumb = forwardRef<
 
   const { isSelected, contentContainerWidth } = useSwitchContext();
 
-  const { colors: themeColors } = useTheme();
+  const themeColorAccentForeground = useThemeColor('accent-foreground');
 
   const tvStyles = switchStyles.thumb({
     className,
@@ -191,13 +196,13 @@ const SwitchThumb = forwardRef<
       if (isSelected) {
         return {
           right: 0,
-          backgroundColor: colors?.selectedBackground ?? themeColors.background,
+          backgroundColor:
+            colors?.selectedBackground ?? themeColorAccentForeground,
         };
       }
       return {
         left: 0,
-        backgroundColor:
-          colors?.defaultBackground ?? themeColors.mutedForeground,
+        backgroundColor: colors?.defaultBackground ?? 'white',
       };
     }
 
@@ -208,8 +213,8 @@ const SwitchThumb = forwardRef<
       ),
       backgroundColor: withTiming(
         isSelected
-          ? (colors?.selectedBackground ?? themeColors.background)
-          : (colors?.defaultBackground ?? themeColors.mutedForeground),
+          ? (colors?.selectedBackground ?? themeColorAccentForeground)
+          : (colors?.defaultBackground ?? 'white'),
         timingConfig
       ),
     };

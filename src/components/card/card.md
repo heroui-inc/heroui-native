@@ -47,15 +47,16 @@ Add header and footer sections for icons, badges, or actions.
 </Card>
 ```
 
-### Surface Variants
+### Variants
 
-Control the card's background appearance using different surface variants.
+Control the card's background appearance using different variants.
 
 ```tsx
-<Card surfaceVariant="none">...</Card>
-<Card surfaceVariant="1">...</Card>
-<Card surfaceVariant="2">...</Card>
-<Card surfaceVariant="3">...</Card>
+<Card variant="default">...</Card>
+<Card variant="secondary">...</Card>
+<Card variant="tertiary">...</Card>
+<Card variant="quaternary">...</Card>
+<Card variant="transparent">...</Card>
 ```
 
 ### Horizontal Layout
@@ -137,12 +138,12 @@ export default function CardExample() {
 
 ### Card
 
-| prop             | type                          | default | description                                        |
-| ---------------- | ----------------------------- | ------- | -------------------------------------------------- |
-| `children`       | `React.ReactNode`             | -       | Content to be rendered inside the card             |
-| `surfaceVariant` | `'none' \| '1' \| '2' \| '3'` | `'1'`   | Visual variant of the card surface                 |
-| `className`      | `string`                      | -       | Additional CSS classes to apply                    |
-| `...ViewProps`   | `ViewProps`                   | -       | All standard React Native View props are supported |
+| prop           | type                                                                            | default     | description                                        |
+| -------------- | ------------------------------------------------------------------------------- | ----------- | -------------------------------------------------- |
+| `children`     | `React.ReactNode`                                                               | -           | Content to be rendered inside the card             |
+| `variant`      | `'default' \| 'secondary' \| 'tertiary' \| 'quaternary' \| 'transparent'`       | `'default'` | Visual variant of the card surface                 |
+| `className`    | `string`                                                                        | -           | Additional CSS classes to apply                    |
+| `...ViewProps` | `ViewProps`                                                                     | -           | All standard React Native View props are supported |
 
 ### Card.Header
 

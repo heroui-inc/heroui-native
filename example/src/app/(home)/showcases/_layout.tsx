@@ -1,9 +1,9 @@
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
-import { useTheme } from 'heroui-native';
+import { useThemeColor } from 'heroui-native';
 
 export default function Layout() {
-  const { colors } = useTheme();
+  const themeColorBackground = useThemeColor('background');
 
   return (
     <Stack
@@ -14,7 +14,7 @@ export default function Layout() {
         fullScreenGestureEnabled: isLiquidGlassAvailable() ? false : true,
         animation: 'none',
         contentStyle: {
-          backgroundColor: colors.background,
+          backgroundColor: themeColorBackground,
         },
       }}
     >

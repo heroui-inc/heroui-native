@@ -129,7 +129,7 @@ export default function SkeletonExample() {
             <Text className="font-semibold text-foreground">John Doe</Text>
           </Skeleton>
           <Skeleton isLoading={isLoading} className="h-3 w-24 rounded-md">
-            <Text className="text-sm text-muted-foreground">@johndoe</Text>
+            <Text className="text-sm text-muted">@johndoe</Text>
           </Skeleton>
         </View>
       </View>
@@ -142,7 +142,7 @@ export default function SkeletonExample() {
           speed: 1,
         }}
       >
-        <View className="h-48 bg-surface-3 rounded-lg overflow-hidden">
+        <View className="h-48 bg-surface-tertiary rounded-lg overflow-hidden">
           <Image
             source={{
               uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/car1.jpg',

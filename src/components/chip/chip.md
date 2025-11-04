@@ -38,6 +38,7 @@ Choose between different visual styles with the `variant` prop.
 <Chip variant="primary">Primary</Chip>
 <Chip variant="secondary">Secondary</Chip>
 <Chip variant="tertiary">Tertiary</Chip>
+<Chip variant="soft">Soft</Chip>
 ```
 
 ### Colors
@@ -141,7 +142,7 @@ export default function ChipExample() {
 | ---------------------------- | ------------------------------------------------------------- | ------------------------------ | ---------------------------------------------------- |
 | `children`                   | `React.ReactNode`                                             | -                              | Content to render inside the chip                    |
 | `size`                       | `'sm' \| 'md' \| 'lg'`                                        | `'md'`                         | Size of the chip                                     |
-| `variant`                    | `'primary' \| 'secondary' \| 'tertiary'`                      | `'primary'`                    | Visual variant of the chip                           |
+| `variant`                    | `'primary' \| 'secondary' \| 'tertiary' \| 'soft'`            | `'primary'`                    | Visual variant of the chip                           |
 | `color`                      | `'accent' \| 'default' \| 'success' \| 'warning' \| 'danger'` | `'accent'`                     | Color theme of the chip                              |
 | `className`                  | `string`                                                      | -                              | Additional CSS classes to apply                      |
 | `layout`                     | `BaseAnimationBuilder \| LayoutAnimationFunction`             | `LinearTransition.springify()` | Layout transition for animated components            |

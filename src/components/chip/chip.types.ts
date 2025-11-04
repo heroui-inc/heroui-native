@@ -13,7 +13,7 @@ export type ChipSize = 'sm' | 'md' | 'lg';
 /**
  * Chip variant types
  */
-export type ChipVariant = 'primary' | 'secondary' | 'tertiary';
+export type ChipVariant = 'primary' | 'secondary' | 'tertiary' | 'soft';
 
 /**
  * Chip color variants

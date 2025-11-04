@@ -3,14 +3,17 @@ import {
   Button,
   cn,
   Popover,
-  useTheme,
+  useThemeColor,
   type PopoverTriggerRef,
 } from 'heroui-native';
 import { type FC, type RefObject } from 'react';
+import { withUniwind } from 'uniwind';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
 import { progressAnimationConfigs } from './constants';
 import { className } from './styles';
+
+const StyledEntypo = withUniwind(Entypo);
 
 type Props = {
   isOnboardingDone: boolean;
@@ -18,7 +21,7 @@ type Props = {
 };
 
 export const Plan: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <Popover>
@@ -30,7 +33,7 @@ export const Plan: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
           )}
           onPress={isOnboardingDone ? simulatePress : undefined}
         >
-          <Entypo name="plus" size={16} color="#fdba74" />
+          <StyledEntypo name="plus" size={16} className="text-orange-300" />
           <AppText className="text-lg text-foreground font-semibold">
             Plan
           </AppText>
@@ -38,7 +41,10 @@ export const Plan: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
       </Popover.Trigger>
       <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
         <Popover.Content className={className.popoverContent} placement="top">
-          <Popover.Arrow stroke={colors.foreground} fill={colors.foreground} />
+          <Popover.Arrow
+            stroke={themeColorForeground}
+            fill={themeColorForeground}
+          />
           <AppText className={className.popoverText}>
             Create and organize your meal plans
           </AppText>

@@ -7,10 +7,10 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { useThemeColor } from '../../helpers/theme/hooks/use-theme-color';
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as AccordionPrimitive from '../../primitives/accordion';
-import { useTheme } from '../../providers/theme';
 import {
   ACCORDION_LAYOUT_TRANSITION,
   DEFAULT_CONTENT_ENTERING,
@@ -20,7 +20,7 @@ import {
   HIGHLIGHT_CONFIG,
   INDICATOR_SPRING_CONFIG,
 } from './accordion.constants';
-import accordionStyles from './accordion.styles';
+import accordionStyles, { styleSheet } from './accordion.styles';
 import type {
   AccordionContentProps,
   AccordionContextValue,
@@ -61,6 +61,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     isDividerVisible = true,
     className,
     classNames,
+    style,
     layout = ACCORDION_LAYOUT_TRANSITION,
     ...restProps
   } = props;
@@ -87,11 +88,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
       <AnimatedRootView
         ref={ref}
         className={containerStyles}
-        style={
-          variant === 'border'
-            ? accordionStyles.styleSheet.borderContainer
-            : undefined
-        }
+        style={[styleSheet.root, style]}
         layout={layout}
         {...restProps}
       >
@@ -136,7 +133,7 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
     children,
     className,
     highlightColor,
-    highlightOpacity: highlightOpacityProp = 0.03,
+    highlightOpacity: highlightOpacityProp = 0.5,
     highlightTimingConfig,
     isHighlightVisible = true,
     ...restProps
@@ -144,7 +141,8 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 
   const { variant } = useAccordionContext();
 
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('background-secondary');
+  const themeColorSurfaceHover = useThemeColor('on-surface-hover');
 
   const tvStyles = accordionStyles.trigger({
     variant,
@@ -185,7 +183,9 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 
   const animatedHighlightStyle = useAnimatedStyle(() => ({
     opacity: highlightOpacity.get() * highlightOpacityProp,
-    backgroundColor: highlightColor || colors.foreground,
+    backgroundColor:
+      highlightColor ||
+      (variant === 'surface' ? themeColorSurfaceHover : themeColorForeground),
   }));
 
   return (
@@ -215,7 +215,7 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
 
   const { isExpanded } = useAccordionItemContext();
 
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   const tvStyles = accordionStyles.indicator({ className });
 
@@ -254,7 +254,7 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
     >
       <ChevronDownIcon
         size={iconProps?.size ?? DEFAULT_ICON_SIZE}
-        color={iconProps?.color ?? colors.foreground}
+        color={iconProps?.color ?? themeColorForeground}
       />
     </AnimatedIndicator>
   );

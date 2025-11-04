@@ -4,9 +4,12 @@ import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import type { TextRef, ViewRef } from '../../helpers/types';
-import { createContext, getElementWithDefault } from '../../helpers/utils';
+import {
+  childrenToString,
+  createContext,
+  getElementWithDefault,
+} from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
-import { useTheme } from '../../providers/theme';
 import { ErrorView } from '../error-view';
 import { FormField } from '../form-field';
 import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './radio-group.constants';
@@ -18,8 +21,9 @@ import type {
   RadioGroupIndicatorThumbProps,
   RadioGroupItemContextValue,
   RadioGroupItemProps,
+  RadioGroupItemRenderProps,
+  RadioGroupLabelProps,
   RadioGroupProps,
-  RadioGroupTitleProps,
 } from './radio-group.types';
 
 const AnimatedRadioItem = Animated.createAnimatedComponent(
@@ -30,12 +34,12 @@ const AnimatedRadioIndicator = Animated.createAnimatedComponent(
   RadioGroupPrimitives.Indicator
 );
 
-const [RadioGroupItemProvider, useRadioGroupItemContext] =
+const [RadioGroupItemProvider, useRadioGroupItem] =
   createContext<RadioGroupItemContextValue>({
     name: 'RadioGroupItemContext',
   });
 
-const useRadioGroupContext = RadioGroupPrimitives.useRadioGroupContext;
+const useRadioGroup = RadioGroupPrimitives.useRadioGroupContext;
 
 // --------------------------------------------------
 
@@ -65,21 +69,19 @@ const RadioGroupItem = forwardRef<
   RadioGroupPrimitives.ItemRef,
   RadioGroupItemProps
 >((props, ref) => {
-  const {
-    children,
-    value,
-    color = 'default',
-    isDisabled,
-    isInvalid,
-    className,
-    ...restProps
-  } = props;
+  const { children, value, isDisabled, isInvalid, className, ...restProps } =
+    props;
+
+  const stringifiedChildren =
+    typeof children === 'function'
+      ? null
+      : childrenToString(children as React.ReactNode);
 
   const {
     value: groupValue,
     isInvalid: groupIsInvalid,
     isDisabled: groupIsDisabled,
-  } = useRadioGroupContext();
+  } = useRadioGroup();
 
   const isSelected = groupValue === value;
 
@@ -94,12 +96,28 @@ const RadioGroupItem = forwardRef<
 
   const contextValue = useMemo(
     () => ({
-      color,
       isSelected,
       isDisabled: isDisabledValue,
       isInvalid: effectiveIsInvalid,
     }),
-    [color, isSelected, isDisabledValue, effectiveIsInvalid]
+    [isSelected, isDisabledValue, effectiveIsInvalid]
+  );
+
+  const renderProps: RadioGroupItemRenderProps = {
+    isSelected,
+    isDisabled: isDisabledValue,
+    isInvalid: effectiveIsInvalid,
+  };
+
+  const content = stringifiedChildren ? (
+    <>
+      <RadioGroupLabel>{stringifiedChildren}</RadioGroupLabel>
+      <RadioGroupIndicator />
+    </>
+  ) : typeof children === 'function' ? (
+    children(renderProps)
+  ) : (
+    children
   );
 
   return (
@@ -112,14 +130,7 @@ const RadioGroupItem = forwardRef<
         hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
         {...restProps}
       >
-        {typeof children === 'string' ? (
-          <>
-            <RadioGroupTitle>{children}</RadioGroupTitle>
-            <RadioGroupIndicator />
-          </>
-        ) : (
-          children
-        )}
+        {content}
       </AnimatedRadioItem>
     </RadioGroupItemProvider>
   );
@@ -131,7 +142,7 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
   (props, ref) => {
     const { children, className, style, ...restProps } = props;
 
-    const { color, isSelected, isInvalid } = useRadioGroupItemContext();
+    const { isSelected, isInvalid } = useRadioGroupItem();
 
     const thumbElement = useMemo(
       () =>
@@ -144,7 +155,6 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
     );
 
     const tvStyles = radioGroupStyles.itemIndicator({
-      color,
       isSelected,
       isInvalid,
       className,
@@ -171,13 +181,10 @@ const RadioGroupIndicatorThumb = forwardRef<
 >((props, ref) => {
   const { className, style, ...restProps } = props;
 
-  const { isSelected } = useRadioGroupItemContext();
-
-  const { theme } = useTheme();
+  const { isSelected } = useRadioGroupItem();
 
   const tvStyles = radioGroupStyles.itemIndicatorThumb({
     isSelected,
-    isDark: theme === 'dark',
     className,
   });
 
@@ -205,7 +212,7 @@ const RadioGroupIndicatorThumb = forwardRef<
 
 // --------------------------------------------------
 
-const RadioGroupTitle = forwardRef<TextRef, RadioGroupTitleProps>(
+const RadioGroupLabel = forwardRef<TextRef, RadioGroupLabelProps>(
   (props, ref) => {
     return <FormField.Title ref={ref} {...props} />;
   }
@@ -225,7 +232,7 @@ const RadioGroupErrorMessage = forwardRef<ViewRef, RadioGroupErrorMessageProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
 
-    const { isInvalid } = useRadioGroupContext();
+    const { isInvalid } = useRadioGroup();
 
     const tvStyles = radioGroupStyles.errorMessage({
       className,
@@ -246,7 +253,7 @@ RadioGroupRoot.displayName = DISPLAY_NAME.RADIO_GROUP_ROOT;
 RadioGroupItem.displayName = DISPLAY_NAME.RADIO_GROUP_ITEM;
 RadioGroupIndicator.displayName = DISPLAY_NAME.RADIO_GROUP_INDICATOR;
 RadioGroupIndicatorThumb.displayName = DISPLAY_NAME.RADIO_GROUP_INDICATOR_THUMB;
-RadioGroupTitle.displayName = DISPLAY_NAME.RADIO_GROUP_TITLE;
+RadioGroupLabel.displayName = DISPLAY_NAME.RADIO_GROUP_TITLE;
 RadioGroupDescription.displayName = DISPLAY_NAME.RADIO_GROUP_DESCRIPTION;
 RadioGroupErrorMessage.displayName = DISPLAY_NAME.RADIO_GROUP_ERROR_MESSAGE;
 
@@ -269,7 +276,7 @@ RadioGroupErrorMessage.displayName = DISPLAY_NAME.RADIO_GROUP_ERROR_MESSAGE;
  * @component RadioGroup.IndicatorThumb - Optional inner circle that appears when selected. Animates
  * scale based on selection. Can be replaced with custom content.
  *
- * @component RadioGroup.Title - Optional text title for the radio option. Clickable by default and
+ * @component RadioGroup.Label - Optional text label for the radio option. Clickable by default and
  * linked to the radio for accessibility.
  *
  * @component RadioGroup.Description - Optional secondary text below the label. Provides additional
@@ -289,11 +296,11 @@ const CompoundRadioGroup = Object.assign(RadioGroupRoot, {
   Indicator: RadioGroupIndicator,
   /** @optional Custom indicator thumb that appears when selected */
   IndicatorThumb: RadioGroupIndicatorThumb,
-  /** @optional Clickable text title */
-  Title: RadioGroupTitle,
+  /** @optional Clickable text label */
+  Label: RadioGroupLabel,
   /** @optional Secondary descriptive text */
   Description: RadioGroupDescription,
 });
 
 export default CompoundRadioGroup;
-export { useRadioGroupContext, useRadioGroupItemContext };
+export { useRadioGroup, useRadioGroupItem };

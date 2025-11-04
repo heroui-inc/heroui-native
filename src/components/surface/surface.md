@@ -22,22 +22,22 @@ The Surface component creates a container with consistent padding and styling.
 
 ### Variants
 
-Control the visual appearance with different elevation levels.
+Control the visual appearance with different surface levels.
 
 ```tsx
-<Surface variant="none">
+<Surface variant="default">
   ...
 </Surface>
 
-<Surface variant="1">
+<Surface variant="secondary">
   ...
 </Surface>
 
-<Surface variant="2">
+<Surface variant="tertiary">
   ...
 </Surface>
 
-<Surface variant="3">
+<Surface variant="quaternary">
   ...
 </Surface>
 ```
@@ -47,11 +47,14 @@ Control the visual appearance with different elevation levels.
 Create visual hierarchy by nesting surfaces with different variants.
 
 ```tsx
-<Surface variant="1">
+<Surface variant="default">
   ...
-  <Surface variant="2">
+  <Surface variant="secondary">
     ...
-    <Surface variant="3">...</Surface>
+    <Surface variant="tertiary">
+      ...
+      <Surface variant="quaternary">...</Surface>
+    </Surface>
   </Surface>
 </Surface>
 ```
@@ -65,7 +68,7 @@ Apply custom styles using className or style props.
   ...
 </Surface>
 
-<Surface variant="none" className="p-0">
+<Surface variant="quaternary" className="p-0">
   ...
 </Surface>
 ```
@@ -78,27 +81,37 @@ import { Text, View } from 'react-native';
 
 export default function SurfaceExample() {
   return (
-    <View className="gap-4 p-4">
-      <Surface variant="1">
-        <View className="gap-2">
-          <Text className="text-lg font-semibold text-foreground">
-            Card Title
-          </Text>
-          <Text className="text-muted-foreground">
-            This is a surface component that provides consistent elevation and
-            styling for content containers.
-          </Text>
-        </View>
+    <View className="gap-4">
+      <Surface variant="default" className="gap-2">
+        <AppText className="text-foreground">Surface Content</AppText>
+        <AppText className="text-muted">
+          This is a default surface variant. It uses bg-surface styling.
+        </AppText>
       </Surface>
 
-      <View className="flex-row gap-4">
-        <Surface variant="2" className="flex-1">
-          <Text className="text-foreground text-center">Left Panel</Text>
-        </Surface>
-        <Surface variant="3" className="flex-1">
-          <Text className="text-foreground text-center">Right Panel</Text>
-        </Surface>
-      </View>
+      <Surface variant="secondary" className="gap-2">
+        <AppText className="text-foreground">Surface Content</AppText>
+        <AppText className="text-muted">
+          This is a secondary surface variant. It uses bg-surface-secondary
+          styling.
+        </AppText>
+      </Surface>
+
+      <Surface variant="tertiary" className="gap-2">
+        <AppText className="text-foreground">Surface Content</AppText>
+        <AppText className="text-muted">
+          This is a tertiary surface variant. It uses bg-surface-tertiary
+          styling.
+        </AppText>
+      </Surface>
+
+      <Surface variant="quaternary" className="gap-2">
+        <AppText className="text-foreground">Surface Content</AppText>
+        <AppText className="text-muted">
+          This is a quaternary surface variant. It uses bg-surface-quaternary
+          styling.
+        </AppText>
+      </Surface>
     </View>
   );
 }
@@ -108,9 +121,9 @@ export default function SurfaceExample() {
 
 ### Surface
 
-| prop           | type                          | default | description                                            |
-| -------------- | ----------------------------- | ------- | ------------------------------------------------------ |
-| `variant`      | `'none' \| '1' \| '2' \| '3'` | `'1'`   | Visual variant controlling background color and border |
-| `children`     | `React.ReactNode`             | -       | Content to be rendered inside the surface              |
-| `className`    | `string`                      | -       | Additional CSS classes to apply                        |
-| `...ViewProps` | `ViewProps`                   | -       | All standard React Native View props are supported     |
+| prop           | type                                                                      | default     | description                                            |
+| -------------- | ------------------------------------------------------------------------- | ----------- | ------------------------------------------------------ |
+| `variant`      | `'default' \| 'secondary' \| 'tertiary' \| 'quaternary' \| 'transparent'` | `'default'` | Visual variant controlling background color and border |
+| `children`     | `React.ReactNode`                                                         | -           | Content to be rendered inside the surface              |
+| `className`    | `string`                                                                  | -           | Additional CSS classes to apply                        |
+| `...ViewProps` | `ViewProps`                                                               | -           | All standard React Native View props are supported     |

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../providers/theme/helpers';
+import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
   base: 'flex-col gap-2',
@@ -10,7 +10,7 @@ const list = tv({
   base: 'self-start flex-row items-center gap-1',
   variants: {
     variant: {
-      pill: 'rounded-[12px] bg-surface-2 p-[3px]',
+      pill: 'rounded-full bg-default p-1',
       line: 'border-b border-border',
     },
   },
@@ -50,15 +50,15 @@ const trigger = tv({
 });
 
 const label = tv({
-  base: 'text-base font-medium text-foreground',
+  base: 'text-base font-medium text-segment-foreground',
 });
 
 const indicator = tv({
   base: 'absolute',
   variants: {
     variant: {
-      pill: 'rounded-[10px] border-[0.5px] border-border shadow-sm dark:shadow-none shadow-black/[0.08] bg-background',
-      line: 'border-b-2 border-foreground bottom-0',
+      pill: 'rounded-full shadow-sm dark:shadow-none shadow-black/5 bg-segment',
+      line: 'border-b-2 border-accent bottom-0',
     },
   },
   defaultVariants: {

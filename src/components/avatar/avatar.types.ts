@@ -1,5 +1,6 @@
 import type { ImageProps, TextProps } from 'react-native';
 import type { AnimatedProps } from 'react-native-reanimated';
+import type { ElementSlots } from '../../helpers/theme/types';
 import type {
   FallbackProps as PrimitiveFallbackProps,
   FallbackRef as PrimitiveFallbackRef,
@@ -8,7 +9,6 @@ import type {
   RootProps as PrimitiveRootProps,
   RootRef as PrimitiveRootRef,
 } from '../../primitives/avatar';
-import type { ElementSlots } from '../../providers/theme';
 import type { AvatarFallbackSlots } from './avatar.styles';
 import type { PersonIconProps } from './person-icon';
 
@@ -18,11 +18,16 @@ import type { PersonIconProps } from './person-icon';
 export type AvatarSize = 'sm' | 'md' | 'lg';
 
 /**
+ * Available variants for the Avatar component
+ */
+export type AvatarVariant = 'default' | 'soft';
+
+/**
  * Available color variants for the Avatar component
  */
 export type AvatarColor =
-  | 'default'
   | 'accent'
+  | 'default'
   | 'success'
   | 'warning'
   | 'danger';
@@ -37,10 +42,14 @@ export interface AvatarRootProps extends PrimitiveRootProps {
    * @default 'md'
    */
   size?: AvatarSize;
-
+  /**
+   * Visual variant of the avatar
+   * @default 'default'
+   */
+  variant?: AvatarVariant;
   /**
    * Color variant of the avatar
-   * @default 'default'
+   * @default 'accent'
    */
   color?: AvatarColor;
 

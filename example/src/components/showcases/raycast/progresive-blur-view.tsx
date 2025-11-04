@@ -2,7 +2,7 @@
 import MaskedView from '@react-native-masked-view/masked-view';
 import { BlurView, type BlurViewProps } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
-import { cn, colorKit, useTheme } from 'heroui-native';
+import { cn, colorKit, useThemeColor } from 'heroui-native';
 import { type FC } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 
@@ -17,7 +17,7 @@ export const ProgressiveBlurView: FC<Props> = ({
   height = 100,
   blurViewProps,
 }) => {
-  const { colors } = useTheme();
+  const themeColorBackground = useThemeColor('background');
 
   return (
     <View
@@ -59,12 +59,12 @@ export const ProgressiveBlurView: FC<Props> = ({
           colors={
             position === 'top'
               ? [
-                  colorKit.setAlpha(colors.background, 0.9).hex(),
-                  colorKit.setAlpha(colors.background, 0).hex(),
+                  colorKit.setAlpha(themeColorBackground, 0.9).hex(),
+                  colorKit.setAlpha(themeColorBackground, 0).hex(),
                 ]
               : [
-                  colorKit.setAlpha(colors.background, 0).hex(),
-                  colorKit.setAlpha(colors.background, 0.9).hex(),
+                  colorKit.setAlpha(themeColorBackground, 0).hex(),
+                  colorKit.setAlpha(themeColorBackground, 0.9).hex(),
                 ]
           }
         />

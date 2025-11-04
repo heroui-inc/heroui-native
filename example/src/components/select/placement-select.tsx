@@ -4,7 +4,7 @@ import {
   ScrollShadow,
   Select,
   useSelect,
-  useTheme,
+  useThemeColor,
 } from 'heroui-native';
 import { type FC, memo, useEffect, useMemo, useRef } from 'react';
 import { FlatList } from 'react-native';
@@ -33,7 +33,7 @@ type PlacementContentListProps = {
 
 const PlacementContentList: FC<PlacementContentListProps> = memo(
   ({ valueIndex }) => {
-    const { colors } = useTheme();
+    const themeColorOverlay = useThemeColor('overlay');
 
     const listRef = useRef<FlatList>(null);
 
@@ -61,7 +61,7 @@ const PlacementContentList: FC<PlacementContentListProps> = memo(
     return (
       <ScrollShadow
         LinearGradientComponent={LinearGradient}
-        color={colors.panel}
+        color={themeColorOverlay}
       >
         <FlatList
           ref={listRef}
@@ -110,17 +110,17 @@ export const PlacementSelect: FC<Props> = ({ placeholder, placement }) => {
   return (
     <Select>
       <Select.Trigger asChild>
-        <Button size="sm" variant="tertiary" className="w-24">
-          <Select.Value placeholder={placeholder} numberOfLines={1} />
+        <Button variant="secondary" className="w-32">
+          <Select.Value
+            placeholder={placeholder}
+            numberOfLines={1}
+            className="text-accent"
+          />
         </Button>
       </Select.Trigger>
       <Select.Portal>
         <Select.Overlay />
-        <Select.Content
-          width={200}
-          placement={placement}
-          className="h-[150px] rounded-xl"
-        >
+        <Select.Content width={200} placement={placement} className="h-[150px]">
           <PlacementContent />
         </Select.Content>
       </Select.Portal>

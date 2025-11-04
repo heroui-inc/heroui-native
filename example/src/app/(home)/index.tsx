@@ -1,6 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
-import { Card, Chip, useTheme } from 'heroui-native';
+import { StatusBar } from 'expo-status-bar';
+import { Card, Chip, cn } from 'heroui-native';
 import type { FC } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import Animated, {
@@ -10,12 +11,16 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
+import { useAppTheme } from '../../contexts/app-theme-context';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 const AnimatedView = Animated.createAnimatedComponent(View);
+
+const StyledFeather = withUniwind(Feather);
 
 type HomeCardProps = {
   title: string;
@@ -33,7 +38,7 @@ const cards: HomeCardProps[] = [
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-components-light.png',
     imageDark:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-components-dark.png',
-    count: 21,
+    count: 20,
     footer: 'Explore all components',
     path: 'components',
   },
@@ -70,7 +75,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
 }) => {
   const router = useRouter();
 
-  const { colors, isDark } = useTheme();
+  const { isDark } = useAppTheme();
 
   const rLightImageStyle = useAnimatedStyle(() => {
     return {
@@ -91,7 +96,12 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
         .easing(Easing.out(Easing.ease))}
       onPress={() => router.push(path)}
     >
-      <Card className="p-0 rounded-xl">
+      <Card
+        className={cn(
+          'p-0 border border-zinc-200',
+          isDark && 'border-zinc-900'
+        )}
+      >
         <AnimatedView
           entering={FadeIn}
           className="absolute inset-0 w-full h-full"
@@ -127,11 +137,11 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
                 {footer}
               </Card.Description>
             </View>
-            <View className="w-9 h-9 rounded-full bg-background/25 items-center justify-center">
-              <Feather
+            <View className="size-9 rounded-full bg-background/25 items-center justify-center">
+              <StyledFeather
                 name="arrow-up-right"
                 size={20}
-                color={colors.foreground}
+                className="text-foreground"
               />
             </View>
           </Card.Footer>
@@ -142,14 +152,13 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
 };
 
 export default function App() {
+  const { isDark } = useAppTheme();
+
   return (
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
-        <AppText className="text-muted-foreground text-base">
-          v1.0.0-alpha.16
-        </AppText>
+        <AppText className="text-muted text-base">v1.0.0-beta.1</AppText>
       </View>
-
       <View className="gap-6">
         {cards.map((card, index) => (
           <HomeCard
@@ -164,6 +173,7 @@ export default function App() {
           />
         ))}
       </View>
+      <StatusBar style={isDark ? 'light' : 'dark'} />
     </ScreenScrollView>
   );
 }

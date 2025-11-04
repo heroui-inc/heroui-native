@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 import { Platform, View } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { useUniwind } from 'uniwind';
 import * as Slot from '../../primitives/slot';
-import { useTheme } from '../../providers/theme';
 import {
   ANDROID_ELEVATION_MAP,
   DEFAULT_SHADOW_COLORS,
@@ -28,15 +28,16 @@ const DropShadowViewRoot = forwardRef<View, DropShadowViewProps>(
       ...restProps
     } = props;
 
-    const { isDark } = useTheme();
+    const { theme } = useUniwind();
     const tvStyles = dropShadowViewStyles({
       className,
       asChild: Boolean(asChild),
     });
 
-    const defaultShadowColor = isDark
-      ? DEFAULT_SHADOW_COLORS.DARK
-      : DEFAULT_SHADOW_COLORS.LIGHT;
+    const defaultShadowColor =
+      theme === 'dark'
+        ? DEFAULT_SHADOW_COLORS.DARK
+        : DEFAULT_SHADOW_COLORS.LIGHT;
 
     const currentShadowColor = shadowColor || defaultShadowColor;
 

@@ -1,23 +1,20 @@
 import type { ReactNode } from 'react';
 import type { TextComponentContextValue } from '../text-component/types';
-import type { ThemeProviderProps } from '../theme/types';
 
 /**
  * Configuration object for HeroUINativeProvider
  *
  * @interface HeroUINativeConfig
- * @extends Omit<ThemeProviderProps, 'children'>
+ * @extends TextComponentContextValue
  *
  * @description
- * Extends the theme provider configuration and will include
- * additional configuration options in future versions.
+ * Contains configuration options for the HeroUI Native provider.
+ * Additional configuration options can be added in future versions.
  */
-export interface HeroUINativeConfig
-  extends Omit<ThemeProviderProps, 'children'>,
-    TextComponentContextValue {
+export interface HeroUINativeConfig extends TextComponentContextValue {
   /**
    * Future configuration options can be added here
-   * For now, it extends ThemeProviderProps (colorScheme, theme) and TextComponentContextValue (textProps)
+   * For now, it extends TextComponentContextValue (textProps)
    */
 }
 
@@ -33,13 +30,9 @@ export interface HeroUINativeConfig
  * @example
  * ```tsx
  * <HeroUINativeProvider config={{
- *   colorScheme: 'dark',
- *   theme: {
- *     light: {
- *       colors: {
- *         accent: '#007AFF'
- *       }
- *     }
+ *   textProps: {
+ *     allowFontScaling: false,
+ *     maxFontSizeMultiplier: 1.5
  *   }
  * }}>
  *   <App />
@@ -60,34 +53,11 @@ export interface HeroUINativeProviderProps {
    * Configuration object for the provider
    *
    * @description
-   * Contains all configuration options including theme settings,
-   * color scheme preference, and global text component configuration.
+   * Contains all configuration options including global text component configuration.
    *
    * @example
    * ```tsx
    * const config: HeroUINativeConfig = {
-   *   colorScheme: 'system',
-   *   theme: {
-   *     light: {
-   *       colors: {
-   *         background: '#ffffff',
-   *         foreground: '#000000',
-   *         accent: 'hsl(220 90% 50%)',
-   *         success: '#00C853'
-   *       },
-   *       borderRadius: {
-   *         DEFAULT: '16px',
-   *         panel: '12px'
-   *       }
-   *     },
-   *     dark: {
-   *       colors: {
-   *         background: '#000000',
-   *         foreground: '#ffffff',
-   *         accent: 'hsl(220 90% 60%)'
-   *       }
-   *     }
-   *   },
    *   textProps: {
    *     allowFontScaling: false,
    *     adjustsFontSizeToFit: false,

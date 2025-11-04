@@ -1,10 +1,11 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useRouter } from 'expo-router';
-import { Avatar, Card, Divider, useTheme } from 'heroui-native';
+import { Avatar, Card, Divider } from 'heroui-native';
 import { Pressable, View } from 'react-native';
 import { KeyboardController } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { Assignee } from '../../../components/showcases/linear-task/dialogs/assignee';
 import { Labels } from '../../../components/showcases/linear-task/dialogs/labels';
@@ -13,11 +14,12 @@ import { Project } from '../../../components/showcases/linear-task/dialogs/proje
 import { Status } from '../../../components/showcases/linear-task/dialogs/status';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
+const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
+
 KeyboardController.preload();
 
 export default function LinearTaskScreen() {
   const insets = useSafeAreaInsets();
-  const { colors } = useTheme();
 
   const router = useRouter();
 
@@ -33,18 +35,16 @@ export default function LinearTaskScreen() {
           className="flex-row items-center gap-1"
           onPress={router.back}
         >
-          <MaterialCommunityIcons
+          <StyledMaterialCommunityIcons
             name="arrow-left"
             size={16}
-            color={colors.foreground}
+            className="text-foreground"
           />
           <AppText className="text-lg font-medium text-foreground">
             Back
           </AppText>
         </Pressable>
-        <AppText className="text-base font-medium text-muted-foreground">
-          DEV-37
-        </AppText>
+        <AppText className="text-base font-medium text-muted">DEV-37</AppText>
       </View>
 
       <AppText className="text-2xl font-bold text-foreground mb-4">
@@ -52,8 +52,8 @@ export default function LinearTaskScreen() {
       </AppText>
 
       <Card
-        surfaceVariant="2"
-        className="flex-row flex-wrap gap-x-2 gap-y-3 border-0 rounded-xl mb-6 -mx-3"
+        variant="tertiary"
+        className="flex-row flex-wrap gap-x-2 gap-y-3 border-0 rounded-3xl mb-6 -mx-3"
       >
         <Status />
         <Priority />
@@ -71,24 +71,24 @@ export default function LinearTaskScreen() {
       </AppText>
 
       <Pressable onPress={simulatePress}>
-        <Card className="mb-6 border-0 bg-surface-2 rounded-xl p-4">
+        <Card className="mb-6 border-0 bg-surface-tertiary rounded-2xl p-4">
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center gap-3">
-              <MaterialCommunityIcons
+              <StyledMaterialCommunityIcons
                 name="github"
                 size={20}
-                color={colors.foreground}
+                className="text-foreground"
               />
               <AppText className="text-base font-semibold text-foreground">
                 feat/dialog-component
               </AppText>
             </View>
             <View className="flex-row items-center gap-2">
-              <AppText className="text-base text-muted-foreground">#26</AppText>
-              <MaterialCommunityIcons
+              <AppText className="text-base text-muted">#26</AppText>
+              <StyledMaterialCommunityIcons
                 name="source-branch"
                 size={20}
-                color="#c084fc"
+                className="text-purple-400"
               />
             </View>
           </View>
@@ -99,7 +99,7 @@ export default function LinearTaskScreen() {
 
       <View className="mb-8">
         <View className="flex-row items-center justify-between mb-4">
-          <AppText className="text-lg font-semibold text-muted-foreground">
+          <AppText className="text-lg font-semibold text-muted">
             Activity
           </AppText>
           <View className="flex-row items-center">

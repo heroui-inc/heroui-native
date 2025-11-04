@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import {
   colorKit,
   Divider,
-  useTheme,
+  useThemeColor,
   type PopoverTriggerRef,
 } from 'heroui-native';
 import {
@@ -19,6 +19,7 @@ import {
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import BgImage from '../../../../assets/images/pancakes.jpg';
 import { AppText } from '../../../components/app-text';
 import { Ask } from '../../../components/showcases/cooking-onboarding/ask';
@@ -30,6 +31,8 @@ import ParallaxScrollView from '../../../components/showcases/cooking-onboarding
 import { Plan } from '../../../components/showcases/cooking-onboarding/plan';
 import { Save } from '../../../components/showcases/cooking-onboarding/save';
 import { Share } from '../../../components/showcases/cooking-onboarding/share';
+
+const StyledFeather = withUniwind(Feather);
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -69,7 +72,7 @@ function onboardingReducer(
 }
 
 export default function CookingOnboardingScreen() {
-  const { colors } = useTheme();
+  const themeColorBackground = useThemeColor('background');
 
   const router = useRouter();
 
@@ -146,7 +149,11 @@ export default function CookingOnboardingScreen() {
         style={{ top: insets.top + 8 }}
       >
         <Pressable onPress={router.back}>
-          <Feather name="chevron-left" size={26} color={colors.foreground} />
+          <StyledFeather
+            name="chevron-left"
+            size={26}
+            className="text-foreground"
+          />
         </Pressable>
         <View className="flex-row gap-2">
           <Share
@@ -198,8 +205,8 @@ export default function CookingOnboardingScreen() {
       </ParallaxScrollView>
       <LinearGradient
         colors={[
-          colors.background,
-          colorKit.setAlpha(colors.background, 0).hex(),
+          themeColorBackground,
+          colorKit.setAlpha(themeColorBackground, 0).hex(),
         ]}
         style={styles.topGradient}
       />

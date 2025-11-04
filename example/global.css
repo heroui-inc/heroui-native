@@ -1,4 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import 'uniwind';
 
+/* Development only: In your app, use @import 'heroui-native/styles' instead */
+@import '../src/styles/index.css';
+
+@import './themes/lavander.css';
+@import './themes/mint.css';
+@import './themes/sky.css';
+
+/* Development only: In your app, use @source './node_modules/heroui-native/lib' */
+@source '../src';

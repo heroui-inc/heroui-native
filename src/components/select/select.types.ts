@@ -6,8 +6,8 @@ import type {
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated';
+import type { ElementSlots } from '../../helpers/theme/types';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
-import type { ElementSlots } from '../../providers/theme';
 import type { DialogContentFallbackSlots } from './select.styles';
 
 /**
@@ -228,7 +228,7 @@ export interface SelectCloseIconProps {
   size?: number;
   /**
    * Color of the close icon
-   * @default theme.colors.foreground
+   * @default --colors-foreground
    */
   color?: string;
 }

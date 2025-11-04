@@ -1,10 +1,11 @@
-import { Card, Chip, cn, DropShadowView, useTheme } from 'heroui-native';
+import { Card, Chip, cn, DropShadowView } from 'heroui-native';
 import { type FC } from 'react';
 import { Image, useWindowDimensions, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   type SharedValue,
 } from 'react-native-reanimated';
+import { useAppTheme } from '../../../contexts/app-theme-context';
 import { AppText } from '../../app-text';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
@@ -32,7 +33,7 @@ export const PreviewCard: FC<PreviewCardProps> = ({
   allItemsWidth,
   scrollOffsetX,
 }) => {
-  const { isDark } = useTheme();
+  const { isDark } = useAppTheme();
   const { width: screenWidth } = useWindowDimensions();
 
   const shift = (allItemsWidth - screenWidth) / 2;
@@ -58,20 +59,20 @@ export const PreviewCard: FC<PreviewCardProps> = ({
     >
       <DropShadowView
         shadowSize="xl"
-        className="aspect-[3/5] rounded-xl"
+        className="aspect-[3/5] rounded-2xl"
         shadowColor={isDark ? '#00000000' : 'black'}
       >
         <Card
           className={cn(
-            'flex-1 border-0 rounded-xl',
+            'flex-1 border-0 rounded-3xl',
             isDark && 'border border-border/70'
           )}
-          surfaceVariant={isDark ? '2' : 'none'}
+          variant={isDark ? 'default' : 'transparent'}
         >
           <Card.Body className="flex-1 p-2 mb-4">
             <Image
               source={{ uri: image }}
-              className="absolute inset-0 rounded-lg"
+              className="absolute inset-0 rounded-xl"
             />
             <Chip className="bg-danger rounded-md">
               <Chip.Label className="text-white font-semibold">

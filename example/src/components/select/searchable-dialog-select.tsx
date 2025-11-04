@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, ScrollShadow, Select, useTheme } from 'heroui-native';
+import { Button, cn, ScrollShadow, Select, useThemeColor } from 'heroui-native';
 import { useState } from 'react';
 import { TextInput, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -9,6 +9,7 @@ import {
 } from 'react-native-keyboard-controller';
 import { Easing } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useAppTheme } from '../../contexts/app-theme-context';
 import { AppText } from '../app-text';
 import { SelectBlurBackdrop } from './select-blur-backdrop';
 
@@ -38,7 +39,12 @@ export function SearchableDialogSelect() {
   const [value, setValue] = useState<CountryOption | undefined>();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { colors, isDark } = useTheme();
+  const { isDark } = useAppTheme();
+
+  const themeColorMuted = useThemeColor('muted');
+  const themeColorOverlay = useThemeColor('overlay');
+  const themeColorSurface = useThemeColor('surface');
+
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
 
@@ -60,16 +66,16 @@ export function SearchableDialogSelect() {
       closeDelay={300}
     >
       <Select.Trigger asChild>
-        <Button variant="tertiary" size="sm" className="min-w-28">
+        <Button variant="tertiary">
           {value ? (
             <View className="flex-row items-center gap-2">
               <AppText className="text-base">{value.flag}</AppText>
-              <AppText className="text-sm text-foreground">
+              <AppText className="text-sm text-accent font-medium">
                 {value.code}
               </AppText>
             </View>
           ) : (
-            <AppText className="text-foreground">Dialog</AppText>
+            <AppText className="text-accent">Dialog</AppText>
           )}
         </Button>
       </Select.Trigger>
@@ -91,7 +97,7 @@ export function SearchableDialogSelect() {
           <Select.Content
             classNames={{
               wrapper: 'justify-center',
-              content: 'gap-2 rounded-2xl dark:bg-surface-1',
+              content: cn('gap-2 rounded-3xl', isDark && 'bg-surface'),
             }}
             style={{ marginTop: insetTop, height: maxDialogHeight }}
             presentation="dialog"
@@ -105,15 +111,15 @@ export function SearchableDialogSelect() {
                 value={searchQuery}
                 onChangeText={setSearchQuery}
                 placeholder="Search country..."
-                placeholderTextColor={colors.mutedForeground}
-                className="p-3 rounded-md bg-surface-3/60 dark:bg-surface-2 text-foreground"
+                placeholderTextColor={themeColorMuted}
+                className="p-3 rounded-xl bg-surface-secondary/80 text-foreground"
                 autoFocus
               />
             </View>
             <ScrollShadow
               className="flex-1"
               LinearGradientComponent={LinearGradient}
-              color={isDark ? colors.surface1 : colors.panel}
+              color={isDark ? themeColorSurface : themeColorOverlay}
             >
               <ScrollView keyboardShouldPersistTaps="handled">
                 {filteredCountries.map((country) => (
@@ -136,7 +142,7 @@ export function SearchableDialogSelect() {
                   </Select.Item>
                 ))}
                 {filteredCountries.length === 0 && (
-                  <AppText className="text-muted dark:text-muted-foreground text-center mt-8">
+                  <AppText className="text-muted text-center mt-8">
                     No countries found
                   </AppText>
                 )}

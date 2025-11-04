@@ -6,9 +6,9 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { colorKit, useThemeColor } from '../../helpers/theme';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
-import { colorKit, useTheme } from '../../providers/theme';
 import { PressableFeedback } from '../pressable-feedback';
 import {
   ANIMATION_DURATION,
@@ -47,7 +47,9 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const { colors } = useTheme();
+  const themeColorAccentHover = useThemeColor('accent-hover');
+  const themeColorDefaultHover = useThemeColor('default-hover');
+  const themeColorDangerHover = useThemeColor('danger-hover');
 
   const stringifiedChildren = childrenToString(children);
 
@@ -59,24 +61,27 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     className,
   });
 
-  const getColor = (color: string) => {
-    return colorKit.invert(color).hex();
-  };
-
   const highlightColorMap = useMemo(() => {
     switch (variant) {
       case 'primary':
-        return getColor(colors.accent);
+        return themeColorAccentHover;
       case 'secondary':
-        return getColor(colors.accentSoft);
+        return themeColorDefaultHover;
       case 'tertiary':
-        return getColor(colors.default);
+        return themeColorDefaultHover;
       case 'ghost':
-        return getColor(colors.background);
-      case 'danger':
-        return getColor(colors.danger);
+        return colorKit.setAlpha(themeColorDefaultHover, 0.3).hex();
+      case 'destructive':
+        return themeColorDangerHover;
+      case 'destructive-soft':
+        return themeColorDefaultHover;
     }
-  }, [variant, colors]);
+  }, [
+    variant,
+    themeColorAccentHover,
+    themeColorDefaultHover,
+    themeColorDangerHover,
+  ]);
 
   const scale = useSharedValue(0);
   const btnWidth = useSharedValue(0);
@@ -168,6 +173,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         variant="highlight"
         animationConfig={{
           color: highlightColorMap,
+          opacity: 1,
           ...animationConfig?.highlight,
         }}
         {...restProps}

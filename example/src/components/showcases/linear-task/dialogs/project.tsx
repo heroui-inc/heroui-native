@@ -1,17 +1,21 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, RadioGroup, useTheme } from 'heroui-native';
+import { Chip, Dialog, RadioGroup } from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../app-text';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
 import { DialogHeader } from '../dialog-header';
 import { SearchBar } from '../search-bar';
+
+const StyledFeather = withUniwind(Feather);
+const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
 
 type ProjectItem = {
   value: string;
@@ -22,8 +26,6 @@ type ProjectItem = {
 export const Project: FC = () => {
   const [value, setValue] = useState('hero-ui-native');
   const [searchQuery, setSearchQuery] = useState('');
-
-  const { colors } = useTheme();
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -37,10 +39,10 @@ export const Project: FC = () => {
         value: 'no-project',
         label: 'No Project',
         indicator: (
-          <MaterialCommunityIcons
+          <StyledMaterialCommunityIcons
             name="cube-outline"
             size={14}
-            color={colors.mutedForeground}
+            className="text-muted"
           />
         ),
       },
@@ -48,10 +50,10 @@ export const Project: FC = () => {
         value: 'hero-ui-native',
         label: 'HeroUI Native',
         indicator: (
-          <MaterialCommunityIcons
+          <StyledMaterialCommunityIcons
             name="arrow-right-drop-circle"
             size={14}
-            color={colors.danger}
+            className="text-danger"
           />
         ),
       },
@@ -59,22 +61,25 @@ export const Project: FC = () => {
         value: 'hero-ui-web',
         label: 'HeroUI Web',
         indicator: (
-          <MaterialCommunityIcons name="web" size={14} color={colors.warning} />
+          <StyledMaterialCommunityIcons
+            name="web"
+            size={14}
+            className="text-warning"
+          />
         ),
       },
       {
         value: 'hero-ui-chat',
         label: 'HeroUI Chat',
         indicator: (
-          <MaterialCommunityIcons
+          <StyledMaterialCommunityIcons
             name="adjust"
             size={14}
-            color={colors.success}
+            className="text-success"
           />
         ),
       },
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -89,7 +94,7 @@ export const Project: FC = () => {
     <Dialog>
       <Dialog.Trigger asChild>
         <Chip
-          className="h-7 bg-surface-3 px-2"
+          className="h-7 bg-surface-quaternary px-2"
           onPress={() => {
             if (Platform.OS === 'ios') {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -108,7 +113,6 @@ export const Project: FC = () => {
         </Dialog.Overlay>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
           <Dialog.Content
-            className="rounded-2xl border-0"
             style={{ marginTop: insetTop, height: dialogContentHeight }}
           >
             <DialogHeader>Project</DialogHeader>
@@ -119,7 +123,7 @@ export const Project: FC = () => {
             />
             {filteredItems.length === 0 && (
               <View className="flex-1 items-center justify-center">
-                <AppText className="text-base font-medium text-muted-foreground">
+                <AppText className="text-base font-medium text-muted">
                   No results
                 </AppText>
               </View>
@@ -156,7 +160,7 @@ export const Project: FC = () => {
                           <View className="w-7 pl-0.5 justify-center">
                             <View className="scale-105">{item.indicator}</View>
                           </View>
-                          <RadioGroup.Title>{item.label}</RadioGroup.Title>
+                          <RadioGroup.Label>{item.label}</RadioGroup.Label>
                         </View>
                         <RadioGroup.Indicator className="border-0 bg-transparent">
                           {value === item.value && (
@@ -164,10 +168,10 @@ export const Project: FC = () => {
                               key={item.value}
                               entering={FadeIn.duration(200)}
                             >
-                              <Feather
+                              <StyledFeather
                                 name="check"
                                 size={18}
-                                color={colors.foreground}
+                                className="text-foreground"
                               />
                             </Animated.View>
                           )}

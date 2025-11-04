@@ -132,7 +132,7 @@ export default function SkeletonGroupExample() {
                 <Text className="font-semibold text-foreground">John Doe</Text>
               </SkeletonGroup.Item>
               <SkeletonGroup.Item className="h-3 w-24 rounded-md">
-                <Text className="text-sm text-muted-foreground">@johndoe</Text>
+                <Text className="text-sm text-muted">@johndoe</Text>
               </SkeletonGroup.Item>
             </View>
           </View>
@@ -157,7 +157,7 @@ export default function SkeletonGroupExample() {
         </Card.Header>
 
         <SkeletonGroup.Item className="h-48 w-full rounded-lg">
-          <View className="h-48 bg-surface-3 rounded-lg overflow-hidden">
+          <View className="h-48 bg-surface-tertiary rounded-lg overflow-hidden">
             <Image
               source={{
                 uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/car1.jpg',

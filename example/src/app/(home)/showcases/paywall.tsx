@@ -3,7 +3,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import { Button, Chip, RadioGroup, useTheme } from 'heroui-native';
+import { Button, Chip, RadioGroup } from 'heroui-native';
 import { useCallback, useRef, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, {
@@ -13,6 +13,7 @@ import Animated, {
   FadeInUp,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Uniwind, useUniwind, withUniwind } from 'uniwind';
 import BG from '../../../../assets/images/paywall-showcase-bg.jpeg';
 import LogoDark from '../../../../assets/logo-dark.png';
 import { AppText } from '../../../components/app-text';
@@ -21,6 +22,8 @@ import { StyledRadio } from '../../../components/showcases/paywall/styled-radio'
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
+const StyledFeather = withUniwind(Feather);
+const StyledIonicons = withUniwind(Ionicons);
 
 export default function Paywall() {
   const [isFreeTrialEnabled, setIsFreeTrialEnabled] = useState(false);
@@ -30,16 +33,16 @@ export default function Paywall() {
 
   const insets = useSafeAreaInsets();
 
-  const { theme, setTheme } = useTheme();
+  const { theme } = useUniwind();
 
   const prevTheme = useRef(theme);
 
   useFocusEffect(
     useCallback(() => {
       prevTheme.current = theme;
-      setTheme('dark');
+      Uniwind.setTheme('dark');
       return () => {
-        setTheme(prevTheme.current);
+        Uniwind.setTheme(prevTheme.current);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -63,7 +66,11 @@ export default function Paywall() {
             onPress={router.back}
             hitSlop={16}
           >
-            <Feather name="chevron-left" size={28} color="black" />
+            <StyledFeather
+              name="chevron-left"
+              size={28}
+              className="text-black"
+            />
           </Pressable>
           <Image source={LogoDark} style={styles.logo} contentFit="contain" />
         </View>
@@ -112,7 +119,11 @@ export default function Paywall() {
           />
         </RadioGroup>
         <View className="flex-row items-center justify-center gap-2 mb-6">
-          <Ionicons name="shield-checkmark" size={20} color="#f9fafb" />
+          <StyledIonicons
+            name="shield-checkmark"
+            size={20}
+            className="text-[#f9fafb]"
+          />
           <AppText className="text-base text-gray-50">
             Secure payment with Stripe
           </AppText>
@@ -121,6 +132,7 @@ export default function Paywall() {
           size="lg"
           className="rounded-full bg-white mb-5"
           onPress={simulatePress}
+          animationConfig={{ highlight: { isDisabled: true } }}
         >
           <Button.Label className="text-black">Continue</Button.Label>
         </Button>

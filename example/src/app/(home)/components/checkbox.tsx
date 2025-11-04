@@ -1,5 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Checkbox, cn, useTheme } from 'heroui-native';
+import {
+  Checkbox,
+  cn,
+  Divider,
+  FormField,
+  Surface,
+  useThemeColor,
+} from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -14,24 +21,150 @@ import Animated, {
   ZoomIn,
   ZoomInDown,
 } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
-import { ScreenScrollView } from '../../../components/screen-scroll-view';
-import { SectionTitle } from '../../../components/section-title';
+import type { UsageVariant } from '../../../components/component-presentation/types';
+import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
+const StyledIonicons = withUniwind(Ionicons);
 
-export default function CheckboxScreen() {
-  const [defaultCheck, setDefaultCheck] = React.useState(true);
-  const [success, setSuccess] = React.useState(true);
-  const [warning, setWarning] = React.useState(true);
-  const [danger, setDanger] = React.useState(true);
+interface CheckboxFieldProps {
+  isSelected: boolean;
+  onSelectedChange: (value: boolean) => void;
+  title: string;
+  description: string;
+}
+
+const CheckboxField: React.FC<CheckboxFieldProps> = ({
+  isSelected,
+  onSelectedChange,
+  title,
+  description,
+}) => {
+  const themeColorSurfaceTertiary = useThemeColor('surface-tertiary');
+
+  return (
+    <FormField
+      isSelected={isSelected}
+      onSelectedChange={onSelectedChange}
+      alignIndicator="start"
+      className="items-start"
+    >
+      <FormField.Indicator>
+        <Checkbox
+          className="mt-0.5"
+          animatedColors={{
+            backgroundColor: { default: themeColorSurfaceTertiary },
+          }}
+        />
+      </FormField.Indicator>
+      <FormField.Content>
+        <FormField.Title className="text-lg">{title}</FormField.Title>
+        <FormField.Description className="text-base">
+          {description}
+        </FormField.Description>
+      </FormField.Content>
+    </FormField>
+  );
+};
+
+const BasicUsage = () => {
+  const [fields, setFields] = React.useState({
+    newsletter: true,
+    marketing: false,
+    terms: false,
+  });
+
+  const fieldConfigs: Record<
+    keyof typeof fields,
+    { title: string; description: string }
+  > = {
+    newsletter: {
+      title: 'Subscribe to newsletter',
+      description: 'Get weekly updates about new features and tips',
+    },
+    marketing: {
+      title: 'Marketing communications',
+      description: 'Receive promotional emails and special offers',
+    },
+    terms: {
+      title: 'Accept terms and conditions',
+      description: 'Agree to our Terms of Service and Privacy Policy',
+    },
+  };
+
+  const handleFieldChange = (key: keyof typeof fields) => (value: boolean) => {
+    setFields((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const fieldKeys = Object.keys(fields) as Array<keyof typeof fields>;
+
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Surface className="py-5 w-full">
+        {fieldKeys.map((key, index) => (
+          <React.Fragment key={key}>
+            {index > 0 && <Divider className="my-4" />}
+            <CheckboxField
+              isSelected={fields[key]}
+              onSelectedChange={handleFieldChange(key)}
+              title={fieldConfigs[key].title}
+              description={fieldConfigs[key].description}
+            />
+          </React.Fragment>
+        ))}
+      </Surface>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const StatesContent = () => {
   const [defaultState, setDefaultState] = React.useState(true);
+  const [invalid, setInvalid] = React.useState(true);
   const [disabled, setDisabled] = React.useState(true);
+
+  return (
+    <View className="flex-1 px-5 items-center justify-center">
+      <View className="flex-row gap-8">
+        <View className="items-center gap-2">
+          <Checkbox
+            isSelected={defaultState}
+            onSelectedChange={setDefaultState}
+          />
+          <AppText className="text-xs text-muted">Default</AppText>
+        </View>
+        <View className="items-center gap-2">
+          <Checkbox
+            isSelected={invalid}
+            onSelectedChange={setInvalid}
+            isInvalid
+          />
+          <AppText className="text-xs text-muted">Invalid</AppText>
+        </View>
+        <View className="items-center gap-2">
+          <Checkbox
+            isSelected={disabled}
+            onSelectedChange={setDisabled}
+            isDisabled
+          />
+          <AppText className="text-xs text-muted">Disabled</AppText>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const CustomStylesContent = () => {
   const [customBackground, setCustomBackground] = React.useState(true);
   const [customIndicator, setCustomIndicator] = React.useState(true);
   const [customBoth, setCustomBoth] = React.useState(true);
 
-  const { colors } = useTheme();
+  const themeColorBackground = useThemeColor('background');
 
   const rThemeToggleStyle = useAnimatedStyle(() => {
     return {
@@ -44,171 +177,151 @@ export default function CheckboxScreen() {
         },
       ],
     };
-  });
+  }, [customBoth]);
 
   return (
-    <ScreenScrollView contentContainerClassName="gap-16">
-      <SectionTitle title="Default" />
+    <View className="flex-1 px-5 items-center justify-center gap-12">
       <Checkbox
-        isSelected={defaultCheck}
-        onSelectedChange={setDefaultCheck}
-        className="self-center"
-      />
-
-      <SectionTitle title="Colors" />
-      <View className="flex-row gap-8 self-center">
-        <Checkbox
-          isSelected={success}
-          onSelectedChange={setSuccess}
-          color="success"
-        />
-        <Checkbox
-          isSelected={warning}
-          onSelectedChange={setWarning}
-          color="warning"
-        />
-        <Checkbox
-          isSelected={danger}
-          onSelectedChange={setDanger}
-          color="danger"
-        />
-      </View>
-
-      <SectionTitle title="States" />
-      <View className="flex-row gap-8 self-center">
-        <View className="items-center gap-2">
-          <Checkbox
-            isSelected={defaultState}
-            onSelectedChange={setDefaultState}
-          />
-          <AppText className="text-xs text-muted-foreground">Default</AppText>
-        </View>
-        <View className="items-center gap-2">
-          <Checkbox
-            isSelected={disabled}
-            onSelectedChange={setDisabled}
-            isDisabled={true}
-          />
-          <AppText className="text-xs text-muted-foreground">Disabled</AppText>
-        </View>
-      </View>
-
-      <SectionTitle title="Custom Background" />
+        isSelected={customIndicator}
+        onSelectedChange={setCustomIndicator}
+      >
+        {({ isSelected }) => {
+          return isSelected ? (
+            <Animated.View key="selected" entering={ZoomIn}>
+              <StyledIonicons
+                name="remove"
+                size={16}
+                className="text-accent-foreground"
+              />
+            </Animated.View>
+          ) : (
+            <Animated.View
+              key="default-1"
+              entering={ZoomInDown.springify().damping(130).stiffness(1300)}
+            >
+              <Animated.View key="default-2" entering={ZoomIn.duration(175)}>
+                <StyledIonicons name="add" size={18} className="text-accent" />
+              </Animated.View>
+            </Animated.View>
+          );
+        }}
+      </Checkbox>
 
       <Checkbox
         isSelected={customBackground}
         onSelectedChange={setCustomBackground}
-        className="w-10 h-10 rounded-lg self-center"
-        colors={{
-          selectedBorder: '#3730a3',
+        className="size-8 rounded-xl"
+        animatedColors={{
+          backgroundColor: {
+            selected: '#3730a3',
+          },
         }}
       >
-        <Checkbox.Background className="items-center justify-center">
-          <View className="absolute inset-0 bg-indigo-400" />
-          {customBackground && (
-            <AnimatedView
-              key="unselected"
-              entering={FadeInDown.duration(175).easing(
-                Easing.out(Easing.ease)
-              )}
-              exiting={FadeOutDown.duration(175).easing(Easing.in(Easing.ease))}
-              className="absolute w-12 h-12 bg-indigo-700/80 rounded-full"
-            />
-          )}
-        </Checkbox.Background>
+        <View className="absolute inset-0 bg-indigo-300 rounded-xl" />
+        {customBackground && (
+          <AnimatedView
+            key="unselected"
+            entering={FadeInDown.duration(150).easing(Easing.out(Easing.ease))}
+            exiting={FadeOutDown.duration(150).easing(Easing.in(Easing.ease))}
+            className="absolute size-12 bg-indigo-700/80 rounded-full"
+          />
+        )}
         <Checkbox.Indicator iconProps={{ size: 18 }} />
       </Checkbox>
-
-      <SectionTitle title="Custom Indicator" />
-
-      <Checkbox
-        isSelected={customIndicator}
-        onSelectedChange={setCustomIndicator}
-        className="self-center"
-      >
-        <Checkbox.Indicator>
-          <View>
-            {customIndicator ? (
-              <Animated.View key="selected" entering={ZoomIn}>
-                <Ionicons
-                  name="remove"
-                  size={16}
-                  color={colors.accentForeground}
-                />
-              </Animated.View>
-            ) : (
-              <Animated.View
-                key="default-1"
-                entering={ZoomInDown.springify().damping(130).stiffness(1300)}
-              >
-                <Animated.View key="default-2" entering={ZoomIn.duration(175)}>
-                  <Ionicons name="add" size={16} color={colors.accent} />
-                </Animated.View>
-              </Animated.View>
-            )}
-          </View>
-        </Checkbox.Indicator>
-      </Checkbox>
-
-      <SectionTitle title="Custom Background & Indicator" />
 
       <Checkbox
         isSelected={customBoth}
         onSelectedChange={setCustomBoth}
-        className="w-12 h-12 rounded-full self-center"
-        colors={{
-          defaultBorder: colors.background,
-          selectedBorder: colors.background,
+        className="w-12 h-12 rounded-full"
+        animatedColors={{
+          borderColor: {
+            default: themeColorBackground,
+            selected: themeColorBackground,
+          },
         }}
       >
-        <Checkbox.Background className="items-center justify-center">
-          <View
-            className={cn(
-              'absolute inset-0 bg-slate-200',
-              customBoth && 'bg-slate-800'
-            )}
-          />
-          <AnimatedView
-            className="flex-row items-center flex-1"
-            style={rThemeToggleStyle}
-          >
-            {customBoth ? (
-              <>
-                <AnimatedView
-                  key="selected"
-                  entering={FadeIn}
-                  className="w-14 h-14 bg-slate-200 rounded-full"
-                />
-                <View className="w-14 h-14" />
-              </>
-            ) : (
-              <>
-                <View className="w-14 h-14" />
-                <AnimatedView
-                  key="unselected"
-                  entering={FadeIn}
-                  className="w-14 h-14 bg-slate-800 rounded-full"
-                />
-              </>
-            )}
-          </AnimatedView>
-        </Checkbox.Background>
-        <Checkbox.Indicator className="z-50">
-          {customBoth ? (
-            <AnimatedView key="check" entering={FadeInLeft.springify()}>
-              <Animated.View entering={ZoomIn.springify()}>
-                <Ionicons name="sunny" size={24} color="#0f172a" />
-              </Animated.View>
+        {({ isSelected }) => (
+          <>
+            <View
+              className={cn(
+                'absolute inset-0 bg-slate-200',
+                customBoth && 'bg-slate-800'
+              )}
+            />
+            <AnimatedView
+              className="flex-row items-center flex-1"
+              style={rThemeToggleStyle}
+            >
+              {isSelected ? (
+                <>
+                  <AnimatedView
+                    key="selected"
+                    entering={FadeIn}
+                    className="size-14 bg-slate-200 rounded-full"
+                  />
+                  <View className="size-14" />
+                </>
+              ) : (
+                <>
+                  <View className="size-14" />
+                  <AnimatedView
+                    key="unselected"
+                    entering={FadeIn}
+                    className="size-14 bg-slate-800 rounded-full"
+                  />
+                </>
+              )}
             </AnimatedView>
-          ) : (
-            <AnimatedView key="x" entering={FadeInRight.springify()}>
-              <Animated.View entering={ZoomIn.springify()}>
-                <Ionicons name="moon" size={20} color="#e2e8f0" />
-              </Animated.View>
-            </AnimatedView>
-          )}
-        </Checkbox.Indicator>
+            <Checkbox.Indicator className="z-50">
+              {isSelected ? (
+                <AnimatedView key="check" entering={FadeInLeft.springify()}>
+                  <Animated.View entering={ZoomIn.springify()}>
+                    <StyledIonicons
+                      name="sunny"
+                      size={24}
+                      className="text-slate-800"
+                    />
+                  </Animated.View>
+                </AnimatedView>
+              ) : (
+                <AnimatedView key="x" entering={FadeInRight.springify()}>
+                  <Animated.View entering={ZoomIn.springify()}>
+                    <StyledIonicons
+                      name="moon"
+                      size={20}
+                      className="text-slate-200"
+                    />
+                  </Animated.View>
+                </AnimatedView>
+              )}
+            </Checkbox.Indicator>
+          </>
+        )}
       </Checkbox>
-    </ScreenScrollView>
+    </View>
   );
+};
+
+// ------------------------------------------------------------------------------
+
+const CHECKBOX_VARIANTS: UsageVariant[] = [
+  {
+    value: 'basic-usage',
+    label: 'Basic usage',
+    content: <BasicUsage />,
+  },
+  {
+    value: 'states',
+    label: 'States',
+    content: <StatesContent />,
+  },
+  {
+    value: 'custom-styles',
+    label: 'Custom styles',
+    content: <CustomStylesContent />,
+  },
+];
+
+export default function CheckboxScreen() {
+  return <UsageVariantFlatList data={CHECKBOX_VARIANTS} />;
 }

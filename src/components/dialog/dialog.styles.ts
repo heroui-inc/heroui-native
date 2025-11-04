@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../providers/theme/helpers';
+import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const portal = tv({
   base: 'absolute inset-0 justify-center p-5',
 });
 
 const overlay = tv({
-  base: 'absolute inset-0 bg-black/50',
+  base: 'absolute inset-0 bg-black/30',
   variants: {
     isDefaultAnimationDisabled: {
       true: 'bg-transparent',
@@ -16,7 +16,7 @@ const overlay = tv({
 });
 
 const content = tv({
-  base: 'bg-panel rounded-lg border border-border p-5',
+  base: 'bg-overlay rounded-3xl border border-border p-5',
 });
 
 const close = tv({
@@ -28,13 +28,7 @@ const title = tv({
 });
 
 const description = tv({
-  base: 'text-base font-normal',
-  variants: {
-    isDark: {
-      true: 'text-muted-foreground',
-      false: 'text-muted',
-    },
-  },
+  base: 'text-base font-normal text-muted',
 });
 
 const dialogStyles = combineStyles({

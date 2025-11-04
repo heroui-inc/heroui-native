@@ -1,16 +1,16 @@
 export {
   default as RadioGroup,
-  useRadioGroupContext,
-  useRadioGroupItemContext,
+  useRadioGroup,
+  useRadioGroupItem,
 } from './radio-group';
 export type {
   RadioGroupDescriptionProps,
   RadioGroupErrorMessageProps,
   RadioGroupIndicatorProps,
   RadioGroupIndicatorThumbProps,
-  RadioGroupItemColor,
   RadioGroupItemContextValue,
   RadioGroupItemProps,
+  RadioGroupItemRenderProps,
+  RadioGroupLabelProps,
   RadioGroupProps,
-  RadioGroupTitleProps,
 } from './radio-group.types';

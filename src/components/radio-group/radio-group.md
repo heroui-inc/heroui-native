@@ -32,7 +32,7 @@ Add descriptive text below each radio option for additional context.
 <RadioGroup value={value} onValueChange={setValue}>
   <RadioGroup.Item value="standard">
     <View>
-      <RadioGroup.Title>Standard Shipping</RadioGroup.Title>
+      <RadioGroup.Label>Standard Shipping</RadioGroup.Label>
       <RadioGroup.Description>
         Delivered in 5-7 business days
       </RadioGroup.Description>
@@ -41,7 +41,7 @@ Add descriptive text below each radio option for additional context.
   </RadioGroup.Item>
   <RadioGroup.Item value="express">
     <View>
-      <RadioGroup.Title>Express Shipping</RadioGroup.Title>
+      <RadioGroup.Label>Express Shipping</RadioGroup.Label>
       <RadioGroup.Description>
         Delivered in 2-3 business days
       </RadioGroup.Description>
@@ -58,7 +58,7 @@ Replace the default indicator thumb with custom content.
 ```tsx
 <RadioGroup value={value} onValueChange={setValue}>
   <RadioGroup.Item value="custom">
-    <RadioGroup.Title>Custom Option</RadioGroup.Title>
+    <RadioGroup.Label>Custom Option</RadioGroup.Label>
     <RadioGroup.Indicator>
       {value === 'custom' && (
         <Animated.View entering={FadeIn}>
@@ -87,7 +87,7 @@ Display validation errors below the radio group.
 ## Example
 
 ```tsx
-import { RadioGroup, Surface, useTheme } from 'heroui-native';
+import { RadioGroup, Surface, useThemeColor } from 'heroui-native';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View } from 'react-native';
@@ -95,15 +95,19 @@ import { AppText } from '../components/app-text';
 
 export default function PaymentMethodExample() {
   const [paymentMethod, setPaymentMethod] = React.useState('card');
-  const { colors } = useTheme();
+  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
       <RadioGroup.Item value="card">
         <View>
           <View className="flex-row items-center gap-1.5">
-            <Ionicons name="card-outline" size={16} color={colors.foreground} />
-            <RadioGroup.Title>Credit/Debit Card</RadioGroup.Title>
+            <Ionicons
+              name="card-outline"
+              size={16}
+              color={themeColorForeground}
+            />
+            <RadioGroup.Label>Credit/Debit Card</RadioGroup.Label>
           </View>
           <RadioGroup.Description>
             Pay securely with your credit or debit card
@@ -114,7 +118,7 @@ export default function PaymentMethodExample() {
 
       <RadioGroup.Item value="paypal">
         <View>
-          <RadioGroup.Title>PayPal</RadioGroup.Title>
+          <RadioGroup.Label>PayPal</RadioGroup.Label>
           <RadioGroup.Description>
             Fast and secure payment with PayPal
           </RadioGroup.Description>
@@ -124,7 +128,7 @@ export default function PaymentMethodExample() {
 
       <RadioGroup.Item value="bank">
         <View>
-          <RadioGroup.Title>Bank Transfer</RadioGroup.Title>
+          <RadioGroup.Label>Bank Transfer</RadioGroup.Label>
           <RadioGroup.Description>
             Direct transfer from your bank account
           </RadioGroup.Description>
@@ -141,7 +145,7 @@ export default function PaymentMethodExample() {
 ```tsx
 <RadioGroup>
   <RadioGroup.Item>
-    <RadioGroup.Title>...</RadioGroup.Title>
+    <RadioGroup.Label>...</RadioGroup.Label>
     <RadioGroup.Description>...</RadioGroup.Description>
     <RadioGroup.Indicator>
       <RadioGroup.IndicatorThumb />
@@ -153,8 +157,8 @@ export default function PaymentMethodExample() {
 
 - **RadioGroup**: Container that manages the selection state of radio items. Supports both horizontal and vertical orientations.
 - **RadioGroup.Item**: Individual radio option within a RadioGroup. Must be used inside RadioGroup. Handles selection state and renders default indicator if no children provided.
-- **RadioGroup.Title**: Optional clickable text title for the radio option. Linked to the radio for accessibility.
-- **RadioGroup.Description**: Optional secondary text below the title. Provides additional context about the radio option.
+- **RadioGroup.Label**: Optional clickable text label for the radio option. Linked to the radio for accessibility.
+- **RadioGroup.Description**: Optional secondary text below the label. Provides additional context about the radio option.
 - **RadioGroup.Indicator**: Optional container for the radio circle. Renders default thumb if no children provided. Manages the visual selection state.
 - **RadioGroup.IndicatorThumb**: Optional inner circle that appears when selected. Animates scale based on selection. Can be replaced with custom content.
 - **RadioGroup.ErrorMessage**: Error message displayed when radio group is invalid. Shown with animation below the radio group content.
@@ -175,15 +179,14 @@ export default function PaymentMethodExample() {
 
 ### RadioGroup.Item
 
-| prop                | type                                              | default     | description                                                               |
-| ------------------- | ------------------------------------------------- | ----------- | ------------------------------------------------------------------------- |
-| `children`          | `React.ReactNode`                                 | `undefined` | Radio item content                                                        |
-| `value`             | `string`                                          | `undefined` | The value associated with this radio item                                 |
-| `color`             | `'default' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Color variant                                                             |
-| `isDisabled`        | `boolean`                                         | `false`     | Whether this specific radio item is disabled                              |
-| `isInvalid`         | `boolean`                                         | `false`     | Whether the radio item is invalid                                         |
-| `className`         | `string`                                          | `undefined` | Custom class name                                                         |
-| `...PressableProps` | `PressableProps`                                  | -           | All standard React Native Pressable props are supported (except disabled) |
+| prop                | type              | default     | description                                                               |
+| ------------------- | ----------------- | ----------- | ------------------------------------------------------------------------- |
+| `children`          | `React.ReactNode` | `undefined` | Radio item content                                                        |
+| `value`             | `string`          | `undefined` | The value associated with this radio item                                 |
+| `isDisabled`        | `boolean`         | `false`     | Whether this specific radio item is disabled                              |
+| `isInvalid`         | `boolean`         | `false`     | Whether the radio item is invalid                                         |
+| `className`         | `string`          | `undefined` | Custom class name                                                         |
+| `...PressableProps` | `PressableProps`  | -           | All standard React Native Pressable props are supported (except disabled) |
 
 ### RadioGroup.Indicator
 
@@ -200,12 +203,12 @@ export default function PaymentMethodExample() {
 | `className`             | `string`                   | `undefined` | Custom class name                                |
 | `...Animated.ViewProps` | `AnimatedProps<ViewProps>` | -           | All Reanimated Animated.View props are supported |
 
-### RadioGroup.Title
+### RadioGroup.Label
 
 | prop                    | type                       | default     | description                                      |
 | ----------------------- | -------------------------- | ----------- | ------------------------------------------------ |
-| `children`              | `React.ReactNode`          | `undefined` | Title text content                               |
-| `className`             | `string`                   | `undefined` | Custom class name for the title element          |
+| `children`              | `React.ReactNode`          | `undefined` | Label text content                               |
+| `className`             | `string`                   | `undefined` | Custom class name for the label element          |
 | `...Animated.TextProps` | `AnimatedProps<TextProps>` | -           | All Reanimated Animated.Text props are supported |
 
 ### RadioGroup.Description
@@ -229,7 +232,7 @@ export default function PaymentMethodExample() {
 
 ## Hooks
 
-### useRadioGroupContext
+### useRadioGroup
 
 **Returns:**
 
@@ -240,13 +243,12 @@ export default function PaymentMethodExample() {
 | `isInvalid`     | `boolean`                 | Whether the radio group is in an invalid state |
 | `onValueChange` | `(value: string) => void` | Function to change the selected value          |
 
-### useRadioGroupItemContext
+### useRadioGroupItem
 
 **Returns:**
 
-| Property     | Type                                              | Description                        |
-| ------------ | ------------------------------------------------- | ---------------------------------- |
-| `color`      | `'default' \| 'success' \| 'warning' \| 'danger'` | Current color variant              |
-| `isSelected` | `boolean`                                         | Whether the radio item is selected |
-| `isDisabled` | `boolean`                                         | Whether the radio item is disabled |
-| `isInvalid`  | `boolean`                                         | Whether the radio item is invalid  |
+| Property     | Type      | Description                        |
+| ------------ | --------- | ---------------------------------- |
+| `isSelected` | `boolean` | Whether the radio item is selected |
+| `isDisabled` | `boolean` | Whether the radio item is disabled |
+| `isInvalid`  | `boolean` | Whether the radio item is invalid  |

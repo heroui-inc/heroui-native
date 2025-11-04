@@ -15,44 +15,38 @@ import {
   ReanimatedLogLevel,
 } from 'react-native-reanimated';
 import '../../global.css';
-import { AppThemeProvider, useAppTheme } from '../contexts/app-theme-context';
+import { AppThemeProvider } from '../contexts/app-theme-context';
 
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
   strict: false,
 });
 
-function ThemedLayout() {
-  const { currentTheme } = useAppTheme();
-
-  return (
-    <HeroUINativeProvider
-      config={{
-        colorScheme: 'system',
-        theme: currentTheme,
-        textProps: {
-          allowFontScaling: false,
-        },
-      }}
-    >
-      <Slot />
-    </HeroUINativeProvider>
-  );
-}
-
 export default function Layout() {
-  useFonts({
+  const fonts = useFonts({
     Inter_400Regular,
     Inter_500Medium,
     Inter_600SemiBold,
     Inter_700Bold,
   });
 
+  if (!fonts) {
+    return null;
+  }
+
   return (
     <GestureHandlerRootView style={styles.root}>
       <KeyboardProvider>
         <AppThemeProvider>
-          <ThemedLayout />
+          <HeroUINativeProvider
+            config={{
+              textProps: {
+                allowFontScaling: false,
+              },
+            }}
+          >
+            <Slot />
+          </HeroUINativeProvider>
         </AppThemeProvider>
       </KeyboardProvider>
     </GestureHandlerRootView>

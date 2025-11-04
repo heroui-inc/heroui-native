@@ -23,7 +23,8 @@ export type ButtonVariant =
   | 'secondary'
   | 'tertiary'
   | 'ghost'
-  | 'danger';
+  | 'destructive'
+  | 'destructive-soft';
 
 /**
  * Configuration for button animations

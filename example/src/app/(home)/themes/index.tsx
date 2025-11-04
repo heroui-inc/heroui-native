@@ -10,21 +10,74 @@ import {
   Surface,
   Switch,
   TextField,
-  useTheme,
+  useThemeColor,
 } from 'heroui-native';
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 import { useAppTheme } from '../../../contexts/app-theme-context';
 
-const ThemeCircle: React.FC<{
-  themeId: string;
-  themeName: string;
+type ThemeOption = {
+  id: string;
+  name: string;
+  lightVariant: string;
+  darkVariant: string;
   colors: { primary: string; secondary: string; tertiary: string };
+};
+
+const availableThemes: ThemeOption[] = [
+  {
+    id: 'default',
+    name: 'Default',
+    lightVariant: 'light',
+    darkVariant: 'dark',
+    colors: {
+      primary: '#006FEE',
+      secondary: '#17C964',
+      tertiary: '#F5A524',
+    },
+  },
+  {
+    id: 'lavender',
+    name: 'Lavender',
+    lightVariant: 'lavender-light',
+    darkVariant: 'lavender-dark',
+    colors: {
+      primary: 'hsl(270 50% 75%)',
+      secondary: 'hsl(160 40% 70%)',
+      tertiary: 'hsl(45 55% 75%)',
+    },
+  },
+  {
+    id: 'mint',
+    name: 'Mint',
+    lightVariant: 'mint-light',
+    darkVariant: 'mint-dark',
+    colors: {
+      primary: 'hsl(165 45% 70%)',
+      secondary: 'hsl(145 50% 68%)',
+      tertiary: 'hsl(55 60% 75%)',
+    },
+  },
+  {
+    id: 'sky',
+    name: 'Sky',
+    lightVariant: 'sky-light',
+    darkVariant: 'sky-dark',
+    colors: {
+      primary: 'hsl(200 50% 72%)',
+      secondary: 'hsl(175 45% 70%)',
+      tertiary: 'hsl(48 58% 75%)',
+    },
+  },
+];
+
+const ThemeCircle: React.FC<{
+  theme: ThemeOption;
   isActive: boolean;
   onPress: () => void;
-}> = ({ colors, isActive, onPress, themeName }) => {
-  const { colors: themeColors } = useTheme();
+}> = ({ theme, isActive, onPress }) => {
+  const themeColorAccent = useThemeColor('accent');
 
   return (
     <Pressable onPress={onPress} className="items-center">
@@ -38,7 +91,7 @@ const ThemeCircle: React.FC<{
               height: 68,
               borderRadius: 34,
               borderWidth: 2,
-              borderColor: themeColors.accent,
+              borderColor: themeColorAccent,
               top: 0,
               left: 0,
             }}
@@ -60,7 +113,7 @@ const ThemeCircle: React.FC<{
               position: 'absolute',
               width: '100%',
               height: '100%',
-              backgroundColor: colors.primary,
+              backgroundColor: theme.colors.primary,
             }}
           />
 
@@ -70,7 +123,7 @@ const ThemeCircle: React.FC<{
               position: 'absolute',
               width: '100%',
               height: '50%',
-              backgroundColor: colors.secondary,
+              backgroundColor: theme.colors.secondary,
               bottom: 0,
             }}
           />
@@ -81,7 +134,7 @@ const ThemeCircle: React.FC<{
               position: 'absolute',
               width: '50%',
               height: '50%',
-              backgroundColor: colors.tertiary,
+              backgroundColor: theme.colors.tertiary,
               bottom: 0,
               right: 0,
             }}
@@ -89,41 +142,36 @@ const ThemeCircle: React.FC<{
         </View>
       </View>
       <Text className="text-xs mt-2 text-foreground font-medium">
-        {themeName}
+        {theme.name}
       </Text>
     </Pressable>
   );
 };
 
 export default function Themes() {
-  const { currentThemeId, setThemeById, availableThemes } = useAppTheme();
+  const { currentTheme, setTheme, isLight } = useAppTheme();
   const [switchValue, setSwitchValue] = React.useState(false);
   const [checkboxValue, setCheckboxValue] = React.useState(false);
   const [radioValue, setRadioValue] = React.useState('option1');
   const [textValue, setTextValue] = React.useState('');
 
-  // Extract colors from current theme for the circles
-  const getThemeColors = (theme: (typeof availableThemes)[number]) => {
-    if (theme.id === 'default') {
-      // Use HeroUI's default theme colors
-      return {
-        primary: '#006FEE', // HeroUI default primary/accent
-        secondary: '#17C964', // HeroUI default success
-        tertiary: '#F5A524', // HeroUI default warning
-      };
-    }
-    const lightColors = theme.config?.light?.colors;
-    return {
-      primary: lightColors?.accent || '#000',
-      secondary: lightColors?.success || '#000',
-      tertiary: lightColors?.warning || '#000',
-    };
+  const getCurrentThemeId = () => {
+    if (currentTheme === 'light' || currentTheme === 'dark') return 'default';
+    if (currentTheme.startsWith('lavender')) return 'lavender';
+    if (currentTheme.startsWith('mint')) return 'mint';
+    if (currentTheme.startsWith('sky')) return 'sky';
+    return 'default';
+  };
+
+  const handleThemeSelect = (theme: ThemeOption) => {
+    const variant = isLight ? theme.lightVariant : theme.darkVariant;
+    setTheme(variant as any);
   };
 
   return (
     <ScreenScrollView contentContainerClassName="px-0">
       {/* Theme Selector */}
-      <View className="px-5 py-8 bg-panel border-b border-divider">
+      <View className="px-5 py-8 bg-overlay border-b border-divider">
         <Text className="text-lg font-bold text-foreground mb-4">
           Select Theme
         </Text>
@@ -131,15 +179,9 @@ export default function Themes() {
           {availableThemes.map((theme) => (
             <ThemeCircle
               key={theme.id}
-              themeId={theme.id}
-              themeName={
-                theme.id === 'default'
-                  ? 'Default'
-                  : (theme.name.split(' ')[0] as string)
-              }
-              colors={getThemeColors(theme)}
-              isActive={currentThemeId === theme.id}
-              onPress={() => setThemeById(theme.id)}
+              theme={theme}
+              isActive={getCurrentThemeId() === theme.id}
+              onPress={() => handleThemeSelect(theme)}
             />
           ))}
         </View>
@@ -154,31 +196,31 @@ export default function Themes() {
           </Text>
           <View className="gap-4">
             <View className="flex-row gap-3">
-              <View className="flex-1 h-16 bg-background border border-border rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-background border border-border rounded-2xl items-center justify-center">
                 <Text className="text-xs text-foreground">Background</Text>
               </View>
-              <View className="flex-1 h-16 bg-panel rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-overlay rounded-2xl items-center justify-center">
                 <Text className="text-xs text-foreground">Panel</Text>
               </View>
             </View>
             <View className="flex-row gap-3">
-              <View className="flex-1 h-16 bg-accent rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-accent rounded-2xl items-center justify-center">
                 <Text className="text-xs text-accent-foreground">Accent</Text>
               </View>
-              <View className="flex-1 h-16 bg-accent-soft rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-accent-soft rounded-2xl items-center justify-center">
                 <Text className="text-xs text-accent-soft-foreground">
                   Accent Soft
                 </Text>
               </View>
             </View>
             <View className="flex-row gap-3">
-              <View className="flex-1 h-16 bg-success rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-success rounded-2xl items-center justify-center">
                 <Text className="text-xs text-success-foreground">Success</Text>
               </View>
-              <View className="flex-1 h-16 bg-warning rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-warning rounded-2xl items-center justify-center">
                 <Text className="text-xs text-warning-foreground">Warning</Text>
               </View>
-              <View className="flex-1 h-16 bg-danger rounded-lg items-center justify-center">
+              <View className="flex-1 h-16 bg-danger rounded-2xl items-center justify-center">
                 <Text className="text-xs text-danger-foreground">Danger</Text>
               </View>
             </View>
@@ -223,7 +265,7 @@ export default function Themes() {
               <Text className="text-foreground font-medium mb-2">
                 Bordered Card Variant
               </Text>
-              <Text className="text-muted-foreground">
+              <Text className="text-muted">
                 This card uses the bordered variant for a subtle outline.
               </Text>
             </Card.Body>
@@ -253,7 +295,7 @@ export default function Themes() {
               <Button variant="ghost" size="md">
                 Ghost
               </Button>
-              <Button variant="danger" size="md">
+              <Button variant="destructive" size="md">
                 Danger
               </Button>
             </View>
@@ -405,14 +447,17 @@ export default function Themes() {
             Surfaces
           </Text>
           <View className="gap-4">
-            <Surface variant="1" className="p-5">
-              <Text className="text-foreground">Surface Variant 1</Text>
+            <Surface variant="default" className="p-5">
+              <Text className="text-foreground">Surface Default</Text>
             </Surface>
-            <Surface variant="2" className="p-5">
-              <Text className="text-foreground">Surface Variant 2</Text>
+            <Surface variant="secondary" className="p-5">
+              <Text className="text-foreground">Surface Secondary</Text>
             </Surface>
-            <Surface variant="3" className="p-5">
-              <Text className="text-foreground">Surface Variant 3</Text>
+            <Surface variant="tertiary" className="p-5">
+              <Text className="text-foreground">Surface Tertiary</Text>
+            </Surface>
+            <Surface variant="quaternary" className="p-5">
+              <Text className="text-foreground">Surface Quaternary</Text>
             </Surface>
           </View>
         </View>
@@ -458,8 +503,8 @@ export default function Themes() {
             </Text>
             <Text className="text-lg text-foreground">Body Large</Text>
             <Text className="text-base text-foreground">Body Regular</Text>
-            <Text className="text-sm text-muted-foreground">Body Small</Text>
-            <Text className="text-xs text-muted-foreground">Caption</Text>
+            <Text className="text-sm text-muted">Body Small</Text>
+            <Text className="text-xs text-muted">Caption</Text>
             <Text className="text-base text-link underline">Link Text</Text>
             <Text className="text-base text-success">Success Text</Text>
             <Text className="text-base text-warning">Warning Text</Text>

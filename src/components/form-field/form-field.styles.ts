@@ -1,5 +1,5 @@
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../providers/theme/helpers';
+import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
   base: 'flex-row items-center gap-3',
@@ -34,17 +34,11 @@ const content = tv({
 });
 
 const title = tv({
-  base: 'text-foreground font-medium text-lg',
+  base: 'text-base font-medium text-foreground',
 });
 
 const description = tv({
-  base: 'text-base font-normal',
-  variants: {
-    isDark: {
-      true: 'text-muted-foreground',
-      false: 'text-muted',
-    },
-  },
+  base: 'text-sm font-normal text-muted',
 });
 
 const indicator = tv({

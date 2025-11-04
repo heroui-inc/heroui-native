@@ -1,45 +1,83 @@
-import type { ThemeConfig } from 'heroui-native';
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
-import { pastelThemes, type ThemeId } from '../themes/pastel-themes';
+import React, { createContext, useCallback, useContext, useMemo } from 'react';
+import { Uniwind, useUniwind } from 'uniwind';
+
+type ThemeName =
+  | 'light'
+  | 'dark'
+  | 'lavender-light'
+  | 'lavender-dark'
+  | 'mint-light'
+  | 'mint-dark'
+  | 'sky-light'
+  | 'sky-dark';
 
 interface AppThemeContextType {
-  currentThemeId: ThemeId;
-  currentTheme: ThemeConfig | undefined;
-  setThemeById: (id: ThemeId) => void;
-  availableThemes: typeof pastelThemes;
+  currentTheme: string;
+  isLight: boolean;
+  isDark: boolean;
+  setTheme: (theme: ThemeName) => void;
+  toggleTheme: () => void;
 }
 
 const AppThemeContext = createContext<AppThemeContextType | undefined>(
   undefined
 );
+
 export const AppThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [currentThemeId, setCurrentThemeId] = useState<ThemeId>('default');
+  const { theme } = useUniwind();
 
-  const setThemeById = useCallback((id: ThemeId) => {
-    setCurrentThemeId(id);
+  const isLight = useMemo(() => {
+    return theme === 'light' || theme.endsWith('-light');
+  }, [theme]);
+
+  const isDark = useMemo(() => {
+    return theme === 'dark' || theme.endsWith('-dark');
+  }, [theme]);
+
+  const setTheme = useCallback((newTheme: ThemeName) => {
+    Uniwind.setTheme(newTheme);
   }, []);
 
-  const currentTheme = useMemo(() => {
-    const theme = pastelThemes.find((t) => t.id === currentThemeId);
-    return theme?.config;
-  }, [currentThemeId]);
+  const toggleTheme = useCallback(() => {
+    switch (theme) {
+      case 'light':
+        Uniwind.setTheme('dark');
+        break;
+      case 'dark':
+        Uniwind.setTheme('light');
+        break;
+      case 'lavender-light':
+        Uniwind.setTheme('lavender-dark');
+        break;
+      case 'lavender-dark':
+        Uniwind.setTheme('lavender-light');
+        break;
+      case 'mint-light':
+        Uniwind.setTheme('mint-dark');
+        break;
+      case 'mint-dark':
+        Uniwind.setTheme('mint-light');
+        break;
+      case 'sky-light':
+        Uniwind.setTheme('sky-dark');
+        break;
+      case 'sky-dark':
+        Uniwind.setTheme('sky-light');
+        break;
+    }
+  }, [theme]);
 
   const value = useMemo(
     () => ({
-      currentThemeId,
-      currentTheme,
-      setThemeById,
-      availableThemes: pastelThemes,
+      currentTheme: theme,
+      isLight,
+      isDark,
+      setTheme,
+      toggleTheme,
     }),
-    [currentThemeId, currentTheme, setThemeById]
+    [theme, isLight, isDark, setTheme, toggleTheme]
   );
 
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { createContext, forwardRef, use, useEffect, useRef } from 'react';
 import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
@@ -14,9 +15,9 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
+import { useThemeColor } from '../../helpers/theme';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
-import { useTheme } from '../../providers/theme';
 import { ArrowSvg } from './arrow-svg';
 import {
   DEFAULT_ALIGN_OFFSET,
@@ -134,13 +135,10 @@ const PopoverOverlay = forwardRef<
   PopoverPrimitivesTypes.OverlayRef,
   PopoverOverlayProps
 >(({ className, style, isDefaultAnimationDisabled, ...props }, ref) => {
-  const { isDark } = useTheme();
-
   const { progress } = usePopover();
 
   const tvStyles = popoverStyles.overlay({
     className,
-    isDark,
   });
 
   const rOverlayStyle = useAnimatedStyle(() => {
@@ -184,7 +182,6 @@ const PopoverContentPopover = forwardRef<
     },
     ref
   ) => {
-    const { isDark } = useTheme();
     const safeAreaInsets = useSafeAreaInsets();
 
     const insets = {
@@ -195,7 +192,10 @@ const PopoverContentPopover = forwardRef<
     };
 
     const { progress } = usePopover();
-    const tvStyles = popoverStyles.popoverContent({ className, isDark });
+
+    const tvStyles = popoverStyles.popoverContent({
+      className,
+    });
 
     const rContainerStyle = useAnimatedStyle(() => {
       if (isDefaultAnimationDisabled) {
@@ -279,11 +279,17 @@ const PopoverContentBottomSheet = forwardRef<
 
     const { popoverState, onOpenChange, progress } = usePopover();
 
-    const { colors } = useTheme();
+    const themeColorOverlay = useThemeColor('overlay');
+    const themeColorMuted = useThemeColor('muted');
 
     const tvStyles = popoverStyles.bottomSheetContent({
       className: bottomSheetViewClassName,
     });
+
+    const handleIndicatorStyle = StyleSheet.flatten([
+      { backgroundColor: themeColorMuted },
+      restProps.handleIndicatorStyle,
+    ]);
 
     useEffect(() => {
       if (popoverState === 'open') {
@@ -324,13 +330,13 @@ const PopoverContentBottomSheet = forwardRef<
         <BottomSheet
           ref={bottomSheetRef}
           backgroundStyle={[
-            { backgroundColor: colors.panel },
+            {
+              backgroundColor: themeColorOverlay,
+              borderRadius: 32,
+            },
             restProps.backgroundStyle,
           ]}
-          handleIndicatorStyle={[
-            { backgroundColor: colors.mutedForeground },
-            restProps.handleIndicatorStyle,
-          ]}
+          handleIndicatorStyle={handleIndicatorStyle}
           enablePanDownToClose={restProps.enablePanDownToClose ?? true}
           animatedIndex={animatedIndex ?? restProps.animatedIndex}
           onClose={onClose}
@@ -383,9 +389,8 @@ const PopoverClose = forwardRef<
   PopoverPrimitivesTypes.CloseRef,
   PopoverCloseProps
 >(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
-  const { colors, isDark } = useTheme();
-
-  const defaultIconColor = isDark ? colors.mutedForeground : colors.muted;
+  const themeColorMuted = useThemeColor('muted');
+  const defaultIconColor = themeColorMuted;
 
   const tvStyles = popoverStyles.close({ className });
 
@@ -430,9 +435,9 @@ const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
 
 const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
   ({ className, children, ...props }, ref) => {
-    const { isDark } = useTheme();
-
-    const tvStyles = popoverStyles.description({ className, isDark });
+    const tvStyles = popoverStyles.description({
+      className,
+    });
 
     return (
       <Text ref={ref} accessibilityRole="text" className={tvStyles} {...props}>
@@ -460,7 +465,8 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
     },
     ref
   ) => {
-    const { colors } = useTheme();
+    const themeColorOverlay = useThemeColor('overlay');
+    const themeColorBorder = useThemeColor('border');
     const { triggerPosition, contentLayout } = usePopover();
     const { placement: placementContext } = use(PopoverContentContext);
 
@@ -478,8 +484,8 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
       return null;
     }
 
-    const arrowFill = fill || colors.panel;
-    const arrowStroke = stroke || colors.border;
+    const arrowFill = fill || themeColorOverlay;
+    const arrowStroke = stroke || themeColorBorder;
 
     const getArrowPosition = (): StyleProp<ViewStyle> => {
       const triggerCenterX = triggerPosition.pageX + triggerPosition.width / 2;

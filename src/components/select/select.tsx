@@ -20,9 +20,9 @@ import {
 } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
 import { useDialogContentAnimation } from '../../helpers/hooks';
+import { useThemeColor } from '../../helpers/theme';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
-import { useTheme } from '../../providers/theme';
 import {
   DEFAULT_ALIGN_OFFSET,
   DEFAULT_INSETS,
@@ -162,13 +162,10 @@ const SelectOverlay = forwardRef<
   SelectPrimitivesTypes.OverlayRef,
   SelectOverlayProps
 >(({ className, style, isDefaultAnimationDisabled, ...props }, ref) => {
-  const { isDark } = useTheme();
-
   const { progress } = useSelect();
 
   const tvStyles = selectStyles.overlay({
     className,
-    isDark,
   });
 
   const rOverlayStyle = useAnimatedStyle(() => {
@@ -212,7 +209,6 @@ const SelectContentPopover = forwardRef<
     },
     ref
   ) => {
-    const { isDark } = useTheme();
     const safeAreaInsets = useSafeAreaInsets();
 
     const insets = {
@@ -223,7 +219,9 @@ const SelectContentPopover = forwardRef<
     };
 
     const { progress } = useSelect();
-    const tvStyles = selectStyles.popoverContent({ className, isDark });
+    const tvStyles = selectStyles.popoverContent({
+      className,
+    });
 
     const rContainerStyle = useAnimatedStyle(() => {
       if (isDefaultAnimationDisabled) {
@@ -305,7 +303,8 @@ const SelectContentBottomSheet = forwardRef<
 
     const { selectState, onOpenChange, progress } = useSelect();
 
-    const { colors } = useTheme();
+    const themeColorOverlay = useThemeColor('overlay');
+    const themeColorMuted = useThemeColor('muted');
 
     const tvStyles = selectStyles.bottomSheetContent({
       className: bottomSheetViewClassName,
@@ -349,11 +348,11 @@ const SelectContentBottomSheet = forwardRef<
       <BottomSheet
         ref={bottomSheetRef}
         backgroundStyle={[
-          { backgroundColor: colors.panel },
+          { backgroundColor: themeColorOverlay },
           restProps.backgroundStyle,
         ]}
         handleIndicatorStyle={[
-          { backgroundColor: colors.mutedForeground },
+          { backgroundColor: themeColorMuted },
           restProps.handleIndicatorStyle,
         ]}
         enablePanDownToClose={restProps.enablePanDownToClose ?? true}
@@ -481,9 +480,8 @@ const SelectClose = forwardRef<
   SelectPrimitivesTypes.CloseRef,
   SelectCloseProps
 >(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
-  const { colors, isDark } = useTheme();
-
-  const defaultIconColor = isDark ? colors.mutedForeground : colors.muted;
+  const themeColorMuted = useThemeColor('muted');
+  const defaultIconColor = themeColorMuted;
 
   const tvStyles = selectStyles.close({ className });
 
@@ -544,9 +542,9 @@ const SelectItemLabel = forwardRef<
 
 const SelectItemDescription = forwardRef<RNText, SelectItemDescriptionProps>(
   ({ className, ...props }, ref) => {
-    const { isDark } = useTheme();
-
-    const tvStyles = selectStyles.itemDescription({ className, isDark });
+    const tvStyles = selectStyles.itemDescription({
+      className,
+    });
 
     return (
       <Text
@@ -565,10 +563,10 @@ const SelectItemIndicator = forwardRef<
   SelectPrimitivesTypes.ItemIndicatorRef,
   SelectItemIndicatorProps
 >(({ className, children, iconProps, ...props }, ref) => {
-  const { colors } = useTheme();
+  const themeColorAccent = useThemeColor('accent');
 
   const iconSize = iconProps?.size ?? 16;
-  const iconColor = iconProps?.color ?? colors.muted;
+  const iconColor = iconProps?.color ?? themeColorAccent;
 
   const tvStyles = selectStyles.itemIndicator({ className });
 
@@ -585,9 +583,9 @@ const SelectListLabel = forwardRef<
   SelectPrimitivesTypes.GroupLabelRef,
   SelectListLabelProps
 >(({ className, ...props }, ref) => {
-  const { isDark } = useTheme();
-
-  const tvStyles = selectStyles.listLabel({ className, isDark });
+  const tvStyles = selectStyles.listLabel({
+    className,
+  });
 
   return (
     <Text

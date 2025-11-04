@@ -1,19 +1,20 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../providers/theme/helpers';
+import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
-  base: 'self-start flex-row items-center justify-center rounded-full py-1 gap-1 overflow-hidden',
+  base: 'self-start flex-row items-center justify-center rounded-full gap-1 overflow-hidden',
   variants: {
     variant: {
       primary: 'border-0',
       secondary: 'border border-border bg-default',
       tertiary: 'border border-border bg-transparent',
+      soft: 'border-0',
     },
     size: {
-      sm: 'px-2',
-      md: 'px-3',
-      lg: 'px-4',
+      sm: 'px-2 h-5',
+      md: 'px-3 h-6',
+      lg: 'px-4 h-7',
     },
     color: {
       accent: '',
@@ -50,6 +51,32 @@ const root = tv({
       color: 'danger',
       className: 'bg-danger',
     },
+    // Soft variant colors
+    {
+      variant: 'soft',
+      color: 'accent',
+      className: 'bg-accent/15',
+    },
+    {
+      variant: 'soft',
+      color: 'default',
+      className: 'bg-default',
+    },
+    {
+      variant: 'soft',
+      color: 'success',
+      className: 'bg-success/15',
+    },
+    {
+      variant: 'soft',
+      color: 'warning',
+      className: 'bg-warning/15',
+    },
+    {
+      variant: 'soft',
+      color: 'danger',
+      className: 'bg-danger/15',
+    },
   ],
   defaultVariants: {
     size: 'md',
@@ -65,6 +92,7 @@ const label = tv({
       primary: '',
       secondary: '',
       tertiary: '',
+      soft: '',
     },
     size: {
       sm: 'text-xs',
@@ -106,24 +134,81 @@ const label = tv({
       color: 'danger',
       className: 'text-danger-foreground',
     },
-    // Secondary & Tertiary variant text colors
+    // Secondary variant text colors
     {
-      variant: ['secondary', 'tertiary'],
-      color: ['accent', 'default'],
-      className: 'text-foreground',
+      variant: 'secondary',
+      color: 'accent',
+      className: 'text-accent',
     },
     {
-      variant: ['secondary', 'tertiary'],
+      variant: 'secondary',
+      color: 'default',
+      className: 'text-default-foreground',
+    },
+    {
+      variant: 'secondary',
       color: 'success',
       className: 'text-success',
     },
     {
-      variant: ['secondary', 'tertiary'],
+      variant: 'secondary',
       color: 'warning',
       className: 'text-warning',
     },
     {
-      variant: ['secondary', 'tertiary'],
+      variant: 'secondary',
+      color: 'danger',
+      className: 'text-danger',
+    },
+    // Tertiary variant text colors
+    {
+      variant: 'tertiary',
+      color: 'accent',
+      className: 'text-foreground',
+    },
+    {
+      variant: 'tertiary',
+      color: 'default',
+      className: 'text-default-foreground',
+    },
+    {
+      variant: 'tertiary',
+      color: 'success',
+      className: 'text-success',
+    },
+    {
+      variant: 'tertiary',
+      color: 'warning',
+      className: 'text-warning',
+    },
+    {
+      variant: 'tertiary',
+      color: 'danger',
+      className: 'text-danger',
+    },
+    // Soft variant text colors
+    {
+      variant: 'soft',
+      color: 'accent',
+      className: 'text-accent',
+    },
+    {
+      variant: 'soft',
+      color: 'default',
+      className: 'text-default-foreground',
+    },
+    {
+      variant: 'soft',
+      color: 'success',
+      className: 'text-success',
+    },
+    {
+      variant: 'soft',
+      color: 'warning',
+      className: 'text-warning',
+    },
+    {
+      variant: 'soft',
       color: 'danger',
       className: 'text-danger',
     },

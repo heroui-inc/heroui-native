@@ -17,6 +17,8 @@ type RootProps = Omit<SlottablePressableProps, 'disabled'> & {
   onSelectedChange?: (isSelected: boolean) => void;
   /** Whether the checkbox is disabled and cannot be interacted with */
   isDisabled?: boolean;
+  /** Whether the checkbox is in an invalid state */
+  isInvalid?: boolean;
 };
 
 /**

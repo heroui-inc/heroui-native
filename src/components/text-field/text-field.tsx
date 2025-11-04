@@ -12,10 +12,11 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { useUniwind } from 'uniwind';
 import { Text } from '../../helpers/components';
+import { useThemeColor } from '../../helpers/theme';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
-import { useTheme } from '../../providers/theme';
 import { ErrorView } from '../error-view';
 import {
   ANIMATION_DURATION,
@@ -24,7 +25,7 @@ import {
   ENTERING_ANIMATION_CONFIG,
   EXITING_ANIMATION_CONFIG,
 } from './text-field.constants';
-import textFieldStyles from './text-field.styles';
+import textFieldStyles, { styleSheet } from './text-field.styles';
 import type {
   TextFieldContextValue,
   TextFieldDescriptionProps,
@@ -128,6 +129,7 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       children,
       className,
       classNames,
+      style,
       placeholderTextColor,
       colors: customColors,
       animationConfig,
@@ -149,7 +151,16 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       DISPLAY_NAME.INPUT_END_CONTENT
     );
 
-    const { colors, theme } = useTheme();
+    const { theme } = useUniwind();
+
+    const themeColorFieldBackground = useThemeColor('field');
+    const themeColorFieldFocusBackground = useThemeColor('field-focus');
+    const themeColorFieldBlurBorder = useThemeColor('field-border');
+    const themeColorFieldFocusBorder = useThemeColor('accent');
+    const themeColorFieldPlaceholder = useThemeColor('field-placeholder');
+
+    const themeColorMuted = useThemeColor('muted');
+    const themeColorDanger = useThemeColor('danger');
 
     const tvStyles = textFieldStyles.input({
       isMultiline: Boolean(restProps.multiline),
@@ -161,12 +172,14 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
 
     const inputStyles = tvStyles.input({ className: classNames?.input });
 
-    const blurBackground = customColors?.blurBackground || colors.default;
-    const focusBackground = customColors?.focusBackground || colors.background;
+    const blurBackground =
+      customColors?.blurBackground || themeColorFieldBackground;
+    const focusBackground =
+      customColors?.focusBackground || themeColorFieldFocusBackground;
     const errorBackground = customColors?.errorBackground;
-    const blurBorder = customColors?.blurBorder || colors.border;
-    const focusBorder = customColors?.focusBorder || colors.mutedForeground;
-    const errorBorder = customColors?.errorBorder || colors.danger;
+    const blurBorder = customColors?.blurBorder || themeColorFieldBlurBorder;
+    const focusBorder = customColors?.focusBorder || themeColorFieldFocusBorder;
+    const errorBorder = customColors?.errorBorder || themeColorDanger;
 
     const isFocused = useSharedValue(0);
     const isError = useSharedValue(0);
@@ -240,17 +253,21 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     };
 
     return (
-      <Animated.View className={containerStyles} style={animatedContainerStyle}>
+      <Animated.View
+        className={containerStyles}
+        style={[animatedContainerStyle, styleSheet.borderCurve]}
+      >
         {startContent}
         <TextInput
           ref={ref}
           className={inputStyles}
-          placeholderTextColor={placeholderTextColor || colors.mutedForeground}
-          selectionColor={
-            props.colors?.focusBackground || colors.mutedForeground
+          style={[styleSheet.borderCurve, style]}
+          placeholderTextColor={
+            placeholderTextColor || themeColorFieldPlaceholder
           }
+          selectionColor={props.colors?.focusBackground || themeColorMuted}
           selectionHandleColor={
-            props.colors?.focusBackground || colors.mutedForeground
+            props.colors?.focusBackground || themeColorMuted
           }
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -315,9 +332,9 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
     const isInvalid =
       localIsInvalid !== undefined ? localIsInvalid : contextIsInvalid;
 
-    const { isDark } = useTheme();
-
-    const tvStyles = textFieldStyles.description({ className, isDark });
+    const tvStyles = textFieldStyles.description({
+      className,
+    });
 
     if (isInvalid) return null;
 

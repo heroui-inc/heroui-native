@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../providers/theme/helpers';
+import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
   slots: {
     container: 'flex-col overflow-hidden',
-    divider: 'h-px bg-border',
+    divider: 'h-hairline bg-divider',
   },
   variants: {
     variant: {
@@ -13,9 +13,9 @@ const root = tv({
         container: '',
         divider: '',
       },
-      border: {
-        container: 'border border-border rounded-xl',
-        divider: '',
+      surface: {
+        container: 'bg-surface border border-surface rounded-3xl',
+        divider: 'mx-3 bg-divider/75',
       },
     },
   },
@@ -29,11 +29,11 @@ const item = tv({
 });
 
 const trigger = tv({
-  base: 'flex-row items-center justify-between py-4 px-4 bg-background z-10 overflow-hidden',
+  base: 'flex-row items-center justify-between py-4 px-3 gap-4 bg-transparent z-10 overflow-hidden',
   variants: {
     variant: {
       default: '',
-      border: '',
+      surface: 'px-5',
     },
   },
   defaultVariants: {
@@ -46,11 +46,11 @@ const indicator = tv({
 });
 
 const content = tv({
-  base: 'px-4 pb-4 bg-background',
+  base: 'px-3 pb-4 bg-transparent',
   variants: {
     variant: {
       default: '',
-      border: '',
+      surface: 'px-5',
     },
   },
   defaultVariants: {
@@ -58,8 +58,8 @@ const content = tv({
   },
 });
 
-const styleSheet = StyleSheet.create({
-  borderContainer: {
+export const styleSheet = StyleSheet.create({
+  root: {
     borderCurve: 'continuous',
   },
 });
@@ -70,7 +70,6 @@ const accordionStyles = combineStyles({
   trigger,
   indicator,
   content,
-  styleSheet,
 });
 
 export type RootSlots = keyof ReturnType<typeof root>;

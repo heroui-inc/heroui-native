@@ -1,16 +1,19 @@
 import Feather from '@expo/vector-icons/Feather';
 import * as Haptics from 'expo-haptics';
-import { Checkbox, Chip, Dialog, FormField, useTheme } from 'heroui-native';
+import { Checkbox, Chip, Dialog, FormField } from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../app-text';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
 import { DialogHeader } from '../dialog-header';
 import { SearchBar } from '../search-bar';
+
+const StyledFeather = withUniwind(Feather);
 
 type LabelItem = {
   value: string;
@@ -23,8 +26,6 @@ export const Labels: FC = () => {
     new Set(['feature'])
   );
   const [searchQuery, setSearchQuery] = useState('');
-
-  const { colors } = useTheme();
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -104,7 +105,7 @@ export const Labels: FC = () => {
           return (
             <View
               key={item.value}
-              className="rounded-full border border-surface-2"
+              className="rounded-full border border-surface-tertiary"
               style={{ marginLeft, zIndex }}
             >
               {item.indicator}
@@ -129,7 +130,7 @@ export const Labels: FC = () => {
     <Dialog>
       <Dialog.Trigger asChild>
         <Chip
-          className="h-7 bg-surface-3 px-2"
+          className="h-7 bg-surface-quaternary px-2"
           onPress={() => {
             if (Platform.OS === 'ios') {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -148,7 +149,6 @@ export const Labels: FC = () => {
         </Dialog.Overlay>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
           <Dialog.Content
-            className="rounded-2xl border-0"
             style={{ marginTop: insetTop, height: dialogContentHeight }}
           >
             <DialogHeader>Labels</DialogHeader>
@@ -159,7 +159,7 @@ export const Labels: FC = () => {
             />
             {filteredItems.length === 0 && (
               <View className="flex-1 items-center justify-center">
-                <AppText className="text-base font-medium text-muted-foreground">
+                <AppText className="text-base font-medium text-muted">
                   No results
                 </AppText>
               </View>
@@ -192,27 +192,23 @@ export const Labels: FC = () => {
                         <FormField.Indicator>
                           <Checkbox
                             isSelected={isSelected}
-                            colors={{
-                              defaultBorder: 'transparent',
-                              selectedBorder: 'transparent',
+                            animatedColors={{
+                              backgroundColor: {
+                                default: 'transparent',
+                                selected: 'transparent',
+                              },
                             }}
                           >
-                            <Checkbox.Background
-                              colors={{
-                                defaultBackground: 'transparent',
-                                selectedBackground: 'transparent',
-                              }}
-                            />
                             <Checkbox.Indicator>
                               {isSelected && (
                                 <Animated.View
                                   key={`${item.value}-check`}
                                   entering={FadeIn.duration(200)}
                                 >
-                                  <Feather
+                                  <StyledFeather
                                     name="check"
                                     size={18}
-                                    color={colors.foreground}
+                                    className="text-foreground"
                                   />
                                 </Animated.View>
                               )}

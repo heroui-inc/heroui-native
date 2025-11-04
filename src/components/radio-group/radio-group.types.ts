@@ -8,12 +8,6 @@ import type {
 } from '../form-field';
 
 /**
- * RadioGroupItem color variant
- * @default 'default'
- */
-export type RadioGroupItemColor = 'default' | 'success' | 'warning' | 'danger';
-
-/**
  * Props for RadioGroup root component
  */
 export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
@@ -27,8 +21,6 @@ export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
  * Context values shared between RadioGroupItem compound components
  */
 export interface RadioGroupItemContextValue {
-  /** Current color variant */
-  color: RadioGroupItemColor;
   /** Whether the radio item is selected */
   isSelected: boolean;
   /** Whether the radio item is disabled */
@@ -38,13 +30,25 @@ export interface RadioGroupItemContextValue {
 }
 
 /**
+ * Render function props for RadioGroupItem children
+ */
+export interface RadioGroupItemRenderProps {
+  /** Whether the radio item is selected */
+  isSelected: boolean;
+  /** Whether the radio item is disabled */
+  isDisabled: boolean;
+  /** Whether the radio item is invalid */
+  isInvalid: boolean;
+}
+
+/**
  * Props for the RadioGroupItem component
  */
-export interface RadioGroupItemProps extends ItemProps {
-  /** Radio item content */
-  children?: React.ReactNode;
-  /** Color variant */
-  color?: RadioGroupItemColor;
+export interface RadioGroupItemProps extends Omit<ItemProps, 'children'> {
+  /** Radio item content, or a render function */
+  children?:
+    | React.ReactNode
+    | ((props: RadioGroupItemRenderProps) => React.ReactNode);
   /** Whether the radio item is invalid @default false */
   isInvalid?: boolean;
   /** Custom class name */
@@ -71,9 +75,9 @@ export interface RadioGroupIndicatorThumbProps
 }
 
 /**
- * Props for RadioGroup.Title component
+ * Props for RadioGroup.Label component
  */
-export interface RadioGroupTitleProps extends FormFieldTitleProps {}
+export interface RadioGroupLabelProps extends FormFieldTitleProps {}
 
 /**
  * Props for RadioGroup.Description component

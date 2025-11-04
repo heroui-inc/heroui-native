@@ -2,9 +2,9 @@ import { forwardRef, useEffect, useMemo, useState } from 'react';
 import type { ImageSourcePropType } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
+import { useThemeColor } from '../../helpers/theme';
 import { childrenToString, createContext } from '../../helpers/utils';
 import * as AvatarPrimitives from '../../primitives/avatar';
-import { useTheme } from '../../providers/theme';
 import {
   AVATAR_DEFAULT_ICON_SIZE,
   AVATAR_DISPLAY_NAME,
@@ -39,14 +39,17 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
   const {
     children,
     size = 'md',
-    color = 'default',
+    variant = 'default',
+    color = 'accent',
     className,
     style,
     ...restProps
   } = props;
 
   const tvStyles = avatarStyles.root({
+    variant,
     size,
+    color,
     className,
   });
 
@@ -123,16 +126,20 @@ const DefaultFallbackIcon: React.FC<{
   colorVariant: AvatarColor;
   iconProps?: PersonIconProps;
 }> = ({ sizeVariant, colorVariant, iconProps }) => {
-  const { colors } = useTheme();
+  const themeColorDefaultForeground = useThemeColor('default-foreground');
+  const themeColorAccent = useThemeColor('accent');
+  const themeColorSuccess = useThemeColor('success');
+  const themeColorWarning = useThemeColor('warning');
+  const themeColorDanger = useThemeColor('danger');
 
   const iconSize = iconProps?.size ?? AVATAR_DEFAULT_ICON_SIZE[sizeVariant];
 
   const defaultIconColorMap: Record<AvatarColor, string> = {
-    default: colors.defaultForeground,
-    accent: colors.accent,
-    success: colors.success,
-    warning: colors.warning,
-    danger: colors.danger,
+    default: themeColorDefaultForeground,
+    accent: themeColorAccent,
+    success: themeColorSuccess,
+    warning: themeColorWarning,
+    danger: themeColorDanger,
   };
 
   const iconColor = iconProps?.color ?? defaultIconColorMap[colorVariant];

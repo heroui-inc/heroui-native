@@ -2,7 +2,7 @@ import {
   Divider,
   Select,
   useSelect,
-  useTheme,
+  useThemeColor,
   type SelectTriggerRef,
 } from 'heroui-native';
 import React, { useRef, useState, type FC } from 'react';
@@ -11,11 +11,8 @@ import { KeyboardController } from 'react-native-keyboard-controller';
 import Animated, {
   interpolate,
   useAnimatedStyle,
-  withTiming,
 } from 'react-native-reanimated';
 import { AppText } from '../app-text';
-
-const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 type SelectOption = {
   value: string;
@@ -42,8 +39,8 @@ const AnimatedTextInputBorder: FC = () => {
 
   return (
     <Animated.View
-      style={[rContainerStyle, styles.borderCurve]}
-      className="absolute -inset-[4px] border-[2.5px] border-border rounded-[16px] pointer-events-none"
+      style={[rContainerStyle, styles.focusRing]}
+      className="absolute -inset-1 border-2 border-accent rounded-[19px] pointer-events-none"
     />
   );
 };
@@ -53,15 +50,9 @@ export function SearchableSelect() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
-  const { colors, isDark } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
 
   const triggerRef = useRef<SelectTriggerRef>(null);
-
-  const rTextInputStyle = useAnimatedStyle(() => {
-    return {
-      backgroundColor: withTiming(isFocused ? colors.panel : colors.default),
-    };
-  });
 
   return (
     <Select
@@ -74,15 +65,14 @@ export function SearchableSelect() {
     >
       <Select.Trigger ref={triggerRef}>
         <AnimatedTextInputBorder />
-        <AnimatedTextInput
+        <TextInput
           value={isFocused ? searchQuery : searchQuery || value?.label}
           onChangeText={setSearchQuery}
           placeholder={
             isFocused ? (value?.label ?? 'Search state...') : 'Search state...'
           }
-          placeholderTextColor={isDark ? colors.mutedForeground : colors.muted}
-          className="w-[256px] h-11 px-3 rounded-lg border border-border bg-default flex-row items-center text-foreground"
-          style={rTextInputStyle}
+          placeholderTextColor={themeColorMuted}
+          className="w-[256px] h-[48px] px-3 rounded-2xl flex-row items-center bg-surface text-foreground text-base/5 shadow-md shadow-black/5"
           onFocus={() => {
             setIsFocused(true);
             triggerRef.current?.open();
@@ -91,7 +81,7 @@ export function SearchableSelect() {
             setIsFocused(false);
             triggerRef.current?.close();
           }}
-          selectionColor={isFocused ? colors.muted : 'transparent'}
+          selectionColor={isFocused ? themeColorMuted : 'transparent'}
         />
       </Select.Trigger>
       <Select.Portal>
@@ -99,10 +89,7 @@ export function SearchableSelect() {
           className="bg-transparent"
           onPress={() => KeyboardController.dismiss()}
         />
-        <Select.Content
-          width="trigger"
-          className="px-0 border border-border rounded-xl"
-        >
+        <Select.Content width="trigger">
           {US_STATES.filter((state) =>
             state.label.toLowerCase().includes(searchQuery.toLowerCase())
           ).map((state, index, filteredArray) => (
@@ -110,7 +97,6 @@ export function SearchableSelect() {
               <Select.Item
                 value={state.value}
                 label={state.label}
-                className="px-4"
                 onPress={() => KeyboardController.dismiss()}
               />
               {index < filteredArray.length - 1 && <Divider />}
@@ -120,9 +106,7 @@ export function SearchableSelect() {
             state.label.toLowerCase().includes(searchQuery.toLowerCase())
           ).length === 0 && (
             <View className="py-6 items-center">
-              <AppText className="text-muted dark:text-muted-foreground">
-                No states found
-              </AppText>
+              <AppText className="text-muted">No states found</AppText>
             </View>
           )}
         </Select.Content>
@@ -132,7 +116,7 @@ export function SearchableSelect() {
 }
 
 const styles = StyleSheet.create({
-  borderCurve: {
+  focusRing: {
     borderCurve: 'continuous',
   },
 });

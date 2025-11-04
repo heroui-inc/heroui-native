@@ -1,0 +1,97 @@
+@layer theme {
+  :root {
+    @variant mint-light {
+      /* Base Colors */
+      --background: hsl(160 30% 98%);
+      --foreground: hsl(160 35% 12%);
+
+      /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
+      --surface: hsl(160 25% 96%);
+      --surface-foreground: hsl(160 35% 18%);
+
+      /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
+      --overlay: hsl(160 25% 96%);
+      --overlay-foreground: hsl(160 35% 18%);
+
+      --muted: hsl(160 15% 45%);
+
+      --default: hsl(160 18% 97%);
+      --default-foreground: hsl(160 25% 32%);
+
+      --accent: hsl(165 45% 70%);
+      --accent-foreground: hsl(165 40% 15%);
+
+      /* Form Field Defaults - Colors */
+      --field-background: hsl(160 25% 96%);
+      --field-foreground: hsl(160 35% 12%);
+      --field-placeholder: var(--muted);
+      --field-border: transparent;
+
+      /* Status Colors */
+      --success: hsl(145 50% 68%);
+      --success-foreground: hsl(145 45% 15%);
+
+      --warning: hsl(55 60% 75%);
+      --warning-foreground: hsl(55 50% 20%);
+
+      --danger: hsl(10 55% 75%);
+      --danger-foreground: hsl(10 45% 20%);
+
+      /* Component Colors */
+      --segment: hsl(160 25% 96%);
+      --segment-foreground: hsl(160 35% 12%);
+
+      /* Misc Colors */
+      --border: hsl(165 20% 88%);
+      --divider: hsl(165 15% 82%);
+      --link: hsl(165 45% 60%);
+    }
+
+    @variant mint-dark {
+      /* Base Colors */
+      --background: hsl(160 20% 10%);
+      --foreground: hsl(160 10% 92%);
+
+      /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
+      --surface: hsl(160 18% 13%);
+      --surface-foreground: hsl(160 10% 85%);
+
+      /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
+      --overlay: hsl(160 16% 16%);
+      --overlay-foreground: hsl(160 10% 85%);
+
+      --muted: hsl(160 10% 38%);
+
+      --default: hsl(160 15% 18%);
+      --default-foreground: hsl(160 10% 80%);
+
+      --accent: hsl(165 40% 60%);
+      --accent-foreground: hsl(165 10% 10%);
+
+      /* Form Field Defaults - Colors */
+      --field-background: var(--default);
+      --field-foreground: var(--foreground);
+      --field-placeholder: var(--muted);
+      --field-border: transparent;
+
+      /* Status Colors */
+      --success: hsl(145 40% 50%);
+      --success-foreground: hsl(145 10% 90%);
+
+      --warning: hsl(55 50% 60%);
+      --warning-foreground: hsl(55 10% 10%);
+
+      --danger: hsl(10 45% 60%);
+      --danger-foreground: hsl(10 10% 90%);
+
+      /* Component Colors */
+      --segment: hsl(160 18% 16%);
+      --segment-foreground: hsl(160 10% 85%);
+
+      /* Misc Colors */
+      --border: hsl(165 15% 22%);
+      --divider: hsl(165 12% 28%);
+      --link: hsl(165 40% 65%);
+    }
+  }
+}

@@ -127,12 +127,12 @@ Customize the input colors for different states.
 
 ```tsx
 import { Ionicons } from '@expo/vector-icons';
-import { TextField, useTheme } from 'heroui-native';
+import { TextField, useThemeColor } from 'heroui-native';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 
 export default function TextFieldExample() {
-  const { colors } = useTheme();
+  const themeColorMuted = useThemeColor('muted');
   const [email, setEmail] = React.useState('');
   const isInvalidEmail =
     email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -150,11 +150,7 @@ export default function TextFieldExample() {
             onChangeText={setEmail}
           >
             <TextField.InputStartContent>
-              <Ionicons
-                name="mail-outline"
-                size={16}
-                color={colors.mutedForeground}
-              />
+              <Ionicons name="mail-outline" size={16} color={themeColorMuted} />
             </TextField.InputStartContent>
           </TextField.Input>
           <TextField.Description>
@@ -172,15 +168,11 @@ export default function TextFieldExample() {
               <Ionicons
                 name="lock-closed-outline"
                 size={16}
-                color={colors.mutedForeground}
+                color={themeColorMuted}
               />
             </TextField.InputStartContent>
             <TextField.InputEndContent>
-              <Ionicons
-                name="eye-outline"
-                size={16}
-                color={colors.mutedForeground}
-              />
+              <Ionicons name="eye-outline" size={16} color={themeColorMuted} />
             </TextField.InputEndContent>
           </TextField.Input>
         </TextField>
@@ -256,16 +248,16 @@ export default function TextFieldExample() {
 
 ### TextField.Input
 
-| prop                 | type                       | default                  | description                                                  |
-| -------------------- | -------------------------- | ------------------------ | ------------------------------------------------------------ |
-| children             | `React.ReactNode`          | -                        | Content to render inside the input container                 |
-| isInvalid            | `boolean`                  | `undefined`              | Whether the input is in an invalid state (overrides context) |
-| className            | `string`                   | -                        | Custom class name for the input container                    |
-| classNames           | `ElementSlots<InputSlots>` | -                        | Custom class names for different parts of the input          |
-| colors               | `TextFieldInputColors`     | -                        | Custom colors for input background and border                |
-| animationConfig      | `TimingConfig`             | -                        | Animation configuration for focus/blur transitions           |
-| placeholderTextColor | `string`                   | `colors.mutedForeground` | Color of the placeholder text                                |
-| ...TextInputProps    | `TextInputProps`           | -                        | All standard React Native TextInput props are supported      |
+| prop                 | type                       | default          | description                                                  |
+| -------------------- | -------------------------- | ---------------- | ------------------------------------------------------------ |
+| children             | `React.ReactNode`          | -                | Content to render inside the input container                 |
+| isInvalid            | `boolean`                  | `undefined`      | Whether the input is in an invalid state (overrides context) |
+| className            | `string`                   | -                | Custom class name for the input container                    |
+| classNames           | `ElementSlots<InputSlots>` | -                | Custom class names for different parts of the input          |
+| colors               | `TextFieldInputColors`     | -                | Custom colors for input background and border                |
+| animationConfig      | `TimingConfig`             | -                | Animation configuration for focus/blur transitions           |
+| placeholderTextColor | `string`                   | `--colors-muted` | Color of the placeholder text                                |
+| ...TextInputProps    | `TextInputProps`           | -                | All standard React Native TextInput props are supported      |
 
 #### ElementSlots<InputSlots>
 

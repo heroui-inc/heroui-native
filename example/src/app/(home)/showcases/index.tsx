@@ -1,10 +1,12 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
 import { useRouter } from 'expo-router';
-import { useTheme } from 'heroui-native';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import { Carousel } from '../../../components/showcase-carousel';
+
+const StyledIonicons = withUniwind(Ionicons);
 const data = [
   {
     imageLight:
@@ -84,7 +86,6 @@ const data = [
     components: [
       { name: 'Button', href: '/components/button' },
       { name: 'Card', href: '/components/card' },
-      { name: 'DropShadowView', href: '/components/drop-shadow-view' },
       { name: 'Divider', href: '/components/divider' },
     ],
   },
@@ -94,8 +95,6 @@ export default function ScaleCarousel() {
   const router = useRouter();
 
   const insets = useSafeAreaInsets();
-
-  const { colors, isDark } = useTheme();
 
   return (
     <View className="flex-1 bg-background">
@@ -108,27 +107,19 @@ export default function ScaleCarousel() {
           onPress={router.back}
         >
           <GlassView style={styles.glassView} isInteractive>
-            <Ionicons
-              name="close"
-              size={24}
-              color={isDark ? colors.mutedForeground : colors.muted}
-            />
+            <StyledIonicons name="close" size={24} className="text-muted" />
           </GlassView>
         </Pressable>
       ) : (
         <Pressable
           onPress={router.back}
-          className="absolute right-3 p-1 rounded-full bg-foreground/10 z-50"
+          className="absolute right-3 p-2.5 rounded-full bg-foreground/10 z-50"
           style={{
             top: insets.top + 12,
           }}
           hitSlop={12}
         >
-          <Ionicons
-            name="close"
-            size={20}
-            color={isDark ? colors.mutedForeground : colors.muted}
-          />
+          <StyledIonicons name="close" size={20} className="text-muted" />
         </Pressable>
       )}
       <Carousel data={data} />

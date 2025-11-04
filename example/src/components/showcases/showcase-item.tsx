@@ -1,6 +1,6 @@
 import { Image as ExpoImage } from 'expo-image';
 import { useRouter } from 'expo-router';
-import { Chip, DropShadowView, Surface, useTheme } from 'heroui-native';
+import { Chip, cn, Surface } from 'heroui-native';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import Animated, {
   Extrapolation,
@@ -9,6 +9,7 @@ import Animated, {
   useAnimatedStyle,
   useDerivedValue,
 } from 'react-native-reanimated';
+import { useAppTheme } from '../../contexts/app-theme-context';
 import { AppText } from '../app-text';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
@@ -43,7 +44,7 @@ export function ShowcaseItem({
 }: ShowcaseItemProps) {
   const router = useRouter();
 
-  const { isDark } = useTheme();
+  const { isDark } = useAppTheme();
 
   const animatedIndex = useDerivedValue(() => {
     return scrollY.get() / itemSize;
@@ -131,18 +132,18 @@ export function ShowcaseItem({
           </AppText>
         </Pressable>
         <AnimatedPressable onPress={() => router.push(item.href)}>
-          <DropShadowView
-            shadowSize={isDark ? 'none' : 'xl'}
-            className="w-[62%] aspect-[1/2] rounded-2xl"
+          <Surface
+            className={cn(
+              'w-[62%] aspect-[1/2] items-center justify-center rounded-3xl p-0 border border-neutral-100 shadow-2xl shadow-black/5',
+              isDark && 'shadow-none border-neutral-900'
+            )}
           >
-            <Surface className="flex-1 items-center justify-center rounded-2xl p-0">
-              <ExpoImage
-                source={{ uri: isDark ? item.imageDark : item.imageLight }}
-                style={StyleSheet.absoluteFill}
-                transition={200}
-              />
-            </Surface>
-          </DropShadowView>
+            <ExpoImage
+              source={{ uri: isDark ? item.imageDark : item.imageLight }}
+              style={StyleSheet.absoluteFill}
+              transition={200}
+            />
+          </Surface>
         </AnimatedPressable>
         <View className="pt-8 gap-5 w-[82%]">
           <View className="flex-row flex-wrap justify-center gap-2">

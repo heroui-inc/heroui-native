@@ -5,6 +5,7 @@ import type {
   LayoutAnimationFunction,
   WithSpringConfig,
 } from 'react-native-reanimated';
+import type { ElementSlots } from '../../helpers/theme/types';
 import type { TimingConfig } from '../../helpers/types';
 import type {
   ContentProps as PrimitiveContentProps,
@@ -13,13 +14,12 @@ import type {
   RootProps as PrimitiveRootProps,
   TriggerProps as PrimitiveTriggerProps,
 } from '../../primitives/accordion';
-import type { ElementSlots } from '../../providers/theme';
 import type { RootSlots } from './accordion.styles';
 
 /**
  * Variant types for the Accordion component
  */
-export type AccordionVariant = 'default' | 'border';
+export type AccordionVariant = 'default' | 'surface';
 
 /**
  * Icon props for the Accordion.Indicator component
@@ -97,7 +97,7 @@ export interface AccordionTriggerProps extends PrimitiveTriggerProps {
   highlightColor?: string;
   /**
    * Custom highlight opacity for press feedback
-   * @default 0.03
+   * @default 0.5
    */
   highlightOpacity?: number;
   /**

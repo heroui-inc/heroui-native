@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { colorKit, useTheme } from 'heroui-native';
+import { colorKit, useThemeColor } from 'heroui-native';
 import type { PropsWithChildren, ReactElement } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import Animated, {
@@ -26,7 +26,7 @@ export default function ParallaxScrollView({
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
 
-  const { colors } = useTheme();
+  const themeColorBackground = useThemeColor('background');
 
   const headerHeight = height * 0.6;
 
@@ -71,8 +71,8 @@ export default function ParallaxScrollView({
         {headerImage}
         <LinearGradient
           colors={[
-            colorKit.setAlpha(colors.background, 0).hex(),
-            colors.background,
+            colorKit.setAlpha(themeColorBackground, 0).hex(),
+            themeColorBackground,
           ]}
           style={styles.gradient}
         />

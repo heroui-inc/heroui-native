@@ -1,28 +1,38 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Button, TextField, useTheme } from 'heroui-native';
+import { Button, TextField } from 'heroui-native';
 import { useState } from 'react';
-import { KeyboardAvoidingView, View } from 'react-native';
-import { ScreenScrollView } from '../../../components/screen-scroll-view';
-import { SectionTitle } from '../../../components/section-title';
+import { Pressable, useWindowDimensions, View } from 'react-native';
+import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
+import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
+import type { UsageVariant } from '../../../components/component-presentation/types';
+import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { useAppTheme } from '../../../contexts/app-theme-context';
 
-export default function TextFieldScreen() {
-  const { colors, isDark } = useTheme();
+const StyledIonicons = withUniwind(Ionicons);
 
-  const [isTestFieldInvalid, setIsTestFieldInvalid] = useState(false);
-  const [testFieldValue, setTestFieldValue] = useState('');
+const KeyboardAvoidingContainer = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const { height } = useWindowDimensions();
 
+  const { progress } = useReanimatedKeyboardAnimation();
+
+  const rStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: progress.value === 1 ? -height * 0.15 : 0 }],
+    };
+  });
+
+  return <Animated.View style={rStyle}>{children}</Animated.View>;
+};
+
+const BasicTextFieldContent = () => {
   return (
-    <KeyboardAvoidingView behavior="padding" className="flex-1 bg-background">
-      <ScreenScrollView
-        contentContainerClassName="gap-16"
-        keyboardShouldPersistTaps="handled"
-      >
-        <SectionTitle title="Basic TextField" />
-        <TextField>
-          <TextField.Input placeholder="No label, just input" />
-        </TextField>
-
-        <SectionTitle title="TextField with Label and Description" />
+    <View className="flex-1 justify-center px-5">
+      <KeyboardAvoidingContainer>
         <TextField isRequired>
           <TextField.Label>Email</TextField.Label>
           <TextField.Input
@@ -34,47 +44,84 @@ export default function TextFieldScreen() {
             We'll never share your email with anyone else.
           </TextField.Description>
         </TextField>
+      </KeyboardAvoidingContainer>
+    </View>
+  );
+};
 
-        <SectionTitle title="Non-required field (no asterisk)" />
-        <TextField>
-          <TextField.Label>Company Name</TextField.Label>
-          <TextField.Input placeholder="Optional field" />
-          <TextField.Description>
-            This field is optional - no asterisk shown
-          </TextField.Description>
-        </TextField>
+const TextFieldWithIconsContent = () => {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-        <SectionTitle title="TextField with Icons" />
+  return (
+    <View className="flex-1 justify-center px-5">
+      <KeyboardAvoidingContainer>
         <TextField isRequired>
           <TextField.Label>Password</TextField.Label>
-          <TextField.Input placeholder="Enter your password" secureTextEntry>
+          <TextField.Input
+            placeholder="Enter your password"
+            secureTextEntry={!isPasswordVisible}
+          >
             <TextField.InputStartContent className="pointer-events-none">
-              <Ionicons
+              <StyledIonicons
                 name="lock-closed-outline"
                 size={16}
-                color={colors.mutedForeground}
+                className="text-muted"
               />
             </TextField.InputStartContent>
-            <TextField.InputEndContent className="pointer-events-none">
-              <Ionicons
-                name="eye-outline"
-                size={16}
-                color={colors.mutedForeground}
-              />
+            <TextField.InputEndContent>
+              <Pressable
+                onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+              >
+                <StyledIonicons
+                  name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'}
+                  size={16}
+                  className="text-muted"
+                />
+              </Pressable>
             </TextField.InputEndContent>
           </TextField.Input>
         </TextField>
+      </KeyboardAvoidingContainer>
+    </View>
+  );
+};
 
-        <SectionTitle title="Disabled TextField" />
-        <TextField isDisabled>
-          <TextField.Label>Disabled Field</TextField.Label>
-          <TextField.Input
-            placeholder="This field is disabled"
-            value="Cannot edit this"
-          />
-        </TextField>
+const DisabledTextFieldContent = () => {
+  return (
+    <View className="flex-1 justify-center px-5">
+      <KeyboardAvoidingContainer>
+        <View className="gap-8">
+          <TextField>
+            <TextField.Label>Account ID</TextField.Label>
+            <TextField.Input
+              placeholder="Enter account ID"
+              value="ACC-2024-12345"
+            />
+            <TextField.Description>
+              Your unique account identifier
+            </TextField.Description>
+          </TextField>
 
-        <SectionTitle title="TextField with multiline" />
+          <TextField isDisabled>
+            <TextField.Label>User Role</TextField.Label>
+            <TextField.Input
+              placeholder="Role assignment"
+              value="Administrator"
+            />
+            <TextField.Description>
+              Contact support to change your role
+            </TextField.Description>
+          </TextField>
+        </View>
+      </KeyboardAvoidingContainer>
+    </View>
+  );
+};
+
+const MultilineTextFieldContent = () => {
+  return (
+    <View className="flex-1 justify-center px-5">
+      <KeyboardAvoidingContainer>
         <TextField>
           <TextField.Label>Message</TextField.Label>
           <TextField.Input
@@ -85,48 +132,111 @@ export default function TextFieldScreen() {
           />
           <TextField.Description>Maximum 500 characters</TextField.Description>
         </TextField>
+      </KeyboardAvoidingContainer>
+    </View>
+  );
+};
 
-        <SectionTitle title="TextField with custom styles" />
-        <TextField>
-          <TextField.Label>Custom Styled</TextField.Label>
-          <TextField.Input
-            placeholder="Custom colors"
-            className="border-[2px]"
-            colors={{
-              blurBorder: isDark ? '#2563eb' : '#2563eb',
-              focusBorder: isDark ? '#2563eb' : '#2563eb',
-              blurBackground: isDark ? '#172554' : '#eff6ff',
-              focusBackground: isDark ? '#172554' : '#eff6ff',
-            }}
-          />
-        </TextField>
+const TextFieldWithValidationContent = () => {
+  const [isTestFieldInvalid, setIsTestFieldInvalid] = useState(false);
+  const [testFieldValue, setTestFieldValue] = useState('');
 
-        <SectionTitle title="TestField With Validation State" />
+  return (
+    <View className="flex-1 justify-center px-5">
+      <KeyboardAvoidingContainer>
         <View className="gap-8">
           <TextField isRequired isInvalid={isTestFieldInvalid}>
-            <TextField.Label>Test Animation Transitions</TextField.Label>
+            <TextField.Label>Promo Code</TextField.Label>
             <TextField.Input
-              placeholder="Type to see animations"
+              placeholder="Enter promo code"
               value={testFieldValue}
               onChangeText={setTestFieldValue}
+              autoCapitalize="characters"
             />
             <TextField.Description>
-              Click the button below to toggle valid/invalid state
+              Enter a valid code to receive discount
             </TextField.Description>
             <TextField.ErrorMessage>
-              This field has validation errors
+              This promo code is invalid or has expired
             </TextField.ErrorMessage>
           </TextField>
           <Button
             onPress={() => setIsTestFieldInvalid(!isTestFieldInvalid)}
-            variant="tertiary"
+            variant="secondary"
             size="sm"
             className="self-start"
           >
-            {isTestFieldInvalid ? 'Make Valid' : 'Make Invalid'}
+            {isTestFieldInvalid ? 'Clear Error' : 'Simulate Error'}
           </Button>
         </View>
-      </ScreenScrollView>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingContainer>
+    </View>
   );
+};
+
+const TextFieldWithCustomStylesContent = () => {
+  const { isDark } = useAppTheme();
+
+  return (
+    <View className="flex-1 justify-center px-5">
+      <KeyboardAvoidingContainer>
+        <TextField>
+          <TextField.Label>Gift Card Number</TextField.Label>
+          <TextField.Input
+            placeholder="Enter 16-digit gift card number"
+            keyboardType="number-pad"
+            maxLength={16}
+            className="border-[0.5px] rounded-none"
+            selectionColor="#2563eb"
+            colors={{
+              blurBorder: isDark ? '#fafafa' : '#09090b',
+              focusBorder: isDark ? '#fafafa' : '#09090b',
+              blurBackground: isDark ? '#18181b' : '#fafafa',
+              focusBackground: isDark ? '#18181b' : '#fafafa',
+            }}
+          />
+          <TextField.Description>
+            Redeem your gift card at checkout
+          </TextField.Description>
+        </TextField>
+      </KeyboardAvoidingContainer>
+    </View>
+  );
+};
+
+const TEXT_FIELD_VARIANTS: UsageVariant[] = [
+  {
+    value: 'basic-text-field',
+    label: 'Basic TextField',
+    content: <BasicTextFieldContent />,
+  },
+  {
+    value: 'text-field-with-icons',
+    label: 'TextField with icons',
+    content: <TextFieldWithIconsContent />,
+  },
+  {
+    value: 'disabled-text-field',
+    label: 'Disabled TextField',
+    content: <DisabledTextFieldContent />,
+  },
+  {
+    value: 'multiline-text-field',
+    label: 'Multiline TextField',
+    content: <MultilineTextFieldContent />,
+  },
+  {
+    value: 'text-field-with-validation',
+    label: 'TextField with validation',
+    content: <TextFieldWithValidationContent />,
+  },
+  {
+    value: 'text-field-with-custom-styles',
+    label: 'TextField with custom styles',
+    content: <TextFieldWithCustomStylesContent />,
+  },
+];
+
+export default function TextFieldScreen() {
+  return <UsageVariantFlatList data={TEXT_FIELD_VARIANTS} />;
 }

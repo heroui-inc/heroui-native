@@ -1,10 +1,14 @@
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Button, Divider, useTheme } from 'heroui-native';
+import { Button, Divider } from 'heroui-native';
 import { type FC } from 'react';
 import { View } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
+
+const StyledEntypo = withUniwind(Entypo);
+const StyledIonicons = withUniwind(Ionicons);
 
 type IngredientItemProps = {
   name: string;
@@ -12,15 +16,11 @@ type IngredientItemProps = {
 };
 
 const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
-  const { colors } = useTheme();
-
   return (
     <View className="flex-row items-center justify-between py-3">
       <View className="flex-col flex-1">
         <AppText className="text-base text-foreground">{name}</AppText>
-        <AppText className="text-sm text-muted-foreground">
-          {description}
-        </AppText>
+        <AppText className="text-sm text-muted">{description}</AppText>
       </View>
       <View className="flex-row gap-2">
         <Button
@@ -30,7 +30,11 @@ const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
           className="rounded-full"
           onPress={simulatePress}
         >
-          <Ionicons name="sparkles-sharp" size={14} color={colors.foreground} />
+          <StyledIonicons
+            name="sparkles-sharp"
+            size={14}
+            className="text-foreground"
+          />
         </Button>
         <Button
           variant="secondary"
@@ -39,7 +43,7 @@ const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
           className="rounded-full"
           onPress={simulatePress}
         >
-          <Entypo name="plus" size={16} color={colors.foreground} />
+          <StyledEntypo name="plus" size={16} className="text-foreground" />
         </Button>
       </View>
     </View>

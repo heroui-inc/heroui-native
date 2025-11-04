@@ -212,7 +212,7 @@ export interface PopoverCloseIconProps {
   size?: number;
   /**
    * Color of the close icon
-   * @default theme.colors.foreground
+   * @default --colors.muted
    */
   color?: string;
 }

@@ -2,22 +2,23 @@ import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 
 const root = tv({
-  base: 'p-4 rounded-lg overflow-hidden',
+  base: 'p-4 rounded-3xl overflow-hidden',
   variants: {
     variant: {
-      'none': 'bg-transparent',
-      '1': 'bg-surface-1 border border-border',
-      '2': 'bg-surface-2 border border-border',
-      '3': 'bg-surface-3 border border-border',
+      default: 'bg-surface',
+      secondary: 'bg-surface-secondary',
+      tertiary: 'bg-surface-tertiary',
+      quaternary: 'bg-surface-quaternary',
+      transparent: 'bg-transparent',
     },
   },
   defaultVariants: {
-    variant: '1',
+    variant: 'default',
   },
 });
 
 export const styleSheet = StyleSheet.create({
-  surfaceRoot: {
+  root: {
     borderCurve: 'continuous',
   },
 });

@@ -180,7 +180,7 @@ const PresentationContent = () => {
               bottomInset={insets.bottom + 4}
             >
               <BottomSheetScrollView
-                contentContainerClassName="py-4 px-8"
+                contentContainerClassName="p-4"
                 showsVerticalScrollIndicator={false}
               >
                 {COUNTRIES.map((country, index) => (

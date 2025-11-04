@@ -172,7 +172,7 @@ const InlineRadioOptionsContent = () => {
           <AppText className="text-foreground font-semibold text-base">
             Select Size
           </AppText>
-          <AppText className="text-foreground-secondary text-sm">
+          <AppText className="text-muted text-sm">
             Classic Cotton T-Shirt
           </AppText>
         </View>
@@ -215,7 +215,7 @@ const RadioGroupStatesContent = () => {
             <AppText className="text-foreground font-semibold text-base">
               Choose Your Plan
             </AppText>
-            <AppText className="text-foreground-secondary text-sm">
+            <AppText className="text-muted text-sm">
               Select a subscription plan to continue
             </AppText>
           </View>
@@ -278,7 +278,7 @@ const CustomIndicatorBackgroundContent = () => {
           <AppText className="text-foreground font-semibold text-base">
             Priority Level
           </AppText>
-          <AppText className="text-foreground-secondary text-sm">
+          <AppText className="text-muted text-sm">
             Set the priority for this task
           </AppText>
         </View>
@@ -355,7 +355,7 @@ const CustomIndicatorThumbContent = () => {
           <AppText className="text-foreground font-semibold text-base">
             Notification Preferences
           </AppText>
-          <AppText className="text-foreground-secondary text-sm">
+          <AppText className="text-muted text-sm">
             Choose how you'd like to receive updates
           </AppText>
         </View>

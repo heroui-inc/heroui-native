@@ -74,7 +74,7 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
     <Dialog.Content
       className="bg-surface rounded-3xl"
       style={[
-        { marginTop: insetTop, maxHeight: maxTextInputDialogHeight },
+        { marginTop: insetTop, height: maxTextInputDialogHeight },
         rContainerStyle,
       ]}
       isDefaultAnimationDisabled
@@ -271,14 +271,9 @@ const TextInputDialogContent = () => {
             >
               <CustomAnimatedContent>
                 <Dialog.Close className="self-end" />
-                <View className="mb-6 gap-1.5">
-                  <Dialog.Title>Update Profile</Dialog.Title>
-                  <Dialog.Description>
-                    Update your profile information. All fields are required.
-                  </Dialog.Description>
-                </View>
+                <Dialog.Title className="mb-6">Update Profile</Dialog.Title>
 
-                <View className="h-[200px]">
+                <View className="flex-1">
                   <ScrollView contentContainerClassName="gap-5">
                     <TextField isRequired isInvalid={!!nameError}>
                       <TextField.Label isInvalid={false}>
@@ -332,7 +327,7 @@ const TextInputDialogContent = () => {
                   </ScrollView>
                 </View>
 
-                <View className="flex-row justify-end gap-3">
+                <View className="flex-row justify-end gap-3 pt-3">
                   <Dialog.Close asChild>
                     <Button
                       variant="ghost"

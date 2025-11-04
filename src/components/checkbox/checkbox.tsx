@@ -162,7 +162,10 @@ const CheckboxIndicator = forwardRef<
 
   const indicatorAnimatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: withTiming(isSelected ? 1 : 0, timingConfig) }],
+      transform: [
+        { translateY: 0.5 },
+        { scale: withTiming(isSelected ? 1 : 0, timingConfig) },
+      ],
     };
   });
 

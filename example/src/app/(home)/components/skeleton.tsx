@@ -154,7 +154,7 @@ const ListSkeletonContent = () => {
             animationType={animationType}
             className="flex-row items-center gap-3"
           >
-            <SkeletonGroup.Item className="h-12 w-12 rounded-lg" />
+            <SkeletonGroup.Item className="size-12 rounded-xl" />
             <View className="flex-1 gap-1.5">
               <SkeletonGroup.Item className="h-4 w-full rounded-md" />
               <SkeletonGroup.Item className="h-3 w-2/3 rounded-md" />

@@ -86,7 +86,6 @@ const data = [
     components: [
       { name: 'Button', href: '/components/button' },
       { name: 'Card', href: '/components/card' },
-      { name: 'DropShadowView', href: '/components/drop-shadow-view' },
       { name: 'Divider', href: '/components/divider' },
     ],
   },

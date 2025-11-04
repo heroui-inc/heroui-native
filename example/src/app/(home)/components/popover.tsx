@@ -95,9 +95,7 @@ const PresentationVariantsContent = () => {
               </Popover.Description>
             </View>
             <Popover.Close asChild>
-              <Button size="sm" variant="secondary" className="self-stretch">
-                Dismiss
-              </Button>
+              <Button variant="secondary">Dismiss</Button>
             </Popover.Close>
           </Popover.Content>
         </Popover.Portal>
@@ -215,7 +213,7 @@ const PlacementPopover = ({
                 className="text-accent"
               />
             </View>
-            <AppText className="text-sm font-semibold flex-1">
+            <AppText className="text-sm font-semibold text-foreground">
               Quick Tip
             </AppText>
           </View>
@@ -273,7 +271,7 @@ const AlignmentPopover = ({ align }: { align: 'start' | 'center' | 'end' }) => {
                 className="text-warning"
               />
             </View>
-            <AppText className="text-sm font-semibold flex-1">
+            <AppText className="text-sm font-semibold text-foreground">
               Alignment
             </AppText>
           </View>

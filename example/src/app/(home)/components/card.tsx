@@ -205,22 +205,24 @@ const BackgroundImageCardContent = () => {
         />
         <View className="flex-1 gap-4">
           <Card.Body className="flex-1">
-            <Card.Title className="text-base text-white uppercase mb-0.5">
+            <Card.Title className="text-base text-zinc-50 uppercase mb-0.5">
               Pet health
             </Card.Title>
-            <Card.Description className="text-neutral-200 font-semibold text-lg">
+            <Card.Description className="text-zinc-50 font-medium text-base">
               Your pet deserve the best
             </Card.Description>
           </Card.Body>
           <Card.Footer className="gap-3">
             <View className="flex-row items-center justify-between">
               <View>
-                <AppText className="text-lg text-white">Available soon</AppText>
-                <AppText className="text-base font-medium text-neutral-400">
+                <AppText className="text-base text-white">
+                  Available soon
+                </AppText>
+                <AppText className="text-base text-zinc-400">
                   Get notified
                 </AppText>
               </View>
-              <Button variant="primary" size="sm" className="bg-white">
+              <Button variant="secondary" size="sm" className="bg-white">
                 <Button.Label className="text-black">Notify me</Button.Label>
               </Button>
             </View>

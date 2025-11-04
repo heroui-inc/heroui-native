@@ -1,5 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { Card, Chip, cn } from 'heroui-native';
 import type { FC } from 'react';
 import { Image, Pressable, View } from 'react-native';
@@ -151,6 +152,8 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
 };
 
 export default function App() {
+  const { isDark } = useAppTheme();
+
   return (
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
@@ -170,6 +173,7 @@ export default function App() {
           />
         ))}
       </View>
+      <StatusBar style={isDark ? 'light' : 'dark'} />
     </ScreenScrollView>
   );
 }

@@ -225,7 +225,7 @@ const WithEndContentContent = () => {
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row gap-4 justify-center">
         <Chip size="sm" variant="secondary">
-          <Chip.Label>Close</Chip.Label>
+          <Chip.Label className="text-muted">Close</Chip.Label>
           <StyledIonicons name="close" size={12} className="text-gray-500" />
         </Chip>
         <Chip size="md" variant="primary" color="danger" className="pr-1.5">
@@ -238,7 +238,7 @@ const WithEndContentContent = () => {
           color="default"
           className="pr-1.5 p-0.5 pl-2 gap-2"
         >
-          <Chip.Label>Clear</Chip.Label>
+          <Chip.Label className="text-muted">Clear</Chip.Label>
           <View className="rounded-full p-1 bg-muted/20">
             <StyledIonicons name="close" size={12} className="text-muted" />
           </View>

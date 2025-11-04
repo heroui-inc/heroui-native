@@ -53,7 +53,7 @@ export default function LinearTaskScreen() {
 
       <Card
         variant="tertiary"
-        className="flex-row flex-wrap gap-x-2 gap-y-3 border-0 rounded-2xl mb-6 -mx-3"
+        className="flex-row flex-wrap gap-x-2 gap-y-3 border-0 rounded-3xl mb-6 -mx-3"
       >
         <Status />
         <Priority />
@@ -71,7 +71,7 @@ export default function LinearTaskScreen() {
       </AppText>
 
       <Pressable onPress={simulatePress}>
-        <Card className="mb-6 border-0 bg-surface-tertiary rounded-xl p-4">
+        <Card className="mb-6 border-0 bg-surface-tertiary rounded-2xl p-4">
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center gap-3">
               <StyledMaterialCommunityIcons

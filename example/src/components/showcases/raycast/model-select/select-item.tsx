@@ -28,7 +28,7 @@ export const SelectItem: FC<Props> = ({ data }) => {
       value={data.value}
       label={data.label}
       className={cn(
-        'pl-4 pr-3 py-4 rounded-xl overflow-hidden',
+        'pl-4 pr-3 py-4 rounded-2xl overflow-hidden',
         isSelectedAndroid && 'bg-neutral-400/40',
         isSelectedAndroid && isDark && 'bg-neutral-800/40'
       )}

@@ -70,7 +70,7 @@ const OnboardingScreen = () => {
       >
         <Button
           size="sm"
-          className={cn('rounded-full bg-black/20', isDark && 'bg-white/20')}
+          className={cn('rounded-full bg-black/10', isDark && 'bg-white/20')}
           isIconOnly
           onPress={router.back}
         >
@@ -82,7 +82,7 @@ const OnboardingScreen = () => {
         </Button>
         <Button
           size="sm"
-          className={cn('rounded-full bg-black/20', isDark && 'bg-white/20')}
+          className={cn('rounded-full bg-black/10', isDark && 'bg-white/20')}
           isIconOnly
           onPress={router.back}
         >
@@ -100,13 +100,13 @@ const OnboardingScreen = () => {
         className="items-center gap-2 px-8"
         entering={FadeInDown.delay(300).springify()}
       >
-        <AppText className="text-muted text-sm font-semibold uppercase tracking-wider">
+        <AppText className="text-muted text-xs font-semibold uppercase tracking-wider">
           Lesson 1
         </AppText>
-        <AppText className="text-4xl font-semibold text-foreground">
+        <AppText className="text-3xl font-semibold text-foreground">
           Setting Up a Show
         </AppText>
-        <AppText className="text-lg text-center text-foreground/75">
+        <AppText className="text-base text-center text-foreground/75">
           It's fast and simple, and we've got a few pointers to help you get
           started successfully.
         </AppText>

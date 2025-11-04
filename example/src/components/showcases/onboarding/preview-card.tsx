@@ -59,20 +59,20 @@ export const PreviewCard: FC<PreviewCardProps> = ({
     >
       <DropShadowView
         shadowSize="xl"
-        className="aspect-[3/5] rounded-xl"
+        className="aspect-[3/5] rounded-2xl"
         shadowColor={isDark ? '#00000000' : 'black'}
       >
         <Card
           className={cn(
-            'flex-1 border-0 rounded-xl',
+            'flex-1 border-0 rounded-3xl',
             isDark && 'border border-border/70'
           )}
-          variant={isDark ? 'tertiary' : 'transparent'}
+          variant={isDark ? 'default' : 'transparent'}
         >
           <Card.Body className="flex-1 p-2 mb-4">
             <Image
               source={{ uri: image }}
-              className="absolute inset-0 rounded-lg"
+              className="absolute inset-0 rounded-xl"
             />
             <Chip className="bg-danger rounded-md">
               <Chip.Label className="text-white font-semibold">

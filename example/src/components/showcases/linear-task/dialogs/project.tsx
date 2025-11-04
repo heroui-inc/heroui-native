@@ -113,7 +113,6 @@ export const Project: FC = () => {
         </Dialog.Overlay>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
           <Dialog.Content
-            className="rounded-2xl border-0"
             style={{ marginTop: insetTop, height: dialogContentHeight }}
           >
             <DialogHeader>Project</DialogHeader>

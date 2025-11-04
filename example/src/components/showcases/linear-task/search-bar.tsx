@@ -20,7 +20,7 @@ export const SearchBar: FC<SearchBarProps> = ({
   const themeColorMuted = useThemeColor('muted');
 
   return (
-    <View className="flex-row items-center gap-2 rounded-lg bg-surface-secondary h-12 px-3 mb-2">
+    <View className="flex-row items-center gap-2 rounded-xl bg-surface-secondary h-12 px-3 mb-2">
       <StyledFontAwesome name="search" size={14} className="text-muted" />
       <TextInput
         value={value}

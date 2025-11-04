@@ -1,7 +1,14 @@
 import Feather from '@expo/vector-icons/Feather';
 import * as Haptics from 'expo-haptics';
-import { Button, cn, Select } from 'heroui-native';
-import { Platform, Pressable, useWindowDimensions, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Button, cn, colorKit, Select, useThemeColor } from 'heroui-native';
+import {
+  Platform,
+  Pressable,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { Easing, SlideInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,7 +17,6 @@ import { useAppTheme } from '../../../../contexts/app-theme-context';
 import { simulatePress } from '../../../../helpers/utils/simulate-press';
 import { AppText } from '../../../app-text';
 import { SelectBlurBackdrop } from '../../../select/select-blur-backdrop';
-import { ProgressiveBlurView } from '../progresive-blur-view';
 import { SelectContentContainer } from './select-content-container';
 import { SelectItem } from './select-item';
 import { type ModelOption } from './types';
@@ -29,6 +35,8 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
   const { height: screenHeight } = useWindowDimensions();
 
   const { isDark } = useAppTheme();
+
+  const themeColorSurface = useThemeColor('surface');
 
   return (
     <Select
@@ -134,11 +142,39 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
               <SelectItem key={m.value} data={m} />
             ))}
           </AnimatedScrollView>
-
-          <ProgressiveBlurView height={insets.top + 150} />
-          <ProgressiveBlurView position="bottom" />
+          <LinearGradient
+            colors={[
+              themeColorSurface,
+              colorKit.setAlpha(themeColorSurface, 0).hex(),
+            ]}
+            style={[styles.topGradient, { height: insets.top + 100 }]}
+          />
+          <LinearGradient
+            colors={[
+              colorKit.setAlpha(themeColorSurface, 0).hex(),
+              themeColorSurface,
+            ]}
+            style={[styles.bottomGradient, { height: insets.bottom + 100 }]}
+          />
         </SelectContentContainer>
       </Select.Portal>
     </Select>
   );
 };
+
+const styles = StyleSheet.create({
+  topGradient: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    pointerEvents: 'none',
+  },
+  bottomGradient: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    pointerEvents: 'none',
+  },
+});

@@ -43,7 +43,7 @@ const FavoriteItem: FC<FavoriteItemProps> = ({
   return (
     <View className="flex-1 gap-3 items-center justify-center">
       <View
-        className={cn('w-14 h-14 rounded-lg', iconClassName)}
+        className={cn('size-14 rounded-2xl', iconClassName)}
         style={styles.borderCurve}
       />
       <View

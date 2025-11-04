@@ -122,7 +122,7 @@ export const Status: FC = () => {
         <Dialog.Overlay isDefaultAnimationDisabled>
           <DialogBlurBackdrop />
         </Dialog.Overlay>
-        <Dialog.Content className="rounded-2xl border-0">
+        <Dialog.Content>
           <DialogHeader>Status</DialogHeader>
           <RadioGroup value={value} onValueChange={setValue} className="gap-7">
             {items.map((item) => (

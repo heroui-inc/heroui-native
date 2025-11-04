@@ -3,7 +3,6 @@ module.exports = {
     {
       exclude: /\/node_modules\//,
       presets: ['module:react-native-builder-bob/babel-preset'],
-      plugins: ['uniwind/babel'],
     },
     {
       include: /\/node_modules\//,

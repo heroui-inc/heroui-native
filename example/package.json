@@ -9,7 +9,6 @@
     "web": "expo start --web -c"
   },
   "dependencies": {
-    "@expo-google-fonts/allan": "^0.4.1",
     "@expo-google-fonts/inter": "^0.4.1",
     "@expo/metro-runtime": "~6.1.1",
     "@gorhom/bottom-sheet": "^5",
@@ -42,7 +41,7 @@
     "tailwind-merge": "^3.3.1",
     "tailwind-variants": "^3.1.0",
     "tailwindcss": "^4.1.14",
-    "uniwind": "v1.0.0-nightly.20251030.1"
+    "uniwind": "^1.0.0-rc.8"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

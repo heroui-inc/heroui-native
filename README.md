@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  v1.0.0-alpha.16
+  v1.0.0-beta.1
 </p>
 
 ## Preview App
@@ -48,7 +48,7 @@ Want to start building with HeroUI Native immediately? We provide a standalone e
 This repository contains a pre-configured React Native app with HeroUI Native already set up, including:
 
 - All necessary dependencies installed
-- Nativewind configuration ready
+- Uniwind configuration ready
 - Example components showcasing best practices
 - Perfect for quickly prototyping or starting a new project
 
@@ -70,36 +70,25 @@ npm install react-native-screens react-native-reanimated@~4.1.0 react-native-wor
 
 > **Important:** It's recommended to use the exact versions specified above to avoid compatibility issues. Version mismatches may cause unexpected bugs.
 
-### 3. Set Up Nativewind
+### 3. Set Up Uniwind
 
-Follow the [NativeWind installation guide](https://www.nativewind.dev/docs/getting-started/installation) to set up Tailwind CSS for React Native.
+Follow the [Uniwind installation guide](https://docs.uniwind.dev/quickstart) to set up Tailwind CSS for React Native.
 
-> **Important:** For correct compatibility with Reanimated v4, you must install NativeWind v4.2.1 specifically. This is crucial for proper functionality.
+If you're migrating from NativeWind, see the [migration guide](https://docs.uniwind.dev/migration-from-nativewind).
 
-### 4. Configure Tailwind
+### 4. Configure global.css
 
-Update your `tailwind.config.js` to include the HeroUI Native plugin:
+Inside your `global.css` file add the following imports:
 
-```javascript
-import heroUINativePlugin from 'heroui-native/tailwind-plugin';
+```css
+@import 'tailwindcss';
+@import 'uniwind';
 
-module.exports = {
-  darkMode: 'class',
-  content: [
-    './app/**/*.{js,jsx,ts,tsx}',
-    './node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}',
-  ],
-  presets: [require('nativewind/preset')],
-  theme: {
-    extend: {},
-  },
-  plugins: [heroUINativePlugin],
-};
+@import 'heroui-native';
+
+// Path to the heroui-native lib inside node_modules from the root of your project
+@source './node_modules/heroui-native/lib';
 ```
-
-> **Important:** Import the tailwind plugin from `heroui-native/tailwind-plugin` and not from `heroui-native`.
-
-> **Important:** The `'./node_modules/heroui-native/lib/**/*.{js,ts,jsx,tsx}'` path is crucial for Tailwind to process the library's component styles. Without it, HeroUI Native components won't be styled correctly.
 
 #### Running on Web (Expo)
 
@@ -159,8 +148,7 @@ export default function MyComponent() {
 ### Core
 
 - [Provider Configuration](./src/providers/hero-ui-native/provider.md) - Complete setup and configuration guide
-- [Theming](./src/providers/theme/theme.md) - Theme customization, colors, and dark mode
-- [Custom Fonts](./src/providers/theme/theme.md#custom-fonts) - How to use custom fonts with HeroUI Native
+- [Theming](./src/styles/theme.md) - Theme customization, colors, fonts and dark mode
 
 ### Components
 

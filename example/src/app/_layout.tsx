@@ -1,4 +1,3 @@
-import { Allan_700Bold } from '@expo-google-fonts/allan';
 import {
   Inter_400Regular,
   Inter_500Medium,
@@ -29,7 +28,6 @@ export default function Layout() {
     Inter_500Medium,
     Inter_600SemiBold,
     Inter_700Bold,
-    Allan_700Bold,
   });
 
   if (!fonts) {

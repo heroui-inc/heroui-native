@@ -19,11 +19,11 @@ const item = tv({
 });
 
 const itemIndicator = tv({
-  base: 'size-6 rounded-full border items-center justify-center overflow-hidden',
+  base: 'size-6 rounded-full border border-field-border items-center justify-center overflow-hidden',
   variants: {
     isSelected: {
-      true: 'bg-accent border-accent',
-      false: 'bg-background-secondary border-border',
+      true: 'bg-accent',
+      false: 'bg-field',
     },
     isInvalid: {
       true: 'bg-transparent border-danger',

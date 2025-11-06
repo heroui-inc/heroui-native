@@ -4,11 +4,7 @@ import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import type { TextRef, ViewRef } from '../../helpers/types';
-import {
-  childrenToString,
-  createContext,
-  getElementWithDefault,
-} from '../../helpers/utils';
+import { childrenToString, createContext } from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
 import { ErrorView } from '../error-view';
 import { FormField } from '../form-field';
@@ -94,15 +90,6 @@ const RadioGroupItem = forwardRef<
     className,
   });
 
-  const contextValue = useMemo(
-    () => ({
-      isSelected,
-      isDisabled: isDisabledValue,
-      isInvalid: effectiveIsInvalid,
-    }),
-    [isSelected, isDisabledValue, effectiveIsInvalid]
-  );
-
   const renderProps: RadioGroupItemRenderProps = {
     isSelected,
     isDisabled: isDisabledValue,
@@ -118,6 +105,15 @@ const RadioGroupItem = forwardRef<
     children(renderProps)
   ) : (
     children
+  );
+
+  const contextValue = useMemo(
+    () => ({
+      isSelected,
+      isDisabled: isDisabledValue,
+      isInvalid: effectiveIsInvalid,
+    }),
+    [isSelected, isDisabledValue, effectiveIsInvalid]
   );
 
   return (
@@ -144,16 +140,6 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
 
     const { isSelected, isInvalid } = useRadioGroupItem();
 
-    const thumbElement = useMemo(
-      () =>
-        getElementWithDefault(
-          children,
-          DISPLAY_NAME.RADIO_GROUP_INDICATOR_THUMB,
-          <RadioGroupIndicatorThumb />
-        ),
-      [children]
-    );
-
     const tvStyles = radioGroupStyles.itemIndicator({
       isSelected,
       isInvalid,
@@ -167,7 +153,7 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
         style={[styleSheet.borderCurve, style]}
         {...restProps}
       >
-        {children ?? thumbElement}
+        {children ?? <RadioGroupIndicatorThumb />}
       </AnimatedRadioIndicator>
     );
   }

@@ -27,11 +27,10 @@ import type {
   FormFieldTitleProps,
 } from './form-field.types';
 
-const [FormFieldProvider, useFormFieldContext] =
-  createContext<FormFieldContextValue>({
-    name: 'FormFieldContext',
-    strict: false,
-  });
+const [FormFieldProvider, useFormField] = createContext<FormFieldContextValue>({
+  name: 'FormFieldContext',
+  strict: false,
+});
 
 // --------------------------------------------------
 
@@ -156,7 +155,7 @@ const FormFieldContent = forwardRef<View, FormFieldContentProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
-    const { isInline } = useFormFieldContext();
+    const { isInline } = useFormField();
 
     const tvStyles = formFieldStyles.content({
       isInline,
@@ -211,7 +210,7 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
     const { isSelected, onSelectedChange, isDisabled, isInvalid } =
-      useFormFieldContext();
+      useFormField();
 
     const tvStyles = formFieldStyles.indicator({
       className,
@@ -247,7 +246,7 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
 
 const FormFieldErrorMessage = forwardRef<ViewRef, ErrorViewRootProps>(
   (props, ref) => {
-    const { isInvalid } = useFormFieldContext();
+    const { isInvalid } = useFormField();
     const { className, ...restProps } = props;
 
     const tvStyles = formFieldStyles.errorMessage({
@@ -311,5 +310,5 @@ const CompoundFormField = Object.assign(FormField, {
   ErrorMessage: FormFieldErrorMessage,
 });
 
-export { useFormFieldContext };
+export { useFormField };
 export default CompoundFormField;

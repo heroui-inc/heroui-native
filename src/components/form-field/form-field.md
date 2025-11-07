@@ -236,37 +236,37 @@ export default function FormFieldExample() {
 
 ### FormField.Title
 
-| prop                  | type                       | default | description                                       |
-| --------------------- | -------------------------- | ------- | ------------------------------------------------- |
-| children              | `React.ReactNode`          | -       | Title text content                                |
-| className             | `string`                   | -       | Custom class name for the title element          |
-| ...Animated.TextProps | `AnimatedProps<TextProps>` | -       | All Reanimated AnimatedText props are supported  |
+| prop                  | type                       | default | description                                     |
+| --------------------- | -------------------------- | ------- | ----------------------------------------------- |
+| children              | `React.ReactNode`          | -       | Title text content                              |
+| className             | `string`                   | -       | Custom class name for the title element         |
+| ...Animated.TextProps | `AnimatedProps<TextProps>` | -       | All Reanimated AnimatedText props are supported |
 
 ### FormField.Description
 
-| prop                  | type                       | default | description                                             |
-| --------------------- | -------------------------- | ------- | ------------------------------------------------------- |
-| children              | `React.ReactNode`          | -       | Description text content                                |
-| className             | `string`                   | -       | Custom class name for the description element           |
-| ...Animated.TextProps | `AnimatedProps<TextProps>` | -       | All Reanimated AnimatedText props are supported        |
+| prop                  | type                       | default | description                                     |
+| --------------------- | -------------------------- | ------- | ----------------------------------------------- |
+| children              | `React.ReactNode`          | -       | Description text content                        |
+| className             | `string`                   | -       | Custom class name for the description element   |
+| ...Animated.TextProps | `AnimatedProps<TextProps>` | -       | All Reanimated AnimatedText props are supported |
 
 ### FormField.Indicator
 
-| prop                  | type                       | default | description                                           |
-| --------------------- | -------------------------- | ------- | ----------------------------------------------------- |
-| children              | `React.ReactNode`          | -       | Control component to render (Switch, Checkbox) |
-| className             | `string`                   | -       | Custom class name for the indicator element           |
-| ...Animated.ViewProps | `AnimatedProps<ViewProps>` | -       | All Reanimated Animated.View props are supported      |
+| prop                  | type                       | default | description                                      |
+| --------------------- | -------------------------- | ------- | ------------------------------------------------ |
+| children              | `React.ReactNode`          | -       | Control component to render (Switch, Checkbox)   |
+| className             | `string`                   | -       | Custom class name for the indicator element      |
+| ...Animated.ViewProps | `AnimatedProps<ViewProps>` | -       | All Reanimated Animated.View props are supported |
 
 ### FormField.ErrorMessage
 
-| prop                  | type                            | default | description                                             |
-| --------------------- | ------------------------------- | ------- | ------------------------------------------------------- |
-| children              | `React.ReactNode`               | -       | Error message content                                   |
-| isInvalid             | `boolean`                       | `false` | Controls the visibility of the error field              |
-| className             | `string`                        | -       | Custom class name for styling                           |
+| prop                  | type                           | default | description                                             |
+| --------------------- | ------------------------------ | ------- | ------------------------------------------------------- |
+| children              | `React.ReactNode`              | -       | Error message content                                   |
+| isInvalid             | `boolean`                      | `false` | Controls the visibility of the error field              |
+| className             | `string`                       | -       | Custom class name for styling                           |
 | classNames            | `ElementSlots<ErrorViewSlots>` | -       | Custom class names for different parts of the component |
-| ...Animated.ViewProps | `AnimatedProps<ViewProps>`      | -       | All Reanimated Animated.View props are supported        |
+| ...Animated.ViewProps | `AnimatedProps<ViewProps>`     | -       | All Reanimated Animated.View props are supported        |
 
 #### ElementSlots<ErrorViewSlots>
 
@@ -274,3 +274,18 @@ export default function FormFieldExample() {
 | ----------- | -------- | ----------------------------------------- |
 | `container` | `string` | Custom class name for the error container |
 | `text`      | `string` | Custom class name for the error text      |
+
+## Hooks
+
+### useFormField
+
+**Returns:**
+
+| property           | type                                           | description                                    |
+| ------------------ | ---------------------------------------------- | ---------------------------------------------- |
+| `isSelected`       | `boolean \| undefined`                         | Whether the control is selected/checked        |
+| `onSelectedChange` | `((isSelected: boolean) => void) \| undefined` | Callback when selection state changes          |
+| `isDisabled`       | `boolean`                                      | Whether the form control is disabled           |
+| `isInline`         | `boolean`                                      | Whether the form control is inline             |
+| `isInvalid`        | `boolean`                                      | Whether the form control is invalid            |
+| `isPressed`        | `SharedValue<boolean>`                         | Reanimated shared value indicating press state |

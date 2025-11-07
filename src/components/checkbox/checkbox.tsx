@@ -10,7 +10,7 @@ import { CheckIcon } from '../../helpers/components';
 import { useIsOnSurface, useThemeColor } from '../../helpers/theme';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
-import { useFormFieldContext } from '../form-field/form-field';
+import { useFormField } from '../form-field/form-field';
 import {
   DEFAULT_CHECK_ICON_SIZE,
   DEFAULT_HIT_SLOP,
@@ -65,7 +65,7 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
     });
 
     const isCheckboxPressed = useSharedValue(false);
-    const formFieldContext = useFormFieldContext();
+    const formFieldContext = useFormField();
 
     const handlePressIn = useCallback(
       (event: GestureResponderEvent) => {

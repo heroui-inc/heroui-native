@@ -1,4 +1,4 @@
-export { default as FormField } from './form-field';
+export { default as FormField, useFormField } from './form-field';
 export type {
   FormFieldContentProps,
   FormFieldDescriptionProps,

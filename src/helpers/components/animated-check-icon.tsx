@@ -12,20 +12,25 @@ import { useThemeColor } from '../theme';
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 const DEFAULT_SIZE = 18;
-const DURATION = 150;
+const ENTER_DURATION = 150;
+const EXIT_DURATION = 150;
 
 interface CheckIconProps {
+  isSelected?: boolean;
   size?: number;
   strokeWidth?: number;
   color?: string;
-  isSelected?: boolean;
+  enterDuration?: number;
+  exitDuration?: number;
 }
 
 export const AnimatedCheckIcon: React.FC<CheckIconProps> = ({
+  isSelected = false,
   size = DEFAULT_SIZE,
   strokeWidth = 2.5,
   color,
-  isSelected = false,
+  enterDuration = ENTER_DURATION,
+  exitDuration = EXIT_DURATION,
 }) => {
   const themeColorForeground = useThemeColor('foreground');
 
@@ -33,10 +38,13 @@ export const AnimatedCheckIcon: React.FC<CheckIconProps> = ({
     if (isSelected) {
       return withDelay(
         100,
-        withTiming(1, { duration: DURATION, easing: Easing.out(Easing.ease) })
+        withTiming(1, {
+          duration: enterDuration,
+          easing: Easing.out(Easing.ease),
+        })
       );
     } else {
-      return withTiming(0, { duration: DURATION });
+      return withTiming(0, { duration: exitDuration });
     }
   });
 

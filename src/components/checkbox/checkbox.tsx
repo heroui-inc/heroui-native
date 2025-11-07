@@ -139,7 +139,14 @@ const CheckboxIndicator = forwardRef<
   CheckboxPrimitivesTypes.IndicatorRef,
   CheckboxIndicatorProps
 >((props, ref) => {
-  const { children, iconProps, className, style, ...restProps } = props;
+  const {
+    children,
+    iconProps,
+    className,
+    style,
+    isDefaultAnimationDisabled = false,
+    ...restProps
+  } = props;
 
   const { isSelected, isDisabled, isInvalid } = useCheckbox();
 
@@ -148,6 +155,8 @@ const CheckboxIndicator = forwardRef<
   const iconSize = iconProps?.size;
   const iconStrokeWidth = iconProps?.strokeWidth;
   const iconColor = iconProps?.color ?? themeColorAccentForeground;
+  const iconEnterDuration = iconProps?.enterDuration;
+  const iconExitDuration = iconProps?.exitDuration;
 
   const tvStyles = checkboxStyles.indicator({
     isInvalid,
@@ -169,6 +178,8 @@ const CheckboxIndicator = forwardRef<
             strokeWidth={iconStrokeWidth}
             color={iconColor}
             isSelected={isSelected}
+            enterDuration={iconEnterDuration}
+            exitDuration={iconExitDuration}
           />
         ));
 
@@ -177,7 +188,7 @@ const CheckboxIndicator = forwardRef<
       ref={ref}
       className={tvStyles}
       style={[
-        {
+        !isDefaultAnimationDisabled && {
           transitionProperty: ['transform', 'opacity', 'borderRadius'],
           transitionDuration: [100, 100, 50],
           transform: [

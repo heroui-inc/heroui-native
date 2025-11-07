@@ -1,4 +1,4 @@
-import type { WithTimingConfig } from 'react-native-reanimated';
+import type { AnimatedProps, WithTimingConfig } from 'react-native-reanimated';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 
 /**
@@ -11,6 +11,10 @@ export interface CheckboxIndicatorIconProps {
   strokeWidth?: number;
   /** Indicator color */
   color?: string;
+  /** Enter duration */
+  enterDuration?: number;
+  /** Exit duration */
+  exitDuration?: number;
 }
 
 /**
@@ -63,7 +67,9 @@ export interface CheckboxProps
  * Props for the CheckboxIndicator component
  */
 export interface CheckboxIndicatorProps
-  extends Omit<CheckboxPrimitivesTypes.IndicatorProps, 'children'> {
+  extends AnimatedProps<
+    Omit<CheckboxPrimitivesTypes.IndicatorProps, 'children'>
+  > {
   /** Child elements to render inside the indicator, or a render function */
   children?:
     | React.ReactNode
@@ -74,4 +80,10 @@ export interface CheckboxIndicatorProps
 
   /** Custom icon props for the indicator */
   iconProps?: CheckboxIndicatorIconProps;
+
+  /**
+   * Whether to disable the default indicator animations (transform, opacity, borderRadius transitions)
+   * @default false
+   */
+  isDefaultAnimationDisabled?: boolean;
 }

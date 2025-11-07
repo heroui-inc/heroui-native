@@ -156,9 +156,9 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
     const { isSelected, isInvalid, isOnSurface } = useRadioGroupItem();
 
     const tvStyles = radioGroupStyles.itemIndicator({
+      isOnSurface,
       isSelected,
       isInvalid,
-      isOnSurface,
       className,
     });
 

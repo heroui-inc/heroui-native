@@ -12,7 +12,7 @@ import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 import { useFormField } from '../form-field/form-field';
 import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './checkbox.constants';
-import checkboxStyles from './checkbox.styles';
+import checkboxStyles, { styleSheet } from './checkbox.styles';
 import type {
   CheckboxIndicatorProps,
   CheckboxProps,
@@ -124,7 +124,7 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
         hitSlop={hitSlop}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
-        style={[animatedStyle, style]}
+        style={[animatedStyle, styleSheet.root, style]}
         {...restProps}
       >
         {content}
@@ -181,7 +181,7 @@ const CheckboxIndicator = forwardRef<
           transitionProperty: ['transform', 'opacity', 'borderRadius'],
           transitionDuration: [100, 100, 50],
           transform: [
-            { translateY: isSelected ? 0 : -6 },
+            { translateX: isSelected ? 0 : -4 },
             { scale: isSelected ? 1 : 0.8 },
           ],
           opacity: isSelected ? 1 : 0,

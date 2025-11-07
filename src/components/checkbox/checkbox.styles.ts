@@ -6,7 +6,7 @@ const root = tv({
   base: 'size-6 rounded-[8px] overflow-hidden',
   variants: {
     isOnSurface: {
-      true: 'bg-on-surface',
+      true: 'bg-surface-secondary',
       false: 'bg-field',
     },
     isSelected: {
@@ -30,7 +30,6 @@ const root = tv({
     },
   ],
   defaultVariants: {
-    isOnSurface: false,
     isSelected: false,
     isDisabled: false,
     isInvalid: false,

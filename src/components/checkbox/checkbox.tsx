@@ -180,7 +180,10 @@ const CheckboxIndicator = forwardRef<
         {
           transitionProperty: ['transform', 'opacity', 'borderRadius'],
           transitionDuration: [100, 100, 50],
-          transform: [{ scale: isSelected ? 1 : 0.7 }],
+          transform: [
+            { translateY: isSelected ? 0 : -6 },
+            { scale: isSelected ? 1 : 0.8 },
+          ],
           opacity: isSelected ? 1 : 0,
           borderRadius: isSelected ? 0 : 99,
         },

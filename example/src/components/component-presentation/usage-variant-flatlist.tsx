@@ -19,6 +19,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppTheme } from '../../contexts/app-theme-context';
+import { useAccessibilityInfo } from '../../helpers/hooks/use-accessability-info';
 import { PaginationIndicator } from './pagination-indicator';
 import type { UsageVariant } from './types';
 import { UsageVariantsSelect } from './usage-variants-select';
@@ -41,17 +42,20 @@ type VariantItemProps = {
 
 const VariantItem = memo(
   ({ item, index, scrollY, itemHeight, width, height }: VariantItemProps) => {
+    const { reduceTransparencyEnabled } = useAccessibilityInfo();
+
+    const applyOpacity = reduceTransparencyEnabled || Platform.OS === 'android';
+
     const animatedStyle = useAnimatedStyle(() => {
       return {
-        opacity:
-          Platform.OS === 'android'
-            ? interpolate(
-                scrollY.get() / itemHeight,
-                [index - 0.5, index, index + 0.5],
-                [0, 1, 0],
-                Extrapolation.CLAMP
-              )
-            : 1,
+        opacity: applyOpacity
+          ? interpolate(
+              scrollY.get() / itemHeight,
+              [index - 0.5, index, index + 0.5],
+              [0, 1, 0],
+              Extrapolation.CLAMP
+            )
+          : 1,
         transform: [
           {
             scale: interpolate(
@@ -86,6 +90,10 @@ export const UsageVariantFlatList = ({
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
   const itemHeight = height;
+
+  const { reduceTransparencyEnabled } = useAccessibilityInfo();
+
+  const applyBlur = Platform.OS === 'ios' && !reduceTransparencyEnabled;
 
   const listRef = useRef<FlatList<UsageVariant>>(null);
 
@@ -174,7 +182,7 @@ export const UsageVariantFlatList = ({
         scrollEnabled={scrollEnabled}
         keyboardShouldPersistTaps="handled"
       />
-      {Platform.OS === 'ios' && (
+      {applyBlur && (
         <AnimatedBlurView
           pointerEvents="none"
           style={StyleSheet.absoluteFill}

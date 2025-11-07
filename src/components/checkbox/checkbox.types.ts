@@ -2,24 +2,6 @@ import type { TimingConfig } from '../../helpers/types';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 
 /**
- * Custom colors for checkbox background states
- */
-export interface CheckboxAnimatedColors {
-  backgroundColor?: {
-    default?: string;
-    selected?: string;
-    defaultInvalid?: string;
-    selectedInvalid?: string;
-  };
-  borderColor?: {
-    default?: string;
-    selected?: string;
-    defaultInvalid?: string;
-    selectedInvalid?: string;
-  };
-}
-
-/**
  * Checkbox Indicator Icon Props
  */
 export interface CheckboxIndicatorIconProps {
@@ -53,9 +35,6 @@ export interface CheckboxProps
 
   /** Custom class name for the checkbox */
   className?: string;
-
-  /** Animated colors for different checkbox states */
-  animatedColors?: CheckboxAnimatedColors;
 }
 
 /**

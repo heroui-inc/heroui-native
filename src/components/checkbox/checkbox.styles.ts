@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
-  base: 'size-6 border rounded-[8px] items-center justify-center overflow-hidden',
+  base: 'size-6 rounded-lg overflow-hidden',
   variants: {
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',
@@ -16,6 +16,27 @@ const root = tv({
 
 const indicator = tv({
   base: 'absolute inset-0 items-center justify-center',
+  variants: {
+    isSelected: {
+      true: 'bg-accent border-accent',
+      false: 'bg-background-secondary border-border',
+    },
+    isInvalid: {
+      true: 'bg-transparent border-danger',
+      false: '',
+    },
+  },
+  compoundVariants: [
+    {
+      isInvalid: true,
+      isSelected: true,
+      className: 'bg-danger border-danger',
+    },
+  ],
+  defaultVariants: {
+    isSelected: false,
+    isInvalid: false,
+  },
 });
 
 const checkboxStyles = combineStyles({

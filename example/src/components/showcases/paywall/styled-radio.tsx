@@ -35,7 +35,9 @@ export const StyledRadio: FC<Props> = ({
     >
       <BlurContainer>
         <RadioGroup.Item value={value} className="flex-1 px-6">
-          <RadioGroup.Indicator className="border-white/25" />
+          <RadioGroup.Indicator
+            className={cn('border-white/25', isSelected && 'bg-white')}
+          />
           <View className="flex-1 flex-row items-center justify-between gap-3">
             <View>
               <RadioGroup.Label className={className.title}>

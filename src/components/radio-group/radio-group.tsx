@@ -3,12 +3,9 @@ import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
+import { useIsOnSurface } from '../../helpers/theme';
 import type { TextRef, ViewRef } from '../../helpers/types';
-import {
-  childrenToString,
-  createContext,
-  getElementWithDefault,
-} from '../../helpers/utils';
+import { childrenToString, createContext } from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
 import { ErrorView } from '../error-view';
 import { FormField } from '../form-field';
@@ -94,15 +91,6 @@ const RadioGroupItem = forwardRef<
     className,
   });
 
-  const contextValue = useMemo(
-    () => ({
-      isSelected,
-      isDisabled: isDisabledValue,
-      isInvalid: effectiveIsInvalid,
-    }),
-    [isSelected, isDisabledValue, effectiveIsInvalid]
-  );
-
   const renderProps: RadioGroupItemRenderProps = {
     isSelected,
     isDisabled: isDisabledValue,
@@ -118,6 +106,15 @@ const RadioGroupItem = forwardRef<
     children(renderProps)
   ) : (
     children
+  );
+
+  const contextValue = useMemo(
+    () => ({
+      isSelected,
+      isDisabled: isDisabledValue,
+      isInvalid: effectiveIsInvalid,
+    }),
+    [isSelected, isDisabledValue, effectiveIsInvalid]
   );
 
   return (
@@ -140,23 +137,26 @@ const RadioGroupItem = forwardRef<
 
 const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
   (props, ref) => {
-    const { children, className, style, ...restProps } = props;
+    const {
+      children,
+      className,
+      style,
+      isOnSurface: isOnSurfaceProp,
+      ...restProps
+    } = props;
 
+    const { isOnSurface: isOnSurfaceGroup } = useRadioGroup();
     const { isSelected, isInvalid } = useRadioGroupItem();
 
-    const thumbElement = useMemo(
-      () =>
-        getElementWithDefault(
-          children,
-          DISPLAY_NAME.RADIO_GROUP_INDICATOR_THUMB,
-          <RadioGroupIndicatorThumb />
-        ),
-      [children]
-    );
+    const isOnSurfaceAutoDetected = useIsOnSurface();
+
+    const isOnSurface =
+      isOnSurfaceProp ?? isOnSurfaceGroup ?? isOnSurfaceAutoDetected;
 
     const tvStyles = radioGroupStyles.itemIndicator({
       isSelected,
       isInvalid,
+      isOnSurface,
       className,
     });
 
@@ -167,7 +167,7 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
         style={[styleSheet.borderCurve, style]}
         {...restProps}
       >
-        {children ?? thumbElement}
+        {children ?? <RadioGroupIndicatorThumb />}
       </AnimatedRadioIndicator>
     );
   }

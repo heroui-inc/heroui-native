@@ -70,6 +70,25 @@ Replace the default indicator thumb with custom content.
 </RadioGroup>
 ```
 
+### With Render Function
+
+Use a render function on RadioGroup.Item to access state and customize the entire content.
+
+```tsx
+<RadioGroup value={value} onValueChange={setValue}>
+  <RadioGroup.Item value="option1">
+    {({ isSelected, isInvalid, isDisabled }) => (
+      <>
+        <RadioGroup.Label>Option 1</RadioGroup.Label>
+        <RadioGroup.Indicator>
+          {isSelected && <CustomIcon />}
+        </RadioGroup.Indicator>
+      </>
+    )}
+  </RadioGroup.Item>
+</RadioGroup>
+```
+
 ### With Error Message
 
 Display validation errors below the radio group.
@@ -156,7 +175,7 @@ export default function PaymentMethodExample() {
 ```
 
 - **RadioGroup**: Container that manages the selection state of radio items. Supports both horizontal and vertical orientations.
-- **RadioGroup.Item**: Individual radio option within a RadioGroup. Must be used inside RadioGroup. Handles selection state and renders default indicator if no children provided.
+- **RadioGroup.Item**: Individual radio option within a RadioGroup. Must be used inside RadioGroup. Handles selection state and renders default indicator if no children provided. Supports render function children to access state (`isSelected`, `isInvalid`, `isDisabled`).
 - **RadioGroup.Label**: Optional clickable text label for the radio option. Linked to the radio for accessibility.
 - **RadioGroup.Description**: Optional secondary text below the label. Provides additional context about the radio option.
 - **RadioGroup.Indicator**: Optional container for the radio circle. Renders default thumb if no children provided. Manages the visual selection state.
@@ -174,25 +193,35 @@ export default function PaymentMethodExample() {
 | `onValueChange` | `(val: string) => void` | `undefined` | Callback fired when the selected value changes     |
 | `isDisabled`    | `boolean`               | `false`     | Whether the entire radio group is disabled         |
 | `isInvalid`     | `boolean`               | `false`     | Whether the radio group is invalid                 |
+| `isOnSurface`   | `boolean`               | `undefined` | Whether the radio group is on surface              |
 | `className`     | `string`                | `undefined` | Custom class name                                  |
 | `...ViewProps`  | `ViewProps`             | -           | All standard React Native View props are supported |
 
 ### RadioGroup.Item
 
-| prop                | type              | default     | description                                                               |
-| ------------------- | ----------------- | ----------- | ------------------------------------------------------------------------- |
-| `children`          | `React.ReactNode` | `undefined` | Radio item content                                                        |
-| `value`             | `string`          | `undefined` | The value associated with this radio item                                 |
-| `isDisabled`        | `boolean`         | `false`     | Whether this specific radio item is disabled                              |
-| `isInvalid`         | `boolean`         | `false`     | Whether the radio item is invalid                                         |
-| `className`         | `string`          | `undefined` | Custom class name                                                         |
-| `...PressableProps` | `PressableProps`  | -           | All standard React Native Pressable props are supported (except disabled) |
+| prop                | type                                                                         | default     | description                                                               |
+| ------------------- | ---------------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------- |
+| `children`          | `React.ReactNode \| ((props: RadioGroupItemRenderProps) => React.ReactNode)` | `undefined` | Radio item content or render function to customize the radio item         |
+| `value`             | `string`                                                                     | `undefined` | The value associated with this radio item                                 |
+| `isDisabled`        | `boolean`                                                                    | `false`     | Whether this specific radio item is disabled                              |
+| `isInvalid`         | `boolean`                                                                    | `false`     | Whether the radio item is invalid                                         |
+| `className`         | `string`                                                                     | `undefined` | Custom class name                                                         |
+| `...PressableProps` | `PressableProps`                                                             | -           | All standard React Native Pressable props are supported (except disabled) |
+
+#### RadioGroupItemRenderProps
+
+| prop         | type      | description                        |
+| ------------ | --------- | ---------------------------------- |
+| `isSelected` | `boolean` | Whether the radio item is selected |
+| `isInvalid`  | `boolean` | Whether the radio item is invalid  |
+| `isDisabled` | `boolean` | Whether the radio item is disabled |
 
 ### RadioGroup.Indicator
 
 | prop                    | type                       | default     | description                                      |
 | ----------------------- | -------------------------- | ----------- | ------------------------------------------------ |
 | `children`              | `React.ReactNode`          | `undefined` | Indicator content                                |
+| `isOnSurface`           | `boolean`                  | `undefined` | Whether the indicator is on surface              |
 | `className`             | `string`                   | `undefined` | Custom class name                                |
 | `...Animated.ViewProps` | `AnimatedProps<ViewProps>` | -           | All Reanimated Animated.View props are supported |
 

@@ -1,17 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import { forwardRef } from 'react';
-import Animated, {
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { CheckIcon } from '../../helpers/components';
-import { useThemeColor } from '../../helpers/theme';
+import { useIsOnSurface, useThemeColor } from '../../helpers/theme';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 import {
   DEFAULT_CHECK_ICON_SIZE,
   DEFAULT_HIT_SLOP,
-  DEFAULT_TIMING_CONFIG,
   DISPLAY_NAME,
 } from './checkbox.constants';
 import checkboxStyles from './checkbox.styles';
@@ -20,6 +16,10 @@ import type {
   CheckboxProps,
   CheckboxRenderProps,
 } from './checkbox.types';
+
+const AnimatedIndicatorView = Animated.createAnimatedComponent(
+  CheckboxPrimitives.Indicator
+);
 
 const useCheckbox = CheckboxPrimitives.useCheckboxContext;
 
@@ -33,12 +33,19 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       onSelectedChange,
       isDisabled = false,
       isInvalid = false,
+      isOnSurface: isOnSurfaceProp,
       className,
       ...restProps
     } = props;
 
+    const isOnSurfaceAutoDetected = useIsOnSurface();
+    const isOnSurface = isOnSurfaceProp ?? isOnSurfaceAutoDetected;
+
     const tvStyles = checkboxStyles.root({
+      isOnSurface,
+      isSelected,
       isDisabled,
+      isInvalid,
       className,
     });
 
@@ -61,6 +68,7 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
         onSelectedChange={onSelectedChange}
         isDisabled={isDisabled}
         isInvalid={isInvalid}
+        isOnSurface={isOnSurface}
         hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
         {...restProps}
       >
@@ -76,14 +84,7 @@ const CheckboxIndicator = forwardRef<
   CheckboxPrimitivesTypes.IndicatorRef,
   CheckboxIndicatorProps
 >((props, ref) => {
-  const {
-    children,
-    animationConfig,
-    iconProps,
-    className,
-    style,
-    ...restProps
-  } = props;
+  const { children, iconProps, className, style, ...restProps } = props;
 
   const { isSelected, isDisabled, isInvalid } = useCheckbox();
 
@@ -93,20 +94,8 @@ const CheckboxIndicator = forwardRef<
   const iconColor = iconProps?.color ?? themeColorAccentForeground;
 
   const tvStyles = checkboxStyles.indicator({
-    isSelected,
     isInvalid,
     className,
-  });
-
-  const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
-
-  const indicatorAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        { translateY: 0.5 },
-        { scale: withTiming(isSelected ? 1 : 0, timingConfig) },
-      ],
-    };
   });
 
   const renderProps: CheckboxRenderProps = {
@@ -118,21 +107,25 @@ const CheckboxIndicator = forwardRef<
   const content =
     typeof children === 'function'
       ? children(renderProps)
-      : (children ?? (
-          <Animated.View style={indicatorAnimatedStyle}>
-            <CheckIcon size={iconSize} color={iconColor} />
-          </Animated.View>
-        ));
+      : (children ?? <CheckIcon size={iconSize} color={iconColor} />);
 
   return (
-    <CheckboxPrimitives.Indicator
+    <AnimatedIndicatorView
       ref={ref}
       className={tvStyles}
-      style={style}
+      style={[
+        {
+          transitionProperty: ['transform', 'opacity'],
+          transitionDuration: 150,
+          transform: [{ scale: isSelected ? 1 : 0.75 }],
+          opacity: isSelected ? 1 : 0,
+        },
+        style,
+      ]}
       {...restProps}
     >
       {content}
-    </CheckboxPrimitives.Indicator>
+    </AnimatedIndicatorView>
   );
 });
 

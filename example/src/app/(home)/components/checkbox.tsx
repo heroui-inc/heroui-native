@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {
   Checkbox,
   cn,
@@ -12,10 +13,8 @@ import { View } from 'react-native';
 import Animated, {
   Easing,
   FadeIn,
-  FadeInDown,
   FadeInLeft,
   FadeInRight,
-  FadeOutDown,
   useAnimatedStyle,
   withTiming,
   ZoomIn,
@@ -28,6 +27,7 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 const StyledIonicons = withUniwind(Ionicons);
+const StyledFontAwesome = withUniwind(FontAwesome);
 
 interface CheckboxFieldProps {
   isSelected: boolean;
@@ -42,8 +42,6 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
   title,
   description,
 }) => {
-  const themeColorSurfaceTertiary = useThemeColor('surface-tertiary');
-
   return (
     <FormField
       isSelected={isSelected}
@@ -52,12 +50,9 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
       className="items-start"
     >
       <FormField.Indicator>
-        <Checkbox
-          className="mt-0.5"
-          animatedColors={{
-            backgroundColor: { default: themeColorSurfaceTertiary },
-          }}
-        />
+        <Checkbox className="mt-0.5 bg-pink-300">
+          <Checkbox.Indicator className="bg-pink-700" />
+        </Checkbox>
       </FormField.Indicator>
       <FormField.Content>
         <FormField.Title className="text-lg">{title}</FormField.Title>
@@ -210,23 +205,63 @@ const CustomStylesContent = () => {
       <Checkbox
         isSelected={customBackground}
         onSelectedChange={setCustomBackground}
-        className="size-8 rounded-xl"
-        animatedColors={{
-          backgroundColor: {
-            selected: '#3730a3',
-          },
-        }}
+        className="size-8 rounded-xl bg-indigo-800"
       >
-        <View className="absolute inset-0 bg-indigo-300 rounded-xl" />
-        {customBackground && (
-          <AnimatedView
-            key="unselected"
-            entering={FadeInDown.duration(150).easing(Easing.out(Easing.ease))}
-            exiting={FadeOutDown.duration(150).easing(Easing.in(Easing.ease))}
-            className="absolute size-12 bg-indigo-700/80 rounded-full"
-          />
-        )}
-        <Checkbox.Indicator iconProps={{ size: 18 }} />
+        {/* {({ isSelected }) => {
+          return (
+            <>
+              {!isSelected ? (
+                <AnimatedView
+                  key="unselected"
+                  entering={FadeInDown.duration(150).easing(
+                    Easing.out(Easing.ease)
+                  )}
+                  exiting={FadeOutDown.duration(150).easing(
+                    Easing.in(Easing.ease)
+                  )}
+                  className="absolute size-12 bg-indigo-700/80 rounded-full"
+                />
+              ) : (
+                <Animated.View
+                  key="selected"
+                  className="absolute inset-0 bg-indigo-300 rounded-xl"
+                >
+                  <Checkbox.Indicator iconProps={{ size: 18 }} />
+                </Animated.View>
+              )}
+            </>
+          );
+        }} */}
+        <Checkbox.Indicator
+          className="bg-pink-300"
+          // style={{ transform: [{ scale: 1 }] }}
+        >
+          {({ isSelected }) => {
+            return isSelected ? (
+              <Animated.View
+                key="selected"
+                entering={ZoomIn.withInitialValues({ scale: 0.5 })}
+              >
+                <StyledFontAwesome
+                  name="check"
+                  size={16}
+                  className="text-accent-foreground"
+                />
+              </Animated.View>
+            ) : (
+              <Animated.View
+                key="unselected"
+                entering={ZoomIn.withInitialValues({ scale: 0.5 })}
+              >
+                <StyledFontAwesome
+                  name="times"
+                  size={16}
+                  className="text-accent"
+                />
+              </Animated.View>
+            );
+          }}
+        </Checkbox.Indicator>
       </Checkbox>
 
       <Checkbox

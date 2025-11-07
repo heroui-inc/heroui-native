@@ -1,4 +1,3 @@
-import type { TimingConfig } from '../../helpers/types';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 
 /**
@@ -52,7 +51,4 @@ export interface CheckboxIndicatorProps
 
   /** Custom icon props for the indicator */
   iconProps?: CheckboxIndicatorIconProps;
-
-  /** Animation configuration for checkbox indicator scale transition */
-  animationConfig?: TimingConfig;
 }

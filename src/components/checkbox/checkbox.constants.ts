@@ -1,17 +1,7 @@
-import { Easing } from 'react-native-reanimated';
-
 export const DISPLAY_NAME = {
   CHECKBOX_ROOT: 'HeroUINative.Checkbox.Root',
   CHECKBOX_INDICATOR: 'HeroUINative.Checkbox.Indicator',
 } as const;
-
-export const ANIMATION_DURATION = 150;
-export const ANIMATION_EASING = Easing.out(Easing.ease);
-
-export const DEFAULT_TIMING_CONFIG = {
-  duration: ANIMATION_DURATION,
-  easing: ANIMATION_EASING,
-};
 
 export const DEFAULT_HIT_SLOP = 6;
 

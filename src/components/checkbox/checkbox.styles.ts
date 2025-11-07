@@ -3,38 +3,49 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
-  base: 'size-6 rounded-lg overflow-hidden',
+  base: 'size-6 rounded-[8px] overflow-hidden',
   variants: {
+    isOnSurface: {
+      true: 'bg-on-surface',
+      false: 'bg-field',
+    },
+    isSelected: {
+      true: '',
+      false: '',
+    },
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',
-    },
-  },
-  defaultVariants: {
-    isDisabled: false,
-  },
-});
-
-const indicator = tv({
-  base: 'absolute inset-0 items-center justify-center',
-  variants: {
-    isSelected: {
-      true: 'bg-accent border-accent',
-      false: 'bg-background-secondary border-border',
+      false: '',
     },
     isInvalid: {
-      true: 'bg-transparent border-danger',
+      true: '',
       false: '',
     },
   },
   compoundVariants: [
     {
+      isSelected: false,
       isInvalid: true,
-      isSelected: true,
-      className: 'bg-danger border-danger',
+      className: 'bg-transparent border border-danger',
     },
   ],
   defaultVariants: {
+    isOnSurface: false,
     isSelected: false,
+    isDisabled: false,
+    isInvalid: false,
+  },
+});
+
+const indicator = tv({
+  base: 'absolute inset-0 items-center justify-center rounded-[8px]',
+  variants: {
+    isInvalid: {
+      true: 'bg-danger',
+      false: 'bg-accent',
+    },
+  },
+  defaultVariants: {
     isInvalid: false,
   },
 });

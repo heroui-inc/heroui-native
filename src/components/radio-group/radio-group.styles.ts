@@ -41,6 +41,10 @@ const itemIndicator = tv({
       className: 'bg-danger border-danger',
     },
   ],
+  defaultVariants: {
+    isSelected: false,
+    isInvalid: false,
+  },
 });
 
 const itemIndicatorThumb = tv({

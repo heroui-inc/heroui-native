@@ -25,6 +25,7 @@ const Root = forwardRef<RootRef, RootProps>(
       isSelected,
       onSelectedChange,
       isInvalid = false,
+      isOnSurface,
       nativeID,
       ...props
     },
@@ -37,6 +38,7 @@ const Root = forwardRef<RootRef, RootProps>(
           isSelected,
           onSelectedChange,
           isInvalid,
+          isOnSurface,
           nativeID,
         }}
       >

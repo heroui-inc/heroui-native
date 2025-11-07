@@ -1,11 +1,4 @@
-import {
-  Checkbox,
-  Divider,
-  FormField,
-  Surface,
-  Switch,
-  useThemeColor,
-} from 'heroui-native';
+import { Checkbox, Divider, FormField, Surface, Switch } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
@@ -99,8 +92,6 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
   title,
   description,
 }) => {
-  const themeColorSurfaceTertiary = useThemeColor('surface-tertiary');
-
   return (
     <FormField
       isSelected={isSelected}
@@ -109,12 +100,9 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
       className="items-start"
     >
       <FormField.Indicator>
-        <Checkbox
-          className="size-5 rounded-md mt-0.5"
-          animatedColors={{
-            backgroundColor: { default: themeColorSurfaceTertiary },
-          }}
-        />
+        <Checkbox className="size-5 rounded-md mt-0.5">
+          <Checkbox.Indicator iconProps={{ size: 16 }} />
+        </Checkbox>
       </FormField.Indicator>
       <FormField.Content>
         <FormField.Title>{title}</FormField.Title>

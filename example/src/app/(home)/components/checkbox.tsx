@@ -343,16 +343,16 @@ const CHECKBOX_VARIANTS: UsageVariant[] = [
     label: 'Basic usage',
     content: <BasicUsage />,
   },
-  {
-    value: 'states',
-    label: 'States',
-    content: <StatesContent />,
-  },
-  {
-    value: 'custom-styles',
-    label: 'Custom styles',
-    content: <CustomStylesContent />,
-  },
+  // {
+  //   value: 'states',
+  //   label: 'States',
+  //   content: <StatesContent />,
+  // },
+  // {
+  //   value: 'custom-styles',
+  //   label: 'Custom styles',
+  //   content: <CustomStylesContent />,
+  // },
 ];
 
 export default function CheckboxScreen() {

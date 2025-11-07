@@ -4,5 +4,3 @@ export const DISPLAY_NAME = {
 } as const;
 
 export const DEFAULT_HIT_SLOP = 6;
-
-export const DEFAULT_CHECK_ICON_SIZE = 16;

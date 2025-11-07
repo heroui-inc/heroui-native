@@ -38,7 +38,7 @@ const root = tv({
 });
 
 const indicator = tv({
-  base: 'absolute inset-0 items-center justify-center rounded-[8px]',
+  base: 'absolute inset-0 items-center justify-center',
   variants: {
     isInvalid: {
       true: 'bg-danger',

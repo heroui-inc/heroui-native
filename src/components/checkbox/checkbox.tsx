@@ -6,16 +6,12 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { CheckIcon } from '../../helpers/components';
+import { AnimatedCheckIcon } from '../../helpers/components/animated-check-icon';
 import { useIsOnSurface, useThemeColor } from '../../helpers/theme';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 import { useFormField } from '../form-field/form-field';
-import {
-  DEFAULT_CHECK_ICON_SIZE,
-  DEFAULT_HIT_SLOP,
-  DISPLAY_NAME,
-} from './checkbox.constants';
+import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './checkbox.constants';
 import checkboxStyles from './checkbox.styles';
 import type {
   CheckboxIndicatorProps,
@@ -149,7 +145,8 @@ const CheckboxIndicator = forwardRef<
 
   const themeColorAccentForeground = useThemeColor('accent-foreground');
 
-  const iconSize = iconProps?.size ?? DEFAULT_CHECK_ICON_SIZE;
+  const iconSize = iconProps?.size;
+  const iconStrokeWidth = iconProps?.strokeWidth;
   const iconColor = iconProps?.color ?? themeColorAccentForeground;
 
   const tvStyles = checkboxStyles.indicator({
@@ -166,7 +163,14 @@ const CheckboxIndicator = forwardRef<
   const content =
     typeof children === 'function'
       ? children(renderProps)
-      : (children ?? <CheckIcon size={iconSize} color={iconColor} />);
+      : (children ?? (
+          <AnimatedCheckIcon
+            size={iconSize}
+            strokeWidth={iconStrokeWidth}
+            color={iconColor}
+            isSelected={isSelected}
+          />
+        ));
 
   return (
     <AnimatedIndicatorView
@@ -174,10 +178,11 @@ const CheckboxIndicator = forwardRef<
       className={tvStyles}
       style={[
         {
-          transitionProperty: ['transform', 'opacity'],
-          transitionDuration: 150,
+          transitionProperty: ['transform', 'opacity', 'borderRadius'],
+          transitionDuration: [100, 100, 50],
           transform: [{ scale: isSelected ? 1 : 0.7 }],
           opacity: isSelected ? 1 : 0,
+          borderRadius: isSelected ? 0 : 99,
         },
         style,
       ]}

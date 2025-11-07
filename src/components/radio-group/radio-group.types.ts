@@ -59,6 +59,8 @@ export interface RadioGroupItemProps extends Omit<ItemProps, 'children'> {
  * Props for RadioGroup.Indicator component
  */
 export interface RadioGroupIndicatorProps extends AnimatedProps<ViewProps> {
+  /** Whether the indicator is on surface */
+  isOnSurface?: boolean;
   /** Indicator content */
   children?: React.ReactNode;
   /** Custom class name */

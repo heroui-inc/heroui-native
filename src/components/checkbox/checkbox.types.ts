@@ -1,3 +1,4 @@
+import type { WithTimingConfig } from 'react-native-reanimated';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 
 /**
@@ -34,6 +35,26 @@ export interface CheckboxProps
 
   /** Custom class name for the checkbox */
   className?: string;
+
+  /** Animation configuration for checkbox scale animation */
+  animationConfig?: {
+    scale?: {
+      /**
+       * Animation target value for scale when pressed
+       * @default 0.95
+       */
+      value?: number;
+      /**
+       * Animation timing configuration
+       */
+      config?: WithTimingConfig;
+      /**
+       * Whether to disable the animation
+       * @default false
+       */
+      isDisabled?: boolean;
+    };
+  };
 }
 
 /**

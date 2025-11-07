@@ -1,4 +1,4 @@
-import { cloneElement, forwardRef, useMemo } from 'react';
+import { cloneElement, forwardRef, useCallback, useMemo } from 'react';
 import {
   Pressable,
   Text,
@@ -11,7 +11,7 @@ import {
   hasProp,
 } from '../../helpers/utils';
 
-import Animated from 'react-native-reanimated';
+import Animated, { useSharedValue } from 'react-native-reanimated';
 import type { PressableRef } from '../../helpers/types';
 import type { ViewRef } from '../../helpers/types/primitives';
 import { ErrorView } from '../error-view';
@@ -30,6 +30,7 @@ import type {
 const [FormFieldProvider, useFormFieldContext] =
   createContext<FormFieldContextValue>({
     name: 'FormFieldContext',
+    strict: false,
   });
 
 // --------------------------------------------------
@@ -48,6 +49,8 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     isDisabled = false,
     isInline = false,
     isInvalid = false,
+    onPressIn,
+    onPressOut,
     ...restProps
   } = props;
 
@@ -73,6 +76,8 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     className,
   });
 
+  const isPressed = useSharedValue<boolean>(false);
+
   const handlePress = (e: GestureResponderEvent) => {
     if (!isDisabled && onSelectedChange && isSelected !== undefined) {
       onSelectedChange(!isSelected);
@@ -83,6 +88,26 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     }
   };
 
+  const handlePressIn = useCallback(
+    (e: GestureResponderEvent) => {
+      isPressed.set(true);
+      if (onPressIn && typeof onPressIn === 'function') {
+        onPressIn(e);
+      }
+    },
+    [isPressed, onPressIn]
+  );
+
+  const handlePressOut = useCallback(
+    (e: GestureResponderEvent) => {
+      isPressed.set(false);
+      if (onPressOut && typeof onPressOut === 'function') {
+        onPressOut(e);
+      }
+    },
+    [isPressed, onPressOut]
+  );
+
   const contextValue: FormFieldContextValue = useMemo(
     () => ({
       isSelected,
@@ -90,8 +115,9 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
       isDisabled,
       isInline,
       isInvalid,
+      isPressed,
     }),
-    [isSelected, onSelectedChange, isDisabled, isInline, isInvalid]
+    [isSelected, onSelectedChange, isDisabled, isInline, isInvalid, isPressed]
   );
 
   return (
@@ -101,6 +127,8 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
           ref={ref}
           className={tvStyles}
           onPress={handlePress}
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}
           disabled={isDisabled}
           {...restProps}
         >

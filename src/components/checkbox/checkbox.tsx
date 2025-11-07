@@ -1,10 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
-import { forwardRef } from 'react';
-import Animated from 'react-native-reanimated';
+import { forwardRef, useCallback } from 'react';
+import type { GestureResponderEvent } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import { CheckIcon } from '../../helpers/components';
 import { useIsOnSurface, useThemeColor } from '../../helpers/theme';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
+import { useFormFieldContext } from '../form-field/form-field';
 import {
   DEFAULT_CHECK_ICON_SIZE,
   DEFAULT_HIT_SLOP,
@@ -16,6 +22,10 @@ import type {
   CheckboxProps,
   CheckboxRenderProps,
 } from './checkbox.types';
+
+const AnimatedRootView = Animated.createAnimatedComponent(
+  CheckboxPrimitives.Root
+);
 
 const AnimatedIndicatorView = Animated.createAnimatedComponent(
   CheckboxPrimitives.Indicator
@@ -34,7 +44,12 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       isDisabled = false,
       isInvalid = false,
       isOnSurface: isOnSurfaceProp,
+      hitSlop = DEFAULT_HIT_SLOP,
       className,
+      style,
+      onPressIn,
+      onPressOut,
+      animationConfig,
       ...restProps
     } = props;
 
@@ -49,6 +64,47 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       className,
     });
 
+    const isCheckboxPressed = useSharedValue(false);
+    const formFieldContext = useFormFieldContext();
+
+    const handlePressIn = useCallback(
+      (event: GestureResponderEvent) => {
+        isCheckboxPressed.set(true);
+        onPressIn?.(event);
+      },
+      [isCheckboxPressed, onPressIn]
+    );
+
+    const handlePressOut = useCallback(
+      (event: GestureResponderEvent) => {
+        isCheckboxPressed.set(false);
+        onPressOut?.(event);
+      },
+      [isCheckboxPressed, onPressOut]
+    );
+
+    const scaleConfig = animationConfig?.scale;
+    const scaleValue = scaleConfig?.value ?? 0.95;
+    const scaleTimingConfig = scaleConfig?.config ?? { duration: 150 };
+    const isScaleDisabled = scaleConfig?.isDisabled ?? false;
+
+    const animatedStyle = useAnimatedStyle(() => {
+      if (isScaleDisabled) {
+        return {};
+      }
+
+      const isPressed =
+        (isCheckboxPressed.get() || formFieldContext?.isPressed.get()) ?? false;
+
+      return {
+        transform: [
+          {
+            scale: withTiming(isPressed ? scaleValue : 1, scaleTimingConfig),
+          },
+        ],
+      };
+    });
+
     const renderProps: CheckboxRenderProps = {
       isSelected,
       isInvalid,
@@ -61,7 +117,7 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
         : (children ?? <CheckboxIndicator />);
 
     return (
-      <CheckboxPrimitives.Root
+      <AnimatedRootView
         ref={ref}
         className={tvStyles}
         isSelected={isSelected}
@@ -69,11 +125,14 @@ const Checkbox = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
         isDisabled={isDisabled}
         isInvalid={isInvalid}
         isOnSurface={isOnSurface}
-        hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
+        hitSlop={hitSlop}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        style={[animatedStyle, style]}
         {...restProps}
       >
         {content}
-      </CheckboxPrimitives.Root>
+      </AnimatedRootView>
     );
   }
 );
@@ -117,7 +176,7 @@ const CheckboxIndicator = forwardRef<
         {
           transitionProperty: ['transform', 'opacity'],
           transitionDuration: 150,
-          transform: [{ scale: isSelected ? 1 : 0.75 }],
+          transform: [{ scale: isSelected ? 1 : 0.7 }],
           opacity: isSelected ? 1 : 0,
         },
         style,

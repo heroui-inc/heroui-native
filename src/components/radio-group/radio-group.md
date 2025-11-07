@@ -193,6 +193,7 @@ export default function PaymentMethodExample() {
 | `onValueChange` | `(val: string) => void` | `undefined` | Callback fired when the selected value changes     |
 | `isDisabled`    | `boolean`               | `false`     | Whether the entire radio group is disabled         |
 | `isInvalid`     | `boolean`               | `false`     | Whether the radio group is invalid                 |
+| `isOnSurface`   | `boolean`               | `undefined` | Whether the radio group is on surface              |
 | `className`     | `string`                | `undefined` | Custom class name                                  |
 | `...ViewProps`  | `ViewProps`             | -           | All standard React Native View props are supported |
 
@@ -220,6 +221,7 @@ export default function PaymentMethodExample() {
 | prop                    | type                       | default     | description                                      |
 | ----------------------- | -------------------------- | ----------- | ------------------------------------------------ |
 | `children`              | `React.ReactNode`          | `undefined` | Indicator content                                |
+| `isOnSurface`           | `boolean`                  | `undefined` | Whether the indicator is on surface              |
 | `className`             | `string`                   | `undefined` | Custom class name                                |
 | `...Animated.ViewProps` | `AnimatedProps<ViewProps>` | -           | All Reanimated Animated.View props are supported |
 

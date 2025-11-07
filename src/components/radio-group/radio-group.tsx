@@ -3,6 +3,7 @@ import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
+import { useIsOnSurface } from '../../helpers/theme';
 import type { TextRef, ViewRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
@@ -136,13 +137,26 @@ const RadioGroupItem = forwardRef<
 
 const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
   (props, ref) => {
-    const { children, className, style, ...restProps } = props;
+    const {
+      children,
+      className,
+      style,
+      isOnSurface: isOnSurfaceProp,
+      ...restProps
+    } = props;
 
+    const { isOnSurface: isOnSurfaceGroup } = useRadioGroup();
     const { isSelected, isInvalid } = useRadioGroupItem();
+
+    const isOnSurfaceAutoDetected = useIsOnSurface();
+
+    const isOnSurface =
+      isOnSurfaceProp ?? isOnSurfaceGroup ?? isOnSurfaceAutoDetected;
 
     const tvStyles = radioGroupStyles.itemIndicator({
       isSelected,
       isInvalid,
+      isOnSurface,
       className,
     });
 

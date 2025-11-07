@@ -21,9 +21,13 @@ const item = tv({
 const itemIndicator = tv({
   base: 'size-6 rounded-full border border-field-border items-center justify-center overflow-hidden',
   variants: {
+    isOnSurface: {
+      true: 'bg-on-surface',
+      false: 'bg-field',
+    },
     isSelected: {
       true: 'bg-accent',
-      false: 'bg-field',
+      false: '',
     },
     isInvalid: {
       true: 'bg-transparent border-danger',

@@ -28,3 +28,13 @@ export interface SurfaceRootProps extends ViewProps {
    */
   className?: string;
 }
+
+/**
+ * Context value for the Surface component
+ */
+export interface SurfaceContextValue {
+  /**
+   * Visual variant of the surface
+   */
+  variant: SurfaceVariant;
+}

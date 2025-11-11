@@ -190,7 +190,10 @@ export const Labels: FC = () => {
                           <FormField.Title>{item.label}</FormField.Title>
                         </FormField.Content>
                         <FormField.Indicator>
-                          <Checkbox isSelected={isSelected}>
+                          <Checkbox
+                            isSelected={isSelected}
+                            className="bg-transparent"
+                          >
                             <Checkbox.Indicator className="bg-transparent">
                               {isSelected && (
                                 <Animated.View

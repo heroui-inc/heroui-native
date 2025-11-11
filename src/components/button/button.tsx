@@ -1,11 +1,12 @@
 import { forwardRef, useCallback, useMemo } from 'react';
 import { View, type GestureResponderEvent } from 'react-native';
-import Animated, {
+import {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { Text } from '../../helpers/components';
 import { colorKit, useThemeColor } from '../../helpers/theme';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
@@ -13,7 +14,6 @@ import { PressableFeedback } from '../pressable-feedback';
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
-  DEFAULT_LAYOUT_TRANSITION,
   DISPLAY_NAME,
 } from './button.constants';
 import buttonStyles, { styleSheet } from './button.styles';
@@ -32,8 +32,6 @@ const [ButtonProvider, useButtonContext] = createContext<ButtonContextValue>({
 const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   const {
     children,
-    layout = DEFAULT_LAYOUT_TRANSITION,
-    skipLayoutAnimation = false,
     variant = 'primary',
     size = 'md',
     isIconOnly = false,
@@ -145,9 +143,8 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
       size,
       variant,
       isDisabled,
-      layout,
     }),
-    [size, variant, isDisabled, layout]
+    [size, variant, isDisabled]
   );
 
   const handleLayout = useCallback(
@@ -161,7 +158,6 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     <ButtonProvider value={contextValue}>
       <PressableFeedback
         ref={ref}
-        layout={skipLayoutAnimation ? undefined : layout}
         className={tvStyles}
         style={[styleSheet.buttonRoot, animatedContainerStyle, style]}
         isDisabled={isDisabled}
@@ -191,9 +187,9 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
 // --------------------------------------------------
 
 const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
-  const { children, layout: layoutProp, className, ...restProps } = props;
+  const { children, className, ...restProps } = props;
 
-  const { size, variant, layout: contextLayout } = useButtonContext();
+  const { size, variant } = useButtonContext();
 
   const tvStyles = buttonStyles.label({
     size,
@@ -202,14 +198,9 @@ const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
   });
 
   return (
-    <Animated.Text
-      ref={ref}
-      layout={layoutProp || contextLayout}
-      className={tvStyles}
-      {...restProps}
-    >
+    <Text ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Animated.Text>
+    </Text>
   );
 });
 

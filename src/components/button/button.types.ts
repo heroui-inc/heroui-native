@@ -1,10 +1,5 @@
-import type { ViewProps } from 'react-native';
-import type {
-  AnimatedProps,
-  BaseAnimationBuilder,
-  LayoutAnimationFunction,
-  WithTimingConfig,
-} from 'react-native-reanimated';
+import type { TextProps } from 'react-native';
+import type { WithTimingConfig } from 'react-native-reanimated';
 import type {
   HighlightAnimationConfig,
   PressableFeedbackProps,
@@ -83,17 +78,12 @@ export type ButtonRootProps = Omit<
    * Scale on press animation configuration
    */
   animationConfig?: AnimationConfig;
-  /**
-   * Whether to skip the layout animation
-   * @default false
-   */
-  skipLayoutAnimation?: boolean;
 };
 
 /**
  * Props for the Button.Label component
  */
-export interface ButtonLabelProps extends AnimatedProps<ViewProps> {
+export interface ButtonLabelProps extends TextProps {
   /**
    * Content to be rendered as label
    */
@@ -120,11 +110,4 @@ export interface ButtonContextValue {
    * Whether the button is disabled
    */
   isDisabled: boolean;
-  /**
-   * Layout transition for animated components
-   */
-  layout?:
-    | BaseAnimationBuilder
-    | LayoutAnimationFunction
-    | typeof BaseAnimationBuilder;
 }

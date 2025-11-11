@@ -3,7 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Button, cn, Spinner, useThemeColor } from 'heroui-native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { FadeIn } from 'react-native-reanimated';
+import { FadeIn, LinearTransition } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -255,6 +255,7 @@ const LayoutTransitionsContent = () => {
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
         <Button
+          layout={LinearTransition.springify()}
           variant="primary"
           onPress={() => {
             setIsDownloading(true);

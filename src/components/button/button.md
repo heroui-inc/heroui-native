@@ -197,7 +197,6 @@ export default function ButtonExample() {
 | `isDisabled`                 | `boolean`                                                                                  | `false`     | Whether the button is disabled                                 |
 | `className`                  | `string`                                                                                   | -           | Additional CSS classes                                         |
 | `animationConfig`            | `AnimationConfig`                                                                          | -           | Scale on press animation configuration                         |
-| `skipLayoutAnimation`        | `boolean`                                                                                  | `false`     | Whether to skip the layout animation                           |
 | `...Animated.PressableProps` | `Animated.PressableProps`                                                                  | -           | All Reanimated AnimatedPressable props are supported           |
 
 #### AnimationConfig
@@ -228,8 +227,8 @@ Configuration object for button press animations including scale and highlight e
 
 ### Button.Label
 
-| prop                    | type                 | default | description                                      |
-| ----------------------- | -------------------- | ------- | ------------------------------------------------ |
-| `children`              | `React.ReactNode`    | -       | Content to be rendered as label                  |
-| `className`             | `string`             | -       | Additional CSS classes                           |
-| `...Animated.TextProps` | `Animated.TextProps` | -       | All Reanimated Animated.Text props are supported |
+| prop           | type              | default | description                           |
+| -------------- | ----------------- | ------- | ------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Content to be rendered as label       |
+| `className`    | `string`          | -       | Additional CSS classes                |
+| `...TextProps` | `TextProps`       | -       | All standard Text props are supported |

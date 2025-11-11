@@ -27,6 +27,7 @@ export const Share: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
     <Popover>
       <Popover.Trigger ref={triggerRef}>
         <Button
+          variant="secondary"
           className={cn(
             className.buttonSecondarySquare,
             className.buttonSecondaryColors

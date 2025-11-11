@@ -32,20 +32,6 @@ Use a render function in the Indicator to show/hide custom icons based on state.
 </Checkbox>
 ```
 
-### With Render Function
-
-Use a render function on the Checkbox to access state and customize the entire content.
-
-```tsx
-<Checkbox isSelected={isSelected} onSelectedChange={setIsSelected}>
-  {({ isSelected, isInvalid, isDisabled }) => (
-    <Checkbox.Indicator>
-      {({ isSelected }) => (isSelected ? <CheckIcon /> : <PlusIcon />)}
-    </Checkbox.Indicator>
-  )}
-</Checkbox>
-```
-
 ### Invalid State
 
 Show validation errors with the `isInvalid` prop.
@@ -61,65 +47,89 @@ Show validation errors with the `isInvalid` prop.
 ## Example
 
 ```tsx
-import { Checkbox, useThemeColor } from 'heroui-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Checkbox, Divider, FormField, Surface } from 'heroui-native';
 import React from 'react';
-import { View } from 'react-native';
-import Animated, { ZoomIn } from 'react-native-reanimated';
+import { View, Text } from 'react-native';
 
-export default function CheckboxExample() {
-  const [defaultCheck, setDefaultCheck] = React.useState(true);
-  const [success, setSuccess] = React.useState(true);
-  const [warning, setWarning] = React.useState(true);
-  const [danger, setDanger] = React.useState(true);
-  const [custom, setCustom] = React.useState(true);
+interface CheckboxFieldProps {
+  isSelected: boolean;
+  onSelectedChange: (value: boolean) => void;
+  title: string;
+  description: string;
+}
 
-  const themeColorAccentForeground = useThemeColor('accent-foreground');
-  const themeColorAccent = useThemeColor('accent');
+const CheckboxField: React.FC<CheckboxFieldProps> = ({
+  isSelected,
+  onSelectedChange,
+  title,
+  description,
+}) => {
+  return (
+    <FormField
+      isSelected={isSelected}
+      onSelectedChange={onSelectedChange}
+      alignIndicator="start"
+      className="items-start"
+    >
+      <FormField.Indicator>
+        <Checkbox className="mt-0.5" />
+      </FormField.Indicator>
+      <FormField.Content>
+        <FormField.Title className="text-lg">{title}</FormField.Title>
+        <FormField.Description className="text-base">
+          {description}
+        </FormField.Description>
+      </FormField.Content>
+    </FormField>
+  );
+};
+
+export default function BasicUsage() {
+  const [fields, setFields] = React.useState({
+    newsletter: true,
+    marketing: false,
+    terms: false,
+  });
+
+  const fieldConfigs: Record<
+    keyof typeof fields,
+    { title: string; description: string }
+  > = {
+    newsletter: {
+      title: 'Subscribe to newsletter',
+      description: 'Get weekly updates about new features and tips',
+    },
+    marketing: {
+      title: 'Marketing communications',
+      description: 'Receive promotional emails and special offers',
+    },
+    terms: {
+      title: 'Accept terms and conditions',
+      description: 'Agree to our Terms of Service and Privacy Policy',
+    },
+  };
+
+  const handleFieldChange = (key: keyof typeof fields) => (value: boolean) => {
+    setFields((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const fieldKeys = Object.keys(fields) as Array<keyof typeof fields>;
 
   return (
-    <View className="flex-row gap-4">
-      <Checkbox isSelected={defaultCheck} onSelectedChange={setDefaultCheck} />
-
-      <Checkbox
-        isSelected={success}
-        onSelectedChange={setSuccess}
-        color="success"
-      />
-
-      <Checkbox
-        isSelected={warning}
-        onSelectedChange={setWarning}
-        color="warning"
-      />
-
-      <Checkbox
-        isSelected={danger}
-        onSelectedChange={setDanger}
-        color="danger"
-      />
-
-      <Checkbox
-        isSelected={custom}
-        onSelectedChange={setCustom}
-        className="w-8 h-8"
-      >
-        <Checkbox.Indicator>
-          {custom ? (
-            <Animated.View key="selected" entering={ZoomIn}>
-              <Ionicons
-                name="remove"
-                size={16}
-                color={themeColorAccentForeground}
-              />
-            </Animated.View>
-          ) : (
-            <Animated.View key="unselected" entering={ZoomIn}>
-              <Ionicons name="add" size={16} color={themeColorAccent} />
-            </Animated.View>
-          )}
-        </Checkbox.Indicator>
-      </Checkbox>
+    <View className="flex-1 items-center justify-center px-5">
+      <Surface className="py-5 w-full">
+        {fieldKeys.map((key, index) => (
+          <React.Fragment key={key}>
+            {index > 0 && <Divider className="my-4" />}
+            <CheckboxField
+              isSelected={fields[key]}
+              onSelectedChange={handleFieldChange(key)}
+              title={fieldConfigs[key].title}
+              description={fieldConfigs[key].description}
+            />
+          </React.Fragment>
+        ))}
+      </Surface>
     </View>
   );
 }
@@ -133,8 +143,8 @@ export default function CheckboxExample() {
 </Checkbox>
 ```
 
-- **Checkbox**: Main container that handles selection state and user interaction. Renders default indicator with checkmark if no children provided. Animates background and border color based on selection state. Supports render function children to access state (`isSelected`, `isInvalid`, `isDisabled`).
-- **Checkbox.Indicator**: Optional checkmark container that scales in when selected. Renders default check icon if no children provided. Handles enter/exit animations and can be replaced with custom indicators. Supports render function children to access state.
+- **Checkbox**: Main container that handles selection state and user interaction. Renders default indicator with checkmark if no children provided. Automatically detects surface context for proper styling. Supports press scale animation. Supports render function children to access state (`isSelected`, `isInvalid`, `isDisabled`).
+- **Checkbox.Indicator**: Optional checkmark container with default slide, scale, opacity, and border radius animations when selected. Renders animated check icon with SVG path animation if no children provided. Animations can be customized or disabled. Supports render function children to access state.
 
 ## API Reference
 
@@ -146,9 +156,11 @@ export default function CheckboxExample() {
 | `isSelected`        | `boolean`                                                              | `undefined` | Whether the checkbox is currently selected                                |
 | `onSelectedChange`  | `(isSelected: boolean) => void`                                        | `undefined` | Callback fired when the checkbox selection state changes                  |
 | `isDisabled`        | `boolean`                                                              | `false`     | Whether the checkbox is disabled and cannot be interacted with            |
-| `isInvalid`         | `boolean`                                                              | `false`     | Whether the checkbox is invalid                                           |
+| `isInvalid`         | `boolean`                                                              | `false`     | Whether the checkbox is invalid (shows danger color)                      |
+| `isOnSurface`       | `boolean`                                                              | `undefined` | Whether checkbox is on a surface background (auto-detected if not set)    |
+| `hitSlop`           | `number`                                                               | `6`         | Hit slop for the pressable area                                           |
+| `animationConfig`   | `CheckboxRootAnimationConfig`                                          | `undefined` | Configuration for press scale animation                                   |
 | `className`         | `string`                                                               | `undefined` | Additional CSS classes to apply                                           |
-| `animatedColors`    | `CheckboxAnimatedColors`                                               | `undefined` | Custom colors for checkbox background and border in different states      |
 | `...PressableProps` | `PressableProps`                                                       | -           | All standard React Native Pressable props are supported (except disabled) |
 
 #### CheckboxRenderProps
@@ -159,26 +171,33 @@ export default function CheckboxExample() {
 | `isInvalid`  | `boolean` | Whether the checkbox is invalid  |
 | `isDisabled` | `boolean` | Whether the checkbox is disabled |
 
-#### CheckboxAnimatedColors
+#### CheckboxRootAnimationConfig
 
-| prop              | type                                                                                          | description                                   |
-| ----------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `backgroundColor` | `{ default?: string; selected?: string; defaultInvalid?: string; selectedInvalid?: string; }` | Custom background colors for different states |
-| `borderColor`     | `{ default?: string; selected?: string; defaultInvalid?: string; selectedInvalid?: string; }` | Custom border colors for different states     |
+| prop    | type                                                    | description                            |
+| ------- | ------------------------------------------------------- | -------------------------------------- |
+| `scale` | `{ value?: number; timingConfig?: WithTimingConfig; isDisabled?: boolean; }` | Configuration for press scale animation |
+
+**scale** object properties:
+- `value` (number, default: `0.95`): Animation target value for scale when pressed
+- `timingConfig` (WithTimingConfig): Animation timing configuration from Reanimated
+- `isDisabled` (boolean, default: `false`): Whether to disable the scale animation
 
 ### Checkbox.Indicator
 
-| prop              | type                                                                   | default     | description                                                     |
-| ----------------- | ---------------------------------------------------------------------- | ----------- | --------------------------------------------------------------- |
-| `children`        | `React.ReactNode \| ((props: CheckboxRenderProps) => React.ReactNode)` | `undefined` | Content or render function for the checkbox indicator           |
-| `className`       | `string`                                                               | `undefined` | Additional CSS classes for the indicator                        |
-| `iconProps`       | `CheckboxIndicatorIconProps`                                           | `undefined` | Custom icon props for the default indicator                     |
-| `animationConfig` | `TimingConfig`                                                         | `undefined` | Animation configuration for checkbox indicator scale transition |
-| `...ViewProps`    | `ViewProps`                                                            | -           | All standard React Native View props are supported              |
+| prop                            | type                                                                   | default     | description                                                                  |
+| ------------------------------- | ---------------------------------------------------------------------- | ----------- | ---------------------------------------------------------------------------- |
+| `children`                      | `React.ReactNode \| ((props: CheckboxRenderProps) => React.ReactNode)` | `undefined` | Content or render function for the checkbox indicator                        |
+| `className`                     | `string`                                                               | `undefined` | Additional CSS classes for the indicator                                     |
+| `iconProps`                     | `CheckboxIndicatorIconProps`                                           | `undefined` | Custom props for the default animated check icon                             |
+| `isDefaultAnimationDisabled`    | `boolean`                                                              | `false`     | Whether to disable default indicator animations (transform, opacity, borderRadius) |
+| `...AnimatedViewProps`          | `AnimatedProps<ViewProps>`                                             | -           | All standard React Native Animated View props are supported                  |
 
 #### CheckboxIndicatorIconProps
 
-| prop    | type     | description     |
-| ------- | -------- | --------------- |
-| `size`  | `number` | Indicator size  |
-| `color` | `string` | Indicator color |
+| prop            | type     | description                                    |
+| --------------- | -------- | ---------------------------------------------- |
+| `size`          | `number` | Icon size                                       |
+| `strokeWidth`   | `number` | Icon stroke width                               |
+| `color`         | `string` | Icon color                                      |
+| `enterDuration` | `number` | Duration of enter animation (check appearing)  |
+| `exitDuration`  | `number` | Duration of exit animation (check disappearing) |

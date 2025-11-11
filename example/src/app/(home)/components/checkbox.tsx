@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Checkbox, Divider, FormField, Surface } from 'heroui-native';
@@ -43,7 +42,9 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
       className="items-start"
     >
       <FormField.Indicator>
-        <Checkbox className="mt-0.5" />
+        <Checkbox className="mt-0.5">
+          <Checkbox.Indicator />
+        </Checkbox>
       </FormField.Indicator>
       <FormField.Content>
         <FormField.Title className="text-lg">{title}</FormField.Title>
@@ -162,9 +163,8 @@ const AnimatedCustomIndicator = ({
   });
 
   return (
-    <Checkbox.Indicator
-      isDefaultAnimationDisabled
-      className="bg-pink-400 rounded-sm"
+    <Animated.View
+      className="aspect-square items-center justify-center bg-pink-400 rounded-sm"
       style={animatedStyle}
     >
       {isSelected ? (
@@ -190,7 +190,7 @@ const AnimatedCustomIndicator = ({
           />
         </Animated.View>
       )}
-    </Checkbox.Indicator>
+    </Animated.View>
   );
 };
 
@@ -217,8 +217,11 @@ const CustomStylesContent = () => {
         className="size-6 rounded-full bg-yellow-400 overflow-visible"
       >
         <Checkbox.Indicator
-          className="bg-transparent translate-x-[3px] translate-y-[-3px]"
-          isDefaultAnimationDisabled
+          className="bg-transparent"
+          animation={{
+            translateX: { value: [-3, 3] },
+          }}
+          style={{ transform: [{ translateY: -2 }] }}
           iconProps={{
             size: 32,
             strokeWidth: 1.5,
@@ -235,7 +238,7 @@ const CustomStylesContent = () => {
         className="size-8 rounded-sm bg-indigo-800 overflow-visible"
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
-        animationConfig={{ scale: { isDisabled: true } }}
+        animation="disabled"
       >
         {({ isSelected }) => (
           <AnimatedCustomIndicator
@@ -250,42 +253,37 @@ const CustomStylesContent = () => {
         onSelectedChange={setCustomBoth}
         className="size-12 rounded-full bg-slate-200"
       >
-        <Checkbox.Indicator
-          className="bg-transparent"
-          isDefaultAnimationDisabled
-        >
-          {({ isSelected }) => {
-            return isSelected ? (
-              <AnimatedView
-                key="sunny"
-                entering={FadeInLeft.springify()}
-                className="absolute inset-0 items-center justify-center rounded-full bg-slate-200"
-              >
-                <Animated.View entering={ZoomIn.springify()}>
-                  <StyledIonicons
-                    name="sunny"
-                    size={24}
-                    className="text-slate-800"
-                  />
-                </Animated.View>
-              </AnimatedView>
-            ) : (
-              <AnimatedView
-                key="moon"
-                entering={FadeInRight.springify()}
-                className="absolute inset-0 items-center justify-center rounded-full bg-slate-800"
-              >
-                <Animated.View entering={ZoomIn.springify()}>
-                  <StyledIonicons
-                    name="moon"
-                    size={20}
-                    className="text-slate-200"
-                  />
-                </Animated.View>
-              </AnimatedView>
-            );
-          }}
-        </Checkbox.Indicator>
+        {({ isSelected }) => {
+          return isSelected ? (
+            <AnimatedView
+              key="sunny"
+              entering={FadeInLeft.springify()}
+              className="absolute inset-0 items-center justify-center rounded-full bg-slate-200"
+            >
+              <Animated.View entering={ZoomIn.springify()}>
+                <StyledIonicons
+                  name="sunny"
+                  size={24}
+                  className="text-slate-800"
+                />
+              </Animated.View>
+            </AnimatedView>
+          ) : (
+            <AnimatedView
+              key="moon"
+              entering={FadeInRight.springify()}
+              className="absolute inset-0 items-center justify-center rounded-full bg-slate-800"
+            >
+              <Animated.View entering={ZoomIn.springify()}>
+                <StyledIonicons
+                  name="moon"
+                  size={20}
+                  className="text-slate-200"
+                />
+              </Animated.View>
+            </AnimatedView>
+          );
+        }}
       </Checkbox>
     </View>
   );

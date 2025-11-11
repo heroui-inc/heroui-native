@@ -1,7 +1,6 @@
 import type { TextInputProps, TextProps, ViewProps } from 'react-native';
-import type { AnimatedProps } from 'react-native-reanimated';
+import type { AnimatedProps, WithTimingConfig } from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
-import type { TimingConfig } from '../../helpers/types';
 import type { ErrorViewRootProps } from '../error-view';
 import type { InputSlots, LabelSlots } from './text-field.styles';
 
@@ -121,7 +120,7 @@ export interface TextFieldInputProps extends TextInputProps {
   /**
    * Animation configuration for focus/blur transitions
    */
-  animationConfig?: TimingConfig;
+  animationConfig?: WithTimingConfig;
 }
 
 /**

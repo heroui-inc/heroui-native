@@ -116,18 +116,18 @@ export default function SwitchExample() {
 
 ### Switch
 
-| prop                | type                                              | default     | description                                                                |
-| ------------------- | ------------------------------------------------- | ----------- | -------------------------------------------------------------------------- |
-| `children`          | `React.ReactNode`                                 | `undefined` | Content to render inside the switch                                        |
-| `color`             | `'default' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Color theme of the switch                                                  |
-| `isSelected`        | `boolean`                                         | `undefined` | Whether the switch is currently selected                                   |
-| `isDisabled`        | `boolean`                                         | `false`     | Whether the switch is disabled and cannot be interacted with               |
-| `className`         | `string`                                          | `undefined` | Custom class name for the switch                                           |
-| `classNames`        | `ElementSlots<RootSlots>`                         | `undefined` | Custom class names for different parts of the component                    |
-| `colors`            | `SwitchColors`                                    | `undefined` | Custom colors for different switch states                                  |
-| `animationConfig`   | `TimingConfig`                                    | `undefined` | Animation configuration for switch background and border colors transition |
-| `onSelectedChange`  | `(isSelected: boolean) => void`                   | `undefined` | Callback fired when the switch selection state changes                     |
-| `...PressableProps` | `Omit<PressableProps, 'disabled'>`                | -           | All standard React Native Pressable props are supported (except disabled)  |
+| prop                | type                                              | default     | description                                                                        |
+| ------------------- | ------------------------------------------------- | ----------- | ---------------------------------------------------------------------------------- |
+| `children`          | `React.ReactNode`                                 | `undefined` | Content to render inside the switch                                                |
+| `color`             | `'default' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Color theme of the switch                                                          |
+| `isSelected`        | `boolean`                                         | `undefined` | Whether the switch is currently selected                                           |
+| `isDisabled`        | `boolean`                                         | `false`     | Whether the switch is disabled and cannot be interacted with                       |
+| `className`         | `string`                                          | `undefined` | Custom class name for the switch                                                   |
+| `classNames`        | `ElementSlots<RootSlots>`                         | `undefined` | Custom class names for different parts of the component                            |
+| `colors`            | `SwitchColors`                                    | `undefined` | Custom colors for different switch states                                          |
+| `animationConfig`   | `WithTimingConfig`                                | `undefined` | Reanimated timing configuration for switch background and border colors transition |
+| `onSelectedChange`  | `(isSelected: boolean) => void`                   | `undefined` | Callback fired when the switch selection state changes                             |
+| `...PressableProps` | `Omit<PressableProps, 'disabled'>`                | -           | All standard React Native Pressable props are supported (except disabled)          |
 
 #### ElementSlots<RootSlots>
 
@@ -145,13 +145,6 @@ export default function SwitchExample() {
 | `selectedBorder`     | `string` | Border color when switch is selected         |
 | `defaultBackground`  | `string` | Background color when switch is not selected |
 | `selectedBackground` | `string` | Background color when switch is selected     |
-
-#### TimingConfig
-
-| prop       | type                                      | description                                    |
-| ---------- | ----------------------------------------- | ---------------------------------------------- |
-| `duration` | `number`                                  | Duration of the animation in milliseconds      |
-| `easing`   | `EasingFunction \| EasingFunctionFactory` | Easing function to control the animation curve |
 
 ### Switch.Thumb
 
@@ -174,10 +167,10 @@ export default function SwitchExample() {
 
 #### SwitchThumbAnimationConfig
 
-| prop              | type           | description                                                    |
-| ----------------- | -------------- | -------------------------------------------------------------- |
-| `translateX`      | `SpringConfig` | Spring animation configuration for thumb motion                |
-| `backgroundColor` | `TimingConfig` | Timing animation configuration for background color transition |
+| prop              | type               | description                                                    |
+| ----------------- | ------------------ | -------------------------------------------------------------- |
+| `translateX`      | `WithSpringConfig` | Spring animation configuration for thumb motion                |
+| `backgroundColor` | `WithTimingConfig` | Timing animation configuration for background color transition |
 
 ### Switch.StartContent
 

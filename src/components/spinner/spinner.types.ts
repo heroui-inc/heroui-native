@@ -1,6 +1,5 @@
 import type { ViewProps } from 'react-native';
-import type { AnimatedProps } from 'react-native-reanimated';
-import type { TimingConfig } from '../../helpers/types';
+import type { AnimatedProps, WithTimingConfig } from 'react-native-reanimated';
 
 /**
  * Base spinner size variants
@@ -57,7 +56,7 @@ export interface SpinnerIndicatorProps extends AnimatedProps<ViewProps> {
   speed?: number;
 
   /** Animation easing for indicator */
-  animationEasing?: TimingConfig['easing'];
+  animationEasing?: WithTimingConfig['easing'];
 
   /** Props for the default icon */
   iconProps?: SpinnerIconProps;

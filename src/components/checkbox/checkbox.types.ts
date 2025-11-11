@@ -1,5 +1,24 @@
-import type { AnimatedProps, WithTimingConfig } from 'react-native-reanimated';
+import type {
+  AnimatedProps,
+  SharedValue,
+  WithTimingConfig,
+} from 'react-native-reanimated';
+import type {
+  Animation,
+  AnimationRoot,
+  AnimationValue,
+} from '../../helpers/types';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
+
+/**
+ * Context value for checkbox animation state
+ */
+export interface CheckboxAnimationContextValue {
+  /** Shared value tracking if the checkbox is pressed */
+  isCheckboxPressed: SharedValue<boolean>;
+  /** Whether all animations should be disabled (cascading from root) */
+  isAllAnimationsDisabled: boolean;
+}
 
 /**
  * Checkbox Indicator Icon Props
@@ -30,6 +49,23 @@ export interface CheckboxRenderProps {
 }
 
 /**
+ * Animation configuration for checkbox root component
+ */
+export type CheckboxRootAnimation = AnimationRoot<{
+  scale?: AnimationValue<{
+    /**
+     * Scale values [unpressed, pressed]
+     * @default [1, 0.95]
+     */
+    value?: [number, number];
+    /**
+     * Animation timing configuration
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+}>;
+
+/**
  * Props for the main Checkbox component
  */
 export interface CheckboxProps
@@ -43,25 +79,62 @@ export interface CheckboxProps
   className?: string;
 
   /** Animation configuration for checkbox scale animation */
-  animationConfig?: {
-    scale?: {
-      /**
-       * Animation target value for scale when pressed
-       * @default 0.95
-       */
-      value?: number;
-      /**
-       * Animation timing configuration
-       */
-      config?: WithTimingConfig;
-      /**
-       * Whether to disable the animation
-       * @default false
-       */
-      isDisabled?: boolean;
-    };
-  };
+  animation?: CheckboxRootAnimation;
 }
+
+/**
+ * Animation configuration for checkbox indicator component
+ */
+export type CheckboxIndicatorAnimation = Animation<{
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [unselected, selected]
+     * @default [0, 1]
+     */
+    value?: [number, number];
+    /**
+     * Animation timing configuration
+     * @default { duration: 100 }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+  borderRadius?: AnimationValue<{
+    /**
+     * Border radius values [unselected, selected]
+     * @default [99, 0]
+     */
+    value?: [number, number];
+    /**
+     * Animation timing configuration
+     * @default { duration: 50 }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+  translateX?: AnimationValue<{
+    /**
+     * TranslateX values [unselected, selected]
+     * @default [-4, 0]
+     */
+    value?: [number, number];
+    /**
+     * Animation timing configuration
+     * @default { duration: 100 }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+  scale?: AnimationValue<{
+    /**
+     * Scale values [unselected, selected]
+     * @default [0.8, 1]
+     */
+    value?: [number, number];
+    /**
+     * Animation timing configuration
+     * @default { duration: 100 }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+}>;
 
 /**
  * Props for the CheckboxIndicator component
@@ -82,8 +155,10 @@ export interface CheckboxIndicatorProps
   iconProps?: CheckboxIndicatorIconProps;
 
   /**
-   * Whether to disable the default indicator animations (transform, opacity, borderRadius transitions)
-   * @default false
+   * Animation configuration
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: CheckboxIndicatorAnimation;
 }

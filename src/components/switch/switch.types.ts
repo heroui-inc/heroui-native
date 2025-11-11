@@ -1,6 +1,9 @@
-import type { SharedValue } from 'react-native-reanimated';
+import type {
+  SharedValue,
+  WithSpringConfig,
+  WithTimingConfig,
+} from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
-import type { SpringConfig, TimingConfig } from '../../helpers/types';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
 import type { RootSlots } from './switch.styles';
 
@@ -46,7 +49,7 @@ export interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
   colors?: SwitchColors;
 
   /** Animation configuration for switch background and border colors transition */
-  animationConfig?: TimingConfig;
+  animationConfig?: WithTimingConfig;
 }
 
 /**
@@ -64,9 +67,9 @@ export interface SwitchThumbColors {
  */
 export interface SwitchThumbAnimationConfig {
   /** Spring animation configuration for thumb motion */
-  translateX?: SpringConfig;
+  translateX?: WithSpringConfig;
   /** Timing animation configuration for background color transition */
-  backgroundColor?: TimingConfig;
+  backgroundColor?: WithTimingConfig;
 }
 
 /**

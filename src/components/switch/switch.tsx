@@ -12,6 +12,7 @@ import * as SwitchPrimitives from '../../primitives/switch';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
 import {
   DEFAULT_SPRING_CONFIG,
+  DEFAULT_THUMB_HEIGHT,
   DEFAULT_THUMB_WIDTH,
   DEFAULT_TIMING_CONFIG,
   DISPLAY_NAME,
@@ -180,6 +181,7 @@ const SwitchThumb = forwardRef<
   });
 
   const computedWidth = width ?? DEFAULT_THUMB_WIDTH;
+  const computedHeight = height ?? DEFAULT_THUMB_HEIGHT;
 
   const springConfig = animationConfig?.translateX ?? DEFAULT_SPRING_CONFIG;
 
@@ -208,7 +210,7 @@ const SwitchThumb = forwardRef<
 
     return {
       left: withSpring(
-        isSelected ? contentContainerWidth.get() - computedWidth + 0.5 : -0.5,
+        isSelected ? contentContainerWidth.get() - computedWidth : 0,
         springConfig
       ),
       backgroundColor: withTiming(
@@ -227,7 +229,7 @@ const SwitchThumb = forwardRef<
       style={[
         {
           width: computedWidth,
-          height: height ?? computedWidth,
+          height: computedHeight,
         },
         containerAnimatedStyle,
       ]}

@@ -3,8 +3,8 @@ import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
   slots: {
-    container: 'shadow-2xl border-[0.5px] rounded-full w-[40px] h-[25px]',
-    contentPaddingContainer: 'flex-1  overflow-hidden px-[3.5px]',
+    container: 'shadow-2xl rounded-full w-[48px] h-[24px]',
+    contentPaddingContainer: 'flex-1 overflow-hidden px-[2.5px]',
     contentContainer: 'flex-1 justify-center',
   },
   variants: {

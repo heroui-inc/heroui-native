@@ -1,9 +1,5 @@
 import type { PressableProps, TextProps } from 'react-native';
-import type {
-  AnimatedProps,
-  BaseAnimationBuilder,
-  LayoutAnimationFunction,
-} from 'react-native-reanimated';
+import type { AnimatedProps } from 'react-native-reanimated';
 
 /**
  * Chip size variants
@@ -43,7 +39,7 @@ export interface ChipProps extends AnimatedProps<PressableProps> {
 /**
  * Props for the ChipLabel component
  */
-export interface ChipLabelProps extends AnimatedProps<TextProps> {
+export interface ChipLabelProps extends TextProps {
   /** Child elements to render as the label. If string, will be wrapped in Text component */
   children?: React.ReactNode;
 
@@ -63,10 +59,4 @@ export interface ChipContextValue {
 
   /** Color theme of the chip */
   color: ChipColor;
-
-  /** Layout transition for animated components */
-  layout?:
-    | BaseAnimationBuilder
-    | LayoutAnimationFunction
-    | typeof BaseAnimationBuilder;
 }

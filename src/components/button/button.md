@@ -88,6 +88,7 @@ Transform button to loading state with spinner animation.
 const themeColorAccentForeground = useThemeColor('accent-foreground');
 
 <Button
+  layout={LinearTransition.springify()}
   variant="primary"
   onPress={() => {
     setIsDownloading(true);

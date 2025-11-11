@@ -19,7 +19,6 @@ import {
 } from './switch.constants';
 import switchStyles from './switch.styles';
 import type {
-  SwitchColor,
   SwitchContentProps,
   SwitchContextValue,
   SwitchProps,
@@ -44,7 +43,6 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
   (props, ref) => {
     const {
       children,
-      color = 'default',
       isDisabled,
       isSelected,
       onSelectedChange,
@@ -57,9 +55,6 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
     } = props;
 
     const themeColorAccent = useThemeColor('accent');
-    const themeColorSuccess = useThemeColor('success');
-    const themeColorWarning = useThemeColor('warning');
-    const themeColorDanger = useThemeColor('danger');
     const themeColorBorder = useThemeColor('border');
     const themeColorSurfaceQuaternary = useThemeColor('surface-quaternary');
 
@@ -80,20 +75,6 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       className: classNames?.contentContainer,
     });
 
-    const backgroundColorMap: Record<SwitchColor, string> = {
-      default: themeColorAccent,
-      success: themeColorSuccess,
-      warning: themeColorWarning,
-      danger: themeColorDanger,
-    };
-
-    const borderColorMap: Record<SwitchColor, string> = {
-      default: themeColorAccent,
-      success: themeColorSuccess,
-      warning: themeColorWarning,
-      danger: themeColorDanger,
-    };
-
     const contentContainerWidth = useSharedValue(0);
     const contentContainerHeight = useSharedValue(0);
 
@@ -103,13 +84,13 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       return {
         backgroundColor: withTiming(
           isSelected
-            ? (colors?.selectedBackground ?? backgroundColorMap[color])
+            ? (colors?.selectedBackground ?? themeColorAccent)
             : (colors?.defaultBackground ?? themeColorSurfaceQuaternary),
           timingConfig
         ),
         borderColor: withTiming(
           isSelected
-            ? (colors?.selectedBorder ?? borderColorMap[color])
+            ? (colors?.selectedBorder ?? themeColorAccent)
             : (colors?.defaultBorder ?? themeColorBorder),
           timingConfig
         ),

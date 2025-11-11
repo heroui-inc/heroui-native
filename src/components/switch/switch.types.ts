@@ -8,11 +8,6 @@ import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
 import type { RootSlots } from './switch.styles';
 
 /**
- * Base switch color variants
- */
-export type SwitchColor = 'default' | 'success' | 'warning' | 'danger';
-
-/**
  * Custom colors for switch states
  */
 export interface SwitchColors {
@@ -32,9 +27,6 @@ export interface SwitchColors {
 export interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
   /** Content to render inside the switch */
   children?: React.ReactNode;
-
-  /** Color theme of the switch @default 'default' */
-  color?: SwitchColor;
 
   /** Whether the switch is disabled @default false */
   isDisabled?: boolean;

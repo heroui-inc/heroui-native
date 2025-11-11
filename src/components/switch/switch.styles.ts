@@ -20,7 +20,7 @@ const root = tv({
 });
 
 const thumb = tv({
-  base: 'absolute items-center justify-center rounded-full overflow-hidden',
+  base: 'absolute items-center justify-center w-[28px] h-[20px] rounded-full overflow-hidden',
 });
 
 const startContent = tv({

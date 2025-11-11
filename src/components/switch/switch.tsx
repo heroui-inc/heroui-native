@@ -6,6 +6,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { useResolvedStyleProperty } from '../../helpers/hooks';
 import { useThemeColor } from '../../helpers/theme';
 import { createContext } from '../../helpers/utils';
 import * as SwitchPrimitives from '../../primitives/switch';
@@ -56,7 +57,7 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
 
     const themeColorAccent = useThemeColor('accent');
     const themeColorBorder = useThemeColor('border');
-    const themeColorSurfaceQuaternary = useThemeColor('surface-quaternary');
+    const themeColorSurfaceQuaternary = useThemeColor('surface-tertiary');
 
     const { container, contentPaddingContainer, contentContainer } =
       switchStyles.root({
@@ -151,7 +152,7 @@ const SwitchThumb = forwardRef<
   SwitchPrimitivesTypes.ThumbRef,
   SwitchThumbProps
 >((props, ref) => {
-  const { children, className, width, height, colors, animationConfig } = props;
+  const { children, className, colors, style, animationConfig } = props;
 
   const { isSelected, contentContainerWidth } = useSwitchContext();
 
@@ -161,8 +162,20 @@ const SwitchThumb = forwardRef<
     className,
   });
 
-  const computedWidth = width ?? DEFAULT_THUMB_WIDTH;
-  const computedHeight = height ?? DEFAULT_THUMB_HEIGHT;
+  const width = useResolvedStyleProperty({
+    className: tvStyles,
+    style,
+    propertyName: 'width',
+  });
+  const computedWidth = typeof width === 'number' ? width : DEFAULT_THUMB_WIDTH;
+
+  const height = useResolvedStyleProperty({
+    className: tvStyles,
+    style,
+    propertyName: 'height',
+  });
+  const computedHeight =
+    typeof height === 'number' ? height : DEFAULT_THUMB_HEIGHT;
 
   const springConfig = animationConfig?.translateX ?? DEFAULT_SPRING_CONFIG;
 

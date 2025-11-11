@@ -151,14 +151,14 @@ export default function SpinnerExample() {
 
 ### Spinner.Indicator
 
-| prop                    | type                     | default     | description                                      |
-| ----------------------- | ------------------------ | ----------- | ------------------------------------------------ |
-| `children`              | `React.ReactNode`        | `undefined` | Content to render inside the indicator           |
-| `speed`                 | `number`                 | `1`         | Speed in rounds per second                       |
-| `animationEasing`       | `TimingConfig['easing']` | `undefined` | Reanimated timing easing for indicator           |
-| `iconProps`             | `SpinnerIconProps`       | `undefined` | Props for the default icon                       |
-| `className`             | `string`                 | `undefined` | Custom class name for the indicator element      |
-| `...Animated.ViewProps` | `Animated.ViewProps`     | -           | All Reanimated Animated.View props are supported |
+| prop                    | type                         | default     | description                                      |
+| ----------------------- | ---------------------------- | ----------- | ------------------------------------------------ |
+| `children`              | `React.ReactNode`            | `undefined` | Content to render inside the indicator           |
+| `speed`                 | `number`                     | `1`         | Speed in rounds per second                       |
+| `animationEasing`       | `WithTimingConfig['easing']` | `undefined` | Reanimated timing easing for indicator           |
+| `iconProps`             | `SpinnerIconProps`           | `undefined` | Props for the default icon                       |
+| `className`             | `string`                     | `undefined` | Custom class name for the indicator element      |
+| `...Animated.ViewProps` | `Animated.ViewProps`         | -           | All Reanimated Animated.View props are supported |
 
 ### SpinnerIconProps
 

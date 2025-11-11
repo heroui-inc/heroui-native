@@ -1,3 +1,4 @@
+export * from './/animation';
 export * from './children-to-string';
 export * from './create-context';
 export * from './ease-gradient';

@@ -66,8 +66,15 @@ const RadioGroupItem = forwardRef<
   RadioGroupPrimitives.ItemRef,
   RadioGroupItemProps
 >((props, ref) => {
-  const { children, value, isDisabled, isInvalid, className, ...restProps } =
-    props;
+  const {
+    children,
+    value,
+    isDisabled,
+    isInvalid,
+    isOnSurface: isOnSurfaceProp,
+    className,
+    ...restProps
+  } = props;
 
   const stringifiedChildren =
     typeof children === 'function'
@@ -78,6 +85,7 @@ const RadioGroupItem = forwardRef<
     value: groupValue,
     isInvalid: groupIsInvalid,
     isDisabled: groupIsDisabled,
+    isOnSurface: isOnSurfaceGroup,
   } = useRadioGroup();
 
   const isSelected = groupValue === value;
@@ -85,6 +93,11 @@ const RadioGroupItem = forwardRef<
   const isDisabledValue = isDisabled ?? groupIsDisabled ?? false;
 
   const effectiveIsInvalid = isInvalid ?? groupIsInvalid ?? false;
+
+  const isOnSurfaceAutoDetected = useIsOnSurface();
+
+  const isOnSurface =
+    isOnSurfaceProp ?? isOnSurfaceGroup ?? isOnSurfaceAutoDetected;
 
   const tvStyles = radioGroupStyles.item({
     isDisabled: isDisabledValue,
@@ -113,8 +126,9 @@ const RadioGroupItem = forwardRef<
       isSelected,
       isDisabled: isDisabledValue,
       isInvalid: effectiveIsInvalid,
+      isOnSurface,
     }),
-    [isSelected, isDisabledValue, effectiveIsInvalid]
+    [isSelected, isDisabledValue, effectiveIsInvalid, isOnSurface]
   );
 
   return (
@@ -137,26 +151,14 @@ const RadioGroupItem = forwardRef<
 
 const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
   (props, ref) => {
-    const {
-      children,
-      className,
-      style,
-      isOnSurface: isOnSurfaceProp,
-      ...restProps
-    } = props;
+    const { children, className, style, ...restProps } = props;
 
-    const { isOnSurface: isOnSurfaceGroup } = useRadioGroup();
-    const { isSelected, isInvalid } = useRadioGroupItem();
-
-    const isOnSurfaceAutoDetected = useIsOnSurface();
-
-    const isOnSurface =
-      isOnSurfaceProp ?? isOnSurfaceGroup ?? isOnSurfaceAutoDetected;
+    const { isSelected, isInvalid, isOnSurface } = useRadioGroupItem();
 
     const tvStyles = radioGroupStyles.itemIndicator({
+      isOnSurface,
       isSelected,
       isInvalid,
-      isOnSurface,
       className,
     });
 
@@ -181,9 +183,10 @@ const RadioGroupIndicatorThumb = forwardRef<
 >((props, ref) => {
   const { className, style, ...restProps } = props;
 
-  const { isSelected } = useRadioGroupItem();
+  const { isSelected, isOnSurface } = useRadioGroupItem();
 
   const tvStyles = radioGroupStyles.itemIndicatorThumb({
+    isOnSurface,
     isSelected,
     className,
   });

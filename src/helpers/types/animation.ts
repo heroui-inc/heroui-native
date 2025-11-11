@@ -1,44 +1,28 @@
-import type {
-  EasingFunction,
-  EasingFunctionFactory,
-} from 'react-native-reanimated';
+/**
+ * Universal animation prop type
+ * - `true` or `undefined`: Use default animations
+ * - `false` or `"disabled"`: Disable all animations
+ * - `object`: Custom animation configuration
+ */
+export type Animation<
+  TConfig extends Record<string, any> = Record<string, any>,
+> = boolean | 'disabled' | TConfig;
 
 /**
- * Configuration for timing-based animations
+ * Root-level animation prop type with cascading control
+ * - `true` or `undefined`: Use default animations
+ * - `false` or `"disabled"`: Disable only root animations (children can still animate)
+ * - `"disable-all"`: Disable all animations including children (cascades down)
+ * - `object`: Custom animation configuration
  */
-export interface TimingConfig {
-  /**
-   * Duration of the animation in milliseconds
-   * @default 300
-   */
-  duration?: number;
-  /**
-   * Easing function to control the animation curve
-   * @example Easing.inOut(Easing.ease)
-   */
-  easing?: EasingFunction | EasingFunctionFactory;
-}
+export type AnimationRoot<
+  TConfig extends Record<string, any> = Record<string, any>,
+> = boolean | 'disabled' | 'disable-all' | TConfig;
 
 /**
- * Configuration for spring-based animations
+ * Animation value that can be a custom config
+ * Used for granular animation control within a component
  */
-export interface SpringConfig {
-  /**
-   * Controls how quickly the animation comes to rest
-   * Higher values make the animation more damped (less bouncy)
-   * @default 10
-   */
-  damping?: number;
-  /**
-   * Controls the speed of the animation
-   * Higher values make the animation faster
-   * @default 100
-   */
-  stiffness?: number;
-  /**
-   * Mass of the animated value
-   * Higher values make the animation slower
-   * @default 1
-   */
-  mass?: number;
-}
+export type AnimationValue<
+  TConfig extends Record<string, any> = Record<string, any>,
+> = TConfig;

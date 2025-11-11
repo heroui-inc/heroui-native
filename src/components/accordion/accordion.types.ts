@@ -4,9 +4,9 @@ import type {
   EntryExitAnimationFunction,
   LayoutAnimationFunction,
   WithSpringConfig,
+  WithTimingConfig,
 } from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
-import type { TimingConfig } from '../../helpers/types';
 import type {
   ContentProps as PrimitiveContentProps,
   IndicatorProps as PrimitiveIndicatorProps,
@@ -103,7 +103,7 @@ export interface AccordionTriggerProps extends PrimitiveTriggerProps {
   /**
    * Custom timing config for highlight animation
    */
-  highlightTimingConfig?: TimingConfig;
+  highlightTimingConfig?: WithTimingConfig;
   /**
    * Whether to show the highlight on press
    * @default true

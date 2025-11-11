@@ -1,5 +1,5 @@
 import type { PressableProps, TextProps, ViewProps } from 'react-native';
-import type { AnimatedProps } from 'react-native-reanimated';
+import type { AnimatedProps, SharedValue } from 'react-native-reanimated';
 
 type FormFieldAlignIndicator = 'start' | 'end';
 
@@ -108,4 +108,6 @@ export interface FormFieldContextValue
   extends Pick<
     FormFieldBaseProps,
     'isSelected' | 'onSelectedChange' | 'isDisabled' | 'isInline' | 'isInvalid'
-  > {}
+  > {
+  isPressed: SharedValue<boolean>;
+}

@@ -15,6 +15,7 @@ import type {
   SwitchContentProps,
   SwitchContextValue,
   SwitchProps,
+  SwitchRenderProps,
   SwitchThumbProps,
 } from './switch.types';
 
@@ -60,8 +61,9 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
     const contextValue = useMemo(
       () => ({
         isSelected,
+        isDisabled,
       }),
-      [isSelected]
+      [isSelected, isDisabled]
     );
 
     const animationContextValue = useMemo(
@@ -71,6 +73,16 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       }),
       [isAllAnimationsDisabled, contentContainerWidth]
     );
+
+    const renderProps: SwitchRenderProps = {
+      isSelected,
+      isDisabled: isDisabled ?? false,
+    };
+
+    const content =
+      typeof children === 'function'
+        ? children(renderProps)
+        : (children ?? <SwitchThumb />);
 
     return (
       <SwitchProvider value={contextValue}>
@@ -87,7 +99,7 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
             }}
             {...restProps}
           >
-            {children ?? <SwitchThumb />}
+            {content}
           </AnimatedSwitchRoot>
         </SwitchAnimationProvider>
       </SwitchProvider>
@@ -103,7 +115,7 @@ const SwitchThumb = forwardRef<
 >((props, ref) => {
   const { children, className, style, animation } = props;
 
-  const { isSelected } = useSwitchContext();
+  const { isSelected, isDisabled } = useSwitchContext();
 
   const tvStyles = switchStyles.thumb({
     className,
@@ -116,13 +128,21 @@ const SwitchThumb = forwardRef<
     isSelected,
   });
 
+  const renderProps: SwitchRenderProps = {
+    isSelected,
+    isDisabled: isDisabled ?? false,
+  };
+
+  const content =
+    typeof children === 'function' ? children(renderProps) : children;
+
   return (
     <AnimatedSwitchThumb
       ref={ref}
       className={tvStyles}
       style={[styleSheet.borderCurve, rContainerStyle, style]}
     >
-      {children}
+      {content}
     </AnimatedSwitchThumb>
   );
 });

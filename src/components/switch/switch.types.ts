@@ -1,4 +1,5 @@
 import type {
+  AnimatedProps,
   SharedValue,
   WithSpringConfig,
   WithTimingConfig,
@@ -9,6 +10,16 @@ import type {
   AnimationValue,
 } from '../../helpers/types/animation';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
+
+/**
+ * Render function props for switch children
+ */
+export interface SwitchRenderProps {
+  /** Whether the switch is selected */
+  isSelected?: boolean;
+  /** Whether the switch is disabled */
+  isDisabled: boolean;
+}
 
 /**
  * Animation configuration for switch root component
@@ -31,9 +42,10 @@ export type SwitchRootAnimation = AnimationRoot<{
 /**
  * Props for the main Switch component
  */
-export interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
-  /** Content to render inside the switch */
-  children?: React.ReactNode;
+export interface SwitchProps
+  extends Omit<SwitchPrimitivesTypes.RootProps, 'children'> {
+  /** Content to render inside the switch, or a render function */
+  children?: React.ReactNode | ((props: SwitchRenderProps) => React.ReactNode);
 
   /** Whether the switch is disabled @default false */
   isDisabled?: boolean;
@@ -91,9 +103,10 @@ export type SwitchThumbAnimation = Animation<{
 /**
  * Props for the SwitchThumb component
  */
-export interface SwitchThumbProps extends SwitchPrimitivesTypes.ThumbProps {
-  /** Content to render inside the thumb */
-  children?: React.ReactNode;
+export interface SwitchThumbProps
+  extends Omit<AnimatedProps<SwitchPrimitivesTypes.ThumbProps>, 'children'> {
+  /** Content to render inside the thumb, or a render function */
+  children?: React.ReactNode | ((props: SwitchRenderProps) => React.ReactNode);
 
   /** Custom class name for the thumb element */
   className?: string;
@@ -121,7 +134,8 @@ export interface SwitchContentProps {
 /**
  * Context value for switch components
  */
-export interface SwitchContextValue extends Pick<SwitchProps, 'isSelected'> {}
+export interface SwitchContextValue
+  extends Pick<SwitchProps, 'isSelected' | 'isDisabled'> {}
 
 /**
  * Context value for switch animation state

@@ -35,9 +35,7 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
       <FormField.Description>{description}</FormField.Description>
     </FormField.Content>
     <FormField.Indicator>
-      <Switch>
-        <Switch.Thumb />
-      </Switch>
+      <Switch />
     </FormField.Indicator>
   </FormField>
 );

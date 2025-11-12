@@ -28,7 +28,7 @@ const AnimatedSwitchThumb = Animated.createAnimatedComponent(
   SwitchPrimitives.Thumb
 );
 
-const [SwitchProvider, useSwitchContext] = createContext<SwitchContextValue>({
+const [SwitchProvider, useSwitch] = createContext<SwitchContextValue>({
   name: 'SwitchContext',
 });
 
@@ -141,7 +141,7 @@ const SwitchThumb = forwardRef<
 >((props, ref) => {
   const { children, className, style, animation } = props;
 
-  const { isSelected, isDisabled } = useSwitchContext();
+  const { isSelected, isDisabled } = useSwitch();
 
   const tvStyles = switchStyles.thumb({
     className,
@@ -218,12 +218,13 @@ SwitchEndContent.displayName = DISPLAY_NAME.SWITCH_END_CONTENT;
  * Compound Switch component with sub-components
  *
  * @component Switch - Main container that handles toggle state and user interaction.
- * Renders default thumb if no children provided. Animates background and border colors
- * based on selection state. Acts as a pressable area for toggling.
+ * Renders default thumb if no children provided. Animates scale (on press) and background
+ * color based on selection state. Acts as a pressable area for toggling. Supports render
+ * function children for dynamic content.
  *
  * @component Switch.Thumb - Optional sliding thumb element that moves between positions.
  * Uses spring animation for smooth transitions. Can contain custom content like icons
- * or be customized with different colors and sizes.
+ * or be customized with different styles and animations. Supports render function children.
  *
  * @component Switch.StartContent - Optional content displayed on the left side of the switch.
  * Typically used for icons or text that appear when switch is off. Positioned absolutely
@@ -233,9 +234,11 @@ SwitchEndContent.displayName = DISPLAY_NAME.SWITCH_END_CONTENT;
  * Typically used for icons or text that appear when switch is on. Positioned absolutely
  * within the switch container.
  *
- * Props flow from Switch to sub-components via context (isSelected).
+ * Props flow from Switch to sub-components via context (isSelected, isDisabled).
  * The switch supports controlled and uncontrolled modes through isSelected/onSelectedChange.
+ * Animations can be customized or disabled at both root and component levels.
  * Content components provide visual feedback without affecting the toggle functionality.
+ * Integrates with FormField for press state sharing and larger touch targets.
  *
  * @see Full documentation: https://heroui.com/components/switch
  */
@@ -248,5 +251,5 @@ const CompoundSwitch = Object.assign(Switch, {
   EndContent: SwitchEndContent,
 });
 
-export { useSwitchContext };
+export { useSwitch };
 export default CompoundSwitch;

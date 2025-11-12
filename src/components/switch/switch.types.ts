@@ -3,21 +3,30 @@ import type {
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated';
+import type {
+  Animation,
+  AnimationRoot,
+  AnimationValue,
+} from '../../helpers/types/animation';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
 
 /**
- * Custom colors for switch states
+ * Animation configuration for switch root component
  */
-export interface SwitchColors {
-  /** Border color when switch is not selected */
-  defaultBorder?: string;
-  /** Border color when switch is selected */
-  selectedBorder?: string;
-  /** Background color when switch is not selected */
-  defaultBackground?: string;
-  /** Background color when switch is selected */
-  selectedBackground?: string;
-}
+export type SwitchRootAnimation = AnimationRoot<{
+  backgroundColor?: AnimationValue<{
+    /**
+     * Background color values [unselected, selected]
+     * @default Uses theme colors (surface-quaternary, accent)
+     */
+    value?: [string, string];
+    /**
+     * Animation timing configuration
+     * @default { duration: 175, easing: Easing.bezier(0.25, 0.1, 0.25, 1) }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+}>;
 
 /**
  * Props for the main Switch component
@@ -32,32 +41,52 @@ export interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
   /** Custom class name for the switch */
   className?: string;
 
-  /** Custom colors for different switch states */
-  colors?: SwitchColors;
-
-  /** Animation configuration for switch background and border colors transition */
-  animationConfig?: WithTimingConfig;
+  /**
+   * Animation configuration for switch
+   * - `false` or `"disabled"`: Disable only root animations
+   * - `"disable-all"`: Disable all animations including children
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: SwitchRootAnimation;
 }
 
 /**
- * Custom colors for switch thumb states
+ * Animation configuration for switch thumb component
  */
-export interface SwitchThumbColors {
-  /** Background color when switch is not selected */
-  defaultBackground?: string;
-  /** Background color when switch is selected */
-  selectedBackground?: string;
-}
-
-/**
- * Animation configuration for switch thumb
- */
-export interface SwitchThumbAnimationConfig {
-  /** Spring animation configuration for thumb motion */
-  translateX?: WithSpringConfig;
-  /** Timing animation configuration for background color transition */
-  backgroundColor?: WithTimingConfig;
-}
+export type SwitchThumbAnimation = Animation<{
+  /**
+   * Animates the `left` position of the thumb between left and right sides.
+   * The `value` property specifies the offset from the edges (left/right).
+   * When you provide a single value (e.g., `value: 2`), it applies the same offset
+   * to both sides: `2px` from the left when unselected, and `2px` from the right when selected.
+   */
+  left?: AnimationValue<{
+    /**
+     * Offset value from the edges (left when unselected, right when selected)
+     * @default 2
+     * @example value: 4 // 4px offset from both left and right edges
+     */
+    value?: number;
+    /**
+     * Spring animation configuration for thumb position
+     * @default { damping: 120, stiffness: 1600, mass: 2 }
+     */
+    springConfig?: WithSpringConfig;
+  }>;
+  backgroundColor?: AnimationValue<{
+    /**
+     * Background color values [unselected, selected]
+     * @default ['white', theme accent-foreground color]
+     */
+    value?: [string, string];
+    /**
+     * Animation timing configuration
+     * @default { duration: 175, easing: Easing.bezier(0.25, 0.1, 0.25, 1) }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+}>;
 
 /**
  * Props for the SwitchThumb component
@@ -69,11 +98,13 @@ export interface SwitchThumbProps extends SwitchPrimitivesTypes.ThumbProps {
   /** Custom class name for the thumb element */
   className?: string;
 
-  /** Custom colors for different states */
-  colors?: SwitchThumbColors;
-
-  /** Animation configuration for thumb */
-  animationConfig?: SwitchThumbAnimationConfig;
+  /**
+   * Animation configuration for thumb
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: SwitchThumbAnimation;
 }
 
 /**
@@ -90,10 +121,14 @@ export interface SwitchContentProps {
 /**
  * Context value for switch components
  */
-export interface SwitchContextValue extends Pick<SwitchProps, 'isSelected'> {
+export interface SwitchContextValue extends Pick<SwitchProps, 'isSelected'> {}
+
+/**
+ * Context value for switch animation state
+ */
+export interface SwitchAnimationContextValue {
+  /** Whether all animations should be disabled (cascading from root) */
+  isAllAnimationsDisabled: boolean;
   /** Width of the content container */
   contentContainerWidth: SharedValue<number>;
-
-  /** Height of the content container */
-  contentContainerHeight: SharedValue<number>;
 }

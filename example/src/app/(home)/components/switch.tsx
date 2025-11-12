@@ -179,24 +179,22 @@ const CustomStylesContent = () => {
           isSelected={contentIcon}
           onSelectedChange={setContentIcon}
           className="w-[56px] h-[32px]"
-          colors={{
-            defaultBackground: '#172554',
-            selectedBackground: '#eab308',
-            defaultBorder: '#dbeafe20',
-            selectedBorder: '#eab308',
+          animation={{
+            backgroundColor: {
+              value: ['#172554', '#eab308'],
+            },
           }}
         >
           <Switch.Thumb
-            className="size-[22px] left-1"
-            colors={{
-              defaultBackground: '#dbeafe',
-              selectedBackground: '#854d0e',
-            }}
-            animationConfig={{
-              translateX: {
-                damping: 30,
-                stiffness: 300,
-                mass: 1,
+            className="size-[22px]"
+            animation={{
+              left: {
+                value: 4,
+                springConfig: {
+                  damping: 30,
+                  stiffness: 300,
+                  mass: 1,
+                },
               },
             }}
           />
@@ -228,21 +226,25 @@ const CustomStylesContent = () => {
           isSelected={contentText}
           onSelectedChange={setContentText}
           className="w-[60px] h-[32px]"
-          colors={{
-            defaultBackground: '#71717a',
-            selectedBackground: '#16a34a',
-            defaultBorder: '#71717a',
-            selectedBorder: '#16a34a',
+          animation={{
+            backgroundColor: {
+              value: ['#71717a', '#16a34a'],
+            },
           }}
         >
           <Switch.Thumb
-            className="size-[22px] left-1"
-            colors={{ defaultBackground: '#fff', selectedBackground: '#fff' }}
-            animationConfig={{
-              translateX: {
-                damping: 36,
-                stiffness: 400,
-                mass: 1,
+            className="size-[22px]"
+            animation={{
+              left: {
+                value: 4,
+                springConfig: {
+                  damping: 36,
+                  stiffness: 400,
+                  mass: 1,
+                },
+              },
+              backgroundColor: {
+                value: ['#fff', '#fff'],
               },
             }}
           />

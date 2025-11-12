@@ -1,22 +1,15 @@
 import { forwardRef, useMemo } from 'react';
-import { View } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
-import { useResolvedStyleProperty } from '../../helpers/hooks';
-import { useThemeColor } from '../../helpers/theme';
+import { View, type ViewStyle } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { createContext } from '../../helpers/utils';
 import * as SwitchPrimitives from '../../primitives/switch';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
 import {
-  DEFAULT_SPRING_CONFIG,
-  DEFAULT_THUMB_WIDTH,
-  DEFAULT_TIMING_CONFIG,
-  DISPLAY_NAME,
-} from './switch.constants';
+  SwitchAnimationProvider,
+  useSwitchRootAnimation,
+  useSwitchThumbAnimation,
+} from './switch.animation';
+import { DISPLAY_NAME } from './switch.constants';
 import switchStyles, { styleSheet } from './switch.styles';
 import type {
   SwitchContentProps,
@@ -48,8 +41,7 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       onSelectedChange,
       className,
       style,
-      colors,
-      animationConfig,
+      animation,
       ...restProps
     } = props;
 
@@ -58,51 +50,46 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       className,
     });
 
-    const themeColorAccent = useThemeColor('accent');
-    const themeColorSurfaceQuaternary = useThemeColor('surface-quaternary');
-
-    const contentContainerWidth = useSharedValue(0);
-    const contentContainerHeight = useSharedValue(0);
-
-    const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
-
-    const rContainerStyle = useAnimatedStyle(() => {
-      return {
-        backgroundColor: withTiming(
-          isSelected
-            ? (colors?.selectedBackground ?? themeColorAccent)
-            : (colors?.defaultBackground ?? themeColorSurfaceQuaternary),
-          timingConfig
-        ),
-      };
-    });
+    const { rContainerStyle, contentContainerWidth, isAllAnimationsDisabled } =
+      useSwitchRootAnimation({
+        animation,
+        style: style as ViewStyle | undefined,
+        isSelected,
+      });
 
     const contextValue = useMemo(
       () => ({
         isSelected,
-        contentContainerWidth,
-        contentContainerHeight,
       }),
-      [isSelected, contentContainerWidth, contentContainerHeight]
+      [isSelected]
+    );
+
+    const animationContextValue = useMemo(
+      () => ({
+        isAllAnimationsDisabled,
+        contentContainerWidth,
+      }),
+      [isAllAnimationsDisabled, contentContainerWidth]
     );
 
     return (
       <SwitchProvider value={contextValue}>
-        <AnimatedSwitchRoot
-          ref={ref}
-          className={tvStyles}
-          style={[styleSheet.borderCurve, rContainerStyle, style]}
-          isSelected={isSelected}
-          onSelectedChange={onSelectedChange}
-          isDisabled={isDisabled}
-          onLayout={(e) => {
-            contentContainerWidth.set(e.nativeEvent.layout.width);
-            contentContainerHeight.set(e.nativeEvent.layout.height);
-          }}
-          {...restProps}
-        >
-          {children ?? <SwitchThumb />}
-        </AnimatedSwitchRoot>
+        <SwitchAnimationProvider value={animationContextValue}>
+          <AnimatedSwitchRoot
+            ref={ref}
+            className={tvStyles}
+            style={[styleSheet.borderCurve, rContainerStyle, style]}
+            isSelected={isSelected}
+            onSelectedChange={onSelectedChange}
+            isDisabled={isDisabled}
+            onLayout={(e) => {
+              contentContainerWidth.set(e.nativeEvent.layout.width);
+            }}
+            {...restProps}
+          >
+            {children ?? <SwitchThumb />}
+          </AnimatedSwitchRoot>
+        </SwitchAnimationProvider>
       </SwitchProvider>
     );
   }
@@ -114,69 +101,19 @@ const SwitchThumb = forwardRef<
   SwitchPrimitivesTypes.ThumbRef,
   SwitchThumbProps
 >((props, ref) => {
-  const { children, className, style, colors, animationConfig } = props;
+  const { children, className, style, animation } = props;
 
-  const { isSelected, contentContainerWidth } = useSwitchContext();
-
-  const themeColorAccentForeground = useThemeColor('accent-foreground');
+  const { isSelected } = useSwitchContext();
 
   const tvStyles = switchStyles.thumb({
     className,
   });
 
-  const width = useResolvedStyleProperty({
+  const { rContainerStyle } = useSwitchThumbAnimation({
+    animation,
+    style: style as ViewStyle | undefined,
     className: tvStyles,
-    style,
-    propertyName: 'width',
-  });
-  const computedWidth = typeof width === 'number' ? width : DEFAULT_THUMB_WIDTH;
-
-  const left = useResolvedStyleProperty({
-    className: tvStyles,
-    style,
-    propertyName: 'left',
-  });
-  const computedLeft = typeof left === 'number' ? left : 0;
-
-  const springConfig = animationConfig?.translateX ?? DEFAULT_SPRING_CONFIG;
-
-  const timingConfig =
-    animationConfig?.backgroundColor ?? DEFAULT_TIMING_CONFIG;
-
-  const rContainerStyle = useAnimatedStyle(() => {
-    const isMounted = contentContainerWidth.get() > 0;
-
-    // This is done to prevent the thumb from moving from the default position to the right
-    // when the component is mounted with `isSelected` set to `true`,
-    // and the user hasn't touched the switch yet.
-    if (!isMounted) {
-      if (isSelected) {
-        return {
-          right: 0,
-          backgroundColor:
-            colors?.selectedBackground ?? themeColorAccentForeground,
-        };
-      }
-      return {
-        left: 0,
-        backgroundColor: colors?.defaultBackground ?? 'white',
-      };
-    }
-
-    return {
-      left: withSpring(
-        isSelected
-          ? contentContainerWidth.get() - computedWidth - computedLeft
-          : computedLeft,
-        springConfig
-      ),
-      backgroundColor: withTiming(
-        isSelected
-          ? (colors?.selectedBackground ?? themeColorAccentForeground)
-          : (colors?.defaultBackground ?? 'white'),
-        timingConfig
-      ),
-    };
+    isSelected,
   });
 
   return (

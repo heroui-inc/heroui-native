@@ -22,4 +22,3 @@ export const DEFAULT_SPRING_CONFIG = {
 };
 
 export const DEFAULT_THUMB_WIDTH = 28;
-export const DEFAULT_THUMB_HEIGHT = 20;

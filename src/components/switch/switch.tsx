@@ -1,27 +1,22 @@
-import { forwardRef, useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
-import { useThemeColor } from '../../helpers/theme';
+import { forwardRef, useCallback, useMemo } from 'react';
+import type { GestureResponderEvent } from 'react-native';
+import { View, type ViewStyle } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { createContext } from '../../helpers/utils';
 import * as SwitchPrimitives from '../../primitives/switch';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
 import {
-  DEFAULT_SPRING_CONFIG,
-  DEFAULT_THUMB_WIDTH,
-  DEFAULT_TIMING_CONFIG,
-  DISPLAY_NAME,
-} from './switch.constants';
-import switchStyles from './switch.styles';
+  SwitchAnimationProvider,
+  useSwitchRootAnimation,
+  useSwitchThumbAnimation,
+} from './switch.animation';
+import { DISPLAY_NAME } from './switch.constants';
+import switchStyles, { styleSheet } from './switch.styles';
 import type {
-  SwitchColor,
   SwitchContentProps,
   SwitchContextValue,
   SwitchProps,
+  SwitchRenderProps,
   SwitchThumbProps,
 } from './switch.types';
 
@@ -33,7 +28,7 @@ const AnimatedSwitchThumb = Animated.createAnimatedComponent(
   SwitchPrimitives.Thumb
 );
 
-const [SwitchProvider, useSwitchContext] = createContext<SwitchContextValue>({
+const [SwitchProvider, useSwitch] = createContext<SwitchContextValue>({
   name: 'SwitchContext',
 });
 
@@ -43,125 +38,100 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
   (props, ref) => {
     const {
       children,
-      color = 'default',
       isDisabled,
       isSelected,
       onSelectedChange,
-      colors,
       className,
-      classNames,
       style,
-      animationConfig,
+      animation,
+      onPressIn,
+      onPressOut,
       ...restProps
     } = props;
 
-    const themeColorAccent = useThemeColor('accent');
-    const themeColorSuccess = useThemeColor('success');
-    const themeColorWarning = useThemeColor('warning');
-    const themeColorDanger = useThemeColor('danger');
-    const themeColorBorder = useThemeColor('border');
-    const themeColorSurfaceQuaternary = useThemeColor('surface-quaternary');
-
-    const { container, contentPaddingContainer, contentContainer } =
-      switchStyles.root({
-        isDisabled,
-      });
-
-    const tvBaseStyles = container({
-      className: [className, classNames?.container],
+    const tvStyles = switchStyles.root({
+      isDisabled,
+      className,
     });
 
-    const tvContentPaddingContainerStyles = contentPaddingContainer({
-      className: classNames?.contentPaddingContainer,
-    });
-
-    const tvContentContainerStyles = contentContainer({
-      className: classNames?.contentContainer,
-    });
-
-    const backgroundColorMap: Record<SwitchColor, string> = {
-      default: themeColorAccent,
-      success: themeColorSuccess,
-      warning: themeColorWarning,
-      danger: themeColorDanger,
-    };
-
-    const borderColorMap: Record<SwitchColor, string> = {
-      default: themeColorAccent,
-      success: themeColorSuccess,
-      warning: themeColorWarning,
-      danger: themeColorDanger,
-    };
-
-    const contentContainerWidth = useSharedValue(0);
-    const contentContainerHeight = useSharedValue(0);
-
-    const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
-
-    const containerAnimatedStyle = useAnimatedStyle(() => {
-      return {
-        backgroundColor: withTiming(
-          isSelected
-            ? (colors?.selectedBackground ?? backgroundColorMap[color])
-            : (colors?.defaultBackground ?? themeColorSurfaceQuaternary),
-          timingConfig
-        ),
-        borderColor: withTiming(
-          isSelected
-            ? (colors?.selectedBorder ?? borderColorMap[color])
-            : (colors?.defaultBorder ?? themeColorBorder),
-          timingConfig
-        ),
-      };
+    const {
+      rContainerStyle,
+      isSwitchPressed,
+      contentContainerWidth,
+      isAllAnimationsDisabled,
+    } = useSwitchRootAnimation({
+      animation,
+      style: style as ViewStyle | undefined,
+      isSelected,
     });
 
     const contextValue = useMemo(
       () => ({
         isSelected,
-        contentContainerWidth,
-        contentContainerHeight,
+        isDisabled,
       }),
-      [isSelected, contentContainerWidth, contentContainerHeight]
+      [isSelected, isDisabled]
     );
+
+    const animationContextValue = useMemo(
+      () => ({
+        isSwitchPressed,
+        isAllAnimationsDisabled,
+        contentContainerWidth,
+      }),
+      [isSwitchPressed, isAllAnimationsDisabled, contentContainerWidth]
+    );
+
+    const handlePressIn = useCallback(
+      (event: GestureResponderEvent) => {
+        isSwitchPressed.set(true);
+        onPressIn?.(event);
+      },
+      [isSwitchPressed, onPressIn]
+    );
+
+    const handlePressOut = useCallback(
+      (event: GestureResponderEvent) => {
+        isSwitchPressed.set(false);
+        onPressOut?.(event);
+      },
+      [isSwitchPressed, onPressOut]
+    );
+
+    const renderProps: SwitchRenderProps = {
+      isSelected,
+      isDisabled: isDisabled ?? false,
+    };
+
+    const content =
+      typeof children === 'function'
+        ? children(renderProps)
+        : (children ?? <SwitchThumb />);
 
     return (
       <SwitchProvider value={contextValue}>
-        <AnimatedSwitchRoot
-          ref={ref}
-          className={tvBaseStyles}
-          style={[styles.switchRoot, containerAnimatedStyle, style]}
-          isSelected={isSelected}
-          onSelectedChange={onSelectedChange}
-          isDisabled={isDisabled}
-          {...restProps}
-        >
-          {/* 
-          This container is useful when you want to animate start or end content entering 
-          and you want it to be hidden outside of switch right by the switch border.
-          The overflow-hidden ensures content stays within the switch boundaries.
-        */}
-          <View className={tvContentPaddingContainerStyles}>
-            <View
-              className={tvContentContainerStyles}
-              onLayout={(e) => {
-                contentContainerWidth.set(e.nativeEvent.layout.width);
-                contentContainerHeight.set(e.nativeEvent.layout.height);
-              }}
-            >
-              {children ?? <SwitchThumb />}
-            </View>
-          </View>
-        </AnimatedSwitchRoot>
+        <SwitchAnimationProvider value={animationContextValue}>
+          <AnimatedSwitchRoot
+            ref={ref}
+            className={tvStyles}
+            style={[styleSheet.borderCurve, rContainerStyle, style]}
+            isSelected={isSelected}
+            onSelectedChange={onSelectedChange}
+            isDisabled={isDisabled}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+            onLayout={(e) => {
+              contentContainerWidth.set(e.nativeEvent.layout.width);
+            }}
+            {...restProps}
+          >
+            {content}
+          </AnimatedSwitchRoot>
+        </SwitchAnimationProvider>
       </SwitchProvider>
     );
   }
 );
-
-const styles = StyleSheet.create({
-  switchRoot: {
-    borderCurve: 'continuous',
-  },
-});
 
 // --------------------------------------------------
 
@@ -169,70 +139,36 @@ const SwitchThumb = forwardRef<
   SwitchPrimitivesTypes.ThumbRef,
   SwitchThumbProps
 >((props, ref) => {
-  const { children, className, width, height, colors, animationConfig } = props;
+  const { children, className, style, animation } = props;
 
-  const { isSelected, contentContainerWidth } = useSwitchContext();
-
-  const themeColorAccentForeground = useThemeColor('accent-foreground');
+  const { isSelected, isDisabled } = useSwitch();
 
   const tvStyles = switchStyles.thumb({
     className,
   });
 
-  const computedWidth = width ?? DEFAULT_THUMB_WIDTH;
-
-  const springConfig = animationConfig?.translateX ?? DEFAULT_SPRING_CONFIG;
-
-  const timingConfig =
-    animationConfig?.backgroundColor ?? DEFAULT_TIMING_CONFIG;
-
-  const containerAnimatedStyle = useAnimatedStyle(() => {
-    const isMounted = contentContainerWidth.get() > 0;
-
-    // This is done to prevent the thumb from moving from the default position to the right
-    // when the component is mounted with `isSelected` set to `true`,
-    // and the user hasn't touched the switch yet.
-    if (!isMounted) {
-      if (isSelected) {
-        return {
-          right: 0,
-          backgroundColor:
-            colors?.selectedBackground ?? themeColorAccentForeground,
-        };
-      }
-      return {
-        left: 0,
-        backgroundColor: colors?.defaultBackground ?? 'white',
-      };
-    }
-
-    return {
-      left: withSpring(
-        isSelected ? contentContainerWidth.get() - computedWidth + 0.5 : -0.5,
-        springConfig
-      ),
-      backgroundColor: withTiming(
-        isSelected
-          ? (colors?.selectedBackground ?? themeColorAccentForeground)
-          : (colors?.defaultBackground ?? 'white'),
-        timingConfig
-      ),
-    };
+  const { rContainerStyle } = useSwitchThumbAnimation({
+    animation,
+    style: style as ViewStyle | undefined,
+    className: tvStyles,
+    isSelected,
   });
+
+  const renderProps: SwitchRenderProps = {
+    isSelected,
+    isDisabled: isDisabled ?? false,
+  };
+
+  const content =
+    typeof children === 'function' ? children(renderProps) : children;
 
   return (
     <AnimatedSwitchThumb
       ref={ref}
       className={tvStyles}
-      style={[
-        {
-          width: computedWidth,
-          height: height ?? computedWidth,
-        },
-        containerAnimatedStyle,
-      ]}
+      style={[styleSheet.borderCurve, rContainerStyle, style]}
     >
-      {children}
+      {content}
     </AnimatedSwitchThumb>
   );
 });
@@ -282,12 +218,13 @@ SwitchEndContent.displayName = DISPLAY_NAME.SWITCH_END_CONTENT;
  * Compound Switch component with sub-components
  *
  * @component Switch - Main container that handles toggle state and user interaction.
- * Renders default thumb if no children provided. Animates background and border colors
- * based on selection state. Acts as a pressable area for toggling.
+ * Renders default thumb if no children provided. Animates scale (on press) and background
+ * color based on selection state. Acts as a pressable area for toggling. Supports render
+ * function children for dynamic content.
  *
  * @component Switch.Thumb - Optional sliding thumb element that moves between positions.
  * Uses spring animation for smooth transitions. Can contain custom content like icons
- * or be customized with different colors and sizes.
+ * or be customized with different styles and animations. Supports render function children.
  *
  * @component Switch.StartContent - Optional content displayed on the left side of the switch.
  * Typically used for icons or text that appear when switch is off. Positioned absolutely
@@ -297,9 +234,11 @@ SwitchEndContent.displayName = DISPLAY_NAME.SWITCH_END_CONTENT;
  * Typically used for icons or text that appear when switch is on. Positioned absolutely
  * within the switch container.
  *
- * Props flow from Switch to sub-components via context (isSelected).
+ * Props flow from Switch to sub-components via context (isSelected, isDisabled).
  * The switch supports controlled and uncontrolled modes through isSelected/onSelectedChange.
+ * Animations can be customized or disabled at both root and component levels.
  * Content components provide visual feedback without affecting the toggle functionality.
+ * Integrates with FormField for press state sharing and larger touch targets.
  *
  * @see Full documentation: https://heroui.com/components/switch
  */
@@ -312,5 +251,5 @@ const CompoundSwitch = Object.assign(Switch, {
   EndContent: SwitchEndContent,
 });
 
-export { useSwitchContext };
+export { useSwitch };
 export default CompoundSwitch;

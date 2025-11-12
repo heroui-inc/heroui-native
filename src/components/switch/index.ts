@@ -1,2 +1,2 @@
-export { default as Switch, useSwitchContext } from './switch';
+export { default as Switch, useSwitch } from './switch';
 export * from './switch.types';

@@ -44,7 +44,7 @@ export function useCheckboxRootAnimation(options: {
   const scaleValue = getAnimationValueProperty({
     animationValue: animationConfig?.scale,
     property: 'value',
-    defaultValue: [1, 0.95] as [number, number],
+    defaultValue: [1, 0.96] as [number, number],
   });
 
   const scaleTimingConfig = getAnimationValueMergedConfig({
@@ -53,12 +53,12 @@ export function useCheckboxRootAnimation(options: {
     defaultValue: { duration: 150 },
   });
 
+  const styleTransform = getStyleTransform(style);
+
   const rContainerStyle = useAnimatedStyle(() => {
     if (isAnimationDisabled) {
       return {};
     }
-
-    const styleTransform = getStyleTransform(style);
 
     const pressed =
       isCheckboxPressed.get() || (formFieldContext?.isPressed.get() ?? false);
@@ -96,8 +96,9 @@ export function useCheckboxIndicatorAnimation(options: {
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
-  const isAnimationDisabledValue =
-    isAnimationDisabled || isAllAnimationsDisabled;
+  const isAnimationDisabledValue = animation
+    ? false
+    : isAnimationDisabled || isAllAnimationsDisabled;
 
   // Opacity animation
   const opacityValue = getAnimationValueProperty({
@@ -147,10 +148,10 @@ export function useCheckboxIndicatorAnimation(options: {
     defaultValue: { duration: 100 },
   });
 
-  const rContainerStyle = useAnimatedStyle(() => {
-    const styleProps = getStyleProperties(style, ['opacity', 'borderRadius']);
-    const styleTransform = getStyleTransform(style);
+  const styleProps = getStyleProperties(style, ['opacity', 'borderRadius']);
+  const styleTransform = getStyleTransform(style);
 
+  const rContainerStyle = useAnimatedStyle(() => {
     if (isAnimationDisabledValue) {
       return {
         opacity: isSelected ? opacityValue[1] : opacityValue[0],

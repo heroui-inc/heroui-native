@@ -26,11 +26,14 @@ export const StyledFormField: FC<Props> = ({
           </FormField.Title>
         </FormField.Content>
         <FormField.Indicator>
-          <Switch colors={{ selectedBackground: 'white' }}>
+          <Switch
+            className="w-10"
+            animation={{ backgroundColor: { value: ['white', 'white'] } }}
+          >
             <Switch.Thumb
-              colors={{
-                defaultBackground: themeColorMuted,
-                selectedBackground: 'black',
+              className="size-5"
+              animation={{
+                backgroundColor: { value: [themeColorMuted, '#262626'] },
               }}
             />
           </Switch>

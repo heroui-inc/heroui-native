@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Divider, FormField, Surface, Switch } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
@@ -13,6 +14,7 @@ import type { UsageVariant } from '../../../components/component-presentation/ty
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
 const StyledIonicons = withUniwind(Ionicons);
+const StyledFontAwesome6 = withUniwind(FontAwesome6);
 
 interface SwitchFieldProps {
   isSelected: boolean;
@@ -159,19 +161,15 @@ const CustomStylesContent = () => {
           <Switch.Thumb>
             {icon ? (
               <Animated.View key="check" entering={ZoomIn}>
-                <StyledIonicons
-                  name="checkmark"
+                <StyledFontAwesome6
+                  name="check"
                   size={12}
                   className="text-accent"
                 />
               </Animated.View>
             ) : (
               <Animated.View key="x" entering={ZoomIn}>
-                <StyledIonicons
-                  name="close"
-                  size={14}
-                  className="text-default"
-                />
+                <StyledIonicons name="close" size={14} className="text-muted" />
               </Animated.View>
             )}
           </Switch.Thumb>
@@ -181,31 +179,26 @@ const CustomStylesContent = () => {
           isSelected={contentIcon}
           onSelectedChange={setContentIcon}
           className="w-[56px] h-[32px]"
-          classNames={{
-            contentPaddingContainer: 'px-1.5',
-          }}
-          colors={{
-            defaultBackground: '#172554',
-            selectedBackground: '#eab308',
-            defaultBorder: '#dbeafe20',
-            selectedBorder: '#eab308',
+          animation={{
+            backgroundColor: {
+              value: ['#172554', '#eab308'],
+            },
           }}
         >
           <Switch.Thumb
-            width={22}
-            colors={{
-              defaultBackground: '#dbeafe',
-              selectedBackground: '#854d0e',
-            }}
-            animationConfig={{
-              translateX: {
-                damping: 30,
-                stiffness: 300,
-                mass: 1,
+            className="size-[22px]"
+            animation={{
+              left: {
+                value: 4,
+                springConfig: {
+                  damping: 30,
+                  stiffness: 300,
+                  mass: 1,
+                },
               },
             }}
           />
-          <Switch.StartContent className="left-0.5">
+          <Switch.StartContent className="left-2">
             {contentIcon && (
               <Animated.View key="sun" entering={ZoomIn.springify()}>
                 <StyledIonicons
@@ -216,7 +209,7 @@ const CustomStylesContent = () => {
               </Animated.View>
             )}
           </Switch.StartContent>
-          <Switch.EndContent className="right-0.5">
+          <Switch.EndContent className="right-2">
             {!contentIcon && (
               <Animated.View key="moon" entering={ZoomIn.springify()}>
                 <StyledIonicons
@@ -233,40 +226,45 @@ const CustomStylesContent = () => {
           isSelected={contentText}
           onSelectedChange={setContentText}
           className="w-[60px] h-[32px]"
-          classNames={{
-            contentPaddingContainer: 'px-1.5',
-          }}
-          colors={{
-            defaultBackground: '#71717a',
-            selectedBackground: '#16a34a',
-            defaultBorder: '#71717a',
-            selectedBorder: '#16a34a',
+          animation={{
+            backgroundColor: {
+              value: ['#71717a', '#16a34a'],
+            },
           }}
         >
           <Switch.Thumb
-            width={22}
-            colors={{ defaultBackground: '#fff', selectedBackground: '#fff' }}
-            animationConfig={{
-              translateX: {
-                damping: 36,
-                stiffness: 400,
-                mass: 1,
+            className="size-[22px]"
+            animation={{
+              left: {
+                value: 4,
+                springConfig: {
+                  damping: 36,
+                  stiffness: 400,
+                  mass: 1,
+                },
+              },
+              backgroundColor: {
+                value: ['#fff', '#fff'],
               },
             }}
           />
-          <Switch.StartContent className="left-1">
+          <Switch.StartContent className="left-3">
             {contentText && (
-              <Animated.View key="sun" entering={FadeInRight.springify()}>
+              <Animated.View
+                key="sun"
+                entering={FadeInRight.springify().duration(100)}
+              >
                 <AppText className="text-xs font-bold text-white">ON</AppText>
               </Animated.View>
             )}
           </Switch.StartContent>
-          <Switch.EndContent className="right-0.5">
+          <Switch.EndContent className="right-2">
             {!contentText && (
-              <Animated.View key="moon" entering={FadeInLeft.springify()}>
-                <AppText className="text-xs font-bold text-zinc-200">
-                  OFF
-                </AppText>
+              <Animated.View
+                key="moon"
+                entering={FadeInLeft.springify().duration(100)}
+              >
+                <AppText className="text-xs font-bold text-white">OFF</AppText>
               </Animated.View>
             )}
           </Switch.EndContent>

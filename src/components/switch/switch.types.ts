@@ -71,12 +71,6 @@ export interface SwitchThumbProps extends SwitchPrimitivesTypes.ThumbProps {
   /** Content to render inside the thumb */
   children?: React.ReactNode;
 
-  /** Width of the thumb component */
-  width?: number;
-
-  /** Height of the thumb component */
-  height?: number;
-
   /** Custom class name for the thumb element */
   className?: string;
 

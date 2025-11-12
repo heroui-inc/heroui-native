@@ -192,7 +192,7 @@ const CustomStylesContent = () => {
           }}
         >
           <Switch.Thumb
-            width={22}
+            className="size-[22px]"
             colors={{
               defaultBackground: '#dbeafe',
               selectedBackground: '#854d0e',
@@ -234,7 +234,7 @@ const CustomStylesContent = () => {
           onSelectedChange={setContentText}
           className="w-[60px] h-[32px]"
           classNames={{
-            contentPaddingContainer: 'px-1.5',
+            contentPaddingContainer: 'px-1',
           }}
           colors={{
             defaultBackground: '#71717a',
@@ -244,7 +244,7 @@ const CustomStylesContent = () => {
           }}
         >
           <Switch.Thumb
-            width={22}
+            className="size-[22px]"
             colors={{ defaultBackground: '#fff', selectedBackground: '#fff' }}
             animationConfig={{
               translateX: {
@@ -254,14 +254,14 @@ const CustomStylesContent = () => {
               },
             }}
           />
-          <Switch.StartContent className="left-1">
+          <Switch.StartContent className="left-1.5">
             {contentText && (
               <Animated.View key="sun" entering={FadeInRight.springify()}>
                 <AppText className="text-xs font-bold text-white">ON</AppText>
               </Animated.View>
             )}
           </Switch.StartContent>
-          <Switch.EndContent className="right-0.5">
+          <Switch.EndContent className="right-1">
             {!contentText && (
               <Animated.View key="moon" entering={FadeInLeft.springify()}>
                 <AppText className="text-xs font-bold text-zinc-200">

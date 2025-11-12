@@ -17,7 +17,7 @@ import type {
   TriggerProps,
   TriggerRef,
 } from './accordion.types';
-import { isItemExpanded, toStringArray } from './accordion.utils';
+import { isItemSelected, toStringArray } from './accordion.utils';
 
 const AccordionContext = createContext<RootContext | null>(null);
 
@@ -82,7 +82,7 @@ function useRootContext() {
 
 type AccordionItemContext = ItemProps & {
   nativeID: string;
-  isExpanded: boolean;
+  isSelected: boolean;
 };
 
 const AccordionItemContext = createContext<AccordionItemContext | null>(null);
@@ -100,7 +100,7 @@ const Item = forwardRef<ItemRef, ItemProps>(
           value,
           isDisabled,
           nativeID,
-          isExpanded: isItemExpanded(rootValue, value),
+          isSelected: isItemSelected(rootValue, value),
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -128,14 +128,14 @@ function useItemContext() {
 const Header = forwardRef<HeaderRef, HeaderProps>(
   ({ asChild, ...props }, ref) => {
     const { isDisabled: rootDisabled } = useRootContext();
-    const { isDisabled: itemDisabled, isExpanded } = useItemContext();
+    const { isDisabled: itemDisabled, isSelected } = useItemContext();
 
     const Component = asChild ? Slot.View : View;
     return (
       <Component
         ref={ref}
         role="heading"
-        aria-expanded={isExpanded}
+        aria-expanded={isSelected}
         aria-disabled={rootDisabled ?? itemDisabled}
         {...props}
       />
@@ -164,7 +164,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       nativeID,
       isDisabled: itemDisabled,
       value,
-      isExpanded,
+      isSelected,
     } = useItemContext();
 
     function onPress(ev: GestureResponderEvent) {
@@ -204,7 +204,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
         role="button"
         onPress={onPress}
         accessibilityState={{
-          expanded: isExpanded,
+          expanded: isSelected,
           disabled: isTriggerDisabled,
         }}
         disabled={isTriggerDisabled}
@@ -235,10 +235,10 @@ Indicator.displayName = 'HeroUINative.Primitive.Accordion.Indicator';
 const Content = forwardRef<ContentRef, ContentProps>(
   ({ asChild, forceMount, ...props }, ref) => {
     const { selectionMode } = useRootContext();
-    const { nativeID, isExpanded } = useItemContext();
+    const { nativeID, isSelected } = useItemContext();
 
     if (!forceMount) {
-      if (!isExpanded) {
+      if (!isSelected) {
         return null;
       }
     }
@@ -247,7 +247,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
     return (
       <Component
         ref={ref}
-        aria-hidden={!(forceMount || isExpanded)}
+        aria-hidden={!(forceMount || isSelected)}
         aria-labelledby={nativeID}
         role={selectionMode === 'single' ? 'region' : 'summary'}
         {...props}

@@ -1,5 +1,5 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { Accordion, useAccordionItemContext } from 'heroui-native';
+import { Accordion, useAccordionItem } from 'heroui-native';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   Easing,
@@ -9,6 +9,7 @@ import Animated, {
   ZoomOut,
 } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
+import { FineTunedAccordion } from '../../../components/accordion/fine-tuned-accordion';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -26,11 +27,11 @@ const CUSTOM_INDICATOR_EXITING = ZoomOut.duration(200).easing(
 );
 
 const CustomIndicator = () => {
-  const { isExpanded } = useAccordionItemContext();
+  const { isSelected } = useAccordionItem();
 
   return (
     <View className="size-5 items-center justify-center">
-      {isExpanded ? (
+      {isSelected ? (
         <Animated.View
           key="minus"
           entering={CUSTOM_INDICATOR_ENTERING}
@@ -354,7 +355,20 @@ const CustomStylesContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const FineTunedAccordionContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <FineTunedAccordion />
+    </View>
+  );
+};
+
 const ACCORDION_VARIANTS: UsageVariant[] = [
+  {
+    value: 'fine-tuned-accordion',
+    label: 'Fine tuned accordion',
+    content: <FineTunedAccordionContent />,
+  },
   {
     value: 'default-variant',
     label: 'Default variant',

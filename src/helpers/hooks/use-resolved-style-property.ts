@@ -9,9 +9,9 @@ import { useResolveClassNames } from 'uniwind';
 type Style = ViewStyle | TextStyle | ImageStyle;
 
 /**
- * Parameters for the useResolvedStyleProperty hook
+ * Parameters for single property resolution
  */
-interface UseResolvedStylePropertyParams<K extends keyof Style = keyof Style> {
+interface UseResolvedStylePropertyParamsSingle<K extends keyof Style> {
   /** The className string to resolve styles from */
   className?: string;
   /** The style prop (can be object, array, or null) */
@@ -21,16 +21,28 @@ interface UseResolvedStylePropertyParams<K extends keyof Style = keyof Style> {
 }
 
 /**
- * A hook that resolves a specific style property from both className and style props.
+ * Parameters for multiple properties resolution
+ */
+interface UseResolvedStylePropertyParamsMultiple<K extends keyof Style> {
+  /** The className string to resolve styles from */
+  className?: string;
+  /** The style prop (can be object, array, or null) */
+  style?: StyleProp<ViewStyle> | StyleProp<TextStyle> | StyleProp<ImageStyle>;
+  /** Array of style property names to resolve */
+  propertyNames: readonly K[];
+}
+
+/**
+ * A hook that resolves specific style properties from both className and style props.
  * The style prop takes precedence over className.
  *
  * This is useful when you need to extract specific style values (like width, height)
  * that might come from either Tailwind classes or inline styles.
  *
- * @param params - Configuration object with className, style, and propertyName
- * @returns The resolved style property value or undefined if not found
+ * @param params - Configuration object with className, style, and propertyName(s)
+ * @returns The resolved style property value(s) or undefined if not found
  *
- * @example
+ * @example Single property
  * ```tsx
  * const width = useResolvedStyleProperty({
  *   className: 'w-10 h-8',
@@ -40,20 +52,28 @@ interface UseResolvedStylePropertyParams<K extends keyof Style = keyof Style> {
  * // Returns: 50 (from style, takes precedence)
  * ```
  *
- * @example
+ * @example Multiple properties
  * ```tsx
- * const height = useResolvedStyleProperty({
- *   className: 'w-10 h-8',
- *   propertyName: 'height',
+ * const [width, left] = useResolvedStyleProperty({
+ *   className: 'w-10 left-2',
+ *   propertyNames: ['width', 'left'],
  * });
- * // Returns: 32 (from className 'h-8')
+ * // Returns: [40, 8] (from className)
  * ```
  */
-function useResolvedStyleProperty<K extends keyof Style>({
-  className,
-  style,
-  propertyName,
-}: UseResolvedStylePropertyParams<K>): Style[K] | undefined {
+function useResolvedStyleProperty<K extends keyof Style>(
+  params: UseResolvedStylePropertyParamsSingle<K>
+): Style[K] | undefined;
+function useResolvedStyleProperty<K extends keyof Style>(
+  params: UseResolvedStylePropertyParamsMultiple<K>
+): (Style[K] | undefined)[];
+function useResolvedStyleProperty<K extends keyof Style>(
+  params:
+    | UseResolvedStylePropertyParamsSingle<K>
+    | UseResolvedStylePropertyParamsMultiple<K>
+): Style[K] | undefined | (Style[K] | undefined)[] {
+  const { className, style } = params;
+
   const resolvedClassName = useResolveClassNames(className ?? '');
   const resolvedStyle = useMemo(
     () => (style ? StyleSheet.flatten(style) : undefined),
@@ -61,6 +81,26 @@ function useResolvedStyleProperty<K extends keyof Style>({
   );
 
   return useMemo(() => {
+    // Check if we're resolving multiple properties
+    if ('propertyNames' in params) {
+      return params.propertyNames.map((propertyName) => {
+        // Style prop takes precedence over className
+        if (resolvedStyle && propertyName in resolvedStyle) {
+          return resolvedStyle[propertyName];
+        }
+
+        // Fall back to className-resolved styles
+        if (resolvedClassName && propertyName in resolvedClassName) {
+          return resolvedClassName[propertyName];
+        }
+
+        return undefined;
+      });
+    }
+
+    // Single property resolution
+    const propertyName = params.propertyName;
+
     // Style prop takes precedence over className
     if (resolvedStyle && propertyName in resolvedStyle) {
       return resolvedStyle[propertyName];
@@ -72,7 +112,7 @@ function useResolvedStyleProperty<K extends keyof Style>({
     }
 
     return undefined;
-  }, [resolvedStyle, resolvedClassName, propertyName]);
+  }, [resolvedStyle, resolvedClassName, params]);
 }
 
 export { useResolvedStyleProperty };

@@ -17,6 +17,7 @@ import {
 } from '../../helpers/utils/animation';
 import {
   DEFAULT_SPRING_CONFIG,
+  DEFAULT_THUMB_LEFT,
   DEFAULT_THUMB_WIDTH,
   DEFAULT_TIMING_CONFIG,
 } from './switch.constants';
@@ -113,19 +114,14 @@ export function useSwitchThumbAnimation(options: {
 
   const themeColorAccentForeground = useThemeColor('accent-foreground');
 
-  const width = useResolvedStyleProperty({
+  const [width, left] = useResolvedStyleProperty({
     className,
     style,
-    propertyName: 'width',
+    propertyNames: ['width', 'left'] as const,
   });
-  const computedWidth = typeof width === 'number' ? width : DEFAULT_THUMB_WIDTH;
 
-  const left = useResolvedStyleProperty({
-    className,
-    style,
-    propertyName: 'left',
-  });
-  const computedLeft = typeof left === 'number' ? left : 2;
+  const computedWidth = typeof width === 'number' ? width : DEFAULT_THUMB_WIDTH;
+  const computedLeft = typeof left === 'number' ? left : DEFAULT_THUMB_LEFT;
 
   const { isAllAnimationsDisabled, contentContainerWidth } =
     useSwitchAnimation();
@@ -173,13 +169,13 @@ export function useSwitchThumbAnimation(options: {
     if (!isMounted) {
       if (isSelected) {
         return {
-          right: 0,
+          right: leftValue,
           backgroundColor: backgroundColorValue[1],
           ...styleProps,
         };
       }
       return {
-        left: 0,
+        left: leftValue,
         backgroundColor: backgroundColorValue[0],
         ...styleProps,
       };

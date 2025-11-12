@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -13,12 +13,11 @@ import * as SwitchPrimitives from '../../primitives/switch';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
 import {
   DEFAULT_SPRING_CONFIG,
-  DEFAULT_THUMB_HEIGHT,
   DEFAULT_THUMB_WIDTH,
   DEFAULT_TIMING_CONFIG,
   DISPLAY_NAME,
 } from './switch.constants';
-import switchStyles from './switch.styles';
+import switchStyles, { styleSheet } from './switch.styles';
 import type {
   SwitchContentProps,
   SwitchContextValue,
@@ -47,52 +46,32 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       isDisabled,
       isSelected,
       onSelectedChange,
-      colors,
       className,
-      classNames,
       style,
+      colors,
       animationConfig,
       ...restProps
     } = props;
 
+    const tvStyles = switchStyles.root({
+      isDisabled,
+      className,
+    });
+
     const themeColorAccent = useThemeColor('accent');
-    const themeColorBorder = useThemeColor('border');
-    const themeColorSurfaceQuaternary = useThemeColor('surface-tertiary');
-
-    const { container, contentPaddingContainer, contentContainer } =
-      switchStyles.root({
-        isDisabled,
-      });
-
-    const tvBaseStyles = container({
-      className: [className, classNames?.container],
-    });
-
-    const tvContentPaddingContainerStyles = contentPaddingContainer({
-      className: classNames?.contentPaddingContainer,
-    });
-
-    const tvContentContainerStyles = contentContainer({
-      className: classNames?.contentContainer,
-    });
+    const themeColorSurfaceQuaternary = useThemeColor('surface-quaternary');
 
     const contentContainerWidth = useSharedValue(0);
     const contentContainerHeight = useSharedValue(0);
 
     const timingConfig = animationConfig ?? DEFAULT_TIMING_CONFIG;
 
-    const containerAnimatedStyle = useAnimatedStyle(() => {
+    const rContainerStyle = useAnimatedStyle(() => {
       return {
         backgroundColor: withTiming(
           isSelected
             ? (colors?.selectedBackground ?? themeColorAccent)
             : (colors?.defaultBackground ?? themeColorSurfaceQuaternary),
-          timingConfig
-        ),
-        borderColor: withTiming(
-          isSelected
-            ? (colors?.selectedBorder ?? themeColorAccent)
-            : (colors?.defaultBorder ?? themeColorBorder),
           timingConfig
         ),
       };
@@ -111,40 +90,23 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       <SwitchProvider value={contextValue}>
         <AnimatedSwitchRoot
           ref={ref}
-          className={tvBaseStyles}
-          style={[styles.switchRoot, containerAnimatedStyle, style]}
+          className={tvStyles}
+          style={[styleSheet.borderCurve, rContainerStyle, style]}
           isSelected={isSelected}
           onSelectedChange={onSelectedChange}
           isDisabled={isDisabled}
+          onLayout={(e) => {
+            contentContainerWidth.set(e.nativeEvent.layout.width);
+            contentContainerHeight.set(e.nativeEvent.layout.height);
+          }}
           {...restProps}
         >
-          {/* 
-          This container is useful when you want to animate start or end content entering 
-          and you want it to be hidden outside of switch right by the switch border.
-          The overflow-hidden ensures content stays within the switch boundaries.
-        */}
-          <View className={tvContentPaddingContainerStyles}>
-            <View
-              className={tvContentContainerStyles}
-              onLayout={(e) => {
-                contentContainerWidth.set(e.nativeEvent.layout.width);
-                contentContainerHeight.set(e.nativeEvent.layout.height);
-              }}
-            >
-              {children ?? <SwitchThumb />}
-            </View>
-          </View>
+          {children ?? <SwitchThumb />}
         </AnimatedSwitchRoot>
       </SwitchProvider>
     );
   }
 );
-
-const styles = StyleSheet.create({
-  switchRoot: {
-    borderCurve: 'continuous',
-  },
-});
 
 // --------------------------------------------------
 
@@ -152,7 +114,7 @@ const SwitchThumb = forwardRef<
   SwitchPrimitivesTypes.ThumbRef,
   SwitchThumbProps
 >((props, ref) => {
-  const { children, className, colors, style, animationConfig } = props;
+  const { children, className, style, colors, animationConfig } = props;
 
   const { isSelected, contentContainerWidth } = useSwitchContext();
 
@@ -169,20 +131,19 @@ const SwitchThumb = forwardRef<
   });
   const computedWidth = typeof width === 'number' ? width : DEFAULT_THUMB_WIDTH;
 
-  const height = useResolvedStyleProperty({
+  const left = useResolvedStyleProperty({
     className: tvStyles,
     style,
-    propertyName: 'height',
+    propertyName: 'left',
   });
-  const computedHeight =
-    typeof height === 'number' ? height : DEFAULT_THUMB_HEIGHT;
+  const computedLeft = typeof left === 'number' ? left : 0;
 
   const springConfig = animationConfig?.translateX ?? DEFAULT_SPRING_CONFIG;
 
   const timingConfig =
     animationConfig?.backgroundColor ?? DEFAULT_TIMING_CONFIG;
 
-  const containerAnimatedStyle = useAnimatedStyle(() => {
+  const rContainerStyle = useAnimatedStyle(() => {
     const isMounted = contentContainerWidth.get() > 0;
 
     // This is done to prevent the thumb from moving from the default position to the right
@@ -204,7 +165,9 @@ const SwitchThumb = forwardRef<
 
     return {
       left: withSpring(
-        isSelected ? contentContainerWidth.get() - computedWidth : 0,
+        isSelected
+          ? contentContainerWidth.get() - computedWidth - computedLeft
+          : computedLeft,
         springConfig
       ),
       backgroundColor: withTiming(
@@ -220,13 +183,7 @@ const SwitchThumb = forwardRef<
     <AnimatedSwitchThumb
       ref={ref}
       className={tvStyles}
-      style={[
-        {
-          width: computedWidth,
-          height: computedHeight,
-        },
-        containerAnimatedStyle,
-      ]}
+      style={[styleSheet.borderCurve, rContainerStyle, style]}
     >
       {children}
     </AnimatedSwitchThumb>

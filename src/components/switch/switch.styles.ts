@@ -1,17 +1,13 @@
+import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
-  slots: {
-    container: 'shadow-2xl rounded-full w-[48px] h-[24px]',
-    contentPaddingContainer: 'flex-1 overflow-hidden px-[2.5px]',
-    contentContainer: 'flex-1 justify-center',
-  },
+  base: 'w-[48px] h-[24px] rounded-full justify-center overflow-hidden',
   variants: {
     isDisabled: {
-      true: {
-        container: 'opacity-disabled pointer-events-none',
-      },
+      true: 'opacity-disabled pointer-events-none',
+      false: '',
     },
   },
   defaultVariants: {
@@ -20,15 +16,15 @@ const root = tv({
 });
 
 const thumb = tv({
-  base: 'absolute items-center justify-center w-[28px] h-[20px] rounded-full overflow-hidden',
+  base: 'absolute left-[2px] items-center justify-center w-[28px] h-[20px] rounded-full shadow-sm shadow-black/5 overflow-hidden',
 });
 
 const startContent = tv({
-  base: 'absolute left-0',
+  base: 'absolute left-[2px]',
 });
 
 const endContent = tv({
-  base: 'absolute right-0',
+  base: 'absolute right-[2px]',
 });
 
 const switchStyles = combineStyles({
@@ -38,5 +34,10 @@ const switchStyles = combineStyles({
   endContent,
 });
 
-export type RootSlots = keyof ReturnType<typeof root>;
+export const styleSheet = StyleSheet.create({
+  borderCurve: {
+    borderCurve: 'continuous',
+  },
+});
+
 export default switchStyles;

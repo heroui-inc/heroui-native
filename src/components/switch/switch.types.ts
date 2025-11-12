@@ -3,9 +3,7 @@ import type {
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated';
-import type { ElementSlots } from '../../helpers/theme/types';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
-import type { RootSlots } from './switch.styles';
 
 /**
  * Custom colors for switch states
@@ -33,9 +31,6 @@ export interface SwitchProps extends SwitchPrimitivesTypes.RootProps {
 
   /** Custom class name for the switch */
   className?: string;
-
-  /** Custom class names for different parts of the component */
-  classNames?: ElementSlots<RootSlots>;
 
   /** Custom colors for different switch states */
   colors?: SwitchColors;

@@ -1,4 +1,5 @@
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
+import type { GestureResponderEvent } from 'react-native';
 import { View, type ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { createContext } from '../../helpers/utils';
@@ -43,6 +44,8 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       className,
       style,
       animation,
+      onPressIn,
+      onPressOut,
       ...restProps
     } = props;
 
@@ -51,12 +54,16 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       className,
     });
 
-    const { rContainerStyle, contentContainerWidth, isAllAnimationsDisabled } =
-      useSwitchRootAnimation({
-        animation,
-        style: style as ViewStyle | undefined,
-        isSelected,
-      });
+    const {
+      rContainerStyle,
+      isSwitchPressed,
+      contentContainerWidth,
+      isAllAnimationsDisabled,
+    } = useSwitchRootAnimation({
+      animation,
+      style: style as ViewStyle | undefined,
+      isSelected,
+    });
 
     const contextValue = useMemo(
       () => ({
@@ -68,10 +75,27 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
 
     const animationContextValue = useMemo(
       () => ({
+        isSwitchPressed,
         isAllAnimationsDisabled,
         contentContainerWidth,
       }),
-      [isAllAnimationsDisabled, contentContainerWidth]
+      [isSwitchPressed, isAllAnimationsDisabled, contentContainerWidth]
+    );
+
+    const handlePressIn = useCallback(
+      (event: GestureResponderEvent) => {
+        isSwitchPressed.set(true);
+        onPressIn?.(event);
+      },
+      [isSwitchPressed, onPressIn]
+    );
+
+    const handlePressOut = useCallback(
+      (event: GestureResponderEvent) => {
+        isSwitchPressed.set(false);
+        onPressOut?.(event);
+      },
+      [isSwitchPressed, onPressOut]
     );
 
     const renderProps: SwitchRenderProps = {
@@ -94,6 +118,8 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
             isSelected={isSelected}
             onSelectedChange={onSelectedChange}
             isDisabled={isDisabled}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
             onLayout={(e) => {
               contentContainerWidth.set(e.nativeEvent.layout.width);
             }}

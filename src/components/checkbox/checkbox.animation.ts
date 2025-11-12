@@ -44,7 +44,7 @@ export function useCheckboxRootAnimation(options: {
   const scaleValue = getAnimationValueProperty({
     animationValue: animationConfig?.scale,
     property: 'value',
-    defaultValue: [1, 0.95] as [number, number],
+    defaultValue: [1, 0.96] as [number, number],
   });
 
   const scaleTimingConfig = getAnimationValueMergedConfig({

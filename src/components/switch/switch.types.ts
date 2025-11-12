@@ -25,6 +25,18 @@ export interface SwitchRenderProps {
  * Animation configuration for switch root component
  */
 export type SwitchRootAnimation = AnimationRoot<{
+  scale?: AnimationValue<{
+    /**
+     * Scale values [unpressed, pressed]
+     * @default [1, 0.95]
+     */
+    value?: [number, number];
+    /**
+     * Animation timing configuration
+     * @default { duration: 150 }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
   backgroundColor?: AnimationValue<{
     /**
      * Background color values [unselected, selected]
@@ -141,6 +153,8 @@ export interface SwitchContextValue
  * Context value for switch animation state
  */
 export interface SwitchAnimationContextValue {
+  /** Shared value tracking if the switch is pressed */
+  isSwitchPressed: SharedValue<boolean>;
   /** Whether all animations should be disabled (cascading from root) */
   isAllAnimationsDisabled: boolean;
   /** Width of the content container */

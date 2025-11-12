@@ -14,7 +14,9 @@ import {
   getAnimationValueProperty,
   getRootAnimationState,
   getStyleProperties,
+  getStyleTransform,
 } from '../../helpers/utils/animation';
+import { useFormField } from '../form-field/form-field';
 import {
   DEFAULT_SPRING_CONFIG,
   DEFAULT_THUMB_LEFT,
@@ -38,7 +40,7 @@ export { SwitchAnimationProvider, useSwitchAnimation };
 
 /**
  * Animation hook for Switch root component
- * Handles background color animation and provides context for child components
+ * Handles scale and background color animations and provides context for child components
  */
 export function useSwitchRootAnimation(options: {
   animation: SwitchRootAnimation | undefined;
@@ -50,11 +52,28 @@ export function useSwitchRootAnimation(options: {
   const themeColorAccent = useThemeColor('accent');
   const themeColorSurfaceQuaternary = useThemeColor('surface-quaternary');
 
+  const formFieldContext = useFormField();
+
+  const isSwitchPressed = useSharedValue(false);
   const contentContainerWidth = useSharedValue(0);
 
   const { animationConfig, isAnimationDisabled, isAllAnimationsDisabled } =
     getRootAnimationState(animation);
 
+  // Scale animation
+  const scaleValue = getAnimationValueProperty({
+    animationValue: animationConfig?.scale,
+    property: 'value',
+    defaultValue: [1, 0.96] as [number, number],
+  });
+
+  const scaleTimingConfig = getAnimationValueMergedConfig({
+    animationValue: animationConfig?.scale,
+    property: 'timingConfig',
+    defaultValue: { duration: 150 },
+  });
+
+  // Background color animation
   const backgroundColorValue = getAnimationValueProperty({
     animationValue: animationConfig?.backgroundColor,
     property: 'value',
@@ -71,6 +90,7 @@ export function useSwitchRootAnimation(options: {
   });
 
   const styleProps = getStyleProperties(style, ['backgroundColor']);
+  const styleTransform = getStyleTransform(style);
 
   const rContainerStyle = useAnimatedStyle(() => {
     if (isAnimationDisabled) {
@@ -82,17 +102,30 @@ export function useSwitchRootAnimation(options: {
       };
     }
 
+    const pressed =
+      isSwitchPressed.get() || (formFieldContext?.isPressed.get() ?? false);
+
     return {
       backgroundColor: withTiming(
         isSelected ? backgroundColorValue[1] : backgroundColorValue[0],
         backgroundColorTimingConfig
       ),
+      transform: [
+        {
+          scale: withTiming(
+            pressed ? scaleValue[1] : scaleValue[0],
+            scaleTimingConfig
+          ),
+        },
+        ...styleTransform,
+      ],
       ...styleProps,
     };
   });
 
   return {
     rContainerStyle,
+    isSwitchPressed,
     contentContainerWidth,
     isAllAnimationsDisabled,
   };

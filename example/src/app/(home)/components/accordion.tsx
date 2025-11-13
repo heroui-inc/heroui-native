@@ -27,11 +27,11 @@ const CUSTOM_INDICATOR_EXITING = ZoomOut.duration(200).easing(
 );
 
 const CustomIndicator = () => {
-  const { isSelected } = useAccordionItem();
+  const { isExpanded } = useAccordionItem();
 
   return (
     <View className="size-5 items-center justify-center">
-      {isSelected ? (
+      {isExpanded ? (
         <Animated.View
           key="minus"
           entering={CUSTOM_INDICATOR_ENTERING}

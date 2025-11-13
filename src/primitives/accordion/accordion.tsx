@@ -82,7 +82,7 @@ function useRootContext() {
 
 type AccordionItemContext = ItemProps & {
   nativeID: string;
-  isSelected: boolean;
+  isExpanded: boolean;
 };
 
 const AccordionItemContext = createContext<AccordionItemContext | null>(null);
@@ -100,7 +100,7 @@ const Item = forwardRef<ItemRef, ItemProps>(
           value,
           isDisabled,
           nativeID,
-          isSelected: isItemSelected(rootValue, value),
+          isExpanded: isItemSelected(rootValue, value),
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -128,14 +128,14 @@ function useItemContext() {
 const Header = forwardRef<HeaderRef, HeaderProps>(
   ({ asChild, ...props }, ref) => {
     const { isDisabled: rootDisabled } = useRootContext();
-    const { isDisabled: itemDisabled, isSelected } = useItemContext();
+    const { isDisabled: itemDisabled, isExpanded } = useItemContext();
 
     const Component = asChild ? Slot.View : View;
     return (
       <Component
         ref={ref}
         role="heading"
-        aria-expanded={isSelected}
+        aria-expanded={isExpanded}
         aria-disabled={rootDisabled ?? itemDisabled}
         {...props}
       />
@@ -164,7 +164,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       nativeID,
       isDisabled: itemDisabled,
       value,
-      isSelected,
+      isExpanded,
     } = useItemContext();
 
     function onPress(ev: GestureResponderEvent) {
@@ -204,7 +204,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
         role="button"
         onPress={onPress}
         accessibilityState={{
-          expanded: isSelected,
+          expanded: isExpanded,
           disabled: isTriggerDisabled,
         }}
         disabled={isTriggerDisabled}
@@ -235,10 +235,10 @@ Indicator.displayName = 'HeroUINative.Primitive.Accordion.Indicator';
 const Content = forwardRef<ContentRef, ContentProps>(
   ({ asChild, forceMount, ...props }, ref) => {
     const { selectionMode } = useRootContext();
-    const { nativeID, isSelected } = useItemContext();
+    const { nativeID, isExpanded } = useItemContext();
 
     if (!forceMount) {
-      if (!isSelected) {
+      if (!isExpanded) {
         return null;
       }
     }
@@ -247,7 +247,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
     return (
       <Component
         ref={ref}
-        aria-hidden={!(forceMount || isSelected)}
+        aria-hidden={!(forceMount || isExpanded)}
         aria-labelledby={nativeID}
         role={selectionMode === 'single' ? 'region' : 'summary'}
         {...props}

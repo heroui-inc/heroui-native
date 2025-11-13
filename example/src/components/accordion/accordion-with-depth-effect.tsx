@@ -135,11 +135,11 @@ const CUSTOM_INDICATOR_EXITING = ZoomOut.duration(200).easing(
 );
 
 const CustomIndicator = () => {
-  const { isSelected } = useAccordionItem();
+  const { isExpanded } = useAccordionItem();
 
   return (
     <View className="size-5 items-center justify-center">
-      {isSelected ? (
+      {isExpanded ? (
         <Animated.View
           key="close"
           entering={CLOSE_INDICATOR_ENTERING.duration(250)}
@@ -171,7 +171,7 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
   const { depth } = use(SettingsContext);
 
   const { value } = useAccordion();
-  const { isSelected } = useAccordionItem();
+  const { isExpanded } = useAccordionItem();
 
   const themeColorSurfaceHover = useThemeColor('on-surface-hover');
 
@@ -192,7 +192,7 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
   const showDivider =
     index < accordionData.length - 1 &&
     !isBeforeSelected &&
-    !isSelected &&
+    !isExpanded &&
     index + 1 !== selectedItemIndex;
 
   return (
@@ -207,7 +207,7 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
           transform: [
             depth
               ? {
-                  scale: isSelected ? 1 : 0.9,
+                  scale: isExpanded ? 1 : 0.9,
                 }
               : {
                   scale: 1,
@@ -221,25 +221,25 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
         className={cn(
           'bg-surface overflow-hidden',
           // First item gets rounded top corners
-          index === 0 && !isSelected && 'rounded-t-2xl',
+          index === 0 && !isExpanded && 'rounded-t-2xl',
           // Last item gets rounded bottom corners
           index === accordionData.length - 1 &&
-            !isSelected &&
+            !isExpanded &&
             !isBeforeSelected &&
             'rounded-b-3xl',
           // Item before selected: rounded bottom corners
           isBeforeSelected && 'rounded-b-2xl',
           // Selected item: full border with all corners rounded
-          isSelected && 'rounded-2xl',
+          isExpanded && 'rounded-2xl',
           // Item after selected: rounded top corners
           isAfterSelected && 'rounded-t-2xl',
           // Spacing for selected items
-          isSelected && index === 0 && cn('mb-6', depth && 'mb-4'),
-          isSelected &&
+          isExpanded && index === 0 && cn('mb-6', depth && 'mb-4'),
+          isExpanded &&
             index > 0 &&
             index < accordionData.length - 1 &&
             cn('my-6', depth && 'my-4'),
-          isSelected &&
+          isExpanded &&
             index === accordionData.length - 1 &&
             cn('mt-6', depth && 'mt-4')
         )}

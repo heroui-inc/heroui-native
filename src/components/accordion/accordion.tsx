@@ -214,7 +214,7 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
   const { children, className, iconProps, springConfig, ...restProps } = props;
 
-  const { isSelected } = useAccordionItem();
+  const { isExpanded } = useAccordionItem();
 
   const themeColorForeground = useThemeColor('foreground');
 
@@ -224,9 +224,9 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
 
   useEffect(() => {
     rotation.set(
-      withSpring(isSelected ? 1 : 0, springConfig || INDICATOR_SPRING_CONFIG)
+      withSpring(isExpanded ? 1 : 0, springConfig || INDICATOR_SPRING_CONFIG)
     );
-  }, [isSelected, rotation, springConfig]);
+  }, [isExpanded, rotation, springConfig]);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -268,11 +268,11 @@ const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
 
   const { variant } = useAccordionInnerContext();
 
-  const { isSelected } = useAccordionItem();
+  const { isExpanded } = useAccordionItem();
 
   const tvStyles = accordionStyles.content({ variant, className });
 
-  if (!isSelected) {
+  if (!isExpanded) {
     return null;
   }
 

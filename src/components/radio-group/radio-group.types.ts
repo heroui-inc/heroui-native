@@ -27,6 +27,8 @@ export interface RadioGroupItemContextValue {
   isDisabled?: boolean;
   /** Whether the radio item is invalid */
   isInvalid?: boolean;
+  /** Whether the radio item is on surface */
+  isOnSurface?: boolean;
 }
 
 /**
@@ -51,6 +53,8 @@ export interface RadioGroupItemProps extends Omit<ItemProps, 'children'> {
     | ((props: RadioGroupItemRenderProps) => React.ReactNode);
   /** Whether the radio item is invalid @default false */
   isInvalid?: boolean;
+  /** Whether the radio item is on surface */
+  isOnSurface?: boolean;
   /** Custom class name */
   className?: string;
 }

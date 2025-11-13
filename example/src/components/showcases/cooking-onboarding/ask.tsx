@@ -27,6 +27,7 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
     <Popover>
       <Popover.Trigger ref={triggerRef}>
         <Button
+          variant="secondary"
           className={cn(
             className.buttonSecondaryLayout,
             className.buttonSecondaryColors

@@ -255,7 +255,7 @@ export default function TextFieldExample() {
 | className            | `string`                   | -                | Custom class name for the input container                    |
 | classNames           | `ElementSlots<InputSlots>` | -                | Custom class names for different parts of the input          |
 | colors               | `TextFieldInputColors`     | -                | Custom colors for input background and border                |
-| animationConfig      | `TimingConfig`             | -                | Animation configuration for focus/blur transitions           |
+| animationConfig      | `WithTimingConfig`             | -                | Reanimated timing configuration for focus/blur transitions           |
 | placeholderTextColor | `string`                   | `--colors-muted` | Color of the placeholder text                                |
 | ...TextInputProps    | `TextInputProps`           | -                | All standard React Native TextInput props are supported      |
 
@@ -276,13 +276,6 @@ export default function TextFieldExample() {
 | blurBorder      | `string` | Border color when input is blurred     |
 | focusBorder     | `string` | Border color when input is focused     |
 | errorBorder     | `string` | Border color when input is invalid     |
-
-#### TimingConfig
-
-| prop     | type                                      | description                                |
-| -------- | ----------------------------------------- | ------------------------------------------ |
-| duration | `number`                                  | Duration of the animation in milliseconds  |
-| easing   | `EasingFunction \| EasingFunctionFactory` | Easing function to control animation curve |
 
 ### TextField.InputStartContent
 

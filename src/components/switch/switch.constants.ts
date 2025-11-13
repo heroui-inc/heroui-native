@@ -21,4 +21,6 @@ export const DEFAULT_SPRING_CONFIG = {
   mass: 2,
 };
 
-export const DEFAULT_THUMB_WIDTH = 18;
+export const DEFAULT_THUMB_WIDTH = 28;
+
+export const DEFAULT_THUMB_LEFT = 2;

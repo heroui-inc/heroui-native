@@ -122,6 +122,7 @@ const OnboardingScreen = () => {
         <Button
           onPress={() => console.log('Next pressed')}
           className="mx-8 rounded-full bg-[#F8DD00]"
+          animationConfig={{ highlight: { isDisabled: true } }}
         >
           <Button.Label className="text-lg font-semibold text-black">
             Next

@@ -1,6 +1,6 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { Accordion, useAccordionItemContext } from 'heroui-native';
-import { StyleSheet, View } from 'react-native';
+import { Accordion, useAccordionItem } from 'heroui-native';
+import { View } from 'react-native';
 import Animated, {
   Easing,
   FadeInLeft,
@@ -9,6 +9,7 @@ import Animated, {
   ZoomOut,
 } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
+import { AccordionWithDepthEffect } from '../../../components/accordion/accordion-with-depth-effect';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -26,7 +27,7 @@ const CUSTOM_INDICATOR_EXITING = ZoomOut.duration(200).easing(
 );
 
 const CustomIndicator = () => {
-  const { isExpanded } = useAccordionItemContext();
+  const { isExpanded } = useAccordionItem();
 
   return (
     <View className="size-5 items-center justify-center">
@@ -315,44 +316,9 @@ const CustomEnteringAnimationContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const CustomStylesContent = () => {
-  return (
-    <View className="flex-1 items-center justify-center px-5">
-      <Accordion isDividerVisible={false} className="w-full">
-        {accordionData.slice(0, 4).map((item) => (
-          <Accordion.Item key={item.id} value={item.id} className="mb-1">
-            <Accordion.Trigger
-              className="bg-surface rounded-2xl"
-              style={styles.borderCurve}
-            >
-              <View className="flex-1 flex-row items-center gap-4">
-                <View className="size-8 rounded-full bg-surface-secondary/50 items-center justify-center">
-                  {item.icon}
-                </View>
-                <AppText className="text-foreground text-base font-medium flex-1">
-                  {item.title}
-                </AppText>
-              </View>
-              <Accordion.Indicator>
-                <CustomIndicator />
-              </Accordion.Indicator>
-            </Accordion.Trigger>
-            <Accordion.Content
-              className="mt-1 bg-surface rounded-2xl px-5 py-4"
-              style={styles.borderCurve}
-            >
-              <AppText className="text-muted text-base/relaxed">
-                {item.content}
-              </AppText>
-            </Accordion.Content>
-          </Accordion.Item>
-        ))}
-      </Accordion>
-    </View>
-  );
+const WithDepthEffectContent = () => {
+  return <AccordionWithDepthEffect />;
 };
-
-// ------------------------------------------------------------------------------
 
 const ACCORDION_VARIANTS: UsageVariant[] = [
   {
@@ -386,17 +352,11 @@ const ACCORDION_VARIANTS: UsageVariant[] = [
     content: <CustomEnteringAnimationContent />,
   },
   {
-    value: 'custom-styles',
-    label: 'Custom styles',
-    content: <CustomStylesContent />,
+    value: 'with-depth-effect',
+    label: 'With depth effect',
+    content: <WithDepthEffectContent />,
   },
 ];
-
-const styles = StyleSheet.create({
-  borderCurve: {
-    borderCurve: 'continuous',
-  },
-});
 
 export default function AccordionScreen() {
   return <UsageVariantFlatList data={ACCORDION_VARIANTS} />;

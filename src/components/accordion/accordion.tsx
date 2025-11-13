@@ -45,12 +45,13 @@ const AnimatedIndicator = Animated.createAnimatedComponent(
 
 // ------------------------------------------------------------------------------
 
-const [AccordionProvider, useAccordionContext] =
+const [AccordionInnerProvider, useAccordionInnerContext] =
   createContext<AccordionContextValue>({
-    name: 'AccordionContext',
+    name: 'AccordionInnerContext',
   });
 
-const useAccordionItemContext = AccordionPrimitive.useItemContext;
+const useAccordion = AccordionPrimitive.useRootContext;
+const useAccordionItem = AccordionPrimitive.useItemContext;
 
 // ------------------------------------------------------------------------------
 
@@ -84,7 +85,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
   );
 
   return (
-    <AccordionProvider value={contextValue}>
+    <AccordionInnerProvider value={contextValue}>
       <AnimatedRootView
         ref={ref}
         className={containerStyles}
@@ -101,7 +102,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
           </>
         ))}
       </AnimatedRootView>
-    </AccordionProvider>
+    </AccordionInnerProvider>
   );
 });
 
@@ -110,7 +111,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
 const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
   const { children, layout: layoutProp, className, ...restProps } = props;
 
-  const { layoutTransition } = useAccordionContext();
+  const { layoutTransition } = useAccordionInnerContext();
 
   const tvStyles = accordionStyles.item({ className });
 
@@ -139,7 +140,7 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const { variant } = useAccordionContext();
+  const { variant } = useAccordionInnerContext();
 
   const themeColorForeground = useThemeColor('background-secondary');
   const themeColorSurfaceHover = useThemeColor('on-surface-hover');
@@ -213,7 +214,7 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
   const { children, className, iconProps, springConfig, ...restProps } = props;
 
-  const { isExpanded } = useAccordionItemContext();
+  const { isExpanded } = useAccordionItem();
 
   const themeColorForeground = useThemeColor('foreground');
 
@@ -265,9 +266,9 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
 const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
   const { children, className, entering, exiting, ...restProps } = props;
 
-  const { variant } = useAccordionContext();
+  const { variant } = useAccordionInnerContext();
 
-  const { isExpanded } = useAccordionItemContext();
+  const { isExpanded } = useAccordionItem();
 
   const tvStyles = accordionStyles.content({ variant, className });
 
@@ -331,4 +332,4 @@ const CompoundAccordion = Object.assign(Root, {
 });
 
 export default CompoundAccordion;
-export { useAccordionContext, useAccordionItemContext };
+export { useAccordion, useAccordionItem };

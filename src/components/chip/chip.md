@@ -138,20 +138,19 @@ export default function ChipExample() {
 
 ### Chip
 
-| prop                         | type                                                          | default                        | description                                          |
-| ---------------------------- | ------------------------------------------------------------- | ------------------------------ | ---------------------------------------------------- |
-| `children`                   | `React.ReactNode`                                             | -                              | Content to render inside the chip                    |
-| `size`                       | `'sm' \| 'md' \| 'lg'`                                        | `'md'`                         | Size of the chip                                     |
-| `variant`                    | `'primary' \| 'secondary' \| 'tertiary' \| 'soft'`            | `'primary'`                    | Visual variant of the chip                           |
-| `color`                      | `'accent' \| 'default' \| 'success' \| 'warning' \| 'danger'` | `'accent'`                     | Color theme of the chip                              |
-| `className`                  | `string`                                                      | -                              | Additional CSS classes to apply                      |
-| `layout`                     | `BaseAnimationBuilder \| LayoutAnimationFunction`             | `LinearTransition.springify()` | Layout transition for animated components            |
-| `...Animated.PressableProps` | `Animated.PressableProps`                                     | -                              | All Reanimated AnimatedPressable props are supported |
+| prop                         | type                                                          | default     | description                                          |
+| ---------------------------- | ------------------------------------------------------------- | ----------- | ---------------------------------------------------- |
+| `children`                   | `React.ReactNode`                                             | -           | Content to render inside the chip                    |
+| `size`                       | `'sm' \| 'md' \| 'lg'`                                        | `'md'`      | Size of the chip                                     |
+| `variant`                    | `'primary' \| 'secondary' \| 'tertiary' \| 'soft'`            | `'primary'` | Visual variant of the chip                           |
+| `color`                      | `'accent' \| 'default' \| 'success' \| 'warning' \| 'danger'` | `'accent'`  | Color theme of the chip                              |
+| `className`                  | `string`                                                      | -           | Additional CSS classes to apply                      |
+| `...Animated.PressableProps` | `Animated.PressableProps`                                     | -           | All Reanimated AnimatedPressable props are supported |
 
 ### Chip.Label
 
-| prop                    | type                 | default | description                                     |
-| ----------------------- | -------------------- | ------- | ----------------------------------------------- |
-| `children`              | `React.ReactNode`    | -       | Text or content to render as the label          |
-| `className`             | `string`             | -       | Additional CSS classes to apply                 |
-| `...Animated.TextProps` | `Animated.TextProps` | -       | All Reanimated AnimatedText props are supported |
+| prop           | type              | default | description                            |
+| -------------- | ----------------- | ------- | -------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Text or content to render as the label |
+| `className`    | `string`          | -       | Additional CSS classes to apply        |
+| `...TextProps` | `TextProps`       | -       | All standard Text props are supported  |

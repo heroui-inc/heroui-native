@@ -1,9 +1,10 @@
 import { forwardRef, useMemo } from 'react';
 import { Pressable, View } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { Text } from '../../helpers/components';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
-import { DEFAULT_LAYOUT_TRANSITION, DISPLAY_NAME } from './chip.constants';
+import { DISPLAY_NAME } from './chip.constants';
 import chipStyles, { styleSheet } from './chip.styles';
 import type { ChipContextValue, ChipLabelProps, ChipProps } from './chip.types';
 
@@ -18,7 +19,6 @@ const [ChipProvider, useChipContext] = createContext<ChipContextValue>({
 const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
   const {
     children,
-    layout = DEFAULT_LAYOUT_TRANSITION,
     variant = 'primary',
     size = 'md',
     color = 'accent',
@@ -41,16 +41,14 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
       size,
       variant,
       color,
-      layout,
     }),
-    [size, variant, color, layout]
+    [size, variant, color]
   );
 
   return (
     <ChipProvider value={contextValue}>
       <AnimatedPressable
         ref={ref}
-        layout={layout}
         className={tvStyles}
         style={[styleSheet.root, style]}
         {...restProps}
@@ -68,9 +66,9 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
 // --------------------------------------------------
 
 const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
-  const { children, layout: layoutProp, className, ...restProps } = props;
+  const { children, className, ...restProps } = props;
 
-  const { size, variant, color, layout: contextLayout } = useChipContext();
+  const { size, variant, color } = useChipContext();
 
   const tvStyles = chipStyles.label({
     size,
@@ -80,14 +78,9 @@ const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
   });
 
   return (
-    <Animated.Text
-      ref={ref}
-      layout={layoutProp || contextLayout}
-      className={tvStyles}
-      {...restProps}
-    >
+    <Text ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Animated.Text>
+    </Text>
   );
 });
 

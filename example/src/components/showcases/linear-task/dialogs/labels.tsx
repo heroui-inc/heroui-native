@@ -192,14 +192,9 @@ export const Labels: FC = () => {
                         <FormField.Indicator>
                           <Checkbox
                             isSelected={isSelected}
-                            animatedColors={{
-                              backgroundColor: {
-                                default: 'transparent',
-                                selected: 'transparent',
-                              },
-                            }}
+                            className="bg-transparent"
                           >
-                            <Checkbox.Indicator>
+                            <Checkbox.Indicator className="bg-transparent">
                               {isSelected && (
                                 <Animated.View
                                   key={`${item.value}-check`}

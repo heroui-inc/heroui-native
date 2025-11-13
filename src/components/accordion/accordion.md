@@ -234,23 +234,16 @@ export default function AccordionExample() {
 
 ### Accordion.Trigger
 
-| prop                    | type              | default | description                                             |
-| ----------------------- | ----------------- | ------- | ------------------------------------------------------- |
-| `children`              | `React.ReactNode` | -       | Children elements to be rendered inside the trigger     |
-| `className`             | `string`          | -       | Additional CSS classes                                  |
-| `highlightColor`        | `string`          | -       | Custom highlight color for press feedback               |
-| `highlightOpacity`      | `number`          | `0.5`   | Custom highlight opacity for press feedback             |
-| `highlightTimingConfig` | `TimingConfig`    | -       | Custom timing config for highlight animation            |
-| `isHighlightVisible`    | `boolean`         | `true`  | Whether to show the highlight on press                  |
-| `isDisabled`            | `boolean`         | -       | Whether the trigger is disabled                         |
-| `...PressableProps`     | `PressableProps`  | -       | All standard React Native Pressable props are supported |
-
-#### TimingConfig
-
-| prop       | type                                      | description                                    |
-| ---------- | ----------------------------------------- | ---------------------------------------------- |
-| `duration` | `number`                                  | Duration of the animation in milliseconds      |
-| `easing`   | `EasingFunction \| EasingFunctionFactory` | Easing function to control the animation curve |
+| prop                    | type               | default | description                                             |
+| ----------------------- | ------------------ | ------- | ------------------------------------------------------- |
+| `children`              | `React.ReactNode`  | -       | Children elements to be rendered inside the trigger     |
+| `className`             | `string`           | -       | Additional CSS classes                                  |
+| `highlightColor`        | `string`           | -       | Custom highlight color for press feedback               |
+| `highlightOpacity`      | `number`           | `0.5`   | Custom highlight opacity for press feedback             |
+| `highlightTimingConfig` | `WithTimingConfig` | -       | Reanimated timing configuration for highlight animation |
+| `isHighlightVisible`    | `boolean`          | `true`  | Whether to show the highlight on press                  |
+| `isDisabled`            | `boolean`          | -       | Whether the trigger is disabled                         |
+| `...PressableProps`     | `PressableProps`   | -       | All standard React Native Pressable props are supported |
 
 ### Accordion.Indicator
 

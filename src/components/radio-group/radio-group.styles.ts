@@ -19,11 +19,15 @@ const item = tv({
 });
 
 const itemIndicator = tv({
-  base: 'size-6 rounded-full border items-center justify-center overflow-hidden',
+  base: 'size-6 rounded-full border border-field-border items-center justify-center overflow-hidden',
   variants: {
+    isOnSurface: {
+      true: 'bg-surface-secondary',
+      false: 'bg-field',
+    },
     isSelected: {
-      true: 'bg-accent border-accent',
-      false: 'bg-background-secondary border-border',
+      true: 'bg-accent',
+      false: '',
     },
     isInvalid: {
       true: 'bg-transparent border-danger',
@@ -37,11 +41,19 @@ const itemIndicator = tv({
       className: 'bg-danger border-danger',
     },
   ],
+  defaultVariants: {
+    isSelected: false,
+    isInvalid: false,
+  },
 });
 
 const itemIndicatorThumb = tv({
-  base: 'size-2.5 dark:size-3 rounded-full bg-background',
+  base: 'size-2.5 dark:size-3 rounded-full',
   variants: {
+    isOnSurface: {
+      true: 'bg-on-surface',
+      false: 'bg-field',
+    },
     isSelected: {
       true: 'opacity-100',
       false: 'opacity-0',

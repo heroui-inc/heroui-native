@@ -73,6 +73,7 @@ const StartIndicatorAlignmentContent = () => {
         value={shippingSpeed}
         onValueChange={setShippingSpeed}
         className="gap-4"
+        isOnSurface
       >
         <RadioGroup.Item value="standard">
           {({ isSelected }) => (
@@ -82,7 +83,9 @@ const StartIndicatorAlignmentContent = () => {
                 isSelected && 'bg-surface'
               )}
             >
-              <RadioGroup.Indicator />
+              <RadioGroup.Indicator
+                className={cn(!isSelected && 'border border-muted/10')}
+              />
               <View className="flex-1">
                 <RadioGroup.Label>Standard Shipping</RadioGroup.Label>
                 <RadioGroup.Description>
@@ -109,7 +112,9 @@ const StartIndicatorAlignmentContent = () => {
                 isSelected && 'bg-surface'
               )}
             >
-              <RadioGroup.Indicator />
+              <RadioGroup.Indicator
+                className={cn(!isSelected && 'border border-muted/10')}
+              />
               <View className="flex-1">
                 <RadioGroup.Label>Express Shipping</RadioGroup.Label>
                 <RadioGroup.Description>
@@ -136,7 +141,9 @@ const StartIndicatorAlignmentContent = () => {
                 isSelected && 'bg-surface'
               )}
             >
-              <RadioGroup.Indicator />
+              <RadioGroup.Indicator
+                className={cn(!isSelected && 'border border-muted/10')}
+              />
               <View className="flex-1">
                 <RadioGroup.Label>Overnight Shipping</RadioGroup.Label>
                 <RadioGroup.Description>
@@ -284,58 +291,70 @@ const CustomIndicatorBackgroundContent = () => {
         </View>
         <RadioGroup value={priority} onValueChange={setPriority}>
           <RadioGroup.Item value="high">
-            <View className="flex-1">
-              <RadioGroup.Label>High Priority</RadioGroup.Label>
-              <RadioGroup.Description>
-                Urgent - requires immediate attention
-              </RadioGroup.Description>
-            </View>
-            <RadioGroup.Indicator
-              className={cn(
-                'size-8',
-                priority === 'high' && 'bg-red-500 border-red-600'
-              )}
-            >
-              <RadioGroup.IndicatorThumb className="size-3.5 bg-red-100" />
-            </RadioGroup.Indicator>
+            {({ isSelected }) => (
+              <>
+                <View className="flex-1">
+                  <RadioGroup.Label>High Priority</RadioGroup.Label>
+                  <RadioGroup.Description>
+                    Urgent - requires immediate attention
+                  </RadioGroup.Description>
+                </View>
+                <RadioGroup.Indicator
+                  className={cn(
+                    'size-8',
+                    isSelected && 'bg-red-500 border-red-400'
+                  )}
+                >
+                  <RadioGroup.IndicatorThumb className="size-3.5 bg-red-100" />
+                </RadioGroup.Indicator>
+              </>
+            )}
           </RadioGroup.Item>
 
           <Divider />
 
           <RadioGroup.Item value="medium">
-            <View className="flex-1">
-              <RadioGroup.Label>Medium Priority</RadioGroup.Label>
-              <RadioGroup.Description>
-                Important - complete within this week
-              </RadioGroup.Description>
-            </View>
-            <RadioGroup.Indicator
-              className={cn(
-                'size-8',
-                priority === 'medium' && 'bg-amber-500 border-amber-600'
-              )}
-            >
-              <RadioGroup.IndicatorThumb className="size-3.5 bg-amber-100" />
-            </RadioGroup.Indicator>
+            {({ isSelected }) => (
+              <>
+                <View className="flex-1">
+                  <RadioGroup.Label>Medium Priority</RadioGroup.Label>
+                  <RadioGroup.Description>
+                    Important - complete within this week
+                  </RadioGroup.Description>
+                </View>
+                <RadioGroup.Indicator
+                  className={cn(
+                    'size-8',
+                    isSelected && 'bg-amber-500 border-amber-400'
+                  )}
+                >
+                  <RadioGroup.IndicatorThumb className="size-3.5 bg-amber-100" />
+                </RadioGroup.Indicator>
+              </>
+            )}
           </RadioGroup.Item>
 
           <Divider />
 
           <RadioGroup.Item value="low">
-            <View className="flex-1">
-              <RadioGroup.Label>Low Priority</RadioGroup.Label>
-              <RadioGroup.Description>
-                Standard - complete when possible
-              </RadioGroup.Description>
-            </View>
-            <RadioGroup.Indicator
-              className={cn(
-                'size-8',
-                priority === 'low' && 'bg-emerald-500 border-emerald-600'
-              )}
-            >
-              <RadioGroup.IndicatorThumb className="size-3.5 bg-emerald-100" />
-            </RadioGroup.Indicator>
+            {({ isSelected }) => (
+              <>
+                <View className="flex-1">
+                  <RadioGroup.Label>Low Priority</RadioGroup.Label>
+                  <RadioGroup.Description>
+                    Standard - complete when possible
+                  </RadioGroup.Description>
+                </View>
+                <RadioGroup.Indicator
+                  className={cn(
+                    'size-8',
+                    isSelected && 'bg-emerald-500 border-emerald-400'
+                  )}
+                >
+                  <RadioGroup.IndicatorThumb className="size-3.5 bg-emerald-100" />
+                </RadioGroup.Indicator>
+              </>
+            )}
           </RadioGroup.Item>
         </RadioGroup>
       </Surface>
@@ -361,65 +380,77 @@ const CustomIndicatorThumbContent = () => {
         </View>
         <RadioGroup value={notification} onValueChange={setNotification}>
           <RadioGroup.Item value="email">
-            <RadioGroup.Indicator>
-              {notification === 'email' && (
-                <AnimatedView entering={FadeIn.duration(200)}>
-                  <StyledFontAwesome
-                    name="check"
-                    size={12}
-                    className="text-accent-foreground"
-                  />
-                </AnimatedView>
-              )}
-            </RadioGroup.Indicator>
-            <View className="flex-1">
-              <RadioGroup.Label>Email Notifications</RadioGroup.Label>
-              <RadioGroup.Description>
-                Get updates via email
-              </RadioGroup.Description>
-            </View>
+            {({ isSelected }) => (
+              <>
+                <RadioGroup.Indicator>
+                  {isSelected && (
+                    <AnimatedView entering={FadeIn.duration(200)}>
+                      <StyledFontAwesome
+                        name="check"
+                        size={12}
+                        className="text-accent-foreground"
+                      />
+                    </AnimatedView>
+                  )}
+                </RadioGroup.Indicator>
+                <View className="flex-1">
+                  <RadioGroup.Label>Email Notifications</RadioGroup.Label>
+                  <RadioGroup.Description>
+                    Get updates via email
+                  </RadioGroup.Description>
+                </View>
+              </>
+            )}
           </RadioGroup.Item>
 
           <Divider />
 
           <RadioGroup.Item value="push">
-            <RadioGroup.Indicator>
-              {notification === 'push' && (
-                <AnimatedView entering={FadeIn.duration(200)}>
-                  <StyledIonicons
-                    name="flash"
-                    size={12}
-                    className="text-background"
-                  />
-                </AnimatedView>
-              )}
-            </RadioGroup.Indicator>
-            <View className="flex-1">
-              <RadioGroup.Label>Push Notifications</RadioGroup.Label>
-              <RadioGroup.Description>
-                Get instant push alerts
-              </RadioGroup.Description>
-            </View>
+            {({ isSelected }) => (
+              <>
+                <RadioGroup.Indicator>
+                  {isSelected && (
+                    <AnimatedView entering={FadeIn.duration(200)}>
+                      <StyledIonicons
+                        name="flash"
+                        size={12}
+                        className="text-background"
+                      />
+                    </AnimatedView>
+                  )}
+                </RadioGroup.Indicator>
+                <View className="flex-1">
+                  <RadioGroup.Label>Push Notifications</RadioGroup.Label>
+                  <RadioGroup.Description>
+                    Get instant push alerts
+                  </RadioGroup.Description>
+                </View>
+              </>
+            )}
           </RadioGroup.Item>
 
           <Divider />
 
           <RadioGroup.Item value="none">
-            <RadioGroup.Indicator>
-              {notification === 'none' && (
-                <AnimatedView
-                  key="none"
-                  entering={ZoomIn.springify()}
-                  className="h-2.5 w-2.5 bg-accent-foreground"
-                />
-              )}
-            </RadioGroup.Indicator>
-            <View className="flex-1">
-              <RadioGroup.Label>No Notifications</RadioGroup.Label>
-              <RadioGroup.Description>
-                Only check updates manually
-              </RadioGroup.Description>
-            </View>
+            {({ isSelected }) => (
+              <>
+                <RadioGroup.Indicator>
+                  {isSelected && (
+                    <AnimatedView
+                      key="none"
+                      entering={ZoomIn.springify()}
+                      className="h-2.5 w-2.5 bg-accent-foreground"
+                    />
+                  )}
+                </RadioGroup.Indicator>
+                <View className="flex-1">
+                  <RadioGroup.Label>No Notifications</RadioGroup.Label>
+                  <RadioGroup.Description>
+                    Only check updates manually
+                  </RadioGroup.Description>
+                </View>
+              </>
+            )}
           </RadioGroup.Item>
         </RadioGroup>
       </Surface>

@@ -52,11 +52,11 @@ const accordionData = [
       />
     ),
     content:
-      'Where design intuition meets code execution - enabling you to see UI problems and build solutions from the ground up.',
+      'The intersection of creative vision and technical implementation - empowering you to identify interface challenges and craft solutions from scratch.',
   },
   {
     id: '2',
-    title: 'What is the craft of UI?',
+    title: 'What defines UI craftsmanship?',
     icon: (
       <StyledMaterialCommunityIcons
         name="minecraft"
@@ -65,11 +65,11 @@ const accordionData = [
       />
     ),
     content:
-      "A course about building things *well* - mastering the platform so you're not limited by tools or libraries",
+      "The art of building things with excellence - achieving platform mastery so you're never constrained by frameworks or tooling",
   },
   {
     id: '3',
-    title: 'Why does craft matter?',
+    title: 'Why is craftsmanship important?',
     icon: (
       <StyledIonicons
         name="sparkles-sharp"
@@ -78,11 +78,11 @@ const accordionData = [
       />
     ),
     content:
-      "Because it's more than making something work - it's making something feel right: inclusive, resilient and scalable.",
+      "Because it transcends mere functionality - it's about creating experiences that feel intuitive: accessible, robust and maintainable.",
   },
   {
     id: '4',
-    title: 'Who is this for?',
+    title: 'Who should embrace this?',
     icon: (
       <StyledEntypo
         name="users"
@@ -91,7 +91,7 @@ const accordionData = [
       />
     ),
     content:
-      'Designers who code, developers who design - anyone ready to stop chasing snippets and become the person who *can build anything*.',
+      'Creative coders and technical designers - individuals prepared to move beyond copy-paste solutions and evolve into builders who *can create anything*.',
   },
 ];
 

@@ -17,7 +17,7 @@ import type {
   TriggerProps,
   TriggerRef,
 } from './accordion.types';
-import { isItemExpanded, toStringArray } from './accordion.utils';
+import { isItemSelected, toStringArray } from './accordion.utils';
 
 const AccordionContext = createContext<RootContext | null>(null);
 
@@ -100,7 +100,7 @@ const Item = forwardRef<ItemRef, ItemProps>(
           value,
           isDisabled,
           nativeID,
-          isExpanded: isItemExpanded(rootValue, value),
+          isExpanded: isItemSelected(rootValue, value),
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -258,4 +258,13 @@ const Content = forwardRef<ContentRef, ContentProps>(
 
 Content.displayName = 'HeroUINative.Primitive.Accordion.Content';
 
-export { Content, Header, Indicator, Item, Root, Trigger, useItemContext };
+export {
+  Content,
+  Header,
+  Indicator,
+  Item,
+  Root,
+  Trigger,
+  useItemContext,
+  useRootContext,
+};

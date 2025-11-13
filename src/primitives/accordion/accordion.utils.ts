@@ -2,7 +2,7 @@ export function toStringArray(value?: string | string[]) {
   return Array.isArray(value) ? value : value ? [value] : [];
 }
 
-export function isItemExpanded(
+export function isItemSelected(
   rootValue: string | string[] | undefined,
   value: string
 ) {

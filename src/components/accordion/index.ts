@@ -1,7 +1,7 @@
 export {
   default as Accordion,
-  useAccordionContext,
-  useAccordionItemContext,
+  useAccordion,
+  useAccordionItem,
 } from './accordion';
 export { ACCORDION_LAYOUT_TRANSITION as AccordionLayoutTransition } from './accordion.constants';
 

@@ -45,10 +45,12 @@ const AnimatedIndicator = Animated.createAnimatedComponent(
 
 // ------------------------------------------------------------------------------
 
-const [AccordionProvider, useAccordion] = createContext<AccordionContextValue>({
-  name: 'AccordionContext',
-});
+const [AccordionInnerProvider, useAccordionInnerContext] =
+  createContext<AccordionContextValue>({
+    name: 'AccordionInnerContext',
+  });
 
+const useAccordion = AccordionPrimitive.useRootContext;
 const useAccordionItem = AccordionPrimitive.useItemContext;
 
 // ------------------------------------------------------------------------------
@@ -83,7 +85,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
   );
 
   return (
-    <AccordionProvider value={contextValue}>
+    <AccordionInnerProvider value={contextValue}>
       <AnimatedRootView
         ref={ref}
         className={containerStyles}
@@ -100,7 +102,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
           </>
         ))}
       </AnimatedRootView>
-    </AccordionProvider>
+    </AccordionInnerProvider>
   );
 });
 
@@ -109,7 +111,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
 const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
   const { children, layout: layoutProp, className, ...restProps } = props;
 
-  const { layoutTransition } = useAccordion();
+  const { layoutTransition } = useAccordionInnerContext();
 
   const tvStyles = accordionStyles.item({ className });
 
@@ -138,7 +140,7 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const { variant } = useAccordion();
+  const { variant } = useAccordionInnerContext();
 
   const themeColorForeground = useThemeColor('background-secondary');
   const themeColorSurfaceHover = useThemeColor('on-surface-hover');
@@ -264,7 +266,7 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
 const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
   const { children, className, entering, exiting, ...restProps } = props;
 
-  const { variant } = useAccordion();
+  const { variant } = useAccordionInnerContext();
 
   const { isSelected } = useAccordionItem();
 

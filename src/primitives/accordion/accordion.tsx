@@ -258,4 +258,13 @@ const Content = forwardRef<ContentRef, ContentProps>(
 
 Content.displayName = 'HeroUINative.Primitive.Accordion.Content';
 
-export { Content, Header, Indicator, Item, Root, Trigger, useItemContext };
+export {
+  Content,
+  Header,
+  Indicator,
+  Item,
+  Root,
+  Trigger,
+  useItemContext,
+  useRootContext,
+};

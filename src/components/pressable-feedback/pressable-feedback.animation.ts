@@ -1,4 +1,10 @@
-import { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { Gesture } from 'react-native-gesture-handler';
+import {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import { useUniwind } from 'uniwind';
 import { colorKit, useThemeColor } from '../../helpers/theme';
 import { createContext } from '../../helpers/utils';
@@ -18,6 +24,44 @@ const [PressableFeedbackAnimationProvider, usePressableFeedbackAnimation] =
   });
 
 export { PressableFeedbackAnimationProvider, usePressableFeedbackAnimation };
+
+// --------------------------------------------------
+
+/**
+ * Animation hook for PressableFeedback root component
+ * Handles ripple gesture and shared values
+ */
+export function usePressableFeedbackRootAnimation() {
+  const isPressed = useSharedValue(false);
+  const pressedCenterX = useSharedValue(0);
+  const pressedCenterY = useSharedValue(0);
+  const containerWidth = useSharedValue(0);
+  const containerHeight = useSharedValue(0);
+  const rippleProgress = useSharedValue(0);
+
+  const gesture = Gesture.Pan()
+    .onBegin((event) => {
+      rippleProgress.set(0);
+      pressedCenterX.set(event.x);
+      pressedCenterY.set(event.y);
+      isPressed.set(true);
+      rippleProgress.set(withTiming(1, { duration: 200 }));
+    })
+    .onFinalize(() => {
+      isPressed.set(false);
+      rippleProgress.set(withTiming(2, { duration: 400 }));
+    });
+
+  return {
+    isPressed,
+    pressedCenterX,
+    pressedCenterY,
+    containerWidth,
+    containerHeight,
+    rippleProgress,
+    gesture,
+  };
+}
 
 // --------------------------------------------------
 

@@ -1,24 +1,21 @@
 import { forwardRef, useCallback, useMemo, type FC } from 'react';
-import {
-  Pressable,
-  StyleSheet,
-  type GestureResponderEvent,
-  type LayoutChangeEvent,
-} from 'react-native';
+import { Pressable, StyleSheet, type LayoutChangeEvent } from 'react-native';
 
 import Animated, {
   interpolate,
   useAnimatedStyle,
-  useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
 
+import { GestureDetector } from 'react-native-gesture-handler';
 import { useThemeColor } from '../../helpers/theme';
 import type { PressableRef } from '../../helpers/types';
 import {
   PressableFeedbackAnimationProvider,
   usePressableFeedbackAnimation,
   usePressableFeedbackHighlightAnimation,
+  usePressableFeedbackRootAnimation,
 } from './pressable-feedback.animation';
 import { DISPLAY_NAME } from './pressable-feedback.constants';
 import pressableFeedbackStyles from './pressable-feedback.styles';
@@ -34,46 +31,21 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       isDisabled = false,
       className,
       children,
-      onPress,
-      onPressIn,
-      onPressOut,
       onLayout,
       ...restProps
     } = props;
 
     const tvStyles = pressableFeedbackStyles({ className });
 
-    const isPressed = useSharedValue(false);
-    const pressedCenterX = useSharedValue(0);
-    const pressedCenterY = useSharedValue(0);
-    const containerWidth = useSharedValue(0);
-    const containerHeight = useSharedValue(0);
-    const rippleProgress = useSharedValue(0);
-
-    const handlePressIn = useCallback(
-      (event: GestureResponderEvent) => {
-        rippleProgress.set(0);
-        isPressed.set(true);
-        pressedCenterX.set(event.nativeEvent.locationX);
-        pressedCenterY.set(event.nativeEvent.locationY);
-        rippleProgress.set(withTiming(1, { duration: 200 }));
-        // @ts-ignore
-        onPressIn?.(event);
-      },
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      [isPressed, onPressIn]
-    );
-
-    const handlePressOut = useCallback(
-      (event: GestureResponderEvent) => {
-        rippleProgress.set(withTiming(2, { duration: 400 }));
-        isPressed.set(false);
-        // @ts-ignore
-        onPressOut?.(event);
-      },
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      [isPressed, onPressOut]
-    );
+    const {
+      isPressed,
+      pressedCenterX,
+      pressedCenterY,
+      containerWidth,
+      containerHeight,
+      rippleProgress,
+      gesture,
+    } = usePressableFeedbackRootAnimation();
 
     const handleLayout = useCallback(
       (event: LayoutChangeEvent) => {
@@ -106,20 +78,19 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
 
     return (
       <PressableFeedbackAnimationProvider value={animationContextValue}>
-        <AnimatedPressable
-          ref={ref}
-          disabled={isDisabled}
-          className={tvStyles}
-          onPress={onPress}
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          onLayout={handleLayout}
-          {...restProps}
-        >
-          {/* <PressableFeedbackHighlight animation={animation} /> */}
-          <PressableFeedbackRipple />
-          {children}
-        </AnimatedPressable>
+        <GestureDetector gesture={gesture}>
+          <AnimatedPressable
+            ref={ref}
+            disabled={isDisabled}
+            className={tvStyles}
+            onLayout={handleLayout}
+            {...restProps}
+          >
+            {/* <PressableFeedbackHighlight animation={animation} /> */}
+            <PressableFeedbackRipple />
+            {children}
+          </AnimatedPressable>
+        </GestureDetector>
       </PressableFeedbackAnimationProvider>
     );
   }
@@ -156,9 +127,8 @@ const PressableFeedbackRipple: FC<{}> = () => {
   const themeColorSurfaceSecondary = useThemeColor('on-surface-hover');
 
   const rContainerStyle = useAnimatedStyle(() => {
-    const circleRadius = Math.sqrt(
-      containerWidth.get() ** 2 + containerHeight.get() ** 2
-    );
+    const circleRadius =
+      Math.sqrt(containerWidth.get() ** 2 + containerHeight.get() ** 2) * 1.25;
 
     const translateX = pressedCenterX.get() - circleRadius;
     const translateY = pressedCenterY.get() - circleRadius;
@@ -169,9 +139,8 @@ const PressableFeedbackRipple: FC<{}> = () => {
       borderRadius: circleRadius,
       opacity: withTiming(
         interpolate(rippleProgress.get(), [0, 1, 2], [0, 1, 0]),
-        { duration: 50 }
+        { duration: 40 }
       ),
-      backgroundColor: themeColorSurfaceSecondary,
       transform: [
         {
           translateX,
@@ -182,7 +151,7 @@ const PressableFeedbackRipple: FC<{}> = () => {
         {
           scale: withTiming(
             interpolate(rippleProgress.get(), [0, 1, 2], [0, 1, 1]),
-            { duration: 50 }
+            { duration: 40 }
           ),
         },
       ],
@@ -194,7 +163,36 @@ const PressableFeedbackRipple: FC<{}> = () => {
       pointerEvents="none"
       className="absolute top-0 left-0"
       style={rContainerStyle}
-    />
+    >
+      <Svg width="100%" height="100%">
+        <Defs>
+          <RadialGradient id="rippleGradient" cx="50%" cy="50%" r="50%">
+            <Stop
+              offset="0%"
+              stopColor={themeColorSurfaceSecondary}
+              stopOpacity="1"
+            />
+            <Stop
+              offset="75%"
+              stopColor={themeColorSurfaceSecondary}
+              stopOpacity="0.75"
+            />
+            <Stop
+              offset="100%"
+              stopColor={themeColorSurfaceSecondary}
+              stopOpacity="0"
+            />
+          </RadialGradient>
+        </Defs>
+        <Rect
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+          fill="url(#rippleGradient)"
+        />
+      </Svg>
+    </Animated.View>
   );
 };
 

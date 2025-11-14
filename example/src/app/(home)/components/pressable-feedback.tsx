@@ -12,7 +12,7 @@ const DefaultContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-4">
-        <PressableFeedback className="bg-surface rounded-2xl h-36 w-36 items-center justify-center">
+        <PressableFeedback className="bg-surface rounded-2xl h-[150px] w-full items-center justify-center">
           <StyledIonicons
             name="checkmark"
             size={32}

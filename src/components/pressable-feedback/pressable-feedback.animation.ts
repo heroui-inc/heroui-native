@@ -229,7 +229,7 @@ export function usePressableFeedbackRippleAnimation(options: {
   const opacityValue = getAnimationValueProperty({
     animationValue: animationConfig?.ripple?.opacity,
     property: 'value',
-    defaultValue: [0, 1, 0] as [number, number, number],
+    defaultValue: [0, 0.1, 0] as [number, number, number],
   });
 
   const opacityTimingConfig = getAnimationValueMergedConfig({

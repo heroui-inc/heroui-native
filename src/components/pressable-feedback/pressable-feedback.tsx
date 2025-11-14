@@ -18,7 +18,9 @@ import {
   usePressableFeedbackRootAnimation,
 } from './pressable-feedback.animation';
 import { DISPLAY_NAME } from './pressable-feedback.constants';
-import pressableFeedbackStyles from './pressable-feedback.styles';
+import pressableFeedbackStyles, {
+  styleSheet,
+} from './pressable-feedback.styles';
 import type {
   PressableFeedbackHighlightRootAnimation,
   PressableFeedbackProps,
@@ -95,10 +97,11 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
             ref={ref}
             disabled={isDisabled}
             className={tvStyles}
-            style={[rContainerStyle, style]}
+            style={[rContainerStyle, styleSheet.root, style]}
             onLayout={handleLayout}
             {...restProps}
           >
+            {children}
             {variant === 'highlight' && (
               <PressableFeedbackHighlight
                 animation={animation as PressableFeedbackHighlightRootAnimation}
@@ -109,7 +112,6 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
                 animation={animation as PressableFeedbackRippleRootAnimation}
               />
             )}
-            {children}
           </AnimatedPressable>
         </GestureDetector>
       </PressableFeedbackAnimationProvider>

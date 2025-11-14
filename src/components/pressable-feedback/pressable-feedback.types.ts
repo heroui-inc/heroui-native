@@ -37,7 +37,7 @@ export type PressableFeedbackHighlightAnimation = AnimationValue<{
   opacity?: AnimationValue<{
     /**
      * Opacity values [unpressed, pressed]
-     * @default [0, 0.1]
+     * @default [0, 0.05]
      */
     value?: [number, number];
     /**
@@ -78,7 +78,7 @@ export type PressableFeedbackRippleAnimation = AnimationValue<{
   opacity?: AnimationValue<{
     /**
      * Opacity values [start, peak, end] for ripple animation
-     * @default [0, 1, 0]
+     * @default [0, 0.1, 0]
      */
     value?: [number, number, number];
     /**

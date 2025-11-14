@@ -154,6 +154,29 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     [btnWidth]
   );
 
+  const highlightAnimation = useMemo(() => {
+    const customHighlight = animationConfig?.highlight;
+
+    // If custom highlight is explicitly disabled, pass it through
+    if (customHighlight === false || customHighlight === 'disabled') {
+      return customHighlight;
+    }
+
+    // Otherwise merge with defaults
+    return {
+      backgroundColor: {
+        value: highlightColorMap,
+        ...(typeof customHighlight === 'object'
+          ? customHighlight.backgroundColor
+          : {}),
+      },
+      opacity: {
+        value: [0, 1] as [number, number],
+        ...(typeof customHighlight === 'object' ? customHighlight.opacity : {}),
+      },
+    };
+  }, [animationConfig?.highlight, highlightColorMap]);
+
   return (
     <ButtonProvider value={contextValue}>
       <PressableFeedback
@@ -166,12 +189,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         onLayout={handleLayout}
         accessibilityRole={accessibilityRole}
         accessibilityState={{ disabled: isDisabled }}
-        variant="highlight"
-        animationConfig={{
-          color: highlightColorMap,
-          opacity: 1,
-          ...animationConfig?.highlight,
-        }}
+        animation={highlightAnimation}
         {...restProps}
       >
         {stringifiedChildren ? (

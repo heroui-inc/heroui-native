@@ -1,47 +1,46 @@
-import type {
-  PressableProps as RNPressableProps,
-  ViewProps,
-} from 'react-native';
+import type { PressableProps as RNPressableProps } from 'react-native';
 import type {
   AnimatedProps,
   SharedValue,
   WithTimingConfig,
 } from 'react-native-reanimated';
+import type { Animation, AnimationValue } from '../../helpers/types';
 
 /**
- * Variant types for the PressableFeedback component
+ * Animation configuration for PressableFeedback highlight overlay
  */
-export type PressableFeedbackVariant = 'highlight';
-
-/**
- * Configuration for highlight animation
- */
-export interface HighlightAnimationConfig {
+export type PressableFeedbackHighlightAnimation = Animation<{
   /**
-   * Opacity when the component is pressed
-   * @default 0.2
+   * Opacity animation for the highlight overlay
    */
-  opacity?: number;
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [unpressed, pressed]
+     * @default [0, 0.1]
+     */
+    value?: [number, number];
+    /**
+     * Animation timing configuration
+     * @default { duration: 200 }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
   /**
-   * Color of the highlight effect
-   * @default 'black' for light theme, 'white' for dark theme
+   * Background color of the highlight overlay
    */
-  color?: string;
-  /**
-   * Configuration for highlight animation
-   */
-  config?: WithTimingConfig;
-  /**
-   * Whether the highlight effect is disabled
-   * @default false
-   */
-  isDisabled?: boolean;
-}
+  backgroundColor?: AnimationValue<{
+    /**
+     * Background color value
+     * @default Computed based on theme (brighten for dark, darken for light)
+     */
+    value?: string;
+  }>;
+}>;
 
 /**
  * Common props shared by both ripple and highlight variants
  */
-export interface PressableFeedbackCommonProps
+export interface PressableFeedbackBaseProps
   extends AnimatedProps<Omit<RNPressableProps, 'children' | 'disabled'>> {
   /**
    * Whether the pressable component is disabled
@@ -61,21 +60,17 @@ export interface PressableFeedbackCommonProps
 /**
  * Props for PressableFeedback component
  */
-export type PressableFeedbackProps = PressableFeedbackCommonProps & {
+export type PressableFeedbackProps = PressableFeedbackBaseProps & {
   /**
-   * Variant to use highlight effect
+   * Animation configuration for the highlight overlay
    */
-  variant?: 'highlight';
-  /**
-   * Configuration for highlight animation
-   */
-  animationConfig?: HighlightAnimationConfig;
+  animation?: PressableFeedbackHighlightAnimation;
 };
 
 /**
- * Internal Props for HighlightComponent
+ * Context value for PressableFeedback animation state
  */
-export interface HighlightComponentProps extends AnimatedProps<ViewProps> {
-  animationConfig: HighlightAnimationConfig;
+export interface PressableFeedbackAnimationContextValue {
+  /** Shared value tracking if component is pressed */
   isPressed: SharedValue<boolean>;
 }

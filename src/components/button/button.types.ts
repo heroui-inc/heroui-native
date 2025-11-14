@@ -1,7 +1,7 @@
 import type { TextProps } from 'react-native';
 import type { WithTimingConfig } from 'react-native-reanimated';
 import type {
-  HighlightAnimationConfig,
+  PressableFeedbackHighlightAnimation,
   PressableFeedbackProps,
 } from '../pressable-feedback';
 
@@ -25,7 +25,7 @@ export type ButtonVariant =
  * Configuration for button animations
  */
 export interface AnimationConfig {
-  highlight?: HighlightAnimationConfig;
+  highlight?: PressableFeedbackHighlightAnimation;
   scale?: {
     /**
      * Animation target value for scale

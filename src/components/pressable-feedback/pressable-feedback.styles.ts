@@ -1,18 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
-const root = tv({
+const pressableFeedbackStyles = tv({
   base: 'overflow-hidden',
-});
-
-const ripple = tv({
-  base: 'absolute pointer-events-none',
-});
-
-const pressableFeedbackStyles = combineStyles({
-  root,
-  ripple,
 });
 
 export default pressableFeedbackStyles;

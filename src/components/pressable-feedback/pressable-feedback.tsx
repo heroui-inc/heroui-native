@@ -26,6 +26,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
     const {
       isDisabled = false,
       className,
+      style,
       children,
       onLayout,
       ...restProps
@@ -41,6 +42,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       containerHeight,
       rippleProgress,
       gesture,
+      rContainerStyle,
     } = usePressableFeedbackRootAnimation();
 
     const handleLayout = useCallback(
@@ -79,12 +81,12 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
             ref={ref}
             disabled={isDisabled}
             className={tvStyles}
+            style={[rContainerStyle, style]}
             onLayout={handleLayout}
             {...restProps}
           >
-            {/* <PressableFeedbackHighlight animation={animation} /> */}
-            <PressableFeedbackRipple />
             {children}
+            <PressableFeedbackRipple />
           </AnimatedPressable>
         </GestureDetector>
       </PressableFeedbackAnimationProvider>

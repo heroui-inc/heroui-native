@@ -34,6 +34,7 @@ export { PressableFeedbackAnimationProvider, usePressableFeedbackAnimation };
  */
 export function usePressableFeedbackRootAnimation() {
   const isPressed = useSharedValue(false);
+  const scale = useSharedValue(0);
   const pressedCenterX = useSharedValue(0);
   const pressedCenterY = useSharedValue(0);
   const containerWidth = useSharedValue(0);
@@ -46,14 +47,31 @@ export function usePressableFeedbackRootAnimation() {
       pressedCenterX.set(event.x);
       pressedCenterY.set(event.y);
       isPressed.set(true);
+      scale.set(withTiming(1, { duration: 250 }));
       if (rippleProgress.get() === 0) {
         rippleProgress.set(withTiming(1, { duration: 250 }));
       }
     })
     .onFinalize(() => {
       isPressed.set(false);
+      scale.set(withTiming(0, { duration: 250 }));
       rippleProgress.set(withTiming(2, { duration: 400 }));
     });
+
+  const rContainerStyle = useAnimatedStyle(() => {
+    const baseWidth = 300;
+    const coefficient =
+      containerWidth.get() > 0 ? baseWidth / containerWidth.get() : 1;
+    const adjustedScaleValue = 1 - (1 - 0.99) * coefficient;
+
+    return {
+      transform: [
+        {
+          scale: interpolate(scale.get(), [0, 1], [1, adjustedScaleValue]),
+        },
+      ],
+    };
+  });
 
   return {
     isPressed,
@@ -63,6 +81,7 @@ export function usePressableFeedbackRootAnimation() {
     containerHeight,
     rippleProgress,
     gesture,
+    rContainerStyle,
   };
 }
 
@@ -160,7 +179,7 @@ export function usePressableFeedbackRippleAnimation() {
       borderRadius: circleRadius,
       opacity: withTiming(
         interpolate(rippleProgress.get(), [0, 1, 2], [0, 1, 0]),
-        { duration: 40 }
+        { duration: 30 }
       ),
       transform: [
         {
@@ -172,7 +191,7 @@ export function usePressableFeedbackRippleAnimation() {
         {
           scale: withTiming(
             interpolate(rippleProgress.get(), [0, 1, 2], [0, 1, 1]),
-            { duration: 40 }
+            { duration: 30 }
           ),
         },
       ],

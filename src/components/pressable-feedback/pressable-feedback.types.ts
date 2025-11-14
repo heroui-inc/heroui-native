@@ -4,7 +4,32 @@ import type {
   SharedValue,
   WithTimingConfig,
 } from 'react-native-reanimated';
-import type { Animation, AnimationValue } from '../../helpers/types';
+import type {
+  Animation,
+  AnimationRoot,
+  AnimationValue,
+} from '../../helpers/types';
+
+/**
+ * Animation configuration for PressableFeedback root component
+ */
+export type PressableFeedbackRootAnimation = AnimationRoot<{
+  /**
+   * Scale animation for the root container
+   */
+  scale?: AnimationValue<{
+    /**
+     * Scale value when pressed
+     * @default 0.99
+     */
+    value?: number;
+    /**
+     * Animation timing configuration
+     * @default { duration: 250 }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+}>;
 
 /**
  * Animation configuration for PressableFeedback highlight overlay
@@ -38,10 +63,50 @@ export type PressableFeedbackHighlightAnimation = Animation<{
 }>;
 
 /**
+ * Animation configuration for PressableFeedback ripple effect
+ */
+export type PressableFeedbackRippleAnimation = Animation<{
+  /**
+   * Opacity animation for the ripple effect
+   */
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [start, peak, end] for ripple animation
+     * @default [0, 1, 0]
+     */
+    value?: [number, number, number];
+    /**
+     * Animation timing configuration
+     * Note: Timing configs are applied to interpolated values. It's not recommended
+     * to keep duration higher than 80ms as the ripple effect will be weak.
+     * @default { duration: 40 }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+  /**
+   * Scale animation for the ripple effect
+   */
+  scale?: AnimationValue<{
+    /**
+     * Scale values [start, peak, end] for ripple animation
+     * @default [0, 1, 1]
+     */
+    value?: [number, number, number];
+    /**
+     * Animation timing configuration
+     * Note: Timing configs are applied to interpolated values. It's not recommended
+     * to keep duration higher than 80ms as the ripple effect will be weak.
+     * @default { duration: 30 }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+}>;
+
+/**
  * Common props shared by both ripple and highlight variants
  */
 export interface PressableFeedbackBaseProps
-  extends AnimatedProps<Omit<RNPressableProps, 'children' | 'disabled'>> {
+  extends AnimatedProps<Omit<RNPressableProps, 'disabled'>> {
   /**
    * Whether the pressable component is disabled
    * @default false

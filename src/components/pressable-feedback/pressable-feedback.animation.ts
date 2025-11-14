@@ -18,6 +18,7 @@ import type {
   PressableFeedbackAnimation,
   PressableFeedbackAnimationContextValue,
   PressableFeedbackHighlightRootAnimation,
+  PressableFeedbackRippleRootAnimation,
   PressableFeedbackVariant,
 } from './pressable-feedback.types';
 
@@ -84,7 +85,7 @@ export function usePressableFeedbackRootAnimation(options: {
       isPressed.set(false);
       scale.set(withTiming(0, scaleTimingConfig));
 
-      if (variant === 'ripple') return;
+      if (variant === 'highlight') return;
 
       rippleProgress.set(withTiming(2, { duration: 400 }));
     });
@@ -198,7 +199,13 @@ export function usePressableFeedbackHighlightAnimation(options: {
  * Animation hook for PressableFeedback ripple effect
  * Handles ripple circle animation with radial gradient
  */
-export function usePressableFeedbackRippleAnimation() {
+export function usePressableFeedbackRippleAnimation(options: {
+  animation: PressableFeedbackRippleRootAnimation | undefined;
+}) {
+  const { animation } = options;
+
+  const { theme } = useUniwind();
+
   const {
     pressedCenterX,
     pressedCenterY,
@@ -207,6 +214,43 @@ export function usePressableFeedbackRippleAnimation() {
     rippleProgress,
   } = usePressableFeedbackAnimation();
 
+  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
+
+  // Background color
+  const defaultColor = theme === 'dark' ? 'white' : 'black';
+
+  const backgroundColor = getAnimationValueProperty({
+    animationValue: animationConfig?.ripple?.backgroundColor,
+    property: 'value',
+    defaultValue: defaultColor,
+  });
+
+  // Opacity animation
+  const opacityValue = getAnimationValueProperty({
+    animationValue: animationConfig?.ripple?.opacity,
+    property: 'value',
+    defaultValue: [0, 1, 0] as [number, number, number],
+  });
+
+  const opacityTimingConfig = getAnimationValueMergedConfig({
+    animationValue: animationConfig?.ripple?.opacity,
+    property: 'timingConfig',
+    defaultValue: { duration: 30 },
+  });
+
+  // Scale animation
+  const scaleValue = getAnimationValueProperty({
+    animationValue: animationConfig?.ripple?.scale,
+    property: 'value',
+    defaultValue: [0, 1, 1] as [number, number, number],
+  });
+
+  const scaleTimingConfig = getAnimationValueMergedConfig({
+    animationValue: animationConfig?.ripple?.scale,
+    property: 'timingConfig',
+    defaultValue: { duration: 30 },
+  });
+
   const rContainerStyle = useAnimatedStyle(() => {
     const circleRadius =
       Math.sqrt(containerWidth.get() ** 2 + containerHeight.get() ** 2) * 1.25;
@@ -214,25 +258,33 @@ export function usePressableFeedbackRippleAnimation() {
     const translateX = pressedCenterX.get() - circleRadius;
     const translateY = pressedCenterY.get() - circleRadius;
 
+    if (isAnimationDisabled) {
+      return {};
+    }
+
     return {
       width: circleRadius * 2,
       height: circleRadius * 2,
       borderRadius: circleRadius,
       opacity: withTiming(
-        interpolate(rippleProgress.get(), [0, 1, 2], [0, 1, 0]),
-        { duration: 30 }
+        interpolate(
+          rippleProgress.get(),
+          [0, 1, 2],
+          [opacityValue[0], opacityValue[1], opacityValue[2]]
+        ),
+        opacityTimingConfig
       ),
       transform: [
-        {
-          translateX,
-        },
-        {
-          translateY,
-        },
+        { translateX },
+        { translateY },
         {
           scale: withTiming(
-            interpolate(rippleProgress.get(), [0, 1, 2], [0, 1, 1]),
-            { duration: 30 }
+            interpolate(
+              rippleProgress.get(),
+              [0, 1, 2],
+              [scaleValue[0], scaleValue[1], scaleValue[2]]
+            ),
+            scaleTimingConfig
           ),
         },
       ],
@@ -241,5 +293,6 @@ export function usePressableFeedbackRippleAnimation() {
 
   return {
     rContainerStyle,
+    backgroundColor,
   };
 }

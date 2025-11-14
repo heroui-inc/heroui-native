@@ -14,14 +14,15 @@ const DefaultContent = () => {
       <View className="flex-row items-center justify-center gap-4">
         <PressableFeedback
           className="bg-surface rounded-2xl h-[150px] w-full items-center justify-center"
-          animation={false}
-        >
-          <StyledIonicons
-            name="checkmark"
-            size={32}
-            className="text-surface-foreground"
-          />
-        </PressableFeedback>
+          variant="ripple"
+          animation={{
+            ripple: {
+              backgroundColor: {
+                value: 'pink',
+              },
+            },
+          }}
+        />
         {/* <PressableFeedback className="bg-accent rounded-2xl h-24 w-24 items-center justify-center">
           <StyledIonicons
             name="heart"

@@ -10,7 +10,6 @@ import Animated from 'react-native-reanimated';
 import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
 
 import { GestureDetector } from 'react-native-gesture-handler';
-import { useThemeColor } from '../../helpers/theme';
 import type { PressableRef } from '../../helpers/types';
 import {
   PressableFeedbackAnimationProvider,
@@ -23,7 +22,7 @@ import pressableFeedbackStyles from './pressable-feedback.styles';
 import type {
   PressableFeedbackHighlightRootAnimation,
   PressableFeedbackProps,
-  PressableFeedbackRippleAnimation,
+  PressableFeedbackRippleRootAnimation,
 } from './pressable-feedback.types';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -105,6 +104,11 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
                 animation={animation as PressableFeedbackHighlightRootAnimation}
               />
             )}
+            {variant === 'ripple' && (
+              <PressableFeedbackRipple
+                animation={animation as PressableFeedbackRippleRootAnimation}
+              />
+            )}
             {children}
           </AnimatedPressable>
         </GestureDetector>
@@ -133,11 +137,10 @@ const PressableFeedbackHighlight: FC<{
 // --------------------------------------------------
 
 const PressableFeedbackRipple: FC<{
-  animation: PressableFeedbackRippleAnimation;
-}> = () => {
-  const { rContainerStyle } = usePressableFeedbackRippleAnimation();
-
-  const themeColorSurfaceSecondary = useThemeColor('on-surface-hover');
+  animation: PressableFeedbackRippleRootAnimation | undefined;
+}> = ({ animation }) => {
+  const { rContainerStyle, backgroundColor } =
+    usePressableFeedbackRippleAnimation({ animation });
 
   return (
     <Animated.View
@@ -148,21 +151,9 @@ const PressableFeedbackRipple: FC<{
       <Svg width="100%" height="100%">
         <Defs>
           <RadialGradient id="rippleGradient" cx="50%" cy="50%" r="50%">
-            <Stop
-              offset="0%"
-              stopOpacity="1"
-              stopColor={themeColorSurfaceSecondary}
-            />
-            <Stop
-              offset="80%"
-              stopOpacity="0.8"
-              stopColor={themeColorSurfaceSecondary}
-            />
-            <Stop
-              offset="100%"
-              stopOpacity="0"
-              stopColor={themeColorSurfaceSecondary}
-            />
+            <Stop offset="0%" stopOpacity="1" stopColor={backgroundColor} />
+            <Stop offset="80%" stopOpacity="0.8" stopColor={backgroundColor} />
+            <Stop offset="100%" stopOpacity="0" stopColor={backgroundColor} />
           </RadialGradient>
         </Defs>
         <Rect

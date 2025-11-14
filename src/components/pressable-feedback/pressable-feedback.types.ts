@@ -73,4 +73,14 @@ export type PressableFeedbackProps = PressableFeedbackBaseProps & {
 export interface PressableFeedbackAnimationContextValue {
   /** Shared value tracking if component is pressed */
   isPressed: SharedValue<boolean>;
+  /** Shared value tracking the center X position of the press */
+  pressedCenterX: SharedValue<number>;
+  /** Shared value tracking the center Y position of the press */
+  pressedCenterY: SharedValue<number>;
+  /** Shared value tracking the container width */
+  containerWidth: SharedValue<number>;
+  /** Shared value tracking the container height */
+  containerHeight: SharedValue<number>;
+  /** Shared value tracking the ripple progress */
+  rippleProgress: SharedValue<number>;
 }

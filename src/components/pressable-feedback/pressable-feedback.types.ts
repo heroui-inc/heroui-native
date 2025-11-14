@@ -4,37 +4,33 @@ import type {
   SharedValue,
   WithTimingConfig,
 } from 'react-native-reanimated';
-import type {
-  Animation,
-  AnimationRoot,
-  AnimationValue,
-} from '../../helpers/types';
+import type { Animation, AnimationValue } from '../../helpers/types';
 
 /**
- * Animation configuration for PressableFeedback root component
+ * Variant of the feedback effect
  */
-export type PressableFeedbackRootAnimation = AnimationRoot<{
+export type PressableFeedbackVariant = 'highlight' | 'ripple';
+
+/**
+ * Scale animation configuration for PressableFeedback root container
+ */
+export type PressableFeedbackScaleAnimation = AnimationValue<{
   /**
-   * Scale animation for the root container
+   * Scale value when pressed
+   * @default 0.99
    */
-  scale?: AnimationValue<{
-    /**
-     * Scale value when pressed
-     * @default 0.99
-     */
-    value?: number;
-    /**
-     * Animation timing configuration
-     * @default { duration: 250 }
-     */
-    timingConfig?: WithTimingConfig;
-  }>;
+  value?: number;
+  /**
+   * Animation timing configuration
+   * @default { duration: 200 }
+   */
+  timingConfig?: WithTimingConfig;
 }>;
 
 /**
  * Animation configuration for PressableFeedback highlight overlay
  */
-export type PressableFeedbackHighlightAnimation = Animation<{
+export type PressableFeedbackHighlightAnimation = AnimationValue<{
   /**
    * Opacity animation for the highlight overlay
    */
@@ -65,7 +61,17 @@ export type PressableFeedbackHighlightAnimation = Animation<{
 /**
  * Animation configuration for PressableFeedback ripple effect
  */
-export type PressableFeedbackRippleAnimation = Animation<{
+export type PressableFeedbackRippleAnimation = AnimationValue<{
+  /**
+   * Background color of the ripple effect
+   */
+  backgroundColor?: AnimationValue<{
+    /**
+     * Background color value
+     * @default Computed based on theme (brighten for dark, darken for light)
+     */
+    value?: string;
+  }>;
   /**
    * Opacity animation for the ripple effect
    */
@@ -79,7 +85,7 @@ export type PressableFeedbackRippleAnimation = Animation<{
      * Animation timing configuration
      * Note: Timing configs are applied to interpolated values. It's not recommended
      * to keep duration higher than 80ms as the ripple effect will be weak.
-     * @default { duration: 40 }
+     * @default { duration: 30 }
      */
     timingConfig?: WithTimingConfig;
   }>;
@@ -103,6 +109,38 @@ export type PressableFeedbackRippleAnimation = Animation<{
 }>;
 
 /**
+ * Animation configuration for PressableFeedback root component with highlight variant
+ */
+export type PressableFeedbackHighlightRootAnimation = Animation<{
+  /**
+   * Scale animation for the root container
+   */
+  scale?: PressableFeedbackScaleAnimation;
+  /**
+   * Highlight overlay animation configuration
+   */
+  highlight?: PressableFeedbackHighlightAnimation;
+}>;
+
+/**
+ * Animation configuration for PressableFeedback root component with ripple variant
+ */
+export type PressableFeedbackRippleRootAnimation = Animation<{
+  /**
+   * Scale animation for the root container
+   */
+  scale?: PressableFeedbackScaleAnimation;
+  /**
+   * Ripple effect animation configuration
+   */
+  ripple?: PressableFeedbackRippleAnimation;
+}>;
+
+export type PressableFeedbackAnimation =
+  | PressableFeedbackHighlightRootAnimation
+  | PressableFeedbackRippleRootAnimation;
+
+/**
  * Common props shared by both ripple and highlight variants
  */
 export interface PressableFeedbackBaseProps
@@ -123,14 +161,41 @@ export interface PressableFeedbackBaseProps
 }
 
 /**
- * Props for PressableFeedback component
+ * Props for PressableFeedback component with highlight variant
  */
-export type PressableFeedbackProps = PressableFeedbackBaseProps & {
+export type PressableFeedbackHighlightProps = PressableFeedbackBaseProps & {
+  /**
+   * Variant of the feedback effect
+   * @default 'highlight'
+   */
+  variant?: Extract<PressableFeedbackVariant, 'highlight'>;
   /**
    * Animation configuration for the highlight overlay
    */
-  animation?: PressableFeedbackHighlightAnimation;
+  animation?: PressableFeedbackHighlightRootAnimation;
 };
+
+/**
+ * Props for PressableFeedback component with ripple variant
+ */
+export type PressableFeedbackRippleProps = PressableFeedbackBaseProps & {
+  /**
+   * Variant of the feedback effect
+   * @default 'highlight'
+   */
+  variant: Extract<PressableFeedbackVariant, 'ripple'>;
+  /**
+   * Animation configuration for the ripple effect
+   */
+  animation?: PressableFeedbackRippleRootAnimation;
+};
+
+/**
+ * Props for PressableFeedback component
+ */
+export type PressableFeedbackProps =
+  | PressableFeedbackHighlightProps
+  | PressableFeedbackRippleProps;
 
 /**
  * Context value for PressableFeedback animation state

@@ -1,5 +1,10 @@
 import { forwardRef, useCallback, useMemo, type FC } from 'react';
-import { Pressable, StyleSheet, type LayoutChangeEvent } from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  type LayoutChangeEvent,
+  type ViewStyle,
+} from 'react-native';
 
 import Animated from 'react-native-reanimated';
 import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
@@ -15,7 +20,11 @@ import {
 } from './pressable-feedback.animation';
 import { DISPLAY_NAME } from './pressable-feedback.constants';
 import pressableFeedbackStyles from './pressable-feedback.styles';
-import type { PressableFeedbackProps } from './pressable-feedback.types';
+import type {
+  PressableFeedbackHighlightRootAnimation,
+  PressableFeedbackProps,
+  PressableFeedbackRippleAnimation,
+} from './pressable-feedback.types';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -24,9 +33,11 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
   (props, ref) => {
     const {
+      variant = 'highlight',
       isDisabled = false,
       className,
       style,
+      animation,
       children,
       onLayout,
       ...restProps
@@ -43,7 +54,11 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       rippleProgress,
       gesture,
       rContainerStyle,
-    } = usePressableFeedbackRootAnimation();
+    } = usePressableFeedbackRootAnimation({
+      variant,
+      animation,
+      style: style as ViewStyle | undefined,
+    });
 
     const handleLayout = useCallback(
       (event: LayoutChangeEvent) => {
@@ -85,8 +100,12 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
             onLayout={handleLayout}
             {...restProps}
           >
+            {variant === 'highlight' && (
+              <PressableFeedbackHighlight
+                animation={animation as PressableFeedbackHighlightRootAnimation}
+              />
+            )}
             {children}
-            <PressableFeedbackRipple />
           </AnimatedPressable>
         </GestureDetector>
       </PressableFeedbackAnimationProvider>
@@ -97,7 +116,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
 // --------------------------------------------------
 
 const PressableFeedbackHighlight: FC<{
-  animation: PressableFeedbackProps['animation'];
+  animation: PressableFeedbackHighlightRootAnimation | undefined;
 }> = ({ animation }) => {
   const { rContainerStyle } = usePressableFeedbackHighlightAnimation({
     animation,
@@ -113,7 +132,9 @@ const PressableFeedbackHighlight: FC<{
 
 // --------------------------------------------------
 
-const PressableFeedbackRipple: FC<{}> = () => {
+const PressableFeedbackRipple: FC<{
+  animation: PressableFeedbackRippleAnimation;
+}> = () => {
   const { rContainerStyle } = usePressableFeedbackRippleAnimation();
 
   const themeColorSurfaceSecondary = useThemeColor('on-surface-hover');

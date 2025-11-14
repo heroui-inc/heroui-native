@@ -1,22 +1,24 @@
+import type { ViewStyle } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
 import {
-  Easing,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 import { useUniwind } from 'uniwind';
-import { colorKit, useThemeColor } from '../../helpers/theme';
 import { createContext } from '../../helpers/utils';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
+  getStyleTransform,
 } from '../../helpers/utils/animation';
 import type {
+  PressableFeedbackAnimation,
   PressableFeedbackAnimationContextValue,
-  PressableFeedbackHighlightAnimation,
+  PressableFeedbackHighlightRootAnimation,
+  PressableFeedbackVariant,
 } from './pressable-feedback.types';
 
 const [PressableFeedbackAnimationProvider, usePressableFeedbackAnimation] =
@@ -30,9 +32,31 @@ export { PressableFeedbackAnimationProvider, usePressableFeedbackAnimation };
 
 /**
  * Animation hook for PressableFeedback root component
- * Handles ripple gesture and shared values
+ * Handles gesture, shared values, and scale animation
  */
-export function usePressableFeedbackRootAnimation() {
+export function usePressableFeedbackRootAnimation(options: {
+  variant: PressableFeedbackVariant;
+  animation: PressableFeedbackAnimation | undefined;
+  style: ViewStyle | undefined;
+}) {
+  const { variant, animation, style } = options;
+
+  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
+
+  // Scale animation values
+  const scaleValue = getAnimationValueProperty({
+    animationValue: animationConfig?.scale,
+    property: 'value',
+    defaultValue: 0.99,
+  });
+
+  const scaleTimingConfig = getAnimationValueMergedConfig({
+    animationValue: animationConfig?.scale,
+    property: 'timingConfig',
+    defaultValue: { duration: 200 },
+  });
+
+  // Shared values
   const isPressed = useSharedValue(false);
   const scale = useSharedValue(0);
   const pressedCenterX = useSharedValue(0);
@@ -41,34 +65,55 @@ export function usePressableFeedbackRootAnimation() {
   const containerHeight = useSharedValue(0);
   const rippleProgress = useSharedValue(0);
 
+  // Gesture handling
   const gesture = Gesture.Pan()
     .onBegin((event) => {
+      isPressed.set(true);
+      scale.set(withTiming(1, scaleTimingConfig));
+
+      if (variant === 'highlight') return;
+
       rippleProgress.set(0);
       pressedCenterX.set(event.x);
       pressedCenterY.set(event.y);
-      isPressed.set(true);
-      scale.set(withTiming(1, { duration: 250 }));
       if (rippleProgress.get() === 0) {
         rippleProgress.set(withTiming(1, { duration: 250 }));
       }
     })
     .onFinalize(() => {
       isPressed.set(false);
-      scale.set(withTiming(0, { duration: 250 }));
+      scale.set(withTiming(0, scaleTimingConfig));
+
+      if (variant === 'ripple') return;
+
       rippleProgress.set(withTiming(2, { duration: 400 }));
     });
+
+  const styleTransform = getStyleTransform(style);
 
   const rContainerStyle = useAnimatedStyle(() => {
     const baseWidth = 300;
     const coefficient =
       containerWidth.get() > 0 ? baseWidth / containerWidth.get() : 1;
-    const adjustedScaleValue = 1 - (1 - 0.99) * coefficient;
+    const adjustedScaleValue = 1 - (1 - scaleValue) * coefficient;
+
+    if (isAnimationDisabled) {
+      return {
+        transform: [
+          {
+            scale: 1,
+          },
+          ...styleTransform,
+        ],
+      };
+    }
 
     return {
       transform: [
         {
           scale: interpolate(scale.get(), [0, 1], [1, adjustedScaleValue]),
         },
+        ...styleTransform,
       ],
     };
   });
@@ -92,40 +137,36 @@ export function usePressableFeedbackRootAnimation() {
  * Handles opacity and background color animations for the highlight effect
  */
 export function usePressableFeedbackHighlightAnimation(options: {
-  animation: PressableFeedbackHighlightAnimation | undefined;
+  animation: PressableFeedbackHighlightRootAnimation | undefined;
 }) {
   const { animation } = options;
 
   const { theme } = useUniwind();
-  const themeColorBackground = useThemeColor('background');
 
   const { isPressed } = usePressableFeedbackAnimation();
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
+  // Background color
+  const defaultColor = theme === 'dark' ? 'white' : 'gray';
+
+  const backgroundColor = getAnimationValueProperty({
+    animationValue: animationConfig?.highlight?.backgroundColor,
+    property: 'value',
+    defaultValue: defaultColor,
+  });
+
   // Opacity animation
   const opacityValue = getAnimationValueProperty({
-    animationValue: animationConfig?.opacity,
+    animationValue: animationConfig?.highlight?.opacity,
     property: 'value',
-    defaultValue: [0, 0.1] as [number, number],
+    defaultValue: [0, 0.05] as [number, number],
   });
 
   const opacityTimingConfig = getAnimationValueMergedConfig({
-    animationValue: animationConfig?.opacity,
+    animationValue: animationConfig?.highlight?.opacity,
     property: 'timingConfig',
-    defaultValue: { duration: 200, easing: Easing.inOut(Easing.quad) },
-  });
-
-  // Background color
-  const defaultColor =
-    theme === 'dark'
-      ? colorKit.brighten(themeColorBackground, 0.05).hex()
-      : colorKit.darken(themeColorBackground, 0.05).hex();
-
-  const backgroundColor = getAnimationValueProperty({
-    animationValue: animationConfig?.backgroundColor,
-    property: 'value',
-    defaultValue: defaultColor,
+    defaultValue: { duration: 200 },
   });
 
   const rContainerStyle = useAnimatedStyle(() => {

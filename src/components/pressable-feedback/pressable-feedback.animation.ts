@@ -1,6 +1,7 @@
 import { Gesture } from 'react-native-gesture-handler';
 import {
   Easing,
+  interpolate,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -45,7 +46,9 @@ export function usePressableFeedbackRootAnimation() {
       pressedCenterX.set(event.x);
       pressedCenterY.set(event.y);
       isPressed.set(true);
-      rippleProgress.set(withTiming(1, { duration: 200 }));
+      if (rippleProgress.get() === 0) {
+        rippleProgress.set(withTiming(1, { duration: 250 }));
+      }
     })
     .onFinalize(() => {
       isPressed.set(false);
@@ -126,5 +129,57 @@ export function usePressableFeedbackHighlightAnimation(options: {
   return {
     rContainerStyle,
     isPressed,
+  };
+}
+
+// --------------------------------------------------
+
+/**
+ * Animation hook for PressableFeedback ripple effect
+ * Handles ripple circle animation with radial gradient
+ */
+export function usePressableFeedbackRippleAnimation() {
+  const {
+    pressedCenterX,
+    pressedCenterY,
+    containerWidth,
+    containerHeight,
+    rippleProgress,
+  } = usePressableFeedbackAnimation();
+
+  const rContainerStyle = useAnimatedStyle(() => {
+    const circleRadius =
+      Math.sqrt(containerWidth.get() ** 2 + containerHeight.get() ** 2) * 1.25;
+
+    const translateX = pressedCenterX.get() - circleRadius;
+    const translateY = pressedCenterY.get() - circleRadius;
+
+    return {
+      width: circleRadius * 2,
+      height: circleRadius * 2,
+      borderRadius: circleRadius,
+      opacity: withTiming(
+        interpolate(rippleProgress.get(), [0, 1, 2], [0, 1, 0]),
+        { duration: 40 }
+      ),
+      transform: [
+        {
+          translateX,
+        },
+        {
+          translateY,
+        },
+        {
+          scale: withTiming(
+            interpolate(rippleProgress.get(), [0, 1, 2], [0, 1, 1]),
+            { duration: 40 }
+          ),
+        },
+      ],
+    };
+  });
+
+  return {
+    rContainerStyle,
   };
 }

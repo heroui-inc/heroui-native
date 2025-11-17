@@ -17,7 +17,19 @@ export type PressableFeedbackVariant = 'highlight' | 'ripple';
 export type PressableFeedbackScaleAnimation = AnimationValue<{
   /**
    * Scale value when pressed
-   * @default 0.99
+   * @default 0.98
+   *
+   * Note: The actual scale is automatically adjusted based on the container's width
+   * using a scale coefficient. This ensures the scale effect feels consistent across different
+   * container sizes:
+   * - Base width: 300px
+   * - If container width > 300px: scale adjustment decreases (less noticeable scale down)
+   * - If container width < 300px: scale adjustment increases (more noticeable scale down)
+   * - Example: 600px width → 0.5x coefficient → adjustedScale = 1 - (1 - 0.98) * 0.5 = 0.99
+   * - Example: 150px width → 2x coefficient → adjustedScale = 1 - (1 - 0.98) * 2 = 0.96
+   *
+   * This automatic scaling creates the same visual feel on different sized containers
+   * by adjusting the scale effect relative to the container size.
    */
   value?: number;
   /**
@@ -25,6 +37,15 @@ export type PressableFeedbackScaleAnimation = AnimationValue<{
    * @default { duration: 200 }
    */
   timingConfig?: WithTimingConfig;
+  /**
+   * Ignore the scale coefficient and use the scale value directly
+   *
+   * When set to true, the scale coefficient will return 1, meaning the actual scale
+   * will always equal the value regardless of the container's width.
+   *
+   * @default false
+   */
+  ignoreScaleCoefficient?: boolean;
 }>;
 
 /**
@@ -71,6 +92,46 @@ export type PressableFeedbackRippleAnimation = AnimationValue<{
      * @default Computed based on theme (brighten for dark, darken for light)
      */
     value?: string;
+  }>;
+  /**
+   * Progress animation configuration for the ripple effect
+   *
+   * This controls how the ripple progresses over time from the center to the edges.
+   * The progress is represented as a shared value that animates from 0 to 2:
+   * - 0 to 1: Initial expansion phase (press begins)
+   * - 1 to 2: Final expansion and fade out phase (press ends)
+   */
+  progress?: AnimationValue<{
+    /**
+     * Base duration for the ripple progress animation in milliseconds
+     *
+     * This value controls how fast the ripple progresses across the container.
+     * Lower values mean faster ripple expansion, higher values mean slower expansion.
+     *
+     * @default 500
+     *
+     * Note: The actual duration is automatically adjusted based on the container's diagonal size
+     * using a durationCoefficient. This ensures the ripple feels consistent across different
+     * container sizes:
+     * - Base diagonal: 450px
+     * - If container diagonal > 450px: duration increases proportionally (max 2x baseDuration)
+     * - If container diagonal < 450px: duration decreases proportionally
+     * - Example: 900px diagonal → 2x coefficient → duration = baseDuration * 2 (capped at 2x)
+     * - Example: 225px diagonal → 0.5x coefficient → duration = baseDuration * 0.5
+     *
+     * This automatic scaling creates the same visual feel on different sized containers
+     * by making the ripple travel at a consistent speed relative to the container size.
+     */
+    baseDuration?: number;
+    /**
+     * Ignore the duration coefficient and use the base duration directly
+     *
+     * When set to true, the durationCoefficient will return 1, meaning the actual duration
+     * will always equal baseDuration regardless of the container's diagonal size.
+     *
+     * @default false
+     */
+    ignoreDurationCoefficient?: boolean;
   }>;
   /**
    * Opacity animation for the ripple effect

@@ -13,7 +13,7 @@ const DefaultContent = () => {
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-4">
         <PressableFeedback
-          className="bg-surface rounded-2xl h-[100px] w-full items-center justify-center"
+          className="bg-surface rounded-2xl h-[500px] w-full items-center justify-center"
           variant="ripple"
         />
         {/* <PressableFeedback className="bg-accent rounded-2xl h-24 w-24 items-center justify-center">

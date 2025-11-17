@@ -3,6 +3,7 @@ import { Gesture } from 'react-native-gesture-handler';
 import {
   interpolate,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
@@ -14,6 +15,7 @@ import {
   getAnimationValueProperty,
   getStyleTransform,
 } from '../../helpers/utils/animation';
+import { BASE_RIPPLE_PROGRESS_DURATION } from './pressable-feedback.constants';
 import type {
   PressableFeedbackAnimation,
   PressableFeedbackAnimationContextValue,
@@ -48,13 +50,48 @@ export function usePressableFeedbackRootAnimation(options: {
   const scaleValue = getAnimationValueProperty({
     animationValue: animationConfig?.scale,
     property: 'value',
-    defaultValue: 0.99,
+    defaultValue: 0.98,
   });
 
   const scaleTimingConfig = getAnimationValueMergedConfig({
     animationValue: animationConfig?.scale,
     property: 'timingConfig',
     defaultValue: { duration: 200 },
+  });
+
+  const ignoreScaleCoefficient = getAnimationValueProperty({
+    animationValue: animationConfig?.scale,
+    property: 'ignoreScaleCoefficient',
+    defaultValue: false,
+  });
+
+  // Ripple progress animation values
+  const rippleProgressBaseDuration = getAnimationValueProperty({
+    animationValue:
+      variant === 'ripple'
+        ? (
+            animationConfig as Extract<
+              PressableFeedbackRippleRootAnimation,
+              Record<string, any>
+            >
+          )?.ripple?.progress
+        : undefined,
+    property: 'baseDuration',
+    defaultValue: BASE_RIPPLE_PROGRESS_DURATION,
+  });
+
+  const ignoreDurationCoefficient = getAnimationValueProperty({
+    animationValue:
+      variant === 'ripple'
+        ? (
+            animationConfig as Extract<
+              PressableFeedbackRippleRootAnimation,
+              Record<string, any>
+            >
+          )?.ripple?.progress
+        : undefined,
+    property: 'ignoreDurationCoefficient',
+    defaultValue: false,
   });
 
   // Shared values
@@ -65,6 +102,19 @@ export function usePressableFeedbackRootAnimation(options: {
   const containerWidth = useSharedValue(0);
   const containerHeight = useSharedValue(0);
   const rippleProgress = useSharedValue(0);
+
+  // Calculate duration coefficient based on diagonal to maintain consistent ripple speed
+  // across different container sizes. Base diagonal is 450px.
+  // Can be disabled by setting ignoreDurationCoefficient to true.
+  const durationCoefficient = useDerivedValue(() => {
+    if (ignoreDurationCoefficient) return 1;
+
+    const baseDiagonal = 450;
+    const currentDiagonal = Math.sqrt(
+      containerWidth.get() ** 2 + containerHeight.get() ** 2
+    );
+    return currentDiagonal > 0 ? currentDiagonal / baseDiagonal : 1;
+  });
 
   // Gesture handling
   const gesture = Gesture.Pan()
@@ -78,7 +128,11 @@ export function usePressableFeedbackRootAnimation(options: {
       pressedCenterX.set(event.x);
       pressedCenterY.set(event.y);
       if (rippleProgress.get() === 0) {
-        rippleProgress.set(withTiming(1, { duration: 250 }));
+        const adjustedDuration = Math.min(
+          rippleProgressBaseDuration * durationCoefficient.get(),
+          rippleProgressBaseDuration * 2
+        );
+        rippleProgress.set(withTiming(1, { duration: adjustedDuration }));
       }
     })
     .onFinalize(() => {
@@ -87,15 +141,23 @@ export function usePressableFeedbackRootAnimation(options: {
 
       if (variant === 'highlight') return;
 
-      rippleProgress.set(withTiming(2, { duration: 400 }));
+      const adjustedDuration = Math.min(
+        rippleProgressBaseDuration * durationCoefficient.get(),
+        rippleProgressBaseDuration * 2
+      );
+      rippleProgress.set(withTiming(2, { duration: adjustedDuration }));
     });
 
   const styleTransform = getStyleTransform(style);
 
   const rContainerStyle = useAnimatedStyle(() => {
-    const baseWidth = 300;
-    const coefficient =
-      containerWidth.get() > 0 ? baseWidth / containerWidth.get() : 1;
+    // Calculate scale coefficient to maintain consistent scale effect across different sizes
+    // Can be disabled by setting ignoreScaleCoefficient to true
+    const coefficient = ignoreScaleCoefficient
+      ? 1
+      : containerWidth.get() > 0
+        ? 300 / containerWidth.get()
+        : 1;
     const adjustedScaleValue = 1 - (1 - scaleValue) * coefficient;
 
     if (isAnimationDisabled) {

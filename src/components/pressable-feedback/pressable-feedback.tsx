@@ -43,6 +43,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
     const {
       variant = 'highlight',
       isDisabled = false,
+      feedbackPosition = 'top',
       className,
       style,
       animation,
@@ -97,6 +98,21 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       ]
     );
 
+    const feedbackElement = (
+      <>
+        {variant === 'highlight' && (
+          <PressableFeedbackHighlight
+            animation={animation as PressableFeedbackHighlightRootAnimation}
+          />
+        )}
+        {variant === 'ripple' && (
+          <PressableFeedbackRipple
+            animation={animation as PressableFeedbackRippleRootAnimation}
+          />
+        )}
+      </>
+    );
+
     return (
       <PressableFeedbackAnimationProvider value={animationContextValue}>
         <GestureDetector gesture={gesture}>
@@ -108,17 +124,9 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
             onLayout={handleLayout}
             {...restProps}
           >
+            {feedbackPosition === 'behind' && feedbackElement}
             {children}
-            {variant === 'highlight' && (
-              <PressableFeedbackHighlight
-                animation={animation as PressableFeedbackHighlightRootAnimation}
-              />
-            )}
-            {variant === 'ripple' && (
-              <PressableFeedbackRipple
-                animation={animation as PressableFeedbackRippleRootAnimation}
-              />
-            )}
+            {feedbackPosition === 'top' && feedbackElement}
           </AnimatedPressable>
         </GestureDetector>
       </PressableFeedbackAnimationProvider>

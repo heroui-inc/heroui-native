@@ -219,6 +219,15 @@ export interface PressableFeedbackBaseProps
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Controls the z-index positioning of the feedback effect relative to children
+   *
+   * - 'behind': Feedback effect renders behind children
+   * - 'top': Feedback effect renders on top of children (default)
+   *
+   * @default 'top'
+   */
+  feedbackPosition?: 'behind' | 'top';
 }
 
 /**

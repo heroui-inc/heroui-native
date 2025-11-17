@@ -1,4 +1,4 @@
-import type { PressableProps as RNPressableProps } from 'react-native';
+import type { PressableProps } from 'react-native';
 import type {
   AnimatedProps,
   SharedValue,
@@ -17,7 +17,7 @@ export type PressableFeedbackVariant = 'highlight' | 'ripple';
 export type PressableFeedbackScaleAnimation = AnimationValue<{
   /**
    * Scale value when pressed
-   * @default 0.98
+   * @default 0.985
    *
    * Note: The actual scale is automatically adjusted based on the container's width
    * using a scale coefficient. This ensures the scale effect feels consistent across different
@@ -34,7 +34,7 @@ export type PressableFeedbackScaleAnimation = AnimationValue<{
   value?: number;
   /**
    * Animation timing configuration
-   * @default { duration: 200 }
+   * @default { duration: 300, easing: Easing.out(Easing.ease) }
    */
   timingConfig?: WithTimingConfig;
   /**
@@ -108,7 +108,7 @@ export type PressableFeedbackRippleAnimation = AnimationValue<{
      * This value controls how fast the ripple progresses across the container.
      * Lower values mean faster ripple expansion, higher values mean slower expansion.
      *
-     * @default 500
+     * @default 1000
      *
      * Note: The actual duration is automatically adjusted based on the container's diagonal size
      * using a durationCoefficient. This ensures the ripple feels consistent across different
@@ -123,6 +123,15 @@ export type PressableFeedbackRippleAnimation = AnimationValue<{
      * by making the ripple travel at a consistent speed relative to the container size.
      */
     baseDuration?: number;
+    /**
+     * Minimum base duration for the ripple progress animation in milliseconds
+     *
+     * This sets a lower bound for the calculated duration after applying the duration coefficient.
+     * Useful for preventing the ripple animation from being too fast on small containers.
+     *
+     * @default undefined (no minimum)
+     */
+    minBaseDuration?: number;
     /**
      * Ignore the duration coefficient and use the base duration directly
      *
@@ -205,7 +214,7 @@ export type PressableFeedbackAnimation =
  * Common props shared by both ripple and highlight variants
  */
 export interface PressableFeedbackBaseProps
-  extends AnimatedProps<Omit<RNPressableProps, 'disabled'>> {
+  extends AnimatedProps<Omit<PressableProps, 'disabled'>> {
   /**
    * Whether the pressable component is disabled
    * @default false

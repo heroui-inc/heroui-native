@@ -1,6 +1,7 @@
 import type { ViewStyle } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
 import {
+  Easing,
   interpolate,
   useAnimatedStyle,
   useDerivedValue,
@@ -15,7 +16,10 @@ import {
   getAnimationValueProperty,
   getStyleTransform,
 } from '../../helpers/utils/animation';
-import { BASE_RIPPLE_PROGRESS_DURATION } from './pressable-feedback.constants';
+import {
+  BASE_RIPPLE_PROGRESS_DURATION,
+  BASE_RIPPLE_PROGRESS_DURATION_MIN,
+} from './pressable-feedback.constants';
 import type {
   PressableFeedbackAnimation,
   PressableFeedbackAnimationContextValue,
@@ -50,13 +54,13 @@ export function usePressableFeedbackRootAnimation(options: {
   const scaleValue = getAnimationValueProperty({
     animationValue: animationConfig?.scale,
     property: 'value',
-    defaultValue: 0.98,
+    defaultValue: 0.985,
   });
 
   const scaleTimingConfig = getAnimationValueMergedConfig({
     animationValue: animationConfig?.scale,
     property: 'timingConfig',
-    defaultValue: { duration: 200 },
+    defaultValue: { duration: 300, easing: Easing.out(Easing.ease) },
   });
 
   const ignoreScaleCoefficient = getAnimationValueProperty({
@@ -94,6 +98,20 @@ export function usePressableFeedbackRootAnimation(options: {
     defaultValue: false,
   });
 
+  const rippleProgressMinBaseDuration = getAnimationValueProperty({
+    animationValue:
+      variant === 'ripple'
+        ? (
+            animationConfig as Extract<
+              PressableFeedbackRippleRootAnimation,
+              Record<string, any>
+            >
+          )?.ripple?.progress
+        : undefined,
+    property: 'minBaseDuration',
+    defaultValue: BASE_RIPPLE_PROGRESS_DURATION_MIN,
+  });
+
   // Shared values
   const isPressed = useSharedValue(false);
   const scale = useSharedValue(0);
@@ -117,7 +135,8 @@ export function usePressableFeedbackRootAnimation(options: {
   });
 
   // Gesture handling
-  const gesture = Gesture.Pan()
+  const gesture = Gesture.Tap()
+    .maxDuration(30000)
     .onBegin((event) => {
       isPressed.set(true);
       scale.set(withTiming(1, scaleTimingConfig));
@@ -129,7 +148,10 @@ export function usePressableFeedbackRootAnimation(options: {
       pressedCenterY.set(event.y);
       if (rippleProgress.get() === 0) {
         const adjustedDuration = Math.min(
-          rippleProgressBaseDuration * durationCoefficient.get(),
+          Math.max(
+            rippleProgressBaseDuration * durationCoefficient.get(),
+            rippleProgressMinBaseDuration
+          ),
           rippleProgressBaseDuration * 2
         );
         rippleProgress.set(withTiming(1, { duration: adjustedDuration }));
@@ -138,11 +160,12 @@ export function usePressableFeedbackRootAnimation(options: {
     .onFinalize(() => {
       isPressed.set(false);
       scale.set(withTiming(0, scaleTimingConfig));
-
       if (variant === 'highlight') return;
-
       const adjustedDuration = Math.min(
-        rippleProgressBaseDuration * durationCoefficient.get(),
+        Math.max(
+          rippleProgressBaseDuration * durationCoefficient.get(),
+          rippleProgressMinBaseDuration
+        ),
         rippleProgressBaseDuration * 2
       );
       rippleProgress.set(withTiming(2, { duration: adjustedDuration }));
@@ -211,7 +234,7 @@ export function usePressableFeedbackHighlightAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   // Background color
-  const defaultColor = theme === 'dark' ? 'white' : 'gray';
+  const defaultColor = theme === 'dark' ? '#d4d4d8' : '#3f3f46';
 
   const backgroundColor = getAnimationValueProperty({
     animationValue: animationConfig?.highlight?.backgroundColor,
@@ -279,7 +302,7 @@ export function usePressableFeedbackRippleAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   // Background color
-  const defaultColor = theme === 'dark' ? 'white' : 'black';
+  const defaultColor = theme === 'dark' ? '#d4d4d8' : '#3f3f46';
 
   const backgroundColor = getAnimationValueProperty({
     animationValue: animationConfig?.ripple?.backgroundColor,

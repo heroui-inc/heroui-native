@@ -1,4 +1,11 @@
-import { forwardRef, useCallback, useMemo, type FC } from 'react';
+import {
+  forwardRef,
+  memo,
+  useCallback,
+  useMemo,
+  useState,
+  type FC,
+} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -138,19 +145,10 @@ const PressableFeedbackHighlight: FC<{
 
 // --------------------------------------------------
 
-const PressableFeedbackRipple: FC<{
-  animation: PressableFeedbackRippleRootAnimation | undefined;
-}> = ({ animation }) => {
-  const { rContainerStyle, backgroundColor } =
-    usePressableFeedbackRippleAnimation({ animation });
-
-  return (
-    <Animated.View
-      pointerEvents="none"
-      className="absolute top-0 left-0"
-      style={rContainerStyle}
-    >
-      <Svg width="100%" height="100%">
+const MemoizedRadialGradient = memo(
+  ({ backgroundColor, width }: { backgroundColor: string; width: number }) => {
+    return (
+      <Svg key={width} width={width} height={width}>
         <Defs>
           <RadialGradient id="rippleGradient" cx="50%" cy="50%" r="50%">
             <Stop offset="0%" stopOpacity="1" stopColor={backgroundColor} />
@@ -166,6 +164,26 @@ const PressableFeedbackRipple: FC<{
           fill="url(#rippleGradient)"
         />
       </Svg>
+    );
+  }
+);
+
+const PressableFeedbackRipple: FC<{
+  animation: PressableFeedbackRippleRootAnimation | undefined;
+}> = ({ animation }) => {
+  const [width, setWidth] = useState<number>(0);
+
+  const { rContainerStyle, backgroundColor } =
+    usePressableFeedbackRippleAnimation({ animation });
+
+  return (
+    <Animated.View
+      pointerEvents="none"
+      className="absolute top-0 left-0 rounded-full"
+      style={rContainerStyle}
+      onLayout={(event) => setWidth(event.nativeEvent.layout.width)}
+    >
+      <MemoizedRadialGradient backgroundColor={backgroundColor} width={width} />
     </Animated.View>
   );
 };

@@ -13,15 +13,8 @@ const DefaultContent = () => {
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-4">
         <PressableFeedback
-          className="bg-surface rounded-2xl h-[150px] w-full items-center justify-center"
+          className="bg-surface rounded-2xl h-[100px] w-full items-center justify-center"
           variant="ripple"
-          animation={{
-            ripple: {
-              backgroundColor: {
-                value: 'pink',
-              },
-            },
-          }}
         />
         {/* <PressableFeedback className="bg-accent rounded-2xl h-24 w-24 items-center justify-center">
           <StyledIonicons
@@ -322,36 +315,36 @@ const PRESSABLE_FEEDBACK_VARIANTS: UsageVariant[] = [
     label: 'Default',
     content: <DefaultContent />,
   },
-  {
-    value: 'custom-opacity',
-    label: 'Custom opacity',
-    content: <CustomOpacityContent />,
-  },
-  {
-    value: 'custom-color',
-    label: 'Custom color',
-    content: <CustomColorContent />,
-  },
-  {
-    value: 'custom-timing',
-    label: 'Custom timing',
-    content: <CustomTimingContent />,
-  },
-  {
-    value: 'disabled',
-    label: 'Disabled state',
-    content: <DisabledStateContent />,
-  },
-  {
-    value: 'list-item',
-    label: 'List item',
-    content: <ListItemContent />,
-  },
-  {
-    value: 'card',
-    label: 'Card',
-    content: <CardContent />,
-  },
+  // {
+  //   value: 'custom-opacity',
+  //   label: 'Custom opacity',
+  //   content: <CustomOpacityContent />,
+  // },
+  // {
+  //   value: 'custom-color',
+  //   label: 'Custom color',
+  //   content: <CustomColorContent />,
+  // },
+  // {
+  //   value: 'custom-timing',
+  //   label: 'Custom timing',
+  //   content: <CustomTimingContent />,
+  // },
+  // {
+  //   value: 'disabled',
+  //   label: 'Disabled state',
+  //   content: <DisabledStateContent />,
+  // },
+  // {
+  //   value: 'list-item',
+  //   label: 'List item',
+  //   content: <ListItemContent />,
+  // },
+  // {
+  //   value: 'card',
+  //   label: 'Card',
+  //   content: <CardContent />,
+  // },
 ];
 
 export default function PressableFeedbackScreen() {

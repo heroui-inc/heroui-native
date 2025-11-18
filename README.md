@@ -165,6 +165,7 @@ export default function MyComponent() {
 - [Error View](./src/components/error-view/error-view.md)
 - [Form Field](./src/components/form-field/form-field.md)
 - [Popover](./src/components/popover/popover.md)
+- [Pressable Feedback](./src/components/pressable-feedback/pressable-feedback.md)
 - [Radio Group](./src/components/radio-group/radio-group.md)
 - [Scroll Shadow](./src/components/scroll-shadow/scroll-shadow.md)
 - [Select](./src/components/select/select.md)

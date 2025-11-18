@@ -27,7 +27,6 @@ const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
           variant="secondary"
           size="sm"
           isIconOnly
-          className="rounded-full"
           onPress={simulatePress}
         >
           <StyledIonicons
@@ -40,7 +39,6 @@ const IngredientItem: FC<IngredientItemProps> = ({ name, description }) => {
           variant="secondary"
           size="sm"
           isIconOnly
-          className="rounded-full"
           onPress={simulatePress}
         >
           <StyledEntypo name="plus" size={16} className="text-foreground" />

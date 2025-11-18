@@ -225,7 +225,7 @@ const BackgroundImageCardContent = () => {
               <Button
                 size="sm"
                 className="bg-white"
-                animationConfig={{ highlight: { isDisabled: true } }}
+                animation={{ highlight: 'disabled' }}
               >
                 <Button.Label className="text-black">Notify me</Button.Label>
               </Button>

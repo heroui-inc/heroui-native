@@ -18,7 +18,9 @@ const SizesContent = () => {
         <View className="gap-8 w-full px-8">
           <Button size="sm">Small Button</Button>
           <Button size="md">Medium Button</Button>
-          <Button size="lg">Large Button</Button>
+          <Button size="lg" feedbackVariant="ripple">
+            Large Button
+          </Button>
         </View>
       </View>
     </View>

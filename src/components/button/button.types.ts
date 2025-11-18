@@ -1,8 +1,7 @@
 import type { TextProps } from 'react-native';
-import type { WithTimingConfig } from 'react-native-reanimated';
 import type {
-  PressableFeedbackHighlightAnimation,
   PressableFeedbackProps,
+  PressableFeedbackVariant,
 } from '../pressable-feedback';
 
 /**
@@ -22,35 +21,9 @@ export type ButtonVariant =
   | 'destructive-soft';
 
 /**
- * Configuration for button animations
- */
-export interface AnimationConfig {
-  highlight?: PressableFeedbackHighlightAnimation;
-  scale?: {
-    /**
-     * Animation target value for scale
-     * @default 0.995
-     */
-    scale?: number;
-    /**
-     * Animation timing configuration
-     */
-    config?: WithTimingConfig;
-    /**
-     * Whether to disable the animation
-     * @default false
-     */
-    isDisabled?: boolean;
-  };
-}
-
-/**
  * Props for the Button.Root component
  */
-export type ButtonRootProps = Omit<
-  PressableFeedbackProps,
-  'variant' | 'animationConfig'
-> & {
+export type ButtonRootProps = Omit<PressableFeedbackProps, 'variant'> & {
   /**
    * Children elements to be rendered inside the button
    */
@@ -60,6 +33,11 @@ export type ButtonRootProps = Omit<
    * @default 'primary'
    */
   variant?: ButtonVariant;
+  /**
+   * Feedback variant for press interaction
+   * @default 'highlight'
+   */
+  feedbackVariant?: PressableFeedbackVariant;
   /**
    * Size of the button
    * @default 'md'
@@ -74,10 +52,6 @@ export type ButtonRootProps = Omit<
    * Additional CSS classes
    */
   className?: string;
-  /**
-   * Scale on press animation configuration
-   */
-  animationConfig?: AnimationConfig;
 };
 
 /**

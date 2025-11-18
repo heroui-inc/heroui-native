@@ -63,6 +63,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       rippleProgress,
       gesture,
       rContainerStyle,
+      isAllAnimationsDisabled,
     } = usePressableFeedbackRootAnimation({
       variant: feedbackVariant,
       animation,
@@ -87,6 +88,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
         containerWidth,
         containerHeight,
         rippleProgress,
+        isAllAnimationsDisabled,
       }),
       [
         isPressed,
@@ -95,6 +97,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
         containerWidth,
         containerHeight,
         rippleProgress,
+        isAllAnimationsDisabled,
       ]
     );
 
@@ -102,12 +105,16 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       <>
         {feedbackVariant === 'highlight' && (
           <PressableFeedbackHighlight
-            animation={animation as PressableFeedbackHighlightRootAnimation}
+            animation={
+              animation as PressableFeedbackHighlightRootAnimation | undefined
+            }
           />
         )}
         {feedbackVariant === 'ripple' && (
           <PressableFeedbackRipple
-            animation={animation as PressableFeedbackRippleRootAnimation}
+            animation={
+              animation as PressableFeedbackRippleRootAnimation | undefined
+            }
           />
         )}
       </>

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import type { ViewStyle } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
 import {
@@ -48,66 +49,68 @@ export function usePressableFeedbackRootAnimation(options: {
 }) {
   const { variant, animation, style } = options;
 
-  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
+  const scaleAnimation = useMemo(() => {
+    return typeof animation === 'object' ? animation?.scale : undefined;
+  }, [animation]);
+
+  const rippleAnimation = useMemo(() => {
+    const animationWithRipple = animation as
+      | PressableFeedbackRippleRootAnimation
+      | undefined;
+
+    return variant === 'ripple' && typeof animationWithRipple === 'object'
+      ? animationWithRipple?.ripple
+      : undefined;
+  }, [animation, variant]);
+
+  const { isAnimationDisabled: isAllAnimationsDisabled } =
+    getAnimationState(animation);
+
+  const {
+    animationConfig: scaleAnimationConfig,
+    isAnimationDisabled: isScaleAnimationDisabled,
+  } = getAnimationState(scaleAnimation);
+
+  const { animationConfig: rippleAnimationConfig } =
+    getAnimationState(rippleAnimation);
+
+  const isAnimationDisabledValue =
+    isAllAnimationsDisabled || isScaleAnimationDisabled;
 
   // Scale animation values
   const scaleValue = getAnimationValueProperty({
-    animationValue: animationConfig?.scale,
+    animationValue: scaleAnimationConfig,
     property: 'value',
     defaultValue: 0.985,
   });
 
   const scaleTimingConfig = getAnimationValueMergedConfig({
-    animationValue: animationConfig?.scale,
+    animationValue: scaleAnimationConfig,
     property: 'timingConfig',
     defaultValue: { duration: 300, easing: Easing.out(Easing.ease) },
   });
 
   const ignoreScaleCoefficient = getAnimationValueProperty({
-    animationValue: animationConfig?.scale,
+    animationValue: scaleAnimationConfig,
     property: 'ignoreScaleCoefficient',
     defaultValue: false,
   });
 
   // Ripple progress animation values
   const rippleProgressBaseDuration = getAnimationValueProperty({
-    animationValue:
-      variant === 'ripple'
-        ? (
-            animationConfig as Extract<
-              PressableFeedbackRippleRootAnimation,
-              Record<string, any>
-            >
-          )?.ripple?.progress
-        : undefined,
+    animationValue: rippleAnimationConfig?.progress,
     property: 'baseDuration',
     defaultValue: BASE_RIPPLE_PROGRESS_DURATION,
   });
 
   const ignoreDurationCoefficient = getAnimationValueProperty({
-    animationValue:
-      variant === 'ripple'
-        ? (
-            animationConfig as Extract<
-              PressableFeedbackRippleRootAnimation,
-              Record<string, any>
-            >
-          )?.ripple?.progress
-        : undefined,
+    animationValue: rippleAnimationConfig?.progress,
     property: 'ignoreDurationCoefficient',
     defaultValue: false,
   });
 
   const rippleProgressMinBaseDuration = getAnimationValueProperty({
-    animationValue:
-      variant === 'ripple'
-        ? (
-            animationConfig as Extract<
-              PressableFeedbackRippleRootAnimation,
-              Record<string, any>
-            >
-          )?.ripple?.progress
-        : undefined,
+    animationValue: rippleAnimationConfig?.progress,
     property: 'minBaseDuration',
     defaultValue: BASE_RIPPLE_PROGRESS_DURATION_MIN,
   });
@@ -173,7 +176,7 @@ export function usePressableFeedbackRootAnimation(options: {
 
   const styleTransform = getStyleTransform(style);
 
-  const rContainerStyle = useAnimatedStyle(() => {
+  const adjustedScaleValue = useDerivedValue(() => {
     // Calculate scale coefficient to maintain consistent scale effect across different sizes
     // Can be disabled by setting ignoreScaleCoefficient to true
     const coefficient = ignoreScaleCoefficient
@@ -181,9 +184,11 @@ export function usePressableFeedbackRootAnimation(options: {
       : containerWidth.get() > 0
         ? 300 / containerWidth.get()
         : 1;
-    const adjustedScaleValue = 1 - (1 - scaleValue) * coefficient;
+    return 1 - (1 - scaleValue) * coefficient;
+  });
 
-    if (isAnimationDisabled) {
+  const rContainerStyle = useAnimatedStyle(() => {
+    if (isAnimationDisabledValue) {
       return {
         transform: [
           {
@@ -197,7 +202,11 @@ export function usePressableFeedbackRootAnimation(options: {
     return {
       transform: [
         {
-          scale: interpolate(scale.get(), [0, 1], [1, adjustedScaleValue]),
+          scale: interpolate(
+            scale.get(),
+            [0, 1],
+            [1, adjustedScaleValue.get()]
+          ),
         },
         ...styleTransform,
       ],
@@ -213,6 +222,7 @@ export function usePressableFeedbackRootAnimation(options: {
     rippleProgress,
     gesture,
     rContainerStyle,
+    isAllAnimationsDisabled,
   };
 }
 
@@ -229,38 +239,44 @@ export function usePressableFeedbackHighlightAnimation(options: {
 
   const { theme } = useUniwind();
 
-  const { isPressed } = usePressableFeedbackAnimation();
+  const { isPressed, isAllAnimationsDisabled } =
+    usePressableFeedbackAnimation();
 
-  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
+  const highlightAnimation = useMemo(() => {
+    return typeof animation === 'object' ? animation?.highlight : undefined;
+  }, [animation]);
+
+  const { animationConfig, isAnimationDisabled } =
+    getAnimationState(highlightAnimation);
+
+  const isAnimationDisabledValue =
+    isAllAnimationsDisabled || isAnimationDisabled;
 
   // Background color
   const defaultColor = theme === 'dark' ? '#d4d4d8' : '#3f3f46';
 
   const backgroundColor = getAnimationValueProperty({
-    animationValue: animationConfig?.highlight?.backgroundColor,
+    animationValue: animationConfig?.backgroundColor,
     property: 'value',
     defaultValue: defaultColor,
   });
 
   // Opacity animation
   const opacityValue = getAnimationValueProperty({
-    animationValue: animationConfig?.highlight?.opacity,
+    animationValue: animationConfig?.opacity,
     property: 'value',
-    defaultValue: [0, 0.05] as [number, number],
+    defaultValue: [0, 0.1] as [number, number],
   });
 
   const opacityTimingConfig = getAnimationValueMergedConfig({
-    animationValue: animationConfig?.highlight?.opacity,
+    animationValue: animationConfig?.opacity,
     property: 'timingConfig',
     defaultValue: { duration: 200 },
   });
 
   const rContainerStyle = useAnimatedStyle(() => {
-    if (isAnimationDisabled) {
-      return {
-        backgroundColor,
-        opacity: isPressed.get() ? opacityValue[1] : opacityValue[0],
-      };
+    if (isAnimationDisabledValue) {
+      return {};
     }
 
     return {
@@ -297,41 +313,50 @@ export function usePressableFeedbackRippleAnimation(options: {
     containerWidth,
     containerHeight,
     rippleProgress,
+    isAllAnimationsDisabled,
   } = usePressableFeedbackAnimation();
 
-  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
+  const rippleAnimation = useMemo(() => {
+    return typeof animation === 'object' ? animation?.ripple : undefined;
+  }, [animation]);
+
+  const { animationConfig, isAnimationDisabled } =
+    getAnimationState(rippleAnimation);
+
+  const isAnimationDisabledValue =
+    isAllAnimationsDisabled || isAnimationDisabled;
 
   // Background color
   const defaultColor = theme === 'dark' ? '#d4d4d8' : '#3f3f46';
 
   const backgroundColor = getAnimationValueProperty({
-    animationValue: animationConfig?.ripple?.backgroundColor,
+    animationValue: animationConfig?.backgroundColor,
     property: 'value',
     defaultValue: defaultColor,
   });
 
   // Opacity animation
   const opacityValue = getAnimationValueProperty({
-    animationValue: animationConfig?.ripple?.opacity,
+    animationValue: animationConfig?.opacity,
     property: 'value',
     defaultValue: [0, 0.1, 0] as [number, number, number],
   });
 
   const opacityTimingConfig = getAnimationValueMergedConfig({
-    animationValue: animationConfig?.ripple?.opacity,
+    animationValue: animationConfig?.opacity,
     property: 'timingConfig',
     defaultValue: { duration: 30 },
   });
 
   // Scale animation
   const scaleValue = getAnimationValueProperty({
-    animationValue: animationConfig?.ripple?.scale,
+    animationValue: animationConfig?.scale,
     property: 'value',
     defaultValue: [0, 1, 1] as [number, number, number],
   });
 
   const scaleTimingConfig = getAnimationValueMergedConfig({
-    animationValue: animationConfig?.ripple?.scale,
+    animationValue: animationConfig?.scale,
     property: 'timingConfig',
     defaultValue: { duration: 30 },
   });
@@ -343,7 +368,7 @@ export function usePressableFeedbackRippleAnimation(options: {
     const translateX = pressedCenterX.get() - circleRadius;
     const translateY = pressedCenterY.get() - circleRadius;
 
-    if (isAnimationDisabled) {
+    if (isAnimationDisabledValue) {
       return {};
     }
 

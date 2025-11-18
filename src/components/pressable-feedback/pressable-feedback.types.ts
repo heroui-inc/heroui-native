@@ -14,7 +14,7 @@ export type PressableFeedbackVariant = 'highlight' | 'ripple';
 /**
  * Scale animation configuration for PressableFeedback root container
  */
-export type PressableFeedbackScaleAnimation = AnimationValue<{
+export type PressableFeedbackScaleAnimation = Animation<{
   /**
    * Scale value when pressed
    * @default 0.985
@@ -51,14 +51,14 @@ export type PressableFeedbackScaleAnimation = AnimationValue<{
 /**
  * Animation configuration for PressableFeedback highlight overlay
  */
-export type PressableFeedbackHighlightAnimation = AnimationValue<{
+export type PressableFeedbackHighlightAnimation = Animation<{
   /**
    * Opacity animation for the highlight overlay
    */
   opacity?: AnimationValue<{
     /**
      * Opacity values [unpressed, pressed]
-     * @default [0, 0.05]
+     * @default [0, 0.1]
      */
     value?: [number, number];
     /**
@@ -82,7 +82,7 @@ export type PressableFeedbackHighlightAnimation = AnimationValue<{
 /**
  * Animation configuration for PressableFeedback ripple effect
  */
-export type PressableFeedbackRippleAnimation = AnimationValue<{
+export type PressableFeedbackRippleAnimation = Animation<{
   /**
    * Background color of the ripple effect
    */
@@ -292,4 +292,6 @@ export interface PressableFeedbackAnimationContextValue {
   containerHeight: SharedValue<number>;
   /** Shared value tracking the ripple progress */
   rippleProgress: SharedValue<number>;
+  /** Whether all animations should be disabled (cascading from root) */
+  isAllAnimationsDisabled: boolean;
 }

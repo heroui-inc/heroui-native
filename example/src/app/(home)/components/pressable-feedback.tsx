@@ -22,7 +22,7 @@ const BackgroundImageCardContent = () => {
           },
         }}
       >
-        <Card className="w-full aspect-square">
+        <Card className="flex-1">
           <Image
             source={{
               uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/neo2.jpeg',
@@ -73,9 +73,15 @@ const CardWithImageContent = () => {
       <View className="flex-row gap-4">
         <PressableFeedback
           variant="ripple"
-          className="flex-1 aspect-[1/1.3] rounded-2xl"
+          className="flex-1 aspect-[1/1.3] rounded-3xl"
+          animation={{
+            ripple: {
+              backgroundColor: { value: '#fecdd3' },
+              opacity: { value: [0, 0.2, 0] },
+            },
+          }}
         >
-          <Card className="flex-1 aspect-[1/1.3] rounded-2xl">
+          <Card className="flex-1">
             <View className="flex-1 gap-4">
               <Card.Header>
                 <Image
@@ -85,7 +91,7 @@ const CardWithImageContent = () => {
                   style={{
                     height: 60,
                     aspectRatio: 1,
-                    borderRadius: 12,
+                    borderRadius: 14,
                   }}
                 />
               </Card.Header>
@@ -106,9 +112,14 @@ const CardWithImageContent = () => {
         </PressableFeedback>
         <PressableFeedback
           variant="ripple"
-          className="flex-1 aspect-[1/1.3] rounded-2xl"
+          className="flex-1 aspect-[1/1.3] rounded-3xl"
+          animation={{
+            ripple: {
+              backgroundColor: { value: '#67e8f9' },
+            },
+          }}
         >
-          <Card className="flex-1 aspect-[1/1.3] rounded-2xl">
+          <Card className="flex-1">
             <View className="flex-1 gap-4">
               <Card.Header>
                 <Image
@@ -118,7 +129,7 @@ const CardWithImageContent = () => {
                   style={{
                     height: 60,
                     aspectRatio: 1,
-                    borderRadius: 12,
+                    borderRadius: 14,
                   }}
                 />
               </Card.Header>

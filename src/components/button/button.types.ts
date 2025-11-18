@@ -1,8 +1,5 @@
 import type { TextProps } from 'react-native';
-import type {
-  PressableFeedbackProps,
-  PressableFeedbackVariant,
-} from '../pressable-feedback';
+import type { PressableFeedbackProps } from '../pressable-feedback';
 
 /**
  * Size variants for the Button component
@@ -23,21 +20,12 @@ export type ButtonVariant =
 /**
  * Props for the Button.Root component
  */
-export type ButtonRootProps = Omit<PressableFeedbackProps, 'variant'> & {
-  /**
-   * Children elements to be rendered inside the button
-   */
-  children?: React.ReactNode;
+export type ButtonRootProps = PressableFeedbackProps & {
   /**
    * Visual variant of the button
    * @default 'primary'
    */
   variant?: ButtonVariant;
-  /**
-   * Feedback variant for press interaction
-   * @default 'highlight'
-   */
-  feedbackVariant?: PressableFeedbackVariant;
   /**
    * Size of the button
    * @default 'md'
@@ -48,10 +36,6 @@ export type ButtonRootProps = Omit<PressableFeedbackProps, 'variant'> & {
    * @default false
    */
   isIconOnly?: boolean;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
 };
 
 /**

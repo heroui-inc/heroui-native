@@ -18,9 +18,7 @@ const SizesContent = () => {
         <View className="gap-8 w-full px-8">
           <Button size="sm">Small Button</Button>
           <Button size="md">Medium Button</Button>
-          <Button size="lg" feedbackVariant="ripple">
-            Large Button
-          </Button>
+          <Button size="lg">Large Button</Button>
         </View>
       </View>
     </View>
@@ -206,14 +204,35 @@ const CustomStylingContent = () => {
         <View className="gap-8 w-full px-8">
           <Button
             className="bg-purple-600"
-            animationConfig={{ highlight: { color: '#c084fc' } }}
+            animation={{
+              highlight: {
+                backgroundColor: {
+                  value: '#c084fc',
+                },
+                opacity: {
+                  value: [0, 1],
+                },
+              },
+            }}
           >
             <Button.Label className="text-white font-semibold">
               Custom Purple
             </Button.Label>
           </Button>
 
-          <Button>
+          <Button
+            feedbackPosition="top"
+            animation={{
+              highlight: {
+                backgroundColor: {
+                  value: '#ec4899',
+                },
+                opacity: {
+                  value: [0, 0.25],
+                },
+              },
+            }}
+          >
             <LinearGradient
               colors={['#0d9488', '#ec4899']}
               start={{ x: 0, y: 0 }}
@@ -229,7 +248,9 @@ const CustomStylingContent = () => {
               'bg-neutral-950 rounded-none',
               isDark && 'bg-neutral-50'
             )}
-            animationConfig={{ highlight: { isDisabled: true } }}
+            animation={{
+              highlight: { backgroundColor: { value: 'transparent' } },
+            }}
           >
             <StyledIonicons
               name="cart-outline"

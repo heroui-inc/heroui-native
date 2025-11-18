@@ -247,7 +247,7 @@ export type PressableFeedbackHighlightProps = PressableFeedbackBaseProps & {
    * Variant of the feedback effect
    * @default 'highlight'
    */
-  variant?: Extract<PressableFeedbackVariant, 'highlight'>;
+  feedbackVariant?: Extract<PressableFeedbackVariant, 'highlight'>;
   /**
    * Animation configuration for the highlight overlay
    */
@@ -262,7 +262,7 @@ export type PressableFeedbackRippleProps = PressableFeedbackBaseProps & {
    * Variant of the feedback effect
    * @default 'highlight'
    */
-  variant: Extract<PressableFeedbackVariant, 'ripple'>;
+  feedbackVariant: Extract<PressableFeedbackVariant, 'ripple'>;
   /**
    * Animation configuration for the ripple effect
    */

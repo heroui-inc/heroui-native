@@ -77,7 +77,37 @@ Choose from six visual variants for different emphasis levels.
 <Button variant="ghost">Ghost</Button>
 <Button variant="destructive">Destructive</Button>
 <Button variant="destructive-soft">Destructive Soft</Button>
+```
 
+### Feedback Variants
+
+Choose between highlight and ripple feedback effects for press interactions.
+
+```tsx
+{
+  /* Highlight feedback (default) */
+}
+<Button feedbackVariant="highlight">Highlight Effect</Button>;
+
+{
+  /* Ripple feedback */
+}
+<Button feedbackVariant="ripple">Ripple Effect</Button>;
+
+{
+  /* Customize ripple animation */
+}
+<Button
+  feedbackVariant="ripple"
+  animation={{
+    ripple: {
+      backgroundColor: { value: '#3b82f6' },
+      opacity: { value: [0, 0.3, 0] },
+    },
+  }}
+>
+  Custom Ripple
+</Button>;
 ```
 
 ### Loading State with Spinner
@@ -189,42 +219,15 @@ export default function ButtonExample() {
 
 ### Button
 
-| prop                         | type                                                                                       | default     | description                                                    |
-| ---------------------------- | ------------------------------------------------------------------------------------------ | ----------- | -------------------------------------------------------------- |
-| `children`                   | `React.ReactNode`                                                                          | -           | Content to be rendered inside the button                       |
-| `variant`                    | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'destructive' \| 'destructive-soft'` | `'primary'` | Visual variant of the button                                   |
-| `size`                       | `'sm' \| 'md' \| 'lg'`                                                                     | `'md'`      | Size of the button                                             |
-| `isIconOnly`                 | `boolean`                                                                                  | `false`     | Whether the button displays an icon only (square aspect ratio) |
-| `isDisabled`                 | `boolean`                                                                                  | `false`     | Whether the button is disabled                                 |
-| `className`                  | `string`                                                                                   | -           | Additional CSS classes                                         |
-| `animationConfig`            | `AnimationConfig`                                                                          | -           | Scale on press animation configuration                         |
-| `...Animated.PressableProps` | `Animated.PressableProps`                                                                  | -           | All Reanimated AnimatedPressable props are supported           |
+Button extends all props from [PressableFeedback](../pressable-feedback/pressable-feedback.md) component with additional button-specific props.
 
-#### AnimationConfig
+| prop         | type                                                                                       | default     | description                                                    |
+| ------------ | ------------------------------------------------------------------------------------------ | ----------- | -------------------------------------------------------------- |
+| `variant`    | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'destructive' \| 'destructive-soft'` | `'primary'` | Visual variant of the button                                   |
+| `size`       | `'sm' \| 'md' \| 'lg'`                                                                     | `'md'`      | Size of the button                                             |
+| `isIconOnly` | `boolean`                                                                                  | `false`     | Whether the button displays an icon only (square aspect ratio) |
 
-Configuration object for button press animations including scale and highlight effects.
-
-| prop        | type                       | description                                   |
-| ----------- | -------------------------- | --------------------------------------------- |
-| `scale`     | `ScaleAnimationConfig`     | Configuration for scale animation on press    |
-| `highlight` | `HighlightAnimationConfig` | Configuration for highlight/overlay animation |
-
-##### ScaleAnimationConfig
-
-| prop         | type               | default | description                                   |
-| ------------ | ------------------ | ------- | --------------------------------------------- |
-| `scale`      | `number`           | `0.995` | Target scale value when button is pressed     |
-| `config`     | `WithTimingConfig` | -       | Reanimated timing configuration for animation |
-| `isDisabled` | `boolean`          | `false` | Whether to disable the scale animation        |
-
-##### HighlightAnimationConfig
-
-| prop         | type               | default | description                                                       |
-| ------------ | ------------------ | ------- | ----------------------------------------------------------------- |
-| `opacity`    | `number`           | `0.2`   | Opacity of the highlight overlay when pressed                     |
-| `color`      | `string`           | auto    | Color of the highlight overlay (auto-calculated based on variant) |
-| `config`     | `WithTimingConfig` | -       | Reanimated timing configuration for animation                     |
-| `isDisabled` | `boolean`          | `false` | Whether to disable the highlight animation                        |
+For inherited props including `feedbackVariant`, `feedbackPosition`, `animation`, `isDisabled`, `className`, `children`, and all Pressable props, see [PressableFeedback API Reference](../pressable-feedback/pressable-feedback.md#api-reference).
 
 ### Button.Label
 

@@ -41,9 +41,9 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
   (props, ref) => {
     const {
-      variant = 'highlight',
-      isDisabled = false,
+      feedbackVariant = 'highlight',
       feedbackPosition = 'top',
+      isDisabled = false,
       className,
       style,
       animation,
@@ -64,7 +64,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       gesture,
       rContainerStyle,
     } = usePressableFeedbackRootAnimation({
-      variant,
+      variant: feedbackVariant,
       animation,
       style: style as ViewStyle | undefined,
     });
@@ -100,12 +100,12 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
 
     const feedbackElement = (
       <>
-        {variant === 'highlight' && (
+        {feedbackVariant === 'highlight' && (
           <PressableFeedbackHighlight
             animation={animation as PressableFeedbackHighlightRootAnimation}
           />
         )}
-        {variant === 'ripple' && (
+        {feedbackVariant === 'ripple' && (
           <PressableFeedbackRipple
             animation={animation as PressableFeedbackRippleRootAnimation}
           />

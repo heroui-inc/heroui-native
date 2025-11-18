@@ -116,7 +116,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     <ButtonProvider value={contextValue}>
       <PressableFeedback
         ref={ref}
-        variant={feedbackVariant}
+        feedbackVariant={feedbackVariant}
         feedbackPosition={feedbackPosition}
         className={tvStyles}
         style={[styleSheet.buttonRoot, style]}

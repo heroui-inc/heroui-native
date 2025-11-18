@@ -12,7 +12,7 @@ const BackgroundImageCardContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <PressableFeedback
-        variant="ripple"
+        feedbackVariant="ripple"
         className="w-full aspect-square rounded-3xl"
         animation={{
           ripple: {
@@ -72,7 +72,7 @@ const CardWithImageContent = () => {
     <View className="flex-1 items-center justify-center px-5">
       <View className="flex-row gap-4">
         <PressableFeedback
-          variant="ripple"
+          feedbackVariant="ripple"
           className="flex-1 aspect-[1/1.3] rounded-3xl"
           animation={{
             ripple: {
@@ -111,7 +111,7 @@ const CardWithImageContent = () => {
           </Card>
         </PressableFeedback>
         <PressableFeedback
-          variant="ripple"
+          feedbackVariant="ripple"
           className="flex-1 aspect-[1/1.3] rounded-3xl"
           animation={{
             ripple: {
@@ -155,6 +155,22 @@ const CardWithImageContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const ButtonHighlightContent = () => {
+  return (
+    <View className="flex-1">
+      <View className="flex-1 items-center justify-center">
+        <View className="gap-6 w-full px-8">
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="tertiary">Tertiary</Button>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const PRESSABLE_FEEDBACK_VARIANTS: UsageVariant[] = [
   {
     value: 'background-image-card',
@@ -165,6 +181,11 @@ const PRESSABLE_FEEDBACK_VARIANTS: UsageVariant[] = [
     value: 'card-with-image',
     label: 'Card with image',
     content: <CardWithImageContent />,
+  },
+  {
+    value: 'button-highlight',
+    label: 'Button highlight',
+    content: <ButtonHighlightContent />,
   },
 ];
 

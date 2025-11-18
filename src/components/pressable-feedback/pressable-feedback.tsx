@@ -209,11 +209,18 @@ PressableFeedbackHighlight.displayName = DISPLAY_NAME.HIGHLIGHT;
 PressableFeedback.displayName = DISPLAY_NAME.ROOT;
 
 /**
- * PressableFeedback component
+ * Container component that provides visual feedback for press interactions with automatic scale animation.
  *
- * @component PressableFeedback - Container component that provides visual feedback
- * for user interactions. Shows a ripple effect on Android and a highlight effect on iOS.
- * Can be used standalone or as part of other components like Button, Card, or Accordion
- * for consistent interaction feedback.
+ * @component PressableFeedback
+ * @description Wraps content to provide consistent press feedback across the app. Features platform-aware
+ * feedback with highlight effect (iOS-style) or ripple effect (Android-style) that emanates from press point.
+ * Includes intelligent scale animation that automatically adjusts based on container size for consistent feel.
+ * @features
+ * - Two feedback variants: 'highlight' (default) and 'ripple'
+ * - Automatic scale animation with smart size adjustment
+ * - Customizable animations for opacity, color, duration, and scale
+ * - Flexible z-index positioning (above or below content)
+ * - Full gesture handling with press, long press, and disabled states
+ * - Used as foundation for interactive components like Button, Card, and Accordion
  */
 export default PressableFeedback;

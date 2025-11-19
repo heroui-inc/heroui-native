@@ -17,7 +17,7 @@ export const RadioGroupContent = () => {
           <View className="flex-1">
             <RadioGroup.Label>Instant</RadioGroup.Label>
             <RadioGroup.Description>
-              Get notifications immediately as they happen
+              Get notifications immediately
             </RadioGroup.Description>
           </View>
         </RadioGroup.Item>

@@ -37,9 +37,9 @@ const availableThemes: ThemeOption[] = [
     lightVariant: 'lavender-light',
     darkVariant: 'lavender-dark',
     colors: {
-      primary: 'hsl(270 50% 75%)',
-      secondary: 'hsl(160 40% 70%)',
-      tertiary: 'hsl(45 55% 75%)',
+      primary: '#B569E0',
+      secondary: '#64C9A8',
+      tertiary: '#E8C765',
     },
   },
   {
@@ -48,9 +48,9 @@ const availableThemes: ThemeOption[] = [
     lightVariant: 'mint-light',
     darkVariant: 'mint-dark',
     colors: {
-      primary: 'hsl(165 45% 70%)',
-      secondary: 'hsl(145 50% 68%)',
-      tertiary: 'hsl(55 60% 75%)',
+      primary: '#5FC9AB',
+      secondary: '#6DD597',
+      tertiary: '#E5CF6C',
     },
   },
   {
@@ -59,9 +59,9 @@ const availableThemes: ThemeOption[] = [
     lightVariant: 'sky-light',
     darkVariant: 'sky-dark',
     colors: {
-      primary: 'hsl(200 50% 72%)',
-      secondary: 'hsl(175 45% 70%)',
-      tertiary: 'hsl(48 58% 75%)',
+      primary: '#6CA9D6',
+      secondary: '#64C9B2',
+      tertiary: '#E8C963',
     },
   },
 ];
@@ -161,9 +161,11 @@ export default function Themes() {
 
   return (
     <KeyboardAwareScrollView
+      className="flex-1"
       contentContainerClassName="gap-12 px-5"
       contentContainerStyle={{
         paddingTop: headerHeight,
+        paddingBottom: 12,
       }}
       bottomOffset={60}
     >

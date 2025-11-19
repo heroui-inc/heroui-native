@@ -33,7 +33,7 @@ export const TextInputContent = () => {
   };
 
   return (
-    <View className="gap-4 bg-background">
+    <View className="gap-4">
       {/* Basic TextField */}
       <TextField isRequired isInvalid={emailError}>
         <TextField.Label>Email</TextField.Label>

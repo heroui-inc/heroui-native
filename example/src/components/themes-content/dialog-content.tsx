@@ -1,7 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Button, Dialog } from 'heroui-native';
 import { useState } from 'react';
-import { Platform, View } from 'react-native';
+import { View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { DialogBlurBackdrop } from '../dialog-blur-backdrop';
 
@@ -9,10 +9,6 @@ const StyledIonicons = withUniwind(Ionicons);
 
 export const DialogContent = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
-
-  if (Platform.OS !== 'ios') {
-    return null;
-  }
 
   return (
     <Dialog isOpen={dialogOpen} onOpenChange={setDialogOpen}>

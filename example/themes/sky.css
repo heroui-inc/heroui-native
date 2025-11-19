@@ -1,72 +1,73 @@
 @layer theme {
   :root {
     @variant sky-light {
-      /* Base Colors */
-      --background: hsl(210 40% 98%);
-      --foreground: hsl(210 35% 12%);
+      /* Base Colors - Airy, serene sky blue */
+      --background: oklch(0.998 0.008 230);
+      --foreground: oklch(0.24 0.045 230);
 
       /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
-      --surface: hsl(210 30% 96%);
-      --surface-foreground: hsl(210 35% 18%);
+      --surface: oklch(0.98 0.01 230);
+      --surface-foreground: oklch(0.3 0.05 230);
 
       /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
-      --overlay: hsl(210 30% 96%);
-      --overlay-foreground: hsl(210 35% 18%);
+      --overlay: oklch(0.998 0.005 230);
+      --overlay-foreground: oklch(0.3 0.05 230);
 
-      --muted: hsl(210 18% 45%);
+      --muted: oklch(0.54 0.038 230);
 
-      --default: hsl(210 22% 97%);
-      --default-foreground: hsl(210 28% 32%);
+      --default: oklch(0.96 0.012 230);
+      --default-foreground: oklch(0.4 0.055 230);
 
-      --accent: hsl(200 50% 72%);
-      --accent-foreground: hsl(200 40% 15%);
+      /* Accent: Bright azure blue with clarity */
+      --accent: oklch(0.68 0.14 235);
+      --accent-foreground: oklch(0.98 0.005 235);
 
       /* Form Field Defaults - Colors */
-      --field-background: hsl(210 30% 96%);
-      --field-foreground: hsl(210 35% 12%);
+      --field-background: oklch(0.98 0.01 230);
+      --field-foreground: oklch(0.24 0.045 230);
       --field-placeholder: var(--muted);
       --field-border: transparent;
 
-      /* Status Colors */
-      --success: hsl(175 45% 70%);
-      --success-foreground: hsl(175 40% 18%);
+      /* Status Colors - Clean, professional palette */
+      --success: oklch(0.72 0.13 165);
+      --success-foreground: oklch(0.24 0.07 165);
 
-      --warning: hsl(48 58% 75%);
-      --warning-foreground: hsl(48 48% 20%);
+      --warning: oklch(0.78 0.14 80);
+      --warning-foreground: oklch(0.28 0.08 80);
 
-      --danger: hsl(340 52% 75%);
-      --danger-foreground: hsl(340 42% 20%);
+      --danger: oklch(0.66 0.18 18);
+      --danger-foreground: oklch(0.98 0.005 18);
 
       /* Component Colors */
-      --segment: hsl(210 30% 96%);
-      --segment-foreground: hsl(210 35% 12%);
+      --segment: oklch(0.98 0.01 230);
+      --segment-foreground: oklch(0.24 0.045 230);
 
       /* Misc Colors */
-      --border: hsl(200 22% 88%);
-      --divider: hsl(200 18% 82%);
-      --link: hsl(200 50% 62%);
+      --divider: oklch(0.93 0.014 230);
+      --link: oklch(0.6 0.13 235);
     }
 
     @variant sky-dark {
-      /* Base Colors */
-      --background: hsl(210 25% 10%);
-      --foreground: hsl(210 10% 92%);
+      /* Base Colors - Deep twilight blue */
+      --background: oklch(0.15 0.042 240);
+      --foreground: oklch(0.95 0.008 240);
 
       /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
-      --surface: hsl(210 22% 13%);
-      --surface-foreground: hsl(210 10% 85%);
+      --surface: oklch(0.2 0.05 240);
+      --surface-foreground: oklch(0.91 0.012 240);
 
       /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
-      --overlay: hsl(210 20% 16%);
-      --overlay-foreground: hsl(210 10% 85%);
+      --overlay: oklch(0.23 0.048 240);
+      --overlay-foreground: oklch(0.91 0.012 240);
 
-      --muted: hsl(210 12% 38%);
+      --muted: oklch(0.5 0.042 240);
 
-      --default: hsl(210 18% 18%);
-      --default-foreground: hsl(210 10% 80%);
+      --default: oklch(0.25 0.052 240);
+      --default-foreground: oklch(0.89 0.015 240);
 
-      --accent: hsl(200 42% 62%);
-      --accent-foreground: hsl(200 10% 10%);
+      /* Accent: Electric cyan-blue glow */
+      --accent: oklch(0.7 0.16 235);
+      --accent-foreground: oklch(0.14 0.04 235);
 
       /* Form Field Defaults - Colors */
       --field-background: var(--default);
@@ -74,24 +75,23 @@
       --field-placeholder: var(--muted);
       --field-border: transparent;
 
-      /* Status Colors */
-      --success: hsl(175 38% 55%);
-      --success-foreground: hsl(175 10% 90%);
+      /* Status Colors - Vibrant night palette */
+      --success: oklch(0.68 0.15 168);
+      --success-foreground: oklch(0.96 0.006 168);
 
-      --warning: hsl(48 48% 60%);
-      --warning-foreground: hsl(48 10% 10%);
+      --warning: oklch(0.75 0.15 85);
+      --warning-foreground: oklch(0.2 0.04 85);
 
-      --danger: hsl(340 42% 60%);
-      --danger-foreground: hsl(340 10% 90%);
+      --danger: oklch(0.64 0.19 22);
+      --danger-foreground: oklch(0.96 0.006 22);
 
       /* Component Colors */
-      --segment: hsl(210 20% 16%);
-      --segment-foreground: hsl(210 10% 85%);
+      --segment: oklch(0.22 0.049 240);
+      --segment-foreground: oklch(0.91 0.012 240);
 
       /* Misc Colors */
-      --border: hsl(200 16% 22%);
-      --divider: hsl(200 14% 28%);
-      --link: hsl(200 42% 65%);
+      --divider: oklch(0.27 0.044 240);
+      --link: oklch(0.73 0.14 235);
     }
   }
 }

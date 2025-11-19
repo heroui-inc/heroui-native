@@ -1,11 +1,9 @@
-import { forwardRef, useEffect } from 'react';
+import { forwardRef, useMemo } from 'react';
 import type { Text as RNText } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   interpolate,
   useAnimatedStyle,
-  withSpring,
-  withTiming,
 } from 'react-native-reanimated';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
@@ -13,6 +11,11 @@ import { useDialogContentAnimation } from '../../helpers/hooks';
 import { useThemeColor } from '../../helpers/theme';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
+import {
+  DialogAnimationProvider,
+  useDialogAnimation,
+  useDialogRootAnimation,
+} from './dialog.animation';
 import { DISPLAY_NAME } from './dialog.constants';
 import dialogStyles, { styleSheet } from './dialog.styles';
 import type {
@@ -39,17 +42,50 @@ const useDialog = DialogPrimitives.useRootContext;
 // --------------------------------------------------
 
 const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
-  ({ children, isOpen, onOpenChange, closeDelay = 300, ...props }, ref) => {
+  (
+    {
+      children,
+      closeDelay = 500,
+      isDismissKeyboardOnClose = true,
+      isOpen: isOpenProp,
+      isDefaultOpen,
+      onOpenChange: onOpenChangeProp,
+      progressAnimationConfigs,
+      ...props
+    },
+    ref
+  ) => {
+    const { internalIsOpen, dialogState, progress, isDragging, onOpenChange } =
+      useDialogRootAnimation({
+        isOpen: isOpenProp,
+        isDefaultOpen,
+        onOpenChange: onOpenChangeProp,
+        closeDelay,
+        isDismissKeyboardOnClose,
+        progressAnimationConfigs,
+      });
+
+    const animationContextValue = useMemo(
+      () => ({
+        dialogState,
+        progress,
+        isDragging,
+      }),
+      [dialogState, progress, isDragging]
+    );
+
     return (
-      <DialogPrimitives.Root
-        ref={ref}
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        closeDelay={closeDelay}
-        {...props}
-      >
-        {children}
-      </DialogPrimitives.Root>
+      <DialogAnimationProvider value={animationContextValue}>
+        <DialogPrimitives.Root
+          ref={ref}
+          isOpen={internalIsOpen}
+          isDefaultOpen={isDefaultOpen}
+          onOpenChange={onOpenChange}
+          {...props}
+        >
+          {children}
+        </DialogPrimitives.Root>
+      </DialogAnimationProvider>
     );
   }
 );
@@ -69,44 +105,21 @@ const DialogPortal = ({
   className,
   children,
   style,
-  progressAnimationConfigs,
   ...props
 }: DialogPortalProps) => {
-  const { dialogState, progress } = useDialog();
+  const animationContext = useDialogAnimation();
 
   const tvStyles = dialogStyles.portal({ className });
 
-  useEffect(() => {
-    if (dialogState === 'open') {
-      // Transition to open state (progress = 1)
-      const openConfig = progressAnimationConfigs?.onOpen;
-      if (openConfig?.animationType === 'spring') {
-        progress.set(withSpring(1, openConfig.animationConfig));
-      } else if (openConfig?.animationType === 'timing') {
-        progress.set(withTiming(1, openConfig.animationConfig));
-      } else {
-        progress.set(withTiming(1, { duration: 200 }));
-      }
-    } else if (dialogState === 'close') {
-      // Transition to close state (progress = 2)
-      const closeConfig = progressAnimationConfigs?.onClose;
-      if (closeConfig?.animationType === 'spring') {
-        progress.set(withSpring(2, closeConfig.animationConfig));
-      } else if (closeConfig?.animationType === 'timing') {
-        progress.set(withTiming(2, closeConfig.animationConfig));
-      } else {
-        progress.set(withTiming(2, { duration: 200 }));
-      }
-    }
-  }, [dialogState, progress, progressAnimationConfigs]);
-
   return (
     <DialogPrimitives.Portal {...props}>
-      <FullWindowOverlay>
-        <Animated.View className={tvStyles} style={style}>
-          {children}
-        </Animated.View>
-      </FullWindowOverlay>
+      <DialogAnimationProvider value={animationContext}>
+        <FullWindowOverlay>
+          <Animated.View className={tvStyles} style={style}>
+            {children}
+          </Animated.View>
+        </FullWindowOverlay>
+      </DialogAnimationProvider>
     </DialogPrimitives.Portal>
   );
 };
@@ -117,7 +130,7 @@ const DialogOverlay = forwardRef<
   DialogPrimitivesTypes.OverlayRef,
   DialogOverlayProps
 >(({ className, style, isDefaultAnimationDisabled = false, ...props }, ref) => {
-  const { progress, isDragging } = useDialog();
+  const { progress, isDragging } = useDialogAnimation();
 
   const rContainerStyle = useAnimatedStyle(() => {
     if (isDefaultAnimationDisabled) {
@@ -167,7 +180,8 @@ const DialogContent = forwardRef<
     },
     ref
   ) => {
-    const { progress, isDragging, dialogState, onOpenChange } = useDialog();
+    const { progress, isDragging, dialogState } = useDialogAnimation();
+    const { onOpenChange } = useDialog();
 
     const tvStyles = dialogStyles.content({ className });
 
@@ -341,5 +355,5 @@ const Dialog = Object.assign(DialogRoot, {
   Description: DialogDescription,
 });
 
-export { useDialog };
+export { useDialog, useDialogAnimation };
 export default Dialog;

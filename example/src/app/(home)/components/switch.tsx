@@ -40,7 +40,7 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   </FormField>
 );
 
-const DefaultContent = () => {
+export const DefaultContent = () => {
   const [fields, setFields] = React.useState({
     notifications: false,
     darkMode: false,

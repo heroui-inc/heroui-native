@@ -13,6 +13,11 @@ export type ToastVariant =
   | 'danger';
 
 /**
+ * Toast placement types
+ */
+export type ToastPlacement = 'top' | 'bottom';
+
+/**
  * Props for the Toast.Root component
  */
 export interface ToastRootProps extends ToastPrimitive.RootProps {
@@ -21,6 +26,11 @@ export interface ToastRootProps extends ToastPrimitive.RootProps {
    * @default 'default'
    */
   variant?: ToastVariant;
+  /**
+   * Placement of the toast
+   * @default 'top'
+   */
+  placement?: ToastPlacement;
   /**
    * Additional CSS class for the toast container
    */

@@ -37,7 +37,11 @@ export function Toaster({ insets }: ToastProviderProps) {
         }}
       >
         <View className="flex-1">
-          <Toast variant="accent" className="flex-row items-center gap-3">
+          <Toast
+            variant="accent"
+            placement="bottom"
+            className="flex-row items-center gap-3"
+          >
             <View className="flex-1">
               <Toast.Label>Accent notification</Toast.Label>
               <Toast.Description>

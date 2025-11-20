@@ -27,12 +27,14 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   const {
     children,
     variant = 'default',
+    placement = 'top',
     className,
     style,
     ...restProps
   } = props;
 
   const tvStyles = toastStyles.root({
+    placement,
     className,
   });
 

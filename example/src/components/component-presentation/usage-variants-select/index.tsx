@@ -56,6 +56,7 @@ export const UsageVariantsSelect = ({
     >
       <Select.Trigger
         isDisabled={data.length === 1}
+        hitSlop={12}
         onPress={() => {
           if (Platform.OS === 'ios') {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);

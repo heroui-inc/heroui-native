@@ -1,4 +1,3 @@
-import type { SharedValue } from 'react-native-reanimated';
 import type {
   ForceMountable,
   PressableRef,
@@ -10,11 +9,6 @@ import type {
 } from '../../helpers/types';
 
 /**
- * Dialog internal state
- */
-type DialogState = 'idle' | 'open' | 'close';
-
-/**
  * Context for the dialog root component
  */
 type RootContext = {
@@ -22,16 +16,6 @@ type RootContext = {
   isOpen: boolean;
   /** Callback fired when the open state changes */
   onOpenChange: (value: boolean) => void;
-  /** Extended internal state for additional control (useful for coordinating animations) */
-  dialogState: DialogState;
-  /** Animation progress shared value (0=idle, 1=open, 2=close) */
-  progress: SharedValue<number>;
-  /** Dragging state shared value */
-  isDragging: SharedValue<boolean>;
-  /** Delay in milliseconds before the dialog closes */
-  closeDelay?: number;
-  /** Whether to dismiss the keyboard when the dialog closes */
-  isDismissKeyboardOnClose?: boolean;
 };
 
 /**
@@ -44,10 +28,6 @@ type RootProps = SlottableViewProps & {
   isDefaultOpen?: boolean;
   /** Event handler called when the open state changes */
   onOpenChange?: (value: boolean) => void;
-  /** Delay in milliseconds before the dialog closes (for exit animations) */
-  closeDelay?: number;
-  /** Whether to dismiss the keyboard when the dialog closes */
-  isDismissKeyboardOnClose?: boolean;
 };
 
 /**
@@ -136,7 +116,6 @@ export type {
   ContentRef,
   DescriptionProps,
   DescriptionRef,
-  DialogState,
   OverlayProps,
   OverlayRef,
   PortalProps,

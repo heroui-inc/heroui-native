@@ -48,12 +48,12 @@ const CardWithImageContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="flex-row gap-4">
-        <Card variant="tertiary" className="flex-1 aspect-[1/1.3] rounded-2xl">
+        <Card className="flex-1 aspect-[1/1.3] rounded-2xl">
           <View className="flex-1 gap-4">
             <Card.Header>
               <Image
                 source={{
-                  uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/robot1.jpg',
+                  uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo1.jpg',
                 }}
                 style={{
                   height: 60,
@@ -76,12 +76,12 @@ const CardWithImageContent = () => {
             </Card.Footer>
           </View>
         </Card>
-        <Card variant="tertiary" className="flex-1 aspect-[1/1.3] rounded-2xl">
+        <Card className="flex-1 aspect-[1/1.3] rounded-2xl">
           <View className="flex-1 gap-4">
             <Card.Header>
               <Image
                 source={{
-                  uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/components-card-robot.png',
+                  uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo2.jpg',
                 }}
                 style={{
                   height: 60,
@@ -114,22 +114,22 @@ const CardWithImageContent = () => {
 const HorizontalCardWithImageContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
-      <View className="gap-4">
+      <View className="w-full gap-4">
         <Card className="flex-row rounded-2xl gap-4 p-4" variant="tertiary">
           <Image
             source={{
-              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/robot2.jpg',
+              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/avocado.jpeg',
             }}
             style={{
               height: 110,
               aspectRatio: 1,
-              borderRadius: 12,
+              borderRadius: 14,
             }}
             resizeMode="cover"
           />
-          <View className="gap-4">
+          <View className="flex-1 gap-4">
             <Card.Body className="flex-1">
-              <Card.Title>Bringing the future</Card.Title>
+              <Card.Title>Avocado Hackathon</Card.Title>
               <Card.Description numberOfLines={2} className="text-sm">
                 Today, 6:30 PM
               </Card.Description>
@@ -151,7 +151,7 @@ const HorizontalCardWithImageContent = () => {
         <Card className="flex-row rounded-2xl gap-4 p-4" variant="tertiary">
           <Image
             source={{
-              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/car1.jpg',
+              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/oranges.jpeg',
             }}
             style={{
               height: 110,
@@ -160,9 +160,9 @@ const HorizontalCardWithImageContent = () => {
             }}
             resizeMode="cover"
           />
-          <View className="gap-4">
+          <View className="flex-1 gap-4">
             <Card.Body className="flex-1">
-              <Card.Title>Marketing Conf</Card.Title>
+              <Card.Title>Sound Electro</Card.Title>
               <Card.Description numberOfLines={2} className="text-sm">
                 Wed, 4:30 PM
               </Card.Description>
@@ -194,22 +194,22 @@ const BackgroundImageCardContent = () => {
       <Card className="w-full aspect-square">
         <Image
           source={{
-            uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/dog1.jpg',
+            uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/neo2.jpeg',
           }}
           className="absolute inset-0"
           resizeMode="cover"
         />
         <LinearGradient
-          colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.8)']}
+          colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.5)']}
           style={StyleSheet.absoluteFill}
         />
         <View className="flex-1 gap-4">
           <Card.Body className="flex-1">
             <Card.Title className="text-base text-zinc-50 uppercase mb-0.5">
-              Pet health
+              Neo
             </Card.Title>
             <Card.Description className="text-zinc-50 font-medium text-base">
-              Your pet deserve the best
+              Home robot
             </Card.Description>
           </Card.Body>
           <Card.Footer className="gap-3">
@@ -218,14 +218,14 @@ const BackgroundImageCardContent = () => {
                 <AppText className="text-base text-white">
                   Available soon
                 </AppText>
-                <AppText className="text-base text-zinc-400">
+                <AppText className="text-base text-zinc-300">
                   Get notified
                 </AppText>
               </View>
               <Button
                 size="sm"
                 className="bg-white"
-                animationConfig={{ highlight: { isDisabled: true } }}
+                animation={{ highlight: 'disabled' }}
               >
                 <Button.Label className="text-black">Notify me</Button.Label>
               </Button>

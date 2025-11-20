@@ -96,6 +96,10 @@ export default function Layout() {
           options={{ title: 'Popover' }}
         />
         <Stack.Screen
+          name="components/pressable-feedback"
+          options={{ title: 'Pressable Feedback' }}
+        />
+        <Stack.Screen
           name="components/popover-native-modal"
           options={{ title: 'Popover Native Modal', presentation: 'formSheet' }}
         />

@@ -7,7 +7,7 @@ import {
   Dialog,
   ScrollShadow,
   TextField,
-  useDialog,
+  useDialogAnimation,
   useThemeColor,
 } from 'heroui-native';
 import { useState, type FC, type PropsWithChildren } from 'react';
@@ -41,7 +41,7 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
   const insetTop = insets.top + 12;
   const maxTextInputDialogHeight = (height - insetTop) / 2;
 
-  const { progress, isDragging } = useDialog();
+  const { progress, isDragging } = useDialogAnimation();
 
   const rContainerStyle = useAnimatedStyle(() => {
     if (isDragging.get()) {
@@ -113,14 +113,13 @@ const BasicDialogContent = () => {
                 </Dialog.Description>
               </View>
               <View className="flex-row justify-end gap-3">
-                <Dialog.Close asChild>
-                  <Button
-                    variant="tertiary"
-                    className="bg-overlay-foreground/5"
-                  >
-                    Confirm
-                  </Button>
-                </Dialog.Close>
+                <Button
+                  variant="tertiary"
+                  className="bg-overlay-foreground/5"
+                  onPress={() => setBasicDialogOpen(false)}
+                >
+                  Confirm
+                </Button>
               </View>
             </Dialog.Content>
           </Dialog.Portal>

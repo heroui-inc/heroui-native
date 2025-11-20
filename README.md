@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  v1.0.0-beta.2
+  v1.0.0-beta.3
 </p>
 
 ## Preview App
@@ -86,7 +86,7 @@ Inside your `global.css` file add the following imports:
 
 @import 'heroui-native/styles';
 
-// Path to the heroui-native lib inside node_modules from the root of your project
+/* Path to the heroui-native lib inside node_modules from the root of your project */
 @source './node_modules/heroui-native/lib';
 ```
 
@@ -120,15 +120,22 @@ npx expo install react-dom react-native-web @expo/metro-runtime
 
 ### 5. Wrap Your App with Provider
 
-Wrap your application with `HeroUINativeProvider`:
+Wrap your application with `HeroUINativeProvider`. Since HeroUI Native uses `react-native-gesture-handler` under the hood, you must wrap it with `GestureHandlerRootView`:
 
 ```tsx
 import { HeroUINativeProvider } from 'heroui-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function App() {
-  return <HeroUINativeProvider>{/* Your app content */}</HeroUINativeProvider>;
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <HeroUINativeProvider>{/* Your app content */}</HeroUINativeProvider>
+    </GestureHandlerRootView>
+  );
 }
 ```
+
+> **Note:** `react-native-gesture-handler` is required because HeroUI Native uses it internally for gesture handling. Make sure to install it if you haven't already: `npm install react-native-gesture-handler`
 
 ### 6. Use Your First Component
 
@@ -165,6 +172,7 @@ export default function MyComponent() {
 - [Error View](./src/components/error-view/error-view.md)
 - [Form Field](./src/components/form-field/form-field.md)
 - [Popover](./src/components/popover/popover.md)
+- [Pressable Feedback](./src/components/pressable-feedback/pressable-feedback.md)
 - [Radio Group](./src/components/radio-group/radio-group.md)
 - [Scroll Shadow](./src/components/scroll-shadow/scroll-shadow.md)
 - [Select](./src/components/select/select.md)

@@ -11,8 +11,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-const AnimatedButton = Animated.createAnimatedComponent(Button);
-
 export const CloseButton = () => {
   const insets = useSafeAreaInsets();
   const themeColorAccentForeground = useThemeColor('accent-foreground');
@@ -62,11 +60,12 @@ export const CloseButton = () => {
   });
 
   return (
-    <AnimatedButton
+    <Button
       className="absolute right-6"
       style={[{ bottom: insets.bottom + 24 }, buttonAnimatedStyle]}
       size="lg"
       isIconOnly
+      hitSlop={12}
       onPress={() => {
         if (Platform.OS === 'ios') {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -90,6 +89,6 @@ export const CloseButton = () => {
       >
         <Ionicons name="close" size={24} color={themeColorAccentForeground} />
       </Animated.View>
-    </AnimatedButton>
+    </Button>
   );
 };

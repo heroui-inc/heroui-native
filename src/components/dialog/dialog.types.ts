@@ -1,29 +1,27 @@
 import type { ReactNode } from 'react';
 import type { StyleProp, TextProps, ViewStyle } from 'react-native';
 import type {
+  SharedValue,
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 
 /**
- * Dialog Root component props
+ * Dialog internal state for animation coordination
  */
-export interface DialogRootProps extends DialogPrimitivesTypes.RootProps {
-  /**
-   * The content of the dialog
-   */
-  children?: ReactNode;
-}
+export type DialogState = 'idle' | 'open' | 'close';
 
 /**
- * Dialog Trigger component props
+ * Context value for dialog animation state
  */
-export interface DialogTriggerProps extends DialogPrimitivesTypes.TriggerProps {
-  /**
-   * The trigger element content
-   */
-  children?: ReactNode;
+export interface DialogAnimationContextValue {
+  /** Extended internal state for animation control */
+  dialogState: DialogState;
+  /** Animation progress shared value (0=idle, 1=open, 2=close) */
+  progress: SharedValue<number>;
+  /** Dragging state shared value */
+  isDragging: SharedValue<boolean>;
 }
 
 /**
@@ -57,6 +55,40 @@ export interface DialogProgressAnimationConfigs {
 }
 
 /**
+ * Dialog Root component props
+ */
+export interface DialogRootProps extends DialogPrimitivesTypes.RootProps {
+  /**
+   * The content of the dialog
+   */
+  children?: ReactNode;
+  /**
+   * Delay in milliseconds before the dialog closes (for exit animations)
+   * @default 300
+   */
+  closeDelay?: number;
+  /**
+   * Whether to dismiss the keyboard when the dialog closes
+   * @default true
+   */
+  isDismissKeyboardOnClose?: boolean;
+  /**
+   * Animation configurations for open/close progress animations
+   */
+  progressAnimationConfigs?: DialogProgressAnimationConfigs;
+}
+
+/**
+ * Dialog Trigger component props
+ */
+export interface DialogTriggerProps extends DialogPrimitivesTypes.TriggerProps {
+  /**
+   * The trigger element content
+   */
+  children?: ReactNode;
+}
+
+/**
  * Dialog Portal component props
  */
 export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
@@ -72,10 +104,6 @@ export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
    * The portal content
    */
   children: ReactNode;
-  /**
-   * Animation configurations for open/close progress animations
-   */
-  progressAnimationConfigs?: DialogProgressAnimationConfigs;
 }
 
 /**

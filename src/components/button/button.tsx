@@ -1,21 +1,11 @@
-import { forwardRef, useCallback, useMemo } from 'react';
-import { View, type GestureResponderEvent } from 'react-native';
-import {
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import { forwardRef, useMemo } from 'react';
+import { View } from 'react-native';
 import { Text } from '../../helpers/components';
 import { colorKit, useThemeColor } from '../../helpers/theme';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
 import { PressableFeedback } from '../pressable-feedback';
-import {
-  ANIMATION_DURATION,
-  ANIMATION_EASING,
-  DISPLAY_NAME,
-} from './button.constants';
+import { DISPLAY_NAME } from './button.constants';
 import buttonStyles, { styleSheet } from './button.styles';
 import type {
   ButtonContextValue,
@@ -33,14 +23,14 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   const {
     children,
     variant = 'primary',
+    feedbackVariant = 'highlight',
+    feedbackPosition = 'behind',
     size = 'md',
     isIconOnly = false,
     isDisabled = false,
     className,
     style,
-    animationConfig,
-    onPressIn,
-    onPressOut,
+    animation,
     accessibilityRole = 'button',
     ...restProps
   } = props;
@@ -81,62 +71,37 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     themeColorDangerHover,
   ]);
 
-  const scale = useSharedValue(0);
-  const btnWidth = useSharedValue(0);
+  const animationConfig = useMemo(() => {
+    // If animation is explicitly provided, use it
+    if (animation !== undefined) {
+      return animation;
+    }
 
-  const isScaleAnimationDisabled = animationConfig?.scale?.isDisabled ?? false;
-
-  const scaleValue = useMemo(
-    () => animationConfig?.scale?.scale ?? 0.995,
-    [animationConfig]
-  );
-
-  const scaleConfig = useMemo(
-    () =>
-      animationConfig?.scale?.config ?? {
-        duration: ANIMATION_DURATION,
-        easing: ANIMATION_EASING,
-      },
-    [animationConfig]
-  );
-
-  const animatedContainerStyle = useAnimatedStyle(() => {
-    const baseWidth = 300;
-    const coefficient = btnWidth.get() > 0 ? baseWidth / btnWidth.get() : 1;
-    const adjustedScaleValue = 1 - (1 - scaleValue) * coefficient;
-
-    return {
-      transform: [
-        {
-          scale: interpolate(scale.get(), [0, 1], [1, adjustedScaleValue]),
+    // Default animation configuration for highlight variant
+    if (feedbackVariant === 'highlight') {
+      return {
+        highlight: {
+          backgroundColor: {
+            value: highlightColorMap,
+          },
+          opacity: {
+            value: [0, 1] as [number, number],
+          },
         },
-      ],
-    };
-  });
+      };
+    }
 
-  const handlePressIn = useCallback(
-    (e: GestureResponderEvent) => {
-      if (!isScaleAnimationDisabled) {
-        scale.set(withTiming(1, scaleConfig));
-      }
-      if (onPressIn && typeof onPressIn === 'function') {
-        onPressIn(e);
-      }
-    },
-    [scale, scaleConfig, onPressIn, isScaleAnimationDisabled]
-  );
+    // Default animation configuration for ripple variant
+    if (feedbackVariant === 'ripple') {
+      return {
+        ripple: {
+          backgroundColor: { value: highlightColorMap },
+        },
+      };
+    }
 
-  const handlePressOut = useCallback(
-    (e: GestureResponderEvent) => {
-      if (!isScaleAnimationDisabled) {
-        scale.set(withTiming(0, scaleConfig));
-      }
-      if (onPressOut && typeof onPressOut === 'function') {
-        onPressOut(e);
-      }
-    },
-    [scale, scaleConfig, onPressOut, isScaleAnimationDisabled]
-  );
+    return undefined;
+  }, [animation, feedbackVariant, highlightColorMap]);
 
   const contextValue = useMemo(
     () => ({
@@ -147,31 +112,18 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     [size, variant, isDisabled]
   );
 
-  const handleLayout = useCallback(
-    (event: { nativeEvent: { layout: { width: number } } }) => {
-      btnWidth.set(event.nativeEvent.layout.width);
-    },
-    [btnWidth]
-  );
-
   return (
     <ButtonProvider value={contextValue}>
       <PressableFeedback
         ref={ref}
+        feedbackVariant={feedbackVariant}
+        feedbackPosition={feedbackPosition}
         className={tvStyles}
-        style={[styleSheet.buttonRoot, animatedContainerStyle, style]}
+        style={[styleSheet.buttonRoot, style]}
         isDisabled={isDisabled}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        onLayout={handleLayout}
         accessibilityRole={accessibilityRole}
         accessibilityState={{ disabled: isDisabled }}
-        variant="highlight"
-        animationConfig={{
-          color: highlightColorMap,
-          opacity: 1,
-          ...animationConfig?.highlight,
-        }}
+        animation={animationConfig}
         {...restProps}
       >
         {stringifiedChildren ? (

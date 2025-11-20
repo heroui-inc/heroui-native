@@ -98,6 +98,10 @@ const components: Component[] = [
     title: 'Text Field',
     path: 'text-field',
   },
+  {
+    title: 'Toast',
+    path: 'toast',
+  },
 ];
 
 export default function App() {

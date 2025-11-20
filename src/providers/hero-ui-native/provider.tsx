@@ -1,6 +1,7 @@
 import React from 'react';
 import { PortalHost } from '../../primitives/portal';
 import { TextComponentProvider } from '../text-component/provider';
+import { Toaster } from '../toast/provider';
 import type { HeroUINativeProviderProps } from './types';
 
 /**
@@ -60,6 +61,7 @@ export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   return (
     <TextComponentProvider value={{ textProps }}>
       {children}
+      <Toaster />
       <PortalHost />
     </TextComponentProvider>
   );

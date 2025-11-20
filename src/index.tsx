@@ -29,3 +29,4 @@ export * from './helpers/theme';
 
 // Provider
 export * from './providers/hero-ui-native';
+export * from './providers/toast';

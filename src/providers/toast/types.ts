@@ -33,11 +33,72 @@ export interface ToastProviderProps {
    * @default { top: 12, bottom: 12, left: 12, right: 12 }
    */
   insets?: ToastInsets;
+  /**
+   * Children to render
+   */
+  children?: React.ReactNode;
 }
 
 /**
- * Context value for the Toast provider
+ * Options for preparing a toast
  */
-export interface ToastContextValue {
-  // PLACEHOLDER
+export interface ToastPrepareOptions {
+  /**
+   * Function that returns the React element to render
+   * The function receives the toast ID as a parameter
+   */
+  component: (id: string) => React.ReactElement;
+}
+
+/**
+ * Represents a single toast item in the state
+ */
+export interface ToastItem {
+  /**
+   * Unique identifier for the toast
+   */
+  id: string;
+  /**
+   * Function that returns the React element to render
+   */
+  component: (id: string) => React.ReactElement;
+  /**
+   * Whether the toast is currently visible
+   */
+  visible: boolean;
+}
+
+/**
+ * Actions for the toast reducer
+ */
+export type ToastAction =
+  | { type: 'ADD'; payload: ToastItem }
+  | { type: 'UPDATE'; payload: { id: string; visible: boolean } }
+  | { type: 'REMOVE'; payload: { id: string } };
+
+/**
+ * Context value for the Toaster provider
+ */
+export interface ToasterContextValue {
+  /**
+   * Prepare a toast for later display
+   * @param options - Options for the toast
+   * @returns The unique ID of the prepared toast
+   */
+  prepare: (options: ToastPrepareOptions) => string;
+  /**
+   * Show a prepared toast
+   * @param id - The ID of the toast to show
+   */
+  show: (id: string) => void;
+  /**
+   * Hide a visible toast
+   * @param id - The ID of the toast to hide
+   */
+  hide: (id: string) => void;
+  /**
+   * Remove a toast from memory
+   * @param id - The ID of the toast to remove
+   */
+  remove: (id: string) => void;
 }

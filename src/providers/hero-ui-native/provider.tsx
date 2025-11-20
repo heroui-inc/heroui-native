@@ -31,8 +31,7 @@ export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
 
   return (
     <TextComponentProvider value={{ textProps }}>
-      {children}
-      {!isToastDisabled && <Toaster {...toastProps} />}
+      <Toaster {...toastProps}>{children}</Toaster>
       <PortalHost />
     </TextComponentProvider>
   );

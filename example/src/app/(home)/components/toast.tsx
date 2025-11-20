@@ -1,4 +1,5 @@
-import { Toast } from 'heroui-native';
+import { Button, Toast, useToaster } from 'heroui-native';
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -68,12 +69,143 @@ const AllVariantsContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const InteractiveDemoContent = () => {
+  const toast = useToaster();
+
+  const myToast = toast.prepare({
+    component: (id) => (
+      <Toast variant="accent" className="flex-row items-center gap-3">
+        <View className="flex-1">
+          <Toast.Label>Interactive Toast</Toast.Label>
+          <Toast.Description>
+            Use buttons below to control this toast
+          </Toast.Description>
+        </View>
+        <Toast.Action onPress={() => toast.hide(id)}>Close</Toast.Action>
+      </Toast>
+    ),
+  });
+
+  return (
+    <View className="flex-1 px-5">
+      <View className="flex-1 justify-center gap-3">
+        <Button onPress={() => toast.show(myToast)} variant="primary">
+          Show Toast
+        </Button>
+
+        <Button onPress={() => toast.hide(myToast)} variant="secondary">
+          Hide Toast
+        </Button>
+
+        <Button onPress={() => toast.remove(myToast)} variant="destructive">
+          Remove Toast
+        </Button>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const MultipleToastsContent = () => {
+  const toast = useToaster();
+
+  const toast1 = toast.prepare({
+    component: (id: string) => (
+      <Toast
+        variant="default"
+        placement="top"
+        className="flex-row items-center gap-3"
+      >
+        <View className="flex-1">
+          <Toast.Label>Toast 1</Toast.Label>
+          <Toast.Description>First toast at top</Toast.Description>
+        </View>
+        <Toast.Action onPress={() => toast.hide(id)}>Close</Toast.Action>
+      </Toast>
+    ),
+  });
+
+  const toast2 = toast.prepare({
+    component: (id: string) => (
+      <Toast
+        variant="accent"
+        placement="top"
+        className="flex-row items-center gap-3"
+      >
+        <View className="flex-1">
+          <Toast.Label>Toast 2</Toast.Label>
+          <Toast.Description>Second toast at top</Toast.Description>
+        </View>
+        <Toast.Action onPress={() => toast.hide(id)}>Close</Toast.Action>
+      </Toast>
+    ),
+  });
+
+  const toast3 = toast.prepare({
+    component: (id: string) => (
+      <Toast
+        variant="success"
+        placement="bottom"
+        className="flex-row items-center gap-3"
+      >
+        <View className="flex-1">
+          <Toast.Label>Toast 3</Toast.Label>
+          <Toast.Description>Third toast at bottom</Toast.Description>
+        </View>
+        <Toast.Action onPress={() => toast.hide(id)}>Close</Toast.Action>
+      </Toast>
+    ),
+  });
+
+  const allToasts = [toast1, toast2, toast3];
+
+  return (
+    <View className="flex-1 px-5">
+      <View className="flex-1 justify-center gap-3">
+        <Button
+          onPress={() => allToasts.forEach((id) => toast.show(id))}
+          variant="primary"
+        >
+          Show All Toasts
+        </Button>
+
+        <Button
+          onPress={() => allToasts.forEach((id) => toast.hide(id))}
+          variant="secondary"
+        >
+          Hide All Toasts
+        </Button>
+
+        <Button
+          onPress={() => allToasts.forEach((id) => toast.remove(id))}
+          variant="destructive"
+        >
+          Remove All Toasts
+        </Button>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const TOAST_VARIANTS: UsageVariant[] = [
+  // {
+  //   value: 'all-variants',
+  //   label: 'All variants',
+  //   content: <AllVariantsContent />,
+  // },
   {
-    value: 'all-variants',
-    label: 'All variants',
-    content: <AllVariantsContent />,
+    value: 'interactive-demo',
+    label: 'Interactive Demo',
+    content: <InteractiveDemoContent />,
   },
+  // {
+  //   value: 'multiple-toasts',
+  //   label: 'Multiple Toasts',
+  //   content: <MultipleToastsContent />,
+  // },
 ];
 
 export default function ToastScreen() {

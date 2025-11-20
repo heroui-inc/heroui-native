@@ -1,15 +1,19 @@
-import { useMemo } from 'react';
+import { Fragment, useCallback, useId, useMemo, useReducer } from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { createContext } from '../../helpers/utils';
-import type { ToastContextValue, ToastProviderProps } from './types';
+import { toastReducer } from './reducer';
+import type { ToasterContextValue, ToastProviderProps } from './types';
 
-const [ToasterProvider, useToaster] = createContext<ToastContextValue>({
-  name: 'ToastContext',
+const [ToasterProvider, useToaster] = createContext<ToasterContextValue>({
+  name: 'ToasterContext',
 });
 
-export function Toaster({ insets }: ToastProviderProps) {
+export function Toaster({ insets, children }: ToastProviderProps) {
   const safeAreaInsets = useSafeAreaInsets();
+  const baseId = useId();
+  const [toasts, dispatch] = useReducer(toastReducer, []);
+  console.log('🔴 🔴', toasts); // VS remove
 
   const finalInsets = useMemo(() => {
     return {
@@ -20,12 +24,55 @@ export function Toaster({ insets }: ToastProviderProps) {
     };
   }, [safeAreaInsets, insets]);
 
-  const contextValue = useMemo<ToastContextValue>(() => {
-    return {};
+  const prepare = useCallback(
+    (options: { component: (id: string) => React.ReactElement }) => {
+      const id = `${baseId}-${Date.now()}-${Math.random()}`;
+      dispatch({
+        type: 'ADD',
+        payload: {
+          id,
+          component: options.component,
+          visible: false,
+        },
+      });
+      return id;
+    },
+    [baseId]
+  );
+
+  const show = useCallback((id: string) => {
+    dispatch({
+      type: 'UPDATE',
+      payload: { id, visible: true },
+    });
   }, []);
+
+  const hide = useCallback((id: string) => {
+    dispatch({
+      type: 'UPDATE',
+      payload: { id, visible: false },
+    });
+  }, []);
+
+  const remove = useCallback((id: string) => {
+    dispatch({
+      type: 'REMOVE',
+      payload: { id },
+    });
+  }, []);
+
+  const contextValue = useMemo<ToasterContextValue>(() => {
+    return {
+      prepare,
+      show,
+      hide,
+      remove,
+    };
+  }, [prepare, show, hide, remove]);
 
   return (
     <ToasterProvider value={contextValue}>
+      {children}
       <View
         className="absolute inset-0 pointer-events-box-none"
         style={{
@@ -36,7 +83,12 @@ export function Toaster({ insets }: ToastProviderProps) {
         }}
       >
         <View className="flex-1">
-          {/* Visible toasts will be rendered here */}
+          {toasts.map((toast) => {
+            if (!toast.visible) return null;
+            return (
+              <Fragment key={toast.id}>{toast.component(toast.id)}</Fragment>
+            );
+          })}
         </View>
       </View>
     </ToasterProvider>

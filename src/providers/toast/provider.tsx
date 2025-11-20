@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Toast } from '../../components/toast';
 import { createContext } from '../../helpers/utils';
 import type { ToastContextValue, ToastProviderProps } from './types';
 
@@ -37,19 +36,7 @@ export function Toaster({ insets }: ToastProviderProps) {
         }}
       >
         <View className="flex-1">
-          <Toast
-            variant="accent"
-            placement="bottom"
-            className="flex-row items-center gap-3"
-          >
-            <View className="flex-1">
-              <Toast.Label>Accent notification</Toast.Label>
-              <Toast.Description>
-                This is an accent toast message
-              </Toast.Description>
-            </View>
-            <Toast.Action>Action</Toast.Action>
-          </Toast>
+          {/* Visible toasts will be rendered here */}
         </View>
       </View>
     </ToasterProvider>

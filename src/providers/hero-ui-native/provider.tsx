@@ -14,54 +14,25 @@ import type { HeroUINativeProviderProps } from './types';
  *
  * Currently provides:
  * - Global text component configuration
+ * - Toast notification system
  * - Portal management for overlays
  *
  * @param {HeroUINativeProviderProps} props - Provider configuration props
  * @param {ReactNode} props.children - Child components to wrap
  * @param {HeroUINativeConfig} [props.config] - Configuration object
  *
- * @example
- * Basic usage with default settings:
- * ```tsx
- * import { HeroUINativeProvider } from '@heroui/native';
- *
- * function App() {
- *   return (
- *     <HeroUINativeProvider>
- *       <YourApp />
- *     </HeroUINativeProvider>
- *   );
- * }
- * ```
- *
- * @example
- * With text component configuration:
- * ```tsx
- * <HeroUINativeProvider
- *   config={{
- *     textProps: {
- *       allowFontScaling: false,
- *       adjustsFontSizeToFit: false,
- *       maxFontSizeMultiplier: 1.5
- *     }
- *   }}
- * >
- *   <YourApp />
- * </HeroUINativeProvider>
- * ```
- *
- * @see {@link HeroUINativeConfig} - Configuration options
  */
 export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   children,
   config = {},
 }) => {
-  const { textProps } = config;
+  const { textProps, toast } = config;
+  const { isDisabled: isToastDisabled = false, ...toastProps } = toast || {};
 
   return (
     <TextComponentProvider value={{ textProps }}>
       {children}
-      <Toaster />
+      {!isToastDisabled && <Toaster {...toastProps} />}
       <PortalHost />
     </TextComponentProvider>
   );

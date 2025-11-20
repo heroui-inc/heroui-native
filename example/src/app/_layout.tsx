@@ -38,13 +38,7 @@ export default function Layout() {
     <GestureHandlerRootView style={styles.root}>
       <KeyboardProvider>
         <AppThemeProvider>
-          <HeroUINativeProvider
-            config={{
-              textProps: {
-                allowFontScaling: false,
-              },
-            }}
-          >
+          <HeroUINativeProvider>
             <Slot />
           </HeroUINativeProvider>
         </AppThemeProvider>

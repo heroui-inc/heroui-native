@@ -120,15 +120,22 @@ npx expo install react-dom react-native-web @expo/metro-runtime
 
 ### 5. Wrap Your App with Provider
 
-Wrap your application with `HeroUINativeProvider`:
+Wrap your application with `HeroUINativeProvider`. Since HeroUI Native uses `react-native-gesture-handler` under the hood, you must wrap it with `GestureHandlerRootView`:
 
 ```tsx
 import { HeroUINativeProvider } from 'heroui-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function App() {
-  return <HeroUINativeProvider>{/* Your app content */}</HeroUINativeProvider>;
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <HeroUINativeProvider>{/* Your app content */}</HeroUINativeProvider>
+    </GestureHandlerRootView>
+  );
 }
 ```
+
+> **Note:** `react-native-gesture-handler` is required because HeroUI Native uses it internally for gesture handling. Make sure to install it if you haven't already: `npm install react-native-gesture-handler`
 
 ### 6. Use Your First Component
 

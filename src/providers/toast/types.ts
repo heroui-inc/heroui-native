@@ -82,9 +82,9 @@ export type ToastAction =
   | { type: 'HIDE_ALL' };
 
 /**
- * Context value for the toast provider
+ * Toast manager API
  */
-export interface ToasterContextValue {
+export interface ToastManager {
   /**
    * Show a toast
    * @param options - Toast configuration options
@@ -92,13 +92,13 @@ export interface ToasterContextValue {
    *
    * @example
    * ```tsx
-   * const { show } = useToast();
+   * const toast = useToast();
    *
    * // With auto-generated ID
-   * show({ component: <Toast>Hello</Toast> });
+   * toast.show({ component: <Toast>Hello</Toast> });
    *
    * // With custom ID
-   * show({ id: 'my-toast', component: <Toast>Hello</Toast> });
+   * toast.show({ id: 'my-toast', component: <Toast>Hello</Toast> });
    * ```
    */
   show: (options: ToastShowOptions) => ToastId;
@@ -113,12 +113,19 @@ export interface ToasterContextValue {
    *
    * @example
    * ```tsx
-   * const { hide } = useToast();
+   * const toast = useToast();
    *
-   * hide();                    // Hide all toasts
-   * hide('my-toast');          // Hide specific toast
-   * hide(['toast-1', 'toast-2']); // Hide multiple toasts
+   * toast.hide();                    // Hide all toasts
+   * toast.hide('my-toast');          // Hide specific toast
+   * toast.hide(['toast-1', 'toast-2']); // Hide multiple toasts
    * ```
    */
   hide: (ids?: ToastId | ToastId[]) => void;
+}
+
+/**
+ * Context value for the toast provider
+ */
+export interface ToasterContextValue {
+  toast: ToastManager;
 }

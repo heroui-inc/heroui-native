@@ -3,80 +3,80 @@ import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
-const AllVariantsContent = () => {
-  return (
-    <View className="flex-1 px-5">
-      <View className="flex-1 justify-center gap-4">
-        {/* Default variant */}
-        <Toast variant="default" className="flex-row items-center gap-3">
-          <View className="flex-1">
-            <Toast.Label>Default notification</Toast.Label>
-            <Toast.Description>
-              This is a default toast message
-            </Toast.Description>
-          </View>
-          <Toast.Action>Action</Toast.Action>
-        </Toast>
+// const AllVariantsContent = () => {
+//   return (
+//     <View className="flex-1 px-5">
+//       <View className="flex-1 justify-center gap-4">
+//         {/* Default variant */}
+//         <Toast variant="default" className="flex-row items-center gap-3">
+//           <View className="flex-1">
+//             <Toast.Label>Default notification</Toast.Label>
+//             <Toast.Description>
+//               This is a default toast message
+//             </Toast.Description>
+//           </View>
+//           <Toast.Action>Action</Toast.Action>
+//         </Toast>
 
-        {/* Accent variant */}
-        <Toast variant="accent" className="flex-row items-center gap-3">
-          <View className="flex-1">
-            <Toast.Label>Accent notification</Toast.Label>
-            <Toast.Description>
-              This is an accent toast message
-            </Toast.Description>
-          </View>
-          <Toast.Action>Action</Toast.Action>
-        </Toast>
+//         {/* Accent variant */}
+//         <Toast variant="accent" className="flex-row items-center gap-3">
+//           <View className="flex-1">
+//             <Toast.Label>Accent notification</Toast.Label>
+//             <Toast.Description>
+//               This is an accent toast message
+//             </Toast.Description>
+//           </View>
+//           <Toast.Action>Action</Toast.Action>
+//         </Toast>
 
-        {/* Success variant */}
-        <Toast variant="success" className="flex-row items-center gap-3">
-          <View className="flex-1">
-            <Toast.Label>Success notification</Toast.Label>
-            <Toast.Description>
-              This is a success toast message
-            </Toast.Description>
-          </View>
-          <Toast.Action>Action</Toast.Action>
-        </Toast>
+//         {/* Success variant */}
+//         <Toast variant="success" className="flex-row items-center gap-3">
+//           <View className="flex-1">
+//             <Toast.Label>Success notification</Toast.Label>
+//             <Toast.Description>
+//               This is a success toast message
+//             </Toast.Description>
+//           </View>
+//           <Toast.Action>Action</Toast.Action>
+//         </Toast>
 
-        {/* Warning variant */}
-        <Toast variant="warning" className="flex-row items-center gap-3">
-          <View className="flex-1">
-            <Toast.Label>Warning notification</Toast.Label>
-            <Toast.Description>
-              This is a warning toast message
-            </Toast.Description>
-          </View>
-          <Toast.Action>Action</Toast.Action>
-        </Toast>
+//         {/* Warning variant */}
+//         <Toast variant="warning" className="flex-row items-center gap-3">
+//           <View className="flex-1">
+//             <Toast.Label>Warning notification</Toast.Label>
+//             <Toast.Description>
+//               This is a warning toast message
+//             </Toast.Description>
+//           </View>
+//           <Toast.Action>Action</Toast.Action>
+//         </Toast>
 
-        {/* Danger variant */}
-        <Toast variant="danger" className="flex-row items-center gap-3">
-          <View className="flex-1">
-            <Toast.Label>Danger notification</Toast.Label>
-            <Toast.Description>
-              This is a danger toast message
-            </Toast.Description>
-          </View>
-          <Toast.Action>Action</Toast.Action>
-        </Toast>
-      </View>
-    </View>
-  );
-};
+//         {/* Danger variant */}
+//         <Toast variant="danger" className="flex-row items-center gap-3">
+//           <View className="flex-1">
+//             <Toast.Label>Danger notification</Toast.Label>
+//             <Toast.Description>
+//               This is a danger toast message
+//             </Toast.Description>
+//           </View>
+//           <Toast.Action>Action</Toast.Action>
+//         </Toast>
+//       </View>
+//     </View>
+//   );
+// };
 
 // ------------------------------------------------------------------------------
 
 const InteractiveDemoContent = () => {
-  const { show, hide } = useToast();
+  const toast = useToast();
 
   return (
     <View className="flex-1 px-5">
       <View className="flex-1 justify-center gap-3">
         <Button
           onPress={() => {
-            const id = show({
+            const id = toast.show({
               id: 'my-toast',
               component: (
                 <Toast variant="accent" className="flex-row items-center gap-3">
@@ -86,7 +86,7 @@ const InteractiveDemoContent = () => {
                       Use buttons below to control this toast
                     </Toast.Description>
                   </View>
-                  <Toast.Action onPress={() => hide('my-toast')}>
+                  <Toast.Action onPress={() => toast.hide('my-toast')}>
                     Close
                   </Toast.Action>
                 </Toast>
@@ -99,11 +99,11 @@ const InteractiveDemoContent = () => {
           Show Toast
         </Button>
 
-        <Button onPress={() => hide('my-toast1')} variant="secondary">
+        <Button onPress={() => toast.hide('my-toast')} variant="secondary">
           Hide Toast
         </Button>
 
-        <Button onPress={() => hide()} variant="destructive">
+        <Button onPress={() => toast.hide()} variant="destructive">
           Hide All Toasts
         </Button>
       </View>
@@ -114,7 +114,7 @@ const InteractiveDemoContent = () => {
 // ------------------------------------------------------------------------------
 
 const MultipleToastsContent = () => {
-  const { show, hide } = useToast();
+  const toast = useToast();
 
   return (
     <View className="flex-1 px-5">
@@ -122,7 +122,7 @@ const MultipleToastsContent = () => {
         <Button
           onPress={() => {
             // Show multiple toasts with custom IDs
-            show({
+            toast.show({
               id: 'toast-1',
               component: (
                 <Toast
@@ -134,14 +134,14 @@ const MultipleToastsContent = () => {
                     <Toast.Label>Toast 1</Toast.Label>
                     <Toast.Description>First toast at top</Toast.Description>
                   </View>
-                  <Toast.Action onPress={() => hide('toast-1')}>
+                  <Toast.Action onPress={() => toast.hide('toast-1')}>
                     Close
                   </Toast.Action>
                 </Toast>
               ),
             });
 
-            show({
+            toast.show({
               id: 'toast-2',
               component: (
                 <Toast
@@ -153,14 +153,14 @@ const MultipleToastsContent = () => {
                     <Toast.Label>Toast 2</Toast.Label>
                     <Toast.Description>Second toast at top</Toast.Description>
                   </View>
-                  <Toast.Action onPress={() => hide('toast-2')}>
+                  <Toast.Action onPress={() => toast.hide('toast-2')}>
                     Close
                   </Toast.Action>
                 </Toast>
               ),
             });
 
-            show({
+            toast.show({
               id: 'toast-3',
               component: (
                 <Toast
@@ -172,7 +172,7 @@ const MultipleToastsContent = () => {
                     <Toast.Label>Toast 3</Toast.Label>
                     <Toast.Description>Third toast at bottom</Toast.Description>
                   </View>
-                  <Toast.Action onPress={() => hide('toast-3')}>
+                  <Toast.Action onPress={() => toast.hide('toast-3')}>
                     Close
                   </Toast.Action>
                 </Toast>
@@ -185,13 +185,13 @@ const MultipleToastsContent = () => {
         </Button>
 
         <Button
-          onPress={() => hide(['toast-1', 'toast-2', 'toast-3'])}
+          onPress={() => toast.hide(['toast-1', 'toast-2', 'toast-3'])}
           variant="secondary"
         >
           Hide Specific Toasts
         </Button>
 
-        <Button onPress={() => hide()} variant="destructive">
+        <Button onPress={() => toast.hide()} variant="destructive">
           Hide All Toasts
         </Button>
       </View>
@@ -202,11 +202,6 @@ const MultipleToastsContent = () => {
 // ------------------------------------------------------------------------------
 
 const TOAST_VARIANTS: UsageVariant[] = [
-  {
-    value: 'all-variants',
-    label: 'All variants',
-    content: <AllVariantsContent />,
-  },
   {
     value: 'interactive-demo',
     label: 'Interactive Demo',

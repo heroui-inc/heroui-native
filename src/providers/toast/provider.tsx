@@ -67,8 +67,10 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
 
   const contextValue = useMemo<ToasterContextValue>(
     () => ({
-      show,
-      hide,
+      toast: {
+        show,
+        hide,
+      },
     }),
     [show, hide]
   );
@@ -94,13 +96,23 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
  *
  * @returns Toast manager with show and hide methods
  *
+ * @example
+ * ```tsx
+ * const toast = useToast();
+ *
+ * // Show a toast
+ * toast.show({ component: <Toast>Hello</Toast> });
+ *
+ * // Hide a toast
+ * toast.hide('my-toast');
+ * ```
  */
-export function useToast(): ToasterContextValue {
+export function useToast() {
   const context = useContext(ToasterContext);
 
   if (!context) {
     throw new Error('useToast must be used within a ToastProvider provider');
   }
 
-  return context;
+  return context.toast;
 }

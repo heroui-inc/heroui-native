@@ -3,13 +3,12 @@ import {
   Fragment,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useReducer,
   useRef,
 } from 'react';
 import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { InsetsContainer } from './insets-container';
 import { toastReducer } from './reducer';
 import type {
   ToasterContextValue,
@@ -30,22 +29,7 @@ const ToasterContext = createContext<ToasterContextValue | null>(null);
 export function ToastProvider({ insets, children }: ToastProviderProps) {
   const [toasts, dispatch] = useReducer(toastReducer, []);
 
-  useEffect(() => {
-    console.log('🔴 🔴', toasts); // VS remove
-  }, [toasts]);
-
-  const safeAreaInsets = useSafeAreaInsets();
-
   const idCounter = useRef(0);
-
-  const finalInsets = useMemo(() => {
-    return {
-      top: insets?.top ?? safeAreaInsets.top + 12,
-      bottom: insets?.bottom ?? safeAreaInsets.bottom + 12,
-      left: insets?.left ?? safeAreaInsets.left + 12,
-      right: insets?.right ?? safeAreaInsets.right + 12,
-    };
-  }, [safeAreaInsets, insets]);
 
   /**
    * Show a toast
@@ -92,15 +76,7 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
   return (
     <ToasterContext.Provider value={contextValue}>
       {children}
-      <View
-        className="absolute inset-0 pointer-events-box-none"
-        style={{
-          paddingTop: finalInsets.top,
-          paddingBottom: finalInsets.bottom,
-          paddingLeft: finalInsets.left,
-          paddingRight: finalInsets.right,
-        }}
-      >
+      <InsetsContainer insets={insets}>
         <View className="flex-1">
           {toasts.map((toastItem) => {
             return (
@@ -108,7 +84,7 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
             );
           })}
         </View>
-      </View>
+      </InsetsContainer>
     </ToasterContext.Provider>
   );
 }

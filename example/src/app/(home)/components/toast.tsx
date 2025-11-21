@@ -202,11 +202,11 @@ const MultipleToastsContent = () => {
 // ------------------------------------------------------------------------------
 
 const TOAST_VARIANTS: UsageVariant[] = [
-  // {
-  //   value: 'all-variants',
-  //   label: 'All variants',
-  //   content: <AllVariantsContent />,
-  // },
+  {
+    value: 'all-variants',
+    label: 'All variants',
+    content: <AllVariantsContent />,
+  },
   {
     value: 'interactive-demo',
     label: 'Interactive Demo',

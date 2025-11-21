@@ -81,9 +81,12 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
       <InsetsContainer insets={insets}>
         <View className="flex-1">
           {toasts.map((toastItem) => {
-            return (
-              <Fragment key={toastItem.id}>{toastItem.component}</Fragment>
-            );
+            const content =
+              typeof toastItem.component === 'function'
+                ? toastItem.component({ id: toastItem.id })
+                : toastItem.component;
+
+            return <Fragment key={toastItem.id}>{content}</Fragment>;
           })}
         </View>
       </InsetsContainer>

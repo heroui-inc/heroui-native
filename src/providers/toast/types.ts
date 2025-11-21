@@ -45,6 +45,16 @@ export interface ToastProviderProps {
 }
 
 /**
+ * Props passed to the toast component function
+ */
+export interface ToastComponentProps {
+  /**
+   * The unique ID of the toast
+   */
+  id: ToastId;
+}
+
+/**
  * Options for showing a toast
  */
 export interface ToastShowOptions {
@@ -54,9 +64,11 @@ export interface ToastShowOptions {
    */
   id?: ToastId;
   /**
-   * The React element to render
+   * The React element to render, or a function that receives toast props
    */
-  component: React.ReactElement;
+  component:
+    | React.ReactElement
+    | ((props: ToastComponentProps) => React.ReactElement);
 }
 
 /**
@@ -68,9 +80,11 @@ export interface ToastItem {
    */
   id: ToastId;
   /**
-   * The React element to render
+   * The React element to render, or a function that receives toast props
    */
-  component: React.ReactElement;
+  component:
+    | React.ReactElement
+    | ((props: ToastComponentProps) => React.ReactElement);
 }
 
 /**

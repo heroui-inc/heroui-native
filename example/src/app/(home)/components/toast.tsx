@@ -1,4 +1,10 @@
-import { Button, Toast, useToast } from 'heroui-native';
+import {
+  Button,
+  Toast,
+  useToast,
+  type ToastComponentProps,
+} from 'heroui-native';
+import { useCallback } from 'react';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -68,31 +74,40 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 
 // ------------------------------------------------------------------------------
 
+const MyToast = ({ id }: ToastComponentProps) => {
+  console.log('🔴 🔴', id); // VS remove
+  const toast = useToast();
+
+  return (
+    <Toast variant="accent" className="flex-row items-center gap-3">
+      <View className="flex-1">
+        <Toast.Label>{id}</Toast.Label>
+        <Toast.Description>
+          Use buttons below to control this toast
+        </Toast.Description>
+      </View>
+      <Toast.Action onPress={() => toast.hide(id)}>Close</Toast.Action>
+    </Toast>
+  );
+};
+
 const InteractiveDemoContent = () => {
   const toast = useToast();
+
+  const _renderToast = useCallback(
+    ({ id }: ToastComponentProps) => <MyToast id={id} />,
+    []
+  );
 
   return (
     <View className="flex-1 px-5">
       <View className="flex-1 justify-center gap-3">
         <Button
           onPress={() => {
-            const id = toast.show({
+            toast.show({
               id: 'my-toast',
-              component: (
-                <Toast variant="accent" className="flex-row items-center gap-3">
-                  <View className="flex-1">
-                    <Toast.Label>Interactive Toast</Toast.Label>
-                    <Toast.Description>
-                      Use buttons below to control this toast
-                    </Toast.Description>
-                  </View>
-                  <Toast.Action onPress={() => toast.hide('my-toast')}>
-                    Close
-                  </Toast.Action>
-                </Toast>
-              ),
+              component: _renderToast,
             });
-            console.log('Toast shown with ID:', id);
           }}
           variant="primary"
         >

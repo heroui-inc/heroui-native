@@ -52,6 +52,14 @@ export interface ToastComponentProps {
    * The unique ID of the toast
    */
   id: ToastId;
+  /**
+   * Show a new toast
+   */
+  show: (options: ToastShowOptions) => ToastId;
+  /**
+   * Hide one or more toasts
+   */
+  hide: (ids?: ToastId | ToastId[]) => void;
 }
 
 /**

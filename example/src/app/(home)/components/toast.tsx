@@ -73,9 +73,8 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 
 // ------------------------------------------------------------------------------
 
-const MyToast = ({ id }: ToastComponentProps) => {
+const MyToast = ({ id, hide }: ToastComponentProps) => {
   console.log('🔴 🔴', id); // VS remove
-  const toast = useToast();
 
   return (
     <Toast variant="accent" className="flex-row items-center gap-3">
@@ -85,7 +84,7 @@ const MyToast = ({ id }: ToastComponentProps) => {
           Use buttons below to control this toast
         </Toast.Description>
       </View>
-      <Toast.Action onPress={() => toast.hide(id)}>Close</Toast.Action>
+      <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
     </Toast>
   );
 };
@@ -93,7 +92,7 @@ const MyToast = ({ id }: ToastComponentProps) => {
 const InteractiveDemoContent = () => {
   const toast = useToast();
 
-  const _renderToast = ({ id }: ToastComponentProps) => <MyToast id={id} />;
+  const _renderToast = (props: ToastComponentProps) => <MyToast {...props} />;
 
   return (
     <View className="flex-1 px-5">

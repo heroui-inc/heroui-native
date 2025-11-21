@@ -81,7 +81,12 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
       <InsetsContainer insets={insets}>
         <View className="flex-1">
           {toasts.map((toastItem) => (
-            <ToastItemRenderer key={toastItem.id} toastItem={toastItem} />
+            <ToastItemRenderer
+              key={toastItem.id}
+              toastItem={toastItem}
+              show={show}
+              hide={hide}
+            />
           ))}
         </View>
       </InsetsContainer>

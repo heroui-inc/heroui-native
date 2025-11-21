@@ -1,6 +1,12 @@
 import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
-import Animated, { FadeInDown, FadeOutDown } from 'react-native-reanimated';
+import Animated, {
+  FadeInDown,
+  FadeOutDown,
+  interpolate,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import { CloseIcon } from '../../helpers/components/close-icon';
 import { Text } from '../../helpers/components/text';
 import type { ViewRef } from '../../helpers/types';
@@ -31,6 +37,9 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     children,
     variant = 'default',
     placement = 'top',
+    index,
+    total,
+    height,
     className,
     style,
     ...restProps
@@ -39,6 +48,29 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   const tvStyles = toastStyles.root({
     placement,
     className,
+  });
+
+  const isLast = index === total - 1;
+
+  const rContainerStyle = useAnimatedStyle(() => {
+    const inputRange = [total - 1, total - 2];
+
+    const opacity = interpolate(index, [total - 3, total - 4], [1, 0]);
+    const translateY = interpolate(index, inputRange, [0, -10]);
+    const scale = interpolate(index, inputRange, [1, 0.97]);
+
+    return {
+      pointerEvents: opacity === 0 ? 'none' : 'auto',
+      opacity: withTiming(opacity, { duration: 300 }),
+      transform: [
+        {
+          translateY: withTiming(translateY, { duration: 300 }),
+        },
+        {
+          scale: withTiming(scale, { duration: 300 }),
+        },
+      ],
+    };
   });
 
   const contextValue = useMemo(
@@ -50,16 +82,25 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
 
   return (
     <ToastProvider value={contextValue}>
-      <AnimatedToastRoot
-        ref={ref}
-        entering={FadeInDown.springify()}
+      <Animated.View
+        className="absolute left-0 right-0 bottom-0"
+        entering={FadeInDown.springify().delay(50)}
         exiting={FadeOutDown.springify()}
-        className={tvStyles}
-        style={[styleSheet.root, style]}
-        {...restProps}
       >
-        {children}
-      </AnimatedToastRoot>
+        <AnimatedToastRoot
+          ref={ref}
+          className={tvStyles}
+          style={[styleSheet.root, rContainerStyle, style]}
+          onLayout={(event) => {
+            if (isLast) {
+              height.set(event.nativeEvent.layout.height);
+            }
+          }}
+          {...restProps}
+        >
+          {children}
+        </AnimatedToastRoot>
+      </Animated.View>
     </ToastProvider>
   );
 });

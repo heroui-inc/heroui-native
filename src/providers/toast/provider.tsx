@@ -31,7 +31,7 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
   const [toasts, dispatch] = useReducer(toastReducer, []);
 
   const idCounter = useRef(0);
-  const toastHeight = useSharedValue(0);
+  const height = useSharedValue(0);
 
   /**
    * Show a toast
@@ -88,8 +88,9 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
               toastItem={toastItem}
               show={show}
               hide={hide}
-              isLast={index === toasts.length - 1}
-              toastHeight={toastHeight}
+              index={index}
+              total={toasts.length}
+              height={height}
             />
           ))}
         </View>

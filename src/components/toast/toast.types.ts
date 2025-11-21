@@ -1,5 +1,6 @@
 import type { ViewRef } from '../../helpers/types';
 import type * as ToastPrimitive from '../../primitives/toast';
+import type { ToastComponentProps } from '../../providers/toast';
 import type { ButtonRootProps } from '../button';
 
 /**
@@ -20,7 +21,9 @@ export type ToastPlacement = 'top' | 'bottom';
 /**
  * Props for the Toast.Root component
  */
-export interface ToastRootProps extends ToastPrimitive.RootProps {
+export interface ToastRootProps
+  extends Omit<ToastPrimitive.RootProps, 'id'>,
+    ToastComponentProps {
   /**
    * Visual variant of the toast
    * @default 'default'

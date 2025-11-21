@@ -74,11 +74,17 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 
 // ------------------------------------------------------------------------------
 
-const MyToast = ({ id, hide }: ToastComponentProps) => {
+const MyToast = (props: ToastComponentProps) => {
+  const { id, hide } = props;
   console.log('🔴 🔴', id); // VS remove
 
   return (
-    <Toast variant="accent" className="flex-row items-center gap-3">
+    <Toast
+      variant="accent"
+      placement="bottom"
+      className="flex-row items-center gap-3"
+      {...props}
+    >
       <View className="flex-1">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>
@@ -135,51 +141,60 @@ const MultipleToastsContent = () => {
             // Show multiple toasts with custom IDs
             toast.show({
               id: 'toast-1',
-              component: ({ id, hide }) => (
+              component: (props: ToastComponentProps) => (
                 <Toast
                   variant="default"
                   placement="top"
                   className="flex-row items-center gap-3"
+                  {...props}
                 >
                   <View className="flex-1">
                     <Toast.Label>Toast 1</Toast.Label>
                     <Toast.Description>First toast at top</Toast.Description>
                   </View>
-                  <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
+                  <Toast.Action onPress={() => props.hide(props.id)}>
+                    Close
+                  </Toast.Action>
                 </Toast>
               ),
             });
 
             toast.show({
               id: 'toast-2',
-              component: ({ id, hide }) => (
+              component: (props: ToastComponentProps) => (
                 <Toast
                   variant="accent"
                   placement="top"
                   className="flex-row items-center gap-3"
+                  {...props}
                 >
                   <View className="flex-1">
                     <Toast.Label>Toast 2</Toast.Label>
                     <Toast.Description>Second toast at top</Toast.Description>
                   </View>
-                  <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
+                  <Toast.Action onPress={() => props.hide(props.id)}>
+                    Close
+                  </Toast.Action>
                 </Toast>
               ),
             });
 
             toast.show({
               id: 'toast-3',
-              component: ({ id, hide }) => (
+              component: (props: ToastComponentProps) => (
                 <Toast
                   variant="success"
                   placement="bottom"
                   className="flex-row items-center gap-3"
+                  {...props}
                 >
                   <View className="flex-1">
                     <Toast.Label>Toast 3</Toast.Label>
                     <Toast.Description>Third toast at bottom</Toast.Description>
                   </View>
-                  <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
+                  <Toast.Action onPress={() => props.hide(props.id)}>
+                    Close
+                  </Toast.Action>
                 </Toast>
               ),
             });

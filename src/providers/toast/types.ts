@@ -1,3 +1,5 @@
+import type { SharedValue } from 'react-native-reanimated';
+
 /**
  * Toast ID type - can be string or number
  */
@@ -53,9 +55,17 @@ export interface ToastComponentProps {
    */
   id: ToastId;
   /**
-   * Shared value containing the height of the last toast
+   * The index of the toast in the array (0-based)
    */
-  toastHeight: number;
+  index: number;
+  /**
+   * The total number of toasts currently displayed
+   */
+  total: number;
+  /**
+   * Shared value containing the height of the last toast in pixels
+   */
+  height: SharedValue<number>;
   /**
    * Show a new toast
    */

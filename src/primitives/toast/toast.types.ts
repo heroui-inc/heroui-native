@@ -20,7 +20,7 @@ type RootContext = {
  */
 type RootProps = SlottableViewProps & {
   /** Unique identifier for the toast */
-  id?: string;
+  id?: string | number;
 };
 
 /**

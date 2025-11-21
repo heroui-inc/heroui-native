@@ -7,6 +7,7 @@ import {
   useRef,
 } from 'react';
 import { View } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
 import { InsetsContainer } from './insets-container';
 import { toastReducer } from './reducer';
 import { ToastItemRenderer } from './toast-item-renderer';
@@ -30,6 +31,7 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
   const [toasts, dispatch] = useReducer(toastReducer, []);
 
   const idCounter = useRef(0);
+  const toastHeight = useSharedValue(0);
 
   /**
    * Show a toast
@@ -80,12 +82,14 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
       {children}
       <InsetsContainer insets={insets}>
         <View className="flex-1">
-          {toasts.map((toastItem) => (
+          {toasts.map((toastItem, index) => (
             <ToastItemRenderer
               key={toastItem.id}
               toastItem={toastItem}
               show={show}
               hide={hide}
+              isLast={index === toasts.length - 1}
+              toastHeight={toastHeight}
             />
           ))}
         </View>

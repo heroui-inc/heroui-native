@@ -53,6 +53,10 @@ export interface ToastComponentProps {
    */
   id: ToastId;
   /**
+   * Shared value containing the height of the last toast
+   */
+  toastHeight: number;
+  /**
    * Show a new toast
    */
   show: (options: ToastShowOptions) => ToastId;
@@ -72,11 +76,9 @@ export interface ToastShowOptions {
    */
   id?: ToastId;
   /**
-   * The React element to render, or a function that receives toast props
+   * A function that receives toast props and returns a React element
    */
-  component:
-    | React.ReactElement
-    | ((props: ToastComponentProps) => React.ReactElement);
+  component: (props: ToastComponentProps) => React.ReactElement;
 }
 
 /**
@@ -88,11 +90,9 @@ export interface ToastItem {
    */
   id: ToastId;
   /**
-   * The React element to render, or a function that receives toast props
+   * A function that receives toast props and returns a React element
    */
-  component:
-    | React.ReactElement
-    | ((props: ToastComponentProps) => React.ReactElement);
+  component: (props: ToastComponentProps) => React.ReactElement;
 }
 
 /**

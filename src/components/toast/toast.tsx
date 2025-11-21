@@ -1,5 +1,6 @@
 import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
+import Animated, { FadeInDown, FadeOutDown } from 'react-native-reanimated';
 import { CloseIcon } from '../../helpers/components/close-icon';
 import { Text } from '../../helpers/components/text';
 import type { ViewRef } from '../../helpers/types';
@@ -16,6 +17,8 @@ import type {
   ToastLabelProps,
   ToastRootProps,
 } from './toast.types';
+
+const AnimatedToastRoot = Animated.createAnimatedComponent(ToastPrimitive.Root);
 
 const [ToastProvider, useToast] = createContext<ToastContextValue>({
   name: 'ToastContext',
@@ -47,14 +50,16 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
 
   return (
     <ToastProvider value={contextValue}>
-      <ToastPrimitive.Root
+      <AnimatedToastRoot
         ref={ref}
+        entering={FadeInDown.springify()}
+        exiting={FadeOutDown.springify()}
         className={tvStyles}
         style={[styleSheet.root, style]}
         {...restProps}
       >
         {children}
-      </ToastPrimitive.Root>
+      </AnimatedToastRoot>
     </ToastProvider>
   );
 });

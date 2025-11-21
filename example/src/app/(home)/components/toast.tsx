@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import {
   Button,
   Toast,
@@ -134,7 +135,7 @@ const MultipleToastsContent = () => {
             // Show multiple toasts with custom IDs
             toast.show({
               id: 'toast-1',
-              component: (
+              component: ({ id, hide }) => (
                 <Toast
                   variant="default"
                   placement="top"
@@ -144,16 +145,14 @@ const MultipleToastsContent = () => {
                     <Toast.Label>Toast 1</Toast.Label>
                     <Toast.Description>First toast at top</Toast.Description>
                   </View>
-                  <Toast.Action onPress={() => toast.hide('toast-1')}>
-                    Close
-                  </Toast.Action>
+                  <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
                 </Toast>
               ),
             });
 
             toast.show({
               id: 'toast-2',
-              component: (
+              component: ({ id, hide }) => (
                 <Toast
                   variant="accent"
                   placement="top"
@@ -163,16 +162,14 @@ const MultipleToastsContent = () => {
                     <Toast.Label>Toast 2</Toast.Label>
                     <Toast.Description>Second toast at top</Toast.Description>
                   </View>
-                  <Toast.Action onPress={() => toast.hide('toast-2')}>
-                    Close
-                  </Toast.Action>
+                  <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
                 </Toast>
               ),
             });
 
             toast.show({
               id: 'toast-3',
-              component: (
+              component: ({ id, hide }) => (
                 <Toast
                   variant="success"
                   placement="bottom"
@@ -182,9 +179,7 @@ const MultipleToastsContent = () => {
                     <Toast.Label>Toast 3</Toast.Label>
                     <Toast.Description>Third toast at bottom</Toast.Description>
                   </View>
-                  <Toast.Action onPress={() => toast.hide('toast-3')}>
-                    Close
-                  </Toast.Action>
+                  <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
                 </Toast>
               ),
             });

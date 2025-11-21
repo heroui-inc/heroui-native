@@ -1,30 +1,28 @@
 import type { ToastAction, ToastItem } from './types';
 
+/**
+ * Reducer for managing toast state
+ */
 export function toastReducer(
   state: ToastItem[],
   action: ToastAction
 ): ToastItem[] {
   switch (action.type) {
-    case 'ADD':
-      return [...state, action.payload];
-
-    case 'UPDATE': {
-      const index = state.findIndex((toast) => toast.id === action.payload.id);
-      if (index === -1) return state;
-
-      const newState = [...state];
-      const existingToast = newState[index];
-      if (existingToast) {
-        newState[index] = {
-          ...existingToast,
-          visible: action.payload.visible,
-        };
-      }
-      return newState;
+    case 'SHOW': {
+      // Remove existing toast with same ID if it exists
+      const filtered = state.filter((toast) => toast.id !== action.payload.id);
+      // Add new toast
+      return [...filtered, action.payload];
     }
 
-    case 'REMOVE':
-      return state.filter((toast) => toast.id !== action.payload.id);
+    case 'HIDE': {
+      // Hide specific toasts by ID
+      return state.filter((toast) => !action.payload.ids.includes(toast.id));
+    }
+
+    case 'HIDE_ALL':
+      // Hide all toasts
+      return [];
 
     default:
       return state;

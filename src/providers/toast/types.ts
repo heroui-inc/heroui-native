@@ -1,4 +1,9 @@
 /**
+ * Toast ID type - can be string or number
+ */
+export type ToastId = string | number;
+
+/**
  * Insets for spacing from screen edges
  */
 export interface ToastInsets {
@@ -40,14 +45,18 @@ export interface ToastProviderProps {
 }
 
 /**
- * Options for preparing a toast
+ * Options for showing a toast
  */
-export interface ToastPrepareOptions {
+export interface ToastShowOptions {
   /**
-   * Function that returns the React element to render
-   * The function receives the toast ID as a parameter
+   * Optional ID for the toast
+   * If not provided, one will be generated automatically
    */
-  component: (id: string) => React.ReactElement;
+  id?: ToastId;
+  /**
+   * The React element to render
+   */
+  component: React.ReactElement;
 }
 
 /**
@@ -57,48 +66,59 @@ export interface ToastItem {
   /**
    * Unique identifier for the toast
    */
-  id: string;
+  id: ToastId;
   /**
-   * Function that returns the React element to render
+   * The React element to render
    */
-  component: (id: string) => React.ReactElement;
-  /**
-   * Whether the toast is currently visible
-   */
-  visible: boolean;
+  component: React.ReactElement;
 }
 
 /**
  * Actions for the toast reducer
  */
 export type ToastAction =
-  | { type: 'ADD'; payload: ToastItem }
-  | { type: 'UPDATE'; payload: { id: string; visible: boolean } }
-  | { type: 'REMOVE'; payload: { id: string } };
+  | { type: 'SHOW'; payload: ToastItem }
+  | { type: 'HIDE'; payload: { ids: ToastId[] } }
+  | { type: 'HIDE_ALL' };
 
 /**
- * Context value for the Toaster provider
+ * Context value for the toast provider
  */
 export interface ToasterContextValue {
   /**
-   * Prepare a toast for later display
-   * @param options - Options for the toast
-   * @returns The unique ID of the prepared toast
+   * Show a toast
+   * @param options - Toast configuration options
+   * @returns The ID of the shown toast
+   *
+   * @example
+   * ```tsx
+   * const { show } = useToast();
+   *
+   * // With auto-generated ID
+   * show({ component: <Toast>Hello</Toast> });
+   *
+   * // With custom ID
+   * show({ id: 'my-toast', component: <Toast>Hello</Toast> });
+   * ```
    */
-  prepare: (options: ToastPrepareOptions) => string;
+  show: (options: ToastShowOptions) => ToastId;
+
   /**
-   * Show a prepared toast
-   * @param id - The ID of the toast to show
+   * Hide one or more toasts
+   *
+   * @param ids - Optional ID(s) of toast(s) to hide
+   * - No argument: hides all toasts
+   * - Single ID: hides that toast
+   * - Array of IDs: hides those toasts
+   *
+   * @example
+   * ```tsx
+   * const { hide } = useToast();
+   *
+   * hide();                    // Hide all toasts
+   * hide('my-toast');          // Hide specific toast
+   * hide(['toast-1', 'toast-2']); // Hide multiple toasts
+   * ```
    */
-  show: (id: string) => void;
-  /**
-   * Hide a visible toast
-   * @param id - The ID of the toast to hide
-   */
-  hide: (id: string) => void;
-  /**
-   * Remove a toast from memory
-   * @param id - The ID of the toast to remove
-   */
-  remove: (id: string) => void;
+  hide: (ids?: ToastId | ToastId[]) => void;
 }

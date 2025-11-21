@@ -193,5 +193,4 @@ const CompoundToast = Object.assign(ToastRoot, {
   Close: ToastClose,
 });
 
-export { useToast };
 export default CompoundToast;

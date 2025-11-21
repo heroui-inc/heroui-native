@@ -19,13 +19,7 @@ export interface HeroUINativeConfig extends TextComponentContextValue {
    * @description
    * Configure the global toast system including insets and wrapper components.
    */
-  toast?: ToastProviderProps & {
-    /**
-     * Disable the toast system globally
-     * @default false
-     */
-    isDisabled?: boolean;
-  };
+  toast?: ToastProviderProps;
 }
 
 /**

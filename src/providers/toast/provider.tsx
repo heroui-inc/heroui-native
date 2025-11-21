@@ -1,19 +1,42 @@
-import { Fragment, useCallback, useId, useMemo, useReducer } from 'react';
+import {
+  createContext,
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+} from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { createContext } from '../../helpers/utils';
 import { toastReducer } from './reducer';
-import type { ToasterContextValue, ToastProviderProps } from './types';
+import type {
+  ToasterContextValue,
+  ToastId,
+  ToastProviderProps,
+  ToastShowOptions,
+} from './types';
 
-const [ToasterProvider, useToaster] = createContext<ToasterContextValue>({
-  name: 'ToasterContext',
-});
+/**
+ * Context for toast manager
+ */
+const ToasterContext = createContext<ToasterContextValue | null>(null);
 
-export function Toaster({ insets, children }: ToastProviderProps) {
-  const safeAreaInsets = useSafeAreaInsets();
-  const baseId = useId();
+/**
+ * Toast provider component
+ * Wraps your app to enable toast functionality
+ */
+export function ToastProvider({ insets, children }: ToastProviderProps) {
   const [toasts, dispatch] = useReducer(toastReducer, []);
-  console.log('🔴 🔴', toasts); // VS remove
+
+  useEffect(() => {
+    console.log('🔴 🔴', toasts); // VS remove
+  }, [toasts]);
+
+  const safeAreaInsets = useSafeAreaInsets();
+
+  const idCounter = useRef(0);
 
   const finalInsets = useMemo(() => {
     return {
@@ -24,54 +47,50 @@ export function Toaster({ insets, children }: ToastProviderProps) {
     };
   }, [safeAreaInsets, insets]);
 
-  const prepare = useCallback(
-    (options: { component: (id: string) => React.ReactElement }) => {
-      const id = `${baseId}-${Date.now()}-${Math.random()}`;
+  /**
+   * Show a toast
+   */
+  const show = useCallback((options: ToastShowOptions): ToastId => {
+    const id = options.id ?? `toast-${Date.now()}-${idCounter.current++}`;
+
+    dispatch({
+      type: 'SHOW',
+      payload: {
+        id,
+        component: options.component,
+      },
+    });
+
+    return id;
+  }, []);
+
+  /**
+   * Hide one or more toasts
+   */
+  const hide = useCallback((ids?: ToastId | ToastId[]) => {
+    if (ids === undefined) {
+      // Hide all toasts
+      dispatch({ type: 'HIDE_ALL' });
+    } else {
+      // Hide specific toast(s)
+      const idsArray = Array.isArray(ids) ? ids : [ids];
       dispatch({
-        type: 'ADD',
-        payload: {
-          id,
-          component: options.component,
-          visible: false,
-        },
+        type: 'HIDE',
+        payload: { ids: idsArray },
       });
-      return id;
-    },
-    [baseId]
-  );
-
-  const show = useCallback((id: string) => {
-    dispatch({
-      type: 'UPDATE',
-      payload: { id, visible: true },
-    });
+    }
   }, []);
 
-  const hide = useCallback((id: string) => {
-    dispatch({
-      type: 'UPDATE',
-      payload: { id, visible: false },
-    });
-  }, []);
-
-  const remove = useCallback((id: string) => {
-    dispatch({
-      type: 'REMOVE',
-      payload: { id },
-    });
-  }, []);
-
-  const contextValue = useMemo<ToasterContextValue>(() => {
-    return {
-      prepare,
+  const contextValue = useMemo<ToasterContextValue>(
+    () => ({
       show,
       hide,
-      remove,
-    };
-  }, [prepare, show, hide, remove]);
+    }),
+    [show, hide]
+  );
 
   return (
-    <ToasterProvider value={contextValue}>
+    <ToasterContext.Provider value={contextValue}>
       {children}
       <View
         className="absolute inset-0 pointer-events-box-none"
@@ -83,16 +102,29 @@ export function Toaster({ insets, children }: ToastProviderProps) {
         }}
       >
         <View className="flex-1">
-          {toasts.map((toast) => {
-            if (!toast.visible) return null;
+          {toasts.map((toastItem) => {
             return (
-              <Fragment key={toast.id}>{toast.component(toast.id)}</Fragment>
+              <Fragment key={toastItem.id}>{toastItem.component}</Fragment>
             );
           })}
         </View>
       </View>
-    </ToasterProvider>
+    </ToasterContext.Provider>
   );
 }
 
-export { useToaster };
+/**
+ * Hook to access toast functionality
+ *
+ * @returns Toast manager with show and hide methods
+ *
+ */
+export function useToast(): ToasterContextValue {
+  const context = useContext(ToasterContext);
+
+  if (!context) {
+    throw new Error('useToast must be used within a ToastProvider provider');
+  }
+
+  return context;
+}

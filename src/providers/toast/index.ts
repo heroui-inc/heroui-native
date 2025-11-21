@@ -1,2 +1,2 @@
-export { Toaster, useToaster } from './provider';
+export { ToastProvider, useToast } from './provider';
 export type * from './types';

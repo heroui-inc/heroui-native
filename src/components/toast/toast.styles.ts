@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
-  base: 'absolute left-0 right-0 rounded-3xl p-4 bg-surface shadow-2xl shadow-black/10',
+  base: 'absolute left-0 right-0 rounded-3xl p-4 bg-surface shadow-2xl shadow-black/5',
   variants: {
     placement: {
       top: 'top-0',

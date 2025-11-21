@@ -1,5 +1,4 @@
-import { Button, Toast, useToaster } from 'heroui-native';
-import { useEffect, useState } from 'react';
+import { Button, Toast, useToast } from 'heroui-native';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -70,35 +69,42 @@ const AllVariantsContent = () => {
 // ------------------------------------------------------------------------------
 
 const InteractiveDemoContent = () => {
-  const toast = useToaster();
-
-  const myToast = toast.prepare({
-    component: (id) => (
-      <Toast variant="accent" className="flex-row items-center gap-3">
-        <View className="flex-1">
-          <Toast.Label>Interactive Toast</Toast.Label>
-          <Toast.Description>
-            Use buttons below to control this toast
-          </Toast.Description>
-        </View>
-        <Toast.Action onPress={() => toast.hide(id)}>Close</Toast.Action>
-      </Toast>
-    ),
-  });
+  const { show, hide } = useToast();
 
   return (
     <View className="flex-1 px-5">
       <View className="flex-1 justify-center gap-3">
-        <Button onPress={() => toast.show(myToast)} variant="primary">
+        <Button
+          onPress={() => {
+            const id = show({
+              id: 'my-toast',
+              component: (
+                <Toast variant="accent" className="flex-row items-center gap-3">
+                  <View className="flex-1">
+                    <Toast.Label>Interactive Toast</Toast.Label>
+                    <Toast.Description>
+                      Use buttons below to control this toast
+                    </Toast.Description>
+                  </View>
+                  <Toast.Action onPress={() => hide('my-toast')}>
+                    Close
+                  </Toast.Action>
+                </Toast>
+              ),
+            });
+            console.log('Toast shown with ID:', id);
+          }}
+          variant="primary"
+        >
           Show Toast
         </Button>
 
-        <Button onPress={() => toast.hide(myToast)} variant="secondary">
+        <Button onPress={() => hide('my-toast1')} variant="secondary">
           Hide Toast
         </Button>
 
-        <Button onPress={() => toast.remove(myToast)} variant="destructive">
-          Remove Toast
+        <Button onPress={() => hide()} variant="destructive">
+          Hide All Toasts
         </Button>
       </View>
     </View>
@@ -108,80 +114,85 @@ const InteractiveDemoContent = () => {
 // ------------------------------------------------------------------------------
 
 const MultipleToastsContent = () => {
-  const toast = useToaster();
-
-  const toast1 = toast.prepare({
-    component: (id: string) => (
-      <Toast
-        variant="default"
-        placement="top"
-        className="flex-row items-center gap-3"
-      >
-        <View className="flex-1">
-          <Toast.Label>Toast 1</Toast.Label>
-          <Toast.Description>First toast at top</Toast.Description>
-        </View>
-        <Toast.Action onPress={() => toast.hide(id)}>Close</Toast.Action>
-      </Toast>
-    ),
-  });
-
-  const toast2 = toast.prepare({
-    component: (id: string) => (
-      <Toast
-        variant="accent"
-        placement="top"
-        className="flex-row items-center gap-3"
-      >
-        <View className="flex-1">
-          <Toast.Label>Toast 2</Toast.Label>
-          <Toast.Description>Second toast at top</Toast.Description>
-        </View>
-        <Toast.Action onPress={() => toast.hide(id)}>Close</Toast.Action>
-      </Toast>
-    ),
-  });
-
-  const toast3 = toast.prepare({
-    component: (id: string) => (
-      <Toast
-        variant="success"
-        placement="bottom"
-        className="flex-row items-center gap-3"
-      >
-        <View className="flex-1">
-          <Toast.Label>Toast 3</Toast.Label>
-          <Toast.Description>Third toast at bottom</Toast.Description>
-        </View>
-        <Toast.Action onPress={() => toast.hide(id)}>Close</Toast.Action>
-      </Toast>
-    ),
-  });
-
-  const allToasts = [toast1, toast2, toast3];
+  const { show, hide } = useToast();
 
   return (
     <View className="flex-1 px-5">
       <View className="flex-1 justify-center gap-3">
         <Button
-          onPress={() => allToasts.forEach((id) => toast.show(id))}
+          onPress={() => {
+            // Show multiple toasts with custom IDs
+            show({
+              id: 'toast-1',
+              component: (
+                <Toast
+                  variant="default"
+                  placement="top"
+                  className="flex-row items-center gap-3"
+                >
+                  <View className="flex-1">
+                    <Toast.Label>Toast 1</Toast.Label>
+                    <Toast.Description>First toast at top</Toast.Description>
+                  </View>
+                  <Toast.Action onPress={() => hide('toast-1')}>
+                    Close
+                  </Toast.Action>
+                </Toast>
+              ),
+            });
+
+            show({
+              id: 'toast-2',
+              component: (
+                <Toast
+                  variant="accent"
+                  placement="top"
+                  className="flex-row items-center gap-3"
+                >
+                  <View className="flex-1">
+                    <Toast.Label>Toast 2</Toast.Label>
+                    <Toast.Description>Second toast at top</Toast.Description>
+                  </View>
+                  <Toast.Action onPress={() => hide('toast-2')}>
+                    Close
+                  </Toast.Action>
+                </Toast>
+              ),
+            });
+
+            show({
+              id: 'toast-3',
+              component: (
+                <Toast
+                  variant="success"
+                  placement="bottom"
+                  className="flex-row items-center gap-3"
+                >
+                  <View className="flex-1">
+                    <Toast.Label>Toast 3</Toast.Label>
+                    <Toast.Description>Third toast at bottom</Toast.Description>
+                  </View>
+                  <Toast.Action onPress={() => hide('toast-3')}>
+                    Close
+                  </Toast.Action>
+                </Toast>
+              ),
+            });
+          }}
           variant="primary"
         >
           Show All Toasts
         </Button>
 
         <Button
-          onPress={() => allToasts.forEach((id) => toast.hide(id))}
+          onPress={() => hide(['toast-1', 'toast-2', 'toast-3'])}
           variant="secondary"
         >
-          Hide All Toasts
+          Hide Specific Toasts
         </Button>
 
-        <Button
-          onPress={() => allToasts.forEach((id) => toast.remove(id))}
-          variant="destructive"
-        >
-          Remove All Toasts
+        <Button onPress={() => hide()} variant="destructive">
+          Hide All Toasts
         </Button>
       </View>
     </View>
@@ -201,11 +212,11 @@ const TOAST_VARIANTS: UsageVariant[] = [
     label: 'Interactive Demo',
     content: <InteractiveDemoContent />,
   },
-  // {
-  //   value: 'multiple-toasts',
-  //   label: 'Multiple Toasts',
-  //   content: <MultipleToastsContent />,
-  // },
+  {
+    value: 'multiple-toasts',
+    label: 'Multiple Toasts',
+    content: <MultipleToastsContent />,
+  },
 ];
 
 export default function ToastScreen() {

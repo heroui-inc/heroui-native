@@ -1,2 +1,2 @@
-export { default as Toast, useToast } from './toast';
+export { default as Toast } from './toast';
 export type * from './toast.types';

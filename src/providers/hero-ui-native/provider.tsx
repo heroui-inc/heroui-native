@@ -1,7 +1,7 @@
 import React from 'react';
 import { PortalHost } from '../../primitives/portal';
 import { TextComponentProvider } from '../text-component/provider';
-import { Toaster } from '../toast/provider';
+import { ToastProvider } from '../toast/provider';
 import type { HeroUINativeProviderProps } from './types';
 
 /**
@@ -27,12 +27,14 @@ export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   config = {},
 }) => {
   const { textProps, toast } = config;
-  const { isDisabled: isToastDisabled = false, ...toastProps } = toast || {};
+  const { ...toastProps } = toast || {};
 
   return (
     <TextComponentProvider value={{ textProps }}>
-      <Toaster {...toastProps}>{children}</Toaster>
-      <PortalHost />
+      <ToastProvider {...toastProps}>
+        {children}
+        <PortalHost />
+      </ToastProvider>
     </TextComponentProvider>
   );
 };

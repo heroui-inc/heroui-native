@@ -1,6 +1,5 @@
 import {
   createContext,
-  Fragment,
   useCallback,
   useContext,
   useMemo,
@@ -10,6 +9,7 @@ import {
 import { View } from 'react-native';
 import { InsetsContainer } from './insets-container';
 import { toastReducer } from './reducer';
+import { ToastItemRenderer } from './toast-item-renderer';
 import type {
   ToasterContextValue,
   ToastId,
@@ -80,14 +80,9 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
       {children}
       <InsetsContainer insets={insets}>
         <View className="flex-1">
-          {toasts.map((toastItem) => {
-            const content =
-              typeof toastItem.component === 'function'
-                ? toastItem.component({ id: toastItem.id })
-                : toastItem.component;
-
-            return <Fragment key={toastItem.id}>{content}</Fragment>;
-          })}
+          {toasts.map((toastItem) => (
+            <ToastItemRenderer key={toastItem.id} toastItem={toastItem} />
+          ))}
         </View>
       </InsetsContainer>
     </ToasterContext.Provider>

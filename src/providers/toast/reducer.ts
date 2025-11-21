@@ -17,7 +17,11 @@ export function toastReducer(
 
     case 'HIDE': {
       // Hide specific toasts by ID
-      return state.filter((toast) => !action.payload.ids.includes(toast.id));
+      // Use loose equality to handle string/number ID comparisons
+      return state.filter(
+        (toast) =>
+          !action.payload.ids.some((id) => String(id) === String(toast.id))
+      );
     }
 
     case 'HIDE_ALL':

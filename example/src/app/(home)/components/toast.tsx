@@ -4,7 +4,6 @@ import {
   useToast,
   type ToastComponentProps,
 } from 'heroui-native';
-import { useCallback } from 'react';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -94,10 +93,7 @@ const MyToast = ({ id }: ToastComponentProps) => {
 const InteractiveDemoContent = () => {
   const toast = useToast();
 
-  const _renderToast = useCallback(
-    ({ id }: ToastComponentProps) => <MyToast id={id} />,
-    []
-  );
+  const _renderToast = ({ id }: ToastComponentProps) => <MyToast id={id} />;
 
   return (
     <View className="flex-1 px-5">
@@ -105,7 +101,7 @@ const InteractiveDemoContent = () => {
         <Button
           onPress={() => {
             toast.show({
-              id: 'my-toast',
+              // id: 'my-toast',
               component: _renderToast,
             });
           }}

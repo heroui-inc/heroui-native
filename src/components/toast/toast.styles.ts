@@ -3,16 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
-  base: 'absolute left-0 right-0 rounded-3xl p-4 bg-surface border border-muted/10 shadow-2xl shadow-black/5',
-  variants: {
-    placement: {
-      top: 'top-0',
-      bottom: 'bottom-0',
-    },
-  },
-  defaultVariants: {
-    placement: 'top',
-  },
+  base: 'rounded-3xl p-4 bg-surface border border-muted/10 shadow-2xl shadow-black/5',
 });
 
 const label = tv({

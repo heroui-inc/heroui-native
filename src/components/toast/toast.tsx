@@ -1,19 +1,14 @@
 import { forwardRef, useMemo } from 'react';
-import { View } from 'react-native';
-import Animated, {
-  Easing,
-  FadeInDown,
-  interpolate,
-  Keyframe,
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
+import { View, type ViewStyle } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { CloseIcon } from '../../helpers/components/close-icon';
 import { Text } from '../../helpers/components/text';
+import { cn } from '../../helpers/theme';
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as ToastPrimitive from '../../primitives/toast';
 import { Button } from '../button';
+import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
 import toastStyles, { styleSheet } from './toast.styles';
 import type {
@@ -24,18 +19,6 @@ import type {
   ToastLabelProps,
   ToastRootProps,
 } from './toast.types';
-
-const exiting = new Keyframe({
-  0: {
-    opacity: 1,
-    transform: [{ translateY: 0 }, { scale: 1 }],
-  },
-  100: {
-    opacity: 0.5,
-    transform: [{ translateY: 100 }, { scale: 0.97 }],
-    easing: Easing.in(Easing.ease),
-  },
-});
 
 const AnimatedToastRoot = Animated.createAnimatedComponent(ToastPrimitive.Root);
 
@@ -55,35 +38,22 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     height,
     className,
     style,
+    animation,
     ...restProps
   } = props;
 
   const tvStyles = toastStyles.root({
-    placement,
     className,
   });
 
   const isLast = index === total - 1;
 
-  const rContainerStyle = useAnimatedStyle(() => {
-    const inputRange = [total - 1, total - 2];
-
-    const opacity = interpolate(index, [total - 3, total - 4], [1, 0]);
-    const translateY = interpolate(index, inputRange, [0, -10]);
-    const scale = interpolate(index, inputRange, [1, 0.97]);
-
-    return {
-      pointerEvents: opacity === 0 ? 'none' : 'auto',
-      opacity: withTiming(opacity, { duration: 300 }),
-      transform: [
-        {
-          translateY: withTiming(translateY, { duration: 300 }),
-        },
-        {
-          scale: withTiming(scale, { duration: 300 }),
-        },
-      ],
-    };
+  const { rContainerStyle, entering, exiting } = useToastRootAnimation({
+    animation,
+    style: style as ViewStyle | undefined,
+    index,
+    total,
+    placement,
   });
 
   const contextValue = useMemo(
@@ -96,14 +66,12 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   return (
     <ToastProvider value={contextValue}>
       <Animated.View
-        className="absolute left-0 right-0 bottom-0"
-        entering={FadeInDown.springify()
-          .withInitialValues({
-            opacity: 1,
-            transform: [{ translateY: 100 }],
-          })
-          .mass(3)}
-        exiting={exiting.duration(200)}
+        className={cn(
+          'absolute left-0 right-0',
+          placement === 'top' ? 'top-0' : 'bottom-0'
+        )}
+        entering={entering}
+        exiting={exiting}
       >
         <AnimatedToastRoot
           ref={ref}

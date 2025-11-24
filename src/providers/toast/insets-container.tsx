@@ -1,13 +1,15 @@
 import type { ReactNode } from 'react';
 import { useMemo } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { ToastInsets } from './types';
 
 interface InsetsContainerProps {
   /**
    * Optional inset values for all edges
-   * If not provided, defaults to safe area insets + 12px
+   * If not provided, defaults to platform-specific values:
+   * - iOS: safe area insets + 0px (top/bottom), + 12px (left/right)
+   * - Android: safe area insets + 12px (all edges)
    */
   insets?: ToastInsets;
   /**
@@ -22,15 +24,19 @@ interface InsetsContainerProps {
  *
  * Combines custom insets with safe area insets:
  * - If custom inset is provided, it overrides safe area + default padding
- * - If not provided, uses safe area inset + 12px default padding
+ * - If not provided, uses platform-specific defaults:
+ *   - iOS: safe area inset + 0px for top/bottom, + 12px for left/right
+ *   - Android: safe area inset + 12px for all edges
  */
 export function InsetsContainer({ insets, children }: InsetsContainerProps) {
   const safeAreaInsets = useSafeAreaInsets();
 
   const finalInsets = useMemo(() => {
     return {
-      top: insets?.top ?? safeAreaInsets.top + 12,
-      bottom: insets?.bottom ?? safeAreaInsets.bottom + 12,
+      top: insets?.top ?? safeAreaInsets.top + (Platform.OS === 'ios' ? 0 : 12),
+      bottom:
+        insets?.bottom ??
+        safeAreaInsets.bottom + (Platform.OS === 'ios' ? 0 : 12),
       left: insets?.left ?? safeAreaInsets.left + 12,
       right: insets?.right ?? safeAreaInsets.right + 12,
     };

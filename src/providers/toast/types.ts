@@ -11,12 +11,12 @@ export type ToastId = string | number;
 export interface ToastInsets {
   /**
    * Inset from the top edge in pixels (added to safe area inset)
-   * @default 12
+   * @default Platform-specific: iOS = 0, Android = 12
    */
   top?: number;
   /**
    * Inset from the bottom edge in pixels (added to safe area inset)
-   * @default 12
+   * @default Platform-specific: iOS = 0, Android = 12
    */
   bottom?: number;
   /**
@@ -37,7 +37,9 @@ export interface ToastInsets {
 export interface ToastProviderProps {
   /**
    * Insets for spacing from screen edges (added to safe area insets)
-   * @default { top: 12, bottom: 12, left: 12, right: 12 }
+   * @default Platform-specific:
+   *   - iOS: { top: 0, bottom: 0, left: 12, right: 12 }
+   *   - Android: { top: 12, bottom: 12, left: 12, right: 12 }
    */
   insets?: ToastInsets;
   /**
@@ -160,4 +162,8 @@ export interface ToastManager {
  */
 export interface ToasterContextValue {
   toast: ToastManager;
+  /**
+   * Whether any toast is currently visible
+   */
+  isToastVisible: boolean;
 }

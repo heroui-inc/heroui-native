@@ -67,14 +67,20 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
     }
   }, []);
 
+  /**
+   * Whether any toast is currently visible
+   */
+  const isToastVisible = toasts.length > 0;
+
   const contextValue = useMemo<ToasterContextValue>(
     () => ({
       toast: {
         show,
         hide,
       },
+      isToastVisible,
     }),
-    [show, hide]
+    [show, hide, isToastVisible]
   );
 
   return (
@@ -102,17 +108,22 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
 /**
  * Hook to access toast functionality
  *
- * @returns Toast manager with show and hide methods
+ * @returns Object containing toast manager and visibility state
  *
  * @example
  * ```tsx
- * const toast = useToast();
+ * const { toast, isToastVisible } = useToast();
  *
  * // Show a toast
  * toast.show({ component: <Toast>Hello</Toast> });
  *
  * // Hide a toast
  * toast.hide('my-toast');
+ *
+ * // Check if any toast is visible
+ * if (isToastVisible) {
+ *   console.log('A toast is currently displayed');
+ * }
  * ```
  */
 export function useToast() {
@@ -122,5 +133,8 @@ export function useToast() {
     throw new Error('useToast must be used within a ToastProvider provider');
   }
 
-  return context.toast;
+  return {
+    toast: context.toast,
+    isToastVisible: context.isToastVisible,
+  };
 }

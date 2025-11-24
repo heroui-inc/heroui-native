@@ -29,7 +29,12 @@ export type ToastPlacement = 'top' | 'bottom';
 export type ToastRootAnimation = Animation<{
   opacity?: AnimationValue<{
     /**
-     * Opacity values [visible, hidden]
+     * Opacity interpolation values [start, end]
+     * Controls how fast toast items fade out as they move beyond the visible stack limits.
+     * When toasts are pushed out of view (beyond the last few visible items), their opacity
+     * gradually decreases to create a smooth disappearing effect.
+     * - First value: fully visible opacity (1) for items within visible stack
+     * - Second value: hidden opacity (0) for items pushed out of view
      * @default [1, 0]
      */
     value?: [number, number];
@@ -41,7 +46,13 @@ export type ToastRootAnimation = Animation<{
   }>;
   translateY?: AnimationValue<{
     /**
-     * Translate Y offset values [current, offset]
+     * Translate Y interpolation values [start, end]
+     * Controls how much of a toast item is visible when it's positioned behind the last visible toast.
+     * This creates a "peek" effect where stacked toasts are slightly offset vertically,
+     * allowing users to see a portion of the toast behind the current one.
+     * - First value: no offset (0) for the last/active toast
+     * - Second value: vertical offset in pixels (10) for toasts behind the last one
+     * Note: The offset direction is automatically adjusted based on placement (top/bottom)
      * @default [0, 10] (multiplied by placement sign)
      */
     value?: [number, number];
@@ -53,7 +64,11 @@ export type ToastRootAnimation = Animation<{
   }>;
   scale?: AnimationValue<{
     /**
-     * Scale values [normal, scaled]
+     * Scale interpolation values [start, end]
+     * Controls the size scaling of toast items in the stack.
+     * Toasts behind the active one are slightly scaled down to create depth and visual hierarchy.
+     * - First value: normal scale (1) for the active/last toast
+     * - Second value: scaled down value (0.97) for toasts positioned behind
      * @default [1, 0.97]
      */
     value?: [number, number];

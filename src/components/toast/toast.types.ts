@@ -93,8 +93,8 @@ export type ToastRootAnimation = Animation<{
  * Props for the Toast.Root component
  */
 export interface ToastRootProps
-  extends Omit<ToastPrimitive.RootProps, 'id'>,
-    ToastComponentProps {
+  extends ToastPrimitive.RootProps,
+    Omit<ToastComponentProps, 'id'> {
   /**
    * Visual variant of the toast
    * @default 'default'

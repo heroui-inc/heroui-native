@@ -6,7 +6,6 @@ import {
   type ToastComponentProps,
 } from 'heroui-native';
 import { View } from 'react-native';
-import { ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { toast as sonnerToast } from 'sonner-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -84,10 +83,6 @@ const MyToast = (props: ToastComponentProps) => {
       variant="accent"
       placement="bottom"
       className="flex-row items-center gap-3"
-      animation={{
-        entering: { top: ZoomIn, bottom: ZoomIn },
-        exiting: { top: ZoomOut, bottom: ZoomOut },
-      }}
       {...props}
     >
       <View className="flex-1">
@@ -140,7 +135,7 @@ const InteractiveDemoContent = () => {
 // ------------------------------------------------------------------------------
 
 const MultipleToastsContent = () => {
-  const { toast, isToastVisible } = useToast();
+  const { toast } = useToast();
 
   return (
     <View className="flex-1 px-5">

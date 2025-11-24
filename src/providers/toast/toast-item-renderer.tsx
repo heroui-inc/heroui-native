@@ -1,14 +1,14 @@
 import { memo } from 'react';
 import type { SharedValue } from 'react-native-reanimated';
-import type { ToastId, ToastItem, ToastShowOptions } from './types';
+import type { ToastItem, ToastShowOptions } from './types';
 
 interface ToastItemRendererProps {
   toastItem: ToastItem;
   index: number;
   total: number;
   height: SharedValue<number>;
-  show: (options: ToastShowOptions) => ToastId;
-  hide: (ids?: ToastId | ToastId[]) => void;
+  show: (options: ToastShowOptions) => string;
+  hide: (ids?: string | string[]) => void;
 }
 
 /**

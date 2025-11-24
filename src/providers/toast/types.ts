@@ -1,11 +1,6 @@
 import type { SharedValue } from 'react-native-reanimated';
 
 /**
- * Toast ID type - can be string or number
- */
-export type ToastId = string | number;
-
-/**
  * Insets for spacing from screen edges
  */
 export interface ToastInsets {
@@ -55,7 +50,7 @@ export interface ToastComponentProps {
   /**
    * The unique ID of the toast
    */
-  id: ToastId;
+  id: string;
   /**
    * The index of the toast in the array (0-based)
    */
@@ -71,11 +66,11 @@ export interface ToastComponentProps {
   /**
    * Show a new toast
    */
-  show: (options: ToastShowOptions) => ToastId;
+  show: (options: ToastShowOptions) => string;
   /**
    * Hide one or more toasts
    */
-  hide: (ids?: ToastId | ToastId[]) => void;
+  hide: (ids?: string | string[]) => void;
 }
 
 /**
@@ -86,7 +81,7 @@ export interface ToastShowOptions {
    * Optional ID for the toast
    * If not provided, one will be generated automatically
    */
-  id?: ToastId;
+  id?: string;
   /**
    * A function that receives toast props and returns a React element
    */
@@ -100,7 +95,7 @@ export interface ToastItem {
   /**
    * Unique identifier for the toast
    */
-  id: ToastId;
+  id: string;
   /**
    * A function that receives toast props and returns a React element
    */
@@ -112,7 +107,7 @@ export interface ToastItem {
  */
 export type ToastAction =
   | { type: 'SHOW'; payload: ToastItem }
-  | { type: 'HIDE'; payload: { ids: ToastId[] } }
+  | { type: 'HIDE'; payload: { ids: string[] } }
   | { type: 'HIDE_ALL' };
 
 /**
@@ -135,7 +130,7 @@ export interface ToastManager {
    * toast.show({ id: 'my-toast', component: <Toast>Hello</Toast> });
    * ```
    */
-  show: (options: ToastShowOptions) => ToastId;
+  show: (options: ToastShowOptions) => string;
 
   /**
    * Hide one or more toasts
@@ -154,7 +149,7 @@ export interface ToastManager {
    * toast.hide(['toast-1', 'toast-2']); // Hide multiple toasts
    * ```
    */
-  hide: (ids?: ToastId | ToastId[]) => void;
+  hide: (ids?: string | string[]) => void;
 }
 
 /**

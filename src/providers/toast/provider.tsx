@@ -13,7 +13,6 @@ import { toastReducer } from './reducer';
 import { ToastItemRenderer } from './toast-item-renderer';
 import type {
   ToasterContextValue,
-  ToastId,
   ToastProviderProps,
   ToastShowOptions,
 } from './types';
@@ -36,7 +35,7 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
   /**
    * Show a toast
    */
-  const show = useCallback((options: ToastShowOptions): ToastId => {
+  const show = useCallback((options: ToastShowOptions): string => {
     const id = options.id ?? `toast-${Date.now()}-${idCounter.current++}`;
 
     dispatch({
@@ -53,7 +52,7 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
   /**
    * Hide one or more toasts
    */
-  const hide = useCallback((ids?: ToastId | ToastId[]) => {
+  const hide = useCallback((ids?: string | string[]) => {
     if (ids === undefined) {
       // Hide all toasts
       dispatch({ type: 'HIDE_ALL' });

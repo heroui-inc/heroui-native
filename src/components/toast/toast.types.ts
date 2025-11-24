@@ -1,6 +1,5 @@
 import type {
-  BaseAnimationBuilder,
-  EntryExitAnimationFunction,
+  EntryOrExitLayoutType,
   WithTimingConfig,
 } from 'react-native-reanimated';
 import type { ViewRef } from '../../helpers/types';
@@ -23,14 +22,6 @@ export type ToastVariant =
  * Toast placement types
  */
 export type ToastPlacement = 'top' | 'bottom';
-
-/**
- * Type for entering/exiting animation configurations
- */
-export type ToastEnteringExitingAnimation =
-  | BaseAnimationBuilder
-  | typeof BaseAnimationBuilder
-  | EntryExitAnimationFunction;
 
 /**
  * Animation configuration for toast root component
@@ -77,24 +68,24 @@ export type ToastRootAnimation = Animation<{
      * Custom entering animation for top placement
      * @default FadeInUp.springify().withInitialValues({ opacity: 1, transform: [{ translateY: -100 }] }).mass(3)
      */
-    top?: ToastEnteringExitingAnimation;
+    top?: EntryOrExitLayoutType;
     /**
      * Custom entering animation for bottom placement
      * @default FadeInDown.springify().withInitialValues({ opacity: 1, transform: [{ translateY: 100 }] }).mass(3)
      */
-    bottom?: ToastEnteringExitingAnimation;
+    bottom?: EntryOrExitLayoutType;
   }>;
   exiting?: AnimationValue<{
     /**
      * Custom exiting animation for top placement
      * @default Keyframe animation with translateY: -100, scale: 0.97, opacity: 0.5
      */
-    top?: ToastEnteringExitingAnimation;
+    top?: EntryOrExitLayoutType;
     /**
      * Custom exiting animation for bottom placement
      * @default Keyframe animation with translateY: 100, scale: 0.97, opacity: 0.5
      */
-    bottom?: ToastEnteringExitingAnimation;
+    bottom?: EntryOrExitLayoutType;
   }>;
 }>;
 

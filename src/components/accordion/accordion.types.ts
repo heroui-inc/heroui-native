@@ -1,7 +1,7 @@
 import type {
   AnimatedProps,
   BaseAnimationBuilder,
-  EntryExitAnimationFunction,
+  EntryOrExitLayoutType,
   LayoutAnimationFunction,
   WithSpringConfig,
   WithTimingConfig,
@@ -149,17 +149,11 @@ export interface AccordionContentProps extends PrimitiveContentProps {
   /**
    * Custom entering animation for content
    */
-  entering?:
-    | BaseAnimationBuilder
-    | typeof BaseAnimationBuilder
-    | EntryExitAnimationFunction;
+  entering?: EntryOrExitLayoutType;
   /**
    * Custom exiting animation for content
    */
-  exiting?:
-    | BaseAnimationBuilder
-    | typeof BaseAnimationBuilder
-    | EntryExitAnimationFunction;
+  exiting?: EntryOrExitLayoutType;
 }
 
 /**

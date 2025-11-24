@@ -15,11 +15,7 @@ import {
   getStyleProperties,
   getStyleTransform,
 } from '../../helpers/utils/animation';
-import type {
-  ToastEnteringExitingAnimation,
-  ToastPlacement,
-  ToastRootAnimation,
-} from './toast.types';
+import type { ToastPlacement, ToastRootAnimation } from './toast.types';
 
 // --------------------------------------------------
 
@@ -82,26 +78,26 @@ export function useToastRootAnimation(options: {
   const enteringTopValue = getAnimationValueProperty({
     animationValue: animationConfig?.entering,
     property: 'top',
-    defaultValue: enteringTop as ToastEnteringExitingAnimation,
+    defaultValue: enteringTop,
   });
 
   const enteringBottomValue = getAnimationValueProperty({
     animationValue: animationConfig?.entering,
     property: 'bottom',
-    defaultValue: enteringBottom as ToastEnteringExitingAnimation,
+    defaultValue: enteringBottom,
   });
 
   // Exiting animation
   const exitingTopValue = getAnimationValueProperty({
     animationValue: animationConfig?.exiting,
     property: 'top',
-    defaultValue: exitingTop as ToastEnteringExitingAnimation,
+    defaultValue: exitingTop,
   });
 
   const exitingBottomValue = getAnimationValueProperty({
     animationValue: animationConfig?.exiting,
     property: 'bottom',
-    defaultValue: exitingBottom as ToastEnteringExitingAnimation,
+    defaultValue: exitingBottom,
   });
 
   // Opacity animation

@@ -7,9 +7,11 @@ import { cn } from '../../helpers/theme';
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as ToastPrimitive from '../../primitives/toast';
+import type { ToastComponentProps } from '../../providers/toast';
 import { Button } from '../button';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
+import { useToastDuration } from './toast.hooks';
 import toastStyles, { styleSheet } from './toast.styles';
 import type {
   ToastActionProps,
@@ -39,8 +41,17 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     className,
     style,
     animation,
+    duration = 4000,
+    hide,
     ...restProps
   } = props;
+
+  // Access id from props (id is omitted from ToastRootProps type but available at runtime)
+  const toastProps = props as ToastRootProps & Pick<ToastComponentProps, 'id'>;
+  const { id } = toastProps;
+
+  // Handle automatic toast dismissal based on duration
+  useToastDuration(duration, id, hide);
 
   const tvStyles = toastStyles.root({
     className,

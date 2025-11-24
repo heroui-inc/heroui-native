@@ -1,9 +1,10 @@
 import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated, {
+  Easing,
   FadeInDown,
-  FadeOutDown,
   interpolate,
+  Keyframe,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
@@ -23,6 +24,18 @@ import type {
   ToastLabelProps,
   ToastRootProps,
 } from './toast.types';
+
+const exiting = new Keyframe({
+  0: {
+    opacity: 1,
+    transform: [{ translateY: 0 }, { scale: 1 }],
+  },
+  100: {
+    opacity: 0.5,
+    transform: [{ translateY: 100 }, { scale: 0.97 }],
+    easing: Easing.in(Easing.ease),
+  },
+});
 
 const AnimatedToastRoot = Animated.createAnimatedComponent(ToastPrimitive.Root);
 
@@ -84,8 +97,13 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     <ToastProvider value={contextValue}>
       <Animated.View
         className="absolute left-0 right-0 bottom-0"
-        entering={FadeInDown.springify().delay(50)}
-        exiting={FadeOutDown.springify()}
+        entering={FadeInDown.springify()
+          .withInitialValues({
+            opacity: 1,
+            transform: [{ translateY: 100 }],
+          })
+          .mass(3)}
+        exiting={exiting.duration(200)}
       >
         <AnimatedToastRoot
           ref={ref}

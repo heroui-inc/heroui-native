@@ -8872,6 +8872,7 @@ __metadata:
     react-native-svg: ^15.12.1
     react-native-web: ^0.21.0
     react-native-worklets: ^0.5.1
+    sonner-native: ^0.21.1
     tailwind-merge: ^3.3.1
     tailwind-variants: ^3.1.0
     tailwindcss: ^4.1.14
@@ -14553,6 +14554,21 @@ __metadata:
     ip-address: ^10.0.1
     smart-buffer: ^4.2.0
   checksum: 4bbe2c88cf0eeaf49f94b7f11564a99b2571bde6fd1e714ff95b38f89e1f97858c19e0ab0e6d39eb7f6a984fa67366825895383ed563fe59962a1d57a1d55318
+  languageName: node
+  linkType: hard
+
+"sonner-native@npm:^0.21.1":
+  version: 0.21.1
+  resolution: "sonner-native@npm:0.21.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">=2.16.1"
+    react-native-reanimated: ">=3.10.1"
+    react-native-safe-area-context: ">=4.10.5"
+    react-native-screens: ">=3.31.1"
+    react-native-svg: ">=15.6.0"
+  checksum: 02f75400859efc0e90f0fa7c7b46833ec990975b58f53dbce79d43142f5c506b89b1de66e980f088aef7039f6b5f7395c8ad538d06ad0c900e821336e08460d7
   languageName: node
   linkType: hard
 

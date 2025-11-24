@@ -6,6 +6,7 @@ import {
   type ToastComponentProps,
 } from 'heroui-native';
 import { View } from 'react-native';
+import { toast as sonnerToast } from 'sonner-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
@@ -76,7 +77,6 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 
 const MyToast = (props: ToastComponentProps) => {
   const { id, hide } = props;
-  console.log('🔴 🔴', id); // VS remove
 
   return (
     <Toast
@@ -123,6 +123,10 @@ const InteractiveDemoContent = () => {
         <Button onPress={() => toast.hide()} variant="destructive">
           Hide All Toasts
         </Button>
+
+        {/* <Button onPress={() => sonnerToast('Hello, World!')}>
+          Sonner Toast
+        </Button> */}
       </View>
     </View>
   );

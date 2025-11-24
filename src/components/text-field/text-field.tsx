@@ -269,10 +269,10 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
           selectionHandleColor={
             props.colors?.focusBackground || themeColorMuted
           }
-          onFocus={handleFocus}
-          onBlur={handleBlur}
           textAlignVertical={restProps.multiline ? 'top' : 'center'}
           {...restProps}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
         {endContent}
       </Animated.View>

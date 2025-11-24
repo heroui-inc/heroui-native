@@ -253,12 +253,10 @@ module.exports = withUniwindConfig(wrapWithReanimatedMetroConfig(config), {
 Apply themes in your app:
 
 ```tsx
-import { useColorScheme } from 'uniwind';
+import { Uniwind } from 'uniwind';
 
 function App() {
-  const { setColorScheme } = useColorScheme();
-
-  return <Button onPress={() => setColorScheme('ocean')}>Ocean Theme</Button>;
+  return <Button onPress={() => Uniwind.setTheme('ocean')}>Ocean Theme</Button>;
 }
 ```
 
@@ -376,16 +374,16 @@ cn('bg-background p-4', 'bg-accent');
 HeroUI Native automatically supports dark mode through Uniwind. The theme switches between light and dark variants based on the system or manual selection:
 
 ```tsx
-import { useColorScheme } from 'uniwind';
+import { Uniwind, useUniwind } from 'uniwind';
 
 function ThemeToggle() {
-  const { colorScheme, setColorScheme } = useColorScheme();
+  const { theme } = useUniwind();
 
   return (
     <Button
-      onPress={() => setColorScheme(colorScheme === 'light' ? 'dark' : 'light')}
+      onPress={() => Uniwind.setTheme(theme === 'light' ? 'dark' : 'light')}
     >
-      Toggle {colorScheme === 'light' ? 'Dark' : 'Light'} Mode
+      Toggle {theme === 'light' ? 'Dark' : 'Light'} Mode
     </Button>
   );
 }

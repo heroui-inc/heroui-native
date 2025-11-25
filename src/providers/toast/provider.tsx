@@ -7,6 +7,7 @@ import {
   useRef,
 } from 'react';
 import { View } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
 import { InsetsContainer } from './insets-container';
 import { toastReducer } from './reducer';
 import { ToastItemRenderer } from './toast-item-renderer';
@@ -28,6 +29,10 @@ const ToasterContext = createContext<ToasterContextValue | null>(null);
 export function ToastProvider({ insets, children }: ToastProviderProps) {
   const [toasts, dispatch] = useReducer(toastReducer, []);
 
+  const heights = useSharedValue<Record<string, number>>({});
+
+  const total = useSharedValue<number>(0);
+
   const idCounter = useRef(0);
 
   /**
@@ -44,6 +49,8 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
       },
     });
 
+    total.set((value) => value + 1);
+
     return id;
   }, []);
 
@@ -54,13 +61,27 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
     if (ids === undefined) {
       // Hide all toasts
       dispatch({ type: 'HIDE_ALL' });
+      heights.set({});
+      total.set(0);
     } else {
       // Hide specific toast(s)
       const idsArray = Array.isArray(ids) ? ids : [ids];
+      const idsToRemove = idsArray;
       dispatch({
         type: 'HIDE',
         payload: { ids: idsArray },
       });
+
+      heights.modify(<T extends Record<string, number>>(value: T): T => {
+        'worklet';
+        const result = { ...value };
+        for (const id of idsToRemove) {
+          delete result[id];
+        }
+        return result;
+      });
+
+      total.set((value) => value - 1);
     }
   }, []);
 
@@ -92,7 +113,8 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
               show={show}
               hide={hide}
               index={index}
-              total={toasts.length}
+              total={total}
+              heights={heights}
             />
           ))}
         </View>

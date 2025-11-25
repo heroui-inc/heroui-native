@@ -14,7 +14,14 @@ interface ToastItemRendererProps {
  * Only re-renders when the toast item itself changes
  */
 export const ToastItemRenderer = memo(
-  ({ toastItem, show, hide, index, total }: ToastItemRendererProps) => {
+  ({
+    toastItem,
+    show,
+    hide,
+    index,
+    total,
+    heights,
+  }: ToastItemRendererProps) => {
     if (typeof toastItem.component !== 'function') {
       throw new Error(
         'Toast component must be a function that receives ToastComponentProps'
@@ -25,6 +32,7 @@ export const ToastItemRenderer = memo(
       id: toastItem.id,
       index,
       total,
+      heights,
       show,
       hide,
     });
@@ -37,8 +45,7 @@ export const ToastItemRenderer = memo(
     return (
       prevProps.toastItem.id === nextProps.toastItem.id &&
       prevProps.toastItem.component === nextProps.toastItem.component &&
-      prevProps.index === nextProps.index &&
-      prevProps.total === nextProps.total
+      prevProps.index === nextProps.index
     );
   }
 );

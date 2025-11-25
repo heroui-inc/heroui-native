@@ -38,6 +38,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     placement = 'top',
     index,
     total,
+    heights,
     className,
     style,
     animation,
@@ -64,6 +65,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
       style: style as ViewStyle | undefined,
       index,
       total,
+      heights,
       placement,
       hide,
       id,
@@ -88,10 +90,30 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
           entering={entering}
           exiting={exiting}
         >
+          {/* Animated toast instance */}
           <AnimatedToastRoot
             ref={ref}
             className={tvStyles}
             style={[styleSheet.root, rContainerStyle, style]}
+            {...restProps}
+          >
+            {children}
+          </AnimatedToastRoot>
+          {/* Static toast instance */}
+          <AnimatedToastRoot
+            className={cn(
+              tvStyles,
+              'absolute top-[200px] opacity-0 pointer-events-none'
+            )}
+            style={[styleSheet.root, style]}
+            onLayout={(event) => {
+              const measuredHeight = event.nativeEvent.layout.height;
+              heights.modify((value: Record<string, number>) => {
+                'worklet';
+                value[id] = measuredHeight;
+                return value;
+              });
+            }}
             {...restProps}
           >
             {children}

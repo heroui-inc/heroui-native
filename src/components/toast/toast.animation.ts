@@ -12,6 +12,7 @@ import {
   withDecay,
   withSpring,
   withTiming,
+  type SharedValue,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import {
@@ -75,6 +76,7 @@ export function useToastRootAnimation(options: {
   style: ViewStyle | undefined;
   index: number;
   total: number;
+  heights: SharedValue<number[]>;
   placement: ToastPlacement;
   hide?: ((ids?: string | string[]) => void) | undefined;
   id?: string | undefined;
@@ -85,6 +87,7 @@ export function useToastRootAnimation(options: {
     style,
     index,
     total,
+    heights,
     placement,
     hide,
     id,
@@ -289,10 +292,17 @@ export function useToastRootAnimation(options: {
     });
 
   const rContainerStyle = useAnimatedStyle(() => {
+    const lastToastId = Object.keys(heights.get())[
+      Object.keys(heights.get()).length - 1
+    ];
+    const lastToastHeight = heights.get()[lastToastId];
+
     const sign = placement === 'top' ? 1 : -1;
 
-    const inputRange = [total - 1, total - 2];
-    const opacityInputRange = [total - 3, total - 4];
+    const totalValue = total.get();
+
+    const inputRange = [totalValue - 1, totalValue - 2];
+    const opacityInputRange = [totalValue - 3, totalValue - 4];
 
     const opacity = interpolate(index, opacityInputRange, opacityValue);
     const scale = interpolate(index, inputRange, scaleValue);
@@ -312,6 +322,7 @@ export function useToastRootAnimation(options: {
 
     if (isAnimationDisabled) {
       return {
+        height: lastToastHeight,
         pointerEvents: opacity === 0 ? 'none' : 'auto',
         opacity,
         transform: [
@@ -328,6 +339,13 @@ export function useToastRootAnimation(options: {
     }
 
     return {
+      height: lastToastHeight
+        ? withSpring(lastToastHeight, {
+            damping: 100,
+            stiffness: 1200,
+            mass: 3,
+          })
+        : undefined,
       pointerEvents: opacity === 0 ? 'none' : 'auto',
       opacity: withTiming(opacity, opacityTimingConfig),
       transform: [

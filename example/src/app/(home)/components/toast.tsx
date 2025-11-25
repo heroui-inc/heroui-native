@@ -5,6 +5,7 @@ import {
   useToast,
   type ToastComponentProps,
 } from 'heroui-native';
+import { useCallback } from 'react';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -76,15 +77,17 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 
 const MyToast1 = (props: ToastComponentProps) => {
   const { id, hide } = props;
+  console.log('🔴 id 🔴', id); // VS remove
 
   return (
     <Toast
       variant="accent"
+      placement="top"
       duration="persistent"
       className="flex-row items-center gap-3"
       {...props}
     >
-      <View className="flex-1 h-[150px]">
+      <View className="flex-1">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>
           Use buttons below to control this toast
@@ -97,18 +100,22 @@ const MyToast1 = (props: ToastComponentProps) => {
 
 const MyToast2 = (props: ToastComponentProps) => {
   const { id, hide } = props;
+  console.log('🔴 id 🔴', id); // VS remove
 
   return (
     <Toast
       variant="success"
+      placement="top"
       duration="persistent"
       className="flex-row items-center gap-3"
       {...props}
     >
-      <View className="flex-1 h-[100px]">
+      <View className="flex-1">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>
-          Use buttons below to control this toast
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam tenetur
+          maxime ab laboriosam qui praesentium facere? Ad dolor fugiat,
+          molestiae esse laudantium sed ut ullam.
         </Toast.Description>
       </View>
       <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
@@ -118,18 +125,24 @@ const MyToast2 = (props: ToastComponentProps) => {
 
 const MyToast3 = (props: ToastComponentProps) => {
   const { id, hide } = props;
+  console.log('🔴 id 🔴', id); // VS remove
 
   return (
     <Toast
       variant="warning"
+      placement="top"
       duration="persistent"
       className="flex-row items-center gap-3"
       {...props}
     >
-      <View className="flex-1 h-[200px]">
+      <View className="flex-1">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>
-          Use buttons below to control this toast
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam tenetur
+          maxime ab laboriosam qui praesentium facere? Ad dolor fugiat,
+          molestiae esse laudantium sed ut ullam. Lorem, ipsum dolor sit amet
+          consectetur adipisicing elit. Nam tenetur maxime ab laboriosam qui
+          praesentium facere?
         </Toast.Description>
       </View>
       <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
@@ -139,9 +152,18 @@ const MyToast3 = (props: ToastComponentProps) => {
 const InteractiveDemoContent = () => {
   const { toast } = useToast();
 
-  const _renderToast1 = (props: ToastComponentProps) => <MyToast1 {...props} />;
-  const _renderToast2 = (props: ToastComponentProps) => <MyToast2 {...props} />;
-  const _renderToast3 = (props: ToastComponentProps) => <MyToast3 {...props} />;
+  const _renderToast1 = useCallback(
+    (props: ToastComponentProps) => <MyToast1 {...props} />,
+    []
+  );
+  const _renderToast2 = useCallback(
+    (props: ToastComponentProps) => <MyToast2 {...props} />,
+    []
+  );
+  const _renderToast3 = useCallback(
+    (props: ToastComponentProps) => <MyToast3 {...props} />,
+    []
+  );
 
   return (
     <View className="flex-1 px-5">

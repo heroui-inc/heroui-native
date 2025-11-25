@@ -1,12 +1,10 @@
 import { memo } from 'react';
-import type { SharedValue } from 'react-native-reanimated';
 import type { ToastItem, ToastShowOptions } from './types';
 
 interface ToastItemRendererProps {
   toastItem: ToastItem;
   index: number;
   total: number;
-  height: SharedValue<number>;
   show: (options: ToastShowOptions) => string;
   hide: (ids?: string | string[]) => void;
 }
@@ -16,7 +14,7 @@ interface ToastItemRendererProps {
  * Only re-renders when the toast item itself changes
  */
 export const ToastItemRenderer = memo(
-  ({ toastItem, show, hide, index, total, height }: ToastItemRendererProps) => {
+  ({ toastItem, show, hide, index, total }: ToastItemRendererProps) => {
     if (typeof toastItem.component !== 'function') {
       throw new Error(
         'Toast component must be a function that receives ToastComponentProps'
@@ -27,7 +25,6 @@ export const ToastItemRenderer = memo(
       id: toastItem.id,
       index,
       total,
-      height,
       show,
       hide,
     });

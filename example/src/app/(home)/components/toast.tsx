@@ -6,7 +6,6 @@ import {
   type ToastComponentProps,
 } from 'heroui-native';
 import { View } from 'react-native';
-import { toast as sonnerToast } from 'sonner-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
@@ -75,7 +74,7 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 
 // ------------------------------------------------------------------------------
 
-const MyToast = (props: ToastComponentProps) => {
+const MyToast1 = (props: ToastComponentProps) => {
   const { id, hide } = props;
 
   return (
@@ -83,10 +82,9 @@ const MyToast = (props: ToastComponentProps) => {
       variant="accent"
       duration="persistent"
       className="flex-row items-center gap-3"
-      isSwipable={false}
       {...props}
     >
-      <View className="flex-1">
+      <View className="flex-1 h-[150px]">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>
           Use buttons below to control this toast
@@ -97,10 +95,53 @@ const MyToast = (props: ToastComponentProps) => {
   );
 };
 
+const MyToast2 = (props: ToastComponentProps) => {
+  const { id, hide } = props;
+
+  return (
+    <Toast
+      variant="success"
+      duration="persistent"
+      className="flex-row items-center gap-3"
+      {...props}
+    >
+      <View className="flex-1 h-[100px]">
+        <Toast.Label>{id}</Toast.Label>
+        <Toast.Description>
+          Use buttons below to control this toast
+        </Toast.Description>
+      </View>
+      <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
+    </Toast>
+  );
+};
+
+const MyToast3 = (props: ToastComponentProps) => {
+  const { id, hide } = props;
+
+  return (
+    <Toast
+      variant="warning"
+      duration="persistent"
+      className="flex-row items-center gap-3"
+      {...props}
+    >
+      <View className="flex-1 h-[200px]">
+        <Toast.Label>{id}</Toast.Label>
+        <Toast.Description>
+          Use buttons below to control this toast
+        </Toast.Description>
+      </View>
+      <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
+    </Toast>
+  );
+};
 const InteractiveDemoContent = () => {
   const { toast } = useToast();
 
-  const _renderToast = (props: ToastComponentProps) => <MyToast {...props} />;
+  const _renderToast1 = (props: ToastComponentProps) => <MyToast1 {...props} />;
+  const _renderToast2 = (props: ToastComponentProps) => <MyToast2 {...props} />;
+  const _renderToast3 = (props: ToastComponentProps) => <MyToast3 {...props} />;
 
   return (
     <View className="flex-1 px-5">
@@ -108,26 +149,43 @@ const InteractiveDemoContent = () => {
         <Button
           onPress={() => {
             toast.show({
-              // id: 'my-toast',
-              component: _renderToast,
+              component: _renderToast1,
             });
           }}
           variant="primary"
         >
-          Show Toast
+          Show Toast 1
         </Button>
 
-        <Button onPress={() => toast.hide('my-toast')} variant="secondary">
-          Hide Toast
+        <Button
+          onPress={() => {
+            toast.show({
+              component: _renderToast2,
+            });
+          }}
+          variant="primary"
+        >
+          Show Toast 2
+        </Button>
+
+        <Button
+          onPress={() => {
+            toast.show({
+              component: _renderToast3,
+            });
+          }}
+          variant="primary"
+        >
+          Show Toast 3
         </Button>
 
         <Button onPress={() => toast.hide()} variant="destructive">
           Hide All Toasts
         </Button>
 
-        <Button onPress={() => sonnerToast('Hello, World!')}>
+        {/* <Button onPress={() => sonnerToast('Hello, World!')}>
           Sonner Toast
-        </Button>
+        </Button> */}
       </View>
     </View>
   );

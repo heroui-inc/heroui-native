@@ -38,7 +38,6 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     placement = 'top',
     index,
     total,
-    height,
     className,
     style,
     animation,
@@ -58,8 +57,6 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   const tvStyles = toastStyles.root({
     className,
   });
-
-  const isLast = index === total - 1;
 
   const { rContainerStyle, entering, exiting, panGesture } =
     useToastRootAnimation({
@@ -95,11 +92,6 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
             ref={ref}
             className={tvStyles}
             style={[styleSheet.root, rContainerStyle, style]}
-            onLayout={(event) => {
-              if (isLast) {
-                height.set(event.nativeEvent.layout.height);
-              }
-            }}
             {...restProps}
           >
             {children}

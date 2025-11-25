@@ -1,5 +1,3 @@
-import type { SharedValue } from 'react-native-reanimated';
-
 /**
  * Insets for spacing from screen edges
  */
@@ -59,10 +57,6 @@ export interface ToastComponentProps {
    * The total number of toasts currently displayed
    */
   total: number;
-  /**
-   * Shared value containing the height of the last toast in pixels
-   */
-  height: SharedValue<number>;
   /**
    * Show a new toast
    */

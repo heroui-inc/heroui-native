@@ -138,6 +138,11 @@ export interface ToastRootProps
    * - `object`: Custom animation configuration
    */
   animation?: ToastRootAnimation;
+  /**
+   * Whether the toast can be swiped to dismiss and dragged with rubber effect
+   * @default true
+   */
+  isSwipable?: boolean;
 }
 
 /**

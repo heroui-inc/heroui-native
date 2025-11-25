@@ -81,9 +81,9 @@ const MyToast = (props: ToastComponentProps) => {
   return (
     <Toast
       variant="accent"
-      placement="top"
       duration="persistent"
       className="flex-row items-center gap-3"
+      isSwipable={false}
       {...props}
     >
       <View className="flex-1">

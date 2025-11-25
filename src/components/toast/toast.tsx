@@ -1,5 +1,6 @@
 import { forwardRef, useMemo } from 'react';
 import { View, type ViewStyle } from 'react-native';
+import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { CloseIcon } from '../../helpers/components/close-icon';
 import { Text } from '../../helpers/components/text';
@@ -43,6 +44,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     animation,
     duration = 4000,
     hide,
+    isSwipable,
     ...restProps
   } = props;
 
@@ -59,13 +61,17 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
 
   const isLast = index === total - 1;
 
-  const { rContainerStyle, entering, exiting } = useToastRootAnimation({
-    animation,
-    style: style as ViewStyle | undefined,
-    index,
-    total,
-    placement,
-  });
+  const { rContainerStyle, entering, exiting, panGesture } =
+    useToastRootAnimation({
+      animation,
+      style: style as ViewStyle | undefined,
+      index,
+      total,
+      placement,
+      hide,
+      id,
+      isSwipable,
+    });
 
   const contextValue = useMemo(
     () => ({
@@ -76,28 +82,30 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
 
   return (
     <ToastProvider value={contextValue}>
-      <Animated.View
-        className={cn(
-          'absolute left-0 right-0',
-          placement === 'top' ? 'top-0' : 'bottom-0'
-        )}
-        entering={entering}
-        exiting={exiting}
-      >
-        <AnimatedToastRoot
-          ref={ref}
-          className={tvStyles}
-          style={[styleSheet.root, rContainerStyle, style]}
-          onLayout={(event) => {
-            if (isLast) {
-              height.set(event.nativeEvent.layout.height);
-            }
-          }}
-          {...restProps}
+      <GestureDetector gesture={panGesture}>
+        <Animated.View
+          className={cn(
+            'absolute left-0 right-0',
+            placement === 'top' ? 'top-0' : 'bottom-0'
+          )}
+          entering={entering}
+          exiting={exiting}
         >
-          {children}
-        </AnimatedToastRoot>
-      </Animated.View>
+          <AnimatedToastRoot
+            ref={ref}
+            className={tvStyles}
+            style={[styleSheet.root, rContainerStyle, style]}
+            onLayout={(event) => {
+              if (isLast) {
+                height.set(event.nativeEvent.layout.height);
+              }
+            }}
+            {...restProps}
+          >
+            {children}
+          </AnimatedToastRoot>
+        </Animated.View>
+      </GestureDetector>
     </ToastProvider>
   );
 });

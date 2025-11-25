@@ -81,7 +81,8 @@ const MyToast = (props: ToastComponentProps) => {
   return (
     <Toast
       variant="accent"
-      placement="bottom"
+      placement="top"
+      duration="persistent"
       className="flex-row items-center gap-3"
       {...props}
     >

@@ -122,10 +122,10 @@ export interface ToastRootProps
   placement?: ToastPlacement;
   /**
    * Duration in milliseconds before the toast automatically disappears
-   * Set to `null` or `Infinity` to prevent auto-hide
+   * Set to `'persistent'` to prevent auto-hide (toast will remain until manually dismissed)
    * @default 4000
    */
-  duration?: number | null;
+  duration?: number | 'persistent';
   /**
    * Additional CSS class for the toast container
    */

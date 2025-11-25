@@ -3,17 +3,18 @@ import { useEffect, useRef } from 'react';
 /**
  * Hook to handle automatic toast dismissal based on duration
  *
- * @param duration - Duration in milliseconds before the toast automatically disappears
+ * @param duration - Duration in milliseconds before the toast automatically disappears, or 'persistent' to prevent auto-hide
  * @param id - The unique ID of the toast
  * @param hide - Function to hide the toast
  *
  * @example
  * ```tsx
  * useToastDuration(4000, toastId, hide);
+ * useToastDuration('persistent', toastId, hide);
  * ```
  */
 export function useToastDuration(
-  duration: number | null | undefined,
+  duration: number | 'persistent' | undefined,
   id: string | undefined,
   hide: ((ids?: string | string[]) => void) | undefined
 ): void {
@@ -26,10 +27,16 @@ export function useToastDuration(
       timeoutRef.current = null;
     }
 
-    // Only set timeout if duration is valid and id/hide are available
+    // Handle immediate dismissal
+    if (duration === 0 && id && hide) {
+      hide(id);
+      return;
+    }
+
+    // Only set timeout if duration is a valid positive number and id/hide are available
+    // Skip timeout if duration is 'persistent', undefined, or invalid (treats as persistent)
     if (
-      duration !== null &&
-      duration !== undefined &&
+      typeof duration === 'number' &&
       !isNaN(duration) &&
       duration > 0 &&
       duration !== Infinity &&

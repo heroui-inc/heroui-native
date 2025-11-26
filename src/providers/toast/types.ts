@@ -1,3 +1,5 @@
+import type { SharedValue } from 'react-native-reanimated';
+
 /**
  * Insets for spacing from screen edges
  */
@@ -56,7 +58,11 @@ export interface ToastComponentProps {
   /**
    * The total number of toasts currently displayed
    */
-  total: number;
+  total: SharedValue<number>;
+  /**
+   * Heights of all toast items, keyed by toast ID
+   */
+  heights: SharedValue<Record<string, number>>;
   /**
    * Show a new toast
    */
@@ -142,6 +148,36 @@ export interface ToastManager {
    * toast.hide('my-toast');          // Hide specific toast
    * toast.hide(['toast-1', 'toast-2']); // Hide multiple toasts
    * ```
+   */
+  hide: (ids?: string | string[]) => void;
+}
+
+/**
+ * Props for the ToastItemRenderer component
+ */
+export interface ToastItemRendererProps {
+  /**
+   * The toast item to render
+   */
+  toastItem: ToastItem;
+  /**
+   * The index of the toast in the array (0-based)
+   */
+  index: number;
+  /**
+   * The total number of toasts currently displayed
+   */
+  total: SharedValue<number>;
+  /**
+   * Heights of all toast items, keyed by toast ID
+   */
+  heights: SharedValue<Record<string, number>>;
+  /**
+   * Show a new toast
+   */
+  show: (options: ToastShowOptions) => string;
+  /**
+   * Hide one or more toasts
    */
   hide: (ids?: string | string[]) => void;
 }

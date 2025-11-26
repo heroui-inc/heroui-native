@@ -77,7 +77,6 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 
 const MyToast1 = (props: ToastComponentProps) => {
   const { id, hide } = props;
-  console.log('🔴 id 🔴', id); // VS remove
 
   return (
     <Toast
@@ -100,7 +99,6 @@ const MyToast1 = (props: ToastComponentProps) => {
 
 const MyToast2 = (props: ToastComponentProps) => {
   const { id, hide } = props;
-  console.log('🔴 id 🔴', id); // VS remove
 
   return (
     <Toast
@@ -125,7 +123,6 @@ const MyToast2 = (props: ToastComponentProps) => {
 
 const MyToast3 = (props: ToastComponentProps) => {
   const { id, hide } = props;
-  console.log('🔴 id 🔴', id); // VS remove
 
   return (
     <Toast

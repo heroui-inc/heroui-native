@@ -35,6 +35,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   const {
     children,
     variant = 'default',
+    duration = 4000,
     placement = 'top',
     index,
     total,
@@ -42,9 +43,8 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     className,
     style,
     animation,
-    duration = 4000,
-    hide,
     isSwipable,
+    hide,
     ...restProps
   } = props;
 
@@ -108,10 +108,9 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
             style={[styleSheet.root, style]}
             onLayout={(event) => {
               const measuredHeight = event.nativeEvent.layout.height;
-              heights.modify((value: Record<string, number>) => {
+              heights.modify((value) => {
                 'worklet';
-                value[id] = measuredHeight;
-                return value;
+                return { ...value, [id]: measuredHeight };
               });
             }}
             {...restProps}

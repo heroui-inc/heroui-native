@@ -75,8 +75,8 @@ export function useToastRootAnimation(options: {
   animation: ToastRootAnimation | undefined;
   style: ViewStyle | undefined;
   index: number;
-  total: number;
-  heights: SharedValue<number[]>;
+  total: SharedValue<number>;
+  heights: SharedValue<Record<string, number>>;
   placement: ToastPlacement;
   hide?: ((ids?: string | string[]) => void) | undefined;
   id?: string | undefined;
@@ -295,7 +295,9 @@ export function useToastRootAnimation(options: {
     const lastToastId = Object.keys(heights.get())[
       Object.keys(heights.get()).length - 1
     ];
-    const lastToastHeight = heights.get()[lastToastId];
+    const lastToastHeight = lastToastId
+      ? heights.get()[lastToastId]
+      : undefined;
 
     const sign = placement === 'top' ? 1 : -1;
 

@@ -29,6 +29,8 @@ const ToasterContext = createContext<ToasterContextValue | null>(null);
 export function ToastProvider({ insets, children }: ToastProviderProps) {
   const [toasts, dispatch] = useReducer(toastReducer, []);
 
+  const isToastVisible = toasts.length > 0;
+
   const heights = useSharedValue<Record<string, number>>({});
 
   const total = useSharedValue<number>(0);
@@ -38,57 +40,58 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
   /**
    * Show a toast
    */
-  const show = useCallback((options: ToastShowOptions): string => {
-    const id = options.id ?? `toast-${Date.now()}-${idCounter.current++}`;
+  const show = useCallback(
+    (options: ToastShowOptions): string => {
+      const id = options.id ?? `toast-${Date.now()}-${idCounter.current++}`;
 
-    dispatch({
-      type: 'SHOW',
-      payload: {
-        id,
-        component: options.component,
-      },
-    });
+      dispatch({
+        type: 'SHOW',
+        payload: {
+          id,
+          component: options.component,
+        },
+      });
 
-    total.set((value) => value + 1);
+      total.set((value) => value + 1);
 
-    return id;
-  }, []);
+      return id;
+    },
+    [total]
+  );
 
   /**
    * Hide one or more toasts
    */
-  const hide = useCallback((ids?: string | string[]) => {
-    if (ids === undefined) {
-      // Hide all toasts
-      dispatch({ type: 'HIDE_ALL' });
-      heights.set({});
-      total.set(0);
-    } else {
-      // Hide specific toast(s)
-      const idsArray = Array.isArray(ids) ? ids : [ids];
-      const idsToRemove = idsArray;
-      dispatch({
-        type: 'HIDE',
-        payload: { ids: idsArray },
-      });
+  const hide = useCallback(
+    (ids?: string | string[]) => {
+      if (ids === undefined) {
+        // Hide all toasts
+        dispatch({ type: 'HIDE_ALL' });
+        heights.set({});
+        total.set(0);
+      } else {
+        // Hide specific toast(s)
+        const idsArray = Array.isArray(ids) ? ids : [ids];
+        const idsToRemove = idsArray;
+        dispatch({
+          type: 'HIDE',
+          payload: { ids: idsArray },
+        });
 
-      heights.modify(<T extends Record<string, number>>(value: T): T => {
-        'worklet';
-        const result = { ...value };
-        for (const id of idsToRemove) {
-          delete result[id];
-        }
-        return result;
-      });
+        heights.modify(<T extends Record<string, number>>(value: T): T => {
+          'worklet';
+          const result = { ...value };
+          for (const id of idsToRemove) {
+            delete result[id];
+          }
+          return result;
+        });
 
-      total.set((value) => value - 1);
-    }
-  }, []);
-
-  /**
-   * Whether any toast is currently visible
-   */
-  const isToastVisible = toasts.length > 0;
+        total.set((value) => value - 1);
+      }
+    },
+    [total, heights]
+  );
 
   const contextValue = useMemo<ToasterContextValue>(
     () => ({

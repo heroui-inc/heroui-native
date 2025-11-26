@@ -1,13 +1,5 @@
 import { memo } from 'react';
-import type { ToastItem, ToastShowOptions } from './types';
-
-interface ToastItemRendererProps {
-  toastItem: ToastItem;
-  index: number;
-  total: number;
-  show: (options: ToastShowOptions) => string;
-  hide: (ids?: string | string[]) => void;
-}
+import type { ToastItemRendererProps } from './types';
 
 /**
  * Memoized toast item component to prevent unnecessary re-renders

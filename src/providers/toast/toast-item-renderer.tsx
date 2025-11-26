@@ -13,6 +13,7 @@ export const ToastItemRenderer = memo(
     index,
     total,
     heights,
+    maxVisibleToasts,
   }: ToastItemRendererProps) => {
     if (typeof toastItem.component !== 'function') {
       throw new Error(
@@ -25,6 +26,7 @@ export const ToastItemRenderer = memo(
       index,
       total,
       heights,
+      maxVisibleToasts,
       show,
       hide,
     });

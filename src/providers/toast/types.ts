@@ -38,6 +38,12 @@ export interface ToastProviderProps {
    */
   insets?: ToastInsets;
   /**
+   * Maximum number of visible toasts before opacity starts fading
+   * Controls when toast items begin to fade out as they move beyond the visible stack
+   * @default 3
+   */
+  maxVisibleToasts?: number;
+  /**
    * Children to render
    */
   children?: React.ReactNode;
@@ -63,6 +69,12 @@ export interface ToastComponentProps {
    * Heights of all toast items, keyed by toast ID
    */
   heights: SharedValue<Record<string, number>>;
+  /**
+   * Maximum number of visible toasts before opacity starts fading
+   * Controls when toast items begin to fade out as they move beyond the visible stack
+   * @default 3
+   */
+  maxVisibleToasts?: number;
   /**
    * Show a new toast
    */
@@ -172,6 +184,12 @@ export interface ToastItemRendererProps {
    * Heights of all toast items, keyed by toast ID
    */
   heights: SharedValue<Record<string, number>>;
+  /**
+   * Maximum number of visible toasts before opacity starts fading
+   * Controls when toast items begin to fade out as they move beyond the visible stack
+   * @default 3
+   */
+  maxVisibleToasts?: number;
   /**
    * Show a new toast
    */

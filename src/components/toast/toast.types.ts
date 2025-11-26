@@ -1,3 +1,4 @@
+import type { ViewStyle } from 'react-native';
 import type {
   EntryOrExitLayoutType,
   WithTimingConfig,
@@ -205,3 +206,22 @@ export interface ToastContextValue {
  * Ref type for the Toast.Root component
  */
 export type ToastRootRef = ViewRef;
+
+/**
+ * Props for useToastRootAnimation hook
+ * Picks required properties from ToastRootProps and adds id from ToastComponentProps
+ */
+export type UseToastRootAnimationOptions = Pick<
+  ToastRootProps,
+  | 'animation'
+  | 'index'
+  | 'total'
+  | 'heights'
+  | 'placement'
+  | 'hide'
+  | 'isSwipable'
+  | 'maxVisibleToasts'
+> &
+  Pick<ToastComponentProps, 'id'> & {
+    style: ViewStyle | undefined;
+  };

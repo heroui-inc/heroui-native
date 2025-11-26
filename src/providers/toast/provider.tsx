@@ -26,7 +26,11 @@ const ToasterContext = createContext<ToasterContextValue | null>(null);
  * Toast provider component
  * Wraps your app to enable toast functionality
  */
-export function ToastProvider({ insets, children }: ToastProviderProps) {
+export function ToastProvider({
+  insets,
+  maxVisibleToasts = 3,
+  children,
+}: ToastProviderProps) {
   const [toasts, dispatch] = useReducer(toastReducer, []);
 
   const isToastVisible = toasts.length > 0;
@@ -118,6 +122,7 @@ export function ToastProvider({ insets, children }: ToastProviderProps) {
               index={index}
               total={total}
               heights={heights}
+              maxVisibleToasts={maxVisibleToasts}
             />
           ))}
         </View>

@@ -40,6 +40,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     index,
     total,
     heights,
+    maxVisibleToasts,
     className,
     style,
     animation,
@@ -70,6 +71,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
       hide,
       id,
       isSwipable,
+      maxVisibleToasts,
     });
 
   const contextValue = useMemo(

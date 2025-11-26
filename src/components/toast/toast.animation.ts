@@ -1,4 +1,4 @@
-import { useWindowDimensions, type ViewStyle } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
 import {
   Easing,
@@ -12,7 +12,6 @@ import {
   withDecay,
   withSpring,
   withTiming,
-  type SharedValue,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import {
@@ -22,7 +21,7 @@ import {
   getStyleProperties,
   getStyleTransform,
 } from '../../helpers/utils/animation';
-import type { ToastPlacement, ToastRootAnimation } from './toast.types';
+import type { UseToastRootAnimationOptions } from './toast.types';
 
 // --------------------------------------------------
 
@@ -71,17 +70,7 @@ export const exitingBottom = new Keyframe({
  * Handles opacity, translateY, and scale animations based on toast index and placement
  * Also handles gesture-based swipe to dismiss and rubber-band drag effects
  */
-export function useToastRootAnimation(options: {
-  animation: ToastRootAnimation | undefined;
-  style: ViewStyle | undefined;
-  index: number;
-  total: SharedValue<number>;
-  heights: SharedValue<Record<string, number>>;
-  placement: ToastPlacement;
-  hide?: ((ids?: string | string[]) => void) | undefined;
-  id?: string | undefined;
-  isSwipable?: boolean;
-}) {
+export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
   const {
     animation,
     style,
@@ -92,6 +81,7 @@ export function useToastRootAnimation(options: {
     hide,
     id,
     isSwipable = true,
+    maxVisibleToasts = 3,
   } = options;
 
   const { height: screenHeight } = useWindowDimensions();
@@ -240,7 +230,7 @@ export function useToastRootAnimation(options: {
 
       if (placement === 'top') {
         // Top placement: dismiss if swiped up (negative Y)
-        if (shouldDismiss && translationY < 0 && id && hide) {
+        if (shouldDismiss && translationY < 0 && id) {
           // Use withDecay to continue motion with velocity
           gestureTranslateY.set(
             withDecay(
@@ -265,7 +255,7 @@ export function useToastRootAnimation(options: {
         }
       } else {
         // Bottom placement: dismiss if swiped down (positive Y)
-        if (shouldDismiss && translationY > 0 && id && hide) {
+        if (shouldDismiss && translationY > 0 && id) {
           // Use withDecay to continue motion with velocity
           gestureTranslateY.set(
             withDecay(
@@ -304,7 +294,10 @@ export function useToastRootAnimation(options: {
     const totalValue = total.get();
 
     const inputRange = [totalValue - 1, totalValue - 2];
-    const opacityInputRange = [totalValue - 3, totalValue - 4];
+    const opacityInputRange = [
+      totalValue - maxVisibleToasts,
+      totalValue - maxVisibleToasts - 1,
+    ];
 
     const opacity = interpolate(index, opacityInputRange, opacityValue);
     const scale = interpolate(index, inputRange, scaleValue);

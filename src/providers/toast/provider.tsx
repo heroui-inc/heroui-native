@@ -8,19 +8,55 @@ import {
 } from 'react';
 import { View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
+import { DefaultToast } from '../../components/toast/toast';
 import { InsetsContainer } from './insets-container';
 import { toastReducer } from './reducer';
 import { ToastItemRenderer } from './toast-item-renderer';
 import type {
+  ToastComponentProps,
   ToasterContextValue,
   ToastProviderProps,
+  ToastShowConfig,
   ToastShowOptions,
+  ToastShowOptionsWithComponent,
 } from './types';
 
 /**
  * Context for toast manager
  */
 const ToasterContext = createContext<ToasterContextValue | null>(null);
+
+/**
+ * Creates a component function for simple string toast
+ */
+function createStringToastComponent(
+  label: string
+): (props: ToastComponentProps) => React.ReactElement {
+  return (props: ToastComponentProps) => (
+    <DefaultToast {...props} label={label} variant="default" />
+  );
+}
+
+/**
+ * Creates a component function for config-based toast
+ */
+function createConfigToastComponent(
+  config: ToastShowConfig
+): (props: ToastComponentProps) => React.ReactElement {
+  return (props: ToastComponentProps) => (
+    <DefaultToast
+      {...props}
+      variant={config.variant}
+      placement={config.placement}
+      duration={config.duration}
+      isSwipable={config.isSwipable}
+      label={config.label}
+      description={config.description}
+      actionLabel={config.actionLabel}
+      onActionPress={config.onActionPress}
+    />
+  );
+}
 
 /**
  * Toast provider component
@@ -43,25 +79,54 @@ export function ToastProvider({
 
   /**
    * Show a toast
+   * Supports three usage patterns:
+   * 1. Simple string: toast.show('This is toast')
+   * 2. Config object: toast.show({ label, variant, ... })
+   * 3. Custom component: toast.show({ component: (props) => <Toast>...</Toast> })
    */
   const show = useCallback(
-    (options: ToastShowOptions): string => {
-      const id = options.id ?? `toast-${Date.now()}-${idCounter.current++}`;
+    (options: string | ToastShowOptions): string => {
+      let normalizedOptions: ToastShowOptionsWithComponent;
+
+      // Case 1: Simple string
+      if (typeof options === 'string') {
+        normalizedOptions = {
+          id: undefined,
+          component: createStringToastComponent(options),
+        };
+      }
+      // Case 2: Config object without component
+      else if (!('component' in options) || options.component === undefined) {
+        const config = options as ToastShowConfig;
+        normalizedOptions = {
+          id: config.id,
+          component: createConfigToastComponent(config),
+          onShow: config.onShow,
+          onHide: config.onHide,
+        };
+      }
+      // Case 3: Config object with component (existing behavior)
+      else {
+        normalizedOptions = options as ToastShowOptionsWithComponent;
+      }
+
+      const id =
+        normalizedOptions.id ?? `toast-${Date.now()}-${idCounter.current++}`;
 
       dispatch({
         type: 'SHOW',
         payload: {
           id,
-          component: options.component,
-          onShow: options.onShow,
-          onHide: options.onHide,
+          component: normalizedOptions.component,
+          onShow: normalizedOptions.onShow,
+          onHide: normalizedOptions.onHide,
         },
       });
 
       total.set((value) => value + 1);
 
-      if (options.onShow) {
-        options.onShow();
+      if (normalizedOptions.onShow) {
+        normalizedOptions.onShow();
       }
 
       return id;

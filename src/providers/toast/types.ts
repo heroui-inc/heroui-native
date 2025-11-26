@@ -1,4 +1,5 @@
 import type { SharedValue } from 'react-native-reanimated';
+import type { ToastRootProps } from '../../components/toast/toast.types';
 
 /**
  * Insets for spacing from screen edges
@@ -78,7 +79,7 @@ export interface ToastComponentProps {
   /**
    * Show a new toast
    */
-  show: (options: ToastShowOptions) => string;
+  show: (options: string | ToastShowOptions) => string;
   /**
    * Hide one or more toasts
    * - No argument: hides the last toast in the array
@@ -90,9 +91,54 @@ export interface ToastComponentProps {
 }
 
 /**
- * Options for showing a toast
+ * Configuration for showing a default styled toast (variant 2)
+ * Used when component is not provided
  */
-export interface ToastShowOptions {
+export interface ToastShowConfig
+  extends Pick<
+    ToastRootProps,
+    'variant' | 'placement' | 'duration' | 'isSwipable'
+  > {
+  /**
+   * Optional ID for the toast
+   * If not provided, one will be generated automatically
+   */
+  id?: string;
+  /**
+   * Label text for the toast
+   */
+  label?: string;
+  /**
+   * Description text for the toast
+   */
+  description?: string;
+  /**
+   * Action button label text
+   */
+  actionLabel?: string;
+  /**
+   * Callback function called when the action button is pressed
+   * Receives show and hide functions for programmatic toast control
+   */
+  onActionPress?: (helpers: {
+    show: (options: string | ToastShowOptions) => string;
+    hide: (ids?: string | string[] | 'all') => void;
+  }) => void;
+  /**
+   * Callback function called when the toast is shown
+   */
+  onShow?: () => void;
+  /**
+   * Callback function called when the toast is hidden
+   */
+  onHide?: () => void;
+}
+
+/**
+ * Options for showing a toast with custom component (variant 3)
+ * Used when component is provided
+ */
+export interface ToastShowOptionsWithComponent {
   /**
    * Optional ID for the toast
    * If not provided, one will be generated automatically
@@ -111,6 +157,15 @@ export interface ToastShowOptions {
    */
   onHide?: () => void;
 }
+
+/**
+ * Conditional type for toast show options
+ * - If component is provided: only id, component, onShow, onHide are allowed
+ * - If component is NOT provided: all config props are available
+ */
+export type ToastShowOptions =
+  | ToastShowOptionsWithComponent
+  | (ToastShowConfig & { component?: never });
 
 /**
  * Represents a single toast item in the state
@@ -148,21 +203,35 @@ export type ToastAction =
 export interface ToastManager {
   /**
    * Show a toast
-   * @param options - Toast configuration options
+   * @param options - Toast configuration options or simple string
    * @returns The ID of the shown toast
    *
    * @example
    * ```tsx
    * const toast = useToast();
    *
-   * // With auto-generated ID
-   * toast.show({ component: <Toast>Hello</Toast> });
+   * // Simple string (variant 1)
+   * toast.show('This is toast');
+   *
+   * // Config object with default styling (variant 2)
+   * toast.show({
+   *   label: 'Success!',
+   *   description: 'Your action was completed',
+   *   variant: 'success',
+   *   actionLabel: 'Undo',
+   *   onActionPress: ({ show, hide }) => hide(),
+   * });
+   *
+   * // Custom component (variant 3)
+   * toast.show({
+   *   component: (props) => <Toast>Hello</Toast>,
+   * });
    *
    * // With custom ID
-   * toast.show({ id: 'my-toast', component: <Toast>Hello</Toast> });
+   * toast.show({ id: 'my-toast', component: (props) => <Toast>Hello</Toast> });
    * ```
    */
-  show: (options: ToastShowOptions) => string;
+  show: (options: string | ToastShowOptions) => string;
 
   /**
    * Hide one or more toasts
@@ -215,7 +284,7 @@ export interface ToastItemRendererProps {
   /**
    * Show a new toast
    */
-  show: (options: ToastShowOptions) => string;
+  show: (options: string | ToastShowOptions) => string;
   /**
    * Hide one or more toasts
    * - No argument: hides the last toast in the array

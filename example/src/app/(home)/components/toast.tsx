@@ -7,6 +7,7 @@ import {
 } from 'heroui-native';
 import { useCallback } from 'react';
 import { View } from 'react-native';
+import { toast as sonnerToast } from 'sonner-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
@@ -79,13 +80,7 @@ const MyToast1 = (props: ToastComponentProps) => {
   const { id, hide } = props;
 
   return (
-    <Toast
-      variant="accent"
-      placement="top"
-      duration="persistent"
-      className="flex-row items-center gap-3"
-      {...props}
-    >
+    <Toast variant="accent" className="flex-row items-center gap-3" {...props}>
       <View className="flex-1">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>
@@ -101,13 +96,7 @@ const MyToast2 = (props: ToastComponentProps) => {
   const { id, hide } = props;
 
   return (
-    <Toast
-      variant="success"
-      placement="top"
-      duration="persistent"
-      className="flex-row items-center gap-3"
-      {...props}
-    >
+    <Toast variant="success" className="flex-row items-center gap-3" {...props}>
       <View className="flex-1">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>
@@ -125,13 +114,7 @@ const MyToast3 = (props: ToastComponentProps) => {
   const { id, hide } = props;
 
   return (
-    <Toast
-      variant="warning"
-      placement="top"
-      duration="persistent"
-      className="flex-row items-center gap-3"
-      {...props}
-    >
+    <Toast variant="warning" className="flex-row items-center gap-3" {...props}>
       <View className="flex-1">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>
@@ -166,11 +149,11 @@ const InteractiveDemoContent = () => {
     <View className="flex-1 px-5">
       <View className="flex-1 justify-center gap-3">
         <Button
-          onPress={() => {
+          onPress={() =>
             toast.show({
               component: _renderToast1,
-            });
-          }}
+            })
+          }
           variant="primary"
         >
           Show Toast 1
@@ -206,9 +189,9 @@ const InteractiveDemoContent = () => {
           Hide All Toasts
         </Button>
 
-        {/* <Button onPress={() => sonnerToast('Hello, World!')}>
+        <Button onPress={() => sonnerToast('Hello, World!')}>
           Sonner Toast
-        </Button> */}
+        </Button>
       </View>
     </View>
   );

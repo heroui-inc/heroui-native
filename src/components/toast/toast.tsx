@@ -8,7 +8,10 @@ import { cn } from '../../helpers/theme';
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as ToastPrimitive from '../../primitives/toast';
-import type { ToastComponentProps } from '../../providers/toast';
+import type {
+  ToastComponentProps,
+  ToastShowOptions,
+} from '../../providers/toast';
 import { Button } from '../button';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
@@ -221,6 +224,71 @@ const ToastClose = forwardRef<View, ToastCloseProps>((props, ref) => {
     </Button>
   );
 });
+
+// --------------------------------------------------
+
+/**
+ * Default styled toast component for simplified toast.show() API
+ * Used internally when showing toasts with string or config object (without component)
+ */
+export function DefaultToast(
+  props: ToastComponentProps & {
+    variant?: ToastRootProps['variant'];
+    placement?: ToastRootProps['placement'];
+    duration?: ToastRootProps['duration'];
+    isSwipable?: ToastRootProps['isSwipable'];
+    label?: string;
+    description?: string;
+    actionLabel?: string;
+    onActionPress?: (helpers: {
+      show: (options: string | ToastShowOptions) => string;
+      hide: (ids?: string | string[] | 'all') => void;
+    }) => void;
+  }
+) {
+  const {
+    id,
+    variant = 'default',
+    placement = 'top',
+    duration = 4000,
+    isSwipable,
+    label,
+    description,
+    actionLabel,
+    onActionPress,
+    hide,
+    show,
+    ...toastComponentProps
+  } = props;
+
+  const handleActionPress = () => {
+    if (onActionPress) {
+      onActionPress({ show, hide });
+    }
+  };
+
+  return (
+    <ToastRoot
+      id={id}
+      variant={variant}
+      placement={placement}
+      duration={duration}
+      isSwipable={isSwipable}
+      className="flex-row items-center gap-3"
+      hide={hide}
+      show={show}
+      {...toastComponentProps}
+    >
+      <View className="flex-1">
+        {label && <ToastLabel>{label}</ToastLabel>}
+        {description && <ToastDescription>{description}</ToastDescription>}
+      </View>
+      {actionLabel && (
+        <ToastAction onPress={handleActionPress}>{actionLabel}</ToastAction>
+      )}
+    </ToastRoot>
+  );
+}
 
 // --------------------------------------------------
 

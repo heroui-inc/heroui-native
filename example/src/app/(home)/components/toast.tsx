@@ -115,7 +115,7 @@ const MyToast2 = (props: ToastComponentProps) => {
           molestiae esse laudantium sed ut ullam.
         </Toast.Description>
       </View>
-      <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
+      <Toast.Action onPress={() => hide()}>Close</Toast.Action>
     </Toast>
   );
 };

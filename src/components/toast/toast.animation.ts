@@ -40,9 +40,9 @@ export const exitingTop = new Keyframe({
   100: {
     opacity: 0.5,
     transform: [{ translateY: -100 }, { scale: 0.97 }],
-    easing: Easing.in(Easing.ease),
+    easing: Easing.bezier(0.4, 0, 1, 1),
   },
-}).duration(200);
+}).duration(150);
 
 export const enteringBottom = FadeInDown.springify()
   .withInitialValues({
@@ -59,9 +59,9 @@ export const exitingBottom = new Keyframe({
   100: {
     opacity: 0.5,
     transform: [{ translateY: 100 }, { scale: 0.97 }],
-    easing: Easing.in(Easing.ease),
+    easing: Easing.bezier(0.4, 0, 1, 1),
   },
-}).duration(200);
+}).duration(150);
 
 // --------------------------------------------------
 
@@ -239,7 +239,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
           gestureTranslateY.set(
             withDecay(
               {
-                velocity: velocityY,
+                velocity: velocityY * 1.5,
                 clamp: [Number.NEGATIVE_INFINITY, 0],
               },
               () => {
@@ -251,11 +251,8 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
           scheduleOnRN(delayedHide, id, velocityY);
         } else {
           // Animate back to 0
-          gestureTranslateY.set(
-            withSpring(0, {}, () => {
-              isDragging.set(false);
-            })
-          );
+          gestureTranslateY.set(withSpring(0));
+          isDragging.set(false);
         }
       } else {
         // Bottom placement: dismiss if swiped down (positive Y)
@@ -264,7 +261,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
           gestureTranslateY.set(
             withDecay(
               {
-                velocity: velocityY,
+                velocity: velocityY * 1.5,
                 clamp: [0, Number.POSITIVE_INFINITY],
               },
               () => {
@@ -276,11 +273,8 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
           scheduleOnRN(delayedHide, id, velocityY);
         } else {
           // Animate back to 0
-          gestureTranslateY.set(
-            withSpring(0, {}, () => {
-              isDragging.set(false);
-            })
-          );
+          gestureTranslateY.set(withSpring(0));
+          isDragging.set(false);
         }
       }
     });

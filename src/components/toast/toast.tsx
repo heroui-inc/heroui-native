@@ -4,7 +4,7 @@ import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { CloseIcon } from '../../helpers/components/close-icon';
 import { Text } from '../../helpers/components/text';
-import { cn } from '../../helpers/theme';
+import { cn, useThemeColor } from '../../helpers/theme';
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as ToastPrimitive from '../../primitives/toast';
@@ -13,6 +13,7 @@ import type {
   ToastShowOptions,
 } from '../../providers/toast';
 import { Button } from '../button';
+import type { PressableFeedbackHighlightRootAnimation } from '../pressable-feedback';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
 import { useToastDuration } from './toast.hooks';
@@ -106,10 +107,8 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
           </AnimatedToastRoot>
           {/* Static toast instance */}
           <AnimatedToastRoot
-            className={cn(
-              tvStyles,
-              'absolute top-[200px] opacity-0 pointer-events-none'
-            )}
+            pointerEvents="none"
+            className={cn(tvStyles, 'absolute opacity-0')}
             style={[styleSheet.root, style]}
             onLayout={(event) => {
               const measuredHeight = event.nativeEvent.layout.height;
@@ -172,6 +171,39 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
 
   const { variant: toastVariant } = useToast();
 
+  const tvStyles = toastStyles.action({
+    variant: toastVariant,
+    className,
+  });
+
+  const themeColorDefaultHover = useThemeColor('default-hover');
+  const themeColorAccentHover = useThemeColor('accent-hover');
+  const themeColorSuccessHover = useThemeColor('success-hover');
+  const themeColorWarningHover = useThemeColor('warning-hover');
+  const themeColorDangerHover = useThemeColor('danger-hover');
+
+  const highlightColorMap = useMemo(() => {
+    switch (toastVariant) {
+      case 'default':
+        return themeColorDefaultHover;
+      case 'accent':
+        return themeColorAccentHover;
+      case 'success':
+        return themeColorSuccessHover;
+      case 'warning':
+        return themeColorWarningHover;
+      case 'danger':
+        return themeColorDangerHover;
+    }
+  }, [
+    toastVariant,
+    themeColorDefaultHover,
+    themeColorAccentHover,
+    themeColorSuccessHover,
+    themeColorWarningHover,
+    themeColorDangerHover,
+  ]);
+
   const buttonVariant = useMemo(() => {
     if (variant) return variant;
 
@@ -185,10 +217,15 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
     }
   }, [toastVariant, variant]);
 
-  const tvStyles = toastStyles.action({
-    variant: toastVariant,
-    className,
-  });
+  const animationConfig = useMemo<PressableFeedbackHighlightRootAnimation>(
+    () => ({
+      highlight: {
+        backgroundColor: { value: highlightColorMap },
+        opacity: { value: [0, 1] },
+      },
+    }),
+    [highlightColorMap]
+  );
 
   return (
     <Button
@@ -196,6 +233,7 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
       variant={buttonVariant}
       size={size}
       className={tvStyles}
+      animation={animationConfig}
       {...restProps}
     >
       {children}

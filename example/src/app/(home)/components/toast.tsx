@@ -80,7 +80,12 @@ const MyToast1 = (props: ToastComponentProps) => {
   const { id, hide } = props;
 
   return (
-    <Toast variant="accent" className="flex-row items-center gap-3" {...props}>
+    <Toast
+      variant="success"
+      duration="persistent"
+      className="flex-row items-center gap-3"
+      {...props}
+    >
       <View className="flex-1">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>

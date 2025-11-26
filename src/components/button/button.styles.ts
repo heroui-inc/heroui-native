@@ -8,10 +8,10 @@ const root = tv({
     variant: {
       primary: 'bg-accent',
       secondary: 'bg-default',
-      tertiary: 'bg-default border border-border',
+      tertiary: 'bg-default',
       ghost: 'bg-transparent',
       destructive: 'bg-danger',
-      ['destructive-soft']: 'bg-default border border-border',
+      ['destructive-soft']: 'bg-default',
     },
     size: {
       sm: 'h-[36px] px-3.5 gap-1.5',

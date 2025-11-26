@@ -80,7 +80,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
     placement,
     hide,
     id,
-    isSwipable = true,
+    isSwipeable = true,
     maxVisibleToasts = 3,
   } = options;
 
@@ -173,7 +173,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
 
   // Create pan gesture handler
   const panGesture = Gesture.Pan()
-    .enabled(!isAnimationDisabled && isSwipable)
+    .enabled(!isAnimationDisabled && isSwipeable)
     .onStart(() => {
       isDragging.set(true);
       gestureTranslateY.set(0);

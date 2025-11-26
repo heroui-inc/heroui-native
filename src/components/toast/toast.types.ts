@@ -143,7 +143,7 @@ export interface ToastRootProps
    * Whether the toast can be swiped to dismiss and dragged with rubber effect
    * @default true
    */
-  isSwipable?: boolean;
+  isSwipeable?: boolean;
 }
 
 /**
@@ -219,7 +219,7 @@ export type UseToastRootAnimationOptions = Pick<
   | 'heights'
   | 'placement'
   | 'hide'
-  | 'isSwipable'
+  | 'isSwipeable'
   | 'maxVisibleToasts'
 > &
   Pick<ToastComponentProps, 'id'> & {

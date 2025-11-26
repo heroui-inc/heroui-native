@@ -49,7 +49,7 @@ function createConfigToastComponent(
       variant={config.variant}
       placement={config.placement}
       duration={config.duration}
-      isSwipable={config.isSwipable}
+      isSwipeable={config.isSwipeable}
       label={config.label}
       description={config.description}
       actionLabel={config.actionLabel}

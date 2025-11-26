@@ -47,7 +47,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     className,
     style,
     animation,
-    isSwipable,
+    isSwipeable,
     hide,
     ...restProps
   } = props;
@@ -73,7 +73,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
       placement,
       hide,
       id,
-      isSwipable,
+      isSwipeable,
       maxVisibleToasts,
     });
 
@@ -236,7 +236,7 @@ export function DefaultToast(
     variant?: ToastRootProps['variant'];
     placement?: ToastRootProps['placement'];
     duration?: ToastRootProps['duration'];
-    isSwipable?: ToastRootProps['isSwipable'];
+    isSwipeable?: ToastRootProps['isSwipeable'];
     label?: string;
     description?: string;
     actionLabel?: string;
@@ -251,7 +251,7 @@ export function DefaultToast(
     variant = 'default',
     placement = 'top',
     duration = 4000,
-    isSwipable,
+    isSwipeable,
     label,
     description,
     actionLabel,
@@ -273,7 +273,7 @@ export function DefaultToast(
       variant={variant}
       placement={placement}
       duration={duration}
-      isSwipable={isSwipable}
+      isSwipeable={isSwipeable}
       className="flex-row items-center gap-3"
       hide={hide}
       show={show}

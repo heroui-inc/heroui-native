@@ -97,7 +97,7 @@ export interface ToastComponentProps {
 export interface ToastShowConfig
   extends Pick<
     ToastRootProps,
-    'variant' | 'placement' | 'duration' | 'isSwipable'
+    'variant' | 'placement' | 'duration' | 'isSwipeable'
   > {
   /**
    * Optional ID for the toast

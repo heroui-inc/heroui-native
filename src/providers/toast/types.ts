@@ -81,8 +81,12 @@ export interface ToastComponentProps {
   show: (options: ToastShowOptions) => string;
   /**
    * Hide one or more toasts
+   * - No argument: hides the last toast in the array
+   * - "all": hides all toasts
+   * - Single ID: hides that toast
+   * - Array of IDs: hides those toasts
    */
-  hide: (ids?: string | string[]) => void;
+  hide: (ids?: string | string[] | 'all') => void;
 }
 
 /**
@@ -164,7 +168,8 @@ export interface ToastManager {
    * Hide one or more toasts
    *
    * @param ids - Optional ID(s) of toast(s) to hide
-   * - No argument: hides all toasts
+   * - No argument: hides the last toast in the array
+   * - "all": hides all toasts
    * - Single ID: hides that toast
    * - Array of IDs: hides those toasts
    *
@@ -172,12 +177,13 @@ export interface ToastManager {
    * ```tsx
    * const toast = useToast();
    *
-   * toast.hide();                    // Hide all toasts
+   * toast.hide();                    // Hide the last toast
+   * toast.hide('all');               // Hide all toasts
    * toast.hide('my-toast');          // Hide specific toast
    * toast.hide(['toast-1', 'toast-2']); // Hide multiple toasts
    * ```
    */
-  hide: (ids?: string | string[]) => void;
+  hide: (ids?: string | string[] | 'all') => void;
 }
 
 /**
@@ -212,8 +218,12 @@ export interface ToastItemRendererProps {
   show: (options: ToastShowOptions) => string;
   /**
    * Hide one or more toasts
+   * - No argument: hides the last toast in the array
+   * - "all": hides all toasts
+   * - Single ID: hides that toast
+   * - Array of IDs: hides those toasts
    */
-  hide: (ids?: string | string[]) => void;
+  hide: (ids?: string | string[] | 'all') => void;
 }
 
 /**

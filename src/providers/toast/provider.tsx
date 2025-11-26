@@ -71,10 +71,38 @@ export function ToastProvider({
 
   /**
    * Hide one or more toasts
+   * - No argument: hides the last toast in the array
+   * - "all": hides all toasts
+   * - Single ID: hides that toast
+   * - Array of IDs: hides those toasts
    */
   const hide = useCallback(
-    (ids?: string | string[]) => {
+    (ids?: string | string[] | 'all') => {
       if (ids === undefined) {
+        // Hide the last toast in the array
+        if (toasts.length > 0) {
+          const lastToast = toasts[toasts.length - 1];
+          if (!lastToast) return;
+
+          if (lastToast.onHide) {
+            lastToast.onHide();
+          }
+
+          dispatch({
+            type: 'HIDE',
+            payload: { ids: [lastToast.id] },
+          });
+
+          heights.modify(<T extends Record<string, number>>(value: T): T => {
+            'worklet';
+            const result = { ...value };
+            delete result[lastToast.id];
+            return result;
+          });
+
+          total.set((value) => value - 1);
+        }
+      } else if (ids === 'all') {
         // Hide all toasts - call onHide for each toast before hiding
         toasts.forEach((toast) => {
           if (toast.onHide) {
@@ -88,30 +116,36 @@ export function ToastProvider({
         // Hide specific toast(s) - call onHide for each toast before hiding
         const idsArray = Array.isArray(ids) ? ids : [ids];
         const idsToRemove = idsArray;
+        let removedCount = 0;
 
         // Find and call onHide callbacks before removing
         idsToRemove.forEach((id) => {
           const toast = toasts.find((t) => String(t.id) === String(id));
-          if (toast?.onHide) {
-            toast.onHide();
+          if (toast) {
+            removedCount++;
+            if (toast.onHide) {
+              toast.onHide();
+            }
           }
         });
 
-        dispatch({
-          type: 'HIDE',
-          payload: { ids: idsArray },
-        });
+        if (removedCount > 0) {
+          dispatch({
+            type: 'HIDE',
+            payload: { ids: idsArray },
+          });
 
-        heights.modify(<T extends Record<string, number>>(value: T): T => {
-          'worklet';
-          const result = { ...value };
-          for (const id of idsToRemove) {
-            delete result[id];
-          }
-          return result;
-        });
+          heights.modify(<T extends Record<string, number>>(value: T): T => {
+            'worklet';
+            const result = { ...value };
+            for (const id of idsToRemove) {
+              delete result[id];
+            }
+            return result;
+          });
 
-        total.set((value) => value - 1);
+          total.set((value) => value - removedCount);
+        }
       }
     },
     [total, heights, toasts]

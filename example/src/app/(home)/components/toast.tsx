@@ -199,6 +199,10 @@ const InteractiveDemoContent = () => {
         </Button>
 
         <Button onPress={() => toast.hide()} variant="destructive">
+          Hide Last Toast
+        </Button>
+
+        <Button onPress={() => toast.hide('all')} variant="destructive">
           Hide All Toasts
         </Button>
 

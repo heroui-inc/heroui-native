@@ -98,6 +98,14 @@ export interface ToastShowOptions {
    * A function that receives toast props and returns a React element
    */
   component: (props: ToastComponentProps) => React.ReactElement;
+  /**
+   * Callback function called when the toast is shown
+   */
+  onShow?: () => void;
+  /**
+   * Callback function called when the toast is hidden
+   */
+  onHide?: () => void;
 }
 
 /**
@@ -112,6 +120,14 @@ export interface ToastItem {
    * A function that receives toast props and returns a React element
    */
   component: (props: ToastComponentProps) => React.ReactElement;
+  /**
+   * Callback function called when the toast is shown
+   */
+  onShow?: () => void;
+  /**
+   * Callback function called when the toast is hidden
+   */
+  onHide?: () => void;
 }
 
 /**

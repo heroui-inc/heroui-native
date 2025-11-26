@@ -53,10 +53,16 @@ export function ToastProvider({
         payload: {
           id,
           component: options.component,
+          onShow: options.onShow,
+          onHide: options.onHide,
         },
       });
 
       total.set((value) => value + 1);
+
+      if (options.onShow) {
+        options.onShow();
+      }
 
       return id;
     },
@@ -69,14 +75,28 @@ export function ToastProvider({
   const hide = useCallback(
     (ids?: string | string[]) => {
       if (ids === undefined) {
-        // Hide all toasts
+        // Hide all toasts - call onHide for each toast before hiding
+        toasts.forEach((toast) => {
+          if (toast.onHide) {
+            toast.onHide();
+          }
+        });
         dispatch({ type: 'HIDE_ALL' });
         heights.set({});
         total.set(0);
       } else {
-        // Hide specific toast(s)
+        // Hide specific toast(s) - call onHide for each toast before hiding
         const idsArray = Array.isArray(ids) ? ids : [ids];
         const idsToRemove = idsArray;
+
+        // Find and call onHide callbacks before removing
+        idsToRemove.forEach((id) => {
+          const toast = toasts.find((t) => String(t.id) === String(id));
+          if (toast?.onHide) {
+            toast.onHide();
+          }
+        });
+
         dispatch({
           type: 'HIDE',
           payload: { ids: idsArray },
@@ -94,7 +114,7 @@ export function ToastProvider({
         total.set((value) => value - 1);
       }
     },
-    [total, heights]
+    [total, heights, toasts]
   );
 
   const contextValue = useMemo<ToasterContextValue>(

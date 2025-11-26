@@ -160,6 +160,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
   // Gesture state shared values
   const isDragging = useSharedValue(false);
   const gestureTranslateY = useSharedValue(0);
+  const gestureScale = useSharedValue(1);
 
   // Helper function to delay hide call based on velocity
   const delayedHide = (toastId: string | undefined, velocity: number) => {
@@ -174,11 +175,12 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
   // Create pan gesture handler
   const panGesture = Gesture.Pan()
     .enabled(!isAnimationDisabled && isSwipeable)
-    .onStart(() => {
+    .onBegin(() => {
       isDragging.set(true);
       gestureTranslateY.set(0);
+      gestureScale.set(0.995);
     })
-    .onUpdate((event) => {
+    .onChange((event) => {
       if (!isDragging.get()) return;
 
       const translationY = event.translationY;
@@ -217,7 +219,9 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
         }
       }
     })
-    .onEnd((event) => {
+    .onFinalize((event) => {
+      gestureScale.set(1);
+
       const translationY = event.translationY;
       const velocityY = event.velocityY;
       const dismissThreshold = 50;
@@ -300,19 +304,21 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
     ];
 
     const opacity = interpolate(index, opacityInputRange, opacityValue);
-    const scale = interpolate(index, inputRange, scaleValue);
 
     // Handle translateY based on dragging state
     let translateY: number;
+    let scale: number;
     if (isDragging.get()) {
       // During gesture: use gesture-based translateY
       translateY = gestureTranslateY.get();
+      scale = gestureScale.get();
     } else {
       // Normal state: use stack-based interpolation
       translateY = interpolate(index, inputRange, [
         translateYValue[0],
         translateYValue[1] * sign,
       ]);
+      scale = interpolate(index, inputRange, scaleValue);
     }
 
     if (isAnimationDisabled) {
@@ -350,7 +356,9 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
             : withTiming(translateY, translateYTimingConfig),
         },
         {
-          scale: withTiming(scale, scaleTimingConfig),
+          scale: isDragging.get()
+            ? withSpring(scale)
+            : withTiming(scale, scaleTimingConfig),
         },
         ...styleTransform,
       ],

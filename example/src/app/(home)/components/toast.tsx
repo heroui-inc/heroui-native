@@ -1,21 +1,20 @@
-/* eslint-disable react/no-unstable-nested-components */
 import Feather from '@expo/vector-icons/Feather';
 import Octicons from '@expo/vector-icons/Octicons';
-import {
-  Button,
-  Toast,
-  useToast,
-  type ToastComponentProps,
-} from 'heroui-native';
+import { Button, useToast, type ToastComponentProps } from 'heroui-native';
 import { useCallback } from 'react';
 import { View } from 'react-native';
-import { toast as sonnerToast } from 'sonner-native';
 import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import {
+  LoadingToast,
+  useLoadingState,
+} from '../../../components/toast/loading-toast';
 
 const StyledFeather = withUniwind(Feather);
 const StyledOcticons = withUniwind(Octicons);
+
+// ------------------------------------------------------------------------------
 
 const DefaultVariantsContent = () => {
   const { toast } = useToast();
@@ -128,6 +127,9 @@ const DefaultVariantsContent = () => {
       >
         Danger toast
       </Button>
+      <Button onPress={() => toast.hide('all')} variant="destructive-soft">
+        Hide all toasts
+      </Button>
     </View>
   );
 };
@@ -183,230 +185,77 @@ const DifferentContentSizesContent = () => {
       >
         Large toast
       </Button>
+      <Button onPress={() => toast.hide('all')} variant="destructive-soft">
+        Hide all toasts
+      </Button>
     </View>
   );
 };
 
 // ------------------------------------------------------------------------------
 
-const MyToast1 = (props: ToastComponentProps) => {
-  const { id, hide } = props;
-
-  return (
-    <Toast
-      variant="success"
-      className="flex-row items-center gap-3"
-      classNames={{
-        overlay: 'bg-green-500',
-      }}
-      {...props}
-    >
-      <View className="flex-1">
-        <Toast.Label>{id}</Toast.Label>
-        <Toast.Description>
-          Use buttons below to control this toast
-        </Toast.Description>
-      </View>
-      <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
-    </Toast>
-  );
-};
-
-const MyToast2 = (props: ToastComponentProps) => {
-  const { id, hide } = props;
-
-  return (
-    <Toast variant="success" className="flex-row items-center gap-3" {...props}>
-      <View className="flex-1">
-        <Toast.Label>{id}</Toast.Label>
-        <Toast.Description>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam tenetur
-          maxime ab laboriosam qui praesentium facere? Ad dolor fugiat,
-          molestiae esse laudantium sed ut ullam.
-        </Toast.Description>
-      </View>
-      <Toast.Action onPress={() => hide()}>Close</Toast.Action>
-    </Toast>
-  );
-};
-
-const MyToast3 = (props: ToastComponentProps) => {
-  const { id, hide } = props;
-
-  return (
-    <Toast variant="warning" className="flex-row items-center gap-3" {...props}>
-      <View className="flex-1">
-        <Toast.Label>{id}</Toast.Label>
-        <Toast.Description>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam tenetur
-          maxime ab laboriosam qui praesentium facere? Ad dolor fugiat,
-          molestiae esse laudantium sed ut ullam. Lorem, ipsum dolor sit amet
-          consectetur adipisicing elit. Nam tenetur maxime ab laboriosam qui
-          praesentium facere?
-        </Toast.Description>
-      </View>
-      <Toast.Action onPress={() => hide(id)}>Close</Toast.Action>
-    </Toast>
-  );
-};
-const InteractiveDemoContent = () => {
+const CustomToastsContent = () => {
   const { toast } = useToast();
+  const TOAST_ID = 'loading-toast';
+  const { isLoading, setIsLoading } = useLoadingState();
 
-  const _renderToast1 = useCallback(
-    (props: ToastComponentProps) => <MyToast1 {...props} />,
-    []
-  );
-  const _renderToast2 = useCallback(
-    (props: ToastComponentProps) => <MyToast2 {...props} />,
-    []
-  );
-  const _renderToast3 = useCallback(
-    (props: ToastComponentProps) => <MyToast3 {...props} />,
-    []
-  );
+  /**
+   * Simulates loading data (e.g., API call, file upload, etc.)
+   * In a real app, this would be an actual async operation
+   */
+  const loadData = async (): Promise<void> => {
+    /**
+     * Simulate network delay or processing time
+     */
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  };
 
-  return (
-    <View className="flex-1 px-5">
-      <View className="flex-1 justify-center gap-3">
-        <Button
-          onPress={() =>
-            toast.show({
-              duration: 'persistent',
-              component: _renderToast1,
-            })
-          }
-          variant="primary"
-        >
-          Show Toast 1
-        </Button>
+  const renderLoadingToast = useCallback((props: ToastComponentProps) => {
+    return <LoadingToast {...props} />;
+  }, []);
 
-        <Button
-          onPress={() => {
-            toast.show({
-              duration: 5000,
-              component: _renderToast2,
-            });
-          }}
-          variant="primary"
-        >
-          Show Toast 2
-        </Button>
+  const handleShowLoadingToast = async () => {
+    /**
+     * Set loading to true and show toast
+     */
+    setIsLoading(true);
+    toast.show({
+      id: TOAST_ID,
+      duration: 'persistent',
+      component: renderLoadingToast,
+    });
 
-        <Button
-          onPress={() => {
-            toast.show({
-              duration: 5000,
-              component: _renderToast3,
-            });
-          }}
-          variant="primary"
-        >
-          Show Toast 3
-        </Button>
-
-        <Button onPress={() => toast.hide()} variant="destructive">
-          Hide Last Toast
-        </Button>
-
-        <Button onPress={() => toast.hide('all')} variant="destructive">
-          Hide All Toasts
-        </Button>
-
-        <Button onPress={() => sonnerToast('Hello, World!')}>
-          Sonner Toast
-        </Button>
-      </View>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const MultipleToastsContent = () => {
-  const { toast } = useToast();
+    try {
+      /**
+       * Perform the actual async operation
+       */
+      await loadData();
+    } catch (error) {
+      /**
+       * Handle errors if needed
+       */
+      console.error('Failed to load data:', error);
+    } finally {
+      /**
+       * Set loading to false when operation completes
+       */
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <View className="flex-1 px-5">
-      <View className="flex-1 justify-center gap-3">
-        <Button
-          onPress={() => {
-            // Show multiple toasts with custom IDs
-            toast.show({
-              id: 'toast-1',
-              component: (props: ToastComponentProps) => (
-                <Toast
-                  variant="default"
-                  placement="top"
-                  className="flex-row items-center gap-3"
-                  {...props}
-                >
-                  <View className="flex-1">
-                    <Toast.Label>Toast 1</Toast.Label>
-                    <Toast.Description>First toast at top</Toast.Description>
-                  </View>
-                  <Toast.Action onPress={() => props.hide(props.id)}>
-                    Close
-                  </Toast.Action>
-                </Toast>
-              ),
-            });
+    <View className="flex-1 items-center justify-center px-5 gap-5">
+      <Button
+        variant="secondary"
+        onPress={handleShowLoadingToast}
+        isDisabled={isLoading}
+      >
+        {isLoading ? 'Loading...' : 'Load data'}
+      </Button>
 
-            toast.show({
-              id: 'toast-2',
-              component: (props: ToastComponentProps) => (
-                <Toast
-                  variant="accent"
-                  placement="top"
-                  className="flex-row items-center gap-3"
-                  {...props}
-                >
-                  <View className="flex-1">
-                    <Toast.Label>Toast 2</Toast.Label>
-                    <Toast.Description>Second toast at top</Toast.Description>
-                  </View>
-                  <Toast.Action onPress={() => props.hide(props.id)}>
-                    Close
-                  </Toast.Action>
-                </Toast>
-              ),
-            });
-
-            toast.show({
-              id: 'toast-3',
-              component: (props: ToastComponentProps) => (
-                <Toast
-                  variant="success"
-                  placement="bottom"
-                  className="flex-row items-center gap-3"
-                  {...props}
-                >
-                  <View className="flex-1">
-                    <Toast.Label>Toast 3</Toast.Label>
-                    <Toast.Description>Third toast at bottom</Toast.Description>
-                  </View>
-                  <Toast.Action onPress={() => props.hide(props.id)}>
-                    Close
-                  </Toast.Action>
-                </Toast>
-              ),
-            });
-          }}
-          variant="primary"
-        >
-          Show All Toasts
-        </Button>
-
-        <Button
-          onPress={() => toast.hide(['toast-1', 'toast-2', 'toast-3'])}
-          variant="secondary"
-        >
-          Hide Specific Toasts
-        </Button>
-
-        <Button onPress={() => toast.hide()} variant="destructive">
-          Hide All Toasts
-        </Button>
-      </View>
+      <Button onPress={() => toast.hide('all')} variant="destructive-soft">
+        Hide all toasts
+      </Button>
     </View>
   );
 };
@@ -416,23 +265,18 @@ const MultipleToastsContent = () => {
 const TOAST_VARIANTS: UsageVariant[] = [
   {
     value: 'default-variants',
-    label: 'Default Variants',
+    label: 'Default variants',
     content: <DefaultVariantsContent />,
   },
   {
     value: 'different-content-sizes',
-    label: 'Different Content Sizes',
+    label: 'Different content sizes',
     content: <DifferentContentSizesContent />,
   },
   {
-    value: 'interactive-demo',
-    label: 'Interactive Demo',
-    content: <InteractiveDemoContent />,
-  },
-  {
-    value: 'multiple-toasts',
-    label: 'Multiple Toasts',
-    content: <MultipleToastsContent />,
+    value: 'custom-toasts',
+    label: 'Custom toasts',
+    content: <CustomToastsContent />,
   },
 ];
 

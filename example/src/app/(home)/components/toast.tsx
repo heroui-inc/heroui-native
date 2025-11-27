@@ -142,6 +142,93 @@ const DefaultVariantsContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const PlacementVariantsContent = () => {
+  const [isTopToastVisible, setIsTopToastVisible] = useState(false);
+  const [isBottomToastVisible, setIsBottomToastVisible] = useState(false);
+
+  const { toast } = useToast();
+
+  const showTopToast = () =>
+    toast.show({
+      variant: 'success',
+      placement: 'top',
+      label: 'You have upgraded your plan',
+      description: 'You can continue using HeroUI Chat',
+      icon: (
+        <StyledOcticons
+          name="shield-check"
+          size={18}
+          className="text-success mt-0.5"
+        />
+      ),
+      actionLabel: 'Close',
+      onActionPress: ({ hide }) => hide(),
+    });
+
+  const showBottomToast = () =>
+    toast.show({
+      variant: 'warning',
+      placement: 'bottom',
+      label: 'You have no credits left',
+      description: 'Upgrade to a paid plan to continue',
+      icon: (
+        <StyledOcticons
+          name="shield"
+          size={18}
+          className="text-warning mt-0.5"
+        />
+      ),
+      actionLabel: 'Close',
+      onActionPress: ({ hide }) => hide(),
+    });
+
+  return (
+    <View className="flex-1 items-center justify-center px-5 gap-5">
+      <Button
+        variant="secondary"
+        onPress={() => {
+          setIsTopToastVisible(true);
+          if (isBottomToastVisible) {
+            toast.hide('all');
+            setIsBottomToastVisible(false);
+            setTimeout(() => {
+              showTopToast();
+            }, 300);
+          }
+          if (!isBottomToastVisible) {
+            showTopToast();
+          }
+        }}
+      >
+        Top toast
+      </Button>
+      <Button
+        variant="secondary"
+        onPress={() => {
+          setIsBottomToastVisible(true);
+          if (isTopToastVisible) {
+            toast.hide('all');
+            setIsTopToastVisible(false);
+            setTimeout(() => {
+              showBottomToast();
+            }, 300);
+          }
+          if (!isTopToastVisible) {
+            showBottomToast();
+          }
+        }}
+      >
+        Bottom toast
+      </Button>
+      <Button onPress={() => toast.hide('all')} variant="destructive-soft">
+        Hide all toasts
+      </Button>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const DifferentContentSizesContent = () => {
   const { toast } = useToast();
 
@@ -418,6 +505,11 @@ const TOAST_VARIANTS: UsageVariant[] = [
     value: 'default-variants',
     label: 'Default variants',
     content: <DefaultVariantsContent />,
+  },
+  {
+    value: 'placement-variants',
+    label: 'Placement variants',
+    content: <PlacementVariantsContent />,
   },
   {
     value: 'different-content-sizes',

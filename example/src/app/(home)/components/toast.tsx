@@ -1,8 +1,8 @@
 import Feather from '@expo/vector-icons/Feather';
 import Octicons from '@expo/vector-icons/Octicons';
 import { Button, useToast, type ToastComponentProps } from 'heroui-native';
-import { useCallback } from 'react';
-import { View } from 'react-native';
+import { useCallback, useRef, useState } from 'react';
+import { TextInput, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -199,6 +199,62 @@ const DifferentContentSizesContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const KeyboardAvoidingContent = () => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const { toast } = useToast();
+
+  const inputRef = useRef<TextInput>(null);
+
+  return (
+    <View className="flex-1 items-center justify-center px-5 gap-5">
+      <Button
+        variant="secondary"
+        onPress={() => {
+          toast.show({
+            variant: 'success',
+            duration: 'persistent',
+            placement: 'bottom',
+            label: 'Payment successful',
+            description:
+              'Your subscription has been renewed. You will be charged $9.99/month. Thank you for your continued support.',
+            actionLabel: 'Close',
+            onActionPress: ({ hide }) => {
+              hide();
+              inputRef.current?.blur();
+            },
+          });
+        }}
+      >
+        Show toast
+      </Button>
+      <Button
+        onPress={() => {
+          if (isFocused) {
+            inputRef.current?.blur();
+          } else {
+            inputRef.current?.focus();
+          }
+        }}
+        variant="secondary"
+      >
+        Toggle keyboard
+      </Button>
+      <Button onPress={() => toast.hide('all')} variant="destructive-soft">
+        Hide toast
+      </Button>
+      <TextInput
+        ref={inputRef}
+        className="opacity-0 pointer-events-none"
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+      />
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const CustomToastsContent = () => {
   const { toast } = useToast();
   const LOADING_TOAST_ID = 'loading-toast';
@@ -349,6 +405,11 @@ const TOAST_VARIANTS: UsageVariant[] = [
     value: 'different-content-sizes',
     label: 'Different content sizes',
     content: <DifferentContentSizesContent />,
+  },
+  {
+    value: 'keyboard-avoiding',
+    label: 'Keyboard avoiding',
+    content: <KeyboardAvoidingContent />,
   },
   {
     value: 'custom-toasts',

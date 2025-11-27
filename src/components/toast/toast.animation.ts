@@ -308,11 +308,17 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
       scale = gestureScale.get();
     } else {
       // Normal state: use stack-based interpolation
-      translateY = interpolate(index, inputRange, [
-        translateYValue[0],
-        translateYValue[1] * sign,
-      ]);
-      scale = interpolate(index, inputRange, scaleValue);
+      translateY = interpolate(
+        index,
+        inputRange,
+        [translateYValue[0], translateYValue[1] * sign],
+        {
+          extrapolateLeft: Extrapolation.CLAMP,
+        }
+      );
+      scale = interpolate(index, inputRange, scaleValue, {
+        extrapolateLeft: Extrapolation.CLAMP,
+      });
     }
 
     if (isAnimationDisabled) {

@@ -45,6 +45,28 @@ export interface ToastProviderProps {
    */
   maxVisibleToasts?: number;
   /**
+   * Custom wrapper function to wrap the toast content
+   * Receives children and should return a component that wraps them
+   * The wrapper should apply flex: 1 (via className or style) to ensure proper layout
+   * Can be any component wrapper - KeyboardAvoidingView, View, or any custom component
+   *
+   * @example
+   * ```tsx
+   * <ToastProvider
+   *   contentWrapper={(children) => (
+   *     <KeyboardAvoidingView
+   *       behavior="padding"
+   *       keyboardVerticalOffset={24}
+   *       className="flex-1"
+   *     >
+   *       {children}
+   *     </KeyboardAvoidingView>
+   *   )}
+   * >
+   * ```
+   */
+  contentWrapper?: (children: React.ReactNode) => React.ReactElement;
+  /**
    * Children to render
    */
   children?: React.ReactNode;

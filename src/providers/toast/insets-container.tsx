@@ -13,6 +13,13 @@ interface InsetsContainerProps {
    */
   insets?: ToastInsets;
   /**
+   * Custom wrapper function to wrap the toast content
+   * Receives children and should return a component that wraps them
+   * The wrapper should apply flex: 1 (via className or style) to ensure proper layout
+   * Can be any component wrapper - KeyboardAvoidingView, View, or any custom component
+   */
+  contentWrapper?: (children: ReactNode) => React.ReactElement;
+  /**
    * Children to render inside the container
    */
   children: ReactNode;
@@ -28,7 +35,11 @@ interface InsetsContainerProps {
  *   - iOS: safe area inset + 0px for top/bottom, + 12px for left/right
  *   - Android: safe area inset + 12px for all edges
  */
-export function InsetsContainer({ insets, children }: InsetsContainerProps) {
+export function InsetsContainer({
+  insets,
+  contentWrapper,
+  children,
+}: InsetsContainerProps) {
   const safeAreaInsets = useSafeAreaInsets();
 
   const finalInsets = useMemo(() => {
@@ -36,7 +47,7 @@ export function InsetsContainer({ insets, children }: InsetsContainerProps) {
       top: insets?.top ?? safeAreaInsets.top + (Platform.OS === 'ios' ? 0 : 12),
       bottom:
         insets?.bottom ??
-        safeAreaInsets.bottom + (Platform.OS === 'ios' ? 0 : 12),
+        safeAreaInsets.bottom + (Platform.OS === 'ios' ? 6 : 12),
       left: insets?.left ?? safeAreaInsets.left + 12,
       right: insets?.right ?? safeAreaInsets.right + 12,
     };
@@ -52,7 +63,11 @@ export function InsetsContainer({ insets, children }: InsetsContainerProps) {
         paddingRight: finalInsets.right,
       }}
     >
-      {children}
+      {contentWrapper ? (
+        contentWrapper(children)
+      ) : (
+        <View className="flex-1">{children}</View>
+      )}
     </View>
   );
 }

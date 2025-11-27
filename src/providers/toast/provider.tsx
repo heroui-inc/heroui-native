@@ -67,6 +67,7 @@ function createConfigToastComponent(
 export function ToastProvider({
   insets,
   maxVisibleToasts = 3,
+  contentWrapper,
   children,
 }: ToastProviderProps) {
   const [toasts, dispatch] = useReducer(toastReducer, []);
@@ -305,7 +306,7 @@ export function ToastProvider({
   return (
     <ToasterContext.Provider value={contextValue}>
       {children}
-      <InsetsContainer insets={insets}>
+      <InsetsContainer insets={insets} contentWrapper={contentWrapper}>
         <View className="flex-1">
           {toasts.map((toastItem, index) => (
             <ToastItemRenderer

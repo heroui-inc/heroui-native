@@ -42,6 +42,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     heights,
     maxVisibleToasts,
     className,
+    classNames,
     style,
     animation,
     isSwipeable,
@@ -53,11 +54,17 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   const toastProps = props as ToastRootProps & Pick<ToastComponentProps, 'id'>;
   const { id } = toastProps;
 
-  const tvStyles = toastStyles.root({
-    className,
+  const { container, overlay } = toastStyles.root();
+
+  const containerStyles = container({
+    className: [className, classNames?.container],
   });
 
-  const { rContainerStyle, entering, exiting, panGesture } =
+  const overlayStyles = overlay({
+    className: classNames?.overlay,
+  });
+
+  const { rContainerStyle, rOverlayStyle, entering, exiting, panGesture } =
     useToastRootAnimation({
       animation,
       style: style as ViewStyle | undefined,
@@ -92,16 +99,21 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
           {/* Animated toast instance */}
           <AnimatedToastRoot
             ref={ref}
-            className={tvStyles}
+            className={containerStyles}
             style={[styleSheet.root, rContainerStyle, style]}
             {...restProps}
           >
             {children}
+            <Animated.View
+              pointerEvents="none"
+              className={overlayStyles}
+              style={rOverlayStyle}
+            />
           </AnimatedToastRoot>
           {/* Static toast instance */}
           <AnimatedToastRoot
             pointerEvents="none"
-            className={cn(tvStyles, 'absolute opacity-0')}
+            className={cn(containerStyles, 'absolute opacity-0')}
             style={[styleSheet.root, style]}
             onLayout={(event) => {
               const measuredHeight = event.nativeEvent.layout.height;
@@ -272,6 +284,7 @@ export function DefaultToast(props: DefaultToastProps) {
     description,
     actionLabel,
     onActionPress,
+    icon,
     hide,
     show,
     ...toastComponentProps
@@ -289,11 +302,12 @@ export function DefaultToast(props: DefaultToastProps) {
       variant={variant}
       placement={placement}
       isSwipeable={isSwipeable}
-      className="flex-row items-center gap-3"
+      className="flex-row gap-3"
       hide={hide}
       show={show}
       {...toastComponentProps}
     >
+      {icon && <View>{icon}</View>}
       <View className="flex-1">
         {label && <ToastLabel>{label}</ToastLabel>}
         {description && <ToastDescription>{description}</ToastDescription>}

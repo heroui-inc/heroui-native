@@ -55,6 +55,7 @@ function createConfigToastComponent(
       description={config.description}
       actionLabel={config.actionLabel}
       onActionPress={config.onActionPress}
+      icon={config.icon}
     />
   );
 }

@@ -2,8 +2,15 @@ import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
+/**
+ * Toast root styles with container and overlay slots
+ */
 const root = tv({
-  base: 'rounded-3xl p-4 bg-surface border border-muted/10 shadow-2xl shadow-black/5 overflow-hidden',
+  slots: {
+    container:
+      'rounded-3xl px-3 py-4 bg-surface border border-muted/10 shadow-2xl shadow-black/5 overflow-hidden',
+    overlay: 'absolute -top-1 left-0 right-0 -bottom-1 bg-surface rounded-3xl',
+  },
 });
 
 const label = tv({
@@ -48,6 +55,11 @@ const toastStyles = combineStyles({
   description,
   action,
 });
+
+/**
+ * Export slot types for type-safe classNames props
+ */
+export type ToastRootSlots = keyof ReturnType<typeof root>;
 
 export const styleSheet = StyleSheet.create({
   root: {

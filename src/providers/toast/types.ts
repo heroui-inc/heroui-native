@@ -128,6 +128,10 @@ export interface ToastShowConfig
     hide: (ids?: string | string[] | 'all') => void;
   }) => void;
   /**
+   * Icon element to display in the toast
+   */
+  icon?: React.ReactNode;
+  /**
    * Callback function called when the toast is shown
    */
   onShow?: () => void;

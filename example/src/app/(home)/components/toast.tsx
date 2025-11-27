@@ -1,4 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
+import Feather from '@expo/vector-icons/Feather';
+import Octicons from '@expo/vector-icons/Octicons';
 import {
   Button,
   Toast,
@@ -8,71 +10,127 @@ import {
 import { useCallback } from 'react';
 import { View } from 'react-native';
 import { toast as sonnerToast } from 'sonner-native';
+import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
-// const AllVariantsContent = () => {
-//   return (
-//     <View className="flex-1 px-5">
-//       <View className="flex-1 justify-center gap-4">
-//         {/* Default variant */}
-//         <Toast variant="default" className="flex-row items-center gap-3">
-//           <View className="flex-1">
-//             <Toast.Label>Default notification</Toast.Label>
-//             <Toast.Description>
-//               This is a default toast message
-//             </Toast.Description>
-//           </View>
-//           <Toast.Action>Action</Toast.Action>
-//         </Toast>
+const StyledFeather = withUniwind(Feather);
+const StyledOcticons = withUniwind(Octicons);
 
-//         {/* Accent variant */}
-//         <Toast variant="accent" className="flex-row items-center gap-3">
-//           <View className="flex-1">
-//             <Toast.Label>Accent notification</Toast.Label>
-//             <Toast.Description>
-//               This is an accent toast message
-//             </Toast.Description>
-//           </View>
-//           <Toast.Action>Action</Toast.Action>
-//         </Toast>
+const DefaultVariantsContent = () => {
+  const { toast } = useToast();
 
-//         {/* Success variant */}
-//         <Toast variant="success" className="flex-row items-center gap-3">
-//           <View className="flex-1">
-//             <Toast.Label>Success notification</Toast.Label>
-//             <Toast.Description>
-//               This is a success toast message
-//             </Toast.Description>
-//           </View>
-//           <Toast.Action>Action</Toast.Action>
-//         </Toast>
-
-//         {/* Warning variant */}
-//         <Toast variant="warning" className="flex-row items-center gap-3">
-//           <View className="flex-1">
-//             <Toast.Label>Warning notification</Toast.Label>
-//             <Toast.Description>
-//               This is a warning toast message
-//             </Toast.Description>
-//           </View>
-//           <Toast.Action>Action</Toast.Action>
-//         </Toast>
-
-//         {/* Danger variant */}
-//         <Toast variant="danger" className="flex-row items-center gap-3">
-//           <View className="flex-1">
-//             <Toast.Label>Danger notification</Toast.Label>
-//             <Toast.Description>
-//               This is a danger toast message
-//             </Toast.Description>
-//           </View>
-//           <Toast.Action>Action</Toast.Action>
-//         </Toast>
-//       </View>
-//     </View>
-//   );
-// };
+  return (
+    <View className="flex-1 items-center justify-center px-5 gap-5">
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.show({
+            variant: 'default',
+            label: 'Join a team',
+            description: 'Junior sent you an invitation to join HeroUI team',
+            icon: (
+              <StyledFeather
+                name="users"
+                size={15}
+                className="text-foreground mt-[3px]"
+              />
+            ),
+            actionLabel: 'Close',
+            onActionPress: ({ hide }) => hide(),
+          })
+        }
+      >
+        Default toast
+      </Button>
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.show({
+            variant: 'accent',
+            label: 'You have 2 credits left',
+            description: 'Get a paid plan for more credits',
+            icon: (
+              <StyledFeather
+                name="info"
+                size={18}
+                className="text-accent mt-0.5"
+              />
+            ),
+            actionLabel: 'Close',
+            onActionPress: ({ hide }) => hide(),
+          })
+        }
+      >
+        Accent toast
+      </Button>
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.show({
+            variant: 'success',
+            label: 'You have upgraded your plan',
+            description: 'You can continue using HeroUI Chat',
+            icon: (
+              <StyledOcticons
+                name="shield-check"
+                size={18}
+                className="text-success mt-0.5"
+              />
+            ),
+            actionLabel: 'Close',
+            onActionPress: ({ hide }) => hide(),
+          })
+        }
+      >
+        Success toast
+      </Button>
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.show({
+            variant: 'warning',
+            label: 'You have no credits left',
+            description: 'Upgrade to a paid plan to continue',
+            icon: (
+              <StyledOcticons
+                name="shield"
+                size={18}
+                className="text-warning mt-0.5"
+              />
+            ),
+            actionLabel: 'Close',
+            onActionPress: ({ hide }) => hide(),
+          })
+        }
+      >
+        Warning toast
+      </Button>
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.show({
+            variant: 'danger',
+            label: 'Storage is full',
+            description:
+              "Remove files to release space. I'm adding more text as usual but it's okay I guess I just want to see how it looks with a lot of information",
+            icon: (
+              <StyledFeather
+                name="hard-drive"
+                size={16}
+                className="text-danger mt-[3px]"
+              />
+            ),
+            actionLabel: 'Close',
+            onActionPress: ({ hide }) => hide(),
+          })
+        }
+      >
+        Danger toast
+      </Button>
+    </View>
+  );
+};
 
 // ------------------------------------------------------------------------------
 
@@ -80,7 +138,14 @@ const MyToast1 = (props: ToastComponentProps) => {
   const { id, hide } = props;
 
   return (
-    <Toast variant="success" className="flex-row items-center gap-3" {...props}>
+    <Toast
+      variant="success"
+      className="flex-row items-center gap-3"
+      classNames={{
+        overlay: 'bg-green-500',
+      }}
+      {...props}
+    >
       <View className="flex-1">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>
@@ -151,7 +216,7 @@ const InteractiveDemoContent = () => {
         <Button
           onPress={() =>
             toast.show({
-              duration: 5000,
+              duration: 'persistent',
               component: _renderToast1,
             })
           }
@@ -294,6 +359,11 @@ const MultipleToastsContent = () => {
 // ------------------------------------------------------------------------------
 
 const TOAST_VARIANTS: UsageVariant[] = [
+  {
+    value: 'default-variants',
+    label: 'Default Variants',
+    content: <DefaultVariantsContent />,
+  },
   {
     value: 'interactive-demo',
     label: 'Interactive Demo',

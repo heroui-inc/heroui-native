@@ -8,17 +8,14 @@ import { cn, useThemeColor } from '../../helpers/theme';
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as ToastPrimitive from '../../primitives/toast';
-import type {
-  ToastComponentProps,
-  ToastShowOptions,
-} from '../../providers/toast';
+import type { ToastComponentProps } from '../../providers/toast';
 import { Button } from '../button';
 import type { PressableFeedbackHighlightRootAnimation } from '../pressable-feedback';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
-import { useToastDuration } from './toast.hooks';
 import toastStyles, { styleSheet } from './toast.styles';
 import type {
+  DefaultToastProps,
   ToastActionProps,
   ToastCloseProps,
   ToastContextValue,
@@ -39,7 +36,6 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   const {
     children,
     variant = 'default',
-    duration = 4000,
     placement = 'top',
     index,
     total,
@@ -56,9 +52,6 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   // Access id from props (id is omitted from ToastRootProps type but available at runtime)
   const toastProps = props as ToastRootProps & Pick<ToastComponentProps, 'id'>;
   const { id } = toastProps;
-
-  // Handle automatic toast dismissal based on duration
-  useToastDuration(duration, id, hide);
 
   const tvStyles = toastStyles.root({
     className,
@@ -269,26 +262,11 @@ const ToastClose = forwardRef<View, ToastCloseProps>((props, ref) => {
  * Default styled toast component for simplified toast.show() API
  * Used internally when showing toasts with string or config object (without component)
  */
-export function DefaultToast(
-  props: ToastComponentProps & {
-    variant?: ToastRootProps['variant'];
-    placement?: ToastRootProps['placement'];
-    duration?: ToastRootProps['duration'];
-    isSwipeable?: ToastRootProps['isSwipeable'];
-    label?: string;
-    description?: string;
-    actionLabel?: string;
-    onActionPress?: (helpers: {
-      show: (options: string | ToastShowOptions) => string;
-      hide: (ids?: string | string[] | 'all') => void;
-    }) => void;
-  }
-) {
+export function DefaultToast(props: DefaultToastProps) {
   const {
     id,
     variant = 'default',
     placement = 'top',
-    duration = 4000,
     isSwipeable,
     label,
     description,
@@ -310,7 +288,6 @@ export function DefaultToast(
       id={id}
       variant={variant}
       placement={placement}
-      duration={duration}
       isSwipeable={isSwipeable}
       className="flex-row items-center gap-3"
       hide={hide}

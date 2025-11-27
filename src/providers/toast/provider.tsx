@@ -21,6 +21,8 @@ import type {
   ToastShowOptionsWithComponent,
 } from './types';
 
+const DEFAULT_DURATION = 4000;
+
 /**
  * Context for toast manager
  */
@@ -48,7 +50,6 @@ function createConfigToastComponent(
       {...props}
       variant={config.variant}
       placement={config.placement}
-      duration={config.duration}
       isSwipeable={config.isSwipeable}
       label={config.label}
       description={config.description}
@@ -76,62 +77,9 @@ export function ToastProvider({
   const total = useSharedValue<number>(0);
 
   const idCounter = useRef(0);
-
-  /**
-   * Show a toast
-   * Supports three usage patterns:
-   * 1. Simple string: toast.show('This is toast')
-   * 2. Config object: toast.show({ label, variant, ... })
-   * 3. Custom component: toast.show({ component: (props) => <Toast>...</Toast> })
-   */
-  const show = useCallback(
-    (options: string | ToastShowOptions): string => {
-      let normalizedOptions: ToastShowOptionsWithComponent;
-
-      // Case 1: Simple string
-      if (typeof options === 'string') {
-        normalizedOptions = {
-          id: undefined,
-          component: createStringToastComponent(options),
-        };
-      }
-      // Case 2: Config object without component
-      else if (!('component' in options) || options.component === undefined) {
-        const config = options as ToastShowConfig;
-        normalizedOptions = {
-          id: config.id,
-          component: createConfigToastComponent(config),
-          onShow: config.onShow,
-          onHide: config.onHide,
-        };
-      }
-      // Case 3: Config object with component (existing behavior)
-      else {
-        normalizedOptions = options as ToastShowOptionsWithComponent;
-      }
-
-      const id =
-        normalizedOptions.id ?? `toast-${Date.now()}-${idCounter.current++}`;
-
-      dispatch({
-        type: 'SHOW',
-        payload: {
-          id,
-          component: normalizedOptions.component,
-          onShow: normalizedOptions.onShow,
-          onHide: normalizedOptions.onHide,
-        },
-      });
-
-      total.set((value) => value + 1);
-
-      if (normalizedOptions.onShow) {
-        normalizedOptions.onShow();
-      }
-
-      return id;
-    },
-    [total]
+  const timeoutRefs = useRef<Map<string, NodeJS.Timeout>>(new Map());
+  const hideRef = useRef<((ids?: string | string[] | 'all') => void) | null>(
+    null
   );
 
   /**
@@ -148,6 +96,13 @@ export function ToastProvider({
         if (toasts.length > 0) {
           const lastToast = toasts[toasts.length - 1];
           if (!lastToast) return;
+
+          // Clear timeout if exists
+          const timeout = timeoutRefs.current.get(lastToast.id);
+          if (timeout) {
+            clearTimeout(timeout);
+            timeoutRefs.current.delete(lastToast.id);
+          }
 
           if (lastToast.onHide) {
             lastToast.onHide();
@@ -168,6 +123,12 @@ export function ToastProvider({
           total.set((value) => value - 1);
         }
       } else if (ids === 'all') {
+        // Clear all timeouts
+        timeoutRefs.current.forEach((timeout) => {
+          clearTimeout(timeout);
+        });
+        timeoutRefs.current.clear();
+
         // Hide all toasts - call onHide for each toast before hiding
         toasts.forEach((toast) => {
           if (toast.onHide) {
@@ -183,8 +144,15 @@ export function ToastProvider({
         const idsToRemove = idsArray;
         let removedCount = 0;
 
-        // Find and call onHide callbacks before removing
+        // Find and call onHide callbacks before removing, and clear timeouts
         idsToRemove.forEach((id) => {
+          // Clear timeout if exists
+          const timeout = timeoutRefs.current.get(id);
+          if (timeout) {
+            clearTimeout(timeout);
+            timeoutRefs.current.delete(id);
+          }
+
           const toast = toasts.find((t) => String(t.id) === String(id));
           if (toast) {
             removedCount++;
@@ -214,6 +182,97 @@ export function ToastProvider({
       }
     },
     [total, heights, toasts]
+  );
+
+  // Keep hide ref up to date
+  hideRef.current = hide;
+
+  /**
+   * Show a toast
+   * Supports three usage patterns:
+   * 1. Simple string: toast.show('This is toast')
+   * 2. Config object: toast.show({ label, variant, ... })
+   * 3. Custom component: toast.show({ component: (props) => <Toast>...</Toast> })
+   */
+  const show = useCallback(
+    (options: string | ToastShowOptions): string => {
+      let normalizedOptions: ToastShowOptionsWithComponent;
+      let duration: number | 'persistent' | undefined = DEFAULT_DURATION; // Default duration
+
+      // Case 1: Simple string
+      if (typeof options === 'string') {
+        normalizedOptions = {
+          id: undefined,
+          component: createStringToastComponent(options),
+          duration: DEFAULT_DURATION,
+        };
+        duration = DEFAULT_DURATION;
+      }
+      // Case 2: Config object without component
+      else if (!('component' in options) || options.component === undefined) {
+        const config = options as ToastShowConfig;
+        duration = config.duration ?? DEFAULT_DURATION;
+        normalizedOptions = {
+          id: config.id,
+          component: createConfigToastComponent(config),
+          duration,
+          onShow: config.onShow,
+          onHide: config.onHide,
+        };
+      }
+      // Case 3: Config object with component (existing behavior)
+      else {
+        normalizedOptions = options as ToastShowOptionsWithComponent;
+        duration = normalizedOptions.duration ?? DEFAULT_DURATION;
+      }
+
+      const id =
+        normalizedOptions.id ?? `toast-${Date.now()}-${idCounter.current++}`;
+
+      dispatch({
+        type: 'SHOW',
+        payload: {
+          id,
+          component: normalizedOptions.component,
+          duration,
+          onShow: normalizedOptions.onShow,
+          onHide: normalizedOptions.onHide,
+        },
+      });
+
+      total.set((value) => value + 1);
+
+      if (normalizedOptions.onShow) {
+        normalizedOptions.onShow();
+      }
+
+      // Set up auto-dismiss timeout synchronously
+      if (
+        duration !== 'persistent' &&
+        typeof duration === 'number' &&
+        !isNaN(duration) &&
+        duration > 0 &&
+        duration !== Infinity
+      ) {
+        // Handle immediate dismissal
+        if (duration === 0) {
+          if (hideRef.current) {
+            hideRef.current(id);
+          }
+        } else {
+          const timeout = setTimeout(() => {
+            if (hideRef.current) {
+              hideRef.current(id);
+            }
+            timeoutRefs.current.delete(id);
+          }, duration);
+          timeoutRefs.current.set(id, timeout);
+        }
+      }
+
+      return id;
+    },
+    [total]
   );
 
   const contextValue = useMemo<ToasterContextValue>(

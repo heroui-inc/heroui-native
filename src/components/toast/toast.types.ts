@@ -6,7 +6,10 @@ import type {
 import type { ViewRef } from '../../helpers/types';
 import type { Animation, AnimationValue } from '../../helpers/types/animation';
 import type * as ToastPrimitive from '../../primitives/toast';
-import type { ToastComponentProps } from '../../providers/toast';
+import type {
+  ToastComponentProps,
+  ToastShowOptions,
+} from '../../providers/toast';
 import type { ButtonRootProps } from '../button';
 
 /**
@@ -122,12 +125,6 @@ export interface ToastRootProps
    */
   placement?: ToastPlacement;
   /**
-   * Duration in milliseconds before the toast automatically disappears
-   * Set to `'persistent'` to prevent auto-hide (toast will remain until manually dismissed)
-   * @default 4000
-   */
-  duration?: number | 'persistent';
-  /**
    * Additional CSS class for the toast container
    */
   className?: string;
@@ -225,3 +222,44 @@ export type UseToastRootAnimationOptions = Pick<
   Pick<ToastComponentProps, 'id'> & {
     style: ViewStyle | undefined;
   };
+
+/**
+ * Props for the DefaultToast component
+ * Used internally when showing toasts with string or config object (without component)
+ */
+export interface DefaultToastProps extends ToastComponentProps {
+  /**
+   * Visual variant of the toast
+   * @default 'default'
+   */
+  variant?: ToastRootProps['variant'];
+  /**
+   * Placement of the toast
+   * @default 'top'
+   */
+  placement?: ToastRootProps['placement'];
+  /**
+   * Whether the toast can be swiped to dismiss and dragged with rubber effect
+   */
+  isSwipeable?: ToastRootProps['isSwipeable'];
+  /**
+   * Label text for the toast
+   */
+  label?: string;
+  /**
+   * Description text for the toast
+   */
+  description?: string;
+  /**
+   * Action button label text
+   */
+  actionLabel?: string;
+  /**
+   * Callback function called when the action button is pressed
+   * Receives show and hide functions for programmatic toast control
+   */
+  onActionPress?: (helpers: {
+    show: (options: string | ToastShowOptions) => string;
+    hide: (ids?: string | string[] | 'all') => void;
+  }) => void;
+}

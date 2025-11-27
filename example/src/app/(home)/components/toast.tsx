@@ -80,12 +80,7 @@ const MyToast1 = (props: ToastComponentProps) => {
   const { id, hide } = props;
 
   return (
-    <Toast
-      variant="success"
-      duration="persistent"
-      className="flex-row items-center gap-3"
-      {...props}
-    >
+    <Toast variant="success" className="flex-row items-center gap-3" {...props}>
       <View className="flex-1">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>
@@ -101,12 +96,7 @@ const MyToast2 = (props: ToastComponentProps) => {
   const { id, hide } = props;
 
   return (
-    <Toast
-      variant="success"
-      duration="persistent"
-      className="flex-row items-center gap-3"
-      {...props}
-    >
+    <Toast variant="success" className="flex-row items-center gap-3" {...props}>
       <View className="flex-1">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>
@@ -124,12 +114,7 @@ const MyToast3 = (props: ToastComponentProps) => {
   const { id, hide } = props;
 
   return (
-    <Toast
-      variant="warning"
-      duration="persistent"
-      className="flex-row items-center gap-3"
-      {...props}
-    >
+    <Toast variant="warning" className="flex-row items-center gap-3" {...props}>
       <View className="flex-1">
         <Toast.Label>{id}</Toast.Label>
         <Toast.Description>
@@ -166,6 +151,7 @@ const InteractiveDemoContent = () => {
         <Button
           onPress={() =>
             toast.show({
+              duration: 5000,
               component: _renderToast1,
             })
           }
@@ -177,6 +163,7 @@ const InteractiveDemoContent = () => {
         <Button
           onPress={() => {
             toast.show({
+              duration: 5000,
               component: _renderToast2,
             });
           }}
@@ -188,6 +175,7 @@ const InteractiveDemoContent = () => {
         <Button
           onPress={() => {
             toast.show({
+              duration: 5000,
               component: _renderToast3,
             });
           }}

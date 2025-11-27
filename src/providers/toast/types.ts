@@ -95,10 +95,13 @@ export interface ToastComponentProps {
  * Used when component is not provided
  */
 export interface ToastShowConfig
-  extends Pick<
-    ToastRootProps,
-    'variant' | 'placement' | 'duration' | 'isSwipeable'
-  > {
+  extends Pick<ToastRootProps, 'variant' | 'placement' | 'isSwipeable'> {
+  /**
+   * Duration in milliseconds before the toast automatically disappears
+   * Set to `'persistent'` to prevent auto-hide (toast will remain until manually dismissed)
+   * @default 4000
+   */
+  duration?: number | 'persistent';
   /**
    * Optional ID for the toast
    * If not provided, one will be generated automatically
@@ -149,6 +152,12 @@ export interface ToastShowOptionsWithComponent {
    */
   component: (props: ToastComponentProps) => React.ReactElement;
   /**
+   * Duration in milliseconds before the toast automatically disappears
+   * Set to `'persistent'` to prevent auto-hide (toast will remain until manually dismissed)
+   * @default 4000
+   */
+  duration?: number | 'persistent';
+  /**
    * Callback function called when the toast is shown
    */
   onShow?: () => void;
@@ -179,6 +188,12 @@ export interface ToastItem {
    * A function that receives toast props and returns a React element
    */
   component: (props: ToastComponentProps) => React.ReactElement;
+  /**
+   * Duration in milliseconds before the toast automatically disappears
+   * Set to `'persistent'` to prevent auto-hide (toast will remain until manually dismissed)
+   * @default 4000
+   */
+  duration?: number | 'persistent';
   /**
    * Callback function called when the toast is shown
    */

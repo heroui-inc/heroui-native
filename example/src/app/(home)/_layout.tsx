@@ -144,6 +144,13 @@ export default function Layout() {
             animationDuration: 300,
           }}
         />
+        <Stack.Screen
+          name="components/toast-native-modal"
+          options={{
+            title: 'Toast From Native Modal',
+            presentation: 'formSheet',
+          }}
+        />
       </Stack>
     </View>
   );

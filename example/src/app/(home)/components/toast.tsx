@@ -1,5 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import Octicons from '@expo/vector-icons/Octicons';
+import { useRouter } from 'expo-router';
 import { Button, useToast, type ToastComponentProps } from 'heroui-native';
 import { useCallback, useRef, useState } from 'react';
 import { TextInput, View } from 'react-native';
@@ -255,6 +256,23 @@ const KeyboardAvoidingContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const FromNativeModalContent = () => {
+  const router = useRouter();
+
+  return (
+    <View className="flex-1 items-center justify-center px-5 gap-5">
+      <Button
+        variant="secondary"
+        onPress={() => router.push('components/toast-native-modal')}
+      >
+        Open modal
+      </Button>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const CustomToastsContent = () => {
   const { toast } = useToast();
   const LOADING_TOAST_ID = 'loading-toast';
@@ -410,6 +428,11 @@ const TOAST_VARIANTS: UsageVariant[] = [
     value: 'keyboard-avoiding',
     label: 'Keyboard avoiding',
     content: <KeyboardAvoidingContent />,
+  },
+  {
+    value: 'from-native-modal',
+    label: 'From native modal',
+    content: <FromNativeModalContent />,
   },
   {
     value: 'custom-toasts',

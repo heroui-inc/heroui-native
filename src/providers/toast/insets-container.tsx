@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import { Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FullWindowOverlay } from 'react-native-screens';
 import type { ToastInsets } from './types';
 
 interface InsetsContainerProps {
@@ -53,21 +54,21 @@ export function InsetsContainer({
     };
   }, [safeAreaInsets, insets]);
 
+  const WindowOverlay = Platform.OS === 'ios' ? FullWindowOverlay : Fragment;
+
   return (
-    <View
-      className="absolute inset-0 pointer-events-box-none"
-      style={{
-        paddingTop: finalInsets.top,
-        paddingBottom: finalInsets.bottom,
-        paddingLeft: finalInsets.left,
-        paddingRight: finalInsets.right,
-      }}
-    >
-      {contentWrapper ? (
-        contentWrapper(children)
-      ) : (
-        <View className="flex-1">{children}</View>
-      )}
-    </View>
+    <WindowOverlay>
+      <View
+        className="absolute inset-0 pointer-events-box-none"
+        style={{
+          paddingTop: finalInsets.top,
+          paddingBottom: finalInsets.bottom,
+          paddingLeft: finalInsets.left,
+          paddingRight: finalInsets.right,
+        }}
+      >
+        {contentWrapper ? contentWrapper(children) : children}
+      </View>
+    </WindowOverlay>
   );
 }

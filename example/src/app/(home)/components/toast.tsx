@@ -6,6 +6,7 @@ import { View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { AchievementToast } from '../../../components/toast/achievement-toast';
 import {
   LoadingToast,
   useLoadingState,
@@ -239,6 +240,10 @@ const CustomToastsContent = () => {
     return <ProgressToast {...props} />;
   }, []);
 
+  const renderAchievementToast = useCallback((props: ToastComponentProps) => {
+    return <AchievementToast {...props} />;
+  }, []);
+
   const handleShowLoadingToast = async () => {
     /**
      * Set loading to true and show toast
@@ -310,6 +315,19 @@ const CustomToastsContent = () => {
         isDisabled={isDisabled}
       >
         Start upload
+      </Button>
+
+      <Button
+        variant="secondary"
+        onPress={() => {
+          toast.show({
+            id: 'achievement-toast',
+            duration: 'persistent',
+            component: renderAchievementToast,
+          });
+        }}
+      >
+        Show achievement toast
       </Button>
 
       <Button onPress={() => toast.hide('all')} variant="destructive-soft">

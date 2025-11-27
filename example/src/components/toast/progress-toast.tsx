@@ -104,12 +104,11 @@ export const ProgressToast = (props: ToastComponentProps) => {
     <Toast
       // @ts-ignore
       layout={LinearTransition.springify().mass(2)}
-      className="w-full overflow-hidden"
       isSwipeable={false}
       {...props}
     >
       <View className="flex-col gap-2 px-4 py-3">
-        <Toast.Label className="text-sm mb-4">
+        <Toast.Label className="text-sm mb-2">
           {progress < 100
             ? `Uploading... ${Math.round(progress)}%`
             : 'Upload complete!'}
@@ -120,7 +119,6 @@ export const ProgressToast = (props: ToastComponentProps) => {
             style={progressBarStyle}
           />
         </View>
-        <Toast.Close className="absolute right-0 top-1.5" />
       </View>
     </Toast>
   );

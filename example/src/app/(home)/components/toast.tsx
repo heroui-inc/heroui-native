@@ -134,6 +134,61 @@ const DefaultVariantsContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const DifferentContentSizesContent = () => {
+  const { toast } = useToast();
+
+  return (
+    <View className="flex-1 items-center justify-center px-5 gap-5">
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.show({
+            variant: 'default',
+            label: 'New message',
+            description: 'Sarah sent you a message',
+            actionLabel: 'Close',
+            onActionPress: ({ hide }) => hide(),
+          })
+        }
+      >
+        Small toast
+      </Button>
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.show({
+            variant: 'success',
+            label: 'Payment successful',
+            description:
+              'Your subscription has been renewed. You will be charged $9.99/month. Thank you for your continued support.',
+            actionLabel: 'Close',
+            onActionPress: ({ hide }) => hide(),
+          })
+        }
+      >
+        Medium toast
+      </Button>
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.show({
+            variant: 'success',
+            label: 'Backup completed successfully',
+            description:
+              'All your files have been backed up to the cloud. You can now access them from any device. The backup includes 1,234 files totaling 2.5 GB. Your data is safe and secure. The next backup will run automatically in 24 hours.',
+            actionLabel: 'Close',
+            onActionPress: ({ hide }) => hide(),
+          })
+        }
+      >
+        Large toast
+      </Button>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const MyToast1 = (props: ToastComponentProps) => {
   const { id, hide } = props;
 
@@ -363,6 +418,11 @@ const TOAST_VARIANTS: UsageVariant[] = [
     value: 'default-variants',
     label: 'Default Variants',
     content: <DefaultVariantsContent />,
+  },
+  {
+    value: 'different-content-sizes',
+    label: 'Different Content Sizes',
+    content: <DifferentContentSizesContent />,
   },
   {
     value: 'interactive-demo',

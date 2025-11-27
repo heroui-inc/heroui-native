@@ -199,6 +199,7 @@ export function ToastProvider({
     (options: string | ToastShowOptions): string => {
       let normalizedOptions: ToastShowOptionsWithComponent;
       let duration: number | 'persistent' | undefined = DEFAULT_DURATION; // Default duration
+      let explicitId: string | undefined;
 
       // Case 1: Simple string
       if (typeof options === 'string') {
@@ -208,11 +209,13 @@ export function ToastProvider({
           duration: DEFAULT_DURATION,
         };
         duration = DEFAULT_DURATION;
+        explicitId = undefined;
       }
       // Case 2: Config object without component
       else if (!('component' in options) || options.component === undefined) {
         const config = options as ToastShowConfig;
         duration = config.duration ?? DEFAULT_DURATION;
+        explicitId = config.id;
         normalizedOptions = {
           id: config.id,
           component: createConfigToastComponent(config),
@@ -225,10 +228,22 @@ export function ToastProvider({
       else {
         normalizedOptions = options as ToastShowOptionsWithComponent;
         duration = normalizedOptions.duration ?? DEFAULT_DURATION;
+        explicitId = normalizedOptions.id;
       }
 
       const id =
         normalizedOptions.id ?? `toast-${Date.now()}-${idCounter.current++}`;
+
+      // If an explicit ID was provided, check if a toast with that ID already exists
+      // If it exists, skip adding a new toast and return the existing ID
+      if (explicitId !== undefined) {
+        const existingToast = toasts.find(
+          (toast) => String(toast.id) === String(explicitId)
+        );
+        if (existingToast) {
+          return existingToast.id;
+        }
+      }
 
       dispatch({
         type: 'SHOW',
@@ -273,7 +288,7 @@ export function ToastProvider({
 
       return id;
     },
-    [total]
+    [total, toasts]
   );
 
   const contextValue = useMemo<ToasterContextValue>(

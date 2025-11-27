@@ -377,7 +377,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
     );
 
     return {
-      opacity: withTiming(opacity, { duration: 150 }),
+      opacity: withTiming(opacity, { duration: 50 }),
     };
   });
 

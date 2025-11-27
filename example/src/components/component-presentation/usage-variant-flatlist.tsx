@@ -123,7 +123,7 @@ export const UsageVariantFlatList = ({
     onScroll: (event) => {
       scrollY.set(event.contentOffset.y);
       if (isToastVisible) {
-        scheduleOnRN(toast.hide);
+        scheduleOnRN(toast.hide, 'all');
       }
     },
   });

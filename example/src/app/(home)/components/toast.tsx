@@ -10,6 +10,10 @@ import {
   LoadingToast,
   useLoadingState,
 } from '../../../components/toast/loading-toast';
+import {
+  ProgressToast,
+  useProgressState,
+} from '../../../components/toast/progress-toast';
 
 const StyledFeather = withUniwind(Feather);
 const StyledOcticons = withUniwind(Octicons);
@@ -196,8 +200,10 @@ const DifferentContentSizesContent = () => {
 
 const CustomToastsContent = () => {
   const { toast } = useToast();
-  const TOAST_ID = 'loading-toast';
+  const LOADING_TOAST_ID = 'loading-toast';
+  const PROGRESS_TOAST_ID = 'progress-toast';
   const { isLoading, setIsLoading } = useLoadingState();
+  const { progress, setProgress, resetProgress } = useProgressState();
 
   /**
    * Simulates loading data (e.g., API call, file upload, etc.)
@@ -210,8 +216,27 @@ const CustomToastsContent = () => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
   };
 
+  /**
+   * Simulates file upload with progress updates
+   * In a real app, this would be an actual upload operation with progress callbacks
+   */
+  const simulateUpload = async (): Promise<void> => {
+    resetProgress();
+    const totalSteps = 100;
+    const stepDuration = 30; // milliseconds per step
+
+    for (let i = 0; i <= totalSteps; i++) {
+      await new Promise((resolve) => setTimeout(resolve, stepDuration));
+      setProgress(i);
+    }
+  };
+
   const renderLoadingToast = useCallback((props: ToastComponentProps) => {
     return <LoadingToast {...props} />;
+  }, []);
+
+  const renderProgressToast = useCallback((props: ToastComponentProps) => {
+    return <ProgressToast {...props} />;
   }, []);
 
   const handleShowLoadingToast = async () => {
@@ -220,7 +245,7 @@ const CustomToastsContent = () => {
      */
     setIsLoading(true);
     toast.show({
-      id: TOAST_ID,
+      id: LOADING_TOAST_ID,
       duration: 'persistent',
       component: renderLoadingToast,
     });
@@ -243,14 +268,48 @@ const CustomToastsContent = () => {
     }
   };
 
+  const handleShowProgressToast = async () => {
+    /**
+     * Reset progress and show toast
+     */
+    resetProgress();
+    toast.show({
+      id: PROGRESS_TOAST_ID,
+      duration: 'persistent',
+      component: renderProgressToast,
+    });
+
+    try {
+      /**
+       * Simulate the upload operation with progress updates
+       */
+      await simulateUpload();
+    } catch (error) {
+      /**
+       * Handle errors if needed
+       */
+      console.error('Failed to upload:', error);
+    }
+  };
+
+  const isDisabled = isLoading || (progress > 0 && progress < 100);
+
   return (
     <View className="flex-1 items-center justify-center px-5 gap-5">
       <Button
         variant="secondary"
         onPress={handleShowLoadingToast}
-        isDisabled={isLoading}
+        isDisabled={isDisabled}
       >
-        {isLoading ? 'Loading...' : 'Load data'}
+        Load data
+      </Button>
+
+      <Button
+        variant="secondary"
+        onPress={handleShowProgressToast}
+        isDisabled={isDisabled}
+      >
+        Start upload
       </Button>
 
       <Button onPress={() => toast.hide('all')} variant="destructive-soft">

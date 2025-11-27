@@ -81,8 +81,10 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   const contextValue = useMemo(
     () => ({
       variant,
+      hide,
+      id,
     }),
-    [variant]
+    [variant, hide, id]
   );
 
   return (
@@ -249,7 +251,29 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
 // --------------------------------------------------
 
 const ToastClose = forwardRef<View, ToastCloseProps>((props, ref) => {
-  const { children, iconProps, size = 'sm', className, ...restProps } = props;
+  const {
+    children,
+    iconProps,
+    size = 'sm',
+    className,
+    onPress,
+    ...restProps
+  } = props;
+  const { hide, id } = useToast();
+
+  /**
+   * Handle close button press
+   * If hide and id are available from context, use them to hide the toast
+   * Otherwise, use the provided onPress handler
+   */
+  const handlePress = (event: any) => {
+    if (hide && id) {
+      hide(id);
+    }
+    if (onPress && typeof onPress === 'function') {
+      onPress(event);
+    }
+  };
 
   return (
     <Button
@@ -259,6 +283,7 @@ const ToastClose = forwardRef<View, ToastCloseProps>((props, ref) => {
       isIconOnly
       aria-label="Close"
       className={className}
+      onPress={handlePress}
       {...restProps}
     >
       {children ?? (

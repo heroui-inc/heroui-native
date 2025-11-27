@@ -6,23 +6,15 @@ import {
   useThemeColor,
   type ToastComponentProps,
 } from 'heroui-native';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { View } from 'react-native';
 import { LinearTransition } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
+import { useSharedState } from './use-shared-state';
 
 const StyledFeather = withUniwind(Feather);
 
-/**
- * Shared loading state management
- *
- * Why we need this:
- * - The toast component is rendered via a memoized callback that doesn't depend on isLoading
- * - When parent updates loading state, the toast component needs to be notified to re-render
- * - We use sharedLoadingState to track current value and listeners to notify components
- */
-let sharedLoadingState = false;
-const loadingStateListeners = new Set<(loading: boolean) => void>();
+const LOADING_STATE_KEY = 'loading-toast-state';
 
 /**
  * Hook to access and update shared loading state
@@ -32,45 +24,10 @@ const loadingStateListeners = new Set<(loading: boolean) => void>();
  * with the new loading state, even if they're memoized or rendered separately
  */
 export const useLoadingState = () => {
-  /**
-   * Initialize state from shared value (important if component mounts after loading starts)
-   */
-  const [isLoading, setIsLoadingState] = useState(() => sharedLoadingState);
-
-  useEffect(() => {
-    /**
-     * Subscribe to loading state changes
-     * When setIsLoading is called elsewhere, this component will update
-     */
-    const updateState = (loading: boolean) => {
-      setIsLoadingState(loading);
-    };
-
-    /**
-     * Sync with current shared state immediately (important if component mounts after state was set)
-     */
-    setIsLoadingState(sharedLoadingState);
-
-    /**
-     * Add listener to receive future updates
-     */
-    loadingStateListeners.add(updateState);
-
-    /**
-     * Cleanup listener on unmount
-     */
-    return () => {
-      loadingStateListeners.delete(updateState);
-    };
-  }, []);
-
-  /**
-   * Set loading state and notify all listeners (all components using this hook)
-   */
-  const setIsLoading = useCallback((loading: boolean) => {
-    sharedLoadingState = loading;
-    loadingStateListeners.forEach((listener) => listener(loading));
-  }, []);
+  const { state: isLoading, setState: setIsLoading } = useSharedState<boolean>(
+    LOADING_STATE_KEY,
+    false
+  );
 
   return { isLoading, setIsLoading };
 };
@@ -102,6 +59,7 @@ export const LoadingToast = (props: ToastComponentProps) => {
         'mx-auto flex-row items-center gap-3 rounded-full p-1',
         isLoading ? 'w-[115px]' : 'w-[185px]'
       )}
+      isSwipeable={false}
       {...props}
     >
       <View className="flex-1 flex-row items-center gap-2">

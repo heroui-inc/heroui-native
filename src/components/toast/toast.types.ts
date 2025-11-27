@@ -203,6 +203,14 @@ export interface ToastContextValue {
    * Visual variant of the toast
    */
   variant: ToastVariant;
+  /**
+   * Function to hide the toast
+   */
+  hide?: (ids?: string | string[] | 'all') => void;
+  /**
+   * ID of the toast
+   */
+  id?: string;
 }
 
 /**

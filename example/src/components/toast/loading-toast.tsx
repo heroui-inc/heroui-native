@@ -56,7 +56,7 @@ export const LoadingToast = (props: ToastComponentProps) => {
       // @ts-ignore
       layout={LinearTransition.springify().mass(2)}
       className={cn(
-        'mx-auto flex-row items-center gap-3 rounded-full p-1',
+        'mx-auto flex-row items-center gap-3 rounded-full border-[4px]',
         isLoading ? 'w-[115px]' : 'w-[185px]'
       )}
       isSwipeable={false}

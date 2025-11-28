@@ -366,27 +366,6 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
     };
   });
 
-  const rOverlayStyle = useAnimatedStyle(() => {
-    const totalValue = total.get();
-    const isLastToast = index === totalValue - 1;
-
-    if (isAnimationDisabled) {
-      return {
-        opacity: isLastToast ? 0 : 1,
-      };
-    }
-
-    const opacity = interpolate(
-      index,
-      [totalValue - 1, totalValue - 2],
-      [0, 1]
-    );
-
-    return {
-      opacity: withTiming(opacity, { duration: 50 }),
-    };
-  });
-
   // Determine entering and exiting animations based on placement
   const enteringAnimation =
     placement === 'top' ? enteringTopValue : enteringBottomValue;
@@ -395,7 +374,6 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
 
   return {
     rContainerStyle,
-    rOverlayStyle,
     isAnimationDisabled,
     entering: isAnimationDisabled ? undefined : enteringAnimation,
     exiting: isAnimationDisabled ? undefined : exitingAnimation,

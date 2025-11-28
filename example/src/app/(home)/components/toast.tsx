@@ -1,12 +1,19 @@
+import Entypo from '@expo/vector-icons/Entypo';
 import Feather from '@expo/vector-icons/Feather';
 import Octicons from '@expo/vector-icons/Octicons';
 import { useRouter } from 'expo-router';
-import { Button, useToast, type ToastComponentProps } from 'heroui-native';
+import {
+  Button,
+  useThemeColor,
+  useToast,
+  type ToastComponentProps,
+} from 'heroui-native';
 import { useCallback, useRef, useState } from 'react';
 import { TextInput, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { Logo } from '../../../components/logo';
 import { AchievementToast } from '../../../components/toast/achievement-toast';
 import {
   LoadingToast,
@@ -19,11 +26,13 @@ import {
 
 const StyledFeather = withUniwind(Feather);
 const StyledOcticons = withUniwind(Octicons);
+const StyledEntypo = withUniwind(Entypo);
 
 // ------------------------------------------------------------------------------
 
 const DefaultVariantsContent = () => {
   const { toast } = useToast();
+  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <View className="flex-1 items-center justify-center px-5 gap-5">
@@ -33,13 +42,16 @@ const DefaultVariantsContent = () => {
           toast.show({
             variant: 'default',
             label: 'Join a team',
-            description: 'Junior sent you an invitation to join HeroUI team',
+            description:
+              'Junior Garcia sent you an invitation to join HeroUI team!',
             icon: (
-              <StyledFeather
-                name="users"
-                size={15}
-                className="text-foreground mt-[3px]"
-              />
+              <View className="mt-0.5">
+                <Logo
+                  themeColorForeground={themeColorForeground}
+                  width={15}
+                  height={20.77}
+                />
+              </View>
             ),
             actionLabel: 'Close',
             onActionPress: ({ hide }) => hide(),
@@ -56,8 +68,8 @@ const DefaultVariantsContent = () => {
             label: 'You have 2 credits left',
             description: 'Get a paid plan for more credits',
             icon: (
-              <StyledFeather
-                name="info"
+              <StyledEntypo
+                name="info-with-circle"
                 size={18}
                 className="text-accent mt-0.5"
               />
@@ -79,8 +91,8 @@ const DefaultVariantsContent = () => {
             icon: (
               <StyledOcticons
                 name="shield-check"
-                size={18}
-                className="text-success mt-0.5"
+                size={16}
+                className="text-success mt-[3px]"
               />
             ),
             actionLabel: 'Close',
@@ -100,8 +112,8 @@ const DefaultVariantsContent = () => {
             icon: (
               <StyledOcticons
                 name="shield"
-                size={18}
-                className="text-warning mt-0.5"
+                size={16}
+                className="text-warning mt-[3px]"
               />
             ),
             actionLabel: 'Close',
@@ -157,8 +169,8 @@ const PlacementVariantsContent = () => {
       icon: (
         <StyledOcticons
           name="shield-check"
-          size={18}
-          className="text-success mt-0.5"
+          size={16}
+          className="text-success mt-[3px]"
         />
       ),
       actionLabel: 'Close',
@@ -174,8 +186,8 @@ const PlacementVariantsContent = () => {
       icon: (
         <StyledOcticons
           name="shield"
-          size={18}
-          className="text-warning mt-0.5"
+          size={16}
+          className="text-warning mt-[3px]"
         />
       ),
       actionLabel: 'Close',
@@ -294,21 +306,33 @@ const KeyboardAvoidingContent = () => {
 
   const inputRef = useRef<TextInput>(null);
 
+  const themeColorForeground = useThemeColor('foreground');
+
   return (
     <View className="flex-1 items-center justify-center px-5 gap-5">
       <Button
         variant="secondary"
         onPress={() => {
           toast.show({
-            variant: 'success',
-            duration: 'persistent',
+            id: 'keyboard-avoiding-toast',
+            variant: 'default',
             placement: 'bottom',
-            label: 'Payment successful',
+            duration: 'persistent',
+            label: 'Join a team',
             description:
-              'Your subscription has been renewed. You will be charged $9.99/month. Thank you for your continued support.',
+              'Junior Garcia sent you an invitation to join HeroUI team!',
+            icon: (
+              <View className="mt-0.5">
+                <Logo
+                  themeColorForeground={themeColorForeground}
+                  width={15}
+                  height={20.77}
+                />
+              </View>
+            ),
             actionLabel: 'Close',
-            onActionPress: ({ hide }) => {
-              hide();
+            onActionPress: ({ hide }) => hide(),
+            onHide: () => {
               inputRef.current?.blur();
             },
           });
@@ -464,6 +488,19 @@ const CustomToastsContent = () => {
     <View className="flex-1 items-center justify-center px-5 gap-5">
       <Button
         variant="secondary"
+        onPress={() => {
+          toast.show({
+            id: 'achievement-toast',
+            duration: 'persistent',
+            component: renderAchievementToast,
+          });
+        }}
+      >
+        Achievement toast
+      </Button>
+
+      <Button
+        variant="secondary"
         onPress={handleShowLoadingToast}
         isDisabled={isDisabled}
       >
@@ -476,19 +513,6 @@ const CustomToastsContent = () => {
         isDisabled={isDisabled}
       >
         Start upload
-      </Button>
-
-      <Button
-        variant="secondary"
-        onPress={() => {
-          toast.show({
-            id: 'achievement-toast',
-            duration: 'persistent',
-            component: renderAchievementToast,
-          });
-        }}
-      >
-        Show achievement toast
       </Button>
 
       <Button onPress={() => toast.hide('all')} variant="destructive-soft">

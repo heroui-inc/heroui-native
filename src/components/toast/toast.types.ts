@@ -3,7 +3,6 @@ import type {
   EntryOrExitLayoutType,
   WithTimingConfig,
 } from 'react-native-reanimated';
-import type { ElementSlots } from '../../helpers/theme/types';
 import type { ViewRef } from '../../helpers/types';
 import type { Animation, AnimationValue } from '../../helpers/types/animation';
 import type * as ToastPrimitive from '../../primitives/toast';
@@ -12,7 +11,6 @@ import type {
   ToastShowOptions,
 } from '../../providers/toast';
 import type { ButtonRootProps } from '../button';
-import type { ToastRootSlots } from './toast.styles';
 
 /**
  * Toast variant types
@@ -130,10 +128,6 @@ export interface ToastRootProps
    * Additional CSS class for the toast container
    */
   className?: string;
-  /**
-   * Additional CSS classes for different parts of the toast root
-   */
-  classNames?: ElementSlots<ToastRootSlots>;
   /**
    * Animation configuration for toast
    * - `false` or `"disabled"`: Disable only root animations

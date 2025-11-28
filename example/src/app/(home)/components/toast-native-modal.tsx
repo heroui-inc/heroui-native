@@ -1,8 +1,11 @@
-import { Button, useToast } from 'heroui-native';
+import { Button, useThemeColor, useToast } from 'heroui-native';
 import { View } from 'react-native';
+import { Logo } from '../../../components/logo';
 
 export default function ToastNativeModalScreen() {
   const { toast } = useToast();
+
+  const themeColorForeground = useThemeColor('foreground');
 
   return (
     <View className="pt-40 px-5 items-center justify-center gap-5">
@@ -11,15 +14,21 @@ export default function ToastNativeModalScreen() {
         className="self-center"
         onPress={() => {
           toast.show({
-            variant: 'success',
-            duration: 2000,
-            label: 'Payment successful',
+            variant: 'default',
+            label: 'Join a team',
             description:
-              'Your subscription has been renewed. You will be charged $9.99/month. Thank you for your continued support.',
+              'Junior Garcia sent you an invitation to join HeroUI team!',
+            icon: (
+              <View className="mt-0.5">
+                <Logo
+                  themeColorForeground={themeColorForeground}
+                  width={15}
+                  height={20.77}
+                />
+              </View>
+            ),
             actionLabel: 'Close',
-            onActionPress: ({ hide }) => {
-              hide();
-            },
+            onActionPress: ({ hide }) => hide(),
           });
         }}
       >

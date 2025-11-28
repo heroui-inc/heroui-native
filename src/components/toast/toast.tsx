@@ -42,7 +42,6 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     heights,
     maxVisibleToasts,
     className,
-    classNames,
     style,
     animation,
     isSwipeable,
@@ -54,17 +53,11 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   const toastProps = props as ToastRootProps & Pick<ToastComponentProps, 'id'>;
   const { id } = toastProps;
 
-  const { container, overlay } = toastStyles.root();
-
-  const containerStyles = container({
-    className: [className, classNames?.container],
+  const containerStyles = toastStyles.root({
+    className,
   });
 
-  const overlayStyles = overlay({
-    className: classNames?.overlay,
-  });
-
-  const { rContainerStyle, rOverlayStyle, entering, exiting, panGesture } =
+  const { rContainerStyle, entering, exiting, panGesture } =
     useToastRootAnimation({
       animation,
       style: style as ViewStyle | undefined,
@@ -106,11 +99,6 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
             {...restProps}
           >
             {children}
-            <Animated.View
-              pointerEvents="none"
-              className={overlayStyles}
-              style={rOverlayStyle}
-            />
           </AnimatedToastRoot>
           {/* Static toast instance */}
           <AnimatedToastRoot

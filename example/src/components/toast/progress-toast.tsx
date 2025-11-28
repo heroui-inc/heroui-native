@@ -89,7 +89,8 @@ export const ProgressToast = (props: ToastComponentProps) => {
       };
     }
     return undefined;
-  }, [progress, hide, id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progress, id]);
 
   /**
    * Animated style for progress bar

@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import { Accordion } from 'heroui-native';
+import { usePathname, useRouter } from 'expo-router';
+import { Accordion, useToast } from 'heroui-native';
+import { useEffect } from 'react';
 import { View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
@@ -106,6 +107,16 @@ const components: Component[] = [
 
 export default function App() {
   const router = useRouter();
+  const pathname = usePathname();
+
+  const { toast, isToastVisible } = useToast();
+
+  useEffect(() => {
+    if (isToastVisible && pathname === '/components') {
+      toast.hide('all');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isToastVisible, pathname]);
 
   return (
     <ScreenScrollView contentContainerClassName="px-4">

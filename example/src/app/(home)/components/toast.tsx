@@ -9,7 +9,7 @@ import {
   type ToastComponentProps,
 } from 'heroui-native';
 import { useCallback, useRef, useState } from 'react';
-import { TextInput, View } from 'react-native';
+import { Platform, TextInput, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -524,7 +524,7 @@ const CustomToastsContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const TOAST_VARIANTS: UsageVariant[] = [
+const TOAST_VARIANTS_IOS: UsageVariant[] = [
   {
     value: 'default-variants',
     label: 'Default variants',
@@ -557,6 +557,38 @@ const TOAST_VARIANTS: UsageVariant[] = [
   },
 ];
 
+const TOAST_VARIANTS_ANDROID: UsageVariant[] = [
+  {
+    value: 'default-variants',
+    label: 'Default variants',
+    content: <DefaultVariantsContent />,
+  },
+  {
+    value: 'placement-variants',
+    label: 'Placement variants',
+    content: <PlacementVariantsContent />,
+  },
+  {
+    value: 'different-content-sizes',
+    label: 'Different content sizes',
+    content: <DifferentContentSizesContent />,
+  },
+  {
+    value: 'keyboard-avoiding',
+    label: 'Keyboard avoiding',
+    content: <KeyboardAvoidingContent />,
+  },
+  {
+    value: 'custom-toasts',
+    label: 'Custom toasts',
+    content: <CustomToastsContent />,
+  },
+];
+
 export default function ToastScreen() {
-  return <UsageVariantFlatList data={TOAST_VARIANTS} />;
+  return (
+    <UsageVariantFlatList
+      data={Platform.OS === 'ios' ? TOAST_VARIANTS_IOS : TOAST_VARIANTS_ANDROID}
+    />
+  );
 }

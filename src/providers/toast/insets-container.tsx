@@ -9,7 +9,7 @@ interface InsetsContainerProps {
   /**
    * Optional inset values for all edges
    * If not provided, defaults to platform-specific values:
-   * - iOS: safe area insets + 0px (top/bottom), + 12px (left/right)
+   * - iOS: safe area insets + 0px (top), + 6px (bottom), + 12px (left/right)
    * - Android: safe area insets + 12px (all edges)
    */
   insets?: ToastInsets;
@@ -33,7 +33,7 @@ interface InsetsContainerProps {
  * Combines custom insets with safe area insets:
  * - If custom inset is provided, it overrides safe area + default padding
  * - If not provided, uses platform-specific defaults:
- *   - iOS: safe area inset + 0px for top/bottom, + 12px for left/right
+ *   - iOS: safe area inset + 0px for top, + 6px for bottom, + 12px for left/right
  *   - Android: safe area inset + 12px for all edges
  */
 export function InsetsContainer({

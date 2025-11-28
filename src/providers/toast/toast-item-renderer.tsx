@@ -34,8 +34,8 @@ export const ToastItemRenderer = memo(
     return content;
   },
   (prevProps, nextProps) => {
-    // Only re-render if the toast ID, component reference, index, or total changed
-    // show, hide, and height are stable references, so we don't need to compare them
+    // Only re-render if the toast ID, component reference, or index changed
+    // show, hide, total, and heights are stable references, so we don't need to compare them
     return (
       prevProps.toastItem.id === nextProps.toastItem.id &&
       prevProps.toastItem.component === nextProps.toastItem.component &&

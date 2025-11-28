@@ -385,11 +385,11 @@ const FromNativeModalContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomToastsContent = () => {
-  const { toast } = useToast();
+  const { toast, isToastVisible } = useToast();
   const LOADING_TOAST_ID = 'loading-toast';
   const PROGRESS_TOAST_ID = 'progress-toast';
-  const { isLoading, setIsLoading } = useLoadingState();
-  const { progress, setProgress, resetProgress } = useProgressState();
+  const { setIsLoading } = useLoadingState();
+  const { setProgress, resetProgress } = useProgressState();
 
   /**
    * Simulates loading data (e.g., API call, file upload, etc.)
@@ -482,8 +482,6 @@ const CustomToastsContent = () => {
     }
   };
 
-  const isDisabled = isLoading || (progress > 0 && progress < 100);
-
   return (
     <View className="flex-1 items-center justify-center px-5 gap-5">
       <Button
@@ -495,6 +493,7 @@ const CustomToastsContent = () => {
             component: renderAchievementToast,
           });
         }}
+        isDisabled={isToastVisible}
       >
         Achievement toast
       </Button>
@@ -502,7 +501,7 @@ const CustomToastsContent = () => {
       <Button
         variant="secondary"
         onPress={handleShowLoadingToast}
-        isDisabled={isDisabled}
+        isDisabled={isToastVisible}
       >
         Load data
       </Button>
@@ -510,7 +509,7 @@ const CustomToastsContent = () => {
       <Button
         variant="secondary"
         onPress={handleShowProgressToast}
-        isDisabled={isDisabled}
+        isDisabled={isToastVisible}
       >
         Start upload
       </Button>

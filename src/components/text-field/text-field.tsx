@@ -134,6 +134,8 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       colors: customColors,
       animationConfig,
       isInvalid: localIsInvalid,
+      onFocus,
+      onBlur,
       ...restProps
     } = props;
 
@@ -242,14 +244,14 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       isFocused.set(withTiming(1, timingConfig));
       currentBgColor.set(focusBackground);
       currentBorderColor.set(focusBorder);
-      restProps.onFocus?.(e);
+      onFocus?.(e);
     };
 
     const handleBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
       isFocused.set(withTiming(0, timingConfig));
       currentBgColor.set(blurBackground);
       currentBorderColor.set(blurBorder);
-      restProps.onBlur?.(e);
+      onBlur?.(e);
     };
 
     return (

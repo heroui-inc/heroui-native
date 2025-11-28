@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  v1.0.0-beta.3
+  v1.0.0-beta.4
 </p>
 
 ## Preview App
@@ -183,6 +183,7 @@ export default function MyComponent() {
 - [Switch](./src/components/switch/switch.md)
 - [Tabs](./src/components/tabs/tabs.md)
 - [Text Field](./src/components/text-field/text-field.md)
+- [Toast](./src/components/toast/toast.md)
 
 ## Changelog
 

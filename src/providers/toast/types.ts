@@ -50,7 +50,7 @@ export interface ToastProviderProps {
   /**
    * Insets for spacing from screen edges (added to safe area insets)
    * @default Platform-specific:
-   *   - iOS: { top: 0, bottom: 0, left: 12, right: 12 }
+   *   - iOS: { top: 0, bottom: 6, left: 12, right: 12 }
    *   - Android: { top: 12, bottom: 12, left: 12, right: 12 }
    */
   insets?: ToastInsets;
@@ -129,7 +129,7 @@ export interface ToastComponentProps {
 }
 
 /**
- * Configuration for showing a default styled toast (variant 2)
+ * Configuration for showing a default styled toast (usage pattern 2)
  * Used when component is not provided
  */
 export interface ToastShowConfig
@@ -183,7 +183,7 @@ export interface ToastShowConfig
 }
 
 /**
- * Options for showing a toast with custom component (variant 3)
+ * Options for showing a toast with custom component (usage pattern 3)
  * Used when component is provided
  */
 export interface ToastShowOptionsWithComponent {
@@ -270,10 +270,10 @@ export interface ToastManager {
    * ```tsx
    * const toast = useToast();
    *
-   * // Simple string (variant 1)
+   * // Simple string (usage pattern 1)
    * toast.show('This is toast');
    *
-   * // Config object with default styling (variant 2)
+   * // Config object with default styling (usage pattern 2)
    * toast.show({
    *   label: 'Success!',
    *   description: 'Your action was completed',
@@ -282,7 +282,7 @@ export interface ToastManager {
    *   onActionPress: ({ show, hide }) => hide(),
    * });
    *
-   * // Custom component (variant 3)
+   * // Custom component (usage pattern 3)
    * toast.show({
    *   component: (props) => <Toast>Hello</Toast>,
    * });

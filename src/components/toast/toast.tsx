@@ -111,7 +111,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
           >
             {children}
           </AnimatedToastRoot>
-          {/* Static toast instance */}
+          {/* Hidden toast instance for height measurement */}
           <AnimatedToastRoot
             pointerEvents="none"
             className={cn(containerStyles, 'absolute opacity-0')}

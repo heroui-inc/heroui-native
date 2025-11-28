@@ -6,11 +6,22 @@ type FormFieldAlignIndicator = 'start' | 'end';
 type FormFieldOrientation = 'horizontal' | 'vertical';
 
 /**
+ * Render function props for form field children
+ */
+export type FormFieldRenderProps = Pick<
+  FormFieldBaseProps,
+  'isSelected' | 'isDisabled' | 'isInvalid'
+>;
+
+/**
  * Base FormField props shared between all orientations
  */
-interface FormFieldBaseProps extends AnimatedProps<PressableProps> {
-  /** Content to render inside the form control */
-  children?: React.ReactNode;
+interface FormFieldBaseProps
+  extends Omit<AnimatedProps<PressableProps>, 'children'> {
+  /** Content to render inside the form control, or a render function */
+  children?:
+    | React.ReactNode
+    | ((props: FormFieldRenderProps) => React.ReactNode);
 
   /** Custom class name for the root element */
   className?: string;
@@ -56,17 +67,6 @@ interface FormFieldVerticalProps extends FormFieldBaseProps {
  * Base FormField component props that extend ViewProps
  */
 export type FormFieldProps = FormFieldHorizontalProps | FormFieldVerticalProps;
-
-/**
- * Props for the FormFieldContent component
- */
-export interface FormFieldContentProps extends AnimatedProps<ViewProps> {
-  /** Content to render inside the content container */
-  children?: React.ReactNode;
-
-  /** Custom class name for the content element */
-  className?: string;
-}
 
 /**
  * Props for the FormFieldTitle component

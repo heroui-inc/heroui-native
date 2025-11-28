@@ -313,12 +313,12 @@ export const AccordionWithDepthEffect: FC = () => {
             onSelectedChange={setDepth}
             className="pr-2"
           >
-            <FormField.Content>
+            <View className="flex-shrink-0 flex-1">
               <FormField.Title>Depth</FormField.Title>
               <FormField.Description>
                 Enable depth effect for the accordion
               </FormField.Description>
-            </FormField.Content>
+            </View>
             <FormField.Indicator>
               <Switch />
             </FormField.Indicator>

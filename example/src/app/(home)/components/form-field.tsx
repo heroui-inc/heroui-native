@@ -18,10 +18,10 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   description,
 }) => (
   <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
-    <FormField.Content>
+    <View className="flex-shrink-0 flex-1">
       <FormField.Title>{title}</FormField.Title>
       <FormField.Description>{description}</FormField.Description>
-    </FormField.Content>
+    </View>
     <FormField.Indicator>
       <Switch />
     </FormField.Indicator>
@@ -104,10 +104,10 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
           <Checkbox.Indicator iconProps={{ size: 16 }} />
         </Checkbox>
       </FormField.Indicator>
-      <FormField.Content>
+      <View className="flex-shrink-0 flex-1">
         <FormField.Title>{title}</FormField.Title>
         <FormField.Description>{description}</FormField.Description>
-      </FormField.Content>
+      </View>
     </FormField>
   );
 };
@@ -184,9 +184,9 @@ const InlineFilter: React.FC<InlineFilterProps> = ({
     <FormField.Indicator>
       <Checkbox className="size-5 rounded-md" />
     </FormField.Indicator>
-    <FormField.Content>
+    <View className="flex-shrink-0">
       <FormField.Title>{label}</FormField.Title>
-    </FormField.Content>
+    </View>
   </FormField>
 );
 
@@ -244,12 +244,12 @@ const DisabledStateContent = () => {
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-8 w-full">
         <FormField isSelected={activeSwitch} onSelectedChange={setActiveSwitch}>
-          <FormField.Content>
+          <View className="flex-shrink-0 flex-1">
             <FormField.Title>Two-factor authentication</FormField.Title>
             <FormField.Description>
               Add an extra layer of security to your account
             </FormField.Description>
-          </FormField.Content>
+          </View>
           <FormField.Indicator>
             <Switch />
           </FormField.Indicator>
@@ -260,12 +260,12 @@ const DisabledStateContent = () => {
           onSelectedChange={setDisabledSwitch}
           isDisabled
         >
-          <FormField.Content>
+          <View className="flex-shrink-0 flex-1">
             <FormField.Title>Biometric authentication</FormField.Title>
             <FormField.Description>
               Requires device with fingerprint or face recognition support
             </FormField.Description>
-          </FormField.Content>
+          </View>
           <FormField.Indicator>
             <Switch />
           </FormField.Indicator>
@@ -294,7 +294,7 @@ const ValidationErrorStatesContent = () => {
             onSelectedChange={setTerms}
             isInvalid={!terms}
           >
-            <FormField.Content>
+            <View className="flex-shrink-0 flex-1">
               <FormField.Title>
                 I agree to the terms and conditions
               </FormField.Title>
@@ -302,7 +302,7 @@ const ValidationErrorStatesContent = () => {
                 By checking this box, you agree to our Terms of Service and
                 Privacy Policy
               </FormField.Description>
-            </FormField.Content>
+            </View>
             <FormField.Indicator>
               <Checkbox />
             </FormField.Indicator>
@@ -318,12 +318,12 @@ const ValidationErrorStatesContent = () => {
             onSelectedChange={setPrivacyAccepted}
             isInvalid={!privacyAccepted}
           >
-            <FormField.Content>
+            <View className="flex-shrink-0 flex-1">
               <FormField.Title>Accept Privacy Policy</FormField.Title>
               <FormField.Description>
                 You must accept our privacy policy to create an account
               </FormField.Description>
-            </FormField.Content>
+            </View>
             <FormField.Indicator>
               <Checkbox isInvalid={false} />
             </FormField.Indicator>
@@ -339,12 +339,12 @@ const ValidationErrorStatesContent = () => {
             onSelectedChange={setDataSharing}
             isInvalid={dataSharing}
           >
-            <FormField.Content>
+            <View className="flex-shrink-0 flex-1">
               <FormField.Title>Share usage data</FormField.Title>
               <FormField.Description>
                 Help improve our product by sharing anonymous usage data
               </FormField.Description>
-            </FormField.Content>
+            </View>
             <FormField.Indicator>
               <Switch />
             </FormField.Indicator>

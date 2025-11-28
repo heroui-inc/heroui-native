@@ -30,10 +30,10 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   description,
 }) => (
   <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
-    <FormField.Content>
+    <View className="flex-shrink-0 flex-1">
       <FormField.Title>{title}</FormField.Title>
       <FormField.Description>{description}</FormField.Description>
-    </FormField.Content>
+    </View>
     <FormField.Indicator>
       <Switch />
     </FormField.Indicator>
@@ -130,12 +130,12 @@ const StatesContent = () => {
               onSelectedChange={handleFieldChange(key)}
               isDisabled={fieldConfigs[key].disabled}
             >
-              <FormField.Content>
+              <View className="flex-shrink-0 flex-1">
                 <FormField.Title>{fieldConfigs[key].title}</FormField.Title>
                 <FormField.Description>
                   {fieldConfigs[key].description}
                 </FormField.Description>
-              </FormField.Content>
+              </View>
               <FormField.Indicator>
                 <Switch />
               </FormField.Indicator>

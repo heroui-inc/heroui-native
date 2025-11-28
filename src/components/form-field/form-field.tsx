@@ -1,4 +1,4 @@
-import { cloneElement, forwardRef, useCallback, useMemo } from 'react';
+import React, { cloneElement, forwardRef, useCallback, useMemo } from 'react';
 import {
   Pressable,
   Text,
@@ -19,7 +19,6 @@ import type { ErrorViewRootProps } from '../error-view/error-view.types';
 import { DISPLAY_NAME } from './form-field.constants';
 import formFieldStyles from './form-field.styles';
 import type {
-  FormFieldContentProps,
   FormFieldContextValue,
   FormFieldDescriptionProps,
   FormFieldIndicatorProps,
@@ -53,20 +52,34 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const contentElement = useMemo(() => {
-    return getElementByDisplayName(children, DISPLAY_NAME.FORM_FIELD_CONTENT);
+  const resolvedChildren = useMemo(() => {
+    return typeof children === 'function' ? children({} as any) : children;
   }, [children]);
 
   const indicatorElement = useMemo(() => {
-    return getElementByDisplayName(children, DISPLAY_NAME.FORM_FIELD_INDICATOR);
-  }, [children]);
+    return getElementByDisplayName(
+      resolvedChildren,
+      DISPLAY_NAME.FORM_FIELD_INDICATOR
+    );
+  }, [resolvedChildren]);
 
   const errorMessageElement = useMemo(() => {
     return getElementByDisplayName(
-      children,
+      resolvedChildren,
       DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE
     );
-  }, [children]);
+  }, [resolvedChildren]);
+
+  const contentChildren = useMemo(() => {
+    return React.Children.toArray(resolvedChildren).filter((child) => {
+      if (!React.isValidElement(child)) return true;
+      const displayName = (child.type as { displayName?: string })?.displayName;
+      return (
+        displayName !== DISPLAY_NAME.FORM_FIELD_INDICATOR &&
+        displayName !== DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE
+      );
+    });
+  }, [resolvedChildren]);
 
   const tvStyles = formFieldStyles.root({
     orientation,
@@ -133,13 +146,13 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
         >
           {orientation === 'horizontal' ? (
             <>
-              {contentElement}
+              {contentChildren}
               {indicatorElement}
             </>
           ) : (
             <>
               {indicatorElement}
-              {contentElement}
+              {contentChildren}
             </>
           )}
         </AnimatedPressable>
@@ -148,27 +161,6 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     </FormFieldProvider>
   );
 });
-
-// --------------------------------------------------
-
-const FormFieldContent = forwardRef<View, FormFieldContentProps>(
-  (props, ref) => {
-    const { children, className, ...restProps } = props;
-
-    const { isInline } = useFormField();
-
-    const tvStyles = formFieldStyles.content({
-      isInline,
-      className,
-    });
-
-    return (
-      <Animated.View ref={ref} className={tvStyles} {...restProps}>
-        {children}
-      </Animated.View>
-    );
-  }
-);
 
 // --------------------------------------------------
 
@@ -267,7 +259,6 @@ const FormFieldErrorMessage = forwardRef<ViewRef, ErrorViewRootProps>(
 // --------------------------------------------------
 
 FormField.displayName = DISPLAY_NAME.FORM_FIELD;
-FormFieldContent.displayName = DISPLAY_NAME.FORM_FIELD_CONTENT;
 FormFieldTitle.displayName = DISPLAY_NAME.FORM_FIELD_TITLE;
 FormFieldDescription.displayName = DISPLAY_NAME.FORM_FIELD_DESCRIPTION;
 FormFieldIndicator.displayName = DISPLAY_NAME.FORM_FIELD_INDICATOR;
@@ -278,9 +269,6 @@ FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
  *
  * @component FormField - Wrapper that provides consistent layout and interaction for form controls.
  * Handles press events to toggle selection state and manages disabled/readonly states.
- *
- * @component FormField.Content - Container for label and description text. Provides
- * consistent spacing and layout for textual content.
  *
  * @component FormField.Title - Primary text title for the form control. Renders as
  * AnimatedText component when children is a string.
@@ -298,8 +286,6 @@ FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
  * The component supports both horizontal and vertical orientations.
  */
 const CompoundFormField = Object.assign(FormField, {
-  /** @optional Container for title and description */
-  Content: FormFieldContent,
   /** @optional Primary text title */
   Title: FormFieldTitle,
   /** @optional Secondary descriptive text */

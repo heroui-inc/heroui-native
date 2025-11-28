@@ -24,10 +24,10 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
     <FormField.Indicator>
       <Checkbox />
     </FormField.Indicator>
-    <FormField.Content>
+    <View className="flex-shrink-0 flex-1">
       <FormField.Title>{label}</FormField.Title>
       <FormField.Description>{description}</FormField.Description>
-    </FormField.Content>
+    </View>
   </FormField>
 );
 

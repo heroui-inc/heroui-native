@@ -23,16 +23,6 @@ const root = tv({
   },
 });
 
-const content = tv({
-  base: 'flex-shrink-0',
-  variants: {
-    isInline: {
-      true: '',
-      false: 'flex-1',
-    },
-  },
-});
-
 const title = tv({
   base: 'text-base font-medium text-foreground',
 });
@@ -51,7 +41,6 @@ const errorMessage = tv({
 
 const formFieldStyles = combineStyles({
   root,
-  content,
   title,
   description,
   indicator,

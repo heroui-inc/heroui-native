@@ -1,5 +1,6 @@
 import { FormField, Switch, useThemeColor } from 'heroui-native';
 import type { FC } from 'react';
+import { View } from 'react-native';
 import { BlurContainer } from './blur-container';
 
 type Props = {
@@ -20,11 +21,11 @@ export const StyledFormField: FC<Props> = ({
         onSelectedChange={onSelectedChange}
         className="h-full px-6"
       >
-        <FormField.Content>
+        <View className="flex-shrink-0 flex-1">
           <FormField.Title className="text-gray-50 text-lg font-semibold">
             Enable Free Trial
           </FormField.Title>
-        </FormField.Content>
+        </View>
         <FormField.Indicator>
           <Switch
             className="w-10"

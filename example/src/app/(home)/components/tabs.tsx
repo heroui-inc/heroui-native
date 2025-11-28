@@ -133,12 +133,12 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <FormField.Indicator>
                 <Checkbox />
               </FormField.Indicator>
-              <FormField.Content>
+              <View className="flex-shrink-0 flex-1">
                 <FormField.Title>Show sidebar</FormField.Title>
                 <FormField.Description>
                   Display the sidebar navigation panel
                 </FormField.Description>
-              </FormField.Content>
+              </View>
             </FormField>
 
             {/* Show Status Bar Checkbox */}
@@ -150,12 +150,12 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <FormField.Indicator>
                 <Checkbox />
               </FormField.Indicator>
-              <FormField.Content>
+              <View className="flex-shrink-0 flex-1">
                 <FormField.Title>Show status bar</FormField.Title>
                 <FormField.Description>
                   Display the status bar at the bottom
                 </FormField.Description>
-              </FormField.Content>
+              </View>
             </FormField>
           </AnimatedContentContainer>
         </Tabs.Content>
@@ -220,12 +220,12 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <FormField.Indicator>
                 <Checkbox />
               </FormField.Indicator>
-              <FormField.Content>
+              <View className="flex-shrink-0 flex-1">
                 <FormField.Title>Account activity</FormField.Title>
                 <FormField.Description>
                   Notifications about your account activity
                 </FormField.Description>
-              </FormField.Content>
+              </View>
             </FormField>
 
             <FormField
@@ -236,12 +236,12 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <FormField.Indicator>
                 <Checkbox />
               </FormField.Indicator>
-              <FormField.Content>
+              <View className="flex-shrink-0 flex-1">
                 <FormField.Title>Mentions</FormField.Title>
                 <FormField.Description>
                   When someone mentions you in a comment
                 </FormField.Description>
-              </FormField.Content>
+              </View>
             </FormField>
 
             <FormField
@@ -252,12 +252,12 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <FormField.Indicator>
                 <Checkbox />
               </FormField.Indicator>
-              <FormField.Content>
+              <View className="flex-shrink-0 flex-1">
                 <FormField.Title>Direct messages</FormField.Title>
                 <FormField.Description>
                   Notifications for new direct messages
                 </FormField.Description>
-              </FormField.Content>
+              </View>
             </FormField>
 
             <FormField
@@ -268,12 +268,12 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <FormField.Indicator>
                 <Checkbox />
               </FormField.Indicator>
-              <FormField.Content>
+              <View className="flex-shrink-0 flex-1">
                 <FormField.Title>Marketing email</FormField.Title>
                 <FormField.Description>
                   Receive emails about new features and updates
                 </FormField.Description>
-              </FormField.Content>
+              </View>
             </FormField>
           </AnimatedContentContainer>
         </Tabs.Content>

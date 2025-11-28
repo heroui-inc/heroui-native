@@ -65,6 +65,9 @@ export interface FormFieldIndicatorProps extends AnimatedProps<ViewProps> {
 
   /** Custom class name for the indicator element */
   className?: string;
+
+  /** Variant of the control to render when no children provided @default 'switch' */
+  variant?: 'checkbox' | 'switch';
 }
 
 /**

@@ -11,8 +11,10 @@ import Animated, { useSharedValue } from 'react-native-reanimated';
 import { Text } from '../../helpers/components/text';
 import type { PressableRef } from '../../helpers/types';
 import type { ViewRef } from '../../helpers/types/primitives';
+import { Checkbox } from '../checkbox';
 import { ErrorView } from '../error-view';
 import type { ErrorViewRootProps } from '../error-view/error-view.types';
+import { Switch } from '../switch';
 import { DISPLAY_NAME } from './form-field.constants';
 import formFieldStyles from './form-field.styles';
 import type {
@@ -159,7 +161,7 @@ const FormFieldDescription = forwardRef<RNText, FormFieldDescriptionProps>(
 
 const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
   (props, ref) => {
-    const { children, className, ...restProps } = props;
+    const { children, className, variant = 'switch', ...restProps } = props;
     const { isSelected, onSelectedChange, isDisabled, isInvalid } =
       useFormField();
 
@@ -168,22 +170,51 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
     });
 
     const enhancedChildren = useMemo(() => {
-      if (!children || typeof children !== 'object') return children;
+      if (children) {
+        if (typeof children !== 'object') return children;
 
-      const child = children as React.ReactElement;
+        const child = children as React.ReactElement;
 
-      return cloneElement(child, {
-        // Only pass props from context if child doesn't already have them
-        ...(isSelected !== undefined &&
-          !hasProp(child, 'isSelected') && { isSelected }),
-        ...(onSelectedChange &&
-          !hasProp(child, 'onSelectedChange') && { onSelectedChange }),
-        ...(isDisabled !== undefined &&
-          !hasProp(child, 'isDisabled') && { isDisabled }),
-        ...(isInvalid !== undefined &&
-          !hasProp(child, 'isInvalid') && { isInvalid }),
-      });
-    }, [children, isSelected, onSelectedChange, isDisabled, isInvalid]);
+        return cloneElement(child, {
+          // Only pass props from context if child doesn't already have them
+          ...(isSelected !== undefined &&
+            !hasProp(child, 'isSelected') && { isSelected }),
+          ...(onSelectedChange &&
+            !hasProp(child, 'onSelectedChange') && { onSelectedChange }),
+          ...(isDisabled !== undefined &&
+            !hasProp(child, 'isDisabled') && { isDisabled }),
+          ...(isInvalid !== undefined &&
+            !hasProp(child, 'isInvalid') && { isInvalid }),
+        });
+      }
+
+      // Render default component based on variant when no children provided
+      if (variant === 'checkbox') {
+        return (
+          <Checkbox
+            isSelected={isSelected}
+            onSelectedChange={onSelectedChange}
+            isDisabled={isDisabled}
+            isInvalid={isInvalid}
+          />
+        );
+      }
+
+      return (
+        <Switch
+          isSelected={isSelected}
+          onSelectedChange={onSelectedChange}
+          isDisabled={isDisabled}
+        />
+      );
+    }, [
+      children,
+      variant,
+      isSelected,
+      onSelectedChange,
+      isDisabled,
+      isInvalid,
+    ]);
 
     return (
       <Animated.View ref={ref} className={tvStyles} {...restProps}>

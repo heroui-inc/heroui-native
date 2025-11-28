@@ -1,5 +1,6 @@
 import { BlurView } from 'expo-blur';
 import * as Haptics from 'expo-haptics';
+import { useToast } from 'heroui-native';
 import { memo, useCallback, useRef, useState } from 'react';
 import {
   FlatList,
@@ -18,6 +19,7 @@ import Animated, {
   type SharedValue,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { scheduleOnRN } from 'react-native-worklets';
 import { useAppTheme } from '../../contexts/app-theme-context';
 import { useAccessibilityInfo } from '../../helpers/hooks/use-accessability-info';
 import { PaginationIndicator } from './pagination-indicator';
@@ -87,6 +89,8 @@ export const UsageVariantFlatList = ({
 
   const { isDark } = useAppTheme();
 
+  const { toast, isToastVisible } = useToast();
+
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
   const itemHeight = height;
@@ -118,6 +122,9 @@ export const UsageVariantFlatList = ({
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       scrollY.set(event.contentOffset.y);
+      if (isToastVisible) {
+        scheduleOnRN(toast.hide, 'all');
+      }
     },
   });
 

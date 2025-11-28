@@ -7,13 +7,18 @@ import {
 } from '@expo-google-fonts/inter';
 import { Slot } from 'expo-router';
 import { HeroUINativeProvider } from 'heroui-native';
+import { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { KeyboardProvider } from 'react-native-keyboard-controller';
+import {
+  KeyboardAvoidingView,
+  KeyboardProvider,
+} from 'react-native-keyboard-controller';
 import {
   configureReanimatedLogger,
   ReanimatedLogLevel,
 } from 'react-native-reanimated';
+import { Toaster } from 'sonner-native';
 import '../../global.css';
 import { AppThemeProvider } from '../contexts/app-theme-context';
 
@@ -21,6 +26,41 @@ configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
   strict: false,
 });
+
+/**
+ * Component that wraps app content inside KeyboardProvider
+ * Contains the contentWrapper and HeroUINativeProvider configuration
+ */
+function AppContent() {
+  const contentWrapper = useCallback(
+    (children: React.ReactNode) => (
+      <KeyboardAvoidingView
+        pointerEvents="box-none"
+        behavior="padding"
+        keyboardVerticalOffset={12}
+        className="flex-1"
+      >
+        {children}
+      </KeyboardAvoidingView>
+    ),
+    []
+  );
+
+  return (
+    <AppThemeProvider>
+      <HeroUINativeProvider
+        config={{
+          toast: {
+            contentWrapper,
+          },
+        }}
+      >
+        <Slot />
+        <Toaster />
+      </HeroUINativeProvider>
+    </AppThemeProvider>
+  );
+}
 
 export default function Layout() {
   const fonts = useFonts({
@@ -37,17 +77,7 @@ export default function Layout() {
   return (
     <GestureHandlerRootView style={styles.root}>
       <KeyboardProvider>
-        <AppThemeProvider>
-          <HeroUINativeProvider
-            config={{
-              textProps: {
-                allowFontScaling: false,
-              },
-            }}
-          >
-            <Slot />
-          </HeroUINativeProvider>
-        </AppThemeProvider>
+        <AppContent />
       </KeyboardProvider>
     </GestureHandlerRootView>
   );

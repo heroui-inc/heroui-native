@@ -134,6 +134,7 @@ export default function Layout() {
           name="components/text-field"
           options={{ title: 'TextField' }}
         />
+        <Stack.Screen name="components/toast" options={{ title: 'Toast' }} />
         <Stack.Screen name="themes/index" options={{ headerTitle: 'Themes' }} />
         <Stack.Screen
           name="showcases"
@@ -141,6 +142,13 @@ export default function Layout() {
             headerShown: false,
             animation: 'slide_from_bottom',
             animationDuration: 300,
+          }}
+        />
+        <Stack.Screen
+          name="components/toast-native-modal"
+          options={{
+            title: 'Toast From Native Modal',
+            presentation: 'formSheet',
           }}
         />
       </Stack>

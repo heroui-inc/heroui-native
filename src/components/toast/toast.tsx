@@ -1,0 +1,400 @@
+import { forwardRef, useMemo } from 'react';
+import { View, type ViewStyle } from 'react-native';
+import { GestureDetector } from 'react-native-gesture-handler';
+import Animated from 'react-native-reanimated';
+import { CloseIcon } from '../../helpers/components/close-icon';
+import { Text } from '../../helpers/components/text';
+import { cn, useThemeColor } from '../../helpers/theme';
+import type { ViewRef } from '../../helpers/types';
+import { createContext } from '../../helpers/utils';
+import * as ToastPrimitive from '../../primitives/toast';
+import type { ToastComponentProps } from '../../providers/toast';
+import { useToastConfig } from '../../providers/toast';
+import { Button } from '../button';
+import type { PressableFeedbackHighlightRootAnimation } from '../pressable-feedback';
+import { useToastRootAnimation } from './toast.animation';
+import { DISPLAY_NAME } from './toast.constants';
+import toastStyles, { styleSheet } from './toast.styles';
+import type {
+  DefaultToastProps,
+  ToastActionProps,
+  ToastCloseProps,
+  ToastContextValue,
+  ToastDescriptionProps,
+  ToastLabelProps,
+  ToastRootProps,
+} from './toast.types';
+
+const AnimatedToastRoot = Animated.createAnimatedComponent(ToastPrimitive.Root);
+
+const [ToastProvider, useToast] = createContext<ToastContextValue>({
+  name: 'ToastContext',
+});
+
+// --------------------------------------------------
+
+const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
+  const globalConfig = useToastConfig();
+
+  const {
+    children,
+    variant: localVariant,
+    placement: localPlacement,
+    index,
+    total,
+    heights,
+    maxVisibleToasts,
+    className,
+    style,
+    animation: localAnimation,
+    isSwipeable: localIsSwipeable,
+    hide,
+    ...restProps
+  } = props;
+
+  /**
+   * Merge global config with local props, ensuring local props take precedence
+   */
+  const variant = localVariant ?? globalConfig?.variant ?? 'default';
+  const placement = localPlacement ?? globalConfig?.placement ?? 'top';
+  const animation = localAnimation ?? globalConfig?.animation;
+  const isSwipeable = localIsSwipeable ?? globalConfig?.isSwipeable;
+
+  // Access id from props (id is omitted from ToastRootProps type but available at runtime)
+  const toastProps = props as ToastRootProps & Pick<ToastComponentProps, 'id'>;
+  const { id } = toastProps;
+
+  const containerStyles = toastStyles.root({
+    className,
+  });
+
+  const { rContainerStyle, entering, exiting, panGesture } =
+    useToastRootAnimation({
+      animation,
+      style: style as ViewStyle | undefined,
+      index,
+      total,
+      heights,
+      placement,
+      hide,
+      id,
+      isSwipeable,
+      maxVisibleToasts,
+    });
+
+  const contextValue = useMemo(
+    () => ({
+      variant,
+      hide,
+      id,
+    }),
+    [variant, hide, id]
+  );
+
+  return (
+    <ToastProvider value={contextValue}>
+      <GestureDetector gesture={panGesture}>
+        <Animated.View
+          className={cn(
+            'absolute left-0 right-0',
+            placement === 'top' ? 'top-0' : 'bottom-0'
+          )}
+          entering={entering}
+          exiting={exiting}
+        >
+          {/* Animated toast instance */}
+          <AnimatedToastRoot
+            ref={ref}
+            className={containerStyles}
+            style={[styleSheet.root, rContainerStyle, style]}
+            {...restProps}
+          >
+            {children}
+          </AnimatedToastRoot>
+          {/* Hidden toast instance for height measurement */}
+          <AnimatedToastRoot
+            pointerEvents="none"
+            className={cn(containerStyles, 'absolute opacity-0')}
+            style={[styleSheet.root, style]}
+            onLayout={(event) => {
+              const measuredHeight = event.nativeEvent.layout.height;
+              heights.modify((value) => {
+                'worklet';
+                return { ...value, [id]: measuredHeight };
+              });
+            }}
+            {...restProps}
+          >
+            {children}
+          </AnimatedToastRoot>
+        </Animated.View>
+      </GestureDetector>
+    </ToastProvider>
+  );
+});
+
+// --------------------------------------------------
+
+const ToastLabel = forwardRef<View, ToastLabelProps>((props, ref) => {
+  const { children, className, ...restProps } = props;
+
+  const { variant } = useToast();
+
+  const tvStyles = toastStyles.label({
+    variant,
+    className,
+  });
+
+  return (
+    <Text ref={ref} className={tvStyles} {...restProps}>
+      {children}
+    </Text>
+  );
+});
+
+// --------------------------------------------------
+
+const ToastDescription = forwardRef<View, ToastDescriptionProps>(
+  (props, ref) => {
+    const { children, className, ...restProps } = props;
+
+    const tvStyles = toastStyles.description({
+      className,
+    });
+
+    return (
+      <Text ref={ref} className={tvStyles} {...restProps}>
+        {children}
+      </Text>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
+  const { children, variant, size = 'sm', className, ...restProps } = props;
+
+  const { variant: toastVariant } = useToast();
+
+  const tvStyles = toastStyles.action({
+    variant: toastVariant,
+    className,
+  });
+
+  const themeColorDefaultHover = useThemeColor('default-hover');
+  const themeColorAccentHover = useThemeColor('accent-hover');
+  const themeColorSuccessHover = useThemeColor('success-hover');
+  const themeColorWarningHover = useThemeColor('warning-hover');
+  const themeColorDangerHover = useThemeColor('danger-hover');
+
+  const highlightColorMap = useMemo(() => {
+    switch (toastVariant) {
+      case 'default':
+        return themeColorDefaultHover;
+      case 'accent':
+        return themeColorAccentHover;
+      case 'success':
+        return themeColorSuccessHover;
+      case 'warning':
+        return themeColorWarningHover;
+      case 'danger':
+        return themeColorDangerHover;
+    }
+  }, [
+    toastVariant,
+    themeColorDefaultHover,
+    themeColorAccentHover,
+    themeColorSuccessHover,
+    themeColorWarningHover,
+    themeColorDangerHover,
+  ]);
+
+  const buttonVariant = useMemo(() => {
+    if (variant) return variant;
+
+    switch (toastVariant) {
+      case 'accent':
+        return 'primary';
+      case 'danger':
+        return 'destructive';
+      default:
+        return 'tertiary';
+    }
+  }, [toastVariant, variant]);
+
+  const animationConfig = useMemo<PressableFeedbackHighlightRootAnimation>(
+    () => ({
+      highlight: {
+        backgroundColor: { value: highlightColorMap },
+        opacity: { value: [0, 1] },
+      },
+    }),
+    [highlightColorMap]
+  );
+
+  return (
+    <Button
+      ref={ref}
+      variant={buttonVariant}
+      size={size}
+      className={tvStyles}
+      animation={animationConfig}
+      {...restProps}
+    >
+      {children}
+    </Button>
+  );
+});
+
+// --------------------------------------------------
+
+const ToastClose = forwardRef<View, ToastCloseProps>((props, ref) => {
+  const {
+    children,
+    iconProps,
+    size = 'sm',
+    className,
+    onPress,
+    ...restProps
+  } = props;
+  const { hide, id } = useToast();
+
+  const themeColorMuted = useThemeColor('muted');
+
+  /**
+   * Handle close button press
+   * If hide and id are available from context, use them to hide the toast
+   * Otherwise, use the provided onPress handler
+   */
+  const handlePress = (event: any) => {
+    if (hide && id) {
+      hide(id);
+    }
+    if (onPress && typeof onPress === 'function') {
+      onPress(event);
+    }
+  };
+
+  return (
+    <Button
+      ref={ref}
+      variant="ghost"
+      size={size}
+      isIconOnly
+      aria-label="Close"
+      className={className}
+      onPress={handlePress}
+      {...restProps}
+    >
+      {children ?? (
+        <CloseIcon
+          size={iconProps?.size ?? 16}
+          color={iconProps?.color ?? themeColorMuted}
+        />
+      )}
+    </Button>
+  );
+});
+
+// --------------------------------------------------
+
+/**
+ * Default styled toast component for simplified toast.show() API
+ * Used internally when showing toasts with string or config object (without component)
+ */
+export function DefaultToast(props: DefaultToastProps) {
+  const globalConfig = useToastConfig();
+
+  const {
+    id,
+    variant: localVariant,
+    placement: localPlacement,
+    isSwipeable: localIsSwipeable,
+    animation: localAnimation,
+    label,
+    description,
+    actionLabel,
+    onActionPress,
+    icon,
+    hide,
+    show,
+    ...toastComponentProps
+  } = props;
+
+  /**
+   * Merge global config with local props, ensuring local props take precedence
+   */
+  const variant = localVariant ?? globalConfig?.variant ?? 'default';
+  const placement = localPlacement ?? globalConfig?.placement ?? 'top';
+  const isSwipeable = localIsSwipeable ?? globalConfig?.isSwipeable;
+  const animation = localAnimation ?? globalConfig?.animation;
+
+  const handleActionPress = () => {
+    if (onActionPress) {
+      onActionPress({ show, hide });
+    }
+  };
+
+  return (
+    <ToastRoot
+      id={id}
+      variant={variant}
+      placement={placement}
+      isSwipeable={isSwipeable}
+      animation={animation}
+      className="flex-row gap-3"
+      hide={hide}
+      show={show}
+      {...toastComponentProps}
+    >
+      {icon && <View>{icon}</View>}
+      <View className="flex-1">
+        {label && <ToastLabel>{label}</ToastLabel>}
+        {description && <ToastDescription>{description}</ToastDescription>}
+      </View>
+      {actionLabel && (
+        <ToastAction onPress={handleActionPress}>{actionLabel}</ToastAction>
+      )}
+    </ToastRoot>
+  );
+}
+
+// --------------------------------------------------
+
+ToastRoot.displayName = DISPLAY_NAME.TOAST_ROOT;
+ToastLabel.displayName = DISPLAY_NAME.TOAST_LABEL;
+ToastDescription.displayName = DISPLAY_NAME.TOAST_DESCRIPTION;
+ToastAction.displayName = DISPLAY_NAME.TOAST_ACTION;
+ToastClose.displayName = DISPLAY_NAME.TOAST_CLOSE;
+
+/**
+ * Compound Toast component with sub-components
+ *
+ * @component Toast - Main toast container that displays notification messages with various variants.
+ *
+ * @component Toast.Label - Title/heading text of the toast notification.
+ *
+ * @component Toast.Description - Descriptive text content of the toast.
+ *
+ * @component Toast.Action - Action button within the toast. Variant is automatically determined
+ * based on toast variant but can be overridden.
+ *
+ * @component Toast.Close - Close button for dismissing the toast. Renders as an icon-only button.
+ *
+ * Props flow from Toast to sub-components via context (variant).
+ *
+ * @see Full documentation: https://heroui.com/components/toast
+ */
+const CompoundToast = Object.assign(ToastRoot, {
+  /** Toast label/title - renders text content */
+  Label: ToastLabel,
+  /** Toast description - renders descriptive text */
+  Description: ToastDescription,
+  /** Toast action button - renders action with appropriate variant */
+  Action: ToastAction,
+  /** Toast close button - renders icon-only close button */
+  Close: ToastClose,
+});
+
+export default CompoundToast;

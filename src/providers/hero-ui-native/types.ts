@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { TextComponentContextValue } from '../text-component/types';
+import type { ToastProviderProps } from '../toast/types';
 
 /**
  * Configuration object for HeroUINativeProvider
@@ -13,9 +14,12 @@ import type { TextComponentContextValue } from '../text-component/types';
  */
 export interface HeroUINativeConfig extends TextComponentContextValue {
   /**
-   * Future configuration options can be added here
-   * For now, it extends TextComponentContextValue (textProps)
+   * Toast configuration
+   *
+   * @description
+   * Configure the global toast system including insets and wrapper components.
    */
+  toast?: ToastProviderProps;
 }
 
 /**

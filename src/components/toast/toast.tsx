@@ -9,6 +9,7 @@ import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as ToastPrimitive from '../../primitives/toast';
 import type { ToastComponentProps } from '../../providers/toast';
+import { useToastConfig } from '../../providers/toast';
 import { Button } from '../button';
 import type { PressableFeedbackHighlightRootAnimation } from '../pressable-feedback';
 import { useToastRootAnimation } from './toast.animation';
@@ -33,21 +34,31 @@ const [ToastProvider, useToast] = createContext<ToastContextValue>({
 // --------------------------------------------------
 
 const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
+  const globalConfig = useToastConfig();
+
   const {
     children,
-    variant = 'default',
-    placement = 'top',
+    variant: localVariant,
+    placement: localPlacement,
     index,
     total,
     heights,
     maxVisibleToasts,
     className,
     style,
-    animation,
-    isSwipeable,
+    animation: localAnimation,
+    isSwipeable: localIsSwipeable,
     hide,
     ...restProps
   } = props;
+
+  /**
+   * Merge global config with local props, ensuring local props take precedence
+   */
+  const variant = localVariant ?? globalConfig?.variant ?? 'default';
+  const placement = localPlacement ?? globalConfig?.placement ?? 'top';
+  const animation = localAnimation ?? globalConfig?.animation;
+  const isSwipeable = localIsSwipeable ?? globalConfig?.isSwipeable;
 
   // Access id from props (id is omitted from ToastRootProps type but available at runtime)
   const toastProps = props as ToastRootProps & Pick<ToastComponentProps, 'id'>;
@@ -288,11 +299,14 @@ const ToastClose = forwardRef<View, ToastCloseProps>((props, ref) => {
  * Used internally when showing toasts with string or config object (without component)
  */
 export function DefaultToast(props: DefaultToastProps) {
+  const globalConfig = useToastConfig();
+
   const {
     id,
-    variant = 'default',
-    placement = 'top',
-    isSwipeable,
+    variant: localVariant,
+    placement: localPlacement,
+    isSwipeable: localIsSwipeable,
+    animation: localAnimation,
     label,
     description,
     actionLabel,
@@ -302,6 +316,14 @@ export function DefaultToast(props: DefaultToastProps) {
     show,
     ...toastComponentProps
   } = props;
+
+  /**
+   * Merge global config with local props, ensuring local props take precedence
+   */
+  const variant = localVariant ?? globalConfig?.variant ?? 'default';
+  const placement = localPlacement ?? globalConfig?.placement ?? 'top';
+  const isSwipeable = localIsSwipeable ?? globalConfig?.isSwipeable;
+  const animation = localAnimation ?? globalConfig?.animation;
 
   const handleActionPress = () => {
     if (onActionPress) {
@@ -315,6 +337,7 @@ export function DefaultToast(props: DefaultToastProps) {
       variant={variant}
       placement={placement}
       isSwipeable={isSwipeable}
+      animation={animation}
       className="flex-row gap-3"
       hide={hide}
       show={show}

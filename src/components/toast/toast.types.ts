@@ -247,6 +247,10 @@ export interface DefaultToastProps extends ToastComponentProps {
    */
   placement?: ToastRootProps['placement'];
   /**
+   * Animation configuration for toast
+   */
+  animation?: ToastRootProps['animation'];
+  /**
    * Whether the toast can be swiped to dismiss and dragged with rubber effect
    */
   isSwipeable?: ToastRootProps['isSwipeable'];

@@ -15,6 +15,7 @@ import { ToastItemRenderer } from './toast-item-renderer';
 import type {
   ToastComponentProps,
   ToasterContextValue,
+  ToastGlobalConfig,
   ToastProviderProps,
   ToastShowConfig,
   ToastShowOptions,
@@ -29,35 +30,92 @@ const DEFAULT_DURATION = 4000;
 const ToasterContext = createContext<ToasterContextValue | null>(null);
 
 /**
+ * Context for global toast configuration
+ */
+const ToastConfigContext = createContext<ToastGlobalConfig | undefined>(
+  undefined
+);
+
+/**
+ * Merges global config with local config, ensuring local config takes precedence
+ * Only includes defined values from localConfig to avoid overriding global config with undefined
+ */
+function mergeToastConfig(
+  globalConfig: ToastGlobalConfig | undefined,
+  localConfig: Partial<ToastGlobalConfig>
+): Partial<ToastGlobalConfig> {
+  const result: Partial<ToastGlobalConfig> = { ...globalConfig };
+
+  // Only override with defined values from localConfig
+  if (localConfig.variant !== undefined) {
+    result.variant = localConfig.variant;
+  }
+  if (localConfig.placement !== undefined) {
+    result.placement = localConfig.placement;
+  }
+  if (localConfig.isSwipeable !== undefined) {
+    result.isSwipeable = localConfig.isSwipeable;
+  }
+  if (localConfig.animation !== undefined) {
+    result.animation = localConfig.animation;
+  }
+
+  return result;
+}
+
+/**
  * Creates a component function for simple string toast
  */
 function createStringToastComponent(
-  label: string
+  label: string,
+  globalConfig: ToastGlobalConfig | undefined
 ): (props: ToastComponentProps) => React.ReactElement {
-  return (props: ToastComponentProps) => (
-    <DefaultToast {...props} label={label} variant="default" />
-  );
+  return (props: ToastComponentProps) => {
+    const mergedConfig = mergeToastConfig(globalConfig, {
+      variant: 'default',
+    });
+    return (
+      <DefaultToast
+        {...props}
+        label={label}
+        variant={mergedConfig.variant}
+        placement={mergedConfig.placement}
+        isSwipeable={mergedConfig.isSwipeable}
+        animation={mergedConfig.animation}
+      />
+    );
+  };
 }
 
 /**
  * Creates a component function for config-based toast
  */
 function createConfigToastComponent(
-  config: ToastShowConfig
+  config: ToastShowConfig,
+  globalConfig: ToastGlobalConfig | undefined
 ): (props: ToastComponentProps) => React.ReactElement {
-  return (props: ToastComponentProps) => (
-    <DefaultToast
-      {...props}
-      variant={config.variant}
-      placement={config.placement}
-      isSwipeable={config.isSwipeable}
-      label={config.label}
-      description={config.description}
-      actionLabel={config.actionLabel}
-      onActionPress={config.onActionPress}
-      icon={config.icon}
-    />
-  );
+  return (props: ToastComponentProps) => {
+    const mergedConfig = mergeToastConfig(globalConfig, {
+      variant: config.variant,
+      placement: config.placement,
+      isSwipeable: config.isSwipeable,
+      animation: config.animation,
+    });
+    return (
+      <DefaultToast
+        {...props}
+        variant={mergedConfig.variant}
+        placement={mergedConfig.placement}
+        isSwipeable={mergedConfig.isSwipeable}
+        animation={mergedConfig.animation}
+        label={config.label}
+        description={config.description}
+        actionLabel={config.actionLabel}
+        onActionPress={config.onActionPress}
+        icon={config.icon}
+      />
+    );
+  };
 }
 
 /**
@@ -65,12 +123,21 @@ function createConfigToastComponent(
  * Wraps your app to enable toast functionality
  */
 export function ToastProvider({
+  defaultProps,
   insets,
   maxVisibleToasts = 3,
   contentWrapper,
   children,
 }: ToastProviderProps) {
   const [toasts, dispatch] = useReducer(toastReducer, []);
+
+  /**
+   * Memoize global config to prevent unnecessary re-renders
+   */
+  const globalConfig = useMemo<ToastGlobalConfig | undefined>(
+    () => defaultProps,
+    [defaultProps]
+  );
 
   const isToastVisible = toasts.length > 0;
 
@@ -206,7 +273,7 @@ export function ToastProvider({
       if (typeof options === 'string') {
         normalizedOptions = {
           id: undefined,
-          component: createStringToastComponent(options),
+          component: createStringToastComponent(options, globalConfig),
           duration: DEFAULT_DURATION,
         };
         duration = DEFAULT_DURATION;
@@ -219,7 +286,7 @@ export function ToastProvider({
         explicitId = config.id;
         normalizedOptions = {
           id: config.id,
-          component: createConfigToastComponent(config),
+          component: createConfigToastComponent(config, globalConfig),
           duration,
           onShow: config.onShow,
           onHide: config.onHide,
@@ -289,7 +356,7 @@ export function ToastProvider({
 
       return id;
     },
-    [total, toasts]
+    [total, toasts, globalConfig]
   );
 
   const contextValue = useMemo<ToasterContextValue>(
@@ -304,25 +371,27 @@ export function ToastProvider({
   );
 
   return (
-    <ToasterContext.Provider value={contextValue}>
-      {children}
-      <InsetsContainer insets={insets} contentWrapper={contentWrapper}>
-        <View className="flex-1">
-          {toasts.map((toastItem, index) => (
-            <ToastItemRenderer
-              key={toastItem.id}
-              toastItem={toastItem}
-              show={show}
-              hide={hide}
-              index={index}
-              total={total}
-              heights={heights}
-              maxVisibleToasts={maxVisibleToasts}
-            />
-          ))}
-        </View>
-      </InsetsContainer>
-    </ToasterContext.Provider>
+    <ToastConfigContext.Provider value={globalConfig}>
+      <ToasterContext.Provider value={contextValue}>
+        {children}
+        <InsetsContainer insets={insets} contentWrapper={contentWrapper}>
+          <View className="flex-1">
+            {toasts.map((toastItem, index) => (
+              <ToastItemRenderer
+                key={toastItem.id}
+                toastItem={toastItem}
+                show={show}
+                hide={hide}
+                index={index}
+                total={total}
+                heights={heights}
+                maxVisibleToasts={maxVisibleToasts}
+              />
+            ))}
+          </View>
+        </InsetsContainer>
+      </ToasterContext.Provider>
+    </ToastConfigContext.Provider>
   );
 }
 
@@ -358,4 +427,19 @@ export function useToast() {
     toast: context.toast,
     isToastVisible: context.isToastVisible,
   };
+}
+
+/**
+ * Hook to access global toast configuration
+ *
+ * @returns Global toast configuration or undefined if not set
+ *
+ * @example
+ * ```tsx
+ * const globalConfig = useToastConfig();
+ * // Use globalConfig.variant, globalConfig.placement, etc.
+ * ```
+ */
+export function useToastConfig(): ToastGlobalConfig | undefined {
+  return useContext(ToastConfigContext);
 }

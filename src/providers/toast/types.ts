@@ -2,6 +2,16 @@ import type { SharedValue } from 'react-native-reanimated';
 import type { ToastRootProps } from '../../components/toast/toast.types';
 
 /**
+ * Global toast configuration
+ * These values are used as defaults for all toasts unless overridden locally
+ */
+export interface ToastGlobalConfig
+  extends Pick<
+    ToastRootProps,
+    'variant' | 'placement' | 'isSwipeable' | 'animation'
+  > {}
+
+/**
  * Insets for spacing from screen edges
  */
 export interface ToastInsets {
@@ -12,7 +22,7 @@ export interface ToastInsets {
   top?: number;
   /**
    * Inset from the bottom edge in pixels (added to safe area inset)
-   * @default Platform-specific: iOS = 0, Android = 12
+   * @default Platform-specific: iOS = 6, Android = 12
    */
   bottom?: number;
   /**
@@ -31,6 +41,12 @@ export interface ToastInsets {
  * Props for the ToastProvider component
  */
 export interface ToastProviderProps {
+  /**
+   * Global toast configuration
+   * These values are used as defaults for all toasts unless overridden locally
+   * Local configs have precedence over global config
+   */
+  defaultProps?: ToastGlobalConfig;
   /**
    * Insets for spacing from screen edges (added to safe area insets)
    * @default Platform-specific:
@@ -117,7 +133,10 @@ export interface ToastComponentProps {
  * Used when component is not provided
  */
 export interface ToastShowConfig
-  extends Pick<ToastRootProps, 'variant' | 'placement' | 'isSwipeable'> {
+  extends Pick<
+    ToastRootProps,
+    'variant' | 'placement' | 'isSwipeable' | 'animation'
+  > {
   /**
    * Duration in milliseconds before the toast automatically disappears
    * Set to `'persistent'` to prevent auto-hide (toast will remain until manually dismissed)

@@ -18,7 +18,6 @@ import {
   configureReanimatedLogger,
   ReanimatedLogLevel,
 } from 'react-native-reanimated';
-import { Toaster } from 'sonner-native';
 import '../../global.css';
 import { AppThemeProvider } from '../contexts/app-theme-context';
 
@@ -56,7 +55,6 @@ function AppContent() {
         }}
       >
         <Slot />
-        <Toaster />
       </HeroUINativeProvider>
     </AppThemeProvider>
   );

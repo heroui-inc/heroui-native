@@ -12,8 +12,7 @@ export type FormFieldRenderProps = Pick<
 /**
  * FormField component props
  */
-export interface FormFieldProps
-  extends Omit<AnimatedProps<PressableProps>, 'children'> {
+export interface FormFieldProps extends Omit<PressableProps, 'children'> {
   /** Content to render inside the form control, or a render function */
   children?:
     | React.ReactNode
@@ -38,7 +37,7 @@ export interface FormFieldProps
 /**
  * Props for the FormFieldLabel component
  */
-export interface FormFieldLabelProps extends AnimatedProps<TextProps> {
+export interface FormFieldLabelProps extends TextProps {
   /** Label text content */
   children?: React.ReactNode;
 
@@ -49,7 +48,7 @@ export interface FormFieldLabelProps extends AnimatedProps<TextProps> {
 /**
  * Props for the FormFieldDescription component
  */
-export interface FormFieldDescriptionProps extends AnimatedProps<TextProps> {
+export interface FormFieldDescriptionProps extends TextProps {
   /** Description text content */
   children?: React.ReactNode;
 

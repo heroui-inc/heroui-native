@@ -1,13 +1,14 @@
 import React, { cloneElement, forwardRef, useCallback, useMemo } from 'react';
 import {
   Pressable,
-  Text,
+  Text as RNText,
   View,
   type GestureResponderEvent,
 } from 'react-native';
 import { createContext, hasProp } from '../../helpers/utils';
 
 import Animated, { useSharedValue } from 'react-native-reanimated';
+import { Text } from '../../helpers/components/text';
 import type { PressableRef } from '../../helpers/types';
 import type { ViewRef } from '../../helpers/types/primitives';
 import { ErrorView } from '../error-view';
@@ -29,9 +30,6 @@ const [FormFieldProvider, useFormField] = createContext<FormFieldContextValue>({
 });
 
 // --------------------------------------------------
-
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-const AnimatedText = Animated.createAnimatedComponent(Text);
 
 const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
   const {
@@ -108,26 +106,24 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
 
   return (
     <FormFieldProvider value={contextValue}>
-      <View>
-        <AnimatedPressable
-          ref={ref}
-          className={tvStyles}
-          onPress={handlePress}
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          disabled={isDisabled}
-          {...restProps}
-        >
-          {content}
-        </AnimatedPressable>
-      </View>
+      <Pressable
+        ref={ref}
+        className={tvStyles}
+        onPress={handlePress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        disabled={isDisabled}
+        {...restProps}
+      >
+        {content}
+      </Pressable>
     </FormFieldProvider>
   );
 });
 
 // --------------------------------------------------
 
-const FormFieldLabel = forwardRef<Text, FormFieldLabelProps>((props, ref) => {
+const FormFieldLabel = forwardRef<RNText, FormFieldLabelProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
   const tvStyles = formFieldStyles.title({
@@ -135,15 +131,15 @@ const FormFieldLabel = forwardRef<Text, FormFieldLabelProps>((props, ref) => {
   });
 
   return (
-    <AnimatedText ref={ref} className={tvStyles} {...restProps}>
+    <Text ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </AnimatedText>
+    </Text>
   );
 });
 
 // --------------------------------------------------
 
-const FormFieldDescription = forwardRef<Text, FormFieldDescriptionProps>(
+const FormFieldDescription = forwardRef<RNText, FormFieldDescriptionProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
@@ -152,9 +148,9 @@ const FormFieldDescription = forwardRef<Text, FormFieldDescriptionProps>(
     });
 
     return (
-      <AnimatedText ref={ref} className={tvStyles} {...restProps}>
+      <Text ref={ref} className={tvStyles} {...restProps}>
         {children}
-      </AnimatedText>
+      </Text>
     );
   }
 );

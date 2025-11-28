@@ -217,7 +217,7 @@ const RadioGroupIndicatorThumb = forwardRef<
 
 const RadioGroupLabel = forwardRef<TextRef, RadioGroupLabelProps>(
   (props, ref) => {
-    return <FormField.Title ref={ref} {...props} />;
+    return <FormField.Label ref={ref} {...props} />;
   }
 );
 

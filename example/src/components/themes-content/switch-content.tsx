@@ -1,5 +1,6 @@
-import { Divider, FormField, Surface, Switch } from 'heroui-native';
+import { Divider, FormField, Surface } from 'heroui-native';
 import React from 'react';
+import { View } from 'react-native';
 
 interface SwitchFieldProps {
   isSelected: boolean;
@@ -15,13 +16,11 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   description,
 }) => (
   <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
-    <FormField.Content>
-      <FormField.Title>{title}</FormField.Title>
+    <View className="flex-1">
+      <FormField.Label>{title}</FormField.Label>
       <FormField.Description>{description}</FormField.Description>
-    </FormField.Content>
-    <FormField.Indicator>
-      <Switch />
-    </FormField.Indicator>
+    </View>
+    <FormField.Indicator />
   </FormField>
 );
 

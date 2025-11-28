@@ -9,7 +9,6 @@ import {
   cn,
   Divider,
   FormField,
-  Switch,
   useAccordion,
   useAccordionItem,
   useThemeColor,
@@ -313,15 +312,13 @@ export const AccordionWithDepthEffect: FC = () => {
             onSelectedChange={setDepth}
             className="pr-2"
           >
-            <FormField.Content>
-              <FormField.Title>Depth</FormField.Title>
+            <View className="flex-1">
+              <FormField.Label>Depth</FormField.Label>
               <FormField.Description>
                 Enable depth effect for the accordion
               </FormField.Description>
-            </FormField.Content>
-            <FormField.Indicator>
-              <Switch />
-            </FormField.Indicator>
+            </View>
+            <FormField.Indicator />
           </FormField>
           <Divider className="mt-6" />
         </View>

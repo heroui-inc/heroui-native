@@ -1,7 +1,6 @@
 import { useHeaderHeight } from '@react-navigation/elements';
 import {
   Button,
-  Checkbox,
   cn,
   FormField,
   RadioGroup,
@@ -129,10 +128,8 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               isSelected={showSidebar}
               onSelectedChange={setShowSidebar}
             >
-              <FormField.Indicator>
-                <Checkbox />
-              </FormField.Indicator>
-              <View className="flex-shrink-0 flex-1">
+              <FormField.Indicator variant="checkbox" />
+              <View className="flex-1">
                 <FormField.Label>Show sidebar</FormField.Label>
                 <FormField.Description>
                   Display the sidebar navigation panel
@@ -145,10 +142,8 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               isSelected={showStatusBar}
               onSelectedChange={setShowStatusBar}
             >
-              <FormField.Indicator>
-                <Checkbox />
-              </FormField.Indicator>
-              <View className="flex-shrink-0 flex-1">
+              <FormField.Indicator variant="checkbox" />
+              <View className="flex-1">
                 <FormField.Label>Show status bar</FormField.Label>
                 <FormField.Description>
                   Display the status bar at the bottom
@@ -214,10 +209,8 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               isSelected={accountActivity}
               onSelectedChange={setAccountActivity}
             >
-              <FormField.Indicator>
-                <Checkbox />
-              </FormField.Indicator>
-              <View className="flex-shrink-0 flex-1">
+              <FormField.Indicator variant="checkbox" />
+              <View className="flex-1">
                 <FormField.Label>Account activity</FormField.Label>
                 <FormField.Description>
                   Notifications about your account activity
@@ -226,10 +219,8 @@ const TabsContent = ({ variant }: TabsContentProps) => {
             </FormField>
 
             <FormField isSelected={mentions} onSelectedChange={setMentions}>
-              <FormField.Indicator>
-                <Checkbox />
-              </FormField.Indicator>
-              <View className="flex-shrink-0 flex-1">
+              <FormField.Indicator variant="checkbox" />
+              <View className="flex-1">
                 <FormField.Label>Mentions</FormField.Label>
                 <FormField.Description>
                   When someone mentions you in a comment
@@ -241,10 +232,8 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               isSelected={directMessages}
               onSelectedChange={setDirectMessages}
             >
-              <FormField.Indicator>
-                <Checkbox />
-              </FormField.Indicator>
-              <View className="flex-shrink-0 flex-1">
+              <FormField.Indicator variant="checkbox" />
+              <View className="flex-1">
                 <FormField.Label>Direct messages</FormField.Label>
                 <FormField.Description>
                   Notifications for new direct messages
@@ -256,10 +245,8 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               isSelected={marketingEmail}
               onSelectedChange={setMarketingEmail}
             >
-              <FormField.Indicator>
-                <Checkbox />
-              </FormField.Indicator>
-              <View className="flex-shrink-0 flex-1">
+              <FormField.Indicator variant="checkbox" />
+              <View className="flex-1">
                 <FormField.Label>Marketing email</FormField.Label>
                 <FormField.Description>
                   Receive emails about new features and updates

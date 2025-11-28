@@ -210,17 +210,14 @@ export default function TabsExample() {
             <FormField
               isSelected={showSidebar}
               onSelectedChange={setShowSidebar}
-              alignIndicator="start"
             >
-              <FormField.Indicator>
-                <Checkbox />
-              </FormField.Indicator>
-              <FormField.Content>
+              <FormField.Indicator variant="checkbox" />
+              <View className="flex-1">
                 <FormField.Label>Show sidebar</FormField.Label>
                 <FormField.Description>
                   Display the sidebar navigation panel
                 </FormField.Description>
-              </FormField.Content>
+              </View>
             </FormField>
           </AnimatedContentContainer>
         </Tabs.Content>
@@ -231,15 +228,13 @@ export default function TabsExample() {
               isSelected={accountActivity}
               onSelectedChange={setAccountActivity}
             >
-              <FormField.Indicator>
-                <Checkbox />
-              </FormField.Indicator>
-              <FormField.Content>
+              <FormField.Indicator variant="checkbox" />
+              <View className="flex-1">
                 <FormField.Label>Account activity</FormField.Label>
                 <FormField.Description>
                   Notifications about your account activity
                 </FormField.Description>
-              </FormField.Content>
+              </View>
             </FormField>
           </AnimatedContentContainer>
         </Tabs.Content>

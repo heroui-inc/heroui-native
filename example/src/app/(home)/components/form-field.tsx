@@ -1,4 +1,4 @@
-import { Checkbox, Divider, FormField, Surface, Switch } from 'heroui-native';
+import { Checkbox, Divider, FormField, Surface } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
@@ -18,13 +18,11 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   description,
 }) => (
   <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
-    <View className="flex-shrink-0 flex-1">
+    <View className="flex-1">
       <FormField.Label>{title}</FormField.Label>
       <FormField.Description>{description}</FormField.Description>
     </View>
-    <FormField.Indicator>
-      <Switch />
-    </FormField.Indicator>
+    <FormField.Indicator />
   </FormField>
 );
 
@@ -103,7 +101,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
           <Checkbox.Indicator iconProps={{ size: 16 }} />
         </Checkbox>
       </FormField.Indicator>
-      <View className="flex-shrink-0 flex-1">
+      <View className="flex-1">
         <FormField.Label>{title}</FormField.Label>
         <FormField.Description>{description}</FormField.Description>
       </View>
@@ -181,9 +179,7 @@ const InlineFilter: React.FC<InlineFilterProps> = ({
     <FormField.Indicator>
       <Checkbox className="size-5 rounded-md" />
     </FormField.Indicator>
-    <View className="flex-shrink-0">
-      <FormField.Label>{label}</FormField.Label>
-    </View>
+    <FormField.Label>{label}</FormField.Label>
   </FormField>
 );
 
@@ -241,15 +237,13 @@ const DisabledStateContent = () => {
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-8 w-full">
         <FormField isSelected={activeSwitch} onSelectedChange={setActiveSwitch}>
-          <View className="flex-shrink-0 flex-1">
+          <View className="flex-1">
             <FormField.Label>Two-factor authentication</FormField.Label>
             <FormField.Description>
               Add an extra layer of security to your account
             </FormField.Description>
           </View>
-          <FormField.Indicator>
-            <Switch />
-          </FormField.Indicator>
+          <FormField.Indicator />
         </FormField>
 
         <FormField
@@ -257,15 +251,13 @@ const DisabledStateContent = () => {
           onSelectedChange={setDisabledSwitch}
           isDisabled
         >
-          <View className="flex-shrink-0 flex-1">
+          <View className="flex-1">
             <FormField.Label>Biometric authentication</FormField.Label>
             <FormField.Description>
               Requires device with fingerprint or face recognition support
             </FormField.Description>
           </View>
-          <FormField.Indicator>
-            <Switch />
-          </FormField.Indicator>
+          <FormField.Indicator />
         </FormField>
       </View>
     </View>
@@ -290,19 +282,20 @@ const ValidationErrorStatesContent = () => {
             isSelected={terms}
             onSelectedChange={setTerms}
             isInvalid={!terms}
+            className="flex-col items-start gap-0"
           >
-            <View className="flex-shrink-0 flex-1">
-              <FormField.Label>
-                I agree to the terms and conditions
-              </FormField.Label>
-              <FormField.Description>
-                By checking this box, you agree to our Terms of Service and
-                Privacy Policy
-              </FormField.Description>
+            <View className="flex-row items-center gap-2">
+              <View className="flex-1">
+                <FormField.Label>
+                  I agree to the terms and conditions
+                </FormField.Label>
+                <FormField.Description>
+                  By checking this box, you agree to our Terms of Service and
+                  Privacy Policy
+                </FormField.Description>
+              </View>
+              <FormField.Indicator variant="checkbox" />
             </View>
-            <FormField.Indicator>
-              <Checkbox />
-            </FormField.Indicator>
             <FormField.ErrorMessage>
               You must accept the terms to continue
             </FormField.ErrorMessage>
@@ -314,16 +307,19 @@ const ValidationErrorStatesContent = () => {
             isSelected={privacyAccepted}
             onSelectedChange={setPrivacyAccepted}
             isInvalid={!privacyAccepted}
+            className="flex-col items-start gap-0"
           >
-            <View className="flex-shrink-0 flex-1">
-              <FormField.Label>Accept Privacy Policy</FormField.Label>
-              <FormField.Description>
-                You must accept our privacy policy to create an account
-              </FormField.Description>
+            <View className="flex-row items-center gap-2">
+              <View className="flex-1">
+                <FormField.Label>Accept Privacy Policy</FormField.Label>
+                <FormField.Description>
+                  You must accept our privacy policy to create an account
+                </FormField.Description>
+              </View>
+              <FormField.Indicator>
+                <Checkbox isInvalid={false} />
+              </FormField.Indicator>
             </View>
-            <FormField.Indicator>
-              <Checkbox isInvalid={false} />
-            </FormField.Indicator>
             <FormField.ErrorMessage>
               Please accept the privacy policy to continue
             </FormField.ErrorMessage>
@@ -335,16 +331,17 @@ const ValidationErrorStatesContent = () => {
             isSelected={dataSharing}
             onSelectedChange={setDataSharing}
             isInvalid={dataSharing}
+            className="flex-col items-start gap-0"
           >
-            <View className="flex-shrink-0 flex-1">
-              <FormField.Label>Share usage data</FormField.Label>
-              <FormField.Description>
-                Help improve our product by sharing anonymous usage data
-              </FormField.Description>
+            <View className="flex-row items-center gap-2">
+              <View className="flex-1">
+                <FormField.Label>Share usage data</FormField.Label>
+                <FormField.Description>
+                  Help improve our product by sharing anonymous usage data
+                </FormField.Description>
+              </View>
+              <FormField.Indicator />
             </View>
-            <FormField.Indicator>
-              <Switch />
-            </FormField.Indicator>
             <FormField.ErrorMessage>
               Warning: This will share your usage patterns
             </FormField.ErrorMessage>

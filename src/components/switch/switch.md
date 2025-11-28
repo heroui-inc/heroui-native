@@ -311,13 +311,11 @@ The Switch component integrates seamlessly with FormField for press state sharin
 
 ```tsx
 <FormField isSelected={isSelected} onSelectedChange={setIsSelected}>
-  <FormField.Content>
+  <View className="flex-1">
     <FormField.Label>Enable notifications</FormField.Label>
     <FormField.Description>Receive push notifications</FormField.Description>
-  </FormField.Content>
-  <FormField.Indicator>
-    <Switch />
-  </FormField.Indicator>
+  </View>
+  <FormField.Indicator />
 </FormField>
 ```
 

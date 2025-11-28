@@ -181,9 +181,8 @@ export const Labels: FC = () => {
                         onSelectedChange={(selected) =>
                           handleSelectionChange(item.value, selected)
                         }
-                        className="self-stretch"
                       >
-                        <View className="flex-row items-center gap-2 flex-shrink-0 flex-1">
+                        <View className="flex-row items-center gap-2 flex-1">
                           <View className="w-5 pl-0.5 justify-center">
                             <View className="scale-105">{item.indicator}</View>
                           </View>

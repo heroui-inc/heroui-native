@@ -21,7 +21,7 @@ export const StyledFormField: FC<Props> = ({
         onSelectedChange={onSelectedChange}
         className="h-full px-6"
       >
-        <View className="flex-shrink-0 flex-1">
+        <View className="flex-1">
           <FormField.Label className="text-gray-50 text-lg font-semibold">
             Enable Free Trial
           </FormField.Label>

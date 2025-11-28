@@ -18,12 +18,10 @@ FormField wraps form controls to provide consistent layout and state management.
 
 ```tsx
 <FormField isSelected={value} onSelectedChange={setValue}>
-  <FormField.Content>
+  <View className="flex-1">
     <FormField.Label>Label text</FormField.Label>
-  </FormField.Content>
-  <FormField.Indicator>
-    <Switch />
-  </FormField.Indicator>
+  </View>
+  <FormField.Indicator />
 </FormField>
 ```
 
@@ -33,15 +31,13 @@ Add helper text below the label using the Description component.
 
 ```tsx
 <FormField isSelected={value} onSelectedChange={setValue}>
-  <FormField.Content>
+  <View className="flex-1">
     <FormField.Label>Enable notifications</FormField.Label>
     <FormField.Description>
       Receive push notifications about your account activity
     </FormField.Description>
-  </FormField.Content>
-  <FormField.Indicator>
-    <Switch />
-  </FormField.Indicator>
+  </View>
+  <FormField.Indicator />
 </FormField>
 ```
 
@@ -50,77 +46,36 @@ Add helper text below the label using the Description component.
 Display validation errors using the ErrorMessage component.
 
 ```tsx
-<FormField isSelected={value} onSelectedChange={setValue} isInvalid={!value}>
-  <FormField.Content>
-    <FormField.Label>I agree to the terms</FormField.Label>
-  </FormField.Content>
-  <FormField.Indicator>
-    <Checkbox />
-  </FormField.Indicator>
+<FormField
+  isSelected={value}
+  onSelectedChange={setValue}
+  isInvalid={!value}
+  className="flex-col items-start gap-1"
+>
+  <View className="flex-row items-center gap-2">
+    <View className="flex-1">
+      <FormField.Label>I agree to the terms</FormField.Label>
+      <FormField.Description>
+        By checking this box, you agree to our Terms of Service
+      </FormField.Description>
+    </View>
+    <FormField.Indicator variant="checkbox" />
+  </View>
   <FormField.ErrorMessage>This field is required</FormField.ErrorMessage>
 </FormField>
 ```
 
-### Inline Layout
+### Disabled State
 
-Use inline layout for compact horizontal form fields.
-
-```tsx
-<View className="flex-row gap-4">
-  <FormField isSelected={value1} onSelectedChange={setValue1}>
-    <View>
-      <FormField.Label>Option 1</FormField.Label>
-    </View>
-    <FormField.Indicator>
-      <Switch />
-    </FormField.Indicator>
-  </FormField>
-
-  <FormField isSelected={value2} onSelectedChange={setValue2}>
-    <View>
-      <FormField.Label>Option 2</FormField.Label>
-    </View>
-    <FormField.Indicator>
-      <Switch />
-    </FormField.Indicator>
-  </FormField>
-</View>
-```
-
-### Vertical Orientation
-
-Stack the indicator above the content for vertical layouts.
-
-```tsx
-<FormField
-  isSelected={value}
-  onSelectedChange={setValue}
-  orientation="vertical"
->
-  <FormField.Content>
-    <FormField.Label>Vertical layout</FormField.Label>
-    <FormField.Description>
-      The control appears above the text
-    </FormField.Description>
-  </FormField.Content>
-  <FormField.Indicator>
-    <Switch />
-  </FormField.Indicator>
-</FormField>
-```
-
-### Disabled and Read-Only States
-
-Control interactivity with disabled and read-only props.
+Control interactivity with the disabled prop.
 
 ```tsx
 <FormField isSelected={value} onSelectedChange={setValue} isDisabled>
-  <FormField.Content>
+  <View className="flex-1">
     <FormField.Label>Disabled field</FormField.Label>
-  </FormField.Content>
-  <FormField.Indicator>
-    <Switch />
-  </FormField.Indicator>
+    <FormField.Description>This field is disabled</FormField.Description>
+  </View>
+  <FormField.Indicator />
 </FormField>
 ```
 
@@ -143,42 +98,43 @@ export default function FormFieldExample() {
           isSelected={notifications}
           onSelectedChange={setNotifications}
         >
-          <FormField.Content>
+          <View className="flex-1">
             <FormField.Label>Enable notifications</FormField.Label>
             <FormField.Description>
               Receive push notifications about your account activity
             </FormField.Description>
-          </FormField.Content>
-          <FormField.Indicator>
-            <Switch />
-          </FormField.Indicator>
+          </View>
+          <FormField.Indicator />
         </FormField>
 
         <FormField
           isSelected={terms}
           onSelectedChange={setTerms}
           isInvalid={!terms}
+          className="flex-col items-start gap-1"
         >
-          <FormField.Content>
-            <FormField.Label>
-              I agree to the terms and conditions
-            </FormField.Label>
-            <FormField.Description>
-              By checking this box, you agree to our Terms of Service
-            </FormField.Description>
-          </FormField.Content>
-          <FormField.Indicator className="mt-0.5">
-            <Checkbox />
-          </FormField.Indicator>
+          <View className="flex-row items-center gap-2">
+            <View className="flex-1">
+              <FormField.Label>
+                I agree to the terms and conditions
+              </FormField.Label>
+              <FormField.Description>
+                By checking this box, you agree to our Terms of Service
+              </FormField.Description>
+            </View>
+            <FormField.Indicator className="mt-0.5">
+              <Checkbox />
+            </FormField.Indicator>
+          </View>
           <FormField.ErrorMessage>
             This field is required
           </FormField.ErrorMessage>
         </FormField>
 
         <FormField isSelected={newsletter} onSelectedChange={setNewsletter}>
-          <FormField.Content>
+          <View className="flex-1">
             <FormField.Label>Subscribe to newsletter</FormField.Label>
-          </FormField.Content>
+          </View>
           <FormField.Indicator>
             <Checkbox color="warning" />
           </FormField.Indicator>
@@ -193,79 +149,70 @@ export default function FormFieldExample() {
 
 ```tsx
 <FormField>
-  <FormField.Content>
-    <FormField.Label>...</FormField.Label>
-    <FormField.Description>...</FormField.Description>
-  </FormField.Content>
+  <FormField.Label>...</FormField.Label>
+  <FormField.Description>...</FormField.Description>
   <FormField.Indicator>...</FormField.Indicator>
   <FormField.ErrorMessage>...</FormField.ErrorMessage>
 </FormField>
 ```
 
 - **FormField**: Root container that manages layout and state propagation
-- **FormField.Content**: Container for label and description text
 - **FormField.Label**: Primary text label for the control
 - **FormField.Description**: Secondary descriptive helper text
-- **FormField.Indicator**: Container for the form control component
+- **FormField.Indicator**: Container for the form control component (Switch, Checkbox)
 - **FormField.ErrorMessage**: Validation error message display
 
 ## API Reference
 
 ### FormField
 
-| prop                       | type                            | default        | description                                              |
-| -------------------------- | ------------------------------- | -------------- | -------------------------------------------------------- |
-| children                   | `React.ReactNode`               | -              | Content to render inside the form control                |
-| orientation                | `'horizontal' \| 'vertical'`    | `'horizontal'` | Layout orientation of the form control                   |
-| alignIndicator             | `'start' \| 'end'`              | `'end'`        | Alignment of the indicator (horizontal orientation only) |
-| isSelected                 | `boolean`                       | `undefined`    | Whether the control is selected/checked                  |
-| isDisabled                 | `boolean`                       | `false`        | Whether the form control is disabled                     |
-| isInvalid                  | `boolean`                       | `false`        | Whether the form control is invalid                      |
-| className                  | `string`                        | -              | Custom class name for the root element                   |
-| onSelectedChange           | `(isSelected: boolean) => void` | -              | Callback when selection state changes                    |
-| ...Animated.PressableProps | `AnimatedProps<PressableProps>` | -              | All Reanimated AnimatedPressable props are supported     |
-
-### FormField.Content
-
-| prop                  | type                       | default | description                                      |
-| --------------------- | -------------------------- | ------- | ------------------------------------------------ |
-| children              | `React.ReactNode`          | -       | Content to render inside the content container   |
-| className             | `string`                   | -       | Custom class name for the content element        |
-| ...Animated.ViewProps | `AnimatedProps<ViewProps>` | -       | All Reanimated Animated.View props are supported |
+| prop              | type                                                                    | default     | description                                                     |
+| ----------------- | ----------------------------------------------------------------------- | ----------- | --------------------------------------------------------------- |
+| children          | `React.ReactNode \| ((props: FormFieldRenderProps) => React.ReactNode)` | -           | Content to render inside the form control, or a render function |
+| isSelected        | `boolean`                                                               | `undefined` | Whether the control is selected/checked                         |
+| isDisabled        | `boolean`                                                               | `false`     | Whether the form control is disabled                            |
+| isInvalid         | `boolean`                                                               | `false`     | Whether the form control is invalid                             |
+| className         | `string`                                                                | -           | Custom class name for the root element                          |
+| onSelectedChange  | `(isSelected: boolean) => void`                                         | -           | Callback when selection state changes                           |
+| ...PressableProps | `PressableProps`                                                        | -           | All React Native Pressable props are supported                  |
 
 ### FormField.Label
 
-| prop                  | type                       | default | description                                     |
-| --------------------- | -------------------------- | ------- | ----------------------------------------------- |
-| children              | `React.ReactNode`          | -       | Title text content                              |
-| className             | `string`                   | -       | Custom class name for the title element         |
-| ...Animated.TextProps | `AnimatedProps<TextProps>` | -       | All Reanimated AnimatedText props are supported |
+| prop         | type              | default | description                               |
+| ------------ | ----------------- | ------- | ----------------------------------------- |
+| children     | `React.ReactNode` | -       | Label text content                        |
+| className    | `string`          | -       | Custom class name for the label element   |
+| ...TextProps | `TextProps`       | -       | All React Native Text props are supported |
 
 ### FormField.Description
 
-| prop                  | type                       | default | description                                     |
-| --------------------- | -------------------------- | ------- | ----------------------------------------------- |
-| children              | `React.ReactNode`          | -       | Description text content                        |
-| className             | `string`                   | -       | Custom class name for the description element   |
-| ...Animated.TextProps | `AnimatedProps<TextProps>` | -       | All Reanimated AnimatedText props are supported |
+| prop         | type              | default | description                                   |
+| ------------ | ----------------- | ------- | --------------------------------------------- |
+| children     | `React.ReactNode` | -       | Description text content                      |
+| className    | `string`          | -       | Custom class name for the description element |
+| ...TextProps | `TextProps`       | -       | All React Native Text props are supported     |
 
 ### FormField.Indicator
 
-| prop                  | type                       | default | description                                      |
-| --------------------- | -------------------------- | ------- | ------------------------------------------------ |
-| children              | `React.ReactNode`          | -       | Control component to render (Switch, Checkbox)   |
-| className             | `string`                   | -       | Custom class name for the indicator element      |
-| ...Animated.ViewProps | `AnimatedProps<ViewProps>` | -       | All Reanimated Animated.View props are supported |
+| prop         | type                     | default    | description                                                |
+| ------------ | ------------------------ | ---------- | ---------------------------------------------------------- |
+| children     | `React.ReactNode`        | -          | Control component to render (Switch, Checkbox)             |
+| variant      | `'checkbox' \| 'switch'` | `'switch'` | Variant of the control to render when no children provided |
+| className    | `string`                 | -          | Custom class name for the indicator element                |
+| ...ViewProps | `ViewProps`              | -          | All React Native View props are supported                  |
+
+**Note**: When children are provided, the component automatically passes down `isSelected`, `onSelectedChange`, `isDisabled`, and `isInvalid` props from the FormField context if they are not already present on the child component.
 
 ### FormField.ErrorMessage
 
 | prop                  | type                           | default | description                                             |
 | --------------------- | ------------------------------ | ------- | ------------------------------------------------------- |
 | children              | `React.ReactNode`              | -       | Error message content                                   |
-| isInvalid             | `boolean`                      | `false` | Controls the visibility of the error field              |
 | className             | `string`                       | -       | Custom class name for styling                           |
 | classNames            | `ElementSlots<ErrorViewSlots>` | -       | Custom class names for different parts of the component |
-| ...Animated.ViewProps | `AnimatedProps<ViewProps>`     | -       | All Reanimated Animated.View props are supported        |
+| ...ErrorViewRootProps | `ErrorViewRootProps`           | -       | All ErrorView root props are supported                  |
+
+**Note**: The `isInvalid` prop is automatically passed from the FormField context. The error message visibility is controlled by the `isInvalid` state of the parent FormField.
 
 #### ElementSlots<ErrorViewSlots>
 

@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { createContext, hasProp } from '../../helpers/utils';
 
-import Animated, { useSharedValue } from 'react-native-reanimated';
+import { useSharedValue } from 'react-native-reanimated';
 import { Text } from '../../helpers/components/text';
 import type { PressableRef } from '../../helpers/types';
 import type { ViewRef } from '../../helpers/types/primitives';
@@ -217,9 +217,9 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
     ]);
 
     return (
-      <Animated.View ref={ref} className={tvStyles} {...restProps}>
+      <View ref={ref} className={tvStyles} {...restProps}>
         {enhancedChildren}
-      </Animated.View>
+      </View>
     );
   }
 );
@@ -258,16 +258,16 @@ FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
  * Compound FormField component with sub-components
  *
  * @component FormField - Wrapper that provides consistent layout and interaction for form controls.
- * Handles press events to toggle selection state and manages disabled/readonly states.
+ * Handles press events to toggle selection state and manages disabled states.
  *
  * @component FormField.Label - Primary text label for the form control. Renders as
- * AnimatedText component when children is a string.
+ * Text component when children is a string.
  *
- * @component FormField.Description - Secondary descriptive text. Renders as AnimatedText
+ * @component FormField.Description - Secondary descriptive text. Renders as Text
  * component when children is a string.
  *
  * @component FormField.Indicator - Container for the control component (Switch, Checkbox).
- * Automatically passes down isSelected, onSelectedChange, and isDisabled props.
+ * Automatically passes down isSelected, onSelectedChange, isDisabled, and isInvalid props.
  *
  * @component FormField.ErrorMessage - Error message displayed when field is invalid.
  * Shown with animation below the form field content.

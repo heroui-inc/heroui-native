@@ -282,7 +282,7 @@ const ValidationErrorStatesContent = () => {
             isSelected={terms}
             onSelectedChange={setTerms}
             isInvalid={!terms}
-            className="flex-col items-start gap-0"
+            className="flex-col items-start gap-1"
           >
             <View className="flex-row items-center gap-2">
               <View className="flex-1">
@@ -307,7 +307,7 @@ const ValidationErrorStatesContent = () => {
             isSelected={privacyAccepted}
             onSelectedChange={setPrivacyAccepted}
             isInvalid={!privacyAccepted}
-            className="flex-col items-start gap-0"
+            className="flex-col items-start gap-1"
           >
             <View className="flex-row items-center gap-2">
               <View className="flex-1">
@@ -331,7 +331,7 @@ const ValidationErrorStatesContent = () => {
             isSelected={dataSharing}
             onSelectedChange={setDataSharing}
             isInvalid={dataSharing}
-            className="flex-col items-start gap-0"
+            className="flex-col items-start gap-1"
           >
             <View className="flex-row items-center gap-2">
               <View className="flex-1">

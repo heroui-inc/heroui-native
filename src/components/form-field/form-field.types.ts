@@ -1,5 +1,5 @@
 import type { PressableProps, TextProps, ViewProps } from 'react-native';
-import type { AnimatedProps, SharedValue } from 'react-native-reanimated';
+import type { SharedValue } from 'react-native-reanimated';
 
 /**
  * Render function props for form field children
@@ -59,7 +59,7 @@ export interface FormFieldDescriptionProps extends TextProps {
 /**
  * Props for the FormFieldIndicator component
  */
-export interface FormFieldIndicatorProps extends AnimatedProps<ViewProps> {
+export interface FormFieldIndicatorProps extends ViewProps {
   /** Control component to render (Switch, Checkbox) */
   children?: React.ReactNode;
 

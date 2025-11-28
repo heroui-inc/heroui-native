@@ -26,7 +26,7 @@ const indicator = tv({
 });
 
 const errorMessage = tv({
-  base: 'mt-1',
+  base: '',
 });
 
 const formFieldStyles = combineStyles({

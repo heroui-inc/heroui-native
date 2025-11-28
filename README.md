@@ -116,8 +116,6 @@ npx expo install react-dom react-native-web @expo/metro-runtime
 }
 ```
 
-3. **Add `darkMode: 'class'` to your `tailwind.config.js`** (already included in the configuration above)
-
 ### 5. Wrap Your App with Provider
 
 Wrap your application with `HeroUINativeProvider`. Since HeroUI Native uses `react-native-gesture-handler` under the hood, you must wrap it with `GestureHandlerRootView`:

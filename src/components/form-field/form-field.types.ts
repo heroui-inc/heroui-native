@@ -36,13 +36,13 @@ export interface FormFieldProps
 }
 
 /**
- * Props for the FormFieldTitle component
+ * Props for the FormFieldLabel component
  */
-export interface FormFieldTitleProps extends AnimatedProps<TextProps> {
-  /** Title text content */
+export interface FormFieldLabelProps extends AnimatedProps<TextProps> {
+  /** Label text content */
   children?: React.ReactNode;
 
-  /** Custom class name for the title element */
+  /** Custom class name for the label element */
   className?: string;
 }
 

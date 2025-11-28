@@ -128,7 +128,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
         <Checkbox className="mt-0.5" />
       </FormField.Indicator>
       <FormField.Content>
-        <FormField.Title className="text-lg">{title}</FormField.Title>
+        <FormField.Label className="text-lg">{title}</FormField.Label>
         <FormField.Description className="text-base">
           {description}
         </FormField.Description>

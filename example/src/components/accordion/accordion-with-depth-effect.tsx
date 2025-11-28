@@ -314,7 +314,7 @@ export const AccordionWithDepthEffect: FC = () => {
             className="pr-2"
           >
             <View className="flex-shrink-0 flex-1">
-              <FormField.Title>Depth</FormField.Title>
+              <FormField.Label>Depth</FormField.Label>
               <FormField.Description>
                 Enable depth effect for the accordion
               </FormField.Description>

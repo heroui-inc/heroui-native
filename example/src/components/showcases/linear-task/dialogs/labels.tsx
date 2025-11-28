@@ -187,7 +187,7 @@ export const Labels: FC = () => {
                           <View className="w-5 pl-0.5 justify-center">
                             <View className="scale-105">{item.indicator}</View>
                           </View>
-                          <FormField.Title>{item.label}</FormField.Title>
+                          <FormField.Label>{item.label}</FormField.Label>
                         </View>
                         <FormField.Indicator>
                           <Checkbox

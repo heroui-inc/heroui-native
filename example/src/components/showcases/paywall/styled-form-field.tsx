@@ -22,9 +22,9 @@ export const StyledFormField: FC<Props> = ({
         className="h-full px-6"
       >
         <View className="flex-shrink-0 flex-1">
-          <FormField.Title className="text-gray-50 text-lg font-semibold">
+          <FormField.Label className="text-gray-50 text-lg font-semibold">
             Enable Free Trial
-          </FormField.Title>
+          </FormField.Label>
         </View>
         <FormField.Indicator>
           <Switch

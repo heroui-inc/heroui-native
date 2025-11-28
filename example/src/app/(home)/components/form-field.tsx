@@ -19,7 +19,7 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
 }) => (
   <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
     <View className="flex-shrink-0 flex-1">
-      <FormField.Title>{title}</FormField.Title>
+      <FormField.Label>{title}</FormField.Label>
       <FormField.Description>{description}</FormField.Description>
     </View>
     <FormField.Indicator>
@@ -104,7 +104,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
         </Checkbox>
       </FormField.Indicator>
       <View className="flex-shrink-0 flex-1">
-        <FormField.Title>{title}</FormField.Title>
+        <FormField.Label>{title}</FormField.Label>
         <FormField.Description>{description}</FormField.Description>
       </View>
     </FormField>
@@ -182,7 +182,7 @@ const InlineFilter: React.FC<InlineFilterProps> = ({
       <Checkbox className="size-5 rounded-md" />
     </FormField.Indicator>
     <View className="flex-shrink-0">
-      <FormField.Title>{label}</FormField.Title>
+      <FormField.Label>{label}</FormField.Label>
     </View>
   </FormField>
 );
@@ -242,7 +242,7 @@ const DisabledStateContent = () => {
       <View className="gap-8 w-full">
         <FormField isSelected={activeSwitch} onSelectedChange={setActiveSwitch}>
           <View className="flex-shrink-0 flex-1">
-            <FormField.Title>Two-factor authentication</FormField.Title>
+            <FormField.Label>Two-factor authentication</FormField.Label>
             <FormField.Description>
               Add an extra layer of security to your account
             </FormField.Description>
@@ -258,7 +258,7 @@ const DisabledStateContent = () => {
           isDisabled
         >
           <View className="flex-shrink-0 flex-1">
-            <FormField.Title>Biometric authentication</FormField.Title>
+            <FormField.Label>Biometric authentication</FormField.Label>
             <FormField.Description>
               Requires device with fingerprint or face recognition support
             </FormField.Description>
@@ -292,9 +292,9 @@ const ValidationErrorStatesContent = () => {
             isInvalid={!terms}
           >
             <View className="flex-shrink-0 flex-1">
-              <FormField.Title>
+              <FormField.Label>
                 I agree to the terms and conditions
-              </FormField.Title>
+              </FormField.Label>
               <FormField.Description>
                 By checking this box, you agree to our Terms of Service and
                 Privacy Policy
@@ -316,7 +316,7 @@ const ValidationErrorStatesContent = () => {
             isInvalid={!privacyAccepted}
           >
             <View className="flex-shrink-0 flex-1">
-              <FormField.Title>Accept Privacy Policy</FormField.Title>
+              <FormField.Label>Accept Privacy Policy</FormField.Label>
               <FormField.Description>
                 You must accept our privacy policy to create an account
               </FormField.Description>
@@ -337,7 +337,7 @@ const ValidationErrorStatesContent = () => {
             isInvalid={dataSharing}
           >
             <View className="flex-shrink-0 flex-1">
-              <FormField.Title>Share usage data</FormField.Title>
+              <FormField.Label>Share usage data</FormField.Label>
               <FormField.Description>
                 Help improve our product by sharing anonymous usage data
               </FormField.Description>

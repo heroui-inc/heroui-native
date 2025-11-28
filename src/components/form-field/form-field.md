@@ -19,7 +19,7 @@ FormField wraps form controls to provide consistent layout and state management.
 ```tsx
 <FormField isSelected={value} onSelectedChange={setValue}>
   <FormField.Content>
-    <FormField.Title>Label text</FormField.Title>
+    <FormField.Label>Label text</FormField.Label>
   </FormField.Content>
   <FormField.Indicator>
     <Switch />
@@ -34,7 +34,7 @@ Add helper text below the label using the Description component.
 ```tsx
 <FormField isSelected={value} onSelectedChange={setValue}>
   <FormField.Content>
-    <FormField.Title>Enable notifications</FormField.Title>
+    <FormField.Label>Enable notifications</FormField.Label>
     <FormField.Description>
       Receive push notifications about your account activity
     </FormField.Description>
@@ -52,7 +52,7 @@ Display validation errors using the ErrorMessage component.
 ```tsx
 <FormField isSelected={value} onSelectedChange={setValue} isInvalid={!value}>
   <FormField.Content>
-    <FormField.Title>I agree to the terms</FormField.Title>
+    <FormField.Label>I agree to the terms</FormField.Label>
   </FormField.Content>
   <FormField.Indicator>
     <Checkbox />
@@ -69,7 +69,7 @@ Use inline layout for compact horizontal form fields.
 <View className="flex-row gap-4">
   <FormField isSelected={value1} onSelectedChange={setValue1}>
     <View>
-      <FormField.Title>Option 1</FormField.Title>
+      <FormField.Label>Option 1</FormField.Label>
     </View>
     <FormField.Indicator>
       <Switch />
@@ -78,7 +78,7 @@ Use inline layout for compact horizontal form fields.
 
   <FormField isSelected={value2} onSelectedChange={setValue2}>
     <View>
-      <FormField.Title>Option 2</FormField.Title>
+      <FormField.Label>Option 2</FormField.Label>
     </View>
     <FormField.Indicator>
       <Switch />
@@ -98,7 +98,7 @@ Stack the indicator above the content for vertical layouts.
   orientation="vertical"
 >
   <FormField.Content>
-    <FormField.Title>Vertical layout</FormField.Title>
+    <FormField.Label>Vertical layout</FormField.Label>
     <FormField.Description>
       The control appears above the text
     </FormField.Description>
@@ -116,7 +116,7 @@ Control interactivity with disabled and read-only props.
 ```tsx
 <FormField isSelected={value} onSelectedChange={setValue} isDisabled>
   <FormField.Content>
-    <FormField.Title>Disabled field</FormField.Title>
+    <FormField.Label>Disabled field</FormField.Label>
   </FormField.Content>
   <FormField.Indicator>
     <Switch />
@@ -144,7 +144,7 @@ export default function FormFieldExample() {
           onSelectedChange={setNotifications}
         >
           <FormField.Content>
-            <FormField.Title>Enable notifications</FormField.Title>
+            <FormField.Label>Enable notifications</FormField.Label>
             <FormField.Description>
               Receive push notifications about your account activity
             </FormField.Description>
@@ -160,9 +160,9 @@ export default function FormFieldExample() {
           isInvalid={!terms}
         >
           <FormField.Content>
-            <FormField.Title>
+            <FormField.Label>
               I agree to the terms and conditions
-            </FormField.Title>
+            </FormField.Label>
             <FormField.Description>
               By checking this box, you agree to our Terms of Service
             </FormField.Description>
@@ -177,7 +177,7 @@ export default function FormFieldExample() {
 
         <FormField isSelected={newsletter} onSelectedChange={setNewsletter}>
           <FormField.Content>
-            <FormField.Title>Subscribe to newsletter</FormField.Title>
+            <FormField.Label>Subscribe to newsletter</FormField.Label>
           </FormField.Content>
           <FormField.Indicator>
             <Checkbox color="warning" />
@@ -194,7 +194,7 @@ export default function FormFieldExample() {
 ```tsx
 <FormField>
   <FormField.Content>
-    <FormField.Title>...</FormField.Title>
+    <FormField.Label>...</FormField.Label>
     <FormField.Description>...</FormField.Description>
   </FormField.Content>
   <FormField.Indicator>...</FormField.Indicator>
@@ -204,7 +204,7 @@ export default function FormFieldExample() {
 
 - **FormField**: Root container that manages layout and state propagation
 - **FormField.Content**: Container for label and description text
-- **FormField.Title**: Primary text title for the control
+- **FormField.Label**: Primary text label for the control
 - **FormField.Description**: Secondary descriptive helper text
 - **FormField.Indicator**: Container for the form control component
 - **FormField.ErrorMessage**: Validation error message display
@@ -233,7 +233,7 @@ export default function FormFieldExample() {
 | className             | `string`                   | -       | Custom class name for the content element        |
 | ...Animated.ViewProps | `AnimatedProps<ViewProps>` | -       | All Reanimated Animated.View props are supported |
 
-### FormField.Title
+### FormField.Label
 
 | prop                  | type                       | default | description                                     |
 | --------------------- | -------------------------- | ------- | ----------------------------------------------- |

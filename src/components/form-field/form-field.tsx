@@ -18,9 +18,9 @@ import type {
   FormFieldContextValue,
   FormFieldDescriptionProps,
   FormFieldIndicatorProps,
+  FormFieldLabelProps,
   FormFieldProps,
   FormFieldRenderProps,
-  FormFieldTitleProps,
 } from './form-field.types';
 
 const [FormFieldProvider, useFormField] = createContext<FormFieldContextValue>({
@@ -127,7 +127,7 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const FormFieldTitle = forwardRef<Text, FormFieldTitleProps>((props, ref) => {
+const FormFieldLabel = forwardRef<Text, FormFieldLabelProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
   const tvStyles = formFieldStyles.title({
@@ -222,7 +222,7 @@ const FormFieldErrorMessage = forwardRef<ViewRef, ErrorViewRootProps>(
 // --------------------------------------------------
 
 FormField.displayName = DISPLAY_NAME.FORM_FIELD;
-FormFieldTitle.displayName = DISPLAY_NAME.FORM_FIELD_TITLE;
+FormFieldLabel.displayName = DISPLAY_NAME.FORM_FIELD_LABEL;
 FormFieldDescription.displayName = DISPLAY_NAME.FORM_FIELD_DESCRIPTION;
 FormFieldIndicator.displayName = DISPLAY_NAME.FORM_FIELD_INDICATOR;
 FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
@@ -233,7 +233,7 @@ FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
  * @component FormField - Wrapper that provides consistent layout and interaction for form controls.
  * Handles press events to toggle selection state and manages disabled/readonly states.
  *
- * @component FormField.Title - Primary text title for the form control. Renders as
+ * @component FormField.Label - Primary text label for the form control. Renders as
  * AnimatedText component when children is a string.
  *
  * @component FormField.Description - Secondary descriptive text. Renders as AnimatedText
@@ -248,8 +248,8 @@ FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
  * Props flow from FormField to sub-components via context.
  */
 const CompoundFormField = Object.assign(FormField, {
-  /** @optional Primary text title */
-  Title: FormFieldTitle,
+  /** @optional Primary text label */
+  Label: FormFieldLabel,
   /** @optional Secondary descriptive text */
   Description: FormFieldDescription,
   /** @optional Container for control component */

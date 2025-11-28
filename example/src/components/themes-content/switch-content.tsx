@@ -17,7 +17,7 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
 }) => (
   <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
     <View className="flex-shrink-0 flex-1">
-      <FormField.Title>{title}</FormField.Title>
+      <FormField.Label>{title}</FormField.Label>
       <FormField.Description>{description}</FormField.Description>
     </View>
     <FormField.Indicator>

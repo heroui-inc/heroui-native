@@ -216,7 +216,7 @@ export default function TabsExample() {
                 <Checkbox />
               </FormField.Indicator>
               <FormField.Content>
-                <FormField.Title>Show sidebar</FormField.Title>
+                <FormField.Label>Show sidebar</FormField.Label>
                 <FormField.Description>
                   Display the sidebar navigation panel
                 </FormField.Description>
@@ -235,7 +235,7 @@ export default function TabsExample() {
                 <Checkbox />
               </FormField.Indicator>
               <FormField.Content>
-                <FormField.Title>Account activity</FormField.Title>
+                <FormField.Label>Account activity</FormField.Label>
                 <FormField.Description>
                   Notifications about your account activity
                 </FormField.Description>

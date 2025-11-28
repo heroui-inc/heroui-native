@@ -18,7 +18,6 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
   <FormField
     isSelected={isSelected}
     onSelectedChange={onSelectedChange}
-    alignIndicator="start"
     className="gap-3"
   >
     <FormField.Indicator>

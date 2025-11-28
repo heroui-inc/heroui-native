@@ -96,7 +96,6 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
     <FormField
       isSelected={isSelected}
       onSelectedChange={onSelectedChange}
-      alignIndicator="start"
       className="items-start"
     >
       <FormField.Indicator>
@@ -177,8 +176,6 @@ const InlineFilter: React.FC<InlineFilterProps> = ({
   <FormField
     isSelected={isSelected}
     onSelectedChange={onSelectedChange}
-    isInline
-    alignIndicator="start"
     className="gap-2"
   >
     <FormField.Indicator>

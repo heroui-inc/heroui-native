@@ -4,21 +4,11 @@ import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 const root = tv({
   base: 'flex-row items-center gap-3',
   variants: {
-    orientation: {
-      horizontal: 'flex-row',
-      vertical: 'flex-col items-start',
-    },
-    alignIndicator: {
-      start: 'flex-row-reverse',
-      end: '',
-    },
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',
     },
   },
   defaultVariants: {
-    orientation: 'horizontal',
-    alignIndicator: 'end',
     isDisabled: false,
   },
 });

@@ -1,22 +1,18 @@
 import type { PressableProps, TextProps, ViewProps } from 'react-native';
 import type { AnimatedProps, SharedValue } from 'react-native-reanimated';
 
-type FormFieldAlignIndicator = 'start' | 'end';
-
-type FormFieldOrientation = 'horizontal' | 'vertical';
-
 /**
  * Render function props for form field children
  */
 export type FormFieldRenderProps = Pick<
-  FormFieldBaseProps,
+  FormFieldProps,
   'isSelected' | 'isDisabled' | 'isInvalid'
 >;
 
 /**
- * Base FormField props shared between all orientations
+ * FormField component props
  */
-interface FormFieldBaseProps
+export interface FormFieldProps
   extends Omit<AnimatedProps<PressableProps>, 'children'> {
   /** Content to render inside the form control, or a render function */
   children?:
@@ -32,41 +28,12 @@ interface FormFieldBaseProps
   /** Whether the form control is disabled @default false */
   isDisabled?: boolean;
 
-  /** Whether the form control is inline (using inside flex-row container) @default false */
-  isInline?: boolean;
-
   /** Whether the form control is invalid @default false */
   isInvalid?: boolean;
 
   /** Callback when selection state changes */
   onSelectedChange?: (isSelected: boolean) => void;
 }
-
-/**
- * FormField props for horizontal orientation
- */
-interface FormFieldHorizontalProps extends FormFieldBaseProps {
-  /** Layout orientation of the form control */
-  orientation?: Extract<FormFieldOrientation, 'horizontal'>;
-
-  /** Alignment of the indicator @default 'end' */
-  alignIndicator?: FormFieldAlignIndicator;
-}
-
-/**
- * FormField props for vertical orientation
- */
-interface FormFieldVerticalProps extends FormFieldBaseProps {
-  /** Layout orientation of the form control */
-  orientation: Extract<FormFieldOrientation, 'vertical'>;
-  /** alignIndicator is not allowed with vertical orientation */
-  alignIndicator?: undefined;
-}
-
-/**
- * Base FormField component props that extend ViewProps
- */
-export type FormFieldProps = FormFieldHorizontalProps | FormFieldVerticalProps;
 
 /**
  * Props for the FormFieldTitle component
@@ -106,8 +73,8 @@ export interface FormFieldIndicatorProps extends AnimatedProps<ViewProps> {
  */
 export interface FormFieldContextValue
   extends Pick<
-    FormFieldBaseProps,
-    'isSelected' | 'onSelectedChange' | 'isDisabled' | 'isInline' | 'isInvalid'
+    FormFieldProps,
+    'isSelected' | 'onSelectedChange' | 'isDisabled' | 'isInvalid'
   > {
   isPressed: SharedValue<boolean>;
 }

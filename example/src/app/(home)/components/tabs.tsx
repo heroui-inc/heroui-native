@@ -128,7 +128,6 @@ const TabsContent = ({ variant }: TabsContentProps) => {
             <FormField
               isSelected={showSidebar}
               onSelectedChange={setShowSidebar}
-              alignIndicator="start"
             >
               <FormField.Indicator>
                 <Checkbox />
@@ -145,7 +144,6 @@ const TabsContent = ({ variant }: TabsContentProps) => {
             <FormField
               isSelected={showStatusBar}
               onSelectedChange={setShowStatusBar}
-              alignIndicator="start"
             >
               <FormField.Indicator>
                 <Checkbox />
@@ -215,7 +213,6 @@ const TabsContent = ({ variant }: TabsContentProps) => {
             <FormField
               isSelected={accountActivity}
               onSelectedChange={setAccountActivity}
-              alignIndicator="start"
             >
               <FormField.Indicator>
                 <Checkbox />
@@ -228,11 +225,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               </View>
             </FormField>
 
-            <FormField
-              isSelected={mentions}
-              onSelectedChange={setMentions}
-              alignIndicator="start"
-            >
+            <FormField isSelected={mentions} onSelectedChange={setMentions}>
               <FormField.Indicator>
                 <Checkbox />
               </FormField.Indicator>
@@ -247,7 +240,6 @@ const TabsContent = ({ variant }: TabsContentProps) => {
             <FormField
               isSelected={directMessages}
               onSelectedChange={setDirectMessages}
-              alignIndicator="start"
             >
               <FormField.Indicator>
                 <Checkbox />
@@ -263,7 +255,6 @@ const TabsContent = ({ variant }: TabsContentProps) => {
             <FormField
               isSelected={marketingEmail}
               onSelectedChange={setMarketingEmail}
-              alignIndicator="start"
             >
               <FormField.Indicator>
                 <Checkbox />

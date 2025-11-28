@@ -5,11 +5,7 @@ import {
   View,
   type GestureResponderEvent,
 } from 'react-native';
-import {
-  createContext,
-  getElementByDisplayName,
-  hasProp,
-} from '../../helpers/utils';
+import { createContext, hasProp } from '../../helpers/utils';
 
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import type { PressableRef } from '../../helpers/types';
@@ -23,6 +19,7 @@ import type {
   FormFieldDescriptionProps,
   FormFieldIndicatorProps,
   FormFieldProps,
+  FormFieldRenderProps,
   FormFieldTitleProps,
 } from './form-field.types';
 
@@ -42,48 +39,26 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     className,
     isSelected,
     onSelectedChange,
-    orientation = 'horizontal',
-    alignIndicator = 'end',
     isDisabled = false,
-    isInline = false,
     isInvalid = false,
     onPressIn,
     onPressOut,
     ...restProps
   } = props;
 
-  const resolvedChildren = useMemo(() => {
-    return typeof children === 'function' ? children({} as any) : children;
-  }, [children]);
+  const renderProps: FormFieldRenderProps = useMemo(
+    () => ({
+      isSelected,
+      isDisabled: isDisabled ?? false,
+      isInvalid: isInvalid ?? false,
+    }),
+    [isSelected, isDisabled, isInvalid]
+  );
 
-  const indicatorElement = useMemo(() => {
-    return getElementByDisplayName(
-      resolvedChildren,
-      DISPLAY_NAME.FORM_FIELD_INDICATOR
-    );
-  }, [resolvedChildren]);
-
-  const errorMessageElement = useMemo(() => {
-    return getElementByDisplayName(
-      resolvedChildren,
-      DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE
-    );
-  }, [resolvedChildren]);
-
-  const contentChildren = useMemo(() => {
-    return React.Children.toArray(resolvedChildren).filter((child) => {
-      if (!React.isValidElement(child)) return true;
-      const displayName = (child.type as { displayName?: string })?.displayName;
-      return (
-        displayName !== DISPLAY_NAME.FORM_FIELD_INDICATOR &&
-        displayName !== DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE
-      );
-    });
-  }, [resolvedChildren]);
+  const content =
+    typeof children === 'function' ? children(renderProps) : children;
 
   const tvStyles = formFieldStyles.root({
-    orientation,
-    alignIndicator,
     isDisabled,
     className,
   });
@@ -125,11 +100,10 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
       isSelected,
       onSelectedChange,
       isDisabled,
-      isInline,
       isInvalid,
       isPressed,
     }),
-    [isSelected, onSelectedChange, isDisabled, isInline, isInvalid, isPressed]
+    [isSelected, onSelectedChange, isDisabled, isInvalid, isPressed]
   );
 
   return (
@@ -144,19 +118,8 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
           disabled={isDisabled}
           {...restProps}
         >
-          {orientation === 'horizontal' ? (
-            <>
-              {contentChildren}
-              {indicatorElement}
-            </>
-          ) : (
-            <>
-              {indicatorElement}
-              {contentChildren}
-            </>
-          )}
+          {content}
         </AnimatedPressable>
-        {errorMessageElement}
       </View>
     </FormFieldProvider>
   );
@@ -283,7 +246,6 @@ FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
  * Shown with animation below the form field content.
  *
  * Props flow from FormField to sub-components via context.
- * The component supports both horizontal and vertical orientations.
  */
 const CompoundFormField = Object.assign(FormField, {
   /** @optional Primary text title */

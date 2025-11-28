@@ -67,19 +67,19 @@ Use inline layout for compact horizontal form fields.
 
 ```tsx
 <View className="flex-row gap-4">
-  <FormField isSelected={value1} onSelectedChange={setValue1} isInline>
-    <FormField.Content>
+  <FormField isSelected={value1} onSelectedChange={setValue1}>
+    <View>
       <FormField.Title>Option 1</FormField.Title>
-    </FormField.Content>
+    </View>
     <FormField.Indicator>
       <Switch />
     </FormField.Indicator>
   </FormField>
 
-  <FormField isSelected={value2} onSelectedChange={setValue2} isInline>
-    <FormField.Content>
+  <FormField isSelected={value2} onSelectedChange={setValue2}>
+    <View>
       <FormField.Title>Option 2</FormField.Title>
-    </FormField.Content>
+    </View>
     <FormField.Indicator>
       <Switch />
     </FormField.Indicator>
@@ -213,18 +213,17 @@ export default function FormFieldExample() {
 
 ### FormField
 
-| prop                       | type                            | default        | description                                                  |
-| -------------------------- | ------------------------------- | -------------- | ------------------------------------------------------------ |
-| children                   | `React.ReactNode`               | -              | Content to render inside the form control                    |
-| orientation                | `'horizontal' \| 'vertical'`    | `'horizontal'` | Layout orientation of the form control                       |
-| alignIndicator             | `'start' \| 'end'`              | `'end'`        | Alignment of the indicator (horizontal orientation only)     |
-| isSelected                 | `boolean`                       | `undefined`    | Whether the control is selected/checked                      |
-| isDisabled                 | `boolean`                       | `false`        | Whether the form control is disabled                         |
-| isInline                   | `boolean`                       | `false`        | Whether the form control is inline (for flex-row containers) |
-| isInvalid                  | `boolean`                       | `false`        | Whether the form control is invalid                          |
-| className                  | `string`                        | -              | Custom class name for the root element                       |
-| onSelectedChange           | `(isSelected: boolean) => void` | -              | Callback when selection state changes                        |
-| ...Animated.PressableProps | `AnimatedProps<PressableProps>` | -              | All Reanimated AnimatedPressable props are supported         |
+| prop                       | type                            | default        | description                                              |
+| -------------------------- | ------------------------------- | -------------- | -------------------------------------------------------- |
+| children                   | `React.ReactNode`               | -              | Content to render inside the form control                |
+| orientation                | `'horizontal' \| 'vertical'`    | `'horizontal'` | Layout orientation of the form control                   |
+| alignIndicator             | `'start' \| 'end'`              | `'end'`        | Alignment of the indicator (horizontal orientation only) |
+| isSelected                 | `boolean`                       | `undefined`    | Whether the control is selected/checked                  |
+| isDisabled                 | `boolean`                       | `false`        | Whether the form control is disabled                     |
+| isInvalid                  | `boolean`                       | `false`        | Whether the form control is invalid                      |
+| className                  | `string`                        | -              | Custom class name for the root element                   |
+| onSelectedChange           | `(isSelected: boolean) => void` | -              | Callback when selection state changes                    |
+| ...Animated.PressableProps | `AnimatedProps<PressableProps>` | -              | All Reanimated AnimatedPressable props are supported     |
 
 ### FormField.Content
 
@@ -286,6 +285,5 @@ export default function FormFieldExample() {
 | `isSelected`       | `boolean \| undefined`                         | Whether the control is selected/checked        |
 | `onSelectedChange` | `((isSelected: boolean) => void) \| undefined` | Callback when selection state changes          |
 | `isDisabled`       | `boolean`                                      | Whether the form control is disabled           |
-| `isInline`         | `boolean`                                      | Whether the form control is inline             |
 | `isInvalid`        | `boolean`                                      | Whether the form control is invalid            |
 | `isPressed`        | `SharedValue<boolean>`                         | Reanimated shared value indicating press state |

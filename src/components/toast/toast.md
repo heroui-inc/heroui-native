@@ -320,3 +320,51 @@ Insets for spacing from screen edges. Values are added to safe area insets.
 | `bottom` | `number` | -       | Inset from the bottom edge in pixels (added to safe area inset). Platform-specific: iOS = 6, Android = 12 |
 | `left`   | `number` | -       | Inset from the left edge in pixels (added to safe area inset). Default: 12                                |
 | `right`  | `number` | -       | Inset from the right edge in pixels (added to safe area inset). Default: 12                               |
+
+### useToast
+
+Hook to access toast functionality. Must be used within a `ToastProvider` (provided by `HeroUINativeProvider`).
+
+| return value     | type           | description                              |
+| ---------------- | -------------- | ---------------------------------------- |
+| `toast`          | `ToastManager` | Toast manager with show and hide methods |
+| `isToastVisible` | `boolean`      | Whether any toast is currently visible   |
+
+#### ToastManager
+
+| method | type                                              | description                                                                                                                          |
+| ------ | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `show` | `(options: string \| ToastShowOptions) => string` | Show a toast. Returns the ID of the shown toast. Supports three usage patterns: simple string, config object, or custom component    |
+| `hide` | `(ids?: string \| string[] \| 'all') => void`     | Hide one or more toasts. No argument hides the last toast, 'all' hides all toasts, single ID or array of IDs hides specific toast(s) |
+
+#### ToastShowOptions
+
+Options for showing a toast. Can be either a config object with default styling or a custom component.
+
+**When using config object (without component):**
+
+| prop            | type                                                                                                                              | default | description                                                                         |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------- |
+| `variant`       | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'`                                                                     | -       | Visual variant of the toast                                                         |
+| `placement`     | `'top' \| 'bottom'`                                                                                                               | -       | Placement of the toast on screen                                                    |
+| `isSwipeable`   | `boolean`                                                                                                                         | -       | Whether the toast can be swiped to dismiss                                          |
+| `animation`     | `ToastRootAnimation \| false \| "disabled" \| "disable-all"`                                                                      | -       | Animation configuration for toast                                                   |
+| `duration`      | `number \| 'persistent'`                                                                                                          | `4000`  | Duration in milliseconds before auto-hide. Set to 'persistent' to prevent auto-hide |
+| `id`            | `string`                                                                                                                          | -       | Optional ID for the toast. If not provided, one will be generated                   |
+| `label`         | `string`                                                                                                                          | -       | Label text for the toast                                                            |
+| `description`   | `string`                                                                                                                          | -       | Description text for the toast                                                      |
+| `actionLabel`   | `string`                                                                                                                          | -       | Action button label text                                                            |
+| `onActionPress` | `(helpers: { show: (options: string \| ToastShowOptions) => string; hide: (ids?: string \| string[] \| 'all') => void }) => void` | -       | Callback function called when the action button is pressed                          |
+| `icon`          | `React.ReactNode`                                                                                                                 | -       | Icon element to display in the toast                                                |
+| `onShow`        | `() => void`                                                                                                                      | -       | Callback function called when the toast is shown                                    |
+| `onHide`        | `() => void`                                                                                                                      | -       | Callback function called when the toast is hidden                                   |
+
+**When using custom component:**
+
+| prop        | type                                                 | default | description                                                                         |
+| ----------- | ---------------------------------------------------- | ------- | ----------------------------------------------------------------------------------- |
+| `id`        | `string`                                             | -       | Optional ID for the toast. If not provided, one will be generated                   |
+| `component` | `(props: ToastComponentProps) => React.ReactElement` | -       | A function that receives toast props and returns a React element                    |
+| `duration`  | `number \| 'persistent'`                             | `4000`  | Duration in milliseconds before auto-hide. Set to 'persistent' to prevent auto-hide |
+| `onShow`    | `() => void`                                         | -       | Callback function called when the toast is shown                                    |
+| `onHide`    | `() => void`                                         | -       | Callback function called when the toast is hidden                                   |

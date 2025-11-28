@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Toast, type ToastComponentProps } from 'heroui-native';
+import { Toast, useThemeColor, type ToastComponentProps } from 'heroui-native';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -19,6 +19,8 @@ const StyledIonicons = withUniwind(Ionicons);
  */
 export const AchievementToast = (props: ToastComponentProps) => {
   const { id, hide } = props;
+
+  const themeColorWarning = useThemeColor('warning');
 
   /**
    * Auto-hide toast after 5 seconds
@@ -179,7 +181,10 @@ export const AchievementToast = (props: ToastComponentProps) => {
         </View>
 
         {/* Close button */}
-        <Toast.Close className="absolute right-2 top-2" />
+        <Toast.Close
+          className="absolute right-2 top-2"
+          iconProps={{ color: themeColorWarning }}
+        />
       </View>
     </Toast>
   );

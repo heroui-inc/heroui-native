@@ -260,6 +260,8 @@ const ToastClose = forwardRef<View, ToastCloseProps>((props, ref) => {
   } = props;
   const { hide, id } = useToast();
 
+  const themeColorMuted = useThemeColor('muted');
+
   /**
    * Handle close button press
    * If hide and id are available from context, use them to hide the toast
@@ -286,7 +288,10 @@ const ToastClose = forwardRef<View, ToastCloseProps>((props, ref) => {
       {...restProps}
     >
       {children ?? (
-        <CloseIcon size={iconProps?.size ?? 16} color={iconProps?.color} />
+        <CloseIcon
+          size={iconProps?.size ?? 16}
+          color={iconProps?.color ?? themeColorMuted}
+        />
       )}
     </Button>
   );

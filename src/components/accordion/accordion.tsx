@@ -24,6 +24,7 @@ import type {
   AccordionContextValue,
   AccordionIndicatorProps,
   AccordionItemProps,
+  AccordionItemRenderProps,
   AccordionRootProps,
   AccordionTriggerProps,
 } from './accordion.types';
@@ -107,20 +108,47 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
 // ------------------------------------------------------------------------------
 
 const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
-  const { children, layout: layoutProp, className, ...restProps } = props;
-
-  const { layoutTransition } = useAccordionInnerContext();
+  const {
+    children,
+    value,
+    layout: layoutProp,
+    className,
+    isDisabled: isDisabledProp,
+    ...restProps
+  } = props;
 
   const tvStyles = accordionStyles.item({ className });
+
+  const { layoutTransition } = useAccordionInnerContext();
+  const { value: rootValue } = useAccordion();
+
+  const itemValue = value as string;
+
+  const isExpanded = Array.isArray(rootValue)
+    ? rootValue.includes(itemValue)
+    : rootValue === itemValue;
+
+  const renderProps: AccordionItemRenderProps = useMemo(
+    () => ({
+      isExpanded,
+      value: itemValue,
+    }),
+    [isExpanded, itemValue]
+  );
+
+  const content =
+    typeof children === 'function' ? children(renderProps) : children;
 
   return (
     <AnimatedItemView
       ref={ref}
-      className={tvStyles}
       layout={layoutProp || layoutTransition}
+      value={value}
+      className={tvStyles}
+      isDisabled={isDisabledProp}
       {...restProps}
     >
-      {children}
+      {content}
     </AnimatedItemView>
   );
 });

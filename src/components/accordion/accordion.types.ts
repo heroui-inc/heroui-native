@@ -65,13 +65,30 @@ export type AccordionRootProps = AnimatedProps<PrimitiveRootProps> & {
 };
 
 /**
+ * Render function props for accordion item children
+ */
+export type AccordionItemRenderProps = {
+  /**
+   * Whether the accordion item is currently expanded
+   */
+  isExpanded: boolean;
+  /**
+   * Unique value identifier for this accordion item
+   */
+  value: string;
+};
+
+/**
  * Props for the Accordion.Item component
  */
-export interface AccordionItemProps extends AnimatedProps<PrimitiveItemProps> {
+export interface AccordionItemProps
+  extends Omit<AnimatedProps<PrimitiveItemProps>, 'children'> {
   /**
-   * Children elements to be rendered inside the accordion item
+   * Children elements to be rendered inside the accordion item, or a render function
    */
-  children?: React.ReactNode;
+  children?:
+    | React.ReactNode
+    | ((props: AccordionItemRenderProps) => React.ReactNode);
   /**
    * Additional CSS classes
    */

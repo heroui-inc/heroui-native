@@ -5,7 +5,7 @@ import {
   View,
   type GestureResponderEvent,
 } from 'react-native';
-import { createContext, hasProp } from '../../helpers/utils';
+import { hasProp } from '../../helpers/utils';
 
 import { useSharedValue } from 'react-native-reanimated';
 import { Text } from '../../helpers/components/text';
@@ -16,6 +16,7 @@ import { ErrorView } from '../error-view';
 import type { ErrorViewRootProps } from '../error-view/error-view.types';
 import { Switch } from '../switch';
 import { DISPLAY_NAME } from './form-field.constants';
+import { FormFieldProvider, useFormField } from './form-field.context';
 import formFieldStyles from './form-field.styles';
 import type {
   FormFieldContextValue,
@@ -25,11 +26,6 @@ import type {
   FormFieldProps,
   FormFieldRenderProps,
 } from './form-field.types';
-
-const [FormFieldProvider, useFormField] = createContext<FormFieldContextValue>({
-  name: 'FormFieldContext',
-  strict: false,
-});
 
 // --------------------------------------------------
 
@@ -285,5 +281,5 @@ const CompoundFormField = Object.assign(FormField, {
   ErrorMessage: FormFieldErrorMessage,
 });
 
-export { useFormField };
+export { useFormField } from './form-field.context';
 export default CompoundFormField;

@@ -11,6 +11,7 @@ import { useSharedValue } from 'react-native-reanimated';
 import { DefaultToast } from '../../components/toast/toast';
 import { InsetsContainer } from './insets-container';
 import { toastReducer } from './reducer';
+import { ToastConfigContext } from './toast-config.context';
 import { ToastItemRenderer } from './toast-item-renderer';
 import type {
   ToastComponentProps,
@@ -28,13 +29,6 @@ const DEFAULT_DURATION = 4000;
  * Context for toast manager
  */
 const ToasterContext = createContext<ToasterContextValue | null>(null);
-
-/**
- * Context for global toast configuration
- */
-const ToastConfigContext = createContext<ToastGlobalConfig | undefined>(
-  undefined
-);
 
 /**
  * Merges global config with local config, ensuring local config takes precedence
@@ -427,19 +421,4 @@ export function useToast() {
     toast: context.toast,
     isToastVisible: context.isToastVisible,
   };
-}
-
-/**
- * Hook to access global toast configuration
- *
- * @returns Global toast configuration or undefined if not set
- *
- * @example
- * ```tsx
- * const globalConfig = useToastConfig();
- * // Use globalConfig.variant, globalConfig.placement, etc.
- * ```
- */
-export function useToastConfig(): ToastGlobalConfig | undefined {
-  return useContext(ToastConfigContext);
 }

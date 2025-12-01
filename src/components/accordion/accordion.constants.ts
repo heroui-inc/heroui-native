@@ -26,14 +26,6 @@ export const ACCORDION_LAYOUT_TRANSITION = LinearTransition.springify()
   .mass(4);
 
 /**
- * Highlight animation configuration
- */
-export const HIGHLIGHT_CONFIG = {
-  duration: 150,
-  easing: Easing.out(Easing.quad),
-};
-
-/**
  * Default icon size for the indicator
  */
 export const DEFAULT_ICON_SIZE = 16;

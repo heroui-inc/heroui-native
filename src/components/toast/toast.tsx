@@ -9,7 +9,7 @@ import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as ToastPrimitive from '../../primitives/toast';
 import type { ToastComponentProps } from '../../providers/toast';
-import { useToastConfig } from '../../providers/toast';
+import { useToastConfig } from '../../providers/toast/toast-config.context';
 import { Button } from '../button';
 import type { PressableFeedbackHighlightRootAnimation } from '../pressable-feedback';
 import { useToastRootAnimation } from './toast.animation';

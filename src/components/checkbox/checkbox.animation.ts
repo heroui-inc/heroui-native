@@ -13,7 +13,7 @@ import {
   getStyleProperties,
   getStyleTransform,
 } from '../../helpers/utils/animation';
-import { useFormField } from '../form-field';
+import { useFormField } from '../form-field/form-field.context';
 import type {
   CheckboxAnimationContextValue,
   CheckboxIndicatorAnimation,

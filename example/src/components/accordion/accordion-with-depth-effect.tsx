@@ -11,7 +11,6 @@ import {
   FormField,
   useAccordion,
   useAccordionItem,
-  useThemeColor,
 } from 'heroui-native';
 import { createContext, use, useState, type FC } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -172,8 +171,6 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
   const { value } = useAccordion();
   const { isExpanded } = useAccordionItem();
 
-  const themeColorSurfaceHover = useThemeColor('on-surface-hover');
-
   const selectedItemIndex = accordionData.findIndex(
     (accordionItem) => accordionItem.id === value
   );
@@ -243,11 +240,7 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
             cn('mt-6', depth && 'mt-4')
         )}
       >
-        <Accordion.Trigger
-          className="px-5"
-          highlightOpacity={depth ? 0 : 0.25}
-          highlightColor={themeColorSurfaceHover}
-        >
+        <Accordion.Trigger className="px-5">
           <View className={classNames.triggerContentContainer}>
             {item.icon}
             <AppText className={classNames.triggerTitle}>{item.title}</AppText>
@@ -291,7 +284,11 @@ export const AccordionWithDepthEffect: FC = () => {
         }}
       >
         <Accordion
-          layout={LAYOUT_TRANSITION}
+          animation={{
+            layout: {
+              value: LAYOUT_TRANSITION as any,
+            },
+          }}
           defaultValue="2"
           isDividerVisible={false}
           className="w-full overflow-visible"

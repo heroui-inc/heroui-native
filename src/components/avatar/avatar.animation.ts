@@ -1,11 +1,21 @@
+import type { ImageStyle } from 'react-native';
+import {
+  Easing,
+  FadeIn,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import type { AnimationRootDisableAll } from '../../helpers/types';
 import {
   getAnimationState,
+  getAnimationValueMergedConfig,
   getAnimationValueProperty,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
+  getStyleProperties,
 } from '../../helpers/utils/animation';
-import { useAvatarContext } from './avatar';
-import { DEFAULT_ENTERING_ANIMATION } from './avatar.constants';
+import * as AvatarPrimitives from '../../primitives/avatar';
+import { useInnerAvatarContext } from './avatar';
 import type {
   AvatarFallbackAnimation,
   AvatarImageAnimation,
@@ -33,30 +43,58 @@ export function useAvatarRootAnimation(options: {
 
 /**
  * Animation hook for Avatar Image component
- * Handles entering animation for the avatar image
+ * Handles opacity animation for the avatar image based on loading status
  */
 export function useAvatarImageAnimation(options: {
   animation: AvatarImageAnimation | undefined;
+  style: ImageStyle | undefined;
 }) {
-  const { animation } = options;
+  const { animation, style } = options;
 
-  const { isAllAnimationsDisabled } = useAvatarContext();
+  const { isAllAnimationsDisabled } = useInnerAvatarContext();
+  const { status } = AvatarPrimitives.useRootContext();
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
-  const isAnimationDisabledValue = animation
-    ? false
-    : isAnimationDisabled || (isAllAnimationsDisabled ?? false);
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    animation,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
-  // Entering animation
-  const enteringValue = getAnimationValueProperty({
-    animationValue: animationConfig?.entering,
+  // Opacity animation
+  const opacityValue = getAnimationValueProperty({
+    animationValue: animationConfig?.opacity,
     property: 'value',
-    defaultValue: DEFAULT_ENTERING_ANIMATION,
+    defaultValue: [0, 1] as [number, number],
+  });
+  const opacityTimingConfig = getAnimationValueMergedConfig({
+    animationValue: animationConfig?.opacity,
+    property: 'timingConfig',
+    defaultValue: { duration: 200, easing: Easing.in(Easing.ease) },
+  });
+
+  const styleProps = getStyleProperties(style, ['opacity']);
+
+  const rImageStyle = useAnimatedStyle(() => {
+    const isLoaded = status === 'loaded';
+    const targetOpacity = isLoaded ? opacityValue[1] : opacityValue[0];
+
+    if (isAnimationDisabledValue) {
+      return {
+        opacity: targetOpacity,
+        ...styleProps,
+      };
+    }
+
+    return {
+      opacity: withTiming(targetOpacity, opacityTimingConfig),
+      ...styleProps,
+    };
   });
 
   return {
-    entering: isAnimationDisabledValue ? undefined : enteringValue,
+    rImageStyle,
   };
 }
 
@@ -66,22 +104,27 @@ export function useAvatarImageAnimation(options: {
  */
 export function useAvatarFallbackAnimation(options: {
   animation: AvatarFallbackAnimation | undefined;
+  delayMs?: number;
 }) {
-  const { animation } = options;
+  const { animation, delayMs } = options;
 
-  const { isAllAnimationsDisabled } = useAvatarContext();
+  const { isAllAnimationsDisabled } = useInnerAvatarContext();
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
-  const isAnimationDisabledValue = animation
-    ? false
-    : isAnimationDisabled || (isAllAnimationsDisabled ?? false);
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    animation,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Entering animation
   const enteringValue = getAnimationValueProperty({
     animationValue: animationConfig?.entering,
     property: 'value',
-    defaultValue: DEFAULT_ENTERING_ANIMATION,
+    defaultValue: FadeIn.duration(200)
+      .easing(Easing.in(Easing.ease))
+      .delay(delayMs ?? 0),
   });
 
   return {

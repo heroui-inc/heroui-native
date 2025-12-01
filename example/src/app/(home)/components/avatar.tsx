@@ -3,7 +3,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, cn } from 'heroui-native';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -38,6 +39,55 @@ const SizesContent = () => {
           />
           <Avatar.Fallback>LG</Avatar.Fallback>
         </Avatar>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const ImageAndFallbackStatesContent = () => {
+  const [imageKey, setImageKey] = useState(20);
+  const [useInvalidSource, setUseInvalidSource] = useState(false);
+
+  const handleRandomImage = () => {
+    const randomKey = Math.floor(Math.random() * 100);
+    setImageKey(randomKey);
+    setUseInvalidSource(false);
+  };
+
+  const handleInvalidImage = () => {
+    setUseInvalidSource(true);
+    setImageKey((prev) => prev + 1);
+  };
+
+  const imageSource = useInvalidSource
+    ? null
+    : { uri: `https://img.heroui.chat/image/avatar?w=400&h=400&u=${imageKey}` };
+
+  return (
+    <View className="flex-1 px-5 items-center justify-center gap-6">
+      <Avatar size="lg" alt="Large Avatar" key={`avatar-${imageKey}`}>
+        <Avatar.Image source={imageSource} />
+        <Avatar.Fallback>LG</Avatar.Fallback>
+      </Avatar>
+      <View className="flex-row gap-3">
+        <Pressable
+          onPress={handleRandomImage}
+          className="bg-accent px-6 py-3 rounded-lg active:opacity-70"
+        >
+          <Text className="text-white text-center font-medium">
+            Random Image
+          </Text>
+        </Pressable>
+        <Pressable
+          onPress={handleInvalidImage}
+          className="bg-danger px-6 py-3 rounded-lg active:opacity-70"
+        >
+          <Text className="text-white text-center font-medium">
+            Invalid Image
+          </Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -322,45 +372,50 @@ const CustomStylesContent = () => {
 
 const AVATAR_VARIANTS: UsageVariant[] = [
   {
-    value: 'sizes',
-    label: 'Sizes',
-    content: <SizesContent />,
+    value: 'image-and-fallback-states',
+    label: 'Image & Fallback States',
+    content: <ImageAndFallbackStatesContent />,
   },
-  {
-    value: 'default-text-fallback',
-    label: 'Default text fallback',
-    content: <DefaultTextFallbackContent />,
-  },
-  {
-    value: 'soft-text-fallback',
-    label: 'Soft text fallback',
-    content: <SoftTextFallbackContent />,
-  },
-  {
-    value: 'default-icon-fallback',
-    label: 'Default icon fallback',
-    content: <DefaultIconFallbackContent />,
-  },
-  {
-    value: 'soft-icon-fallback',
-    label: 'Soft icon fallback',
-    content: <SoftIconFallbackContent />,
-  },
-  {
-    value: 'custom-fallback',
-    label: 'Custom fallback',
-    content: <CustomFallbackContent />,
-  },
-  {
-    value: 'avatar-group',
-    label: 'Avatar group',
-    content: <AvatarGroupContent />,
-  },
-  {
-    value: 'custom-styles',
-    label: 'Custom styles',
-    content: <CustomStylesContent />,
-  },
+  // {
+  //   value: 'sizes',
+  //   label: 'Sizes',
+  //   content: <SizesContent />,
+  // },
+  // {
+  //   value: 'default-text-fallback',
+  //   label: 'Default text fallback',
+  //   content: <DefaultTextFallbackContent />,
+  // },
+  // {
+  //   value: 'soft-text-fallback',
+  //   label: 'Soft text fallback',
+  //   content: <SoftTextFallbackContent />,
+  // },
+  // {
+  //   value: 'default-icon-fallback',
+  //   label: 'Default icon fallback',
+  //   content: <DefaultIconFallbackContent />,
+  // },
+  // {
+  //   value: 'soft-icon-fallback',
+  //   label: 'Soft icon fallback',
+  //   content: <SoftIconFallbackContent />,
+  // },
+  // {
+  //   value: 'custom-fallback',
+  //   label: 'Custom fallback',
+  //   content: <CustomFallbackContent />,
+  // },
+  // {
+  //   value: 'avatar-group',
+  //   label: 'Avatar group',
+  //   content: <AvatarGroupContent />,
+  // },
+  // {
+  //   value: 'custom-styles',
+  //   label: 'Custom styles',
+  //   content: <CustomStylesContent />,
+  // },
 ];
 
 export default function AvatarScreen() {

@@ -2,6 +2,7 @@ import type { ImageProps, TextProps } from 'react-native';
 import type {
   AnimatedProps,
   EntryOrExitLayoutType,
+  WithTimingConfig,
 } from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
 import type {
@@ -78,11 +79,17 @@ export interface AvatarRootProps extends PrimitiveRootProps {
  * Animation configuration for avatar image component
  */
 export type AvatarImageAnimation = Animation<{
-  entering?: AnimationValue<{
+  opacity?: AnimationValue<{
     /**
-     * Custom entering animation for image
+     * Opacity values [initial, loaded] for image animation
+     * @default [0, 1]
      */
-    value?: EntryOrExitLayoutType;
+    value?: [number, number];
+    /**
+     * Animation timing configuration
+     * @default { duration: 150 }
+     */
+    timingConfig?: WithTimingConfig;
   }>;
 }>;
 

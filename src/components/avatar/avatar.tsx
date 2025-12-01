@@ -1,5 +1,5 @@
-import { forwardRef, useEffect, useMemo, useState } from 'react';
-import type { ImageSourcePropType } from 'react-native';
+import { forwardRef, useMemo } from 'react';
+import type { ImageSourcePropType, ImageStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
 import { useThemeColor } from '../../helpers/theme';
@@ -33,9 +33,16 @@ const AnimatedFallback = Animated.createAnimatedComponent(
   AvatarPrimitives.Fallback
 );
 
-const [AvatarProvider, useAvatarContext] = createContext<AvatarContextValue>({
-  name: 'AvatarContext',
-});
+export const [AvatarProvider, useInnerAvatarContext] =
+  createContext<AvatarContextValue>({
+    name: 'AvatarContext',
+  });
+
+/**
+ * Hook to access Avatar primitive root context
+ * Provides access to avatar status and other root-level state
+ */
+const useAvatar = AvatarPrimitives.useRootContext;
 
 // --------------------------------------------------
 
@@ -89,29 +96,39 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
 
 const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
   (props, ref) => {
-    const { className } = props;
-    const animation =
-      'asChild' in props && props.asChild
-        ? undefined
-        : 'animation' in props
-          ? props.animation
-          : undefined;
+    const {
+      className,
+      style: styleProp,
+      source,
+      asChild,
+      ...restProps
+    } = props;
 
-    const { entering } = useAvatarImageAnimation({
+    const animation = asChild
+      ? undefined
+      : 'animation' in props
+        ? props.animation
+        : undefined;
+
+    const normalizedStyle =
+      styleProp && typeof styleProp === 'object' && !Array.isArray(styleProp)
+        ? (styleProp as ImageStyle)
+        : undefined;
+
+    const { rImageStyle } = useAvatarImageAnimation({
       animation,
+      style: normalizedStyle,
     });
 
     const tvStyles = avatarStyles.image({
       className,
     });
 
-    if (props.asChild) {
+    if (asChild) {
       return (
         <AvatarPrimitives.Image ref={ref} className={tvStyles} {...props} />
       );
     }
-
-    const { source, ...restProps } = props;
 
     return (
       <AvatarPrimitives.Image
@@ -120,8 +137,7 @@ const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
         asChild
       >
         <Animated.Image
-          key={AVATAR_DISPLAY_NAME.IMAGE}
-          entering={entering}
+          style={[rImageStyle, styleProp]}
           className={tvStyles}
           {...restProps}
         />
@@ -162,39 +178,24 @@ const DefaultFallbackIcon: React.FC<{
 
 const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
   (props, ref) => {
-    const { size, color: contextColor } = useAvatarContext();
+    const { size, color: contextColor } = useInnerAvatarContext();
 
     const {
       children,
-      delayMs = 0,
       color: colorProp,
       className,
       classNames,
       textProps,
       iconProps,
       style,
+      delayMs,
       animation,
       ...restProps
     } = props;
 
-    const [isVisible, setIsVisible] = useState(delayMs === 0);
-
-    useEffect(() => {
-      if (delayMs > 0) {
-        const timer = setTimeout(() => {
-          setIsVisible(true);
-        }, delayMs);
-
-        return () => clearTimeout(timer);
-      }
-      return undefined;
-    }, [delayMs]);
+    const stringifiedChildren = childrenToString(children);
 
     const color = colorProp ?? contextColor;
-
-    const { entering } = useAvatarFallbackAnimation({
-      animation,
-    });
 
     const { container, text } = avatarStyles.fallback({
       size,
@@ -209,11 +210,10 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
       className: [classNames?.text, textProps?.className],
     });
 
-    if (!isVisible) {
-      return null;
-    }
-
-    const stringifiedChildren = childrenToString(children);
+    const { entering } = useAvatarFallbackAnimation({
+      animation,
+      delayMs,
+    });
 
     return (
       <AnimatedFallback
@@ -275,4 +275,4 @@ const Avatar = Object.assign(AvatarRoot, {
 });
 
 export default Avatar;
-export { useAvatarContext };
+export { Avatar, useAvatar };

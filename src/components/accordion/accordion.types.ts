@@ -4,7 +4,6 @@ import type {
   EntryOrExitLayoutType,
   LayoutAnimationFunction,
   WithSpringConfig,
-  WithTimingConfig,
 } from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
 import type {
@@ -91,24 +90,6 @@ export interface AccordionTriggerProps extends PrimitiveTriggerProps {
    * Additional CSS classes
    */
   className?: string;
-  /**
-   * Custom highlight color for press feedback
-   */
-  highlightColor?: string;
-  /**
-   * Custom highlight opacity for press feedback
-   * @default 0.5
-   */
-  highlightOpacity?: number;
-  /**
-   * Custom timing config for highlight animation
-   */
-  highlightTimingConfig?: WithTimingConfig;
-  /**
-   * Whether to show the highlight on press
-   * @default true
-   */
-  isHighlightVisible?: boolean;
 }
 
 /**

@@ -117,6 +117,33 @@ Hide the dividers between accordion items.
 </Accordion>
 ```
 
+### With PressableFeedback
+
+Wrap `Accordion.Trigger` with `PressableFeedback` to add custom press feedback animations.
+
+```tsx
+import { Accordion, PressableFeedback } from 'heroui-native';
+
+<Accordion selectionMode="single">
+  <Accordion.Item value="1">
+    <PressableFeedback
+      feedbackVariant="highlight"
+      animation={{
+        highlight: {
+          opacity: { value: [0, 0.05] },
+        },
+      }}
+    >
+      <Accordion.Trigger>
+        <Text>Item Title</Text>
+        <Accordion.Indicator />
+      </Accordion.Trigger>
+    </PressableFeedback>
+    <Accordion.Content>...</Accordion.Content>
+  </Accordion.Item>
+</Accordion>
+```
+
 ## Example
 
 ```tsx
@@ -192,7 +219,7 @@ export default function AccordionExample() {
 
 - **Accordion**: Main container that manages the accordion state and behavior. Controls expansion/collapse of items, supports single or multiple selection modes, and provides variant styling (default or surface).
 - **Accordion.Item**: Container for individual accordion items. Wraps the trigger and content, managing the expanded state for each item.
-- **Accordion.Trigger**: Interactive element that toggles item expansion. Built on Header and Trigger primitives, includes press feedback animation.
+- **Accordion.Trigger**: Interactive element that toggles item expansion. Built on Header and Trigger primitives.
 - **Accordion.Indicator**: Optional visual indicator showing expansion state. Defaults to an animated chevron icon that rotates based on item state.
 - **Accordion.Content**: Container for expandable content. Animated with layout transitions for smooth expand/collapse effects.
 
@@ -234,16 +261,12 @@ export default function AccordionExample() {
 
 ### Accordion.Trigger
 
-| prop                    | type               | default | description                                             |
-| ----------------------- | ------------------ | ------- | ------------------------------------------------------- |
-| `children`              | `React.ReactNode`  | -       | Children elements to be rendered inside the trigger     |
-| `className`             | `string`           | -       | Additional CSS classes                                  |
-| `highlightColor`        | `string`           | -       | Custom highlight color for press feedback               |
-| `highlightOpacity`      | `number`           | `0.5`   | Custom highlight opacity for press feedback             |
-| `highlightTimingConfig` | `WithTimingConfig` | -       | Reanimated timing configuration for highlight animation |
-| `isHighlightVisible`    | `boolean`          | `true`  | Whether to show the highlight on press                  |
-| `isDisabled`            | `boolean`          | -       | Whether the trigger is disabled                         |
-| `...PressableProps`     | `PressableProps`   | -       | All standard React Native Pressable props are supported |
+| prop                | type                                      | default | description                                             |
+| ------------------- | ----------------------------------------- | ------- | ------------------------------------------------------- |
+| `children`          | `React.ReactNode`                         | -       | Children elements to be rendered inside the trigger     |
+| `className`         | `string`                                  | -       | Additional CSS classes                                  |
+| `isDisabled`        | `boolean`                                 | -       | Whether the trigger is disabled                         |
+| `...PressableProps` | `PressableProps`                          | -       | All standard React Native Pressable props are supported |
 
 ### Accordion.Indicator
 

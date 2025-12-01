@@ -1,11 +1,10 @@
 import { Children, forwardRef, useEffect, useMemo } from 'react';
-import { StyleSheet, View, type GestureResponderEvent } from 'react-native';
+import { View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-  withTiming,
 } from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/theme/hooks/use-theme-color';
 import type { ViewRef } from '../../helpers/types';
@@ -17,7 +16,6 @@ import {
   DEFAULT_CONTENT_EXITING,
   DEFAULT_ICON_SIZE,
   DISPLAY_NAME,
-  HIGHLIGHT_CONFIG,
   INDICATOR_SPRING_CONFIG,
 } from './accordion.constants';
 import accordionStyles, { styleSheet } from './accordion.styles';
@@ -130,79 +128,18 @@ const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
 // ------------------------------------------------------------------------------
 
 const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
-  const {
-    children,
-    className,
-    highlightColor,
-    highlightOpacity: highlightOpacityProp = 0.5,
-    highlightTimingConfig,
-    isHighlightVisible = true,
-    ...restProps
-  } = props;
+  const { children, className, ...restProps } = props;
 
   const { variant } = useAccordionInnerContext();
-
-  const themeColorForeground = useThemeColor('background-secondary');
-  const themeColorSurfaceHover = useThemeColor('on-surface-hover');
 
   const tvStyles = accordionStyles.trigger({
     variant,
     className,
   });
 
-  const highlightOpacity = useSharedValue(0);
-
-  const handlePressIn = (event: GestureResponderEvent) => {
-    if (isHighlightVisible) {
-      highlightOpacity.set(
-        withTiming(
-          1,
-          highlightTimingConfig || {
-            duration: HIGHLIGHT_CONFIG.duration,
-            easing: HIGHLIGHT_CONFIG.easing,
-          }
-        )
-      );
-    }
-    restProps.onPressIn?.(event);
-  };
-
-  const handlePressOut = (event: GestureResponderEvent) => {
-    if (isHighlightVisible) {
-      highlightOpacity.set(
-        withTiming(
-          0,
-          highlightTimingConfig || {
-            duration: HIGHLIGHT_CONFIG.duration,
-            easing: HIGHLIGHT_CONFIG.easing,
-          }
-        )
-      );
-    }
-    restProps.onPressOut?.(event);
-  };
-
-  const animatedHighlightStyle = useAnimatedStyle(() => ({
-    opacity: highlightOpacity.get() * highlightOpacityProp,
-    backgroundColor:
-      highlightColor ||
-      (variant === 'surface' ? themeColorSurfaceHover : themeColorForeground),
-  }));
-
   return (
     <AccordionPrimitive.Header>
-      <AccordionPrimitive.Trigger
-        ref={ref}
-        className={tvStyles}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        {...restProps}
-      >
-        {isHighlightVisible && (
-          <Animated.View
-            style={[StyleSheet.absoluteFill, animatedHighlightStyle]}
-          />
-        )}
+      <AccordionPrimitive.Trigger ref={ref} className={tvStyles} {...restProps}>
         {children}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
@@ -307,7 +244,7 @@ Content.displayName = DISPLAY_NAME.CONTENT;
  * Wraps the trigger and content, managing the expanded state for each item.
  *
  * @component Accordion.Trigger - Interactive element that toggles item expansion.
- * Built on Header and Trigger primitives, includes press feedback animation.
+ * Built on Header and Trigger primitives.
  *
  * @component Accordion.Indicator - Optional visual indicator showing expansion state.
  * Defaults to an animated chevron icon that rotates based on item state.
@@ -323,7 +260,7 @@ Content.displayName = DISPLAY_NAME.CONTENT;
 const CompoundAccordion = Object.assign(Root, {
   /** @required Container for individual accordion items */
   Item,
-  /** @required Interactive trigger element with press feedback */
+  /** @required Interactive trigger element */
   Trigger,
   /** @optional Visual indicator showing expansion state (defaults to chevron) */
   Indicator,

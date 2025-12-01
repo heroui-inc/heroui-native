@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 import { usePathname, useRouter } from 'expo-router';
 import { Accordion, useToast } from 'heroui-native';
 import { useEffect } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
@@ -125,8 +126,12 @@ export default function App() {
         {components.map((item) => (
           <Accordion.Item key={item.title} value={item.title}>
             <Accordion.Trigger
-              highlightOpacity={0.25}
-              onPress={() => router.push(`/components/${item.path}`)}
+              onPress={() => {
+                if (Platform.OS === 'ios') {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                }
+                router.push(`/components/${item.path}`);
+              }}
             >
               <AppText className="text-foreground text-base ml-1">
                 {item.title}

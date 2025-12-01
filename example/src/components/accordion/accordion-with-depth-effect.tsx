@@ -284,7 +284,11 @@ export const AccordionWithDepthEffect: FC = () => {
         }}
       >
         <Accordion
-          layout={LAYOUT_TRANSITION}
+          animation={{
+            layout: {
+              value: LAYOUT_TRANSITION as any,
+            },
+          }}
           defaultValue="2"
           isDividerVisible={false}
           className="w-full overflow-visible"

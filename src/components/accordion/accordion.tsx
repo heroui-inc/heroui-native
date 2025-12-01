@@ -1,22 +1,21 @@
-import { Children, forwardRef, useEffect, useMemo } from 'react';
-import { View } from 'react-native';
-import Animated, {
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated';
+import { Children, forwardRef, useMemo } from 'react';
+import { View, type ViewStyle } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/theme/hooks/use-theme-color';
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
 import * as AccordionPrimitive from '../../primitives/accordion';
 import {
+  AccordionAnimationProvider,
+  useAccordionAnimation,
+  useAccordionContentAnimation,
+  useAccordionIndicatorAnimation,
+  useAccordionRootAnimation,
+} from './accordion.animation';
+import {
   ACCORDION_LAYOUT_TRANSITION,
-  DEFAULT_CONTENT_ENTERING,
-  DEFAULT_CONTENT_EXITING,
   DEFAULT_ICON_SIZE,
   DISPLAY_NAME,
-  INDICATOR_SPRING_CONFIG,
 } from './accordion.constants';
 import accordionStyles, { styleSheet } from './accordion.styles';
 import type {
@@ -63,6 +62,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     classNames,
     style,
     layout = ACCORDION_LAYOUT_TRANSITION,
+    animation,
     ...restProps
   } = props;
 
@@ -74,33 +74,50 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
 
   const dividerStyles = divider({ className: classNames?.divider });
 
+  const { layoutTransition, isAllAnimationsDisabled } =
+    useAccordionRootAnimation({
+      animation,
+      layout,
+    });
+
   const contextValue: AccordionContextValue = useMemo(
     () => ({
       variant,
-      isDividerVisible,
-      layoutTransition: layout,
     }),
-    [variant, isDividerVisible, layout]
+    [variant]
+  );
+
+  const animationContextValue = useMemo(
+    () => ({
+      isAllAnimationsDisabled,
+      layoutTransition,
+    }),
+    [isAllAnimationsDisabled, layoutTransition]
   );
 
   return (
     <AccordionInnerProvider value={contextValue}>
-      <AnimatedRootView
-        ref={ref}
-        className={containerStyles}
-        style={[styleSheet.root, style]}
-        layout={layout}
-        {...restProps}
-      >
-        {Children.map(children, (child, index) => (
-          <>
-            {child}
-            {isDividerVisible && index < Children.count(children) - 1 && (
-              <Animated.View className={dividerStyles} layout={layout} />
-            )}
-          </>
-        ))}
-      </AnimatedRootView>
+      <AccordionAnimationProvider value={animationContextValue}>
+        <AnimatedRootView
+          ref={ref}
+          className={containerStyles}
+          style={[styleSheet.root, style]}
+          layout={layoutTransition}
+          {...restProps}
+        >
+          {Children.map(children, (child, index) => (
+            <>
+              {child}
+              {isDividerVisible && index < Children.count(children) - 1 && (
+                <Animated.View
+                  className={dividerStyles}
+                  layout={layoutTransition}
+                />
+              )}
+            </>
+          ))}
+        </AnimatedRootView>
+      </AccordionAnimationProvider>
     </AccordionInnerProvider>
   );
 });
@@ -119,7 +136,7 @@ const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
 
   const tvStyles = accordionStyles.item({ className });
 
-  const { layoutTransition } = useAccordionInnerContext();
+  const { layoutTransition } = useAccordionAnimation();
   const { value: rootValue } = useAccordion();
 
   const itemValue = value as string;
@@ -177,7 +194,8 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 // ------------------------------------------------------------------------------
 
 const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
-  const { children, className, iconProps, springConfig, ...restProps } = props;
+  const { children, className, iconProps, animation, style, ...restProps } =
+    props;
 
   const { isExpanded } = useAccordionItem();
 
@@ -185,22 +203,10 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
 
   const tvStyles = accordionStyles.indicator({ className });
 
-  const rotation = useSharedValue(0);
-
-  useEffect(() => {
-    rotation.set(
-      withSpring(isExpanded ? 1 : 0, springConfig || INDICATOR_SPRING_CONFIG)
-    );
-  }, [isExpanded, rotation, springConfig]);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          rotate: interpolate(rotation.get(), [0, 1], [0, -180]) + 'deg',
-        },
-      ],
-    };
+  const { rContainerStyle } = useAccordionIndicatorAnimation({
+    animation,
+    style: style as ViewStyle | undefined,
+    isExpanded,
   });
 
   if (children) {
@@ -215,7 +221,7 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
     <AnimatedIndicator
       ref={ref}
       className={tvStyles}
-      style={animatedStyle}
+      style={rContainerStyle}
       {...restProps}
     >
       <ChevronDownIcon
@@ -229,23 +235,26 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
 // ------------------------------------------------------------------------------
 
 const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
-  const { children, className, entering, exiting, ...restProps } = props;
+  const { children, className, animation, ...restProps } = props;
 
   const { variant } = useAccordionInnerContext();
 
-  const { isExpanded } = useAccordionItem();
+  const { isExpanded, isDisabled } = useAccordionItem();
 
   const tvStyles = accordionStyles.content({ variant, className });
+
+  const { entering: animatedEntering, exiting: animatedExiting } =
+    useAccordionContentAnimation({
+      animation,
+      isDisabled,
+    });
 
   if (!isExpanded) {
     return null;
   }
 
   return (
-    <Animated.View
-      entering={entering || DEFAULT_CONTENT_ENTERING}
-      exiting={exiting || DEFAULT_CONTENT_EXITING}
-    >
+    <Animated.View entering={animatedEntering} exiting={animatedExiting}>
       <AccordionPrimitive.Content ref={ref} className={tvStyles} {...restProps}>
         {children}
       </AccordionPrimitive.Content>

@@ -289,23 +289,29 @@ const CustomEnteringAnimationContent = () => {
                 </AppText>
               </View>
               <Accordion.Indicator
-                springConfig={
-                  index === 0
-                    ? { damping: 60, stiffness: 900, mass: 3 }
-                    : index === 1
-                      ? { damping: 50, stiffness: 900, mass: 3 }
-                      : { damping: 40, stiffness: 900, mass: 3 }
-                }
+                animation={{
+                  rotation: {
+                    springConfig:
+                      index === 0
+                        ? { damping: 60, stiffness: 900, mass: 3 }
+                        : index === 1
+                          ? { damping: 50, stiffness: 900, mass: 3 }
+                          : { damping: 40, stiffness: 900, mass: 3 },
+                  },
+                }}
               />
             </Accordion.Trigger>
             <Accordion.Content
-              entering={
-                index === 0
-                  ? FadeInRight.delay(50).easing(Easing.inOut(Easing.ease))
-                  : index === 1
-                    ? FadeInLeft.delay(50).easing(Easing.inOut(Easing.ease))
-                    : ZoomIn.delay(50).easing(Easing.out(Easing.exp))
-              }
+              animation={{
+                entering: {
+                  value:
+                    index === 0
+                      ? FadeInRight.delay(50).easing(Easing.inOut(Easing.ease))
+                      : index === 1
+                        ? FadeInLeft.delay(50).easing(Easing.inOut(Easing.ease))
+                        : ZoomIn.delay(50).easing(Easing.out(Easing.exp)),
+                },
+              }}
             >
               <AppText className={classNames.contentText}>
                 {item.content}

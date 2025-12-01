@@ -275,21 +275,25 @@ Content.displayName = DISPLAY_NAME.CONTENT;
  *
  * @component Accordion - Main container that manages the accordion state and behavior.
  * Controls expansion/collapse of items, supports single or multiple selection modes,
- * and provides variant styling (default or border).
+ * and provides variant styling (default or surface).
  *
  * @component Accordion.Item - Container for individual accordion items.
  * Wraps the trigger and content, managing the expanded state for each item.
+ * Supports render function children that receive expansion state.
  *
  * @component Accordion.Trigger - Interactive element that toggles item expansion.
  * Built on Header and Trigger primitives.
  *
  * @component Accordion.Indicator - Optional visual indicator showing expansion state.
  * Defaults to an animated chevron icon that rotates based on item state.
+ * Supports custom animation configuration.
  *
  * @component Accordion.Content - Container for expandable content.
  * Animated with layout transitions for smooth expand/collapse effects.
+ * Supports custom entering and exiting animations.
  *
- * Props flow from Accordion to sub-components via context (variant, isDividerVisible).
+ * Props flow from Accordion to sub-components via context (variant).
+ * Animation state flows via AccordionAnimationProvider.
  * Item expansion state is managed by the primitive accordion context.
  *
  * @see Full documentation: https://heroui.com/components/accordion

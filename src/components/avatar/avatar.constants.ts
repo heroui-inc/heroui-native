@@ -11,9 +11,9 @@ export const AVATAR_DISPLAY_NAME = {
 };
 
 /**
- * Animation configuration for fade in effect
+ * Default entering animation for avatar components
  */
-export const AVATAR_ENTERING_ANIMATION = FadeIn.duration(200).easing(
+export const DEFAULT_ENTERING_ANIMATION = FadeIn.duration(200).easing(
   Easing.in(Easing.ease)
 );
 

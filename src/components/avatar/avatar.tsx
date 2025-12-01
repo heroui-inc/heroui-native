@@ -6,9 +6,13 @@ import { useThemeColor } from '../../helpers/theme';
 import { childrenToString, createContext } from '../../helpers/utils';
 import * as AvatarPrimitives from '../../primitives/avatar';
 import {
+  useAvatarFallbackAnimation,
+  useAvatarImageAnimation,
+  useAvatarRootAnimation,
+} from './avatar.animation';
+import {
   AVATAR_DEFAULT_ICON_SIZE,
   AVATAR_DISPLAY_NAME,
-  AVATAR_ENTERING_ANIMATION,
 } from './avatar.constants';
 import avatarStyles, { styleSheet } from './avatar.styles';
 import type {
@@ -43,6 +47,7 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
     color = 'accent',
     className,
     style,
+    animation,
     ...restProps
   } = props;
 
@@ -53,12 +58,17 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
     className,
   });
 
+  const { isAllAnimationsDisabled } = useAvatarRootAnimation({
+    animation,
+  });
+
   const contextValue = useMemo(
     () => ({
       size,
       color,
+      isAllAnimationsDisabled,
     }),
-    [size, color]
+    [size, color, isAllAnimationsDisabled]
   );
 
   return (
@@ -79,28 +89,29 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
 
 const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
   (props, ref) => {
-    if (props.asChild) {
-      const { className, ...restProps } = props;
+    const { className } = props;
+    const animation =
+      'asChild' in props && props.asChild
+        ? undefined
+        : 'animation' in props
+          ? props.animation
+          : undefined;
 
-      const tvStyles = avatarStyles.image({
-        className,
-      });
-
-      return (
-        <AvatarPrimitives.Image ref={ref} className={tvStyles} {...restProps} />
-      );
-    }
-
-    const {
-      className,
-      entering = AVATAR_ENTERING_ANIMATION,
-      source,
-      ...restProps
-    } = props;
+    const { entering } = useAvatarImageAnimation({
+      animation,
+    });
 
     const tvStyles = avatarStyles.image({
       className,
     });
+
+    if (props.asChild) {
+      return (
+        <AvatarPrimitives.Image ref={ref} className={tvStyles} {...props} />
+      );
+    }
+
+    const { source, ...restProps } = props;
 
     return (
       <AvatarPrimitives.Image
@@ -151,11 +162,10 @@ const DefaultFallbackIcon: React.FC<{
 
 const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
   (props, ref) => {
-    const contextValue = useAvatarContext();
+    const { size, color: contextColor } = useAvatarContext();
 
     const {
       children,
-      entering = AVATAR_ENTERING_ANIMATION,
       delayMs = 0,
       color: colorProp,
       className,
@@ -163,6 +173,7 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
       textProps,
       iconProps,
       style,
+      animation,
       ...restProps
     } = props;
 
@@ -179,8 +190,11 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
       return undefined;
     }, [delayMs]);
 
-    const size = contextValue.size;
-    const color = colorProp ?? contextValue.color;
+    const color = colorProp ?? contextColor;
+
+    const { entering } = useAvatarFallbackAnimation({
+      animation,
+    });
 
     const { container, text } = avatarStyles.fallback({
       size,

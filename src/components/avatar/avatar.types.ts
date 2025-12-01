@@ -1,6 +1,14 @@
 import type { ImageProps, TextProps } from 'react-native';
-import type { AnimatedProps } from 'react-native-reanimated';
+import type {
+  AnimatedProps,
+  EntryOrExitLayoutType,
+} from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
+import type {
+  Animation,
+  AnimationRootDisableAll,
+  AnimationValue,
+} from '../../helpers/types/animation';
 import type {
   FallbackProps as PrimitiveFallbackProps,
   FallbackRef as PrimitiveFallbackRef,
@@ -57,7 +65,26 @@ export interface AvatarRootProps extends PrimitiveRootProps {
    * Additional CSS classes
    */
   className?: string;
+
+  /**
+   * Animation configuration for avatar
+   * - `"disable-all"`: Disable all animations including children
+   * - `undefined`: Use default animations
+   */
+  animation?: AnimationRootDisableAll;
 }
+
+/**
+ * Animation configuration for avatar image component
+ */
+export type AvatarImageAnimation = Animation<{
+  entering?: AnimationValue<{
+    /**
+     * Custom entering animation for image
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
+}>;
 
 /**
  * Props for the Avatar image component
@@ -73,6 +100,13 @@ export type AvatarImageProps =
        * Whether to use the default image directly
        */
       asChild?: false;
+      /**
+       * Animation configuration for image
+       * - `false` or `"disabled"`: Disable all animations
+       * - `true` or `undefined`: Use default animations
+       * - `object`: Custom animation configuration
+       */
+      animation?: AvatarImageAnimation;
     })
   | (PrimitiveImageProps & {
       /**
@@ -84,6 +118,18 @@ export type AvatarImageProps =
        */
       asChild: true;
     });
+
+/**
+ * Animation configuration for avatar fallback component
+ */
+export type AvatarFallbackAnimation = Animation<{
+  entering?: AnimationValue<{
+    /**
+     * Custom entering animation for fallback
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
+}>;
 
 /**
  * Props for the Avatar fallback component
@@ -122,6 +168,14 @@ export interface AvatarFallbackProps
    * Props to pass to the default icon when no children are provided
    */
   iconProps?: PersonIconProps;
+
+  /**
+   * Animation configuration for fallback
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: AvatarFallbackAnimation;
 }
 
 /**
@@ -137,6 +191,11 @@ export interface AvatarContextValue {
    * Current color variant of the avatar
    */
   color: AvatarColor;
+
+  /**
+   * Whether all animations should be disabled (cascading from root)
+   */
+  isAllAnimationsDisabled?: boolean;
 }
 
 /** Reference type for the Avatar root component */

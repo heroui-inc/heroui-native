@@ -16,7 +16,7 @@ import {
   getStyleProperties,
   getStyleTransform,
 } from '../../helpers/utils/animation';
-import { useFormField } from '../form-field/form-field';
+import { useFormField } from '../form-field/form-field.context';
 import {
   DEFAULT_SPRING_CONFIG,
   DEFAULT_THUMB_LEFT,

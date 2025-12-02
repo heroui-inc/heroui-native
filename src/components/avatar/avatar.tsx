@@ -3,7 +3,7 @@ import type { ImageSourcePropType, ImageStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
 import { useThemeColor } from '../../helpers/theme';
-import { childrenToString, createContext } from '../../helpers/utils';
+import { childrenToString } from '../../helpers/utils';
 import * as AvatarPrimitives from '../../primitives/avatar';
 import {
   useAvatarFallbackAnimation,
@@ -14,10 +14,10 @@ import {
   AVATAR_DEFAULT_ICON_SIZE,
   AVATAR_DISPLAY_NAME,
 } from './avatar.constants';
+import { AvatarProvider, useInnerAvatarContext } from './avatar.context';
 import avatarStyles, { styleSheet } from './avatar.styles';
 import type {
   AvatarColor,
-  AvatarContextValue,
   AvatarFallbackProps,
   AvatarFallbackRef,
   AvatarImageProps,
@@ -32,11 +32,6 @@ import { PersonIcon } from './person-icon';
 const AnimatedFallback = Animated.createAnimatedComponent(
   AvatarPrimitives.Fallback
 );
-
-export const [AvatarProvider, useInnerAvatarContext] =
-  createContext<AvatarContextValue>({
-    name: 'AvatarContext',
-  });
 
 /**
  * Hook to access Avatar primitive root context

@@ -15,7 +15,7 @@ import {
   getStyleProperties,
 } from '../../helpers/utils/animation';
 import * as AvatarPrimitives from '../../primitives/avatar';
-import { useInnerAvatarContext } from './avatar';
+import { useInnerAvatarContext } from './avatar.context';
 import type {
   AvatarFallbackAnimation,
   AvatarImageAnimation,

@@ -19,11 +19,13 @@ import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { createContext, getElementByDisplayName } from '../../helpers/utils';
 import { ErrorView } from '../error-view';
 import {
+  useTextFieldDescriptionAnimation,
+  useTextFieldLabelAnimation,
+} from './text-field.animation';
+import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
   DISPLAY_NAME,
-  ENTERING_ANIMATION_CONFIG,
-  EXITING_ANIMATION_CONFIG,
 } from './text-field.constants';
 import textFieldStyles, { styleSheet } from './text-field.styles';
 import type {
@@ -77,12 +79,11 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
 const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
   (props, ref) => {
     const {
-      entering = ENTERING_ANIMATION_CONFIG,
-      exiting = EXITING_ANIMATION_CONFIG,
       children,
       className,
       classNames,
       isInvalid: localIsInvalid,
+      animation,
       ...restProps
     } = props;
 
@@ -104,6 +105,8 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
     const asteriskStyles = tvStyles.asterisk({
       className: classNames?.asterisk,
     });
+
+    const { entering, exiting } = useTextFieldLabelAnimation({ animation });
 
     return (
       <AnimatedText
@@ -321,11 +324,10 @@ const TextFieldInputEndContent = forwardRef<
 const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
   (props, ref) => {
     const {
-      entering = ENTERING_ANIMATION_CONFIG,
-      exiting = EXITING_ANIMATION_CONFIG,
       isInvalid: localIsInvalid,
       children,
       className,
+      animation,
       ...restProps
     } = props;
 
@@ -336,6 +338,10 @@ const TextFieldDescription = forwardRef<TextRef, TextFieldDescriptionProps>(
 
     const tvStyles = textFieldStyles.description({
       className,
+    });
+
+    const { entering, exiting } = useTextFieldDescriptionAnimation({
+      animation,
     });
 
     if (isInvalid) return null;

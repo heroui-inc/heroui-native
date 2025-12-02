@@ -1,6 +1,11 @@
 import type { TextInputProps, TextProps, ViewProps } from 'react-native';
-import type { AnimatedProps, WithTimingConfig } from 'react-native-reanimated';
+import type {
+  AnimatedProps,
+  EntryOrExitLayoutType,
+  WithTimingConfig,
+} from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
+import type { Animation, AnimationValue } from '../../helpers/types/animation';
 import type { ErrorViewRootProps } from '../error-view';
 import type { InputSlots, LabelSlots } from './text-field.styles';
 
@@ -41,6 +46,42 @@ export interface TextFieldInputColors {
 }
 
 /**
+ * Animation configuration for TextField Label component
+ */
+export type TextFieldLabelAnimation = Animation<{
+  entering?: AnimationValue<{
+    /**
+     * Custom entering animation for label
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
+  exiting?: AnimationValue<{
+    /**
+     * Custom exiting animation for label
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
+}>;
+
+/**
+ * Animation configuration for TextField Description component
+ */
+export type TextFieldDescriptionAnimation = Animation<{
+  entering?: AnimationValue<{
+    /**
+     * Custom entering animation for description
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
+  exiting?: AnimationValue<{
+    /**
+     * Custom exiting animation for description
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
+}>;
+
+/**
  * Props for the TextField.Root component
  */
 export interface TextFieldRootProps extends ViewProps {
@@ -72,7 +113,8 @@ export interface TextFieldRootProps extends ViewProps {
 /**
  * Props for the TextField.Label component
  */
-export interface TextFieldLabelProps extends AnimatedProps<TextProps> {
+export interface TextFieldLabelProps
+  extends Omit<AnimatedProps<TextProps>, 'entering' | 'exiting'> {
   /**
    * Whether the label is in an invalid state (overrides context)
    * @default undefined - uses context value
@@ -90,6 +132,13 @@ export interface TextFieldLabelProps extends AnimatedProps<TextProps> {
    * Additional CSS classes for different parts of the label
    */
   classNames?: ElementSlots<LabelSlots>;
+  /**
+   * Animation configuration for label
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: TextFieldLabelAnimation;
 }
 
 /**
@@ -154,7 +203,8 @@ export interface TextFieldInputEndContentProps extends ViewProps {
 /**
  * Props for the TextField.Description component
  */
-export interface TextFieldDescriptionProps extends AnimatedProps<TextProps> {
+export interface TextFieldDescriptionProps
+  extends Omit<AnimatedProps<TextProps>, 'entering' | 'exiting'> {
   /**
    * Children elements to be rendered as the description text
    */
@@ -168,6 +218,13 @@ export interface TextFieldDescriptionProps extends AnimatedProps<TextProps> {
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Animation configuration for description
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: TextFieldDescriptionAnimation;
 }
 
 /**

@@ -1,4 +1,3 @@
-import { Easing, FadeIn } from 'react-native-reanimated';
 import type { AvatarSize } from './avatar.types';
 
 /**
@@ -9,13 +8,6 @@ export const AVATAR_DISPLAY_NAME = {
   IMAGE: 'HeroUINative.Avatar.Image',
   FALLBACK: 'HeroUINative.Avatar.Fallback',
 };
-
-/**
- * Default entering animation for avatar components
- */
-export const DEFAULT_ENTERING_ANIMATION = FadeIn.duration(200).easing(
-  Easing.in(Easing.ease)
-);
 
 /**
  * Default icon sizes for different avatar sizes

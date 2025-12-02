@@ -5,7 +5,7 @@ import {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import type { AnimationRootDisableAll } from '../../helpers/types';
+import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,

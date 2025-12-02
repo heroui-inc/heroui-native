@@ -87,7 +87,7 @@ export type AvatarImageAnimation = Animation<{
     value?: [number, number];
     /**
      * Animation timing configuration
-     * @default { duration: 150 }
+     * @default { duration: 200, easing: Easing.in(Easing.ease) }
      */
     timingConfig?: WithTimingConfig;
   }>;

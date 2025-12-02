@@ -12,6 +12,7 @@ import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleProperties,
   getStyleTransform,
@@ -161,9 +162,11 @@ export function useSwitchThumbAnimation(options: {
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
-  const isAnimationDisabledValue = animation
-    ? false
-    : isAnimationDisabled || isAllAnimationsDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    animation,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Left position animation
   const leftValue = getAnimationValueProperty({

@@ -15,6 +15,7 @@ import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleTransform,
 } from '../../helpers/utils/animation';
@@ -91,9 +92,11 @@ export function useAccordionIndicatorAnimation(options: {
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
-  const isAnimationDisabledValue = animation
-    ? false
-    : isAnimationDisabled || isAllAnimationsDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    animation,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Rotation animation values
   const rotationValue = getAnimationValueProperty({
@@ -149,17 +152,18 @@ export function useAccordionIndicatorAnimation(options: {
  */
 export function useAccordionContentAnimation(options: {
   animation: AccordionContentAnimation | undefined;
-  isDisabled?: boolean;
 }) {
-  const { animation, isDisabled } = options;
+  const { animation } = options;
 
   const { isAllAnimationsDisabled } = useAccordionAnimation();
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
-  const isAnimationDisabledValue = animation
-    ? false
-    : isAnimationDisabled || isAllAnimationsDisabled || isDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    animation,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Entering animation
   const enteringValue = getAnimationValueProperty({

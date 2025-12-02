@@ -9,6 +9,7 @@ import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleProperties,
   getStyleTransform,
@@ -96,9 +97,11 @@ export function useCheckboxIndicatorAnimation(options: {
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
-  const isAnimationDisabledValue = animation
-    ? false
-    : isAnimationDisabled || isAllAnimationsDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    animation,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Opacity animation
   const opacityValue = getAnimationValueProperty({

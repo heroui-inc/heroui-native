@@ -239,14 +239,13 @@ const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
 
   const { variant } = useAccordionInnerContext();
 
-  const { isExpanded, isDisabled } = useAccordionItem();
+  const { isExpanded } = useAccordionItem();
 
   const tvStyles = accordionStyles.content({ variant, className });
 
   const { entering: animatedEntering, exiting: animatedExiting } =
     useAccordionContentAnimation({
       animation,
-      isDisabled,
     });
 
   if (!isExpanded) {

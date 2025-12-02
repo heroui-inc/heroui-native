@@ -1,5 +1,4 @@
 import type { PressableProps, TextProps } from 'react-native';
-import type { AnimatedProps } from 'react-native-reanimated';
 
 /**
  * Chip size variants
@@ -19,7 +18,7 @@ export type ChipColor = 'accent' | 'default' | 'success' | 'warning' | 'danger';
 /**
  * Props for the main Chip component
  */
-export interface ChipProps extends AnimatedProps<PressableProps> {
+export interface ChipProps extends PressableProps {
   /** Child elements to render inside the chip */
   children?: React.ReactNode;
 

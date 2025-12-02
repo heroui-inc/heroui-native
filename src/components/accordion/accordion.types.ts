@@ -56,7 +56,10 @@ export type AccordionRootAnimation = AnimationRoot<{
 /**
  * Props for the Accordion root component
  */
-export type AccordionRootProps = AnimatedProps<PrimitiveRootProps> & {
+export type AccordionRootProps = Omit<
+  AnimatedProps<PrimitiveRootProps>,
+  'layout'
+> & {
   /**
    * Children elements to be rendered inside the accordion
    */

@@ -143,7 +143,7 @@ export type AvatarFallbackAnimation = Animation<{
  * Extends primitive fallback props with styled variants
  */
 export interface AvatarFallbackProps
-  extends AnimatedProps<PrimitiveFallbackProps> {
+  extends Omit<AnimatedProps<PrimitiveFallbackProps>, 'entering'> {
   /**
    * Delay in milliseconds before the fallback is shown
    * @default 0

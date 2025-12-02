@@ -1,9 +1,5 @@
 import { useEffect } from 'react';
 import type { ViewStyle } from 'react-native';
-import type {
-  BaseAnimationBuilder,
-  LayoutAnimationFunction,
-} from 'react-native-reanimated';
 import {
   interpolate,
   useAnimatedStyle,
@@ -49,12 +45,8 @@ export { AccordionAnimationProvider, useAccordionAnimation };
  */
 export function useAccordionRootAnimation(options: {
   animation: AccordionRootAnimation | undefined;
-  layout?:
-    | BaseAnimationBuilder
-    | LayoutAnimationFunction
-    | typeof BaseAnimationBuilder;
 }) {
-  const { animation, layout } = options;
+  const { animation } = options;
 
   // Read parent animation disabled state from global context
   const parentAnimationSettingsContext = useAnimationSettings();
@@ -80,7 +72,7 @@ export function useAccordionRootAnimation(options: {
   const layoutTransitionValue = getAnimationValueProperty({
     animationValue: animationConfig?.layout,
     property: 'value',
-    defaultValue: layout || ACCORDION_LAYOUT_TRANSITION,
+    defaultValue: ACCORDION_LAYOUT_TRANSITION,
   });
 
   return {

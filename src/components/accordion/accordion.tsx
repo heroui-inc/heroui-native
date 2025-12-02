@@ -13,11 +13,7 @@ import {
   useAccordionIndicatorAnimation,
   useAccordionRootAnimation,
 } from './accordion.animation';
-import {
-  ACCORDION_LAYOUT_TRANSITION,
-  DEFAULT_ICON_SIZE,
-  DISPLAY_NAME,
-} from './accordion.constants';
+import { DEFAULT_ICON_SIZE, DISPLAY_NAME } from './accordion.constants';
 import accordionStyles, { styleSheet } from './accordion.styles';
 import type {
   AccordionContentProps,
@@ -62,7 +58,6 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     className,
     classNames,
     style,
-    layout = ACCORDION_LAYOUT_TRANSITION,
     animation,
     ...restProps
   } = props;
@@ -78,7 +73,6 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
   const { layoutTransition, isAllAnimationsDisabled } =
     useAccordionRootAnimation({
       animation,
-      layout,
     });
 
   const contextValue: AccordionContextValue = useMemo(

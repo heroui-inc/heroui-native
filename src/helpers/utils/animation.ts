@@ -256,3 +256,34 @@ export function getIsAnimationDisabledValue<
   // Otherwise, use the disabled flags
   return isDisabled || (isAllAnimationsDisabled ?? false);
 }
+
+/**
+ * Combine parent animation disabled state with own animation disabled state
+ * Parent value takes precedence - if parent has disable-all, it cascades down
+ *
+ * @param options - Object containing parentIsAllAnimationsDisabled and ownIsAllAnimationsDisabled
+ * @param options.parentIsAllAnimationsDisabled - Whether parent context has disable-all (from global context)
+ * @param options.ownIsAllAnimationsDisabled - Whether own animation prop has disable-all
+ * @returns Combined isAllAnimationsDisabled value (parent || own)
+ *
+ * @example
+ * const combined = getCombinedAnimationDisabledState({
+ *   parentIsAllAnimationsDisabled: true,
+ *   ownIsAllAnimationsDisabled: false
+ * });
+ * // Returns: true (parent wins)
+ */
+export function getCombinedAnimationDisabledState(options: {
+  parentIsAllAnimationsDisabled: boolean | undefined;
+  ownIsAllAnimationsDisabled: boolean;
+}): boolean {
+  const { parentIsAllAnimationsDisabled, ownIsAllAnimationsDisabled } = options;
+
+  // Parent always wins if it has disable-all
+  if (parentIsAllAnimationsDisabled === true) {
+    return true;
+  }
+
+  // Otherwise use own value
+  return ownIsAllAnimationsDisabled;
+}

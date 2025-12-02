@@ -16,8 +16,6 @@ import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.typ
 export interface CheckboxAnimationContextValue {
   /** Shared value tracking if the checkbox is pressed */
   isCheckboxPressed: SharedValue<boolean>;
-  /** Whether all animations should be disabled (cascading from root) */
-  isAllAnimationsDisabled: boolean;
 }
 
 /**

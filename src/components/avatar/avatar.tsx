@@ -2,6 +2,7 @@ import { forwardRef, useMemo } from 'react';
 import type { ImageSourcePropType, ImageStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { useThemeColor } from '../../helpers/theme';
 import { childrenToString } from '../../helpers/utils';
 import * as AvatarPrimitives from '../../primitives/avatar';
@@ -68,22 +69,30 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
     () => ({
       size,
       color,
+    }),
+    [size, color]
+  );
+
+  const animationSettingsContextValue = useMemo(
+    () => ({
       isAllAnimationsDisabled,
     }),
-    [size, color, isAllAnimationsDisabled]
+    [isAllAnimationsDisabled]
   );
 
   return (
-    <AvatarProvider value={contextValue}>
-      <AvatarPrimitives.Root
-        ref={ref}
-        className={tvStyles}
-        style={[styleSheet.borderCurve, style]}
-        {...restProps}
-      >
-        {children}
-      </AvatarPrimitives.Root>
-    </AvatarProvider>
+    <AnimationSettingsProvider value={animationSettingsContextValue}>
+      <AvatarProvider value={contextValue}>
+        <AvatarPrimitives.Root
+          ref={ref}
+          className={tvStyles}
+          style={[styleSheet.borderCurve, style]}
+          {...restProps}
+        >
+          {children}
+        </AvatarPrimitives.Root>
+      </AvatarProvider>
+    </AnimationSettingsProvider>
   );
 });
 

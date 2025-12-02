@@ -198,11 +198,6 @@ export interface AvatarContextValue {
    * Current color variant of the avatar
    */
   color: AvatarColor;
-
-  /**
-   * Whether all animations should be disabled (cascading from root)
-   */
-  isAllAnimationsDisabled?: boolean;
 }
 
 /** Reference type for the Avatar root component */

@@ -232,10 +232,6 @@ export interface AccordionContextValue {
  */
 export interface AccordionAnimationContextValue {
   /**
-   * Whether all animations should be disabled (cascading from root)
-   */
-  isAllAnimationsDisabled: boolean;
-  /**
    * Custom layout animation for accordion transitions
    */
   layoutTransition?: LayoutTransition;

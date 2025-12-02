@@ -10,11 +10,13 @@ import {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
+import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
 import { createContext } from '../../helpers/utils';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
+  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleTransform,
@@ -54,8 +56,22 @@ export function useAccordionRootAnimation(options: {
 }) {
   const { animation, layout } = options;
 
-  const { animationConfig, isAnimationDisabled, isAllAnimationsDisabled } =
-    getRootAnimationState(animation);
+  // Read parent animation disabled state from global context
+  const parentAnimationSettingsContext = useAnimationSettings();
+  const parentIsAllAnimationsDisabled =
+    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+
+  const {
+    animationConfig,
+    isAnimationDisabled,
+    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
+  } = getRootAnimationState(animation);
+
+  // Combine parent and own disable-all states (parent wins)
+  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    parentIsAllAnimationsDisabled,
+    ownIsAllAnimationsDisabled,
+  });
 
   const isAnimationDisabledValue =
     isAnimationDisabled || isAllAnimationsDisabled;
@@ -88,7 +104,8 @@ export function useAccordionIndicatorAnimation(options: {
 }) {
   const { animation, style, isExpanded } = options;
 
-  const { isAllAnimationsDisabled } = useAccordionAnimation();
+  // Read from global animation context (always available in compound parts)
+  const { isAllAnimationsDisabled } = useAnimationSettings();
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
@@ -155,7 +172,8 @@ export function useAccordionContentAnimation(options: {
 }) {
   const { animation } = options;
 
-  const { isAllAnimationsDisabled } = useAccordionAnimation();
+  // Read from global animation context (always available in compound parts)
+  const { isAllAnimationsDisabled } = useAnimationSettings();
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 

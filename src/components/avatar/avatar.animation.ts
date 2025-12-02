@@ -5,17 +5,18 @@ import {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
 import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
+  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleProperties,
 } from '../../helpers/utils/animation';
 import * as AvatarPrimitives from '../../primitives/avatar';
-import { useInnerAvatarContext } from './avatar.context';
 import type {
   AvatarFallbackAnimation,
   AvatarImageAnimation,
@@ -30,14 +31,22 @@ export function useAvatarRootAnimation(options: {
 }) {
   const { animation } = options;
 
-  const { isAnimationDisabled, isAllAnimationsDisabled } =
+  // Read parent animation disabled state from global context
+  const parentAnimationSettingsContext = useAnimationSettings();
+  const parentIsAllAnimationsDisabled =
+    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+
+  const { isAllAnimationsDisabled: ownIsAllAnimationsDisabled } =
     getRootAnimationState(animation);
 
-  const isAnimationDisabledValue =
-    isAnimationDisabled || isAllAnimationsDisabled;
+  // Combine parent and own disable-all states (parent wins)
+  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    parentIsAllAnimationsDisabled,
+    ownIsAllAnimationsDisabled,
+  });
 
   return {
-    isAllAnimationsDisabled: isAnimationDisabledValue,
+    isAllAnimationsDisabled,
   };
 }
 
@@ -51,7 +60,9 @@ export function useAvatarImageAnimation(options: {
 }) {
   const { animation, style } = options;
 
-  const { isAllAnimationsDisabled } = useInnerAvatarContext();
+  // Read from global animation context (always available in compound parts)
+  const { isAllAnimationsDisabled } = useAnimationSettings();
+
   const { status } = AvatarPrimitives.useRootContext();
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
@@ -108,7 +119,8 @@ export function useAvatarFallbackAnimation(options: {
 }) {
   const { animation, delayMs } = options;
 
-  const { isAllAnimationsDisabled } = useInnerAvatarContext();
+  // Read from global animation context (always available in compound parts)
+  const { isAllAnimationsDisabled } = useAnimationSettings();
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 

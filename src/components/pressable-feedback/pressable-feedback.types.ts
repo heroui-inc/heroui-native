@@ -292,6 +292,4 @@ export interface PressableFeedbackAnimationContextValue {
   containerHeight: SharedValue<number>;
   /** Shared value tracking the ripple progress */
   rippleProgress: SharedValue<number>;
-  /** Whether all animations should be disabled (cascading from root) */
-  isAllAnimationsDisabled: boolean;
 }

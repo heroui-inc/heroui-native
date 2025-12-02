@@ -1,6 +1,7 @@
 import { Children, forwardRef, useMemo } from 'react';
 import { View, type ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { useThemeColor } from '../../helpers/theme/hooks/use-theme-color';
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
@@ -87,38 +88,46 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     [variant]
   );
 
-  const animationContextValue = useMemo(
+  const animationSettingsContextValue = useMemo(
     () => ({
       isAllAnimationsDisabled,
+    }),
+    [isAllAnimationsDisabled]
+  );
+
+  const animationContextValue = useMemo(
+    () => ({
       layoutTransition,
     }),
-    [isAllAnimationsDisabled, layoutTransition]
+    [layoutTransition]
   );
 
   return (
-    <AccordionInnerProvider value={contextValue}>
+    <AnimationSettingsProvider value={animationSettingsContextValue}>
       <AccordionAnimationProvider value={animationContextValue}>
-        <AnimatedRootView
-          ref={ref}
-          className={containerStyles}
-          style={[styleSheet.root, style]}
-          layout={layoutTransition}
-          {...restProps}
-        >
-          {Children.map(children, (child, index) => (
-            <>
-              {child}
-              {isDividerVisible && index < Children.count(children) - 1 && (
-                <Animated.View
-                  className={dividerStyles}
-                  layout={layoutTransition}
-                />
-              )}
-            </>
-          ))}
-        </AnimatedRootView>
+        <AccordionInnerProvider value={contextValue}>
+          <AnimatedRootView
+            ref={ref}
+            className={containerStyles}
+            style={[styleSheet.root, style]}
+            layout={layoutTransition}
+            {...restProps}
+          >
+            {Children.map(children, (child, index) => (
+              <>
+                {child}
+                {isDividerVisible && index < Children.count(children) - 1 && (
+                  <Animated.View
+                    className={dividerStyles}
+                    layout={layoutTransition}
+                  />
+                )}
+              </>
+            ))}
+          </AnimatedRootView>
+        </AccordionInnerProvider>
       </AccordionAnimationProvider>
-    </AccordionInnerProvider>
+    </AnimationSettingsProvider>
   );
 });
 

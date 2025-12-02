@@ -17,6 +17,7 @@ import Animated from 'react-native-reanimated';
 import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
 
 import { GestureDetector } from 'react-native-gesture-handler';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import type { PressableRef } from '../../helpers/types';
 import {
   PressableFeedbackAnimationProvider,
@@ -88,7 +89,6 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
         containerWidth,
         containerHeight,
         rippleProgress,
-        isAllAnimationsDisabled,
       }),
       [
         isPressed,
@@ -97,8 +97,14 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
         containerWidth,
         containerHeight,
         rippleProgress,
-        isAllAnimationsDisabled,
       ]
+    );
+
+    const animationSettingsContextValue = useMemo(
+      () => ({
+        isAllAnimationsDisabled,
+      }),
+      [isAllAnimationsDisabled]
     );
 
     const feedbackElement = (
@@ -121,22 +127,24 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
     );
 
     return (
-      <PressableFeedbackAnimationProvider value={animationContextValue}>
-        <GestureDetector gesture={gesture}>
-          <AnimatedPressable
-            ref={ref}
-            disabled={isDisabled}
-            className={tvStyles}
-            style={[rContainerStyle, styleSheet.root, style]}
-            onLayout={handleLayout}
-            {...restProps}
-          >
-            {feedbackPosition === 'behind' && feedbackElement}
-            {children}
-            {feedbackPosition === 'top' && feedbackElement}
-          </AnimatedPressable>
-        </GestureDetector>
-      </PressableFeedbackAnimationProvider>
+      <AnimationSettingsProvider value={animationSettingsContextValue}>
+        <PressableFeedbackAnimationProvider value={animationContextValue}>
+          <GestureDetector gesture={gesture}>
+            <AnimatedPressable
+              ref={ref}
+              disabled={isDisabled}
+              className={tvStyles}
+              style={[rContainerStyle, styleSheet.root, style]}
+              onLayout={handleLayout}
+              {...restProps}
+            >
+              {feedbackPosition === 'behind' && feedbackElement}
+              {children}
+              {feedbackPosition === 'top' && feedbackElement}
+            </AnimatedPressable>
+          </GestureDetector>
+        </PressableFeedbackAnimationProvider>
+      </AnimationSettingsProvider>
     );
   }
 );

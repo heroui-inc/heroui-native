@@ -2,6 +2,7 @@ import { forwardRef, useCallback, useMemo } from 'react';
 import type { GestureResponderEvent } from 'react-native';
 import { View, type ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { createContext } from '../../helpers/utils';
 import * as SwitchPrimitives from '../../primitives/switch';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
@@ -76,10 +77,16 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
     const animationContextValue = useMemo(
       () => ({
         isSwitchPressed,
-        isAllAnimationsDisabled,
         contentContainerWidth,
       }),
-      [isSwitchPressed, isAllAnimationsDisabled, contentContainerWidth]
+      [isSwitchPressed, contentContainerWidth]
+    );
+
+    const animationSettingsContextValue = useMemo(
+      () => ({
+        isAllAnimationsDisabled,
+      }),
+      [isAllAnimationsDisabled]
     );
 
     const handlePressIn = useCallback(
@@ -110,24 +117,26 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
 
     return (
       <SwitchProvider value={contextValue}>
-        <SwitchAnimationProvider value={animationContextValue}>
-          <AnimatedSwitchRoot
-            ref={ref}
-            className={tvStyles}
-            style={[styleSheet.borderCurve, rContainerStyle, style]}
-            isSelected={isSelected}
-            onSelectedChange={onSelectedChange}
-            isDisabled={isDisabled}
-            onPressIn={handlePressIn}
-            onPressOut={handlePressOut}
-            onLayout={(e) => {
-              contentContainerWidth.set(e.nativeEvent.layout.width);
-            }}
-            {...restProps}
-          >
-            {content}
-          </AnimatedSwitchRoot>
-        </SwitchAnimationProvider>
+        <AnimationSettingsProvider value={animationSettingsContextValue}>
+          <SwitchAnimationProvider value={animationContextValue}>
+            <AnimatedSwitchRoot
+              ref={ref}
+              className={tvStyles}
+              style={[styleSheet.borderCurve, rContainerStyle, style]}
+              isSelected={isSelected}
+              onSelectedChange={onSelectedChange}
+              isDisabled={isDisabled}
+              onPressIn={handlePressIn}
+              onPressOut={handlePressOut}
+              onLayout={(e) => {
+                contentContainerWidth.set(e.nativeEvent.layout.width);
+              }}
+              {...restProps}
+            >
+              {content}
+            </AnimatedSwitchRoot>
+          </SwitchAnimationProvider>
+        </AnimationSettingsProvider>
       </SwitchProvider>
     );
   }

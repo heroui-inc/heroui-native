@@ -28,7 +28,8 @@ export type ErrorViewRootAnimation = Animation<{
 /**
  * Props for the ErrorView root component
  */
-export interface ErrorViewRootProps extends AnimatedProps<ViewProps> {
+export interface ErrorViewRootProps
+  extends Omit<AnimatedProps<ViewProps>, 'entering' | 'exiting'> {
   /**
    * The content of the error field
    * When passed as string, it will be wrapped with Text component

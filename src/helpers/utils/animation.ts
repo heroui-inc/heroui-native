@@ -215,3 +215,75 @@ export function getStyleProperties<T extends Record<string, any>>(
     return acc;
   }, {} as Partial<T>);
 }
+
+/**
+ * Determine if animations should be disabled based on animation config and flags
+ * Returns false (animations enabled) if animation is an object or true
+ * Otherwise uses the disabled flags to determine the result
+ *
+ * @param options - Object containing animation, isAnimationDisabled, and isAllAnimationsDisabled
+ * @param options.animation - Animation configuration (can be boolean, 'disabled', or object)
+ * @param options.isAnimationDisabled - Whether animation is explicitly disabled
+ * @param options.isAllAnimationsDisabled - Whether all animations should be disabled (cascading from root)
+ * @returns true if animations should be disabled, false otherwise
+ *
+ * @example
+ * const isDisabled = getIsAnimationDisabledValue({
+ *   animation: { opacity: { value: [0, 1] } },
+ *   isAnimationDisabled: false,
+ *   isAllAnimationsDisabled: false
+ * });
+ * // Returns: false (animations enabled because animation is an object)
+ */
+export function getIsAnimationDisabledValue<
+  TConfig extends Record<string, any>,
+>(options: {
+  animation: Animation<TConfig> | undefined;
+  isAnimationDisabled: boolean;
+  isAllAnimationsDisabled: boolean | undefined;
+}): boolean {
+  const {
+    animation,
+    isAnimationDisabled: isDisabled,
+    isAllAnimationsDisabled,
+  } = options;
+
+  // If animation is an object or true, animations are enabled
+  if (typeof animation === 'object' || animation === true) {
+    return false;
+  }
+
+  // Otherwise, use the disabled flags
+  return isDisabled || (isAllAnimationsDisabled ?? false);
+}
+
+/**
+ * Combine parent animation disabled state with own animation disabled state
+ * Parent value takes precedence - if parent has disable-all, it cascades down
+ *
+ * @param options - Object containing parentIsAllAnimationsDisabled and ownIsAllAnimationsDisabled
+ * @param options.parentIsAllAnimationsDisabled - Whether parent context has disable-all (from global context)
+ * @param options.ownIsAllAnimationsDisabled - Whether own animation prop has disable-all
+ * @returns Combined isAllAnimationsDisabled value (parent || own)
+ *
+ * @example
+ * const combined = getCombinedAnimationDisabledState({
+ *   parentIsAllAnimationsDisabled: true,
+ *   ownIsAllAnimationsDisabled: false
+ * });
+ * // Returns: true (parent wins)
+ */
+export function getCombinedAnimationDisabledState(options: {
+  parentIsAllAnimationsDisabled: boolean | undefined;
+  ownIsAllAnimationsDisabled: boolean;
+}): boolean {
+  const { parentIsAllAnimationsDisabled, ownIsAllAnimationsDisabled } = options;
+
+  // Parent always wins if it has disable-all
+  if (parentIsAllAnimationsDisabled === true) {
+    return true;
+  }
+
+  // Otherwise use own value
+  return ownIsAllAnimationsDisabled;
+}

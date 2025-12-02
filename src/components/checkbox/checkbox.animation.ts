@@ -4,11 +4,14 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
 import { createContext } from '../../helpers/utils';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
+  getCombinedAnimationDisabledState,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleProperties,
   getStyleTransform,
@@ -38,8 +41,22 @@ export function useCheckboxRootAnimation(options: {
   const isCheckboxPressed = useSharedValue(false);
   const formFieldContext = useFormField();
 
-  const { animationConfig, isAnimationDisabled, isAllAnimationsDisabled } =
-    getRootAnimationState(animation);
+  // Read parent animation disabled state from global context
+  const parentAnimationSettingsContext = useAnimationSettings();
+  const parentIsAllAnimationsDisabled =
+    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+
+  const {
+    animationConfig,
+    isAnimationDisabled,
+    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
+  } = getRootAnimationState(animation);
+
+  // Combine parent and own disable-all states (parent wins)
+  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    parentIsAllAnimationsDisabled,
+    ownIsAllAnimationsDisabled,
+  });
 
   const scaleValue = getAnimationValueProperty({
     animationValue: animationConfig?.scale,
@@ -92,13 +109,16 @@ export function useCheckboxIndicatorAnimation(options: {
 }) {
   const { animation, isSelected, style } = options;
 
-  const { isAllAnimationsDisabled } = useCheckboxAnimation();
+  // Read from global animation context (always available in compound parts)
+  const { isAllAnimationsDisabled } = useAnimationSettings();
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
-  const isAnimationDisabledValue = animation
-    ? false
-    : isAnimationDisabled || isAllAnimationsDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    animation,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Opacity animation
   const opacityValue = getAnimationValueProperty({

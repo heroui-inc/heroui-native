@@ -155,8 +155,6 @@ export interface SwitchContextValue
 export interface SwitchAnimationContextValue {
   /** Shared value tracking if the switch is pressed */
   isSwitchPressed: SharedValue<boolean>;
-  /** Whether all animations should be disabled (cascading from root) */
-  isAllAnimationsDisabled: boolean;
   /** Width of the content container */
   contentContainerWidth: SharedValue<number>;
 }

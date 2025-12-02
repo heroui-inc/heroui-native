@@ -24,6 +24,8 @@ export type AnimationRoot<
   TConfig extends Record<string, any> = Record<string, any>,
 > = boolean | 'disabled' | 'disable-all' | TConfig;
 
+export type AnimationRootDisableAll = Extract<AnimationRoot, 'disable-all'>;
+
 /**
  * Animation value that can be a custom config
  * Used for granular animation control within a component

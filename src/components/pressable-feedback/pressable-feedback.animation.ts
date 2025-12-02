@@ -10,11 +10,14 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import { useUniwind } from 'uniwind';
+import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
 import { createContext } from '../../helpers/utils';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
+  getCombinedAnimationDisabledState,
+  getIsAnimationDisabledValue,
   getStyleTransform,
 } from '../../helpers/utils/animation';
 import {
@@ -49,6 +52,11 @@ export function usePressableFeedbackRootAnimation(options: {
 }) {
   const { variant, animation, style } = options;
 
+  // Read parent animation disabled state from global context
+  const parentAnimationSettingsContext = useAnimationSettings();
+  const parentIsAllAnimationsDisabled =
+    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+
   const scaleAnimation = useMemo(() => {
     return typeof animation === 'object' ? animation?.scale : undefined;
   }, [animation]);
@@ -63,8 +71,14 @@ export function usePressableFeedbackRootAnimation(options: {
       : undefined;
   }, [animation, variant]);
 
-  const { isAnimationDisabled: isAllAnimationsDisabled } =
+  const { isAnimationDisabled: ownIsAnimationDisabled } =
     getAnimationState(animation);
+
+  // Combine parent and own disable-all states (parent wins)
+  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    parentIsAllAnimationsDisabled,
+    ownIsAllAnimationsDisabled: ownIsAnimationDisabled,
+  });
 
   const {
     animationConfig: scaleAnimationConfig,
@@ -74,8 +88,11 @@ export function usePressableFeedbackRootAnimation(options: {
   const { animationConfig: rippleAnimationConfig } =
     getAnimationState(rippleAnimation);
 
-  const isAnimationDisabledValue =
-    isAllAnimationsDisabled || isScaleAnimationDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    animation: scaleAnimation,
+    isAnimationDisabled: isScaleAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Scale animation values
   const scaleValue = getAnimationValueProperty({
@@ -239,8 +256,9 @@ export function usePressableFeedbackHighlightAnimation(options: {
 
   const { theme } = useUniwind();
 
-  const { isPressed, isAllAnimationsDisabled } =
-    usePressableFeedbackAnimation();
+  const { isAllAnimationsDisabled } = useAnimationSettings();
+
+  const { isPressed } = usePressableFeedbackAnimation();
 
   const highlightAnimation = useMemo(() => {
     return typeof animation === 'object' ? animation?.highlight : undefined;
@@ -249,8 +267,11 @@ export function usePressableFeedbackHighlightAnimation(options: {
   const { animationConfig, isAnimationDisabled } =
     getAnimationState(highlightAnimation);
 
-  const isAnimationDisabledValue =
-    isAllAnimationsDisabled || isAnimationDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    animation: highlightAnimation,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Background color
   const defaultColor = theme === 'dark' ? '#d4d4d8' : '#3f3f46';
@@ -307,13 +328,14 @@ export function usePressableFeedbackRippleAnimation(options: {
 
   const { theme } = useUniwind();
 
+  const { isAllAnimationsDisabled } = useAnimationSettings();
+
   const {
     pressedCenterX,
     pressedCenterY,
     containerWidth,
     containerHeight,
     rippleProgress,
-    isAllAnimationsDisabled,
   } = usePressableFeedbackAnimation();
 
   const rippleAnimation = useMemo(() => {
@@ -323,8 +345,11 @@ export function usePressableFeedbackRippleAnimation(options: {
   const { animationConfig, isAnimationDisabled } =
     getAnimationState(rippleAnimation);
 
-  const isAnimationDisabledValue =
-    isAllAnimationsDisabled || isAnimationDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    animation: rippleAnimation,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Background color
   const defaultColor = theme === 'dark' ? '#d4d4d8' : '#3f3f46';

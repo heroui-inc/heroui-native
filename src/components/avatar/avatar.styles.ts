@@ -56,7 +56,7 @@ const avatarRoot = tv({
   defaultVariants: {
     variant: 'default',
     size: 'md',
-    color: 'default',
+    color: 'accent',
   },
 });
 

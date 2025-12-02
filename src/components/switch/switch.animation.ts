@@ -5,6 +5,7 @@ import {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
 import { useResolvedStyleProperty } from '../../helpers/hooks';
 import { useThemeColor } from '../../helpers/theme';
 import { createContext } from '../../helpers/utils';
@@ -12,6 +13,8 @@ import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
+  getCombinedAnimationDisabledState,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleProperties,
   getStyleTransform,
@@ -57,8 +60,22 @@ export function useSwitchRootAnimation(options: {
   const isSwitchPressed = useSharedValue(false);
   const contentContainerWidth = useSharedValue(0);
 
-  const { animationConfig, isAnimationDisabled, isAllAnimationsDisabled } =
-    getRootAnimationState(animation);
+  // Read parent animation disabled state from global context
+  const parentAnimationSettingsContext = useAnimationSettings();
+  const parentIsAllAnimationsDisabled =
+    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+
+  const {
+    animationConfig,
+    isAnimationDisabled,
+    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
+  } = getRootAnimationState(animation);
+
+  // Combine parent and own disable-all states (parent wins)
+  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    parentIsAllAnimationsDisabled,
+    ownIsAllAnimationsDisabled,
+  });
 
   // Scale animation
   const scaleValue = getAnimationValueProperty({
@@ -156,14 +173,18 @@ export function useSwitchThumbAnimation(options: {
   const computedWidth = typeof width === 'number' ? width : DEFAULT_THUMB_WIDTH;
   const computedLeft = typeof left === 'number' ? left : DEFAULT_THUMB_LEFT;
 
-  const { isAllAnimationsDisabled, contentContainerWidth } =
-    useSwitchAnimation();
+  // Read from global animation context (always available in compound parts)
+  const { isAllAnimationsDisabled } = useAnimationSettings();
+
+  const { contentContainerWidth } = useSwitchAnimation();
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
-  const isAnimationDisabledValue = animation
-    ? false
-    : isAnimationDisabled || isAllAnimationsDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    animation,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Left position animation
   const leftValue = getAnimationValueProperty({

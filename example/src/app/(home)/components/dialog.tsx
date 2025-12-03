@@ -289,9 +289,13 @@ const TextInputDialogContent = () => {
                         autoCorrect
                         autoFocus
                         isInvalid={false}
-                        colors={{
-                          blurBackground: themeColorSurfaceSecondary,
-                          focusBackground: themeColorSurfaceSecondary,
+                        animation={{
+                          backgroundColor: {
+                            value: {
+                              blur: themeColorSurfaceSecondary,
+                              focus: themeColorSurfaceSecondary,
+                            },
+                          },
                         }}
                         selectionColor={themeColorMuted}
                       />
@@ -313,9 +317,13 @@ const TextInputDialogContent = () => {
                         }}
                         autoCapitalize="none"
                         isInvalid={false}
-                        colors={{
-                          blurBackground: themeColorSurfaceSecondary,
-                          focusBackground: themeColorSurfaceSecondary,
+                        animation={{
+                          backgroundColor: {
+                            value: {
+                              blur: themeColorSurfaceSecondary,
+                              focus: themeColorSurfaceSecondary,
+                            },
+                          },
                         }}
                         selectionColor={themeColorMuted}
                       />

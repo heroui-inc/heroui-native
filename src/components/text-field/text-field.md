@@ -254,8 +254,7 @@ export default function TextFieldExample() {
 | isInvalid            | `boolean`                  | `undefined`      | Whether the input is in an invalid state (overrides context) |
 | className            | `string`                   | -                | Custom class name for the input container                    |
 | classNames           | `ElementSlots<InputSlots>` | -                | Custom class names for different parts of the input          |
-| colors               | `TextFieldInputColors`     | -                | Custom colors for input background and border                |
-| animationConfig      | `WithTimingConfig`             | -                | Reanimated timing configuration for focus/blur transitions           |
+| animation            | `TextFieldInputAnimation`  | -                | Animation configuration for focus/blur and error transitions |
 | placeholderTextColor | `string`                   | `--colors-muted` | Color of the placeholder text                                |
 | ...TextInputProps    | `TextInputProps`           | -                | All standard React Native TextInput props are supported      |
 
@@ -266,16 +265,17 @@ export default function TextFieldExample() {
 | container | `string` | Custom class name for the input container    |
 | input     | `string` | Custom class name for the text input element |
 
-#### TextFieldInputColors
+#### TextFieldInputAnimation
 
-| prop            | type     | description                            |
-| --------------- | -------- | -------------------------------------- |
-| blurBackground  | `string` | Background color when input is blurred |
-| focusBackground | `string` | Background color when input is focused |
-| errorBackground | `string` | Background color when input is invalid |
-| blurBorder      | `string` | Border color when input is blurred     |
-| focusBorder     | `string` | Border color when input is focused     |
-| errorBorder     | `string` | Border color when input is invalid     |
+| prop                             | type                                              | description                                                     |
+| -------------------------------- | ------------------------------------------------- | --------------------------------------------------------------- |
+| backgroundColor                  | `AnimationValue<{...}>`                           | Background color animation configuration                        |
+| borderColor                      | `AnimationValue<{...}>`                           | Border color animation configuration                            |
+|                                  |                                                   |                                                                 |
+| **backgroundColor.value**        | `{blur?: string, focus?: string, error?: string}` | Background colors for different states                          |
+| **backgroundColor.timingConfig** | `WithTimingConfig`                                | Animation timing configuration for background color transitions |
+| **borderColor.value**            | `{blur?: string, focus?: string, error?: string}` | Border colors for different states                              |
+| **borderColor.timingConfig**     | `WithTimingConfig`                                | Animation timing configuration for border color transitions     |
 
 ### TextField.InputStartContent
 

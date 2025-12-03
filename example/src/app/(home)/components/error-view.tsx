@@ -188,19 +188,31 @@ const MultipleErrorsContent = () => {
             </ErrorView>
             <ErrorView
               isInvalid={showMultipleErrors}
-              entering={FadeInDown.delay(100)}
+              animation={{
+                entering: {
+                  value: FadeInDown.delay(100),
+                },
+              }}
             >
               • At least one uppercase letter
             </ErrorView>
             <ErrorView
               isInvalid={showMultipleErrors}
-              entering={FadeInDown.delay(200)}
+              animation={{
+                entering: {
+                  value: FadeInDown.delay(200),
+                },
+              }}
             >
               • At least one number
             </ErrorView>
             <ErrorView
               isInvalid={showMultipleErrors}
-              entering={FadeInDown.delay(300)}
+              animation={{
+                entering: {
+                  value: FadeInDown.delay(300),
+                },
+              }}
             >
               • At least one special character (!@#$%^&*)
             </ErrorView>

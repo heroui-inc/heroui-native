@@ -5,45 +5,13 @@ import type {
   WithTimingConfig,
 } from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
-import type { Animation, AnimationValue } from '../../helpers/types/animation';
+import type {
+  Animation,
+  AnimationRootDisableAll,
+  AnimationValue,
+} from '../../helpers/types/animation';
 import type { ErrorViewRootProps } from '../error-view';
 import type { InputSlots, LabelSlots } from './text-field.styles';
-
-/**
- * Custom colors for TextField.Input component
- */
-export interface TextFieldInputColors {
-  /**
-   * Background color when input is blurred
-   * @default --colors-default
-   */
-  blurBackground?: string;
-  /**
-   * Background color when input is focused
-   * @default --colors-background
-   */
-  focusBackground?: string;
-  /**
-   * Background color when input is invalid
-   * @default --colors-default (same as blurBackground)
-   */
-  errorBackground?: string;
-  /**
-   * Border color when input is blurred
-   * @default --colors-border
-   */
-  blurBorder?: string;
-  /**
-   * Border color when input is focused
-   * @default --colors-muted
-   */
-  focusBorder?: string;
-  /**
-   * Border color when input is invalid
-   * @default --colors-danger
-   */
-  errorBorder?: string;
-}
 
 /**
  * Animation configuration for TextField Label component
@@ -82,6 +50,68 @@ export type TextFieldDescriptionAnimation = Animation<{
 }>;
 
 /**
+ * Animation configuration for TextField Input component
+ */
+export type TextFieldInputAnimation = Animation<{
+  backgroundColor?: AnimationValue<{
+    /**
+     * Background color values for different states
+     * @default Uses theme colors (field, field-focus, field)
+     */
+    value?: {
+      /**
+       * Background color when input is blurred
+       * @default --colors-field
+       */
+      blur?: string;
+      /**
+       * Background color when input is focused
+       * @default --colors-field-focus
+       */
+      focus?: string;
+      /**
+       * Background color when input is invalid
+       * @default --colors-field (same as blur)
+       */
+      error?: string;
+    };
+    /**
+     * Animation timing configuration
+     * @default { duration: 150, easing: Easing.out(Easing.ease) }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+  borderColor?: AnimationValue<{
+    /**
+     * Border color values for different states
+     * @default Uses theme colors (field-border, accent, danger)
+     */
+    value?: {
+      /**
+       * Border color when input is blurred
+       * @default --colors-field-border
+       */
+      blur?: string;
+      /**
+       * Border color when input is focused
+       * @default --colors-accent
+       */
+      focus?: string;
+      /**
+       * Border color when input is invalid
+       * @default --colors-danger
+       */
+      error?: string;
+    };
+    /**
+     * Animation timing configuration
+     * @default { duration: 150, easing: Easing.out(Easing.ease) }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+}>;
+
+/**
  * Props for the TextField.Root component
  */
 export interface TextFieldRootProps extends ViewProps {
@@ -108,6 +138,12 @@ export interface TextFieldRootProps extends ViewProps {
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Animation configuration for text field root
+   * - `"disable-all"`: Disable all animations including children (cascades down to all child components)
+   * - `undefined`: Use default animations
+   */
+  animation?: AnimationRootDisableAll;
 }
 
 /**
@@ -163,13 +199,12 @@ export interface TextFieldInputProps extends TextInputProps {
    */
   classNames?: ElementSlots<InputSlots>;
   /**
-   * Custom colors for the input background and border
+   * Animation configuration for input focus/blur and error state transitions
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  colors?: TextFieldInputColors;
-  /**
-   * Animation configuration for focus/blur transitions
-   */
-  animationConfig?: WithTimingConfig;
+  animation?: TextFieldInputAnimation;
 }
 
 /**

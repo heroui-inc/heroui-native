@@ -3,11 +3,8 @@ import Animated from 'react-native-reanimated';
 import { Text } from '../../helpers/components';
 import type { ViewRef } from '../../helpers/types/primitives';
 import { childrenToString } from '../../helpers/utils';
-import {
-  DISPLAY_NAME,
-  ENTERING_ANIMATION_CONFIG,
-  EXITING_ANIMATION_CONFIG,
-} from './error-view.constants';
+import { useErrorViewRootAnimation } from './error-view.animation';
+import { DISPLAY_NAME } from './error-view.constants';
 import errorViewStyles from './error-view.styles';
 import type { ErrorViewRootProps } from './error-view.types';
 
@@ -20,8 +17,7 @@ const ErrorViewRoot = forwardRef<ViewRef, ErrorViewRootProps>((props, ref) => {
     classNames,
     textProps,
     isInvalid = false,
-    entering = ENTERING_ANIMATION_CONFIG,
-    exiting = EXITING_ANIMATION_CONFIG,
+    animation,
     ...restProps
   } = props;
 
@@ -35,7 +31,18 @@ const ErrorViewRoot = forwardRef<ViewRef, ErrorViewRootProps>((props, ref) => {
     className: [classNames?.text, textProps?.className],
   });
 
+  const { entering, exiting } = useErrorViewRootAnimation({ animation });
+
   if (!isInvalid) return null;
+
+  const stringifiedChildren = childrenToString(children);
+  const renderedChildren = stringifiedChildren ? (
+    <Text className={textStyles} {...textProps}>
+      {stringifiedChildren}
+    </Text>
+  ) : (
+    children
+  );
 
   return (
     <Animated.View
@@ -45,17 +52,7 @@ const ErrorViewRoot = forwardRef<ViewRef, ErrorViewRootProps>((props, ref) => {
       className={containerStyles}
       {...restProps}
     >
-      {(() => {
-        const stringifiedChildren = childrenToString(children);
-
-        return stringifiedChildren ? (
-          <Text className={textStyles} {...textProps}>
-            {stringifiedChildren}
-          </Text>
-        ) : (
-          children
-        );
-      })()}
+      {renderedChildren}
     </Animated.View>
   );
 });

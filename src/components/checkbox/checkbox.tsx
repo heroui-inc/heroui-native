@@ -3,6 +3,7 @@ import { View, type GestureResponderEvent, type ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { CheckIcon } from '../../helpers/components';
 import { AnimatedCheckIcon } from '../../helpers/components/animated-check-icon';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { useIsOnSurface, useThemeColor } from '../../helpers/theme';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
@@ -68,10 +69,16 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
 
     const animationContextValue = useMemo(
       () => ({
-        isAllAnimationsDisabled,
         isCheckboxPressed,
       }),
-      [isAllAnimationsDisabled, isCheckboxPressed]
+      [isCheckboxPressed]
+    );
+
+    const animationSettingsContextValue = useMemo(
+      () => ({
+        isAllAnimationsDisabled,
+      }),
+      [isAllAnimationsDisabled]
     );
 
     const handlePressIn = useCallback(
@@ -102,24 +109,26 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
         : (children ?? <CheckboxIndicator />);
 
     return (
-      <CheckboxAnimationProvider value={animationContextValue}>
-        <AnimatedRootView
-          ref={ref}
-          className={tvStyles}
-          isSelected={isSelected}
-          onSelectedChange={onSelectedChange}
-          isDisabled={isDisabled}
-          isInvalid={isInvalid}
-          isOnSurface={isOnSurface}
-          hitSlop={hitSlop}
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          style={[rContainerStyle, styleSheet.root, style]}
-          {...restProps}
-        >
-          {content}
-        </AnimatedRootView>
-      </CheckboxAnimationProvider>
+      <AnimationSettingsProvider value={animationSettingsContextValue}>
+        <CheckboxAnimationProvider value={animationContextValue}>
+          <AnimatedRootView
+            ref={ref}
+            className={tvStyles}
+            isSelected={isSelected}
+            onSelectedChange={onSelectedChange}
+            isDisabled={isDisabled}
+            isInvalid={isInvalid}
+            isOnSurface={isOnSurface}
+            hitSlop={hitSlop}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+            style={[rContainerStyle, styleSheet.root, style]}
+            {...restProps}
+          >
+            {content}
+          </AnimatedRootView>
+        </CheckboxAnimationProvider>
+      </AnimationSettingsProvider>
     );
   }
 );

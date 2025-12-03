@@ -1,6 +1,15 @@
 import type { ImageProps, TextProps } from 'react-native';
-import type { AnimatedProps } from 'react-native-reanimated';
+import type {
+  AnimatedProps,
+  EntryOrExitLayoutType,
+  WithTimingConfig,
+} from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
+import type {
+  Animation,
+  AnimationRootDisableAll,
+  AnimationValue,
+} from '../../helpers/types/animation';
 import type {
   FallbackProps as PrimitiveFallbackProps,
   FallbackRef as PrimitiveFallbackRef,
@@ -57,7 +66,32 @@ export interface AvatarRootProps extends PrimitiveRootProps {
    * Additional CSS classes
    */
   className?: string;
+
+  /**
+   * Animation configuration for avatar
+   * - `"disable-all"`: Disable all animations including children
+   * - `undefined`: Use default animations
+   */
+  animation?: AnimationRootDisableAll;
 }
+
+/**
+ * Animation configuration for avatar image component
+ */
+export type AvatarImageAnimation = Animation<{
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [initial, loaded] for image animation
+     * @default [0, 1]
+     */
+    value?: [number, number];
+    /**
+     * Animation timing configuration
+     * @default { duration: 200, easing: Easing.in(Easing.ease) }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+}>;
 
 /**
  * Props for the Avatar image component
@@ -73,6 +107,13 @@ export type AvatarImageProps =
        * Whether to use the default image directly
        */
       asChild?: false;
+      /**
+       * Animation configuration for image
+       * - `false` or `"disabled"`: Disable all animations
+       * - `true` or `undefined`: Use default animations
+       * - `object`: Custom animation configuration
+       */
+      animation?: AvatarImageAnimation;
     })
   | (PrimitiveImageProps & {
       /**
@@ -86,11 +127,23 @@ export type AvatarImageProps =
     });
 
 /**
+ * Animation configuration for avatar fallback component
+ */
+export type AvatarFallbackAnimation = Animation<{
+  entering?: AnimationValue<{
+    /**
+     * Custom entering animation for fallback
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
+}>;
+
+/**
  * Props for the Avatar fallback component
  * Extends primitive fallback props with styled variants
  */
 export interface AvatarFallbackProps
-  extends AnimatedProps<PrimitiveFallbackProps> {
+  extends Omit<AnimatedProps<PrimitiveFallbackProps>, 'entering'> {
   /**
    * Delay in milliseconds before the fallback is shown
    * @default 0
@@ -122,6 +175,14 @@ export interface AvatarFallbackProps
    * Props to pass to the default icon when no children are provided
    */
   iconProps?: PersonIconProps;
+
+  /**
+   * Animation configuration for fallback
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: AvatarFallbackAnimation;
 }
 
 /**

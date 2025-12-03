@@ -4,7 +4,7 @@ import type { ItemProps, RootProps } from '../../primitives/radio-group';
 import type { ErrorViewRootProps } from '../error-view/error-view.types';
 import type {
   FormFieldDescriptionProps,
-  FormFieldTitleProps,
+  FormFieldLabelProps,
 } from '../form-field';
 
 /**
@@ -81,7 +81,7 @@ export interface RadioGroupIndicatorThumbProps
 /**
  * Props for RadioGroup.Label component
  */
-export interface RadioGroupLabelProps extends FormFieldTitleProps {}
+export interface RadioGroupLabelProps extends FormFieldLabelProps {}
 
 /**
  * Props for RadioGroup.Description component

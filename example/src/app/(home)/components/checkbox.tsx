@@ -18,6 +18,7 @@ import type { UsageVariant } from '../../../components/component-presentation/ty
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
+const StyleAnimatedView = withUniwind(Animated.View);
 const StyledIonicons = withUniwind(Ionicons);
 const StyledFontAwesome = withUniwind(FontAwesome);
 
@@ -38,18 +39,17 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
     <FormField
       isSelected={isSelected}
       onSelectedChange={onSelectedChange}
-      alignIndicator="start"
       className="items-start"
     >
       <FormField.Indicator>
         <Checkbox className="mt-0.5" />
       </FormField.Indicator>
-      <FormField.Content>
-        <FormField.Title className="text-lg">{title}</FormField.Title>
+      <View className="flex-1">
+        <FormField.Label className="text-lg">{title}</FormField.Label>
         <FormField.Description className="text-base">
           {description}
         </FormField.Description>
-      </FormField.Content>
+      </View>
     </FormField>
   );
 };
@@ -161,7 +161,7 @@ const AnimatedCustomIndicator = ({
   });
 
   return (
-    <Animated.View
+    <StyleAnimatedView
       className="aspect-square items-center justify-center bg-pink-400 rounded-sm"
       style={animatedStyle}
     >
@@ -188,7 +188,7 @@ const AnimatedCustomIndicator = ({
           />
         </Animated.View>
       )}
-    </Animated.View>
+    </StyleAnimatedView>
   );
 };
 

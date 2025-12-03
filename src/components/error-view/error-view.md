@@ -27,9 +27,7 @@ Control when the error appears using the `isInvalid` prop.
 ```tsx
 const [isInvalid, setIsInvalid] = useState(false);
 
-<ErrorView isInvalid={isInvalid}>
-  Please enter a valid email address
-</ErrorView>;
+<ErrorView isInvalid={isInvalid}>Please enter a valid email address</ErrorView>;
 ```
 
 ### Custom Content
@@ -47,18 +45,28 @@ Pass custom React components as children instead of strings.
 
 ### Custom Animations
 
-Override default entering and exiting animations.
+Override default entering and exiting animations using the `animation` prop.
 
 ```tsx
 import { SlideInDown, SlideOutUp } from 'react-native-reanimated';
 
 <ErrorView
   isInvalid={true}
-  entering={SlideInDown.duration(200)}
-  exiting={SlideOutUp.duration(150)}
+  animation={{
+    entering: { value: SlideInDown.duration(200) },
+    exiting: { value: SlideOutUp.duration(150) },
+  }}
 >
   Field validation failed
 </ErrorView>;
+```
+
+Disable animations entirely:
+
+```tsx
+<ErrorView isInvalid={true} animation={false}>
+  Field validation failed
+</ErrorView>
 ```
 
 ### Custom Styling
@@ -88,7 +96,7 @@ Pass additional props to the Text component when children is a string.
   textProps={{
     numberOfLines: 1,
     ellipsizeMode: 'tail',
-    style: { letterSpacing: 0.5 }
+    style: { letterSpacing: 0.5 },
   }}
 >
   This is a very long error message that might need to be truncated
@@ -141,11 +149,31 @@ export default function ErrorViewExample() {
 
 ### ErrorView
 
-| prop                   | type                                    | default     | description                                                           |
-| ---------------------- | --------------------------------------- | ----------- | --------------------------------------------------------------------- |
-| `children`             | `React.ReactNode`                       | `undefined` | The content of the error field. String children are wrapped with Text |
-| `isInvalid`            | `boolean`                               | `false`     | Controls the visibility of the error field                            |
-| `className`            | `string`                                | `undefined` | Additional CSS classes for the container                              |
-| `classNames`           | `{ container?: string, text?: string }` | `undefined` | Additional CSS classes for different parts of the component           |
+| prop                   | type                                    | default     | description                                                              |
+| ---------------------- | --------------------------------------- | ----------- | ------------------------------------------------------------------------ |
+| `children`             | `React.ReactNode`                       | `undefined` | The content of the error field. String children are wrapped with Text    |
+| `isInvalid`            | `boolean`                               | `false`     | Controls the visibility of the error field                               |
+| `animation`            | `ErrorViewRootAnimation`                | -           | Animation configuration for error view                                   |
+| `className`            | `string`                                | `undefined` | Additional CSS classes for the container                                 |
+| `classNames`           | `{ container?: string, text?: string }` | `undefined` | Additional CSS classes for different parts of the component              |
 | `textProps`            | `TextProps`                             | `undefined` | Additional props to pass to the Text component when children is a string |
-| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`              | -           | All Reanimated Animated.View props are supported                      |
+| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`              | -           | All Reanimated Animated.View props are supported                         |
+
+#### ErrorViewRootAnimation
+
+Animation configuration for ErrorView root component. Can be:
+
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
+
+| prop       | type                                                | default                                                 | description                              |
+| ---------- | --------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------- |
+| `entering` | `AnimationValue<{ value?: EntryOrExitLayoutType }>` | `FadeIn.duration(150).easing(Easing.out(Easing.ease))`  | Custom entering animation for error view |
+| `exiting`  | `AnimationValue<{ value?: EntryOrExitLayoutType }>` | `FadeOut.duration(100).easing(Easing.out(Easing.ease))` | Custom exiting animation for error view  |
+
+##### Entering/Exiting AnimationValue
+
+| prop    | type                    | default | description                                  |
+| ------- | ----------------------- | ------- | -------------------------------------------- |
+| `value` | `EntryOrExitLayoutType` | -       | Custom reanimated entering/exiting animation |

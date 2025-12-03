@@ -7,7 +7,10 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { useSharedState } from './use-shared-state';
+
+const StyleAnimatedView = withUniwind(Animated.View);
 
 const PROGRESS_STATE_KEY = 'progress-toast-state';
 
@@ -115,7 +118,7 @@ export const ProgressToast = (props: ToastComponentProps) => {
             : 'Upload complete!'}
         </Toast.Label>
         <View className="h-1 w-full overflow-hidden rounded-full bg-muted/20">
-          <Animated.View
+          <StyleAnimatedView
             className="h-full bg-accent rounded-full"
             style={progressBarStyle}
           />

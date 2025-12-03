@@ -10,7 +10,7 @@ const list = tv({
   base: 'self-start flex-row items-center gap-1',
   variants: {
     variant: {
-      pill: 'rounded-full bg-default p-1',
+      pill: 'rounded-full bg-default p-[3px]',
       line: 'border-b border-border',
     },
   },
@@ -21,6 +21,15 @@ const list = tv({
 
 const scrollView = tv({
   base: '',
+  variants: {
+    variant: {
+      pill: 'rounded-full',
+      line: '',
+    },
+  },
+  defaultVariants: {
+    variant: 'pill',
+  },
 });
 
 const scrollViewContentContainer = tv({

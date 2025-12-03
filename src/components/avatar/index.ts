@@ -1,4 +1,4 @@
-export { default as Avatar, useAvatarContext } from './avatar';
+export { default as Avatar, useAvatar } from './avatar';
 export type {
   AvatarColor,
   AvatarContextValue,

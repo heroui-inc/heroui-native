@@ -118,21 +118,16 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
   description,
 }) => {
   return (
-    <FormField
-      isSelected={isSelected}
-      onSelectedChange={onSelectedChange}
-      alignIndicator="start"
-      className="items-start"
-    >
+    <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
       <FormField.Indicator>
         <Checkbox className="mt-0.5" />
       </FormField.Indicator>
-      <FormField.Content>
-        <FormField.Title className="text-lg">{title}</FormField.Title>
+      <View className="flex-1">
+        <FormField.Label className="text-lg">{title}</FormField.Label>
         <FormField.Description className="text-base">
           {description}
         </FormField.Description>
-      </FormField.Content>
+      </View>
     </FormField>
   );
 };

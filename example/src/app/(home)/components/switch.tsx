@@ -30,13 +30,11 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   description,
 }) => (
   <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
-    <FormField.Content>
-      <FormField.Title>{title}</FormField.Title>
+    <View className="flex-1">
+      <FormField.Label>{title}</FormField.Label>
       <FormField.Description>{description}</FormField.Description>
-    </FormField.Content>
-    <FormField.Indicator>
-      <Switch />
-    </FormField.Indicator>
+    </View>
+    <FormField.Indicator />
   </FormField>
 );
 
@@ -130,15 +128,13 @@ const StatesContent = () => {
               onSelectedChange={handleFieldChange(key)}
               isDisabled={fieldConfigs[key].disabled}
             >
-              <FormField.Content>
-                <FormField.Title>{fieldConfigs[key].title}</FormField.Title>
+              <View className="flex-1">
+                <FormField.Label>{fieldConfigs[key].title}</FormField.Label>
                 <FormField.Description>
                   {fieldConfigs[key].description}
                 </FormField.Description>
-              </FormField.Content>
-              <FormField.Indicator>
-                <Switch />
-              </FormField.Indicator>
+              </View>
+              <FormField.Indicator />
             </FormField>
           </React.Fragment>
         ))}

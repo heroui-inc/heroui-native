@@ -1,3 +1,5 @@
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Haptics from 'expo-haptics';
 import { Button, useSelect, useThemeColor } from 'heroui-native';
 import { Platform } from 'react-native';
@@ -7,9 +9,9 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import Ionicons from '@expo/vector-icons/Ionicons';
+const StyleAnimatedView = withUniwind(Animated.View);
 
 export const CloseButton = () => {
   const insets = useSafeAreaInsets();
@@ -73,7 +75,7 @@ export const CloseButton = () => {
         onOpenChange(false);
       }}
     >
-      <Animated.View
+      <StyleAnimatedView
         className="absolute items-center justify-center"
         style={listIconAnimatedStyle}
       >
@@ -82,13 +84,13 @@ export const CloseButton = () => {
           size={20}
           color={themeColorAccentForeground}
         />
-      </Animated.View>
-      <Animated.View
+      </StyleAnimatedView>
+      <StyleAnimatedView
         className="absolute items-center justify-center"
         style={closeIconAnimatedStyle}
       >
         <Ionicons name="close" size={24} color={themeColorAccentForeground} />
-      </Animated.View>
+      </StyleAnimatedView>
     </Button>
   );
 };

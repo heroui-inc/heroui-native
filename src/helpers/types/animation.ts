@@ -1,3 +1,8 @@
+import type {
+  BaseAnimationBuilder,
+  LayoutAnimationFunction,
+} from 'react-native-reanimated';
+
 /**
  * Universal animation prop type
  * - `true` or `undefined`: Use default animations
@@ -19,6 +24,8 @@ export type AnimationRoot<
   TConfig extends Record<string, any> = Record<string, any>,
 > = boolean | 'disabled' | 'disable-all' | TConfig;
 
+export type AnimationRootDisableAll = Extract<AnimationRoot, 'disable-all'>;
+
 /**
  * Animation value that can be a custom config
  * Used for granular animation control within a component
@@ -26,3 +33,9 @@ export type AnimationRoot<
 export type AnimationValue<
   TConfig extends Record<string, any> = Record<string, any>,
 > = TConfig;
+
+export type LayoutTransition =
+  | BaseAnimationBuilder
+  | LayoutAnimationFunction
+  | typeof BaseAnimationBuilder
+  | undefined;

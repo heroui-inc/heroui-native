@@ -1,4 +1,4 @@
-import { Checkbox, FormField } from 'heroui-native';
+import { FormField } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -18,16 +18,13 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
   <FormField
     isSelected={isSelected}
     onSelectedChange={onSelectedChange}
-    alignIndicator="start"
     className="gap-3"
   >
-    <FormField.Indicator>
-      <Checkbox />
-    </FormField.Indicator>
-    <FormField.Content>
-      <FormField.Title>{label}</FormField.Title>
+    <FormField.Indicator variant="checkbox" />
+    <View className="flex-1">
+      <FormField.Label>{label}</FormField.Label>
       <FormField.Description>{description}</FormField.Description>
-    </FormField.Content>
+    </View>
   </FormField>
 );
 

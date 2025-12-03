@@ -9,6 +9,7 @@ import Animated, {
 import { withUniwind } from 'uniwind';
 
 const StyledFeather = withUniwind(Feather);
+const StyleAnimatedView = withUniwind(Animated.View);
 
 type SelectOption = {
   value: string;
@@ -44,14 +45,14 @@ const AnimatedTrigger: FC = () => {
       className="bg-surface h-[48px] w-[256px] px-3 rounded-2xl justify-center shadow-md shadow-black/5"
       style={styles.borderCurve}
     >
-      <Animated.View
+      <StyleAnimatedView
         style={[rContainerStyle, styles.borderCurve]}
-        className="absolute -inset-1 border-[2.5px] border-accent rounded-[19px] pointer-events-none"
+        className="absolute -inset-1 border-[2.5px] border-accent rounded-[10px] pointer-events-none"
       />
       <Select.Value placeholder="Select a state" />
-      <Animated.View style={rChevronStyle} className="absolute right-3">
+      <StyleAnimatedView style={rChevronStyle} className="absolute right-3">
         <StyledFeather name="chevron-down" size={18} className="text-muted" />
-      </Animated.View>
+      </StyleAnimatedView>
     </View>
   );
 };

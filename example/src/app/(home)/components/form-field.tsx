@@ -1,9 +1,12 @@
-import { Checkbox, Divider, FormField, Surface, Switch } from 'heroui-native';
+import { Checkbox, Divider, FormField, Surface } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+
+const StyleAnimatedView = withUniwind(Animated.View);
 interface SwitchFieldProps {
   isSelected: boolean;
   onSelectedChange: (value: boolean) => void;
@@ -18,13 +21,11 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   description,
 }) => (
   <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
-    <FormField.Content>
-      <FormField.Title>{title}</FormField.Title>
+    <View className="flex-1">
+      <FormField.Label>{title}</FormField.Label>
       <FormField.Description>{description}</FormField.Description>
-    </FormField.Content>
-    <FormField.Indicator>
-      <Switch />
-    </FormField.Indicator>
+    </View>
+    <FormField.Indicator />
   </FormField>
 );
 
@@ -96,7 +97,6 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
     <FormField
       isSelected={isSelected}
       onSelectedChange={onSelectedChange}
-      alignIndicator="start"
       className="items-start"
     >
       <FormField.Indicator>
@@ -104,10 +104,10 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
           <Checkbox.Indicator iconProps={{ size: 16 }} />
         </Checkbox>
       </FormField.Indicator>
-      <FormField.Content>
-        <FormField.Title>{title}</FormField.Title>
+      <View className="flex-1">
+        <FormField.Label>{title}</FormField.Label>
         <FormField.Description>{description}</FormField.Description>
-      </FormField.Content>
+      </View>
     </FormField>
   );
 };
@@ -177,16 +177,12 @@ const InlineFilter: React.FC<InlineFilterProps> = ({
   <FormField
     isSelected={isSelected}
     onSelectedChange={onSelectedChange}
-    isInline
-    alignIndicator="start"
     className="gap-2"
   >
     <FormField.Indicator>
       <Checkbox className="size-5 rounded-md" />
     </FormField.Indicator>
-    <FormField.Content>
-      <FormField.Title>{label}</FormField.Title>
-    </FormField.Content>
+    <FormField.Label>{label}</FormField.Label>
   </FormField>
 );
 
@@ -244,15 +240,13 @@ const DisabledStateContent = () => {
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-8 w-full">
         <FormField isSelected={activeSwitch} onSelectedChange={setActiveSwitch}>
-          <FormField.Content>
-            <FormField.Title>Two-factor authentication</FormField.Title>
+          <View className="flex-1">
+            <FormField.Label>Two-factor authentication</FormField.Label>
             <FormField.Description>
               Add an extra layer of security to your account
             </FormField.Description>
-          </FormField.Content>
-          <FormField.Indicator>
-            <Switch />
-          </FormField.Indicator>
+          </View>
+          <FormField.Indicator />
         </FormField>
 
         <FormField
@@ -260,15 +254,13 @@ const DisabledStateContent = () => {
           onSelectedChange={setDisabledSwitch}
           isDisabled
         >
-          <FormField.Content>
-            <FormField.Title>Biometric authentication</FormField.Title>
+          <View className="flex-1">
+            <FormField.Label>Biometric authentication</FormField.Label>
             <FormField.Description>
               Requires device with fingerprint or face recognition support
             </FormField.Description>
-          </FormField.Content>
-          <FormField.Indicator>
-            <Switch />
-          </FormField.Indicator>
+          </View>
+          <FormField.Indicator />
         </FormField>
       </View>
     </View>
@@ -284,7 +276,7 @@ const ValidationErrorStatesContent = () => {
 
   return (
     <View className="flex-1 items-center justify-center px-5">
-      <Animated.View
+      <StyleAnimatedView
         className="gap-8 w-full h-[350px]"
         layout={LinearTransition}
       >
@@ -293,19 +285,20 @@ const ValidationErrorStatesContent = () => {
             isSelected={terms}
             onSelectedChange={setTerms}
             isInvalid={!terms}
+            className="flex-col items-start gap-1"
           >
-            <FormField.Content>
-              <FormField.Title>
-                I agree to the terms and conditions
-              </FormField.Title>
-              <FormField.Description>
-                By checking this box, you agree to our Terms of Service and
-                Privacy Policy
-              </FormField.Description>
-            </FormField.Content>
-            <FormField.Indicator>
-              <Checkbox />
-            </FormField.Indicator>
+            <View className="flex-row items-center gap-2">
+              <View className="flex-1">
+                <FormField.Label>
+                  I agree to the terms and conditions
+                </FormField.Label>
+                <FormField.Description>
+                  By checking this box, you agree to our Terms of Service and
+                  Privacy Policy
+                </FormField.Description>
+              </View>
+              <FormField.Indicator variant="checkbox" />
+            </View>
             <FormField.ErrorMessage>
               You must accept the terms to continue
             </FormField.ErrorMessage>
@@ -317,16 +310,19 @@ const ValidationErrorStatesContent = () => {
             isSelected={privacyAccepted}
             onSelectedChange={setPrivacyAccepted}
             isInvalid={!privacyAccepted}
+            className="flex-col items-start gap-1"
           >
-            <FormField.Content>
-              <FormField.Title>Accept Privacy Policy</FormField.Title>
-              <FormField.Description>
-                You must accept our privacy policy to create an account
-              </FormField.Description>
-            </FormField.Content>
-            <FormField.Indicator>
-              <Checkbox isInvalid={false} />
-            </FormField.Indicator>
+            <View className="flex-row items-center gap-2">
+              <View className="flex-1">
+                <FormField.Label>Accept Privacy Policy</FormField.Label>
+                <FormField.Description>
+                  You must accept our privacy policy to create an account
+                </FormField.Description>
+              </View>
+              <FormField.Indicator>
+                <Checkbox isInvalid={false} />
+              </FormField.Indicator>
+            </View>
             <FormField.ErrorMessage>
               Please accept the privacy policy to continue
             </FormField.ErrorMessage>
@@ -338,22 +334,23 @@ const ValidationErrorStatesContent = () => {
             isSelected={dataSharing}
             onSelectedChange={setDataSharing}
             isInvalid={dataSharing}
+            className="flex-col items-start gap-1"
           >
-            <FormField.Content>
-              <FormField.Title>Share usage data</FormField.Title>
-              <FormField.Description>
-                Help improve our product by sharing anonymous usage data
-              </FormField.Description>
-            </FormField.Content>
-            <FormField.Indicator>
-              <Switch />
-            </FormField.Indicator>
+            <View className="flex-row items-center gap-2">
+              <View className="flex-1">
+                <FormField.Label>Share usage data</FormField.Label>
+                <FormField.Description>
+                  Help improve our product by sharing anonymous usage data
+                </FormField.Description>
+              </View>
+              <FormField.Indicator />
+            </View>
             <FormField.ErrorMessage>
               Warning: This will share your usage patterns
             </FormField.ErrorMessage>
           </FormField>
         </Animated.View>
-      </Animated.View>
+      </StyleAnimatedView>
     </View>
   );
 };

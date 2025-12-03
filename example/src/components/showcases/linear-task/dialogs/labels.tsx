@@ -181,14 +181,13 @@ export const Labels: FC = () => {
                         onSelectedChange={(selected) =>
                           handleSelectionChange(item.value, selected)
                         }
-                        className="self-stretch"
                       >
-                        <FormField.Content className="flex-row items-center gap-2">
+                        <View className="flex-row items-center gap-2 flex-1">
                           <View className="w-5 pl-0.5 justify-center">
                             <View className="scale-105">{item.indicator}</View>
                           </View>
-                          <FormField.Title>{item.label}</FormField.Title>
-                        </FormField.Content>
+                          <FormField.Label>{item.label}</FormField.Label>
+                        </View>
                         <FormField.Indicator>
                           <Checkbox
                             isSelected={isSelected}

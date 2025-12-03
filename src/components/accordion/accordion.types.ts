@@ -1,12 +1,15 @@
 import type {
   AnimatedProps,
-  BaseAnimationBuilder,
   EntryOrExitLayoutType,
-  LayoutAnimationFunction,
   WithSpringConfig,
-  WithTimingConfig,
 } from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
+import type {
+  Animation,
+  AnimationRoot,
+  AnimationValue,
+  LayoutTransition,
+} from '../../helpers/types/animation';
 import type {
   ContentProps as PrimitiveContentProps,
   IndicatorProps as PrimitiveIndicatorProps,
@@ -38,9 +41,25 @@ export interface AccordionIndicatorIconProps {
 }
 
 /**
+ * Animation configuration for accordion root component
+ */
+export type AccordionRootAnimation = AnimationRoot<{
+  layout?: AnimationValue<{
+    /**
+     * Custom layout animation for accordion transitions
+     * @default LinearTransition.springify().damping(140).stiffness(1600).mass(4)
+     */
+    value?: LayoutTransition;
+  }>;
+}>;
+
+/**
  * Props for the Accordion root component
  */
-export type AccordionRootProps = AnimatedProps<PrimitiveRootProps> & {
+export type AccordionRootProps = Omit<
+  AnimatedProps<PrimitiveRootProps>,
+  'layout'
+> & {
   /**
    * Children elements to be rendered inside the accordion
    */
@@ -63,16 +82,41 @@ export type AccordionRootProps = AnimatedProps<PrimitiveRootProps> & {
    * Additional CSS classes for the slots
    */
   classNames?: ElementSlots<RootSlots>;
+  /**
+   * Animation configuration for accordion
+   * - `false` or `"disabled"`: Disable only root animations
+   * - `"disable-all"`: Disable all animations including children
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: AccordionRootAnimation;
+};
+
+/**
+ * Render function props for accordion item children
+ */
+export type AccordionItemRenderProps = {
+  /**
+   * Whether the accordion item is currently expanded
+   */
+  isExpanded: boolean;
+  /**
+   * Unique value identifier for this accordion item
+   */
+  value: string;
 };
 
 /**
  * Props for the Accordion.Item component
  */
-export interface AccordionItemProps extends AnimatedProps<PrimitiveItemProps> {
+export interface AccordionItemProps
+  extends Omit<AnimatedProps<PrimitiveItemProps>, 'children'> {
   /**
-   * Children elements to be rendered inside the accordion item
+   * Children elements to be rendered inside the accordion item, or a render function
    */
-  children?: React.ReactNode;
+  children?:
+    | React.ReactNode
+    | ((props: AccordionItemRenderProps) => React.ReactNode);
   /**
    * Additional CSS classes
    */
@@ -91,25 +135,25 @@ export interface AccordionTriggerProps extends PrimitiveTriggerProps {
    * Additional CSS classes
    */
   className?: string;
-  /**
-   * Custom highlight color for press feedback
-   */
-  highlightColor?: string;
-  /**
-   * Custom highlight opacity for press feedback
-   * @default 0.5
-   */
-  highlightOpacity?: number;
-  /**
-   * Custom timing config for highlight animation
-   */
-  highlightTimingConfig?: WithTimingConfig;
-  /**
-   * Whether to show the highlight on press
-   * @default true
-   */
-  isHighlightVisible?: boolean;
 }
+
+/**
+ * Animation configuration for accordion indicator component
+ */
+export type AccordionIndicatorAnimation = Animation<{
+  rotation?: AnimationValue<{
+    /**
+     * Rotation values [collapsed, expanded] in degrees
+     * @default [0, -180]
+     */
+    value?: [number, number];
+    /**
+     * Spring animation configuration for rotation
+     * @default { damping: 140, stiffness: 1000, mass: 4 }
+     */
+    springConfig?: WithSpringConfig;
+  }>;
+}>;
 
 /**
  * Props for the Accordion.Indicator component
@@ -129,10 +173,31 @@ export interface AccordionIndicatorProps
    */
   iconProps?: AccordionIndicatorIconProps;
   /**
-   * Spring configuration for indicator animation
+   * Animation configuration for indicator
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  springConfig?: WithSpringConfig;
+  animation?: AccordionIndicatorAnimation;
 }
+
+/**
+ * Animation configuration for accordion content component
+ */
+export type AccordionContentAnimation = Animation<{
+  entering?: AnimationValue<{
+    /**
+     * Custom entering animation for content
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
+  exiting?: AnimationValue<{
+    /**
+     * Custom exiting animation for content
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
+}>;
 
 /**
  * Props for the Accordion.Content component
@@ -147,13 +212,12 @@ export interface AccordionContentProps extends PrimitiveContentProps {
    */
   className?: string;
   /**
-   * Custom entering animation for content
+   * Animation configuration for content
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  entering?: EntryOrExitLayoutType;
-  /**
-   * Custom exiting animation for content
-   */
-  exiting?: EntryOrExitLayoutType;
+  animation?: AccordionContentAnimation;
 }
 
 /**
@@ -164,15 +228,14 @@ export interface AccordionContextValue {
    * Visual variant of the accordion
    */
   variant: AccordionVariant;
-  /**
-   * Whether to show dividers between items
-   */
-  isDividerVisible: boolean;
+}
+
+/**
+ * Context value for accordion animation state
+ */
+export interface AccordionAnimationContextValue {
   /**
    * Custom layout animation for accordion transitions
    */
-  layoutTransition?:
-    | BaseAnimationBuilder
-    | LayoutAnimationFunction
-    | typeof BaseAnimationBuilder;
+  layoutTransition?: LayoutTransition;
 }

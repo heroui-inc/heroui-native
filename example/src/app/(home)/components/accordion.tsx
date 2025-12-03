@@ -1,5 +1,5 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { Accordion, useAccordionItem } from 'heroui-native';
+import { Accordion, PressableFeedback, useAccordionItem } from 'heroui-native';
 import { View } from 'react-native';
 import Animated, {
   Easing,
@@ -125,15 +125,19 @@ const DefaultVariantContent = () => {
       <Accordion defaultValue="2" className="w-full">
         {accordionData.map((item) => (
           <Accordion.Item key={item.id} value={item.id}>
-            <Accordion.Trigger>
-              <View className={classNames.triggerContentContainer}>
-                {item.icon}
-                <AppText className={classNames.triggerTitle}>
-                  {item.title}
-                </AppText>
-              </View>
-              <Accordion.Indicator />
-            </Accordion.Trigger>
+            <PressableFeedback
+              animation={{ highlight: { opacity: { value: [0, 0.05] } } }}
+            >
+              <Accordion.Trigger>
+                <View className={classNames.triggerContentContainer}>
+                  {item.icon}
+                  <AppText className={classNames.triggerTitle}>
+                    {item.title}
+                  </AppText>
+                </View>
+                <Accordion.Indicator />
+              </Accordion.Trigger>
+            </PressableFeedback>
             <Accordion.Content>
               <AppText className={classNames.contentText}>
                 {item.content}
@@ -277,7 +281,7 @@ const CustomEnteringAnimationContent = () => {
       <Accordion variant="surface" className="w-full">
         {accordionData.slice(0, 3).map((item, index) => (
           <Accordion.Item key={item.id} value={item.id}>
-            <Accordion.Trigger isHighlightVisible={false}>
+            <Accordion.Trigger>
               <View className={classNames.triggerContentContainer}>
                 {item.icon}
                 <AppText className={classNames.triggerTitle}>
@@ -285,23 +289,29 @@ const CustomEnteringAnimationContent = () => {
                 </AppText>
               </View>
               <Accordion.Indicator
-                springConfig={
-                  index === 0
-                    ? { damping: 60, stiffness: 900, mass: 3 }
-                    : index === 1
-                      ? { damping: 50, stiffness: 900, mass: 3 }
-                      : { damping: 40, stiffness: 900, mass: 3 }
-                }
+                animation={{
+                  rotation: {
+                    springConfig:
+                      index === 0
+                        ? { damping: 60, stiffness: 900, mass: 3 }
+                        : index === 1
+                          ? { damping: 50, stiffness: 900, mass: 3 }
+                          : { damping: 40, stiffness: 900, mass: 3 },
+                  },
+                }}
               />
             </Accordion.Trigger>
             <Accordion.Content
-              entering={
-                index === 0
-                  ? FadeInRight.delay(50).easing(Easing.inOut(Easing.ease))
-                  : index === 1
-                    ? FadeInLeft.delay(50).easing(Easing.inOut(Easing.ease))
-                    : ZoomIn.delay(50).easing(Easing.out(Easing.exp))
-              }
+              animation={{
+                entering: {
+                  value:
+                    index === 0
+                      ? FadeInRight.delay(50).easing(Easing.inOut(Easing.ease))
+                      : index === 1
+                        ? FadeInLeft.delay(50).easing(Easing.inOut(Easing.ease))
+                        : ZoomIn.delay(50).easing(Easing.out(Easing.exp)),
+                },
+              }}
             >
               <AppText className={classNames.contentText}>
                 {item.content}

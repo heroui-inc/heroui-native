@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
 import { Button, TextField } from 'heroui-native';
 import { useState } from 'react';
@@ -187,13 +188,10 @@ const TextFieldWithCustomStylesContent = () => {
             keyboardType="number-pad"
             maxLength={16}
             className="border-[0.5px] rounded-none"
-            selectionColor="#2563eb"
-            colors={{
-              blurBorder: isDark ? '#fafafa' : '#09090b',
-              focusBorder: isDark ? '#fafafa' : '#09090b',
-              blurBackground: isDark ? '#18181b' : '#fafafa',
-              focusBackground: isDark ? '#18181b' : '#fafafa',
+            style={{
+              borderColor: isDark ? '#fafafa' : '#09090b',
             }}
+            animation="disabled"
           />
           <TextField.Description>
             Redeem your gift card at checkout

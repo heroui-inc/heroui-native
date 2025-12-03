@@ -1,6 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import { Pressable, View } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
 import { Text } from '../../helpers/components';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
@@ -8,9 +7,7 @@ import { DISPLAY_NAME } from './chip.constants';
 import chipStyles, { styleSheet } from './chip.styles';
 import type { ChipContextValue, ChipLabelProps, ChipProps } from './chip.types';
 
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-
-const [ChipProvider, useChipContext] = createContext<ChipContextValue>({
+const [ChipProvider, useChip] = createContext<ChipContextValue>({
   name: 'ChipContext',
 });
 
@@ -47,10 +44,10 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
 
   return (
     <ChipProvider value={contextValue}>
-      <AnimatedPressable
+      <Pressable
         ref={ref}
         className={tvStyles}
-        style={[styleSheet.root, style]}
+        style={[styleSheet.root, style] as StyleProp<ViewStyle>}
         {...restProps}
       >
         {stringifiedChildren ? (
@@ -58,7 +55,7 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
         ) : (
           children
         )}
-      </AnimatedPressable>
+      </Pressable>
     </ChipProvider>
   );
 });
@@ -68,7 +65,7 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
 const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
-  const { size, variant, color } = useChipContext();
+  const { size, variant, color } = useChip();
 
   const tvStyles = chipStyles.label({
     size,
@@ -108,5 +105,4 @@ const CompoundChip = Object.assign(Chip, {
   Label: ChipLabel,
 });
 
-export { useChipContext };
 export default CompoundChip;

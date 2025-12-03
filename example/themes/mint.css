@@ -43,6 +43,7 @@
       --segment-foreground: oklch(0.22 0.05 170);
 
       /* Misc Colors */
+      --border: oklch(0 0 0 / 0%);
       --divider: oklch(0.92 0.016 170);
       --link: oklch(0.62 0.15 175);
     }
@@ -90,6 +91,7 @@
       --segment-foreground: oklch(0.91 0.015 170);
 
       /* Misc Colors */
+      --border: oklch(0 0 0 / 0%);
       --divider: oklch(0.26 0.048 170);
       --link: oklch(0.72 0.16 175);
     }

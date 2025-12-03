@@ -14,6 +14,8 @@ import type { UsageVariant } from '../../../components/component-presentation/ty
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
+const StyleAnimatedView = withUniwind(Animated.View);
+
 const StyledIonicons = withUniwind(Ionicons);
 const StyledFontAwesome = withUniwind(FontAwesome);
 
@@ -216,7 +218,7 @@ const RadioGroupStatesContent = () => {
 
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <Animated.View className="w-full" layout={LinearTransition}>
+      <StyleAnimatedView className="w-full" layout={LinearTransition}>
         <Surface className="gap-6">
           <View>
             <AppText className="text-foreground font-semibold text-base">
@@ -268,7 +270,7 @@ const RadioGroupStatesContent = () => {
             </RadioGroup.ErrorMessage>
           </RadioGroup>
         </Surface>
-      </Animated.View>
+      </StyleAnimatedView>
     </View>
   );
 };

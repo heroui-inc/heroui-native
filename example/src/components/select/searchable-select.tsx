@@ -12,7 +12,10 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../app-text';
+
+const StyleAnimatedView = withUniwind(Animated.View);
 
 type SelectOption = {
   value: string;
@@ -38,7 +41,7 @@ const AnimatedTextInputBorder: FC = () => {
   });
 
   return (
-    <Animated.View
+    <StyleAnimatedView
       style={[rContainerStyle, styles.focusRing]}
       className="absolute -inset-1 border-2 border-accent rounded-[19px] pointer-events-none"
     />

@@ -9,6 +9,9 @@ import Animated, {
   useScrollOffset,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
+
+const StyleAnimatedView = withUniwind(Animated.View);
 
 type Props = PropsWithChildren<{
   headerImage: ReactElement;
@@ -64,7 +67,7 @@ export default function ParallaxScrollView({
       contentContainerStyle={{ paddingBottom: insets.bottom + 12 }}
       scrollEnabled={scrollEnabled}
     >
-      <Animated.View
+      <StyleAnimatedView
         className="overflow-hidden"
         style={[{ height: headerHeight }, headerAnimatedStyle]}
       >
@@ -76,7 +79,7 @@ export default function ParallaxScrollView({
           ]}
           style={styles.gradient}
         />
-      </Animated.View>
+      </StyleAnimatedView>
       <View className="flex-1 p-4 overflow-hidden -mt-[100px] z-50">
         {children}
       </View>

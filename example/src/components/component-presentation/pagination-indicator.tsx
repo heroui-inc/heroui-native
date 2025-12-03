@@ -5,9 +5,10 @@ import Animated, {
   type SharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../app-text';
 
-const AnimatedView = Animated.createAnimatedComponent(View);
+const StyleAnimatedView = withUniwind(Animated.View);
 
 export type PaginationIndicatorProps = {
   index: number;
@@ -66,7 +67,7 @@ export function PaginationIndicator({
 
   return (
     <View className="flex-row items-center">
-      <AnimatedView
+      <StyleAnimatedView
         className="w-3 h-[2px] bg-foreground"
         style={[
           {
@@ -75,11 +76,11 @@ export function PaginationIndicator({
           rBarStyle,
         ]}
       />
-      <Animated.View className="absolute left-8" style={rLabelStyle}>
+      <StyleAnimatedView className="absolute left-8" style={rLabelStyle}>
         <AppText className="text-foreground text-lg font-normal">
           {label}
         </AppText>
-      </Animated.View>
+      </StyleAnimatedView>
     </View>
   );
 }

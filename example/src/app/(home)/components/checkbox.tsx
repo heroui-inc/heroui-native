@@ -18,6 +18,7 @@ import type { UsageVariant } from '../../../components/component-presentation/ty
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
+const StyleAnimatedView = withUniwind(Animated.View);
 const StyledIonicons = withUniwind(Ionicons);
 const StyledFontAwesome = withUniwind(FontAwesome);
 
@@ -160,7 +161,7 @@ const AnimatedCustomIndicator = ({
   });
 
   return (
-    <Animated.View
+    <StyleAnimatedView
       className="aspect-square items-center justify-center bg-pink-400 rounded-sm"
       style={animatedStyle}
     >
@@ -187,7 +188,7 @@ const AnimatedCustomIndicator = ({
           />
         </Animated.View>
       )}
-    </Animated.View>
+    </StyleAnimatedView>
   );
 };
 

@@ -14,8 +14,11 @@ import Animated, {
   FadeOut,
   LinearTransition,
 } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+
+const StyleAnimatedView = withUniwind(Animated.View);
 
 const DURATION = 200;
 
@@ -24,13 +27,13 @@ const AnimatedContentContainer = ({
 }: {
   children: React.ReactNode;
 }) => (
-  <Animated.View
+  <StyleAnimatedView
     entering={FadeIn.duration(DURATION)}
     exiting={FadeOut.duration(DURATION)}
     className="gap-6"
   >
     {children}
-  </Animated.View>
+  </StyleAnimatedView>
 );
 
 interface FormErrors {
@@ -109,7 +112,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
           </Tabs.Trigger>
         </Tabs.ScrollView>
       </Tabs.List>
-      <Animated.View
+      <StyleAnimatedView
         layout={LinearTransition.duration(DURATION)}
         className={cn(
           'px-2 py-6',
@@ -302,7 +305,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
             </Button>
           </AnimatedContentContainer>
         </Tabs.Content>
-      </Animated.View>
+      </StyleAnimatedView>
     </Tabs>
   );
 };

@@ -65,7 +65,7 @@ npm install heroui-native
 ### 2. Install Mandatory Peer Dependencies
 
 ```bash
-npm install react-native-screens react-native-reanimated@~4.1.1 react-native-worklets@0.5.1 react-native-safe-area-context~5.6.0 react-native-svg@15.12.1 tailwind-variants@^3.2.2 tailwind-merge@^3.3.1 @gorhom/bottom-sheet@^5
+npm install react-native-screens react-native-reanimated@~4.1.1 react-native-worklets@0.5.1 react-native-safe-area-context@~5.6.0 react-native-svg@15.12.1 tailwind-variants@^3.2.2 tailwind-merge@^3.4.0 @gorhom/bottom-sheet@^5
 ```
 
 > **Important:** It's recommended to use the exact versions specified above to avoid compatibility issues. Version mismatches may cause unexpected bugs.

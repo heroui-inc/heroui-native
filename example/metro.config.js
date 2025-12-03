@@ -1,7 +1,6 @@
 const path = require('path');
 const exampleNodeModules = path.join(__dirname, 'node_modules'); // Example's node_modules
 const escape = require('escape-string-regexp');
-const exclusionList = require('metro-config/private/defaults/exclusionList');
 const rootPkg = require('../package.json');
 const { withUniwindConfig } = require('uniwind/metro');
 const { getDefaultConfig } = require('@expo/metro-config');
@@ -34,10 +33,8 @@ const configObj = {
     disableHierarchicalLookup: true,
     nodeModulesPaths: [exampleNodeModules, path.resolve(root, 'node_modules')],
 
-    blockList: exclusionList(
-      peerDependencies.map(
-        (m) => new RegExp(`^${escape(path.join(root, 'node_modules', m))}/.*$`) // Exclude root's node_modules
-      )
+    blockList: peerDependencies.map(
+      (m) => new RegExp(`^${escape(path.join(root, 'node_modules', m))}/.*$`) // Exclude root's node_modules
     ),
     extraNodeModules: {
       ...peerDependencies.reduce((acc, name) => {

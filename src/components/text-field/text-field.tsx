@@ -2,8 +2,8 @@ import { forwardRef, useMemo } from 'react';
 import {
   TextInput,
   View,
-  type NativeSyntheticEvent,
-  type TextInputFocusEventData,
+  type BlurEvent,
+  type FocusEvent,
   type TextInput as TextInputType,
   type ViewStyle,
 } from 'react-native';
@@ -182,12 +182,12 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       style: style as ViewStyle | undefined,
     });
 
-    const handleFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    const handleFocus = (e: FocusEvent) => {
       handleFocusAnimation();
       onFocus?.(e);
     };
 
-    const handleBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    const handleBlur = (e: BlurEvent) => {
       handleBlurAnimation();
       onBlur?.(e);
     };

@@ -329,7 +329,7 @@ TextFieldErrorMessage.displayName = DISPLAY_NAME.ERROR_MESSAGE;
 /**
  * Compound TextField component with sub-components
  *
- * @component TextField - Main container that provides gap-2 spacing between children.
+ * @component TextField - Main container that provides gap-1 spacing between children.
  * Handles disabled state and validation state for the entire field.
  *
  * @component TextField.Label - Label with optional asterisk for required fields.

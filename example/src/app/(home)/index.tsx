@@ -157,7 +157,7 @@ export default function App() {
   return (
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
-        <AppText className="text-muted text-base">v1.0.0-beta.4</AppText>
+        <AppText className="text-muted text-base">v1.0.0-beta.5</AppText>
       </View>
       <View className="gap-6">
         {cards.map((card, index) => (

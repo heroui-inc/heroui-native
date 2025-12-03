@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  v1.0.0-beta.4
+  v1.0.0-beta.5
 </p>
 
 ## Preview App

@@ -32,6 +32,7 @@ import { Plan } from '../../../components/showcases/cooking-onboarding/plan';
 import { Save } from '../../../components/showcases/cooking-onboarding/save';
 import { Share } from '../../../components/showcases/cooking-onboarding/share';
 
+const StyleAnimatedView = withUniwind(Animated.View);
 const StyledFeather = withUniwind(Feather);
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -140,7 +141,7 @@ export default function CookingOnboardingScreen() {
   }, [onboardingState.isActive]);
 
   return (
-    <Animated.View
+    <StyleAnimatedView
       entering={FadeIn.delay(300)}
       className="flex-1 bg-background"
     >
@@ -219,7 +220,7 @@ export default function CookingOnboardingScreen() {
           className="bg-black/25"
         />
       )}
-    </Animated.View>
+    </StyleAnimatedView>
   );
 }
 

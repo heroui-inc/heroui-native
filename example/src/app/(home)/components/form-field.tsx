@@ -2,8 +2,11 @@ import { Checkbox, Divider, FormField, Surface } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+
+const StyleAnimatedView = withUniwind(Animated.View);
 interface SwitchFieldProps {
   isSelected: boolean;
   onSelectedChange: (value: boolean) => void;
@@ -273,7 +276,7 @@ const ValidationErrorStatesContent = () => {
 
   return (
     <View className="flex-1 items-center justify-center px-5">
-      <Animated.View
+      <StyleAnimatedView
         className="gap-8 w-full h-[350px]"
         layout={LinearTransition}
       >
@@ -347,7 +350,7 @@ const ValidationErrorStatesContent = () => {
             </FormField.ErrorMessage>
           </FormField>
         </Animated.View>
-      </Animated.View>
+      </StyleAnimatedView>
     </View>
   );
 };

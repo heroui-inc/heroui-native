@@ -11,6 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
 
+const StyleAnimatedView = withUniwind(Animated.View);
 const StyledIonicons = withUniwind(Ionicons);
 
 /**
@@ -136,19 +137,19 @@ export const AchievementToast = (props: ToastComponentProps) => {
     <Toast className="bg-[#F5F1E8] border-[2px] border-orange-200" {...props}>
       <View className="relative flex-row items-center gap-4 px-4 py-3">
         {/* Confetti decorative elements */}
-        <Animated.View
+        <StyleAnimatedView
           className="absolute right-8 top-2 size-2 rounded-full bg-orange-600/60"
           style={confetti1Style}
         />
-        <Animated.View
+        <StyleAnimatedView
           className="absolute right-12 top-4 size-1.5 rounded-full bg-orange-700/50"
           style={confetti2Style}
         />
-        <Animated.View
+        <StyleAnimatedView
           className="absolute right-6 bottom-3 size-2 rounded-full bg-orange-500/40"
           style={confetti3Style}
         />
-        <Animated.View
+        <StyleAnimatedView
           className="absolute right-10 bottom-2 size-1 rounded-full bg-orange-600/50"
           style={confetti4Style}
         />

@@ -158,7 +158,7 @@ const TabsScrollView = forwardRef<ScrollView, TabsScrollViewProps>(
     const { measurements, variant } = useTabsMeasurements();
     const { width: screenWidth } = useWindowDimensions();
 
-    const scrollViewStyles = tabsStyles.scrollView({ className });
+    const scrollViewStyles = tabsStyles.scrollView({ variant, className });
     const contentContainerStyles = tabsStyles.scrollViewContentContainer({
       variant,
       className: contentContainerClassName,

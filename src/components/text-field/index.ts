@@ -1,8 +1,7 @@
-export { default as TextField, useTextFieldContext } from './text-field';
+export { default as TextField, useTextField } from './text-field';
 export type {
   TextFieldDescriptionProps,
   TextFieldErrorMessageProps,
-  TextFieldInputColors,
   TextFieldInputEndContentProps,
   TextFieldInputProps,
   TextFieldInputStartContentProps,

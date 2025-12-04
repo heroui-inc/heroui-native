@@ -96,10 +96,6 @@ export type SpinnerIndicatorAnimation = Animation<{
      * @default Easing.linear
      */
     easing?: WithTimingConfig['easing'];
-    /**
-     * Animation timing configuration
-     */
-    timingConfig?: WithTimingConfig;
   }>;
 }>;
 
@@ -109,9 +105,6 @@ export type SpinnerIndicatorAnimation = Animation<{
 export interface SpinnerIndicatorProps extends AnimatedProps<ViewProps> {
   /** Content to render inside the indicator */
   children?: React.ReactNode;
-
-  /** Speed in rounds per second @default 1.1 */
-  speed?: number;
 
   /** Props for the default icon */
   iconProps?: SpinnerIconProps;

@@ -103,15 +103,8 @@ const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
 
 const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
   (props, ref) => {
-    const {
-      children,
-      className,
-      style,
-      speed = 1.1,
-      iconProps,
-      animation,
-      ...restProps
-    } = props;
+    const { children, className, style, iconProps, animation, ...restProps } =
+      props;
 
     const { size, color, isLoading } = useSpinnerContext();
 
@@ -139,7 +132,6 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
       animation,
       style: style as ViewStyle | undefined,
       isLoading,
-      speed,
     });
 
     if (!isLoading) {
@@ -176,7 +168,7 @@ SpinnerIndicator.displayName = DISPLAY_NAME.INDICATOR;
  * @component Spinner - Main container that controls loading state, size, and color.
  * Renders a default animated indicator if no children provided.
  *
- * @component Spinner.Indicator - Optional sub-component for customizing animation speed
+ * @component Spinner.Indicator - Optional sub-component for customizing animation configuration
  * and icon appearance. Accepts custom children to replace the default icon.
  * When omitted, Spinner uses a default indicator with standard animation settings.
  *
@@ -186,7 +178,7 @@ SpinnerIndicator.displayName = DISPLAY_NAME.INDICATOR;
  * @see Full documentation: https://heroui.com/components/spinner
  */
 const CompoundSpinner = Object.assign(SpinnerRoot, {
-  /** @optional Customize animation speed and icon appearance */
+  /** @optional Customize animation configuration and icon appearance */
   Indicator: SpinnerIndicator,
 });
 

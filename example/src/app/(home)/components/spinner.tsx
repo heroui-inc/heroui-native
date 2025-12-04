@@ -62,7 +62,7 @@ const CustomContentContent = () => {
     <View className="flex-1 items-center justify-center">
       <View className="flex-row gap-4">
         <Spinner size="md" color="default">
-          <Spinner.Indicator speed={0.7}>
+          <Spinner.Indicator animation={{ rotation: { speed: 0.7 } }}>
             <StyledIonicons
               name="reload"
               size={24}
@@ -71,7 +71,7 @@ const CustomContentContent = () => {
           </Spinner.Indicator>
         </Spinner>
         <Spinner size="lg" color="default">
-          <Spinner.Indicator speed={0.7}>
+          <Spinner.Indicator animation={{ rotation: { speed: 0.7 } }}>
             <Text className="text-xl">⏳</Text>
           </Spinner.Indicator>
         </Spinner>
@@ -88,19 +88,19 @@ const AnimationSpeedContent = () => {
       <View className="flex-row gap-4">
         <View className="items-center">
           <Spinner size="md" color="default">
-            <Spinner.Indicator speed={0.5} />
+            <Spinner.Indicator animation={{ rotation: { speed: 0.5 } }} />
           </Spinner>
           <Text className="text-xs text-muted mt-2">0.5x</Text>
         </View>
         <View className="items-center">
           <Spinner size="md" color="default">
-            <Spinner.Indicator speed={1} />
+            <Spinner.Indicator animation={{ rotation: { speed: 1 } }} />
           </Spinner>
           <Text className="text-xs text-muted mt-2">1x</Text>
         </View>
         <View className="items-center">
           <Spinner size="md" color="default">
-            <Spinner.Indicator speed={2} />
+            <Spinner.Indicator animation={{ rotation: { speed: 2 } }} />
           </Spinner>
           <Text className="text-xs text-muted mt-2">2x</Text>
         </View>

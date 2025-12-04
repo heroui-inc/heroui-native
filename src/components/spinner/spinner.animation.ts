@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import type { ViewStyle } from 'react-native';
 import {
   cancelAnimation,
@@ -12,7 +12,6 @@ import {
 import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
 import {
   getAnimationState,
-  getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
@@ -91,9 +90,8 @@ export function useSpinnerIndicatorAnimation(options: {
   animation: SpinnerIndicatorAnimation | undefined;
   style: ViewStyle | undefined;
   isLoading: boolean;
-  speed?: number;
 }) {
-  const { animation, style, isLoading, speed = 1.1 } = options;
+  const { animation, style, isLoading } = options;
 
   // Read from global animation context (always available in compound parts)
   const { isAllAnimationsDisabled } = useAnimationSettings();
@@ -110,7 +108,7 @@ export function useSpinnerIndicatorAnimation(options: {
   const rotationSpeed = getAnimationValueProperty({
     animationValue: animationConfig?.rotation,
     property: 'speed',
-    defaultValue: speed,
+    defaultValue: 1.1,
   });
 
   const rotationEasing = getAnimationValueProperty({
@@ -119,14 +117,12 @@ export function useSpinnerIndicatorAnimation(options: {
     defaultValue: Easing.linear,
   });
 
-  const rotationTimingConfig = getAnimationValueMergedConfig({
-    animationValue: animationConfig?.rotation,
-    property: 'timingConfig',
-    defaultValue: {
+  const rotationTimingConfig = useMemo(() => {
+    return {
       duration: DEFAULT_ROTATION_DURATION / rotationSpeed,
       easing: rotationEasing,
-    },
-  });
+    };
+  }, [rotationSpeed, rotationEasing]);
 
   const rotation = useSharedValue(0);
 

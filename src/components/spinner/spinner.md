@@ -53,15 +53,15 @@ Control the visibility of the spinner with the `isLoading` prop.
 
 ### Animation Speed
 
-Customize the rotation speed using the compound Indicator component.
+Customize the rotation speed using the `animation` prop on the Indicator component.
 
 ```tsx
 <Spinner>
-  <Spinner.Indicator speed={0.5} />
+  <Spinner.Indicator animation={{ rotation: { speed: 0.5 } }} />
 </Spinner>
 
 <Spinner>
-  <Spinner.Indicator speed={2} />
+  <Spinner.Indicator animation={{ rotation: { speed: 2 } }} />
 </Spinner>
 ```
 
@@ -115,7 +115,7 @@ export default function SpinnerExample() {
 
       <View className="flex-row gap-4 items-center justify-center">
         <Spinner size="md" color="#EC4899">
-          <Spinner.Indicator speed={0.7}>
+          <Spinner.Indicator animation={{ rotation: { speed: 0.7 } }}>
             <Ionicons name="refresh" size={24} color="#EC4899" />
           </Spinner.Indicator>
         </Spinner>
@@ -134,7 +134,7 @@ export default function SpinnerExample() {
 ```
 
 - **Spinner**: Main container that controls loading state, size, and color. Renders a default animated indicator if no children provided.
-- **Spinner.Indicator**: Optional sub-component for customizing animation speed and icon appearance. Accepts custom children to replace the default icon.
+- **Spinner.Indicator**: Optional sub-component for customizing animation configuration and icon appearance. Accepts custom children to replace the default icon.
 
 ## API Reference
 
@@ -183,7 +183,6 @@ Animation configuration for the Spinner root component. Can be:
 | prop                    | type                        | default     | description                                                                       |
 | ----------------------- | --------------------------- | ----------- | --------------------------------------------------------------------------------- |
 | `children`              | `React.ReactNode`           | `undefined` | Content to render inside the indicator                                            |
-| `speed`                 | `number`                    | `1.1`       | Speed in rounds per second                                                        |
 | `iconProps`             | `SpinnerIconProps`          | `undefined` | Props for the default icon                                                        |
 | `className`             | `string`                    | `undefined` | Custom class name for the indicator element                                       |
 | `animation`             | `SpinnerIndicatorAnimation` | `undefined` | Animation configuration for spinner indicator (see Animation Configuration below) |
@@ -205,11 +204,10 @@ Animation configuration for the Spinner Indicator component. Can be:
 
 **RotationConfig:**
 
-| property       | type                         | default                                             | description                    |
-| -------------- | ---------------------------- | --------------------------------------------------- | ------------------------------ |
-| `speed`        | `number`                     | `1.1`                                               | Rotation speed multiplier      |
-| `easing`       | `WithTimingConfig['easing']` | `Easing.linear`                                     | Animation easing configuration |
-| `timingConfig` | `WithTimingConfig`           | `{ duration: 1000 / speed, easing: Easing.linear }` | Animation timing configuration |
+| property | type                         | default         | description                    |
+| -------- | ---------------------------- | --------------- | ------------------------------ |
+| `speed`  | `number`                     | `1.1`           | Rotation speed multiplier      |
+| `easing` | `WithTimingConfig['easing']` | `Easing.linear` | Animation easing configuration |
 
 ### SpinnerIconProps
 

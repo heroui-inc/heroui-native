@@ -1,10 +1,8 @@
 import React, { useMemo, type PropsWithChildren } from 'react';
 
 import { View } from 'react-native';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { createContext } from '../../helpers/utils';
 import Skeleton from '../skeleton/skeleton';
-import { useSkeletonGroupRootAnimation } from './skeleton-group.animation';
 import { DISPLAY_NAME } from './skeleton-group.constants';
 import { skeletonGroupStyles } from './skeleton-group.styles';
 import type {
@@ -29,16 +27,11 @@ const SkeletonGroupRoot: React.FC<PropsWithChildren<SkeletonGroupRootProps>> = (
     children,
     className,
     style,
-    animation,
     isSkeletonOnly = false,
     ...restProps
   } = props;
 
   const containerStyles = skeletonGroupStyles({ className });
-
-  const { isAllAnimationsDisabled } = useSkeletonGroupRootAnimation({
-    animation,
-  });
 
   const contextValue = useMemo<SkeletonGroupContextValue>(
     () => ({
@@ -47,25 +40,16 @@ const SkeletonGroupRoot: React.FC<PropsWithChildren<SkeletonGroupRootProps>> = (
     [restProps]
   );
 
-  const animationSettingsContextValue = useMemo(
-    () => ({
-      isAllAnimationsDisabled,
-    }),
-    [isAllAnimationsDisabled]
-  );
-
   if (isSkeletonOnly && !restProps.isLoading) {
     return null;
   }
 
   return (
-    <AnimationSettingsProvider value={animationSettingsContextValue}>
-      <SkeletonGroupProvider value={contextValue}>
-        <View className={containerStyles} style={style}>
-          {children}
-        </View>
-      </SkeletonGroupProvider>
-    </AnimationSettingsProvider>
+    <SkeletonGroupProvider value={contextValue}>
+      <View className={containerStyles} style={style}>
+        {children}
+      </View>
+    </SkeletonGroupProvider>
   );
 };
 

@@ -2,8 +2,10 @@ import type { ViewProps } from 'react-native';
 import type {
   AnimatedProps,
   EasingFunction,
+  EntryOrExitLayoutType,
   SharedValue,
 } from 'react-native-reanimated';
+import type { Animation } from '../../helpers/types';
 
 /**
  * Skeleton animation type - defines the animation style
@@ -11,97 +13,85 @@ import type {
 export type SkeletonAnimation = 'shimmer' | 'pulse' | 'none';
 
 /**
- * Shimmer animation configuration
+ * Shimmer animation configuration for Skeleton root component
  */
-export interface ShimmerConfig {
+export type SkeletonShimmerAnimation = Animation<{
   /**
    * Animation duration in milliseconds
    * @default 1500
    */
   duration?: number;
-
-  /**
-   * Easing function for the animation
-   */
-  easing?: EasingFunction;
-
   /**
    * Speed multiplier for the animation
    * @default 1
    */
   speed?: number;
-
   /**
    * Highlight color for the shimmer effect
    */
   highlightColor?: string;
-}
+  /**
+   * Easing function for the animation
+   */
+  easing?: EasingFunction;
+}>;
 
 /**
- * Pulse animation configuration
+ * Pulse animation configuration for Skeleton root component
  */
-export interface PulseConfig {
+export type SkeletonPulseAnimation = Animation<{
   /**
    * Animation duration in milliseconds
    * @default 1000
    */
   duration?: number;
-
-  /**
-   * Easing function for the animation
-   */
-  easing?: EasingFunction;
-
   /**
    * Minimum opacity value
    * @default 0.3
    */
   minOpacity?: number;
-
   /**
    * Maximum opacity value
    * @default 1
    */
   maxOpacity?: number;
-}
+  /**
+   * Easing function for the animation
+   */
+  easing?: EasingFunction;
+}>;
 
 /**
- * Context value for skeleton provider
+ * Animation configuration for Skeleton root component
  */
-export interface SkeletonContextValue {
+export type SkeletonRootAnimation = Animation<{
+  entering?: Animation<{
+    /**
+     * Custom entering animation for skeleton
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
   /**
-   * Whether the skeleton is currently loading
+   * Exiting animation for the skeleton
    */
-  isLoading: boolean;
+  exiting?: Animation<{
+    /**
+     * Custom exiting animation for skeleton
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
   /**
-   * Animation type
+   * Shimmer animation configuration
    */
-  animationType: SkeletonAnimation;
+  shimmer?: SkeletonShimmerAnimation;
   /**
-   * Shimmer configuration
+   * Pulse animation configuration
    */
-  shimmerConfig?: ShimmerConfig;
+  pulse?: SkeletonPulseAnimation;
   /**
-   * Pulse configuration
+   * Entering animation for the skeleton
    */
-  pulseConfig?: PulseConfig;
-  /**
-   * Shared animation progress value
-   */
-  progress: SharedValue<number>;
-  /**
-   * Component width for shimmer calculation
-   */
-  componentWidth: number;
-  /**
-   * Component offset for shimmer calculation
-   */
-  offset: number;
-  /**
-   * Screen width for animation calculation
-   */
-  screenWidth: number;
-}
+}>;
 
 /**
  * Props for the main Skeleton component
@@ -125,17 +115,42 @@ export interface SkeletonProps extends AnimatedProps<ViewProps> {
   animationType?: SkeletonAnimation;
 
   /**
-   * Shimmer animation configuration
+   * Animation configuration
    */
-  shimmerConfig?: ShimmerConfig;
-
-  /**
-   * Pulse animation configuration
-   */
-  pulseConfig?: PulseConfig;
+  animation?: SkeletonRootAnimation;
 
   /**
    * Additional CSS classes for styling
    */
   className?: string;
+}
+
+/**
+ * Context value for skeleton animation provider
+ */
+export interface SkeletonAnimationContextValue {
+  /**
+   * Whether the skeleton is currently loading
+   */
+  isLoading: boolean;
+  /**
+   * Animation type
+   */
+  animationType: SkeletonAnimation;
+  /**
+   * Shared animation progress value
+   */
+  progress: SharedValue<number>;
+  /**
+   * Component width for shimmer calculation
+   */
+  componentWidth: number;
+  /**
+   * Component offset for shimmer calculation
+   */
+  offset: number;
+  /**
+   * Screen width for animation calculation
+   */
+  screenWidth: number;
 }

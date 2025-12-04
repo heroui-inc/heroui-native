@@ -81,7 +81,7 @@ export const PreviewCard: FC<PreviewCardProps> = ({
             </Chip>
           </Card.Body>
           <Card.Footer>
-            <Card.Title className="font-semibold">{title}</Card.Title>
+            <Card.Label className="font-semibold">{title}</Card.Label>
             <Card.Description>
               <AppText className="text-blue-500 font-medium">
                 {category}

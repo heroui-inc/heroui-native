@@ -17,8 +17,8 @@ const BasicCardContent = () => {
         <View className="gap-4">
           <Card.Body className="mb-4">
             <View className="gap-1 mb-2">
-              <Card.Title className="text-pink-400">$450</Card.Title>
-              <Card.Title>Living room Sofa</Card.Title>
+              <Card.Label className="text-pink-400">$450</Card.Label>
+              <Card.Label>Living room Sofa</Card.Label>
             </View>
             <Card.Description>
               This sofa is perfect for modern tropical spaces, baroque inspired
@@ -63,7 +63,7 @@ const CardWithImageContent = () => {
               />
             </Card.Header>
             <Card.Body className="flex-1">
-              <Card.Title>Indie Hackers</Card.Title>
+              <Card.Label>Indie Hackers</Card.Label>
               <Card.Description className="text-sm">
                 148 members
               </Card.Description>
@@ -91,7 +91,7 @@ const CardWithImageContent = () => {
               />
             </Card.Header>
             <Card.Body className="flex-1">
-              <Card.Title>AI Builders</Card.Title>
+              <Card.Label>AI Builders</Card.Label>
               <Card.Description className="text-sm">
                 362 members
               </Card.Description>
@@ -129,7 +129,7 @@ const HorizontalCardWithImageContent = () => {
           />
           <View className="flex-1 gap-4">
             <Card.Body className="flex-1">
-              <Card.Title>Avocado Hackathon</Card.Title>
+              <Card.Label>Avocado Hackathon</Card.Label>
               <Card.Description numberOfLines={2} className="text-sm">
                 Today, 6:30 PM
               </Card.Description>
@@ -162,7 +162,7 @@ const HorizontalCardWithImageContent = () => {
           />
           <View className="flex-1 gap-4">
             <Card.Body className="flex-1">
-              <Card.Title>Sound Electro</Card.Title>
+              <Card.Label>Sound Electro</Card.Label>
               <Card.Description numberOfLines={2} className="text-sm">
                 Wed, 4:30 PM
               </Card.Description>
@@ -205,9 +205,9 @@ const BackgroundImageCardContent = () => {
         />
         <View className="flex-1 gap-4">
           <Card.Body className="flex-1">
-            <Card.Title className="text-base text-zinc-50 uppercase mb-0.5">
+            <Card.Label className="text-base text-zinc-50 uppercase mb-0.5">
               Neo
-            </Card.Title>
+            </Card.Label>
             <Card.Description className="text-zinc-50 font-medium text-base">
               Home robot
             </Card.Description>

@@ -36,9 +36,9 @@ const BackgroundImageCardContent = () => {
           />
           <View className="flex-1 gap-4">
             <Card.Body className="flex-1">
-              <Card.Title className="text-base text-zinc-50 uppercase mb-0.5">
+              <Card.Label className="text-base text-zinc-50 uppercase mb-0.5">
                 Neo
-              </Card.Title>
+              </Card.Label>
               <Card.Description className="text-zinc-50 font-medium text-base">
                 Home robot
               </Card.Description>
@@ -101,7 +101,7 @@ const CardWithImageContent = () => {
                 />
               </Card.Header>
               <Card.Body className="flex-1">
-                <Card.Title>Indie Hackers</Card.Title>
+                <Card.Label>Indie Hackers</Card.Label>
                 <Card.Description className="text-sm">
                   148 members
                 </Card.Description>
@@ -139,7 +139,7 @@ const CardWithImageContent = () => {
                 />
               </Card.Header>
               <Card.Body className="flex-1">
-                <Card.Title>AI Builders</Card.Title>
+                <Card.Label>AI Builders</Card.Label>
                 <Card.Description className="text-sm">
                   362 members
                 </Card.Description>

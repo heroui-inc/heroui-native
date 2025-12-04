@@ -1,8 +1,6 @@
 import {
-  createContext,
   forwardRef,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -23,10 +21,10 @@ import {
   useTabsRootAnimation,
 } from './tabs.animation';
 import { DISPLAY_NAME } from './tabs.constants';
+import { MeasurementsContext, useTabsMeasurements } from './tabs.context';
 import tabsStyles from './tabs.styles';
 import type {
   ItemMeasurements,
-  MeasurementsContextValue,
   TabsContentProps,
   TabsIndicatorProps,
   TabsLabelProps,
@@ -42,22 +40,6 @@ const AnimatedIndicator = Animated.createAnimatedComponent(
 
 const useTabs = TabsPrimitives.useRootContext;
 const useTabsTrigger = TabsPrimitives.useTriggerContext;
-
-// --------------------------------------------------
-
-const MeasurementsContext = createContext<MeasurementsContextValue | null>(
-  null
-);
-
-function useTabsMeasurements() {
-  const context = useContext(MeasurementsContext);
-  if (!context) {
-    throw new Error(
-      'Tabs measurement components must be used within Tabs component'
-    );
-  }
-  return context;
-}
 
 // --------------------------------------------------
 

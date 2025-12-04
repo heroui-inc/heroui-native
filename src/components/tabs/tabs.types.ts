@@ -204,16 +204,6 @@ export interface TabsContentProps extends TabsPrimitivesTypes.ContentProps {
 }
 
 /**
- * Context value shared between Tabs compound components
- */
-export interface TabsContextValue {
-  /**
-   * The currently selected tab value
-   */
-  value: string;
-}
-
-/**
  * Measurements for a tab item
  */
 export type ItemMeasurements = {

@@ -366,3 +366,80 @@ export default function TabsExample() {
 | `value`        | `string`          | -       | The value of the tab this content belongs to        |
 | `className`    | `string`          | -       | Additional CSS classes                              |
 | `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported  |
+
+### useTabs
+
+Hook to access tabs root context values within custom components or compound components.
+
+```tsx
+import { useTabs } from 'heroui-native';
+
+const CustomComponent = () => {
+  const { value, onValueChange, nativeID } = useTabs();
+  // ... your implementation
+};
+```
+
+**Returns:** `UseTabsReturn`
+
+| property        | type                      | description                                |
+| --------------- | ------------------------- | ------------------------------------------ |
+| `value`         | `string`                  | Currently active tab value                 |
+| `onValueChange` | `(value: string) => void` | Callback function to change the active tab |
+| `nativeID`      | `string`                  | Unique identifier for the tabs instance    |
+
+**Note:** This hook must be used within a `Tabs` component. It will throw an error if called outside of the tabs context.
+
+### useTabsMeasurements
+
+Hook to access tab measurements context values for managing tab trigger positions and dimensions.
+
+```tsx
+import { useTabsMeasurements } from 'heroui-native';
+
+const CustomIndicator = () => {
+  const { measurements, variant } = useTabsMeasurements();
+  // ... your implementation
+};
+```
+
+**Returns:** `UseTabsMeasurementsReturn`
+
+| property          | type                                                    | description                                       |
+| ----------------- | ------------------------------------------------------- | ------------------------------------------------- |
+| `measurements`    | `Record<string, ItemMeasurements>`                      | Record of measurements for each tab trigger       |
+| `setMeasurements` | `(key: string, measurements: ItemMeasurements) => void` | Function to update measurements for a tab trigger |
+| `variant`         | `'pill' \| 'line'`                                      | Visual variant of the tabs                        |
+
+#### ItemMeasurements
+
+| property | type     | description                         |
+| -------- | -------- | ----------------------------------- |
+| `width`  | `number` | Width of the tab trigger in pixels  |
+| `height` | `number` | Height of the tab trigger in pixels |
+| `x`      | `number` | X position of the tab trigger       |
+
+**Note:** This hook must be used within a `Tabs` component. It will throw an error if called outside of the tabs context.
+
+### useTabsTrigger
+
+Hook to access tab trigger context values within custom components or compound components.
+
+```tsx
+import { useTabsTrigger } from 'heroui-native';
+
+const CustomLabel = () => {
+  const { value, isSelected, nativeID } = useTabsTrigger();
+  // ... your implementation
+};
+```
+
+**Returns:** `UseTabsTriggerReturn`
+
+| property     | type      | description                                |
+| ------------ | --------- | ------------------------------------------ |
+| `value`      | `string`  | The value of this trigger                  |
+| `nativeID`   | `string`  | Unique identifier for this trigger         |
+| `isSelected` | `boolean` | Whether this trigger is currently selected |
+
+**Note:** This hook must be used within a `Tabs.Trigger` component. It will throw an error if called outside of the trigger context.

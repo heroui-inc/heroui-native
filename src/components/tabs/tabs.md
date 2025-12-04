@@ -288,14 +288,15 @@ export default function TabsExample() {
 
 ### Tabs
 
-| prop            | type                      | default  | description                                        |
-| --------------- | ------------------------- | -------- | -------------------------------------------------- |
-| `children`      | `React.ReactNode`         | -        | Children elements to be rendered inside tabs       |
-| `value`         | `string`                  | -        | Currently active tab value                         |
-| `variant`       | `'pill' \| 'line'`        | `'pill'` | Visual variant of the tabs                         |
-| `className`     | `string`                  | -        | Additional CSS classes for the container           |
-| `onValueChange` | `(value: string) => void` | -        | Callback when the active tab changes               |
-| `...ViewProps`  | `ViewProps`               | -        | All standard React Native View props are supported |
+| prop            | type                         | default  | description                                                                          |
+| --------------- | ---------------------------- | -------- | ------------------------------------------------------------------------------------ |
+| `children`      | `React.ReactNode`            | -        | Children elements to be rendered inside tabs                                         |
+| `value`         | `string`                     | -        | Currently active tab value                                                           |
+| `variant`       | `'pill' \| 'line'`           | `'pill'` | Visual variant of the tabs                                                           |
+| `className`     | `string`                     | -        | Additional CSS classes for the container                                             |
+| `animation`     | `"disable-all" \| undefined` | -        | Animation configuration - `"disable-all"` disables all animations including children |
+| `onValueChange` | `(value: string) => void`    | -        | Callback when the active tab changes                                                 |
+| `...ViewProps`  | `ViewProps`                  | -        | All standard React Native View props are supported                                   |
 
 ### Tabs.List
 
@@ -335,14 +336,22 @@ export default function TabsExample() {
 
 ### Tabs.Indicator
 
-| prop                    | type                           | default              | description                                      |
-| ----------------------- | ------------------------------ | -------------------- | ------------------------------------------------ |
-| `children`              | `React.ReactNode`              | -                    | Custom indicator content                         |
-| `className`             | `string`                       | -                    | Additional CSS classes                           |
-| `animationConfig`       | `TabsIndicatorAnimationConfig` | `{ type: 'spring' }` | Animation configuration for the indicator        |
-| `...Animated.ViewProps` | `Animated.ViewProps`           | -                    | All Reanimated Animated.View props are supported |
+| prop                    | type                     | default | description                                      |
+| ----------------------- | ------------------------ | ------- | ------------------------------------------------ |
+| `children`              | `React.ReactNode`        | -       | Custom indicator content                         |
+| `className`             | `string`                 | -       | Additional CSS classes                           |
+| `animation`             | `TabsIndicatorAnimation` | -       | Animation configuration for the indicator        |
+| `...Animated.ViewProps` | `Animated.ViewProps`     | -       | All Reanimated Animated.View props are supported |
 
-#### TabsIndicatorAnimationConfig
+#### TabsIndicatorAnimation
+
+| prop     | type                                  | description |
+| -------- | ------------------------------------- | ----------- | ------------------------------------- |
+| `width`  | `TabsIndicatorPropertyAnimationValue` | -           | Width animation configuration         |
+| `height` | `TabsIndicatorPropertyAnimationValue` | -           | Height animation configuration        |
+| `left`   | `TabsIndicatorPropertyAnimationValue` | -           | Left position animation configuration |
+
+#### TabsIndicatorPropertyAnimationValue
 
 | prop     | type                                   | description                        |
 | -------- | -------------------------------------- | ---------------------------------- |

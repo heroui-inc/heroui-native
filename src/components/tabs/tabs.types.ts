@@ -3,6 +3,11 @@ import type {
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated';
+import type {
+  Animation,
+  AnimationRootDisableAll,
+  AnimationValue,
+} from '../../helpers/types/animation';
 import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
 
 /**
@@ -22,6 +27,12 @@ export interface TabsProps extends TabsPrimitivesTypes.RootProps {
    * @default 'pill'
    */
   variant?: 'pill' | 'line';
+  /**
+   * Animation configuration for tabs
+   * - `"disable-all"`: Disable all animations including children (cascades down to all child components)
+   * - `undefined`: Use default animations
+   */
+  animation?: AnimationRootDisableAll;
 }
 
 /**
@@ -99,17 +110,59 @@ export interface TabsLabelProps extends TabsPrimitivesTypes.LabelProps {
 }
 
 /**
- * Animation configuration for the Tabs indicator
+ * Spring animation value for tabs indicator properties
  */
-export type TabsIndicatorAnimationConfig =
-  | {
-      type: 'spring';
-      config?: WithSpringConfig;
-    }
-  | {
-      type: 'timing';
-      config?: WithTimingConfig;
-    };
+type TabsIndicatorSpringAnimationValue = AnimationValue<{
+  /**
+   * Animation type
+   */
+  type: 'spring';
+  /**
+   * Spring animation configuration
+   * @default { stiffness: 1200, damping: 120 }
+   */
+  config?: WithSpringConfig;
+}>;
+
+/**
+ * Timing animation value for tabs indicator properties
+ */
+type TabsIndicatorTimingAnimationValue = AnimationValue<{
+  /**
+   * Animation type
+   */
+  type: 'timing';
+  /**
+   * Timing animation configuration
+   * @default { duration: 200 }
+   */
+  config?: WithTimingConfig;
+}>;
+
+/**
+ * Animation value for tabs indicator properties (width, height, left)
+ */
+type TabsIndicatorPropertyAnimationValue =
+  | TabsIndicatorSpringAnimationValue
+  | TabsIndicatorTimingAnimationValue;
+
+/**
+ * Animation configuration for tabs indicator component
+ */
+export type TabsIndicatorAnimation = Animation<{
+  /**
+   * Width animation configuration
+   */
+  width?: TabsIndicatorPropertyAnimationValue;
+  /**
+   * Height animation configuration
+   */
+  height?: TabsIndicatorPropertyAnimationValue;
+  /**
+   * Left position animation configuration
+   */
+  left?: TabsIndicatorPropertyAnimationValue;
+}>;
 
 /**
  * Props for the TabsIndicator component
@@ -124,10 +177,12 @@ export interface TabsIndicatorProps extends TabsPrimitivesTypes.IndicatorProps {
    */
   children?: React.ReactNode;
   /**
-   * Animation configuration for the indicator
-   * @default { type: 'spring' }
+   * Animation configuration for indicator
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  animationConfig?: TabsIndicatorAnimationConfig;
+  animation?: TabsIndicatorAnimation;
 }
 
 /**
@@ -149,11 +204,19 @@ export interface TabsContentProps extends TabsPrimitivesTypes.ContentProps {
 }
 
 /**
- * Context value shared between Tabs compound components
+ * Measurements for a tab item
  */
-export interface TabsContextValue {
-  /**
-   * The currently selected tab value
-   */
-  value: string;
-}
+export type ItemMeasurements = {
+  width: number;
+  height: number;
+  x: number;
+};
+
+/**
+ * Context value for tab measurements
+ */
+export type MeasurementsContextValue = {
+  measurements: Record<string, ItemMeasurements>;
+  setMeasurements: (key: string, measurements: ItemMeasurements) => void;
+  variant: 'pill' | 'line';
+};

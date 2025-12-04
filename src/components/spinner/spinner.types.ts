@@ -1,5 +1,14 @@
 import type { ViewProps } from 'react-native';
-import type { AnimatedProps, WithTimingConfig } from 'react-native-reanimated';
+import type {
+  AnimatedProps,
+  EntryOrExitLayoutType,
+  WithTimingConfig,
+} from 'react-native-reanimated';
+import type {
+  Animation,
+  AnimationRoot,
+  AnimationValue,
+} from '../../helpers/types/animation';
 
 /**
  * Base spinner size variants
@@ -10,6 +19,24 @@ export type SpinnerSize = 'sm' | 'md' | 'lg';
  * Base spinner color variants
  */
 export type SpinnerColor = 'default' | 'success' | 'warning' | 'danger';
+
+/**
+ * Animation configuration for spinner root component
+ */
+export type SpinnerRootAnimation = AnimationRoot<{
+  entering?: AnimationValue<{
+    /**
+     * Custom entering animation for spinner root
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
+  exiting?: AnimationValue<{
+    /**
+     * Custom exiting animation for spinner root
+     */
+    value?: EntryOrExitLayoutType;
+  }>;
+}>;
 
 /**
  * Props for the main Spinner component
@@ -29,6 +56,15 @@ export interface SpinnerProps extends AnimatedProps<ViewProps> {
 
   /** Custom class name for the spinner */
   className?: string;
+
+  /**
+   * Animation configuration for spinner root
+   * - `"disable-all"`: Disable all animations including children
+   * - `false` or `"disabled"`: Disable only root animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: SpinnerRootAnimation;
 }
 
 /**
@@ -46,23 +82,43 @@ export interface SpinnerIconProps {
 }
 
 /**
+ * Animation configuration for spinner indicator component
+ */
+export type SpinnerIndicatorAnimation = Animation<{
+  rotation?: AnimationValue<{
+    /**
+     * Rotation speed multiplier
+     * @default 1.1
+     */
+    speed?: number;
+    /**
+     * Animation easing configuration
+     * @default Easing.linear
+     */
+    easing?: WithTimingConfig['easing'];
+  }>;
+}>;
+
+/**
  * Props for the SpinnerIndicator component
  */
 export interface SpinnerIndicatorProps extends AnimatedProps<ViewProps> {
   /** Content to render inside the indicator */
   children?: React.ReactNode;
 
-  /** Speed in rounds per second @default 1 */
-  speed?: number;
-
-  /** Animation easing for indicator */
-  animationEasing?: WithTimingConfig['easing'];
-
   /** Props for the default icon */
   iconProps?: SpinnerIconProps;
 
   /** Custom class name for the indicator element */
   className?: string;
+
+  /**
+   * Animation configuration for spinner indicator
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: SpinnerIndicatorAnimation;
 }
 
 /**

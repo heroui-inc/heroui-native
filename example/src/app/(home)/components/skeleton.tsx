@@ -72,7 +72,9 @@ const CardSkeletonContent = () => {
                 <SkeletonGroup.Item className="size-10 rounded-full">
                   <Avatar size="sm" alt="Avatar">
                     <Avatar.Image
-                      source={{ uri: 'https://i.pravatar.cc/150?img=4' }}
+                      source={{
+                        uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=4',
+                      }}
                     />
                     <Avatar.Fallback />
                   </Avatar>
@@ -88,9 +90,9 @@ const CardSkeletonContent = () => {
                   {!isLoading && (
                     <View>
                       <Text className="font-semibold text-foreground">
-                        Alex Mitchell
+                        Sarah Mitchell
                       </Text>
-                      <Text className="text-sm text-muted">@alexmitchell</Text>
+                      <Text className="text-sm text-muted">@mitchell</Text>
                     </View>
                   )}
                 </View>
@@ -105,8 +107,7 @@ const CardSkeletonContent = () => {
                 )}
                 {!isLoading && (
                   <Text className="text-base text-foreground">
-                    Finally picked up my dream car today! The sleek design and
-                    powerful engine.
+                    Bridging the Future
                   </Text>
                 )}
               </View>
@@ -116,7 +117,7 @@ const CardSkeletonContent = () => {
               <View className="h-48 bg-surface-secondary rounded-2xl overflow-hidden">
                 <Image
                   source={{
-                    uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/car1.jpg',
+                    uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/robot1.jpeg',
                   }}
                   className="h-full w-full"
                 />
@@ -291,9 +292,11 @@ const CustomShimmerConfigContent = () => {
             className="h-16 w-full rounded-2xl"
             isLoading={isLoading}
             variant="shimmer"
-            shimmerConfig={{
-              duration: 2000,
-              highlightColor: 'rgba(59, 130, 246, 0.3)',
+            animation={{
+              shimmer: {
+                duration: 2000,
+                highlightColor: 'rgba(59, 130, 246, 0.3)',
+              },
             }}
           >
             <View
@@ -308,10 +311,12 @@ const CustomShimmerConfigContent = () => {
             className="h-16 w-full rounded-2xl"
             isLoading={isLoading}
             variant="shimmer"
-            shimmerConfig={{
-              duration: 1000,
-              speed: 2,
-              highlightColor: 'rgba(34, 197, 94, 0.3)',
+            animation={{
+              shimmer: {
+                duration: 1000,
+                speed: 2,
+                highlightColor: 'rgba(34, 197, 94, 0.3)',
+              },
             }}
           >
             <View
@@ -349,10 +354,12 @@ const CustomPulseConfigContent = () => {
             className="h-16 w-full rounded-2xl bg-purple-500"
             isLoading={isLoading}
             variant="pulse"
-            pulseConfig={{
-              duration: 500,
-              minOpacity: 0.2,
-              maxOpacity: 0.8,
+            animation={{
+              pulse: {
+                duration: 500,
+                minOpacity: 0.2,
+                maxOpacity: 0.8,
+              },
             }}
           >
             <View
@@ -367,10 +374,12 @@ const CustomPulseConfigContent = () => {
             className="h-16 w-full rounded-2xl bg-orange-500"
             isLoading={isLoading}
             variant="pulse"
-            pulseConfig={{
-              duration: 1000,
-              minOpacity: 0.5,
-              maxOpacity: 1,
+            animation={{
+              pulse: {
+                duration: 1000,
+                minOpacity: 0.5,
+                maxOpacity: 1,
+              },
             }}
           >
             <View

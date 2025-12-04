@@ -251,13 +251,13 @@ export function useSkeletonShimmerAnimation(options: {
       ? colorKit
           .setAlpha(
             colorKit.increaseBrightness(themeColorBackground, 10).hex(),
-            0.5
+            0.1
           )
           .hex()
       : colorKit
           .setAlpha(
-            colorKit.decreaseBrightness(themeColorBackground, 5).hex(),
-            0.5
+            colorKit.decreaseBrightness(themeColorBackground, 10).hex(),
+            0.75
           )
           .hex();
   }, [theme, themeColorBackground]);

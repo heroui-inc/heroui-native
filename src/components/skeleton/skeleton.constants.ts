@@ -24,15 +24,6 @@ export const DEFAULT_PULSE_DURATION = 1000;
 export const DEFAULT_EASING = Easing.linear;
 
 /**
- * Default gradient colors for shimmer effect
- */
-export const DEFAULT_GRADIENT_COLORS = [
-  'transparent',
-  'rgba(255, 255, 255, 0.5)',
-  'transparent',
-];
-
-/**
  * Default minimum opacity for pulse animation
  */
 export const DEFAULT_PULSE_MIN_OPACITY = 0.5;

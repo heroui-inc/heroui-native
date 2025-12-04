@@ -47,7 +47,7 @@ export type SkeletonPulseAnimation = Animation<{
   duration?: number;
   /**
    * Minimum opacity value
-   * @default 0.3
+   * @default 0.5
    */
   minOpacity?: number;
   /**

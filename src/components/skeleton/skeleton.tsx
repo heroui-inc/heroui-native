@@ -167,7 +167,7 @@ Skeleton.displayName = DISPLAY_NAME.SKELETON;
  *
  * @component Skeleton - Animated loading placeholder that can display shimmer or pulse effects.
  * Shows skeleton state when isLoading is true, otherwise displays children content.
- * Supports customizable animations through shimmerConfig and pulseConfig props.
+ * Supports customizable animations through the animation prop with shimmer and pulse configurations.
  * Shape and size are controlled via className for maximum flexibility.
  *
  * @see Full documentation: https://heroui.com/components/skeleton

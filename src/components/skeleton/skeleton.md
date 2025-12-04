@@ -50,10 +50,12 @@ Customize the shimmer effect with duration, speed, and highlight color.
 <Skeleton
   className="h-16 w-full rounded-lg"
   variant="shimmer"
-  shimmerConfig={{
-    duration: 2000,
-    speed: 2,
-    highlightColor: 'rgba(59, 130, 246, 0.3)',
+  animation={{
+    shimmer: {
+      duration: 2000,
+      speed: 2,
+      highlightColor: 'rgba(59, 130, 246, 0.3)',
+    },
   }}
 >
   ...
@@ -68,10 +70,12 @@ Configure pulse animation with duration and opacity range.
 <Skeleton
   className="h-16 w-full rounded-lg"
   variant="pulse"
-  pulseConfig={{
-    duration: 500,
-    minOpacity: 0.1,
-    maxOpacity: 0.8,
+  animation={{
+    pulse: {
+      duration: 500,
+      minOpacity: 0.1,
+      maxOpacity: 0.8,
+    },
   }}
 >
   ...
@@ -137,9 +141,11 @@ export default function SkeletonExample() {
       <Skeleton
         isLoading={isLoading}
         className="h-48 w-full rounded-lg"
-        shimmerConfig={{
-          duration: 1500,
-          speed: 1,
+        animation={{
+          shimmer: {
+            duration: 1500,
+            speed: 1,
+          },
         }}
       >
         <View className="h-48 bg-surface-tertiary rounded-lg overflow-hidden">
@@ -165,12 +171,20 @@ export default function SkeletonExample() {
 | `children`              | `React.ReactNode`                | -           | Content to show when not loading                 |
 | `isLoading`             | `boolean`                        | `true`      | Whether the skeleton is currently loading        |
 | `variant`               | `'shimmer' \| 'pulse' \| 'none'` | `'shimmer'` | Animation variant                                |
+| `animation`             | `SkeletonRootAnimation`          | -           | Animation configuration                          |
 | `className`             | `string`                         | -           | Additional CSS classes for styling               |
-| `shimmerConfig`         | `ShimmerConfig`                  | -           | Shimmer animation configuration                  |
-| `pulseConfig`           | `PulseConfig`                    | -           | Pulse animation configuration                    |
 | `...Animated.ViewProps` | `AnimatedProps<ViewProps>`       | -           | All Reanimated Animated.View props are supported |
 
-#### ShimmerConfig
+#### SkeletonRootAnimation
+
+| prop       | type                                           | description                     |
+| ---------- | ---------------------------------------------- | ------------------------------- |
+| `entering` | `Animation<{ value?: EntryOrExitLayoutType }>` | Custom entering animation       |
+| `exiting`  | `Animation<{ value?: EntryOrExitLayoutType }>` | Custom exiting animation        |
+| `shimmer`  | `SkeletonShimmerAnimation`                     | Shimmer animation configuration |
+| `pulse`    | `SkeletonPulseAnimation`                       | Pulse animation configuration   |
+
+#### SkeletonShimmerAnimation
 
 | prop             | type             | description                                        |
 | ---------------- | ---------------- | -------------------------------------------------- |
@@ -179,7 +193,7 @@ export default function SkeletonExample() {
 | `speed`          | `number`         | Speed multiplier for the animation (default: 1)    |
 | `highlightColor` | `string`         | Highlight color for the shimmer effect             |
 
-#### PulseConfig
+#### SkeletonPulseAnimation
 
 | prop         | type             | description                                        |
 | ------------ | ---------------- | -------------------------------------------------- |

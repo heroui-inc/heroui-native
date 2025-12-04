@@ -8,7 +8,7 @@ export const DISPLAY_NAME = {
   OVERLAY: 'HeroUINative.Popover.Overlay',
   CONTENT: 'HeroUINative.Popover.Content',
   CLOSE: 'HeroUINative.Popover.Close',
-  TITLE: 'HeroUINative.Popover.Title',
+  LABEL: 'HeroUINative.Popover.Label',
   DESCRIPTION: 'HeroUINative.Popover.Description',
   ARROW: 'HeroUINative.Popover.Arrow',
 };

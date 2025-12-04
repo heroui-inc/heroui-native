@@ -179,11 +179,11 @@ export interface DialogCloseIconProps {
 }
 
 /**
- * Dialog Title component props
+ * Dialog Label component props
  */
-export interface DialogTitleProps extends TextProps {
+export interface DialogLabelProps extends TextProps {
   /**
-   * Additional CSS class for the title
+   * Additional CSS class for the label
    */
   className?: string;
 }

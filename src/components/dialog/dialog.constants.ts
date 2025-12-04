@@ -8,6 +8,6 @@ export const DISPLAY_NAME = {
   OVERLAY: 'HeroUINative.Dialog.Overlay',
   CONTENT: 'HeroUINative.Dialog.Content',
   CLOSE: 'HeroUINative.Dialog.Close',
-  TITLE: 'HeroUINative.Dialog.Title',
+  LABEL: 'HeroUINative.Dialog.Label',
   DESCRIPTION: 'HeroUINative.Dialog.Description',
 };

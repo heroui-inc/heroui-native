@@ -37,7 +37,7 @@ Structure popover content with title and description for better information hier
     <Popover.Overlay />
     <Popover.Content>
       <Popover.Close />
-      <Popover.Title>...</Popover.Title>
+      <Popover.Label>...</Popover.Label>
       <Popover.Description>...</Popover.Description>
     </Popover.Content>
   </Popover.Portal>
@@ -121,7 +121,7 @@ Use bottom sheet presentation for mobile-optimized interaction patterns.
   <Popover.Portal>
     <Popover.Overlay />
     <Popover.Content presentation="bottom-sheet">
-      <Popover.Title>...</Popover.Title>
+      <Popover.Label>...</Popover.Label>
       <Popover.Description>...</Popover.Description>
       <Popover.Close asChild>
         <Button>Close</Button>
@@ -238,7 +238,7 @@ export default function PopoverExample() {
         <Popover.Overlay />
         <Popover.Content width={320} className="gap-1 rounded-xl px-6 py-4">
           <Popover.Close className="absolute top-3 right-3 z-50" />
-          <Popover.Title>Information</Popover.Title>
+          <Popover.Label>Information</Popover.Label>
           <Popover.Description>
             This popover includes a title and description to provide more
             structured information to users.
@@ -260,7 +260,7 @@ export default function PopoverExample() {
     <Popover.Content>
       <Popover.Arrow />
       <Popover.Close />
-      <Popover.Title>...</Popover.Title>
+      <Popover.Label>...</Popover.Label>
       <Popover.Description>...</Popover.Description>
     </Popover.Content>
   </Popover.Portal>
@@ -274,7 +274,7 @@ export default function PopoverExample() {
 - **Popover.Content**: Container for popover content with positioning, styling, and collision detection. Supports both popover and bottom-sheet presentations.
 - **Popover.Arrow**: Optional arrow element pointing to the trigger. Automatically positioned based on placement.
 - **Popover.Close**: Close button that dismisses the popover when pressed. Renders a default X icon if no children provided.
-- **Popover.Title**: Optional title text with pre-styled typography.
+- **Popover.Label**: Optional label text with pre-styled typography.
 - **Popover.Description**: Optional description text with muted styling.
 
 ## API Reference
@@ -390,12 +390,12 @@ export default function PopoverExample() {
 | `size`  | `number` | `18`             | Size of the icon  |
 | `color` | `string` | `--colors.muted` | Color of the icon |
 
-### Popover.Title
+### Popover.Label
 
 | prop           | type        | default | description                                        |
 | -------------- | ----------- | ------- | -------------------------------------------------- |
-| `children`     | `ReactNode` | -       | The title text content                             |
-| `className`    | `string`    | -       | Additional CSS classes for the title               |
+| `children`     | `ReactNode` | -       | The label text content                             |
+| `className`    | `string`    | -       | Additional CSS classes for the label               |
 | `...TextProps` | `TextProps` | -       | All standard React Native Text props are supported |
 
 ### Popover.Description

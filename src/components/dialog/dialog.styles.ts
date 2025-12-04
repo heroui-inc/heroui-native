@@ -23,7 +23,7 @@ const close = tv({
   base: '',
 });
 
-const title = tv({
+const label = tv({
   base: 'text-lg font-medium text-foreground',
 });
 
@@ -36,7 +36,7 @@ const dialogStyles = combineStyles({
   overlay,
   content,
   close,
-  title,
+  label,
   description,
 });
 

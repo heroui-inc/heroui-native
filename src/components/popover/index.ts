@@ -6,12 +6,12 @@ export type {
   PopoverCloseProps,
   PopoverContentProps,
   PopoverDescriptionProps,
+  PopoverLabelProps,
   PopoverOverlayProps,
   PopoverPlacement,
   PopoverPortalProps,
   PopoverProgressAnimationConfigs,
   PopoverRootProps,
-  PopoverTitleProps,
   PopoverTriggerProps,
   PopoverTriggerRef,
 } from './popover.types';

@@ -130,9 +130,9 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
           <Card.Body className="h-16" />
           <Card.Footer className="px-3 pb-3 flex-row items-end gap-4">
             <View className="flex-1">
-              <Card.Title className="text-2xl text-foreground/85">
+              <Card.Label className="text-2xl text-foreground/85">
                 {title}
-              </Card.Title>
+              </Card.Label>
               <Card.Description className="text-foreground/65 pl-0.5">
                 {footer}
               </Card.Description>

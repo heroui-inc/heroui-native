@@ -49,11 +49,11 @@ export interface CardFooterProps extends ViewProps {
 }
 
 /**
- * Props for the Card.Title component
+ * Props for the Card.Label component
  */
-export interface CardTitleProps extends TextProps {
+export interface CardLabelProps extends TextProps {
   /**
-   * Children elements to be rendered as the title text
+   * Children elements to be rendered as the label text
    */
   children?: React.ReactNode;
   /**

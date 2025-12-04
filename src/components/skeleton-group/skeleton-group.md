@@ -57,12 +57,12 @@ Use `isSkeletonOnly` when the group contains only skeleton placeholders with lay
 </SkeletonGroup>
 ```
 
-### With Animation Types
+### With Animation Variants
 
 Control animation style for all items in the group.
 
 ```tsx
-<SkeletonGroup isLoading={isLoading} animationType="pulse">
+<SkeletonGroup isLoading={isLoading} variant="pulse">
   <SkeletonGroup.Item className="h-10 w-10 rounded-full" />
   <SkeletonGroup.Item className="h-4 w-32 rounded-md" />
   <SkeletonGroup.Item className="h-3 w-24 rounded-md" />
@@ -76,7 +76,7 @@ Configure shimmer or pulse animations for the entire group.
 ```tsx
 <SkeletonGroup
   isLoading={isLoading}
-  animationType="shimmer"
+  variant="shimmer"
   shimmerConfig={{
     duration: 2000,
     highlightColor: 'rgba(59, 130, 246, 0.3)',
@@ -192,7 +192,7 @@ export default function SkeletonGroupExample() {
 | `children`              | `React.ReactNode`                | -           | SkeletonGroup.Item components and layout elements                      |
 | `isLoading`             | `boolean`                        | `true`      | Whether the skeleton items are currently loading                       |
 | `isSkeletonOnly`        | `boolean`                        | `false`     | Hides entire group when isLoading is false (for skeleton-only layouts) |
-| `animationType`         | `'shimmer' \| 'pulse' \| 'none'` | `'shimmer'` | Animation type for all items in the group                              |
+| `variant`               | `'shimmer' \| 'pulse' \| 'none'` | `'shimmer'` | Animation variant for all items in the group                           |
 | `className`             | `string`                         | -           | Additional CSS classes for the group container                         |
 | `style`                 | `StyleProp<ViewStyle>`           | -           | Custom styles for the group container                                  |
 | `shimmerConfig`         | `ShimmerConfig`                  | -           | Shimmer animation configuration for all items                          |
@@ -223,7 +223,7 @@ export default function SkeletonGroupExample() {
 | ----------------------- | -------------------------------- | --------- | ------------------------------------------------------------------- |
 | `children`              | `React.ReactNode`                | -         | Content to show when not loading                                    |
 | `isLoading`             | `boolean`                        | inherited | Whether the skeleton is currently loading (overrides group setting) |
-| `animationType`         | `'shimmer' \| 'pulse' \| 'none'` | inherited | Animation type (overrides group setting)                            |
+| `variant`               | `'shimmer' \| 'pulse' \| 'none'` | inherited | Animation variant (overrides group setting)                         |
 | `className`             | `string`                         | -         | Additional CSS classes for styling the item                         |
 | `shimmerConfig`         | `ShimmerConfig`                  | inherited | Shimmer animation configuration (overrides group setting)           |
 | `pulseConfig`           | `PulseConfig`                    | inherited | Pulse animation configuration (overrides group setting)             |
@@ -236,7 +236,7 @@ export default function SkeletonGroupExample() {
 SkeletonGroup.Item components inherit all animation-related props from their parent SkeletonGroup:
 
 - `isLoading`
-- `animationType`
+- `variant`
 - `shimmerConfig`
 - `pulseConfig`
 

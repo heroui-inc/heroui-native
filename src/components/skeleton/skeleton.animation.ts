@@ -51,10 +51,10 @@ export { SkeletonAnimationProvider, useSkeletonAnimation };
 export function useSkeletonRootAnimation(options: {
   animation: SkeletonRootAnimation | undefined;
   isLoading: boolean;
-  animationType: SkeletonAnimation;
+  variant: SkeletonAnimation;
   progress: SharedValue<number>;
 }) {
-  const { animation, isLoading, animationType, progress } = options;
+  const { animation, isLoading, variant, progress } = options;
 
   // Read parent animation disabled state from global context
   const parentAnimationSettingsContext = useAnimationSettings();
@@ -160,10 +160,10 @@ export function useSkeletonRootAnimation(options: {
 
   // Handle progress animation
   useEffect(() => {
-    if (isLoading && animationType !== 'none' && !isAllAnimationsDisabled) {
+    if (isLoading && variant !== 'none' && !isAllAnimationsDisabled) {
       progress.set(0);
 
-      if (animationType === 'shimmer') {
+      if (variant === 'shimmer') {
         progress.value = withRepeat(
           withTiming(1, {
             duration: shimmerDuration / shimmerSpeed,
@@ -174,7 +174,7 @@ export function useSkeletonRootAnimation(options: {
           undefined,
           ReduceMotion.System
         );
-      } else if (animationType === 'pulse') {
+      } else if (variant === 'pulse') {
         progress.value = withRepeat(
           withTiming(1, {
             duration: pulseDuration,
@@ -196,7 +196,7 @@ export function useSkeletonRootAnimation(options: {
     };
   }, [
     isLoading,
-    animationType,
+    variant,
     progress,
     shimmerDuration,
     shimmerEasing,
@@ -305,7 +305,7 @@ export function useSkeletonPulseAnimation(options: {
 }) {
   const { animation } = options;
 
-  const { animationType, progress } = useSkeletonAnimation();
+  const { variant, progress } = useSkeletonAnimation();
 
   const { isAllAnimationsDisabled } = useAnimationSettings();
 
@@ -336,7 +336,7 @@ export function useSkeletonPulseAnimation(options: {
   });
 
   const rContainerStyle = useAnimatedStyle(() => {
-    if (isAnimationDisabledValue || animationType !== 'pulse') {
+    if (isAnimationDisabledValue || variant !== 'pulse') {
       return {
         opacity: 1,
       };

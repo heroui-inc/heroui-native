@@ -54,13 +54,13 @@ const PulseAnimation: React.FC<
     animation: SkeletonProps['animation'];
   }>
 > = ({ children, animation }) => {
-  const { animationType } = useSkeletonAnimation();
+  const { variant } = useSkeletonAnimation();
 
   const { rContainerStyle } = useSkeletonPulseAnimation({
     animation,
   });
 
-  if (animationType === 'pulse') {
+  if (variant === 'pulse') {
     return <Animated.View style={rContainerStyle}>{children}</Animated.View>;
   }
 
@@ -73,7 +73,7 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
   const {
     children,
     isLoading = true,
-    animationType = 'shimmer',
+    variant = 'shimmer',
     animation,
     className,
     style,
@@ -91,7 +91,7 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
     useSkeletonRootAnimation({
       animation,
       isLoading,
-      animationType,
+      variant,
       progress,
     });
 
@@ -111,13 +111,13 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
   const animationContextValue = useMemo(
     () => ({
       isLoading,
-      animationType,
+      variant,
       progress,
       componentWidth,
       offset,
       screenWidth,
     }),
-    [isLoading, animationType, progress, componentWidth, offset, screenWidth]
+    [isLoading, variant, progress, componentWidth, offset, screenWidth]
   );
 
   const animationSettingsContextValue = useMemo(
@@ -148,7 +148,7 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
             className={tvStyles}
             {...restProps}
           >
-            {animationType === 'shimmer' && componentWidth > 0 && (
+            {variant === 'shimmer' && componentWidth > 0 && (
               <ShimmerAnimation animation={animation} />
             )}
           </Animated.View>

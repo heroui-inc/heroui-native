@@ -109,10 +109,10 @@ export interface SkeletonProps extends AnimatedProps<ViewProps> {
   isLoading?: boolean;
 
   /**
-   * Animation type
+   * Animation variant
    * @default 'shimmer'
    */
-  animationType?: SkeletonAnimation;
+  variant?: SkeletonAnimation;
 
   /**
    * Animation configuration
@@ -134,9 +134,9 @@ export interface SkeletonAnimationContextValue {
    */
   isLoading: boolean;
   /**
-   * Animation type
+   * Animation variant
    */
-  animationType: SkeletonAnimation;
+  variant: SkeletonAnimation;
   /**
    * Shared animation progress value
    */

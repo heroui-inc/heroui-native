@@ -19,19 +19,19 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 const SkeletonControls = ({
   isLoading,
   setIsLoading,
-  animationType,
-  setAnimationType,
+  variant,
+  setVariant,
 }: {
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
-  animationType: SkeletonAnimation;
-  setAnimationType: (value: SkeletonAnimation) => void;
+  variant: SkeletonAnimation;
+  setVariant: (value: SkeletonAnimation) => void;
 }) => {
   return (
     <Surface className="w-full gap-6">
       <RadioGroup
-        value={animationType}
-        onValueChange={(value) => setAnimationType(value as SkeletonAnimation)}
+        value={variant}
+        onValueChange={(value) => setVariant(value as SkeletonAnimation)}
         className="flex-row justify-center gap-5"
       >
         <RadioGroup.Item value="shimmer">
@@ -56,15 +56,14 @@ const SkeletonControls = ({
 
 const CardSkeletonContent = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [animationType, setAnimationType] =
-    useState<SkeletonAnimation>('shimmer');
+  const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
 
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full">
         <SkeletonGroup
           isLoading={isLoading}
-          animationType={animationType}
+          variant={variant}
           className="h-[360px]"
         >
           <Card className="p-4">
@@ -128,8 +127,8 @@ const CardSkeletonContent = () => {
         <SkeletonControls
           isLoading={isLoading}
           setIsLoading={setIsLoading}
-          animationType={animationType}
-          setAnimationType={setAnimationType}
+          variant={variant}
+          setVariant={setVariant}
         />
       </View>
     </View>
@@ -140,8 +139,7 @@ const CardSkeletonContent = () => {
 
 const ListSkeletonContent = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [animationType, setAnimationType] =
-    useState<SkeletonAnimation>('shimmer');
+  const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
 
   return (
     <View className="flex-1 items-center justify-center px-5 gap-12">
@@ -151,7 +149,7 @@ const ListSkeletonContent = () => {
             key={item}
             isLoading={isLoading}
             isSkeletonOnly
-            animationType={animationType}
+            variant={variant}
             className="flex-row items-center gap-3"
           >
             <SkeletonGroup.Item className="size-12 rounded-xl" />
@@ -170,8 +168,8 @@ const ListSkeletonContent = () => {
       <SkeletonControls
         isLoading={isLoading}
         setIsLoading={setIsLoading}
-        animationType={animationType}
-        setAnimationType={setAnimationType}
+        variant={variant}
+        setVariant={setVariant}
       />
     </View>
   );
@@ -181,8 +179,7 @@ const ListSkeletonContent = () => {
 
 const TextSkeletonsContent = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [animationType, setAnimationType] =
-    useState<SkeletonAnimation>('shimmer');
+  const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
 
   return (
     <View className="flex-1 items-center justify-center px-5">
@@ -192,7 +189,7 @@ const TextSkeletonsContent = () => {
             entering={FadeInLeft.duration(200)}
             exiting={FadeOutRight.duration(200)}
             isLoading={isLoading}
-            animationType={animationType}
+            variant={variant}
             isSkeletonOnly
             className="gap-2"
           >
@@ -216,8 +213,8 @@ const TextSkeletonsContent = () => {
       <SkeletonControls
         isLoading={isLoading}
         setIsLoading={setIsLoading}
-        animationType={animationType}
-        setAnimationType={setAnimationType}
+        variant={variant}
+        setVariant={setVariant}
       />
     </View>
   );
@@ -227,15 +224,14 @@ const TextSkeletonsContent = () => {
 
 const CircularSkeletonsContent = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [animationType, setAnimationType] =
-    useState<SkeletonAnimation>('shimmer');
+  const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
 
   return (
     <View className="flex-1 items-center justify-center gap-12 px-5">
       <View className="gap-6">
         <SkeletonGroup
           isLoading={isLoading}
-          animationType={animationType}
+          variant={variant}
           className="flex-row gap-4 items-end justify-center"
         >
           <SkeletonGroup.Item className="size-10 rounded-full">
@@ -275,8 +271,8 @@ const CircularSkeletonsContent = () => {
       <SkeletonControls
         isLoading={isLoading}
         setIsLoading={setIsLoading}
-        animationType={animationType}
-        setAnimationType={setAnimationType}
+        variant={variant}
+        setVariant={setVariant}
       />
     </View>
   );
@@ -294,7 +290,7 @@ const CustomShimmerConfigContent = () => {
           <Skeleton
             className="h-16 w-full rounded-2xl"
             isLoading={isLoading}
-            animationType="shimmer"
+            variant="shimmer"
             shimmerConfig={{
               duration: 2000,
               highlightColor: 'rgba(59, 130, 246, 0.3)',
@@ -311,7 +307,7 @@ const CustomShimmerConfigContent = () => {
           <Skeleton
             className="h-16 w-full rounded-2xl"
             isLoading={isLoading}
-            animationType="shimmer"
+            variant="shimmer"
             shimmerConfig={{
               duration: 1000,
               speed: 2,
@@ -352,7 +348,7 @@ const CustomPulseConfigContent = () => {
           <Skeleton
             className="h-16 w-full rounded-2xl bg-purple-500"
             isLoading={isLoading}
-            animationType="pulse"
+            variant="pulse"
             pulseConfig={{
               duration: 500,
               minOpacity: 0.2,
@@ -370,7 +366,7 @@ const CustomPulseConfigContent = () => {
           <Skeleton
             className="h-16 w-full rounded-2xl bg-orange-500"
             isLoading={isLoading}
-            animationType="pulse"
+            variant="pulse"
             pulseConfig={{
               duration: 1000,
               minOpacity: 0.5,

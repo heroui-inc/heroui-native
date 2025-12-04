@@ -32,14 +32,14 @@ Show skeleton while loading, then display content when ready.
 </Skeleton>
 ```
 
-### Animation Types
+### Animation Variants
 
-Control the animation style with the `animationType` prop.
+Control the animation style with the `variant` prop.
 
 ```tsx
-<Skeleton animationType="shimmer" className="h-20 w-full rounded-lg" />
-<Skeleton animationType="pulse" className="h-20 w-full rounded-lg" />
-<Skeleton animationType="none" className="h-20 w-full rounded-lg" />
+<Skeleton variant="shimmer" className="h-20 w-full rounded-lg" />
+<Skeleton variant="pulse" className="h-20 w-full rounded-lg" />
+<Skeleton variant="none" className="h-20 w-full rounded-lg" />
 ```
 
 ### Custom Shimmer Configuration
@@ -49,7 +49,7 @@ Customize the shimmer effect with duration, speed, and highlight color.
 ```tsx
 <Skeleton
   className="h-16 w-full rounded-lg"
-  animationType="shimmer"
+  variant="shimmer"
   shimmerConfig={{
     duration: 2000,
     speed: 2,
@@ -67,7 +67,7 @@ Configure pulse animation with duration and opacity range.
 ```tsx
 <Skeleton
   className="h-16 w-full rounded-lg"
-  animationType="pulse"
+  variant="pulse"
   pulseConfig={{
     duration: 500,
     minOpacity: 0.1,
@@ -164,7 +164,7 @@ export default function SkeletonExample() {
 | ----------------------- | -------------------------------- | ----------- | ------------------------------------------------ |
 | `children`              | `React.ReactNode`                | -           | Content to show when not loading                 |
 | `isLoading`             | `boolean`                        | `true`      | Whether the skeleton is currently loading        |
-| `animationType`         | `'shimmer' \| 'pulse' \| 'none'` | `'shimmer'` | Animation type                                   |
+| `variant`               | `'shimmer' \| 'pulse' \| 'none'` | `'shimmer'` | Animation variant                                |
 | `className`             | `string`                         | -           | Additional CSS classes for styling               |
 | `shimmerConfig`         | `ShimmerConfig`                  | -           | Shimmer animation configuration                  |
 | `pulseConfig`           | `PulseConfig`                    | -           | Pulse animation configuration                    |

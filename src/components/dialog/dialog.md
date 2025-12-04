@@ -25,7 +25,7 @@ Simple dialog with title, description, and close button.
     <Dialog.Overlay />
     <Dialog.Content>
       <Dialog.Close />
-      <Dialog.Title>...</Dialog.Title>
+      <Dialog.Label>...</Dialog.Label>
       <Dialog.Description>...</Dialog.Description>
     </Dialog.Content>
   </Dialog.Portal>
@@ -87,7 +87,7 @@ Handle long content with scroll views.
     <Dialog.Overlay />
     <Dialog.Content>
       <Dialog.Close />
-      <Dialog.Title>...</Dialog.Title>
+      <Dialog.Label>...</Dialog.Label>
       <View className="h-[300px]">
         <ScrollView>...</ScrollView>
       </View>
@@ -108,7 +108,7 @@ Dialog with text inputs and keyboard handling.
     <KeyboardAvoidingView behavior="padding">
       <Dialog.Content>
         <Dialog.Close />
-        <Dialog.Title>...</Dialog.Title>
+        <Dialog.Label>...</Dialog.Label>
         <TextField>...</TextField>
         <Button onPress={handleSubmit}>Submit</Button>
       </Dialog.Content>
@@ -137,7 +137,7 @@ export default function DialogExample() {
         <Dialog.Content>
           <Dialog.Close />
           <View className="mb-5 gap-1.5">
-            <Dialog.Title>Confirm Action</Dialog.Title>
+            <Dialog.Label>Confirm Action</Dialog.Label>
             <Dialog.Description>
               Are you sure you want to proceed with this action? This cannot be
               undone.
@@ -167,7 +167,7 @@ export default function DialogExample() {
     <Dialog.Overlay>...</Dialog.Overlay>
     <Dialog.Content>
       <Dialog.Close>...</Dialog.Close>
-      <Dialog.Title>...</Dialog.Title>
+      <Dialog.Label>...</Dialog.Label>
       <Dialog.Description>...</Dialog.Description>
     </Dialog.Content>
   </Dialog.Portal>
@@ -180,7 +180,7 @@ export default function DialogExample() {
 - **Dialog.Overlay**: Background overlay that appears behind the dialog content, typically closes dialog when pressed.
 - **Dialog.Content**: Main dialog container with gesture support for drag-to-dismiss.
 - **Dialog.Close**: Close button that dismisses the dialog when pressed.
-- **Dialog.Title**: Dialog title text with semantic heading role.
+- **Dialog.Label**: Dialog label text with semantic heading role.
 - **Dialog.Description**: Dialog description text that provides additional context.
 
 ## API Reference
@@ -263,12 +263,12 @@ export default function DialogExample() {
 | `size`  | `number` | Icon size (default: 18)                     |
 | `color` | `string` | Icon color (default: '--colors-foreground') |
 
-### Dialog.Title
+### Dialog.Label
 
 | prop           | type              | default | description                                        |
 | -------------- | ----------------- | ------- | -------------------------------------------------- |
-| `children`     | `React.ReactNode` | -       | Title content                                      |
-| `className`    | `string`          | -       | Additional CSS classes for title                   |
+| `children`     | `React.ReactNode` | -       | Label content                                      |
+| `className`    | `string`          | -       | Additional CSS classes for label                   |
 | `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported |
 
 ### Dialog.Description

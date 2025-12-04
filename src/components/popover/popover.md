@@ -385,9 +385,9 @@ export default function PopoverExample() {
 
 #### PopoverCloseIconProps
 
-| prop    | type     | default              | description       |
-| ------- | -------- | -------------------- | ----------------- |
-| `size`  | `number` | `18`                 | Size of the icon  |
+| prop    | type     | default          | description       |
+| ------- | -------- | ---------------- | ----------------- |
+| `size`  | `number` | `18`             | Size of the icon  |
 | `color` | `string` | `--colors.muted` | Color of the icon |
 
 ### Popover.Title
@@ -405,3 +405,34 @@ export default function PopoverExample() {
 | `children`     | `ReactNode` | -       | The description text content                       |
 | `className`    | `string`    | -       | Additional CSS classes for the description         |
 | `...TextProps` | `TextProps` | -       | All standard React Native Text props are supported |
+
+### usePopover
+
+Hook to access popover context values within custom components or compound components.
+
+```tsx
+import { usePopover } from 'heroui-native';
+
+const CustomContent = () => {
+  const { isOpen, onOpenChange, progress } = usePopover();
+  // ... your implementation
+};
+```
+
+**Returns:** `UsePopoverReturn`
+
+| property             | type                                                | description                                                  |
+| -------------------- | --------------------------------------------------- | ------------------------------------------------------------ |
+| `isOpen`             | `boolean`                                           | Whether the popover is currently open                        |
+| `onOpenChange`       | `(open: boolean) => void`                           | Callback function to change the popover open state           |
+| `popoverState`       | `'idle' \| 'open' \| 'close'`                       | Extended internal state for coordinating animations          |
+| `isDisabled`         | `boolean \| undefined`                              | Whether the popover is disabled                              |
+| `triggerPosition`    | `LayoutPosition \| null`                            | The position of the trigger element relative to the viewport |
+| `setTriggerPosition` | `(triggerPosition: LayoutPosition \| null) => void` | Function to update the trigger element's position            |
+| `contentLayout`      | `LayoutRectangle \| null`                           | The layout measurements of the popover content               |
+| `setContentLayout`   | `(contentLayout: LayoutRectangle \| null) => void`  | Function to update the content layout measurements           |
+| `nativeID`           | `string`                                            | Unique identifier for the popover instance                   |
+| `progress`           | `SharedValue<number>`                               | Progress value for the popover animation (0-2 range)         |
+| `closeDelay`         | `number \| undefined`                               | Delay in milliseconds before the popover closes              |
+
+**Note:** This hook must be used within a `Popover` component. It will throw an error if called outside of the popover context.

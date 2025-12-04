@@ -182,5 +182,4 @@ const CompoundSpinner = Object.assign(SpinnerRoot, {
   Indicator: SpinnerIndicator,
 });
 
-export { useSpinnerContext };
 export default CompoundSpinner;

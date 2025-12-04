@@ -293,3 +293,29 @@ Each animation property supports:
 
 - `value` (`[number, number]`): Animation values for [unselected, selected] states
 - `timingConfig` (`WithTimingConfig`): Reanimated timing configuration
+
+### useCheckbox
+
+Hook to access checkbox context values within custom components or compound components.
+
+```tsx
+import { useCheckbox } from 'heroui-native';
+
+const CustomIndicator = () => {
+  const { isSelected, isInvalid, isDisabled } = useCheckbox();
+  // ... your implementation
+};
+```
+
+**Returns:** `UseCheckboxReturn`
+
+| property           | type                                           | description                                                    |
+| ------------------ | ---------------------------------------------- | -------------------------------------------------------------- |
+| `isSelected`       | `boolean \| undefined`                         | Whether the checkbox is currently selected                     |
+| `onSelectedChange` | `((isSelected: boolean) => void) \| undefined` | Callback function to change the checkbox selection state       |
+| `isDisabled`       | `boolean`                                      | Whether the checkbox is disabled and cannot be interacted with |
+| `isInvalid`        | `boolean`                                      | Whether the checkbox is invalid (shows danger color)           |
+| `isOnSurface`      | `boolean \| undefined`                         | Whether checkbox is on a surface background                    |
+| `nativeID`         | `string \| undefined`                          | Native ID for the checkbox element                             |
+
+**Note:** This hook must be used within a `Checkbox` component. It will throw an error if called outside of the checkbox context.

@@ -1,10 +1,15 @@
 import type { StyleProp, ViewStyle } from 'react-native';
+import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import type { SkeletonProps } from '../skeleton/skeleton.types';
 
 /**
  * Props for the SkeletonGroup root component
  */
 export interface SkeletonGroupRootProps extends Omit<SkeletonProps, 'style'> {
+  /**
+   * Animation configuration. Use `"disable-all"` to disable all animations
+   */
+  animation?: AnimationRootDisableAll;
   /**
    * When true, hides the entire group when isLoading is false.
    * Use this to prevent layout issues when skeleton contains wrapper elements.

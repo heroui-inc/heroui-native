@@ -75,12 +75,12 @@ SkeletonGroupItem.displayName = DISPLAY_NAME.SKELETON_GROUP_ITEM;
  * Compound SkeletonGroup component for managing multiple skeleton loading states
  *
  * @component SkeletonGroup - Root container that provides centralized control for all skeleton items.
- * Passes isLoading, animationType, shimmerConfig, and pulseConfig to child items via context.
+ * Passes isLoading, variant, and animation to child items via context.
  *
  * @component SkeletonGroup.Item - Individual skeleton item that inherits props from the parent group.
  * Can override group props with its own props for specific customization.
  *
- * Props flow from SkeletonGroup to Items via context (isLoading, animationType, shimmerConfig, pulseConfig).
+ * Props flow from SkeletonGroup to Items via context (isLoading, variant, animation).
  * Items can override any inherited prop by passing their own values.
  *
  * @see Full documentation: https://heroui.com/components/skeleton-group

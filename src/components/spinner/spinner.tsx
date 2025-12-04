@@ -1,25 +1,16 @@
-import { forwardRef, useEffect, useMemo } from 'react';
-import type { View } from 'react-native';
-import Animated, {
-  cancelAnimation,
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withSequence,
-  withTiming,
-} from 'react-native-reanimated';
+import { forwardRef, useMemo } from 'react';
+import type { View, ViewStyle } from 'react-native';
+import Animated from 'react-native-reanimated';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { useThemeColor } from '../../helpers/theme';
 import { createContext, getElementWithDefault } from '../../helpers/utils';
 import * as ActivityIndicatorPrimitives from '../../primitives/activity-indicator';
 import { SpinnerIcon } from './spinner-icon';
 import {
-  DEFAULT_ROTATION_DURATION,
-  DEFAULT_SPINNER_INDICATOR_ENTERING,
-  DEFAULT_SPINNER_INDICATOR_EXITING,
-  DISPLAY_NAME,
-  SPINNER_SIZE_MAP,
-} from './spinner.constants';
+  useSpinnerIndicatorAnimation,
+  useSpinnerRootAnimation,
+} from './spinner.animation';
+import { DISPLAY_NAME, SPINNER_SIZE_MAP } from './spinner.constants';
 import spinnerStyles from './spinner.styles';
 import type {
   SpinnerContextValue,
@@ -44,13 +35,12 @@ const [SpinnerProvider, useSpinnerContext] = createContext<SpinnerContextValue>(
 const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
   const {
     children,
-    entering = DEFAULT_SPINNER_INDICATOR_ENTERING,
-    exiting = DEFAULT_SPINNER_INDICATOR_EXITING,
     size = 'md',
     color = 'default',
     isLoading = true,
     className,
     style,
+    animation,
     ...restProps
   } = props;
 
@@ -58,6 +48,11 @@ const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
     size,
     className,
   });
+
+  const { entering, exiting, isAllAnimationsDisabled } =
+    useSpinnerRootAnimation({
+      animation,
+    });
 
   const indicatorElement = useMemo(
     () =>
@@ -78,20 +73,29 @@ const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
     [size, color, isLoading]
   );
 
+  const animationSettingsContextValue = useMemo(
+    () => ({
+      isAllAnimationsDisabled,
+    }),
+    [isAllAnimationsDisabled]
+  );
+
   return (
-    <SpinnerProvider value={contextValue}>
-      <AnimatedRoot
-        ref={ref}
-        entering={entering}
-        exiting={exiting}
-        isLoading={isLoading}
-        className={tvStyles}
-        style={style}
-        {...restProps}
-      >
-        {children || indicatorElement}
-      </AnimatedRoot>
-    </SpinnerProvider>
+    <AnimationSettingsProvider value={animationSettingsContextValue}>
+      <SpinnerProvider value={contextValue}>
+        <AnimatedRoot
+          ref={ref}
+          entering={entering}
+          exiting={exiting}
+          isLoading={isLoading}
+          className={tvStyles}
+          style={style}
+          {...restProps}
+        >
+          {children || indicatorElement}
+        </AnimatedRoot>
+      </SpinnerProvider>
+    </AnimationSettingsProvider>
   );
 });
 
@@ -104,8 +108,8 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
       className,
       style,
       speed = 1.1,
-      animationEasing,
       iconProps,
+      animation,
       ...restProps
     } = props;
 
@@ -131,35 +135,11 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
 
     const iconColor = colorMap[color] || color;
 
-    const rotation = useSharedValue(0);
-
-    useEffect(() => {
-      if (isLoading) {
-        rotation.set(
-          withRepeat(
-            withSequence(
-              withTiming(360, {
-                duration: DEFAULT_ROTATION_DURATION / speed,
-                easing: animationEasing || Easing.linear,
-              })
-            ),
-            -1,
-            false
-          )
-        );
-      } else {
-        rotation.set(withTiming(0, { duration: 300 }));
-      }
-
-      return () => {
-        cancelAnimation(rotation);
-      };
-    }, [isLoading, speed, animationEasing, rotation]);
-
-    const animatedStyle = useAnimatedStyle(() => {
-      return {
-        transform: [{ rotate: `${rotation.get()}deg` }],
-      };
+    const { rContainerStyle } = useSpinnerIndicatorAnimation({
+      animation,
+      style: style as ViewStyle | undefined,
+      isLoading,
+      speed,
     });
 
     if (!isLoading) {
@@ -170,7 +150,7 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
       <AnimatedIndicator
         ref={ref}
         className={tvStyles}
-        style={[animatedStyle, style]}
+        style={[rContainerStyle, style]}
         {...restProps}
       >
         {children || (
@@ -196,8 +176,8 @@ SpinnerIndicator.displayName = DISPLAY_NAME.INDICATOR;
  * @component Spinner - Main container that controls loading state, size, and color.
  * Renders a default animated indicator if no children provided.
  *
- * @component Spinner.Indicator - Optional sub-component for customizing animation speed,
- * easing, and icon appearance. Accepts custom children to replace the default icon.
+ * @component Spinner.Indicator - Optional sub-component for customizing animation speed
+ * and icon appearance. Accepts custom children to replace the default icon.
  * When omitted, Spinner uses a default indicator with standard animation settings.
  *
  * Props flow from Spinner to Indicator via context (size, color, isLoading).
@@ -206,7 +186,7 @@ SpinnerIndicator.displayName = DISPLAY_NAME.INDICATOR;
  * @see Full documentation: https://heroui.com/components/spinner
  */
 const CompoundSpinner = Object.assign(SpinnerRoot, {
-  /** @optional Customize animation speed, easing, and icon appearance */
+  /** @optional Customize animation speed and icon appearance */
   Indicator: SpinnerIndicator,
 });
 

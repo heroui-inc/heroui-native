@@ -1,9 +1,4 @@
-import {
-  Easing,
-  FadeIn,
-  FadeOut,
-  type WithTimingConfig,
-} from 'react-native-reanimated';
+import { Easing, FadeIn, FadeOut } from 'react-native-reanimated';
 
 /**
  * Display names for Spinner components
@@ -18,14 +13,6 @@ export const DISPLAY_NAME = {
  * Default animation duration for spinner rotation (in milliseconds)
  */
 export const DEFAULT_ROTATION_DURATION = 1000;
-
-/**
- * Default animation configuration for spinner
- */
-export const DEFAULT_ANIMATION_CONFIG: WithTimingConfig = {
-  duration: DEFAULT_ROTATION_DURATION,
-  easing: Easing.linear,
-};
 
 /**
  * Size mappings for spinner icon dimensions

@@ -134,31 +134,82 @@ export default function SpinnerExample() {
 ```
 
 - **Spinner**: Main container that controls loading state, size, and color. Renders a default animated indicator if no children provided.
-- **Spinner.Indicator**: Optional sub-component for customizing animation speed, easing, and icon appearance. Accepts custom children to replace the default icon.
+- **Spinner.Indicator**: Optional sub-component for customizing animation speed and icon appearance. Accepts custom children to replace the default icon.
 
 ## API Reference
 
 ### Spinner
 
-| prop           | type                                                        | default     | description                                        |
-| -------------- | ----------------------------------------------------------- | ----------- | -------------------------------------------------- |
-| `children`     | `React.ReactNode`                                           | `undefined` | Content to render inside the spinner               |
-| `size`         | `'sm' \| 'md' \| 'lg'`                                      | `'md'`      | Size of the spinner                                |
-| `color`        | `'default' \| 'success' \| 'warning' \| 'danger' \| string` | `'default'` | Color theme of the spinner                         |
-| `isLoading`    | `boolean`                                                   | `true`      | Whether the spinner is loading                     |
-| `className`    | `string`                                                    | `undefined` | Custom class name for the spinner                  |
-| `...ViewProps` | `ViewProps`                                                 | -           | All standard React Native View props are supported |
+| prop           | type                                                        | default     | description                                                                  |
+| -------------- | ----------------------------------------------------------- | ----------- | ---------------------------------------------------------------------------- |
+| `children`     | `React.ReactNode`                                           | `undefined` | Content to render inside the spinner                                         |
+| `size`         | `'sm' \| 'md' \| 'lg'`                                      | `'md'`      | Size of the spinner                                                          |
+| `color`        | `'default' \| 'success' \| 'warning' \| 'danger' \| string` | `'default'` | Color theme of the spinner                                                   |
+| `isLoading`    | `boolean`                                                   | `true`      | Whether the spinner is loading                                               |
+| `className`    | `string`                                                    | `undefined` | Custom class name for the spinner                                            |
+| `animation`    | `SpinnerRootAnimation`                                      | `undefined` | Animation configuration for spinner root (see Animation Configuration below) |
+| `...ViewProps` | `ViewProps`                                                 | -           | All standard React Native View props are supported                           |
+
+#### SpinnerRootAnimation
+
+Animation configuration for the Spinner root component. Can be:
+
+- `false` or `"disabled"`: Disable only root animations (children can still animate)
+- `"disable-all"`: Disable all animations including children
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration with the following properties:
+
+**Animation Properties:**
+
+| property   | type                             | default | description                      |
+| ---------- | -------------------------------- | ------- | -------------------------------- |
+| `entering` | `AnimationValue<EnteringConfig>` | -       | Entering animation configuration |
+| `exiting`  | `AnimationValue<ExitingConfig>`  | -       | Exiting animation configuration  |
+
+**EnteringConfig:**
+
+| property | type                    | default                                                | description               |
+| -------- | ----------------------- | ------------------------------------------------------ | ------------------------- |
+| `value`  | `EntryOrExitLayoutType` | `FadeIn.duration(200).easing(Easing.out(Easing.ease))` | Custom entering animation |
+
+**ExitingConfig:**
+
+| property | type                    | default                 | description              |
+| -------- | ----------------------- | ----------------------- | ------------------------ |
+| `value`  | `EntryOrExitLayoutType` | `FadeOut.duration(100)` | Custom exiting animation |
 
 ### Spinner.Indicator
 
-| prop                    | type                         | default     | description                                      |
-| ----------------------- | ---------------------------- | ----------- | ------------------------------------------------ |
-| `children`              | `React.ReactNode`            | `undefined` | Content to render inside the indicator           |
-| `speed`                 | `number`                     | `1`         | Speed in rounds per second                       |
-| `animationEasing`       | `WithTimingConfig['easing']` | `undefined` | Reanimated timing easing for indicator           |
-| `iconProps`             | `SpinnerIconProps`           | `undefined` | Props for the default icon                       |
-| `className`             | `string`                     | `undefined` | Custom class name for the indicator element      |
-| `...Animated.ViewProps` | `Animated.ViewProps`         | -           | All Reanimated Animated.View props are supported |
+| prop                    | type                        | default     | description                                                                       |
+| ----------------------- | --------------------------- | ----------- | --------------------------------------------------------------------------------- |
+| `children`              | `React.ReactNode`           | `undefined` | Content to render inside the indicator                                            |
+| `speed`                 | `number`                    | `1.1`       | Speed in rounds per second                                                        |
+| `iconProps`             | `SpinnerIconProps`          | `undefined` | Props for the default icon                                                        |
+| `className`             | `string`                    | `undefined` | Custom class name for the indicator element                                       |
+| `animation`             | `SpinnerIndicatorAnimation` | `undefined` | Animation configuration for spinner indicator (see Animation Configuration below) |
+| `...Animated.ViewProps` | `Animated.ViewProps`        | -           | All Reanimated Animated.View props are supported                                  |
+
+#### SpinnerIndicatorAnimation
+
+Animation configuration for the Spinner Indicator component. Can be:
+
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration with the following properties:
+
+**Animation Properties:**
+
+| property   | type                             | default | description                      |
+| ---------- | -------------------------------- | ------- | -------------------------------- |
+| `rotation` | `AnimationValue<RotationConfig>` | -       | Rotation animation configuration |
+
+**RotationConfig:**
+
+| property       | type                         | default                                             | description                    |
+| -------------- | ---------------------------- | --------------------------------------------------- | ------------------------------ |
+| `speed`        | `number`                     | `1.1`                                               | Rotation speed multiplier      |
+| `easing`       | `WithTimingConfig['easing']` | `Easing.linear`                                     | Animation easing configuration |
+| `timingConfig` | `WithTimingConfig`           | `{ duration: 1000 / speed, easing: Easing.linear }` | Animation timing configuration |
 
 ### SpinnerIconProps
 

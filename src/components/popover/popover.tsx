@@ -36,10 +36,10 @@ import type {
   PopoverContentPopoverProps,
   PopoverContentProps,
   PopoverDescriptionProps,
+  PopoverLabelProps,
   PopoverOverlayProps,
   PopoverPortalProps,
   PopoverRootProps,
-  PopoverTitleProps,
   PopoverTriggerProps,
 } from './popover.types';
 
@@ -413,9 +413,9 @@ const PopoverClose = forwardRef<
 
 // --------------------------------------------------
 
-const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
+const PopoverLabel = forwardRef<RNText, PopoverLabelProps>(
   ({ className, children, ...props }, ref) => {
-    const tvStyles = popoverStyles.title({ className });
+    const tvStyles = popoverStyles.label({ className });
 
     return (
       <Text
@@ -573,7 +573,7 @@ PopoverPortal.displayName = DISPLAY_NAME.PORTAL;
 PopoverOverlay.displayName = DISPLAY_NAME.OVERLAY;
 PopoverContent.displayName = DISPLAY_NAME.CONTENT;
 PopoverClose.displayName = DISPLAY_NAME.CLOSE;
-PopoverTitle.displayName = DISPLAY_NAME.TITLE;
+PopoverLabel.displayName = DISPLAY_NAME.LABEL;
 PopoverDescription.displayName = DISPLAY_NAME.DESCRIPTION;
 PopoverArrow.displayName = DISPLAY_NAME.ARROW;
 
@@ -602,7 +602,7 @@ PopoverArrow.displayName = DISPLAY_NAME.ARROW;
  * @component Popover.Close - Close button that dismisses the popover when pressed.
  * Renders a default X icon if no children provided.
  *
- * @component Popover.Title - Optional title text with pre-styled typography.
+ * @component Popover.Label - Optional label text with pre-styled typography.
  *
  * @component Popover.Description - Optional description text with muted styling.
  *
@@ -618,7 +618,7 @@ const Popover = Object.assign(PopoverRoot, {
   Content: PopoverContent,
   Arrow: PopoverArrow,
   Close: PopoverClose,
-  Title: PopoverTitle,
+  Label: PopoverLabel,
   Description: PopoverDescription,
 });
 

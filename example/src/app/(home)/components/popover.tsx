@@ -33,7 +33,7 @@ const WithTitleDescriptionContent = () => {
                 />
               </View>
               <View className="flex-1">
-                <Popover.Title>Fun Fact!</Popover.Title>
+                <Popover.Label>Fun Fact!</Popover.Label>
               </View>
             </View>
             <Popover.Description className="text-sm">
@@ -83,7 +83,7 @@ const PresentationVariantsContent = () => {
                   />
                 </View>
                 <View className="flex-1">
-                  <Popover.Title>Payment Successful</Popover.Title>
+                  <Popover.Label>Payment Successful</Popover.Label>
                   <AppText className="text-xs text-muted">
                     2 minutes ago
                   </AppText>
@@ -109,9 +109,9 @@ const PresentationVariantsContent = () => {
           <Popover.Content presentation="bottom-sheet">
             <View className="gap-4">
               <View className="mb-2">
-                <Popover.Title className="text-center text-foreground">
+                <Popover.Label className="text-center text-foreground">
                   Share Options
-                </Popover.Title>
+                </Popover.Label>
                 <Popover.Description className="text-center text-muted">
                   Choose how you'd like to share this content
                 </Popover.Description>

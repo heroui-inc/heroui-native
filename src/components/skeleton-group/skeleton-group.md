@@ -57,12 +57,12 @@ Use `isSkeletonOnly` when the group contains only skeleton placeholders with lay
 </SkeletonGroup>
 ```
 
-### With Animation Types
+### With Animation Variants
 
 Control animation style for all items in the group.
 
 ```tsx
-<SkeletonGroup isLoading={isLoading} animationType="pulse">
+<SkeletonGroup isLoading={isLoading} variant="pulse">
   <SkeletonGroup.Item className="h-10 w-10 rounded-full" />
   <SkeletonGroup.Item className="h-4 w-32 rounded-md" />
   <SkeletonGroup.Item className="h-3 w-24 rounded-md" />
@@ -76,10 +76,12 @@ Configure shimmer or pulse animations for the entire group.
 ```tsx
 <SkeletonGroup
   isLoading={isLoading}
-  animationType="shimmer"
-  shimmerConfig={{
-    duration: 2000,
-    highlightColor: 'rgba(59, 130, 246, 0.3)',
+  variant="shimmer"
+  animation={{
+    shimmer: {
+      duration: 2000,
+      highlightColor: 'rgba(59, 130, 246, 0.3)',
+    },
   }}
 >
   <SkeletonGroup.Item className="h-16 w-full rounded-lg" />
@@ -192,14 +194,22 @@ export default function SkeletonGroupExample() {
 | `children`              | `React.ReactNode`                | -           | SkeletonGroup.Item components and layout elements                      |
 | `isLoading`             | `boolean`                        | `true`      | Whether the skeleton items are currently loading                       |
 | `isSkeletonOnly`        | `boolean`                        | `false`     | Hides entire group when isLoading is false (for skeleton-only layouts) |
-| `animationType`         | `'shimmer' \| 'pulse' \| 'none'` | `'shimmer'` | Animation type for all items in the group                              |
+| `variant`               | `'shimmer' \| 'pulse' \| 'none'` | `'shimmer'` | Animation variant for all items in the group                           |
+| `animation`             | `SkeletonRootAnimation`          | -           | Animation configuration for all items                                  |
 | `className`             | `string`                         | -           | Additional CSS classes for the group container                         |
 | `style`                 | `StyleProp<ViewStyle>`           | -           | Custom styles for the group container                                  |
-| `shimmerConfig`         | `ShimmerConfig`                  | -           | Shimmer animation configuration for all items                          |
-| `pulseConfig`           | `PulseConfig`                    | -           | Pulse animation configuration for all items                            |
 | `...Animated.ViewProps` | `AnimatedProps<ViewProps>`       | -           | All Reanimated Animated.View props are supported                       |
 
-#### ShimmerConfig
+#### SkeletonRootAnimation
+
+| prop       | type                                           | description                     |
+| ---------- | ---------------------------------------------- | ------------------------------- |
+| `entering` | `Animation<{ value?: EntryOrExitLayoutType }>` | Custom entering animation       |
+| `exiting`  | `Animation<{ value?: EntryOrExitLayoutType }>` | Custom exiting animation        |
+| `shimmer`  | `SkeletonShimmerAnimation`                     | Shimmer animation configuration |
+| `pulse`    | `SkeletonPulseAnimation`                       | Pulse animation configuration   |
+
+#### SkeletonShimmerAnimation
 
 | prop             | type             | description                                        |
 | ---------------- | ---------------- | -------------------------------------------------- |
@@ -208,13 +218,13 @@ export default function SkeletonGroupExample() {
 | `speed`          | `number`         | Speed multiplier for the animation (default: 1)    |
 | `highlightColor` | `string`         | Highlight color for the shimmer effect             |
 
-#### PulseConfig
+#### SkeletonPulseAnimation
 
 | prop         | type             | description                                        |
 | ------------ | ---------------- | -------------------------------------------------- |
 | `duration`   | `number`         | Animation duration in milliseconds (default: 1000) |
 | `easing`     | `EasingFunction` | Easing function for the animation                  |
-| `minOpacity` | `number`         | Minimum opacity value (default: 0.3)               |
+| `minOpacity` | `number`         | Minimum opacity value (default: 0.5)               |
 | `maxOpacity` | `number`         | Maximum opacity value (default: 1)                 |
 
 ### SkeletonGroup.Item
@@ -223,10 +233,9 @@ export default function SkeletonGroupExample() {
 | ----------------------- | -------------------------------- | --------- | ------------------------------------------------------------------- |
 | `children`              | `React.ReactNode`                | -         | Content to show when not loading                                    |
 | `isLoading`             | `boolean`                        | inherited | Whether the skeleton is currently loading (overrides group setting) |
-| `animationType`         | `'shimmer' \| 'pulse' \| 'none'` | inherited | Animation type (overrides group setting)                            |
+| `variant`               | `'shimmer' \| 'pulse' \| 'none'` | inherited | Animation variant (overrides group setting)                         |
+| `animation`             | `SkeletonRootAnimation`          | inherited | Animation configuration (overrides group setting)                   |
 | `className`             | `string`                         | -         | Additional CSS classes for styling the item                         |
-| `shimmerConfig`         | `ShimmerConfig`                  | inherited | Shimmer animation configuration (overrides group setting)           |
-| `pulseConfig`           | `PulseConfig`                    | inherited | Pulse animation configuration (overrides group setting)             |
 | `...Animated.ViewProps` | `AnimatedProps<ViewProps>`       | -         | All Reanimated Animated.View props are supported                    |
 
 ## Important Notes
@@ -236,8 +245,7 @@ export default function SkeletonGroupExample() {
 SkeletonGroup.Item components inherit all animation-related props from their parent SkeletonGroup:
 
 - `isLoading`
-- `animationType`
-- `shimmerConfig`
-- `pulseConfig`
+- `variant`
+- `animation`
 
 Individual items can override any inherited prop by providing their own value.

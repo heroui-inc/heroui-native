@@ -19,19 +19,19 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 const SkeletonControls = ({
   isLoading,
   setIsLoading,
-  animationType,
-  setAnimationType,
+  variant,
+  setVariant,
 }: {
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
-  animationType: SkeletonAnimation;
-  setAnimationType: (value: SkeletonAnimation) => void;
+  variant: SkeletonAnimation;
+  setVariant: (value: SkeletonAnimation) => void;
 }) => {
   return (
     <Surface className="w-full gap-6">
       <RadioGroup
-        value={animationType}
-        onValueChange={(value) => setAnimationType(value as SkeletonAnimation)}
+        value={variant}
+        onValueChange={(value) => setVariant(value as SkeletonAnimation)}
         className="flex-row justify-center gap-5"
       >
         <RadioGroup.Item value="shimmer">
@@ -56,15 +56,14 @@ const SkeletonControls = ({
 
 const CardSkeletonContent = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [animationType, setAnimationType] =
-    useState<SkeletonAnimation>('shimmer');
+  const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
 
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full">
         <SkeletonGroup
           isLoading={isLoading}
-          animationType={animationType}
+          variant={variant}
           className="h-[360px]"
         >
           <Card className="p-4">
@@ -73,7 +72,9 @@ const CardSkeletonContent = () => {
                 <SkeletonGroup.Item className="size-10 rounded-full">
                   <Avatar size="sm" alt="Avatar">
                     <Avatar.Image
-                      source={{ uri: 'https://i.pravatar.cc/150?img=4' }}
+                      source={{
+                        uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=4',
+                      }}
                     />
                     <Avatar.Fallback />
                   </Avatar>
@@ -89,9 +90,9 @@ const CardSkeletonContent = () => {
                   {!isLoading && (
                     <View>
                       <Text className="font-semibold text-foreground">
-                        Alex Mitchell
+                        Sarah Mitchell
                       </Text>
-                      <Text className="text-sm text-muted">@alexmitchell</Text>
+                      <Text className="text-sm text-muted">@mitchell</Text>
                     </View>
                   )}
                 </View>
@@ -106,8 +107,7 @@ const CardSkeletonContent = () => {
                 )}
                 {!isLoading && (
                   <Text className="text-base text-foreground">
-                    Finally picked up my dream car today! The sleek design and
-                    powerful engine.
+                    Bridging the Future
                   </Text>
                 )}
               </View>
@@ -117,7 +117,7 @@ const CardSkeletonContent = () => {
               <View className="h-48 bg-surface-secondary rounded-2xl overflow-hidden">
                 <Image
                   source={{
-                    uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/backgrounds/cards/car1.jpg',
+                    uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/robot1.jpeg',
                   }}
                   className="h-full w-full"
                 />
@@ -128,8 +128,8 @@ const CardSkeletonContent = () => {
         <SkeletonControls
           isLoading={isLoading}
           setIsLoading={setIsLoading}
-          animationType={animationType}
-          setAnimationType={setAnimationType}
+          variant={variant}
+          setVariant={setVariant}
         />
       </View>
     </View>
@@ -140,8 +140,7 @@ const CardSkeletonContent = () => {
 
 const ListSkeletonContent = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [animationType, setAnimationType] =
-    useState<SkeletonAnimation>('shimmer');
+  const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
 
   return (
     <View className="flex-1 items-center justify-center px-5 gap-12">
@@ -151,7 +150,7 @@ const ListSkeletonContent = () => {
             key={item}
             isLoading={isLoading}
             isSkeletonOnly
-            animationType={animationType}
+            variant={variant}
             className="flex-row items-center gap-3"
           >
             <SkeletonGroup.Item className="size-12 rounded-xl" />
@@ -170,8 +169,8 @@ const ListSkeletonContent = () => {
       <SkeletonControls
         isLoading={isLoading}
         setIsLoading={setIsLoading}
-        animationType={animationType}
-        setAnimationType={setAnimationType}
+        variant={variant}
+        setVariant={setVariant}
       />
     </View>
   );
@@ -181,8 +180,7 @@ const ListSkeletonContent = () => {
 
 const TextSkeletonsContent = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [animationType, setAnimationType] =
-    useState<SkeletonAnimation>('shimmer');
+  const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
 
   return (
     <View className="flex-1 items-center justify-center px-5">
@@ -192,7 +190,7 @@ const TextSkeletonsContent = () => {
             entering={FadeInLeft.duration(200)}
             exiting={FadeOutRight.duration(200)}
             isLoading={isLoading}
-            animationType={animationType}
+            variant={variant}
             isSkeletonOnly
             className="gap-2"
           >
@@ -216,8 +214,8 @@ const TextSkeletonsContent = () => {
       <SkeletonControls
         isLoading={isLoading}
         setIsLoading={setIsLoading}
-        animationType={animationType}
-        setAnimationType={setAnimationType}
+        variant={variant}
+        setVariant={setVariant}
       />
     </View>
   );
@@ -227,15 +225,14 @@ const TextSkeletonsContent = () => {
 
 const CircularSkeletonsContent = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [animationType, setAnimationType] =
-    useState<SkeletonAnimation>('shimmer');
+  const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
 
   return (
     <View className="flex-1 items-center justify-center gap-12 px-5">
       <View className="gap-6">
         <SkeletonGroup
           isLoading={isLoading}
-          animationType={animationType}
+          variant={variant}
           className="flex-row gap-4 items-end justify-center"
         >
           <SkeletonGroup.Item className="size-10 rounded-full">
@@ -275,8 +272,8 @@ const CircularSkeletonsContent = () => {
       <SkeletonControls
         isLoading={isLoading}
         setIsLoading={setIsLoading}
-        animationType={animationType}
-        setAnimationType={setAnimationType}
+        variant={variant}
+        setVariant={setVariant}
       />
     </View>
   );
@@ -294,10 +291,12 @@ const CustomShimmerConfigContent = () => {
           <Skeleton
             className="h-16 w-full rounded-2xl"
             isLoading={isLoading}
-            animationType="shimmer"
-            shimmerConfig={{
-              duration: 2000,
-              highlightColor: 'rgba(59, 130, 246, 0.3)',
+            variant="shimmer"
+            animation={{
+              shimmer: {
+                duration: 2000,
+                highlightColor: 'rgba(59, 130, 246, 0.3)',
+              },
             }}
           >
             <View
@@ -311,11 +310,13 @@ const CustomShimmerConfigContent = () => {
           <Skeleton
             className="h-16 w-full rounded-2xl"
             isLoading={isLoading}
-            animationType="shimmer"
-            shimmerConfig={{
-              duration: 1000,
-              speed: 2,
-              highlightColor: 'rgba(34, 197, 94, 0.3)',
+            variant="shimmer"
+            animation={{
+              shimmer: {
+                duration: 1000,
+                speed: 2,
+                highlightColor: 'rgba(34, 197, 94, 0.3)',
+              },
             }}
           >
             <View
@@ -352,11 +353,13 @@ const CustomPulseConfigContent = () => {
           <Skeleton
             className="h-16 w-full rounded-2xl bg-purple-500"
             isLoading={isLoading}
-            animationType="pulse"
-            pulseConfig={{
-              duration: 500,
-              minOpacity: 0.2,
-              maxOpacity: 0.8,
+            variant="pulse"
+            animation={{
+              pulse: {
+                duration: 500,
+                minOpacity: 0.2,
+                maxOpacity: 0.8,
+              },
             }}
           >
             <View
@@ -370,11 +373,13 @@ const CustomPulseConfigContent = () => {
           <Skeleton
             className="h-16 w-full rounded-2xl bg-orange-500"
             isLoading={isLoading}
-            animationType="pulse"
-            pulseConfig={{
-              duration: 1000,
-              minOpacity: 0.5,
-              maxOpacity: 1,
+            variant="pulse"
+            animation={{
+              pulse: {
+                duration: 1000,
+                minOpacity: 0.5,
+                maxOpacity: 1,
+              },
             }}
           >
             <View

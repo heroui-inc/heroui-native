@@ -106,7 +106,7 @@ const BasicDialogContent = () => {
                 />
               </View>
               <View className="mb-8 gap-1.5">
-                <Dialog.Title>Low Disk Space</Dialog.Title>
+                <Dialog.Label>Low Disk Space</Dialog.Label>
                 <Dialog.Description>
                   You are running low on disk space. Delete unnecessary files to
                   free up space.
@@ -162,7 +162,7 @@ const BlurBackdropDialogContent = () => {
                 />
               </View>
               <View className="mb-8 gap-1">
-                <Dialog.Title>Delete product</Dialog.Title>
+                <Dialog.Label>Delete product</Dialog.Label>
                 <Dialog.Description>
                   Are you sure you want to delete this product? This action
                   cannot be undone.
@@ -270,7 +270,7 @@ const TextInputDialogContent = () => {
             >
               <CustomAnimatedContent>
                 <Dialog.Close className="self-end" />
-                <Dialog.Title className="mb-6">Update Profile</Dialog.Title>
+                <Dialog.Label className="mb-6">Update Profile</Dialog.Label>
 
                 <View className="flex-1">
                   <ScrollView contentContainerClassName="gap-5">
@@ -383,9 +383,9 @@ const LongContentDialogContent = () => {
             />
             <Dialog.Content className="rounded-2xl px-0 shadow-2xl shadow-black/10">
               <Dialog.Close className="self-end mr-4" />
-              <Dialog.Title className="text-center mb-5">
+              <Dialog.Label className="text-center mb-5">
                 Upload Audio
-              </Dialog.Title>
+              </Dialog.Label>
               <ScrollShadow
                 LinearGradientComponent={LinearGradient}
                 style={{ height: height * 0.35 }}

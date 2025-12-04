@@ -4,10 +4,10 @@ export type {
   DialogCloseProps,
   DialogContentProps,
   DialogDescriptionProps,
+  DialogLabelProps,
   DialogOverlayProps,
   DialogPortalProps,
   DialogProgressAnimationConfigs,
   DialogRootProps,
-  DialogTitleProps,
   DialogTriggerProps,
 } from './dialog.types';

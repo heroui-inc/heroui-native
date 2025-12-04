@@ -10,13 +10,6 @@ const skeleton = tv({
 });
 
 /**
- * Gradient wrapper styles for shimmer effect
- */
-const gradientWrapper = tv({
-  base: 'absolute inset-0',
-});
-
-/**
  * Native styles for border curve
  */
 export const nativeStyles = StyleSheet.create({
@@ -30,7 +23,6 @@ export const nativeStyles = StyleSheet.create({
  */
 const styleSheet = combineStyles({
   skeleton,
-  gradientWrapper,
 });
 
 export default styleSheet;

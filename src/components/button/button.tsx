@@ -180,5 +180,4 @@ const CompoundButton = Object.assign(ButtonRoot, {
   Label: ButtonLabel,
 });
 
-export { useButtonContext };
 export default CompoundButton;

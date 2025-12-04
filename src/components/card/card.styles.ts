@@ -17,7 +17,7 @@ const footer = tv({
   base: '',
 });
 
-const title = tv({
+const label = tv({
   base: 'text-foreground font-medium text-lg',
 });
 
@@ -30,7 +30,7 @@ const cardStyles = combineStyles({
   header,
   body,
   footer,
-  title,
+  label,
   description,
 });
 

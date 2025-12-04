@@ -21,7 +21,7 @@ const close = tv({
   base: '',
 });
 
-const title = tv({
+const label = tv({
   base: 'text-lg font-medium text-foreground',
 });
 
@@ -39,7 +39,7 @@ const popoverStyles = {
   popoverContent,
   bottomSheetContent,
   close,
-  title,
+  label,
   description,
   arrow,
 };

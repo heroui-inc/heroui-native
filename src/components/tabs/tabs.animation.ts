@@ -16,8 +16,9 @@ import {
   getRootAnimationState,
   getStyleProperties,
 } from '../../helpers/utils/animation';
-import { useTabs, useTabsMeasurements } from './tabs';
+import * as TabsPrimitives from '../../primitives/tabs';
 import { DEFAULT_INDICATOR_SPRING_CONFIG } from './tabs.constants';
+import { useTabsMeasurements } from './tabs.context';
 import type { TabsIndicatorAnimation } from './tabs.types';
 
 // --------------------------------------------------
@@ -63,7 +64,7 @@ export function useTabsIndicatorAnimation(options: {
   const { animation, style } = options;
 
   // Get active measurements from tabs context
-  const { value } = useTabs();
+  const { value } = TabsPrimitives.useRootContext();
   const { measurements } = useTabsMeasurements();
   const activeMeasurements = measurements[value];
 

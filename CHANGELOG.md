@@ -1,3 +1,31 @@
+## 1.0.0-beta.6 (2025-12-04)
+
+* chore: sync versions ([fe493a7](https://github.com/heroui-inc/heroui-native/commit/fe493a7))
+* docs(checkbox): update doc with useCheckbox api reference ([c8afe1a](https://github.com/heroui-inc/heroui-native/commit/c8afe1a))
+* docs(popover): update doc with usePopover api reference ([5e9b2ef](https://github.com/heroui-inc/heroui-native/commit/5e9b2ef))
+* docs(readme): update installation react-native-svg version ([162a63e](https://github.com/heroui-inc/heroui-native/commit/162a63e))
+* docs(skeleton): update docs with added animation api ([9acbcb5](https://github.com/heroui-inc/heroui-native/commit/9acbcb5))
+* docs(tabs): update doc file with new animation prop ([a7b19b5](https://github.com/heroui-inc/heroui-native/commit/a7b19b5))
+* docs(tabs): update doc with hooks api reference ([d31af7b](https://github.com/heroui-inc/heroui-native/commit/d31af7b))
+* build: update dependencies ([cf3ee4c](https://github.com/heroui-inc/heroui-native/commit/cf3ee4c))
+* build: update react-native-worklets peer dep version ([e0f5121](https://github.com/heroui-inc/heroui-native/commit/e0f5121))
+* fix: versions consistency ([482b106](https://github.com/heroui-inc/heroui-native/commit/482b106))
+* fix(tabs): cycle issue ([7d11c4f](https://github.com/heroui-inc/heroui-native/commit/7d11c4f))
+* refactor(button): remove useButtonContext from index export ([d6550ff](https://github.com/heroui-inc/heroui-native/commit/d6550ff))
+* refactor(card): rename CardTitle to CardLabel ([d010de2](https://github.com/heroui-inc/heroui-native/commit/d010de2))
+* refactor(dialog): rename DialogTitle to DialogLabel ([7c0d888](https://github.com/heroui-inc/heroui-native/commit/7c0d888))
+* refactor(popover): rename PopoverTitle to PopoverLabel ([d3abb37](https://github.com/heroui-inc/heroui-native/commit/d3abb37))
+* refactor(skeleton-group): add animation file ([a5c1e90](https://github.com/heroui-inc/heroui-native/commit/a5c1e90))
+* refactor(skeleton): add animation file ([85264a2](https://github.com/heroui-inc/heroui-native/commit/85264a2))
+* refactor(skeleton): exmples ([e302f93](https://github.com/heroui-inc/heroui-native/commit/e302f93))
+* refactor(skeleton): rename animationType prop to variant ([21816ac](https://github.com/heroui-inc/heroui-native/commit/21816ac))
+* refactor(spinner): add animation file ([fd2c1aa](https://github.com/heroui-inc/heroui-native/commit/fd2c1aa))
+* refactor(spinner): indicator animation props ([e7cc833](https://github.com/heroui-inc/heroui-native/commit/e7cc833))
+* refactor(spinner): remove useSpinnerContext from index export ([70af8d8](https://github.com/heroui-inc/heroui-native/commit/70af8d8))
+* refactor(tabs): add animation file ([7c5d0fc](https://github.com/heroui-inc/heroui-native/commit/7c5d0fc))
+
+
+
 ## 1.0.0-beta.5 (2025-12-03)
 
 * chore: omit layout animation props for error-view, accordion and avatar ([5379fb5](https://github.com/heroui-inc/heroui-native/commit/5379fb5))

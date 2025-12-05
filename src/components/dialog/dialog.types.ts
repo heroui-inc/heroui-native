@@ -237,7 +237,7 @@ export interface DialogCloseIconProps {
   size?: number;
   /**
    * Color of the close icon
-   * @default --colors-foreground
+   * @default theme color muted
    */
   color?: string;
 }

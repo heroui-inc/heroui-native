@@ -47,7 +47,7 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
   (
     {
       children,
-      closeDelay = 500,
+      closeDelay = 300,
       isDismissKeyboardOnClose = true,
       isOpen: isOpenProp,
       isDefaultOpen,

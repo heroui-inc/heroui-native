@@ -9,6 +9,7 @@ import {
   useAnimationSettings,
 } from '../../helpers/contexts/animation-settings-context';
 import { useDialogContentAnimation } from '../../helpers/hooks';
+import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
 import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
 import { useThemeColor } from '../../helpers/theme';
 import * as DialogPrimitives from '../../primitives/dialog';
@@ -16,7 +17,6 @@ import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import {
   DialogAnimationProvider,
   useDialogAnimation,
-  useDialogOverlayAnimation,
 } from './dialog.animation';
 import { DISPLAY_NAME } from './dialog.constants';
 import dialogStyles, { styleSheet } from './dialog.styles';
@@ -152,11 +152,17 @@ const DialogOverlay = forwardRef<
   DialogPrimitivesTypes.OverlayRef,
   DialogOverlayProps
 >(({ className, style, animation, ...props }, ref) => {
+  const { progress, isDragging, isGestureReleaseAnimationRunning } =
+    useDialogAnimation();
+
   const tvStyles = dialogStyles.overlay({ className });
 
-  const { rContainerStyle } = useDialogOverlayAnimation({
+  const { rContainerStyle } = usePopupOverlayAnimation({
+    progress,
+    isDragging,
+    isGestureReleaseAnimationRunning,
     animation,
-    style,
+    style: style as ViewStyle,
   });
 
   return (

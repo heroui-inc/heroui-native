@@ -72,3 +72,20 @@ export type PopupRootAnimationConfig = {
    */
   exiting?: AnimationValue<SpringAnimationConfig | TimingAnimationConfig>;
 };
+
+/**
+ * Animation configuration for popup overlay components (Dialog, Select, etc.)
+ * Supports opacity animation configuration
+ */
+export type PopupOverlayAnimation = Animation<{
+  /**
+   * Opacity animation configuration
+   */
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [idle, open, close]
+     * @default [0, 1, 0]
+     */
+    value?: [number, number, number];
+  }>;
+}>;

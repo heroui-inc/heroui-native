@@ -1,6 +1,6 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { forwardRef, useEffect, useMemo, useRef } from 'react';
-import type { Text as RNText } from 'react-native';
+import type { Text as RNText, ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
@@ -22,6 +22,7 @@ import {
   useAnimationSettings,
 } from '../../helpers/contexts/animation-settings-context';
 import { useDialogContentAnimation } from '../../helpers/hooks';
+import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
 import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
 import { useThemeColor } from '../../helpers/theme';
 import * as SelectPrimitives from '../../primitives/select';
@@ -194,28 +195,27 @@ const SelectPortal = ({ className, children, ...props }: SelectPortalProps) => {
 const SelectOverlay = forwardRef<
   SelectPrimitivesTypes.OverlayRef,
   SelectOverlayProps
->(({ className, style, isDefaultAnimationDisabled, ...props }, ref) => {
-  const { progress } = useSelectAnimation();
+>(({ className, style, animation, ...props }, ref) => {
+  const { progress, isDragging, isGestureReleaseAnimationRunning } =
+    useSelectAnimation();
 
   const tvStyles = selectStyles.overlay({
     className,
   });
 
-  const rOverlayStyle = useAnimatedStyle(() => {
-    if (isDefaultAnimationDisabled) {
-      return {};
-    }
-    const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
-    return {
-      opacity,
-    };
+  const { rContainerStyle } = usePopupOverlayAnimation({
+    progress,
+    isDragging,
+    isGestureReleaseAnimationRunning,
+    animation,
+    style: style as ViewStyle,
   });
 
   return (
     <AnimatedOverlay
       ref={ref}
       className={tvStyles}
-      style={[rOverlayStyle, style]}
+      style={[rContainerStyle, style]}
       {...props}
     />
   );

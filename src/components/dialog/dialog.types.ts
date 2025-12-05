@@ -5,6 +5,7 @@ import type {
   Animation,
   AnimationRoot,
   AnimationValue,
+  PopupOverlayAnimation,
   PopupRootAnimationConfig,
 } from '../../helpers/types/animation';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
@@ -92,32 +93,17 @@ export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
 /**
  * Animation configuration for Dialog Overlay component
  */
-export type DialogOverlayAnimation = Animation<{
-  /**
-   * Opacity animation configuration
-   */
-  opacity?: AnimationValue<{
-    /**
-     * Opacity values [idle, open, close]
-     * @default [0, 1, 0]
-     */
-    value?: [number, number, number];
-  }>;
-}>;
+export type DialogOverlayAnimation = PopupOverlayAnimation;
 
 /**
  * Dialog Overlay component props
  */
 export interface DialogOverlayProps
-  extends Omit<DialogPrimitivesTypes.OverlayProps, 'asChild' | 'style'> {
+  extends Omit<DialogPrimitivesTypes.OverlayProps, 'asChild'> {
   /**
    * Additional CSS class for the overlay
    */
   className?: string;
-  /**
-   * Additional style for the overlay container
-   */
-  style?: ViewStyle;
   /**
    * Animation configuration for overlay
    * - `false` or `"disabled"`: Disable all animations

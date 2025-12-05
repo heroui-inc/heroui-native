@@ -2,9 +2,11 @@ import type BottomSheet from '@gorhom/bottom-sheet';
 import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
+import type { SharedValue } from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
 import type {
   AnimationRoot,
+  PopupOverlayAnimation,
   PopupRootAnimationConfig,
 } from '../../helpers/types/animation';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
@@ -14,6 +16,20 @@ import type { DialogContentFallbackSlots } from './select.styles';
  * Select internal state for animation coordination
  */
 export type SelectState = 'idle' | 'open' | 'close';
+
+/**
+ * Context value for select animation state
+ */
+export interface SelectAnimationContextValue {
+  /** Extended internal state for animation control */
+  selectState: SelectState;
+  /** Animation progress shared value (0=idle, 1=open, 2=close) */
+  progress: SharedValue<number>;
+  /** Dragging state shared value */
+  isDragging: SharedValue<boolean>;
+  /** Gesture release animation running state shared value */
+  isGestureReleaseAnimationRunning: SharedValue<boolean>;
+}
 
 /**
  * Ref type for the Select Trigger component
@@ -100,6 +116,11 @@ export interface SelectPortalProps extends SelectPrimitivesTypes.PortalProps {
 }
 
 /**
+ * Animation configuration for Select Overlay component
+ */
+export type SelectOverlayAnimation = PopupOverlayAnimation;
+
+/**
  * Select Overlay component props
  */
 export interface SelectOverlayProps extends SelectPrimitivesTypes.OverlayProps {
@@ -108,11 +129,12 @@ export interface SelectOverlayProps extends SelectPrimitivesTypes.OverlayProps {
    */
   className?: string;
   /**
-   * Whether to disable the default opacity animation
-   * Use this when you want to animate opacity using your own Reanimated useAnimatedStyle
-   * @default false
+   * Animation configuration for overlay
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: SelectOverlayAnimation;
 }
 
 /**

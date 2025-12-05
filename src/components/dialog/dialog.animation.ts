@@ -113,6 +113,7 @@ export function useDialogRootAnimation(options: {
     (externalIsOpen ?? isDefaultOpen) ? 'open' : 'idle'
   );
   const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
+  const previousExternalIsOpenRef = useRef<boolean | undefined>(externalIsOpen);
 
   const progressValue: Record<DialogState, number> = {
     idle: 0,
@@ -208,7 +209,27 @@ export function useDialogRootAnimation(options: {
   // Sync internal state when external isOpen changes
   useEffect(() => {
     if (externalIsOpen !== undefined) {
-      updateDialogState(externalIsOpen);
+      const previousValue = previousExternalIsOpenRef.current;
+      const hasChanged = previousValue !== externalIsOpen;
+      previousExternalIsOpenRef.current = externalIsOpen;
+
+      // Check if internal state already matches external state
+      // If we're already in sync or transitioning to the same state, don't call callback
+      // (prevents double-calling when prop change is a reaction to our callback)
+      const isAlreadyOpen = externalIsOpen && dialogState === 'open';
+      // When closing, 'close' state means we're already transitioning to closed
+      const isAlreadyClosed =
+        !externalIsOpen && (dialogState === 'idle' || dialogState === 'close');
+      const isAlreadySynced = isAlreadyOpen || isAlreadyClosed;
+
+      // Only call callback when syncing if:
+      // 1. The value actually changed, AND
+      // 2. We're not already in sync (to prevent double-calling)
+      if (hasChanged && !isAlreadySynced) {
+        updateDialogState(externalIsOpen, externalOnOpenChange);
+      } else {
+        updateDialogState(externalIsOpen);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [externalIsOpen]);

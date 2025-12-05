@@ -172,50 +172,64 @@ const DialogOverlay = forwardRef<
 const DialogContent = forwardRef<
   DialogPrimitivesTypes.ContentRef,
   DialogContentProps
->(({ className, style, children, onLayout, animation, ...props }, ref) => {
-  const { progress, isDragging, dialogState } = useDialogAnimation();
-  const { onOpenChange } = useDialog();
+>(
+  (
+    {
+      className,
+      style,
+      children,
+      onLayout,
+      animation,
+      isSwipeable = true,
+      ...props
+    },
+    ref
+  ) => {
+    const { progress, isDragging, dialogState } = useDialogAnimation();
+    const { onOpenChange } = useDialog();
 
-  const tvStyles = dialogStyles.content({ className });
+    const tvStyles = dialogStyles.content({ className });
 
-  const {
-    contentY,
-    contentHeight,
-    panGesture,
-    rDragContainerStyle,
-    rContainerStyle,
-  } = useDialogContentAnimation({
-    progress,
-    isDragging,
-    dialogState,
-    onOpenChange,
-    animation,
-    style: style as ViewStyle | undefined,
-  });
+    const {
+      contentY,
+      contentHeight,
+      panGesture,
+      rDragContainerStyle,
+      rContainerStyle,
+    } = useDialogContentAnimation({
+      progress,
+      isDragging,
+      dialogState,
+      onOpenChange,
+      animation,
+      style: style as ViewStyle | undefined,
+      isSwipeable,
+    });
 
-  return (
-    <GestureDetector gesture={panGesture}>
-      <Animated.View
-        style={rDragContainerStyle}
-        pointerEvents="box-none"
-        onLayout={(event) => {
-          contentY.set(event.nativeEvent.layout.y);
-          contentHeight.set(event.nativeEvent.layout.height);
-          onLayout?.(event);
-        }}
-      >
-        <AnimatedContent
-          ref={ref}
-          className={tvStyles}
-          style={[styleSheet.contentContainer, rContainerStyle, style]}
-          {...props}
+    return (
+      <GestureDetector gesture={panGesture}>
+        <Animated.View
+          style={rDragContainerStyle}
+          pointerEvents="box-none"
+          onLayout={(event) => {
+            contentY.set(event.nativeEvent.layout.y);
+            contentHeight.set(event.nativeEvent.layout.height);
+            onLayout?.(event);
+          }}
         >
-          {children}
-        </AnimatedContent>
-      </Animated.View>
-    </GestureDetector>
-  );
-});
+          <AnimatedContent
+            ref={ref}
+            className={tvStyles}
+            style={[styleSheet.contentContainer, rContainerStyle, style]}
+            {...props}
+          >
+            {children}
+          </AnimatedContent>
+        </Animated.View>
+      </GestureDetector>
+    );
+  }
+);
 
 // --------------------------------------------------
 

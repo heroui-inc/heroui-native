@@ -199,6 +199,11 @@ export interface DialogContentProps
    * - `object`: Custom animation configuration
    */
   animation?: DialogContentAnimation;
+  /**
+   * Whether the dialog content can be swiped to dismiss
+   * @default true
+   */
+  isSwipeable?: boolean;
 }
 
 /**

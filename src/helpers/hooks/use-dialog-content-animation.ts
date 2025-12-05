@@ -48,6 +48,11 @@ export interface UseDialogContentAnimationProps {
    * Style prop for handling style overrides
    */
   style?: ViewStyle;
+  /**
+   * Whether the dialog content can be swiped to dismiss
+   * @default true
+   */
+  isSwipeable?: boolean;
 }
 
 export const useDialogContentAnimation = ({
@@ -57,6 +62,7 @@ export const useDialogContentAnimation = ({
   onOpenChange,
   animation,
   style,
+  isSwipeable = true,
 }: UseDialogContentAnimationProps) => {
   const { height: screenHeight } = useWindowDimensions();
   const isKeyboardOpen = useKeyboardStatus();
@@ -90,7 +96,7 @@ export const useDialogContentAnimation = ({
   const panGesture = useMemo(
     () =>
       Gesture.Pan()
-        .enabled(dialogState === 'open')
+        .enabled(isSwipeable && dialogState === 'open')
         .onStart(() => {
           if (isOnEndAnimationRunning.get()) return;
           isDragging.set(true);
@@ -153,6 +159,7 @@ export const useDialogContentAnimation = ({
       isDragging,
       isKeyboardOpen,
       isOnEndAnimationRunning,
+      isSwipeable,
       onOpenChange,
       progress,
       progressAnchor,

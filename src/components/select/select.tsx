@@ -380,65 +380,52 @@ const SelectContentBottomSheet = forwardRef<
 const SelectContentDialog = forwardRef<
   SelectPrimitivesTypes.ContentRef,
   SelectContentProps & { presentation: 'dialog' }
->(
-  (
-    {
-      classNames,
-      style,
-      children,
-      onLayout,
-      isDefaultAnimationDisabled = false,
-      ...props
-    },
-    ref
-  ) => {
-    const { progress, isDragging, selectState, onOpenChange } = useSelect();
+>(({ classNames, style, children, onLayout, ...props }, ref) => {
+  const { progress, isDragging, selectState, onOpenChange } = useSelect();
 
-    const { wrapper, content } = selectStyles.dialogContent();
+  const { wrapper, content } = selectStyles.dialogContent();
 
-    const wrapperStyles = wrapper({ className: classNames?.wrapper });
-    const contentStyles = content({ className: classNames?.content });
+  const wrapperStyles = wrapper({ className: classNames?.wrapper });
+  const contentStyles = content({ className: classNames?.content });
 
-    const {
-      contentY,
-      contentHeight,
-      panGesture,
-      rDragContainerStyle,
-      rContainerStyle,
-    } = useDialogContentAnimation({
-      progress,
-      isDragging,
-      dialogState: selectState,
-      onOpenChange,
-      isDefaultAnimationDisabled,
-    });
+  const {
+    contentY,
+    contentHeight,
+    panGesture,
+    rDragContainerStyle,
+    rContainerStyle,
+  } = useDialogContentAnimation({
+    progress,
+    isDragging,
+    dialogState: selectState,
+    onOpenChange,
+  });
 
-    return (
-      <View className={wrapperStyles}>
-        <GestureDetector gesture={panGesture}>
-          <Animated.View
-            style={rDragContainerStyle}
-            className="pointer-events-box-none"
-            onLayout={(event) => {
-              contentY.set(event.nativeEvent.layout.y);
-              contentHeight.set(event.nativeEvent.layout.height);
-              onLayout?.(event);
-            }}
+  return (
+    <View className={wrapperStyles}>
+      <GestureDetector gesture={panGesture}>
+        <Animated.View
+          style={rDragContainerStyle}
+          className="pointer-events-box-none"
+          onLayout={(event) => {
+            contentY.set(event.nativeEvent.layout.y);
+            contentHeight.set(event.nativeEvent.layout.height);
+            onLayout?.(event);
+          }}
+        >
+          <AnimatedDialogContent
+            ref={ref}
+            className={contentStyles}
+            style={[styleSheet.contentContainer, rContainerStyle, style]}
+            {...props}
           >
-            <AnimatedDialogContent
-              ref={ref}
-              className={contentStyles}
-              style={[styleSheet.contentContainer, rContainerStyle, style]}
-              {...props}
-            >
-              {children}
-            </AnimatedDialogContent>
-          </Animated.View>
-        </GestureDetector>
-      </View>
-    );
-  }
-);
+            {children}
+          </AnimatedDialogContent>
+        </Animated.View>
+      </GestureDetector>
+    </View>
+  );
+});
 
 // --------------------------------------------------
 

@@ -154,6 +154,32 @@ export interface DialogOverlayProps
 }
 
 /**
+ * Animation configuration for Dialog Content component
+ */
+export type DialogContentAnimation = Animation<{
+  /**
+   * Opacity animation configuration
+   */
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [idle, open, close]
+     * @default [0, 1, 0]
+     */
+    value?: [number, number, number];
+  }>;
+  /**
+   * Scale animation configuration
+   */
+  scale?: AnimationValue<{
+    /**
+     * Scale values [idle, open, close]
+     * @default [0.97, 1, 0.97]
+     */
+    value?: [number, number, number];
+  }>;
+}>;
+
+/**
  * Dialog Content component props
  */
 export interface DialogContentProps
@@ -167,11 +193,12 @@ export interface DialogContentProps
    */
   children?: ReactNode;
   /**
-   * Whether to disable the default animations (opacity, scale)
-   * Use this when you want to animate these properties using your own Reanimated useAnimatedStyle
-   * @default false
+   * Animation configuration for content
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: DialogContentAnimation;
 }
 
 /**

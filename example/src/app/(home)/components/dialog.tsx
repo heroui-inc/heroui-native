@@ -74,11 +74,15 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Dialog.Content
       className="bg-surface rounded-3xl"
+      animation={{
+        scale: {
+          value: [1, 1, 1],
+        },
+      }}
       style={[
         { marginTop: insetTop, height: maxTextInputDialogHeight },
         rContainerStyle,
       ]}
-      isDefaultAnimationDisabled
     >
       {children}
     </Dialog.Content>

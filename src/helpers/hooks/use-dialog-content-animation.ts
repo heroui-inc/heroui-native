@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import type { ViewStyle } from 'react-native';
 import { Keyboard, useWindowDimensions } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
 import type { SharedValue } from 'react-native-reanimated';
@@ -10,6 +12,15 @@ import {
   withSpring,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
+import type { DialogContentAnimation } from '../../components/dialog/dialog.types';
+import { useAnimationSettings } from '../contexts/animation-settings-context';
+import {
+  getAnimationState,
+  getAnimationValueProperty,
+  getIsAnimationDisabledValue,
+  getStyleProperties,
+  getStyleTransform,
+} from '../utils/animation';
 import { useKeyboardStatus } from './use-keyboard-status';
 
 export interface UseDialogContentAnimationProps {
@@ -30,10 +41,13 @@ export interface UseDialogContentAnimationProps {
    */
   onOpenChange: (open: boolean) => void;
   /**
-   * Whether to disable default animations
-   * @default false
+   * Animation configuration for content
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: DialogContentAnimation;
+  /**
+   * Style prop for handling style overrides
+   */
+  style?: ViewStyle;
 }
 
 export const useDialogContentAnimation = ({
@@ -41,7 +55,8 @@ export const useDialogContentAnimation = ({
   isDragging,
   dialogState,
   onOpenChange,
-  isDefaultAnimationDisabled = false,
+  animation,
+  style,
 }: UseDialogContentAnimationProps) => {
   const { height: screenHeight } = useWindowDimensions();
   const isKeyboardOpen = useKeyboardStatus();
@@ -72,59 +87,78 @@ export const useDialogContentAnimation = ({
     return interpolate(progress.get(), [1, 2], [1, 0.95], Extrapolation.CLAMP);
   });
 
-  const panGesture = Gesture.Pan()
-    .enabled(dialogState === 'open')
-    .onStart(() => {
-      if (isOnEndAnimationRunning.get()) return;
-      isDragging.set(true);
-    })
-    .onUpdate((event) => {
-      if (!isDragging.get()) return;
+  const panGesture = useMemo(
+    () =>
+      Gesture.Pan()
+        .enabled(dialogState === 'open')
+        .onStart(() => {
+          if (isOnEndAnimationRunning.get()) return;
+          isDragging.set(true);
+        })
+        .onUpdate((event) => {
+          if (!isDragging.get()) return;
 
-      const maxDragDistance = screenHeight - contentY.get();
+          const maxDragDistance = screenHeight - contentY.get();
 
-      if (event.translationY > 0) {
-        const progressValue = 1 + event.translationY / maxDragDistance;
-        progress.set(progressValue);
-      } else if (event.translationY < 0 && !isKeyboardOpen) {
-        const progressValue = 1 - Math.abs(event.translationY) / contentY.get();
-        progress.set(progressValue);
-      }
-    })
-    .onEnd(() => {
-      progressAnchor.set(progress.get());
-      contentTranslateYAnchor.set(contentTranslateY.get());
-      contentScaleAnchor.set(contentScale.get());
+          if (event.translationY > 0) {
+            const progressValue = 1 + event.translationY / maxDragDistance;
+            progress.set(progressValue);
+          } else if (event.translationY < 0 && !isKeyboardOpen) {
+            const progressValue =
+              1 - Math.abs(event.translationY) / contentY.get();
+            progress.set(progressValue);
+          }
+        })
+        .onEnd(() => {
+          progressAnchor.set(progress.get());
+          contentTranslateYAnchor.set(contentTranslateY.get());
+          contentScaleAnchor.set(contentScale.get());
 
-      if (progress.get() > 1.1) {
-        isOnEndAnimationRunning.set(true);
-        scheduleOnRN(dismissKeyboard);
-        progress.set(
-          withSpring(
-            2,
-            {
-              mass: 4,
-              damping: 120,
-              stiffness: 900,
-              overshootClamping: false,
-            },
-            () => {
-              isOnEndAnimationRunning.set(false);
-              isDragging.set(false);
-            }
-          )
-        );
-        setTimeout(() => {
-          scheduleOnRN(onOpenChange, false);
-        }, 300);
-      } else {
-        progress.set(
-          withSpring(1, {}, () => {
-            isDragging.set(false);
-          })
-        );
-      }
-    });
+          if (progress.get() > 1.1) {
+            isOnEndAnimationRunning.set(true);
+            scheduleOnRN(dismissKeyboard);
+            progress.set(
+              withSpring(
+                2,
+                {
+                  mass: 4,
+                  damping: 120,
+                  stiffness: 900,
+                  overshootClamping: false,
+                },
+                () => {
+                  isOnEndAnimationRunning.set(false);
+                  isDragging.set(false);
+                }
+              )
+            );
+            setTimeout(() => {
+              scheduleOnRN(onOpenChange, false);
+            }, 300);
+          } else {
+            progress.set(
+              withSpring(1, {}, () => {
+                isDragging.set(false);
+              })
+            );
+          }
+        }),
+    [
+      contentScale,
+      contentScaleAnchor,
+      contentTranslateY,
+      contentTranslateYAnchor,
+      contentY,
+      dialogState,
+      isDragging,
+      isKeyboardOpen,
+      isOnEndAnimationRunning,
+      onOpenChange,
+      progress,
+      progressAnchor,
+      screenHeight,
+    ]
+  );
 
   const rDragContainerStyle = useAnimatedStyle(() => {
     if (!isDragging.get()) {
@@ -174,22 +208,60 @@ export const useDialogContentAnimation = ({
     };
   });
 
+  // Read from global animation context (always available in compound parts)
+  const { isAllAnimationsDisabled } = useAnimationSettings();
+
+  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
+
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    animation,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
+
+  // Opacity animation
+  const opacityValue = getAnimationValueProperty({
+    animationValue: animationConfig?.opacity,
+    property: 'value',
+    defaultValue: [0, 1, 0] as [number, number, number],
+  });
+
+  // Scale animation
+  const scaleValue = getAnimationValueProperty({
+    animationValue: animationConfig?.scale,
+    property: 'value',
+    defaultValue: [0.97, 1, 0.97] as [number, number, number],
+  });
+
+  // Extract style overrides OUTSIDE useAnimatedStyle
+  const styleProps = getStyleProperties(style, ['opacity']);
+  const styleTransform = getStyleTransform(style);
+
   const rContainerStyle = useAnimatedStyle(() => {
-    if (isDragging.get()) {
-      return { opacity: 1 };
+    // Handle disabled state first
+    if (isAnimationDisabledValue) {
+      return {
+        opacity: progress.get() > 0 ? 1 : 0,
+        ...styleProps,
+      };
     }
 
-    if (isDefaultAnimationDisabled) {
-      return {};
+    // Handle dragging state - when dragging, opacity should be 1
+    if (isDragging.get()) {
+      return {
+        opacity: 1,
+      };
     }
+
+    // Animated state
+    const currentProgress = progress.get();
+    const targetOpacity = interpolate(currentProgress, [0, 1, 2], opacityValue);
+    const targetScale = interpolate(currentProgress, [0, 1, 2], scaleValue);
 
     return {
-      opacity: interpolate(progress.get(), [0, 1, 2], [0, 1, 0]),
-      transform: [
-        {
-          scale: interpolate(progress.get(), [0, 1, 2], [0.97, 1, 0.97]),
-        },
-      ],
+      opacity: targetOpacity,
+      transform: [{ scale: targetScale }, ...styleTransform],
+      ...styleProps,
     };
   });
 

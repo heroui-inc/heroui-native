@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import type { Text as RNText } from 'react-native';
+import type { Text as RNText, ViewStyle } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
@@ -172,61 +172,50 @@ const DialogOverlay = forwardRef<
 const DialogContent = forwardRef<
   DialogPrimitivesTypes.ContentRef,
   DialogContentProps
->(
-  (
-    {
-      className,
-      style,
-      children,
-      onLayout,
-      isDefaultAnimationDisabled = false,
-      ...props
-    },
-    ref
-  ) => {
-    const { progress, isDragging, dialogState } = useDialogAnimation();
-    const { onOpenChange } = useDialog();
+>(({ className, style, children, onLayout, animation, ...props }, ref) => {
+  const { progress, isDragging, dialogState } = useDialogAnimation();
+  const { onOpenChange } = useDialog();
 
-    const tvStyles = dialogStyles.content({ className });
+  const tvStyles = dialogStyles.content({ className });
 
-    const {
-      contentY,
-      contentHeight,
-      panGesture,
-      rDragContainerStyle,
-      rContainerStyle,
-    } = useDialogContentAnimation({
-      progress,
-      isDragging,
-      dialogState,
-      onOpenChange,
-      isDefaultAnimationDisabled,
-    });
+  const {
+    contentY,
+    contentHeight,
+    panGesture,
+    rDragContainerStyle,
+    rContainerStyle,
+  } = useDialogContentAnimation({
+    progress,
+    isDragging,
+    dialogState,
+    onOpenChange,
+    animation,
+    style: style as ViewStyle | undefined,
+  });
 
-    return (
-      <GestureDetector gesture={panGesture}>
-        <Animated.View
-          style={rDragContainerStyle}
-          className="pointer-events-box-none"
-          onLayout={(event) => {
-            contentY.set(event.nativeEvent.layout.y);
-            contentHeight.set(event.nativeEvent.layout.height);
-            onLayout?.(event);
-          }}
+  return (
+    <GestureDetector gesture={panGesture}>
+      <Animated.View
+        style={rDragContainerStyle}
+        pointerEvents="box-none"
+        onLayout={(event) => {
+          contentY.set(event.nativeEvent.layout.y);
+          contentHeight.set(event.nativeEvent.layout.height);
+          onLayout?.(event);
+        }}
+      >
+        <AnimatedContent
+          ref={ref}
+          className={tvStyles}
+          style={[styleSheet.contentContainer, rContainerStyle, style]}
+          {...props}
         >
-          <AnimatedContent
-            ref={ref}
-            className={tvStyles}
-            style={[styleSheet.contentContainer, rContainerStyle, style]}
-            {...props}
-          >
-            {children}
-          </AnimatedContent>
-        </Animated.View>
-      </GestureDetector>
-    );
-  }
-);
+          {children}
+        </AnimatedContent>
+      </Animated.View>
+    </GestureDetector>
+  );
+});
 
 // --------------------------------------------------
 

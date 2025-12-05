@@ -1,14 +1,25 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Keyboard } from 'react-native';
 import {
   useSharedValue,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
 import { createContext } from '../../helpers/utils';
+import {
+  getCombinedAnimationDisabledState,
+  getRootAnimationState,
+} from '../../helpers/utils/animation';
+import {
+  DEFAULT_ENTERING_CONFIG,
+  DEFAULT_ENTERING_TYPE,
+  DEFAULT_EXITING_CONFIG,
+  DEFAULT_EXITING_TYPE,
+} from './dialog.constants';
 import type {
   DialogAnimationContextValue,
-  DialogProgressAnimationConfigs,
+  DialogRootAnimation,
   DialogState,
 } from './dialog.types';
 
@@ -36,8 +47,8 @@ export function useDialogRootAnimation(options: {
   closeDelay?: number;
   /** Whether to dismiss the keyboard when the dialog closes */
   isDismissKeyboardOnClose?: boolean;
-  /** Animation configurations for open/close progress animations */
-  progressAnimationConfigs?: DialogProgressAnimationConfigs;
+  /** Animation configuration for dialog root */
+  animation?: DialogRootAnimation;
 }) {
   const {
     isOpen: externalIsOpen,
@@ -45,8 +56,45 @@ export function useDialogRootAnimation(options: {
     onOpenChange: externalOnOpenChange,
     closeDelay = 300,
     isDismissKeyboardOnClose = true,
-    progressAnimationConfigs,
+    animation,
   } = options;
+
+  // Read parent animation disabled state from global context
+  const parentAnimationSettingsContext = useAnimationSettings();
+  const parentIsAllAnimationsDisabled =
+    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+
+  const {
+    animationConfig,
+    isAnimationDisabled,
+    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
+  } = getRootAnimationState(animation);
+
+  // Combine parent and own disable-all states (parent wins)
+  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    parentIsAllAnimationsDisabled,
+    ownIsAllAnimationsDisabled,
+  });
+
+  // Extract entering animation configuration
+  const enteringAnimation = animationConfig?.entering;
+  const enteringType = enteringAnimation?.type ?? DEFAULT_ENTERING_TYPE;
+  const enteringConfig = useMemo(
+    () => enteringAnimation?.config ?? DEFAULT_ENTERING_CONFIG,
+    [enteringAnimation?.config]
+  );
+
+  // Extract exiting animation configuration
+  const exitingAnimation = animationConfig?.exiting;
+  const exitingType = exitingAnimation?.type ?? DEFAULT_EXITING_TYPE;
+  const exitingConfig = useMemo(
+    () => exitingAnimation?.config ?? DEFAULT_EXITING_CONFIG,
+    [exitingAnimation?.config]
+  );
+
+  // If animation is disabled, closeDelay should be 0
+  const closeDelayValue =
+    isAnimationDisabled || isAllAnimationsDisabled ? 0 : closeDelay;
 
   // Internal isOpen state that gets delayed when closing
   const [internalIsOpen, setInternalIsOpen] = useState<boolean>(
@@ -69,27 +117,43 @@ export function useDialogRootAnimation(options: {
 
   // Animation function for opening
   const animateOpen = useCallback(() => {
-    const openConfig = progressAnimationConfigs?.onOpen;
-    if (openConfig?.animationType === 'spring') {
-      progress.set(withSpring(1, openConfig.animationConfig));
-    } else if (openConfig?.animationType === 'timing') {
-      progress.set(withTiming(1, openConfig.animationConfig));
-    } else {
-      progress.set(withTiming(1, { duration: 200 }));
+    if (isAnimationDisabled || isAllAnimationsDisabled) {
+      progress.set(1);
+      return;
     }
-  }, [progress, progressAnimationConfigs]);
+
+    if (enteringType === 'spring') {
+      progress.set(withSpring(1, enteringConfig));
+    } else {
+      progress.set(withTiming(1, enteringConfig));
+    }
+  }, [
+    progress,
+    enteringType,
+    enteringConfig,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  ]);
 
   // Animation function for closing
   const animateClose = useCallback(() => {
-    const closeConfig = progressAnimationConfigs?.onClose;
-    if (closeConfig?.animationType === 'spring') {
-      progress.set(withSpring(2, closeConfig.animationConfig));
-    } else if (closeConfig?.animationType === 'timing') {
-      progress.set(withTiming(2, closeConfig.animationConfig));
-    } else {
-      progress.set(withTiming(2, { duration: 200 }));
+    if (isAnimationDisabled || isAllAnimationsDisabled) {
+      progress.set(2);
+      return;
     }
-  }, [progress, progressAnimationConfigs]);
+
+    if (exitingType === 'spring') {
+      progress.set(withSpring(2, exitingConfig));
+    } else {
+      progress.set(withTiming(2, exitingConfig));
+    }
+  }, [
+    progress,
+    exitingType,
+    exitingConfig,
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  ]);
 
   // Reusable function to handle open/close state changes
   const updateDialogState = useCallback(
@@ -108,14 +172,14 @@ export function useDialogRootAnimation(options: {
         if (isDismissKeyboardOnClose) {
           Keyboard.dismiss();
         }
-        if (closeDelay > 0) {
+        if (closeDelayValue > 0) {
           clearTimeout(timeoutRef.current);
           timeoutRef.current = setTimeout(() => {
             setInternalIsOpen(false);
             setDialogState('idle');
             progress.set(0);
             callback?.(value);
-          }, closeDelay);
+          }, closeDelayValue);
         } else {
           setInternalIsOpen(false);
           setDialogState('idle');
@@ -124,7 +188,13 @@ export function useDialogRootAnimation(options: {
         }
       }
     },
-    [closeDelay, isDismissKeyboardOnClose, progress, animateOpen, animateClose]
+    [
+      closeDelayValue,
+      isDismissKeyboardOnClose,
+      progress,
+      animateOpen,
+      animateClose,
+    ]
   );
 
   // Sync internal state when external isOpen changes
@@ -158,5 +228,6 @@ export function useDialogRootAnimation(options: {
     progress,
     isDragging,
     onOpenChange: handleOpenChange,
+    isAllAnimationsDisabled,
   };
 }

@@ -7,7 +7,6 @@ export type {
   DialogLabelProps,
   DialogOverlayProps,
   DialogPortalProps,
-  DialogProgressAnimationConfigs,
   DialogRootProps,
   DialogTriggerProps,
 } from './dialog.types';

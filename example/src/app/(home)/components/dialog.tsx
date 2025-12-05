@@ -30,6 +30,7 @@ import { DialogBlurBackdrop } from '../../../components/dialog-blur-backdrop';
 import { useAppTheme } from '../../../contexts/app-theme-context';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
+const StyleScrollView = withUniwind(ScrollView);
 const StyledIonicons = withUniwind(Ionicons);
 
 KeyboardController.preload();
@@ -273,7 +274,7 @@ const TextInputDialogContent = () => {
                 <Dialog.Label className="mb-6">Update Profile</Dialog.Label>
 
                 <View className="flex-1">
-                  <ScrollView contentContainerClassName="gap-5">
+                  <StyleScrollView contentContainerClassName="gap-5">
                     <TextField isRequired isInvalid={!!nameError}>
                       <TextField.Label isInvalid={false}>
                         Full Name
@@ -331,7 +332,7 @@ const TextInputDialogContent = () => {
                         {emailError}
                       </TextField.ErrorMessage>
                     </TextField>
-                  </ScrollView>
+                  </StyleScrollView>
                 </View>
 
                 <View className="flex-row justify-end gap-3 pt-3">
@@ -391,7 +392,7 @@ const LongContentDialogContent = () => {
                 style={{ height: height * 0.35 }}
                 color={themeColorOverlay}
               >
-                <ScrollView contentContainerClassName="px-6">
+                <StyleScrollView contentContainerClassName="px-6">
                   <Text className="text-foreground/80 text-center">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                     do eiusmod tempor incididunt ut labore et dolore magna
@@ -431,7 +432,7 @@ const LongContentDialogContent = () => {
                     odit aut fugit, sed quia consequuntur magni dolores eos qui
                     ratione voluptatem sequi nesciunt.
                   </Text>
-                </ScrollView>
+                </StyleScrollView>
               </ScrollShadow>
               <Button
                 variant="ghost"

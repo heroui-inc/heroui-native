@@ -7,6 +7,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { useDialogContentAnimation } from '../../helpers/hooks';
 import { useThemeColor } from '../../helpers/theme';
 import * as DialogPrimitives from '../../primitives/dialog';
@@ -50,20 +51,26 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
       isOpen: isOpenProp,
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
-      progressAnimationConfigs,
+      animation,
       ...props
     },
     ref
   ) => {
-    const { internalIsOpen, dialogState, progress, isDragging, onOpenChange } =
-      useDialogRootAnimation({
-        isOpen: isOpenProp,
-        isDefaultOpen,
-        onOpenChange: onOpenChangeProp,
-        closeDelay,
-        isDismissKeyboardOnClose,
-        progressAnimationConfigs,
-      });
+    const {
+      internalIsOpen,
+      dialogState,
+      progress,
+      isDragging,
+      onOpenChange,
+      isAllAnimationsDisabled,
+    } = useDialogRootAnimation({
+      isOpen: isOpenProp,
+      isDefaultOpen,
+      onOpenChange: onOpenChangeProp,
+      closeDelay,
+      isDismissKeyboardOnClose,
+      animation,
+    });
 
     const animationContextValue = useMemo(
       () => ({
@@ -74,18 +81,27 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
       [dialogState, progress, isDragging]
     );
 
+    const animationSettingsContextValue = useMemo(
+      () => ({
+        isAllAnimationsDisabled,
+      }),
+      [isAllAnimationsDisabled]
+    );
+
     return (
-      <DialogAnimationProvider value={animationContextValue}>
-        <DialogPrimitives.Root
-          ref={ref}
-          isOpen={internalIsOpen}
-          isDefaultOpen={isDefaultOpen}
-          onOpenChange={onOpenChange}
-          {...props}
-        >
-          {children}
-        </DialogPrimitives.Root>
-      </DialogAnimationProvider>
+      <AnimationSettingsProvider value={animationSettingsContextValue}>
+        <DialogAnimationProvider value={animationContextValue}>
+          <DialogPrimitives.Root
+            ref={ref}
+            isOpen={internalIsOpen}
+            isDefaultOpen={isDefaultOpen}
+            onOpenChange={onOpenChange}
+            {...props}
+          >
+            {children}
+          </DialogPrimitives.Root>
+        </DialogAnimationProvider>
+      </AnimationSettingsProvider>
     );
   }
 );

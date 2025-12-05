@@ -5,6 +5,10 @@ import type {
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated';
+import type {
+  AnimationRoot,
+  AnimationValue,
+} from '../../helpers/types/animation';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 
 /**
@@ -28,31 +32,31 @@ export interface DialogAnimationContextValue {
  * Spring animation configuration
  */
 interface SpringAnimationConfig {
-  animationType: 'spring';
-  animationConfig?: WithSpringConfig;
+  type: 'spring';
+  config?: WithSpringConfig;
 }
 
 /**
  * Timing animation configuration
  */
 interface TimingAnimationConfig {
-  animationType: 'timing';
-  animationConfig?: WithTimingConfig;
+  type: 'timing';
+  config?: WithTimingConfig;
 }
 
 /**
- * Progress animation configuration
+ * Animation configuration for Dialog root component
  */
-export interface DialogProgressAnimationConfigs {
+export type DialogRootAnimation = AnimationRoot<{
   /**
-   * Animation configuration for opening
+   * Animation configuration for entering (opening)
    */
-  onOpen?: SpringAnimationConfig | TimingAnimationConfig;
+  entering?: AnimationValue<SpringAnimationConfig | TimingAnimationConfig>;
   /**
-   * Animation configuration for closing
+   * Animation configuration for exiting (closing)
    */
-  onClose?: SpringAnimationConfig | TimingAnimationConfig;
-}
+  exiting?: AnimationValue<SpringAnimationConfig | TimingAnimationConfig>;
+}>;
 
 /**
  * Dialog Root component props
@@ -73,9 +77,13 @@ export interface DialogRootProps extends DialogPrimitivesTypes.RootProps {
    */
   isDismissKeyboardOnClose?: boolean;
   /**
-   * Animation configurations for open/close progress animations
+   * Animation configuration for dialog root
+   * - `"disable-all"`: Disable all animations including children
+   * - `false` or `"disabled"`: Disable only root animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  progressAnimationConfigs?: DialogProgressAnimationConfigs;
+  animation?: DialogRootAnimation;
 }
 
 /**

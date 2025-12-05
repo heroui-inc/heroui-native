@@ -150,9 +150,7 @@ const BlurBackdropDialogContent = () => {
             <Button variant="secondary">Dialog with blur backdrop</Button>
           </Dialog.Trigger>
           <Dialog.Portal>
-            <Dialog.Overlay isDefaultAnimationDisabled>
-              <DialogBlurBackdrop />
-            </Dialog.Overlay>
+            <DialogBlurBackdrop />
             <Dialog.Content className="max-w-sm mx-auto">
               <Dialog.Close className="self-end -mb-2 z-50" />
               <View className="size-10 items-center justify-center rounded-full bg-overlay-foreground/5 mb-4">
@@ -262,9 +260,7 @@ const TextInputDialogContent = () => {
             <Button variant="secondary">Dialog with text input</Button>
           </Dialog.Trigger>
           <Dialog.Portal>
-            <Dialog.Overlay isDefaultAnimationDisabled>
-              <DialogBlurBackdrop />
-            </Dialog.Overlay>
+            <DialogBlurBackdrop />
             <KeyboardAvoidingView
               behavior="padding"
               keyboardVerticalOffset={24}

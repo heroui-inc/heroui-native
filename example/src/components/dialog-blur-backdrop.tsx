@@ -1,4 +1,4 @@
-import { useDialogAnimation } from 'heroui-native';
+import { Dialog, useDialogAnimation } from 'heroui-native';
 import { StyleSheet } from 'react-native';
 import { interpolate, useDerivedValue } from 'react-native-reanimated';
 import { useAppTheme } from '../contexts/app-theme-context';
@@ -19,10 +19,12 @@ export const DialogBlurBackdrop = () => {
   });
 
   return (
-    <AnimatedBlurView
-      blurIntensity={blurIntensity}
-      tint={isDark ? 'dark' : 'systemUltraThinMaterialDark'}
-      style={StyleSheet.absoluteFill}
-    />
+    <Dialog.Close style={StyleSheet.absoluteFill}>
+      <AnimatedBlurView
+        blurIntensity={blurIntensity}
+        tint={isDark ? 'dark' : 'systemUltraThinMaterialDark'}
+        style={StyleSheet.absoluteFill}
+      />
+    </Dialog.Close>
   );
 };

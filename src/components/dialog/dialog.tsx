@@ -1,13 +1,13 @@
 import { forwardRef, useMemo } from 'react';
 import type { Text as RNText } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated, {
-  interpolate,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
+import {
+  AnimationSettingsProvider,
+  useAnimationSettings,
+} from '../../helpers/contexts/animation-settings-context';
 import { useDialogContentAnimation } from '../../helpers/hooks';
 import { useThemeColor } from '../../helpers/theme';
 import * as DialogPrimitives from '../../primitives/dialog';
@@ -15,6 +15,7 @@ import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import {
   DialogAnimationProvider,
   useDialogAnimation,
+  useDialogOverlayAnimation,
   useDialogRootAnimation,
 } from './dialog.animation';
 import { DISPLAY_NAME } from './dialog.constants';
@@ -123,19 +124,22 @@ const DialogPortal = ({
   style,
   ...props
 }: DialogPortalProps) => {
+  const animationSettingsContext = useAnimationSettings();
   const animationContext = useDialogAnimation();
 
   const tvStyles = dialogStyles.portal({ className });
 
   return (
     <DialogPrimitives.Portal {...props}>
-      <DialogAnimationProvider value={animationContext}>
-        <FullWindowOverlay>
-          <Animated.View className={tvStyles} style={style}>
-            {children}
-          </Animated.View>
-        </FullWindowOverlay>
-      </DialogAnimationProvider>
+      <AnimationSettingsProvider value={animationSettingsContext}>
+        <DialogAnimationProvider value={animationContext}>
+          <FullWindowOverlay>
+            <Animated.View className={tvStyles} style={style}>
+              {children}
+            </Animated.View>
+          </FullWindowOverlay>
+        </DialogAnimationProvider>
+      </AnimationSettingsProvider>
     </DialogPrimitives.Portal>
   );
 };
@@ -145,28 +149,12 @@ const DialogPortal = ({
 const DialogOverlay = forwardRef<
   DialogPrimitivesTypes.OverlayRef,
   DialogOverlayProps
->(({ className, style, isDefaultAnimationDisabled = false, ...props }, ref) => {
-  const { progress, isDragging } = useDialogAnimation();
+>(({ className, style, animation, ...props }, ref) => {
+  const tvStyles = dialogStyles.overlay({ className });
 
-  const rContainerStyle = useAnimatedStyle(() => {
-    if (isDefaultAnimationDisabled) {
-      return {};
-    }
-
-    if (isDragging.get() && progress.get() <= 1) {
-      return { opacity: 1 };
-    }
-
-    const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
-
-    return {
-      opacity,
-    };
-  });
-
-  const tvStyles = dialogStyles.overlay({
-    className,
-    isDefaultAnimationDisabled,
+  const { rContainerStyle } = useDialogOverlayAnimation({
+    animation,
+    style,
   });
 
   return (

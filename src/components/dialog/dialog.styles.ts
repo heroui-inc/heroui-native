@@ -7,12 +7,7 @@ const portal = tv({
 });
 
 const overlay = tv({
-  base: 'absolute inset-0 bg-black/30',
-  variants: {
-    isDefaultAnimationDisabled: {
-      true: 'bg-transparent',
-    },
-  },
+  base: 'absolute inset-0 bg-black/20',
 });
 
 const content = tv({

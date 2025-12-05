@@ -16,9 +16,7 @@ export const DialogContent = () => {
         <Button variant="destructive-soft">Delete Account</Button>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay isDefaultAnimationDisabled>
-          <DialogBlurBackdrop />
-        </Dialog.Overlay>
+        <DialogBlurBackdrop />
         <Dialog.Content className="max-w-sm mx-auto">
           <Dialog.Close className="self-end -mb-2 z-50" />
           <View className="size-10 items-center justify-center rounded-full bg-overlay-foreground/5 mb-4">

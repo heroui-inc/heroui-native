@@ -6,6 +6,7 @@ import type {
   WithTimingConfig,
 } from 'react-native-reanimated';
 import type {
+  Animation,
   AnimationRoot,
   AnimationValue,
 } from '../../helpers/types/animation';
@@ -115,20 +116,41 @@ export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
 }
 
 /**
+ * Animation configuration for Dialog Overlay component
+ */
+export type DialogOverlayAnimation = Animation<{
+  /**
+   * Opacity animation configuration
+   */
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [idle, open, close]
+     * @default [0, 1, 0]
+     */
+    value?: [number, number, number];
+  }>;
+}>;
+
+/**
  * Dialog Overlay component props
  */
 export interface DialogOverlayProps
-  extends Omit<DialogPrimitivesTypes.OverlayProps, 'asChild'> {
+  extends Omit<DialogPrimitivesTypes.OverlayProps, 'asChild' | 'style'> {
   /**
    * Additional CSS class for the overlay
    */
   className?: string;
   /**
-   * Whether to disable the default opacity animation
-   * Use this when you want to animate opacity using your own Reanimated useAnimatedStyle
-   * @default false
+   * Additional style for the overlay container
    */
-  isDefaultAnimationDisabled?: boolean;
+  style?: ViewStyle;
+  /**
+   * Animation configuration for overlay
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: DialogOverlayAnimation;
 }
 
 /**

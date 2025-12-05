@@ -1,14 +1,11 @@
 import type { ReactNode } from 'react';
 import type { StyleProp, TextProps, ViewStyle } from 'react-native';
-import type {
-  SharedValue,
-  WithSpringConfig,
-  WithTimingConfig,
-} from 'react-native-reanimated';
+import type { SharedValue } from 'react-native-reanimated';
 import type {
   Animation,
   AnimationRoot,
   AnimationValue,
+  PopupRootAnimationConfig,
 } from '../../helpers/types/animation';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 
@@ -32,34 +29,9 @@ export interface DialogAnimationContextValue {
 }
 
 /**
- * Spring animation configuration
- */
-interface SpringAnimationConfig {
-  type: 'spring';
-  config?: WithSpringConfig;
-}
-
-/**
- * Timing animation configuration
- */
-interface TimingAnimationConfig {
-  type: 'timing';
-  config?: WithTimingConfig;
-}
-
-/**
  * Animation configuration for Dialog root component
  */
-export type DialogRootAnimation = AnimationRoot<{
-  /**
-   * Animation configuration for entering (opening)
-   */
-  entering?: AnimationValue<SpringAnimationConfig | TimingAnimationConfig>;
-  /**
-   * Animation configuration for exiting (closing)
-   */
-  exiting?: AnimationValue<SpringAnimationConfig | TimingAnimationConfig>;
-}>;
+export type DialogRootAnimation = AnimationRoot<PopupRootAnimationConfig>;
 
 /**
  * Dialog Root component props

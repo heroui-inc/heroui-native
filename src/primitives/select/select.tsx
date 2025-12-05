@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import {
   BackHandler,
-  Keyboard,
   Pressable,
   StyleSheet,
   Text,
@@ -17,7 +16,6 @@ import {
   type LayoutChangeEvent,
   type LayoutRectangle,
 } from 'react-native';
-import { useSharedValue } from 'react-native-reanimated';
 import {
   useAugmentedRef,
   useControllableState,
@@ -48,7 +46,6 @@ import type {
   PortalProps,
   RootProps,
   RootRef,
-  SelectState,
   TriggerProps,
   TriggerRef,
   ValueProps,
@@ -74,10 +71,11 @@ const Root = forwardRef<RootRef, RootProps>(
       value: valueProp,
       defaultValue,
       onValueChange: onValueChangeProp,
+      isOpen: isOpenProp,
+      isDefaultOpen,
       onOpenChange: onOpenChangeProp,
       closeDelay,
       isDisabled,
-      isDismissKeyboardOnClose = true,
       ...viewProps
     },
     ref
@@ -89,33 +87,18 @@ const Root = forwardRef<RootRef, RootProps>(
       defaultProp: defaultValue,
       onChange: onValueChangeProp,
     });
+
+    const [isOpen = false, onOpenChange] = useControllableState({
+      prop: isOpenProp,
+      defaultProp: isDefaultOpen,
+      onChange: onOpenChangeProp,
+    });
+
     const [triggerPosition, setTriggerPosition] =
       useState<LayoutPosition | null>(null);
     const [contentLayout, setContentLayout] = useState<LayoutRectangle | null>(
       null
     );
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectState, setSelectState] = useState<SelectState>('idle');
-
-    const progress = useSharedValue(0);
-    const isDragging = useSharedValue(false);
-
-    function onOpenChange(isOpenValue: boolean) {
-      if (isOpenValue) {
-        setIsOpen(true);
-        setSelectState('open');
-      } else {
-        setSelectState('close');
-        if (isDismissKeyboardOnClose) {
-          Keyboard.dismiss();
-        }
-        setTimeout(() => {
-          setIsOpen(false);
-          setSelectState('idle');
-        }, closeDelay);
-      }
-      onOpenChangeProp?.(isOpenValue);
-    }
 
     const Component = asChild ? Slot.View : View;
     return (
@@ -125,7 +108,6 @@ const Root = forwardRef<RootRef, RootProps>(
           onValueChange,
           isOpen,
           onOpenChange,
-          selectState,
           isDisabled,
           contentLayout,
           nativeID,
@@ -133,9 +115,6 @@ const Root = forwardRef<RootRef, RootProps>(
           setTriggerPosition,
           triggerPosition,
           closeDelay,
-          progress,
-          isDragging,
-          isDismissKeyboardOnClose,
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -397,7 +376,7 @@ const PopoverContent = forwardRef<ContentRef, PopoverContentProps>(
 
 const DialogContent = forwardRef<ContentRef, DialogContentProps>(
   ({ asChild, forceMount, ...props }, ref) => {
-    const { selectState, nativeID, onOpenChange } = useRootContext();
+    const { isOpen, nativeID, onOpenChange } = useRootContext();
 
     useEffect(() => {
       const backHandler = BackHandler.addEventListener(
@@ -415,7 +394,7 @@ const DialogContent = forwardRef<ContentRef, DialogContentProps>(
     }, []);
 
     if (!forceMount) {
-      if (selectState === 'idle') {
+      if (!isOpen) {
         return null;
       }
     }

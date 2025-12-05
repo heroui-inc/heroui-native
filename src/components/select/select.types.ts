@@ -2,13 +2,18 @@ import type BottomSheet from '@gorhom/bottom-sheet';
 import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
-import type {
-  WithSpringConfig,
-  WithTimingConfig,
-} from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
+import type {
+  AnimationRoot,
+  PopupRootAnimationConfig,
+} from '../../helpers/types/animation';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import type { DialogContentFallbackSlots } from './select.styles';
+
+/**
+ * Select internal state for animation coordination
+ */
+export type SelectState = 'idle' | 'open' | 'close';
 
 /**
  * Ref type for the Select Trigger component
@@ -31,34 +36,9 @@ export type SelectPlacement = 'top' | 'bottom' | 'left' | 'right';
 export type SelectAlign = 'start' | 'center' | 'end';
 
 /**
- * Spring animation configuration
+ * Animation configuration for Select root component
  */
-interface SpringAnimationConfig {
-  animationType: 'spring';
-  animationConfig?: WithSpringConfig;
-}
-
-/**
- * Timing animation configuration
- */
-interface TimingAnimationConfig {
-  animationType: 'timing';
-  animationConfig?: WithTimingConfig;
-}
-
-/**
- * Progress animation configuration for select transitions
- */
-export interface SelectProgressAnimationConfigs {
-  /**
-   * Animation configuration for opening
-   */
-  onOpen?: SpringAnimationConfig | TimingAnimationConfig;
-  /**
-   * Animation configuration for closing
-   */
-  onClose?: SpringAnimationConfig | TimingAnimationConfig;
-}
+export type SelectRootAnimation = AnimationRoot<PopupRootAnimationConfig>;
 
 /**
  * Select Root component props
@@ -69,9 +49,26 @@ export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
    */
   children?: ReactNode;
   /**
-   * Whether the select is open
+   * The controlled open state of the select
    */
   isOpen?: boolean;
+  /**
+   * The open state of the select when initially rendered (uncontrolled)
+   */
+  isDefaultOpen?: boolean;
+  /**
+   * Whether to dismiss the keyboard when the select closes
+   * @default true
+   */
+  isDismissKeyboardOnClose?: boolean;
+  /**
+   * Animation configuration for select root
+   * - `"disable-all"`: Disable all animations including children
+   * - `false` or `"disabled"`: Disable only root animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: SelectRootAnimation;
 }
 
 /**
@@ -100,10 +97,6 @@ export interface SelectPortalProps extends SelectPrimitivesTypes.PortalProps {
    * The portal content
    */
   children: ReactNode;
-  /**
-   * Animation configurations for open/close progress animations
-   */
-  progressAnimationConfigs?: SelectProgressAnimationConfigs;
 }
 
 /**

@@ -9,6 +9,7 @@ import {
   useAnimationSettings,
 } from '../../helpers/contexts/animation-settings-context';
 import { useDialogContentAnimation } from '../../helpers/hooks';
+import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
 import { useThemeColor } from '../../helpers/theme';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
@@ -16,7 +17,6 @@ import {
   DialogAnimationProvider,
   useDialogAnimation,
   useDialogOverlayAnimation,
-  useDialogRootAnimation,
 } from './dialog.animation';
 import { DISPLAY_NAME } from './dialog.constants';
 import dialogStyles, { styleSheet } from './dialog.styles';
@@ -59,13 +59,13 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
   ) => {
     const {
       internalIsOpen,
-      dialogState,
+      componentState,
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
       onOpenChange,
       isAllAnimationsDisabled,
-    } = useDialogRootAnimation({
+    } = usePopupRootAnimation({
       isOpen: isOpenProp,
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
@@ -76,12 +76,12 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
 
     const animationContextValue = useMemo(
       () => ({
-        dialogState,
+        dialogState: componentState,
         progress,
         isDragging,
         isGestureReleaseAnimationRunning,
       }),
-      [dialogState, progress, isDragging, isGestureReleaseAnimationRunning]
+      [componentState, progress, isDragging, isGestureReleaseAnimationRunning]
     );
 
     const animationSettingsContextValue = useMemo(

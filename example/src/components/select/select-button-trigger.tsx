@@ -1,5 +1,5 @@
 import Feather from '@expo/vector-icons/Feather';
-import { Divider, Select, useSelect } from 'heroui-native';
+import { Divider, Select, useSelectAnimation } from 'heroui-native';
 import React, { useState, type FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
@@ -24,7 +24,7 @@ const US_STATES: SelectOption[] = [
 ];
 
 const AnimatedTrigger: FC = () => {
-  const { progress } = useSelect();
+  const { progress } = useSelectAnimation();
 
   const rContainerStyle = useAnimatedStyle(() => {
     const opacity = interpolate(progress.value, [0, 1, 2], [0, 1, 0]);

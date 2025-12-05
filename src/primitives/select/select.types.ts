@@ -1,5 +1,4 @@
 import type { LayoutRectangle } from 'react-native';
-import type { SharedValue } from 'react-native-reanimated';
 import type { LayoutPosition } from '../../helpers/hooks';
 import type {
   ForceMountable,
@@ -49,10 +48,6 @@ interface IRootContext {
    */
   onOpenChange: (open: boolean) => void;
   /**
-   * Extended internal state for additional control (useful for coordinating animations)
-   */
-  selectState: SelectState;
-  /**
    * Whether the select is disabled
    */
   isDisabled?: boolean;
@@ -77,14 +72,6 @@ interface IRootContext {
    */
   nativeID: string;
   /**
-   * Progress value for the select animation
-   */
-  progress: SharedValue<number>;
-  /**
-   * Whether the select content (dialog) is currently dragging
-   */
-  isDragging: SharedValue<boolean>;
-  /**
    * Delay in milliseconds before the select closes
    */
   closeDelay?: number;
@@ -96,10 +83,6 @@ interface IRootContext {
    * Callback fired when the selected value changes
    */
   onValueChange: (option: SelectOption) => void;
-  /**
-   * Whether to dismiss the keyboard when the select closes
-   */
-  isDismissKeyboardOnClose?: boolean;
 }
 
 /**
@@ -120,6 +103,14 @@ type RootProps = SlottableViewProps & {
    */
   onValueChange?: (option: SelectOption) => void;
   /**
+   * The controlled open state of the select
+   */
+  isOpen?: boolean;
+  /**
+   * The open state of the select when initially rendered (uncontrolled)
+   */
+  isDefaultOpen?: boolean;
+  /**
    * Callback fired when the select open state changes
    * @param open - Whether the select is open or closed
    */
@@ -133,10 +124,6 @@ type RootProps = SlottableViewProps & {
    * Whether the select is disabled
    */
   isDisabled?: boolean;
-  /**
-   * Whether to dismiss the keyboard when the select closes
-   */
-  isDismissKeyboardOnClose?: boolean;
 };
 /**
  * Props for the Select Portal component

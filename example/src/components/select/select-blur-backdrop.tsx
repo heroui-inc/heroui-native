@@ -1,4 +1,4 @@
-import { useSelect } from 'heroui-native';
+import { useSelectAnimation } from 'heroui-native';
 import { StyleSheet } from 'react-native';
 import { interpolate, useDerivedValue } from 'react-native-reanimated';
 import { useAppTheme } from '../../contexts/app-theme-context';
@@ -10,7 +10,7 @@ type Props = {
 
 export const SelectBlurBackdrop = ({ maxIntensity }: Props) => {
   const { isDark } = useAppTheme();
-  const { progress, isDragging } = useSelect();
+  const { progress, isDragging } = useSelectAnimation();
 
   const blurIntensity = useDerivedValue(() => {
     const defaultMaxIntensityValue = isDark ? 75 : 50;

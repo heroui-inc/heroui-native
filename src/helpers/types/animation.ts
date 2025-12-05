@@ -1,6 +1,8 @@
 import type {
   BaseAnimationBuilder,
   LayoutAnimationFunction,
+  WithSpringConfig,
+  WithTimingConfig,
 } from 'react-native-reanimated';
 
 /**
@@ -39,3 +41,34 @@ export type LayoutTransition =
   | LayoutAnimationFunction
   | typeof BaseAnimationBuilder
   | undefined;
+
+/**
+ * Spring animation configuration
+ */
+interface SpringAnimationConfig {
+  type: 'spring';
+  config?: WithSpringConfig;
+}
+
+/**
+ * Timing animation configuration
+ */
+interface TimingAnimationConfig {
+  type: 'timing';
+  config?: WithTimingConfig;
+}
+
+/**
+ * Animation configuration for popup root components (Dialog, Select, etc.)
+ * Supports entering and exiting animations with spring or timing types
+ */
+export type PopupRootAnimationConfig = {
+  /**
+   * Animation configuration for entering (opening)
+   */
+  entering?: AnimationValue<SpringAnimationConfig | TimingAnimationConfig>;
+  /**
+   * Animation configuration for exiting (closing)
+   */
+  exiting?: AnimationValue<SpringAnimationConfig | TimingAnimationConfig>;
+};

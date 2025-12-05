@@ -1,7 +1,12 @@
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Haptics from 'expo-haptics';
-import { Button, useSelect, useThemeColor } from 'heroui-native';
+import {
+  Button,
+  useSelect,
+  useSelectAnimation,
+  useThemeColor,
+} from 'heroui-native';
 import { Platform } from 'react-native';
 import Animated, {
   Extrapolation,
@@ -16,7 +21,8 @@ const StyleAnimatedView = withUniwind(Animated.View);
 export const CloseButton = () => {
   const insets = useSafeAreaInsets();
   const themeColorAccentForeground = useThemeColor('accent-foreground');
-  const { progress, onOpenChange } = useSelect();
+  const { onOpenChange } = useSelect();
+  const { progress } = useSelectAnimation();
 
   const buttonAnimatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(progress.get(), [0, 1, 2], [0, 1, 1]);

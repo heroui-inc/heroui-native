@@ -123,6 +123,7 @@ export function useDialogRootAnimation(options: {
 
   const progress = useSharedValue(progressValue[dialogState]);
   const isDragging = useSharedValue(false);
+  const isGestureReleaseAnimationRunning = useSharedValue(false);
 
   // Animation function for opening
   const animateOpen = useCallback(() => {
@@ -256,6 +257,7 @@ export function useDialogRootAnimation(options: {
     dialogState,
     progress,
     isDragging,
+    isGestureReleaseAnimationRunning,
     onOpenChange: handleOpenChange,
     isAllAnimationsDisabled,
   };
@@ -273,7 +275,8 @@ export function useDialogOverlayAnimation(options: {
 }) {
   const { animation, style } = options;
 
-  const { progress, isDragging } = useDialogAnimation();
+  const { progress, isDragging, isGestureReleaseAnimationRunning } =
+    useDialogAnimation();
 
   // Read from global animation context (always available in compound parts)
   const { isAllAnimationsDisabled } = useAnimationSettings();
@@ -306,10 +309,12 @@ export function useDialogOverlayAnimation(options: {
     }
 
     // Handle dragging state - when dragging and progress <= 1, opacity should be 1
-    if (isDragging.get() && progress.get() <= 1) {
+    if (
+      isDragging.get() ||
+      (isGestureReleaseAnimationRunning.get() && progress.get() <= 1)
+    ) {
       return {
         opacity: 1,
-        ...styleProps,
       };
     }
 

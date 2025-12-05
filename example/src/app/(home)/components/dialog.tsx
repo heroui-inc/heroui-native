@@ -50,7 +50,7 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
         borderRadius: interpolate(
           progress.get(),
           [1, 1.25],
-          [18, 42],
+          [24, 42],
           Extrapolation.CLAMP
         ),
       };

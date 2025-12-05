@@ -62,6 +62,7 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
       dialogState,
       progress,
       isDragging,
+      isGestureReleaseAnimationRunning,
       onOpenChange,
       isAllAnimationsDisabled,
     } = useDialogRootAnimation({
@@ -78,8 +79,9 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
         dialogState,
         progress,
         isDragging,
+        isGestureReleaseAnimationRunning,
       }),
-      [dialogState, progress, isDragging]
+      [dialogState, progress, isDragging, isGestureReleaseAnimationRunning]
     );
 
     const animationSettingsContextValue = useMemo(
@@ -185,7 +187,12 @@ const DialogContent = forwardRef<
     },
     ref
   ) => {
-    const { progress, isDragging, dialogState } = useDialogAnimation();
+    const {
+      progress,
+      isDragging,
+      isGestureReleaseAnimationRunning,
+      dialogState,
+    } = useDialogAnimation();
     const { onOpenChange } = useDialog();
 
     const tvStyles = dialogStyles.content({ className });
@@ -199,6 +206,7 @@ const DialogContent = forwardRef<
     } = useDialogContentAnimation({
       progress,
       isDragging,
+      isGestureReleaseAnimationRunning,
       dialogState,
       onOpenChange,
       animation,

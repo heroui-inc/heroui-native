@@ -27,6 +27,8 @@ export interface DialogAnimationContextValue {
   progress: SharedValue<number>;
   /** Dragging state shared value */
   isDragging: SharedValue<boolean>;
+  /** Gesture release animation running state shared value */
+  isGestureReleaseAnimationRunning: SharedValue<boolean>;
 }
 
 /**

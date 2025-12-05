@@ -33,6 +33,10 @@ export interface UseDialogContentAnimationProps {
    */
   isDragging: SharedValue<boolean>;
   /**
+   * Gesture release animation running state shared value
+   */
+  isGestureReleaseAnimationRunning: SharedValue<boolean>;
+  /**
    * Current dialog state
    */
   dialogState: 'idle' | 'open' | 'close';
@@ -58,6 +62,7 @@ export interface UseDialogContentAnimationProps {
 export const useDialogContentAnimation = ({
   progress,
   isDragging,
+  isGestureReleaseAnimationRunning,
   dialogState,
   onOpenChange,
   animation,
@@ -69,7 +74,6 @@ export const useDialogContentAnimation = ({
 
   const contentY = useSharedValue(0);
   const contentHeight = useSharedValue(0);
-  const isOnEndAnimationRunning = useSharedValue(false);
   const progressAnchor = useSharedValue(1);
   const contentTranslateYAnchor = useSharedValue(0);
   const contentScaleAnchor = useSharedValue(1);
@@ -97,8 +101,7 @@ export const useDialogContentAnimation = ({
     () =>
       Gesture.Pan()
         .enabled(isSwipeable && dialogState === 'open')
-        .onStart(() => {
-          if (isOnEndAnimationRunning.get()) return;
+        .onBegin(() => {
           isDragging.set(true);
         })
         .onUpdate((event) => {
@@ -115,13 +118,13 @@ export const useDialogContentAnimation = ({
             progress.set(progressValue);
           }
         })
-        .onEnd(() => {
+        .onFinalize(() => {
           progressAnchor.set(progress.get());
           contentTranslateYAnchor.set(contentTranslateY.get());
           contentScaleAnchor.set(contentScale.get());
 
           if (progress.get() > 1.1) {
-            isOnEndAnimationRunning.set(true);
+            isGestureReleaseAnimationRunning.set(true);
             scheduleOnRN(dismissKeyboard);
             progress.set(
               withSpring(
@@ -133,20 +136,22 @@ export const useDialogContentAnimation = ({
                   overshootClamping: false,
                 },
                 () => {
-                  isOnEndAnimationRunning.set(false);
-                  isDragging.set(false);
+                  isGestureReleaseAnimationRunning.set(false);
                 }
               )
             );
+            isDragging.set(false);
             setTimeout(() => {
               scheduleOnRN(onOpenChange, false);
             }, 300);
           } else {
+            isGestureReleaseAnimationRunning.set(true);
             progress.set(
               withSpring(1, {}, () => {
-                isDragging.set(false);
+                isGestureReleaseAnimationRunning.set(false);
               })
             );
+            isDragging.set(false);
           }
         }),
     [
@@ -158,7 +163,7 @@ export const useDialogContentAnimation = ({
       dialogState,
       isDragging,
       isKeyboardOpen,
-      isOnEndAnimationRunning,
+      isGestureReleaseAnimationRunning,
       isSwipeable,
       onOpenChange,
       progress,
@@ -168,11 +173,11 @@ export const useDialogContentAnimation = ({
   );
 
   const rDragContainerStyle = useAnimatedStyle(() => {
-    if (!isDragging.get()) {
+    if (!isDragging.get() && !isGestureReleaseAnimationRunning.get()) {
       return {};
     }
 
-    if (isOnEndAnimationRunning.get()) {
+    if (isGestureReleaseAnimationRunning.get()) {
       return {
         opacity: interpolate(
           progress.get(),
@@ -183,8 +188,15 @@ export const useDialogContentAnimation = ({
           {
             translateY: interpolate(
               progress.get(),
-              [1, progressAnchor.get(), progressAnchor.get() + 0.1, 2],
               [
+                progressAnchor.get(),
+                1,
+                progressAnchor.get(),
+                progressAnchor.get() + 0.1,
+                2,
+              ],
+              [
+                contentTranslateYAnchor.get(),
                 0,
                 contentTranslateYAnchor.get(),
                 contentTranslateYAnchor.get() + 50,
@@ -195,8 +207,8 @@ export const useDialogContentAnimation = ({
           {
             scale: interpolate(
               progress.get(),
-              [1, progressAnchor.get(), 2],
-              [1, contentScaleAnchor.get(), 0.75]
+              [progressAnchor.get(), 1, progressAnchor.get(), 2],
+              [contentScaleAnchor.get(), 1, contentScaleAnchor.get(), 0.75]
             ),
           },
         ],
@@ -254,7 +266,7 @@ export const useDialogContentAnimation = ({
     }
 
     // Handle dragging state - when dragging, opacity should be 1
-    if (isDragging.get()) {
+    if (isDragging.get() || isGestureReleaseAnimationRunning.get()) {
       return {
         opacity: 1,
       };

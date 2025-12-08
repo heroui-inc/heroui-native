@@ -7,11 +7,11 @@ import type { ElementSlots } from '../../helpers/theme/types';
 import type {
   AnimationRoot,
   PopupOverlayAnimation,
+  PopupPopoverContentAnimation,
   PopupRootAnimationConfig,
 } from '../../helpers/types/animation';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import type { DialogContentAnimation } from '../dialog/dialog.types';
-import type { PopoverContentPopoverAnimation } from '../popover/popover.types';
 import type { DialogContentFallbackSlots } from './select.styles';
 
 /**
@@ -141,9 +141,9 @@ export interface SelectOverlayProps extends SelectPrimitivesTypes.OverlayProps {
 
 /**
  * Animation configuration for Select Content Popover component
- * Reuses PopoverContentPopoverAnimation since they share the same animation behavior
+ * Reuses PopupPopoverContentAnimation since they share the same animation behavior
  */
-export type SelectContentPopoverAnimation = PopoverContentPopoverAnimation;
+export type SelectContentPopoverAnimation = PopupPopoverContentAnimation;
 
 /**
  * Select Content props for 'popover' presentation

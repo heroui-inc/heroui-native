@@ -24,8 +24,8 @@ import {
   useAnimationSettings,
 } from '../../helpers/contexts/animation-settings-context';
 import { useDialogContentAnimation } from '../../helpers/hooks';
-import { usePopoverContentAnimation } from '../../helpers/hooks/use-popover-content-animation';
 import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
+import { usePopupPopoverContentAnimation } from '../../helpers/hooks/use-popup-popover-content-animation';
 import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
 import { useThemeColor } from '../../helpers/theme';
 import * as SelectPrimitives from '../../primitives/select';
@@ -260,7 +260,7 @@ const SelectContentPopover = forwardRef<
       className,
     });
 
-    const { rContainerStyle } = usePopoverContentAnimation({
+    const { rContainerStyle } = usePopupPopoverContentAnimation({
       progress,
       placement,
       animation,

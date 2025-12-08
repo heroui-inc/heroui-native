@@ -27,7 +27,7 @@ export const DialogContent = () => {
             />
           </View>
           <View className="mb-8 gap-1">
-            <Dialog.Label>Delete Account</Dialog.Label>
+            <Dialog.Title>Delete Account</Dialog.Title>
             <Dialog.Description>
               Are you sure you want to delete your account? This action cannot
               be undone and all your data will be permanently removed.

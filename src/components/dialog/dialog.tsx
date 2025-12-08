@@ -24,10 +24,10 @@ import type {
   DialogCloseProps,
   DialogContentProps,
   DialogDescriptionProps,
-  DialogLabelProps,
   DialogOverlayProps,
   DialogPortalProps,
   DialogRootProps,
+  DialogTitleProps,
   DialogTriggerProps,
 } from './dialog.types';
 
@@ -276,7 +276,7 @@ const DialogClose = forwardRef<
 
 // --------------------------------------------------
 
-const DialogLabel = forwardRef<RNText, DialogLabelProps>(
+const DialogTitle = forwardRef<RNText, DialogTitleProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useDialog();
     const tvStyles = dialogStyles.label({ className });
@@ -328,7 +328,7 @@ DialogPortal.displayName = DISPLAY_NAME.PORTAL;
 DialogOverlay.displayName = DISPLAY_NAME.OVERLAY;
 DialogContent.displayName = DISPLAY_NAME.CONTENT;
 DialogClose.displayName = DISPLAY_NAME.CLOSE;
-DialogLabel.displayName = DISPLAY_NAME.LABEL;
+DialogTitle.displayName = DISPLAY_NAME.TITLE;
 DialogDescription.displayName = DISPLAY_NAME.DESCRIPTION;
 
 /**
@@ -352,7 +352,7 @@ DialogDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  * @component Dialog.Close - Close button for the dialog.
  * Can accept custom children or uses default close icon.
  *
- * @component Dialog.Label - The dialog label text.
+ * @component Dialog.Title - The dialog title text.
  * Automatically linked for accessibility.
  *
  * @component Dialog.Description - The dialog description text.
@@ -371,8 +371,8 @@ const Dialog = Object.assign(DialogRoot, {
   Content: DialogContent,
   /** @optional Close button for the dialog */
   Close: DialogClose,
-  /** @optional Dialog label text */
-  Label: DialogLabel,
+  /** @optional Dialog title text */
+  Title: DialogTitle,
   /** @optional Dialog description text */
   Description: DialogDescription,
 });

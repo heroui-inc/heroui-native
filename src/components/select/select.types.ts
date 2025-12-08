@@ -10,6 +10,7 @@ import type {
   PopupRootAnimationConfig,
 } from '../../helpers/types/animation';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
+import type { DialogContentAnimation } from '../dialog/dialog.types';
 import type { DialogContentFallbackSlots } from './select.styles';
 
 /**
@@ -182,6 +183,11 @@ export interface SelectContentBottomSheetProps
 }
 
 /**
+ * Animation configuration for Select Content component (dialog presentation)
+ */
+export type SelectContentAnimation = DialogContentAnimation;
+
+/**
  * Select Content props for 'dialog' presentation
  */
 export interface SelectContentDialogProps
@@ -199,11 +205,17 @@ export interface SelectContentDialogProps
    */
   presentation: 'dialog';
   /**
-   * Whether to disable the default animations (opacity, scale, translate)
-   * Use this when you want to animate these properties using your own Reanimated useAnimatedStyle
-   * @default false
+   * Animation configuration for content
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: SelectContentAnimation;
+  /**
+   * Whether the dialog content can be swiped to dismiss
+   * @default true
+   */
+  isSwipeable?: boolean;
 }
 
 /**

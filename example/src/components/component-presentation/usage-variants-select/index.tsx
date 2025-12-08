@@ -86,9 +86,7 @@ export const UsageVariantsSelect = ({
         {Platform.OS === 'android' ? (
           <Select.Overlay className="bg-background" />
         ) : (
-          <Select.Overlay className="bg-transparent" isDefaultAnimationDisabled>
-            <SelectBlurBackdrop maxIntensity={75} />
-          </Select.Overlay>
+          <SelectBlurBackdrop />
         )}
 
         <SelectContentContainer>

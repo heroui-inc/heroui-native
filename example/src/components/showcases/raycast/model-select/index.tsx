@@ -87,9 +87,7 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
         {Platform.OS === 'android' ? (
           <Select.Overlay className="bg-background" />
         ) : (
-          <Select.Overlay className="bg-transparent" isDefaultAnimationDisabled>
-            <SelectBlurBackdrop />
-          </Select.Overlay>
+          <SelectBlurBackdrop />
         )}
 
         <SelectContentContainer>

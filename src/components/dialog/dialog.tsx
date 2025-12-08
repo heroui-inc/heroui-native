@@ -193,13 +193,14 @@ const DialogContent = forwardRef<
     },
     ref
   ) => {
+    const { onOpenChange } = useDialog();
+
     const {
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
       dialogState,
     } = useDialogAnimation();
-    const { onOpenChange } = useDialog();
 
     const tvStyles = dialogStyles.content({ className });
 

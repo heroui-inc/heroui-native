@@ -1,6 +1,10 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { forwardRef, useEffect, useMemo, useRef } from 'react';
-import type { Text as RNText, ViewStyle } from 'react-native';
+import { forwardRef, useCallback, useEffect, useMemo, useRef } from 'react';
+import type {
+  LayoutChangeEvent,
+  Text as RNText,
+  ViewStyle,
+} from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
@@ -414,59 +418,81 @@ const SelectContentBottomSheet = forwardRef<
 const SelectContentDialog = forwardRef<
   SelectPrimitivesTypes.ContentRef,
   SelectContentProps & { presentation: 'dialog' }
->(({ classNames, style, children, onLayout, ...props }, ref) => {
-  const { onOpenChange } = useSelect();
-  const {
-    progress,
-    isDragging,
-    isGestureReleaseAnimationRunning,
-    selectState,
-  } = useSelectAnimation();
+>(
+  (
+    {
+      classNames,
+      style,
+      children,
+      onLayout,
+      animation,
+      isSwipeable = true,
+      ...props
+    },
+    ref
+  ) => {
+    const { onOpenChange } = useSelect();
 
-  const { wrapper, content } = selectStyles.dialogContent();
+    const {
+      progress,
+      isDragging,
+      isGestureReleaseAnimationRunning,
+      selectState,
+    } = useSelectAnimation();
 
-  const wrapperStyles = wrapper({ className: classNames?.wrapper });
-  const contentStyles = content({ className: classNames?.content });
+    const { wrapper, content } = selectStyles.dialogContent();
 
-  const {
-    contentY,
-    contentHeight,
-    panGesture,
-    rDragContainerStyle,
-    rContainerStyle,
-  } = useDialogContentAnimation({
-    progress,
-    isDragging,
-    isGestureReleaseAnimationRunning,
-    dialogState: selectState,
-    onOpenChange,
-  });
+    const wrapperStyles = wrapper({ className: classNames?.wrapper });
+    const contentStyles = content({ className: classNames?.content });
 
-  return (
-    <View className={wrapperStyles}>
-      <GestureDetector gesture={panGesture}>
-        <Animated.View
-          style={rDragContainerStyle}
-          className="pointer-events-box-none"
-          onLayout={(event) => {
-            contentY.set(event.nativeEvent.layout.y);
-            contentHeight.set(event.nativeEvent.layout.height);
-            onLayout?.(event);
-          }}
-        >
-          <AnimatedDialogContent
-            ref={ref}
-            className={contentStyles}
-            style={[styleSheet.contentContainer, rContainerStyle, style]}
-            {...props}
+    const {
+      contentY,
+      contentHeight,
+      panGesture,
+      rDragContainerStyle,
+      rContainerStyle,
+    } = useDialogContentAnimation({
+      progress,
+      isDragging,
+      isGestureReleaseAnimationRunning,
+      dialogState: selectState,
+      onOpenChange,
+      animation,
+      style: style as ViewStyle | undefined,
+      isSwipeable,
+    });
+
+    const handleLayout = useCallback(
+      (event: LayoutChangeEvent) => {
+        contentY.set(event.nativeEvent.layout.y);
+        contentHeight.set(event.nativeEvent.layout.height);
+        onLayout?.(event);
+      },
+      [contentY, contentHeight, onLayout]
+    );
+
+    return (
+      <View className={wrapperStyles}>
+        <GestureDetector gesture={panGesture}>
+          <Animated.View
+            style={rDragContainerStyle}
+            pointerEvents="box-none"
+            onLayout={handleLayout}
           >
-            {children}
-          </AnimatedDialogContent>
-        </Animated.View>
-      </GestureDetector>
-    </View>
-  );
-});
+            <AnimatedDialogContent
+              ref={ref}
+              className={contentStyles}
+              style={[styleSheet.contentContainer, rContainerStyle, style]}
+              {...props}
+            >
+              {children}
+            </AnimatedDialogContent>
+          </Animated.View>
+        </GestureDetector>
+      </View>
+    );
+  }
+);
 
 // --------------------------------------------------
 

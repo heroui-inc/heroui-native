@@ -90,9 +90,7 @@ export function SearchableDialogSelect() {
           },
         }}
       >
-        <Select.Overlay className="bg-transparent" isDefaultAnimationDisabled>
-          <SelectBlurBackdrop />
-        </Select.Overlay>
+        <SelectBlurBackdrop />
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
           <Select.Content
             classNames={{

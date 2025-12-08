@@ -7,11 +7,7 @@ import type {
 } from 'react-native';
 import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated, {
-  interpolate,
-  useAnimatedReaction,
-  useSharedValue,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   CheckIcon,
@@ -23,6 +19,7 @@ import {
   AnimationSettingsProvider,
   useAnimationSettings,
 } from '../../helpers/contexts/animation-settings-context';
+import { usePopupBottomSheetContentAnimation } from '../../helpers/hooks/use-popup-bottom-sheet-content-animation';
 import { usePopupDialogContentAnimation } from '../../helpers/hooks/use-popup-dialog-content-animation';
 import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
 import { usePopupPopoverContentAnimation } from '../../helpers/hooks/use-popup-popover-content-animation';
@@ -333,16 +330,10 @@ const SelectContentBottomSheet = forwardRef<
       restProps.onClose?.();
     };
 
-    const animatedIndex = useSharedValue(0);
-
-    useAnimatedReaction(
-      () => animatedIndex.get(),
-      (value) => {
-        if (selectState === 'open' && value <= 0) {
-          progress.set(interpolate(animatedIndex.get(), [0, -1], [1, 2]));
-        }
-      }
-    );
+    const { animatedIndex } = usePopupBottomSheetContentAnimation({
+      progress,
+      componentState: selectState,
+    });
 
     return (
       <BottomSheet

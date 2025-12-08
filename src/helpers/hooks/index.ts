@@ -1,6 +1,7 @@
 export * from './use-augmented-ref';
 export * from './use-controllable-state';
 export * from './use-keyboard-status';
+export * from './use-popup-bottom-sheet-content-animation';
 export * from './use-popup-dialog-content-animation';
 export * from './use-popup-overlay-animation';
 export * from './use-popup-popover-content-animation';

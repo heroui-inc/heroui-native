@@ -272,11 +272,11 @@ export interface PopoverCloseIconProps {
 }
 
 /**
- * Popover Label component props
+ * Popover Title component props
  */
-export interface PopoverLabelProps extends TextProps {
+export interface PopoverTitleProps extends TextProps {
   /**
-   * Additional CSS class for the label
+   * Additional CSS class for the title
    */
   className?: string;
 }

@@ -10,11 +10,7 @@ import {
 } from 'react';
 import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
-import Animated, {
-  interpolate,
-  useAnimatedReaction,
-  useSharedValue,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
@@ -22,6 +18,7 @@ import {
   AnimationSettingsProvider,
   useAnimationSettings,
 } from '../../helpers/contexts/animation-settings-context';
+import { usePopupBottomSheetContentAnimation } from '../../helpers/hooks/use-popup-bottom-sheet-content-animation';
 import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
 import { usePopupPopoverContentAnimation } from '../../helpers/hooks/use-popup-popover-content-animation';
 import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
@@ -48,10 +45,10 @@ import type {
   PopoverContentPopoverProps,
   PopoverContentProps,
   PopoverDescriptionProps,
-  PopoverLabelProps,
   PopoverOverlayProps,
   PopoverPortalProps,
   PopoverRootProps,
+  PopoverTitleProps,
   PopoverTriggerProps,
 } from './popover.types';
 
@@ -245,12 +242,6 @@ const PopoverContentPopover = forwardRef<
       style: style as ViewStyle,
     });
 
-    const flatStyle = StyleSheet.flatten([
-      styleSheet.contentContainer,
-      rContainerStyle,
-      style,
-    ]);
-
     return (
       <PopoverContentContext value={{ placement }}>
         <AnimatedContent
@@ -262,7 +253,7 @@ const PopoverContentPopover = forwardRef<
           alignOffset={alignOffset}
           insets={insets}
           className={tvStyles}
-          style={flatStyle}
+          style={[styleSheet.contentContainer, rContainerStyle, style]}
           {...props}
         >
           {children}
@@ -324,16 +315,10 @@ const PopoverContentBottomSheet = forwardRef<
       restProps.onClose?.();
     };
 
-    const animatedIndex = useSharedValue(0);
-
-    useAnimatedReaction(
-      () => animatedIndex.get(),
-      (value) => {
-        if (popoverState === 'open' && value <= 0) {
-          progress.set(interpolate(animatedIndex.get(), [0, -1], [1, 2]));
-        }
-      }
-    );
+    const { animatedIndex } = usePopupBottomSheetContentAnimation({
+      progress,
+      componentState: popoverState,
+    });
 
     return (
       <PopoverContentContext value={{ placement: 'bottom' }}>
@@ -399,10 +384,9 @@ const PopoverClose = forwardRef<
   PopoverPrimitivesTypes.CloseRef,
   PopoverCloseProps
 >(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
-  const themeColorMuted = useThemeColor('muted');
-  const defaultIconColor = themeColorMuted;
-
   const tvStyles = popoverStyles.close({ className });
+
+  const themeColorMuted = useThemeColor('muted');
 
   return (
     <PopoverPrimitives.Close
@@ -414,7 +398,7 @@ const PopoverClose = forwardRef<
       {children || (
         <CloseIcon
           size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? defaultIconColor}
+          color={iconProps?.color ?? themeColorMuted}
         />
       )}
     </PopoverPrimitives.Close>
@@ -423,7 +407,7 @@ const PopoverClose = forwardRef<
 
 // --------------------------------------------------
 
-const PopoverLabel = forwardRef<RNText, PopoverLabelProps>(
+const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
   ({ className, children, ...props }, ref) => {
     const tvStyles = popoverStyles.label({ className });
 
@@ -583,7 +567,7 @@ PopoverPortal.displayName = DISPLAY_NAME.PORTAL;
 PopoverOverlay.displayName = DISPLAY_NAME.OVERLAY;
 PopoverContent.displayName = DISPLAY_NAME.CONTENT;
 PopoverClose.displayName = DISPLAY_NAME.CLOSE;
-PopoverLabel.displayName = DISPLAY_NAME.LABEL;
+PopoverTitle.displayName = DISPLAY_NAME.TITLE;
 PopoverDescription.displayName = DISPLAY_NAME.DESCRIPTION;
 PopoverArrow.displayName = DISPLAY_NAME.ARROW;
 
@@ -612,7 +596,7 @@ PopoverArrow.displayName = DISPLAY_NAME.ARROW;
  * @component Popover.Close - Close button that dismisses the popover when pressed.
  * Renders a default X icon if no children provided.
  *
- * @component Popover.Label - Optional label text with pre-styled typography.
+ * @component Popover.Title - Optional title text with pre-styled typography.
  *
  * @component Popover.Description - Optional description text with muted styling.
  *
@@ -628,7 +612,7 @@ const Popover = Object.assign(PopoverRoot, {
   Content: PopoverContent,
   Arrow: PopoverArrow,
   Close: PopoverClose,
-  Label: PopoverLabel,
+  Title: PopoverTitle,
   Description: PopoverDescription,
 });
 

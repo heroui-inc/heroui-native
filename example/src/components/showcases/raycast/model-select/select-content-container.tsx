@@ -18,7 +18,7 @@ export const SelectContentContainer: FC<PropsWithChildren> = ({ children }) => {
         content: 'w-full h-full border-0 bg-transparent gap-2',
       }}
       presentation="dialog"
-      isDefaultAnimationDisabled
+      animation={false}
       style={rContainerStyle}
     >
       {children}

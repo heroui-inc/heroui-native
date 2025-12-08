@@ -8,7 +8,9 @@ import type {
   WithTimingConfig,
 } from 'react-native-reanimated';
 import type {
+  Animation,
   AnimationRoot,
+  AnimationValue,
   PopupOverlayAnimation,
   PopupRootAnimationConfig,
 } from '../../helpers/types/animation';
@@ -185,6 +187,62 @@ export interface PopoverOverlayProps
 }
 
 /**
+ * Animation configuration for Popover Content Popover component
+ */
+export type PopoverContentPopoverAnimation = Animation<{
+  /**
+   * Opacity animation configuration
+   */
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [idle, open, close]
+     * @default [0, 1, 0]
+     */
+    value?: [number, number, number];
+  }>;
+  /**
+   * Scale animation configuration
+   */
+  scale?: AnimationValue<{
+    /**
+     * Scale values [idle, open, close]
+     * @default [0.95, 1, 0.95]
+     */
+    value?: [number, number, number];
+  }>;
+  /**
+   * TranslateX animation configuration
+   */
+  translateX?: AnimationValue<{
+    /**
+     * TranslateX values [idle, open, close]
+     * @default Based on placement (4, 0, 4) or (-4, 0, -4)
+     */
+    value?: [number, number, number];
+  }>;
+  /**
+   * TranslateY animation configuration
+   */
+  translateY?: AnimationValue<{
+    /**
+     * TranslateY values [idle, open, close]
+     * @default Based on placement (4, 0, 4) or (-4, 0, -4)
+     */
+    value?: [number, number, number];
+  }>;
+  /**
+   * Transform origin configuration
+   */
+  transformOrigin?: AnimationValue<{
+    /**
+     * Transform origin value
+     * @default Based on placement ('top', 'bottom', 'left', 'right')
+     */
+    value?: string;
+  }>;
+}>;
+
+/**
  * Popover Content props for 'popover' presentation
  */
 export interface PopoverContentPopoverProps
@@ -202,11 +260,12 @@ export interface PopoverContentPopoverProps
    */
   presentation?: 'popover';
   /**
-   * Whether to disable the default animations (opacity, scale, translate)
-   * Use this when you want to animate these properties using your own Reanimated useAnimatedStyle
-   * @default false
+   * Animation configuration for content
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: PopoverContentPopoverAnimation;
 }
 
 /**

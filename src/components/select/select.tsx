@@ -5,13 +5,11 @@ import type {
   Text as RNText,
   ViewStyle,
 } from 'react-native';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
-  Extrapolation,
   interpolate,
   useAnimatedReaction,
-  useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -26,6 +24,7 @@ import {
   useAnimationSettings,
 } from '../../helpers/contexts/animation-settings-context';
 import { useDialogContentAnimation } from '../../helpers/hooks';
+import { usePopoverContentAnimation } from '../../helpers/hooks/use-popover-content-animation';
 import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
 import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
 import { useThemeColor } from '../../helpers/theme';
@@ -241,7 +240,7 @@ const SelectContentPopover = forwardRef<
       className,
       children,
       style,
-      isDefaultAnimationDisabled,
+      animation,
       ...props
     },
     ref
@@ -261,50 +260,12 @@ const SelectContentPopover = forwardRef<
       className,
     });
 
-    const rContainerStyle = useAnimatedStyle(() => {
-      if (isDefaultAnimationDisabled) {
-        return {};
-      }
-
-      let transformOrigin = 'top';
-      let translateX = 0;
-      let translateY = 0;
-
-      if (placement === 'top') {
-        transformOrigin = 'bottom';
-        translateY = interpolate(progress.get(), [0, 1, 2], [4, 0, 4]);
-      } else if (placement === 'bottom') {
-        transformOrigin = 'top';
-        translateY = interpolate(progress.get(), [0, 1, 2], [-4, 0, -4]);
-      } else if (placement === 'left') {
-        transformOrigin = 'right';
-        translateX = interpolate(progress.get(), [0, 1, 2], [4, 0, 4]);
-      } else if (placement === 'right') {
-        transformOrigin = 'left';
-        translateX = interpolate(progress.get(), [0, 1, 2], [-4, 0, -4]);
-      }
-
-      return {
-        opacity: interpolate(
-          progress.get(),
-          [0, 1, 2],
-          [0, 1, 0],
-          Extrapolation.CLAMP
-        ),
-        transformOrigin,
-        transform: [
-          { translateX },
-          { translateY },
-          { scale: interpolate(progress.get(), [0, 1, 2], [0.95, 1, 0.95]) },
-        ],
-      };
+    const { rContainerStyle } = usePopoverContentAnimation({
+      progress,
+      placement,
+      animation,
+      style: style as ViewStyle,
     });
-
-    const flatStyle = StyleSheet.flatten([
-      styleSheet.contentContainer,
-      rContainerStyle,
-      style,
-    ]);
 
     return (
       <AnimatedPopoverContent
@@ -316,7 +277,7 @@ const SelectContentPopover = forwardRef<
         alignOffset={alignOffset}
         insets={insets}
         className={tvStyles}
-        style={flatStyle}
+        style={[styleSheet.contentContainer, rContainerStyle, style]}
         {...props}
       >
         {children}

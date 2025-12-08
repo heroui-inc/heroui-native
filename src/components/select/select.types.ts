@@ -11,6 +11,7 @@ import type {
 } from '../../helpers/types/animation';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import type { DialogContentAnimation } from '../dialog/dialog.types';
+import type { PopoverContentPopoverAnimation } from '../popover/popover.types';
 import type { DialogContentFallbackSlots } from './select.styles';
 
 /**
@@ -139,6 +140,12 @@ export interface SelectOverlayProps extends SelectPrimitivesTypes.OverlayProps {
 }
 
 /**
+ * Animation configuration for Select Content Popover component
+ * Reuses PopoverContentPopoverAnimation since they share the same animation behavior
+ */
+export type SelectContentPopoverAnimation = PopoverContentPopoverAnimation;
+
+/**
  * Select Content props for 'popover' presentation
  */
 export interface SelectContentPopoverProps
@@ -156,11 +163,12 @@ export interface SelectContentPopoverProps
    */
   presentation?: 'popover';
   /**
-   * Whether to disable the default animations (opacity, scale, translate)
-   * Use this when you want to animate these properties using your own Reanimated useAnimatedStyle
-   * @default false
+   * Animation configuration for content
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: SelectContentPopoverAnimation;
 }
 
 /**

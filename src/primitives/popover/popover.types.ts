@@ -63,6 +63,10 @@ interface IRootContext {
    * Delay in milliseconds before the popover closes
    */
   closeDelay?: number;
+  /**
+   * Whether the popover should be open by default (uncontrolled mode)
+   */
+  isDefaultOpen?: boolean;
 }
 
 /**

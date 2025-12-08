@@ -1,7 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Button, Popover } from 'heroui-native';
-import { useEffect, useState } from 'react';
 import { Platform, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
@@ -11,16 +10,9 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 const StyledIonicons = withUniwind(Ionicons);
 
 const WithTitleDescriptionContent = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    console.log('🔴 🔴', isOpen); // VS remove
-  }, [isOpen]);
-
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <Button onPress={() => setIsOpen(!isOpen)}>Toggle Popover</Button>
-      <Popover isOpen={isOpen} onOpenChange={setIsOpen}>
+      <Popover>
         <Popover.Trigger asChild>
           <Button variant="secondary">Did you know?</Button>
         </Popover.Trigger>

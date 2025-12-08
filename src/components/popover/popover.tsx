@@ -1,6 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { createContext, forwardRef, use, useEffect, useRef } from 'react';
+import {
+  createContext,
+  forwardRef,
+  use,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
@@ -9,23 +16,29 @@ import Animated, {
   useAnimatedReaction,
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
-  withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
+import {
+  AnimationSettingsProvider,
+  useAnimationSettings,
+} from '../../helpers/contexts/animation-settings-context';
+import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
+import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
 import { useThemeColor } from '../../helpers/theme';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import { ArrowSvg } from './arrow-svg';
 import {
+  PopoverAnimationProvider,
+  usePopoverAnimation,
+} from './popover.animation';
+import {
   DEFAULT_ALIGN_OFFSET,
   DEFAULT_INSETS,
   DEFAULT_OFFSET,
   DISPLAY_NAME,
-  SPRING_CONFIG_CLOSE,
-  SPRING_CONFIG_OPEN,
 } from './popover.constants';
 import popoverStyles, { styleSheet } from './popover.styles';
 import type {
@@ -62,18 +75,69 @@ const PopoverContentContext = createContext<PopoverContentContextValue>({
 const PopoverRoot = forwardRef<
   PopoverPrimitivesTypes.RootRef,
   PopoverRootProps
->(({ children, onOpenChange, closeDelay = 400, ...props }, ref) => {
-  return (
-    <PopoverPrimitives.Root
-      ref={ref}
-      onOpenChange={onOpenChange}
-      closeDelay={closeDelay}
-      {...props}
-    >
-      {children}
-    </PopoverPrimitives.Root>
-  );
-});
+>(
+  (
+    {
+      children,
+      closeDelay = 400,
+      isOpen: isOpenProp,
+      isDefaultOpen,
+      onOpenChange: onOpenChangeProp,
+      animation,
+      ...props
+    },
+    ref
+  ) => {
+    const {
+      internalIsOpen,
+      componentState,
+      progress,
+      isDragging,
+      onOpenChange,
+      isAllAnimationsDisabled,
+    } = usePopupRootAnimation({
+      isOpen: isOpenProp,
+      isDefaultOpen,
+      onOpenChange: onOpenChangeProp,
+      closeDelay,
+      isDismissKeyboardOnClose: false,
+      animation,
+    });
+
+    const animationContextValue = useMemo(
+      () => ({
+        popoverState: componentState,
+        progress,
+        isDragging,
+      }),
+      [componentState, progress, isDragging]
+    );
+
+    const animationSettingsContextValue = useMemo(
+      () => ({
+        isAllAnimationsDisabled,
+      }),
+      [isAllAnimationsDisabled]
+    );
+
+    return (
+      <AnimationSettingsProvider value={animationSettingsContextValue}>
+        <PopoverAnimationProvider value={animationContextValue}>
+          <PopoverPrimitives.Root
+            ref={ref}
+            isOpen={internalIsOpen}
+            isDefaultOpen={isDefaultOpen}
+            onOpenChange={onOpenChange}
+            closeDelay={closeDelay}
+            {...props}
+          >
+            {children}
+          </PopoverPrimitives.Root>
+        </PopoverAnimationProvider>
+      </AnimationSettingsProvider>
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -89,42 +153,25 @@ const PopoverTrigger = forwardRef<
 const PopoverPortal = ({
   className,
   children,
-  progressAnimationConfigs,
+  style,
   ...props
 }: PopoverPortalProps) => {
+  const animationSettingsContext = useAnimationSettings();
+  const animationContext = usePopoverAnimation();
+
   const tvStyles = popoverStyles.portal({ className });
-
-  const { popoverState, progress } = usePopover();
-
-  useEffect(() => {
-    if (popoverState === 'open') {
-      const openConfig = progressAnimationConfigs?.onOpen;
-      if (openConfig?.animationType === 'spring') {
-        progress.set(withSpring(1, openConfig.animationConfig));
-      } else if (openConfig?.animationType === 'timing') {
-        progress.set(withTiming(1, openConfig.animationConfig));
-      } else {
-        progress.set(withSpring(1, SPRING_CONFIG_OPEN));
-      }
-    } else if (popoverState === 'close') {
-      const closeConfig = progressAnimationConfigs?.onClose;
-      if (closeConfig?.animationType === 'spring') {
-        progress.set(withSpring(2, closeConfig.animationConfig));
-      } else if (closeConfig?.animationType === 'timing') {
-        progress.set(withTiming(2, closeConfig.animationConfig));
-      } else {
-        progress.set(withSpring(2, SPRING_CONFIG_CLOSE));
-      }
-    } else {
-      progress.set(0);
-    }
-  }, [popoverState, progress, progressAnimationConfigs]);
 
   return (
     <PopoverPrimitives.Portal {...props}>
-      <FullWindowOverlay>
-        <View className={tvStyles}>{children}</View>
-      </FullWindowOverlay>
+      <AnimationSettingsProvider value={animationSettingsContext}>
+        <PopoverAnimationProvider value={animationContext}>
+          <FullWindowOverlay>
+            <Animated.View className={tvStyles} style={style}>
+              {children}
+            </Animated.View>
+          </FullWindowOverlay>
+        </PopoverAnimationProvider>
+      </AnimationSettingsProvider>
     </PopoverPrimitives.Portal>
   );
 };
@@ -134,28 +181,23 @@ const PopoverPortal = ({
 const PopoverOverlay = forwardRef<
   PopoverPrimitivesTypes.OverlayRef,
   PopoverOverlayProps
->(({ className, style, isDefaultAnimationDisabled, ...props }, ref) => {
-  const { progress } = usePopover();
+>(({ className, style, animation, ...props }, ref) => {
+  const { progress, isDragging } = usePopoverAnimation();
 
-  const tvStyles = popoverStyles.overlay({
-    className,
-  });
+  const tvStyles = popoverStyles.overlay({ className });
 
-  const rOverlayStyle = useAnimatedStyle(() => {
-    if (isDefaultAnimationDisabled) {
-      return {};
-    }
-    const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
-    return {
-      opacity,
-    };
+  const { rContainerStyle } = usePopupOverlayAnimation({
+    progress,
+    isDragging,
+    animation,
+    style: style as ViewStyle,
   });
 
   return (
     <AnimatedOverlay
       ref={ref}
       className={tvStyles}
-      style={[rOverlayStyle, style]}
+      style={[rContainerStyle, style]}
       {...props}
     />
   );
@@ -191,7 +233,7 @@ const PopoverContentPopover = forwardRef<
       right: DEFAULT_INSETS.right + safeAreaInsets.right,
     };
 
-    const { progress } = usePopover();
+    const { progress } = usePopoverAnimation();
 
     const tvStyles = popoverStyles.popoverContent({
       className,
@@ -277,7 +319,8 @@ const PopoverContentBottomSheet = forwardRef<
 
     const bottomSheetRef = useRef<BottomSheet>(null);
 
-    const { popoverState, onOpenChange, progress } = usePopover();
+    const { onOpenChange } = usePopover();
+    const { popoverState, progress } = usePopoverAnimation();
 
     const themeColorOverlay = useThemeColor('overlay');
     const themeColorMuted = useThemeColor('muted');
@@ -622,5 +665,5 @@ const Popover = Object.assign(PopoverRoot, {
   Description: PopoverDescription,
 });
 
-export { usePopover };
+export { usePopover, usePopoverAnimation };
 export default Popover;

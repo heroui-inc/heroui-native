@@ -19,8 +19,8 @@ export function usePopupOverlayAnimation(options: {
   progress: SharedValue<number>;
   /** Dragging state shared value */
   isDragging: SharedValue<boolean>;
-  /** Gesture release animation running state shared value */
-  isGestureReleaseAnimationRunning: SharedValue<boolean>;
+  /** Gesture release animation running state shared value (optional, for components with swipe gestures) */
+  isGestureReleaseAnimationRunning?: SharedValue<boolean>;
   /** Animation configuration for overlay */
   animation?: PopupOverlayAnimation;
   /** Style prop for handling style overrides */
@@ -67,7 +67,7 @@ export function usePopupOverlayAnimation(options: {
     // Handle dragging state - when dragging and progress <= 1, opacity should be 1
     if (
       isDragging.get() ||
-      (isGestureReleaseAnimationRunning.get() && progress.get() <= 1)
+      (isGestureReleaseAnimationRunning?.get() && progress.get() <= 1)
     ) {
       return {
         opacity: 1,

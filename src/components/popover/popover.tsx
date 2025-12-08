@@ -149,7 +149,6 @@ const PopoverTrigger = forwardRef<
 const PopoverPortal = ({
   className,
   children,
-  style,
   ...props
 }: PopoverPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
@@ -162,7 +161,7 @@ const PopoverPortal = ({
       <AnimationSettingsProvider value={animationSettingsContext}>
         <PopoverAnimationProvider value={animationContext}>
           <FullWindowOverlay>
-            <Animated.View className={tvStyles} style={style}>
+            <Animated.View className={tvStyles} pointerEvents="box-none">
               {children}
             </Animated.View>
           </FullWindowOverlay>

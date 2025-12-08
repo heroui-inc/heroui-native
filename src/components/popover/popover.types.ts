@@ -152,10 +152,6 @@ export interface PopoverPortalProps extends PopoverPrimitivesTypes.PortalProps {
    */
   className?: string;
   /**
-   * Additional style for the portal container
-   */
-  style?: StyleProp<ViewStyle>;
-  /**
    * The portal content
    */
   children: ReactNode;

@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Button, Popover } from 'heroui-native';
+import { useEffect, useState } from 'react';
 import { Platform, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
@@ -10,9 +11,16 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 const StyledIonicons = withUniwind(Ionicons);
 
 const WithTitleDescriptionContent = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    console.log('🔴 🔴', isOpen); // VS remove
+  }, [isOpen]);
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <Popover>
+      <Button onPress={() => setIsOpen(!isOpen)}>Toggle Popover</Button>
+      <Popover isOpen={isOpen} onOpenChange={setIsOpen}>
         <Popover.Trigger asChild>
           <Button variant="secondary">Did you know?</Button>
         </Popover.Trigger>
@@ -33,7 +41,7 @@ const WithTitleDescriptionContent = () => {
                 />
               </View>
               <View className="flex-1">
-                <Popover.Label>Fun Fact!</Popover.Label>
+                <Popover.Title>Fun Fact!</Popover.Title>
               </View>
             </View>
             <Popover.Description className="text-sm">
@@ -83,7 +91,7 @@ const PresentationVariantsContent = () => {
                   />
                 </View>
                 <View className="flex-1">
-                  <Popover.Label>Payment Successful</Popover.Label>
+                  <Popover.Title>Payment Successful</Popover.Title>
                   <AppText className="text-xs text-muted">
                     2 minutes ago
                   </AppText>
@@ -109,9 +117,9 @@ const PresentationVariantsContent = () => {
           <Popover.Content presentation="bottom-sheet">
             <View className="gap-4">
               <View className="mb-2">
-                <Popover.Label className="text-center text-foreground">
+                <Popover.Title className="text-center text-foreground">
                   Share Options
-                </Popover.Label>
+                </Popover.Title>
                 <Popover.Description className="text-center text-muted">
                   Choose how you'd like to share this content
                 </Popover.Description>

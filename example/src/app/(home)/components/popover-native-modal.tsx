@@ -35,7 +35,7 @@ export default function PopoverNativeModalScreen() {
                 />
               </View>
               <View className="flex-1">
-                <Popover.Label>Fun Fact!</Popover.Label>
+                <Popover.Title>Fun Fact!</Popover.Title>
               </View>
             </View>
             <Popover.Description className="text-sm">

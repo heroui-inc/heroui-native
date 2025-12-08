@@ -52,6 +52,7 @@ const Root = forwardRef<RootRef, RootProps>(
     });
 
     const Component = asChild ? Slot.View : View;
+
     return (
       <DialogContext.Provider
         value={{

@@ -32,7 +32,7 @@ import { Plan } from '../../../components/showcases/cooking-onboarding/plan';
 import { Save } from '../../../components/showcases/cooking-onboarding/save';
 import { Share } from '../../../components/showcases/cooking-onboarding/share';
 
-const StyleAnimatedView = withUniwind(Animated.View);
+const StyledAnimatedView = withUniwind(Animated.View);
 const StyledFeather = withUniwind(Feather);
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -94,10 +94,10 @@ export default function CookingOnboardingScreen() {
   const onboardingSteps = useMemo<OnboardingStep[]>(
     () => [
       { ref: shareTriggerRef, delay: 1000 },
-      { ref: saveTriggerRef, delay: 400 },
-      { ref: cookTriggerRef, delay: 400 },
-      { ref: planTriggerRef, delay: 400 },
-      { ref: askTriggerRef, delay: 400 },
+      { ref: saveTriggerRef, delay: 500 },
+      { ref: cookTriggerRef, delay: 500 },
+      { ref: planTriggerRef, delay: 500 },
+      { ref: askTriggerRef, delay: 500 },
     ],
     []
   );
@@ -141,7 +141,7 @@ export default function CookingOnboardingScreen() {
   }, [onboardingState.isActive]);
 
   return (
-    <StyleAnimatedView
+    <StyledAnimatedView
       entering={FadeIn.delay(300)}
       className="flex-1 bg-background"
     >
@@ -216,11 +216,11 @@ export default function CookingOnboardingScreen() {
           entering={FadeIn.delay(1000)}
           exiting={FadeOut}
           style={StyleSheet.absoluteFill}
-          onPressIn={handleOverlayPress}
+          onPress={handleOverlayPress}
           className="bg-black/25"
         />
       )}
-    </StyleAnimatedView>
+    </StyledAnimatedView>
   );
 }
 

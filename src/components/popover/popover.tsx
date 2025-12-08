@@ -223,8 +223,8 @@ const PopoverContentPopover = forwardRef<
       return {
         opacity: interpolate(
           progress.get(),
-          [0, 1, 1.75, 2],
-          [0.25, 1, 0.75, 0],
+          [0, 1, 2],
+          [0, 1, 0],
           Extrapolation.CLAMP
         ),
         transformOrigin,

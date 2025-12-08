@@ -9,7 +9,6 @@ export type {
   PopoverOverlayProps,
   PopoverPlacement,
   PopoverPortalProps,
-  PopoverProgressAnimationConfigs,
   PopoverRootAnimation,
   PopoverRootProps,
   PopoverTitleProps,

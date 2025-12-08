@@ -448,7 +448,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
       children,
       style,
       className,
-      height = 10,
+      height = 8,
       width = 16,
       fill,
       stroke,

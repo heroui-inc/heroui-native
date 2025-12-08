@@ -39,11 +39,6 @@ export interface SelectAnimationContextValue {
 export type SelectTriggerRef = SelectPrimitivesTypes.TriggerRef;
 
 /**
- * Presentation mode for the select content
- */
-export type SelectPresentation = 'popover' | 'bottom-sheet' | 'dialog';
-
-/**
  * Select placement options
  */
 export type SelectPlacement = 'top' | 'bottom' | 'left' | 'right';
@@ -264,7 +259,7 @@ export interface SelectCloseIconProps {
   size?: number;
   /**
    * Color of the close icon
-   * @default --colors-foreground
+   * @default --colors-muted
    */
   color?: string;
 }

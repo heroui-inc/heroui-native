@@ -108,6 +108,7 @@ const Root = forwardRef<RootRef, RootProps>(
           onValueChange,
           isOpen,
           onOpenChange,
+          isDefaultOpen,
           isDisabled,
           contentLayout,
           nativeID,
@@ -133,6 +134,8 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       isDisabled: isDisabledRoot,
       setTriggerPosition,
       closeDelay,
+      isDefaultOpen,
+      triggerPosition,
     } = useRootContext();
 
     const isDisabledValue = isDisabled || isDisabledRoot;
@@ -156,6 +159,24 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
         },
       },
     });
+
+    // Open popover on mount if isDefaultOpen is true
+    useEffect(() => {
+      if (isDefaultOpen && !triggerPosition) {
+        // Use setTimeout to ensure the component is mounted and can be measured
+        const timeoutId = setTimeout(() => {
+          augmentedRef.current?.measure(
+            (_x, _y, width, height, pageX, pageY) => {
+              setTriggerPosition({ width, pageX, pageY: pageY, height });
+              onOpenChange(true);
+            }
+          );
+        }, 0);
+        return () => clearTimeout(timeoutId);
+      }
+      return undefined;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     function onPress(ev: GestureResponderEvent) {
       if (isDisabledValue) return;

@@ -48,6 +48,10 @@ interface IRootContext {
    */
   onOpenChange: (open: boolean) => void;
   /**
+   * Whether the select is default open
+   */
+  isDefaultOpen?: boolean;
+  /**
    * Whether the select is disabled
    */
   isDisabled?: boolean;

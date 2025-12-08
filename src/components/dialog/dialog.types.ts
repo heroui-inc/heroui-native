@@ -2,9 +2,8 @@ import type { ReactNode } from 'react';
 import type { StyleProp, TextProps, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
-  Animation,
   AnimationRoot,
-  AnimationValue,
+  PopupDialogContentAnimation,
   PopupOverlayAnimation,
   PopupRootAnimationConfig,
 } from '../../helpers/types/animation';
@@ -115,29 +114,9 @@ export interface DialogOverlayProps
 
 /**
  * Animation configuration for Dialog Content component
+ * Reuses PopupDialogContentAnimation since they share the same animation behavior
  */
-export type DialogContentAnimation = Animation<{
-  /**
-   * Opacity animation configuration
-   */
-  opacity?: AnimationValue<{
-    /**
-     * Opacity values [idle, open, close]
-     * @default [0, 1, 0]
-     */
-    value?: [number, number, number];
-  }>;
-  /**
-   * Scale animation configuration
-   */
-  scale?: AnimationValue<{
-    /**
-     * Scale values [idle, open, close]
-     * @default [0.97, 1, 0.97]
-     */
-    value?: [number, number, number];
-  }>;
-}>;
+export type DialogContentAnimation = PopupDialogContentAnimation;
 
 /**
  * Dialog Content component props

@@ -12,8 +12,8 @@ import {
   withSpring,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
-import type { DialogContentAnimation } from '../../components/dialog/dialog.types';
 import { useAnimationSettings } from '../contexts/animation-settings-context';
+import type { PopupDialogContentAnimation } from '../types/animation';
 import {
   getAnimationState,
   getAnimationValueProperty,
@@ -23,7 +23,7 @@ import {
 } from '../utils/animation';
 import { useKeyboardStatus } from './use-keyboard-status';
 
-export interface UseDialogContentAnimationProps {
+export interface UsePopupDialogContentAnimationProps {
   /**
    * Progress shared value (0 = closed, 1 = open, 2 = closing)
    */
@@ -47,7 +47,7 @@ export interface UseDialogContentAnimationProps {
   /**
    * Animation configuration for content
    */
-  animation?: DialogContentAnimation;
+  animation?: PopupDialogContentAnimation;
   /**
    * Style prop for handling style overrides
    */
@@ -59,7 +59,7 @@ export interface UseDialogContentAnimationProps {
   isSwipeable?: boolean;
 }
 
-export const useDialogContentAnimation = ({
+export const usePopupDialogContentAnimation = ({
   progress,
   isDragging,
   isGestureReleaseAnimationRunning,
@@ -68,7 +68,7 @@ export const useDialogContentAnimation = ({
   animation,
   style,
   isSwipeable = true,
-}: UseDialogContentAnimationProps) => {
+}: UsePopupDialogContentAnimationProps) => {
   const { height: screenHeight } = useWindowDimensions();
   const isKeyboardOpen = useKeyboardStatus();
 

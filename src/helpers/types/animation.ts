@@ -91,6 +91,33 @@ export type PopupOverlayAnimation = Animation<{
 }>;
 
 /**
+ * Animation configuration for popup dialog content components (Dialog, Select dialog presentation)
+ * Supports opacity and scale animations
+ */
+export type PopupDialogContentAnimation = Animation<{
+  /**
+   * Opacity animation configuration
+   */
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [idle, open, close]
+     * @default [0, 1, 0]
+     */
+    value?: [number, number, number];
+  }>;
+  /**
+   * Scale animation configuration
+   */
+  scale?: AnimationValue<{
+    /**
+     * Scale values [idle, open, close]
+     * @default [0.97, 1, 0.97]
+     */
+    value?: [number, number, number];
+  }>;
+}>;
+
+/**
  * Animation configuration for popup popover content components (Popover, Select popover presentation)
  * Supports opacity, scale, translate, and transform origin animations
  */

@@ -8,7 +8,7 @@ import {
   AnimationSettingsProvider,
   useAnimationSettings,
 } from '../../helpers/contexts/animation-settings-context';
-import { useDialogContentAnimation } from '../../helpers/hooks';
+import { usePopupDialogContentAnimation } from '../../helpers/hooks/use-popup-dialog-content-animation';
 import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
 import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
 import { useThemeColor } from '../../helpers/theme';
@@ -210,7 +210,7 @@ const DialogContent = forwardRef<
       panGesture,
       rDragContainerStyle,
       rContainerStyle,
-    } = useDialogContentAnimation({
+    } = usePopupDialogContentAnimation({
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,

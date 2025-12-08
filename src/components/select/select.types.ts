@@ -6,12 +6,12 @@ import type { SharedValue } from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
 import type {
   AnimationRoot,
+  PopupDialogContentAnimation,
   PopupOverlayAnimation,
   PopupPopoverContentAnimation,
   PopupRootAnimationConfig,
 } from '../../helpers/types/animation';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
-import type { DialogContentAnimation } from '../dialog/dialog.types';
 import type { DialogContentFallbackSlots } from './select.styles';
 
 /**
@@ -192,8 +192,9 @@ export interface SelectContentBottomSheetProps
 
 /**
  * Animation configuration for Select Content component (dialog presentation)
+ * Reuses PopupDialogContentAnimation since they share the same animation behavior
  */
-export type SelectContentAnimation = DialogContentAnimation;
+export type SelectContentAnimation = PopupDialogContentAnimation;
 
 /**
  * Select Content props for 'dialog' presentation

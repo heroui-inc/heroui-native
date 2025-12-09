@@ -368,22 +368,24 @@ export function ToastProvider({
     <ToastConfigContext.Provider value={globalConfig}>
       <ToasterContext.Provider value={contextValue}>
         {children}
-        <InsetsContainer insets={insets} contentWrapper={contentWrapper}>
-          <View className="flex-1">
-            {toasts.map((toastItem, index) => (
-              <ToastItemRenderer
-                key={toastItem.id}
-                toastItem={toastItem}
-                show={show}
-                hide={hide}
-                index={index}
-                total={total}
-                heights={heights}
-                maxVisibleToasts={maxVisibleToasts}
-              />
-            ))}
-          </View>
-        </InsetsContainer>
+        {toasts.length > 0 && (
+          <InsetsContainer insets={insets} contentWrapper={contentWrapper}>
+            <View className="flex-1">
+              {toasts.map((toastItem, index) => (
+                <ToastItemRenderer
+                  key={toastItem.id}
+                  toastItem={toastItem}
+                  show={show}
+                  hide={hide}
+                  index={index}
+                  total={total}
+                  heights={heights}
+                  maxVisibleToasts={maxVisibleToasts}
+                />
+              ))}
+            </View>
+          </InsetsContainer>
+        )}
       </ToasterContext.Provider>
     </ToastConfigContext.Provider>
   );

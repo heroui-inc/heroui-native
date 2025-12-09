@@ -151,6 +151,39 @@ Combine icons with labels for enhanced visual context.
 </Tabs>
 ```
 
+### With Render Function
+
+Use a render function on `Tabs.Trigger` to access state and customize content based on selection.
+
+```tsx
+<Tabs value={activeTab} onValueChange={setActiveTab}>
+  <Tabs.List>
+    <Tabs.Indicator />
+    <Tabs.Trigger value="settings">
+      {({ isSelected, value, isDisabled }) => (
+        <Tabs.Label
+          className={isSelected ? 'text-accent font-medium' : 'text-foreground'}
+        >
+          Settings
+        </Tabs.Label>
+      )}
+    </Tabs.Trigger>
+    <Tabs.Trigger value="profile">
+      {({ isSelected }) => (
+        <>
+          <Icon name="user" size={16} />
+          <Tabs.Label className={isSelected ? 'text-accent' : 'text-muted'}>
+            Profile
+          </Tabs.Label>
+        </>
+      )}
+    </Tabs.Trigger>
+  </Tabs.List>
+  <Tabs.Content value="settings">...</Tabs.Content>
+  <Tabs.Content value="profile">...</Tabs.Content>
+</Tabs>
+```
+
 ## Example
 
 ```tsx
@@ -318,13 +351,23 @@ export default function TabsExample() {
 
 ### Tabs.Trigger
 
-| prop                | type              | default | description                                             |
-| ------------------- | ----------------- | ------- | ------------------------------------------------------- |
-| `children`          | `React.ReactNode` | -       | Children elements to be rendered inside the trigger     |
-| `value`             | `string`          | -       | The unique value identifying this tab                   |
-| `isDisabled`        | `boolean`         | `false` | Whether the trigger is disabled                         |
-| `className`         | `string`          | -       | Additional CSS classes                                  |
-| `...PressableProps` | `PressableProps`  | -       | All standard React Native Pressable props are supported |
+| prop                | type                                                                      | default | description                                                               |
+| ------------------- | ------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------- |
+| `children`          | `React.ReactNode \| ((props: TabsTriggerRenderProps) => React.ReactNode)` | -       | Children elements to be rendered inside the trigger, or a render function |
+| `value`             | `string`                                                                  | -       | The unique value identifying this tab                                     |
+| `isDisabled`        | `boolean`                                                                 | `false` | Whether the trigger is disabled                                           |
+| `className`         | `string`                                                                  | -       | Additional CSS classes                                                    |
+| `...PressableProps` | `PressableProps`                                                          | -       | All standard React Native Pressable props are supported                   |
+
+#### TabsTriggerRenderProps
+
+When using a render function for `children`, the following props are provided:
+
+| property     | type      | description                                |
+| ------------ | --------- | ------------------------------------------ |
+| `isSelected` | `boolean` | Whether this trigger is currently selected |
+| `value`      | `string`  | The value of the trigger                   |
+| `isDisabled` | `boolean` | Whether the trigger is disabled            |
 
 ### Tabs.Label
 

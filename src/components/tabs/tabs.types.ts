@@ -73,9 +73,22 @@ export interface TabsScrollViewProps extends ScrollViewProps {
 }
 
 /**
+ * Render function props for TabsTrigger children
+ */
+export interface TabsTriggerRenderProps {
+  /** Whether this trigger is currently selected */
+  isSelected: boolean;
+  /** The value of the trigger */
+  value: string;
+  /** Whether the trigger is disabled */
+  isDisabled: boolean;
+}
+
+/**
  * Props for the TabsTrigger component
  */
-export interface TabsTriggerProps extends TabsPrimitivesTypes.TriggerProps {
+export interface TabsTriggerProps
+  extends Omit<TabsPrimitivesTypes.TriggerProps, 'children'> {
   /**
    * The unique value identifying this tab
    */
@@ -90,9 +103,11 @@ export interface TabsTriggerProps extends TabsPrimitivesTypes.TriggerProps {
    */
   className?: string;
   /**
-   * React children elements
+   * Child elements to render inside the trigger, or a render function
    */
-  children?: React.ReactNode;
+  children?:
+    | React.ReactNode
+    | ((props: TabsTriggerRenderProps) => React.ReactNode);
 }
 
 /**

@@ -189,6 +189,51 @@ Customize item appearance with custom content and indicators.
 </Select>
 ```
 
+### With Render Function
+
+Use a render function on `Select.Item` to access state and customize content based on selection.
+
+```tsx
+<Select>
+  <Select.Trigger>...</Select.Trigger>
+  <Select.Portal>
+    <Select.Overlay />
+    <Select.Content>
+      <Select.Item value="us" label="United States">
+        {({ isSelected, value, isDisabled }) => (
+          <>
+            <View className="flex-row items-center gap-3 flex-1">
+              <Text>🇺🇸</Text>
+              <Select.ItemLabel
+                className={
+                  isSelected ? 'text-accent font-medium' : 'text-foreground'
+                }
+              />
+            </View>
+            <Select.ItemIndicator />
+          </>
+        )}
+      </Select.Item>
+      <Select.Item value="uk" label="United Kingdom">
+        {({ isSelected }) => (
+          <>
+            <View className="flex-row items-center gap-3 flex-1">
+              <Text>🇬🇧</Text>
+              <Select.ItemLabel
+                className={
+                  isSelected ? 'text-accent font-medium' : 'text-foreground'
+                }
+              />
+            </View>
+            <Select.ItemIndicator />
+          </>
+        )}
+      </Select.Item>
+    </Select.Content>
+  </Select.Portal>
+</Select>
+```
+
 ### With Item Description
 
 Add descriptions to items for additional context.
@@ -598,14 +643,24 @@ Animation configuration for the Select Content component in dialog presentation 
 
 ### Select.Item
 
-| prop                | type             | default | description                                             |
-| ------------------- | ---------------- | ------- | ------------------------------------------------------- |
-| `children`          | `ReactNode`      | -       | Custom item content. Defaults to label and indicator    |
-| `value`             | `any`            | -       | The value associated with this item (required)          |
-| `label`             | `string`         | -       | The label text for this item (required)                 |
-| `isDisabled`        | `boolean`        | `false` | Whether this item is disabled                           |
-| `className`         | `string`         | -       | Additional CSS classes for the item                     |
-| `...PressableProps` | `PressableProps` | -       | All standard React Native Pressable props are supported |
+| prop                | type                                                         | default | description                                                                |
+| ------------------- | ------------------------------------------------------------ | ------- | -------------------------------------------------------------------------- |
+| `children`          | `ReactNode \| ((props: SelectItemRenderProps) => ReactNode)` | -       | Custom item content. Defaults to label and indicator, or a render function |
+| `value`             | `any`                                                        | -       | The value associated with this item (required)                             |
+| `label`             | `string`                                                     | -       | The label text for this item (required)                                    |
+| `isDisabled`        | `boolean`                                                    | `false` | Whether this item is disabled                                              |
+| `className`         | `string`                                                     | -       | Additional CSS classes for the item                                        |
+| `...PressableProps` | `PressableProps`                                             | -       | All standard React Native Pressable props are supported                    |
+
+#### SelectItemRenderProps
+
+When using a render function for `children`, the following props are provided:
+
+| property     | type      | description                             |
+| ------------ | --------- | --------------------------------------- |
+| `isSelected` | `boolean` | Whether this item is currently selected |
+| `value`      | `string`  | The value of the item                   |
+| `isDisabled` | `boolean` | Whether the item is disabled            |
 
 ### Select.ItemLabel
 

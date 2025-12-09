@@ -6,23 +6,14 @@ import {
   type ComponentType,
 } from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
-import Animated, {
-  Extrapolation,
-  interpolate,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useComposedEventHandler,
-  useDerivedValue,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, { useComposedEventHandler } from 'react-native-reanimated';
 import { colorKit, useThemeColor } from '../../helpers/theme';
 import { easeGradient } from '../../helpers/utils';
+import { useScrollShadowRootAnimation } from './scroll-shadow.animation';
 import {
   DEFAULT_SCROLL_EVENT_THROTTLE,
   DEFAULT_SHADOW_SIZE,
   SCROLL_SHADOW_DISPLAY_NAME,
-  SHADOW_EXIT_ANIMATION_DURATION,
 } from './scroll-shadow.constants';
 import { nativeStyles, scrollShadowStyles } from './scroll-shadow.styles';
 import type { ScrollShadowProps } from './scroll-shadow.types';
@@ -43,18 +34,10 @@ const animatedComponentCache = new WeakMap<
  *
  * @param ComponentType - The original component type to create an animated version of
  * @returns The cached animated component type
- * @throws If ComponentType is not a valid component type or if Animated.createAnimatedComponent fails
  */
 function getAnimatedComponent(
   ComponentType: ComponentType<any>
 ): ComponentType<any> {
-  // Validate that ComponentType is actually a function/component
-  if (typeof ComponentType !== 'function') {
-    throw new Error(
-      'ScrollShadow: children.type must be a valid React component type'
-    );
-  }
-
   let cached = animatedComponentCache.get(ComponentType);
   if (!cached) {
     try {
@@ -80,6 +63,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
     className,
     style,
     LinearGradientComponent,
+    animation,
     ...restProps
   } = props;
 
@@ -97,61 +81,20 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
   const orientation =
     orientationProp || (childHorizontal ? 'horizontal' : 'vertical');
 
-  const scrollOffset = useSharedValue(0);
-  const contentSize = useSharedValue(0);
-  const containerSize = useSharedValue(0);
-
-  const localScrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      const offset =
-        orientation === 'vertical'
-          ? event.contentOffset.y
-          : event.contentOffset.x;
-      scrollOffset.set(offset);
-    },
+  // Get all animation logic from root hook
+  const {
+    contentSize,
+    containerSize,
+    localScrollHandler,
+    topShadowStyle,
+    bottomShadowStyle,
+  } = useScrollShadowRootAnimation({
+    animation,
+    orientation,
+    size,
+    visibility,
+    isEnabled,
   });
-
-  const topShadowOpacity = useDerivedValue(() => {
-    if (!isEnabled)
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-
-    if (visibility === 'none')
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-    if (visibility === 'bottom' || visibility === 'right')
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-
-    return interpolate(
-      scrollOffset.get(),
-      [0, size / 4],
-      [0, 1],
-      Extrapolation.CLAMP
-    );
-  });
-
-  const bottomShadowOpacity = useDerivedValue(() => {
-    if (!isEnabled)
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-
-    if (visibility === 'none')
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-    if (visibility === 'top' || visibility === 'left')
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-
-    return interpolate(
-      scrollOffset.get() + containerSize.get(),
-      [contentSize.get() - size / 4, contentSize.get()],
-      [1, 0],
-      Extrapolation.CLAMP
-    );
-  });
-
-  const topShadowStyle = useAnimatedStyle(() => ({
-    opacity: topShadowOpacity.get(),
-  }));
-
-  const bottomShadowStyle = useAnimatedStyle(() => ({
-    opacity: bottomShadowOpacity.get(),
-  }));
 
   const onContentSizeChange = (w: number, h: number) => {
     const contentDimension = orientation === 'vertical' ? h : w;

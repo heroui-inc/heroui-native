@@ -29,7 +29,7 @@ Combine title and description components for structured text content.
 ```tsx
 <Card>
   <Card.Body>
-    <Card.Label>...</Card.Label>
+    <Card.Title>...</Card.Title>
     <Card.Description>...</Card.Description>
   </Card.Body>
 </Card>
@@ -93,8 +93,8 @@ export default function CardExample() {
       <View className="gap-4">
         <Card.Body className="mb-4">
           <View className="gap-1 mb-2">
-            <Card.Label className="text-pink-500">$450</Card.Label>
-            <Card.Label>Living room Sofa • Collection 2025</Card.Label>
+            <Card.Title className="text-pink-500">$450</Card.Title>
+            <Card.Title>Living room Sofa • Collection 2025</Card.Title>
           </View>
           <Card.Description>
             This sofa is perfect for modern tropical spaces, baroque inspired
@@ -120,7 +120,7 @@ export default function CardExample() {
 <Card>
   <Card.Header>...</Card.Header>
   <Card.Body>
-    <Card.Label>...</Card.Label>
+    <Card.Title>...</Card.Title>
     <Card.Description>...</Card.Description>
   </Card.Body>
   <Card.Footer>...</Card.Footer>
@@ -130,7 +130,7 @@ export default function CardExample() {
 - **Card**: Main container that extends Surface component. Provides base card structure with configurable surface variants and handles overall layout.
 - **Card.Header**: Header section for top-aligned content like icons or badges.
 - **Card.Body**: Main content area with flex-1 that expands to fill all available space between Card.Header and Card.Footer.
-- **Card.Label**: Label text with foreground color and medium font weight.
+- **Card.Title**: Title text with foreground color and medium font weight.
 - **Card.Description**: Description text with muted color and smaller font size.
 - **Card.Footer**: Footer section for bottom-aligned actions like buttons.
 
@@ -169,11 +169,11 @@ export default function CardExample() {
 | `className`    | `string`          | -       | Additional CSS classes                             |
 | `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported |
 
-### Card.Label
+### Card.Title
 
 | prop           | type              | default | description                                        |
 | -------------- | ----------------- | ------- | -------------------------------------------------- |
-| `children`     | `React.ReactNode` | -       | Children elements to be rendered as the label text |
+| `children`     | `React.ReactNode` | -       | Children elements to be rendered as the title text |
 | `className`    | `string`          | -       | Additional CSS classes                             |
 | `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported |
 

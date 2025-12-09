@@ -10,8 +10,8 @@ import type {
   CardDescriptionProps,
   CardFooterProps,
   CardHeaderProps,
-  CardLabelProps,
   CardRootProps,
+  CardTitleProps,
 } from './card.types';
 
 // --------------------------------------------------
@@ -72,7 +72,7 @@ const CardFooter = forwardRef<ViewRef, CardFooterProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const CardLabel = forwardRef<TextRef, CardLabelProps>((props, ref) => {
+const CardTitle = forwardRef<TextRef, CardTitleProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
   const tvStyles = cardStyles.label({ className });
@@ -108,7 +108,7 @@ CardRoot.displayName = DISPLAY_NAME.ROOT;
 CardHeader.displayName = DISPLAY_NAME.HEADER;
 CardBody.displayName = DISPLAY_NAME.BODY;
 CardFooter.displayName = DISPLAY_NAME.FOOTER;
-CardLabel.displayName = DISPLAY_NAME.LABEL;
+CardTitle.displayName = DISPLAY_NAME.TITLE;
 CardDescription.displayName = DISPLAY_NAME.DESCRIPTION;
 
 /**
@@ -122,7 +122,7 @@ CardDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  * @component Card.Body - Main content area with flex-1 that expands to fill all available space
  * between Card.Header and Card.Footer.
  *
- * @component Card.Label - Label text with foreground color and medium font weight.
+ * @component Card.Title - Title text with foreground color and medium font weight.
  *
  * @component Card.Description - Description text with muted color and smaller font size.
  *
@@ -139,8 +139,8 @@ const CompoundCard = Object.assign(CardRoot, {
   Body: CardBody,
   /** @optional Bottom-aligned footer for actions */
   Footer: CardFooter,
-  /** @optional Label text with styled typography */
-  Label: CardLabel,
+  /** @optional Title text with styled typography */
+  Title: CardTitle,
   /** @optional Description text with muted styling */
   Description: CardDescription,
 });

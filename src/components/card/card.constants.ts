@@ -6,6 +6,6 @@ export const DISPLAY_NAME = {
   HEADER: 'HeroUINative.Card.Header',
   BODY: 'HeroUINative.Card.Body',
   FOOTER: 'HeroUINative.Card.Footer',
-  LABEL: 'HeroUINative.Card.Label',
+  TITLE: 'HeroUINative.Card.Title',
   DESCRIPTION: 'HeroUINative.Card.Description',
 };

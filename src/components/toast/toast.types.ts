@@ -144,15 +144,15 @@ export interface ToastRootProps
 }
 
 /**
- * Props for the Toast.Label component
+ * Props for the Toast.Title component
  */
-export interface ToastLabelProps extends ToastPrimitive.LabelProps {
+export interface ToastTitleProps extends ToastPrimitive.TitleProps {
   /**
-   * Content to be rendered as label
+   * Content to be rendered as title
    */
   children?: React.ReactNode;
   /**
-   * Additional CSS class for the label
+   * Additional CSS class for the title
    */
   className?: string;
 }

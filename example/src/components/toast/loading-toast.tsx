@@ -75,14 +75,14 @@ export const LoadingToast = (props: ToastComponentProps) => {
             <StyledFeather name="check" size={18} className="text-success" />
           )}
         </View>
-        <Toast.Label
+        <Toast.Title
           className={cn(
             'text-sm',
             isLoading ? 'text-muted/75' : 'text-success'
           )}
         >
           {isLoading ? 'Loading...' : 'Loaded successfully'}
-        </Toast.Label>
+        </Toast.Title>
       </View>
     </Toast>
   );

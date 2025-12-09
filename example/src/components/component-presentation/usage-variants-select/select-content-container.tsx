@@ -20,6 +20,7 @@ export const SelectContentContainer: FC<PropsWithChildren> = ({ children }) => {
       presentation="dialog"
       animation={false}
       style={rContainerStyle}
+      isSwipeable={false}
     >
       {children}
     </Select.Content>

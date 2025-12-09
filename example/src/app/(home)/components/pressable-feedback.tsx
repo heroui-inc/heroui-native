@@ -59,7 +59,7 @@ const BackgroundImageCardContent = () => {
                   animation={{ highlight: 'disabled' }}
                   onPress={simulatePress}
                 >
-                  <Button.Title className="text-black">Notify me</Button.Title>
+                  <Button.Label className="text-black">Notify me</Button.Label>
                 </Button>
               </View>
             </Card.Footer>

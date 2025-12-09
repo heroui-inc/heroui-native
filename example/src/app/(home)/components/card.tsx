@@ -28,7 +28,7 @@ const BasicCardContent = () => {
           <Card.Footer className="gap-3">
             <Button variant="primary">Buy now</Button>
             <Button variant="ghost">
-              <Button.Title>Add to cart</Button.Title>
+              <Button.Label>Add to cart</Button.Label>
               <StyledIonicons
                 name="basket-outline"
                 size={16}
@@ -227,7 +227,7 @@ const BackgroundImageCardContent = () => {
                 className="bg-white"
                 animation={{ highlight: 'disabled' }}
               >
-                <Button.Title className="text-black">Notify me</Button.Title>
+                <Button.Label className="text-black">Notify me</Button.Label>
               </Button>
             </View>
           </Card.Footer>

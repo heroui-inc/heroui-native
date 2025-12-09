@@ -14,7 +14,7 @@ import { Button } from 'heroui-native';
 
 ### Basic Usage
 
-The Button component accepts string children that automatically render as title.
+The Button component accepts string children that automatically render as label.
 
 ```tsx
 <Button>Basic Button</Button>
@@ -22,26 +22,26 @@ The Button component accepts string children that automatically render as title.
 
 ### With Compound Parts
 
-Use Button.Title for explicit control over the title component.
+Use Button.Label for explicit control over the label component.
 
 ```tsx
 <Button>
-  <Button.Title>Click me</Button.Title>
+  <Button.Label>Click me</Button.Label>
 </Button>
 ```
 
 ### With Icons
 
-Combine icons with titles for enhanced visual communication.
+Combine icons with labels for enhanced visual communication.
 
 ```tsx
 <Button>
   <Icon name="add" size={20} />
-  <Button.Title>Add Item</Button.Title>
+  <Button.Label>Add Item</Button.Label>
 </Button>
 
 <Button>
-  <Button.Title>Download</Button.Title>
+  <Button.Label>Download</Button.Label>
   <Icon name="download" size={18} />
 </Button>
 ```
@@ -149,7 +149,7 @@ Add gradient backgrounds using absolute positioned elements.
     end={{ x: 1, y: 0 }}
     style={StyleSheet.absoluteFill}
   />
-  <Button.Title className="text-white font-bold">Gradient</Button.Title>
+  <Button.Label className="text-white font-bold">Gradient</Button.Label>
 </Button>
 ```
 
@@ -172,7 +172,7 @@ export default function ButtonExample() {
     <View className="gap-4 p-4">
       <Button variant="primary">
         <Ionicons name="add" size={20} color={themeColorAccentForeground} />
-        <Button.Title>Add Item</Button.Title>
+        <Button.Label>Add Item</Button.Label>
       </Button>
 
       <View className="flex-row gap-4">
@@ -192,7 +192,7 @@ export default function ButtonExample() {
       </View>
 
       <Button variant="tertiary">
-        <Button.Title>Learn More</Button.Title>
+        <Button.Label>Learn More</Button.Label>
         <Ionicons
           name="chevron-forward"
           size={18}
@@ -208,12 +208,12 @@ export default function ButtonExample() {
 
 ```tsx
 <Button>
-  <Button.Title>...</Button.Title>
+  <Button.Label>...</Button.Label>
 </Button>
 ```
 
-- **Button**: Main container that handles press interactions, animations, and variants. Renders string children as title or accepts compound components for custom layouts.
-- **Button.Title**: Text content of the button. Inherits size and variant styling from parent Button context.
+- **Button**: Main container that handles press interactions, animations, and variants. Renders string children as label or accepts compound components for custom layouts.
+- **Button.Label**: Text content of the button. Inherits size and variant styling from parent Button context.
 
 ## API Reference
 
@@ -229,10 +229,10 @@ Button extends all props from [PressableFeedback](../pressable-feedback/pressabl
 
 For inherited props including `feedbackVariant`, `feedbackPosition`, `animation`, `isDisabled`, `className`, `children`, and all Pressable props, see [PressableFeedback API Reference](../pressable-feedback/pressable-feedback.md#api-reference).
 
-### Button.Title
+### Button.Label
 
 | prop           | type              | default | description                           |
 | -------------- | ----------------- | ------- | ------------------------------------- |
-| `children`     | `React.ReactNode` | -       | Content to be rendered as title       |
+| `children`     | `React.ReactNode` | -       | Content to be rendered as label       |
 | `className`    | `string`          | -       | Additional CSS classes                |
 | `...TextProps` | `TextProps`       | -       | All standard Text props are supported |

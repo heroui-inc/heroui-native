@@ -3,5 +3,5 @@
  */
 export const DISPLAY_NAME = {
   BUTTON_ROOT: 'HeroUINative.Button.Root',
-  BUTTON_TITLE: 'HeroUINative.Button.Title',
+  BUTTON_LABEL: 'HeroUINative.Button.Label',
 };

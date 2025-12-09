@@ -39,11 +39,11 @@ export type ButtonRootProps = PressableFeedbackProps & {
 };
 
 /**
- * Props for the Button.Title component
+ * Props for the Button.Label component
  */
-export interface ButtonTitleProps extends TextProps {
+export interface ButtonLabelProps extends TextProps {
   /**
-   * Content to be rendered as title
+   * Content to be rendered as label
    */
   children?: React.ReactNode;
   /**

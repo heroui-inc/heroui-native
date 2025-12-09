@@ -134,7 +134,7 @@ export default function Paywall() {
           onPress={simulatePress}
           animation={{ highlight: 'disabled' }}
         >
-          <Button.Title className="text-black">Continue</Button.Title>
+          <Button.Label className="text-black">Continue</Button.Label>
         </Button>
         <View className="flex-row items-center justify-center">
           <Pressable onPress={simulatePress}>

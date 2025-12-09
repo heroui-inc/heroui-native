@@ -66,6 +66,71 @@ const BasicRadioGroupContent = () => {
 
 // ------------------------------------------------------------------------------
 
+interface ShippingOptionItemProps {
+  /** The value for the radio item */
+  value: string;
+  /** The label text */
+  label: string;
+  /** The description text */
+  description: string;
+  /** The price/value text to display on the right */
+  price: string;
+  /** Optional className for the container */
+  containerClassName?: string;
+  /** Optional className for the indicator */
+  indicatorClassName?: string;
+  /** Optional className for the price text */
+  priceClassName?: string;
+}
+
+/**
+ * Reusable shipping option item component for RadioGroup
+ * Displays a radio option with indicator, label, description, and price
+ */
+const ShippingOptionItem = ({
+  value,
+  label,
+  description,
+  price,
+  containerClassName,
+  indicatorClassName,
+  priceClassName,
+}: ShippingOptionItemProps) => {
+  return (
+    <RadioGroup.Item value={value}>
+      {({ isSelected }) => (
+        <View
+          className={cn(
+            'flex-row items-center justify-between gap-3 p-3 rounded-2xl bg-transparent',
+            isSelected && 'bg-surface',
+            containerClassName
+          )}
+        >
+          <RadioGroup.Indicator
+            className={cn(
+              !isSelected && 'border border-muted/10',
+              indicatorClassName
+            )}
+          />
+          <View className="flex-1">
+            <RadioGroup.Label>{label}</RadioGroup.Label>
+            <RadioGroup.Description>{description}</RadioGroup.Description>
+          </View>
+          <AppText
+            className={cn(
+              'text-foreground font-semibold',
+              isSelected && 'text-accent',
+              priceClassName
+            )}
+          >
+            {price}
+          </AppText>
+        </View>
+      )}
+    </RadioGroup.Item>
+  );
+};
+
 const StartIndicatorAlignmentContent = () => {
   const [shippingSpeed, setShippingSpeed] = React.useState('standard');
 
@@ -77,92 +142,24 @@ const StartIndicatorAlignmentContent = () => {
         className="gap-4"
         isOnSurface
       >
-        <RadioGroup.Item value="standard">
-          {({ isSelected }) => (
-            <View
-              className={cn(
-                'flex-row items-center justify-between gap-3 p-3 rounded-2xl bg-surface-secondary',
-                isSelected && 'bg-surface'
-              )}
-            >
-              <RadioGroup.Indicator
-                className={cn(!isSelected && 'border border-muted/10')}
-              />
-              <View className="flex-1">
-                <RadioGroup.Label>Standard Shipping</RadioGroup.Label>
-                <RadioGroup.Description>
-                  5-7 business days
-                </RadioGroup.Description>
-              </View>
-              <AppText
-                className={cn(
-                  'text-foreground font-semibold',
-                  isSelected && 'text-accent'
-                )}
-              >
-                Free
-              </AppText>
-            </View>
-          )}
-        </RadioGroup.Item>
-
-        <RadioGroup.Item value="express">
-          {({ isSelected }) => (
-            <View
-              className={cn(
-                'flex-row items-center justify-between gap-3 p-3 rounded-2xl bg-surface-secondary',
-                isSelected && 'bg-surface'
-              )}
-            >
-              <RadioGroup.Indicator
-                className={cn(!isSelected && 'border border-muted/10')}
-              />
-              <View className="flex-1">
-                <RadioGroup.Label>Express Shipping</RadioGroup.Label>
-                <RadioGroup.Description>
-                  2-3 business days
-                </RadioGroup.Description>
-              </View>
-              <AppText
-                className={cn(
-                  'text-foreground font-semibold',
-                  isSelected && 'text-accent'
-                )}
-              >
-                $9.99
-              </AppText>
-            </View>
-          )}
-        </RadioGroup.Item>
-
-        <RadioGroup.Item value="overnight">
-          {({ isSelected }) => (
-            <View
-              className={cn(
-                'flex-row items-center justify-between gap-3 p-3 rounded-2xl bg-surface-secondary',
-                isSelected && 'bg-surface'
-              )}
-            >
-              <RadioGroup.Indicator
-                className={cn(!isSelected && 'border border-muted/10')}
-              />
-              <View className="flex-1">
-                <RadioGroup.Label>Overnight Shipping</RadioGroup.Label>
-                <RadioGroup.Description>
-                  Next business day
-                </RadioGroup.Description>
-              </View>
-              <AppText
-                className={cn(
-                  'text-foreground font-semibold',
-                  isSelected && 'text-accent'
-                )}
-              >
-                $24.99
-              </AppText>
-            </View>
-          )}
-        </RadioGroup.Item>
+        <ShippingOptionItem
+          value="standard"
+          label="Standard Shipping"
+          description="5-7 business days"
+          price="Free"
+        />
+        <ShippingOptionItem
+          value="express"
+          label="Express Shipping"
+          description="2-3 business days"
+          price="$9.99"
+        />
+        <ShippingOptionItem
+          value="overnight"
+          label="Overnight Shipping"
+          description="Next business day"
+          price="$24.99"
+        />
       </RadioGroup>
     </View>
   );

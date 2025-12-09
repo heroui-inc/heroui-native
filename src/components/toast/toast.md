@@ -49,7 +49,7 @@ const { toast } = useToast();
 toast.show({
   component: (props) => (
     <Toast variant="accent" placement="top" {...props}>
-      <Toast.Label>Custom Toast</Toast.Label>
+      <Toast.Title>Custom Toast</Toast.Title>
       <Toast.Description>This is a custom toast component</Toast.Description>
       <Toast.Close />
     </Toast>
@@ -90,7 +90,7 @@ export default function ToastExample() {
           toast.show({
             component: (props) => (
               <Toast variant="accent" {...props}>
-                <Toast.Label>Custom Toast</Toast.Label>
+                <Toast.Title>Custom Toast</Toast.Title>
                 <Toast.Description>
                   This uses a custom component
                 </Toast.Description>
@@ -112,7 +112,7 @@ export default function ToastExample() {
 
 ```tsx
 <Toast>
-  <Toast.Label>...</Toast.Label>
+  <Toast.Title>...</Toast.Title>
   <Toast.Description>...</Toast.Description>
   <Toast.Action>...</Toast.Action>
   <Toast.Close />
@@ -120,8 +120,8 @@ export default function ToastExample() {
 ```
 
 - **Toast**: Main container that displays notification messages. Handles positioning, animations, and swipe gestures.
-- **Toast.Label**: Title text of the toast notification. Inherits variant styling from parent Toast context.
-- **Toast.Description**: Descriptive text content displayed below the label.
+- **Toast.Title**: Title text of the toast notification. Inherits variant styling from parent Toast context.
+- **Toast.Description**: Descriptive text content displayed below the title.
 - **Toast.Action**: Action button within the toast. Button variant is automatically determined based on toast variant but can be overridden.
 - **Toast.Close**: Close button for dismissing the toast. Renders as an icon-only button that calls hide when pressed.
 
@@ -234,11 +234,11 @@ For padding, use `border` classes. For actual borders, use `outline` classes.
 | `className`    | `string`                                                      | -           | Additional CSS class for the toast container                              |
 | `...ViewProps` | `ViewProps`                                                   | -           | All standard React Native View props are supported                        |
 
-### Toast.Label
+### Toast.Title
 
 | prop           | type              | default | description                                        |
 | -------------- | ----------------- | ------- | -------------------------------------------------- |
-| `children`     | `React.ReactNode` | -       | Content to be rendered as label                    |
+| `children`     | `React.ReactNode` | -       | Content to be rendered as title                    |
 | `className`    | `string`          | -       | Additional CSS classes                             |
 | `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported |
 

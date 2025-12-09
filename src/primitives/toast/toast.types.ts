@@ -24,9 +24,9 @@ type RootProps = SlottableViewProps & {
 };
 
 /**
- * Props for the toast label component
+ * Props for the toast title component
  */
-type LabelProps = SlottableTextProps;
+type TitleProps = SlottableTextProps;
 
 /**
  * Props for the toast description component
@@ -52,9 +52,9 @@ type CloseProps = SlottablePressableProps;
 type RootRef = ViewRef;
 
 /**
- * Ref type for the toast label
+ * Ref type for the toast title
  */
-type LabelRef = TextRef;
+type TitleRef = TextRef;
 
 /**
  * Ref type for the toast description
@@ -78,9 +78,9 @@ export type {
   CloseRef,
   DescriptionProps,
   DescriptionRef,
-  LabelProps,
-  LabelRef,
   RootContext,
   RootProps,
   RootRef,
+  TitleProps,
+  TitleRef,
 };

@@ -21,8 +21,8 @@ import type {
   ToastCloseProps,
   ToastContextValue,
   ToastDescriptionProps,
-  ToastLabelProps,
   ToastRootProps,
+  ToastTitleProps,
 } from './toast.types';
 
 const AnimatedToastRoot = Animated.createAnimatedComponent(ToastPrimitive.Root);
@@ -135,7 +135,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const ToastLabel = forwardRef<View, ToastLabelProps>((props, ref) => {
+const ToastTitle = forwardRef<View, ToastTitleProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
   const { variant } = useToast();
@@ -350,7 +350,7 @@ export function DefaultToast(props: DefaultToastProps) {
     >
       {icon && <View>{icon}</View>}
       <View className="flex-1">
-        {label && <ToastLabel>{label}</ToastLabel>}
+        {label && <ToastTitle>{label}</ToastTitle>}
         {description && <ToastDescription>{description}</ToastDescription>}
       </View>
       {actionLabel && (
@@ -363,7 +363,7 @@ export function DefaultToast(props: DefaultToastProps) {
 // --------------------------------------------------
 
 ToastRoot.displayName = DISPLAY_NAME.TOAST_ROOT;
-ToastLabel.displayName = DISPLAY_NAME.TOAST_LABEL;
+ToastTitle.displayName = DISPLAY_NAME.TOAST_TITLE;
 ToastDescription.displayName = DISPLAY_NAME.TOAST_DESCRIPTION;
 ToastAction.displayName = DISPLAY_NAME.TOAST_ACTION;
 ToastClose.displayName = DISPLAY_NAME.TOAST_CLOSE;
@@ -373,7 +373,7 @@ ToastClose.displayName = DISPLAY_NAME.TOAST_CLOSE;
  *
  * @component Toast - Main toast container that displays notification messages with various variants.
  *
- * @component Toast.Label - Title/heading text of the toast notification.
+ * @component Toast.Title - Title/heading text of the toast notification.
  *
  * @component Toast.Description - Descriptive text content of the toast.
  *
@@ -387,8 +387,8 @@ ToastClose.displayName = DISPLAY_NAME.TOAST_CLOSE;
  * @see Full documentation: https://heroui.com/components/toast
  */
 const CompoundToast = Object.assign(ToastRoot, {
-  /** Toast label/title - renders text content */
-  Label: ToastLabel,
+  /** Toast title - renders text content */
+  Title: ToastTitle,
   /** Toast description - renders descriptive text */
   Description: ToastDescription,
   /** Toast action button - renders action with appropriate variant */

@@ -13,11 +13,11 @@ import type {
   CloseRef,
   DescriptionProps,
   DescriptionRef,
-  LabelProps,
-  LabelRef,
   RootContext,
   RootProps,
   RootRef,
+  TitleProps,
+  TitleRef,
 } from './toast.types';
 
 const ToastContext = createContext<RootContext | null>(null);
@@ -61,7 +61,7 @@ Root.displayName = 'HeroUINative.Primitive.Toast.Root';
 
 // --------------------------------------------------
 
-const Label = forwardRef<LabelRef, LabelProps>((props, ref) => {
+const Title = forwardRef<TitleRef, TitleProps>((props, ref) => {
   const { nativeID } = useRootContext();
   return (
     <Text
@@ -74,7 +74,7 @@ const Label = forwardRef<LabelRef, LabelProps>((props, ref) => {
   );
 });
 
-Label.displayName = 'HeroUINative.Primitive.Toast.Label';
+Title.displayName = 'HeroUINative.Primitive.Toast.Title';
 
 // --------------------------------------------------
 
@@ -135,4 +135,4 @@ Close.displayName = 'HeroUINative.Primitive.Toast.Close';
 
 // --------------------------------------------------
 
-export { Action, Close, Description, Label, Root, useRootContext };
+export { Action, Close, Description, Root, Title, useRootContext };

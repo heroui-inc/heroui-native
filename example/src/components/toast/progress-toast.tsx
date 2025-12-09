@@ -112,11 +112,11 @@ export const ProgressToast = (props: ToastComponentProps) => {
       {...props}
     >
       <View className="flex-col gap-2 px-4 py-3">
-        <Toast.Label className="text-sm mb-2">
+        <Toast.Title className="text-sm mb-2">
           {progress < 100
             ? `Uploading... ${Math.round(progress)}%`
             : 'Upload complete!'}
-        </Toast.Label>
+        </Toast.Title>
         <View className="h-1 w-full overflow-hidden rounded-full bg-muted/20">
           <StyleAnimatedView
             className="h-full bg-accent rounded-full"

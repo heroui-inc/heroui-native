@@ -1,25 +1,56 @@
-import { cloneElement, createElement, forwardRef, isValidElement } from 'react';
+import {
+  cloneElement,
+  createElement,
+  forwardRef,
+  isValidElement,
+  type ComponentType,
+} from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
-import Animated, {
-  Extrapolation,
-  interpolate,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useComposedEventHandler,
-  useDerivedValue,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, { useComposedEventHandler } from 'react-native-reanimated';
 import { colorKit, useThemeColor } from '../../helpers/theme';
 import { easeGradient } from '../../helpers/utils';
+import { useScrollShadowRootAnimation } from './scroll-shadow.animation';
 import {
   DEFAULT_SCROLL_EVENT_THROTTLE,
   DEFAULT_SHADOW_SIZE,
   SCROLL_SHADOW_DISPLAY_NAME,
-  SHADOW_EXIT_ANIMATION_DURATION,
 } from './scroll-shadow.constants';
 import { nativeStyles, scrollShadowStyles } from './scroll-shadow.styles';
 import type { ScrollShadowProps } from './scroll-shadow.types';
+
+/**
+ * Cache for animated components to prevent remounting on every render.
+ * Using WeakMap ensures components are garbage collected when no longer referenced.
+ */
+const animatedComponentCache = new WeakMap<
+  ComponentType<any>,
+  ComponentType<any>
+>();
+
+/**
+ * Gets or creates a cached animated component for the given component type.
+ * This prevents creating new component types on every render, which would cause
+ * React to treat them as different components and trigger unmount/remount cycles.
+ *
+ * @param ComponentType - The original component type to create an animated version of
+ * @returns The cached animated component type
+ */
+function getAnimatedComponent(
+  ComponentType: ComponentType<any>
+): ComponentType<any> {
+  let cached = animatedComponentCache.get(ComponentType);
+  if (!cached) {
+    try {
+      cached = Animated.createAnimatedComponent(ComponentType);
+      animatedComponentCache.set(ComponentType, cached);
+    } catch (error) {
+      throw new Error(
+        `ScrollShadow: Failed to create animated component: ${error instanceof Error ? error.message : String(error)}`
+      );
+    }
+  }
+  return cached;
+}
 
 const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
   const {
@@ -32,6 +63,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
     className,
     style,
     LinearGradientComponent,
+    animation,
     ...restProps
   } = props;
 
@@ -49,61 +81,20 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
   const orientation =
     orientationProp || (childHorizontal ? 'horizontal' : 'vertical');
 
-  const scrollOffset = useSharedValue(0);
-  const contentSize = useSharedValue(0);
-  const containerSize = useSharedValue(0);
-
-  const localScrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      const offset =
-        orientation === 'vertical'
-          ? event.contentOffset.y
-          : event.contentOffset.x;
-      scrollOffset.set(offset);
-    },
+  // Get all animation logic from root hook
+  const {
+    contentSize,
+    containerSize,
+    localScrollHandler,
+    topShadowStyle,
+    bottomShadowStyle,
+  } = useScrollShadowRootAnimation({
+    animation,
+    orientation,
+    size,
+    visibility,
+    isEnabled,
   });
-
-  const topShadowOpacity = useDerivedValue(() => {
-    if (!isEnabled)
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-
-    if (visibility === 'none')
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-    if (visibility === 'bottom' || visibility === 'right')
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-
-    return interpolate(
-      scrollOffset.get(),
-      [0, size / 4],
-      [0, 1],
-      Extrapolation.CLAMP
-    );
-  });
-
-  const bottomShadowOpacity = useDerivedValue(() => {
-    if (!isEnabled)
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-
-    if (visibility === 'none')
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-    if (visibility === 'top' || visibility === 'left')
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-
-    return interpolate(
-      scrollOffset.get() + containerSize.get(),
-      [contentSize.get() - size / 4, contentSize.get()],
-      [1, 0],
-      Extrapolation.CLAMP
-    );
-  });
-
-  const topShadowStyle = useAnimatedStyle(() => ({
-    opacity: topShadowOpacity.get(),
-  }));
-
-  const bottomShadowStyle = useAnimatedStyle(() => ({
-    opacity: bottomShadowOpacity.get(),
-  }));
 
   const onContentSizeChange = (w: number, h: number) => {
     const contentDimension = orientation === 'vertical' ? h : w;
@@ -144,7 +135,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
         scrollEventThrottle,
         onScroll,
       })
-    : createElement(Animated.createAnimatedComponent(children.type as any), {
+    : createElement(getAnimatedComponent(children.type as any), {
         ...(children as any).props,
         onContentSizeChange,
         onLayout,

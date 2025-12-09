@@ -116,8 +116,10 @@ const TabsContent = ({ variant }: TabsContentProps) => {
       onValueChange={setActiveTab}
       className={cn('gap-1.5', variant === 'line' && 'gap-0')}
     >
-      <Tabs.List className="border-b-0">
-        <Tabs.ScrollView contentContainerClassName="gap-4">
+      <Tabs.List className={cn('border-b-0', variant === 'line' && 'mx-4')}>
+        <Tabs.ScrollView
+          contentContainerClassName={cn('gap-4', variant === 'line' && 'px-0')}
+        >
           <Tabs.Indicator />
           <TabTrigger value="general" label="General" />
           <TabTrigger value="appearance" label="Appearance" />

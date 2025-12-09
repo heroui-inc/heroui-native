@@ -112,10 +112,6 @@ export default function Layout() {
           options={{ title: 'Scroll Shadow' }}
         />
         <Stack.Screen
-          name="components/scroll-shadow-test"
-          options={{ title: 'Scroll Shadow Test' }}
-        />
-        <Stack.Screen
           name="components/select-native-modal"
           options={{ title: 'Select Native Modal', presentation: 'formSheet' }}
         />

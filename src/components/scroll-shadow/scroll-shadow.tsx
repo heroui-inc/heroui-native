@@ -1,4 +1,10 @@
-import { cloneElement, createElement, forwardRef, isValidElement } from 'react';
+import {
+  cloneElement,
+  createElement,
+  forwardRef,
+  isValidElement,
+  type ComponentType,
+} from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Animated, {
   Extrapolation,
@@ -20,6 +26,48 @@ import {
 } from './scroll-shadow.constants';
 import { nativeStyles, scrollShadowStyles } from './scroll-shadow.styles';
 import type { ScrollShadowProps } from './scroll-shadow.types';
+
+/**
+ * Cache for animated components to prevent remounting on every render.
+ * Using WeakMap ensures components are garbage collected when no longer referenced.
+ */
+const animatedComponentCache = new WeakMap<
+  ComponentType<any>,
+  ComponentType<any>
+>();
+
+/**
+ * Gets or creates a cached animated component for the given component type.
+ * This prevents creating new component types on every render, which would cause
+ * React to treat them as different components and trigger unmount/remount cycles.
+ *
+ * @param ComponentType - The original component type to create an animated version of
+ * @returns The cached animated component type
+ * @throws If ComponentType is not a valid component type or if Animated.createAnimatedComponent fails
+ */
+function getAnimatedComponent(
+  ComponentType: ComponentType<any>
+): ComponentType<any> {
+  // Validate that ComponentType is actually a function/component
+  if (typeof ComponentType !== 'function') {
+    throw new Error(
+      'ScrollShadow: children.type must be a valid React component type'
+    );
+  }
+
+  let cached = animatedComponentCache.get(ComponentType);
+  if (!cached) {
+    try {
+      cached = Animated.createAnimatedComponent(ComponentType);
+      animatedComponentCache.set(ComponentType, cached);
+    } catch (error) {
+      throw new Error(
+        `ScrollShadow: Failed to create animated component: ${error instanceof Error ? error.message : String(error)}`
+      );
+    }
+  }
+  return cached;
+}
 
 const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
   const {
@@ -144,7 +192,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
         scrollEventThrottle,
         onScroll,
       })
-    : createElement(Animated.createAnimatedComponent(children.type as any), {
+    : createElement(getAnimatedComponent(children.type as any), {
         ...(children as any).props,
         onContentSizeChange,
         onLayout,

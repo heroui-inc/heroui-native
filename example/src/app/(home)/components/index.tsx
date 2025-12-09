@@ -73,6 +73,10 @@ const components: Component[] = [
     path: 'scroll-shadow',
   },
   {
+    title: 'Scroll Shadow Test',
+    path: 'scroll-shadow-test',
+  },
+  {
     title: 'Select',
     path: 'select',
   },

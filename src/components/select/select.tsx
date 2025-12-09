@@ -48,6 +48,7 @@ import type {
   SelectItemIndicatorProps,
   SelectItemLabelProps,
   SelectItemProps,
+  SelectItemRenderProps,
   SelectListLabelProps,
   SelectOverlayProps,
   SelectPortalProps,
@@ -512,17 +513,50 @@ const SelectClose = forwardRef<
 // --------------------------------------------------
 
 const SelectItem = forwardRef<SelectPrimitivesTypes.ItemRef, SelectItemProps>(
-  ({ children, className, ...props }, ref) => {
+  (
+    {
+      children,
+      className,
+      disabled = false,
+      value: itemValue,
+      label,
+      ...props
+    },
+    ref
+  ) => {
+    const { value } = useSelect();
+
+    const isSelected = value?.value === itemValue;
+    const isDisabled = disabled ?? false;
+
     const tvStyles = selectStyles.item({ className });
 
+    const renderProps: SelectItemRenderProps = {
+      isSelected,
+      value: itemValue,
+      isDisabled,
+    };
+
+    const content =
+      typeof children === 'function'
+        ? children(renderProps)
+        : (children ?? (
+            <>
+              <SelectItemLabel />
+              <SelectItemIndicator />
+            </>
+          ));
+
     return (
-      <SelectPrimitives.Item ref={ref} className={tvStyles} {...props}>
-        {children || (
-          <>
-            <SelectItemLabel />
-            <SelectItemIndicator />
-          </>
-        )}
+      <SelectPrimitives.Item
+        ref={ref}
+        className={tvStyles}
+        disabled={disabled}
+        value={itemValue}
+        label={label}
+        {...props}
+      >
+        {content}
       </SelectPrimitives.Item>
     );
   }

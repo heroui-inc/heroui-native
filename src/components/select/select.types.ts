@@ -285,13 +285,30 @@ export interface SelectListLabelProps extends TextProps {
 }
 
 /**
+ * Render function props for SelectItem children
+ */
+export interface SelectItemRenderProps {
+  /** Whether this item is currently selected */
+  isSelected: boolean;
+  /** The value of the item */
+  value: string;
+  /** Whether the item is disabled */
+  isDisabled: boolean;
+}
+
+/**
  * Select Item component props
  */
-export interface SelectItemProps extends SelectPrimitivesTypes.ItemProps {
+export interface SelectItemProps
+  extends Omit<SelectPrimitivesTypes.ItemProps, 'children'> {
   /**
    * Additional CSS class for the item
    */
   className?: string;
+  /**
+   * Child elements to render inside the item, or a render function
+   */
+  children?: ReactNode | ((props: SelectItemRenderProps) => ReactNode);
 }
 
 /**

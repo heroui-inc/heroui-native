@@ -439,9 +439,9 @@ const LongContentDialogContent = () => {
                 className="self-center"
                 onPress={simulatePress}
               >
-                <Button.Label className="text-foreground font-semibold">
+                <Button.Title className="text-foreground font-semibold">
                   Agree to Terms
-                </Button.Label>
+                </Button.Title>
               </Button>
             </Dialog.Content>
           </Dialog.Portal>

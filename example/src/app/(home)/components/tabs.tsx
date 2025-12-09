@@ -316,7 +316,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               className="self-start px-6"
               onPress={handleUpdateProfile}
             >
-              <Button.Label className="text-base">Update profile</Button.Label>
+              <Button.Title className="text-base">Update profile</Button.Title>
             </Button>
           </AnimatedContentContainer>
         </Tabs.Content>

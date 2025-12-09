@@ -124,9 +124,9 @@ const OnboardingScreen = () => {
           className="mx-8 rounded-full bg-[#F8DD00]"
           animation={{ highlight: 'disabled' }}
         >
-          <Button.Label className="text-lg font-semibold text-black">
+          <Button.Title className="text-lg font-semibold text-black">
             Next
-          </Button.Label>
+          </Button.Title>
         </Button>
       </AnimatedView>
     </View>

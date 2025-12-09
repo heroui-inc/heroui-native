@@ -283,7 +283,7 @@ export default function TabsExample() {
               />
             </TextField>
             <Button size="sm" className="self-start">
-              <Button.Label>Update profile</Button.Label>
+              <Button.Title>Update profile</Button.Title>
             </Button>
           </AnimatedContentContainer>
         </Tabs.Content>

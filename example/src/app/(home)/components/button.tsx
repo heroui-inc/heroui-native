@@ -55,11 +55,11 @@ const DisabledStateContent = () => {
         <View className="gap-8 w-full px-8">
           <Button isDisabled>
             <Spinner color={themeColorMuted} size="sm" />
-            <Button.Label>Loading</Button.Label>
+            <Button.Title>Loading</Button.Title>
           </Button>
           <Button variant="secondary" isDisabled>
             <Spinner size="sm" color={themeColorMuted} />
-            <Button.Label>Loading</Button.Label>
+            <Button.Title>Loading</Button.Title>
           </Button>
           <Button variant="tertiary" isDisabled>
             <StyledIonicons
@@ -67,7 +67,7 @@ const DisabledStateContent = () => {
               size={16}
               className="text-muted"
             />
-            <Button.Label>Access Denied</Button.Label>
+            <Button.Title>Access Denied</Button.Title>
           </Button>
         </View>
       </View>
@@ -113,11 +113,11 @@ const WithIconsContent = () => {
               size={20}
               className="text-accent-foreground"
             />
-            <Button.Label>Add Item</Button.Label>
+            <Button.Title>Add Item</Button.Title>
           </Button>
 
           <Button variant="secondary">
-            <Button.Label>Download</Button.Label>
+            <Button.Title>Download</Button.Title>
             <StyledIonicons
               name="download"
               size={18}
@@ -131,7 +131,7 @@ const WithIconsContent = () => {
               size={14}
               className="text-default-foreground"
             />
-            <Button.Label>Favorite</Button.Label>
+            <Button.Title>Favorite</Button.Title>
             <StyledIonicons
               name="chevron-forward"
               size={18}
@@ -145,7 +145,7 @@ const WithIconsContent = () => {
               size={14}
               className="text-danger-foreground"
             />
-            <Button.Label>Delete</Button.Label>
+            <Button.Title>Delete</Button.Title>
           </Button>
         </View>
       </View>
@@ -161,31 +161,31 @@ const IconOnlyContent = () => {
       <View className="flex-1 items-center justify-center">
         <View className="flex-row gap-8">
           <Button size="sm" isIconOnly>
-            <Button.Label>
+            <Button.Title>
               <StyledIonicons
                 name="add"
                 size={16}
                 className="text-accent-foreground"
               />
-            </Button.Label>
+            </Button.Title>
           </Button>
           <Button size="md" variant="secondary" isIconOnly>
-            <Button.Label>
+            <Button.Title>
               <StyledIonicons
                 name="heart"
                 size={18}
                 className="text-pink-500"
               />
-            </Button.Label>
+            </Button.Title>
           </Button>
           <Button size="lg" variant="destructive" isIconOnly>
-            <Button.Label>
+            <Button.Title>
               <StyledIonicons
                 name="trash"
                 size={20}
                 className="text-danger-foreground"
               />
-            </Button.Label>
+            </Button.Title>
           </Button>
         </View>
       </View>
@@ -215,9 +215,9 @@ const CustomStylingContent = () => {
               },
             }}
           >
-            <Button.Label className="text-white font-semibold">
+            <Button.Title className="text-white font-semibold">
               Custom Purple
-            </Button.Label>
+            </Button.Title>
           </Button>
 
           <Button
@@ -239,9 +239,9 @@ const CustomStylingContent = () => {
               end={{ x: 1, y: 0 }}
               style={StyleSheet.absoluteFill}
             />
-            <Button.Label className="text-white font-bold">
+            <Button.Title className="text-white font-bold">
               Gradient
-            </Button.Label>
+            </Button.Title>
           </Button>
           <Button
             className={cn(
@@ -257,11 +257,11 @@ const CustomStylingContent = () => {
               size={18}
               className={cn('text-neutral-50', isDark && 'text-neutral-950')}
             />
-            <Button.Label
+            <Button.Title
               className={cn('text-neutral-50', isDark && 'text-neutral-950')}
             >
               Add to Cart
-            </Button.Label>
+            </Button.Title>
           </Button>
         </View>
       </View>

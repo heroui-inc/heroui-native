@@ -9,8 +9,8 @@ import { DISPLAY_NAME } from './button.constants';
 import buttonStyles, { styleSheet } from './button.styles';
 import type {
   ButtonContextValue,
-  ButtonLabelProps,
   ButtonRootProps,
+  ButtonTitleProps,
 } from './button.types';
 
 const [ButtonProvider, useButtonContext] = createContext<ButtonContextValue>({
@@ -127,7 +127,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         {...restProps}
       >
         {stringifiedChildren ? (
-          <ButtonLabel>{stringifiedChildren}</ButtonLabel>
+          <ButtonTitle>{stringifiedChildren}</ButtonTitle>
         ) : (
           children
         )}
@@ -138,7 +138,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
+const ButtonTitle = forwardRef<View, ButtonTitleProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
   const { size, variant } = useButtonContext();
@@ -159,7 +159,7 @@ const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
 // --------------------------------------------------
 
 ButtonRoot.displayName = DISPLAY_NAME.BUTTON_ROOT;
-ButtonLabel.displayName = DISPLAY_NAME.BUTTON_LABEL;
+ButtonTitle.displayName = DISPLAY_NAME.BUTTON_TITLE;
 
 /**
  * Compound Button component with sub-components
@@ -167,7 +167,7 @@ ButtonLabel.displayName = DISPLAY_NAME.BUTTON_LABEL;
  * @component Button - Main button container that handles press interactions, animations, and variants.
  * Renders with string children as label or accepts compound components for custom layouts.
  *
- * @component Button.Label - Text content of the button. When string is provided,
+ * @component Button.Title - Text content of the button. When string is provided,
  * it renders as Text. Otherwise renders children as-is.
  *
  * Props flow from Button to sub-components via context (size, variant, isDisabled).
@@ -176,8 +176,8 @@ ButtonLabel.displayName = DISPLAY_NAME.BUTTON_LABEL;
  * @see Full documentation: https://heroui.com/components/button
  */
 const CompoundButton = Object.assign(ButtonRoot, {
-  /** Button label - renders text or custom content */
-  Label: ButtonLabel,
+  /** Button title - renders text or custom content */
+  Title: ButtonTitle,
 });
 
 export default CompoundButton;

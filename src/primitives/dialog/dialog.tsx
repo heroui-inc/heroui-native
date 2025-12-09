@@ -43,15 +43,16 @@ const Root = forwardRef<RootRef, RootProps>(
     },
     ref
   ) => {
-    const nativeID = useId();
-
     const [isOpen = false, onOpenChange] = useControllableState({
       prop: isOpenProp,
       defaultProp: isDefaultOpen,
       onChange: onOpenChangeProp,
     });
 
+    const nativeID = useId();
+
     const Component = asChild ? Slot.View : View;
+
     return (
       <DialogContext.Provider
         value={{

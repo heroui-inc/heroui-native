@@ -2,11 +2,31 @@ import type BottomSheet from '@gorhom/bottom-sheet';
 import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
 import type { StyleProp, TextProps, ViewStyle } from 'react-native';
+import type { SharedValue } from 'react-native-reanimated';
 import type {
-  WithSpringConfig,
-  WithTimingConfig,
-} from 'react-native-reanimated';
+  AnimationRoot,
+  PopupOverlayAnimation,
+  PopupPopoverContentAnimation,
+  PopupRootAnimationConfig,
+} from '../../helpers/types/animation';
 import type * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
+
+/**
+ * Popover internal state for animation coordination
+ */
+export type PopoverState = 'idle' | 'open' | 'close';
+
+/**
+ * Context value for popover animation state
+ */
+export interface PopoverAnimationContextValue {
+  /** Extended internal state for animation control */
+  popoverState: PopoverState;
+  /** Animation progress shared value (0=idle, 1=open, 2=close) */
+  progress: SharedValue<number>;
+  /** Dragging state shared value */
+  isDragging: SharedValue<boolean>;
+}
 
 /**
  * Ref type for the Popover Trigger component
@@ -39,34 +59,9 @@ export interface PopoverContentContextValue {
 }
 
 /**
- * Spring animation configuration
+ * Animation configuration for Popover root component
  */
-interface SpringAnimationConfig {
-  animationType: 'spring';
-  animationConfig?: WithSpringConfig;
-}
-
-/**
- * Timing animation configuration
- */
-interface TimingAnimationConfig {
-  animationType: 'timing';
-  animationConfig?: WithTimingConfig;
-}
-
-/**
- * Progress animation configuration for popover transitions
- */
-export interface PopoverProgressAnimationConfigs {
-  /**
-   * Animation configuration for opening
-   */
-  onOpen?: SpringAnimationConfig | TimingAnimationConfig;
-  /**
-   * Animation configuration for closing
-   */
-  onClose?: SpringAnimationConfig | TimingAnimationConfig;
-}
+export type PopoverRootAnimation = AnimationRoot<PopupRootAnimationConfig>;
 
 /**
  * Popover Root component props
@@ -77,9 +72,26 @@ export interface PopoverRootProps extends PopoverPrimitivesTypes.RootProps {
    */
   children?: ReactNode;
   /**
-   * Whether the popover is open
+   * The controlled open state of the popover
    */
   isOpen?: boolean;
+  /**
+   * The open state of the popover when initially rendered (uncontrolled)
+   */
+  isDefaultOpen?: boolean;
+  /**
+   * Delay in milliseconds before the popover closes (for exit animations)
+   * @default 400
+   */
+  closeDelay?: number;
+  /**
+   * Animation configuration for popover root
+   * - `"disable-all"`: Disable all animations including children
+   * - `false` or `"disabled"`: Disable only root animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: PopoverRootAnimation;
 }
 
 /**
@@ -109,11 +121,12 @@ export interface PopoverPortalProps extends PopoverPrimitivesTypes.PortalProps {
    * The portal content
    */
   children: ReactNode;
-  /**
-   * Animation configurations for open/close progress animations
-   */
-  progressAnimationConfigs?: PopoverProgressAnimationConfigs;
 }
+
+/**
+ * Animation configuration for Popover Overlay component
+ */
+export type PopoverOverlayAnimation = PopupOverlayAnimation;
 
 /**
  * Popover Overlay component props
@@ -125,11 +138,13 @@ export interface PopoverOverlayProps
    */
   className?: string;
   /**
-   * Whether to disable the default opacity animation
-   * Use this when you want to animate opacity using your own Reanimated useAnimatedStyle
-   * @default false
+   * Animation configuration for overlay
+   * - `"disable-all"`: Disable all animations including children
+   * - `false` or `"disabled"`: Disable only overlay animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: PopoverOverlayAnimation;
 }
 
 /**
@@ -150,11 +165,12 @@ export interface PopoverContentPopoverProps
    */
   presentation?: 'popover';
   /**
-   * Whether to disable the default animations (opacity, scale, translate)
-   * Use this when you want to animate these properties using your own Reanimated useAnimatedStyle
-   * @default false
+   * Animation configuration for content
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: PopupPopoverContentAnimation;
 }
 
 /**
@@ -218,11 +234,11 @@ export interface PopoverCloseIconProps {
 }
 
 /**
- * Popover Label component props
+ * Popover Title component props
  */
-export interface PopoverLabelProps extends TextProps {
+export interface PopoverTitleProps extends TextProps {
   /**
-   * Additional CSS class for the label
+   * Additional CSS class for the title
    */
   className?: string;
 }

@@ -119,9 +119,7 @@ export const Status: FC = () => {
         </Chip>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay isDefaultAnimationDisabled>
-          <DialogBlurBackdrop />
-        </Dialog.Overlay>
+        <DialogBlurBackdrop />
         <Dialog.Content>
           <DialogHeader>Status</DialogHeader>
           <RadioGroup value={value} onValueChange={setValue} className="gap-7">

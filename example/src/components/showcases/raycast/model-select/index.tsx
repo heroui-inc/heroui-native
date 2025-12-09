@@ -22,6 +22,7 @@ import { SelectItem } from './select-item';
 import { type ModelOption } from './types';
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
+const StyledAnimatedScrollView = withUniwind(AnimatedScrollView);
 const StyledFeather = withUniwind(Feather);
 
 type Props = {
@@ -46,6 +47,22 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
         setModel(modelValue!);
       }}
       defaultValue={data[0]}
+      animation={{
+        entering: {
+          type: 'timing',
+          config: {
+            duration: 400,
+            easing: Easing.out(Easing.quad),
+          },
+        },
+        exiting: {
+          type: 'timing',
+          config: {
+            duration: 200,
+            easing: Easing.out(Easing.quad),
+          },
+        },
+      }}
     >
       <Select.Trigger asChild>
         <Button
@@ -66,30 +83,11 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
           </AppText>
         </Button>
       </Select.Trigger>
-      <Select.Portal
-        progressAnimationConfigs={{
-          onOpen: {
-            animationType: 'timing',
-            animationConfig: {
-              duration: 400,
-              easing: Easing.out(Easing.quad),
-            },
-          },
-          onClose: {
-            animationType: 'timing',
-            animationConfig: {
-              duration: 200,
-              easing: Easing.out(Easing.quad),
-            },
-          },
-        }}
-      >
+      <Select.Portal>
         {Platform.OS === 'android' ? (
           <Select.Overlay className="bg-background" />
         ) : (
-          <Select.Overlay className="bg-transparent" isDefaultAnimationDisabled>
-            <SelectBlurBackdrop />
-          </Select.Overlay>
+          <SelectBlurBackdrop />
         )}
 
         <SelectContentContainer>
@@ -124,7 +122,7 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
             </Pressable>
           </View>
 
-          <AnimatedScrollView
+          <StyledAnimatedScrollView
             entering={SlideInDown.withInitialValues({
               originY: 100,
             })
@@ -141,7 +139,7 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
             {data.map((m) => (
               <SelectItem key={m.value} data={m} />
             ))}
-          </AnimatedScrollView>
+          </StyledAnimatedScrollView>
           <LinearGradient
             colors={[
               themeColorSurface,

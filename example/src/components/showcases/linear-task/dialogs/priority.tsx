@@ -97,9 +97,7 @@ export const Priority: FC = () => {
         </Chip>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay isDefaultAnimationDisabled>
-          <DialogBlurBackdrop />
-        </Dialog.Overlay>
+        <DialogBlurBackdrop />
         <Dialog.Content>
           <DialogHeader>Priority</DialogHeader>
           <RadioGroup value={value} onValueChange={setValue} className="gap-7">

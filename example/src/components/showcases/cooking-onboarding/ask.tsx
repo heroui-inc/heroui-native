@@ -10,7 +10,7 @@ import { type FC, type RefObject } from 'react';
 import { withUniwind } from 'uniwind';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
-import { progressAnimationConfigs } from './constants';
+import { popoverAnimation } from './constants';
 import { className } from './styles';
 
 const StyledIonicons = withUniwind(Ionicons);
@@ -24,7 +24,7 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
   const themeColorForeground = useThemeColor('foreground');
 
   return (
-    <Popover>
+    <Popover animation={popoverAnimation}>
       <Popover.Trigger ref={triggerRef}>
         <Button
           variant="secondary"
@@ -44,7 +44,7 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
           </AppText>
         </Button>
       </Popover.Trigger>
-      <Popover.Portal progressAnimationConfigs={progressAnimationConfigs}>
+      <Popover.Portal>
         <Popover.Content
           className={cn(className.popoverContent, 'w-[240px]')}
           placement="top"

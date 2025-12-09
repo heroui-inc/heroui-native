@@ -1,20 +1,22 @@
 import { forwardRef, useMemo } from 'react';
-import type { Text as RNText } from 'react-native';
+import type { Text as RNText, ViewStyle } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated, {
-  interpolate,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { Text } from '../../helpers/components/text';
-import { useDialogContentAnimation } from '../../helpers/hooks';
+import {
+  AnimationSettingsProvider,
+  useAnimationSettings,
+} from '../../helpers/contexts/animation-settings-context';
+import { usePopupDialogContentAnimation } from '../../helpers/hooks/use-popup-dialog-content-animation';
+import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
+import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
 import { useThemeColor } from '../../helpers/theme';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import {
   DialogAnimationProvider,
   useDialogAnimation,
-  useDialogRootAnimation,
 } from './dialog.animation';
 import { DISPLAY_NAME } from './dialog.constants';
 import dialogStyles, { styleSheet } from './dialog.styles';
@@ -22,10 +24,10 @@ import type {
   DialogCloseProps,
   DialogContentProps,
   DialogDescriptionProps,
-  DialogLabelProps,
   DialogOverlayProps,
   DialogPortalProps,
   DialogRootProps,
+  DialogTitleProps,
   DialogTriggerProps,
 } from './dialog.types';
 
@@ -45,47 +47,64 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
   (
     {
       children,
-      closeDelay = 500,
+      closeDelay = 300,
       isDismissKeyboardOnClose = true,
       isOpen: isOpenProp,
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
-      progressAnimationConfigs,
+      animation,
       ...props
     },
     ref
   ) => {
-    const { internalIsOpen, dialogState, progress, isDragging, onOpenChange } =
-      useDialogRootAnimation({
-        isOpen: isOpenProp,
-        isDefaultOpen,
-        onOpenChange: onOpenChangeProp,
-        closeDelay,
-        isDismissKeyboardOnClose,
-        progressAnimationConfigs,
-      });
+    const {
+      internalIsOpen,
+      componentState,
+      progress,
+      isDragging,
+      isGestureReleaseAnimationRunning,
+      onOpenChange,
+      isAllAnimationsDisabled,
+    } = usePopupRootAnimation({
+      isOpen: isOpenProp,
+      isDefaultOpen,
+      onOpenChange: onOpenChangeProp,
+      closeDelay,
+      isDismissKeyboardOnClose,
+      animation,
+    });
 
     const animationContextValue = useMemo(
       () => ({
-        dialogState,
+        dialogState: componentState,
         progress,
         isDragging,
+        isGestureReleaseAnimationRunning,
       }),
-      [dialogState, progress, isDragging]
+      [componentState, progress, isDragging, isGestureReleaseAnimationRunning]
+    );
+
+    const animationSettingsContextValue = useMemo(
+      () => ({
+        isAllAnimationsDisabled,
+      }),
+      [isAllAnimationsDisabled]
     );
 
     return (
-      <DialogAnimationProvider value={animationContextValue}>
-        <DialogPrimitives.Root
-          ref={ref}
-          isOpen={internalIsOpen}
-          isDefaultOpen={isDefaultOpen}
-          onOpenChange={onOpenChange}
-          {...props}
-        >
-          {children}
-        </DialogPrimitives.Root>
-      </DialogAnimationProvider>
+      <AnimationSettingsProvider value={animationSettingsContextValue}>
+        <DialogAnimationProvider value={animationContextValue}>
+          <DialogPrimitives.Root
+            ref={ref}
+            isOpen={internalIsOpen}
+            isDefaultOpen={isDefaultOpen}
+            onOpenChange={onOpenChange}
+            {...props}
+          >
+            {children}
+          </DialogPrimitives.Root>
+        </DialogAnimationProvider>
+      </AnimationSettingsProvider>
     );
   }
 );
@@ -107,19 +126,22 @@ const DialogPortal = ({
   style,
   ...props
 }: DialogPortalProps) => {
+  const animationSettingsContext = useAnimationSettings();
   const animationContext = useDialogAnimation();
 
   const tvStyles = dialogStyles.portal({ className });
 
   return (
     <DialogPrimitives.Portal {...props}>
-      <DialogAnimationProvider value={animationContext}>
-        <FullWindowOverlay>
-          <Animated.View className={tvStyles} style={style}>
-            {children}
-          </Animated.View>
-        </FullWindowOverlay>
-      </DialogAnimationProvider>
+      <AnimationSettingsProvider value={animationSettingsContext}>
+        <DialogAnimationProvider value={animationContext}>
+          <FullWindowOverlay>
+            <Animated.View className={tvStyles} style={style}>
+              {children}
+            </Animated.View>
+          </FullWindowOverlay>
+        </DialogAnimationProvider>
+      </AnimationSettingsProvider>
     </DialogPrimitives.Portal>
   );
 };
@@ -129,28 +151,18 @@ const DialogPortal = ({
 const DialogOverlay = forwardRef<
   DialogPrimitivesTypes.OverlayRef,
   DialogOverlayProps
->(({ className, style, isDefaultAnimationDisabled = false, ...props }, ref) => {
-  const { progress, isDragging } = useDialogAnimation();
+>(({ className, style, animation, ...props }, ref) => {
+  const { progress, isDragging, isGestureReleaseAnimationRunning } =
+    useDialogAnimation();
 
-  const rContainerStyle = useAnimatedStyle(() => {
-    if (isDefaultAnimationDisabled) {
-      return {};
-    }
+  const tvStyles = dialogStyles.overlay({ className });
 
-    if (isDragging.get() && progress.get() <= 1) {
-      return { opacity: 1 };
-    }
-
-    const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
-
-    return {
-      opacity,
-    };
-  });
-
-  const tvStyles = dialogStyles.overlay({
-    className,
-    isDefaultAnimationDisabled,
+  const { rContainerStyle } = usePopupOverlayAnimation({
+    progress,
+    isDragging,
+    isGestureReleaseAnimationRunning,
+    animation,
+    style: style as ViewStyle,
   });
 
   return (
@@ -175,13 +187,20 @@ const DialogContent = forwardRef<
       style,
       children,
       onLayout,
-      isDefaultAnimationDisabled = false,
+      animation,
+      isSwipeable = true,
       ...props
     },
     ref
   ) => {
-    const { progress, isDragging, dialogState } = useDialogAnimation();
     const { onOpenChange } = useDialog();
+
+    const {
+      progress,
+      isDragging,
+      isGestureReleaseAnimationRunning,
+      dialogState,
+    } = useDialogAnimation();
 
     const tvStyles = dialogStyles.content({ className });
 
@@ -191,19 +210,22 @@ const DialogContent = forwardRef<
       panGesture,
       rDragContainerStyle,
       rContainerStyle,
-    } = useDialogContentAnimation({
+    } = usePopupDialogContentAnimation({
       progress,
       isDragging,
+      isGestureReleaseAnimationRunning,
       dialogState,
       onOpenChange,
-      isDefaultAnimationDisabled,
+      animation,
+      style: style as ViewStyle | undefined,
+      isSwipeable,
     });
 
     return (
       <GestureDetector gesture={panGesture}>
         <Animated.View
           style={rDragContainerStyle}
-          className="pointer-events-box-none"
+          pointerEvents="box-none"
           onLayout={(event) => {
             contentY.set(event.nativeEvent.layout.y);
             contentHeight.set(event.nativeEvent.layout.height);
@@ -254,7 +276,7 @@ const DialogClose = forwardRef<
 
 // --------------------------------------------------
 
-const DialogLabel = forwardRef<RNText, DialogLabelProps>(
+const DialogTitle = forwardRef<RNText, DialogTitleProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useDialog();
     const tvStyles = dialogStyles.label({ className });
@@ -306,7 +328,7 @@ DialogPortal.displayName = DISPLAY_NAME.PORTAL;
 DialogOverlay.displayName = DISPLAY_NAME.OVERLAY;
 DialogContent.displayName = DISPLAY_NAME.CONTENT;
 DialogClose.displayName = DISPLAY_NAME.CLOSE;
-DialogLabel.displayName = DISPLAY_NAME.LABEL;
+DialogTitle.displayName = DISPLAY_NAME.TITLE;
 DialogDescription.displayName = DISPLAY_NAME.DESCRIPTION;
 
 /**
@@ -330,7 +352,7 @@ DialogDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  * @component Dialog.Close - Close button for the dialog.
  * Can accept custom children or uses default close icon.
  *
- * @component Dialog.Label - The dialog label text.
+ * @component Dialog.Title - The dialog title text.
  * Automatically linked for accessibility.
  *
  * @component Dialog.Description - The dialog description text.
@@ -349,8 +371,8 @@ const Dialog = Object.assign(DialogRoot, {
   Content: DialogContent,
   /** @optional Close button for the dialog */
   Close: DialogClose,
-  /** @optional Dialog label text */
-  Label: DialogLabel,
+  /** @optional Dialog title text */
+  Title: DialogTitle,
   /** @optional Dialog description text */
   Description: DialogDescription,
 });

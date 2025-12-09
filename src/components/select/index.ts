@@ -1,4 +1,9 @@
-export { default as Select, useSelect, useSelectItem } from './select';
+export {
+  default as Select,
+  useSelect,
+  useSelectAnimation,
+  useSelectItem,
+} from './select';
 export type {
   SelectAlign,
   SelectCloseIconProps,
@@ -13,7 +18,6 @@ export type {
   SelectOverlayProps,
   SelectPlacement,
   SelectPortalProps,
-  SelectProgressAnimationConfigs,
   SelectRootProps,
   SelectTriggerProps,
   SelectTriggerRef,

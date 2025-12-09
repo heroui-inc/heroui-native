@@ -1,7 +1,7 @@
 import {
   Divider,
   Select,
-  useSelect,
+  useSelectAnimation,
   useThemeColor,
   type SelectTriggerRef,
 } from 'heroui-native';
@@ -31,7 +31,7 @@ const US_STATES: SelectOption[] = [
 ];
 
 const AnimatedTextInputBorder: FC = () => {
-  const { progress } = useSelect();
+  const { progress } = useSelectAnimation();
 
   const rContainerStyle = useAnimatedStyle(() => {
     const opacity = interpolate(progress.value, [0, 1, 2], [0, 1, 0]);

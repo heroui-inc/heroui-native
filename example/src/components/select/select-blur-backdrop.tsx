@@ -1,4 +1,4 @@
-import { useSelect } from 'heroui-native';
+import { Select, useSelectAnimation } from 'heroui-native';
 import { StyleSheet } from 'react-native';
 import { interpolate, useDerivedValue } from 'react-native-reanimated';
 import { useAppTheme } from '../../contexts/app-theme-context';
@@ -10,13 +10,17 @@ type Props = {
 
 export const SelectBlurBackdrop = ({ maxIntensity }: Props) => {
   const { isDark } = useAppTheme();
-  const { progress, isDragging } = useSelect();
+  const { progress, isDragging, isGestureReleaseAnimationRunning } =
+    useSelectAnimation();
 
   const blurIntensity = useDerivedValue(() => {
     const defaultMaxIntensityValue = isDark ? 75 : 50;
     const computedMaxIntensityValue = maxIntensity ?? defaultMaxIntensityValue;
 
-    if (isDragging.get() && progress.get() <= 1) {
+    if (
+      (isDragging.get() || isGestureReleaseAnimationRunning.get()) &&
+      progress.get() <= 1
+    ) {
       return computedMaxIntensityValue;
     }
 
@@ -28,10 +32,12 @@ export const SelectBlurBackdrop = ({ maxIntensity }: Props) => {
   });
 
   return (
-    <AnimatedBlurView
-      blurIntensity={blurIntensity}
-      tint={isDark ? 'dark' : 'systemUltraThinMaterialLight'}
-      style={StyleSheet.absoluteFill}
-    />
+    <Select.Close style={StyleSheet.absoluteFill}>
+      <AnimatedBlurView
+        blurIntensity={blurIntensity}
+        tint={isDark ? 'dark' : 'light'}
+        style={StyleSheet.absoluteFill}
+      />
+    </Select.Close>
   );
 };

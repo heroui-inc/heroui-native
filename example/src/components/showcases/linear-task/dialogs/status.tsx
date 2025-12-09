@@ -113,9 +113,9 @@ export const Status: FC = () => {
           }}
         >
           {items.find((item) => item.value === value)?.indicator}
-          <Chip.Label className="text-foreground font-medium">
+          <Chip.Title className="text-foreground font-medium">
             {items.find((item) => item.value === value)?.label}
-          </Chip.Label>
+          </Chip.Title>
         </Chip>
       </Dialog.Trigger>
       <Dialog.Portal>

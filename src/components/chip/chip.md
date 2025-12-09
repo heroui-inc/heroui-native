@@ -60,11 +60,11 @@ Add icons or custom content alongside text using compound components.
 ```tsx
 <Chip>
   <Icon name="star" size={12} />
-  <Chip.Label>Featured</Chip.Label>
+  <Chip.Title>Featured</Chip.Title>
 </Chip>
 
 <Chip>
-  <Chip.Label>Close</Chip.Label>
+  <Chip.Title>Close</Chip.Title>
   <Icon name="close" size={12} />
 </Chip>
 ```
@@ -75,7 +75,7 @@ Apply custom styles using className or style props.
 
 ```tsx
 <Chip className="bg-purple-600 px-6">
-  <Chip.Label className="text-white">Custom</Chip.Label>
+  <Chip.Title className="text-white">Custom</Chip.Title>
 </Chip>
 ```
 
@@ -101,21 +101,21 @@ export default function ChipExample() {
         </Chip>
         <Chip variant="secondary" color="success">
           <View className="size-1.5 rounded-full bg-success" />
-          <Chip.Label>Success</Chip.Label>
+          <Chip.Title>Success</Chip.Title>
         </Chip>
         <Chip variant="tertiary" color="warning">
           <Ionicons name="star" size={12} color="#F59E0B" />
-          <Chip.Label>Premium</Chip.Label>
+          <Chip.Title>Premium</Chip.Title>
         </Chip>
       </View>
 
       <View className="flex-row gap-2">
         <Chip variant="secondary">
-          <Chip.Label>Remove</Chip.Label>
+          <Chip.Title>Remove</Chip.Title>
           <Ionicons name="close" size={14} color="#6B7280" />
         </Chip>
         <Chip className="bg-purple-600">
-          <Chip.Label className="text-white font-semibold">Custom</Chip.Label>
+          <Chip.Title className="text-white font-semibold">Custom</Chip.Title>
         </Chip>
       </View>
     </View>
@@ -127,12 +127,12 @@ export default function ChipExample() {
 
 ```tsx
 <Chip>
-  <Chip.Label>...</Chip.Label>
+  <Chip.Title>...</Chip.Title>
 </Chip>
 ```
 
 - **Chip**: Main container that displays a compact element
-- **Chip.Label**: Text content of the chip
+- **Chip.Title**: Text content of the chip
 
 ## API Reference
 
@@ -147,10 +147,10 @@ export default function ChipExample() {
 | `className`         | `string`                                                      | -           | Additional CSS classes to apply   |
 | `...PressableProps` | `PressableProps`                                              | -           | All Pressable props are supported |
 
-### Chip.Label
+### Chip.Title
 
 | prop           | type              | default | description                            |
 | -------------- | ----------------- | ------- | -------------------------------------- |
-| `children`     | `React.ReactNode` | -       | Text or content to render as the label |
+| `children`     | `React.ReactNode` | -       | Text or content to render as the title |
 | `className`    | `string`          | -       | Additional CSS classes to apply        |
 | `...TextProps` | `TextProps`       | -       | All standard Text props are supported  |

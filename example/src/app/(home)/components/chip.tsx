@@ -183,34 +183,34 @@ const WithStartContentContent = () => {
         <View className="flex-row flex-wrap gap-4 justify-center">
           <Chip variant="tertiary">
             <AppText className="text-xs">📌</AppText>
-            <Chip.Label>Featured</Chip.Label>
+            <Chip.Title>Featured</Chip.Title>
           </Chip>
           <Chip size="md" variant="secondary" color="success">
             <StyledIonicons name="add" size={16} className="text-green-500" />
-            <Chip.Label>New</Chip.Label>
+            <Chip.Title>New</Chip.Title>
           </Chip>
           <Chip size="lg" variant="tertiary" color="warning">
             <StyledIonicons name="star" size={12} className="text-yellow-500" />
-            <Chip.Label>Premium</Chip.Label>
+            <Chip.Title>Premium</Chip.Title>
           </Chip>
         </View>
 
         <View className="flex-row flex-wrap gap-4 justify-center">
           <Chip size="md" variant="secondary">
             <View className="size-1.5 mr-1.5 rounded-full bg-accent" />
-            <Chip.Label>Information</Chip.Label>
+            <Chip.Title>Information</Chip.Title>
           </Chip>
           <Chip size="md" variant="secondary" color="success">
             <View className="size-1.5 mr-1.5 rounded-full bg-success" />
-            <Chip.Label>Completed</Chip.Label>
+            <Chip.Title>Completed</Chip.Title>
           </Chip>
           <Chip size="md" variant="secondary" color="warning">
             <View className="size-1.5 mr-1.5 rounded-full bg-warning" />
-            <Chip.Label>Pending</Chip.Label>
+            <Chip.Title>Pending</Chip.Title>
           </Chip>
           <Chip size="md" variant="secondary" color="danger">
             <View className="size-1.5 mr-1.5 rounded-full bg-danger" />
-            <Chip.Label>Failed</Chip.Label>
+            <Chip.Title>Failed</Chip.Title>
           </Chip>
         </View>
       </View>
@@ -225,11 +225,11 @@ const WithEndContentContent = () => {
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row gap-4 justify-center">
         <Chip size="sm" variant="secondary">
-          <Chip.Label className="text-muted">Close</Chip.Label>
+          <Chip.Title className="text-muted">Close</Chip.Title>
           <StyledIonicons name="close" size={12} className="text-gray-500" />
         </Chip>
         <Chip size="md" variant="primary" color="danger" className="pr-1.5">
-          <Chip.Label>Remove</Chip.Label>
+          <Chip.Title>Remove</Chip.Title>
           <StyledIonicons name="close" size={16} className="text-white" />
         </Chip>
         <Chip
@@ -238,7 +238,7 @@ const WithEndContentContent = () => {
           color="default"
           className="pr-1.5 p-0.5 pl-2 gap-2"
         >
-          <Chip.Label className="text-muted">Clear</Chip.Label>
+          <Chip.Title className="text-muted">Clear</Chip.Title>
           <View className="rounded-full p-1 bg-muted/20">
             <StyledIonicons name="close" size={12} className="text-muted" />
           </View>
@@ -255,13 +255,13 @@ const CustomStylingContent = () => {
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row flex-wrap gap-4 justify-center">
         <Chip className="bg-purple-600 px-6">
-          <Chip.Label className="text-background text-base">Custom</Chip.Label>
+          <Chip.Title className="text-background text-base">Custom</Chip.Title>
         </Chip>
         <Chip
           variant="secondary"
           className="border-purple-600 bg-purple-100 rounded-sm"
         >
-          <Chip.Label className="text-purple-800">Purple</Chip.Label>
+          <Chip.Title className="text-purple-800">Purple</Chip.Title>
         </Chip>
 
         <Chip>
@@ -271,7 +271,7 @@ const CustomStylingContent = () => {
             end={{ x: 1, y: 0 }}
             style={StyleSheet.absoluteFill}
           />
-          <Chip.Label className="text-white font-semibold">Gradient</Chip.Label>
+          <Chip.Title className="text-white font-semibold">Gradient</Chip.Title>
         </Chip>
 
         <Chip size="lg">
@@ -281,7 +281,7 @@ const CustomStylingContent = () => {
             end={{ x: 1, y: 1 }}
             style={StyleSheet.absoluteFill}
           />
-          <Chip.Label className="text-white font-bold">Premium</Chip.Label>
+          <Chip.Title className="text-white font-bold">Premium</Chip.Title>
         </Chip>
 
         <Chip>
@@ -291,7 +291,7 @@ const CustomStylingContent = () => {
             end={{ x: 1, y: 0.5 }}
             style={StyleSheet.absoluteFill}
           />
-          <Chip.Label className="text-white font-semibold">Hot</Chip.Label>
+          <Chip.Title className="text-white font-semibold">Hot</Chip.Title>
         </Chip>
       </View>
     </View>

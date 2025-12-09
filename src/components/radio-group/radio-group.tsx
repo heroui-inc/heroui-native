@@ -1,14 +1,18 @@
-/* eslint-disable react-native/no-inline-styles */
 import { forwardRef, useMemo } from 'react';
-import { View } from 'react-native';
+import { View, type ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { useIsOnSurface } from '../../helpers/theme';
 import type { TextRef, ViewRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
 import { ErrorView } from '../error-view';
 import { FormField } from '../form-field';
+import {
+  useRadioGroupIndicatorThumbAnimation,
+  useRadioGroupRootAnimation,
+} from './radio-group.animation';
 import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './radio-group.constants';
 import radioGroupStyles, { styleSheet } from './radio-group.styles';
 import type {
@@ -44,19 +48,32 @@ const RadioGroupRoot = forwardRef<
   RadioGroupPrimitives.RootRef,
   RadioGroupProps
 >((props, ref) => {
-  const { className, isInvalid = false, ...restProps } = props;
+  const { className, isInvalid = false, animation, ...restProps } = props;
 
   const tvStyles = radioGroupStyles.root({
     className,
   });
 
+  const { isAllAnimationsDisabled } = useRadioGroupRootAnimation({
+    animation,
+  });
+
+  const animationSettingsContextValue = useMemo(
+    () => ({
+      isAllAnimationsDisabled,
+    }),
+    [isAllAnimationsDisabled]
+  );
+
   return (
-    <RadioGroupPrimitives.Root
-      ref={ref}
-      className={tvStyles}
-      isInvalid={isInvalid}
-      {...restProps}
-    />
+    <AnimationSettingsProvider value={animationSettingsContextValue}>
+      <RadioGroupPrimitives.Root
+        ref={ref}
+        className={tvStyles}
+        isInvalid={isInvalid}
+        {...restProps}
+      />
+    </AnimationSettingsProvider>
   );
 });
 
@@ -181,7 +198,7 @@ const RadioGroupIndicatorThumb = forwardRef<
   View,
   RadioGroupIndicatorThumbProps
 >((props, ref) => {
-  const { className, style, ...restProps } = props;
+  const { className, style, animation, ...restProps } = props;
 
   const { isSelected, isOnSurface } = useRadioGroupItem();
 
@@ -191,23 +208,17 @@ const RadioGroupIndicatorThumb = forwardRef<
     className,
   });
 
+  const { rContainerStyle } = useRadioGroupIndicatorThumbAnimation({
+    animation,
+    isSelected,
+    style: style as ViewStyle | undefined,
+  });
+
   return (
     <Animated.View
       ref={ref}
       className={tvStyles}
-      style={[
-        {
-          transitionProperty: ['transform'],
-          transitionDuration: 300,
-          transitionTimingFunction: 'ease-out',
-          transform: [
-            {
-              scale: isSelected ? 1 : 1.5,
-            },
-          ],
-        },
-        style,
-      ]}
+      style={[rContainerStyle, style]}
       {...restProps}
     />
   );

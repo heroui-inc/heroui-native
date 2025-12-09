@@ -7,6 +7,7 @@ export type {
   RadioGroupDescriptionProps,
   RadioGroupErrorMessageProps,
   RadioGroupIndicatorProps,
+  RadioGroupIndicatorThumbAnimation,
   RadioGroupIndicatorThumbProps,
   RadioGroupItemContextValue,
   RadioGroupItemProps,

@@ -151,26 +151,50 @@ export default function ScrollShadowExample() {
 
 ### ScrollShadow
 
-| prop           | type                                                                   | default     | description                                                                                                   |
-| -------------- | ---------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------- |
-| `children`     | `React.ReactElement`                                                   | -           | The scrollable component to enhance with shadows. Must be a single React element (ScrollView, FlatList, etc.) |
-| `LinearGradientComponent` | `ComponentType<LinearGradientProps>`                           | **required** | LinearGradient component from any compatible library (expo-linear-gradient, react-native-linear-gradient, etc.) |
-| `size`         | `number`                                                               | `50`        | Size (height/width) of the gradient shadow in pixels                                                          |
-| `orientation`  | `'horizontal' \| 'vertical'`                                           | auto-detect | Orientation of the scroll shadow. If not provided, will auto-detect from child's `horizontal` prop            |
-| `visibility`   | `'auto' \| 'top' \| 'bottom' \| 'left' \| 'right' \| 'both' \| 'none'` | `'auto'`    | Visibility mode for the shadows. 'auto' shows shadows based on scroll position and content overflow           |
-| `color`        | `string`                                                               | theme color | Custom color for the gradient shadow. If not provided, uses the theme's background color                      |
-| `isEnabled`    | `boolean`                                                              | `true`      | Whether the shadow effect is enabled                                                                          |
-| `className`    | `string`                                                               | -           | Additional CSS classes to apply to the container                                                              |
-| `...ViewProps` | `ViewProps`                                                            | -           | All standard React Native View props are supported                                                            |
+| prop                      | type                                                                   | default      | description                                                                                                     |
+| ------------------------- | ---------------------------------------------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------- |
+| `children`                | `React.ReactElement`                                                   | -            | The scrollable component to enhance with shadows. Must be a single React element (ScrollView, FlatList, etc.)   |
+| `LinearGradientComponent` | `ComponentType<LinearGradientProps>`                                   | **required** | LinearGradient component from any compatible library (expo-linear-gradient, react-native-linear-gradient, etc.) |
+| `size`                    | `number`                                                               | `50`         | Size (height/width) of the gradient shadow in pixels                                                            |
+| `orientation`             | `'horizontal' \| 'vertical'`                                           | auto-detect  | Orientation of the scroll shadow. If not provided, will auto-detect from child's `horizontal` prop              |
+| `visibility`              | `'auto' \| 'top' \| 'bottom' \| 'left' \| 'right' \| 'both' \| 'none'` | `'auto'`     | Visibility mode for the shadows. 'auto' shows shadows based on scroll position and content overflow             |
+| `color`                   | `string`                                                               | theme color  | Custom color for the gradient shadow. If not provided, uses the theme's background color                        |
+| `isEnabled`               | `boolean`                                                              | `true`       | Whether the shadow effect is enabled                                                                            |
+| `animation`               | `ScrollShadowRootAnimation`                                            | `undefined`  | Animation configuration for scroll shadow (see below)                                                           |
+| `className`               | `string`                                                               | -            | Additional CSS classes to apply to the container                                                                |
+| `...ViewProps`            | `ViewProps`                                                            | -            | All standard React Native View props are supported                                                              |
+
+#### ScrollShadowRootAnimation
+
+Animation configuration for the ScrollShadow root component. Supports cascading control to disable animations across all child components.
+
+| value                   | description                                               |
+| ----------------------- | --------------------------------------------------------- |
+| `true` or `undefined`   | Use default animations                                    |
+| `false` or `"disabled"` | Disable only root animations (children can still animate) |
+| `"disable-all"`         | Disable all animations including children (cascades down) |
+| `object`                | Custom animation configuration                            |
+
+**Custom Configuration:**
+
+| property  | type                            | default     | description                                 |
+| --------- | ------------------------------- | ----------- | ------------------------------------------- |
+| `opacity` | `AnimationValue<OpacityConfig>` | `undefined` | Opacity animation configuration for shadows |
+
+**OpacityConfig:**
+
+| property | type               | default  | description                                                                 |
+| -------- | ------------------ | -------- | --------------------------------------------------------------------------- |
+| `value`  | `[number, number]` | `[0, 1]` | Opacity values [initial, active]. For bottom/right shadow, this is reversed |
 
 ### LinearGradientProps
 
 The `LinearGradientComponent` prop expects a component that accepts these props:
 
-| prop           | type                              | description                                                                |
-| -------------- | --------------------------------- | -------------------------------------------------------------------------- |
-| `colors`       | `any`                             | Array of colors for the gradient                                          |
-| `locations`    | `any` (optional)                  | Array of numbers defining the location of each gradient color stop        |
-| `start`        | `any` (optional)                  | Start point of the gradient (e.g., `{ x: 0, y: 0 }`)                    |
-| `end`          | `any` (optional)                  | End point of the gradient (e.g., `{ x: 1, y: 0 }`)                      |
-| `style`        | `StyleProp<ViewStyle>` (optional) | Style to apply to the gradient view                                      |
+| prop        | type                              | description                                                        |
+| ----------- | --------------------------------- | ------------------------------------------------------------------ |
+| `colors`    | `any`                             | Array of colors for the gradient                                   |
+| `locations` | `any` (optional)                  | Array of numbers defining the location of each gradient color stop |
+| `start`     | `any` (optional)                  | Start point of the gradient (e.g., `{ x: 0, y: 0 }`)               |
+| `end`       | `any` (optional)                  | End point of the gradient (e.g., `{ x: 1, y: 0 }`)                 |
+| `style`     | `StyleProp<ViewStyle>` (optional) | Style to apply to the gradient view                                |

@@ -72,7 +72,7 @@ export interface ScrollShadowProps extends ViewProps {
 
   /**
    * Size (height/width) of the gradient shadow in pixels
-   * @default 40
+   * @default 50
    */
   size?: number;
 

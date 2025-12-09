@@ -1,5 +1,10 @@
 import type { ViewProps } from 'react-native';
-import type { AnimatedProps } from 'react-native-reanimated';
+import type { AnimatedProps, WithTimingConfig } from 'react-native-reanimated';
+import type {
+  Animation,
+  AnimationRootDisableAll,
+  AnimationValue,
+} from '../../helpers/types/animation';
 import type { ItemProps, RootProps } from '../../primitives/radio-group';
 import type { ErrorViewRootProps } from '../error-view/error-view.types';
 import type {
@@ -15,6 +20,12 @@ export interface RadioGroupProps extends Omit<RootProps, 'asChild'> {
   children?: React.ReactNode;
   /** Custom class name */
   className?: string;
+  /**
+   * Animation configuration for radio group
+   * - `"disable-all"`: Disable all animations including children
+   * - `undefined`: Use default animations
+   */
+  animation?: AnimationRootDisableAll;
 }
 
 /**
@@ -70,12 +81,37 @@ export interface RadioGroupIndicatorProps extends AnimatedProps<ViewProps> {
 }
 
 /**
+ * Animation configuration for RadioGroupIndicatorThumb component
+ */
+export type RadioGroupIndicatorThumbAnimation = Animation<{
+  scale?: AnimationValue<{
+    /**
+     * Scale values [unselected, selected]
+     * @default [1.5, 1]
+     */
+    value?: [number, number];
+    /**
+     * Animation timing configuration
+     * @default { duration: 300, easing: Easing.out(Easing.ease) }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+}>;
+
+/**
  * Props for RadioGroup.IndicatorThumb component
  */
 export interface RadioGroupIndicatorThumbProps
   extends Omit<AnimatedProps<ViewProps>, 'children'> {
   /** Custom class name */
   className?: string;
+  /**
+   * Animation configuration
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: RadioGroupIndicatorThumbAnimation;
 }
 
 /**

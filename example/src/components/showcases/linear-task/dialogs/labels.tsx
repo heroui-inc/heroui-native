@@ -138,9 +138,9 @@ export const Labels: FC = () => {
           }}
         >
           {renderStackedIndicators()}
-          <Chip.Title className="text-foreground font-medium">
+          <Chip.Label className="text-foreground font-medium">
             {getChipLabel()}
-          </Chip.Title>
+          </Chip.Label>
         </Chip>
       </Dialog.Trigger>
       <Dialog.Portal>

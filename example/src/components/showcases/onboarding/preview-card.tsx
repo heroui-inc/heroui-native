@@ -75,9 +75,9 @@ export const PreviewCard: FC<PreviewCardProps> = ({
               className="absolute inset-0 rounded-xl"
             />
             <Chip className="bg-danger rounded-md">
-              <Chip.Title className="text-white font-semibold">
+              <Chip.Label className="text-white font-semibold">
                 Live • {liveCount}
-              </Chip.Title>
+              </Chip.Label>
             </Chip>
           </Card.Body>
           <Card.Footer>

@@ -36,13 +36,13 @@ export interface ChipProps extends PressableProps {
 }
 
 /**
- * Props for the ChipTitle component
+ * Props for the ChipLabel component
  */
-export interface ChipTitleProps extends TextProps {
-  /** Child elements to render as the title. If string, will be wrapped in Text component */
+export interface ChipLabelProps extends TextProps {
+  /** Child elements to render as the label. If string, will be wrapped in Text component */
   children?: React.ReactNode;
 
-  /** Custom class name for the title */
+  /** Custom class name for the label */
   className?: string;
 }
 

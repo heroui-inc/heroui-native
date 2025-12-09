@@ -5,7 +5,7 @@ import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
 import { DISPLAY_NAME } from './chip.constants';
 import chipStyles, { styleSheet } from './chip.styles';
-import type { ChipContextValue, ChipProps, ChipTitleProps } from './chip.types';
+import type { ChipContextValue, ChipLabelProps, ChipProps } from './chip.types';
 
 const [ChipProvider, useChip] = createContext<ChipContextValue>({
   name: 'ChipContext',
@@ -51,7 +51,7 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
         {...restProps}
       >
         {stringifiedChildren ? (
-          <ChipTitle>{stringifiedChildren}</ChipTitle>
+          <ChipLabel>{stringifiedChildren}</ChipLabel>
         ) : (
           children
         )}
@@ -62,7 +62,7 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const ChipTitle = forwardRef<View, ChipTitleProps>((props, ref) => {
+const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
   const { size, variant, color } = useChip();
@@ -84,7 +84,7 @@ const ChipTitle = forwardRef<View, ChipTitleProps>((props, ref) => {
 // --------------------------------------------------
 
 Chip.displayName = DISPLAY_NAME.CHIP_ROOT;
-ChipTitle.displayName = DISPLAY_NAME.CHIP_TITLE;
+ChipLabel.displayName = DISPLAY_NAME.CHIP_LABEL_CONTENT;
 
 /**
  * Compound Chip component with sub-components
@@ -92,7 +92,7 @@ ChipTitle.displayName = DISPLAY_NAME.CHIP_TITLE;
  * @component Chip - Main container that displays a compact element. Renders with
  * string children as label or accepts compound components for custom layouts.
  *
- * @component Chip.Title - Text content of the chip. When string is provided,
+ * @component Chip.Label - Text content of the chip. When string is provided,
  * it renders as Text. Otherwise renders children as-is.
  *
  * Props flow from Chip to sub-components via context (size, variant, color).
@@ -101,8 +101,8 @@ ChipTitle.displayName = DISPLAY_NAME.CHIP_TITLE;
  * @see Full documentation: https://heroui.com/components/chip
  */
 const CompoundChip = Object.assign(Chip, {
-  /** Chip title - renders text or custom content */
-  Title: ChipTitle,
+  /** Chip label - renders text or custom content */
+  Label: ChipLabel,
 });
 
 export default CompoundChip;

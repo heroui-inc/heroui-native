@@ -91,9 +91,9 @@ export const Priority: FC = () => {
           }}
         >
           {items.find((item) => item.value === value)?.indicator}
-          <Chip.Title className="text-foreground font-medium">
+          <Chip.Label className="text-foreground font-medium">
             {items.find((item) => item.value === value)?.label}
-          </Chip.Title>
+          </Chip.Label>
         </Chip>
       </Dialog.Trigger>
       <Dialog.Portal>

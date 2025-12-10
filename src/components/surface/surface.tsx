@@ -1,7 +1,9 @@
 import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import type { ViewRef } from '../../helpers/types/primitives';
 import { createContext } from '../../helpers/utils';
+import { useSurfaceRootAnimation } from './surface.animation';
 import { DISPLAY_NAME } from './surface.constants';
 import surfaceStyles, { styleSheet } from './surface.styles';
 import type { SurfaceContextValue, SurfaceRootProps } from './surface.types';
@@ -12,22 +14,38 @@ const [SurfaceProvider, useSurface] = createContext<SurfaceContextValue>({
 });
 
 const Surface = forwardRef<ViewRef, SurfaceRootProps>(
-  ({ children, variant = 'default', className, style, ...props }, ref) => {
+  (
+    { children, variant = 'default', className, style, animation, ...props },
+    ref
+  ) => {
     const tvStyles = surfaceStyles({ variant, className });
+
+    const { isAllAnimationsDisabled } = useSurfaceRootAnimation({
+      animation,
+    });
+
+    const animationSettingsContextValue = useMemo(
+      () => ({
+        isAllAnimationsDisabled,
+      }),
+      [isAllAnimationsDisabled]
+    );
 
     const contextValue = useMemo(() => ({ variant }), [variant]);
 
     return (
-      <SurfaceProvider value={contextValue}>
-        <View
-          ref={ref}
-          className={tvStyles}
-          style={[styleSheet.root, style]}
-          {...props}
-        >
-          {children}
-        </View>
-      </SurfaceProvider>
+      <AnimationSettingsProvider value={animationSettingsContextValue}>
+        <SurfaceProvider value={contextValue}>
+          <View
+            ref={ref}
+            className={tvStyles}
+            style={[styleSheet.root, style]}
+            {...props}
+          >
+            {children}
+          </View>
+        </SurfaceProvider>
+      </AnimationSettingsProvider>
     );
   }
 );

@@ -1,4 +1,5 @@
 import type { ViewProps } from 'react-native';
+import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 
 /**
  * Variant options for the Surface component
@@ -27,6 +28,12 @@ export interface SurfaceRootProps extends ViewProps {
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Animation configuration for surface
+   * - `"disable-all"`: Disable all animations including children
+   * - `undefined`: Use default animations
+   */
+  animation?: AnimationRootDisableAll;
 }
 
 /**

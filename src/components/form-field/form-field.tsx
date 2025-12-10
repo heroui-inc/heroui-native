@@ -9,12 +9,14 @@ import { hasProp } from '../../helpers/utils';
 
 import { useSharedValue } from 'react-native-reanimated';
 import { Text } from '../../helpers/components/text';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import type { PressableRef } from '../../helpers/types';
 import type { ViewRef } from '../../helpers/types/primitives';
 import { Checkbox } from '../checkbox';
 import { ErrorView } from '../error-view';
 import type { ErrorViewRootProps } from '../error-view/error-view.types';
 import { Switch } from '../switch';
+import { useFormFieldRootAnimation } from './form-field.animation';
 import { DISPLAY_NAME } from './form-field.constants';
 import { FormFieldProvider, useFormField } from './form-field.context';
 import formFieldStyles from './form-field.styles';
@@ -39,6 +41,7 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     isInvalid = false,
     onPressIn,
     onPressOut,
+    animation,
     ...restProps
   } = props;
 
@@ -58,6 +61,17 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     isDisabled,
     className,
   });
+
+  const { isAllAnimationsDisabled } = useFormFieldRootAnimation({
+    animation,
+  });
+
+  const animationSettingsContextValue = useMemo(
+    () => ({
+      isAllAnimationsDisabled,
+    }),
+    [isAllAnimationsDisabled]
+  );
 
   const isPressed = useSharedValue<boolean>(false);
 
@@ -103,19 +117,21 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
   );
 
   return (
-    <FormFieldProvider value={contextValue}>
-      <Pressable
-        ref={ref}
-        className={tvStyles}
-        onPress={handlePress}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        disabled={isDisabled}
-        {...restProps}
-      >
-        {content}
-      </Pressable>
-    </FormFieldProvider>
+    <AnimationSettingsProvider value={animationSettingsContextValue}>
+      <FormFieldProvider value={contextValue}>
+        <Pressable
+          ref={ref}
+          className={tvStyles}
+          onPress={handlePress}
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}
+          disabled={isDisabled}
+          {...restProps}
+        >
+          {content}
+        </Pressable>
+      </FormFieldProvider>
+    </AnimationSettingsProvider>
   );
 });
 

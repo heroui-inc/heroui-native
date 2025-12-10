@@ -1,5 +1,6 @@
 import type { PressableProps, TextProps, ViewProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
+import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 
 /**
  * Render function props for form field children
@@ -32,6 +33,9 @@ export interface FormFieldProps extends Omit<PressableProps, 'children'> {
 
   /** Callback when selection state changes */
   onSelectedChange?: (isSelected: boolean) => void;
+
+  /** Animation configuration. Use `"disable-all"` to disable all animations including children */
+  animation?: AnimationRootDisableAll;
 }
 
 /**

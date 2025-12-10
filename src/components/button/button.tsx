@@ -1,6 +1,6 @@
 import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
-import { Text } from '../../helpers/components';
+import { HeroText } from '../../helpers/components';
 import { colorKit, useThemeColor } from '../../helpers/theme';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
@@ -150,9 +150,9 @@ const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
   });
 
   return (
-    <Text ref={ref} className={tvStyles} {...restProps}>
+    <HeroText ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Text>
+    </HeroText>
   );
 });
 

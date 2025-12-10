@@ -8,7 +8,7 @@ import {
 import { hasProp } from '../../helpers/utils';
 
 import { useSharedValue } from 'react-native-reanimated';
-import { Text } from '../../helpers/components/text';
+import { HeroText } from '../../helpers/components/hero-text';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import type { PressableRef } from '../../helpers/types';
 import type { ViewRef } from '../../helpers/types/primitives';
@@ -145,9 +145,9 @@ const FormFieldLabel = forwardRef<RNText, FormFieldLabelProps>((props, ref) => {
   });
 
   return (
-    <Text ref={ref} className={tvStyles} {...restProps}>
+    <HeroText ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Text>
+    </HeroText>
   );
 });
 
@@ -162,9 +162,9 @@ const FormFieldDescription = forwardRef<RNText, FormFieldDescriptionProps>(
     });
 
     return (
-      <Text ref={ref} className={tvStyles} {...restProps}>
+      <HeroText ref={ref} className={tvStyles} {...restProps}>
         {children}
-      </Text>
+      </HeroText>
     );
   }
 );

@@ -26,7 +26,7 @@ const label = tv({
 });
 
 const description = tv({
-  base: 'text-base/snug font-normal text-muted',
+  base: 'text-base/snug text-muted',
 });
 
 const arrow = tv({

@@ -1,6 +1,6 @@
 import { forwardRef, useMemo } from 'react';
 import { Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { Text } from '../../helpers/components';
+import { HeroText } from '../../helpers/components';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
@@ -91,9 +91,9 @@ const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
   });
 
   return (
-    <Text ref={ref} className={tvStyles} {...restProps}>
+    <HeroText ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Text>
+    </HeroText>
   );
 });
 

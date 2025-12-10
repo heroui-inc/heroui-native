@@ -14,7 +14,7 @@ import {
   CloseIcon,
   FullWindowOverlay,
 } from '../../helpers/components';
-import { Text } from '../../helpers/components/text';
+import { HeroText } from '../../helpers/components/hero-text';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
@@ -573,9 +573,14 @@ const SelectItemLabel = forwardRef<
   const tvStyles = selectStyles.itemLabel({ className });
 
   return (
-    <Text ref={ref} accessibilityRole="text" className={tvStyles} {...props}>
+    <HeroText
+      ref={ref}
+      accessibilityRole="text"
+      className={tvStyles}
+      {...props}
+    >
       {label}
-    </Text>
+    </HeroText>
   );
 });
 
@@ -588,7 +593,7 @@ const SelectItemDescription = forwardRef<RNText, SelectItemDescriptionProps>(
     });
 
     return (
-      <Text
+      <HeroText
         ref={ref}
         accessibilityRole="summary"
         className={tvStyles}
@@ -629,7 +634,7 @@ const SelectListLabel = forwardRef<
   });
 
   return (
-    <Text
+    <HeroText
       ref={ref}
       className={tvStyles}
       accessibilityRole="header"

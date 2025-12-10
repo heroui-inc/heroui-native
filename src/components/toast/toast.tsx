@@ -3,7 +3,7 @@ import { View, type ViewStyle } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { CloseIcon } from '../../helpers/components/close-icon';
-import { Text } from '../../helpers/components/text';
+import { HeroText } from '../../helpers/components/hero-text';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { cn, useThemeColor } from '../../helpers/theme';
 import type { ViewRef } from '../../helpers/types';
@@ -161,9 +161,9 @@ const ToastTitle = forwardRef<View, ToastTitleProps>((props, ref) => {
   });
 
   return (
-    <Text ref={ref} className={tvStyles} {...restProps}>
+    <HeroText ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Text>
+    </HeroText>
   );
 });
 
@@ -178,9 +178,9 @@ const ToastDescription = forwardRef<View, ToastDescriptionProps>(
     });
 
     return (
-      <Text ref={ref} className={tvStyles} {...restProps}>
+      <HeroText ref={ref} className={tvStyles} {...restProps}>
         {children}
-      </Text>
+      </HeroText>
     );
   }
 );

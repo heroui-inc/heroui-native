@@ -1,7 +1,7 @@
 import { forwardRef, useMemo } from 'react';
 import type { ImageSourcePropType, ImageStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { Text } from '../../helpers/components';
+import { HeroText } from '../../helpers/components';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { useThemeColor } from '../../helpers/theme';
 import { childrenToString } from '../../helpers/utils';
@@ -230,9 +230,9 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
       >
         {children ? (
           stringifiedChildren ? (
-            <Text className={tvTextStyles} {...textProps}>
+            <HeroText className={tvTextStyles} {...textProps}>
               {stringifiedChildren}
-            </Text>
+            </HeroText>
           ) : (
             children
           )

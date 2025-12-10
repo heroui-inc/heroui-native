@@ -13,7 +13,7 @@ import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
-import { Text } from '../../helpers/components/text';
+import { HeroText } from '../../helpers/components/hero-text';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
@@ -411,7 +411,7 @@ const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
     const tvStyles = popoverStyles.label({ className });
 
     return (
-      <Text
+      <HeroText
         ref={ref}
         role="heading"
         accessibilityRole="header"
@@ -419,7 +419,7 @@ const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
         {...props}
       >
         {children}
-      </Text>
+      </HeroText>
     );
   }
 );
@@ -433,9 +433,14 @@ const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
     });
 
     return (
-      <Text ref={ref} accessibilityRole="text" className={tvStyles} {...props}>
+      <HeroText
+        ref={ref}
+        accessibilityRole="text"
+        className={tvStyles}
+        {...props}
+      >
         {children}
-      </Text>
+      </HeroText>
     );
   }
 );

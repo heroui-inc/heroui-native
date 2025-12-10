@@ -4,13 +4,16 @@ import type {
   EntryOrExitLayoutType,
 } from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
-import type { Animation, AnimationValue } from '../../helpers/types/animation';
+import type {
+  AnimationRoot,
+  AnimationValue,
+} from '../../helpers/types/animation';
 import type { ErrorViewSlots } from './error-view.styles';
 
 /**
  * Animation configuration for ErrorView root component
  */
-export type ErrorViewRootAnimation = Animation<{
+export type ErrorViewRootAnimation = AnimationRoot<{
   entering?: AnimationValue<{
     /**
      * Custom entering animation for error view

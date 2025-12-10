@@ -11,7 +11,7 @@ const root = tv({
       tertiary: 'bg-default',
       ghost: 'bg-transparent',
       danger: 'bg-danger',
-      ['danger-soft']: 'bg-default',
+      ['danger-soft']: 'bg-danger-soft',
     },
     size: {
       sm: 'h-[36px] px-3.5 gap-1.5',

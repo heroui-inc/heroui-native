@@ -49,7 +49,7 @@ const { toast } = useToast();
 toast.show({
   component: (props) => (
     <Toast variant="accent" placement="top" {...props}>
-      <Toast.Label>Custom Toast</Toast.Label>
+      <Toast.Title>Custom Toast</Toast.Title>
       <Toast.Description>This is a custom toast component</Toast.Description>
       <Toast.Close />
     </Toast>
@@ -58,6 +58,37 @@ toast.show({
 ```
 
 **Note**: Toast items are memoized for performance. If you need to pass external state (like loading state) to a custom toast component, it will not update automatically. Use shared state techniques instead, such as React Context, state management libraries, or refs to ensure state updates propagate to the toast component.
+
+### Disabling All Animations
+
+Disable all animations including children by using `"disable-all"`. This cascades down to all child components (like Button in Toast.Action).
+
+```tsx
+const { toast } = useToast();
+
+toast.show({
+  variant: 'success',
+  label: 'Operation completed',
+  description: 'All animations are disabled',
+  animation: 'disable-all',
+});
+```
+
+Or with a custom component:
+
+```tsx
+const { toast } = useToast();
+
+toast.show({
+  component: (props) => (
+    <Toast variant="accent" animation="disable-all" {...props}>
+      <Toast.Title>No animations</Toast.Title>
+      <Toast.Description>This toast has all animations disabled</Toast.Description>
+      <Toast.Action>Action</Toast.Action>
+    </Toast>
+  ),
+});
+```
 
 ## Example
 
@@ -90,7 +121,7 @@ export default function ToastExample() {
           toast.show({
             component: (props) => (
               <Toast variant="accent" {...props}>
-                <Toast.Label>Custom Toast</Toast.Label>
+                <Toast.Title>Custom Toast</Toast.Title>
                 <Toast.Description>
                   This uses a custom component
                 </Toast.Description>
@@ -112,7 +143,7 @@ export default function ToastExample() {
 
 ```tsx
 <Toast>
-  <Toast.Label>...</Toast.Label>
+  <Toast.Title>...</Toast.Title>
   <Toast.Description>...</Toast.Description>
   <Toast.Action>...</Toast.Action>
   <Toast.Close />
@@ -120,8 +151,8 @@ export default function ToastExample() {
 ```
 
 - **Toast**: Main container that displays notification messages. Handles positioning, animations, and swipe gestures.
-- **Toast.Label**: Title text of the toast notification. Inherits variant styling from parent Toast context.
-- **Toast.Description**: Descriptive text content displayed below the label.
+- **Toast.Title**: Title text of the toast notification. Inherits variant styling from parent Toast context.
+- **Toast.Description**: Descriptive text content displayed below the title.
 - **Toast.Action**: Action button within the toast. Button variant is automatically determined based on toast variant but can be overridden.
 - **Toast.Close**: Close button for dismissing the toast. Renders as an icon-only button that calls hide when pressed.
 
@@ -230,15 +261,15 @@ For padding, use `border` classes. For actual borders, use `outline` classes.
 | `variant`      | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Visual variant of the toast                                               |
 | `placement`    | `'top' \| 'bottom'`                                           | `'top'`     | Placement of the toast on screen                                          |
 | `isSwipeable`  | `boolean`                                                     | `true`      | Whether the toast can be swiped to dismiss and dragged with rubber effect |
-| `animation`    | `ToastRootAnimation \| false \| "disabled" \| "disable-all"`  | -           | Animation configuration for toast                                         |
+| `animation`    | `ToastRootAnimation \| false \| "disabled" \| "disable-all"`  | -           | Animation configuration for toast. Use `"disable-all"` to disable all animations including children |
 | `className`    | `string`                                                      | -           | Additional CSS class for the toast container                              |
 | `...ViewProps` | `ViewProps`                                                   | -           | All standard React Native View props are supported                        |
 
-### Toast.Label
+### Toast.Title
 
 | prop           | type              | default | description                                        |
 | -------------- | ----------------- | ------- | -------------------------------------------------- |
-| `children`     | `React.ReactNode` | -       | Content to be rendered as label                    |
+| `children`     | `React.ReactNode` | -       | Content to be rendered as title                    |
 | `className`    | `string`          | -       | Additional CSS classes                             |
 | `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported |
 

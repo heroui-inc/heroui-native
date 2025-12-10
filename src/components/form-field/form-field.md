@@ -79,6 +79,24 @@ Control interactivity with the disabled prop.
 </FormField>
 ```
 
+### Disabling All Animations
+
+Disable all animations including children by using `"disable-all"`. This cascades down to all child components.
+
+```tsx
+<FormField
+  isSelected={value}
+  onSelectedChange={setValue}
+  animation="disable-all"
+>
+  <View className="flex-1">
+    <FormField.Label>Label text</FormField.Label>
+    <FormField.Description>Description text</FormField.Description>
+  </View>
+  <FormField.Indicator />
+</FormField>
+```
+
 ## Example
 
 ```tsx
@@ -166,15 +184,16 @@ export default function FormFieldExample() {
 
 ### FormField
 
-| prop              | type                                                                    | default     | description                                                     |
-| ----------------- | ----------------------------------------------------------------------- | ----------- | --------------------------------------------------------------- |
-| children          | `React.ReactNode \| ((props: FormFieldRenderProps) => React.ReactNode)` | -           | Content to render inside the form control, or a render function |
-| isSelected        | `boolean`                                                               | `undefined` | Whether the control is selected/checked                         |
-| isDisabled        | `boolean`                                                               | `false`     | Whether the form control is disabled                            |
-| isInvalid         | `boolean`                                                               | `false`     | Whether the form control is invalid                             |
-| className         | `string`                                                                | -           | Custom class name for the root element                          |
-| onSelectedChange  | `(isSelected: boolean) => void`                                         | -           | Callback when selection state changes                           |
-| ...PressableProps | `PressableProps`                                                        | -           | All React Native Pressable props are supported                  |
+| prop              | type                                                                    | default     | description                                                                               |
+| ----------------- | ----------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
+| children          | `React.ReactNode \| ((props: FormFieldRenderProps) => React.ReactNode)` | -           | Content to render inside the form control, or a render function                           |
+| isSelected        | `boolean`                                                               | `undefined` | Whether the control is selected/checked                                                   |
+| isDisabled        | `boolean`                                                               | `false`     | Whether the form control is disabled                                                      |
+| isInvalid         | `boolean`                                                               | `false`     | Whether the form control is invalid                                                       |
+| className         | `string`                                                                | -           | Custom class name for the root element                                                    |
+| onSelectedChange  | `(isSelected: boolean) => void`                                         | -           | Callback when selection state changes                                                     |
+| animation         | `AnimationRootDisableAll`                                               | -           | Animation configuration. Use `"disable-all"` to disable all animations including children |
+| ...PressableProps | `PressableProps`                                                        | -           | All React Native Pressable props are supported                                            |
 
 ### FormField.Label
 

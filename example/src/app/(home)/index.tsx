@@ -130,9 +130,9 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
           <Card.Body className="h-16" />
           <Card.Footer className="px-3 pb-3 flex-row items-end gap-4">
             <View className="flex-1">
-              <Card.Label className="text-2xl text-foreground/85">
+              <Card.Title className="text-2xl text-foreground/85">
                 {title}
-              </Card.Label>
+              </Card.Title>
               <Card.Description className="text-foreground/65 pl-0.5">
                 {footer}
               </Card.Description>
@@ -157,7 +157,7 @@ export default function App() {
   return (
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
-        <AppText className="text-muted text-base">v1.0.0-beta.6</AppText>
+        <AppText className="text-muted text-base">v1.0.0-beta.7</AppText>
       </View>
       <View className="gap-6">
         {cards.map((card, index) => (

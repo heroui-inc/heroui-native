@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { Button, Divider, Select, useThemeColor } from 'heroui-native';
+import { Button, cn, Divider, Select, useThemeColor } from 'heroui-native';
 import React, { useState } from 'react';
 import { Platform, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -111,7 +111,7 @@ const PresentationContent = () => {
                     value={country.value}
                     label={country.label}
                   >
-                    <View className="flex-row items-center gap-3">
+                    <View className="flex-1 flex-row items-center gap-3">
                       <AppText className="text-2xl">{country.flag}</AppText>
                       <AppText className="text-sm text-muted w-10">
                         {country.code}
@@ -171,13 +171,18 @@ const PresentationContent = () => {
                 width: 42,
                 backgroundColor: themeColorMuted,
               }}
-              bottomSheetViewClassName="h-full mx-3 rounded-[32px] border border-divider/20 bg-overlay overflow-hidden"
+              bottomSheetViewClassName={cn(
+                'h-full mx-2 border border-divider/20 bg-overlay overflow-hidden',
+                Platform.OS === 'ios'
+                  ? 'rounded-t-4xl rounded-b-[54px]'
+                  : 'rounded-4xl'
+              )}
               bottomSheetViewProps={{
                 style: {
                   padding: 0,
                 },
               }}
-              bottomInset={insets.bottom + 4}
+              bottomInset={Platform.OS === 'ios' ? 8 : insets.bottom + 4}
             >
               <BottomSheetScrollView
                 contentContainerClassName="p-4"

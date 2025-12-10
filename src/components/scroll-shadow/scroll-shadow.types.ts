@@ -1,5 +1,9 @@
 import type { ComponentType } from 'react';
 import type { ViewProps } from 'react-native';
+import type {
+  AnimationRoot,
+  AnimationValue,
+} from '../../helpers/types/animation';
 
 /**
  * Orientation of the scroll shadow
@@ -38,6 +42,25 @@ export interface LinearGradientProps {
 export type LinearGradientComponent = ComponentType<LinearGradientProps>;
 
 /**
+ * Animation configuration for ScrollShadow root component
+ */
+export type ScrollShadowRootAnimation = AnimationRoot<{
+  /**
+   * Opacity animation configuration
+   */
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [initial, active]
+     * - First value (0): Initial opacity when shadow is not visible
+     * - Second value (1): Active opacity when shadow is visible
+     * For bottom/right shadow, this array is reversed: [1, 0]
+     * @default [0, 1]
+     */
+    value?: [number, number];
+  }>;
+}>;
+
+/**
  * Props for the ScrollShadow component
  */
 export interface ScrollShadowProps extends ViewProps {
@@ -49,7 +72,7 @@ export interface ScrollShadowProps extends ViewProps {
 
   /**
    * Size (height/width) of the gradient shadow in pixels
-   * @default 40
+   * @default 50
    */
   size?: number;
 
@@ -89,4 +112,10 @@ export interface ScrollShadowProps extends ViewProps {
    * Required for the component to render shadows
    */
   LinearGradientComponent: LinearGradientComponent;
+
+  /**
+   * Animation configuration for scroll shadow
+   * @default undefined
+   */
+  animation?: ScrollShadowRootAnimation;
 }

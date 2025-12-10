@@ -1,5 +1,5 @@
 import Feather from '@expo/vector-icons/Feather';
-import { Divider, Select, useSelect } from 'heroui-native';
+import { Divider, Select, useSelectAnimation } from 'heroui-native';
 import React, { useState, type FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
@@ -24,7 +24,7 @@ const US_STATES: SelectOption[] = [
 ];
 
 const AnimatedTrigger: FC = () => {
-  const { progress } = useSelect();
+  const { progress } = useSelectAnimation();
 
   const rContainerStyle = useAnimatedStyle(() => {
     const opacity = interpolate(progress.value, [0, 1, 2], [0, 1, 0]);
@@ -47,7 +47,7 @@ const AnimatedTrigger: FC = () => {
     >
       <StyleAnimatedView
         style={[rContainerStyle, styles.borderCurve]}
-        className="absolute -inset-1 border-[2.5px] border-accent rounded-[10px] pointer-events-none"
+        className="absolute -inset-1 border-[2.5px] border-accent rounded-[18px] pointer-events-none"
       />
       <Select.Value placeholder="Select a state" />
       <StyleAnimatedView style={rChevronStyle} className="absolute right-3">

@@ -1,4 +1,4 @@
-import { Card, Chip, cn, DropShadowView } from 'heroui-native';
+import { Card, Chip, cn } from 'heroui-native';
 import { type FC } from 'react';
 import { Image, useWindowDimensions, View } from 'react-native';
 import Animated, {
@@ -57,40 +57,31 @@ export const PreviewCard: FC<PreviewCardProps> = ({
         rContainerStyle,
       ]}
     >
-      <DropShadowView
-        shadowSize="xl"
-        className="aspect-[3/5] rounded-2xl"
-        shadowColor={isDark ? '#00000000' : 'black'}
+      <Card
+        className={cn(
+          'aspect-3/5 border-0 rounded-3xl',
+          isDark && 'border border-border/70'
+        )}
       >
-        <Card
-          className={cn(
-            'flex-1 border-0 rounded-3xl',
-            isDark && 'border border-border/70'
-          )}
-          variant={isDark ? 'default' : 'transparent'}
-        >
-          <Card.Body className="flex-1 p-2 mb-4">
-            <Image
-              source={{ uri: image }}
-              className="absolute inset-0 rounded-xl"
-            />
-            <Chip className="bg-danger rounded-md">
-              <Chip.Label className="text-white font-semibold">
-                Live • {liveCount}
-              </Chip.Label>
-            </Chip>
-          </Card.Body>
-          <Card.Footer>
-            <Card.Label className="font-semibold">{title}</Card.Label>
-            <Card.Description>
-              <AppText className="text-blue-500 font-medium">
-                {category}
-              </AppText>{' '}
-              • {brands}
-            </Card.Description>
-          </Card.Footer>
-        </Card>
-      </DropShadowView>
+        <Card.Body className="flex-1 p-2 mb-4">
+          <Image
+            source={{ uri: image }}
+            className="absolute inset-0 rounded-xl"
+          />
+          <Chip className="bg-danger rounded-md">
+            <Chip.Label className="text-white font-semibold">
+              Live • {liveCount}
+            </Chip.Label>
+          </Chip>
+        </Card.Body>
+        <Card.Footer>
+          <Card.Title className="font-semibold">{title}</Card.Title>
+          <Card.Description>
+            <AppText className="text-blue-500 font-medium">{category}</AppText>{' '}
+            • {brands}
+          </Card.Description>
+        </Card.Footer>
+      </Card>
     </AnimatedView>
   );
 };

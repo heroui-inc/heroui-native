@@ -1,10 +1,12 @@
 import type { ReactNode } from 'react';
 import type { StyleProp, TextProps, ViewStyle } from 'react-native';
+import type { SharedValue } from 'react-native-reanimated';
 import type {
-  SharedValue,
-  WithSpringConfig,
-  WithTimingConfig,
-} from 'react-native-reanimated';
+  AnimationRoot,
+  PopupDialogContentAnimation,
+  PopupOverlayAnimation,
+  PopupRootAnimationConfig,
+} from '../../helpers/types/animation';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 
 /**
@@ -22,37 +24,14 @@ export interface DialogAnimationContextValue {
   progress: SharedValue<number>;
   /** Dragging state shared value */
   isDragging: SharedValue<boolean>;
+  /** Gesture release animation running state shared value */
+  isGestureReleaseAnimationRunning: SharedValue<boolean>;
 }
 
 /**
- * Spring animation configuration
+ * Animation configuration for Dialog root component
  */
-interface SpringAnimationConfig {
-  animationType: 'spring';
-  animationConfig?: WithSpringConfig;
-}
-
-/**
- * Timing animation configuration
- */
-interface TimingAnimationConfig {
-  animationType: 'timing';
-  animationConfig?: WithTimingConfig;
-}
-
-/**
- * Progress animation configuration
- */
-export interface DialogProgressAnimationConfigs {
-  /**
-   * Animation configuration for opening
-   */
-  onOpen?: SpringAnimationConfig | TimingAnimationConfig;
-  /**
-   * Animation configuration for closing
-   */
-  onClose?: SpringAnimationConfig | TimingAnimationConfig;
-}
+export type DialogRootAnimation = AnimationRoot<PopupRootAnimationConfig>;
 
 /**
  * Dialog Root component props
@@ -73,9 +52,13 @@ export interface DialogRootProps extends DialogPrimitivesTypes.RootProps {
    */
   isDismissKeyboardOnClose?: boolean;
   /**
-   * Animation configurations for open/close progress animations
+   * Animation configuration for dialog root
+   * - `"disable-all"`: Disable all animations including children
+   * - `false` or `"disabled"`: Disable only root animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  progressAnimationConfigs?: DialogProgressAnimationConfigs;
+  animation?: DialogRootAnimation;
 }
 
 /**
@@ -107,6 +90,11 @@ export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
 }
 
 /**
+ * Animation configuration for Dialog Overlay component
+ */
+export type DialogOverlayAnimation = PopupOverlayAnimation;
+
+/**
  * Dialog Overlay component props
  */
 export interface DialogOverlayProps
@@ -116,12 +104,19 @@ export interface DialogOverlayProps
    */
   className?: string;
   /**
-   * Whether to disable the default opacity animation
-   * Use this when you want to animate opacity using your own Reanimated useAnimatedStyle
-   * @default false
+   * Animation configuration for overlay
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: DialogOverlayAnimation;
 }
+
+/**
+ * Animation configuration for Dialog Content component
+ * Reuses PopupDialogContentAnimation since they share the same animation behavior
+ */
+export type DialogContentAnimation = PopupDialogContentAnimation;
 
 /**
  * Dialog Content component props
@@ -137,11 +132,17 @@ export interface DialogContentProps
    */
   children?: ReactNode;
   /**
-   * Whether to disable the default animations (opacity, scale)
-   * Use this when you want to animate these properties using your own Reanimated useAnimatedStyle
-   * @default false
+   * Animation configuration for content
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: DialogContentAnimation;
+  /**
+   * Whether the dialog content can be swiped to dismiss
+   * @default true
+   */
+  isSwipeable?: boolean;
 }
 
 /**
@@ -173,17 +174,17 @@ export interface DialogCloseIconProps {
   size?: number;
   /**
    * Color of the close icon
-   * @default --colors-foreground
+   * @default theme color muted
    */
   color?: string;
 }
 
 /**
- * Dialog Label component props
+ * Dialog Title component props
  */
-export interface DialogLabelProps extends TextProps {
+export interface DialogTitleProps extends TextProps {
   /**
-   * Additional CSS class for the label
+   * Additional CSS class for the title
    */
   className?: string;
 }

@@ -32,6 +32,7 @@ import type {
   TabsProps,
   TabsScrollViewProps,
   TabsTriggerProps,
+  TabsTriggerRenderProps,
 } from './tabs.types';
 
 const AnimatedIndicator = Animated.createAnimatedComponent(
@@ -206,6 +207,9 @@ const TabsTrigger = forwardRef<
     ...restProps
   } = props;
   const { setMeasurements } = useTabsMeasurements();
+  const { value: rootValue } = useTabs();
+
+  const isSelected = rootValue === value;
 
   const tvStyles = tabsStyles.trigger({ isDisabled, className });
 
@@ -217,6 +221,15 @@ const TabsTrigger = forwardRef<
     [value, setMeasurements]
   );
 
+  const renderProps: TabsTriggerRenderProps = {
+    isSelected,
+    value,
+    isDisabled,
+  };
+
+  const content =
+    typeof children === 'function' ? children(renderProps) : children;
+
   return (
     <TabsPrimitives.Trigger
       ref={ref}
@@ -227,7 +240,7 @@ const TabsTrigger = forwardRef<
       onLayout={handleLayout}
       {...restProps}
     >
-      {children}
+      {content}
     </TabsPrimitives.Trigger>
   );
 });

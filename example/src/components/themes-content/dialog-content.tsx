@@ -13,12 +13,10 @@ export const DialogContent = () => {
   return (
     <Dialog isOpen={dialogOpen} onOpenChange={setDialogOpen}>
       <Dialog.Trigger asChild>
-        <Button variant="destructive-soft">Delete Account</Button>
+        <Button variant="danger-soft">Delete Account</Button>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay isDefaultAnimationDisabled>
-          <DialogBlurBackdrop />
-        </Dialog.Overlay>
+        <DialogBlurBackdrop />
         <Dialog.Content className="max-w-sm mx-auto">
           <Dialog.Close className="self-end -mb-2 z-50" />
           <View className="size-10 items-center justify-center rounded-full bg-overlay-foreground/5 mb-4">
@@ -29,7 +27,7 @@ export const DialogContent = () => {
             />
           </View>
           <View className="mb-8 gap-1">
-            <Dialog.Label>Delete Account</Dialog.Label>
+            <Dialog.Title>Delete Account</Dialog.Title>
             <Dialog.Description>
               Are you sure you want to delete your account? This action cannot
               be undone and all your data will be permanently removed.
@@ -37,7 +35,7 @@ export const DialogContent = () => {
           </View>
           <View className="gap-3">
             <Button
-              variant="destructive"
+              variant="danger"
               onPress={() => {
                 setDialogOpen(false);
                 console.log('Account deleted');

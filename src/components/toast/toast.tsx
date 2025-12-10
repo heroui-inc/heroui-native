@@ -3,7 +3,8 @@ import { View, type ViewStyle } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { CloseIcon } from '../../helpers/components/close-icon';
-import { Text } from '../../helpers/components/text';
+import { HeroText } from '../../helpers/components/hero-text';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { cn, useThemeColor } from '../../helpers/theme';
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
@@ -21,8 +22,8 @@ import type {
   ToastCloseProps,
   ToastContextValue,
   ToastDescriptionProps,
-  ToastLabelProps,
   ToastRootProps,
+  ToastTitleProps,
 } from './toast.types';
 
 const AnimatedToastRoot = Animated.createAnimatedComponent(ToastPrimitive.Root);
@@ -68,19 +69,31 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     className,
   });
 
-  const { rContainerStyle, entering, exiting, panGesture } =
-    useToastRootAnimation({
-      animation,
-      style: style as ViewStyle | undefined,
-      index,
-      total,
-      heights,
-      placement,
-      hide,
-      id,
-      isSwipeable,
-      maxVisibleToasts,
-    });
+  const {
+    rContainerStyle,
+    entering,
+    exiting,
+    panGesture,
+    isAllAnimationsDisabled,
+  } = useToastRootAnimation({
+    animation,
+    style: style as ViewStyle | undefined,
+    index,
+    total,
+    heights,
+    placement,
+    hide,
+    id,
+    isSwipeable,
+    maxVisibleToasts,
+  });
+
+  const animationSettingsContextValue = useMemo(
+    () => ({
+      isAllAnimationsDisabled,
+    }),
+    [isAllAnimationsDisabled]
+  );
 
   const contextValue = useMemo(
     () => ({
@@ -92,50 +105,52 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   );
 
   return (
-    <ToastProvider value={contextValue}>
-      <GestureDetector gesture={panGesture}>
-        <Animated.View
-          className={cn(
-            'absolute left-0 right-0',
-            placement === 'top' ? 'top-0' : 'bottom-0'
-          )}
-          entering={entering}
-          exiting={exiting}
-        >
-          {/* Animated toast instance */}
-          <AnimatedToastRoot
-            ref={ref}
-            className={containerStyles}
-            style={[styleSheet.root, rContainerStyle, style]}
-            {...restProps}
+    <AnimationSettingsProvider value={animationSettingsContextValue}>
+      <ToastProvider value={contextValue}>
+        <GestureDetector gesture={panGesture}>
+          <Animated.View
+            className={cn(
+              'absolute left-0 right-0',
+              placement === 'top' ? 'top-0' : 'bottom-0'
+            )}
+            entering={entering}
+            exiting={exiting}
           >
-            {children}
-          </AnimatedToastRoot>
-          {/* Hidden toast instance for height measurement */}
-          <AnimatedToastRoot
-            pointerEvents="none"
-            className={cn(containerStyles, 'absolute opacity-0')}
-            style={[styleSheet.root, style]}
-            onLayout={(event) => {
-              const measuredHeight = event.nativeEvent.layout.height;
-              heights.modify((value) => {
-                'worklet';
-                return { ...value, [id]: measuredHeight };
-              });
-            }}
-            {...restProps}
-          >
-            {children}
-          </AnimatedToastRoot>
-        </Animated.View>
-      </GestureDetector>
-    </ToastProvider>
+            {/* Animated toast instance */}
+            <AnimatedToastRoot
+              ref={ref}
+              className={containerStyles}
+              style={[styleSheet.root, rContainerStyle, style]}
+              {...restProps}
+            >
+              {children}
+            </AnimatedToastRoot>
+            {/* Hidden toast instance for height measurement */}
+            <AnimatedToastRoot
+              pointerEvents="none"
+              className={cn(containerStyles, 'absolute opacity-0')}
+              style={[styleSheet.root, style]}
+              onLayout={(event) => {
+                const measuredHeight = event.nativeEvent.layout.height;
+                heights.modify((value) => {
+                  'worklet';
+                  return { ...value, [id]: measuredHeight };
+                });
+              }}
+              {...restProps}
+            >
+              {children}
+            </AnimatedToastRoot>
+          </Animated.View>
+        </GestureDetector>
+      </ToastProvider>
+    </AnimationSettingsProvider>
   );
 });
 
 // --------------------------------------------------
 
-const ToastLabel = forwardRef<View, ToastLabelProps>((props, ref) => {
+const ToastTitle = forwardRef<View, ToastTitleProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
   const { variant } = useToast();
@@ -146,9 +161,9 @@ const ToastLabel = forwardRef<View, ToastLabelProps>((props, ref) => {
   });
 
   return (
-    <Text ref={ref} className={tvStyles} {...restProps}>
+    <HeroText ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Text>
+    </HeroText>
   );
 });
 
@@ -163,9 +178,9 @@ const ToastDescription = forwardRef<View, ToastDescriptionProps>(
     });
 
     return (
-      <Text ref={ref} className={tvStyles} {...restProps}>
+      <HeroText ref={ref} className={tvStyles} {...restProps}>
         {children}
-      </Text>
+      </HeroText>
     );
   }
 );
@@ -217,7 +232,7 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
       case 'accent':
         return 'primary';
       case 'danger':
-        return 'destructive';
+        return 'danger';
       default:
         return 'tertiary';
     }
@@ -350,7 +365,7 @@ export function DefaultToast(props: DefaultToastProps) {
     >
       {icon && <View>{icon}</View>}
       <View className="flex-1">
-        {label && <ToastLabel>{label}</ToastLabel>}
+        {label && <ToastTitle>{label}</ToastTitle>}
         {description && <ToastDescription>{description}</ToastDescription>}
       </View>
       {actionLabel && (
@@ -363,7 +378,7 @@ export function DefaultToast(props: DefaultToastProps) {
 // --------------------------------------------------
 
 ToastRoot.displayName = DISPLAY_NAME.TOAST_ROOT;
-ToastLabel.displayName = DISPLAY_NAME.TOAST_LABEL;
+ToastTitle.displayName = DISPLAY_NAME.TOAST_TITLE;
 ToastDescription.displayName = DISPLAY_NAME.TOAST_DESCRIPTION;
 ToastAction.displayName = DISPLAY_NAME.TOAST_ACTION;
 ToastClose.displayName = DISPLAY_NAME.TOAST_CLOSE;
@@ -373,7 +388,7 @@ ToastClose.displayName = DISPLAY_NAME.TOAST_CLOSE;
  *
  * @component Toast - Main toast container that displays notification messages with various variants.
  *
- * @component Toast.Label - Title/heading text of the toast notification.
+ * @component Toast.Title - Title/heading text of the toast notification.
  *
  * @component Toast.Description - Descriptive text content of the toast.
  *
@@ -387,8 +402,8 @@ ToastClose.displayName = DISPLAY_NAME.TOAST_CLOSE;
  * @see Full documentation: https://heroui.com/components/toast
  */
 const CompoundToast = Object.assign(ToastRoot, {
-  /** Toast label/title - renders text content */
-  Label: ToastLabel,
+  /** Toast title - renders text content */
+  Title: ToastTitle,
   /** Toast description - renders descriptive text */
   Description: ToastDescription,
   /** Toast action button - renders action with appropriate variant */

@@ -45,6 +45,27 @@ interface TabsContentProps {
   variant: 'pill' | 'line';
 }
 
+interface TabTriggerProps {
+  value: string;
+  label: string;
+}
+
+const TabTrigger = ({ value, label }: TabTriggerProps) => {
+  return (
+    <Tabs.Trigger value={value}>
+      {({ isSelected }) => (
+        <Tabs.Label
+          className={cn(
+            isSelected ? 'text-accent font-medium' : 'text-foreground'
+          )}
+        >
+          {label}
+        </Tabs.Label>
+      )}
+    </Tabs.Trigger>
+  );
+};
+
 const TabsContent = ({ variant }: TabsContentProps) => {
   const [activeTab, setActiveTab] = useState('general');
 
@@ -95,21 +116,15 @@ const TabsContent = ({ variant }: TabsContentProps) => {
       onValueChange={setActiveTab}
       className={cn('gap-1.5', variant === 'line' && 'gap-0')}
     >
-      <Tabs.List className="border-b-0">
-        <Tabs.ScrollView contentContainerClassName="gap-4">
+      <Tabs.List className={cn('border-b-0', variant === 'line' && 'mx-4')}>
+        <Tabs.ScrollView
+          contentContainerClassName={cn('gap-4', variant === 'line' && 'px-0')}
+        >
           <Tabs.Indicator />
-          <Tabs.Trigger value="general">
-            <Tabs.Label>General</Tabs.Label>
-          </Tabs.Trigger>
-          <Tabs.Trigger value="appearance">
-            <Tabs.Label>Appearance</Tabs.Label>
-          </Tabs.Trigger>
-          <Tabs.Trigger value="notifications">
-            <Tabs.Label>Notifications</Tabs.Label>
-          </Tabs.Trigger>
-          <Tabs.Trigger value="profile">
-            <Tabs.Label>Profile</Tabs.Label>
-          </Tabs.Trigger>
+          <TabTrigger value="general" label="General" />
+          <TabTrigger value="appearance" label="Appearance" />
+          <TabTrigger value="notifications" label="Notifications" />
+          <TabTrigger value="profile" label="Profile" />
         </Tabs.ScrollView>
       </Tabs.List>
       <StyleAnimatedView

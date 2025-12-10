@@ -2,23 +2,41 @@ import type BottomSheet from '@gorhom/bottom-sheet';
 import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
-import type {
-  WithSpringConfig,
-  WithTimingConfig,
-} from 'react-native-reanimated';
+import type { SharedValue } from 'react-native-reanimated';
 import type { ElementSlots } from '../../helpers/theme/types';
+import type {
+  AnimationRoot,
+  PopupDialogContentAnimation,
+  PopupOverlayAnimation,
+  PopupPopoverContentAnimation,
+  PopupRootAnimationConfig,
+} from '../../helpers/types/animation';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import type { DialogContentFallbackSlots } from './select.styles';
+
+/**
+ * Select internal state for animation coordination
+ */
+export type SelectState = 'idle' | 'open' | 'close';
+
+/**
+ * Context value for select animation state
+ */
+export interface SelectAnimationContextValue {
+  /** Extended internal state for animation control */
+  selectState: SelectState;
+  /** Animation progress shared value (0=idle, 1=open, 2=close) */
+  progress: SharedValue<number>;
+  /** Dragging state shared value */
+  isDragging: SharedValue<boolean>;
+  /** Gesture release animation running state shared value */
+  isGestureReleaseAnimationRunning: SharedValue<boolean>;
+}
 
 /**
  * Ref type for the Select Trigger component
  */
 export type SelectTriggerRef = SelectPrimitivesTypes.TriggerRef;
-
-/**
- * Presentation mode for the select content
- */
-export type SelectPresentation = 'popover' | 'bottom-sheet' | 'dialog';
 
 /**
  * Select placement options
@@ -31,34 +49,9 @@ export type SelectPlacement = 'top' | 'bottom' | 'left' | 'right';
 export type SelectAlign = 'start' | 'center' | 'end';
 
 /**
- * Spring animation configuration
+ * Animation configuration for Select root component
  */
-interface SpringAnimationConfig {
-  animationType: 'spring';
-  animationConfig?: WithSpringConfig;
-}
-
-/**
- * Timing animation configuration
- */
-interface TimingAnimationConfig {
-  animationType: 'timing';
-  animationConfig?: WithTimingConfig;
-}
-
-/**
- * Progress animation configuration for select transitions
- */
-export interface SelectProgressAnimationConfigs {
-  /**
-   * Animation configuration for opening
-   */
-  onOpen?: SpringAnimationConfig | TimingAnimationConfig;
-  /**
-   * Animation configuration for closing
-   */
-  onClose?: SpringAnimationConfig | TimingAnimationConfig;
-}
+export type SelectRootAnimation = AnimationRoot<PopupRootAnimationConfig>;
 
 /**
  * Select Root component props
@@ -69,9 +62,26 @@ export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
    */
   children?: ReactNode;
   /**
-   * Whether the select is open
+   * The controlled open state of the select
    */
   isOpen?: boolean;
+  /**
+   * The open state of the select when initially rendered (uncontrolled)
+   */
+  isDefaultOpen?: boolean;
+  /**
+   * Whether to dismiss the keyboard when the select closes
+   * @default true
+   */
+  isDismissKeyboardOnClose?: boolean;
+  /**
+   * Animation configuration for select root
+   * - `"disable-all"`: Disable all animations including children
+   * - `false` or `"disabled"`: Disable only root animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: SelectRootAnimation;
 }
 
 /**
@@ -100,11 +110,12 @@ export interface SelectPortalProps extends SelectPrimitivesTypes.PortalProps {
    * The portal content
    */
   children: ReactNode;
-  /**
-   * Animation configurations for open/close progress animations
-   */
-  progressAnimationConfigs?: SelectProgressAnimationConfigs;
 }
+
+/**
+ * Animation configuration for Select Overlay component
+ */
+export type SelectOverlayAnimation = PopupOverlayAnimation;
 
 /**
  * Select Overlay component props
@@ -115,12 +126,19 @@ export interface SelectOverlayProps extends SelectPrimitivesTypes.OverlayProps {
    */
   className?: string;
   /**
-   * Whether to disable the default opacity animation
-   * Use this when you want to animate opacity using your own Reanimated useAnimatedStyle
-   * @default false
+   * Animation configuration for overlay
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: SelectOverlayAnimation;
 }
+
+/**
+ * Animation configuration for Select Content Popover component
+ * Reuses PopupPopoverContentAnimation since they share the same animation behavior
+ */
+export type SelectContentPopoverAnimation = PopupPopoverContentAnimation;
 
 /**
  * Select Content props for 'popover' presentation
@@ -140,11 +158,12 @@ export interface SelectContentPopoverProps
    */
   presentation?: 'popover';
   /**
-   * Whether to disable the default animations (opacity, scale, translate)
-   * Use this when you want to animate these properties using your own Reanimated useAnimatedStyle
-   * @default false
+   * Animation configuration for content
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: SelectContentPopoverAnimation;
 }
 
 /**
@@ -167,6 +186,12 @@ export interface SelectContentBottomSheetProps
 }
 
 /**
+ * Animation configuration for Select Content component (dialog presentation)
+ * Reuses PopupDialogContentAnimation since they share the same animation behavior
+ */
+export type SelectContentAnimation = PopupDialogContentAnimation;
+
+/**
  * Select Content props for 'dialog' presentation
  */
 export interface SelectContentDialogProps
@@ -184,11 +209,17 @@ export interface SelectContentDialogProps
    */
   presentation: 'dialog';
   /**
-   * Whether to disable the default animations (opacity, scale, translate)
-   * Use this when you want to animate these properties using your own Reanimated useAnimatedStyle
-   * @default false
+   * Animation configuration for content
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
    */
-  isDefaultAnimationDisabled?: boolean;
+  animation?: SelectContentAnimation;
+  /**
+   * Whether the dialog content can be swiped to dismiss
+   * @default true
+   */
+  isSwipeable?: boolean;
 }
 
 /**
@@ -228,7 +259,7 @@ export interface SelectCloseIconProps {
   size?: number;
   /**
    * Color of the close icon
-   * @default --colors-foreground
+   * @default --colors-muted
    */
   color?: string;
 }
@@ -254,13 +285,30 @@ export interface SelectListLabelProps extends TextProps {
 }
 
 /**
+ * Render function props for SelectItem children
+ */
+export interface SelectItemRenderProps {
+  /** Whether this item is currently selected */
+  isSelected: boolean;
+  /** The value of the item */
+  value: string;
+  /** Whether the item is disabled */
+  isDisabled: boolean;
+}
+
+/**
  * Select Item component props
  */
-export interface SelectItemProps extends SelectPrimitivesTypes.ItemProps {
+export interface SelectItemProps
+  extends Omit<SelectPrimitivesTypes.ItemProps, 'children'> {
   /**
    * Additional CSS class for the item
    */
   className?: string;
+  /**
+   * Child elements to render inside the item, or a render function
+   */
+  children?: ReactNode | ((props: SelectItemRenderProps) => ReactNode);
 }
 
 /**

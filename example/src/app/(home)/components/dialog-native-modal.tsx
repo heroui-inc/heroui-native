@@ -18,7 +18,7 @@ export default function DialogNativeModalScreen() {
           <Dialog.Content>
             <Dialog.Close className="self-end -mb-2 z-50" />
             <View className="mb-5 gap-1.5">
-              <Dialog.Label>Confirm Action</Dialog.Label>
+              <Dialog.Title>Confirm Action</Dialog.Title>
               <Dialog.Description>
                 Are you sure you want to proceed with this action? This cannot
                 be undone.

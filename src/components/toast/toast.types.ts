@@ -4,7 +4,10 @@ import type {
   WithTimingConfig,
 } from 'react-native-reanimated';
 import type { ViewRef } from '../../helpers/types';
-import type { Animation, AnimationValue } from '../../helpers/types/animation';
+import type {
+  AnimationRoot,
+  AnimationValue,
+} from '../../helpers/types/animation';
 import type * as ToastPrimitive from '../../primitives/toast';
 import type {
   ToastComponentProps,
@@ -30,7 +33,7 @@ export type ToastPlacement = 'top' | 'bottom';
 /**
  * Animation configuration for toast root component
  */
-export type ToastRootAnimation = Animation<{
+export type ToastRootAnimation = AnimationRoot<{
   opacity?: AnimationValue<{
     /**
      * Opacity interpolation values [start, end]
@@ -144,15 +147,15 @@ export interface ToastRootProps
 }
 
 /**
- * Props for the Toast.Label component
+ * Props for the Toast.Title component
  */
-export interface ToastLabelProps extends ToastPrimitive.LabelProps {
+export interface ToastTitleProps extends ToastPrimitive.TitleProps {
   /**
-   * Content to be rendered as label
+   * Content to be rendered as title
    */
   children?: React.ReactNode;
   /**
-   * Additional CSS class for the label
+   * Additional CSS class for the title
    */
   className?: string;
 }

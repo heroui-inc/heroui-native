@@ -134,7 +134,7 @@ export const AchievementToast = (props: ToastComponentProps) => {
   }));
 
   return (
-    <Toast className="bg-[#F5F1E8] border-[2px] border-orange-200" {...props}>
+    <Toast className="bg-[#F5F1E8] border-2 border-orange-200" {...props}>
       <View className="relative flex-row items-center gap-4 px-4 py-3">
         {/* Confetti decorative elements */}
         <StyleAnimatedView
@@ -170,15 +170,15 @@ export const AchievementToast = (props: ToastComponentProps) => {
 
         {/* Text content */}
         <View className="flex-1 flex-col gap-1">
-          <Toast.Label className="text-xs font-medium text-[#2D3748]">
+          <Toast.Title className="text-xs font-medium text-[#2D3748]">
             New achievement!
-          </Toast.Label>
-          <Toast.Label className="text-base font-bold text-[#2D3748]">
+          </Toast.Title>
+          <Toast.Title className="text-base font-bold text-[#2D3748]">
             You're on a 1-day
-          </Toast.Label>
-          <Toast.Label className="text-base font-bold text-[#2D3748]">
+          </Toast.Title>
+          <Toast.Title className="text-base font-bold text-[#2D3748]">
             study streak
-          </Toast.Label>
+          </Toast.Title>
         </View>
 
         {/* Close button */}

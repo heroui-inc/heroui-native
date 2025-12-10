@@ -1,35 +1,41 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { forwardRef, useEffect, useRef } from 'react';
-import type { Text as RNText } from 'react-native';
-import { StyleSheet, View } from 'react-native';
+import { forwardRef, useCallback, useEffect, useMemo, useRef } from 'react';
+import type {
+  LayoutChangeEvent,
+  Text as RNText,
+  ViewStyle,
+} from 'react-native';
+import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated, {
-  Extrapolation,
-  interpolate,
-  useAnimatedReaction,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   CheckIcon,
   CloseIcon,
   FullWindowOverlay,
 } from '../../helpers/components';
-import { Text } from '../../helpers/components/text';
-import { useDialogContentAnimation } from '../../helpers/hooks';
+import { HeroText } from '../../helpers/components/hero-text';
+import {
+  AnimationSettingsProvider,
+  useAnimationSettings,
+} from '../../helpers/contexts/animation-settings-context';
+import { usePopupBottomSheetContentAnimation } from '../../helpers/hooks/use-popup-bottom-sheet-content-animation';
+import { usePopupDialogContentAnimation } from '../../helpers/hooks/use-popup-dialog-content-animation';
+import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
+import { usePopupPopoverContentAnimation } from '../../helpers/hooks/use-popup-popover-content-animation';
+import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
 import { useThemeColor } from '../../helpers/theme';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
+import {
+  SelectAnimationProvider,
+  useSelectAnimation,
+} from './select.animation';
 import {
   DEFAULT_ALIGN_OFFSET,
   DEFAULT_INSETS,
   DEFAULT_OFFSET,
   DISPLAY_NAME,
-  SPRING_CONFIG_CLOSE,
-  SPRING_CONFIG_OPEN,
 } from './select.constants';
 import selectStyles, { styleSheet } from './select.styles';
 import type {
@@ -42,6 +48,7 @@ import type {
   SelectItemIndicatorProps,
   SelectItemLabelProps,
   SelectItemProps,
+  SelectItemRenderProps,
   SelectListLabelProps,
   SelectOverlayProps,
   SelectPortalProps,
@@ -69,16 +76,68 @@ const useSelectItem = SelectPrimitives.useItemContext;
 // --------------------------------------------------
 
 const SelectRoot = forwardRef<SelectPrimitivesTypes.RootRef, SelectRootProps>(
-  ({ children, onOpenChange, closeDelay = 400, ...props }, ref) => {
+  (
+    {
+      children,
+      closeDelay = 400,
+      isDismissKeyboardOnClose = true,
+      isOpen: isOpenProp,
+      isDefaultOpen,
+      onOpenChange: onOpenChangeProp,
+      animation,
+      ...props
+    },
+    ref
+  ) => {
+    const {
+      internalIsOpen,
+      componentState,
+      progress,
+      isDragging,
+      isGestureReleaseAnimationRunning,
+      onOpenChange,
+      isAllAnimationsDisabled,
+    } = usePopupRootAnimation({
+      isOpen: isOpenProp,
+      isDefaultOpen,
+      onOpenChange: onOpenChangeProp,
+      closeDelay,
+      isDismissKeyboardOnClose,
+      animation,
+    });
+
+    const animationContextValue = useMemo(
+      () => ({
+        selectState: componentState,
+        progress,
+        isDragging,
+        isGestureReleaseAnimationRunning,
+      }),
+      [componentState, progress, isDragging, isGestureReleaseAnimationRunning]
+    );
+
+    const animationSettingsContextValue = useMemo(
+      () => ({
+        isAllAnimationsDisabled,
+      }),
+      [isAllAnimationsDisabled]
+    );
+
     return (
-      <SelectPrimitives.Root
-        ref={ref}
-        onOpenChange={onOpenChange}
-        closeDelay={closeDelay}
-        {...props}
-      >
-        {children}
-      </SelectPrimitives.Root>
+      <AnimationSettingsProvider value={animationSettingsContextValue}>
+        <SelectAnimationProvider value={animationContextValue}>
+          <SelectPrimitives.Root
+            ref={ref}
+            isOpen={internalIsOpen}
+            isDefaultOpen={isDefaultOpen}
+            onOpenChange={onOpenChange}
+            closeDelay={closeDelay}
+            {...props}
+          >
+            {children}
+          </SelectPrimitives.Root>
+        </SelectAnimationProvider>
+      </AnimationSettingsProvider>
     );
   }
 );
@@ -113,45 +172,21 @@ const SelectValue = forwardRef<
 
 // --------------------------------------------------
 
-const SelectPortal = ({
-  className,
-  children,
-  progressAnimationConfigs,
-  ...props
-}: SelectPortalProps) => {
+const SelectPortal = ({ className, children, ...props }: SelectPortalProps) => {
+  const animationSettingsContext = useAnimationSettings();
+  const animationContext = useSelectAnimation();
+
   const tvStyles = selectStyles.portal({ className });
-
-  const { selectState, progress } = useSelect();
-
-  useEffect(() => {
-    if (selectState === 'open') {
-      const openConfig = progressAnimationConfigs?.onOpen;
-      if (openConfig?.animationType === 'spring') {
-        progress.set(withSpring(1, openConfig.animationConfig));
-      } else if (openConfig?.animationType === 'timing') {
-        progress.set(withTiming(1, openConfig.animationConfig));
-      } else {
-        progress.set(withSpring(1, SPRING_CONFIG_OPEN));
-      }
-    } else if (selectState === 'close') {
-      const closeConfig = progressAnimationConfigs?.onClose;
-      if (closeConfig?.animationType === 'spring') {
-        progress.set(withSpring(2, closeConfig.animationConfig));
-      } else if (closeConfig?.animationType === 'timing') {
-        progress.set(withTiming(2, closeConfig.animationConfig));
-      } else {
-        progress.set(withSpring(2, SPRING_CONFIG_CLOSE));
-      }
-    } else {
-      progress.set(0);
-    }
-  }, [selectState, progress, progressAnimationConfigs]);
 
   return (
     <SelectPrimitives.Portal {...props}>
-      <FullWindowOverlay>
-        <View className={tvStyles}>{children}</View>
-      </FullWindowOverlay>
+      <AnimationSettingsProvider value={animationSettingsContext}>
+        <SelectAnimationProvider value={animationContext}>
+          <FullWindowOverlay>
+            <View className={tvStyles}>{children}</View>
+          </FullWindowOverlay>
+        </SelectAnimationProvider>
+      </AnimationSettingsProvider>
     </SelectPrimitives.Portal>
   );
 };
@@ -161,28 +196,27 @@ const SelectPortal = ({
 const SelectOverlay = forwardRef<
   SelectPrimitivesTypes.OverlayRef,
   SelectOverlayProps
->(({ className, style, isDefaultAnimationDisabled, ...props }, ref) => {
-  const { progress } = useSelect();
+>(({ className, style, animation, ...props }, ref) => {
+  const { progress, isDragging, isGestureReleaseAnimationRunning } =
+    useSelectAnimation();
 
   const tvStyles = selectStyles.overlay({
     className,
   });
 
-  const rOverlayStyle = useAnimatedStyle(() => {
-    if (isDefaultAnimationDisabled) {
-      return {};
-    }
-    const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
-    return {
-      opacity,
-    };
+  const { rContainerStyle } = usePopupOverlayAnimation({
+    progress,
+    isDragging,
+    isGestureReleaseAnimationRunning,
+    animation,
+    style: style as ViewStyle,
   });
 
   return (
     <AnimatedOverlay
       ref={ref}
       className={tvStyles}
-      style={[rOverlayStyle, style]}
+      style={[rContainerStyle, style]}
       {...props}
     />
   );
@@ -204,7 +238,7 @@ const SelectContentPopover = forwardRef<
       className,
       children,
       style,
-      isDefaultAnimationDisabled,
+      animation,
       ...props
     },
     ref
@@ -218,55 +252,18 @@ const SelectContentPopover = forwardRef<
       right: DEFAULT_INSETS.right + safeAreaInsets.right,
     };
 
-    const { progress } = useSelect();
+    const { progress } = useSelectAnimation();
+
     const tvStyles = selectStyles.popoverContent({
       className,
     });
 
-    const rContainerStyle = useAnimatedStyle(() => {
-      if (isDefaultAnimationDisabled) {
-        return {};
-      }
-
-      let transformOrigin = 'top';
-      let translateX = 0;
-      let translateY = 0;
-
-      if (placement === 'top') {
-        transformOrigin = 'bottom';
-        translateY = interpolate(progress.get(), [0, 1, 2], [4, 0, 4]);
-      } else if (placement === 'bottom') {
-        transformOrigin = 'top';
-        translateY = interpolate(progress.get(), [0, 1, 2], [-4, 0, -4]);
-      } else if (placement === 'left') {
-        transformOrigin = 'right';
-        translateX = interpolate(progress.get(), [0, 1, 2], [4, 0, 4]);
-      } else if (placement === 'right') {
-        transformOrigin = 'left';
-        translateX = interpolate(progress.get(), [0, 1, 2], [-4, 0, -4]);
-      }
-
-      return {
-        opacity: interpolate(
-          progress.get(),
-          [0, 1, 1.75, 2],
-          [0.25, 1, 0.75, 0],
-          Extrapolation.CLAMP
-        ),
-        transformOrigin,
-        transform: [
-          { translateX },
-          { translateY },
-          { scale: interpolate(progress.get(), [0, 1, 2], [0.95, 1, 0.95]) },
-        ],
-      };
+    const { rContainerStyle } = usePopupPopoverContentAnimation({
+      progress,
+      placement,
+      animation,
+      style: style as ViewStyle,
     });
-
-    const flatStyle = StyleSheet.flatten([
-      styleSheet.contentContainer,
-      rContainerStyle,
-      style,
-    ]);
 
     return (
       <AnimatedPopoverContent
@@ -278,7 +275,7 @@ const SelectContentPopover = forwardRef<
         alignOffset={alignOffset}
         insets={insets}
         className={tvStyles}
-        style={flatStyle}
+        style={[styleSheet.contentContainer, rContainerStyle, style]}
         {...props}
       >
         {children}
@@ -301,7 +298,8 @@ const SelectContentBottomSheet = forwardRef<
 
     const bottomSheetRef = useRef<BottomSheet>(null);
 
-    const { selectState, onOpenChange, progress } = useSelect();
+    const { onOpenChange } = useSelect();
+    const { selectState, progress } = useSelectAnimation();
 
     const themeColorOverlay = useThemeColor('overlay');
     const themeColorMuted = useThemeColor('muted');
@@ -333,16 +331,10 @@ const SelectContentBottomSheet = forwardRef<
       restProps.onClose?.();
     };
 
-    const animatedIndex = useSharedValue(0);
-
-    useAnimatedReaction(
-      () => animatedIndex.get(),
-      (value) => {
-        if (selectState === 'open' && value <= 0) {
-          progress.set(interpolate(animatedIndex.get(), [0, -1], [1, 2]));
-        }
-      }
-    );
+    const { animatedIndex } = usePopupBottomSheetContentAnimation({
+      progress,
+      componentState: selectState,
+    });
 
     return (
       <BottomSheet
@@ -387,12 +379,20 @@ const SelectContentDialog = forwardRef<
       style,
       children,
       onLayout,
-      isDefaultAnimationDisabled = false,
+      animation,
+      isSwipeable = true,
       ...props
     },
     ref
   ) => {
-    const { progress, isDragging, selectState, onOpenChange } = useSelect();
+    const { onOpenChange } = useSelect();
+
+    const {
+      progress,
+      isDragging,
+      isGestureReleaseAnimationRunning,
+      selectState,
+    } = useSelectAnimation();
 
     const { wrapper, content } = selectStyles.dialogContent();
 
@@ -405,25 +405,33 @@ const SelectContentDialog = forwardRef<
       panGesture,
       rDragContainerStyle,
       rContainerStyle,
-    } = useDialogContentAnimation({
+    } = usePopupDialogContentAnimation({
       progress,
       isDragging,
+      isGestureReleaseAnimationRunning,
       dialogState: selectState,
       onOpenChange,
-      isDefaultAnimationDisabled,
+      animation,
+      style: style as ViewStyle | undefined,
+      isSwipeable,
     });
+
+    const handleLayout = useCallback(
+      (event: LayoutChangeEvent) => {
+        contentY.set(event.nativeEvent.layout.y);
+        contentHeight.set(event.nativeEvent.layout.height);
+        onLayout?.(event);
+      },
+      [contentY, contentHeight, onLayout]
+    );
 
     return (
       <View className={wrapperStyles}>
         <GestureDetector gesture={panGesture}>
           <Animated.View
             style={rDragContainerStyle}
-            className="pointer-events-box-none"
-            onLayout={(event) => {
-              contentY.set(event.nativeEvent.layout.y);
-              contentHeight.set(event.nativeEvent.layout.height);
-              onLayout?.(event);
-            }}
+            pointerEvents="box-none"
+            onLayout={handleLayout}
           >
             <AnimatedDialogContent
               ref={ref}
@@ -505,17 +513,50 @@ const SelectClose = forwardRef<
 // --------------------------------------------------
 
 const SelectItem = forwardRef<SelectPrimitivesTypes.ItemRef, SelectItemProps>(
-  ({ children, className, ...props }, ref) => {
+  (
+    {
+      children,
+      className,
+      disabled = false,
+      value: itemValue,
+      label,
+      ...props
+    },
+    ref
+  ) => {
+    const { value } = useSelect();
+
+    const isSelected = value?.value === itemValue;
+    const isDisabled = disabled ?? false;
+
     const tvStyles = selectStyles.item({ className });
 
+    const renderProps: SelectItemRenderProps = {
+      isSelected,
+      value: itemValue,
+      isDisabled,
+    };
+
+    const content =
+      typeof children === 'function'
+        ? children(renderProps)
+        : (children ?? (
+            <>
+              <SelectItemLabel />
+              <SelectItemIndicator />
+            </>
+          ));
+
     return (
-      <SelectPrimitives.Item ref={ref} className={tvStyles} {...props}>
-        {children || (
-          <>
-            <SelectItemLabel />
-            <SelectItemIndicator />
-          </>
-        )}
+      <SelectPrimitives.Item
+        ref={ref}
+        className={tvStyles}
+        disabled={disabled}
+        value={itemValue}
+        label={label}
+        {...props}
+      >
+        {content}
       </SelectPrimitives.Item>
     );
   }
@@ -532,9 +573,14 @@ const SelectItemLabel = forwardRef<
   const tvStyles = selectStyles.itemLabel({ className });
 
   return (
-    <Text ref={ref} accessibilityRole="text" className={tvStyles} {...props}>
+    <HeroText
+      ref={ref}
+      accessibilityRole="text"
+      className={tvStyles}
+      {...props}
+    >
       {label}
-    </Text>
+    </HeroText>
   );
 });
 
@@ -547,7 +593,7 @@ const SelectItemDescription = forwardRef<RNText, SelectItemDescriptionProps>(
     });
 
     return (
-      <Text
+      <HeroText
         ref={ref}
         accessibilityRole="summary"
         className={tvStyles}
@@ -588,7 +634,7 @@ const SelectListLabel = forwardRef<
   });
 
   return (
-    <Text
+    <HeroText
       ref={ref}
       className={tvStyles}
       accessibilityRole="header"
@@ -666,5 +712,5 @@ const Select = Object.assign(SelectRoot, {
   Close: SelectClose,
 });
 
-export { useSelect, useSelectItem };
+export { useSelect, useSelectAnimation, useSelectItem };
 export default Select;

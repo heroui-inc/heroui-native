@@ -10,8 +10,8 @@ const root = tv({
       secondary: 'bg-default',
       tertiary: 'bg-default',
       ghost: 'bg-transparent',
-      destructive: 'bg-danger',
-      ['destructive-soft']: 'bg-default',
+      danger: 'bg-danger',
+      ['danger-soft']: 'bg-danger-soft',
     },
     size: {
       sm: 'h-[36px] px-3.5 gap-1.5',
@@ -41,8 +41,8 @@ const label = tv({
       secondary: 'text-accent-soft-foreground',
       tertiary: 'text-default-foreground',
       ghost: 'text-default-foreground',
-      destructive: 'text-danger-foreground',
-      ['destructive-soft']: 'text-danger',
+      danger: 'text-danger-foreground',
+      ['danger-soft']: 'text-danger',
     },
     size: {
       sm: 'text-sm',

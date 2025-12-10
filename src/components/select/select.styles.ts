@@ -11,7 +11,7 @@ const trigger = tv({
 });
 
 const value = tv({
-  base: 'text-base text-foreground font-normal',
+  base: 'text-base text-foreground',
 });
 
 const portal = tv({
@@ -54,7 +54,7 @@ const itemLabel = tv({
 });
 
 const itemDescription = tv({
-  base: 'text-sm/snug text-muted font-normal',
+  base: 'text-sm/snug text-muted',
 });
 
 const itemIndicator = tv({

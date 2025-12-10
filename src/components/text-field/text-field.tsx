@@ -8,7 +8,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { Text } from '../../helpers/components';
+import { HeroText } from '../../helpers/components';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { useThemeColor } from '../../helpers/theme';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
@@ -37,7 +37,7 @@ const [TextFieldProvider, useTextField] = createContext<TextFieldContextValue>({
   name: 'TextFieldContext',
 });
 
-const AnimatedText = Animated.createAnimatedComponent(Text);
+const AnimatedText = Animated.createAnimatedComponent(HeroText);
 
 // --------------------------------------------------
 
@@ -123,7 +123,7 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
         {...restProps}
       >
         {children}
-        {isRequired && <Text className={asteriskStyles}> *</Text>}
+        {isRequired && <HeroText className={asteriskStyles}> *</HeroText>}
       </AnimatedText>
     );
   }

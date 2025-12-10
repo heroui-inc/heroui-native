@@ -18,6 +18,7 @@ import {
   getAnimationValueProperty,
   getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
+  getRootAnimationState,
   getStyleTransform,
 } from '../../helpers/utils/animation';
 import {
@@ -57,6 +58,20 @@ export function usePressableFeedbackRootAnimation(options: {
   const parentIsAllAnimationsDisabled =
     parentAnimationSettingsContext?.isAllAnimationsDisabled;
 
+  const {
+    isAnimationDisabled: isRootAnimationDisabled,
+    isAllAnimationsDisabled: isRootAllAnimationsDisabled,
+  } = getRootAnimationState(animation);
+
+  const ownIsAllAnimationsDisabled =
+    isRootAnimationDisabled || isRootAllAnimationsDisabled;
+
+  // Combine parent and own disable-all states (parent wins)
+  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    parentIsAllAnimationsDisabled,
+    ownIsAllAnimationsDisabled,
+  });
+
   const scaleAnimation = useMemo(() => {
     return typeof animation === 'object' ? animation?.scale : undefined;
   }, [animation]);
@@ -70,15 +85,6 @@ export function usePressableFeedbackRootAnimation(options: {
       ? animationWithRipple?.ripple
       : undefined;
   }, [animation, variant]);
-
-  const { isAnimationDisabled: ownIsAnimationDisabled } =
-    getAnimationState(animation);
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled: ownIsAnimationDisabled,
-  });
 
   const {
     animationConfig: scaleAnimationConfig,

@@ -1,5 +1,4 @@
 import type { LayoutRectangle } from 'react-native';
-import type { SharedValue } from 'react-native-reanimated';
 import type { LayoutPosition } from '../../helpers/hooks';
 import type {
   ForceMountable,
@@ -37,9 +36,9 @@ interface IRootContext {
    */
   onOpenChange: (open: boolean) => void;
   /**
-   * Extended internal state for additional control (useful for coordinating animations)
+   * Whether the popover should be open by default (uncontrolled mode)
    */
-  popoverState: PopoverState;
+  isDefaultOpen?: boolean;
   /**
    * Whether the popover is disabled
    */
@@ -65,10 +64,6 @@ interface IRootContext {
    */
   nativeID: string;
   /**
-   * Progress value for the popover animation
-   */
-  progress: SharedValue<number>;
-  /**
    * Delay in milliseconds before the popover closes
    */
   closeDelay?: number;
@@ -78,6 +73,14 @@ interface IRootContext {
  * Props for the Popover Root component
  */
 type RootProps = SlottableViewProps & {
+  /**
+   * The controlled open state of the popover
+   */
+  isOpen?: boolean;
+  /**
+   * The open state of the popover when initially rendered (uncontrolled)
+   */
+  isDefaultOpen?: boolean;
   /**
    * Callback fired when the popover open state changes
    * @param open - Whether the popover is open or closed

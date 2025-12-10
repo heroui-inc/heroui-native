@@ -1,4 +1,4 @@
-export { default as Popover, usePopover } from './popover';
+export { default as Popover, usePopover, usePopoverAnimation } from './popover';
 export type {
   PopoverAlign,
   PopoverArrowProps,
@@ -6,12 +6,12 @@ export type {
   PopoverCloseProps,
   PopoverContentProps,
   PopoverDescriptionProps,
-  PopoverLabelProps,
   PopoverOverlayProps,
   PopoverPlacement,
   PopoverPortalProps,
-  PopoverProgressAnimationConfigs,
+  PopoverRootAnimation,
   PopoverRootProps,
+  PopoverTitleProps,
   PopoverTriggerProps,
   PopoverTriggerRef,
 } from './popover.types';

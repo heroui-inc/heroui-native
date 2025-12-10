@@ -14,8 +14,8 @@ export type ButtonVariant =
   | 'secondary'
   | 'tertiary'
   | 'ghost'
-  | 'destructive'
-  | 'destructive-soft';
+  | 'danger'
+  | 'danger-soft';
 
 /**
  * Props for the Button.Root component

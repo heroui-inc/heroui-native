@@ -144,9 +144,7 @@ export const Labels: FC = () => {
         </Chip>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay isDefaultAnimationDisabled>
-          <DialogBlurBackdrop />
-        </Dialog.Overlay>
+        <DialogBlurBackdrop />
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
           <Dialog.Content
             style={{ marginTop: insetTop, height: dialogContentHeight }}

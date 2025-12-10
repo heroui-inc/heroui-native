@@ -14,9 +14,9 @@ import {
   type LayoutChangeEvent,
   type LayoutRectangle,
 } from 'react-native';
-import { useSharedValue } from 'react-native-reanimated';
 import {
   useAugmentedRef,
+  useControllableState,
   useRelativePosition,
   type LayoutPosition,
 } from '../../helpers/hooks';
@@ -30,7 +30,6 @@ import type {
   IRootContext,
   OverlayProps,
   OverlayRef,
-  PopoverState,
   PortalProps,
   RootProps,
   RootRef,
@@ -54,6 +53,8 @@ const Root = forwardRef<RootRef, RootProps>(
   (
     {
       asChild,
+      isOpen: isOpenProp,
+      isDefaultOpen,
       onOpenChange: onOpenChangeProp,
       closeDelay,
       isDisabled,
@@ -61,30 +62,18 @@ const Root = forwardRef<RootRef, RootProps>(
     },
     ref
   ) => {
-    const nativeID = useId();
+    const [isOpen = false, onOpenChange] = useControllableState({
+      prop: isOpenProp,
+      defaultProp: isDefaultOpen,
+      onChange: onOpenChangeProp,
+    });
     const [triggerPosition, setTriggerPosition] =
       useState<LayoutPosition | null>(null);
     const [contentLayout, setContentLayout] = useState<LayoutRectangle | null>(
       null
     );
-    const [isOpen, setIsOpen] = useState(false);
-    const [popoverState, setPopoverState] = useState<PopoverState>('idle');
 
-    const progress = useSharedValue(0);
-
-    function onOpenChange(value: boolean) {
-      if (value) {
-        setIsOpen(true);
-        setPopoverState('open');
-      } else {
-        setPopoverState('close');
-        setTimeout(() => {
-          setIsOpen(false);
-          setPopoverState('idle');
-        }, closeDelay);
-      }
-      onOpenChangeProp?.(value);
-    }
+    const nativeID = useId();
 
     const Component = asChild ? Slot.View : View;
     return (
@@ -92,7 +81,6 @@ const Root = forwardRef<RootRef, RootProps>(
         value={{
           isOpen,
           onOpenChange,
-          popoverState,
           isDisabled,
           contentLayout,
           nativeID,
@@ -100,7 +88,7 @@ const Root = forwardRef<RootRef, RootProps>(
           setTriggerPosition,
           triggerPosition,
           closeDelay,
-          progress,
+          isDefaultOpen,
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -119,6 +107,8 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       isDisabled: isDisabledRoot,
       setTriggerPosition,
       closeDelay,
+      isDefaultOpen,
+      triggerPosition,
     } = useRootContext();
 
     const isDisabledValue = isDisabled ?? isDisabledRoot ?? undefined;
@@ -142,6 +132,24 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
         },
       },
     });
+
+    // Open popover on mount if isDefaultOpen is true
+    useEffect(() => {
+      if (isDefaultOpen && !triggerPosition) {
+        // Use setTimeout to ensure the component is mounted and can be measured
+        const timeoutId = setTimeout(() => {
+          augmentedRef.current?.measure(
+            (_x, _y, width, height, pageX, pageY) => {
+              setTriggerPosition({ width, pageX, pageY: pageY, height });
+              onOpenChange(true);
+            }
+          );
+        }, 0);
+        return () => clearTimeout(timeoutId);
+      }
+      return undefined;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     function onPress(ev: GestureResponderEvent) {
       if (isDisabledValue) return;
@@ -278,6 +286,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
             setTriggerPosition(null);
             setContentLayout(null);
           }, closeDelay);
+
           onOpenChange(false);
           return true;
         }

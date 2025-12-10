@@ -32,7 +32,7 @@ export const CardContent = () => {
               />
             </Card.Header>
             <Card.Body className="flex-1">
-              <Card.Label>Indie Hackers</Card.Label>
+              <Card.Title>Indie Hackers</Card.Title>
               <Card.Description className="text-sm">
                 148 members
               </Card.Description>
@@ -70,7 +70,7 @@ export const CardContent = () => {
               />
             </Card.Header>
             <Card.Body className="flex-1">
-              <Card.Label>AI Builders</Card.Label>
+              <Card.Title>AI Builders</Card.Title>
               <Card.Description className="text-sm">
                 362 members
               </Card.Description>

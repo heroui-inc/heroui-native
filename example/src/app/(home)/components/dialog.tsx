@@ -30,6 +30,7 @@ import { DialogBlurBackdrop } from '../../../components/dialog-blur-backdrop';
 import { useAppTheme } from '../../../contexts/app-theme-context';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
+const StyleScrollView = withUniwind(ScrollView);
 const StyledIonicons = withUniwind(Ionicons);
 
 KeyboardController.preload();
@@ -49,7 +50,7 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
         borderRadius: interpolate(
           progress.get(),
           [1, 1.25],
-          [18, 42],
+          [24, 42],
           Extrapolation.CLAMP
         ),
       };
@@ -73,11 +74,15 @@ const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Dialog.Content
       className="bg-surface rounded-3xl"
+      animation={{
+        scale: {
+          value: [1, 1, 1],
+        },
+      }}
       style={[
         { marginTop: insetTop, height: maxTextInputDialogHeight },
         rContainerStyle,
       ]}
-      isDefaultAnimationDisabled
     >
       {children}
     </Dialog.Content>
@@ -106,7 +111,7 @@ const BasicDialogContent = () => {
                 />
               </View>
               <View className="mb-8 gap-1.5">
-                <Dialog.Label>Low Disk Space</Dialog.Label>
+                <Dialog.Title>Low Disk Space</Dialog.Title>
                 <Dialog.Description>
                   You are running low on disk space. Delete unnecessary files to
                   free up space.
@@ -149,9 +154,7 @@ const BlurBackdropDialogContent = () => {
             <Button variant="secondary">Dialog with blur backdrop</Button>
           </Dialog.Trigger>
           <Dialog.Portal>
-            <Dialog.Overlay isDefaultAnimationDisabled>
-              <DialogBlurBackdrop />
-            </Dialog.Overlay>
+            <DialogBlurBackdrop />
             <Dialog.Content className="max-w-sm mx-auto">
               <Dialog.Close className="self-end -mb-2 z-50" />
               <View className="size-10 items-center justify-center rounded-full bg-overlay-foreground/5 mb-4">
@@ -162,14 +165,14 @@ const BlurBackdropDialogContent = () => {
                 />
               </View>
               <View className="mb-8 gap-1">
-                <Dialog.Label>Delete product</Dialog.Label>
+                <Dialog.Title>Delete product</Dialog.Title>
                 <Dialog.Description>
                   Are you sure you want to delete this product? This action
                   cannot be undone.
                 </Dialog.Description>
               </View>
               <View className="gap-3">
-                <Button variant="destructive" onPress={simulatePress}>
+                <Button variant="danger" onPress={simulatePress}>
                   Delete
                 </Button>
                 <Dialog.Close asChild>
@@ -261,19 +264,17 @@ const TextInputDialogContent = () => {
             <Button variant="secondary">Dialog with text input</Button>
           </Dialog.Trigger>
           <Dialog.Portal>
-            <Dialog.Overlay isDefaultAnimationDisabled>
-              <DialogBlurBackdrop />
-            </Dialog.Overlay>
+            <DialogBlurBackdrop />
             <KeyboardAvoidingView
               behavior="padding"
               keyboardVerticalOffset={24}
             >
               <CustomAnimatedContent>
                 <Dialog.Close className="self-end" />
-                <Dialog.Label className="mb-6">Update Profile</Dialog.Label>
+                <Dialog.Title className="mb-6">Update Profile</Dialog.Title>
 
                 <View className="flex-1">
-                  <ScrollView contentContainerClassName="gap-5">
+                  <StyleScrollView contentContainerClassName="gap-5">
                     <TextField isRequired isInvalid={!!nameError}>
                       <TextField.Label isInvalid={false}>
                         Full Name
@@ -331,7 +332,7 @@ const TextInputDialogContent = () => {
                         {emailError}
                       </TextField.ErrorMessage>
                     </TextField>
-                  </ScrollView>
+                  </StyleScrollView>
                 </View>
 
                 <View className="flex-row justify-end gap-3 pt-3">
@@ -383,15 +384,15 @@ const LongContentDialogContent = () => {
             />
             <Dialog.Content className="rounded-2xl px-0 shadow-2xl shadow-black/10">
               <Dialog.Close className="self-end mr-4" />
-              <Dialog.Label className="text-center mb-5">
+              <Dialog.Title className="text-center mb-5">
                 Upload Audio
-              </Dialog.Label>
+              </Dialog.Title>
               <ScrollShadow
                 LinearGradientComponent={LinearGradient}
                 style={{ height: height * 0.35 }}
                 color={themeColorOverlay}
               >
-                <ScrollView contentContainerClassName="px-6">
+                <StyleScrollView contentContainerClassName="px-6">
                   <Text className="text-foreground/80 text-center">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                     do eiusmod tempor incididunt ut labore et dolore magna
@@ -431,7 +432,7 @@ const LongContentDialogContent = () => {
                     odit aut fugit, sed quia consequuntur magni dolores eos qui
                     ratione voluptatem sequi nesciunt.
                   </Text>
-                </ScrollView>
+                </StyleScrollView>
               </ScrollShadow>
               <Button
                 variant="ghost"

@@ -1,5 +1,5 @@
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import { useSelect, useThemeColor } from 'heroui-native';
+import { useSelectAnimation, useThemeColor } from 'heroui-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -12,7 +12,7 @@ const StyleAnimatedView = withUniwind(Animated.View);
 export const TriggerButton = () => {
   const insets = useSafeAreaInsets();
   const themeColorAccentForeground = useThemeColor('accent-foreground');
-  const { progress } = useSelect();
+  const { progress } = useSelectAnimation();
 
   const animatedStyle = useAnimatedStyle(() => {
     const opacity = interpolate(progress.get(), [0, 1, 1.5], [1, 0, 1]);

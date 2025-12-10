@@ -1,3 +1,5 @@
+import * as Haptics from 'expo-haptics';
+import { LinearGradient } from 'expo-linear-gradient';
 import { colorKit, Select, useThemeColor } from 'heroui-native';
 import {
   FlatList,
@@ -9,9 +11,7 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { Easing, SlideInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import * as Haptics from 'expo-haptics';
-import { LinearGradient } from 'expo-linear-gradient';
+import { withUniwind } from 'uniwind';
 import { SelectBlurBackdrop } from '../../select/select-blur-backdrop';
 import type { UsageVariant } from '../types';
 import { CloseButton } from './close-button';
@@ -20,6 +20,7 @@ import { SelectItem } from './select-item';
 import { TriggerButton } from './trigger-button';
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
+const StyledAnimatedScrollView = withUniwind(AnimatedScrollView);
 
 type Props = {
   data: UsageVariant[];
@@ -53,6 +54,22 @@ export const UsageVariantsSelect = ({
         }, 200);
       }}
       defaultValue={data[0]}
+      animation={{
+        entering: {
+          type: 'timing',
+          config: {
+            duration: 400,
+            easing: Easing.out(Easing.quad),
+          },
+        },
+        exiting: {
+          type: 'timing',
+          config: {
+            duration: 200,
+            easing: Easing.out(Easing.quad),
+          },
+        },
+      }}
     >
       <Select.Trigger
         isDisabled={data.length === 1}
@@ -65,34 +82,15 @@ export const UsageVariantsSelect = ({
       >
         <TriggerButton />
       </Select.Trigger>
-      <Select.Portal
-        progressAnimationConfigs={{
-          onOpen: {
-            animationType: 'timing',
-            animationConfig: {
-              duration: 400,
-              easing: Easing.out(Easing.quad),
-            },
-          },
-          onClose: {
-            animationType: 'timing',
-            animationConfig: {
-              duration: 200,
-              easing: Easing.out(Easing.quad),
-            },
-          },
-        }}
-      >
+      <Select.Portal>
         {Platform.OS === 'android' ? (
           <Select.Overlay className="bg-background" />
         ) : (
-          <Select.Overlay className="bg-transparent" isDefaultAnimationDisabled>
-            <SelectBlurBackdrop maxIntensity={75} />
-          </Select.Overlay>
+          <SelectBlurBackdrop />
         )}
 
         <SelectContentContainer>
-          <AnimatedScrollView
+          <StyledAnimatedScrollView
             entering={SlideInDown.withInitialValues({
               originY: 100,
             })
@@ -109,7 +107,7 @@ export const UsageVariantsSelect = ({
             {data.map((m) => (
               <SelectItem key={m.value} data={m} />
             ))}
-          </AnimatedScrollView>
+          </StyledAnimatedScrollView>
           <LinearGradient
             colors={[
               themeColorSurface,

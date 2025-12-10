@@ -7,12 +7,7 @@ const portal = tv({
 });
 
 const overlay = tv({
-  base: 'absolute inset-0 bg-black/30',
-  variants: {
-    isDefaultAnimationDisabled: {
-      true: 'bg-transparent',
-    },
-  },
+  base: 'absolute inset-0 bg-black/20',
 });
 
 const content = tv({
@@ -28,7 +23,7 @@ const label = tv({
 });
 
 const description = tv({
-  base: 'text-base font-normal text-muted',
+  base: 'text-base text-muted',
 });
 
 const dialogStyles = combineStyles({

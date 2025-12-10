@@ -1,8 +1,10 @@
 import { forwardRef, useMemo } from 'react';
 import { Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { Text } from '../../helpers/components';
+import { HeroText } from '../../helpers/components';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import type { PressableRef } from '../../helpers/types';
 import { childrenToString, createContext } from '../../helpers/utils';
+import { useChipRootAnimation } from './chip.animation';
 import { DISPLAY_NAME } from './chip.constants';
 import chipStyles, { styleSheet } from './chip.styles';
 import type { ChipContextValue, ChipLabelProps, ChipProps } from './chip.types';
@@ -21,6 +23,7 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
     color = 'accent',
     className,
     style,
+    animation,
     ...restProps
   } = props;
 
@@ -33,6 +36,17 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
     className,
   });
 
+  const { isAllAnimationsDisabled } = useChipRootAnimation({
+    animation,
+  });
+
+  const animationSettingsContextValue = useMemo(
+    () => ({
+      isAllAnimationsDisabled,
+    }),
+    [isAllAnimationsDisabled]
+  );
+
   const contextValue = useMemo(
     () => ({
       size,
@@ -43,20 +57,22 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
   );
 
   return (
-    <ChipProvider value={contextValue}>
-      <Pressable
-        ref={ref}
-        className={tvStyles}
-        style={[styleSheet.root, style] as StyleProp<ViewStyle>}
-        {...restProps}
-      >
-        {stringifiedChildren ? (
-          <ChipLabel>{stringifiedChildren}</ChipLabel>
-        ) : (
-          children
-        )}
-      </Pressable>
-    </ChipProvider>
+    <AnimationSettingsProvider value={animationSettingsContextValue}>
+      <ChipProvider value={contextValue}>
+        <Pressable
+          ref={ref}
+          className={tvStyles}
+          style={[styleSheet.root, style] as StyleProp<ViewStyle>}
+          {...restProps}
+        >
+          {stringifiedChildren ? (
+            <ChipLabel>{stringifiedChildren}</ChipLabel>
+          ) : (
+            children
+          )}
+        </Pressable>
+      </ChipProvider>
+    </AnimationSettingsProvider>
   );
 });
 
@@ -75,9 +91,9 @@ const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
   });
 
   return (
-    <Text ref={ref} className={tvStyles} {...restProps}>
+    <HeroText ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Text>
+    </HeroText>
   );
 });
 

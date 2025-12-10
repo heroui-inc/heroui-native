@@ -186,16 +186,27 @@ export default function PaymentMethodExample() {
 
 ### RadioGroup
 
-| prop            | type                    | default     | description                                        |
-| --------------- | ----------------------- | ----------- | -------------------------------------------------- |
-| `children`      | `React.ReactNode`       | `undefined` | Radio group content                                |
-| `value`         | `string \| undefined`   | `undefined` | The currently selected value of the radio group    |
-| `onValueChange` | `(val: string) => void` | `undefined` | Callback fired when the selected value changes     |
-| `isDisabled`    | `boolean`               | `false`     | Whether the entire radio group is disabled         |
-| `isInvalid`     | `boolean`               | `false`     | Whether the radio group is invalid                 |
-| `isOnSurface`   | `boolean`               | `undefined` | Whether the radio group is on surface              |
-| `className`     | `string`                | `undefined` | Custom class name                                  |
-| `...ViewProps`  | `ViewProps`             | -           | All standard React Native View props are supported |
+| prop            | type                      | default     | description                                         |
+| --------------- | ------------------------- | ----------- | --------------------------------------------------- |
+| `children`      | `React.ReactNode`         | `undefined` | Radio group content                                 |
+| `value`         | `string \| undefined`     | `undefined` | The currently selected value of the radio group     |
+| `onValueChange` | `(val: string) => void`   | `undefined` | Callback fired when the selected value changes      |
+| `isDisabled`    | `boolean`                 | `false`     | Whether the entire radio group is disabled          |
+| `isInvalid`     | `boolean`                 | `false`     | Whether the radio group is invalid                  |
+| `isOnSurface`   | `boolean`                 | `undefined` | Whether the radio group is on surface               |
+| `animation`     | `RadioGroupRootAnimation` | `undefined` | Animation configuration for radio group (see below) |
+| `className`     | `string`                  | `undefined` | Custom class name                                   |
+| `...ViewProps`  | `ViewProps`               | -           | All standard React Native View props are supported  |
+
+#### RadioGroupRootAnimation
+
+Animation configuration for the RadioGroup root component. Supports cascading control to disable animations across all child components.
+
+| value                   | description                                               |
+| ----------------------- | --------------------------------------------------------- |
+| `true` or `undefined`   | Use default animations                                    |
+| `false` or `"disabled"` | Disable only root animations (children can still animate) |
+| `"disable-all"`         | Disable all animations including children (cascades down) |
 
 ### RadioGroup.Item
 
@@ -205,6 +216,8 @@ export default function PaymentMethodExample() {
 | `value`             | `string`                                                                     | `undefined` | The value associated with this radio item                                 |
 | `isDisabled`        | `boolean`                                                                    | `false`     | Whether this specific radio item is disabled                              |
 | `isInvalid`         | `boolean`                                                                    | `false`     | Whether the radio item is invalid                                         |
+| `isOnSurface`       | `boolean`                                                                    | `undefined` | Whether the radio item is on surface (auto-detected if not set)           |
+| `hitSlop`           | `number`                                                                     | `6`         | Hit slop for the pressable area                                           |
 | `className`         | `string`                                                                     | `undefined` | Custom class name                                                         |
 | `...PressableProps` | `PressableProps`                                                             | -           | All standard React Native Pressable props are supported (except disabled) |
 
@@ -221,16 +234,39 @@ export default function PaymentMethodExample() {
 | prop                    | type                       | default     | description                                      |
 | ----------------------- | -------------------------- | ----------- | ------------------------------------------------ |
 | `children`              | `React.ReactNode`          | `undefined` | Indicator content                                |
-| `isOnSurface`           | `boolean`                  | `undefined` | Whether the indicator is on surface              |
 | `className`             | `string`                   | `undefined` | Custom class name                                |
 | `...Animated.ViewProps` | `AnimatedProps<ViewProps>` | -           | All Reanimated Animated.View props are supported |
+
+**Note:** The `isOnSurface` state is automatically provided via context from the parent RadioGroup.Item component.
 
 ### RadioGroup.IndicatorThumb
 
-| prop                    | type                       | default     | description                                      |
-| ----------------------- | -------------------------- | ----------- | ------------------------------------------------ |
-| `className`             | `string`                   | `undefined` | Custom class name                                |
-| `...Animated.ViewProps` | `AnimatedProps<ViewProps>` | -           | All Reanimated Animated.View props are supported |
+| prop                    | type                                | default     | description                                      |
+| ----------------------- | ----------------------------------- | ----------- | ------------------------------------------------ |
+| `className`             | `string`                            | `undefined` | Custom class name                                |
+| `animation`             | `RadioGroupIndicatorThumbAnimation` | `undefined` | Animation configuration for thumb (see below)    |
+| `...Animated.ViewProps` | `AnimatedProps<ViewProps>`          | -           | All Reanimated Animated.View props are supported |
+
+#### RadioGroupIndicatorThumbAnimation
+
+Animation configuration for the RadioGroupIndicatorThumb component. Can be:
+
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
+
+**Animation Properties:**
+
+| property | type                          | default     | description                                   |
+| -------- | ----------------------------- | ----------- | --------------------------------------------- |
+| `scale`  | `AnimationValue<ScaleConfig>` | `undefined` | Scale animation configuration for thumb state |
+
+**ScaleConfig:**
+
+| property       | type               | default                                              | description                         |
+| -------------- | ------------------ | ---------------------------------------------------- | ----------------------------------- |
+| `value`        | `[number, number]` | `[1.5, 1]`                                           | Scale values [unselected, selected] |
+| `timingConfig` | `WithTimingConfig` | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration      |
 
 ### RadioGroup.Label
 
@@ -276,8 +312,9 @@ export default function PaymentMethodExample() {
 
 **Returns:**
 
-| Property     | Type      | Description                        |
-| ------------ | --------- | ---------------------------------- |
-| `isSelected` | `boolean` | Whether the radio item is selected |
-| `isDisabled` | `boolean` | Whether the radio item is disabled |
-| `isInvalid`  | `boolean` | Whether the radio item is invalid  |
+| Property      | Type      | Description                          |
+| ------------- | --------- | ------------------------------------ |
+| `isSelected`  | `boolean` | Whether the radio item is selected   |
+| `isDisabled`  | `boolean` | Whether the radio item is disabled   |
+| `isInvalid`   | `boolean` | Whether the radio item is invalid    |
+| `isOnSurface` | `boolean` | Whether the radio item is on surface |

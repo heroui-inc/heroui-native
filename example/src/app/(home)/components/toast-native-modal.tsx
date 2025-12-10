@@ -34,7 +34,7 @@ export default function ToastNativeModalScreen() {
       >
         Show toast
       </Button>
-      <Button onPress={() => toast.hide('all')} variant="destructive-soft">
+      <Button onPress={() => toast.hide('all')} variant="danger-soft">
         Hide toast
       </Button>
     </View>

@@ -172,7 +172,7 @@ const BlurBackdropDialogContent = () => {
                 </Dialog.Description>
               </View>
               <View className="gap-3">
-                <Button variant="destructive" onPress={simulatePress}>
+                <Button variant="danger" onPress={simulatePress}>
                   Delete
                 </Button>
                 <Dialog.Close asChild>

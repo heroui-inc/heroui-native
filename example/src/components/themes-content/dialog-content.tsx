@@ -13,7 +13,7 @@ export const DialogContent = () => {
   return (
     <Dialog isOpen={dialogOpen} onOpenChange={setDialogOpen}>
       <Dialog.Trigger asChild>
-        <Button variant="destructive-soft">Delete Account</Button>
+        <Button variant="danger-soft">Delete Account</Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <DialogBlurBackdrop />
@@ -35,7 +35,7 @@ export const DialogContent = () => {
           </View>
           <View className="gap-3">
             <Button
-              variant="destructive"
+              variant="danger"
               onPress={() => {
                 setDialogOpen(false);
                 console.log('Account deleted');

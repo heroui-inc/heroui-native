@@ -134,7 +134,7 @@ export const AchievementToast = (props: ToastComponentProps) => {
   }));
 
   return (
-    <Toast className="bg-[#F5F1E8] border-[2px] border-orange-200" {...props}>
+    <Toast className="bg-[#F5F1E8] border-2 border-orange-200" {...props}>
       <View className="relative flex-row items-center gap-4 px-4 py-3">
         {/* Confetti decorative elements */}
         <StyleAnimatedView

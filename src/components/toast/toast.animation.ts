@@ -14,10 +14,12 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
+import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
 import {
-  getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
+  getCombinedAnimationDisabledState,
+  getRootAnimationState,
   getStyleProperties,
   getStyleTransform,
 } from '../../helpers/utils/animation';
@@ -86,7 +88,22 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
 
   const { height: screenHeight } = useWindowDimensions();
 
-  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
+  // Read parent animation disabled state from global context
+  const parentAnimationSettingsContext = useAnimationSettings();
+  const parentIsAllAnimationsDisabled =
+    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+
+  const {
+    animationConfig,
+    isAnimationDisabled,
+    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
+  } = getRootAnimationState(animation);
+
+  // Combine parent and own disable-all states (parent wins)
+  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    parentIsAllAnimationsDisabled,
+    ownIsAllAnimationsDisabled,
+  });
 
   // Entering animation
   const enteringTopValue = getAnimationValueProperty({
@@ -374,7 +391,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
 
   return {
     rContainerStyle,
-    isAnimationDisabled,
+    isAllAnimationsDisabled,
     entering: isAnimationDisabled ? undefined : enteringAnimation,
     exiting: isAnimationDisabled ? undefined : exitingAnimation,
     panGesture,

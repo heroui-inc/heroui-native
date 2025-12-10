@@ -4,6 +4,7 @@ import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { CloseIcon } from '../../helpers/components/close-icon';
 import { Text } from '../../helpers/components/text';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { cn, useThemeColor } from '../../helpers/theme';
 import type { ViewRef } from '../../helpers/types';
 import { createContext } from '../../helpers/utils';
@@ -68,19 +69,31 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     className,
   });
 
-  const { rContainerStyle, entering, exiting, panGesture } =
-    useToastRootAnimation({
-      animation,
-      style: style as ViewStyle | undefined,
-      index,
-      total,
-      heights,
-      placement,
-      hide,
-      id,
-      isSwipeable,
-      maxVisibleToasts,
-    });
+  const {
+    rContainerStyle,
+    entering,
+    exiting,
+    panGesture,
+    isAllAnimationsDisabled,
+  } = useToastRootAnimation({
+    animation,
+    style: style as ViewStyle | undefined,
+    index,
+    total,
+    heights,
+    placement,
+    hide,
+    id,
+    isSwipeable,
+    maxVisibleToasts,
+  });
+
+  const animationSettingsContextValue = useMemo(
+    () => ({
+      isAllAnimationsDisabled,
+    }),
+    [isAllAnimationsDisabled]
+  );
 
   const contextValue = useMemo(
     () => ({
@@ -92,44 +105,46 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   );
 
   return (
-    <ToastProvider value={contextValue}>
-      <GestureDetector gesture={panGesture}>
-        <Animated.View
-          className={cn(
-            'absolute left-0 right-0',
-            placement === 'top' ? 'top-0' : 'bottom-0'
-          )}
-          entering={entering}
-          exiting={exiting}
-        >
-          {/* Animated toast instance */}
-          <AnimatedToastRoot
-            ref={ref}
-            className={containerStyles}
-            style={[styleSheet.root, rContainerStyle, style]}
-            {...restProps}
+    <AnimationSettingsProvider value={animationSettingsContextValue}>
+      <ToastProvider value={contextValue}>
+        <GestureDetector gesture={panGesture}>
+          <Animated.View
+            className={cn(
+              'absolute left-0 right-0',
+              placement === 'top' ? 'top-0' : 'bottom-0'
+            )}
+            entering={entering}
+            exiting={exiting}
           >
-            {children}
-          </AnimatedToastRoot>
-          {/* Hidden toast instance for height measurement */}
-          <AnimatedToastRoot
-            pointerEvents="none"
-            className={cn(containerStyles, 'absolute opacity-0')}
-            style={[styleSheet.root, style]}
-            onLayout={(event) => {
-              const measuredHeight = event.nativeEvent.layout.height;
-              heights.modify((value) => {
-                'worklet';
-                return { ...value, [id]: measuredHeight };
-              });
-            }}
-            {...restProps}
-          >
-            {children}
-          </AnimatedToastRoot>
-        </Animated.View>
-      </GestureDetector>
-    </ToastProvider>
+            {/* Animated toast instance */}
+            <AnimatedToastRoot
+              ref={ref}
+              className={containerStyles}
+              style={[styleSheet.root, rContainerStyle, style]}
+              {...restProps}
+            >
+              {children}
+            </AnimatedToastRoot>
+            {/* Hidden toast instance for height measurement */}
+            <AnimatedToastRoot
+              pointerEvents="none"
+              className={cn(containerStyles, 'absolute opacity-0')}
+              style={[styleSheet.root, style]}
+              onLayout={(event) => {
+                const measuredHeight = event.nativeEvent.layout.height;
+                heights.modify((value) => {
+                  'worklet';
+                  return { ...value, [id]: measuredHeight };
+                });
+              }}
+              {...restProps}
+            >
+              {children}
+            </AnimatedToastRoot>
+          </Animated.View>
+        </GestureDetector>
+      </ToastProvider>
+    </AnimationSettingsProvider>
   );
 });
 

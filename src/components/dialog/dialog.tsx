@@ -3,7 +3,7 @@ import type { Text as RNText, ViewStyle } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
-import { Text } from '../../helpers/components/text';
+import { HeroText } from '../../helpers/components/hero-text';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
@@ -282,7 +282,7 @@ const DialogTitle = forwardRef<RNText, DialogTitleProps>(
     const tvStyles = dialogStyles.label({ className });
 
     return (
-      <Text
+      <HeroText
         ref={ref}
         role="heading"
         accessibilityRole="header"
@@ -291,7 +291,7 @@ const DialogTitle = forwardRef<RNText, DialogTitleProps>(
         {...props}
       >
         {children}
-      </Text>
+      </HeroText>
     );
   }
 );
@@ -307,7 +307,7 @@ const DialogDescription = forwardRef<RNText, DialogDescriptionProps>(
     });
 
     return (
-      <Text
+      <HeroText
         ref={ref}
         accessibilityRole="text"
         nativeID={`${nativeID}_desc`}
@@ -315,7 +315,7 @@ const DialogDescription = forwardRef<RNText, DialogDescriptionProps>(
         {...props}
       >
         {children}
-      </Text>
+      </HeroText>
     );
   }
 );

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { View } from 'react-native';
-import { Text } from '../../helpers/components';
+import { HeroText } from '../../helpers/components';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { Surface } from '../surface';
 import { DISPLAY_NAME } from './card.constants';
@@ -78,9 +78,9 @@ const CardTitle = forwardRef<TextRef, CardTitleProps>((props, ref) => {
   const tvStyles = cardStyles.label({ className });
 
   return (
-    <Text ref={ref} className={tvStyles} {...restProps}>
+    <HeroText ref={ref} className={tvStyles} {...restProps}>
       {children}
-    </Text>
+    </HeroText>
   );
 });
 
@@ -95,9 +95,9 @@ const CardDescription = forwardRef<TextRef, CardDescriptionProps>(
     });
 
     return (
-      <Text ref={ref} className={tvStyles} {...restProps}>
+      <HeroText ref={ref} className={tvStyles} {...restProps}>
         {children}
-      </Text>
+      </HeroText>
     );
   }
 );

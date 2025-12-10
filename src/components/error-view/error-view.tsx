@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import Animated from 'react-native-reanimated';
-import { Text } from '../../helpers/components';
+import { HeroText } from '../../helpers/components';
 import type { ViewRef } from '../../helpers/types/primitives';
 import { childrenToString } from '../../helpers/utils';
 import { useErrorViewRootAnimation } from './error-view.animation';
@@ -37,9 +37,9 @@ const ErrorViewRoot = forwardRef<ViewRef, ErrorViewRootProps>((props, ref) => {
 
   const stringifiedChildren = childrenToString(children);
   const renderedChildren = stringifiedChildren ? (
-    <Text className={textStyles} {...textProps}>
+    <HeroText className={textStyles} {...textProps}>
       {stringifiedChildren}
-    </Text>
+    </HeroText>
   ) : (
     children
   );

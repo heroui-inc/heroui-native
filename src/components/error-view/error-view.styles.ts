@@ -4,7 +4,7 @@ import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 const root = tv({
   slots: {
     container: '',
-    text: 'text-sm text-danger font-normal',
+    text: 'text-sm text-danger',
   },
 });
 

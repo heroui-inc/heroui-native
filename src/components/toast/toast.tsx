@@ -232,7 +232,7 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
       case 'accent':
         return 'primary';
       case 'danger':
-        return 'destructive';
+        return 'danger';
       default:
         return 'tertiary';
     }

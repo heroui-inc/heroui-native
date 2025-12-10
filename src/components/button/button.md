@@ -75,8 +75,8 @@ Choose from six visual variants for different emphasis levels.
 <Button variant="secondary">Secondary</Button>
 <Button variant="tertiary">Tertiary</Button>
 <Button variant="ghost">Ghost</Button>
-<Button variant="destructive">Destructive</Button>
-<Button variant="destructive-soft">Destructive Soft</Button>
+<Button variant="danger">Danger</Button>
+<Button variant="danger-soft">Danger Soft</Button>
 ```
 
 ### Feedback Variants
@@ -186,7 +186,7 @@ export default function ButtonExample() {
             color={themeColorAccentSoftForeground}
           />
         </Button>
-        <Button size="sm" variant="destructive" isIconOnly>
+        <Button size="sm" variant="danger" isIconOnly>
           <Ionicons name="trash" size={16} color={themeColorDangerForeground} />
         </Button>
       </View>
@@ -223,7 +223,7 @@ Button extends all props from [PressableFeedback](../pressable-feedback/pressabl
 
 | prop         | type                                                                                       | default     | description                                                    |
 | ------------ | ------------------------------------------------------------------------------------------ | ----------- | -------------------------------------------------------------- |
-| `variant`    | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'destructive' \| 'destructive-soft'` | `'primary'` | Visual variant of the button                                   |
+| `variant`    | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'danger' \| 'danger-soft'` | `'primary'` | Visual variant of the button                                   |
 | `size`       | `'sm' \| 'md' \| 'lg'`                                                                     | `'md'`      | Size of the button                                             |
 | `isIconOnly` | `boolean`                                                                                  | `false`     | Whether the button displays an icon only (square aspect ratio) |
 

@@ -36,8 +36,8 @@ const VariantsContent = () => {
           <Button variant="secondary">Secondary</Button>
           <Button variant="tertiary">Tertiary</Button>
           <Button variant="ghost">Ghost</Button>
-          <Button variant="destructive">Destructive</Button>
-          <Button variant="destructive-soft">Destructive Soft</Button>
+          <Button variant="danger">Danger</Button>
+          <Button variant="danger-soft">Danger Soft</Button>
         </View>
       </View>
     </View>
@@ -139,7 +139,7 @@ const WithIconsContent = () => {
             />
           </Button>
 
-          <Button variant="destructive" size="sm">
+          <Button variant="danger" size="sm">
             <StyledIonicons
               name="trash"
               size={14}
@@ -178,7 +178,7 @@ const IconOnlyContent = () => {
               />
             </Button.Label>
           </Button>
-          <Button size="lg" variant="destructive" isIconOnly>
+          <Button size="lg" variant="danger" isIconOnly>
             <Button.Label>
               <StyledIonicons
                 name="trash"

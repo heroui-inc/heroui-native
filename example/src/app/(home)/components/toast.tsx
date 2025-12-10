@@ -145,7 +145,7 @@ const DefaultVariantsContent = () => {
       >
         Danger toast
       </Button>
-      <Button onPress={() => toast.hide('all')} variant="destructive-soft">
+      <Button onPress={() => toast.hide('all')} variant="danger-soft">
         Hide all toasts
       </Button>
     </View>
@@ -232,7 +232,7 @@ const PlacementVariantsContent = () => {
       >
         Bottom toast
       </Button>
-      <Button onPress={() => toast.hide('all')} variant="destructive-soft">
+      <Button onPress={() => toast.hide('all')} variant="danger-soft">
         Hide all toasts
       </Button>
     </View>
@@ -290,7 +290,7 @@ const DifferentContentSizesContent = () => {
       >
         Large toast
       </Button>
-      <Button onPress={() => toast.hide('all')} variant="destructive-soft">
+      <Button onPress={() => toast.hide('all')} variant="danger-soft">
         Hide all toasts
       </Button>
     </View>
@@ -352,7 +352,7 @@ const KeyboardAvoidingContent = () => {
       >
         Toggle keyboard
       </Button>
-      <Button onPress={() => toast.hide('all')} variant="destructive-soft">
+      <Button onPress={() => toast.hide('all')} variant="danger-soft">
         Hide toast
       </Button>
       <TextInput
@@ -514,7 +514,7 @@ const CustomToastsContent = () => {
         Start upload
       </Button>
 
-      <Button onPress={() => toast.hide('all')} variant="destructive-soft">
+      <Button onPress={() => toast.hide('all')} variant="danger-soft">
         Hide all toasts
       </Button>
     </View>

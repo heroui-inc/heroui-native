@@ -59,9 +59,9 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         return themeColorDefaultHover;
       case 'ghost':
         return colorKit.setAlpha(themeColorDefaultHover, 0.3).hex();
-      case 'destructive':
+      case 'danger':
         return themeColorDangerHover;
-      case 'destructive-soft':
+      case 'danger-soft':
         return themeColorDefaultHover;
     }
   }, [

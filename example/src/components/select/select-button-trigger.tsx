@@ -47,7 +47,7 @@ const AnimatedTrigger: FC = () => {
     >
       <StyleAnimatedView
         style={[rContainerStyle, styles.borderCurve]}
-        className="absolute -inset-1 border-[2.5px] border-accent rounded-[10px] pointer-events-none"
+        className="absolute -inset-1 border-[2.5px] border-accent rounded-[18px] pointer-events-none"
       />
       <Select.Value placeholder="Select a state" />
       <StyleAnimatedView style={rChevronStyle} className="absolute right-3">

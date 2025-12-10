@@ -174,7 +174,7 @@ const PresentationContent = () => {
               bottomSheetViewClassName={cn(
                 'h-full mx-2 border border-divider/20 bg-overlay overflow-hidden',
                 Platform.OS === 'ios'
-                  ? 'rounded-t-4xl rounded-b-[28px]'
+                  ? 'rounded-t-4xl rounded-b-[54px]'
                   : 'rounded-4xl'
               )}
               bottomSheetViewProps={{

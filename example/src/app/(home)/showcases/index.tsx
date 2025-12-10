@@ -81,7 +81,7 @@ const data = [
     imageDark:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/showcases-onboarding-dark-1.png',
     title: 'Onboarding',
-    description: 'Onboarding step with marquee carousel of shadowed cards',
+    description: 'Onboarding step with marquee carousel of shadowed cards.',
     href: '/showcases/onboarding',
     components: [
       { name: 'Button', href: '/components/button' },

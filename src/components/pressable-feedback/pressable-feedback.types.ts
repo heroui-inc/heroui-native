@@ -4,7 +4,11 @@ import type {
   SharedValue,
   WithTimingConfig,
 } from 'react-native-reanimated';
-import type { Animation, AnimationValue } from '../../helpers/types';
+import type {
+  Animation,
+  AnimationRoot,
+  AnimationValue,
+} from '../../helpers/types';
 
 /**
  * Variant of the feedback effect
@@ -181,7 +185,7 @@ export type PressableFeedbackRippleAnimation = Animation<{
 /**
  * Animation configuration for PressableFeedback root component with highlight variant
  */
-export type PressableFeedbackHighlightRootAnimation = Animation<{
+export type PressableFeedbackHighlightRootAnimation = AnimationRoot<{
   /**
    * Scale animation for the root container
    */
@@ -195,7 +199,7 @@ export type PressableFeedbackHighlightRootAnimation = Animation<{
 /**
  * Animation configuration for PressableFeedback root component with ripple variant
  */
-export type PressableFeedbackRippleRootAnimation = Animation<{
+export type PressableFeedbackRippleRootAnimation = AnimationRoot<{
   /**
    * Scale animation for the root container
    */

@@ -79,6 +79,17 @@ Apply custom styles using className or style props.
 </Chip>
 ```
 
+### Disable All Animations
+
+Disable all animations including children by using the `"disable-all"` value for the `animation` prop.
+
+```tsx
+{
+  /* Disable all animations including children */
+}
+<Chip animation="disable-all">No Animations</Chip>;
+```
+
 ## Example
 
 ```tsx
@@ -138,14 +149,15 @@ export default function ChipExample() {
 
 ### Chip
 
-| prop                | type                                                          | default     | description                       |
-| ------------------- | ------------------------------------------------------------- | ----------- | --------------------------------- |
-| `children`          | `React.ReactNode`                                             | -           | Content to render inside the chip |
-| `size`              | `'sm' \| 'md' \| 'lg'`                                        | `'md'`      | Size of the chip                  |
-| `variant`           | `'primary' \| 'secondary' \| 'tertiary' \| 'soft'`            | `'primary'` | Visual variant of the chip        |
-| `color`             | `'accent' \| 'default' \| 'success' \| 'warning' \| 'danger'` | `'accent'`  | Color theme of the chip           |
-| `className`         | `string`                                                      | -           | Additional CSS classes to apply   |
-| `...PressableProps` | `PressableProps`                                              | -           | All Pressable props are supported |
+| prop                | type                                                          | default     | description                                                                               |
+| ------------------- | ------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
+| `children`          | `React.ReactNode`                                             | -           | Content to render inside the chip                                                         |
+| `size`              | `'sm' \| 'md' \| 'lg'`                                        | `'md'`      | Size of the chip                                                                          |
+| `variant`           | `'primary' \| 'secondary' \| 'tertiary' \| 'soft'`            | `'primary'` | Visual variant of the chip                                                                |
+| `color`             | `'accent' \| 'default' \| 'success' \| 'warning' \| 'danger'` | `'accent'`  | Color theme of the chip                                                                   |
+| `className`         | `string`                                                      | -           | Additional CSS classes to apply                                                           |
+| `animation`         | `"disable-all"`                                               | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
+| `...PressableProps` | `PressableProps`                                              | -           | All Pressable props are supported                                                         |
 
 ### Chip.Label
 

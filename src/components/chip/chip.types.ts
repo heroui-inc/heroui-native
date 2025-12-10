@@ -1,4 +1,5 @@
 import type { PressableProps, TextProps } from 'react-native';
+import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 
 /**
  * Chip size variants
@@ -33,6 +34,13 @@ export interface ChipProps extends PressableProps {
 
   /** Custom class name for the chip */
   className?: string;
+
+  /**
+   * Animation configuration for chip
+   * - `"disable-all"`: Disable all animations including children
+   * - `undefined`: Use default animations
+   */
+  animation?: AnimationRootDisableAll;
 }
 
 /**

@@ -5,7 +5,7 @@ import type {
   EntryOrExitLayoutType,
   SharedValue,
 } from 'react-native-reanimated';
-import type { Animation } from '../../helpers/types';
+import type { Animation, AnimationRoot } from '../../helpers/types';
 
 /**
  * Skeleton animation type - defines the animation style
@@ -64,7 +64,7 @@ export type SkeletonPulseAnimation = Animation<{
 /**
  * Animation configuration for Skeleton root component
  */
-export type SkeletonRootAnimation = Animation<{
+export type SkeletonRootAnimation = AnimationRoot<{
   entering?: Animation<{
     /**
      * Custom entering animation for skeleton

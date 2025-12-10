@@ -59,6 +59,37 @@ toast.show({
 
 **Note**: Toast items are memoized for performance. If you need to pass external state (like loading state) to a custom toast component, it will not update automatically. Use shared state techniques instead, such as React Context, state management libraries, or refs to ensure state updates propagate to the toast component.
 
+### Disabling All Animations
+
+Disable all animations including children by using `"disable-all"`. This cascades down to all child components (like Button in Toast.Action).
+
+```tsx
+const { toast } = useToast();
+
+toast.show({
+  variant: 'success',
+  label: 'Operation completed',
+  description: 'All animations are disabled',
+  animation: 'disable-all',
+});
+```
+
+Or with a custom component:
+
+```tsx
+const { toast } = useToast();
+
+toast.show({
+  component: (props) => (
+    <Toast variant="accent" animation="disable-all" {...props}>
+      <Toast.Title>No animations</Toast.Title>
+      <Toast.Description>This toast has all animations disabled</Toast.Description>
+      <Toast.Action>Action</Toast.Action>
+    </Toast>
+  ),
+});
+```
+
 ## Example
 
 ```tsx
@@ -230,7 +261,7 @@ For padding, use `border` classes. For actual borders, use `outline` classes.
 | `variant`      | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Visual variant of the toast                                               |
 | `placement`    | `'top' \| 'bottom'`                                           | `'top'`     | Placement of the toast on screen                                          |
 | `isSwipeable`  | `boolean`                                                     | `true`      | Whether the toast can be swiped to dismiss and dragged with rubber effect |
-| `animation`    | `ToastRootAnimation \| false \| "disabled" \| "disable-all"`  | -           | Animation configuration for toast                                         |
+| `animation`    | `ToastRootAnimation \| false \| "disabled" \| "disable-all"`  | -           | Animation configuration for toast. Use `"disable-all"` to disable all animations including children |
 | `className`    | `string`                                                      | -           | Additional CSS class for the toast container                              |
 | `...ViewProps` | `ViewProps`                                                   | -           | All standard React Native View props are supported                        |
 

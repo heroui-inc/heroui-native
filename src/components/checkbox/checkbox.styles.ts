@@ -18,15 +18,15 @@ const root = tv({
       false: '',
     },
     isInvalid: {
-      true: '',
-      false: '',
+      true: 'border border-danger',
+      false: 'border-0',
     },
   },
   compoundVariants: [
     {
       isSelected: false,
       isInvalid: true,
-      className: 'bg-transparent border border-danger',
+      className: 'bg-transparent',
     },
   ],
   defaultVariants: {

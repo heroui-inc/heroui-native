@@ -93,7 +93,6 @@ export function SearchableDialogSelect() {
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
           <Select.Content
             classNames={{
-              wrapper: 'justify-center',
               content: cn('gap-2 rounded-3xl', isDark && 'bg-surface'),
             }}
             style={{ marginTop: insetTop, height: maxDialogHeight }}

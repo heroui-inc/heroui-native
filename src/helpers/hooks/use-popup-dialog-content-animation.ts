@@ -101,9 +101,7 @@ export const usePopupDialogContentAnimation = ({
     () =>
       Gesture.Pan()
         .enabled(isSwipeable && dialogState === 'open')
-        .onBegin(() => {
-          isDragging.set(true);
-        })
+        .onStart(() => isDragging.set(true))
         .onUpdate((event) => {
           if (!isDragging.get()) return;
 

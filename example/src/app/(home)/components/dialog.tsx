@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -7,21 +8,16 @@ import {
   Dialog,
   ScrollShadow,
   TextField,
-  useDialogAnimation,
   useThemeColor,
 } from 'heroui-native';
-import { useState, type FC, type PropsWithChildren } from 'react';
+import { useState } from 'react';
 import { Platform, Text, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {
   KeyboardAvoidingView,
   KeyboardController,
 } from 'react-native-keyboard-controller';
-import {
-  Extrapolation,
-  interpolate,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
@@ -34,60 +30,6 @@ const StyleScrollView = withUniwind(ScrollView);
 const StyledIonicons = withUniwind(Ionicons);
 
 KeyboardController.preload();
-
-const CustomAnimatedContent: FC<PropsWithChildren> = ({ children }) => {
-  const { height } = useWindowDimensions();
-  const insets = useSafeAreaInsets();
-
-  const insetTop = insets.top + 12;
-  const maxTextInputDialogHeight = (height - insetTop) / 2;
-
-  const { progress, isDragging } = useDialogAnimation();
-
-  const rContainerStyle = useAnimatedStyle(() => {
-    if (isDragging.get()) {
-      return {
-        borderRadius: interpolate(
-          progress.get(),
-          [1, 1.25],
-          [24, 42],
-          Extrapolation.CLAMP
-        ),
-      };
-    }
-
-    return {
-      opacity: interpolate(progress.get(), [0, 1, 2], [0, 1, 0]),
-      transform: [
-        {
-          scaleX: interpolate(
-            progress.get(),
-            [0, 1, 2],
-            [0.9, 1, 0.9],
-            Extrapolation.CLAMP
-          ),
-        },
-      ],
-    };
-  });
-
-  return (
-    <Dialog.Content
-      className="bg-surface rounded-3xl"
-      animation={{
-        scale: {
-          value: [1, 1, 1],
-        },
-      }}
-      style={[
-        { marginTop: insetTop, height: maxTextInputDialogHeight },
-        rContainerStyle,
-      ]}
-    >
-      {children}
-    </Dialog.Content>
-  );
-};
 
 const BasicDialogContent = () => {
   const [basicDialogOpen, setBasicDialogOpen] = useState(false);
@@ -201,6 +143,12 @@ const TextInputDialogContent = () => {
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
 
+  const { height } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+
+  const insetTop = insets.top + 12;
+  const maxTextInputDialogHeight = (height - insetTop) / 2;
+
   const themeColorSurfaceSecondary = useThemeColor('surface-secondary');
   const themeColorMuted = useThemeColor('muted');
 
@@ -268,8 +216,23 @@ const TextInputDialogContent = () => {
             <KeyboardAvoidingView
               behavior="padding"
               keyboardVerticalOffset={24}
+              style={{
+                flex: 1,
+                justifyContent: 'flex-start',
+              }}
             >
-              <CustomAnimatedContent>
+              <Dialog.Content
+                className="bg-surface rounded-3xl"
+                animation={{
+                  scale: {
+                    value: [0.85, 1, 0.95],
+                  },
+                }}
+                style={{
+                  marginTop: insetTop,
+                  height: maxTextInputDialogHeight,
+                }}
+              >
                 <Dialog.Close className="self-end" />
                 <Dialog.Title className="mb-6">Update Profile</Dialog.Title>
 
@@ -354,7 +317,7 @@ const TextInputDialogContent = () => {
                     Update Profile
                   </Button>
                 </View>
-              </CustomAnimatedContent>
+              </Dialog.Content>
             </KeyboardAvoidingView>
           </Dialog.Portal>
         </Dialog>

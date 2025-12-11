@@ -160,6 +160,29 @@ export function usePressableFeedbackRootAnimation(options: {
     return currentDiagonal > 0 ? currentDiagonal / baseDiagonal : 1;
   });
 
+  /**
+   * Resets the pressable feedback animation state to idle.
+   * For ripple variant, triggers the fade-out animation phase.
+   * This is a worklet that runs on the UI thread.
+   */
+  function resetAnimationState() {
+    'worklet';
+
+    isPressed.set(false);
+    scale.set(withTiming(0, scaleTimingConfig));
+
+    if (variant === 'highlight') return;
+
+    const adjustedDuration = Math.min(
+      Math.max(
+        rippleProgressBaseDuration * durationCoefficient.get(),
+        rippleProgressMinBaseDuration
+      ),
+      rippleProgressBaseDuration * 2
+    );
+    rippleProgress.set(withTiming(2, { duration: adjustedDuration }));
+  }
+
   // Gesture handling
   const gesture = Gesture.Tap()
     .maxDuration(30000)
@@ -184,17 +207,11 @@ export function usePressableFeedbackRootAnimation(options: {
       }
     })
     .onFinalize(() => {
-      isPressed.set(false);
-      scale.set(withTiming(0, scaleTimingConfig));
-      if (variant === 'highlight') return;
-      const adjustedDuration = Math.min(
-        Math.max(
-          rippleProgressBaseDuration * durationCoefficient.get(),
-          rippleProgressMinBaseDuration
-        ),
-        rippleProgressBaseDuration * 2
-      );
-      rippleProgress.set(withTiming(2, { duration: adjustedDuration }));
+      resetAnimationState();
+    })
+    .onTouchesCancelled(() => {
+      if (!isPressed.get()) return;
+      resetAnimationState();
     });
 
   const styleTransform = getStyleTransform(style);

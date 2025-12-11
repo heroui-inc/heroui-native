@@ -1,3 +1,12 @@
+## 1.0.0-beta.8 (2025-12-11)
+
+* chore: sync versions ([ee98892](https://github.com/heroui-inc/heroui-native/commit/ee98892))
+* fix(checkbox): style issue on invalid state change ([6aded2e](https://github.com/heroui-inc/heroui-native/commit/6aded2e))
+* fix(dialog): content opacity issue ([b88ca14](https://github.com/heroui-inc/heroui-native/commit/b88ca14))
+* fix(pressable-feedback): reset animation state on scroll issue ([70a0a3d](https://github.com/heroui-inc/heroui-native/commit/70a0a3d))
+
+
+
 ## 1.0.0-beta.7 (2025-12-10)
 
 * build: upgrade uniwind to v1.2.2 ([709120a](https://github.com/heroui-inc/heroui-native/commit/709120a))

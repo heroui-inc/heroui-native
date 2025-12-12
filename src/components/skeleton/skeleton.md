@@ -177,27 +177,22 @@ export default function SkeletonExample() {
 
 #### SkeletonRootAnimation
 
-| prop       | type                                           | description                     |
-| ---------- | ---------------------------------------------- | ------------------------------- |
-| `entering` | `Animation<{ value?: EntryOrExitLayoutType }>` | Custom entering animation       |
-| `exiting`  | `Animation<{ value?: EntryOrExitLayoutType }>` | Custom exiting animation        |
-| `shimmer`  | `SkeletonShimmerAnimation`                     | Shimmer animation configuration |
-| `pulse`    | `SkeletonPulseAnimation`                       | Pulse animation configuration   |
+Animation configuration for Skeleton component. Can be:
 
-#### SkeletonShimmerAnimation
+- `false` or `"disabled"`: Disable only root animations
+- `"disable-all"`: Disable all animations including children
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
 
-| prop             | type             | description                                        |
-| ---------------- | ---------------- | -------------------------------------------------- |
-| `duration`       | `number`         | Animation duration in milliseconds (default: 1500) |
-| `easing`         | `EasingFunction` | Easing function for the animation                  |
-| `speed`          | `number`         | Speed multiplier for the animation (default: 1)    |
-| `highlightColor` | `string`         | Highlight color for the shimmer effect             |
-
-#### SkeletonPulseAnimation
-
-| prop         | type             | description                                        |
-| ------------ | ---------------- | -------------------------------------------------- |
-| `duration`   | `number`         | Animation duration in milliseconds (default: 1000) |
-| `easing`     | `EasingFunction` | Easing function for the animation                  |
-| `minOpacity` | `number`         | Minimum opacity value (default: 0.5)               |
-| `maxOpacity` | `number`         | Maximum opacity value (default: 1)                 |
+| prop                     | type                    | default                     | description                            |
+| ------------------------ | ----------------------- | --------------------------- | -------------------------------------- |
+| `entering.value`         | `EntryOrExitLayoutType` | `FadeIn`                    | Custom entering animation              |
+| `exiting.value`          | `EntryOrExitLayoutType` | `FadeOut`                   | Custom exiting animation               |
+| `shimmer.duration`       | `number`                | `1500`                      | Animation duration in milliseconds     |
+| `shimmer.speed`          | `number`                | `1`                         | Speed multiplier for the animation     |
+| `shimmer.highlightColor` | `string`                | -                           | Highlight color for the shimmer effect |
+| `shimmer.easing`         | `EasingFunction`        | `Easing.linear`             | Easing function for the animation      |
+| `pulse.duration`         | `number`                | `1000`                      | Animation duration in milliseconds     |
+| `pulse.minOpacity`       | `number`                | `0.5`                       | Minimum opacity value                  |
+| `pulse.maxOpacity`       | `number`                | `1`                         | Maximum opacity value                  |
+| `pulse.easing`           | `EasingFunction`        | `Easing.inOut(Easing.ease)` | Easing function for the animation      |

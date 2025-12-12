@@ -194,23 +194,37 @@ export default function DialogExample() {
 | `isDefaultOpen`            | `boolean`                  | `false` | Initial open state when uncontrolled                                                 |
 | `closeDelay`               | `number`                   | `300`   | Delay in milliseconds before dialog closes (should match closing animation duration) |
 | `isDismissKeyboardOnClose` | `boolean`                  | `true`  | Whether to dismiss keyboard when dialog closes                                       |
-| `animation`                | `DialogRootAnimation`      | -       | Animation configuration for open/close transitions                                   |
+| `animation`                | `DialogRootAnimation`      | -       | Animation configuration                                                              |
 | `onOpenChange`             | `(value: boolean) => void` | -       | Callback when open state changes                                                     |
 | `...ViewProps`             | `ViewProps`                | -       | All standard React Native View props are supported                                   |
 
 #### DialogRootAnimation
 
-`DialogRootAnimation` accepts the following values:
+Animation configuration for dialog root component. Can be:
 
+- `false` or `"disabled"`: Disable only root animations
+- `"disable-all"`: Disable all animations including children
 - `true` or `undefined`: Use default animations
-- `false` or `"disabled"`: Disable only root animations (children can still animate)
-- `"disable-all"`: Disable all animations including children (cascades down)
-- `object`: Custom animation configuration with the following properties:
+- `object`: Custom animation configuration
 
-| prop       | type                                                             | description                         |
-| ---------- | ---------------------------------------------------------------- | ----------------------------------- |
-| `entering` | `AnimationValue<SpringAnimationConfig \| TimingAnimationConfig>` | Animation configuration for opening |
-| `exiting`  | `AnimationValue<SpringAnimationConfig \| TimingAnimationConfig>` | Animation configuration for closing |
+| prop             | type                                             | default                                                                                          | description                         |
+| ---------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 200,`<br/>`easing: Easing.out(Easing.ease) } }`     | Animation configuration for opening |
+| `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 150,`<br/>`easing: Easing.bezier(0.4, 0, 1, 1) } }` | Animation configuration for closing |
+
+#### SpringAnimationConfig
+
+| prop     | type               | default | description                               |
+| -------- | ------------------ | ------- | ----------------------------------------- |
+| `type`   | `'spring'`         | -       | Animation type (must be `'spring'`)       |
+| `config` | `WithSpringConfig` | -       | Reanimated spring animation configuration |
+
+#### TimingAnimationConfig
+
+| prop     | type               | default | description                               |
+| -------- | ------------------ | ------- | ----------------------------------------- |
+| `type`   | `'timing'`         | -       | Animation type (must be `'timing'`)       |
+| `config` | `WithTimingConfig` | -       | Reanimated timing animation configuration |
 
 ### Dialog.Trigger
 
@@ -237,22 +251,22 @@ export default function DialogExample() {
 | `children`          | `React.ReactNode`        | -       | Custom overlay content                                  |
 | `className`         | `string`                 | -       | Additional CSS classes for overlay                      |
 | `style`             | `ViewStyle`              | -       | Additional styles for overlay container                 |
-| `animation`         | `DialogOverlayAnimation` | -       | Animation configuration for overlay                     |
+| `animation`         | `DialogOverlayAnimation` | -       | Animation configuration                                 |
 | `isCloseOnPress`    | `boolean`                | `true`  | Whether pressing overlay closes dialog                  |
 | `forceMount`        | `boolean`                | -       | Force mount when closed for animation purposes          |
 | `...PressableProps` | `PressableProps`         | -       | All standard React Native Pressable props are supported |
 
 #### DialogOverlayAnimation
 
-`DialogOverlayAnimation` accepts the following values:
+Animation configuration for dialog overlay component. Can be:
 
-- `true` or `undefined`: Use default animations
 - `false` or `"disabled"`: Disable all animations
-- `object`: Custom animation configuration with the following properties:
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
 
-| prop      | type                                                   | description                                                                                      |
-| --------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `opacity` | `AnimationValue<{ value?: [number, number, number] }>` | Opacity animation configuration. Values represent [idle, open, close] states. Default: [0, 1, 0] |
+| prop            | type                       | default     | description                        |
+| --------------- | -------------------------- | ----------- | ---------------------------------- |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close] |
 
 ### Dialog.Content
 
@@ -262,23 +276,23 @@ export default function DialogExample() {
 | `className`             | `string`                             | -       | Additional CSS classes for content container        |
 | `style`                 | `StyleProp<ViewStyle>`               | -       | Additional styles for content container             |
 | `onLayout`              | `(event: LayoutChangeEvent) => void` | -       | Layout event handler                                |
-| `animation`             | `DialogContentAnimation`             | -       | Animation configuration for content                 |
+| `animation`             | `DialogContentAnimation`             | -       | Animation configuration                             |
 | `isSwipeable`           | `boolean`                            | `true`  | Whether the dialog content can be swiped to dismiss |
 | `forceMount`            | `boolean`                            | -       | Force mount when closed for animation purposes      |
 | `...Animated.ViewProps` | `Animated.ViewProps`                 | -       | All Reanimated Animated.View props are supported    |
 
 #### DialogContentAnimation
 
-`DialogContentAnimation` accepts the following values:
+Animation configuration for dialog content component. Can be:
 
-- `true` or `undefined`: Use default animations
 - `false` or `"disabled"`: Disable all animations
-- `object`: Custom animation configuration with the following properties:
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
 
-| prop      | type                                                   | description                                                                                          |
-| --------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| `opacity` | `AnimationValue<{ value?: [number, number, number] }>` | Opacity animation configuration. Values represent [idle, open, close] states. Default: [0, 1, 0]     |
-| `scale`   | `AnimationValue<{ value?: [number, number, number] }>` | Scale animation configuration. Values represent [idle, open, close] states. Default: [0.97, 1, 0.97] |
+| prop            | type                       | default           | description                        |
+| --------------- | -------------------------- | ----------------- | ---------------------------------- |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]`       | Opacity values [idle, open, close] |
+| `scale.value`   | `[number, number, number]` | `[0.97, 1, 0.97]` | Scale values [idle, open, close]   |
 
 ### Dialog.Close
 
@@ -332,12 +346,13 @@ const { isOpen, onOpenChange } = useDialog();
 Hook to access dialog animation context for advanced customization.
 
 ```tsx
-const { dialogState, progress, isDragging, isGestureReleaseAnimationRunning } = useDialogAnimation();
+const { dialogState, progress, isDragging, isGestureReleaseAnimationRunning } =
+  useDialogAnimation();
 ```
 
-| property                          | type                          | description                                  |
-| --------------------------------- | ----------------------------- | -------------------------------------------- |
-| `dialogState`                     | `'idle' \| 'open' \| 'close'` | Internal dialog state                        |
-| `progress`                        | `SharedValue<number>`         | Animation progress (0=idle, 1=open, 2=close) |
-| `isDragging`                      | `SharedValue<boolean>`        | Whether dialog is being dragged              |
+| property                           | type                          | description                                  |
+| ---------------------------------- | ----------------------------- | -------------------------------------------- |
+| `dialogState`                      | `'idle' \| 'open' \| 'close'` | Internal dialog state                        |
+| `progress`                         | `SharedValue<number>`         | Animation progress (0=idle, 1=open, 2=close) |
+| `isDragging`                       | `SharedValue<boolean>`        | Whether dialog is being dragged              |
 | `isGestureReleaseAnimationRunning` | `SharedValue<boolean>`        | Whether gesture release animation is running |

@@ -289,39 +289,37 @@ export default function PopoverExample() {
 | `isDefaultOpen` | `boolean`                   | -       | The open state of the popover when initially rendered (uncontrolled mode) |
 | `onOpenChange`  | `(isOpen: boolean) => void` | -       | Callback when the popover open state changes                              |
 | `closeDelay`    | `number`                    | `400`   | Delay in milliseconds before closing the popover                          |
-| `animation`     | `PopoverRootAnimation`      | -       | Animation configuration for popover root                                  |
+| `animation`     | `PopoverRootAnimation`      | -       | Animation configuration                                                   |
 | `asChild`       | `boolean`                   | `false` | Whether to render as a child element                                      |
 | `...ViewProps`  | `ViewProps`                 | -       | All standard React Native View props are supported                        |
 
 #### PopoverRootAnimation
 
-Animation configuration for Popover root component. Can be:
+Animation configuration for popover root component. Can be:
 
+- `false` or `"disabled"`: Disable only root animations
+- `"disable-all"`: Disable all animations including children
 - `true` or `undefined`: Use default animations
-- `false` or `"disabled"`: Disable only root animations (children can still animate)
-- `"disable-all"`: Disable all animations including children (cascades down)
 - `object`: Custom animation configuration
 
-**Object structure:**
+| prop             | type                                             | default                                                                                          | description                         |
+| ---------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 200,`<br/>`easing: Easing.out(Easing.ease) } }`     | Animation configuration for opening |
+| `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 150,`<br/>`easing: Easing.bezier(0.4, 0, 1, 1) } }` | Animation configuration for closing |
 
-| prop       | type                                             | description                         |
-| ---------- | ------------------------------------------------ | ----------------------------------- |
-| `entering` | `SpringAnimationConfig \| TimingAnimationConfig` | Animation configuration for opening |
-| `exiting`  | `SpringAnimationConfig \| TimingAnimationConfig` | Animation configuration for closing |
+#### SpringAnimationConfig
 
-**SpringAnimationConfig:**
+| prop     | type               | default | description                               |
+| -------- | ------------------ | ------- | ----------------------------------------- |
+| `type`   | `'spring'`         | -       | Animation type (must be `'spring'`)       |
+| `config` | `WithSpringConfig` | -       | Reanimated spring animation configuration |
 
-| prop     | type               | description                    |
-| -------- | ------------------ | ------------------------------ |
-| `type`   | `'spring'`         | Animation type                 |
-| `config` | `WithSpringConfig` | Spring animation configuration |
+#### TimingAnimationConfig
 
-**TimingAnimationConfig:**
-
-| prop     | type               | description                    |
-| -------- | ------------------ | ------------------------------ |
-| `type`   | `'timing'`         | Animation type                 |
-| `config` | `WithTimingConfig` | Timing animation configuration |
+| prop     | type               | default | description                               |
+| -------- | ------------------ | ------- | ----------------------------------------- |
+| `type`   | `'timing'`         | -       | Animation type (must be `'timing'`)       |
+| `config` | `WithTimingConfig` | -       | Reanimated timing animation configuration |
 
 ### Popover.Trigger
 
@@ -349,29 +347,21 @@ Animation configuration for Popover root component. Can be:
 | `className`             | `string`                  | -       | Additional CSS classes for the overlay               |
 | `closeOnPress`          | `boolean`                 | `true`  | Whether to close the popover when overlay is pressed |
 | `forceMount`            | `boolean`                 | -       | Whether to force mount the component in the DOM      |
-| `animation`             | `PopoverOverlayAnimation` | -       | Animation configuration for overlay                  |
+| `animation`             | `PopoverOverlayAnimation` | -       | Animation configuration                              |
 | `asChild`               | `boolean`                 | `false` | Whether to render as a child element                 |
 | `...Animated.ViewProps` | `Animated.ViewProps`      | -       | All Reanimated Animated.View props are supported     |
 
 #### PopoverOverlayAnimation
 
-Animation configuration for Popover Overlay component. Can be:
+Animation configuration for popover overlay component. Can be:
 
-- `true` or `undefined`: Use default animations
 - `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-**Object structure:**
-
-| prop      | type     | description                     |
-| --------- | -------- | ------------------------------- |
-| `opacity` | `object` | Opacity animation configuration |
-
-**Opacity configuration:**
-
-| prop    | type                       | default     | description                        |
-| ------- | -------------------------- | ----------- | ---------------------------------- |
-| `value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close] |
+| prop            | type                       | default     | description                        |
+| --------------- | -------------------------- | ----------- | ---------------------------------- |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close] |
 
 ### Popover.Content (Popover Presentation)
 
@@ -389,7 +379,7 @@ Animation configuration for Popover Overlay component. Can be:
 | `insets`                  | `Insets`                                         | -               | Screen edge insets to respect when positioning         |
 | `className`               | `string`                                         | -               | Additional CSS classes for the content container       |
 | `presentation`            | `'popover'`                                      | -               | Presentation mode for the popover                      |
-| `animation`               | `PopupPopoverContentAnimation`                   | -               | Animation configuration for content                    |
+| `animation`               | `PopupPopoverContentAnimation`                   | -               | Animation configuration                                |
 | `asChild`                 | `boolean`                                        | `false`         | Whether to render as a child element                   |
 | `...Animated.ViewProps`   | `Animated.ViewProps`                             | -               | All Reanimated Animated.View props are supported       |
 
@@ -405,6 +395,22 @@ Animation configuration for Popover Overlay component. Can be:
 | `backgroundStyle`          | `ViewStyle`            | -       | Style for the bottom sheet background            |
 | `handleIndicatorStyle`     | `ViewStyle`            | -       | Style for the bottom sheet handle indicator      |
 | `...BottomSheetProps`      | `BottomSheetProps`     | -       | All @gorhom/bottom-sheet props are supported     |
+
+#### PopupPopoverContentAnimation
+
+Animation configuration for popover content component (popover presentation). Can be:
+
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
+
+| prop                    | type                       | default                                                         | description                           |
+| ----------------------- | -------------------------- | --------------------------------------------------------------- | ------------------------------------- |
+| `opacity.value`         | `[number, number, number]` | `[0, 1, 0]`                                                     | Opacity values [idle, open, close]    |
+| `scale.value`           | `[number, number, number]` | `[0.95, 1, 0.95]`                                               | Scale values [idle, open, close]      |
+| `translateX.value`      | `[number, number, number]` | Based on placement<br/>`(4, 0, 4)` or `(-4, 0, -4)`             | TranslateX values [idle, open, close] |
+| `translateY.value`      | `[number, number, number]` | Based on placement<br/>`(4, 0, 4)` or `(-4, 0, -4)`             | TranslateY values [idle, open, close] |
+| `transformOrigin.value` | `string`                   | Based on placement<br/>`'top'`, `'bottom'`, `'left'`, `'right'` | Transform origin value                |
 
 ### Popover.Arrow
 
@@ -471,18 +477,18 @@ const CustomContent = () => {
 
 **Returns:** `UsePopoverReturn`
 
-| property             | type                                                | description                                                  |
-| -------------------- | --------------------------------------------------- | ------------------------------------------------------------ |
-| `isOpen`             | `boolean`                                           | Whether the popover is currently open                        |
-| `onOpenChange`       | `(open: boolean) => void`                           | Callback function to change the popover open state           |
-| `isDefaultOpen`       | `boolean \| undefined`                              | Whether the popover should be open by default (uncontrolled mode) |
-| `isDisabled`         | `boolean \| undefined`                              | Whether the popover is disabled                              |
-| `triggerPosition`    | `LayoutPosition \| null`                            | The position of the trigger element relative to the viewport |
-| `setTriggerPosition` | `(triggerPosition: LayoutPosition \| null) => void` | Function to update the trigger element's position            |
-| `contentLayout`      | `LayoutRectangle \| null`                           | The layout measurements of the popover content               |
-| `setContentLayout`   | `(contentLayout: LayoutRectangle \| null) => void`  | Function to update the content layout measurements           |
-| `nativeID`           | `string`                                            | Unique identifier for the popover instance                   |
-| `closeDelay`         | `number \| undefined`                               | Delay in milliseconds before the popover closes              |
+| property             | type                                                | description                                                       |
+| -------------------- | --------------------------------------------------- | ----------------------------------------------------------------- |
+| `isOpen`             | `boolean`                                           | Whether the popover is currently open                             |
+| `onOpenChange`       | `(open: boolean) => void`                           | Callback function to change the popover open state                |
+| `isDefaultOpen`      | `boolean \| undefined`                              | Whether the popover should be open by default (uncontrolled mode) |
+| `isDisabled`         | `boolean \| undefined`                              | Whether the popover is disabled                                   |
+| `triggerPosition`    | `LayoutPosition \| null`                            | The position of the trigger element relative to the viewport      |
+| `setTriggerPosition` | `(triggerPosition: LayoutPosition \| null) => void` | Function to update the trigger element's position                 |
+| `contentLayout`      | `LayoutRectangle \| null`                           | The layout measurements of the popover content                    |
+| `setContentLayout`   | `(contentLayout: LayoutRectangle \| null) => void`  | Function to update the content layout measurements                |
+| `nativeID`           | `string`                                            | Unique identifier for the popover instance                        |
+| `closeDelay`         | `number \| undefined`                               | Delay in milliseconds before the popover closes                   |
 
 **Note:** This hook must be used within a `Popover` component. It will throw an error if called outside of the popover context.
 
@@ -501,10 +507,10 @@ const CustomContent = () => {
 
 **Returns:** `UsePopoverAnimationReturn`
 
-| property       | type                      | description                                                  |
-| -------------- | ------------------------- | ------------------------------------------------------------ |
-| `popoverState` | `'idle' \| 'open' \| 'close'` | Extended internal state for coordinating animations          |
-| `progress`     | `SharedValue<number>`     | Progress value for the popover animation (0=idle, 1=open, 2=close) |
-| `isDragging`   | `SharedValue<boolean>`    | Dragging state shared value                                  |
+| property       | type                          | description                                                        |
+| -------------- | ----------------------------- | ------------------------------------------------------------------ |
+| `popoverState` | `'idle' \| 'open' \| 'close'` | Extended internal state for coordinating animations                |
+| `progress`     | `SharedValue<number>`         | Progress value for the popover animation (0=idle, 1=open, 2=close) |
+| `isDragging`   | `SharedValue<boolean>`        | Dragging state shared value                                        |
 
 **Note:** This hook must be used within a `Popover` component. It will throw an error if called outside of the popover animation context.

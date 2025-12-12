@@ -149,31 +149,28 @@ export default function ErrorViewExample() {
 
 ### ErrorView
 
-| prop                   | type                                    | default     | description                                                              |
-| ---------------------- | --------------------------------------- | ----------- | ------------------------------------------------------------------------ |
-| `children`             | `React.ReactNode`                       | `undefined` | The content of the error field. String children are wrapped with Text    |
-| `isInvalid`            | `boolean`                               | `false`     | Controls the visibility of the error field                               |
-| `animation`            | `ErrorViewRootAnimation`                | -           | Animation configuration for error view                                   |
-| `className`            | `string`                                | `undefined` | Additional CSS classes for the container                                 |
-| `classNames`           | `{ container?: string, text?: string }` | `undefined` | Additional CSS classes for different parts of the component              |
-| `textProps`            | `TextProps`                             | `undefined` | Additional props to pass to the Text component when children is a string |
-| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`              | -           | All Reanimated Animated.View props are supported                         |
+| prop                   | type                           | default     | description                                                              |
+| ---------------------- | ------------------------------ | ----------- | ------------------------------------------------------------------------ |
+| `children`             | `React.ReactNode`              | `undefined` | The content of the error field. String children are wrapped with Text    |
+| `isInvalid`            | `boolean`                      | `false`     | Controls the visibility of the error field                               |
+| `animation`            | `ErrorViewRootAnimation`       | -           | Animation configuration                                                  |
+| `className`            | `string`                       | `undefined` | Additional CSS classes for the container                                 |
+| `classNames`           | `ElementSlots<ErrorViewSlots>` | `undefined` | Additional CSS classes for different parts of the component              |
+| `textProps`            | `TextProps`                    | `undefined` | Additional props to pass to the Text component when children is a string |
+| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`     | -           | All Reanimated Animated.View props are supported                         |
+
+**classNames prop:** `ElementSlots<ErrorViewSlots>` provides type-safe CSS classes for different parts of the error view component. Available slots: `container`, `text`.
 
 #### ErrorViewRootAnimation
 
-Animation configuration for ErrorView root component. Can be:
+Animation configuration for error view root component. Can be:
 
-- `false` or `"disabled"`: Disable all animations
+- `false` or `"disabled"`: Disable only root animations
+- `"disable-all"`: Disable all animations including children
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop       | type                                                | default                                                 | description                              |
-| ---------- | --------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------- |
-| `entering` | `AnimationValue<{ value?: EntryOrExitLayoutType }>` | `FadeIn.duration(150).easing(Easing.out(Easing.ease))`  | Custom entering animation for error view |
-| `exiting`  | `AnimationValue<{ value?: EntryOrExitLayoutType }>` | `FadeOut.duration(100).easing(Easing.out(Easing.ease))` | Custom exiting animation for error view  |
-
-##### Entering/Exiting AnimationValue
-
-| prop    | type                    | default | description                                  |
-| ------- | ----------------------- | ------- | -------------------------------------------- |
-| `value` | `EntryOrExitLayoutType` | -       | Custom reanimated entering/exiting animation |
+| prop             | type                    | default                                                               | description                              |
+| ---------------- | ----------------------- | --------------------------------------------------------------------- | ---------------------------------------- |
+| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation for error view |
+| `exiting.value`  | `EntryOrExitLayoutType` | `FadeOut`<br/>`.duration(100)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation for error view  |

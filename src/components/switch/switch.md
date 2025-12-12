@@ -188,15 +188,15 @@ export default function SwitchExample() {
 
 ### Switch
 
-| prop                        | type                                                                 | default     | description                                                            |
-| --------------------------- | -------------------------------------------------------------------- | ----------- | ---------------------------------------------------------------------- |
-| `children`                  | `React.ReactNode \| ((props: SwitchRenderProps) => React.ReactNode)` | `undefined` | Content to render inside the switch, or a render function              |
-| `isSelected`                | `boolean`                                                            | `undefined` | Whether the switch is currently selected                               |
-| `isDisabled`                | `boolean`                                                            | `false`     | Whether the switch is disabled and cannot be interacted with           |
-| `className`                 | `string`                                                             | `undefined` | Custom class name for the switch                                       |
-| `animation`                 | `SwitchRootAnimation`                                                | `undefined` | Animation configuration for switch (see Animation Configuration below) |
-| `onSelectedChange`          | `(isSelected: boolean) => void`                                      | `undefined` | Callback fired when the switch selection state changes                 |
-| `...AnimatedPressableProps` | `AnimatedProps<PressableProps>`                                      | -           | All React Native Reanimated Pressable props are supported              |
+| prop                        | type                                                                 | default     | description                                                  |
+| --------------------------- | -------------------------------------------------------------------- | ----------- | ------------------------------------------------------------ |
+| `children`                  | `React.ReactNode \| ((props: SwitchRenderProps) => React.ReactNode)` | `undefined` | Content to render inside the switch, or a render function    |
+| `isSelected`                | `boolean`                                                            | `undefined` | Whether the switch is currently selected                     |
+| `isDisabled`                | `boolean`                                                            | `false`     | Whether the switch is disabled and cannot be interacted with |
+| `className`                 | `string`                                                             | `undefined` | Custom class name for the switch                             |
+| `animation`                 | `SwitchRootAnimation`                                                | -           | Animation configuration                                      |
+| `onSelectedChange`          | `(isSelected: boolean) => void`                                      | -           | Callback fired when the switch selection state changes       |
+| `...AnimatedPressableProps` | `AnimatedProps<PressableProps>`                                      | -           | All React Native Reanimated Pressable props are supported    |
 
 #### SwitchRenderProps
 
@@ -207,33 +207,19 @@ export default function SwitchExample() {
 
 #### SwitchRootAnimation
 
-Animation configuration for the Switch root component. Can be:
+Animation configuration for Switch component. Can be:
 
-- `false` or `"disabled"`: Disable only root animations (children can still animate)
+- `false` or `"disabled"`: Disable only root animations
 - `"disable-all"`: Disable all animations including children
 - `true` or `undefined`: Use default animations
-- `object`: Custom animation configuration with the following properties:
+- `object`: Custom animation configuration
 
-**Animation Properties:**
-
-| property          | type                          | default     | description                                   |
-| ----------------- | ----------------------------- | ----------- | --------------------------------------------- |
-| `scale`           | `AnimationValue<ScaleConfig>` | `undefined` | Scale animation configuration for press state |
-| `backgroundColor` | `AnimationValue<BgConfig>`    | `undefined` | Background color animation configuration      |
-
-**ScaleConfig:**
-
-| property       | type               | default             | description                       |
-| -------------- | ------------------ | ------------------- | --------------------------------- |
-| `value`        | `[number, number]` | `[1, 0.96]`         | Scale values [unpressed, pressed] |
-| `timingConfig` | `WithTimingConfig` | `{ duration: 150 }` | Animation timing configuration    |
-
-**BgConfig:**
-
-| property       | type               | default                                                        | description                                    |
-| -------------- | ------------------ | -------------------------------------------------------------- | ---------------------------------------------- |
-| `value`        | `[string, string]` | Uses theme colors (surface-quaternary, accent)                 | Background color values [unselected, selected] |
-| `timingConfig` | `WithTimingConfig` | `{ duration: 175, easing: Easing.bezier(0.25, 0.1, 0.25, 1) }` | Animation timing configuration                 |
+| prop                           | type               | default                                                        | description                                    |
+| ------------------------------ | ------------------ | -------------------------------------------------------------- | ---------------------------------------------- |
+| `scale.value`                  | `[number, number]` | `[1, 0.96]`                                                    | Scale values [unpressed, pressed]              |
+| `scale.timingConfig`           | `WithTimingConfig` | `{ duration: 150 }`                                            | Animation timing configuration                 |
+| `backgroundColor.value`        | `[string, string]` | Uses theme colors                                              | Background color values [unselected, selected] |
+| `backgroundColor.timingConfig` | `WithTimingConfig` | `{ duration: 175, easing: Easing.bezier(0.25, 0.1, 0.25, 1) }` | Animation timing configuration                 |
 
 ### Switch.Thumb
 
@@ -241,39 +227,23 @@ Animation configuration for the Switch root component. Can be:
 | -------------- | -------------------------------------------------------------------- | ----------- | -------------------------------------------------------- |
 | `children`     | `React.ReactNode \| ((props: SwitchRenderProps) => React.ReactNode)` | `undefined` | Content to render inside the thumb, or a render function |
 | `className`    | `string`                                                             | `undefined` | Custom class name for the thumb element                  |
-| `animation`    | `SwitchThumbAnimation`                                               | `undefined` | Animation configuration for thumb (see below)            |
+| `animation`    | `SwitchThumbAnimation`                                               | -           | Animation configuration                                  |
 | `...ViewProps` | `ViewProps`                                                          | -           | All standard React Native View props are supported       |
 
 #### SwitchThumbAnimation
 
-Animation configuration for the Switch thumb component. Can be:
+Animation configuration for Switch.Thumb component. Can be:
 
 - `false` or `"disabled"`: Disable all animations
 - `true` or `undefined`: Use default animations
-- `object`: Custom animation configuration with the following properties:
+- `object`: Custom animation configuration
 
-**Animation Properties:**
-
-| property          | type                         | default     | description                              |
-| ----------------- | ---------------------------- | ----------- | ---------------------------------------- |
-| `left`            | `AnimationValue<LeftConfig>` | `undefined` | Left position animation configuration    |
-| `backgroundColor` | `AnimationValue<BgConfig>`   | `undefined` | Background color animation configuration |
-
-**LeftConfig:**
-
-The `left` animation moves the thumb between left and right positions. When you provide a single `value` (e.g., `value: 2`), it applies the same offset to both sides: `2px` from the left when unselected, and `2px` from the right when selected.
-
-| property       | type               | default                                      | description                                       |
-| -------------- | ------------------ | -------------------------------------------- | ------------------------------------------------- |
-| `value`        | `number`           | `2`                                          | Offset value from the edges (left/right)          |
-| `springConfig` | `WithSpringConfig` | `{ damping: 120, stiffness: 1600, mass: 2 }` | Spring animation configuration for thumb position |
-
-**BgConfig:**
-
-| property       | type               | default                                                        | description                                    |
-| -------------- | ------------------ | -------------------------------------------------------------- | ---------------------------------------------- |
-| `value`        | `[string, string]` | `['white', theme accent-foreground color]`                     | Background color values [unselected, selected] |
-| `timingConfig` | `WithTimingConfig` | `{ duration: 175, easing: Easing.bezier(0.25, 0.1, 0.25, 1) }` | Animation timing configuration                 |
+| prop                           | type               | default                                                        | description                                                             |
+| ------------------------------ | ------------------ | -------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `left.value`                   | `number`           | `2`                                                            | Offset value from the edges (left when unselected, right when selected) |
+| `left.springConfig`            | `WithSpringConfig` | `{ damping: 120, stiffness: 1600, mass: 2 }`                   | Spring animation configuration for thumb position                       |
+| `backgroundColor.value`        | `[string, string]` | `['white', theme accent-foreground color]`                     | Background color values [unselected, selected]                          |
+| `backgroundColor.timingConfig` | `WithTimingConfig` | `{ duration: 175, easing: Easing.bezier(0.25, 0.1, 0.25, 1) }` | Animation timing configuration                                          |
 
 ### Switch.StartContent
 

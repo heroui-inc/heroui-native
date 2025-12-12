@@ -321,15 +321,15 @@ export default function TabsExample() {
 
 ### Tabs
 
-| prop            | type                         | default  | description                                                                          |
-| --------------- | ---------------------------- | -------- | ------------------------------------------------------------------------------------ |
-| `children`      | `React.ReactNode`            | -        | Children elements to be rendered inside tabs                                         |
-| `value`         | `string`                     | -        | Currently active tab value                                                           |
-| `variant`       | `'pill' \| 'line'`           | `'pill'` | Visual variant of the tabs                                                           |
-| `className`     | `string`                     | -        | Additional CSS classes for the container                                             |
-| `animation`     | `"disable-all" \| undefined` | -        | Animation configuration - `"disable-all"` disables all animations including children |
-| `onValueChange` | `(value: string) => void`    | -        | Callback when the active tab changes                                                 |
-| `...ViewProps`  | `ViewProps`                  | -        | All standard React Native View props are supported                                   |
+| prop            | type                         | default     | description                                                                               |
+| --------------- | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
+| `children`      | `React.ReactNode`            | -           | Children elements to be rendered inside tabs                                              |
+| `value`         | `string`                     | -           | Currently active tab value                                                                |
+| `variant`       | `'pill' \| 'line'`           | `'pill'`    | Visual variant of the tabs                                                                |
+| `className`     | `string`                     | -           | Additional CSS classes for the container                                                  |
+| `animation`     | `"disable-all" \| undefined` | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
+| `onValueChange` | `(value: string) => void`    | -           | Callback when the active tab changes                                                      |
+| `...ViewProps`  | `ViewProps`                  | -           | All standard React Native View props are supported                                        |
 
 ### Tabs.List
 
@@ -383,23 +383,25 @@ When using a render function for `children`, the following props are provided:
 | ----------------------- | ------------------------ | ------- | ------------------------------------------------ |
 | `children`              | `React.ReactNode`        | -       | Custom indicator content                         |
 | `className`             | `string`                 | -       | Additional CSS classes                           |
-| `animation`             | `TabsIndicatorAnimation` | -       | Animation configuration for the indicator        |
+| `animation`             | `TabsIndicatorAnimation` | -       | Animation configuration                          |
 | `...Animated.ViewProps` | `Animated.ViewProps`     | -       | All Reanimated Animated.View props are supported |
 
 #### TabsIndicatorAnimation
 
-| prop     | type                                  | description |
-| -------- | ------------------------------------- | ----------- | ------------------------------------- |
-| `width`  | `TabsIndicatorPropertyAnimationValue` | -           | Width animation configuration         |
-| `height` | `TabsIndicatorPropertyAnimationValue` | -           | Height animation configuration        |
-| `left`   | `TabsIndicatorPropertyAnimationValue` | -           | Left position animation configuration |
+Animation configuration for Tabs.Indicator component. Can be:
 
-#### TabsIndicatorPropertyAnimationValue
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
 
-| prop     | type                                   | description                        |
-| -------- | -------------------------------------- | ---------------------------------- |
-| `type`   | `'spring' \| 'timing'`                 | Type of animation to use           |
-| `config` | `WithSpringConfig \| WithTimingConfig` | Reanimated animation configuration |
+| prop            | type                                   | default                                                                      | description                        |
+| --------------- | -------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------- |
+| `width.type`    | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use           |
+| `width.config`  | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration |
+| `height.type`   | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use           |
+| `height.config` | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration |
+| `left.type`     | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use           |
+| `left.config`   | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration |
 
 ### Tabs.Content
 

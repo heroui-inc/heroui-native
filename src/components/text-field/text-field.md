@@ -229,15 +229,15 @@ export default function TextFieldExample() {
 
 ### TextField
 
-| prop         | type                      | default | description                                                            |
-| ------------ | ------------------------- | ------- | ---------------------------------------------------------------------- |
-| children     | `React.ReactNode`         | -       | Content to render inside the text field                                |
-| isDisabled   | `boolean`                 | `false` | Whether the entire text field is disabled                              |
-| isInvalid    | `boolean`                 | `false` | Whether the text field is in an invalid state                          |
-| isRequired   | `boolean`                 | `false` | Whether the text field is required (shows asterisk)                    |
-| className    | `string`                  | -       | Custom class name for the root element                                 |
-| animation    | `AnimationRootDisableAll` | -       | Animation configuration. Use `"disable-all"` to disable all animations |
-| ...ViewProps | `ViewProps`               | -       | All standard React Native View props are supported                     |
+| prop         | type                         | default     | description                                                                               |
+| ------------ | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
+| children     | `React.ReactNode`            | -           | Content to render inside the text field                                                   |
+| isDisabled   | `boolean`                    | `false`     | Whether the entire text field is disabled                                                 |
+| isInvalid    | `boolean`                    | `false`     | Whether the text field is in an invalid state                                             |
+| isRequired   | `boolean`                    | `false`     | Whether the text field is required (shows asterisk)                                       |
+| className    | `string`                     | -           | Custom class name for the root element                                                    |
+| animation    | `"disable-all" \| undefined` | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
+| ...ViewProps | `ViewProps`                  | -           | All standard React Native View props are supported                                        |
 
 ### TextField.Label
 
@@ -247,7 +247,7 @@ export default function TextFieldExample() {
 | isInvalid             | `boolean`                  | `undefined` | Whether the label is in an invalid state (overrides context) |
 | className             | `string`                   | -           | Custom class name for the label element                      |
 | classNames            | `ElementSlots<LabelSlots>` | -           | Custom class names for different parts of the label          |
-| animation             | `TextFieldLabelAnimation`  | -           | Animation configuration for entering/exiting transitions     |
+| animation             | `TextFieldLabelAnimation`  | -           | Animation configuration                                      |
 | ...Animated.TextProps | `AnimatedProps<TextProps>` | -           | All Reanimated Animated.Text props are supported             |
 
 #### ElementSlots<LabelSlots>
@@ -259,13 +259,16 @@ export default function TextFieldExample() {
 
 #### TextFieldLabelAnimation
 
-| prop               | type                    | description                      |
-| ------------------ | ----------------------- | -------------------------------- |
-| entering           | `AnimationValue<{...}>` | Entering animation configuration |
-| exiting            | `AnimationValue<{...}>` | Exiting animation configuration  |
-|                    |                         |                                  |
-| **entering.value** | `EntryOrExitLayoutType` | Custom entering animation        |
-| **exiting.value**  | `EntryOrExitLayoutType` | Custom exiting animation         |
+Animation configuration for TextField.Label component. Can be:
+
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
+
+| prop             | type                    | default                                                               | description               |
+| ---------------- | ----------------------- | --------------------------------------------------------------------- | ------------------------- |
+| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation |
+| `exiting.value`  | `EntryOrExitLayoutType` | `FadeOut`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation  |
 
 ### TextField.Input
 
@@ -275,7 +278,7 @@ export default function TextFieldExample() {
 | isInvalid         | `boolean`                  | `undefined` | Whether the input is in an invalid state (overrides context) |
 | className         | `string`                   | -           | Custom class name for the input container                    |
 | classNames        | `ElementSlots<InputSlots>` | -           | Custom class names for different parts of the input          |
-| animation         | `TextFieldInputAnimation`  | -           | Animation configuration for focus/blur and error transitions |
+| animation         | `TextFieldInputAnimation`  | -           | Animation configuration                                      |
 | ...TextInputProps | `TextInputProps`           | -           | All standard React Native TextInput props are supported      |
 
 #### ElementSlots<InputSlots>
@@ -287,15 +290,22 @@ export default function TextFieldExample() {
 
 #### TextFieldInputAnimation
 
-| prop                             | type                                              | description                                                     |
-| -------------------------------- | ------------------------------------------------- | --------------------------------------------------------------- |
-| backgroundColor                  | `AnimationValue<{...}>`                           | Background color animation configuration                        |
-| borderColor                      | `AnimationValue<{...}>`                           | Border color animation configuration                            |
-|                                  |                                                   |                                                                 |
-| **backgroundColor.value**        | `{blur?: string, focus?: string, error?: string}` | Background colors for different states                          |
-| **backgroundColor.timingConfig** | `WithTimingConfig`                                | Animation timing configuration for background color transitions |
-| **borderColor.value**            | `{blur?: string, focus?: string, error?: string}` | Border colors for different states                              |
-| **borderColor.timingConfig**     | `WithTimingConfig`                                | Animation timing configuration for border color transitions     |
+Animation configuration for TextField.Input component. Can be:
+
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
+
+| prop                           | type               | default                                              | description                                                     |
+| ------------------------------ | ------------------ | ---------------------------------------------------- | --------------------------------------------------------------- |
+| `backgroundColor.value.blur`   | `string`           | Uses theme color                                     | Background color when input is blurred                          |
+| `backgroundColor.value.focus`  | `string`           | Uses theme color                                     | Background color when input is focused                          |
+| `backgroundColor.value.error`  | `string`           | Uses theme color                                     | Background color when input is invalid                          |
+| `backgroundColor.timingConfig` | `WithTimingConfig` | `{ duration: 150, easing: Easing.out(Easing.ease) }` | Animation timing configuration for background color transitions |
+| `borderColor.value.blur`       | `string`           | Uses theme color                                     | Border color when input is blurred                              |
+| `borderColor.value.focus`      | `string`           | Uses theme color                                     | Border color when input is focused                              |
+| `borderColor.value.error`      | `string`           | Uses theme color                                     | Border color when input is invalid                              |
+| `borderColor.timingConfig`     | `WithTimingConfig` | `{ duration: 150, easing: Easing.out(Easing.ease) }` | Animation timing configuration for border color transitions     |
 
 ### TextField.InputStartContent
 
@@ -320,18 +330,21 @@ export default function TextFieldExample() {
 | children              | `React.ReactNode`               | -           | Description text content                                           |
 | isInvalid             | `boolean`                       | `undefined` | Whether the description is in an invalid state (overrides context) |
 | className             | `string`                        | -           | Custom class name for the description element                      |
-| animation             | `TextFieldDescriptionAnimation` | -           | Animation configuration for entering/exiting transitions           |
+| animation             | `TextFieldDescriptionAnimation` | -           | Animation configuration                                            |
 | ...Animated.TextProps | `AnimatedProps<TextProps>`      | -           | All Reanimated Animated.Text props are supported                   |
 
 #### TextFieldDescriptionAnimation
 
-| prop               | type                    | description                      |
-| ------------------ | ----------------------- | -------------------------------- |
-| entering           | `AnimationValue<{...}>` | Entering animation configuration |
-| exiting            | `AnimationValue<{...}>` | Exiting animation configuration  |
-|                    |                         |                                  |
-| **entering.value** | `EntryOrExitLayoutType` | Custom entering animation        |
-| **exiting.value**  | `EntryOrExitLayoutType` | Custom exiting animation         |
+Animation configuration for TextField.Description component. Can be:
+
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
+
+| prop             | type                    | default                                                               | description               |
+| ---------------- | ----------------------- | --------------------------------------------------------------------- | ------------------------- |
+| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation |
+| `exiting.value`  | `EntryOrExitLayoutType` | `FadeOut`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation  |
 
 ### TextField.ErrorMessage
 

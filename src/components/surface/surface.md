@@ -137,5 +137,5 @@ export default function SurfaceExample() {
 | `variant`      | `'default' \| 'secondary' \| 'tertiary' \| 'quaternary' \| 'transparent'` | `'default'` | Visual variant controlling background color and border                                    |
 | `children`     | `React.ReactNode`                                                         | -           | Content to be rendered inside the surface                                                 |
 | `className`    | `string`                                                                  | -           | Additional CSS classes to apply                                                           |
-| `animation`    | `"disable-all"`                                                           | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
+| `animation`    | `"disable-all" \| undefined`                                              | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
 | `...ViewProps` | `ViewProps`                                                               | -           | All standard React Native View props are supported                                        |

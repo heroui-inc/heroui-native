@@ -156,7 +156,7 @@ export default function ChipExample() {
 | `variant`           | `'primary' \| 'secondary' \| 'tertiary' \| 'soft'`            | `'primary'` | Visual variant of the chip                                                                |
 | `color`             | `'accent' \| 'default' \| 'success' \| 'warning' \| 'danger'` | `'accent'`  | Color theme of the chip                                                                   |
 | `className`         | `string`                                                      | -           | Additional CSS classes to apply                                                           |
-| `animation`         | `"disable-all"`                                               | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
+| `animation`         | `"disable-all" \| undefined`                                  | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
 | `...PressableProps` | `PressableProps`                                              | -           | All Pressable props are supported                                                         |
 
 ### Chip.Label

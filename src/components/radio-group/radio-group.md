@@ -185,27 +185,17 @@ export default function PaymentMethodExample() {
 
 ### RadioGroup
 
-| prop            | type                      | default     | description                                         |
-| --------------- | ------------------------- | ----------- | --------------------------------------------------- |
-| `children`      | `React.ReactNode`         | `undefined` | Radio group content                                 |
-| `value`         | `string \| undefined`     | `undefined` | The currently selected value of the radio group     |
-| `onValueChange` | `(val: string) => void`   | `undefined` | Callback fired when the selected value changes      |
-| `isDisabled`    | `boolean`                 | `false`     | Whether the entire radio group is disabled          |
-| `isInvalid`     | `boolean`                 | `false`     | Whether the radio group is invalid                  |
-| `isOnSurface`   | `boolean`                 | `undefined` | Whether the radio group is on surface               |
-| `animation`     | `RadioGroupRootAnimation` | `undefined` | Animation configuration for radio group (see below) |
-| `className`     | `string`                  | `undefined` | Custom class name                                   |
-| `...ViewProps`  | `ViewProps`               | -           | All standard React Native View props are supported  |
-
-#### RadioGroupRootAnimation
-
-Animation configuration for the RadioGroup root component. Supports cascading control to disable animations across all child components.
-
-| value                   | description                                               |
-| ----------------------- | --------------------------------------------------------- |
-| `true` or `undefined`   | Use default animations                                    |
-| `false` or `"disabled"` | Disable only root animations (children can still animate) |
-| `"disable-all"`         | Disable all animations including children (cascades down) |
+| prop            | type                         | default     | description                                                                               |
+| --------------- | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
+| `children`      | `React.ReactNode`            | `undefined` | Radio group content                                                                       |
+| `value`         | `string \| undefined`        | `undefined` | The currently selected value of the radio group                                           |
+| `onValueChange` | `(val: string) => void`      | `undefined` | Callback fired when the selected value changes                                            |
+| `isDisabled`    | `boolean`                    | `false`     | Whether the entire radio group is disabled                                                |
+| `isInvalid`     | `boolean`                    | `false`     | Whether the radio group is invalid                                                        |
+| `isOnSurface`   | `boolean`                    | `undefined` | Whether the radio group is on surface                                                     |
+| `animation`     | `"disable-all" \| undefined` | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
+| `className`     | `string`                     | `undefined` | Custom class name                                                                         |
+| `...ViewProps`  | `ViewProps`                  | -           | All standard React Native View props are supported                                        |
 
 ### RadioGroup.Item
 
@@ -243,29 +233,21 @@ Animation configuration for the RadioGroup root component. Supports cascading co
 | prop                    | type                                | default     | description                                      |
 | ----------------------- | ----------------------------------- | ----------- | ------------------------------------------------ |
 | `className`             | `string`                            | `undefined` | Custom class name                                |
-| `animation`             | `RadioGroupIndicatorThumbAnimation` | `undefined` | Animation configuration for thumb (see below)    |
+| `animation`             | `RadioGroupIndicatorThumbAnimation` | -           | Animation configuration                          |
 | `...Animated.ViewProps` | `AnimatedProps<ViewProps>`          | -           | All Reanimated Animated.View props are supported |
 
 #### RadioGroupIndicatorThumbAnimation
 
-Animation configuration for the RadioGroupIndicatorThumb component. Can be:
+Animation configuration for RadioGroupIndicatorThumb component. Can be:
 
 - `false` or `"disabled"`: Disable all animations
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-**Animation Properties:**
-
-| property | type                          | default     | description                                   |
-| -------- | ----------------------------- | ----------- | --------------------------------------------- |
-| `scale`  | `AnimationValue<ScaleConfig>` | `undefined` | Scale animation configuration for thumb state |
-
-**ScaleConfig:**
-
-| property       | type               | default                                              | description                         |
-| -------------- | ------------------ | ---------------------------------------------------- | ----------------------------------- |
-| `value`        | `[number, number]` | `[1.5, 1]`                                           | Scale values [unselected, selected] |
-| `timingConfig` | `WithTimingConfig` | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration      |
+| prop                 | type               | default                                              | description                         |
+| -------------------- | ------------------ | ---------------------------------------------------- | ----------------------------------- |
+| `scale.value`        | `[number, number]` | `[1.5, 1]`                                           | Scale values [unselected, selected] |
+| `scale.timingConfig` | `WithTimingConfig` | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration      |
 
 ### RadioGroup.Label
 

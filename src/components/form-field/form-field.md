@@ -192,7 +192,7 @@ export default function FormFieldExample() {
 | isInvalid         | `boolean`                                                               | `false`     | Whether the form control is invalid                                                       |
 | className         | `string`                                                                | -           | Custom class name for the root element                                                    |
 | onSelectedChange  | `(isSelected: boolean) => void`                                         | -           | Callback when selection state changes                                                     |
-| animation         | `AnimationRootDisableAll`                                               | -           | Animation configuration. Use `"disable-all"` to disable all animations including children |
+| animation         | `"disable-all" \| undefined`                                            | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
 | ...PressableProps | `PressableProps`                                                        | -           | All React Native Pressable props are supported                                            |
 
 ### FormField.Label
@@ -224,21 +224,9 @@ export default function FormFieldExample() {
 
 ### FormField.ErrorMessage
 
-| prop                  | type                           | default | description                                             |
-| --------------------- | ------------------------------ | ------- | ------------------------------------------------------- |
-| children              | `React.ReactNode`              | -       | Error message content                                   |
-| className             | `string`                       | -       | Custom class name for styling                           |
-| classNames            | `ElementSlots<ErrorViewSlots>` | -       | Custom class names for different parts of the component |
-| ...ErrorViewRootProps | `ErrorViewRootProps`           | -       | All ErrorView root props are supported                  |
+FormField.ErrorMessage extends all props from [ErrorView](../error-view/error-view.md) component.
 
 **Note**: The `isInvalid` prop is automatically passed from the FormField context. The error message visibility is controlled by the `isInvalid` state of the parent FormField.
-
-#### ElementSlots<ErrorViewSlots>
-
-| prop        | type     | description                               |
-| ----------- | -------- | ----------------------------------------- |
-| `container` | `string` | Custom class name for the error container |
-| `text`      | `string` | Custom class name for the error text      |
 
 ## Hooks
 

@@ -143,7 +143,7 @@ export default function CardExample() {
 | `children`     | `React.ReactNode`                                                         | -           | Content to be rendered inside the card                                                    |
 | `variant`      | `'default' \| 'secondary' \| 'tertiary' \| 'quaternary' \| 'transparent'` | `'default'` | Visual variant of the card surface                                                        |
 | `className`    | `string`                                                                  | -           | Additional CSS classes to apply                                                           |
-| `animation`    | `"disable-all"`                                                           | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
+| `animation`    | `"disable-all" \| undefined`                                              | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
 | `...ViewProps` | `ViewProps`                                                               | -           | All standard React Native View props are supported                                        |
 
 ### Card.Header

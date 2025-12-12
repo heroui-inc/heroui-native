@@ -198,18 +198,18 @@ export default function BasicUsage() {
 
 ### Checkbox
 
-| prop                | type                                                                   | default     | description                                                                                                                                                          |
-| ------------------- | ---------------------------------------------------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children`          | `React.ReactNode \| ((props: CheckboxRenderProps) => React.ReactNode)` | `undefined` | Child elements or render function to customize the checkbox                                                                                                          |
-| `isSelected`        | `boolean`                                                              | `undefined` | Whether the checkbox is currently selected                                                                                                                           |
-| `onSelectedChange`  | `(isSelected: boolean) => void`                                        | `undefined` | Callback fired when the checkbox selection state changes                                                                                                             |
-| `isDisabled`        | `boolean`                                                              | `false`     | Whether the checkbox is disabled and cannot be interacted with                                                                                                       |
-| `isInvalid`         | `boolean`                                                              | `false`     | Whether the checkbox is invalid (shows danger color)                                                                                                                 |
-| `isOnSurface`       | `boolean`                                                              | `undefined` | Whether checkbox is on a surface background (auto-detected if not set)                                                                                               |
-| `hitSlop`           | `number`                                                               | `6`         | Hit slop for the pressable area                                                                                                                                      |
-| `animation`         | `CheckboxRootAnimation`                                                | `undefined` | Animation configuration for press scale animation. Use `"disable-all"` to disable all animations including indicator, or `"disabled"` to disable only root animation |
-| `className`         | `string`                                                               | `undefined` | Additional CSS classes to apply                                                                                                                                      |
-| `...PressableProps` | `PressableProps`                                                       | -           | All standard React Native Pressable props are supported (except disabled)                                                                                            |
+| prop                | type                                                                   | default     | description                                                               |
+| ------------------- | ---------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------- |
+| `children`          | `React.ReactNode \| ((props: CheckboxRenderProps) => React.ReactNode)` | `undefined` | Child elements or render function to customize the checkbox               |
+| `isSelected`        | `boolean`                                                              | `undefined` | Whether the checkbox is currently selected                                |
+| `onSelectedChange`  | `(isSelected: boolean) => void`                                        | `undefined` | Callback fired when the checkbox selection state changes                  |
+| `isDisabled`        | `boolean`                                                              | `false`     | Whether the checkbox is disabled and cannot be interacted with            |
+| `isInvalid`         | `boolean`                                                              | `false`     | Whether the checkbox is invalid (shows danger color)                      |
+| `isOnSurface`       | `boolean`                                                              | `undefined` | Whether checkbox is on a surface background (auto-detected if not set)    |
+| `hitSlop`           | `number`                                                               | `6`         | Hit slop for the pressable area                                           |
+| `animation`         | `CheckboxRootAnimation`                                                | -           | Animation configuration                                                   |
+| `className`         | `string`                                                               | `undefined` | Additional CSS classes to apply                                           |
+| `...PressableProps` | `PressableProps`                                                       | -           | All standard React Native Pressable props are supported (except disabled) |
 
 #### CheckboxRenderProps
 
@@ -221,35 +221,27 @@ export default function BasicUsage() {
 
 #### CheckboxRootAnimation
 
-Configuration object or string literal to control root checkbox animations.
+Animation configuration for checkbox root component. Can be:
 
-**Type:** `CheckboxRootAnimation = boolean | "disabled" | "disable-all" | { scale?: AnimationValue }`
+- `false` or `"disabled"`: Disable only root animations
+- `"disable-all"`: Disable all animations including children
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
 
-**String values:**
-
-- `"disabled" | false`: Disables only the root press scale animation
-- `"disable-all"`: Disables all animations (root and indicator)
-
-**Object configuration:**
-
-| prop    | type                                                                            | description                             |
-| ------- | ------------------------------------------------------------------------------- | --------------------------------------- |
-| `scale` | `AnimationValue<{ value?: [number, number]; timingConfig?: WithTimingConfig }>` | Configuration for press scale animation |
-
-**scale** properties:
-
-- `value` (`[number, number]`, default: `[1, 0.95]`): Scale values for [unpressed, pressed] states
-- `timingConfig` (`WithTimingConfig`): Animation timing configuration from Reanimated (default: `{ duration: 150 }`)
+| prop                 | type               | default             | description                       |
+| -------------------- | ------------------ | ------------------- | --------------------------------- |
+| `scale.value`        | `[number, number]` | `[1, 0.96]`         | Scale values [unpressed, pressed] |
+| `scale.timingConfig` | `WithTimingConfig` | `{ duration: 150 }` | Animation timing configuration    |
 
 ### Checkbox.Indicator
 
-| prop                   | type                                                                   | default     | description                                                                                            |
-| ---------------------- | ---------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------ |
-| `children`             | `React.ReactNode \| ((props: CheckboxRenderProps) => React.ReactNode)` | `undefined` | Content or render function for the checkbox indicator                                                  |
-| `className`            | `string`                                                               | `undefined` | Additional CSS classes for the indicator                                                               |
-| `iconProps`            | `CheckboxIndicatorIconProps`                                           | `undefined` | Custom props for the default animated check icon                                                       |
-| `animation`            | `CheckboxIndicatorAnimation`                                           | `undefined` | Animation configuration for indicator animations. Use `"disabled"` to disable all indicator animations |
-| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`                                             | -           | All standard React Native Animated View props are supported                                            |
+| prop                   | type                                                                   | default     | description                                                 |
+| ---------------------- | ---------------------------------------------------------------------- | ----------- | ----------------------------------------------------------- |
+| `children`             | `React.ReactNode \| ((props: CheckboxRenderProps) => React.ReactNode)` | `undefined` | Content or render function for the checkbox indicator       |
+| `className`            | `string`                                                               | `undefined` | Additional CSS classes for the indicator                    |
+| `iconProps`            | `CheckboxIndicatorIconProps`                                           | `undefined` | Custom props for the default animated check icon            |
+| `animation`            | `CheckboxIndicatorAnimation`                                           | -           | Animation configuration                                     |
+| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`                                             | -           | All standard React Native Animated View props are supported |
 
 #### CheckboxIndicatorIconProps
 
@@ -265,34 +257,22 @@ Props for customizing the default animated check icon.
 
 #### CheckboxIndicatorAnimation
 
-Configuration object or string literal to control indicator animations.
+Animation configuration for checkbox indicator component. Can be:
 
-**Type:** `CheckboxIndicatorAnimation = boolean | "disabled" | { opacity?: AnimationValue; borderRadius?: AnimationValue; translateX?: AnimationValue; scale?: AnimationValue }`
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
 
-**String values:**
-
-- `"disabled" | false`: Disables all indicator animations (opacity, borderRadius, translateX, scale)
-
-**Object configuration:**
-
-| prop           | type                                                                            | description                                    |
-| -------------- | ------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `opacity`      | `AnimationValue<{ value?: [number, number]; timingConfig?: WithTimingConfig }>` | Opacity animation configuration                |
-| `borderRadius` | `AnimationValue<{ value?: [number, number]; timingConfig?: WithTimingConfig }>` | Border radius animation configuration          |
-| `translateX`   | `AnimationValue<{ value?: [number, number]; timingConfig?: WithTimingConfig }>` | Horizontal translation animation configuration |
-| `scale`        | `AnimationValue<{ value?: [number, number]; timingConfig?: WithTimingConfig }>` | Scale animation configuration                  |
-
-**Default animation values:**
-
-- `opacity`: `value: [0, 1]`, `timingConfig: { duration: 100 }`
-- `borderRadius`: `value: [8, 0]`, `timingConfig: { duration: 50 }`
-- `translateX`: `value: [-4, 0]`, `timingConfig: { duration: 100 }`
-- `scale`: `value: [0.8, 1]`, `timingConfig: { duration: 100 }`
-
-Each animation property supports:
-
-- `value` (`[number, number]`): Animation values for [unselected, selected] states
-- `timingConfig` (`WithTimingConfig`): Reanimated timing configuration
+| prop                        | type               | default             | description                                 |
+| --------------------------- | ------------------ | ------------------- | ------------------------------------------- |
+| `opacity.value`             | `[number, number]` | `[0, 1]`            | Opacity values [unselected, selected]       |
+| `opacity.timingConfig`      | `WithTimingConfig` | `{ duration: 100 }` | Animation timing configuration              |
+| `borderRadius.value`        | `[number, number]` | `[8, 0]`            | Border radius values [unselected, selected] |
+| `borderRadius.timingConfig` | `WithTimingConfig` | `{ duration: 50 }`  | Animation timing configuration              |
+| `translateX.value`          | `[number, number]` | `[-4, 0]`           | TranslateX values [unselected, selected]    |
+| `translateX.timingConfig`   | `WithTimingConfig` | `{ duration: 100 }` | Animation timing configuration              |
+| `scale.value`               | `[number, number]` | `[0.8, 1]`          | Scale values [unselected, selected]         |
+| `scale.timingConfig`        | `WithTimingConfig` | `{ duration: 100 }` | Animation timing configuration              |
 
 ### useCheckbox
 

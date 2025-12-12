@@ -160,32 +160,22 @@ export default function ScrollShadowExample() {
 | `visibility`              | `'auto' \| 'top' \| 'bottom' \| 'left' \| 'right' \| 'both' \| 'none'` | `'auto'`     | Visibility mode for the shadows. 'auto' shows shadows based on scroll position and content overflow             |
 | `color`                   | `string`                                                               | theme color  | Custom color for the gradient shadow. If not provided, uses the theme's background color                        |
 | `isEnabled`               | `boolean`                                                              | `true`       | Whether the shadow effect is enabled                                                                            |
-| `animation`               | `ScrollShadowRootAnimation`                                            | `undefined`  | Animation configuration for scroll shadow (see below)                                                           |
+| `animation`               | `ScrollShadowRootAnimation`                                            | -            | Animation configuration                                                                                         |
 | `className`               | `string`                                                               | -            | Additional CSS classes to apply to the container                                                                |
 | `...ViewProps`            | `ViewProps`                                                            | -            | All standard React Native View props are supported                                                              |
 
 #### ScrollShadowRootAnimation
 
-Animation configuration for the ScrollShadow root component. Supports cascading control to disable animations across all child components.
+Animation configuration for ScrollShadow component. Can be:
 
-| value                   | description                                               |
-| ----------------------- | --------------------------------------------------------- |
-| `true` or `undefined`   | Use default animations                                    |
-| `false` or `"disabled"` | Disable only root animations (children can still animate) |
-| `"disable-all"`         | Disable all animations including children (cascades down) |
-| `object`                | Custom animation configuration                            |
+- `false` or `"disabled"`: Disable only root animations
+- `"disable-all"`: Disable all animations including children
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
 
-**Custom Configuration:**
-
-| property  | type                            | default     | description                                 |
-| --------- | ------------------------------- | ----------- | ------------------------------------------- |
-| `opacity` | `AnimationValue<OpacityConfig>` | `undefined` | Opacity animation configuration for shadows |
-
-**OpacityConfig:**
-
-| property | type               | default  | description                                                                 |
-| -------- | ------------------ | -------- | --------------------------------------------------------------------------- |
-| `value`  | `[number, number]` | `[0, 1]` | Opacity values [initial, active]. For bottom/right shadow, this is reversed |
+| prop            | type               | default  | description                                                                 |
+| --------------- | ------------------ | -------- | --------------------------------------------------------------------------- |
+| `opacity.value` | `[number, number]` | `[0, 1]` | Opacity values [initial, active]. For bottom/right shadow, this is reversed |
 
 ### LinearGradientProps
 

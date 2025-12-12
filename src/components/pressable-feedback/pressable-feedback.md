@@ -213,60 +213,53 @@ export default function PressableFeedbackExample() {
 
 ### PressableFeedback
 
-The component includes a default scale animation (0.985) that is automatically applied on press. This scale value is intelligently adjusted based on container width for consistent visual feedback across different sizes.
-
-| prop               | type                                                                                                                        | default       | description                                                                                                                           |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `children`         | `React.ReactNode`                                                                                                           | -             | Content to be wrapped with press feedback                                                                                             |
-| `feedbackVariant`  | `'highlight' \| 'ripple'`                                                                                                   | `'highlight'` | Type of feedback effect to display                                                                                                    |
-| `feedbackPosition` | `'behind' \| 'top'`                                                                                                         | `'top'`       | Controls z-index positioning of feedback effect relative to children                                                                  |
-| `isDisabled`       | `boolean`                                                                                                                   | `false`       | Whether the pressable component is disabled                                                                                           |
-| `className`        | `string`                                                                                                                    | -             | Additional CSS classes                                                                                                                |
-| `animation`        | `boolean \| 'disabled' \| 'disable-all' \| PressableFeedbackHighlightRootAnimation \| PressableFeedbackRippleRootAnimation` | -             | Animation configuration. Set to `'disabled'` to disable root animations, `'disable-all'` to disable all animations including children |
-| `...AnimatedProps` | `AnimatedProps<PressableProps>`                                                                                             | -             | All Reanimated Animated Pressable props are supported                                                                                 |
+| prop               | type                                                                              | default       | description                                                          |
+| ------------------ | --------------------------------------------------------------------------------- | ------------- | -------------------------------------------------------------------- |
+| `children`         | `React.ReactNode`                                                                 | -             | Content to be wrapped with press feedback                            |
+| `feedbackVariant`  | `'highlight' \| 'ripple'`                                                         | `'highlight'` | Type of feedback effect to display                                   |
+| `feedbackPosition` | `'behind' \| 'top'`                                                               | `'top'`       | Controls z-index positioning of feedback effect relative to children |
+| `isDisabled`       | `boolean`                                                                         | `false`       | Whether the pressable component is disabled                          |
+| `className`        | `string`                                                                          | -             | Additional CSS classes                                               |
+| `animation`        | `PressableFeedbackHighlightRootAnimation \| PressableFeedbackRippleRootAnimation` | -             | Animation configuration                                              |
+| `...AnimatedProps` | `AnimatedProps<PressableProps>`                                                   | -             | All Reanimated Animated Pressable props are supported                |
 
 #### PressableFeedbackHighlightRootAnimation
 
-| prop        | type                                  | description                               |
-| ----------- | ------------------------------------- | ----------------------------------------- |
-| `scale`     | `PressableFeedbackScaleAnimation`     | Scale animation for the root container    |
-| `highlight` | `PressableFeedbackHighlightAnimation` | Highlight overlay animation configuration |
+Animation configuration for PressableFeedback component with highlight variant. Can be:
+
+- `false` or `"disabled"`: Disable only root animations
+- `"disable-all"`: Disable all animations including children
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
+
+| prop                              | type               | default                                              | description                                                                |
+| --------------------------------- | ------------------ | ---------------------------------------------------- | -------------------------------------------------------------------------- |
+| `scale.value`                     | `number`           | `0.985`                                              | Scale value when pressed (automatically adjusted based on container width) |
+| `scale.timingConfig`              | `WithTimingConfig` | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration                                             |
+| `scale.ignoreScaleCoefficient`    | `boolean`          | `false`                                              | Ignore automatic scale coefficient and use the scale value directly        |
+| `highlight.opacity.value`         | `[number, number]` | `[0, 0.1]`                                           | Opacity values [unpressed, pressed]                                        |
+| `highlight.opacity.timingConfig`  | `WithTimingConfig` | `{ duration: 200 }`                                  | Animation timing configuration                                             |
+| `highlight.backgroundColor.value` | `string`           | Computed based on theme                              | Background color of highlight overlay                                      |
 
 #### PressableFeedbackRippleRootAnimation
 
-| prop     | type                               | description                            |
-| -------- | ---------------------------------- | -------------------------------------- |
-| `scale`  | `PressableFeedbackScaleAnimation`  | Scale animation for the root container |
-| `ripple` | `PressableFeedbackRippleAnimation` | Ripple effect animation configuration  |
+Animation configuration for PressableFeedback component with ripple variant. Can be:
 
-#### PressableFeedbackScaleAnimation
+- `false` or `"disabled"`: Disable only root animations
+- `"disable-all"`: Disable all animations including children
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
 
-| prop                     | type               | default                                              | description                                                                |
-| ------------------------ | ------------------ | ---------------------------------------------------- | -------------------------------------------------------------------------- |
-| `value`                  | `number`           | `0.985`                                              | Scale value when pressed (automatically adjusted based on container width) |
-| `timingConfig`           | `WithTimingConfig` | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration                                             |
-| `ignoreScaleCoefficient` | `boolean`          | `false`                                              | Ignore automatic scale coefficient and use the scale value directly        |
-
-#### PressableFeedbackHighlightAnimation
-
-| prop              | type                            | description                           |
-| ----------------- | ------------------------------- | ------------------------------------- |
-| `opacity`         | `AnimationValue<OpacityConfig>` | Opacity animation for highlight       |
-| `backgroundColor` | `AnimationValue<ColorConfig>`   | Background color of highlight overlay |
-
-#### PressableFeedbackRippleAnimation
-
-| prop              | type                                  | description                       |
-| ----------------- | ------------------------------------- | --------------------------------- |
-| `backgroundColor` | `AnimationValue<ColorConfig>`         | Background color of ripple effect |
-| `progress`        | `AnimationValue<ProgressConfig>`      | Progress animation configuration  |
-| `opacity`         | `AnimationValue<RippleOpacityConfig>` | Opacity animation for ripple      |
-| `scale`           | `AnimationValue<RippleScaleConfig>`   | Scale animation for ripple        |
-
-#### ProgressConfig
-
-| prop                        | type      | default | description                                                                  |
-| --------------------------- | --------- | ------- | ---------------------------------------------------------------------------- |
-| `baseDuration`              | `number`  | `1000`  | Base duration for ripple progress (automatically adjusted based on diagonal) |
-| `minBaseDuration`           | `number`  | -       | Minimum base duration for the ripple progress animation                      |
-| `ignoreDurationCoefficient` | `boolean` | `false` | Ignore automatic duration coefficient and use base duration directly         |
+| prop                                        | type                       | default                                              | description                                                                  |
+| ------------------------------------------- | -------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `scale.value`                               | `number`                   | `0.985`                                              | Scale value when pressed (automatically adjusted based on container width)   |
+| `scale.timingConfig`                        | `WithTimingConfig`         | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration                                               |
+| `scale.ignoreScaleCoefficient`              | `boolean`                  | `false`                                              | Ignore automatic scale coefficient and use the scale value directly          |
+| `ripple.backgroundColor.value`              | `string`                   | Computed based on theme                              | Background color of ripple effect                                            |
+| `ripple.progress.baseDuration`              | `number`                   | `1000`                                               | Base duration for ripple progress (automatically adjusted based on diagonal) |
+| `ripple.progress.minBaseDuration`           | `number`                   | -                                                    | Minimum base duration for the ripple progress animation                      |
+| `ripple.progress.ignoreDurationCoefficient` | `boolean`                  | `false`                                              | Ignore automatic duration coefficient and use base duration directly         |
+| `ripple.opacity.value`                      | `[number, number, number]` | `[0, 0.1, 0]`                                        | Opacity values [start, peak, end] for ripple animation                       |
+| `ripple.opacity.timingConfig`               | `WithTimingConfig`         | `{ duration: 30 }`                                   | Animation timing configuration                                               |
+| `ripple.scale.value`                        | `[number, number, number]` | `[0, 1, 1]`                                          | Scale values [start, peak, end] for ripple animation                         |
+| `ripple.scale.timingConfig`                 | `WithTimingConfig`         | `{ duration: 30 }`                                   | Animation timing configuration                                               |

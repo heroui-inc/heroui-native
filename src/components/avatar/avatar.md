@@ -273,40 +273,56 @@ Props extend different base types depending on the `asChild` prop value:
 
 **Note:** When using `asChild={true}` with custom image components, the `className` prop may not be applied in some cases depending on the custom component's implementation. Ensure your custom component properly handles style props.
 
-| prop                    | type                                                                                                   | default     | description                                                                                                                                               |
-| ----------------------- | ------------------------------------------------------------------------------------------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `source`                | `ImageSourcePropType`                                                                                  | -           | Image source (required when `asChild={false}`)                                                                                                            |
-| `asChild`               | `boolean`                                                                                              | `false`     | Whether to use a custom image component as child                                                                                                          |
-| `className`             | `string`                                                                                               | -           | Additional CSS classes to apply                                                                                                                           |
-| `animation`             | `boolean \| "disabled" \| { opacity?: { value?: [number, number], timingConfig?: WithTimingConfig } }` | `undefined` | Animation configuration. `false` or `"disabled"` disables animations. `true` or `undefined` uses defaults. Object allows custom opacity animation config. |
-| `onLoadingStatusChange` | `(status: 'loading' \| 'loaded' \| 'error') => void`                                                   | -           | Callback fired when the loading status changes                                                                                                            |
-| `...AnimatedProps`      | `AnimatedProps<ImageProps>` or primitive props                                                         | -           | Additional props based on `asChild` value                                                                                                                 |
+| prop               | type                                           | default | description                                      |
+| ------------------ | ---------------------------------------------- | ------- | ------------------------------------------------ |
+| `source`           | `ImageSourcePropType`                          | -       | Image source (required when `asChild={false}`)   |
+| `asChild`          | `boolean`                                      | `false` | Whether to use a custom image component as child |
+| `className`        | `string`                                       | -       | Additional CSS classes to apply                  |
+| `animation`        | `AvatarImageAnimation`                         | -       | Animation configuration                          |
+| `...AnimatedProps` | `AnimatedProps<ImageProps>` or primitive props | -       | Additional props based on `asChild` value        |
 
-**Animation Details:**
+#### AvatarImageAnimation
 
-- The image uses opacity-based animation that transitions from `[0, 1]` (invisible to visible) when the image loads
-- Default timing: `{ duration: 200, easing: Easing.in(Easing.ease) }`
-- Animation is automatically disabled when `asChild={true}`
+Animation configuration for avatar image component. Can be:
+
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
+
+| prop                   | type               | default                                             | description                                          |
+| ---------------------- | ------------------ | --------------------------------------------------- | ---------------------------------------------------- |
+| `opacity.value`        | `[number, number]` | `[0, 1]`                                            | Opacity values [initial, loaded] for image animation |
+| `opacity.timingConfig` | `WithTimingConfig` | `{ duration: 200, easing: Easing.in(Easing.ease) }` | Animation timing configuration                       |
+
+**Note:** Animation is automatically disabled when `asChild={true}`
 
 ### Avatar.Fallback
 
-| prop                    | type                                                                        | default               | description                                                                                                                                         |
-| ----------------------- | --------------------------------------------------------------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children`              | `React.ReactNode`                                                           | -                     | Fallback content (text, icon, or custom element)                                                                                                    |
-| `delayMs`               | `number`                                                                    | `0`                   | Delay in milliseconds before showing the fallback (applied to entering animation)                                                                   |
-| `color`                 | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'`               | inherited from parent | Color variant of the fallback                                                                                                                       |
-| `className`             | `string`                                                                    | -                     | Additional CSS classes for the container                                                                                                            |
-| `classNames`            | `{ container?: string, text?: string }`                                     | -                     | Additional CSS classes for different parts                                                                                                          |
-| `textProps`             | `TextProps`                                                                 | -                     | Props to pass to Text component when children is a string                                                                                           |
-| `iconProps`             | `PersonIconProps`                                                           | -                     | Props to customize the default person icon                                                                                                          |
-| `animation`             | `boolean \| "disabled" \| { entering?: { value?: EntryOrExitLayoutType } }` | `undefined`           | Animation configuration. `false` or `"disabled"` disables animations. `true` or `undefined` uses defaults. Object allows custom entering animation. |
-| `...Animated.ViewProps` | `Animated.ViewProps`                                                        | -                     | All Reanimated Animated.View props are supported                                                                                                    |
+| prop                    | type                                                          | default               | description                                                                       |
+| ----------------------- | ------------------------------------------------------------- | --------------------- | --------------------------------------------------------------------------------- |
+| `children`              | `React.ReactNode`                                             | -                     | Fallback content (text, icon, or custom element)                                  |
+| `delayMs`               | `number`                                                      | `0`                   | Delay in milliseconds before showing the fallback (applied to entering animation) |
+| `color`                 | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'` | inherited from parent | Color variant of the fallback                                                     |
+| `className`             | `string`                                                      | -                     | Additional CSS classes for the container                                          |
+| `classNames`            | `ElementSlots<AvatarFallbackSlots>`                           | -                     | Additional CSS classes for different parts                                        |
+| `textProps`             | `TextProps`                                                   | -                     | Props to pass to Text component when children is a string                         |
+| `iconProps`             | `PersonIconProps`                                             | -                     | Props to customize the default person icon                                        |
+| `animation`             | `AvatarFallbackAnimation`                                     | -                     | Animation configuration                                                           |
+| `...Animated.ViewProps` | `Animated.ViewProps`                                          | -                     | All Reanimated Animated.View props are supported                                  |
 
-**Animation Details:**
+**classNames prop:** `ElementSlots<AvatarFallbackSlots>` provides type-safe CSS classes for different parts of the fallback component. Available slots: `container`, `text`.
 
-- Default entering animation: `FadeIn.duration(200).easing(Easing.in(Easing.ease))`
-- The `delayMs` prop is automatically applied to the entering animation delay
-- Custom entering animations can be provided via the `animation` prop
+#### AvatarFallbackAnimation
+
+Animation configuration for avatar fallback component. Can be:
+
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
+
+| prop             | type                    | default                                                                             | description                            |
+| ---------------- | ----------------------- | ----------------------------------------------------------------------------------- | -------------------------------------- |
+| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(200)`<br/>`.easing(Easing.in(Easing.ease))`<br/>`.delay(0)` | Custom entering animation for fallback |
 
 #### PersonIconProps
 

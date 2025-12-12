@@ -221,11 +221,11 @@ export default function ButtonExample() {
 
 Button extends all props from [PressableFeedback](../pressable-feedback/pressable-feedback.md) component with additional button-specific props.
 
-| prop         | type                                                                                       | default     | description                                                    |
-| ------------ | ------------------------------------------------------------------------------------------ | ----------- | -------------------------------------------------------------- |
+| prop         | type                                                                             | default     | description                                                    |
+| ------------ | -------------------------------------------------------------------------------- | ----------- | -------------------------------------------------------------- |
 | `variant`    | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'danger' \| 'danger-soft'` | `'primary'` | Visual variant of the button                                   |
-| `size`       | `'sm' \| 'md' \| 'lg'`                                                                     | `'md'`      | Size of the button                                             |
-| `isIconOnly` | `boolean`                                                                                  | `false`     | Whether the button displays an icon only (square aspect ratio) |
+| `size`       | `'sm' \| 'md' \| 'lg'`                                                           | `'md'`      | Size of the button                                             |
+| `isIconOnly` | `boolean`                                                                        | `false`     | Whether the button displays an icon only (square aspect ratio) |
 
 For inherited props including `feedbackVariant`, `feedbackPosition`, `animation`, `isDisabled`, `className`, `children`, and all Pressable props, see [PressableFeedback API Reference](../pressable-feedback/pressable-feedback.md#api-reference).
 

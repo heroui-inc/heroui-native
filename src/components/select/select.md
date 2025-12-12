@@ -408,40 +408,37 @@ export default function SelectExample() {
 | `closeDelay`               | `number`                        | `400`   | Delay in milliseconds before closing the select                        |
 | `isDisabled`               | `boolean`                       | `false` | Whether the select is disabled                                         |
 | `isDismissKeyboardOnClose` | `boolean`                       | `true`  | Whether to dismiss keyboard when select closes                         |
-| `animation`                | `SelectRootAnimation`           | -       | Animation configuration for select root                                |
+| `animation`                | `SelectRootAnimation`           | -       | Animation configuration                                                |
 | `asChild`                  | `boolean`                       | `false` | Whether to render as a child element                                   |
 | `...ViewProps`             | `ViewProps`                     | -       | All standard React Native View props are supported                     |
 
 #### SelectRootAnimation
 
-Animation configuration for the Select root component. Supports cascading control to disable animations across all child components.
+Animation configuration for Select component. Can be:
 
-| value                   | description                                               |
-| ----------------------- | --------------------------------------------------------- |
-| `true` or `undefined`   | Use default animations                                    |
-| `false` or `"disabled"` | Disable only root animations (children can still animate) |
-| `"disable-all"`         | Disable all animations including children (cascades down) |
-| `object`                | Custom animation configuration                            |
+- `false` or `"disabled"`: Disable only root animations
+- `"disable-all"`: Disable all animations including children
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
 
-**Custom Configuration:**
+| prop             | type                                             | default | description                                    |
+| ---------------- | ------------------------------------------------ | ------- | ---------------------------------------------- |
+| `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | -       | Animation configuration for when select opens  |
+| `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | -       | Animation configuration for when select closes |
 
-```typescript
-{
-  entering?: {
-    type: 'spring' | 'timing';
-    config?: WithSpringConfig | WithTimingConfig;
-  };
-  exiting?: {
-    type: 'spring' | 'timing';
-    config?: WithSpringConfig | WithTimingConfig;
-  };
-}
-```
+#### SpringAnimationConfig
 
-- `entering`: Animation configuration for when the select opens
-- `exiting`: Animation configuration for when the select closes
-- `type`: Animation type - `'spring'` for spring-based animations or `'timing'` for duration-based animations
-- `config`: Optional configuration object for the animation type (spring damping/stiffness or timing duration/easing)
+| prop     | type               | default | description                               |
+| -------- | ------------------ | ------- | ----------------------------------------- |
+| `type`   | `'spring'`         | -       | Animation type (must be `'spring'`)       |
+| `config` | `WithSpringConfig` | -       | Reanimated spring animation configuration |
+
+#### TimingAnimationConfig
+
+| prop     | type               | default | description                               |
+| -------- | ------------------ | ------- | ----------------------------------------- |
+| `type`   | `'timing'`         | -       | Animation type (must be `'timing'`)       |
+| `config` | `WithTimingConfig` | -       | Reanimated timing animation configuration |
 
 ### Select.Trigger
 
@@ -475,7 +472,7 @@ Animation configuration for the Select root component. Supports cascading contro
 | prop                    | type                     | default | description                                         |
 | ----------------------- | ------------------------ | ------- | --------------------------------------------------- |
 | `className`             | `string`                 | -       | Additional CSS classes for the overlay              |
-| `animation`             | `SelectOverlayAnimation` | -       | Animation configuration for overlay                 |
+| `animation`             | `SelectOverlayAnimation` | -       | Animation configuration                             |
 | `closeOnPress`          | `boolean`                | `true`  | Whether to close the select when overlay is pressed |
 | `forceMount`            | `boolean`                | -       | Whether to force mount the component in the DOM     |
 | `asChild`               | `boolean`                | `false` | Whether to render as a child element                |
@@ -483,26 +480,15 @@ Animation configuration for the Select root component. Supports cascading contro
 
 #### SelectOverlayAnimation
 
-Animation configuration for the Select Overlay component. Controls the opacity animation of the overlay backdrop.
+Animation configuration for Select.Overlay component. Can be:
 
-| value                   | description                    |
-| ----------------------- | ------------------------------ |
-| `true` or `undefined`   | Use default animations         |
-| `false` or `"disabled"` | Disable all animations         |
-| `object`                | Custom animation configuration |
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
 
-**Custom Configuration:**
-
-```typescript
-{
-  opacity?: {
-    value?: [number, number, number];
-  };
-}
-```
-
-- `opacity`: Opacity animation configuration
-  - `value`: Opacity values `[idle, open, close]` - defaults to `[0, 1, 0]`
+| prop            | type                       | default     | description                        |
+| --------------- | -------------------------- | ----------- | ---------------------------------- |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close] |
 
 ### Select.Content (Popover Presentation)
 
@@ -517,7 +503,7 @@ Animation configuration for the Select Overlay component. Controls the opacity a
 | `offset`                | `number`                                         | `8`             | Distance from trigger element in pixels                |
 | `alignOffset`           | `number`                                         | `0`             | Offset along the alignment axis in pixels              |
 | `className`             | `string`                                         | -               | Additional CSS classes for the content container       |
-| `animation`             | `SelectContentPopoverAnimation`                  | -               | Animation configuration for content                    |
+| `animation`             | `SelectContentPopoverAnimation`                  | -               | Animation configuration                                |
 | `forceMount`            | `boolean`                                        | -               | Whether to force mount the component in the DOM        |
 | `insets`                | `Insets`                                         | -               | Screen edge insets to respect when positioning         |
 | `asChild`               | `boolean`                                        | `false`         | Whether to render as a child element                   |
@@ -525,46 +511,19 @@ Animation configuration for the Select Overlay component. Controls the opacity a
 
 #### SelectContentPopoverAnimation
 
-Animation configuration for the Select Content component in popover presentation mode. Supports opacity, scale, translate, and transform origin animations.
+Animation configuration for Select.Content component (popover presentation). Can be:
 
-| value                   | description                    |
-| ----------------------- | ------------------------------ |
-| `true` or `undefined`   | Use default animations         |
-| `false` or `"disabled"` | Disable all animations         |
-| `object`                | Custom animation configuration |
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
 
-**Custom Configuration:**
-
-```typescript
-{
-  opacity?: {
-    value?: [number, number, number];
-  };
-  scale?: {
-    value?: [number, number, number];
-  };
-  translateX?: {
-    value?: [number, number, number];
-  };
-  translateY?: {
-    value?: [number, number, number];
-  };
-  transformOrigin?: {
-    value?: string;
-  };
-}
-```
-
-- `opacity`: Opacity animation configuration
-  - `value`: Opacity values `[idle, open, close]` - defaults to `[0, 1, 0]`
-- `scale`: Scale animation configuration
-  - `value`: Scale values `[idle, open, close]` - defaults to `[0.95, 1, 0.95]`
-- `translateX`: Horizontal translation animation configuration
-  - `value`: TranslateX values `[idle, open, close]` - defaults based on placement (e.g., `[4, 0, 4]` or `[-4, 0, -4]`)
-- `translateY`: Vertical translation animation configuration
-  - `value`: TranslateY values `[idle, open, close]` - defaults based on placement (e.g., `[4, 0, 4]` or `[-4, 0, -4]`)
-- `transformOrigin`: Transform origin configuration
-  - `value`: Transform origin value - defaults based on placement (`'top'`, `'bottom'`, `'left'`, or `'right'`)
+| prop                    | type                       | default            | description                           |
+| ----------------------- | -------------------------- | ------------------ | ------------------------------------- |
+| `opacity.value`         | `[number, number, number]` | `[0, 1, 0]`        | Opacity values [idle, open, close]    |
+| `scale.value`           | `[number, number, number]` | `[0.95, 1, 0.95]`  | Scale values [idle, open, close]      |
+| `translateX.value`      | `[number, number, number]` | Based on placement | TranslateX values [idle, open, close] |
+| `translateY.value`      | `[number, number, number]` | Based on placement | TranslateY values [idle, open, close] |
+| `transformOrigin.value` | `string`                   | Based on placement | Transform origin value                |
 
 ### Select.Content (Bottom Sheet Presentation)
 
@@ -582,7 +541,7 @@ Animation configuration for the Select Content component in popover presentation
 | `children`              | `ReactNode`                              | -       | The dialog content                                  |
 | `presentation`          | `'dialog'`                               | -       | Presentation mode for the select                    |
 | `classNames`            | `{ wrapper?: string; content?: string }` | -       | Additional CSS classes for wrapper and content      |
-| `animation`             | `SelectContentAnimation`                 | -       | Animation configuration for content                 |
+| `animation`             | `SelectContentAnimation`                 | -       | Animation configuration                             |
 | `isSwipeable`           | `boolean`                                | `true`  | Whether the dialog content can be swiped to dismiss |
 | `forceMount`            | `boolean`                                | -       | Whether to force mount the component in the DOM     |
 | `asChild`               | `boolean`                                | `false` | Whether to render as a child element                |
@@ -590,31 +549,16 @@ Animation configuration for the Select Content component in popover presentation
 
 #### SelectContentAnimation
 
-Animation configuration for the Select Content component in dialog presentation mode. Supports opacity and scale animations.
+Animation configuration for Select.Content component (dialog presentation). Can be:
 
-| value                   | description                    |
-| ----------------------- | ------------------------------ |
-| `true` or `undefined`   | Use default animations         |
-| `false` or `"disabled"` | Disable all animations         |
-| `object`                | Custom animation configuration |
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
 
-**Custom Configuration:**
-
-```typescript
-{
-  opacity?: {
-    value?: [number, number, number];
-  };
-  scale?: {
-    value?: [number, number, number];
-  };
-}
-```
-
-- `opacity`: Opacity animation configuration
-  - `value`: Opacity values `[idle, open, close]` - defaults to `[0, 1, 0]`
-- `scale`: Scale animation configuration
-  - `value`: Scale values `[idle, open, close]` - defaults to `[0.97, 1, 0.97]`
+| prop            | type                       | default           | description                        |
+| --------------- | -------------------------- | ----------------- | ---------------------------------- |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]`       | Opacity values [idle, open, close] |
+| `scale.value`   | `[number, number, number]` | `[0.97, 1, 0.97]` | Scale values [idle, open, close]   |
 
 ### Select.Close
 
@@ -720,20 +664,20 @@ const {
 
 #### Return Value
 
-| property             | type                                         | description                                           |
-| -------------------- | -------------------------------------------- | ----------------------------------------------------- |
-| `isOpen`             | `boolean`                                    | Whether the select is currently open                  |
-| `onOpenChange`       | `(open: boolean) => void`                    | Callback to change the open state                     |
-| `isDefaultOpen`      | `boolean \| undefined`                        | Whether the select is open by default (uncontrolled mode) |
-| `isDisabled`         | `boolean \| undefined`                       | Whether the select is disabled                        |
-| `triggerPosition`    | `LayoutPosition \| null`                     | Position of the trigger element relative to viewport  |
-| `setTriggerPosition` | `(position: LayoutPosition \| null) => void` | Updates the trigger element's position                |
-| `contentLayout`      | `LayoutRectangle \| null`                    | Layout measurements of the select content             |
-| `setContentLayout`   | `(layout: LayoutRectangle \| null) => void`  | Updates the content layout measurements               |
-| `nativeID`           | `string`                                     | Unique identifier for the select instance             |
-| `closeDelay`         | `number \| undefined`                        | Delay in milliseconds before the select closes        |
-| `value`              | `SelectOption`                               | Currently selected option                             |
-| `onValueChange`      | `(option: SelectOption) => void`             | Callback fired when the selected value changes        |
+| property             | type                                         | description                                               |
+| -------------------- | -------------------------------------------- | --------------------------------------------------------- |
+| `isOpen`             | `boolean`                                    | Whether the select is currently open                      |
+| `onOpenChange`       | `(open: boolean) => void`                    | Callback to change the open state                         |
+| `isDefaultOpen`      | `boolean \| undefined`                       | Whether the select is open by default (uncontrolled mode) |
+| `isDisabled`         | `boolean \| undefined`                       | Whether the select is disabled                            |
+| `triggerPosition`    | `LayoutPosition \| null`                     | Position of the trigger element relative to viewport      |
+| `setTriggerPosition` | `(position: LayoutPosition \| null) => void` | Updates the trigger element's position                    |
+| `contentLayout`      | `LayoutRectangle \| null`                    | Layout measurements of the select content                 |
+| `setContentLayout`   | `(layout: LayoutRectangle \| null) => void`  | Updates the content layout measurements                   |
+| `nativeID`           | `string`                                     | Unique identifier for the select instance                 |
+| `closeDelay`         | `number \| undefined`                        | Delay in milliseconds before the select closes            |
+| `value`              | `SelectOption`                               | Currently selected option                                 |
+| `onValueChange`      | `(option: SelectOption) => void`             | Callback fired when the selected value changes            |
 
 **Note:** This hook must be used within a `Select` component. It will throw an error if called outside of the select context.
 
@@ -744,17 +688,18 @@ Hook to access the Select animation state values within custom components or com
 ```tsx
 import { useSelectAnimation } from 'heroui-native';
 
-const { selectState, progress, isDragging, isGestureReleaseAnimationRunning } = useSelectAnimation();
+const { selectState, progress, isDragging, isGestureReleaseAnimationRunning } =
+  useSelectAnimation();
 ```
 
 #### Return Value
 
-| property                             | type                      | description                                                  |
-| ------------------------------------ | ------------------------- | ------------------------------------------------------------ |
-| `selectState`                        | `'idle' \| 'open' \| 'close'` | Extended internal state for coordinating animations          |
-| `progress`                           | `SharedValue<number>`     | Progress value for animations (0=idle, 1=open, 2=close)     |
-| `isDragging`                         | `SharedValue<boolean>`    | Whether the select content is currently being dragged        |
-| `isGestureReleaseAnimationRunning`   | `SharedValue<boolean>`    | Whether the gesture release animation is currently running   |
+| property                           | type                          | description                                                |
+| ---------------------------------- | ----------------------------- | ---------------------------------------------------------- |
+| `selectState`                      | `'idle' \| 'open' \| 'close'` | Extended internal state for coordinating animations        |
+| `progress`                         | `SharedValue<number>`         | Progress value for animations (0=idle, 1=open, 2=close)    |
+| `isDragging`                       | `SharedValue<boolean>`        | Whether the select content is currently being dragged      |
+| `isGestureReleaseAnimationRunning` | `SharedValue<boolean>`        | Whether the gesture release animation is currently running |
 
 **Note:** This hook must be used within a `Select` component. It will throw an error if called outside of the select animation context.
 

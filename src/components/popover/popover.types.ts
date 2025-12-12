@@ -254,6 +254,11 @@ export interface PopoverDescriptionProps extends TextProps {
 }
 
 /**
+ * Return type for the usePopover hook
+ */
+export type UsePopoverReturn = PopoverPrimitivesTypes.IRootContext;
+
+/**
  * Popover Arrow component props
  */
 export interface PopoverArrowProps {
@@ -303,4 +308,22 @@ export interface PopoverArrowProps {
    * Placement of the popover (inherited from content)
    */
   placement?: PopoverPlacement;
+}
+
+/**
+ * Return type for the usePopoverAnimation hook
+ */
+export interface UsePopoverAnimationReturn {
+  /**
+   * Extended internal state for coordinating animations
+   */
+  popoverState: PopoverState;
+  /**
+   * Animation progress shared value (0=idle, 1=open, 2=close)
+   */
+  progress: SharedValue<number>;
+  /**
+   * Dragging state shared value
+   */
+  isDragging: SharedValue<boolean>;
 }

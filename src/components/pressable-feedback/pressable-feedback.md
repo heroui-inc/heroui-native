@@ -158,9 +158,9 @@ export default function PressableFeedbackExample() {
               </Card.Body>
               <Card.Footer className="flex-row items-center gap-2">
                 <View className="size-3 rounded-full bg-rose-400" />
-                <AppText className="text-sm font-medium text-foreground">
+                <Text className="text-sm font-medium text-foreground">
                   @indiehackers
-                </AppText>
+                </Text>
               </Card.Footer>
             </View>
           </Card>
@@ -196,9 +196,9 @@ export default function PressableFeedbackExample() {
               </Card.Body>
               <Card.Footer className="flex-row items-center gap-2">
                 <View className="size-3 rounded-full bg-emerald-400" />
-                <AppText className="text-sm font-medium text-foreground">
+                <Text className="text-sm font-medium text-foreground">
                   @aibuilders
-                </AppText>
+                </Text>
               </Card.Footer>
             </View>
           </Card>

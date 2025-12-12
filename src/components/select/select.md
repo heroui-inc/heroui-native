@@ -705,41 +705,58 @@ import { useSelect } from 'heroui-native';
 const {
   isOpen,
   onOpenChange,
-  selectState,
+  isDefaultOpen,
   isDisabled,
   triggerPosition,
   setTriggerPosition,
   contentLayout,
   setContentLayout,
   nativeID,
-  progress,
-  isDragging,
   closeDelay,
   value,
   onValueChange,
-  isDismissKeyboardOnClose,
 } = useSelect();
 ```
 
 #### Return Value
 
-| property                   | type                                         | description                                           |
-| -------------------------- | -------------------------------------------- | ----------------------------------------------------- |
-| `isOpen`                   | `boolean`                                    | Whether the select is currently open                  |
-| `onOpenChange`             | `(open: boolean) => void`                    | Callback to change the open state                     |
-| `selectState`              | `'idle' \| 'open' \| 'close'`                | Extended internal state for animation control         |
-| `isDisabled`               | `boolean \| undefined`                       | Whether the select is disabled                        |
-| `triggerPosition`          | `LayoutPosition \| null`                     | Position of the trigger element relative to viewport  |
-| `setTriggerPosition`       | `(position: LayoutPosition \| null) => void` | Updates the trigger element's position                |
-| `contentLayout`            | `LayoutRectangle \| null`                    | Layout measurements of the select content             |
-| `setContentLayout`         | `(layout: LayoutRectangle \| null) => void`  | Updates the content layout measurements               |
-| `nativeID`                 | `string`                                     | Unique identifier for the select instance             |
-| `progress`                 | `SharedValue<number>`                        | Progress value for animations (0-1)                   |
-| `isDragging`               | `SharedValue<boolean>`                       | Whether the select content is currently being dragged |
-| `closeDelay`               | `number \| undefined`                        | Delay in milliseconds before the select closes        |
-| `value`                    | `SelectOption \| undefined`                  | Currently selected option                             |
-| `onValueChange`            | `(option: SelectOption) => void`             | Callback fired when the selected value changes        |
-| `isDismissKeyboardOnClose` | `boolean \| undefined`                       | Whether to dismiss keyboard when the select closes    |
+| property             | type                                         | description                                           |
+| -------------------- | -------------------------------------------- | ----------------------------------------------------- |
+| `isOpen`             | `boolean`                                    | Whether the select is currently open                  |
+| `onOpenChange`       | `(open: boolean) => void`                    | Callback to change the open state                     |
+| `isDefaultOpen`      | `boolean \| undefined`                        | Whether the select is open by default (uncontrolled mode) |
+| `isDisabled`         | `boolean \| undefined`                       | Whether the select is disabled                        |
+| `triggerPosition`    | `LayoutPosition \| null`                     | Position of the trigger element relative to viewport  |
+| `setTriggerPosition` | `(position: LayoutPosition \| null) => void` | Updates the trigger element's position                |
+| `contentLayout`      | `LayoutRectangle \| null`                    | Layout measurements of the select content             |
+| `setContentLayout`   | `(layout: LayoutRectangle \| null) => void`  | Updates the content layout measurements               |
+| `nativeID`           | `string`                                     | Unique identifier for the select instance             |
+| `closeDelay`         | `number \| undefined`                        | Delay in milliseconds before the select closes        |
+| `value`              | `SelectOption`                               | Currently selected option                             |
+| `onValueChange`      | `(option: SelectOption) => void`             | Callback fired when the selected value changes        |
+
+**Note:** This hook must be used within a `Select` component. It will throw an error if called outside of the select context.
+
+### useSelectAnimation
+
+Hook to access the Select animation state values within custom components or compound components.
+
+```tsx
+import { useSelectAnimation } from 'heroui-native';
+
+const { selectState, progress, isDragging, isGestureReleaseAnimationRunning } = useSelectAnimation();
+```
+
+#### Return Value
+
+| property                             | type                      | description                                                  |
+| ------------------------------------ | ------------------------- | ------------------------------------------------------------ |
+| `selectState`                        | `'idle' \| 'open' \| 'close'` | Extended internal state for coordinating animations          |
+| `progress`                           | `SharedValue<number>`     | Progress value for animations (0=idle, 1=open, 2=close)     |
+| `isDragging`                         | `SharedValue<boolean>`    | Whether the select content is currently being dragged        |
+| `isGestureReleaseAnimationRunning`   | `SharedValue<boolean>`    | Whether the gesture release animation is currently running   |
+
+**Note:** This hook must be used within a `Select` component. It will throw an error if called outside of the select animation context.
 
 #### SelectOption
 

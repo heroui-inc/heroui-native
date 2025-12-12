@@ -106,11 +106,10 @@ Display validation errors below the radio group.
 ## Example
 
 ```tsx
-import { RadioGroup, Surface, useThemeColor } from 'heroui-native';
+import { RadioGroup, useThemeColor } from 'heroui-native';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View } from 'react-native';
-import { AppText } from '../components/app-text';
 
 export default function PaymentMethodExample() {
   const [paymentMethod, setPaymentMethod] = React.useState('card');

@@ -310,10 +310,10 @@ Props extend different base types depending on the `asChild` prop value:
 
 #### PersonIconProps
 
-| prop    | type     | description                |
-| ------- | -------- | -------------------------- |
-| `size`  | `number` | Size of the icon in pixels |
-| `color` | `string` | Color of the icon          |
+| prop    | type     | description                           |
+| ------- | -------- | ------------------------------------- |
+| `size`  | `number` | Size of the icon in pixels (optional) |
+| `color` | `string` | Color of the icon (optional)          |
 
 ### useAvatar Hook
 

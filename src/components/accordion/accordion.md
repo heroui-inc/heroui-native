@@ -243,7 +243,7 @@ export default function AccordionExample() {
 | `onValueChange`         | `(value: string \| string[] \| undefined) => void` | -           | Callback when expanded items change                               |
 | `...Animated.ViewProps` | `Animated.ViewProps`                               | -           | All Reanimated Animated.View props are supported                  |
 
-#### ElementSlots<RootSlots>
+#### `ElementSlots<RootSlots>`
 
 | prop        | type     | description                                     |
 | ----------- | -------- | ----------------------------------------------- |
@@ -259,9 +259,9 @@ Animation configuration for accordion root component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop     | type                                           | default                                                             | description                                       |
-| -------- | ---------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------- |
-| `layout` | `AnimationValue<{ value?: LayoutTransition }>` | `LinearTransition.springify().damping(140).stiffness(1600).mass(4)` | Custom layout animation for accordion transitions |
+| prop           | type               | default                                                                                         | description                                       |
+| -------------- | ------------------ | ----------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `layout.value` | `LayoutTransition` | `LinearTransition`<br/>`.springify()`<br/>`.damping(140)`<br/>`.stiffness(1600)`<br/>`.mass(4)` | Custom layout animation for accordion transitions |
 
 ### Accordion.Item
 
@@ -314,16 +314,10 @@ Animation configuration for accordion indicator component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop       | type                                                                            | default                                                                          | description                      |
-| ---------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------- |
-| `rotation` | `AnimationValue<{ value?: [number, number], springConfig?: WithSpringConfig }>` | `{ value: [0, -180], springConfig: { damping: 140, stiffness: 1000, mass: 4 } }` | Rotation animation configuration |
-
-##### Rotation AnimationValue
-
-| prop           | type               | default                                      | description                                      |
-| -------------- | ------------------ | -------------------------------------------- | ------------------------------------------------ |
-| `value`        | `[number, number]` | `[0, -180]`                                  | Rotation values [collapsed, expanded] in degrees |
-| `springConfig` | `WithSpringConfig` | `{ damping: 140, stiffness: 1000, mass: 4 }` | Spring animation configuration for rotation      |
+| prop                    | type               | default                                      | description                                      |
+| ----------------------- | ------------------ | -------------------------------------------- | ------------------------------------------------ |
+| `rotation.value`        | `[number, number]` | `[0, -180]`                                  | Rotation values [collapsed, expanded] in degrees |
+| `rotation.springConfig` | `WithSpringConfig` | `{ damping: 140, stiffness: 1000, mass: 4 }` | Spring animation configuration for rotation      |
 
 ### Accordion.Content
 
@@ -342,16 +336,10 @@ Animation configuration for accordion content component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop       | type                                                | default                                                | description                           |
-| ---------- | --------------------------------------------------- | ------------------------------------------------------ | ------------------------------------- |
-| `entering` | `AnimationValue<{ value?: EntryOrExitLayoutType }>` | `FadeIn.duration(200).easing(Easing.out(Easing.ease))` | Custom entering animation for content |
-| `exiting`  | `AnimationValue<{ value?: EntryOrExitLayoutType }>` | `FadeOut.duration(200).easing(Easing.in(Easing.ease))` | Custom exiting animation for content  |
-
-##### Entering/Exiting AnimationValue
-
-| prop    | type                    | default | description                                  |
-| ------- | ----------------------- | ------- | -------------------------------------------- |
-| `value` | `EntryOrExitLayoutType` | -       | Custom reanimated entering/exiting animation |
+| prop             | type                    | default                                                              | description                           |
+| ---------------- | ----------------------- | -------------------------------------------------------------------- | ------------------------------------- |
+| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(200)`<br/>`.easing(Easing.out(Easing.ease))` | Custom entering animation for content |
+| `exiting.value`  | `EntryOrExitLayoutType` | `FadeOut`<br/>`.duration(200)`<br/>`.easing(Easing.in(Easing.ease))` | Custom exiting animation for content  |
 
 ## Hooks
 

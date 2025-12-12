@@ -45,7 +45,7 @@ export type LayoutTransition =
 /**
  * Spring animation configuration
  */
-interface SpringAnimationConfig {
+export interface SpringAnimationConfig {
   type: 'spring';
   config?: WithSpringConfig;
 }
@@ -53,7 +53,7 @@ interface SpringAnimationConfig {
 /**
  * Timing animation configuration
  */
-interface TimingAnimationConfig {
+export interface TimingAnimationConfig {
   type: 'timing';
   config?: WithTimingConfig;
 }

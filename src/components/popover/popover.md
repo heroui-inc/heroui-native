@@ -464,7 +464,7 @@ Hook to access popover context values within custom components or compound compo
 import { usePopover } from 'heroui-native';
 
 const CustomContent = () => {
-  const { isOpen, onOpenChange, progress } = usePopover();
+  const { isOpen, onOpenChange, triggerPosition } = usePopover();
   // ... your implementation
 };
 ```
@@ -475,14 +475,36 @@ const CustomContent = () => {
 | -------------------- | --------------------------------------------------- | ------------------------------------------------------------ |
 | `isOpen`             | `boolean`                                           | Whether the popover is currently open                        |
 | `onOpenChange`       | `(open: boolean) => void`                           | Callback function to change the popover open state           |
-| `popoverState`       | `'idle' \| 'open' \| 'close'`                       | Extended internal state for coordinating animations          |
+| `isDefaultOpen`       | `boolean \| undefined`                              | Whether the popover should be open by default (uncontrolled mode) |
 | `isDisabled`         | `boolean \| undefined`                              | Whether the popover is disabled                              |
 | `triggerPosition`    | `LayoutPosition \| null`                            | The position of the trigger element relative to the viewport |
 | `setTriggerPosition` | `(triggerPosition: LayoutPosition \| null) => void` | Function to update the trigger element's position            |
 | `contentLayout`      | `LayoutRectangle \| null`                           | The layout measurements of the popover content               |
 | `setContentLayout`   | `(contentLayout: LayoutRectangle \| null) => void`  | Function to update the content layout measurements           |
 | `nativeID`           | `string`                                            | Unique identifier for the popover instance                   |
-| `progress`           | `SharedValue<number>`                               | Progress value for the popover animation (0-2 range)         |
 | `closeDelay`         | `number \| undefined`                               | Delay in milliseconds before the popover closes              |
 
 **Note:** This hook must be used within a `Popover` component. It will throw an error if called outside of the popover context.
+
+### usePopoverAnimation
+
+Hook to access popover animation state values within custom components or compound components.
+
+```tsx
+import { usePopoverAnimation } from 'heroui-native';
+
+const CustomContent = () => {
+  const { popoverState, progress, isDragging } = usePopoverAnimation();
+  // ... your implementation
+};
+```
+
+**Returns:** `UsePopoverAnimationReturn`
+
+| property       | type                      | description                                                  |
+| -------------- | ------------------------- | ------------------------------------------------------------ |
+| `popoverState` | `'idle' \| 'open' \| 'close'` | Extended internal state for coordinating animations          |
+| `progress`     | `SharedValue<number>`     | Progress value for the popover animation (0=idle, 1=open, 2=close) |
+| `isDragging`   | `SharedValue<boolean>`    | Dragging state shared value                                  |
+
+**Note:** This hook must be used within a `Popover` component. It will throw an error if called outside of the popover animation context.

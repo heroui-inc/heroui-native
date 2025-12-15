@@ -5,21 +5,22 @@ import {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
-import { useResolvedStyleProperty } from '../../helpers/hooks';
+import { useAnimationSettings } from '../../helpers/contexts';
+import {
+  useCombinedAnimationDisabledState,
+  useResolvedStyleProperty,
+} from '../../helpers/hooks';
 import { useThemeColor } from '../../helpers/theme';
 import { createContext } from '../../helpers/utils';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleProperties,
   getStyleTransform,
 } from '../../helpers/utils/animation';
-import { useGlobalAnimationSettings } from '../../providers/animation-settings';
 import { useFormField } from '../form-field/form-field.context';
 import {
   DEFAULT_SPRING_CONFIG,
@@ -61,26 +62,10 @@ export function useSwitchRootAnimation(options: {
   const isSwitchPressed = useSharedValue(false);
   const contentContainerWidth = useSharedValue(0);
 
-  // Get global animation disabled state
-  const { globalIsAllAnimationsDisabled } = useGlobalAnimationSettings();
+  const { animationConfig, isAnimationDisabled } =
+    getRootAnimationState(animation);
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const {
-    animationConfig,
-    isAnimationDisabled,
-    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
-
-  // Combine global, parent, and own disable-all states (global > parent > own)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    globalIsAllAnimationsDisabled,
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
-  });
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
   // Scale animation
   const scaleValue = getAnimationValueProperty({

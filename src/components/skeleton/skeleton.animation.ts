@@ -12,17 +12,15 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import { useUniwind } from 'uniwind';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useAnimationSettings } from '../../helpers/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import { colorKit, useThemeColor } from '../../helpers/theme';
 import { createContext } from '../../helpers/utils';
 import {
   getAnimationState,
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
-  getRootAnimationState,
 } from '../../helpers/utils/animation';
-import { useGlobalAnimationSettings } from '../../providers/animation-settings';
 import {
   DEFAULT_EASING,
   DEFAULT_PULSE_DURATION,
@@ -58,28 +56,7 @@ export function useSkeletonRootAnimation(options: {
 }) {
   const { animation, isLoading, variant, progress } = options;
 
-  // Get global animation disabled state
-  const { globalIsAllAnimationsDisabled } = useGlobalAnimationSettings();
-
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const {
-    isAnimationDisabled: isRootAnimationDisabled,
-    isAllAnimationsDisabled: isRootAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
-
-  const ownIsAllAnimationsDisabled =
-    isRootAnimationDisabled || isRootAllAnimationsDisabled;
-
-  // Combine global, parent, and own disable-all states (global > parent > own)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    globalIsAllAnimationsDisabled,
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
-  });
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
   const enteringAnimation = useMemo(() => {
     return typeof animation === 'object' ? animation?.entering : undefined;

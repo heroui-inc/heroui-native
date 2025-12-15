@@ -9,16 +9,15 @@ import {
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useAnimationSettings } from '../../helpers/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import {
   getAnimationState,
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleTransform,
 } from '../../helpers/utils/animation';
-import { useGlobalAnimationSettings } from '../../providers/animation-settings';
 import {
   DEFAULT_ROTATION_DURATION,
   DEFAULT_SPINNER_INDICATOR_ENTERING,
@@ -40,26 +39,10 @@ export function useSpinnerRootAnimation(options: {
 }) {
   const { animation } = options;
 
-  // Get global animation disabled state
-  const { globalIsAllAnimationsDisabled } = useGlobalAnimationSettings();
+  const { animationConfig, isAnimationDisabled } =
+    getRootAnimationState(animation);
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const {
-    animationConfig,
-    isAnimationDisabled,
-    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
-
-  // Combine global, parent, and own disable-all states (global > parent > own)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    globalIsAllAnimationsDisabled,
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
-  });
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
   const isAnimationDisabledValue =
     isAnimationDisabled || isAllAnimationsDisabled;

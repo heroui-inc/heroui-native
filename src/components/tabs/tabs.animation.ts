@@ -8,16 +8,14 @@ import {
   type WithTimingConfig,
 } from 'react-native-reanimated';
 import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import {
   getAnimationState,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
-  getRootAnimationState,
   getStyleProperties,
 } from '../../helpers/utils/animation';
 import * as TabsPrimitives from '../../primitives/tabs';
-import { useGlobalAnimationSettings } from '../../providers/animation-settings';
 import { DEFAULT_INDICATOR_SPRING_CONFIG } from './tabs.constants';
 import { useTabsMeasurements } from './tabs.context';
 import type { TabsIndicatorAnimation } from './tabs.types';
@@ -33,23 +31,7 @@ export function useTabsRootAnimation(options: {
 }) {
   const { animation } = options;
 
-  // Get global animation disabled state
-  const { globalIsAllAnimationsDisabled } = useGlobalAnimationSettings();
-
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const { isAllAnimationsDisabled: ownIsAllAnimationsDisabled } =
-    getRootAnimationState(animation);
-
-  // Combine global, parent, and own disable-all states (global > parent > own)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    globalIsAllAnimationsDisabled,
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
-  });
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
   return {
     isAllAnimationsDisabled,

@@ -7,13 +7,11 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import {
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
   getRootAnimationState,
 } from '../../helpers/utils/animation';
-import { useGlobalAnimationSettings } from '../../providers/animation-settings';
 import { SHADOW_EXIT_ANIMATION_DURATION } from './scroll-shadow.constants';
 import type {
   ScrollShadowOrientation,
@@ -36,26 +34,10 @@ export function useScrollShadowRootAnimation(options: {
 }) {
   const { animation, orientation, size, visibility, isEnabled } = options;
 
-  // Get global animation disabled state
-  const { globalIsAllAnimationsDisabled } = useGlobalAnimationSettings();
+  const { animationConfig, isAnimationDisabled } =
+    getRootAnimationState(animation);
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const {
-    animationConfig,
-    isAnimationDisabled,
-    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
-
-  // Combine global, parent, and own disable-all states (global > parent > own)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    globalIsAllAnimationsDisabled,
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
-  });
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
   const isAnimationDisabledValue =
     isAnimationDisabled || isAllAnimationsDisabled;

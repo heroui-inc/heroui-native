@@ -4,6 +4,7 @@ import {
   getCombinedAnimationDisabledState,
   getRootAnimationState,
 } from '../../helpers/utils/animation';
+import { useGlobalAnimationSettings } from '../../providers/animation-settings';
 import {
   ENTERING_ANIMATION_CONFIG,
   EXITING_ANIMATION_CONFIG,
@@ -21,6 +22,9 @@ export function useErrorViewRootAnimation(options: {
 }) {
   const { animation } = options;
 
+  // Get global animation disabled state
+  const { globalIsAllAnimationsDisabled } = useGlobalAnimationSettings();
+
   // Read from global animation context (can be undefined)
   const parentAnimationSettingsContext = useAnimationSettings();
   const parentIsAllAnimationsDisabled =
@@ -32,8 +36,9 @@ export function useErrorViewRootAnimation(options: {
     isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
   } = getRootAnimationState(animation);
 
-  // Combine parent and own disable-all states (parent wins)
+  // Combine global, parent, and own disable-all states (global > parent > own)
   const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    globalIsAllAnimationsDisabled,
     parentIsAllAnimationsDisabled,
     ownIsAllAnimationsDisabled,
   });

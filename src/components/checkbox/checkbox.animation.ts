@@ -16,6 +16,7 @@ import {
   getStyleProperties,
   getStyleTransform,
 } from '../../helpers/utils/animation';
+import { useGlobalAnimationSettings } from '../../providers/animation-settings';
 import { useFormField } from '../form-field/form-field.context';
 import type {
   CheckboxAnimationContextValue,
@@ -41,6 +42,9 @@ export function useCheckboxRootAnimation(options: {
   const isCheckboxPressed = useSharedValue(false);
   const formFieldContext = useFormField();
 
+  // Get global animation disabled state
+  const { globalIsAllAnimationsDisabled } = useGlobalAnimationSettings();
+
   // Read parent animation disabled state from global context
   const parentAnimationSettingsContext = useAnimationSettings();
   const parentIsAllAnimationsDisabled =
@@ -52,8 +56,9 @@ export function useCheckboxRootAnimation(options: {
     isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
   } = getRootAnimationState(animation);
 
-  // Combine parent and own disable-all states (parent wins)
+  // Combine global, parent, and own disable-all states (global > parent > own)
   const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    globalIsAllAnimationsDisabled,
     parentIsAllAnimationsDisabled,
     ownIsAllAnimationsDisabled,
   });

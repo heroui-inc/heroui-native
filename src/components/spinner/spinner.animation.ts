@@ -18,6 +18,7 @@ import {
   getRootAnimationState,
   getStyleTransform,
 } from '../../helpers/utils/animation';
+import { useGlobalAnimationSettings } from '../../providers/animation-settings';
 import {
   DEFAULT_ROTATION_DURATION,
   DEFAULT_SPINNER_INDICATOR_ENTERING,
@@ -39,6 +40,9 @@ export function useSpinnerRootAnimation(options: {
 }) {
   const { animation } = options;
 
+  // Get global animation disabled state
+  const { globalIsAllAnimationsDisabled } = useGlobalAnimationSettings();
+
   // Read parent animation disabled state from global context
   const parentAnimationSettingsContext = useAnimationSettings();
   const parentIsAllAnimationsDisabled =
@@ -50,8 +54,9 @@ export function useSpinnerRootAnimation(options: {
     isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
   } = getRootAnimationState(animation);
 
-  // Combine parent and own disable-all states (parent wins)
+  // Combine global, parent, and own disable-all states (global > parent > own)
   const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    globalIsAllAnimationsDisabled,
     parentIsAllAnimationsDisabled,
     ownIsAllAnimationsDisabled,
   });

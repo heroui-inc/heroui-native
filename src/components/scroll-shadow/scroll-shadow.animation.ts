@@ -13,6 +13,7 @@ import {
   getCombinedAnimationDisabledState,
   getRootAnimationState,
 } from '../../helpers/utils/animation';
+import { useGlobalAnimationSettings } from '../../providers/animation-settings';
 import { SHADOW_EXIT_ANIMATION_DURATION } from './scroll-shadow.constants';
 import type {
   ScrollShadowOrientation,
@@ -35,6 +36,9 @@ export function useScrollShadowRootAnimation(options: {
 }) {
   const { animation, orientation, size, visibility, isEnabled } = options;
 
+  // Get global animation disabled state
+  const { globalIsAllAnimationsDisabled } = useGlobalAnimationSettings();
+
   // Read parent animation disabled state from global context
   const parentAnimationSettingsContext = useAnimationSettings();
   const parentIsAllAnimationsDisabled =
@@ -46,8 +50,9 @@ export function useScrollShadowRootAnimation(options: {
     isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
   } = getRootAnimationState(animation);
 
-  // Combine parent and own disable-all states (parent wins)
+  // Combine global, parent, and own disable-all states (global > parent > own)
   const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    globalIsAllAnimationsDisabled,
     parentIsAllAnimationsDisabled,
     ownIsAllAnimationsDisabled,
   });

@@ -17,6 +17,7 @@ import {
   getStyleProperties,
 } from '../../helpers/utils/animation';
 import * as AvatarPrimitives from '../../primitives/avatar';
+import { useGlobalAnimationSettings } from '../../providers/animation-settings';
 import type {
   AvatarFallbackAnimation,
   AvatarImageAnimation,
@@ -31,6 +32,9 @@ export function useAvatarRootAnimation(options: {
 }) {
   const { animation } = options;
 
+  // Get global animation disabled state
+  const { globalIsAllAnimationsDisabled } = useGlobalAnimationSettings();
+
   // Read parent animation disabled state from global context
   const parentAnimationSettingsContext = useAnimationSettings();
   const parentIsAllAnimationsDisabled =
@@ -39,8 +43,9 @@ export function useAvatarRootAnimation(options: {
   const { isAllAnimationsDisabled: ownIsAllAnimationsDisabled } =
     getRootAnimationState(animation);
 
-  // Combine parent and own disable-all states (parent wins)
+  // Combine global, parent, and own disable-all states (global > parent > own)
   const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    globalIsAllAnimationsDisabled,
     parentIsAllAnimationsDisabled,
     ownIsAllAnimationsDisabled,
   });

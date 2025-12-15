@@ -258,28 +258,40 @@ export function getIsAnimationDisabledValue<
 }
 
 /**
- * Combine parent animation disabled state with own animation disabled state
- * Parent value takes precedence - if parent has disable-all, it cascades down
+ * Combine global, parent, and own animation disabled states
+ * Priority: Global > Parent > Own (global wins if enabled)
  *
- * @param options - Object containing parentIsAllAnimationsDisabled and ownIsAllAnimationsDisabled
- * @param options.parentIsAllAnimationsDisabled - Whether parent context has disable-all (from global context)
+ * @param options - Object containing globalIsAllAnimationsDisabled, parentIsAllAnimationsDisabled, and ownIsAllAnimationsDisabled
+ * @param options.globalIsAllAnimationsDisabled - Whether global provider has disable-all (from GlobalAnimationSettingsProvider)
+ * @param options.parentIsAllAnimationsDisabled - Whether parent context has disable-all (from AnimationSettingsContext)
  * @param options.ownIsAllAnimationsDisabled - Whether own animation prop has disable-all
- * @returns Combined isAllAnimationsDisabled value (parent || own)
+ * @returns Combined isAllAnimationsDisabled value (global || parent || own)
  *
  * @example
  * const combined = getCombinedAnimationDisabledState({
- *   parentIsAllAnimationsDisabled: true,
+ *   globalIsAllAnimationsDisabled: true,
+ *   parentIsAllAnimationsDisabled: false,
  *   ownIsAllAnimationsDisabled: false
  * });
- * // Returns: true (parent wins)
+ * // Returns: true (global wins)
  */
 export function getCombinedAnimationDisabledState(options: {
+  globalIsAllAnimationsDisabled?: boolean;
   parentIsAllAnimationsDisabled: boolean | undefined;
   ownIsAllAnimationsDisabled: boolean;
 }): boolean {
-  const { parentIsAllAnimationsDisabled, ownIsAllAnimationsDisabled } = options;
+  const {
+    globalIsAllAnimationsDisabled,
+    parentIsAllAnimationsDisabled,
+    ownIsAllAnimationsDisabled,
+  } = options;
 
-  // Parent always wins if it has disable-all
+  // Global always wins if it has disable-all
+  if (globalIsAllAnimationsDisabled === true) {
+    return true;
+  }
+
+  // Parent wins if it has disable-all
   if (parentIsAllAnimationsDisabled === true) {
     return true;
   }

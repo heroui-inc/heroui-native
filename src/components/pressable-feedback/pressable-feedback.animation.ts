@@ -21,6 +21,7 @@ import {
   getRootAnimationState,
   getStyleTransform,
 } from '../../helpers/utils/animation';
+import { useGlobalAnimationSettings } from '../../providers/animation-settings';
 import {
   BASE_RIPPLE_PROGRESS_DURATION,
   BASE_RIPPLE_PROGRESS_DURATION_MIN,
@@ -53,6 +54,9 @@ export function usePressableFeedbackRootAnimation(options: {
 }) {
   const { variant, animation, style } = options;
 
+  // Get global animation disabled state
+  const { globalIsAllAnimationsDisabled } = useGlobalAnimationSettings();
+
   // Read parent animation disabled state from global context
   const parentAnimationSettingsContext = useAnimationSettings();
   const parentIsAllAnimationsDisabled =
@@ -66,8 +70,9 @@ export function usePressableFeedbackRootAnimation(options: {
   const ownIsAllAnimationsDisabled =
     isRootAnimationDisabled || isRootAllAnimationsDisabled;
 
-  // Combine parent and own disable-all states (parent wins)
+  // Combine global, parent, and own disable-all states (global > parent > own)
   const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    globalIsAllAnimationsDisabled,
     parentIsAllAnimationsDisabled,
     ownIsAllAnimationsDisabled,
   });

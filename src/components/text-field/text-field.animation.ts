@@ -19,6 +19,7 @@ import {
   getRootAnimationState,
   getStyleProperties,
 } from '../../helpers/utils/animation';
+import { useGlobalAnimationSettings } from '../../providers/animation-settings';
 import {
   ANIMATION_DURATION,
   ANIMATION_EASING,
@@ -42,6 +43,9 @@ export function useTextFieldRootAnimation(options: {
 }) {
   const { animation } = options;
 
+  // Get global animation disabled state
+  const { globalIsAllAnimationsDisabled } = useGlobalAnimationSettings();
+
   // Read parent animation disabled state from global context
   const parentAnimationSettingsContext = useAnimationSettings();
   const parentIsAllAnimationsDisabled =
@@ -50,8 +54,9 @@ export function useTextFieldRootAnimation(options: {
   const { isAllAnimationsDisabled: ownIsAllAnimationsDisabled } =
     getRootAnimationState(animation);
 
-  // Combine parent and own disable-all states (parent wins)
+  // Combine global, parent, and own disable-all states (global > parent > own)
   const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
+    globalIsAllAnimationsDisabled,
     parentIsAllAnimationsDisabled,
     ownIsAllAnimationsDisabled,
   });

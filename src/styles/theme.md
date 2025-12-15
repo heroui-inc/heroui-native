@@ -198,7 +198,7 @@ HeroUI Native supports extensive theming customization through Uniwind's theming
 You can override any theme variable to customize colors:
 
 ```css
-@theme {
+@layer theme {
   @variant light {
     --accent: oklch(0.65 0.25 270); /* Custom purple accent */
     --background: oklch(0.98 0 0); /* Custom background */

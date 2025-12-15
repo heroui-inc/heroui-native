@@ -1,4 +1,5 @@
 import React from 'react';
+import { useReducedMotion } from 'react-native-reanimated';
 import { createContext } from '../../helpers/utils';
 import type {
   GlobalAnimationSettingsContextValue,
@@ -19,6 +20,8 @@ export { useGlobalAnimationSettings };
  * @description
  * Provider component that controls global animation settings across the application.
  * When animation is set to 'disable-all', all animations will be disabled globally.
+ * Additionally, if the user has enabled reduce motion in accessibility settings,
+ * all animations will be disabled automatically.
  *
  * This provider wraps AnimationSettingsProvider to cascade the global setting
  * down through the component tree.
@@ -30,7 +33,9 @@ export { useGlobalAnimationSettings };
 export const GlobalAnimationSettingsProviderComponent: React.FC<
   GlobalAnimationSettingsProviderProps
 > = ({ animation, children }) => {
-  const globalIsAllAnimationsDisabled = animation === 'disable-all';
+  const reducedMotion = useReducedMotion();
+  const globalIsAllAnimationsDisabled =
+    animation === 'disable-all' || reducedMotion;
 
   return (
     <GlobalAnimationSettingsProvider value={{ globalIsAllAnimationsDisabled }}>

@@ -18,6 +18,7 @@ import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import {
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleProperties,
   getStyleTransform,
@@ -91,6 +92,11 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
     getRootAnimationState(animation);
 
   const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Entering animation
   const enteringTopValue = getAnimationValueProperty({
@@ -178,7 +184,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
 
   // Create pan gesture handler
   const panGesture = Gesture.Pan()
-    .enabled(!isAnimationDisabled && isSwipeable)
+    .enabled(!isAnimationDisabledValue && isSwipeable)
     .onBegin(() => {
       isDragging.set(true);
       gestureTranslateY.set(0);
@@ -325,7 +331,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
       });
     }
 
-    if (isAnimationDisabled) {
+    if (isAnimationDisabledValue) {
       return {
         height: lastToastHeight,
         pointerEvents: opacity === 0 ? 'none' : 'auto',
@@ -379,8 +385,8 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
   return {
     rContainerStyle,
     isAllAnimationsDisabled,
-    entering: isAnimationDisabled ? undefined : enteringAnimation,
-    exiting: isAnimationDisabled ? undefined : exitingAnimation,
+    entering: isAnimationDisabledValue ? undefined : enteringAnimation,
+    exiting: isAnimationDisabledValue ? undefined : exitingAnimation,
     panGesture,
   };
 }

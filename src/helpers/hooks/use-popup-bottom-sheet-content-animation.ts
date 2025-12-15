@@ -6,6 +6,7 @@ import {
   useSharedValue,
 } from 'react-native-reanimated';
 import { useAnimationSettings } from '../contexts/animation-settings-context';
+import { getIsAnimationDisabledValue } from '../utils';
 
 /**
  * Component state type for popup-like components
@@ -34,12 +35,14 @@ export function usePopupBottomSheetContentAnimation({
   progress,
   componentState,
 }: UsePopupBottomSheetContentAnimationProps) {
-  // Read from global animation context (always available in compound parts)
   const { isAllAnimationsDisabled } = useAnimationSettings();
 
   const animatedIndex = useSharedValue(0);
 
-  const isAnimationDisabledValue = isAllAnimationsDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled: false,
+    isAllAnimationsDisabled,
+  });
 
   // Handle animation disabled state - set progress directly based on component state
   useEffect(() => {

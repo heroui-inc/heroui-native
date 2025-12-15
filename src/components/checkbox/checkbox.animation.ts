@@ -46,6 +46,11 @@ export function useCheckboxRootAnimation(options: {
 
   const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
+
   const scaleValue = getAnimationValueProperty({
     animationValue: animationConfig?.scale,
     property: 'value',
@@ -61,7 +66,7 @@ export function useCheckboxRootAnimation(options: {
   const styleTransform = getStyleTransform(style);
 
   const rContainerStyle = useAnimatedStyle(() => {
-    if (isAnimationDisabled) {
+    if (isAnimationDisabledValue) {
       return {};
     }
 
@@ -103,7 +108,6 @@ export function useCheckboxIndicatorAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

@@ -53,8 +53,10 @@ export function useAccordionRootAnimation(options: {
   const { animationConfig, isAnimationDisabled } =
     getRootAnimationState(animation);
 
-  const isAnimationDisabledValue =
-    isAnimationDisabled || isAllAnimationsDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Layout transition animation
   const layoutTransitionValue = getAnimationValueProperty({
@@ -90,7 +92,6 @@ export function useAccordionIndicatorAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -158,7 +159,6 @@ export function useAccordionContentAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

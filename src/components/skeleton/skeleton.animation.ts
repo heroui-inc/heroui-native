@@ -91,13 +91,11 @@ export function useSkeletonRootAnimation(options: {
     getAnimationState(pulseAnimation);
 
   const isEnteringAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: enteringAnimation,
     isAnimationDisabled: isEnteringAnimationDisabled,
     isAllAnimationsDisabled,
   });
 
   const isExitingAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: exitingAnimation,
     isAnimationDisabled: isExitingAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -228,7 +226,6 @@ export function useSkeletonShimmerAnimation(options: {
     getAnimationState(shimmerAnimation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: shimmerAnimation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -305,7 +302,6 @@ export function useSkeletonPulseAnimation(options: {
     getAnimationState(pulseAnimation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: pulseAnimation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

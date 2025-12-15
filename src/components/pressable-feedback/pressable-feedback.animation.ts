@@ -77,7 +77,6 @@ export function usePressableFeedbackRootAnimation(options: {
     getAnimationState(rippleAnimation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: scaleAnimation,
     isAnimationDisabled: isScaleAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -273,7 +272,6 @@ export function usePressableFeedbackHighlightAnimation(options: {
     getAnimationState(highlightAnimation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: highlightAnimation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -351,7 +349,6 @@ export function usePressableFeedbackRippleAnimation(options: {
     getAnimationState(rippleAnimation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: rippleAnimation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

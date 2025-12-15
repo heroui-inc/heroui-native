@@ -1,6 +1,7 @@
 import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import {
   getAnimationValueProperty,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
 } from '../../helpers/utils/animation';
 import {
@@ -25,8 +26,10 @@ export function useErrorViewRootAnimation(options: {
 
   const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
-  const isAnimationDisabledValue =
-    isAnimationDisabled || isAllAnimationsDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Entering animation
   const enteringValue = getAnimationValueProperty({

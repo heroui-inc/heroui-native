@@ -52,7 +52,6 @@ function AppContent() {
           toast: {
             contentWrapper,
           },
-          animation: 'disable-all',
         }}
       >
         <Slot />

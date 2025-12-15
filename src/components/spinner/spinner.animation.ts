@@ -44,8 +44,10 @@ export function useSpinnerRootAnimation(options: {
 
   const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
-  const isAnimationDisabledValue =
-    isAnimationDisabled || isAllAnimationsDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Entering animation
   const enteringValue = getAnimationValueProperty({
@@ -87,7 +89,6 @@ export function useSpinnerIndicatorAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

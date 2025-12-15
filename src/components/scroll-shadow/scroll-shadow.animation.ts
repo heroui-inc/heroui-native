@@ -10,6 +10,7 @@ import {
 import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import {
   getAnimationValueProperty,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
 } from '../../helpers/utils/animation';
 import { SHADOW_EXIT_ANIMATION_DURATION } from './scroll-shadow.constants';
@@ -39,8 +40,10 @@ export function useScrollShadowRootAnimation(options: {
 
   const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
-  const isAnimationDisabledValue =
-    isAnimationDisabled || isAllAnimationsDisabled;
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
 
   // Opacity animation values
   const topOpacityValue = getAnimationValueProperty({

@@ -31,6 +31,7 @@ const LAYOUT_TRANSITION = LinearTransition.springify()
   .stiffness(1000)
   .mass(2);
 
+const StyledAnimatedView = withUniwind(Animated.View);
 const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
 const StyledAntDesign = withUniwind(AntDesign);
 const StyledIonicons = withUniwind(Ionicons);
@@ -212,7 +213,7 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
         },
       ]}
     >
-      <Animated.View
+      <StyledAnimatedView
         layout={LAYOUT_TRANSITION}
         className={cn(
           'bg-surface overflow-hidden',
@@ -252,15 +253,15 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
         <Accordion.Content className="px-5">
           <AppText className={classNames.contentText}>{item.content}</AppText>
         </Accordion.Content>
-      </Animated.View>
+      </StyledAnimatedView>
       {showDivider && (
-        <Animated.View
+        <StyledAnimatedView
           layout={LAYOUT_TRANSITION}
           entering={FadeIn.duration(200)}
           className={cn('px-3 bg-surface', depth && 'pb-3 -mb-3')}
         >
           <Divider />
-        </Animated.View>
+        </StyledAnimatedView>
       )}
     </Animated.View>
   );

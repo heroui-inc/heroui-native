@@ -67,6 +67,11 @@ export function useSwitchRootAnimation(options: {
 
   const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
+
   // Scale animation
   const scaleValue = getAnimationValueProperty({
     animationValue: animationConfig?.scale,
@@ -100,7 +105,7 @@ export function useSwitchRootAnimation(options: {
   const styleTransform = getStyleTransform(style);
 
   const rContainerStyle = useAnimatedStyle(() => {
-    if (isAnimationDisabled) {
+    if (isAnimationDisabledValue) {
       return {
         backgroundColor: isSelected
           ? backgroundColorValue[1]
@@ -171,7 +176,6 @@ export function useSwitchThumbAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

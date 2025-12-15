@@ -62,7 +62,6 @@ export function useTabsIndicatorAnimation(options: {
 
   // IMPORTANT: Use getIsAnimationDisabledValue to respect both own and parent states
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

@@ -296,14 +296,14 @@ Animation configuration for dialog content component. Can be:
 
 ### Dialog.Close
 
-| prop                       | type                    | default | description                                                    |
-| -------------------------- | ----------------------- | ------- | -------------------------------------------------------------- |
-| `children`                 | `React.ReactNode`       | -       | Custom close button content                                    |
-| `className`                | `string`                | -       | Additional CSS classes for close button                        |
-| `iconProps`                | `DialogCloseIconProps`  | -       | Configuration for default close icon                           |
-| `hitSlop`                  | `number`                | `12`    | Hit slop area for the close button                             |
-| `asChild`                  | `boolean`               | -       | Render as child element without wrapper                        |
-| `...TouchableOpacityProps` | `TouchableOpacityProps` | -       | All standard React Native TouchableOpacity props are supported |
+| prop                | type                   | default | description                                             |
+| ------------------- | ---------------------- | ------- | ------------------------------------------------------- |
+| `children`          | `React.ReactNode`      | -       | Custom close button content                             |
+| `className`         | `string`               | -       | Additional CSS classes for close button                 |
+| `iconProps`         | `DialogCloseIconProps` | -       | Configuration for default close icon                    |
+| `hitSlop`           | `number`               | `12`    | Hit slop area for the close button                      |
+| `asChild`           | `boolean`              | -       | Render as child element without wrapper                 |
+| `...PressableProps` | `PressableProps`       | -       | All standard React Native Pressable props are supported |
 
 #### DialogCloseIconProps
 

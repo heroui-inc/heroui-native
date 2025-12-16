@@ -1,6 +1,4 @@
-import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
   base: 'bg-divider',
@@ -14,23 +12,36 @@ const root = tv({
       vertical: 'h-full',
     },
   },
+  compoundVariants: [
+    // Thin variant - horizontal orientation
+    {
+      variant: 'thin',
+      orientation: 'horizontal',
+      className: 'h-hairline',
+    },
+    // Thin variant - vertical orientation
+    {
+      variant: 'thin',
+      orientation: 'vertical',
+      className: 'w-hairline',
+    },
+    // Thick variant - horizontal orientation
+    {
+      variant: 'thick',
+      orientation: 'horizontal',
+      className: `h-[6px]`,
+    },
+    // Thick variant - vertical orientation
+    {
+      variant: 'thick',
+      orientation: 'vertical',
+      className: `w-[6px]`,
+    },
+  ],
   defaultVariants: {
     variant: 'thin',
     orientation: 'horizontal',
   },
 });
 
-export const styleSheet = StyleSheet.create({
-  hairlineWidth: {
-    height: StyleSheet.hairlineWidth,
-  },
-  hairlineWidthVertical: {
-    width: StyleSheet.hairlineWidth,
-  },
-});
-
-const dividerStyles = combineStyles({
-  root,
-});
-
-export default dividerStyles;
+export default root;

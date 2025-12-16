@@ -28,4 +28,5 @@ export * from './helpers/theme';
 
 // Provider
 export * from './providers/hero-ui-native';
+export { useTextComponent } from './providers/text-component';
 export * from './providers/toast';

@@ -121,4 +121,5 @@ const CompoundChip = Object.assign(Chip, {
   Label: ChipLabel,
 });
 
+export { useChip };
 export default CompoundChip;

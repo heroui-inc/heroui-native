@@ -1,3 +1,22 @@
+## 1.0.0-beta.9 (2025-12-16)
+
+* chore: fix invalid tailwind syntax for custom colors ([4f79489](https://github.com/heroui-inc/heroui-native/commit/4f79489))
+* chore: sync versions ([a25812d](https://github.com/heroui-inc/heroui-native/commit/a25812d))
+* refactor: getIsAnimationDisabledValue return logic ([e281d74](https://github.com/heroui-inc/heroui-native/commit/e281d74))
+* refactor(divider): styles handling ([fa1fdd4](https://github.com/heroui-inc/heroui-native/commit/fa1fdd4))
+* feat: add global animation settings provider ([b9e9ade](https://github.com/heroui-inc/heroui-native/commit/b9e9ade))
+* feat: add to export useButton hook ([33d3cc1](https://github.com/heroui-inc/heroui-native/commit/33d3cc1))
+* feat: add to export useChip hook ([28a1721](https://github.com/heroui-inc/heroui-native/commit/28a1721))
+* feat: add to export useTextComponent hook ([7cd9ddd](https://github.com/heroui-inc/heroui-native/commit/7cd9ddd))
+* feat: add useCombinedAnimationDisabledState hook ([b511587](https://github.com/heroui-inc/heroui-native/commit/b511587))
+* feat: handle reduce motion flag for global animation settings provider ([06fe31c](https://github.com/heroui-inc/heroui-native/commit/06fe31c))
+* docs: fix minor inconsistencies in component docs ([b28aeba](https://github.com/heroui-inc/heroui-native/commit/b28aeba))
+* docs: improve animation api reference for all components ([b760a68](https://github.com/heroui-inc/heroui-native/commit/b760a68))
+* docs(avatar): remove important notes ([765f83b](https://github.com/heroui-inc/heroui-native/commit/765f83b))
+* docs(dialog): fix dialog close pressable props ref ([49d84df](https://github.com/heroui-inc/heroui-native/commit/49d84df))
+
+
+
 ## 1.0.0-beta.8 (2025-12-11)
 
 * chore: sync versions ([ee98892](https://github.com/heroui-inc/heroui-native/commit/ee98892))

@@ -6,14 +6,13 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
-  getRootAnimationState,
   getStyleProperties,
 } from '../../helpers/utils/animation';
 import * as AvatarPrimitives from '../../primitives/avatar';
@@ -31,19 +30,7 @@ export function useAvatarRootAnimation(options: {
 }) {
   const { animation } = options;
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const { isAllAnimationsDisabled: ownIsAllAnimationsDisabled } =
-    getRootAnimationState(animation);
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
-  });
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
   return {
     isAllAnimationsDisabled,
@@ -68,7 +55,6 @@ export function useAvatarImageAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -125,7 +111,6 @@ export function useAvatarFallbackAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

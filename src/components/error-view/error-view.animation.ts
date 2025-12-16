@@ -1,7 +1,7 @@
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import {
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
 } from '../../helpers/utils/animation';
 import {
@@ -21,25 +21,15 @@ export function useErrorViewRootAnimation(options: {
 }) {
   const { animation } = options;
 
-  // Read from global animation context (can be undefined)
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+  const { animationConfig, isAnimationDisabled } =
+    getRootAnimationState(animation);
 
-  const {
-    animationConfig,
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
     isAnimationDisabled,
-    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
+    isAllAnimationsDisabled,
   });
-
-  const isAnimationDisabledValue =
-    isAnimationDisabled || isAllAnimationsDisabled;
 
   // Entering animation
   const enteringValue = getAnimationValueProperty({

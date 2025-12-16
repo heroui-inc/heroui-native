@@ -34,13 +34,11 @@ export function usePopupOverlayAnimation(options: {
     style,
   } = options;
 
-  // Read from global animation context (always available in compound parts)
   const { isAllAnimationsDisabled } = useAnimationSettings();
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

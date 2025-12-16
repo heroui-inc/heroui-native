@@ -7,15 +7,15 @@ import {
   withTiming,
   type WithTimingConfig,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../contexts/animation-settings-context';
 import type {
   AnimationRoot,
   PopupRootAnimationConfig,
 } from '../types/animation';
 import {
-  getCombinedAnimationDisabledState,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
 } from '../utils/animation';
+import { useCombinedAnimationDisabledState } from './use-combined-animation-disabled-state';
 
 /**
  * Component state type for popup-like components
@@ -75,21 +75,15 @@ export function usePopupRootAnimation(options: {
     animation,
   } = options;
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const {
-    animationConfig,
-    isAnimationDisabled,
-    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
+  const { animationConfig, isAnimationDisabled } =
+    getRootAnimationState(animation);
 
   // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
   });
 
   // Extract entering animation configuration
@@ -103,8 +97,7 @@ export function usePopupRootAnimation(options: {
   const exitingConfig = exitingAnimation?.config ?? DEFAULT_EXITING_CONFIG;
 
   // If animation is disabled, closeDelay should be 0
-  const closeDelayValue =
-    isAnimationDisabled || isAllAnimationsDisabled ? 0 : closeDelay;
+  const closeDelayValue = isAnimationDisabledValue ? 0 : closeDelay;
 
   // Internal isOpen state that gets delayed when closing
   const [internalIsOpen, setInternalIsOpen] = useState<boolean>(
@@ -129,7 +122,7 @@ export function usePopupRootAnimation(options: {
 
   // Animation function for opening
   const animateOpen = useCallback(() => {
-    if (isAnimationDisabled || isAllAnimationsDisabled) {
+    if (isAnimationDisabledValue) {
       progress.set(1);
       return;
     }
@@ -139,17 +132,11 @@ export function usePopupRootAnimation(options: {
     } else {
       progress.set(withTiming(1, enteringConfig));
     }
-  }, [
-    progress,
-    enteringType,
-    enteringConfig,
-    isAnimationDisabled,
-    isAllAnimationsDisabled,
-  ]);
+  }, [progress, enteringType, enteringConfig, isAnimationDisabledValue]);
 
   // Animation function for closing
   const animateClose = useCallback(() => {
-    if (isAnimationDisabled || isAllAnimationsDisabled) {
+    if (isAnimationDisabledValue) {
       progress.set(2);
       return;
     }
@@ -159,13 +146,7 @@ export function usePopupRootAnimation(options: {
     } else {
       progress.set(withTiming(2, exitingConfig));
     }
-  }, [
-    progress,
-    exitingType,
-    exitingConfig,
-    isAnimationDisabled,
-    isAllAnimationsDisabled,
-  ]);
+  }, [progress, exitingType, exitingConfig, isAnimationDisabledValue]);
 
   // Reusable function to handle open/close state changes
   const updateComponentState = useCallback(

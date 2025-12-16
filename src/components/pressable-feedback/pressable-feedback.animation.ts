@@ -10,15 +10,14 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import { useUniwind } from 'uniwind';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useAnimationSettings } from '../../helpers/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import { createContext } from '../../helpers/utils';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
-  getRootAnimationState,
   getStyleTransform,
 } from '../../helpers/utils/animation';
 import {
@@ -53,24 +52,7 @@ export function usePressableFeedbackRootAnimation(options: {
 }) {
   const { variant, animation, style } = options;
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const {
-    isAnimationDisabled: isRootAnimationDisabled,
-    isAllAnimationsDisabled: isRootAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
-
-  const ownIsAllAnimationsDisabled =
-    isRootAnimationDisabled || isRootAllAnimationsDisabled;
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
-  });
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
   const scaleAnimation = useMemo(() => {
     return typeof animation === 'object' ? animation?.scale : undefined;
@@ -95,7 +77,6 @@ export function usePressableFeedbackRootAnimation(options: {
     getAnimationState(rippleAnimation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: scaleAnimation,
     isAnimationDisabled: isScaleAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -291,7 +272,6 @@ export function usePressableFeedbackHighlightAnimation(options: {
     getAnimationState(highlightAnimation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: highlightAnimation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -369,7 +349,6 @@ export function usePressableFeedbackRippleAnimation(options: {
     getAnimationState(rippleAnimation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: rippleAnimation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

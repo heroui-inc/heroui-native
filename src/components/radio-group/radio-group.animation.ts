@@ -1,14 +1,13 @@
 import type { ViewStyle } from 'react-native';
 import { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useAnimationSettings } from '../../helpers/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
-  getRootAnimationState,
   getStyleTransform,
 } from '../../helpers/utils/animation';
 import type { RadioGroupIndicatorThumbAnimation } from './radio-group.types';
@@ -24,19 +23,7 @@ export function useRadioGroupRootAnimation(options: {
 }) {
   const { animation } = options;
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const { isAllAnimationsDisabled: ownIsAllAnimationsDisabled } =
-    getRootAnimationState(animation);
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
-  });
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
   return {
     isAllAnimationsDisabled,
@@ -62,7 +49,6 @@ export function useRadioGroupIndicatorThumbAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

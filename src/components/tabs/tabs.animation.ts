@@ -8,12 +8,11 @@ import {
   type WithTimingConfig,
 } from 'react-native-reanimated';
 import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import {
   getAnimationState,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
-  getRootAnimationState,
   getStyleProperties,
 } from '../../helpers/utils/animation';
 import * as TabsPrimitives from '../../primitives/tabs';
@@ -32,19 +31,7 @@ export function useTabsRootAnimation(options: {
 }) {
   const { animation } = options;
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const { isAllAnimationsDisabled: ownIsAllAnimationsDisabled } =
-    getRootAnimationState(animation);
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
-  });
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
   return {
     isAllAnimationsDisabled,
@@ -75,7 +62,6 @@ export function useTabsIndicatorAnimation(options: {
 
   // IMPORTANT: Use getIsAnimationDisabledValue to respect both own and parent states
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

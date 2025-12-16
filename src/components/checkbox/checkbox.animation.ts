@@ -4,13 +4,13 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useAnimationSettings } from '../../helpers/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import { createContext } from '../../helpers/utils';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleProperties,
@@ -41,21 +41,14 @@ export function useCheckboxRootAnimation(options: {
   const isCheckboxPressed = useSharedValue(false);
   const formFieldContext = useFormField();
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+  const { animationConfig, isAnimationDisabled } =
+    getRootAnimationState(animation);
 
-  const {
-    animationConfig,
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
     isAnimationDisabled,
-    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
+    isAllAnimationsDisabled,
   });
 
   const scaleValue = getAnimationValueProperty({
@@ -73,7 +66,7 @@ export function useCheckboxRootAnimation(options: {
   const styleTransform = getStyleTransform(style);
 
   const rContainerStyle = useAnimatedStyle(() => {
-    if (isAnimationDisabled) {
+    if (isAnimationDisabledValue) {
       return {};
     }
 
@@ -115,7 +108,6 @@ export function useCheckboxIndicatorAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

@@ -72,6 +72,15 @@ export const usePopupDialogContentAnimation = ({
   const { height: screenHeight } = useWindowDimensions();
   const isKeyboardOpen = useKeyboardStatus();
 
+  const { isAllAnimationsDisabled } = useAnimationSettings();
+
+  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
+
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
+
   const contentY = useSharedValue(0);
   const contentHeight = useSharedValue(0);
   const progressAnchor = useSharedValue(1);
@@ -100,7 +109,9 @@ export const usePopupDialogContentAnimation = ({
   const panGesture = useMemo(
     () =>
       Gesture.Pan()
-        .enabled(isSwipeable && dialogState === 'open')
+        .enabled(
+          isSwipeable && dialogState === 'open' && !isAnimationDisabledValue
+        )
         .onStart(() => isDragging.set(true))
         .onUpdate((event) => {
           if (!isDragging.get()) return;
@@ -167,6 +178,7 @@ export const usePopupDialogContentAnimation = ({
       progress,
       progressAnchor,
       screenHeight,
+      isAnimationDisabledValue,
     ]
   );
 
@@ -223,17 +235,6 @@ export const usePopupDialogContentAnimation = ({
         },
       ],
     };
-  });
-
-  // Read from global animation context (always available in compound parts)
-  const { isAllAnimationsDisabled } = useAnimationSettings();
-
-  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
-
-  const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
-    isAnimationDisabled,
-    isAllAnimationsDisabled,
   });
 
   // Opacity animation

@@ -14,11 +14,11 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import {
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleProperties,
   getStyleTransform,
@@ -88,21 +88,14 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
 
   const { height: screenHeight } = useWindowDimensions();
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+  const { animationConfig, isAnimationDisabled } =
+    getRootAnimationState(animation);
 
-  const {
-    animationConfig,
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
     isAnimationDisabled,
-    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
+    isAllAnimationsDisabled,
   });
 
   // Entering animation
@@ -191,7 +184,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
 
   // Create pan gesture handler
   const panGesture = Gesture.Pan()
-    .enabled(!isAnimationDisabled && isSwipeable)
+    .enabled(!isAnimationDisabledValue && isSwipeable)
     .onBegin(() => {
       isDragging.set(true);
       gestureTranslateY.set(0);
@@ -338,7 +331,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
       });
     }
 
-    if (isAnimationDisabled) {
+    if (isAnimationDisabledValue) {
       return {
         height: lastToastHeight,
         pointerEvents: opacity === 0 ? 'none' : 'auto',
@@ -392,8 +385,8 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
   return {
     rContainerStyle,
     isAllAnimationsDisabled,
-    entering: isAnimationDisabled ? undefined : enteringAnimation,
-    exiting: isAnimationDisabled ? undefined : exitingAnimation,
+    entering: isAnimationDisabledValue ? undefined : enteringAnimation,
+    exiting: isAnimationDisabledValue ? undefined : exitingAnimation,
     panGesture,
   };
 }

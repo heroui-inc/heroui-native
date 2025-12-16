@@ -12,15 +12,14 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import { useUniwind } from 'uniwind';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useAnimationSettings } from '../../helpers/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import { colorKit, useThemeColor } from '../../helpers/theme';
 import { createContext } from '../../helpers/utils';
 import {
   getAnimationState,
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
-  getRootAnimationState,
 } from '../../helpers/utils/animation';
 import {
   DEFAULT_EASING,
@@ -57,24 +56,7 @@ export function useSkeletonRootAnimation(options: {
 }) {
   const { animation, isLoading, variant, progress } = options;
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const {
-    isAnimationDisabled: isRootAnimationDisabled,
-    isAllAnimationsDisabled: isRootAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
-
-  const ownIsAllAnimationsDisabled =
-    isRootAnimationDisabled || isRootAllAnimationsDisabled;
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
-  });
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
   const enteringAnimation = useMemo(() => {
     return typeof animation === 'object' ? animation?.entering : undefined;
@@ -109,13 +91,11 @@ export function useSkeletonRootAnimation(options: {
     getAnimationState(pulseAnimation);
 
   const isEnteringAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: enteringAnimation,
     isAnimationDisabled: isEnteringAnimationDisabled,
     isAllAnimationsDisabled,
   });
 
   const isExitingAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: exitingAnimation,
     isAnimationDisabled: isExitingAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -246,7 +226,6 @@ export function useSkeletonShimmerAnimation(options: {
     getAnimationState(shimmerAnimation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: shimmerAnimation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -323,7 +302,6 @@ export function useSkeletonPulseAnimation(options: {
     getAnimationState(pulseAnimation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation: pulseAnimation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

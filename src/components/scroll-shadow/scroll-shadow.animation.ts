@@ -7,10 +7,10 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import {
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
+  getIsAnimationDisabledValue,
   getRootAnimationState,
 } from '../../helpers/utils/animation';
 import { SHADOW_EXIT_ANIMATION_DURATION } from './scroll-shadow.constants';
@@ -35,25 +35,15 @@ export function useScrollShadowRootAnimation(options: {
 }) {
   const { animation, orientation, size, visibility, isEnabled } = options;
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+  const { animationConfig, isAnimationDisabled } =
+    getRootAnimationState(animation);
 
-  const {
-    animationConfig,
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
     isAnimationDisabled,
-    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
+    isAllAnimationsDisabled,
   });
-
-  const isAnimationDisabledValue =
-    isAnimationDisabled || isAllAnimationsDisabled;
 
   // Opacity animation values
   const topOpacityValue = getAnimationValueProperty({

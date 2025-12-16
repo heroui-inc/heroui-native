@@ -1,9 +1,5 @@
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import type { AnimationRootDisableAll } from '../../helpers/types/animation';
-import {
-  getCombinedAnimationDisabledState,
-  getRootAnimationState,
-} from '../../helpers/utils/animation';
 
 /**
  * Animation hook for Surface root component
@@ -14,19 +10,7 @@ export function useSurfaceRootAnimation(options: {
 }) {
   const { animation } = options;
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const { isAllAnimationsDisabled: ownIsAllAnimationsDisabled } =
-    getRootAnimationState(animation);
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
-  });
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
   return {
     isAllAnimationsDisabled,

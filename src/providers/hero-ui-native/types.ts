@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import type { TextComponentContextValue } from '../text-component/types';
 import type { ToastProviderProps } from '../toast/types';
 
@@ -13,6 +14,13 @@ import type { ToastProviderProps } from '../toast/types';
  * Additional configuration options can be added in future versions.
  */
 export interface HeroUINativeConfig extends TextComponentContextValue {
+  /**
+   * Global animation configuration
+   *
+   * @description
+   * When set to 'disable-all', all animations across the application will be disabled.
+   */
+  animation?: AnimationRootDisableAll;
   /**
    * Toast configuration
    *

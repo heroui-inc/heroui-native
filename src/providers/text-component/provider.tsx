@@ -1,9 +1,9 @@
 import { createContext } from '../../helpers/utils';
 import type { TextComponentContextValue } from './types';
 
-const [TextComponentProvider, useTextComponentContext] =
+const [TextComponentProvider, useTextComponent] =
   createContext<TextComponentContextValue>({
     name: 'TextComponentContext',
   });
 
-export { TextComponentProvider, useTextComponentContext };
+export { TextComponentProvider, useTextComponent };

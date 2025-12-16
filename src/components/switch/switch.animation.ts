@@ -5,15 +5,17 @@ import {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
-import { useResolvedStyleProperty } from '../../helpers/hooks';
+import { useAnimationSettings } from '../../helpers/contexts';
+import {
+  useCombinedAnimationDisabledState,
+  useResolvedStyleProperty,
+} from '../../helpers/hooks';
 import { useThemeColor } from '../../helpers/theme';
 import { createContext } from '../../helpers/utils';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleProperties,
@@ -60,21 +62,14 @@ export function useSwitchRootAnimation(options: {
   const isSwitchPressed = useSharedValue(false);
   const contentContainerWidth = useSharedValue(0);
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+  const { animationConfig, isAnimationDisabled } =
+    getRootAnimationState(animation);
 
-  const {
-    animationConfig,
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
     isAnimationDisabled,
-    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
+    isAllAnimationsDisabled,
   });
 
   // Scale animation
@@ -110,7 +105,7 @@ export function useSwitchRootAnimation(options: {
   const styleTransform = getStyleTransform(style);
 
   const rContainerStyle = useAnimatedStyle(() => {
-    if (isAnimationDisabled) {
+    if (isAnimationDisabledValue) {
       return {
         backgroundColor: isSelected
           ? backgroundColorValue[1]
@@ -181,7 +176,6 @@ export function useSwitchThumbAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

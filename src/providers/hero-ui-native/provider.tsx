@@ -1,5 +1,6 @@
 import React from 'react';
 import { PortalHost } from '../../primitives/portal';
+import { GlobalAnimationSettingsProvider } from '../animation-settings';
 import { TextComponentProvider } from '../text-component/provider';
 import { ToastProvider } from '../toast/provider';
 import type { HeroUINativeProviderProps } from './types';
@@ -13,6 +14,7 @@ import type { HeroUINativeProviderProps } from './types';
  * or the section where you want to use HeroUI Native components.
  *
  * Currently provides:
+ * - Global animation settings
  * - Global text component configuration
  * - Toast notification system
  * - Portal management for overlays
@@ -26,16 +28,18 @@ export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   children,
   config = {},
 }) => {
-  const { textProps, toast } = config;
+  const { textProps, toast, animation } = config;
   const { ...toastProps } = toast || {};
 
   return (
-    <TextComponentProvider value={{ textProps }}>
-      <ToastProvider {...toastProps}>
-        {children}
-        <PortalHost />
-      </ToastProvider>
-    </TextComponentProvider>
+    <GlobalAnimationSettingsProvider animation={animation}>
+      <TextComponentProvider value={{ textProps }}>
+        <ToastProvider {...toastProps}>
+          {children}
+          <PortalHost />
+        </ToastProvider>
+      </TextComponentProvider>
+    </GlobalAnimationSettingsProvider>
   );
 };
 

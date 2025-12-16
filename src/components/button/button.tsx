@@ -13,7 +13,7 @@ import type {
   ButtonRootProps,
 } from './button.types';
 
-const [ButtonProvider, useButtonContext] = createContext<ButtonContextValue>({
+const [ButtonProvider, useButton] = createContext<ButtonContextValue>({
   name: 'ButtonContext',
 });
 
@@ -141,7 +141,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
 const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
-  const { size, variant } = useButtonContext();
+  const { size, variant } = useButton();
 
   const tvStyles = buttonStyles.label({
     size,
@@ -180,4 +180,5 @@ const CompoundButton = Object.assign(ButtonRoot, {
   Label: ButtonLabel,
 });
 
+export { useButton };
 export default CompoundButton;

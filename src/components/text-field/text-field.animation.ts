@@ -7,16 +7,15 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import { useUniwind } from 'uniwind';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useAnimationSettings } from '../../helpers/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import { useThemeColor } from '../../helpers/theme';
 import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
-  getRootAnimationState,
   getStyleProperties,
 } from '../../helpers/utils/animation';
 import {
@@ -42,19 +41,7 @@ export function useTextFieldRootAnimation(options: {
 }) {
   const { animation } = options;
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
-
-  const { isAllAnimationsDisabled: ownIsAllAnimationsDisabled } =
-    getRootAnimationState(animation);
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
-  });
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
   return {
     isAllAnimationsDisabled,
@@ -77,7 +64,6 @@ export function useTextFieldLabelAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -118,7 +104,6 @@ export function useTextFieldDescriptionAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -169,7 +154,6 @@ export function useTextFieldInputAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

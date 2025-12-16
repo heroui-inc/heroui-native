@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
-import { useTextComponentContext } from '../../providers/text-component/provider';
+import { useTextComponent } from '../../providers/text-component/provider';
 import { cn } from '../theme';
 
 /**
@@ -54,7 +54,7 @@ export interface HeroTextProps extends RNTextProps {
 export const HeroText = React.forwardRef<RNText, HeroTextProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
-    const { textProps } = useTextComponentContext();
+    const { textProps } = useTextComponent();
 
     const mergedProps = Object.assign({}, textProps, restProps);
 

@@ -6,13 +6,13 @@ import {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
+import { useAnimationSettings } from '../../helpers/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import { createContext } from '../../helpers/utils';
 import {
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
-  getCombinedAnimationDisabledState,
   getIsAnimationDisabledValue,
   getRootAnimationState,
   getStyleTransform,
@@ -48,25 +48,15 @@ export function useAccordionRootAnimation(options: {
 }) {
   const { animation } = options;
 
-  // Read parent animation disabled state from global context
-  const parentAnimationSettingsContext = useAnimationSettings();
-  const parentIsAllAnimationsDisabled =
-    parentAnimationSettingsContext?.isAllAnimationsDisabled;
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
 
-  const {
-    animationConfig,
+  const { animationConfig, isAnimationDisabled } =
+    getRootAnimationState(animation);
+
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
     isAnimationDisabled,
-    isAllAnimationsDisabled: ownIsAllAnimationsDisabled,
-  } = getRootAnimationState(animation);
-
-  // Combine parent and own disable-all states (parent wins)
-  const isAllAnimationsDisabled = getCombinedAnimationDisabledState({
-    parentIsAllAnimationsDisabled,
-    ownIsAllAnimationsDisabled,
+    isAllAnimationsDisabled,
   });
-
-  const isAnimationDisabledValue =
-    isAnimationDisabled || isAllAnimationsDisabled;
 
   // Layout transition animation
   const layoutTransitionValue = getAnimationValueProperty({
@@ -102,7 +92,6 @@ export function useAccordionIndicatorAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });
@@ -170,7 +159,6 @@ export function useAccordionContentAnimation(options: {
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    animation,
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });

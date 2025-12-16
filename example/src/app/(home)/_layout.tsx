@@ -1,8 +1,9 @@
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
-import { useThemeColor } from 'heroui-native';
-import { useCallback } from 'react';
+import { useThemeColor, useToast } from 'heroui-native';
+import { useCallback, useEffect } from 'react';
 import { Image, Platform, StyleSheet, View } from 'react-native';
+import { useReducedMotion } from 'react-native-reanimated';
 import LogoDark from '../../../assets/logo-dark.png';
 import LogoLight from '../../../assets/logo-light.png';
 import { ThemeToggle } from '../../components/theme-toggle';
@@ -12,6 +13,23 @@ export default function Layout() {
   const { isDark } = useAppTheme();
   const themeColorForeground = useThemeColor('foreground');
   const themeColorBackground = useThemeColor('background');
+
+  const reducedMotion = useReducedMotion();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (reducedMotion) {
+      toast.show({
+        duration: 'persistent',
+        variant: 'warning',
+        label: 'Reduce motion enabled',
+        description: 'All animations will be disabled',
+        actionLabel: 'Close',
+        onActionPress: ({ hide }) => hide(),
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reducedMotion]);
 
   const _renderTitle = () => {
     return (

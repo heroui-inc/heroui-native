@@ -30,7 +30,6 @@ export interface DividerProps extends ViewProps {
 
   /**
    * Custom thickness of the divider. This controls the height (for horizontal) or width (for vertical) of the divider.
-   * Note: Setting height via className will not work - use this prop instead.
    */
   thickness?: number;
 

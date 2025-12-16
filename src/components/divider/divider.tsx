@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { View } from 'react-native';
-import { DISPLAY_NAME, THICK_VARIANT_HEIGHT } from './divider.constants';
-import dividerStyles, { styleSheet } from './divider.styles';
+import { DISPLAY_NAME } from './divider.constants';
+import dividerStyles from './divider.styles';
 import type { DividerProps } from './divider.types';
 
 // --------------------------------------------------
@@ -16,39 +16,28 @@ const DividerRoot = forwardRef<View, DividerProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const tvStyles = dividerStyles.root({
+  const tvStyles = dividerStyles({
     variant,
     orientation,
     className,
   });
 
-  const thicknessStyles = (() => {
-    if (thickness !== undefined) {
-      return orientation === 'horizontal'
+  /**
+   * Custom thickness handling: when thickness prop is provided,
+   * override the variant-based thickness with inline styles
+   */
+  const customThicknessStyle =
+    thickness !== undefined
+      ? orientation === 'horizontal'
         ? { height: thickness }
-        : { width: thickness };
-    }
-
-    if (variant === 'thin') {
-      return orientation === 'horizontal'
-        ? styleSheet.hairlineWidth
-        : styleSheet.hairlineWidthVertical;
-    }
-
-    if (variant === 'thick') {
-      return orientation === 'horizontal'
-        ? { height: THICK_VARIANT_HEIGHT }
-        : { width: THICK_VARIANT_HEIGHT };
-    }
-
-    return {};
-  })();
+        : { width: thickness }
+      : undefined;
 
   return (
     <View
       ref={ref}
       className={tvStyles}
-      style={[thicknessStyles, style]}
+      style={customThicknessStyle ? [customThicknessStyle, style] : style}
       {...restProps}
     />
   );
@@ -63,7 +52,8 @@ DividerRoot.displayName = DISPLAY_NAME.ROOT;
  *
  * @component Divider - A simple line to separate content visually.
  * Supports horizontal and vertical orientations with thin and thick variants.
- * Uses StyleSheet.hairlineWidth for the thin variant by default.
+ * Uses hairline width utility classes for the thin variant by default.
+ * Custom thickness can be provided via the thickness prop to override variant-based sizing.
  *
  * @see Full documentation: https://heroui.com/components/divider
  */

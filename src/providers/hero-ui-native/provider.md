@@ -7,6 +7,8 @@ The `HeroUINativeProvider` is the root provider component that configures and in
 The provider serves as the main entry point for HeroUI Native, wrapping your application with essential contexts and configurations:
 
 - **Text Configuration**: Global text component settings for consistency across all HeroUI components
+- **Animation Configuration**: Global animation control to disable all animations across the application
+- **Toast Configuration**: Global toast system configuration including insets, default props, and wrapper components
 - **Portal Management**: Handles overlays, modals, and other components that render on top of the app hierarchy
 
 ## Installation & Setup
@@ -69,6 +71,56 @@ config={{
 }}
 ```
 
+### Animation Configuration
+
+Global animation configuration for the entire application:
+
+```tsx
+config={{
+  // Disable all animations across the application (cascades to all children)
+  animation: 'disable-all',
+}}
+```
+
+**Note**: When set to `'disable-all'`, all animations across the application will be disabled, including animations in child components. This is useful for accessibility or performance optimization.
+
+### Toast Configuration
+
+Configure the global toast system including insets, default props, and wrapper components:
+
+```tsx
+config={{
+  toast: {
+    // Global toast configuration (used as defaults for all toasts)
+    defaultProps: {
+      variant: 'default',
+      placement: 'top',
+      isSwipeable: true,
+      animation: true,
+    },
+    // Insets for spacing from screen edges (added to safe area insets)
+    insets: {
+      top: 0,      // Default: iOS = 0, Android = 12
+      bottom: 6,   // Default: iOS = 6, Android = 12
+      left: 12,    // Default: 12
+      right: 12,   // Default: 12
+    },
+    // Maximum number of visible toasts before opacity starts fading
+    maxVisibleToasts: 3,
+    // Custom wrapper function to wrap the toast content
+    contentWrapper: (children) => (
+      <KeyboardAvoidingView
+        behavior="padding"
+        keyboardVerticalOffset={24}
+        className="flex-1"
+      >
+        {children}
+      </KeyboardAvoidingView>
+    ),
+  },
+}}
+```
+
 ## Architecture
 
 ### Provider Hierarchy
@@ -77,9 +129,11 @@ The `HeroUINativeProvider` internally composes multiple providers:
 
 ```
 HeroUINativeProvider
-├── TextComponentProvider (text configuration)
-│   └── Your App
-│   └── PortalHost (for overlays)
+├── GlobalAnimationSettingsProvider (animation configuration)
+│   └── TextComponentProvider (text configuration)
+│       └── ToastProvider (toast configuration)
+│           └── Your App
+│           └── PortalHost (for overlays)
 ```
 
 ## Complete Example
@@ -97,6 +151,22 @@ const config: HeroUINativeConfig = {
     maxFontSizeMultiplier: 1.5,
     allowFontScaling: true,
     adjustsFontSizeToFit: false,
+  },
+  // Global animation configuration
+  animation: 'disable-all', // Optional: disable all animations
+  // Global toast configuration
+  toast: {
+    defaultProps: {
+      variant: 'default',
+      placement: 'top',
+    },
+    insets: {
+      top: 0,
+      bottom: 6,
+      left: 12,
+      right: 12,
+    },
+    maxVisibleToasts: 3,
   },
 };
 
@@ -187,9 +257,7 @@ const config: HeroUINativeConfig = {
 
 function App() {
   return (
-    <HeroUINativeProvider config={config}>
-      {/* ... */}
-    </HeroUINativeProvider>
+    <HeroUINativeProvider config={config}>{/* ... */}</HeroUINativeProvider>
   );
 }
 ```
@@ -214,16 +282,26 @@ config={{
 The provider is fully typed. Import types for better IDE support:
 
 ```tsx
-import {
-  HeroUINativeProvider,
-  type HeroUINativeConfig,
-} from 'heroui-native';
+import { HeroUINativeProvider, type HeroUINativeConfig } from 'heroui-native';
 
 const config: HeroUINativeConfig = {
   // Full type safety and autocomplete
   textProps: {
     allowFontScaling: true,
     maxFontSizeMultiplier: 1.5,
+  },
+  animation: 'disable-all', // Optional: disable all animations
+  toast: {
+    defaultProps: {
+      variant: 'default',
+      placement: 'top',
+    },
+    insets: {
+      top: 0,
+      bottom: 6,
+      left: 12,
+      right: 12,
+    },
   },
 };
 ```

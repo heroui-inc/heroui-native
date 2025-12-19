@@ -19,7 +19,6 @@ type ThemeOption = {
   name: string;
   lightVariant: string;
   darkVariant: string;
-  colors: { primary: string; secondary: string; tertiary: string };
 };
 
 const availableThemes: ThemeOption[] = [
@@ -28,44 +27,24 @@ const availableThemes: ThemeOption[] = [
     name: 'Default',
     lightVariant: 'light',
     darkVariant: 'dark',
-    colors: {
-      primary: '#006FEE',
-      secondary: '#17C964',
-      tertiary: '#F5A524',
-    },
   },
   {
     id: 'lavender',
     name: 'Lavender',
     lightVariant: 'lavender-light',
     darkVariant: 'lavender-dark',
-    colors: {
-      primary: '#B569E0',
-      secondary: '#64C9A8',
-      tertiary: '#E8C765',
-    },
   },
   {
     id: 'mint',
     name: 'Mint',
     lightVariant: 'mint-light',
     darkVariant: 'mint-dark',
-    colors: {
-      primary: '#5FC9AB',
-      secondary: '#6DD597',
-      tertiary: '#E5CF6C',
-    },
   },
   {
     id: 'sky',
     name: 'Sky',
     lightVariant: 'sky-light',
     darkVariant: 'sky-dark',
-    colors: {
-      primary: '#6CA9D6',
-      secondary: '#64C9B2',
-      tertiary: '#E8C963',
-    },
   },
 ];
 

@@ -27,7 +27,7 @@ export const ThemeToggle: FC = () => {
         }
         toggleTheme();
       }}
-      className={cn('p-3', isLGAvailable && 'px-2.5 py-0')}
+      className={cn('p-3', isLGAvailable && 'px-2.5 py-2')}
     >
       {isLight ? (
         <Animated.View key="moon" entering={ZoomIn} exiting={FadeOut}>

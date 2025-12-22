@@ -197,11 +197,19 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
     className,
   });
 
-  const themeColorDefaultHover = useThemeColor('default-hover');
-  const themeColorAccentHover = useThemeColor('accent-hover');
-  const themeColorSuccessHover = useThemeColor('success-hover');
-  const themeColorWarningHover = useThemeColor('warning-hover');
-  const themeColorDangerHover = useThemeColor('danger-hover');
+  const [
+    themeColorDefaultHover,
+    themeColorAccentHover,
+    themeColorSuccessHover,
+    themeColorWarningHover,
+    themeColorDangerHover,
+  ] = useThemeColor([
+    'default-hover',
+    'accent-hover',
+    'success-hover',
+    'warning-hover',
+    'danger-hover',
+  ]);
 
   const highlightColorMap = useMemo(() => {
     switch (toastVariant) {

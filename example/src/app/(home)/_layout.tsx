@@ -11,8 +11,10 @@ import { useAppTheme } from '../../contexts/app-theme-context';
 
 export default function Layout() {
   const { isDark } = useAppTheme();
-  const themeColorForeground = useThemeColor('foreground');
-  const themeColorBackground = useThemeColor('background');
+  const [themeColorForeground, themeColorBackground] = useThemeColor([
+    'foreground',
+    'background',
+  ]);
 
   const reducedMotion = useReducedMotion();
   const { toast } = useToast();

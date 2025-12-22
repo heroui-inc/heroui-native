@@ -149,8 +149,10 @@ const TextInputDialogContent = () => {
   const insetTop = insets.top + 12;
   const maxTextInputDialogHeight = (height - insetTop) / 2;
 
-  const themeColorSurfaceSecondary = useThemeColor('surface-secondary');
-  const themeColorMuted = useThemeColor('muted');
+  const [themeColorSurfaceSecondary, themeColorMuted] = useThemeColor([
+    'surface-secondary',
+    'muted',
+  ]);
 
   const validateEmail = (emailValue: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

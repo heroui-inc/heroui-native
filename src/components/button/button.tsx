@@ -35,9 +35,17 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const themeColorAccentHover = useThemeColor('accent-hover');
-  const themeColorDefaultHover = useThemeColor('default-hover');
-  const themeColorDangerHover = useThemeColor('danger-hover');
+  const [
+    themeColorAccentHover,
+    themeColorDefaultHover,
+    themeColorDangerHover,
+    themeColorDangerSoftHover,
+  ] = useThemeColor([
+    'accent-hover',
+    'default-hover',
+    'danger-hover',
+    'danger-soft-hover',
+  ]);
 
   const stringifiedChildren = childrenToString(children);
 
@@ -62,13 +70,14 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
       case 'danger':
         return themeColorDangerHover;
       case 'danger-soft':
-        return themeColorDefaultHover;
+        return themeColorDangerSoftHover;
     }
   }, [
     variant,
     themeColorAccentHover,
     themeColorDefaultHover,
     themeColorDangerHover,
+    themeColorDangerSoftHover,
   ]);
 
   const animationConfig = useMemo(() => {

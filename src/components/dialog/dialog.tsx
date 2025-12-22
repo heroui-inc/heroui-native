@@ -253,7 +253,6 @@ const DialogClose = forwardRef<
   DialogCloseProps
 >(({ className, iconProps, hitSlop = 12, children, ...props }, ref) => {
   const themeColorMuted = useThemeColor('muted');
-  const defaultIconColor = themeColorMuted;
 
   const tvStyles = dialogStyles.close({ className });
 
@@ -267,7 +266,7 @@ const DialogClose = forwardRef<
       {children || (
         <CloseIcon
           size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? defaultIconColor}
+          color={iconProps?.color ?? themeColorMuted}
         />
       )}
     </DialogPrimitives.Close>

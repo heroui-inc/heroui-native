@@ -161,12 +161,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { View } from 'react-native';
 
 export default function ButtonExample() {
-  const themeColorAccentForeground = useThemeColor('accent-foreground');
-  const themeColorAccentSoftForeground = useThemeColor(
-    'accent-soft-foreground'
-  );
-  const themeColorDangerForeground = useThemeColor('danger-foreground');
-  const themeColorDefaultForeground = useThemeColor('default-foreground');
+  const [
+    themeColorAccentForeground,
+    themeColorAccentSoftForeground,
+    themeColorDangerForeground,
+    themeColorDefaultForeground,
+  ] = useThemeColor([
+    'accent-foreground',
+    'accent-soft-foreground',
+    'danger-foreground',
+    'default-foreground',
+  ]);
 
   return (
     <View className="gap-4 p-4">

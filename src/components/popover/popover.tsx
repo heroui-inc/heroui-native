@@ -279,8 +279,10 @@ const PopoverContentBottomSheet = forwardRef<
     const { onOpenChange } = usePopover();
     const { popoverState, progress } = usePopoverAnimation();
 
-    const themeColorOverlay = useThemeColor('overlay');
-    const themeColorMuted = useThemeColor('muted');
+    const [themeColorOverlay, themeColorMuted] = [
+      useThemeColor('overlay'),
+      useThemeColor('muted'),
+    ];
 
     const tvStyles = popoverStyles.bottomSheetContent({
       className: bottomSheetViewClassName,
@@ -463,8 +465,10 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
     },
     ref
   ) => {
-    const themeColorOverlay = useThemeColor('overlay');
-    const themeColorBorder = useThemeColor('border');
+    const [themeColorOverlay, themeColorBorder] = useThemeColor([
+      'overlay',
+      'border',
+    ]);
     const { triggerPosition, contentLayout } = usePopover();
     const { placement: placementContext } = use(PopoverContentContext);
 

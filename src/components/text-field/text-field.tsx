@@ -159,8 +159,10 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       DISPLAY_NAME.INPUT_END_CONTENT
     );
 
-    const themeColorFieldPlaceholder = useThemeColor('field-placeholder');
-    const themeColorMuted = useThemeColor('muted');
+    const [themeColorFieldPlaceholder, themeColorMuted] = useThemeColor([
+      'field-placeholder',
+      'muted',
+    ]);
 
     const tvStyles = textFieldStyles.input({
       isMultiline: Boolean(restProps.multiline),

@@ -54,8 +54,10 @@ export function useSwitchRootAnimation(options: {
 }) {
   const { animation, style, isSelected } = options;
 
-  const themeColorAccent = useThemeColor('accent');
-  const themeColorSurfaceQuaternary = useThemeColor('surface-quaternary');
+  const [themeColorAccent, themeColorSurfaceQuaternary] = useThemeColor([
+    'accent',
+    'surface-quaternary',
+  ]);
 
   const formFieldContext = useFormField();
 

@@ -301,8 +301,10 @@ const SelectContentBottomSheet = forwardRef<
     const { onOpenChange } = useSelect();
     const { selectState, progress } = useSelectAnimation();
 
-    const themeColorOverlay = useThemeColor('overlay');
-    const themeColorMuted = useThemeColor('muted');
+    const [themeColorOverlay, themeColorMuted] = [
+      useThemeColor('overlay'),
+      useThemeColor('muted'),
+    ];
 
     const tvStyles = selectStyles.bottomSheetContent({
       className: bottomSheetViewClassName,
@@ -489,7 +491,6 @@ const SelectClose = forwardRef<
   SelectCloseProps
 >(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
   const themeColorMuted = useThemeColor('muted');
-  const defaultIconColor = themeColorMuted;
 
   const tvStyles = selectStyles.close({ className });
 
@@ -503,7 +504,7 @@ const SelectClose = forwardRef<
       {children || (
         <CloseIcon
           size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? defaultIconColor}
+          color={iconProps?.color ?? themeColorMuted}
         />
       )}
     </SelectPrimitives.Close>

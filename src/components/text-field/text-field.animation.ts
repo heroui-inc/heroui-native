@@ -143,11 +143,19 @@ export function useTextFieldInputAnimation(options: {
 
   const { theme } = useUniwind();
 
-  const themeColorFieldBackground = useThemeColor('field');
-  const themeColorFieldFocusBackground = useThemeColor('field-focus');
-  const themeColorFieldBlurBorder = useThemeColor('field-border');
-  const themeColorFieldFocusBorder = useThemeColor('accent');
-  const themeColorDanger = useThemeColor('danger');
+  const [
+    themeColorFieldBackground,
+    themeColorFieldFocusBackground,
+    themeColorFieldBlurBorder,
+    themeColorFieldFocusBorder,
+    themeColorDanger,
+  ] = useThemeColor([
+    'field',
+    'field-focus',
+    'field-border',
+    'accent',
+    'danger',
+  ]);
 
   const { isAllAnimationsDisabled } = useAnimationSettings();
 

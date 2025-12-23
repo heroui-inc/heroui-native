@@ -1,8 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import GorhomBottomSheet, {
   BottomSheetView as GorhomBottomSheetView,
+  useBottomSheet as useGorhomBottomSheet,
 } from '@gorhom/bottom-sheet';
-import { forwardRef, useEffect, useMemo, useRef } from 'react';
+import { forwardRef, useEffect, useMemo } from 'react';
 import type { Text as RNText, ViewStyle } from 'react-native';
 import { StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -27,6 +28,7 @@ import { DISPLAY_NAME } from './bottom-sheet.constants';
 import bottomSheetStyles from './bottom-sheet.styles';
 import type {
   BottomSheetCloseProps,
+  BottomSheetContentContainerProps,
   BottomSheetContentProps,
   BottomSheetDescriptionProps,
   BottomSheetOverlayProps,
@@ -122,26 +124,15 @@ const BottomSheetTrigger = forwardRef<
 
 // --------------------------------------------------
 
-const BottomSheetPortal = ({
-  className,
-  children,
-  style,
-  ...props
-}: BottomSheetPortalProps) => {
+const BottomSheetPortal = ({ children, ...props }: BottomSheetPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
   const animationContext = useBottomSheetAnimation();
-
-  const tvStyles = bottomSheetStyles.portal({ className });
 
   return (
     <BottomSheetPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <BottomSheetAnimationProvider value={animationContext}>
-          <FullWindowOverlay>
-            <Animated.View className={tvStyles} style={style}>
-              {children}
-            </Animated.View>
-          </FullWindowOverlay>
+          <FullWindowOverlay>{children}</FullWindowOverlay>
         </BottomSheetAnimationProvider>
       </AnimationSettingsProvider>
     </BottomSheetPrimitives.Portal>
@@ -190,10 +181,6 @@ const BottomSheetContent = forwardRef<
     },
     ref
   ) => {
-    const insets = useSafeAreaInsets();
-
-    const bottomSheetRef = useRef<GorhomBottomSheet>(null);
-
     const { onOpenChange } = useBottomSheet();
     const { bottomSheetState, progress } = useBottomSheetAnimation();
 
@@ -202,32 +189,10 @@ const BottomSheetContent = forwardRef<
       useThemeColor('muted'),
     ];
 
-    const tvStyles = bottomSheetStyles.contentContainer({
-      className: contentContainerClassName,
-    });
-
     const handleIndicatorStyle = StyleSheet.flatten([
       { backgroundColor: themeColorMuted },
       restProps.handleIndicatorStyle,
     ]);
-
-    useEffect(() => {
-      if (bottomSheetState === 'open') {
-        bottomSheetRef.current?.expand();
-      } else if (bottomSheetState === 'close') {
-        bottomSheetRef.current?.close();
-      }
-    }, [bottomSheetState]);
-
-    useEffect(() => {
-      if (ref && bottomSheetRef.current) {
-        if (typeof ref === 'function') {
-          ref(bottomSheetRef.current);
-        } else {
-          ref.current = bottomSheetRef.current;
-        }
-      }
-    }, [ref]);
 
     const onClose = () => {
       onOpenChange(false);
@@ -241,7 +206,7 @@ const BottomSheetContent = forwardRef<
 
     return (
       <GorhomBottomSheet
-        ref={bottomSheetRef}
+        ref={ref}
         backgroundStyle={[
           {
             backgroundColor: themeColorOverlay,
@@ -256,20 +221,56 @@ const BottomSheetContent = forwardRef<
         onClose={onClose}
         {...restProps}
       >
-        <GorhomBottomSheetView
-          className={tvStyles}
-          style={[
-            { paddingBottom: insets.bottom + 12 },
-            contentContainerProps?.style,
-          ]}
-          {...contentContainerProps}
+        <ContentContainer
+          contentContainerClassName={contentContainerClassName}
+          contentContainerProps={contentContainerProps}
         >
           {children}
-        </GorhomBottomSheetView>
+        </ContentContainer>
       </GorhomBottomSheet>
     );
   }
 );
+
+// --------------------------------------------------
+
+const ContentContainer = ({
+  children,
+  contentContainerClassName,
+  contentContainerProps,
+}: BottomSheetContentContainerProps) => {
+  const insets = useSafeAreaInsets();
+  const { bottomSheetState } = useBottomSheetAnimation();
+  const { expand, close } = useGorhomBottomSheet();
+
+  const tvStyles = bottomSheetStyles.contentContainer({
+    className: contentContainerClassName,
+  });
+
+  useEffect(() => {
+    if (bottomSheetState === 'open') {
+      expand();
+    } else if (bottomSheetState === 'close') {
+      setTimeout(() => {
+        close();
+      }, 100);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bottomSheetState]);
+
+  return (
+    <GorhomBottomSheetView
+      className={tvStyles}
+      style={[
+        { paddingBottom: insets.bottom + 12 },
+        contentContainerProps?.style,
+      ]}
+      {...contentContainerProps}
+    >
+      {children}
+    </GorhomBottomSheetView>
+  );
+};
 
 // --------------------------------------------------
 
@@ -351,6 +352,7 @@ BottomSheetTrigger.displayName = DISPLAY_NAME.TRIGGER;
 BottomSheetPortal.displayName = DISPLAY_NAME.PORTAL;
 BottomSheetOverlay.displayName = DISPLAY_NAME.OVERLAY;
 BottomSheetContent.displayName = DISPLAY_NAME.CONTENT;
+ContentContainer.displayName = DISPLAY_NAME.CONTENT_CONTAINER;
 BottomSheetClose.displayName = DISPLAY_NAME.CLOSE;
 BottomSheetTitle.displayName = DISPLAY_NAME.TITLE;
 BottomSheetDescription.displayName = DISPLAY_NAME.DESCRIPTION;

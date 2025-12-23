@@ -360,3 +360,21 @@ export interface SelectItemIndicatorProps
    */
   iconProps?: SelectItemIndicatorIconProps;
 }
+
+/**
+ * Select ContentContainer component props
+ */
+export interface SelectContentContainerProps {
+  /**
+   * The content to be rendered inside the container
+   */
+  children?: ReactNode;
+  /**
+   * Additional CSS class for the content container
+   */
+  contentContainerClassName?: string;
+  /**
+   * Props for the content container
+   */
+  contentContainerProps?: Omit<BottomSheetViewProps, 'children'>;
+}

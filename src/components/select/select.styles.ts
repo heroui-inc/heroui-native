@@ -26,7 +26,7 @@ const popoverContent = tv({
   base: 'bg-overlay rounded-3xl border border-border p-3 px-4 shadow-lg shadow-black/5 dark:shadow-none',
 });
 
-const bottomSheetContent = tv({
+const contentContainer = tv({
   base: 'p-5',
 });
 
@@ -66,7 +66,7 @@ const selectStyles = {
   portal,
   overlay,
   popoverContent,
-  bottomSheetContent,
+  contentContainer,
   dialogContent,
   close,
   value,

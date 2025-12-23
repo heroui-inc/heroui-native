@@ -327,3 +327,21 @@ export interface UsePopoverAnimationReturn {
    */
   isDragging: SharedValue<boolean>;
 }
+
+/**
+ * Popover ContentContainer component props
+ */
+export interface PopoverContentContainerProps {
+  /**
+   * The content to be rendered inside the container
+   */
+  children?: ReactNode;
+  /**
+   * Additional CSS class for the content container
+   */
+  contentContainerClassName?: string;
+  /**
+   * Props for the content container
+   */
+  contentContainerProps?: Omit<BottomSheetViewProps, 'children'>;
+}

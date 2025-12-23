@@ -1,5 +1,9 @@
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback, useEffect, useMemo, useRef } from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import BottomSheet, {
+  BottomSheetView,
+  useBottomSheet as useGorhomBottomSheet,
+} from '@gorhom/bottom-sheet';
+import { forwardRef, useCallback, useEffect, useMemo } from 'react';
 import type {
   LayoutChangeEvent,
   Text as RNText,
@@ -41,6 +45,7 @@ import selectStyles, { styleSheet } from './select.styles';
 import type {
   SelectCloseProps,
   SelectContentBottomSheetProps,
+  SelectContentContainerProps,
   SelectContentDialogProps,
   SelectContentPopoverProps,
   SelectContentProps,
@@ -299,10 +304,6 @@ const SelectContentBottomSheet = forwardRef<
     },
     ref
   ) => {
-    const insets = useSafeAreaInsets();
-
-    const bottomSheetRef = useRef<BottomSheet>(null);
-
     const { onOpenChange } = useSelect();
     const { selectState, progress } = useSelectAnimation();
 
@@ -310,28 +311,6 @@ const SelectContentBottomSheet = forwardRef<
       useThemeColor('overlay'),
       useThemeColor('muted'),
     ];
-
-    const tvStyles = selectStyles.bottomSheetContent({
-      className: contentContainerClassName,
-    });
-
-    useEffect(() => {
-      if (selectState === 'open') {
-        bottomSheetRef.current?.expand();
-      } else if (selectState === 'close') {
-        bottomSheetRef.current?.close();
-      }
-    }, [selectState]);
-
-    useEffect(() => {
-      if (ref && bottomSheetRef.current) {
-        if (typeof ref === 'function') {
-          ref(bottomSheetRef.current);
-        } else {
-          ref.current = bottomSheetRef.current;
-        }
-      }
-    }, [ref]);
 
     const onClose = () => {
       onOpenChange(false);
@@ -345,9 +324,13 @@ const SelectContentBottomSheet = forwardRef<
 
     return (
       <BottomSheet
-        ref={bottomSheetRef}
+        ref={ref}
         backgroundStyle={[
-          { backgroundColor: themeColorOverlay },
+          {
+            backgroundColor: themeColorOverlay,
+            borderRadius: 32,
+            borderCurve: 'continuous',
+          },
           restProps.backgroundStyle,
         ]}
         handleIndicatorStyle={[
@@ -359,20 +342,56 @@ const SelectContentBottomSheet = forwardRef<
         onClose={onClose}
         {...restProps}
       >
-        <BottomSheetView
-          className={tvStyles}
-          style={[
-            { paddingBottom: insets.bottom + 12 },
-            contentContainerProps?.style,
-          ]}
-          {...contentContainerProps}
+        <SelectContentContainer
+          contentContainerClassName={contentContainerClassName}
+          contentContainerProps={contentContainerProps}
         >
           {children}
-        </BottomSheetView>
+        </SelectContentContainer>
       </BottomSheet>
     );
   }
 );
+
+// --------------------------------------------------
+
+const SelectContentContainer = ({
+  children,
+  contentContainerClassName,
+  contentContainerProps,
+}: SelectContentContainerProps) => {
+  const insets = useSafeAreaInsets();
+  const { selectState } = useSelectAnimation();
+  const { expand, close } = useGorhomBottomSheet();
+
+  const tvStyles = selectStyles.contentContainer({
+    className: contentContainerClassName,
+  });
+
+  useEffect(() => {
+    if (selectState === 'open') {
+      expand();
+    } else if (selectState === 'close') {
+      setTimeout(() => {
+        close();
+      }, 100);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectState]);
+
+  return (
+    <BottomSheetView
+      className={tvStyles}
+      style={[
+        { paddingBottom: insets.bottom + 12 },
+        contentContainerProps?.style,
+      ]}
+      {...contentContainerProps}
+    >
+      {children}
+    </BottomSheetView>
+  );
+};
 
 // --------------------------------------------------
 
@@ -656,6 +675,7 @@ SelectTrigger.displayName = DISPLAY_NAME.TRIGGER;
 SelectPortal.displayName = DISPLAY_NAME.PORTAL;
 SelectOverlay.displayName = DISPLAY_NAME.OVERLAY;
 SelectContent.displayName = DISPLAY_NAME.CONTENT;
+SelectContentContainer.displayName = DISPLAY_NAME.CONTENT_CONTAINER;
 SelectClose.displayName = DISPLAY_NAME.CLOSE;
 SelectItemDescription.displayName = DISPLAY_NAME.ITEM_DESCRIPTION;
 SelectValue.displayName = DISPLAY_NAME.VALUE;

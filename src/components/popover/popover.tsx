@@ -1,13 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import {
-  createContext,
-  forwardRef,
-  use,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import BottomSheet, {
+  BottomSheetView,
+  useBottomSheet as useGorhomBottomSheet,
+} from '@gorhom/bottom-sheet';
+import { createContext, forwardRef, use, useEffect, useMemo } from 'react';
 import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -41,6 +37,7 @@ import type {
   PopoverArrowProps,
   PopoverCloseProps,
   PopoverContentBottomSheetProps,
+  PopoverContentContainerProps,
   PopoverContentContextValue,
   PopoverContentPopoverProps,
   PopoverContentProps,
@@ -277,10 +274,6 @@ const PopoverContentBottomSheet = forwardRef<
     },
     ref
   ) => {
-    const insets = useSafeAreaInsets();
-
-    const bottomSheetRef = useRef<BottomSheet>(null);
-
     const { onOpenChange } = usePopover();
     const { popoverState, progress } = usePopoverAnimation();
 
@@ -289,32 +282,10 @@ const PopoverContentBottomSheet = forwardRef<
       useThemeColor('muted'),
     ];
 
-    const tvStyles = popoverStyles.bottomSheetContent({
-      className: contentContainerClassName,
-    });
-
     const handleIndicatorStyle = StyleSheet.flatten([
       { backgroundColor: themeColorMuted },
       restProps.handleIndicatorStyle,
     ]);
-
-    useEffect(() => {
-      if (popoverState === 'open') {
-        bottomSheetRef.current?.expand();
-      } else if (popoverState === 'close') {
-        bottomSheetRef.current?.close();
-      }
-    }, [popoverState]);
-
-    useEffect(() => {
-      if (ref && bottomSheetRef.current) {
-        if (typeof ref === 'function') {
-          ref(bottomSheetRef.current);
-        } else {
-          ref.current = bottomSheetRef.current;
-        }
-      }
-    }, [ref]);
 
     const onClose = () => {
       onOpenChange(false);
@@ -329,7 +300,7 @@ const PopoverContentBottomSheet = forwardRef<
     return (
       <PopoverContentContext value={{ placement: 'bottom' }}>
         <BottomSheet
-          ref={bottomSheetRef}
+          ref={ref}
           backgroundStyle={[
             {
               backgroundColor: themeColorOverlay,
@@ -344,21 +315,57 @@ const PopoverContentBottomSheet = forwardRef<
           onClose={onClose}
           {...restProps}
         >
-          <BottomSheetView
-            className={tvStyles}
-            style={[
-              { paddingBottom: insets.bottom + 12 },
-              contentContainerProps?.style,
-            ]}
-            {...contentContainerProps}
+          <PopoverContentContainer
+            contentContainerClassName={contentContainerClassName}
+            contentContainerProps={contentContainerProps}
           >
             {children}
-          </BottomSheetView>
+          </PopoverContentContainer>
         </BottomSheet>
       </PopoverContentContext>
     );
   }
 );
+
+// --------------------------------------------------
+
+const PopoverContentContainer = ({
+  children,
+  contentContainerClassName,
+  contentContainerProps,
+}: PopoverContentContainerProps) => {
+  const insets = useSafeAreaInsets();
+  const { popoverState } = usePopoverAnimation();
+  const { expand, close } = useGorhomBottomSheet();
+
+  const tvStyles = popoverStyles.contentContainer({
+    className: contentContainerClassName,
+  });
+
+  useEffect(() => {
+    if (popoverState === 'open') {
+      expand();
+    } else if (popoverState === 'close') {
+      setTimeout(() => {
+        close();
+      }, 100);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [popoverState]);
+
+  return (
+    <BottomSheetView
+      className={tvStyles}
+      style={[
+        { paddingBottom: insets.bottom + 12 },
+        contentContainerProps?.style,
+      ]}
+      {...contentContainerProps}
+    >
+      {children}
+    </BottomSheetView>
+  );
+};
 
 // --------------------------------------------------
 
@@ -580,6 +587,8 @@ PopoverTrigger.displayName = DISPLAY_NAME.TRIGGER;
 PopoverPortal.displayName = DISPLAY_NAME.PORTAL;
 PopoverOverlay.displayName = DISPLAY_NAME.OVERLAY;
 PopoverContent.displayName = DISPLAY_NAME.CONTENT;
+PopoverContentContainer.displayName = DISPLAY_NAME.CONTENT_CONTAINER;
+PopoverContentContainer.displayName = DISPLAY_NAME.CONTENT_CONTAINER;
 PopoverClose.displayName = DISPLAY_NAME.CLOSE;
 PopoverTitle.displayName = DISPLAY_NAME.TITLE;
 PopoverDescription.displayName = DISPLAY_NAME.DESCRIPTION;

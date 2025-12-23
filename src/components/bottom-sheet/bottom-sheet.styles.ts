@@ -1,10 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 
-const portal = tv({
-  base: 'absolute inset-0',
-});
-
 const overlay = tv({
   base: 'absolute inset-0 bg-black/20',
 });
@@ -26,7 +22,6 @@ const description = tv({
 });
 
 const bottomSheetStyles = {
-  portal,
   overlay,
   contentContainer,
   close,

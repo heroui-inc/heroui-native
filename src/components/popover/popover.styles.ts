@@ -13,7 +13,7 @@ const popoverContent = tv({
   base: 'absolute bg-overlay rounded-3xl border border-border p-3 px-4 shadow-lg shadow-black/5 dark:shadow-none',
 });
 
-const bottomSheetContent = tv({
+const contentContainer = tv({
   base: 'flex-1 p-5 bg-transparent',
 });
 
@@ -37,7 +37,7 @@ const popoverStyles = {
   portal,
   overlay,
   popoverContent,
-  bottomSheetContent,
+  contentContainer,
   close,
   label,
   description,

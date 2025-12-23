@@ -1,7 +1,7 @@
 import type GorhomBottomSheet from '@gorhom/bottom-sheet';
 import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
-import type { StyleProp, TextProps, ViewStyle } from 'react-native';
+import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
   AnimationRoot,
@@ -77,14 +77,6 @@ export interface BottomSheetTriggerProps
  */
 export interface BottomSheetPortalProps
   extends BottomSheetPrimitivesTypes.PortalProps {
-  /**
-   * Additional CSS class for the portal container
-   */
-  className?: string;
-  /**
-   * Additional style for the portal container
-   */
-  style?: StyleProp<ViewStyle>;
   /**
    * The portal content
    */
@@ -204,4 +196,22 @@ export interface UseBottomSheetAnimationReturn {
    * Dragging state shared value
    */
   isDragging: SharedValue<boolean>;
+}
+
+/**
+ * BottomSheet ContentContainer component props
+ */
+export interface BottomSheetContentContainerProps {
+  /**
+   * The content to be rendered inside the container
+   */
+  children?: ReactNode;
+  /**
+   * Additional CSS class for the content container
+   */
+  contentContainerClassName?: string;
+  /**
+   * Props for the content container
+   */
+  contentContainerProps?: Omit<BottomSheetViewProps, 'children'>;
 }

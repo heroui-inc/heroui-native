@@ -171,13 +171,13 @@ const PresentationContent = () => {
                 width: 42,
                 backgroundColor: themeColorMuted,
               }}
-              bottomSheetViewClassName={cn(
+              contentContainerClassName={cn(
                 'h-full mx-2 border border-divider/20 bg-overlay overflow-hidden',
                 Platform.OS === 'ios'
                   ? 'rounded-t-4xl rounded-b-[54px]'
                   : 'rounded-4xl'
               )}
-              bottomSheetViewProps={{
+              contentContainerProps={{
                 style: {
                   padding: 0,
                 },

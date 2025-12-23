@@ -6,7 +6,15 @@ const overlay = tv({
 });
 
 const contentContainer = tv({
-  base: 'flex-1 p-5 bg-transparent',
+  base: 'flex-1 p-5 pb-safe-offset-3 bg-transparent',
+});
+
+const contentBackground = tv({
+  base: 'bg-overlay rounded-t-[32px]',
+});
+
+const contentHandleIndicator = tv({
+  base: 'bg-muted',
 });
 
 const close = tv({
@@ -24,6 +32,8 @@ const description = tv({
 const bottomSheetStyles = {
   overlay,
   contentContainer,
+  contentBackground,
+  contentHandleIndicator,
   close,
   label,
   description,

@@ -307,10 +307,8 @@ const SelectContentBottomSheet = forwardRef<
     const { onOpenChange } = useSelect();
     const { selectState, progress } = useSelectAnimation();
 
-    const [themeColorOverlay, themeColorMuted] = [
-      useThemeColor('overlay'),
-      useThemeColor('muted'),
-    ];
+    const themeColorOverlay = useThemeColor('overlay');
+    const themeColorMuted = useThemeColor('muted');
 
     const onClose = () => {
       onOpenChange(false);

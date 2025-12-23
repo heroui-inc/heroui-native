@@ -5,9 +5,8 @@ import GorhomBottomSheet, {
 } from '@gorhom/bottom-sheet';
 import { forwardRef, useEffect, useMemo } from 'react';
 import type { Text as RNText, ViewStyle } from 'react-native';
-import { StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
 import { HeroText } from '../../helpers/components/hero-text';
 import {
@@ -25,7 +24,7 @@ import {
   useBottomSheetAnimation,
 } from './bottom-sheet.animation';
 import { DISPLAY_NAME } from './bottom-sheet.constants';
-import bottomSheetStyles from './bottom-sheet.styles';
+import bottomSheetStyles, { styleSheet } from './bottom-sheet.styles';
 import type {
   BottomSheetCloseProps,
   BottomSheetContentContainerProps,
@@ -41,6 +40,8 @@ import type {
 const AnimatedOverlay = Animated.createAnimatedComponent(
   BottomSheetPrimitives.Overlay
 );
+
+const StyledGorhomBottomSheet = withUniwind(GorhomBottomSheet);
 
 const useBottomSheet = BottomSheetPrimitives.useRootContext;
 
@@ -175,6 +176,8 @@ const BottomSheetContent = forwardRef<
   (
     {
       children,
+      backgroundClassName,
+      handleIndicatorClassName,
       contentContainerClassName,
       contentContainerProps,
       ...restProps
@@ -184,15 +187,14 @@ const BottomSheetContent = forwardRef<
     const { onOpenChange } = useBottomSheet();
     const { bottomSheetState, progress } = useBottomSheetAnimation();
 
-    const [themeColorOverlay, themeColorMuted] = [
-      useThemeColor('overlay'),
-      useThemeColor('muted'),
-    ];
+    const contentBackgroundClassName = bottomSheetStyles.contentBackground({
+      className: backgroundClassName,
+    });
 
-    const handleIndicatorStyle = StyleSheet.flatten([
-      { backgroundColor: themeColorMuted },
-      restProps.handleIndicatorStyle,
-    ]);
+    const contentHandleIndicatorClassName =
+      bottomSheetStyles.contentHandleIndicator({
+        className: handleIndicatorClassName,
+      });
 
     const onClose = () => {
       onOpenChange(false);
@@ -205,17 +207,14 @@ const BottomSheetContent = forwardRef<
     });
 
     return (
-      <GorhomBottomSheet
+      <StyledGorhomBottomSheet
         ref={ref}
+        backgroundClassName={contentBackgroundClassName}
         backgroundStyle={[
-          {
-            backgroundColor: themeColorOverlay,
-            borderRadius: 32,
-            borderCurve: 'continuous',
-          },
+          styleSheet.contentContainer,
           restProps.backgroundStyle,
         ]}
-        handleIndicatorStyle={handleIndicatorStyle}
+        handleIndicatorClassName={contentHandleIndicatorClassName}
         enablePanDownToClose={restProps.enablePanDownToClose ?? true}
         animatedIndex={animatedIndex ?? restProps.animatedIndex}
         onClose={onClose}
@@ -227,7 +226,7 @@ const BottomSheetContent = forwardRef<
         >
           {children}
         </ContentContainer>
-      </GorhomBottomSheet>
+      </StyledGorhomBottomSheet>
     );
   }
 );
@@ -239,7 +238,6 @@ const ContentContainer = ({
   contentContainerClassName,
   contentContainerProps,
 }: BottomSheetContentContainerProps) => {
-  const insets = useSafeAreaInsets();
   const { bottomSheetState } = useBottomSheetAnimation();
   const { expand, close } = useGorhomBottomSheet();
 
@@ -259,14 +257,7 @@ const ContentContainer = ({
   }, [bottomSheetState]);
 
   return (
-    <GorhomBottomSheetView
-      className={tvStyles}
-      style={[
-        { paddingBottom: insets.bottom + 12 },
-        contentContainerProps?.style,
-      ]}
-      {...contentContainerProps}
-    >
+    <GorhomBottomSheetView className={tvStyles} {...contentContainerProps}>
       {children}
     </GorhomBottomSheetView>
   );

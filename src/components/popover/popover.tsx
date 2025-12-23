@@ -277,10 +277,8 @@ const PopoverContentBottomSheet = forwardRef<
     const { onOpenChange } = usePopover();
     const { popoverState, progress } = usePopoverAnimation();
 
-    const [themeColorOverlay, themeColorMuted] = [
-      useThemeColor('overlay'),
-      useThemeColor('muted'),
-    ];
+    const themeColorOverlay = useThemeColor('overlay');
+    const themeColorMuted = useThemeColor('muted');
 
     const handleIndicatorStyle = StyleSheet.flatten([
       { backgroundColor: themeColorMuted },

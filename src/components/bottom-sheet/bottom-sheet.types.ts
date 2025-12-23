@@ -116,9 +116,30 @@ export interface BottomSheetContentProps
    */
   children?: ReactNode;
   /**
+   * Additional CSS class for the bottom sheet
+   */
+  className?: string;
+  /**
+   * Additional CSS class for the container
+   */
+  containerClassName?: string;
+  /**
    * Additional CSS class for the content container
    */
   contentContainerClassName?: string;
+  /**
+   * Additional CSS class for the background
+   */
+  backgroundClassName?: string;
+  /**
+   * Additional CSS class for the handle
+   */
+  handleClassName?: string;
+  /**
+   * Additional CSS class for the handle indicator
+   */
+  handleIndicatorClassName?: string;
+
   /**
    * Props for the content container
    */

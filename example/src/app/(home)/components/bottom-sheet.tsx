@@ -20,10 +20,7 @@ const BasicBottomSheetContent = () => {
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
             <BottomSheet.Overlay />
-            <BottomSheet.Content
-              snapPoints={['50%']}
-              handleIndicatorClassName="bg-blue-400"
-            >
+            <BottomSheet.Content snapPoints={['50%']}>
               <BottomSheet.Close className="self-end -mb-2 z-50" />
               <View className="size-9 items-center justify-center rounded-full bg-overlay-foreground/5 mb-4">
                 <StyledIonicons

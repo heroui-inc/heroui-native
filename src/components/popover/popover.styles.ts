@@ -13,10 +13,6 @@ const popoverContent = tv({
   base: 'absolute bg-overlay rounded-3xl border border-border p-3 px-4 shadow-lg shadow-black/5 dark:shadow-none',
 });
 
-const contentContainer = tv({
-  base: 'flex-1 p-5 bg-transparent',
-});
-
 const close = tv({
   base: '',
 });
@@ -37,7 +33,6 @@ const popoverStyles = {
   portal,
   overlay,
   popoverContent,
-  contentContainer,
   close,
   label,
   description,

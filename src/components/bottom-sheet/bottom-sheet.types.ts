@@ -1,5 +1,4 @@
 import type GorhomBottomSheet from '@gorhom/bottom-sheet';
-import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
@@ -8,6 +7,7 @@ import type {
   PopupOverlayAnimation,
   PopupRootAnimationConfig,
 } from '../../helpers/types/animation';
+import type { BaseBottomSheetContentProps } from '../../helpers/types/bottom-sheet';
 import type * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
 
 /**
@@ -110,41 +110,8 @@ export interface BottomSheetOverlayProps
  * BottomSheet Content component props
  */
 export interface BottomSheetContentProps
-  extends Partial<React.ComponentProps<typeof GorhomBottomSheet>> {
-  /**
-   * The bottom sheet content
-   */
-  children?: ReactNode;
-  /**
-   * Additional CSS class for the bottom sheet
-   */
-  className?: string;
-  /**
-   * Additional CSS class for the container
-   */
-  containerClassName?: string;
-  /**
-   * Additional CSS class for the content container
-   */
-  contentContainerClassName?: string;
-  /**
-   * Additional CSS class for the background
-   */
-  backgroundClassName?: string;
-  /**
-   * Additional CSS class for the handle
-   */
-  handleClassName?: string;
-  /**
-   * Additional CSS class for the handle indicator
-   */
-  handleIndicatorClassName?: string;
-
-  /**
-   * Props for the content container
-   */
-  contentContainerProps?: Omit<BottomSheetViewProps, 'children'>;
-}
+  extends Partial<React.ComponentProps<typeof GorhomBottomSheet>>,
+    BaseBottomSheetContentProps {}
 
 /**
  * BottomSheet Close component props
@@ -217,22 +184,4 @@ export interface UseBottomSheetAnimationReturn {
    * Dragging state shared value
    */
   isDragging: SharedValue<boolean>;
-}
-
-/**
- * BottomSheet ContentContainer component props
- */
-export interface BottomSheetContentContainerProps {
-  /**
-   * The content to be rendered inside the container
-   */
-  children?: ReactNode;
-  /**
-   * Additional CSS class for the content container
-   */
-  contentContainerClassName?: string;
-  /**
-   * Props for the content container
-   */
-  contentContainerProps?: Omit<BottomSheetViewProps, 'children'>;
 }

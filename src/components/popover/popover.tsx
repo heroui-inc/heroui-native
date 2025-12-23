@@ -269,7 +269,12 @@ const PopoverContentBottomSheet = forwardRef<
   PopoverContentProps & { presentation: 'bottom-sheet' }
 >(
   (
-    { children, bottomSheetViewClassName, bottomSheetViewProps, ...restProps },
+    {
+      children,
+      contentContainerClassName,
+      contentContainerProps,
+      ...restProps
+    },
     ref
   ) => {
     const insets = useSafeAreaInsets();
@@ -285,7 +290,7 @@ const PopoverContentBottomSheet = forwardRef<
     ];
 
     const tvStyles = popoverStyles.bottomSheetContent({
-      className: bottomSheetViewClassName,
+      className: contentContainerClassName,
     });
 
     const handleIndicatorStyle = StyleSheet.flatten([
@@ -329,6 +334,7 @@ const PopoverContentBottomSheet = forwardRef<
             {
               backgroundColor: themeColorOverlay,
               borderRadius: 32,
+              borderCurve: 'continuous',
             },
             restProps.backgroundStyle,
           ]}
@@ -342,9 +348,9 @@ const PopoverContentBottomSheet = forwardRef<
             className={tvStyles}
             style={[
               { paddingBottom: insets.bottom + 12 },
-              bottomSheetViewProps?.style,
+              contentContainerProps?.style,
             ]}
-            {...bottomSheetViewProps}
+            {...contentContainerProps}
           >
             {children}
           </BottomSheetView>

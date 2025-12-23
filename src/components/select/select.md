@@ -527,12 +527,12 @@ Animation configuration for Select.Content component (popover presentation). Can
 
 ### Select.Content (Bottom Sheet Presentation)
 
-| prop                       | type               | default | description                                      |
-| -------------------------- | ------------------ | ------- | ------------------------------------------------ |
-| `children`                 | `ReactNode`        | -       | The bottom sheet content                         |
-| `presentation`             | `'bottom-sheet'`   | -       | Presentation mode for the select                 |
-| `bottomSheetViewClassName` | `string`           | -       | Additional CSS classes for the bottom sheet view |
-| `...BottomSheetProps`      | `BottomSheetProps` | -       | All @gorhom/bottom-sheet props are supported     |
+| prop                        | type               | default | description                                      |
+| --------------------------- | ------------------ | ------- | ------------------------------------------------ |
+| `children`                  | `ReactNode`        | -       | The bottom sheet content                         |
+| `presentation`              | `'bottom-sheet'`   | -       | Presentation mode for the select                 |
+| `contentContainerClassName` | `string`           | -       | Additional CSS classes for the content container |
+| `...BottomSheetProps`       | `BottomSheetProps` | -       | All @gorhom/bottom-sheet props are supported     |
 
 ### Select.Content (Dialog Presentation)
 

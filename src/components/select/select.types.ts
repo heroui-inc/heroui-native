@@ -176,13 +176,13 @@ export interface SelectContentBottomSheetProps
    */
   presentation: 'bottom-sheet';
   /**
-   * Additional CSS class for the bottom sheet view
+   * Additional CSS class for the content container
    */
-  bottomSheetViewClassName?: string;
+  contentContainerClassName?: string;
   /**
-   * Props for the bottom sheet view
+   * Props for the content container
    */
-  bottomSheetViewProps?: Omit<BottomSheetViewProps, 'children'>;
+  contentContainerProps?: Omit<BottomSheetViewProps, 'children'>;
 }
 
 /**

@@ -1,11 +1,8 @@
-/* eslint-disable react-native/no-inline-styles */
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Button } from 'heroui-native';
+import { BottomSheet, Button } from 'heroui-native';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
-import * as BottomSheetPrimitives from '../../../../../src/primitives/bottom-sheet';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
@@ -17,13 +14,14 @@ const BasicBottomSheetContent = () => {
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
-        <BottomSheetPrimitives.Root isOpen={isOpen} onOpenChange={setIsOpen}>
-          <BottomSheetPrimitives.Trigger asChild>
+        <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+          <BottomSheet.Trigger asChild>
             <Button variant="secondary">Basic Bottom Sheet</Button>
-          </BottomSheetPrimitives.Trigger>
-          <BottomSheetPrimitives.Portal snapPoints={['50%']}>
-            <BottomSheetPrimitives.Content className="gap-4 px-6 py-5">
-              <BottomSheetPrimitives.Close className="self-end -mb-2 z-50" />
+          </BottomSheet.Trigger>
+          <BottomSheet.Portal>
+            <BottomSheet.Overlay />
+            <BottomSheet.Content snapPoints={['50%']}>
+              <BottomSheet.Close className="self-end -mb-2 z-50" />
               <View className="size-9 items-center justify-center rounded-full bg-overlay-foreground/5 mb-4">
                 <StyledIonicons
                   name="albums-outline"
@@ -32,13 +30,11 @@ const BasicBottomSheetContent = () => {
                 />
               </View>
               <View className="mb-8 gap-1.5">
-                <BottomSheetPrimitives.Title>
-                  Low Disk Space
-                </BottomSheetPrimitives.Title>
-                <BottomSheetPrimitives.Description>
+                <BottomSheet.Title>Low Disk Space</BottomSheet.Title>
+                <BottomSheet.Description>
                   You are running low on disk space. Delete unnecessary files to
                   free up space.
-                </BottomSheetPrimitives.Description>
+                </BottomSheet.Description>
               </View>
               <View className="flex-row justify-end gap-3">
                 <Button
@@ -49,9 +45,9 @@ const BasicBottomSheetContent = () => {
                   Confirm
                 </Button>
               </View>
-            </BottomSheetPrimitives.Content>
-          </BottomSheetPrimitives.Portal>
-        </BottomSheetPrimitives.Root>
+            </BottomSheet.Content>
+          </BottomSheet.Portal>
+        </BottomSheet>
       </View>
     </View>
   );
@@ -65,14 +61,14 @@ const WithOverlayContent = () => {
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
-        <BottomSheetPrimitives.Root isOpen={isOpen} onOpenChange={setIsOpen}>
-          <BottomSheetPrimitives.Trigger asChild>
+        <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+          <BottomSheet.Trigger asChild>
             <Button variant="secondary">Bottom Sheet with Overlay</Button>
-          </BottomSheetPrimitives.Trigger>
-          <BottomSheetPrimitives.Portal snapPoints={['60%']}>
-            <BottomSheetPrimitives.Overlay />
-            <BottomSheetPrimitives.Content className="gap-4 px-6 py-5">
-              <BottomSheetPrimitives.Close className="self-end -mb-2 z-50" />
+          </BottomSheet.Trigger>
+          <BottomSheet.Portal>
+            <BottomSheet.Overlay />
+            <BottomSheet.Content snapPoints={['60%']}>
+              <BottomSheet.Close className="self-end -mb-2 z-50" />
               <View className="size-9 items-center justify-center rounded-full bg-overlay-foreground/5 mb-4">
                 <StyledIonicons
                   name="information-circle-outline"
@@ -81,17 +77,15 @@ const WithOverlayContent = () => {
                 />
               </View>
               <View className="mb-8 gap-1.5">
-                <BottomSheetPrimitives.Title>
-                  Information
-                </BottomSheetPrimitives.Title>
-                <BottomSheetPrimitives.Description>
+                <BottomSheet.Title>Information</BottomSheet.Title>
+                <BottomSheet.Description>
                   This bottom sheet includes an overlay that can be tapped to
                   close.
-                </BottomSheetPrimitives.Description>
+                </BottomSheet.Description>
               </View>
-            </BottomSheetPrimitives.Content>
-          </BottomSheetPrimitives.Portal>
-        </BottomSheetPrimitives.Root>
+            </BottomSheet.Content>
+          </BottomSheet.Portal>
+        </BottomSheet>
       </View>
     </View>
   );
@@ -101,28 +95,23 @@ const WithOverlayContent = () => {
 
 const ScrollableContent = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const insets = useSafeAreaInsets();
 
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
-        <BottomSheetPrimitives.Root isOpen={isOpen} onOpenChange={setIsOpen}>
-          <BottomSheetPrimitives.Trigger asChild>
+        <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+          <BottomSheet.Trigger asChild>
             <Button variant="secondary">Scrollable Content</Button>
-          </BottomSheetPrimitives.Trigger>
-          <BottomSheetPrimitives.Portal snapPoints={['90%']}>
-            <BottomSheetPrimitives.Content
-              className="gap-4 px-6"
-              style={{ paddingBottom: insets.bottom + 12 }}
-            >
-              <BottomSheetPrimitives.Close className="self-end -mb-2 z-50" />
+          </BottomSheet.Trigger>
+          <BottomSheet.Portal>
+            <BottomSheet.Overlay />
+            <BottomSheet.Content snapPoints={['90%']}>
+              <BottomSheet.Close className="self-end -mb-2 z-50" />
               <View className="mb-4 gap-1.5">
-                <BottomSheetPrimitives.Title>
-                  Long Content
-                </BottomSheetPrimitives.Title>
-                <BottomSheetPrimitives.Description>
+                <BottomSheet.Title>Long Content</BottomSheet.Title>
+                <BottomSheet.Description>
                   This bottom sheet contains scrollable content.
-                </BottomSheetPrimitives.Description>
+                </BottomSheet.Description>
               </View>
               <View className="gap-4">
                 {Array.from({ length: 20 }).map((_, index) => (
@@ -136,9 +125,9 @@ const ScrollableContent = () => {
                   </View>
                 ))}
               </View>
-            </BottomSheetPrimitives.Content>
-          </BottomSheetPrimitives.Portal>
-        </BottomSheetPrimitives.Root>
+            </BottomSheet.Content>
+          </BottomSheet.Portal>
+        </BottomSheet>
       </View>
     </View>
   );
@@ -152,28 +141,24 @@ const CustomSnapPointsContent = () => {
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
-        <BottomSheetPrimitives.Root isOpen={isOpen} onOpenChange={setIsOpen}>
-          <BottomSheetPrimitives.Trigger asChild>
+        <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+          <BottomSheet.Trigger asChild>
             <Button variant="secondary">Custom Snap Points</Button>
-          </BottomSheetPrimitives.Trigger>
-          <BottomSheetPrimitives.Portal
-            snapPoints={['25%', '50%', '90%']}
-            index={1}
-          >
-            <BottomSheetPrimitives.Content className="gap-4 px-6 py-5">
-              <BottomSheetPrimitives.Close className="self-end -mb-2 z-50" />
+          </BottomSheet.Trigger>
+          <BottomSheet.Portal>
+            <BottomSheet.Overlay />
+            <BottomSheet.Content snapPoints={['25%', '50%', '90%']} index={1}>
+              <BottomSheet.Close className="self-end -mb-2 z-50" />
               <View className="mb-4 gap-1.5">
-                <BottomSheetPrimitives.Title>
-                  Multiple Snap Points
-                </BottomSheetPrimitives.Title>
-                <BottomSheetPrimitives.Description>
+                <BottomSheet.Title>Multiple Snap Points</BottomSheet.Title>
+                <BottomSheet.Description>
                   Drag to adjust the height. This bottom sheet has three snap
                   points: 25%, 50%, and 90%.
-                </BottomSheetPrimitives.Description>
+                </BottomSheet.Description>
               </View>
-            </BottomSheetPrimitives.Content>
-          </BottomSheetPrimitives.Portal>
-        </BottomSheetPrimitives.Root>
+            </BottomSheet.Content>
+          </BottomSheet.Portal>
+        </BottomSheet>
       </View>
     </View>
   );

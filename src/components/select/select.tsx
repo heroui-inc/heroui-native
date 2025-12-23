@@ -291,7 +291,12 @@ const SelectContentBottomSheet = forwardRef<
   SelectContentProps & { presentation: 'bottom-sheet' }
 >(
   (
-    { children, bottomSheetViewClassName, bottomSheetViewProps, ...restProps },
+    {
+      children,
+      contentContainerClassName,
+      contentContainerProps,
+      ...restProps
+    },
     ref
   ) => {
     const insets = useSafeAreaInsets();
@@ -307,7 +312,7 @@ const SelectContentBottomSheet = forwardRef<
     ];
 
     const tvStyles = selectStyles.bottomSheetContent({
-      className: bottomSheetViewClassName,
+      className: contentContainerClassName,
     });
 
     useEffect(() => {
@@ -358,9 +363,9 @@ const SelectContentBottomSheet = forwardRef<
           className={tvStyles}
           style={[
             { paddingBottom: insets.bottom + 12 },
-            bottomSheetViewProps?.style,
+            contentContainerProps?.style,
           ]}
-          {...bottomSheetViewProps}
+          {...contentContainerProps}
         >
           {children}
         </BottomSheetView>

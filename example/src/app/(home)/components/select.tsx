@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { LinearGradient } from 'expo-linear-gradient';
 import {

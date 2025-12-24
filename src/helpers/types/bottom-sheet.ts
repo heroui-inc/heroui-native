@@ -1,5 +1,6 @@
 import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
+import type { AnimationDisabled } from './animation';
 
 /**
  * State type for bottom sheet content container animation coordination
@@ -65,4 +66,9 @@ export interface BaseBottomSheetContentProps {
    * Props for the content container
    */
   contentContainerProps?: Omit<BottomSheetViewProps, 'children'>;
+  /**
+   * Animation configuration for bottom sheet content
+   * - `false` or `"disabled"`: Disable all animations
+   */
+  animation?: AnimationDisabled;
 }

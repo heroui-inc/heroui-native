@@ -1,7 +1,10 @@
 import GorhomBottomSheet from '@gorhom/bottom-sheet';
 import { forwardRef, useMemo } from 'react';
 import type { Text as RNText, ViewStyle } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, {
+  ReduceMotion,
+  useSharedValue,
+} from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
 import {
   BottomSheetContentContainer,
@@ -22,6 +25,7 @@ import * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/botto
 import {
   BottomSheetAnimationProvider,
   useBottomSheetAnimation,
+  useBottomSheetContentAnimation,
 } from './bottom-sheet.animation';
 import { DISPLAY_NAME } from './bottom-sheet.constants';
 import bottomSheetStyles, { styleSheet } from './bottom-sheet.styles';
@@ -67,7 +71,6 @@ const BottomSheetRoot = forwardRef<
       internalIsOpen,
       componentState,
       progress,
-      isDragging,
       onOpenChange,
       isAllAnimationsDisabled,
     } = usePopupRootAnimation({
@@ -83,9 +86,8 @@ const BottomSheetRoot = forwardRef<
       () => ({
         bottomSheetState: componentState,
         progress,
-        isDragging,
       }),
-      [componentState, progress, isDragging]
+      [componentState, progress]
     );
 
     const animationSettingsContextValue = useMemo(
@@ -145,7 +147,8 @@ const BottomSheetOverlay = forwardRef<
   BottomSheetPrimitivesTypes.OverlayRef,
   BottomSheetOverlayProps
 >(({ className, style, animation, ...props }, ref) => {
-  const { progress, isDragging } = useBottomSheetAnimation();
+  const { progress } = useBottomSheetAnimation();
+  const isDragging = useSharedValue(false);
 
   const tvStyles = bottomSheetStyles.overlay({ className });
 
@@ -179,12 +182,18 @@ const BottomSheetContent = forwardRef<
       handleIndicatorClassName,
       contentContainerClassName,
       contentContainerProps,
+      animationConfigs,
+      animation,
       ...restProps
     },
     ref
   ) => {
     const { onOpenChange } = useBottomSheet();
     const { bottomSheetState, progress } = useBottomSheetAnimation();
+
+    const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
+      animation,
+    });
 
     const { animatedIndex } = usePopupBottomSheetContentAnimation({
       progress,
@@ -209,6 +218,16 @@ const BottomSheetContent = forwardRef<
       restProps.onClose?.();
     };
 
+    const mergedAnimationConfigs = useMemo(
+      () => ({
+        ...animationConfigs,
+        reduceMotion: isAnimationDisabledValue
+          ? ReduceMotion.Always
+          : animationConfigs?.reduceMotion,
+      }),
+      [animationConfigs, isAnimationDisabledValue]
+    );
+
     return (
       <StyledGorhomBottomSheet
         ref={ref}
@@ -221,6 +240,7 @@ const BottomSheetContent = forwardRef<
         enablePanDownToClose={restProps.enablePanDownToClose ?? true}
         animatedIndex={animatedIndex ?? restProps.animatedIndex}
         onClose={onClose}
+        animationConfigs={mergedAnimationConfigs}
         {...restProps}
       >
         <BottomSheetContentContainer

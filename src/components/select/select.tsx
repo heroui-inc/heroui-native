@@ -7,7 +7,7 @@ import type {
 } from 'react-native';
 import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
+import Animated, { ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
 import {
@@ -29,6 +29,7 @@ import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animat
 import { useThemeColor } from '../../helpers/theme';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
+import { useBottomSheetContentAnimation } from '../bottom-sheet/bottom-sheet.animation';
 import bottomSheetStyles from '../bottom-sheet/bottom-sheet.styles';
 import {
   SelectAnimationProvider,
@@ -302,12 +303,18 @@ const SelectContentBottomSheet = forwardRef<
       handleIndicatorClassName,
       contentContainerClassName,
       contentContainerProps,
+      animation,
+      animationConfigs,
       ...restProps
     },
     ref
   ) => {
     const { onOpenChange } = useSelect();
     const { selectState, progress } = useSelectAnimation();
+
+    const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
+      animation,
+    });
 
     const { animatedIndex } = usePopupBottomSheetContentAnimation({
       progress,
@@ -332,6 +339,16 @@ const SelectContentBottomSheet = forwardRef<
       restProps.onClose?.();
     };
 
+    const mergedAnimationConfigs = useMemo(
+      () => ({
+        ...animationConfigs,
+        reduceMotion: isAnimationDisabledValue
+          ? ReduceMotion.Always
+          : animationConfigs?.reduceMotion,
+      }),
+      [animationConfigs, isAnimationDisabledValue]
+    );
+
     return (
       <StyledBottomSheet
         ref={ref}
@@ -344,6 +361,7 @@ const SelectContentBottomSheet = forwardRef<
         enablePanDownToClose={restProps.enablePanDownToClose ?? true}
         animatedIndex={animatedIndex ?? restProps.animatedIndex}
         onClose={onClose}
+        animationConfigs={mergedAnimationConfigs}
         {...restProps}
       >
         <BottomSheetContentContainer

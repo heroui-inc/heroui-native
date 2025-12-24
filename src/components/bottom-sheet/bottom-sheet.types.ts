@@ -3,9 +3,8 @@ import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
-  AnimationRoot,
+  AnimationRootDisableAll,
   PopupOverlayAnimation,
-  PopupRootAnimationConfig,
 } from '../../helpers/types/animation';
 import type { BaseBottomSheetContentProps } from '../../helpers/types/bottom-sheet';
 import type * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
@@ -23,14 +22,12 @@ export interface BottomSheetAnimationContextValue {
   bottomSheetState: BottomSheetState;
   /** Animation progress shared value (0=idle, 1=open, 2=close) */
   progress: SharedValue<number>;
-  /** Dragging state shared value */
-  isDragging: SharedValue<boolean>;
 }
 
 /**
  * Animation configuration for BottomSheet root component
  */
-export type BottomSheetRootAnimation = AnimationRoot<PopupRootAnimationConfig>;
+export type BottomSheetRootAnimation = AnimationRootDisableAll;
 
 /**
  * BottomSheet Root component props
@@ -54,9 +51,7 @@ export interface BottomSheetRootProps
   /**
    * Animation configuration for bottom sheet root
    * - `"disable-all"`: Disable all animations including children
-   * - `false` or `"disabled"`: Disable only root animations
-   * - `true` or `undefined`: Use default animations
-   * - `object`: Custom animation configuration
+   * - `undefined`: Use default animations
    */
   animation?: BottomSheetRootAnimation;
 }
@@ -180,8 +175,4 @@ export interface UseBottomSheetAnimationReturn {
    * Animation progress shared value (0=idle, 1=open, 2=close)
    */
   progress: SharedValue<number>;
-  /**
-   * Dragging state shared value
-   */
-  isDragging: SharedValue<boolean>;
 }

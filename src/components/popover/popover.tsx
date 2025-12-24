@@ -2,7 +2,7 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import { createContext, forwardRef, use, useMemo } from 'react';
 import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
 import { View } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, { ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
 import {
@@ -22,6 +22,7 @@ import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animat
 import { useThemeColor } from '../../helpers/theme';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
+import { useBottomSheetContentAnimation } from '../bottom-sheet/bottom-sheet.animation';
 import bottomSheetStyles from '../bottom-sheet/bottom-sheet.styles';
 import { ArrowSvg } from './arrow-svg';
 import {
@@ -275,12 +276,18 @@ const PopoverContentBottomSheet = forwardRef<
       handleIndicatorClassName,
       contentContainerClassName,
       contentContainerProps,
+      animation,
+      animationConfigs,
       ...restProps
     },
     ref
   ) => {
     const { onOpenChange } = usePopover();
     const { popoverState, progress } = usePopoverAnimation();
+
+    const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
+      animation,
+    });
 
     const { animatedIndex } = usePopupBottomSheetContentAnimation({
       progress,
@@ -305,6 +312,16 @@ const PopoverContentBottomSheet = forwardRef<
       restProps.onClose?.();
     };
 
+    const mergedAnimationConfigs = useMemo(
+      () => ({
+        ...animationConfigs,
+        reduceMotion: isAnimationDisabledValue
+          ? ReduceMotion.Always
+          : animationConfigs?.reduceMotion,
+      }),
+      [animationConfigs, isAnimationDisabledValue]
+    );
+
     return (
       <PopoverContentContext value={{ placement: 'bottom' }}>
         <StyledBottomSheet
@@ -318,6 +335,7 @@ const PopoverContentBottomSheet = forwardRef<
           enablePanDownToClose={restProps.enablePanDownToClose ?? true}
           animatedIndex={animatedIndex ?? restProps.animatedIndex}
           onClose={onClose}
+          animationConfigs={mergedAnimationConfigs}
           {...restProps}
         >
           <BottomSheetContentContainer

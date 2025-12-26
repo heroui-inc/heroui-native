@@ -198,11 +198,17 @@ const RadioGroupIndicatorThumb = forwardRef<
   View,
   RadioGroupIndicatorThumbProps
 >((props, ref) => {
-  const { className, style, animation, ...restProps } = props;
+  const {
+    className,
+    style,
+    animation,
+    isAnimatedStyleActive = true,
+    ...restProps
+  } = props;
 
   const { isSelected, isOnSurface } = useRadioGroupItem();
 
-  const tvStyles = radioGroupStyles.itemIndicatorThumb({
+  const thumbClassName = radioGroupStyles.itemIndicatorThumb({
     isOnSurface,
     isSelected,
     className,
@@ -213,11 +219,13 @@ const RadioGroupIndicatorThumb = forwardRef<
     isSelected,
   });
 
+  const thumbStyle = isAnimatedStyleActive ? [rContainerStyle, style] : style;
+
   return (
     <Animated.View
       ref={ref}
-      className={tvStyles}
-      style={[rContainerStyle, style]}
+      className={thumbClassName}
+      style={thumbStyle}
       {...restProps}
     />
   );

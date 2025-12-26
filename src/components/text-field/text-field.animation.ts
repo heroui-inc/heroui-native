@@ -176,15 +176,6 @@ export function useTextFieldInputAnimation(options: {
       themeColorFieldBackground,
   };
 
-  const backgroundColorTimingConfig = getAnimationValueMergedConfig({
-    animationValue: animationConfig?.backgroundColor,
-    property: 'timingConfig',
-    defaultValue: {
-      duration: ANIMATION_DURATION,
-      easing: ANIMATION_EASING,
-    },
-  });
-
   // Border color animation
   const borderColorValue = {
     blur:
@@ -194,8 +185,19 @@ export function useTextFieldInputAnimation(options: {
     error: animationConfig?.borderColor?.value?.error ?? themeColorDanger,
   };
 
-  const borderColorTimingConfig = getAnimationValueMergedConfig({
-    animationValue: animationConfig?.borderColor,
+  // Focus/blur animation timing configuration
+  const focusTimingConfig = getAnimationValueMergedConfig({
+    animationValue: animationConfig?.focus,
+    property: 'timingConfig',
+    defaultValue: {
+      duration: ANIMATION_DURATION,
+      easing: ANIMATION_EASING,
+    },
+  });
+
+  // Error state animation timing configuration
+  const errorTimingConfig = getAnimationValueMergedConfig({
+    animationValue: animationConfig?.error,
     property: 'timingConfig',
     defaultValue: {
       duration: ANIMATION_DURATION,
@@ -208,23 +210,23 @@ export function useTextFieldInputAnimation(options: {
     'borderColor',
   ]);
 
-  const isFocused = useSharedValue(0);
-  const isError = useSharedValue(0);
+  const focusProgress = useSharedValue(0);
+  const errorProgress = useSharedValue(0);
   const currentBgColor = useSharedValue(backgroundColorValue.blur);
   const currentBorderColor = useSharedValue(borderColorValue.blur);
 
   // Update error state when isInvalid changes
   useEffect(() => {
     if (isInvalid) {
-      isError.set(
-        withTiming(1, isAnimationDisabledValue ? {} : borderColorTimingConfig)
+      errorProgress.set(
+        withTiming(1, isAnimationDisabledValue ? {} : errorTimingConfig)
       );
     } else {
-      isError.set(
-        withTiming(0, isAnimationDisabledValue ? {} : borderColorTimingConfig)
+      errorProgress.set(
+        withTiming(0, isAnimationDisabledValue ? {} : errorTimingConfig)
       );
     }
-  }, [isInvalid, isError, isAnimationDisabledValue, borderColorTimingConfig]);
+  }, [isInvalid, errorProgress, isAnimationDisabledValue, errorTimingConfig]);
 
   const animatedContainerStyle = useAnimatedStyle(() => {
     if (isInvalid) {
@@ -241,12 +243,12 @@ export function useTextFieldInputAnimation(options: {
 
       return {
         backgroundColor: interpolateColor(
-          isError.get(),
+          errorProgress.get(),
           [0, 1],
           [currentBgColor.get(), errorBgColor]
         ),
         borderColor: interpolateColor(
-          isError.get(),
+          errorProgress.get(),
           [0, 1],
           [currentBorderColor.get(), errorBorderColor]
         ),
@@ -256,10 +258,10 @@ export function useTextFieldInputAnimation(options: {
 
     if (isAnimationDisabledValue) {
       return {
-        backgroundColor: isFocused.get()
+        backgroundColor: focusProgress.get()
           ? backgroundColorValue.focus
           : backgroundColorValue.blur,
-        borderColor: isFocused.get()
+        borderColor: focusProgress.get()
           ? borderColorValue.focus
           : borderColorValue.blur,
         ...styleProps,
@@ -268,12 +270,12 @@ export function useTextFieldInputAnimation(options: {
 
     return {
       backgroundColor: interpolateColor(
-        isFocused.get(),
+        focusProgress.get(),
         [0, 1],
         [backgroundColorValue.blur, backgroundColorValue.focus]
       ),
       borderColor: interpolateColor(
-        isFocused.get(),
+        focusProgress.get(),
         [0, 1],
         [borderColorValue.blur, borderColorValue.focus]
       ),
@@ -283,9 +285,9 @@ export function useTextFieldInputAnimation(options: {
 
   const handleFocusAnimation = () => {
     if (!isAnimationDisabledValue) {
-      isFocused.set(withTiming(1, backgroundColorTimingConfig));
+      focusProgress.set(withTiming(1, focusTimingConfig));
     } else {
-      isFocused.set(1);
+      focusProgress.set(1);
     }
     currentBgColor.set(backgroundColorValue.focus);
     currentBorderColor.set(borderColorValue.focus);
@@ -293,9 +295,9 @@ export function useTextFieldInputAnimation(options: {
 
   const handleBlurAnimation = () => {
     if (!isAnimationDisabledValue) {
-      isFocused.set(withTiming(0, backgroundColorTimingConfig));
+      focusProgress.set(withTiming(0, focusTimingConfig));
     } else {
-      isFocused.set(0);
+      focusProgress.set(0);
     }
     currentBgColor.set(backgroundColorValue.blur);
     currentBorderColor.set(borderColorValue.blur);

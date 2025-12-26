@@ -18,6 +18,7 @@ import {
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
+  getRootAnimationState,
   getStyleTransform,
 } from '../../helpers/utils/animation';
 import {
@@ -52,7 +53,12 @@ export function usePressableFeedbackRootAnimation(options: {
 }) {
   const { variant, animation, style } = options;
 
-  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+  const { isAnimationDisabled: isAnimationDisabledFromRoot } =
+    getRootAnimationState(animation);
+  const isAllAnimationsDisabledFromRoot =
+    useCombinedAnimationDisabledState(animation);
+  const isAllAnimationsDisabled =
+    isAllAnimationsDisabledFromRoot || isAnimationDisabledFromRoot;
 
   const scaleAnimation = useMemo(() => {
     return typeof animation === 'object' ? animation?.scale : undefined;

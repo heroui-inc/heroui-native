@@ -75,11 +75,6 @@ export type TextFieldInputAnimation = Animation<{
        */
       error?: string;
     };
-    /**
-     * Animation timing configuration
-     * @default { duration: 150, easing: Easing.out(Easing.ease) }
-     */
-    timingConfig?: WithTimingConfig;
   }>;
   borderColor?: AnimationValue<{
     /**
@@ -103,6 +98,21 @@ export type TextFieldInputAnimation = Animation<{
        */
       error?: string;
     };
+  }>;
+  /**
+   * Animation timing configuration for focus/blur transitions
+   */
+  focus?: AnimationValue<{
+    /**
+     * Animation timing configuration
+     * @default { duration: 150, easing: Easing.out(Easing.ease) }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+  /**
+   * Animation timing configuration for error state transitions
+   */
+  error?: AnimationValue<{
     /**
      * Animation timing configuration
      * @default { duration: 150, easing: Easing.out(Easing.ease) }

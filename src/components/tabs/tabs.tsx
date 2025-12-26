@@ -267,7 +267,14 @@ const TabsIndicator = forwardRef<
   TabsPrimitivesTypes.IndicatorRef,
   TabsIndicatorProps
 >((props, ref) => {
-  const { children, className, style, animation, ...restProps } = props;
+  const {
+    children,
+    className,
+    style,
+    animation,
+    isAnimatedStyleActive = true,
+    ...restProps
+  } = props;
 
   const { variant } = useTabsMeasurements();
 
@@ -275,13 +282,17 @@ const TabsIndicator = forwardRef<
     animation,
   });
 
-  const tvStyles = tabsStyles.indicator({ variant, className });
+  const indicatorClassName = tabsStyles.indicator({ variant, className });
+
+  const indicatorStyle = isAnimatedStyleActive
+    ? [rContainerStyle, style]
+    : style;
 
   return (
     <AnimatedIndicator
       ref={ref}
-      className={tvStyles}
-      style={[rContainerStyle, style]}
+      className={indicatorClassName}
+      style={indicatorStyle}
       {...restProps}
     >
       {children}

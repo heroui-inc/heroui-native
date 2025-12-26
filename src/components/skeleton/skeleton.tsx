@@ -29,19 +29,18 @@ import type { SkeletonProps } from './skeleton.types';
 
 const ShimmerAnimation: React.FC<{
   animation: SkeletonProps['animation'];
-}> = ({ animation }) => {
+  isAnimatedStyleActive?: boolean;
+}> = ({ animation, isAnimatedStyleActive = true }) => {
   const { rContainerStyle, gradientColors } = useSkeletonShimmerAnimation({
     animation,
   });
 
+  const shimmerStyle = isAnimatedStyleActive
+    ? [StyleSheet.absoluteFill, nativeStyles.borderCurve, rContainerStyle]
+    : [StyleSheet.absoluteFill, nativeStyles.borderCurve];
+
   return (
-    <Animated.View
-      style={[
-        StyleSheet.absoluteFill,
-        nativeStyles.borderCurve,
-        rContainerStyle,
-      ]}
-    >
+    <Animated.View style={shimmerStyle}>
       <LinearGradientComponent colors={gradientColors} />
     </Animated.View>
   );
@@ -52,8 +51,9 @@ const ShimmerAnimation: React.FC<{
 const PulseAnimation: React.FC<
   PropsWithChildren<{
     animation: SkeletonProps['animation'];
+    isAnimatedStyleActive?: boolean;
   }>
-> = ({ children, animation }) => {
+> = ({ children, animation, isAnimatedStyleActive = true }) => {
   const { variant } = useSkeletonAnimation();
 
   const { rContainerStyle } = useSkeletonPulseAnimation({
@@ -61,7 +61,8 @@ const PulseAnimation: React.FC<
   });
 
   if (variant === 'pulse') {
-    return <Animated.View style={rContainerStyle}>{children}</Animated.View>;
+    const pulseStyle = isAnimatedStyleActive ? rContainerStyle : undefined;
+    return <Animated.View style={pulseStyle}>{children}</Animated.View>;
   }
 
   return children;
@@ -75,6 +76,7 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
     isLoading = true,
     variant = 'shimmer',
     animation,
+    isAnimatedStyleActive = true,
     className,
     style,
     ...restProps
@@ -138,7 +140,10 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
       <SkeletonAnimationProvider value={animationContextValue}>
-        <PulseAnimation animation={animation}>
+        <PulseAnimation
+          animation={animation}
+          isAnimatedStyleActive={isAnimatedStyleActive}
+        >
           <Animated.View
             key="skeleton"
             entering={entering}
@@ -149,7 +154,10 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
             {...restProps}
           >
             {variant === 'shimmer' && componentWidth > 0 && (
-              <ShimmerAnimation animation={animation} />
+              <ShimmerAnimation
+                animation={animation}
+                isAnimatedStyleActive={isAnimatedStyleActive}
+              />
             )}
           </Animated.View>
         </PulseAnimation>

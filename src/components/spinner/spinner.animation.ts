@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from 'react';
-import type { ViewStyle } from 'react-native';
 import {
   cancelAnimation,
   Easing,
@@ -16,7 +15,6 @@ import {
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-  getStyleTransform,
 } from '../../helpers/utils/animation';
 import {
   DEFAULT_ROTATION_DURATION,
@@ -78,10 +76,9 @@ export function useSpinnerRootAnimation(options: {
  */
 export function useSpinnerIndicatorAnimation(options: {
   animation: SpinnerIndicatorAnimation | undefined;
-  style: ViewStyle | undefined;
   isLoading: boolean;
 }) {
-  const { animation, style, isLoading } = options;
+  const { animation, isLoading } = options;
 
   // Read from global animation context (always available in compound parts)
   const { isAllAnimationsDisabled } = useAnimationSettings();
@@ -137,16 +134,12 @@ export function useSpinnerIndicatorAnimation(options: {
     };
   }, [isLoading, isAnimationDisabledValue, rotation, rotationTimingConfig]);
 
-  // Extract style transform OUTSIDE useAnimatedStyle
-  const styleTransform = getStyleTransform(style);
-
   const rContainerStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
           rotate: `${rotation.get()}deg`,
         },
-        ...styleTransform,
       ],
     };
   });

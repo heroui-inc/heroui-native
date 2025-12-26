@@ -1,6 +1,6 @@
 import GorhomBottomSheet from '@gorhom/bottom-sheet';
 import { forwardRef, useMemo } from 'react';
-import type { Text as RNText, ViewStyle } from 'react-native';
+import type { Text as RNText } from 'react-native';
 import Animated, {
   ReduceMotion,
   useSharedValue,
@@ -146,28 +146,36 @@ const BottomSheetPortal = ({ children, ...props }: BottomSheetPortalProps) => {
 const BottomSheetOverlay = forwardRef<
   BottomSheetPrimitivesTypes.OverlayRef,
   BottomSheetOverlayProps
->(({ className, style, animation, ...props }, ref) => {
-  const { progress } = useBottomSheetAnimation();
-  const isDragging = useSharedValue(false);
+>(
+  (
+    { className, style, animation, isAnimatedStyleActive = true, ...props },
+    ref
+  ) => {
+    const { progress } = useBottomSheetAnimation();
+    const isDragging = useSharedValue(false);
 
-  const tvStyles = bottomSheetStyles.overlay({ className });
+    const overlayClassName = bottomSheetStyles.overlay({ className });
 
-  const { rContainerStyle } = usePopupOverlayAnimation({
-    progress,
-    isDragging,
-    animation,
-    style: style as ViewStyle,
-  });
+    const { rContainerStyle } = usePopupOverlayAnimation({
+      progress,
+      isDragging,
+      animation,
+    });
 
-  return (
-    <AnimatedOverlay
-      ref={ref}
-      className={tvStyles}
-      style={[rContainerStyle, style]}
-      {...props}
-    />
-  );
-});
+    const overlayStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
+
+    return (
+      <AnimatedOverlay
+        ref={ref}
+        className={overlayClassName}
+        style={overlayStyle}
+        {...props}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 

@@ -1,4 +1,3 @@
-import type { ViewStyle } from 'react-native';
 import type {
   EntryOrExitLayoutType,
   WithTimingConfig,
@@ -144,6 +143,13 @@ export interface ToastRootProps
    * @default true
    */
   isSwipeable?: boolean;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
 }
 
 /**
@@ -230,9 +236,7 @@ export type UseToastRootAnimationOptions = Pick<
   | 'isSwipeable'
   | 'maxVisibleToasts'
 > &
-  Pick<ToastComponentProps, 'id'> & {
-    style: ViewStyle | undefined;
-  };
+  Pick<ToastComponentProps, 'id'>;
 
 /**
  * Props for the DefaultToast component

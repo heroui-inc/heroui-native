@@ -20,8 +20,6 @@ import {
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-  getStyleProperties,
-  getStyleTransform,
 } from '../../helpers/utils/animation';
 import type { UseToastRootAnimationOptions } from './toast.types';
 
@@ -75,7 +73,6 @@ export const exitingBottom = new Keyframe({
 export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
   const {
     animation,
-    style,
     index,
     total,
     heights,
@@ -162,10 +159,6 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
     property: 'timingConfig',
     defaultValue: { duration: 300 },
   });
-
-  // Extract style overrides OUTSIDE useAnimatedStyle
-  const styleProps = getStyleProperties(style, ['opacity']);
-  const styleTransform = getStyleTransform(style);
 
   // Gesture state shared values
   const isDragging = useSharedValue(false);
@@ -343,9 +336,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
           {
             scale,
           },
-          ...styleTransform,
         ],
-        ...styleProps,
       };
     }
 
@@ -370,9 +361,7 @@ export function useToastRootAnimation(options: UseToastRootAnimationOptions) {
             ? withSpring(scale)
             : withTiming(scale, scaleTimingConfig),
         },
-        ...styleTransform,
       ],
-      ...styleProps,
     };
   });
 

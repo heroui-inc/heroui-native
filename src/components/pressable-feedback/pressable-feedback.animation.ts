@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import type { ViewStyle } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
 import {
   Easing,
@@ -18,7 +17,7 @@ import {
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
-  getStyleTransform,
+  getRootAnimationState,
 } from '../../helpers/utils/animation';
 import {
   BASE_RIPPLE_PROGRESS_DURATION,
@@ -48,11 +47,15 @@ export { PressableFeedbackAnimationProvider, usePressableFeedbackAnimation };
 export function usePressableFeedbackRootAnimation(options: {
   variant: PressableFeedbackVariant;
   animation: PressableFeedbackAnimation | undefined;
-  style: ViewStyle | undefined;
 }) {
-  const { variant, animation, style } = options;
+  const { variant, animation } = options;
 
-  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+  const { isAnimationDisabled: isAnimationDisabledFromRoot } =
+    getRootAnimationState(animation);
+  const isAllAnimationsDisabledFromRoot =
+    useCombinedAnimationDisabledState(animation);
+  const isAllAnimationsDisabled =
+    isAllAnimationsDisabledFromRoot || isAnimationDisabledFromRoot;
 
   const scaleAnimation = useMemo(() => {
     return typeof animation === 'object' ? animation?.scale : undefined;
@@ -195,8 +198,6 @@ export function usePressableFeedbackRootAnimation(options: {
       resetAnimationState();
     });
 
-  const styleTransform = getStyleTransform(style);
-
   const adjustedScaleValue = useDerivedValue(() => {
     // Calculate scale coefficient to maintain consistent scale effect across different sizes
     // Can be disabled by setting ignoreScaleCoefficient to true
@@ -215,7 +216,6 @@ export function usePressableFeedbackRootAnimation(options: {
           {
             scale: 1,
           },
-          ...styleTransform,
         ],
       };
     }
@@ -229,7 +229,6 @@ export function usePressableFeedbackRootAnimation(options: {
             [1, adjustedScaleValue.get()]
           ),
         },
-        ...styleTransform,
       ],
     };
   });

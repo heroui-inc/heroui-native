@@ -261,11 +261,12 @@ For padding, use `border` classes. For actual borders, use `outline` classes.
 | prop           | type                                                          | default     | description                                                               |
 | -------------- | ------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------- |
 | `variant`      | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'` | `'default'` | Visual variant of the toast                                               |
-| `placement`    | `'top' \| 'bottom'`                                           | `'top'`     | Placement of the toast on screen                                          |
-| `isSwipeable`  | `boolean`                                                     | `true`      | Whether the toast can be swiped to dismiss and dragged with rubber effect |
-| `animation`    | `ToastRootAnimation`                                          | -           | Animation configuration                                                   |
-| `className`    | `string`                                                      | -           | Additional CSS class for the toast container                              |
-| `...ViewProps` | `ViewProps`                                                   | -           | All standard React Native View props are supported                        |
+| `placement`            | `'top' \| 'bottom'`                                           | `'top'`     | Placement of the toast on screen                                          |
+| `isSwipeable`          | `boolean`                                                     | `true`      | Whether the toast can be swiped to dismiss and dragged with rubber effect |
+| `animation`            | `ToastRootAnimation`                                          | -           | Animation configuration                                                   |
+| `isAnimatedStyleActive` | `boolean`                                                     | `true`      | Whether animated styles (react-native-reanimated) are active              |
+| `className`             | `string`                                                      | -           | Additional CSS class for the toast container                              |
+| `...ViewProps`          | `ViewProps`                                                   | -           | All standard React Native View props are supported                        |
 
 #### ToastRootAnimation
 

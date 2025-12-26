@@ -75,11 +75,6 @@ export type TextFieldInputAnimation = Animation<{
        */
       error?: string;
     };
-    /**
-     * Animation timing configuration
-     * @default { duration: 150, easing: Easing.out(Easing.ease) }
-     */
-    timingConfig?: WithTimingConfig;
   }>;
   borderColor?: AnimationValue<{
     /**
@@ -103,6 +98,21 @@ export type TextFieldInputAnimation = Animation<{
        */
       error?: string;
     };
+  }>;
+  /**
+   * Animation timing configuration for focus/blur transitions
+   */
+  focus?: AnimationValue<{
+    /**
+     * Animation timing configuration
+     * @default { duration: 150, easing: Easing.out(Easing.ease) }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+  /**
+   * Animation timing configuration for error state transitions
+   */
+  error?: AnimationValue<{
     /**
      * Animation timing configuration
      * @default { duration: 150, easing: Easing.out(Easing.ease) }
@@ -205,6 +215,13 @@ export interface TextFieldInputProps extends TextInputProps {
    * - `object`: Custom animation configuration
    */
   animation?: TextFieldInputAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
 }
 
 /**

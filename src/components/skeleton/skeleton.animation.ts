@@ -20,6 +20,7 @@ import {
   getAnimationState,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
+  getRootAnimationState,
 } from '../../helpers/utils/animation';
 import {
   DEFAULT_EASING,
@@ -56,7 +57,12 @@ export function useSkeletonRootAnimation(options: {
 }) {
   const { animation, isLoading, variant, progress } = options;
 
-  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+  const { isAnimationDisabled: isAnimationDisabledFromRoot } =
+    getRootAnimationState(animation);
+  const isAllAnimationsDisabledFromRoot =
+    useCombinedAnimationDisabledState(animation);
+  const isAllAnimationsDisabled =
+    isAllAnimationsDisabledFromRoot || isAnimationDisabledFromRoot;
 
   const enteringAnimation = useMemo(() => {
     return typeof animation === 'object' ? animation?.entering : undefined;

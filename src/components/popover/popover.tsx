@@ -177,27 +177,35 @@ const PopoverPortal = ({
 const PopoverOverlay = forwardRef<
   PopoverPrimitivesTypes.OverlayRef,
   PopoverOverlayProps
->(({ className, style, animation, ...props }, ref) => {
-  const { progress, isDragging } = usePopoverAnimation();
+>(
+  (
+    { className, style, animation, isAnimatedStyleActive = true, ...props },
+    ref
+  ) => {
+    const { progress, isDragging } = usePopoverAnimation();
 
-  const tvStyles = popoverStyles.overlay({ className });
+    const overlayClassName = popoverStyles.overlay({ className });
 
-  const { rContainerStyle } = usePopupOverlayAnimation({
-    progress,
-    isDragging,
-    animation,
-    style: style as ViewStyle,
-  });
+    const { rContainerStyle } = usePopupOverlayAnimation({
+      progress,
+      isDragging,
+      animation,
+    });
 
-  return (
-    <AnimatedOverlay
-      ref={ref}
-      className={tvStyles}
-      style={[rContainerStyle, style]}
-      {...props}
-    />
-  );
-});
+    const overlayStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
+
+    return (
+      <AnimatedOverlay
+        ref={ref}
+        className={overlayClassName}
+        style={overlayStyle}
+        {...props}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -216,6 +224,7 @@ const PopoverContentPopover = forwardRef<
       children,
       style,
       animation,
+      isAnimatedStyleActive = true,
       ...props
     },
     ref
@@ -231,7 +240,7 @@ const PopoverContentPopover = forwardRef<
 
     const { progress } = usePopoverAnimation();
 
-    const tvStyles = popoverStyles.popoverContent({
+    const contentClassName = popoverStyles.popoverContent({
       className,
     });
 
@@ -239,8 +248,11 @@ const PopoverContentPopover = forwardRef<
       progress,
       placement,
       animation,
-      style: style as ViewStyle,
     });
+
+    const contentStyle = isAnimatedStyleActive
+      ? [styleSheet.contentContainer, rContainerStyle, style]
+      : [styleSheet.contentContainer, style];
 
     return (
       <PopoverContentContext value={{ placement }}>
@@ -252,8 +264,8 @@ const PopoverContentPopover = forwardRef<
           offset={offset}
           alignOffset={alignOffset}
           insets={insets}
-          className={tvStyles}
-          style={[styleSheet.contentContainer, rContainerStyle, style]}
+          className={contentClassName}
+          style={contentStyle}
           {...props}
         >
           {children}

@@ -49,6 +49,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     style,
     animation: localAnimation,
     isSwipeable: localIsSwipeable,
+    isAnimatedStyleActive = true,
     hide,
     ...restProps
   } = props;
@@ -65,7 +66,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   const toastProps = props as ToastRootProps & Pick<ToastComponentProps, 'id'>;
   const { id } = toastProps;
 
-  const containerStyles = toastStyles.root({
+  const rootClassName = toastStyles.root({
     className,
   });
 
@@ -86,6 +87,10 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     isSwipeable,
     maxVisibleToasts,
   });
+
+  const rootStyle = isAnimatedStyleActive
+    ? [styleSheet.root, rContainerStyle, style]
+    : [styleSheet.root, style];
 
   const animationSettingsContextValue = useMemo(
     () => ({
@@ -118,8 +123,8 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
             {/* Animated toast instance */}
             <AnimatedToastRoot
               ref={ref}
-              className={containerStyles}
-              style={[styleSheet.root, rContainerStyle, style]}
+              className={rootClassName}
+              style={rootStyle}
               {...restProps}
             >
               {children}
@@ -127,7 +132,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
             {/* Hidden toast instance for height measurement */}
             <AnimatedToastRoot
               pointerEvents="none"
-              className={cn(containerStyles, 'absolute opacity-0')}
+              className={cn(rootClassName, 'absolute opacity-0')}
               style={[styleSheet.root, style]}
               onLayout={(event) => {
                 const measuredHeight = event.nativeEvent.layout.height;

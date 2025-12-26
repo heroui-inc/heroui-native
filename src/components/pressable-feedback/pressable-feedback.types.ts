@@ -241,6 +241,13 @@ export interface PressableFeedbackBaseProps
    * @default 'top'
    */
   feedbackPosition?: 'behind' | 'top';
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
 }
 
 /**

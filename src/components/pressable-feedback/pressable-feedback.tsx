@@ -43,12 +43,13 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       className,
       style,
       animation,
+      isAnimatedStyleActive = true,
       children,
       onLayout,
       ...restProps
     } = props;
 
-    const tvStyles = pressableFeedbackStyles({ className });
+    const rootClassName = pressableFeedbackStyles({ className });
 
     const {
       isPressed,
@@ -64,6 +65,10 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       variant: feedbackVariant,
       animation,
     });
+
+    const rootStyle = isAnimatedStyleActive
+      ? [rContainerStyle, styleSheet.root, style]
+      : [styleSheet.root, style];
 
     const handleLayout = useCallback(
       (event: LayoutChangeEvent) => {
@@ -127,8 +132,8 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
             <AnimatedPressable
               ref={ref}
               disabled={isDisabled}
-              className={tvStyles}
-              style={[rContainerStyle, styleSheet.root, style]}
+              className={rootClassName}
+              style={rootStyle}
               onLayout={handleLayout}
               {...restProps}
             >

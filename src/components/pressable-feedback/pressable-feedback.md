@@ -213,15 +213,16 @@ export default function PressableFeedbackExample() {
 
 ### PressableFeedback
 
-| prop               | type                                                                              | default       | description                                                          |
-| ------------------ | --------------------------------------------------------------------------------- | ------------- | -------------------------------------------------------------------- |
-| `children`         | `React.ReactNode`                                                                 | -             | Content to be wrapped with press feedback                            |
-| `feedbackVariant`  | `'highlight' \| 'ripple'`                                                         | `'highlight'` | Type of feedback effect to display                                   |
-| `feedbackPosition` | `'behind' \| 'top'`                                                               | `'top'`       | Controls z-index positioning of feedback effect relative to children |
-| `isDisabled`       | `boolean`                                                                         | `false`       | Whether the pressable component is disabled                          |
-| `className`        | `string`                                                                          | -             | Additional CSS classes                                               |
-| `animation`        | `PressableFeedbackHighlightRootAnimation \| PressableFeedbackRippleRootAnimation` | -             | Animation configuration                                              |
-| `...AnimatedProps` | `AnimatedProps<PressableProps>`                                                   | -             | All Reanimated Animated Pressable props are supported                |
+| prop                    | type                                                                              | default       | description                                                          |
+| ----------------------- | --------------------------------------------------------------------------------- | ------------- | -------------------------------------------------------------------- |
+| `children`              | `React.ReactNode`                                                                 | -             | Content to be wrapped with press feedback                            |
+| `feedbackVariant`       | `'highlight' \| 'ripple'`                                                         | `'highlight'` | Type of feedback effect to display                                   |
+| `feedbackPosition`      | `'behind' \| 'top'`                                                               | `'top'`       | Controls z-index positioning of feedback effect relative to children |
+| `isDisabled`            | `boolean`                                                                         | `false`       | Whether the pressable component is disabled                          |
+| `className`             | `string`                                                                          | -             | Additional CSS classes                                               |
+| `animation`             | `PressableFeedbackHighlightRootAnimation \| PressableFeedbackRippleRootAnimation` | -             | Animation configuration                                              |
+| `isAnimatedStyleActive` | `boolean`                                                                         | `true`        | Whether animated styles (react-native-reanimated) are active         |
+| `...AnimatedProps`      | `AnimatedProps<PressableProps>`                                                   | -             | All Reanimated Animated Pressable props are supported                |
 
 #### PressableFeedbackHighlightRootAnimation
 

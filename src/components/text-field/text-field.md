@@ -272,14 +272,15 @@ Animation configuration for TextField.Label component. Can be:
 
 ### TextField.Input
 
-| prop              | type                       | default     | description                                                  |
-| ----------------- | -------------------------- | ----------- | ------------------------------------------------------------ |
-| children          | `React.ReactNode`          | -           | Content to render inside the input container                 |
-| isInvalid         | `boolean`                  | `undefined` | Whether the input is in an invalid state (overrides context) |
-| className         | `string`                   | -           | Custom class name for the input container                    |
-| classNames        | `ElementSlots<InputSlots>` | -           | Custom class names for different parts of the input          |
-| animation         | `TextFieldInputAnimation`  | -           | Animation configuration                                      |
-| ...TextInputProps | `TextInputProps`           | -           | All standard React Native TextInput props are supported      |
+| prop                  | type                       | default     | description                                                  |
+| --------------------- | -------------------------- | ----------- | ------------------------------------------------------------ |
+| children              | `React.ReactNode`          | -           | Content to render inside the input container                 |
+| isInvalid             | `boolean`                  | `undefined` | Whether the input is in an invalid state (overrides context) |
+| className             | `string`                   | -           | Custom class name for the input container                    |
+| classNames            | `ElementSlots<InputSlots>` | -           | Custom class names for different parts of the input          |
+| animation             | `TextFieldInputAnimation`  | -           | Animation configuration                                      |
+| isAnimatedStyleActive | `boolean`                  | `true`      | Whether animated styles (react-native-reanimated) are active |
+| ...TextInputProps     | `TextInputProps`           | -           | All standard React Native TextInput props are supported      |
 
 #### ElementSlots<InputSlots>
 

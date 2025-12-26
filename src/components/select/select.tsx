@@ -198,30 +198,39 @@ const SelectPortal = ({ className, children, ...props }: SelectPortalProps) => {
 const SelectOverlay = forwardRef<
   SelectPrimitivesTypes.OverlayRef,
   SelectOverlayProps
->(({ className, style, animation, ...props }, ref) => {
-  const { progress, isDragging, isGestureReleaseAnimationRunning } =
-    useSelectAnimation();
+>(
+  (
+    { className, style, animation, isAnimatedStyleActive = true, ...props },
+    ref
+  ) => {
+    const { progress, isDragging, isGestureReleaseAnimationRunning } =
+      useSelectAnimation();
 
-  const tvStyles = selectStyles.overlay({
-    className,
-  });
+    const overlayClassName = selectStyles.overlay({
+      className,
+    });
 
-  const { rContainerStyle } = usePopupOverlayAnimation({
-    progress,
-    isDragging,
-    isGestureReleaseAnimationRunning,
-    animation,
-  });
+    const { rContainerStyle } = usePopupOverlayAnimation({
+      progress,
+      isDragging,
+      isGestureReleaseAnimationRunning,
+      animation,
+    });
 
-  return (
-    <AnimatedOverlay
-      ref={ref}
-      className={tvStyles}
-      style={[rContainerStyle, style]}
-      {...props}
-    />
-  );
-});
+    const overlayStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
+
+    return (
+      <AnimatedOverlay
+        ref={ref}
+        className={overlayClassName}
+        style={overlayStyle}
+        {...props}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -240,6 +249,7 @@ const SelectContentPopover = forwardRef<
       children,
       style,
       animation,
+      isAnimatedStyleActive = true,
       ...props
     },
     ref
@@ -255,7 +265,7 @@ const SelectContentPopover = forwardRef<
 
     const { progress } = useSelectAnimation();
 
-    const tvStyles = selectStyles.popoverContent({
+    const contentClassName = selectStyles.popoverContent({
       className,
     });
 
@@ -264,6 +274,10 @@ const SelectContentPopover = forwardRef<
       placement,
       animation,
     });
+
+    const contentStyle = isAnimatedStyleActive
+      ? [styleSheet.contentContainer, rContainerStyle, style]
+      : [styleSheet.contentContainer, style];
 
     return (
       <AnimatedPopoverContent
@@ -274,8 +288,8 @@ const SelectContentPopover = forwardRef<
         offset={offset}
         alignOffset={alignOffset}
         insets={insets}
-        className={tvStyles}
-        style={[styleSheet.contentContainer, rContainerStyle, style]}
+        className={contentClassName}
+        style={contentStyle}
         {...props}
       >
         {children}
@@ -384,6 +398,7 @@ const SelectContentDialog = forwardRef<
       onLayout,
       animation,
       isSwipeable = true,
+      isAnimatedStyleActive = true,
       ...props
     },
     ref
@@ -400,7 +415,7 @@ const SelectContentDialog = forwardRef<
     const { wrapper, content } = selectStyles.dialogContent();
 
     const wrapperStyles = wrapper({ className: classNames?.wrapper });
-    const contentStyles = content({ className: classNames?.content });
+    const contentClassName = content({ className: classNames?.content });
 
     const {
       contentY,
@@ -417,6 +432,10 @@ const SelectContentDialog = forwardRef<
       animation,
       isSwipeable,
     });
+
+    const contentStyle = isAnimatedStyleActive
+      ? [styleSheet.contentContainer, rContainerStyle, style]
+      : [styleSheet.contentContainer, style];
 
     const handleLayout = useCallback(
       (event: LayoutChangeEvent) => {
@@ -437,8 +456,8 @@ const SelectContentDialog = forwardRef<
           >
             <AnimatedDialogContent
               ref={ref}
-              className={contentStyles}
-              style={[styleSheet.contentContainer, rContainerStyle, style]}
+              className={contentClassName}
+              style={contentStyle}
               {...props}
             >
               {children}

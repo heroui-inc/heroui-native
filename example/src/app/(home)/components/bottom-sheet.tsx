@@ -164,7 +164,7 @@ const NativeModalBottomSheetContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const BOTTOM_SHEET_VARIANTS: UsageVariant[] = [
+const BOTTOM_SHEET_VARIANTS_IOS: UsageVariant[] = [
   {
     value: 'basic-bottom-sheet',
     label: 'Basic bottom sheet',
@@ -197,6 +197,37 @@ const BOTTOM_SHEET_VARIANTS: UsageVariant[] = [
   },
 ];
 
+const BOTTOM_SHEET_VARIANTS_ANDROID: UsageVariant[] = [
+  {
+    value: 'basic-bottom-sheet',
+    label: 'Basic bottom sheet',
+    content: <BasicBottomSheetContent />,
+  },
+  {
+    value: 'detached-bottom-sheet',
+    label: 'Detached bottom sheet',
+    content: <DetachedBottomSheetContent />,
+  },
+  {
+    value: 'scrollable-with-snap-points',
+    label: 'Scrollable with snap points',
+    content: <ScrollableWithSnapPointsContent />,
+  },
+  {
+    value: 'with-text-input',
+    label: 'Bottom sheet with text input',
+    content: <WithTextInputContent />,
+  },
+];
+
 export default function BottomSheetScreen() {
-  return <UsageVariantFlatList data={BOTTOM_SHEET_VARIANTS} />;
+  return (
+    <UsageVariantFlatList
+      data={
+        Platform.OS === 'ios'
+          ? BOTTOM_SHEET_VARIANTS_IOS
+          : BOTTOM_SHEET_VARIANTS_ANDROID
+      }
+    />
+  );
 }

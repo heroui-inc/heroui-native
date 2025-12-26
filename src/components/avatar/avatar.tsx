@@ -114,17 +114,31 @@ const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
         ? props.animation
         : undefined;
 
+    const isAnimatedStyleActive = asChild
+      ? true
+      : 'isAnimatedStyleActive' in props
+        ? (props.isAnimatedStyleActive ?? true)
+        : true;
+
     const { rImageStyle } = useAvatarImageAnimation({
       animation,
     });
 
-    const tvStyles = avatarStyles.image({
+    const imageClassName = avatarStyles.image({
       className,
     });
 
+    const imageStyle = isAnimatedStyleActive
+      ? [rImageStyle, styleProp]
+      : styleProp;
+
     if (asChild) {
       return (
-        <AvatarPrimitives.Image ref={ref} className={tvStyles} {...props} />
+        <AvatarPrimitives.Image
+          ref={ref}
+          className={imageClassName}
+          {...props}
+        />
       );
     }
 
@@ -135,8 +149,8 @@ const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
         asChild
       >
         <Animated.Image
-          style={[rImageStyle, styleProp]}
-          className={tvStyles}
+          style={imageStyle}
+          className={imageClassName}
           {...restProps}
         />
       </AvatarPrimitives.Image>

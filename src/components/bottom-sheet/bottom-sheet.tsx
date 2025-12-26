@@ -146,27 +146,36 @@ const BottomSheetPortal = ({ children, ...props }: BottomSheetPortalProps) => {
 const BottomSheetOverlay = forwardRef<
   BottomSheetPrimitivesTypes.OverlayRef,
   BottomSheetOverlayProps
->(({ className, style, animation, ...props }, ref) => {
-  const { progress } = useBottomSheetAnimation();
-  const isDragging = useSharedValue(false);
+>(
+  (
+    { className, style, animation, isAnimatedStyleActive = true, ...props },
+    ref
+  ) => {
+    const { progress } = useBottomSheetAnimation();
+    const isDragging = useSharedValue(false);
 
-  const tvStyles = bottomSheetStyles.overlay({ className });
+    const overlayClassName = bottomSheetStyles.overlay({ className });
 
-  const { rContainerStyle } = usePopupOverlayAnimation({
-    progress,
-    isDragging,
-    animation,
-  });
+    const { rContainerStyle } = usePopupOverlayAnimation({
+      progress,
+      isDragging,
+      animation,
+    });
 
-  return (
-    <AnimatedOverlay
-      ref={ref}
-      className={tvStyles}
-      style={[rContainerStyle, style]}
-      {...props}
-    />
-  );
-});
+    const overlayStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
+
+    return (
+      <AnimatedOverlay
+        ref={ref}
+        className={overlayClassName}
+        style={overlayStyle}
+        {...props}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 

@@ -6,7 +6,6 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useUniwind } from 'uniwind';
 import { useAnimationSettings } from '../../helpers/contexts';
 import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import { useThemeColor } from '../../helpers/theme';
@@ -141,8 +140,6 @@ export function useTextFieldInputAnimation(options: {
 }) {
   const { animation, isInvalid, style } = options;
 
-  const { theme } = useUniwind();
-
   const [
     themeColorFieldBackground,
     themeColorFieldFocusBackground,
@@ -228,17 +225,6 @@ export function useTextFieldInputAnimation(options: {
       );
     }
   }, [isInvalid, isError, isAnimationDisabledValue, borderColorTimingConfig]);
-
-  // Update current colors when theme changes
-  useEffect(() => {
-    currentBgColor.set(
-      isFocused.get() ? backgroundColorValue.focus : backgroundColorValue.blur
-    );
-    currentBorderColor.set(
-      isFocused.get() ? borderColorValue.focus : borderColorValue.blur
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme]);
 
   const animatedContainerStyle = useAnimatedStyle(() => {
     if (isInvalid) {

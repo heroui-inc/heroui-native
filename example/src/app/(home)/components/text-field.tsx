@@ -40,6 +40,14 @@ const BasicTextFieldContent = () => {
             placeholder="Enter your email"
             keyboardType="email-address"
             autoCapitalize="none"
+            animation={{
+              backgroundColor: {
+                timingConfig: {
+                  duration: 2000,
+                },
+              },
+              state: 'disabled',
+            }}
           />
           <TextField.Description>
             We'll never share your email with anyone else.

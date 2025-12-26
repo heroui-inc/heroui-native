@@ -24,7 +24,22 @@ type TransformArray = Array<TransformArrayItem>;
 export function isAnimationDisabled<TConfig extends Record<string, any>>(
   animation: Animation<TConfig> | AnimationRoot<TConfig> | undefined
 ): boolean {
-  return animation === false || animation === 'disabled';
+  // Check top-level disabled values
+  if (animation === false || animation === 'disabled') {
+    return true;
+  }
+
+  // Check state property in config objects
+  if (
+    typeof animation === 'object' &&
+    animation !== null &&
+    'state' in animation
+  ) {
+    const state = animation.state;
+    return state === false || state === 'disabled';
+  }
+
+  return false;
 }
 
 /**
@@ -35,7 +50,22 @@ export function isAnimationDisabled<TConfig extends Record<string, any>>(
 export function shouldDisableAll<TConfig extends Record<string, any>>(
   animation: AnimationRoot<TConfig> | undefined
 ): boolean {
-  return animation === 'disable-all';
+  // Check top-level disable-all value
+  if (animation === 'disable-all') {
+    return true;
+  }
+
+  // Check state property in config objects
+  if (
+    typeof animation === 'object' &&
+    animation !== null &&
+    'state' in animation
+  ) {
+    const state = animation.state;
+    return state === 'disable-all';
+  }
+
+  return false;
 }
 
 /**
@@ -50,8 +80,12 @@ export function getAnimationState<TConfig extends Record<string, any>>(
   isAnimationDisabled: boolean;
 } {
   const isDisabled = isAnimationDisabled(animation);
+  // Always extract config when it's an object, regardless of disabled state
+  // This allows users to customize colors/properties even when animations are disabled
   const config =
-    !isDisabled && typeof animation === 'object' ? animation : undefined;
+    typeof animation === 'object' && animation !== null
+      ? (animation as TConfig)
+      : undefined;
 
   return {
     animationConfig: config,
@@ -73,8 +107,12 @@ export function getRootAnimationState<TConfig extends Record<string, any>>(
 } {
   const shouldCascade = shouldDisableAll(animation);
   const isDisabled = isAnimationDisabled(animation) || shouldCascade;
+  // Always extract config when it's an object, regardless of disabled state
+  // This allows users to customize colors/properties even when animations are disabled
   const config =
-    !isDisabled && typeof animation === 'object' ? animation : undefined;
+    typeof animation === 'object' && animation !== null
+      ? (animation as TConfig)
+      : undefined;
 
   return {
     animationConfig: config,

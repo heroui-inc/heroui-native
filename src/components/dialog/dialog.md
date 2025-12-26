@@ -246,15 +246,16 @@ Animation configuration for dialog root component. Can be:
 
 ### Dialog.Overlay
 
-| prop                | type                     | default | description                                             |
-| ------------------- | ------------------------ | ------- | ------------------------------------------------------- |
-| `children`          | `React.ReactNode`        | -       | Custom overlay content                                  |
-| `className`         | `string`                 | -       | Additional CSS classes for overlay                      |
-| `style`             | `ViewStyle`              | -       | Additional styles for overlay container                 |
-| `animation`         | `DialogOverlayAnimation` | -       | Animation configuration                                 |
-| `isCloseOnPress`    | `boolean`                | `true`  | Whether pressing overlay closes dialog                  |
-| `forceMount`        | `boolean`                | -       | Force mount when closed for animation purposes          |
-| `...PressableProps` | `PressableProps`         | -       | All standard React Native Pressable props are supported |
+| prop                    | type                     | default | description                                                  |
+| ----------------------- | ------------------------ | ------- | ------------------------------------------------------------ |
+| `children`              | `React.ReactNode`        | -       | Custom overlay content                                       |
+| `className`             | `string`                 | -       | Additional CSS classes for overlay                           |
+| `style`                 | `ViewStyle`              | -       | Additional styles for overlay container                      |
+| `animation`             | `DialogOverlayAnimation` | -       | Animation configuration                                      |
+| `isAnimatedStyleActive` | `boolean`                | `true`  | Whether animated styles (react-native-reanimated) are active |
+| `isCloseOnPress`        | `boolean`                | `true`  | Whether pressing overlay closes dialog                       |
+| `forceMount`            | `boolean`                | -       | Force mount when closed for animation purposes               |
+| `...PressableProps`     | `PressableProps`         | -       | All standard React Native Pressable props are supported      |
 
 #### DialogOverlayAnimation
 
@@ -270,16 +271,17 @@ Animation configuration for dialog overlay component. Can be:
 
 ### Dialog.Content
 
-| prop                    | type                                 | default | description                                         |
-| ----------------------- | ------------------------------------ | ------- | --------------------------------------------------- |
-| `children`              | `React.ReactNode`                    | -       | Dialog content                                      |
-| `className`             | `string`                             | -       | Additional CSS classes for content container        |
-| `style`                 | `StyleProp<ViewStyle>`               | -       | Additional styles for content container             |
-| `onLayout`              | `(event: LayoutChangeEvent) => void` | -       | Layout event handler                                |
-| `animation`             | `DialogContentAnimation`             | -       | Animation configuration                             |
-| `isSwipeable`           | `boolean`                            | `true`  | Whether the dialog content can be swiped to dismiss |
-| `forceMount`            | `boolean`                            | -       | Force mount when closed for animation purposes      |
-| `...Animated.ViewProps` | `Animated.ViewProps`                 | -       | All Reanimated Animated.View props are supported    |
+| prop                    | type                                 | default | description                                                  |
+| ----------------------- | ------------------------------------ | ------- | ------------------------------------------------------------ |
+| `children`              | `React.ReactNode`                    | -       | Dialog content                                               |
+| `className`             | `string`                             | -       | Additional CSS classes for content container                 |
+| `style`                 | `StyleProp<ViewStyle>`               | -       | Additional styles for content container                      |
+| `onLayout`              | `(event: LayoutChangeEvent) => void` | -       | Layout event handler                                         |
+| `animation`             | `DialogContentAnimation`             | -       | Animation configuration                                      |
+| `isAnimatedStyleActive` | `boolean`                            | `true`  | Whether animated styles (react-native-reanimated) are active |
+| `isSwipeable`           | `boolean`                            | `true`  | Whether the dialog content can be swiped to dismiss          |
+| `forceMount`            | `boolean`                            | -       | Force mount when closed for animation purposes               |
+| `...Animated.ViewProps` | `Animated.ViewProps`                 | -       | All Reanimated Animated.View props are supported             |
 
 #### DialogContentAnimation
 

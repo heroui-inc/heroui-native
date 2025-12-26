@@ -197,25 +197,36 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 // ------------------------------------------------------------------------------
 
 const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
-  const { children, className, iconProps, animation, style, ...restProps } =
-    props;
+  const {
+    children,
+    className,
+    iconProps,
+    animation,
+    isAnimatedStyleActive = true,
+    style,
+    ...restProps
+  } = props;
 
   const { isExpanded } = useAccordionItem();
 
   const themeColorForeground = useThemeColor('foreground');
 
-  const tvStyles = accordionStyles.indicator({ className });
+  const indicatorClassName = accordionStyles.indicator({ className });
 
   const { rContainerStyle } = useAccordionIndicatorAnimation({
     animation,
     isExpanded,
   });
 
+  const indicatorStyle = isAnimatedStyleActive
+    ? [rContainerStyle, style]
+    : style;
+
   if (children) {
     return (
       <AnimatedIndicator
         ref={ref}
-        className={tvStyles}
+        className={indicatorClassName}
         style={style}
         {...restProps}
       >
@@ -227,8 +238,8 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
   return (
     <AnimatedIndicator
       ref={ref}
-      className={tvStyles}
-      style={[rContainerStyle, style]}
+      className={indicatorClassName}
+      style={indicatorStyle}
       {...restProps}
     >
       <ChevronDownIcon

@@ -297,6 +297,7 @@ Animation configuration for accordion root component. Can be:
 | `className`             | `string`                      | -       | Additional CSS classes                                                 |
 | `iconProps`             | `AccordionIndicatorIconProps` | -       | Icon configuration                                                     |
 | `animation`             | `AccordionIndicatorAnimation` | -       | Animation configuration for indicator                                  |
+| `isAnimatedStyleActive` | `boolean`                     | `true`  | Whether animated styles (react-native-reanimated) are active           |
 | `...Animated.ViewProps` | `Animated.ViewProps`          | -       | All Reanimated Animated.View props are supported                       |
 
 #### AccordionIndicatorIconProps

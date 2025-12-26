@@ -186,7 +186,6 @@ const PopoverOverlay = forwardRef<
     progress,
     isDragging,
     animation,
-    style: style as ViewStyle,
   });
 
   return (
@@ -239,7 +238,6 @@ const PopoverContentPopover = forwardRef<
       progress,
       placement,
       animation,
-      style: style as ViewStyle,
     });
 
     return (

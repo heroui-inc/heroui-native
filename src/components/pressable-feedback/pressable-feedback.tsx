@@ -6,12 +6,7 @@ import {
   useState,
   type FC,
 } from 'react';
-import {
-  Pressable,
-  StyleSheet,
-  type LayoutChangeEvent,
-  type ViewStyle,
-} from 'react-native';
+import { Pressable, StyleSheet, type LayoutChangeEvent } from 'react-native';
 
 import Animated from 'react-native-reanimated';
 import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
@@ -68,7 +63,6 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
     } = usePressableFeedbackRootAnimation({
       variant: feedbackVariant,
       animation,
-      style: style as ViewStyle | undefined,
     });
 
     const handleLayout = useCallback(

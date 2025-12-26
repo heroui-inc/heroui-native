@@ -1,4 +1,3 @@
-import type { ViewStyle } from 'react-native';
 import {
   useAnimatedStyle,
   useSharedValue,
@@ -13,8 +12,6 @@ import {
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-  getStyleProperties,
-  getStyleTransform,
 } from '../../helpers/utils/animation';
 import { useFormField } from '../form-field/form-field.context';
 import type {
@@ -34,9 +31,8 @@ export { CheckboxAnimationProvider, useCheckboxAnimation };
 
 export function useCheckboxRootAnimation(options: {
   animation: CheckboxRootAnimation | undefined;
-  style: ViewStyle | undefined;
 }) {
-  const { animation, style } = options;
+  const { animation } = options;
 
   const isCheckboxPressed = useSharedValue(false);
   const formFieldContext = useFormField();
@@ -63,8 +59,6 @@ export function useCheckboxRootAnimation(options: {
     defaultValue: { duration: 150 },
   });
 
-  const styleTransform = getStyleTransform(style);
-
   const rContainerStyle = useAnimatedStyle(() => {
     if (isAnimationDisabledValue) {
       return {};
@@ -81,7 +75,6 @@ export function useCheckboxRootAnimation(options: {
             scaleTimingConfig
           ),
         },
-        ...styleTransform,
       ],
     };
   });
@@ -98,9 +91,8 @@ export function useCheckboxRootAnimation(options: {
 export function useCheckboxIndicatorAnimation(options: {
   animation: CheckboxIndicatorAnimation | undefined;
   isSelected: boolean | undefined;
-  style: ViewStyle | undefined;
 }) {
-  const { animation, isSelected, style } = options;
+  const { animation, isSelected } = options;
 
   // Read from global animation context (always available in compound parts)
   const { isAllAnimationsDisabled } = useAnimationSettings();
@@ -160,9 +152,6 @@ export function useCheckboxIndicatorAnimation(options: {
     defaultValue: { duration: 100 },
   });
 
-  const styleProps = getStyleProperties(style, ['opacity', 'borderRadius']);
-  const styleTransform = getStyleTransform(style);
-
   const rContainerStyle = useAnimatedStyle(() => {
     if (isAnimationDisabledValue) {
       return {
@@ -176,7 +165,6 @@ export function useCheckboxIndicatorAnimation(options: {
             scale: isSelected ? scaleValue[1] : scaleValue[0],
           },
         ],
-        ...styleProps,
       };
     }
 
@@ -202,9 +190,7 @@ export function useCheckboxIndicatorAnimation(options: {
             scaleTimingConfig
           ),
         },
-        ...styleTransform,
       ],
-      ...styleProps,
     };
   });
 

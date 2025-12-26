@@ -1,4 +1,3 @@
-import type { ViewStyle } from 'react-native';
 import type {
   EntryOrExitLayoutType,
   WithTimingConfig,
@@ -230,9 +229,7 @@ export type UseToastRootAnimationOptions = Pick<
   | 'isSwipeable'
   | 'maxVisibleToasts'
 > &
-  Pick<ToastComponentProps, 'id'> & {
-    style: ViewStyle | undefined;
-  };
+  Pick<ToastComponentProps, 'id'>;
 
 /**
  * Props for the DefaultToast component

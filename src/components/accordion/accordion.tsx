@@ -1,5 +1,5 @@
 import { Children, forwardRef, useMemo } from 'react';
-import { View, type ViewStyle } from 'react-native';
+import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { useThemeColor } from '../../helpers/theme/hooks/use-theme-color';
@@ -208,13 +208,17 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
 
   const { rContainerStyle } = useAccordionIndicatorAnimation({
     animation,
-    style: style as ViewStyle | undefined,
     isExpanded,
   });
 
   if (children) {
     return (
-      <AnimatedIndicator ref={ref} className={tvStyles} {...restProps}>
+      <AnimatedIndicator
+        ref={ref}
+        className={tvStyles}
+        style={style}
+        {...restProps}
+      >
         {children}
       </AnimatedIndicator>
     );
@@ -224,7 +228,7 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
     <AnimatedIndicator
       ref={ref}
       className={tvStyles}
-      style={rContainerStyle}
+      style={[rContainerStyle, style]}
       {...restProps}
     >
       <ChevronDownIcon

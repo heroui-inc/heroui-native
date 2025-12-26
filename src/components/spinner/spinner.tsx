@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import type { View, ViewStyle } from 'react-native';
+import type { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { useThemeColor } from '../../helpers/theme';
@@ -132,7 +132,6 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
 
     const { rContainerStyle } = useSpinnerIndicatorAnimation({
       animation,
-      style: style as ViewStyle | undefined,
       isLoading,
     });
 

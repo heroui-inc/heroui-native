@@ -62,7 +62,6 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       isAllAnimationsDisabled,
     } = useSwitchRootAnimation({
       animation,
-      style: style as ViewStyle | undefined,
       isSelected,
     });
 

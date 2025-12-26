@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import type { ViewStyle } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
 import {
   Easing,
@@ -19,7 +18,6 @@ import {
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-  getStyleTransform,
 } from '../../helpers/utils/animation';
 import {
   BASE_RIPPLE_PROGRESS_DURATION,
@@ -49,9 +47,8 @@ export { PressableFeedbackAnimationProvider, usePressableFeedbackAnimation };
 export function usePressableFeedbackRootAnimation(options: {
   variant: PressableFeedbackVariant;
   animation: PressableFeedbackAnimation | undefined;
-  style: ViewStyle | undefined;
 }) {
-  const { variant, animation, style } = options;
+  const { variant, animation } = options;
 
   const { isAnimationDisabled: isAnimationDisabledFromRoot } =
     getRootAnimationState(animation);
@@ -201,8 +198,6 @@ export function usePressableFeedbackRootAnimation(options: {
       resetAnimationState();
     });
 
-  const styleTransform = getStyleTransform(style);
-
   const adjustedScaleValue = useDerivedValue(() => {
     // Calculate scale coefficient to maintain consistent scale effect across different sizes
     // Can be disabled by setting ignoreScaleCoefficient to true
@@ -221,7 +216,6 @@ export function usePressableFeedbackRootAnimation(options: {
           {
             scale: 1,
           },
-          ...styleTransform,
         ],
       };
     }
@@ -235,7 +229,6 @@ export function usePressableFeedbackRootAnimation(options: {
             [1, adjustedScaleValue.get()]
           ),
         },
-        ...styleTransform,
       ],
     };
   });

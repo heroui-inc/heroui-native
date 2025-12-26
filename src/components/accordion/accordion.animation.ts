@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import type { ViewStyle } from 'react-native';
 import {
   interpolate,
   useAnimatedStyle,
@@ -15,7 +14,6 @@ import {
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-  getStyleTransform,
 } from '../../helpers/utils/animation';
 import {
   ACCORDION_LAYOUT_TRANSITION,
@@ -81,10 +79,9 @@ export function useAccordionRootAnimation(options: {
  */
 export function useAccordionIndicatorAnimation(options: {
   animation: AccordionIndicatorAnimation | undefined;
-  style: ViewStyle | undefined;
   isExpanded: boolean;
 }) {
-  const { animation, style, isExpanded } = options;
+  const { animation, isExpanded } = options;
 
   // Read from global animation context (always available in compound parts)
   const { isAllAnimationsDisabled } = useAnimationSettings();
@@ -119,8 +116,6 @@ export function useAccordionIndicatorAnimation(options: {
     }
   }, [isExpanded, isAnimationDisabledValue, rotation, rotationSpringConfig]);
 
-  const styleTransform = getStyleTransform(style);
-
   const rContainerStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -132,7 +127,6 @@ export function useAccordionIndicatorAnimation(options: {
               [rotationValue[0], rotationValue[1]]
             ) + 'deg',
         },
-        ...styleTransform,
       ],
     };
   });

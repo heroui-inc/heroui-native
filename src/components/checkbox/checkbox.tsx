@@ -1,5 +1,5 @@
 import { forwardRef, useCallback, useMemo } from 'react';
-import { View, type GestureResponderEvent, type ViewStyle } from 'react-native';
+import { View, type GestureResponderEvent } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { CheckIcon } from '../../helpers/components';
 import { AnimatedCheckIcon } from '../../helpers/components/animated-check-icon';
@@ -64,7 +64,6 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
     const { rContainerStyle, isCheckboxPressed, isAllAnimationsDisabled } =
       useCheckboxRootAnimation({
         animation,
-        style: style as ViewStyle | undefined,
       });
 
     const animationContextValue = useMemo(
@@ -161,7 +160,6 @@ const CheckboxIndicator = forwardRef<
     useCheckboxIndicatorAnimation({
       animation,
       isSelected,
-      style: style as ViewStyle | undefined,
     });
 
   const renderProps: CheckboxRenderProps = {
@@ -175,7 +173,7 @@ const CheckboxIndicator = forwardRef<
       ? children(renderProps)
       : (children ??
         (isAnimationDisabled ? (
-          <View className="translate-y-[1px]">
+          <View className="translate-y-px">
             <CheckIcon size={iconSize} color={iconColor} />
           </View>
         ) : (

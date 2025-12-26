@@ -1,6 +1,6 @@
 import GorhomBottomSheet from '@gorhom/bottom-sheet';
 import { forwardRef, useMemo } from 'react';
-import type { Text as RNText, ViewStyle } from 'react-native';
+import type { Text as RNText } from 'react-native';
 import Animated, {
   ReduceMotion,
   useSharedValue,
@@ -156,7 +156,6 @@ const BottomSheetOverlay = forwardRef<
     progress,
     isDragging,
     animation,
-    style: style as ViewStyle,
   });
 
   return (

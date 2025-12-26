@@ -1,20 +1,8 @@
-import type { TransformsStyle } from 'react-native';
 import type {
   Animation,
   AnimationRoot,
   AnimationValue,
 } from '../types/animation';
-
-/**
- * Extract transform array type from TransformsStyle, excluding string transforms
- * (react-native-reanimated doesn't support string transforms)
- */
-type TransformArrayItem = Exclude<
-  NonNullable<TransformsStyle['transform']>,
-  string
->[number];
-
-type TransformArray = Array<TransformArrayItem>;
 
 /**
  * Check if the entire animation is disabled
@@ -196,62 +184,6 @@ export function getAnimationValueMergedConfig<
 
   // Merge with defaults to ensure all properties exist
   return { ...options.defaultValue, ...value };
-}
-
-/**
- * Extract transform array from style
- * Returns empty array if transform is not an array
- * Filters out string transforms as react-native-reanimated doesn't support them
- *
- * @param style - Style object
- * @returns Transform array or empty array (compatible with react-native-reanimated)
- *
- * @example
- * const styleTransform = getStyleTransform(style);
- * // Use in animated style:
- * transform: [...myTransforms, ...styleTransform]
- */
-export function getStyleTransform<T extends Record<string, any>>(
-  style?: T
-): TransformArray {
-  'worklet';
-  if (!Array.isArray(style?.transform)) {
-    return [];
-  }
-  // Filter out string transforms (react-native-reanimated doesn't support them)
-  return style.transform.filter(
-    (item): item is TransformArrayItem =>
-      typeof item === 'object' && item !== null
-  );
-}
-
-/**
- * Extract specific style properties if they exist
- * Returns object with only the properties that exist in style
- *
- * @param style - Style object
- * @param keys - Array of style property keys to extract
- * @returns Object with existing properties that can be spread
- *
- * @example
- * const styleProps = getStyleProperties(style, ['opacity', 'borderRadius']);
- * // Returns: { opacity: 0.5, borderRadius: 8 } or { opacity: 0.5 } etc.
- * // Use in animated style:
- * return { ...styleProps, opacity: styleProps.opacity ?? animatedOpacity }
- */
-export function getStyleProperties<T extends Record<string, any>>(
-  style: T | undefined,
-  keys: (keyof T)[]
-): Partial<T> {
-  'worklet';
-  if (!style) return {};
-
-  return keys.reduce((acc, key) => {
-    if (style[key] !== undefined) {
-      acc[key] = style[key];
-    }
-    return acc;
-  }, {} as Partial<T>);
 }
 
 /**

@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import type { ImageSourcePropType, ImageStyle } from 'react-native';
+import type { ImageSourcePropType } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/components';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
@@ -114,14 +114,8 @@ const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
         ? props.animation
         : undefined;
 
-    const normalizedStyle =
-      styleProp && typeof styleProp === 'object' && !Array.isArray(styleProp)
-        ? (styleProp as ImageStyle)
-        : undefined;
-
     const { rImageStyle } = useAvatarImageAnimation({
       animation,
-      style: normalizedStyle,
     });
 
     const tvStyles = avatarStyles.image({

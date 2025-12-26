@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import { View, type ViewStyle } from 'react-native';
+import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
@@ -211,7 +211,6 @@ const RadioGroupIndicatorThumb = forwardRef<
   const { rContainerStyle } = useRadioGroupIndicatorThumbAnimation({
     animation,
     isSelected,
-    style: style as ViewStyle | undefined,
   });
 
   return (

@@ -1,10 +1,6 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import { forwardRef, useCallback, useMemo } from 'react';
-import type {
-  LayoutChangeEvent,
-  Text as RNText,
-  ViewStyle,
-} from 'react-native';
+import type { LayoutChangeEvent, Text as RNText } from 'react-native';
 import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated, { ReduceMotion } from 'react-native-reanimated';
@@ -215,7 +211,6 @@ const SelectOverlay = forwardRef<
     isDragging,
     isGestureReleaseAnimationRunning,
     animation,
-    style: style as ViewStyle,
   });
 
   return (
@@ -268,7 +263,6 @@ const SelectContentPopover = forwardRef<
       progress,
       placement,
       animation,
-      style: style as ViewStyle,
     });
 
     return (
@@ -421,7 +415,6 @@ const SelectContentDialog = forwardRef<
       dialogState: selectState,
       onOpenChange,
       animation,
-      style: style as ViewStyle | undefined,
       isSwipeable,
     });
 

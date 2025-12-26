@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import type { ViewStyle } from 'react-native';
 import { Keyboard, useWindowDimensions } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
 import type { SharedValue } from 'react-native-reanimated';
@@ -18,8 +17,6 @@ import {
   getAnimationState,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
-  getStyleProperties,
-  getStyleTransform,
 } from '../utils/animation';
 import { useKeyboardStatus } from './use-keyboard-status';
 
@@ -49,10 +46,6 @@ export interface UsePopupDialogContentAnimationProps {
    */
   animation?: PopupDialogContentAnimation;
   /**
-   * Style prop for handling style overrides
-   */
-  style?: ViewStyle;
-  /**
    * Whether the dialog content can be swiped to dismiss
    * @default true
    */
@@ -66,7 +59,6 @@ export const usePopupDialogContentAnimation = ({
   dialogState,
   onOpenChange,
   animation,
-  style,
   isSwipeable = true,
 }: UsePopupDialogContentAnimationProps) => {
   const { height: screenHeight } = useWindowDimensions();
@@ -251,16 +243,11 @@ export const usePopupDialogContentAnimation = ({
     defaultValue: [0.97, 1, 0.97] as [number, number, number],
   });
 
-  // Extract style overrides OUTSIDE useAnimatedStyle
-  const styleProps = getStyleProperties(style, ['opacity']);
-  const styleTransform = getStyleTransform(style);
-
   const rContainerStyle = useAnimatedStyle(() => {
     // Handle disabled state first
     if (isAnimationDisabledValue) {
       return {
         opacity: progress.get() > 0 ? 1 : 0,
-        ...styleProps,
       };
     }
 
@@ -278,8 +265,7 @@ export const usePopupDialogContentAnimation = ({
 
     return {
       opacity: targetOpacity,
-      transform: [{ scale: targetScale }, ...styleTransform],
-      ...styleProps,
+      transform: [{ scale: targetScale }],
     };
   });
 

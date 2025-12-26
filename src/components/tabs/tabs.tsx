@@ -273,7 +273,6 @@ const TabsIndicator = forwardRef<
 
   const { rContainerStyle } = useTabsIndicatorAnimation({
     animation,
-    style: style as ViewStyle | undefined,
   });
 
   const tvStyles = tabsStyles.indicator({ variant, className });

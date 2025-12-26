@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import { View, type ViewStyle } from 'react-native';
+import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { CloseIcon } from '../../helpers/components/close-icon';
@@ -77,7 +77,6 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     isAllAnimationsDisabled,
   } = useToastRootAnimation({
     animation,
-    style: style as ViewStyle | undefined,
     index,
     total,
     heights,

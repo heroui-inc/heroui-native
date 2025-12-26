@@ -1,5 +1,5 @@
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback, useEffect, useMemo, useRef } from 'react';
+import BottomSheet from '@gorhom/bottom-sheet';
+import { forwardRef, useCallback, useMemo } from 'react';
 import type {
   LayoutChangeEvent,
   Text as RNText,
@@ -7,9 +7,11 @@ import type {
 } from 'react-native';
 import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
+import Animated, { ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import {
+  BottomSheetContentContainer,
   CheckIcon,
   CloseIcon,
   FullWindowOverlay,
@@ -27,6 +29,8 @@ import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animat
 import { useThemeColor } from '../../helpers/theme';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
+import { useBottomSheetContentAnimation } from '../bottom-sheet/bottom-sheet.animation';
+import bottomSheetStyles from '../bottom-sheet/bottom-sheet.styles';
 import {
   SelectAnimationProvider,
   useSelectAnimation,
@@ -68,6 +72,8 @@ const AnimatedPopoverContent = Animated.createAnimatedComponent(
 const AnimatedDialogContent = Animated.createAnimatedComponent(
   SelectPrimitives.DialogContent
 );
+
+const StyledBottomSheet = withUniwind(BottomSheet);
 
 const useSelect = SelectPrimitives.useRootContext;
 
@@ -291,80 +297,81 @@ const SelectContentBottomSheet = forwardRef<
   SelectContentProps & { presentation: 'bottom-sheet' }
 >(
   (
-    { children, bottomSheetViewClassName, bottomSheetViewProps, ...restProps },
+    {
+      children,
+      backgroundClassName,
+      handleIndicatorClassName,
+      contentContainerClassName,
+      contentContainerProps,
+      animation,
+      animationConfigs,
+      ...restProps
+    },
     ref
   ) => {
-    const insets = useSafeAreaInsets();
-
-    const bottomSheetRef = useRef<BottomSheet>(null);
-
     const { onOpenChange } = useSelect();
     const { selectState, progress } = useSelectAnimation();
 
-    const [themeColorOverlay, themeColorMuted] = [
-      useThemeColor('overlay'),
-      useThemeColor('muted'),
-    ];
-
-    const tvStyles = selectStyles.bottomSheetContent({
-      className: bottomSheetViewClassName,
+    const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
+      animation,
     });
-
-    useEffect(() => {
-      if (selectState === 'open') {
-        bottomSheetRef.current?.expand();
-      } else if (selectState === 'close') {
-        bottomSheetRef.current?.close();
-      }
-    }, [selectState]);
-
-    useEffect(() => {
-      if (ref && bottomSheetRef.current) {
-        if (typeof ref === 'function') {
-          ref(bottomSheetRef.current);
-        } else {
-          ref.current = bottomSheetRef.current;
-        }
-      }
-    }, [ref]);
-
-    const onClose = () => {
-      onOpenChange(false);
-      restProps.onClose?.();
-    };
 
     const { animatedIndex } = usePopupBottomSheetContentAnimation({
       progress,
       componentState: selectState,
     });
 
+    const contentBackgroundClassName = bottomSheetStyles.contentBackground({
+      className: backgroundClassName,
+    });
+
+    const contentHandleIndicatorClassName =
+      bottomSheetStyles.contentHandleIndicator({
+        className: handleIndicatorClassName,
+      });
+
+    const contentContainerClassNameValue = bottomSheetStyles.contentContainer({
+      className: contentContainerClassName,
+    });
+
+    const onClose = () => {
+      onOpenChange(false);
+      restProps.onClose?.();
+    };
+
+    const mergedAnimationConfigs = useMemo(
+      () => ({
+        ...animationConfigs,
+        reduceMotion: isAnimationDisabledValue
+          ? ReduceMotion.Always
+          : animationConfigs?.reduceMotion,
+      }),
+      [animationConfigs, isAnimationDisabledValue]
+    );
+
     return (
-      <BottomSheet
-        ref={bottomSheetRef}
+      <StyledBottomSheet
+        ref={ref}
+        backgroundClassName={contentBackgroundClassName}
         backgroundStyle={[
-          { backgroundColor: themeColorOverlay },
+          styleSheet.contentContainer,
           restProps.backgroundStyle,
         ]}
-        handleIndicatorStyle={[
-          { backgroundColor: themeColorMuted },
-          restProps.handleIndicatorStyle,
-        ]}
+        handleIndicatorClassName={contentHandleIndicatorClassName}
         enablePanDownToClose={restProps.enablePanDownToClose ?? true}
         animatedIndex={animatedIndex ?? restProps.animatedIndex}
         onClose={onClose}
+        animationConfigs={mergedAnimationConfigs}
         {...restProps}
       >
-        <BottomSheetView
-          className={tvStyles}
-          style={[
-            { paddingBottom: insets.bottom + 12 },
-            bottomSheetViewProps?.style,
-          ]}
-          {...bottomSheetViewProps}
+        <BottomSheetContentContainer
+          state={selectState}
+          contentContainerClassName={contentContainerClassNameValue}
+          contentContainerProps={contentContainerProps}
         >
           {children}
-        </BottomSheetView>
-      </BottomSheet>
+        </BottomSheetContentContainer>
+      </StyledBottomSheet>
     );
   }
 );

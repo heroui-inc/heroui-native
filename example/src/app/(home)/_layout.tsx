@@ -87,6 +87,17 @@ export default function Layout() {
           options={{ title: 'Accordion' }}
         />
         <Stack.Screen name="components/avatar" options={{ title: 'Avatar' }} />
+        <Stack.Screen
+          name="components/bottom-sheet"
+          options={{ title: 'Bottom Sheet' }}
+        />
+        <Stack.Screen
+          name="components/bottom-sheet-native-modal"
+          options={{
+            title: 'Bottom Sheet Native Modal',
+            presentation: 'formSheet',
+          }}
+        />
         <Stack.Screen name="components/button" options={{ title: 'Button' }} />
         <Stack.Screen name="components/card" options={{ title: 'Card' }} />
         <Stack.Screen

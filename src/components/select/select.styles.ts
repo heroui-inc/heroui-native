@@ -26,10 +26,6 @@ const popoverContent = tv({
   base: 'bg-overlay rounded-3xl border border-border p-3 px-4 shadow-lg shadow-black/5 dark:shadow-none',
 });
 
-const bottomSheetContent = tv({
-  base: 'p-5',
-});
-
 const dialogContent = tv({
   slots: {
     wrapper: 'absolute inset-0 justify-center p-5',
@@ -66,7 +62,6 @@ const selectStyles = {
   portal,
   overlay,
   popoverContent,
-  bottomSheetContent,
   dialogContent,
   close,
   value,

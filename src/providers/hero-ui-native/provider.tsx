@@ -1,9 +1,21 @@
 import React from 'react';
+import { SafeAreaListener } from 'react-native-safe-area-context';
+import { Uniwind } from 'uniwind';
 import { PortalHost } from '../../primitives/portal';
 import { GlobalAnimationSettingsProvider } from '../animation-settings';
 import { TextComponentProvider } from '../text-component/provider';
 import { ToastProvider } from '../toast/provider';
 import type { HeroUINativeProviderProps } from './types';
+
+export const Root = () => (
+  <SafeAreaListener
+    onChange={({ insets }) => {
+      Uniwind.updateInsets(insets);
+    }}
+  >
+    {/* app content */}
+  </SafeAreaListener>
+);
 
 /**
  * HeroUINativeProvider Component
@@ -32,14 +44,20 @@ export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   const { ...toastProps } = toast || {};
 
   return (
-    <GlobalAnimationSettingsProvider animation={animation}>
-      <TextComponentProvider value={{ textProps }}>
-        <ToastProvider {...toastProps}>
-          {children}
-          <PortalHost />
-        </ToastProvider>
-      </TextComponentProvider>
-    </GlobalAnimationSettingsProvider>
+    <SafeAreaListener
+      onChange={({ insets }) => {
+        Uniwind.updateInsets(insets);
+      }}
+    >
+      <GlobalAnimationSettingsProvider animation={animation}>
+        <TextComponentProvider value={{ textProps }}>
+          <ToastProvider {...toastProps}>
+            {children}
+            <PortalHost />
+          </ToastProvider>
+        </TextComponentProvider>
+      </GlobalAnimationSettingsProvider>
+    </SafeAreaListener>
   );
 };
 

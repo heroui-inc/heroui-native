@@ -25,6 +25,10 @@ const components: Component[] = [
     path: 'avatar',
   },
   {
+    title: 'Bottom Sheet',
+    path: 'bottom-sheet',
+  },
+  {
     title: 'Button',
     path: 'button',
   },

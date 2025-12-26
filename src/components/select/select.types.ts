@@ -1,5 +1,4 @@
 import type BottomSheet from '@gorhom/bottom-sheet';
-import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
@@ -11,6 +10,7 @@ import type {
   PopupPopoverContentAnimation,
   PopupRootAnimationConfig,
 } from '../../helpers/types/animation';
+import type { BaseBottomSheetContentProps } from '../../helpers/types/bottom-sheet';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import type { DialogContentFallbackSlots } from './select.styles';
 
@@ -170,19 +170,12 @@ export interface SelectContentPopoverProps
  * Select Content props for 'bottom-sheet' presentation
  */
 export interface SelectContentBottomSheetProps
-  extends Partial<React.ComponentProps<typeof BottomSheet>> {
+  extends Partial<React.ComponentProps<typeof BottomSheet>>,
+    BaseBottomSheetContentProps {
   /**
    * Presentation mode for the select
    */
   presentation: 'bottom-sheet';
-  /**
-   * Additional CSS class for the bottom sheet view
-   */
-  bottomSheetViewClassName?: string;
-  /**
-   * Props for the bottom sheet view
-   */
-  bottomSheetViewProps?: Omit<BottomSheetViewProps, 'children'>;
 }
 
 /**

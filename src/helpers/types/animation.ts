@@ -15,6 +15,8 @@ export type Animation<
   TConfig extends Record<string, any> = Record<string, any>,
 > = boolean | 'disabled' | TConfig;
 
+export type AnimationDisabled = 'disabled' | false;
+
 /**
  * Root-level animation prop type with cascading control
  * - `true` or `undefined`: Use default animations

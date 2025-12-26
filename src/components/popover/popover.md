@@ -385,16 +385,16 @@ Animation configuration for popover overlay component. Can be:
 
 ### Popover.Content (Bottom Sheet Presentation)
 
-| prop                       | type                   | default | description                                      |
-| -------------------------- | ---------------------- | ------- | ------------------------------------------------ |
-| `children`                 | `ReactNode`            | -       | The bottom sheet content                         |
-| `presentation`             | `'bottom-sheet'`       | -       | Presentation mode for the popover                |
-| `bottomSheetViewClassName` | `string`               | -       | Additional CSS classes for the bottom sheet view |
-| `bottomSheetViewProps`     | `BottomSheetViewProps` | -       | Props for the bottom sheet view                  |
-| `enablePanDownToClose`     | `boolean`              | `true`  | Whether pan down gesture closes the sheet        |
-| `backgroundStyle`          | `ViewStyle`            | -       | Style for the bottom sheet background            |
-| `handleIndicatorStyle`     | `ViewStyle`            | -       | Style for the bottom sheet handle indicator      |
-| `...BottomSheetProps`      | `BottomSheetProps`     | -       | All @gorhom/bottom-sheet props are supported     |
+| prop                        | type                   | default | description                                      |
+| --------------------------- | ---------------------- | ------- | ------------------------------------------------ |
+| `children`                  | `ReactNode`            | -       | The bottom sheet content                         |
+| `presentation`              | `'bottom-sheet'`       | -       | Presentation mode for the popover                |
+| `contentContainerClassName` | `string`               | -       | Additional CSS classes for the content container |
+| `contentContainerProps`     | `BottomSheetViewProps` | -       | Props for the content container                  |
+| `enablePanDownToClose`      | `boolean`              | `true`  | Whether pan down gesture closes the sheet        |
+| `backgroundStyle`           | `ViewStyle`            | -       | Style for the bottom sheet background            |
+| `handleIndicatorStyle`      | `ViewStyle`            | -       | Style for the bottom sheet handle indicator      |
+| `...BottomSheetProps`       | `BottomSheetProps`     | -       | All @gorhom/bottom-sheet props are supported     |
 
 #### PopupPopoverContentAnimation
 

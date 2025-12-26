@@ -5,7 +5,6 @@ import {
   type BlurEvent,
   type FocusEvent,
   type TextInput as TextInputType,
-  type ViewStyle,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/components';
@@ -135,11 +134,12 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
   (props, ref) => {
     const {
       children,
+      isInvalid: localIsInvalid,
       className,
       classNames,
       style,
       animation,
-      isInvalid: localIsInvalid,
+      isAnimatedStyleActive = true,
       onFocus,
       onBlur,
       ...restProps
@@ -168,7 +168,7 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       isMultiline: Boolean(restProps.multiline),
     });
 
-    const containerStyles = tvStyles.container({
+    const containerClassName = tvStyles.container({
       className: [className, classNames?.container],
     });
 
@@ -181,8 +181,11 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     } = useTextFieldInputAnimation({
       animation,
       isInvalid,
-      style: style as ViewStyle | undefined,
     });
+
+    const containerStyle = isAnimatedStyleActive
+      ? [animatedContainerStyle, styleSheet.borderCurve, style]
+      : [styleSheet.borderCurve, style];
 
     const handleFocus = (e: FocusEvent) => {
       handleFocusAnimation();
@@ -195,15 +198,12 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     };
 
     return (
-      <Animated.View
-        className={containerStyles}
-        style={[animatedContainerStyle, styleSheet.borderCurve]}
-      >
+      <Animated.View className={containerClassName} style={containerStyle}>
         {startContent}
         <TextInput
           ref={ref}
           className={inputStyles}
-          style={[styleSheet.borderCurve, style]}
+          style={[styleSheet.borderCurve]}
           placeholderTextColor={themeColorFieldPlaceholder}
           selectionColor={themeColorMuted}
           selectionHandleColor={themeColorMuted}

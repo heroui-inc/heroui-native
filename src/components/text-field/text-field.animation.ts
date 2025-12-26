@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { type ViewStyle } from 'react-native';
 import {
   interpolateColor,
   useAnimatedStyle,
@@ -15,7 +14,6 @@ import {
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
-  getStyleProperties,
 } from '../../helpers/utils/animation';
 import {
   ANIMATION_DURATION,
@@ -136,9 +134,8 @@ export function useTextFieldDescriptionAnimation(options: {
 export function useTextFieldInputAnimation(options: {
   animation: TextFieldInputAnimation | undefined;
   isInvalid: boolean;
-  style: ViewStyle | undefined;
 }) {
-  const { animation, isInvalid, style } = options;
+  const { animation, isInvalid } = options;
 
   const [
     themeColorFieldBackground,
@@ -205,11 +202,6 @@ export function useTextFieldInputAnimation(options: {
     },
   });
 
-  const styleProps = getStyleProperties(style, [
-    'backgroundColor',
-    'borderColor',
-  ]);
-
   const focusProgress = useSharedValue(0);
   const errorProgress = useSharedValue(0);
   const currentBgColor = useSharedValue(backgroundColorValue.blur);
@@ -237,7 +229,6 @@ export function useTextFieldInputAnimation(options: {
         return {
           backgroundColor: errorBgColor,
           borderColor: errorBorderColor,
-          ...styleProps,
         };
       }
 
@@ -252,7 +243,6 @@ export function useTextFieldInputAnimation(options: {
           [0, 1],
           [currentBorderColor.get(), errorBorderColor]
         ),
-        ...styleProps,
       };
     }
 
@@ -264,7 +254,6 @@ export function useTextFieldInputAnimation(options: {
         borderColor: focusProgress.get()
           ? borderColorValue.focus
           : borderColorValue.blur,
-        ...styleProps,
       };
     }
 
@@ -279,7 +268,6 @@ export function useTextFieldInputAnimation(options: {
         [0, 1],
         [borderColorValue.blur, borderColorValue.focus]
       ),
-      ...styleProps,
     };
   });
 

@@ -62,6 +62,30 @@ const label = tv({
   base: 'text-base font-medium text-segment-foreground',
 });
 
+/**
+ * Indicator style definition
+ *
+ * @note ANIMATED PROPERTIES (cannot be set via className):
+ * The following properties are animated and cannot be overridden using Tailwind classes:
+ * - `width` - Animated for indicator width transitions when switching tabs
+ * - `height` - Animated for indicator height transitions when switching tabs
+ * - `left` - Animated for indicator position transitions when switching tabs
+ * - `opacity` - Animated for indicator visibility transitions (0 when no active tab, 1 when active tab is selected)
+ *
+ * To customize these properties, use the `animation` prop on `Tabs.Indicator`:
+ * ```tsx
+ * <Tabs.Indicator
+ *   animation={{
+ *     width: { type: 'spring', config: { stiffness: 1200, damping: 120 } },
+ *     height: { type: 'spring', config: { stiffness: 1200, damping: 120 } },
+ *     left: { type: 'timing', config: { duration: 200 } }
+ *   }}
+ * />
+ * ```
+ *
+ * To completely disable animated styles and apply your own via className or style prop,
+ * set `isAnimatedStyleActive={false}` on `Tabs.Indicator`.
+ */
 const indicator = tv({
   base: 'absolute',
   variants: {

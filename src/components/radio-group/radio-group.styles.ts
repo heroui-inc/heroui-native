@@ -47,6 +47,25 @@ const itemIndicator = tv({
   },
 });
 
+/**
+ * Indicator thumb style definition
+ *
+ * @note ANIMATED PROPERTIES (cannot be set via className):
+ * The following property is animated and cannot be overridden using Tailwind classes:
+ * - `transform` (specifically `scale`) - Animated for selection transitions (unselected: 1.5, selected: 1)
+ *
+ * To customize this property, use the `animation` prop on `RadioGroup.IndicatorThumb`:
+ * ```tsx
+ * <RadioGroup.IndicatorThumb
+ *   animation={{
+ *     scale: { value: [1.5, 1], timingConfig: { duration: 300, easing: Easing.out(Easing.ease) } }
+ *   }}
+ * />
+ * ```
+ *
+ * To completely disable animated styles and apply your own via className or style prop,
+ * set `isAnimatedStyleActive={false}` on `RadioGroup.IndicatorThumb`.
+ */
 const itemIndicatorThumb = tv({
   base: 'size-2.5 dark:size-3 rounded-full',
   variants: {

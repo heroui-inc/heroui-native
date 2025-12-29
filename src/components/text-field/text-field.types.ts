@@ -202,10 +202,46 @@ export interface TextFieldInputProps extends TextInputProps {
   isInvalid?: boolean;
   /**
    * Additional CSS classes
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `backgroundColor` - Animated for focus/blur and error state transitions (applied to container)
+   * - `borderColor` - Animated for focus/blur and error state transitions (applied to container)
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <TextField.Input
+   *   animation={{
+   *     backgroundColor: { value: { blur: '#fff', focus: '#f0f0f0', error: '#fee' } },
+   *     borderColor: { value: { blur: '#ccc', focus: '#007AFF', error: '#ff0000' } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**
    * Additional CSS classes for different parts of the input
+   *
+   * @note The `container` slot has the following animated properties that cannot be set via className:
+   * - `backgroundColor` - Animated for focus/blur and error state transitions
+   * - `borderColor` - Animated for focus/blur and error state transitions
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <TextField.Input
+   *   classNames={{
+   *     container: "custom-class", // backgroundColor and borderColor cannot be overridden here
+   *     input: "custom-input-class"
+   *   }}
+   *   animation={{
+   *     backgroundColor: { value: { blur: '#fff', focus: '#f0f0f0', error: '#fee' } },
+   *     borderColor: { value: { blur: '#ccc', focus: '#007AFF', error: '#ff0000' } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   classNames?: ElementSlots<InputSlots>;
   /**

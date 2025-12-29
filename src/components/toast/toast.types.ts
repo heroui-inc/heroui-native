@@ -128,6 +128,34 @@ export interface ToastRootProps
   placement?: ToastPlacement;
   /**
    * Additional CSS class for the toast container
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `opacity` - Animated for visibility transitions when toasts are pushed beyond visible stack limits
+   * - `transform` (translateY) - Animated for vertical position transitions when toasts are stacked, and for swipe-to-dismiss gestures
+   * - `transform` (scale) - Animated for size scaling transitions when toasts are stacked (toasts behind active one are scaled down)
+   * - `height` - Animated for height transitions when toast content changes
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <Toast.Root
+   *   animation={{
+   *     opacity: {
+   *       value: [1, 0],
+   *       timingConfig: { duration: 300 }
+   *     },
+   *     translateY: {
+   *       value: [0, 10],
+   *       timingConfig: { duration: 300 }
+   *     },
+   *     scale: {
+   *       value: [1, 0.97],
+   *       timingConfig: { duration: 300 }
+   *     }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**

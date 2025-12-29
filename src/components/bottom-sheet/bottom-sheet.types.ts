@@ -90,6 +90,20 @@ export interface BottomSheetOverlayProps
   extends BottomSheetPrimitivesTypes.OverlayProps {
   /**
    * Additional CSS class for the overlay
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `opacity` - Animated for overlay show/hide transitions (idle: 0, open: 1, close: 0)
+   *
+   * To customize this property, use the `animation` prop:
+   * ```tsx
+   * <BottomSheet.Overlay
+   *   animation={{
+   *     opacity: { value: [0, 1, 0] }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**

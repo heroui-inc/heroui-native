@@ -230,6 +230,20 @@ export interface PressableFeedbackBaseProps
   children?: React.ReactNode;
   /**
    * Additional CSS classes
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `transform` (specifically `scale`) - Animated for press feedback transitions (unpressed: 1, pressed: adjusted scale based on container width, default: 0.985)
+   *
+   * To customize this property, use the `animation` prop:
+   * ```tsx
+   * <PressableFeedback
+   *   animation={{
+   *     scale: { value: 0.985, timingConfig: { duration: 300, easing: Easing.out(Easing.ease) } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**

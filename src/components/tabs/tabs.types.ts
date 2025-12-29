@@ -185,6 +185,25 @@ export type TabsIndicatorAnimation = Animation<{
 export interface TabsIndicatorProps extends TabsPrimitivesTypes.IndicatorProps {
   /**
    * Additional CSS classes for the indicator element
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `width` - Animated for indicator width transitions when switching tabs
+   * - `height` - Animated for indicator height transitions when switching tabs
+   * - `left` - Animated for indicator position transitions when switching tabs
+   * - `opacity` - Animated for indicator visibility transitions (0 when no active tab, 1 when active tab is selected)
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <Tabs.Indicator
+   *   animation={{
+   *     width: { type: 'spring', config: { stiffness: 1200, damping: 120 } },
+   *     height: { type: 'spring', config: { stiffness: 1200, damping: 120 } },
+   *     left: { type: 'timing', config: { duration: 200 } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**

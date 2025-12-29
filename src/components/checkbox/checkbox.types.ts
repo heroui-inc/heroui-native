@@ -73,7 +73,22 @@ export interface CheckboxProps
     | React.ReactNode
     | ((props: CheckboxRenderProps) => React.ReactNode);
 
-  /** Custom class name for the checkbox */
+  /** Custom class name for the checkbox
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `transform` (specifically `scale`) - Animated for press feedback transitions (unpressed: 1, pressed: 0.96)
+   *
+   * To customize this property, use the `animation` prop:
+   * ```tsx
+   * <Checkbox
+   *   animation={{
+   *     scale: { value: [1, 0.96], timingConfig: { duration: 150 } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+   */
   className?: string;
 
   /** Animation configuration for checkbox scale animation */
@@ -153,7 +168,27 @@ export interface CheckboxIndicatorProps
     | React.ReactNode
     | ((props: CheckboxRenderProps) => React.ReactNode);
 
-  /** Custom class name for the indicator */
+  /** Custom class name for the indicator
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `opacity` - Animated for selection transitions (unselected: 0, selected: 1)
+   * - `borderRadius` - Animated for selection transitions (unselected: 8, selected: 0)
+   * - `transform` (specifically `translateX` and `scale`) - Animated for selection transitions (translateX: unselected: -4, selected: 0; scale: unselected: 0.8, selected: 1)
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <Checkbox.Indicator
+   *   animation={{
+   *     opacity: { value: [0, 1], timingConfig: { duration: 100 } },
+   *     borderRadius: { value: [8, 0], timingConfig: { duration: 50 } },
+   *     translateX: { value: [-4, 0], timingConfig: { duration: 100 } },
+   *     scale: { value: [0.8, 1], timingConfig: { duration: 100 } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+   */
   className?: string;
 
   /** Custom icon props for the indicator */

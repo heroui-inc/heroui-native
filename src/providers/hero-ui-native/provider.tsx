@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaListener } from 'react-native-safe-area-context';
 import { Uniwind } from 'uniwind';
 import { PortalHost } from '../../primitives/portal';
@@ -7,15 +7,10 @@ import { TextComponentProvider } from '../text-component/provider';
 import { ToastProvider } from '../toast/provider';
 import type { HeroUINativeProviderProps } from './types';
 
-export const Root = () => (
-  <SafeAreaListener
-    onChange={({ insets }) => {
-      Uniwind.updateInsets(insets);
-    }}
-  >
-    {/* app content */}
-  </SafeAreaListener>
-);
+const LOG_COLOR = {
+  BLUE: '\x1b[34m',
+  RESET: '\x1b[0m',
+};
 
 /**
  * HeroUINativeProvider Component
@@ -42,6 +37,21 @@ export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
 }) => {
   const { textProps, toast, animation } = config;
   const { ...toastProps } = toast || {};
+
+  useEffect(() => {
+    if (__DEV__) {
+      console.info(
+        `${LOG_COLOR.BLUE}HeroUI Native Styling Principles${LOG_COLOR.RESET}\n` +
+          `• className: this is your go-to styling solution. Use Tailwind CSS classes via className prop on all components.\n` +
+          `• StyleSheet precedence: The style prop (StyleSheet API) has precedence over className when both are provided. This allows you to override Tailwind classes when needed.\n` +
+          `• Animated styles: Some style properties are animated using react-native-reanimated and have precedence over className. To identify which styles are animated:\n` +
+          `  - Hover over className in your IDE - TypeScript definitions show which properties are occupied by animated styles\n` +
+          `  - Check component documentation - Each component page includes a link to the component's style source\n` +
+          `• If styles are occupied by animation, modify them via the animation prop on components that support it.\n` +
+          `• To deactivate animated style completely and apply your own styles, use isAnimatedStyleActive prop.`
+      );
+    }
+  }, []);
 
   return (
     <SafeAreaListener

@@ -62,7 +62,24 @@ export interface SwitchProps
   /** Whether the switch is disabled @default false */
   isDisabled?: boolean;
 
-  /** Custom class name for the switch */
+  /** Custom class name for the switch
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `backgroundColor` - Animated for selection transitions (unselected: surface-quaternary, selected: accent)
+   * - `transform` (specifically `scale`) - Animated for press feedback transitions (unpressed: 1, pressed: 0.96)
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <Switch
+   *   animation={{
+   *     backgroundColor: { value: ['#e5e5e5', '#007AFF'], timingConfig: { duration: 175 } },
+   *     scale: { value: [1, 0.96], timingConfig: { duration: 150 } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+   */
   className?: string;
 
   /**
@@ -127,7 +144,24 @@ export interface SwitchThumbProps
   /** Content to render inside the thumb, or a render function */
   children?: React.ReactNode | ((props: SwitchRenderProps) => React.ReactNode);
 
-  /** Custom class name for the thumb element */
+  /** Custom class name for the thumb element
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `left` - Animated for thumb position transitions (unselected: left edge offset, selected: right edge offset)
+   * - `backgroundColor` - Animated for selection transitions (unselected: white, selected: accent-foreground)
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <Switch.Thumb
+   *   animation={{
+   *     left: { value: 2, springConfig: { damping: 120, stiffness: 1600, mass: 2 } },
+   *     backgroundColor: { value: ['white', '#ffffff'], timingConfig: { duration: 175 } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+   */
   className?: string;
 
   /**

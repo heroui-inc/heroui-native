@@ -103,7 +103,22 @@ export type RadioGroupIndicatorThumbAnimation = Animation<{
  */
 export interface RadioGroupIndicatorThumbProps
   extends Omit<AnimatedProps<ViewProps>, 'children'> {
-  /** Custom class name */
+  /** Custom class name
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `transform` (specifically `scale`) - Animated for selection transitions (unselected: 1.5, selected: 1)
+   *
+   * To customize this property, use the `animation` prop:
+   * ```tsx
+   * <RadioGroup.IndicatorThumb
+   *   animation={{
+   *     scale: { value: [1.5, 1], timingConfig: { duration: 300, easing: Easing.out(Easing.ease) } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+   */
   className?: string;
   /**
    * Animation configuration

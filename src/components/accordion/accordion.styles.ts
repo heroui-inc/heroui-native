@@ -41,6 +41,25 @@ const trigger = tv({
   },
 });
 
+/**
+ * Indicator style definition
+ *
+ * @note ANIMATED PROPERTIES (cannot be set via className):
+ * The following property is animated and cannot be overridden using Tailwind classes:
+ * - `transform` (specifically `rotate`) - Animated for expand/collapse rotation transitions
+ *
+ * To customize this property, use the `animation` prop on `Accordion.Indicator`:
+ * ```tsx
+ * <Accordion.Indicator
+ *   animation={{
+ *     rotation: { value: [0, -180], springConfig: { damping: 140, stiffness: 1000, mass: 4 } }
+ *   }}
+ * />
+ * ```
+ *
+ * To completely disable animated styles and apply your own via className or style prop,
+ * set `isAnimatedStyleActive={false}` on `Accordion.Indicator`.
+ */
 const indicator = tv({
   base: 'items-center justify-center',
 });

@@ -112,7 +112,7 @@ export type PressableFeedbackRippleAnimation = Animation<{
      * This value controls how fast the ripple progresses across the container.
      * Lower values mean faster ripple expansion, higher values mean slower expansion.
      *
-     * @default 1000
+     * @default 750
      *
      * Note: The actual duration is automatically adjusted based on the container's diagonal size
      * using a durationCoefficient. This ensures the ripple feels consistent across different

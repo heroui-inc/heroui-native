@@ -81,7 +81,6 @@ const CardWithImageContent = () => {
           className="flex-1 aspect-[1/1.3] rounded-3xl"
           animation={{
             ripple: {
-              progress: { baseDuration: 1500 },
               backgroundColor: { value: '#fecdd3' },
               opacity: { value: [0, 0.2, 0] },
             },
@@ -121,7 +120,6 @@ const CardWithImageContent = () => {
           className="flex-1 aspect-[1/1.3] rounded-3xl"
           animation={{
             ripple: {
-              progress: { baseDuration: 1500 },
               backgroundColor: { value: '#67e8f9' },
             },
           }}

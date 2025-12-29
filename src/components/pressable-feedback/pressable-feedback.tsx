@@ -1,9 +1,13 @@
 import { forwardRef, useCallback, useMemo, type FC } from 'react';
-import { Pressable, StyleSheet, type LayoutChangeEvent } from 'react-native';
+import {
+  StyleSheet,
+  type GestureResponderEvent,
+  type LayoutChangeEvent,
+} from 'react-native';
 
+import { Pressable } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-
-import { GestureDetector } from 'react-native-gesture-handler';
+import { withUniwind } from 'uniwind';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import type { PressableRef } from '../../helpers/types';
 import {
@@ -23,6 +27,7 @@ import type {
 } from './pressable-feedback.types';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+const StyledAnimatedPressable = withUniwind(AnimatedPressable);
 
 // --------------------------------------------------
 
@@ -38,6 +43,9 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       isAnimatedStyleActive = true,
       children,
       onLayout,
+      onTouchStart,
+      onTouchEnd,
+      onTouchCancel,
       ...restProps
     } = props;
 
@@ -50,7 +58,8 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       containerWidth,
       containerHeight,
       rippleProgress,
-      gesture,
+      handleAnimationStart,
+      handleAnimationEnd,
       rContainerStyle,
       isAllAnimationsDisabled,
     } = usePressableFeedbackRootAnimation({
@@ -70,6 +79,33 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
         onLayout?.(event);
       },
       [containerWidth, containerHeight, onLayout]
+    );
+
+    const handleTouchStart = useCallback(
+      (event: GestureResponderEvent) => {
+        handleAnimationStart(event);
+        // @ts-ignore
+        onTouchStart?.(event);
+      },
+      [handleAnimationStart, onTouchStart]
+    );
+
+    const handleTouchEnd = useCallback(
+      (event: GestureResponderEvent) => {
+        handleAnimationEnd();
+        // @ts-ignore
+        onTouchEnd?.(event);
+      },
+      [handleAnimationEnd, onTouchEnd]
+    );
+
+    const handleTouchCancel = useCallback(
+      (event: GestureResponderEvent) => {
+        handleAnimationEnd();
+        // @ts-ignore
+        onTouchCancel?.(event);
+      },
+      [handleAnimationEnd, onTouchCancel]
     );
 
     const animationContextValue = useMemo(
@@ -120,20 +156,22 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
     return (
       <AnimationSettingsProvider value={animationSettingsContextValue}>
         <PressableFeedbackAnimationProvider value={animationContextValue}>
-          <GestureDetector gesture={gesture}>
-            <AnimatedPressable
-              ref={ref}
-              disabled={isDisabled}
-              className={rootClassName}
-              style={rootStyle}
-              onLayout={handleLayout}
-              {...restProps}
-            >
-              {feedbackPosition === 'behind' && feedbackElement}
-              {children}
-              {feedbackPosition === 'top' && feedbackElement}
-            </AnimatedPressable>
-          </GestureDetector>
+          {/* @ts-ignore */}
+          <StyledAnimatedPressable
+            ref={ref}
+            disabled={isDisabled}
+            className={rootClassName}
+            style={rootStyle}
+            onLayout={handleLayout}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchCancel}
+            {...restProps}
+          >
+            {feedbackPosition === 'behind' && feedbackElement}
+            {children}
+            {feedbackPosition === 'top' && feedbackElement}
+          </StyledAnimatedPressable>
         </PressableFeedbackAnimationProvider>
       </AnimationSettingsProvider>
     );

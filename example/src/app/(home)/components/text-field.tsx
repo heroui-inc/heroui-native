@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
 import { Button, cn, TextField } from 'heroui-native';
 import { useState } from 'react';

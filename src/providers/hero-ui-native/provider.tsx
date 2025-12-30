@@ -72,6 +72,15 @@ export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
 };
 
 /**
+ * Re-export PortalHost for advanced use cases.
+ *
+ * @description
+ * Allows consumers to manually mount a portal host in custom layouts
+ * (e.g. for BottomSheet, Modal, or any overlay components).
+ */
+export { PortalHost };
+
+/**
  * Default export for convenience
  *
  * @description

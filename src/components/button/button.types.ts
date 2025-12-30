@@ -1,5 +1,9 @@
 import type { TextProps } from 'react-native';
-import type { PressableFeedbackProps } from '../pressable-feedback';
+import type {
+  PressableFeedbackHighlightProps,
+  PressableFeedbackProps,
+  PressableFeedbackRippleProps,
+} from '../pressable-feedback';
 
 /**
  * Size variants for the Button component
@@ -36,6 +40,19 @@ export type ButtonRootProps = PressableFeedbackProps & {
    * @default false
    */
   isIconOnly?: boolean;
+  /**
+   * Variant of pressable feedback effect
+   * @default 'highlight'
+   */
+  pressableFeedbackVariant?: 'highlight' | 'ripple' | 'none';
+  /**
+   * Props for PressableFeedback.Highlight component
+   */
+  pressableFeedbackHighlightProps?: PressableFeedbackHighlightProps;
+  /**
+   * Props for PressableFeedback.Ripple component
+   */
+  pressableFeedbackRippleProps?: PressableFeedbackRippleProps;
 };
 
 /**

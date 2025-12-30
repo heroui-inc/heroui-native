@@ -12,7 +12,7 @@ import * as ToastPrimitive from '../../primitives/toast';
 import type { ToastComponentProps } from '../../providers/toast';
 import { useToastConfig } from '../../providers/toast/toast-config.context';
 import { Button } from '../button';
-import type { PressableFeedbackHighlightRootAnimation } from '../pressable-feedback';
+import type { PressableFeedbackHighlightAnimation } from '../pressable-feedback';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
 import toastStyles, { styleSheet } from './toast.styles';
@@ -250,12 +250,10 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
     }
   }, [toastVariant, variant]);
 
-  const animationConfig = useMemo<PressableFeedbackHighlightRootAnimation>(
+  const highlightAnimationConfig = useMemo<PressableFeedbackHighlightAnimation>(
     () => ({
-      highlight: {
-        backgroundColor: { value: highlightColorMap },
-        opacity: { value: [0, 1] },
-      },
+      backgroundColor: { value: highlightColorMap },
+      opacity: { value: [0, 1] },
     }),
     [highlightColorMap]
   );
@@ -266,7 +264,10 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
       variant={buttonVariant}
       size={size}
       className={tvStyles}
-      animation={animationConfig}
+      pressableFeedbackVariant="highlight"
+      pressableFeedbackHighlightProps={{
+        animation: highlightAnimationConfig,
+      }}
       {...restProps}
     >
       {children}

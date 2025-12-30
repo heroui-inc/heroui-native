@@ -1,17 +1,16 @@
-import { forwardRef, useCallback, useMemo, type FC } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 import {
-  StyleSheet,
+  Pressable,
+  View,
   type GestureResponderEvent,
   type LayoutChangeEvent,
 } from 'react-native';
 
-import { Pressable } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-import { withUniwind } from 'uniwind';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import type { PressableRef } from '../../helpers/types';
+import type { PressableRef, ViewRef } from '../../helpers/types';
 import {
-  PressableFeedbackAnimationProvider,
+  PressableFeedbackRootAnimationProvider,
   usePressableFeedbackHighlightAnimation,
   usePressableFeedbackRippleAnimation,
   usePressableFeedbackRootAnimation,
@@ -21,21 +20,18 @@ import pressableFeedbackStyles, {
   styleSheet,
 } from './pressable-feedback.styles';
 import type {
-  PressableFeedbackHighlightRootAnimation,
+  PressableFeedbackHighlightProps,
   PressableFeedbackProps,
-  PressableFeedbackRippleRootAnimation,
+  PressableFeedbackRippleProps,
 } from './pressable-feedback.types';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-const StyledAnimatedPressable = withUniwind(AnimatedPressable);
 
 // --------------------------------------------------
 
 const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
   (props, ref) => {
     const {
-      feedbackVariant = 'highlight',
-      feedbackPosition = 'top',
       isDisabled = false,
       className,
       style,
@@ -43,27 +39,22 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       isAnimatedStyleActive = true,
       children,
       onLayout,
-      onTouchStart,
-      onTouchEnd,
-      onTouchCancel,
+      onPressIn,
+      onPressOut,
       ...restProps
     } = props;
 
-    const rootClassName = pressableFeedbackStyles({ className });
+    const rootClassName = pressableFeedbackStyles.root({ className });
 
     const {
       isPressed,
-      pressedCenterX,
-      pressedCenterY,
       containerWidth,
       containerHeight,
-      rippleProgress,
-      handleAnimationStart,
-      handleAnimationEnd,
       rContainerStyle,
       isAllAnimationsDisabled,
+      animationOnPressIn,
+      animationOnPressOut,
     } = usePressableFeedbackRootAnimation({
-      variant: feedbackVariant,
       animation,
     });
 
@@ -81,50 +72,31 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       [containerWidth, containerHeight, onLayout]
     );
 
-    const handleTouchStart = useCallback(
+    const handlePressIn = useCallback(
       (event: GestureResponderEvent) => {
-        handleAnimationStart(event);
+        animationOnPressIn();
         // @ts-ignore
-        onTouchStart?.(event);
+        onPressIn?.(event);
       },
-      [handleAnimationStart, onTouchStart]
+      [animationOnPressIn, onPressIn]
     );
 
-    const handleTouchEnd = useCallback(
+    const handlePressOut = useCallback(
       (event: GestureResponderEvent) => {
-        handleAnimationEnd();
+        animationOnPressOut();
         // @ts-ignore
-        onTouchEnd?.(event);
+        onPressOut?.(event);
       },
-      [handleAnimationEnd, onTouchEnd]
-    );
-
-    const handleTouchCancel = useCallback(
-      (event: GestureResponderEvent) => {
-        handleAnimationEnd();
-        // @ts-ignore
-        onTouchCancel?.(event);
-      },
-      [handleAnimationEnd, onTouchCancel]
+      [animationOnPressOut, onPressOut]
     );
 
     const animationContextValue = useMemo(
       () => ({
         isPressed,
-        pressedCenterX,
-        pressedCenterY,
         containerWidth,
         containerHeight,
-        rippleProgress,
       }),
-      [
-        isPressed,
-        pressedCenterX,
-        pressedCenterY,
-        containerWidth,
-        containerHeight,
-        rippleProgress,
-      ]
+      [isPressed, containerWidth, containerHeight]
     );
 
     const animationSettingsContextValue = useMemo(
@@ -134,45 +106,22 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       [isAllAnimationsDisabled]
     );
 
-    const feedbackElement = (
-      <>
-        {feedbackVariant === 'highlight' && (
-          <PressableFeedbackHighlight
-            animation={
-              animation as PressableFeedbackHighlightRootAnimation | undefined
-            }
-          />
-        )}
-        {feedbackVariant === 'ripple' && (
-          <PressableFeedbackRipple
-            animation={
-              animation as PressableFeedbackRippleRootAnimation | undefined
-            }
-          />
-        )}
-      </>
-    );
-
     return (
       <AnimationSettingsProvider value={animationSettingsContextValue}>
-        <PressableFeedbackAnimationProvider value={animationContextValue}>
-          {/* @ts-ignore */}
-          <StyledAnimatedPressable
+        <PressableFeedbackRootAnimationProvider value={animationContextValue}>
+          <AnimatedPressable
             ref={ref}
             disabled={isDisabled}
             className={rootClassName}
             style={rootStyle}
             onLayout={handleLayout}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            onTouchCancel={handleTouchCancel}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
             {...restProps}
           >
-            {feedbackPosition === 'behind' && feedbackElement}
             {children}
-            {feedbackPosition === 'top' && feedbackElement}
-          </StyledAnimatedPressable>
-        </PressableFeedbackAnimationProvider>
+          </AnimatedPressable>
+        </PressableFeedbackRootAnimationProvider>
       </AnimationSettingsProvider>
     );
   }
@@ -180,47 +129,136 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
 
 // --------------------------------------------------
 
-const PressableFeedbackHighlight: FC<{
-  animation: PressableFeedbackHighlightRootAnimation | undefined;
-}> = ({ animation }) => {
+/**
+ * Highlight component for PressableFeedback that renders highlight feedback effect
+ * Must be used within PressableFeedback component
+ */
+const PressableFeedbackHighlight = forwardRef<
+  ViewRef,
+  PressableFeedbackHighlightProps
+>((props, ref) => {
+  const {
+    animation,
+    className,
+    isAnimatedStyleActive = true,
+    style,
+    ...restProps
+  } = props;
+
   const { rContainerStyle } = usePressableFeedbackHighlightAnimation({
     animation,
   });
 
-  return (
-    <Animated.View
-      pointerEvents="none"
-      style={[StyleSheet.absoluteFill, rContainerStyle]}
-    />
-  );
-};
+  const highlightClassName = pressableFeedbackStyles.highlight({ className });
 
-// --------------------------------------------------
-
-const PressableFeedbackRipple: FC<{
-  animation: PressableFeedbackRippleRootAnimation | undefined;
-}> = ({ animation }) => {
-  const { rContainerStyle, backgroundColor } =
-    usePressableFeedbackRippleAnimation({ animation });
+  const highlightStyle = isAnimatedStyleActive
+    ? [rContainerStyle, style]
+    : style;
 
   return (
     <Animated.View
+      ref={ref}
       pointerEvents="none"
-      className="absolute top-0 left-0 rounded-full"
-      style={[
-        rContainerStyle,
-        {
-          experimental_backgroundImage: `radial-gradient(circle at center, ${backgroundColor} 30%, transparent 70%)`,
-        },
-      ]}
+      className={highlightClassName}
+      style={highlightStyle}
+      {...restProps}
     />
   );
-};
+});
 
 // --------------------------------------------------
 
-PressableFeedbackHighlight.displayName = DISPLAY_NAME.HIGHLIGHT;
+/**
+ * Ripple component for PressableFeedback that renders ripple feedback effect
+ * Must be used within PressableFeedback component
+ */
+const PressableFeedbackRipple = forwardRef<
+  ViewRef,
+  PressableFeedbackRippleProps
+>((props, ref) => {
+  const {
+    animation,
+    className,
+    classNames,
+    containerStyle,
+    rippleStyle: rippleStyleProp,
+    isAnimatedStyleActive = true,
+    onTouchStart,
+    onTouchEnd,
+    onTouchCancel,
+    ...restProps
+  } = props;
+
+  const {
+    rContainerStyle,
+    backgroundColor,
+    animationOnTouchEnd,
+    animationOnTouchStart,
+  } = usePressableFeedbackRippleAnimation({ animation });
+
+  const { container, ripple: rippleSlot } = pressableFeedbackStyles.ripple();
+
+  const containerClassName = container({
+    className: [className, classNames?.container],
+  });
+  const rippleClassName = rippleSlot({ className: classNames?.ripple });
+
+  const rippleStyle = isAnimatedStyleActive
+    ? [rContainerStyle, rippleStyleProp]
+    : rippleStyleProp;
+
+  const handleTouchStart = useCallback(
+    (event: GestureResponderEvent) => {
+      animationOnTouchStart(event);
+      onTouchStart?.(event);
+    },
+    [animationOnTouchStart, onTouchStart]
+  );
+
+  const handleTouchEnd = useCallback(
+    (event: GestureResponderEvent) => {
+      animationOnTouchEnd();
+      onTouchEnd?.(event);
+    },
+    [animationOnTouchEnd, onTouchEnd]
+  );
+
+  const handleTouchCancel = useCallback(
+    (event: GestureResponderEvent) => {
+      animationOnTouchEnd();
+      onTouchCancel?.(event);
+    },
+    [animationOnTouchEnd, onTouchCancel]
+  );
+  return (
+    <View
+      ref={ref}
+      className={containerClassName}
+      style={containerStyle}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchCancel}
+      {...restProps}
+    >
+      <Animated.View
+        pointerEvents="none"
+        className={rippleClassName}
+        style={[
+          rippleStyle,
+          {
+            experimental_backgroundImage: `radial-gradient(circle at center, ${backgroundColor} 30%, transparent 70%)`,
+          },
+        ]}
+      />
+    </View>
+  );
+});
+
+// --------------------------------------------------
+
 PressableFeedback.displayName = DISPLAY_NAME.ROOT;
+PressableFeedbackHighlight.displayName = DISPLAY_NAME.HIGHLIGHT;
+PressableFeedbackRipple.displayName = DISPLAY_NAME.RIPPLE;
 
 /**
  * Container component that provides visual feedback for press interactions with automatic scale animation.
@@ -230,11 +268,24 @@ PressableFeedback.displayName = DISPLAY_NAME.ROOT;
  * feedback with highlight effect (iOS-style) or ripple effect (Android-style) that emanates from press point.
  * Includes intelligent scale animation that automatically adjusts based on container size for consistent feel.
  * @features
- * - Two feedback variants: 'highlight' (default) and 'ripple'
  * - Automatic scale animation with smart size adjustment
  * - Customizable animations for opacity, color, duration, and scale
- * - Flexible z-index positioning (above or below content)
  * - Full gesture handling with press, long press, and disabled states
  * - Used as foundation for interactive components like Button, Card, and Accordion
+ *
+ * @component PressableFeedback.Highlight
+ * @description Highlight component that renders highlight feedback effect (iOS-style).
+ * Must be used within PressableFeedback component. Uses root's isPressed state from context.
+ *
+ * @component PressableFeedback.Ripple
+ * @description Ripple component that renders ripple feedback effect (Android-style).
+ * Must be used within PressableFeedback component. Handles touch events to track position.
  */
-export default PressableFeedback;
+const PressableFeedbackCompound = Object.assign(PressableFeedback, {
+  /** Highlight component that renders highlight feedback effect */
+  Highlight: PressableFeedbackHighlight,
+  /** Ripple component that renders ripple feedback effect */
+  Ripple: PressableFeedbackRipple,
+});
+
+export default PressableFeedbackCompound;

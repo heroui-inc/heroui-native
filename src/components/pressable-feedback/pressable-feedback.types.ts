@@ -1,14 +1,16 @@
-import type { PressableProps } from 'react-native';
+import type { PressableProps, ViewProps } from 'react-native';
 import type {
   AnimatedProps,
   SharedValue,
   WithTimingConfig,
 } from 'react-native-reanimated';
+import type { ElementSlots } from '../../helpers/theme/types';
 import type {
   Animation,
   AnimationRoot,
   AnimationValue,
 } from '../../helpers/types';
+import type { RippleSlots } from './pressable-feedback.styles';
 
 /**
  * Variant of the feedback effect
@@ -18,7 +20,7 @@ export type PressableFeedbackVariant = 'highlight' | 'ripple';
 /**
  * Scale animation configuration for PressableFeedback root container
  */
-export type PressableFeedbackScaleAnimation = Animation<{
+export type PressableFeedbackScaleAnimation = AnimationValue<{
   /**
    * Scale value when pressed
    * @default 0.985
@@ -183,41 +185,20 @@ export type PressableFeedbackRippleAnimation = Animation<{
 }>;
 
 /**
- * Animation configuration for PressableFeedback root component with highlight variant
+ * Animation configuration for PressableFeedback root component
+ * Only contains scale animation configuration
  */
-export type PressableFeedbackHighlightRootAnimation = AnimationRoot<{
+export type PressableFeedbackRootAnimation = AnimationRoot<{
   /**
    * Scale animation for the root container
    */
   scale?: PressableFeedbackScaleAnimation;
-  /**
-   * Highlight overlay animation configuration
-   */
-  highlight?: PressableFeedbackHighlightAnimation;
 }>;
 
 /**
- * Animation configuration for PressableFeedback root component with ripple variant
+ * Props for PressableFeedback root component
  */
-export type PressableFeedbackRippleRootAnimation = AnimationRoot<{
-  /**
-   * Scale animation for the root container
-   */
-  scale?: PressableFeedbackScaleAnimation;
-  /**
-   * Ripple effect animation configuration
-   */
-  ripple?: PressableFeedbackRippleAnimation;
-}>;
-
-export type PressableFeedbackAnimation =
-  | PressableFeedbackHighlightRootAnimation
-  | PressableFeedbackRippleRootAnimation;
-
-/**
- * Common props shared by both ripple and highlight variants
- */
-export interface PressableFeedbackBaseProps
+export interface PressableFeedbackProps
   extends AnimatedProps<Omit<PressableProps, 'disabled'>> {
   /**
    * Whether the pressable component is disabled
@@ -247,14 +228,9 @@ export interface PressableFeedbackBaseProps
    */
   className?: string;
   /**
-   * Controls the z-index positioning of the feedback effect relative to children
-   *
-   * - 'behind': Feedback effect renders behind children
-   * - 'top': Feedback effect renders on top of children (default)
-   *
-   * @default 'top'
+   * Animation configuration for the root component (scale only)
    */
-  feedbackPosition?: 'behind' | 'top';
+  animation?: PressableFeedbackRootAnimation;
   /**
    * Whether animated styles (react-native-reanimated) are active
    * When `false`, the animated style is removed and you can implement custom logic
@@ -265,56 +241,110 @@ export interface PressableFeedbackBaseProps
 }
 
 /**
- * Props for PressableFeedback component with highlight variant
+ * Props for PressableFeedback highlight component
  */
-export type PressableFeedbackHighlightProps = PressableFeedbackBaseProps & {
+export interface PressableFeedbackHighlightProps
+  extends AnimatedProps<ViewProps> {
   /**
-   * Variant of the feedback effect
-   * @default 'highlight'
+   * Additional CSS classes
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `backgroundColor` - Animated for highlight background color transitions (default: theme-aware gray)
+   * - `opacity` - Animated for highlight visibility transitions (unpressed: 0, pressed: 0.1, default duration: 200ms)
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <PressableFeedback.Highlight
+   *   animation={{
+   *     backgroundColor: { value: '#3f3f46' },
+   *     opacity: { value: [0, 0.2], timingConfig: { duration: 300 } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
-  feedbackVariant?: Extract<PressableFeedbackVariant, 'highlight'>;
+  className?: string;
   /**
    * Animation configuration for the highlight overlay
    */
-  animation?: PressableFeedbackHighlightRootAnimation;
-};
-
-/**
- * Props for PressableFeedback component with ripple variant
- */
-export type PressableFeedbackRippleProps = PressableFeedbackBaseProps & {
+  animation?: PressableFeedbackHighlightAnimation;
   /**
-   * Variant of the feedback effect
-   * @default 'highlight'
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
    */
-  feedbackVariant: Extract<PressableFeedbackVariant, 'ripple'>;
+  isAnimatedStyleActive?: boolean;
+}
+
+/**
+ * Props for PressableFeedback ripple component
+ */
+export interface PressableFeedbackRippleProps extends Omit<ViewProps, 'style'> {
   /**
-   * Animation configuration for the ripple effect
+   * Additional CSS classes for the container slot
+   *
+   * Applied to the container slot (`absolute inset-0`). The container handles touch events and positioning.
+   * Container styles can be fully customized via className or the `classNames.container` prop.
    */
-  animation?: PressableFeedbackRippleRootAnimation;
-};
+  className?: string;
+  /**
+   * Additional CSS classes for the slots
+   *
+   * - `container`: Outer container slot (`absolute inset-0`) - styles can be fully customized
+   * - `ripple`: Inner ripple slot (`absolute top-0 left-0 rounded-full`) - has animated properties that cannot be set via className
+   *
+   * @note The following style properties on the `ripple` slot are occupied by animations and cannot be set via className:
+   * - `width`, `height`, `borderRadius` - Animated for ripple circle size calculations (based on container diagonal)
+   * - `opacity` - Animated for ripple visibility transitions (unpressed: 0, expanding: 0.1, fading: 0)
+   * - `transform` (specifically `translateX`, `translateY`, `scale`) - Animated for ripple position and expansion from touch point
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <PressableFeedback.Ripple
+   *   animation={{
+   *     opacity: { value: [0, 0.1, 0], timingConfig: { duration: 400 } },
+   *     scale: { value: [0, 1, 1] },
+   *     backgroundColor: { value: '#3f3f46' }
+   *   }}
+   * />
+   * ```
+   *
+   * Touch handlers (`onTouchStart`, `onTouchEnd`, `onTouchCancel`) can be customized via props and will be called alongside animation handlers.
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+   */
+  classNames?: ElementSlots<RippleSlots>;
+  /**
+   * Style for the container slot
+   */
+  containerStyle?: ViewProps['style'];
+  /**
+   * Style for the ripple slot
+   */
+  rippleStyle?: ViewProps['style'];
+  /**
+   * Animation configuration for the ripple overlay
+   */
+  animation?: PressableFeedbackRippleAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
+}
 
 /**
- * Props for PressableFeedback component
+ * Context value for PressableFeedback root animation state
  */
-export type PressableFeedbackProps =
-  | PressableFeedbackHighlightProps
-  | PressableFeedbackRippleProps;
-
-/**
- * Context value for PressableFeedback animation state
- */
-export interface PressableFeedbackAnimationContextValue {
-  /** Shared value tracking if component is pressed */
+export interface PressableFeedbackRootAnimationContextValue {
+  /** Shared value tracking if component is pressed (for scale animation) */
   isPressed: SharedValue<boolean>;
-  /** Shared value tracking the center X position of the press */
-  pressedCenterX: SharedValue<number>;
-  /** Shared value tracking the center Y position of the press */
-  pressedCenterY: SharedValue<number>;
-  /** Shared value tracking the container width */
+  /** Shared value tracking the container width (for scale coefficient calculation) */
   containerWidth: SharedValue<number>;
-  /** Shared value tracking the container height */
+  /** Shared value tracking the container height (for scale coefficient calculation) */
   containerHeight: SharedValue<number>;
-  /** Shared value tracking the ripple progress */
-  rippleProgress: SharedValue<number>;
 }

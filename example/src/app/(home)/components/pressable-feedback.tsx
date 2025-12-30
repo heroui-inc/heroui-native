@@ -50,7 +50,12 @@ const BackgroundImageCardContent = () => {
                   </AppText>
                 </View>
 
-                <Button size="sm" className="bg-white" onPress={simulatePress}>
+                <Button
+                  size="sm"
+                  className="bg-white"
+                  pressableFeedbackVariant="none"
+                  onPress={simulatePress}
+                >
                   <Button.Label className="text-black">Notify me</Button.Label>
                 </Button>
               </View>

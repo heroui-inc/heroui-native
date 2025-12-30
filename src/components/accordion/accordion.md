@@ -119,26 +119,25 @@ Hide the dividers between accordion items.
 
 ### With PressableFeedback
 
-Wrap `Accordion.Trigger` with `PressableFeedback` to add custom press feedback animations.
+Use `Accordion.Trigger` with `asChild` prop and wrap content with `PressableFeedback` to add custom press feedback animations.
 
 ```tsx
 import { Accordion, PressableFeedback } from 'heroui-native';
+import { View } from 'react-native';
 
-<Accordion selectionMode="single">
+<Accordion>
   <Accordion.Item value="1">
-    <PressableFeedback
-      feedbackVariant="highlight"
-      animation={{
-        highlight: {
-          opacity: { value: [0, 0.05] },
-        },
-      }}
-    >
-      <Accordion.Trigger>
-        <Text>Item Title</Text>
+    <Accordion.Trigger asChild>
+      <PressableFeedback>
+        <View className="flex-row items-center flex-1 gap-3">
+          <Text>Item Title</Text>
+        </View>
         <Accordion.Indicator />
-      </Accordion.Trigger>
-    </PressableFeedback>
+        <PressableFeedback.Highlight
+          animation={{ opacity: { value: [0, 0.05] } }}
+        />
+      </PressableFeedback>
+    </Accordion.Trigger>
     <Accordion.Content>...</Accordion.Content>
   </Accordion.Item>
 </Accordion>;

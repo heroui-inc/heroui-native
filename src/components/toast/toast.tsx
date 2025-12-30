@@ -250,12 +250,10 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
     }
   }, [toastVariant, variant]);
 
-  const animationConfig = useMemo<PressableFeedbackHighlightAnimation>(
+  const highlightAnimationConfig = useMemo<PressableFeedbackHighlightAnimation>(
     () => ({
-      highlight: {
-        backgroundColor: { value: highlightColorMap },
-        opacity: { value: [0, 1] },
-      },
+      backgroundColor: { value: highlightColorMap },
+      opacity: { value: [0, 1] },
     }),
     [highlightColorMap]
   );
@@ -266,7 +264,10 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
       variant={buttonVariant}
       size={size}
       className={tvStyles}
-      animation={animationConfig}
+      pressableFeedbackVariant="highlight"
+      pressableFeedbackHighlightProps={{
+        animation: highlightAnimationConfig,
+      }}
       {...restProps}
     >
       {children}

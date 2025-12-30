@@ -1,6 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, cn, Spinner, useThemeColor } from 'heroui-native';
+import {
+  Button,
+  cn,
+  PressableFeedback,
+  Spinner,
+  useThemeColor,
+} from 'heroui-native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FadeIn, LinearTransition } from 'react-native-reanimated';
@@ -204,13 +210,13 @@ const CustomStylingContent = () => {
         <View className="gap-8 w-full px-8">
           <Button
             className="bg-purple-600"
-            animation={{
-              highlight: {
+            pressableFeedbackHighlightProps={{
+              animation: {
                 backgroundColor: {
                   value: '#c084fc',
                 },
                 opacity: {
-                  value: [0, 1],
+                  value: [0, 0.5],
                 },
               },
             }}
@@ -220,26 +226,20 @@ const CustomStylingContent = () => {
             </Button.Label>
           </Button>
 
-          <Button
-            feedbackPosition="top"
-            animation={{
-              highlight: {
-                backgroundColor: {
-                  value: '#ec4899',
-                },
-                opacity: {
-                  value: [0, 0.25],
-                },
-              },
-            }}
-          >
+          <Button pressableFeedbackVariant="none">
             <LinearGradient
               colors={['#0d9488', '#ec4899']}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
               style={StyleSheet.absoluteFill}
             />
-            <Button.Label className="text-white font-bold">
+            <PressableFeedback.Ripple
+              animation={{
+                backgroundColor: { value: 'white' },
+                opacity: { value: [0, 0.5, 0] },
+              }}
+            />
+            <Button.Label className="text-white font-bold" pointerEvents="none">
               Gradient
             </Button.Label>
           </Button>
@@ -248,9 +248,7 @@ const CustomStylingContent = () => {
               'bg-neutral-950 rounded-none',
               isDark && 'bg-neutral-50'
             )}
-            animation={{
-              highlight: { backgroundColor: { value: 'transparent' } },
-            }}
+            pressableFeedbackVariant="none"
           >
             <StyledIonicons
               name="cart-outline"

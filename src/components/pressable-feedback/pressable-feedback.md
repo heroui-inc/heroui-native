@@ -211,9 +211,6 @@ Animation configuration for highlight overlay. Can be:
 | `rippleStyle`           | `ViewStyle`                              | -       | Style for the ripple slot                                    |
 | `animation`             | `PressableFeedbackRippleAnimation`       | -       | Animation configuration for ripple overlay                   |
 | `isAnimatedStyleActive` | `boolean`                                | `true`  | Whether animated styles (react-native-reanimated) are active |
-| `onTouchStart`          | `(event: GestureResponderEvent) => void` | -       | Touch start handler (called alongside animation handler)     |
-| `onTouchEnd`            | `(event: GestureResponderEvent) => void` | -       | Touch end handler (called alongside animation handler)       |
-| `onTouchCancel`         | `(event: GestureResponderEvent) => void` | -       | Touch cancel handler (called alongside animation handler)    |
 | `...ViewProps`          | `Omit<ViewProps, 'style'>`               | -       | All View props except style are supported                    |
 
 #### PressableFeedbackRippleAnimation

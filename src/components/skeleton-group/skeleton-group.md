@@ -209,17 +209,18 @@ Animation configuration for SkeletonGroup component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                     | type                    | default                     | description                            |
-| ------------------------ | ----------------------- | --------------------------- | -------------------------------------- |
-| `entering.value`         | `EntryOrExitLayoutType` | `FadeIn`                    | Custom entering animation              |
-| `exiting.value`          | `EntryOrExitLayoutType` | `FadeOut`                   | Custom exiting animation               |
-| `shimmer.duration`       | `number`                | `1500`                      | Animation duration in milliseconds     |
-| `shimmer.speed`          | `number`                | `1`                         | Speed multiplier for the animation     |
-| `shimmer.highlightColor` | `string`                | -                           | Highlight color for the shimmer effect |
-| `shimmer.easing`         | `EasingFunction`        | `Easing.linear`             | Easing function for the animation      |
-| `pulse.duration`         | `number`                | `1000`                      | Animation duration in milliseconds     |
-| `pulse.minOpacity`       | `number`                | `0.5`                       | Minimum opacity value                  |
-| `pulse.maxOpacity`       | `number`                | `1`                         | Maximum opacity value                  |
+| prop                     | type                                    | default                     | description                            |
+| ------------------------ | --------------------------------------- | --------------------------- | -------------------------------------- |
+| `state`                  | `'disabled' \| 'disable-all' \| boolean` | -                          | Disable animations while customizing properties |
+| `entering.value`         | `EntryOrExitLayoutType`                 | `FadeIn`                    | Custom entering animation              |
+| `exiting.value`          | `EntryOrExitLayoutType`                 | `FadeOut`                   | Custom exiting animation               |
+| `shimmer.duration`       | `number`                                | `1500`                      | Animation duration in milliseconds     |
+| `shimmer.speed`          | `number`                                | `1`                         | Speed multiplier for the animation     |
+| `shimmer.highlightColor` | `string`                                | -                           | Highlight color for the shimmer effect |
+| `shimmer.easing`         | `EasingFunction`                        | `Easing.linear`             | Easing function for the animation      |
+| `pulse.duration`         | `number`                                | `1000`                      | Animation duration in milliseconds     |
+| `pulse.minOpacity`       | `number`                                | `0.5`                       | Minimum opacity value                  |
+| `pulse.maxOpacity`       | `number`                                | `1`                         | Maximum opacity value                  |
 | `pulse.easing`           | `EasingFunction`        | `Easing.inOut(Easing.ease)` | Easing function for the animation      |
 
 ### SkeletonGroup.Item

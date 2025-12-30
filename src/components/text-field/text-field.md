@@ -265,10 +265,11 @@ Animation configuration for TextField.Label component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop             | type                    | default                                                               | description               |
-| ---------------- | ----------------------- | --------------------------------------------------------------------- | ------------------------- |
-| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation |
-| `exiting.value`  | `EntryOrExitLayoutType` | `FadeOut`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation  |
+| prop             | type                          | default                                                               | description               |
+| ---------------- | ----------------------------- | --------------------------------------------------------------------- | ------------------------- |
+| `state`          | `'disabled' \| boolean`       | -                                                                     | Disable animations while customizing properties |
+| `entering.value` | `EntryOrExitLayoutType`       | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation |
+| `exiting.value`  | `EntryOrExitLayoutType`       | `FadeOut`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation  |
 
 ### TextField.Input
 
@@ -297,16 +298,17 @@ Animation configuration for TextField.Input component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                           | type               | default                                              | description                                                     |
-| ------------------------------ | ------------------ | ---------------------------------------------------- | --------------------------------------------------------------- |
-| `backgroundColor.value.blur`   | `string`           | Uses theme color                                     | Background color when input is blurred                          |
-| `backgroundColor.value.focus`  | `string`           | Uses theme color                                     | Background color when input is focused                          |
-| `backgroundColor.value.error`  | `string`           | Uses theme color                                     | Background color when input is invalid                          |
-| `backgroundColor.timingConfig` | `WithTimingConfig` | `{ duration: 150, easing: Easing.out(Easing.ease) }` | Animation timing configuration for background color transitions |
-| `borderColor.value.blur`       | `string`           | Uses theme color                                     | Border color when input is blurred                              |
-| `borderColor.value.focus`      | `string`           | Uses theme color                                     | Border color when input is focused                              |
-| `borderColor.value.error`      | `string`           | Uses theme color                                     | Border color when input is invalid                              |
-| `borderColor.timingConfig`     | `WithTimingConfig` | `{ duration: 150, easing: Easing.out(Easing.ease) }` | Animation timing configuration for border color transitions     |
+| prop                           | type                          | default                                              | description                                                     |
+| ------------------------------ | ----------------------------- | ---------------------------------------------------- | --------------------------------------------------------------- |
+| `state`                        | `'disabled' \| boolean`       | -                                                    | Disable animations while customizing properties                 |
+| `backgroundColor.value.blur`   | `string`                      | Uses theme color                                     | Background color when input is blurred                          |
+| `backgroundColor.value.focus`  | `string`                      | Uses theme color                                     | Background color when input is focused                          |
+| `backgroundColor.value.error`  | `string`                      | Uses theme color                                     | Background color when input is invalid                          |
+| `backgroundColor.timingConfig` | `WithTimingConfig`            | `{ duration: 150, easing: Easing.out(Easing.ease) }` | Animation timing configuration for background color transitions |
+| `borderColor.value.blur`       | `string`                      | Uses theme color                                     | Border color when input is blurred                              |
+| `borderColor.value.focus`      | `string`                      | Uses theme color                                     | Border color when input is focused                              |
+| `borderColor.value.error`      | `string`                      | Uses theme color                                     | Border color when input is invalid                              |
+| `borderColor.timingConfig`     | `WithTimingConfig`            | `{ duration: 150, easing: Easing.out(Easing.ease) }` | Animation timing configuration for border color transitions     |
 
 ### TextField.InputStartContent
 
@@ -342,10 +344,11 @@ Animation configuration for TextField.Description component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop             | type                    | default                                                               | description               |
-| ---------------- | ----------------------- | --------------------------------------------------------------------- | ------------------------- |
-| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation |
-| `exiting.value`  | `EntryOrExitLayoutType` | `FadeOut`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation  |
+| prop             | type                          | default                                                               | description               |
+| ---------------- | ----------------------------- | --------------------------------------------------------------------- | ------------------------- |
+| `state`          | `'disabled' \| boolean`       | -                                                                     | Disable animations while customizing properties |
+| `entering.value` | `EntryOrExitLayoutType`       | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation |
+| `exiting.value`  | `EntryOrExitLayoutType`       | `FadeOut`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation  |
 
 ### TextField.ErrorMessage
 

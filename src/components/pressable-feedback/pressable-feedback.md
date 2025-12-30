@@ -170,11 +170,12 @@ Animation configuration for PressableFeedback root component (scale only). Can b
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                           | type               | default                                              | description                                                                |
-| ------------------------------ | ------------------ | ---------------------------------------------------- | -------------------------------------------------------------------------- |
-| `scale.value`                  | `number`           | `0.985`                                              | Scale value when pressed (automatically adjusted based on container width) |
-| `scale.timingConfig`           | `WithTimingConfig` | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration                                             |
-| `scale.ignoreScaleCoefficient` | `boolean`          | `false`                                              | Ignore automatic scale coefficient and use the scale value directly        |
+| prop                           | type                                    | default                                              | description                                                                |
+| ------------------------------ | --------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------- |
+| `state`                        | `'disabled' \| 'disable-all' \| boolean` | -                                                    | Disable animations while customizing properties                             |
+| `scale.value`                  | `number`                                | `0.985`                                              | Scale value when pressed (automatically adjusted based on container width) |
+| `scale.timingConfig`           | `WithTimingConfig`                      | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration                                             |
+| `scale.ignoreScaleCoefficient` | `boolean`                               | `false`                                              | Ignore automatic scale coefficient and use the scale value directly        |
 
 ### PressableFeedback.Highlight
 
@@ -195,11 +196,12 @@ Animation configuration for highlight overlay. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                    | type               | default             | description                           |
-| ----------------------- | ------------------ | ------------------- | ------------------------------------- |
-| `opacity.value`         | `[number, number]` | `[0, 0.1]`          | Opacity values [unpressed, pressed]   |
-| `opacity.timingConfig`  | `WithTimingConfig` | `{ duration: 200 }` | Animation timing configuration        |
-| `backgroundColor.value` | `string`           | Theme-aware gray    | Background color of highlight overlay |
+| prop                    | type                          | default             | description                           |
+| ----------------------- | ----------------------------- | ------------------- | ------------------------------------- |
+| `state`                 | `'disabled' \| boolean`       | -                   | Disable animations while customizing properties |
+| `opacity.value`         | `[number, number]`            | `[0, 0.1]`          | Opacity values [unpressed, pressed]   |
+| `opacity.timingConfig`  | `WithTimingConfig`            | `{ duration: 200 }` | Animation timing configuration        |
+| `backgroundColor.value` | `string`                      | Theme-aware gray    | Background color of highlight overlay |
 
 ### PressableFeedback.Ripple
 
@@ -222,16 +224,17 @@ Animation configuration for ripple overlay. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                                 | type                       | default                 | description                                                                  |
-| ------------------------------------ | -------------------------- | ----------------------- | ---------------------------------------------------------------------------- |
-| `backgroundColor.value`              | `string`                   | Computed based on theme | Background color of ripple effect                                            |
-| `progress.baseDuration`              | `number`                   | `1000`                  | Base duration for ripple progress (automatically adjusted based on diagonal) |
-| `progress.minBaseDuration`           | `number`                   | `750`                   | Minimum base duration for the ripple progress animation                      |
-| `progress.ignoreDurationCoefficient` | `boolean`                  | `false`                 | Ignore automatic duration coefficient and use base duration directly         |
-| `opacity.value`                      | `[number, number, number]` | `[0, 0.1, 0]`           | Opacity values [start, peak, end] for ripple animation                       |
-| `opacity.timingConfig`               | `WithTimingConfig`         | `{ duration: 200 }`     | Animation timing configuration                                               |
-| `scale.value`                        | `[number, number, number]` | `[0, 1, 1]`             | Scale values [start, peak, end] for ripple animation                         |
-| `scale.timingConfig`                 | `WithTimingConfig`         | `{ duration: 200 }`     | Animation timing configuration                                               |
+| prop                                 | type                          | default                 | description                                                                  |
+| ------------------------------------ | ----------------------------- | ----------------------- | ---------------------------------------------------------------------------- |
+| `state`                              | `'disabled' \| boolean`       | -                       | Disable animations while customizing properties                              |
+| `backgroundColor.value`               | `string`                      | Computed based on theme | Background color of ripple effect                                            |
+| `progress.baseDuration`              | `number`                      | `1000`                  | Base duration for ripple progress (automatically adjusted based on diagonal) |
+| `progress.minBaseDuration`           | `number`                      | `750`                   | Minimum base duration for the ripple progress animation                      |
+| `progress.ignoreDurationCoefficient` | `boolean`                     | `false`                 | Ignore automatic duration coefficient and use base duration directly         |
+| `opacity.value`                      | `[number, number, number]`    | `[0, 0.1, 0]`           | Opacity values [start, peak, end] for ripple animation                       |
+| `opacity.timingConfig`               | `WithTimingConfig`            | `{ duration: 200 }`     | Animation timing configuration                                               |
+| `scale.value`                        | `[number, number, number]`    | `[0, 1, 1]`             | Scale values [start, peak, end] for ripple animation                         |
+| `scale.timingConfig`                 | `WithTimingConfig`            | `{ duration: 200 }`     | Animation timing configuration                                               |
 
 #### ElementSlots<RippleSlots>
 

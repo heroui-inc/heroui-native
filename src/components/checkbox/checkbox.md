@@ -229,10 +229,11 @@ Animation configuration for checkbox root component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                 | type               | default             | description                       |
-| -------------------- | ------------------ | ------------------- | --------------------------------- |
-| `scale.value`        | `[number, number]` | `[1, 0.96]`         | Scale values [unpressed, pressed] |
-| `scale.timingConfig` | `WithTimingConfig` | `{ duration: 150 }` | Animation timing configuration    |
+| prop                 | type                                    | default             | description                       |
+| -------------------- | --------------------------------------- | ------------------- | --------------------------------- |
+| `state`              | `'disabled' \| 'disable-all' \| boolean` | -                   | Disable animations while customizing properties |
+| `scale.value`        | `[number, number]`                      | `[1, 0.96]`         | Scale values [unpressed, pressed] |
+| `scale.timingConfig` | `WithTimingConfig`                      | `{ duration: 150 }` | Animation timing configuration    |
 
 ### Checkbox.Indicator
 
@@ -265,15 +266,16 @@ Animation configuration for checkbox indicator component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                        | type               | default             | description                                 |
-| --------------------------- | ------------------ | ------------------- | ------------------------------------------- |
-| `opacity.value`             | `[number, number]` | `[0, 1]`            | Opacity values [unselected, selected]       |
-| `opacity.timingConfig`      | `WithTimingConfig` | `{ duration: 100 }` | Animation timing configuration              |
-| `borderRadius.value`        | `[number, number]` | `[8, 0]`            | Border radius values [unselected, selected] |
-| `borderRadius.timingConfig` | `WithTimingConfig` | `{ duration: 50 }`  | Animation timing configuration              |
-| `translateX.value`          | `[number, number]` | `[-4, 0]`           | TranslateX values [unselected, selected]    |
-| `translateX.timingConfig`   | `WithTimingConfig` | `{ duration: 100 }` | Animation timing configuration              |
-| `scale.value`               | `[number, number]` | `[0.8, 1]`          | Scale values [unselected, selected]         |
+| prop                        | type                          | default             | description                                 |
+| --------------------------- | ----------------------------- | ------------------- | ------------------------------------------- |
+| `state`                     | `'disabled' \| boolean`       | -                   | Disable animations while customizing properties |
+| `opacity.value`             | `[number, number]`            | `[0, 1]`            | Opacity values [unselected, selected]       |
+| `opacity.timingConfig`      | `WithTimingConfig`            | `{ duration: 100 }` | Animation timing configuration              |
+| `borderRadius.value`        | `[number, number]`            | `[8, 0]`            | Border radius values [unselected, selected] |
+| `borderRadius.timingConfig` | `WithTimingConfig`            | `{ duration: 50 }`  | Animation timing configuration              |
+| `translateX.value`          | `[number, number]`            | `[-4, 0]`           | TranslateX values [unselected, selected]    |
+| `translateX.timingConfig`   | `WithTimingConfig`            | `{ duration: 100 }` | Animation timing configuration              |
+| `scale.value`               | `[number, number]`            | `[0.8, 1]`          | Scale values [unselected, selected]         |
 | `scale.timingConfig`        | `WithTimingConfig` | `{ duration: 100 }` | Animation timing configuration              |
 
 ### useCheckbox

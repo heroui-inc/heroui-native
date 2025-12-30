@@ -173,9 +173,10 @@ Animation configuration for ScrollShadow component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type               | default  | description                                                                 |
-| --------------- | ------------------ | -------- | --------------------------------------------------------------------------- |
-| `opacity.value` | `[number, number]` | `[0, 1]` | Opacity values [initial, active]. For bottom/right shadow, this is reversed |
+| prop            | type                                    | default  | description                                                                 |
+| --------------- | --------------------------------------- | -------- | --------------------------------------------------------------------------- |
+| `state`         | `'disabled' \| 'disable-all' \| boolean` | -        | Disable animations while customizing properties                             |
+| `opacity.value` | `[number, number]`                      | `[0, 1]` | Opacity values [initial, active]. For bottom/right shadow, this is reversed |
 
 ### LinearGradientProps
 

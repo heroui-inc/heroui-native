@@ -213,6 +213,11 @@ Animation configuration for bottom sheet root component. Can be:
 
 - `"disable-all"`: Disable all animations including children
 - `undefined`: Use default animations
+- `object`: Custom animation configuration
+
+| prop   | type                                    | default | description                                |
+| ------ | --------------------------------------- | ------- | ------------------------------------------ |
+| `state` | `'disabled' \| 'disable-all' \| boolean` | -       | Disable animations while customizing properties |
 
 ### BottomSheet.Trigger
 
@@ -253,9 +258,10 @@ Animation configuration for bottom sheet overlay component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                       | default     | description                        |
-| --------------- | -------------------------- | ----------- | ---------------------------------- |
-| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close] |
+| prop            | type                          | default     | description                        |
+| --------------- | ----------------------------- | ----------- | ---------------------------------- |
+| `state`         | `'disabled' \| boolean`       | -           | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]`     | `[0, 1, 0]` | Opacity values [idle, open, close] |
 
 ### BottomSheet.Content
 

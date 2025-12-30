@@ -304,6 +304,7 @@ Animation configuration for popover root component. Can be:
 
 | prop             | type                                             | default                                                                                          | description                         |
 | ---------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| `state`          | `'disabled' \| 'disable-all' \| boolean`         | -                                                                                                | Disable animations while customizing properties |
 | `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 200,`<br/>`easing: Easing.out(Easing.ease) } }`     | Animation configuration for opening |
 | `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 150,`<br/>`easing: Easing.bezier(0.4, 0, 1, 1) } }` | Animation configuration for closing |
 
@@ -360,9 +361,10 @@ Animation configuration for popover overlay component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                       | default     | description                        |
-| --------------- | -------------------------- | ----------- | ---------------------------------- |
-| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close] |
+| prop            | type                          | default     | description                        |
+| --------------- | ----------------------------- | ----------- | ---------------------------------- |
+| `state`         | `'disabled' \| boolean`       | -           | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]`      | `[0, 1, 0]` | Opacity values [idle, open, close] |
 
 ### Popover.Content (Popover Presentation)
 
@@ -406,13 +408,14 @@ Animation configuration for popover content component (popover presentation). Ca
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                    | type                       | default                                                         | description                           |
-| ----------------------- | -------------------------- | --------------------------------------------------------------- | ------------------------------------- |
-| `opacity.value`         | `[number, number, number]` | `[0, 1, 0]`                                                     | Opacity values [idle, open, close]    |
-| `scale.value`           | `[number, number, number]` | `[0.95, 1, 0.95]`                                               | Scale values [idle, open, close]      |
-| `translateX.value`      | `[number, number, number]` | Based on placement<br/>`(4, 0, 4)` or `(-4, 0, -4)`             | TranslateX values [idle, open, close] |
-| `translateY.value`      | `[number, number, number]` | Based on placement<br/>`(4, 0, 4)` or `(-4, 0, -4)`             | TranslateY values [idle, open, close] |
-| `transformOrigin.value` | `string`                   | Based on placement<br/>`'top'`, `'bottom'`, `'left'`, `'right'` | Transform origin value                |
+| prop                    | type                          | default                                                         | description                           |
+| ----------------------- | ----------------------------- | --------------------------------------------------------------- | ------------------------------------- |
+| `state`                 | `'disabled' \| boolean`       | -                                                               | Disable animations while customizing properties |
+| `opacity.value`         | `[number, number, number]`     | `[0, 1, 0]`                                                     | Opacity values [idle, open, close]    |
+| `scale.value`           | `[number, number, number]`     | `[0.95, 1, 0.95]`                                               | Scale values [idle, open, close]      |
+| `translateX.value`      | `[number, number, number]`     | Based on placement<br/>`(4, 0, 4)` or `(-4, 0, -4)`             | TranslateX values [idle, open, close] |
+| `translateY.value`      | `[number, number, number]`     | Based on placement<br/>`(4, 0, 4)` or `(-4, 0, -4)`             | TranslateY values [idle, open, close] |
+| `transformOrigin.value` | `string`                      | Based on placement<br/>`'top'`, `'bottom'`, `'left'`, `'right'` | Transform origin value                |
 
 ### Popover.Arrow
 

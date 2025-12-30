@@ -290,10 +290,11 @@ Animation configuration for avatar image component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                   | type               | default                                             | description                                          |
-| ---------------------- | ------------------ | --------------------------------------------------- | ---------------------------------------------------- |
-| `opacity.value`        | `[number, number]` | `[0, 1]`                                            | Opacity values [initial, loaded] for image animation |
-| `opacity.timingConfig` | `WithTimingConfig` | `{ duration: 200, easing: Easing.in(Easing.ease) }` | Animation timing configuration                       |
+| prop                   | type                          | default                                             | description                                          |
+| ---------------------- | ----------------------------- | --------------------------------------------------- | ---------------------------------------------------- |
+| `state`                | `'disabled' \| boolean`       | -                                                   | Disable animations while customizing properties      |
+| `opacity.value`        | `[number, number]`            | `[0, 1]`                                            | Opacity values [initial, loaded] for image animation |
+| `opacity.timingConfig` | `WithTimingConfig`            | `{ duration: 200, easing: Easing.in(Easing.ease) }` | Animation timing configuration                       |
 
 **Note:** Animation is automatically disabled when `asChild={true}`
 
@@ -321,9 +322,10 @@ Animation configuration for avatar fallback component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop             | type                    | default                                                                             | description                            |
-| ---------------- | ----------------------- | ----------------------------------------------------------------------------------- | -------------------------------------- |
-| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(200)`<br/>`.easing(Easing.in(Easing.ease))`<br/>`.delay(0)` | Custom entering animation for fallback |
+| prop             | type                          | default                                                                             | description                            |
+| ---------------- | ----------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------- |
+| `state`          | `'disabled' \| boolean`       | -                                                                                   | Disable animations while customizing properties |
+| `entering.value` | `EntryOrExitLayoutType`       | `FadeIn`<br/>`.duration(200)`<br/>`.easing(Easing.in(Easing.ease))`<br/>`.delay(0)` | Custom entering animation for fallback |
 
 #### PersonIconProps
 

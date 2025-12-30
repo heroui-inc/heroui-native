@@ -423,6 +423,7 @@ Animation configuration for Select component. Can be:
 
 | prop             | type                                             | default | description                                    |
 | ---------------- | ------------------------------------------------ | ------- | ---------------------------------------------- |
+| `state`          | `'disabled' \| 'disable-all' \| boolean`         | -       | Disable animations while customizing properties |
 | `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | -       | Animation configuration for when select opens  |
 | `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | -       | Animation configuration for when select closes |
 
@@ -487,9 +488,10 @@ Animation configuration for Select.Overlay component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                       | default     | description                        |
-| --------------- | -------------------------- | ----------- | ---------------------------------- |
-| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close] |
+| prop            | type                          | default     | description                        |
+| --------------- | ----------------------------- | ----------- | ---------------------------------- |
+| `state`         | `'disabled' \| boolean`       | -           | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]`    | `[0, 1, 0]` | Opacity values [idle, open, close] |
 
 ### Select.Content (Popover Presentation)
 
@@ -519,13 +521,14 @@ Animation configuration for Select.Content component (popover presentation). Can
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                    | type                       | default            | description                           |
-| ----------------------- | -------------------------- | ------------------ | ------------------------------------- |
-| `opacity.value`         | `[number, number, number]` | `[0, 1, 0]`        | Opacity values [idle, open, close]    |
-| `scale.value`           | `[number, number, number]` | `[0.95, 1, 0.95]`  | Scale values [idle, open, close]      |
-| `translateX.value`      | `[number, number, number]` | Based on placement | TranslateX values [idle, open, close] |
-| `translateY.value`      | `[number, number, number]` | Based on placement | TranslateY values [idle, open, close] |
-| `transformOrigin.value` | `string`                   | Based on placement | Transform origin value                |
+| prop                    | type                          | default            | description                           |
+| ----------------------- | ----------------------------- | ------------------ | ------------------------------------- |
+| `state`                 | `'disabled' \| boolean`       | -                  | Disable animations while customizing properties |
+| `opacity.value`         | `[number, number, number]`    | `[0, 1, 0]`        | Opacity values [idle, open, close]    |
+| `scale.value`           | `[number, number, number]`    | `[0.95, 1, 0.95]`  | Scale values [idle, open, close]      |
+| `translateX.value`      | `[number, number, number]`    | Based on placement | TranslateX values [idle, open, close] |
+| `translateY.value`      | `[number, number, number]`    | Based on placement | TranslateY values [idle, open, close] |
+| `transformOrigin.value` | `string`                      | Based on placement | Transform origin value                |
 
 ### Select.Content (Bottom Sheet Presentation)
 
@@ -558,10 +561,11 @@ Animation configuration for Select.Content component (dialog presentation). Can 
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                       | default           | description                        |
-| --------------- | -------------------------- | ----------------- | ---------------------------------- |
-| `opacity.value` | `[number, number, number]` | `[0, 1, 0]`       | Opacity values [idle, open, close] |
-| `scale.value`   | `[number, number, number]` | `[0.97, 1, 0.97]` | Scale values [idle, open, close]   |
+| prop            | type                          | default           | description                        |
+| --------------- | ----------------------------- | ----------------- | ---------------------------------- |
+| `state`         | `'disabled' \| boolean`       | -                 | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]`    | `[0, 1, 0]`       | Opacity values [idle, open, close] |
+| `scale.value`   | `[number, number, number]`     | `[0.97, 1, 0.97]` | Scale values [idle, open, close]   |
 
 ### Select.Close
 

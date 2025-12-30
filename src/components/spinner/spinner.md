@@ -159,10 +159,11 @@ Animation configuration for Spinner component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop             | type                    | default                                                              | description               |
-| ---------------- | ----------------------- | -------------------------------------------------------------------- | ------------------------- |
-| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(200)`<br/>`.easing(Easing.out(Easing.ease))` | Custom entering animation |
-| `exiting.value`  | `EntryOrExitLayoutType` | `FadeOut`<br/>`.duration(100)`                                       | Custom exiting animation  |
+| prop             | type                                     | default                                                              | description                                     |
+| ---------------- | ---------------------------------------- | -------------------------------------------------------------------- | ----------------------------------------------- |
+| `state`          | `'disabled' \| 'disable-all' \| boolean` | -                                                                    | Disable animations while customizing properties |
+| `entering.value` | `EntryOrExitLayoutType`                  | `FadeIn`<br/>`.duration(200)`<br/>`.easing(Easing.out(Easing.ease))` | Custom entering animation                       |
+| `exiting.value`  | `EntryOrExitLayoutType`                  | `FadeOut`<br/>`.duration(100)`                                       | Custom exiting animation                        |
 
 ### Spinner.Indicator
 
@@ -183,10 +184,11 @@ Animation configuration for Spinner.Indicator component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop              | type                         | default         | description                    |
-| ----------------- | ---------------------------- | --------------- | ------------------------------ |
-| `rotation.speed`  | `number`                     | `1.1`           | Rotation speed multiplier      |
-| `rotation.easing` | `WithTimingConfig['easing']` | `Easing.linear` | Animation easing configuration |
+| prop              | type                         | default         | description                                     |
+| ----------------- | ---------------------------- | --------------- | ----------------------------------------------- |
+| `state`           | `'disabled' \| boolean`      | -               | Disable animations while customizing properties |
+| `rotation.speed`  | `number`                     | `1.1`           | Rotation speed multiplier                       |
+| `rotation.easing` | `WithTimingConfig['easing']` | `Easing.linear` | Animation easing configuration                  |
 
 ### SpinnerIconProps
 

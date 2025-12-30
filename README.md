@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  v1.0.0-beta.9
+  v1.0.0-beta.10
 </p>
 
 ## Getting Started

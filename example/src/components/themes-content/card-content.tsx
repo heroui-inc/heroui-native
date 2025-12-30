@@ -7,16 +7,7 @@ import { AppText } from '../app-text';
 export const CardContent = () => {
   return (
     <View className="flex-row gap-4">
-      <PressableFeedback
-        feedbackVariant="ripple"
-        className="flex-1 aspect-[1/1.3] rounded-3xl"
-        animation={{
-          ripple: {
-            backgroundColor: { value: '#fecdd3' },
-            opacity: { value: [0, 0.2, 0] },
-          },
-        }}
-      >
+      <PressableFeedback className="flex-1 aspect-[1/1.3] rounded-3xl">
         <Card className="flex-1">
           <View className="flex-1 gap-4">
             <Card.Header>
@@ -45,16 +36,14 @@ export const CardContent = () => {
             </Card.Footer>
           </View>
         </Card>
+        <PressableFeedback.Ripple
+          animation={{
+            backgroundColor: { value: '#fecdd3' },
+            opacity: { value: [0, 0.2, 0] },
+          }}
+        />
       </PressableFeedback>
-      <PressableFeedback
-        feedbackVariant="ripple"
-        className="flex-1 aspect-[1/1.3] rounded-3xl"
-        animation={{
-          ripple: {
-            backgroundColor: { value: '#67e8f9' },
-          },
-        }}
-      >
+      <PressableFeedback className="flex-1 aspect-[1/1.3] rounded-3xl">
         <Card className="flex-1">
           <View className="flex-1 gap-4">
             <Card.Header>
@@ -83,6 +72,11 @@ export const CardContent = () => {
             </Card.Footer>
           </View>
         </Card>
+        <PressableFeedback.Ripple
+          animation={{
+            backgroundColor: { value: '#67e8f9' },
+          }}
+        />
       </PressableFeedback>
     </View>
   );

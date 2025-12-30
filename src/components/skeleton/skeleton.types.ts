@@ -120,7 +120,42 @@ export interface SkeletonProps extends AnimatedProps<ViewProps> {
   animation?: SkeletonRootAnimation;
 
   /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
+
+  /**
    * Additional CSS classes for styling
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `opacity` - Animated for pulse variant transitions (min: 0.5, max: 1)
+   *
+   * The shimmer variant uses an internal overlay with `transform` (translateX) animation, which doesn't affect the className prop.
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <Skeleton
+   *   variant="pulse"
+   *   animation={{
+   *     pulse: { minOpacity: 0.5, maxOpacity: 1, duration: 1000, easing: Easing.inOut(Easing.ease) }
+   *   }}
+   * />
+   * ```
+   *
+   * For shimmer variant:
+   * ```tsx
+   * <Skeleton
+   *   variant="shimmer"
+   *   animation={{
+   *     shimmer: { duration: 1500, speed: 1, highlightColor: '#ffffff', easing: Easing.linear }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
 }

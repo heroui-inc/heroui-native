@@ -1,4 +1,3 @@
-import type { ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import { interpolate, useAnimatedStyle } from 'react-native-reanimated';
 import { useAnimationSettings } from '../contexts/animation-settings-context';
@@ -7,7 +6,6 @@ import {
   getAnimationState,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
-  getStyleProperties,
 } from '../utils/animation';
 
 /**
@@ -23,16 +21,9 @@ export function usePopupOverlayAnimation(options: {
   isGestureReleaseAnimationRunning?: SharedValue<boolean>;
   /** Animation configuration for overlay */
   animation?: PopupOverlayAnimation;
-  /** Style prop for handling style overrides */
-  style?: ViewStyle;
 }) {
-  const {
-    progress,
-    isDragging,
-    isGestureReleaseAnimationRunning,
-    animation,
-    style,
-  } = options;
+  const { progress, isDragging, isGestureReleaseAnimationRunning, animation } =
+    options;
 
   const { isAllAnimationsDisabled } = useAnimationSettings();
 
@@ -50,15 +41,11 @@ export function usePopupOverlayAnimation(options: {
     defaultValue: [0, 1, 0] as [number, number, number],
   });
 
-  // Extract style overrides OUTSIDE useAnimatedStyle
-  const styleProps = getStyleProperties(style, ['opacity']);
-
   const rContainerStyle = useAnimatedStyle(() => {
     // Handle disabled state first
     if (isAnimationDisabledValue) {
       return {
         opacity: progress.get() > 0 ? 1 : 0,
-        ...styleProps,
       };
     }
 
@@ -74,7 +61,6 @@ export function usePopupOverlayAnimation(options: {
 
     return {
       opacity: interpolate(progress.get(), [0, 1, 2], opacityValue),
-      ...styleProps,
     };
   });
 

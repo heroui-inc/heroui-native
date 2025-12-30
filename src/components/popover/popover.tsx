@@ -1,18 +1,15 @@
-/* eslint-disable react-native/no-inline-styles */
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import {
-  createContext,
-  forwardRef,
-  use,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import BottomSheet from '@gorhom/bottom-sheet';
+import { createContext, forwardRef, use, useMemo } from 'react';
 import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
-import { StyleSheet, View } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { View } from 'react-native';
+import Animated, { ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
+import { withUniwind } from 'uniwind';
+import {
+  BottomSheetContentContainer,
+  CloseIcon,
+  FullWindowOverlay,
+} from '../../helpers/components';
 import { HeroText } from '../../helpers/components/hero-text';
 import {
   AnimationSettingsProvider,
@@ -25,6 +22,8 @@ import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animat
 import { useThemeColor } from '../../helpers/theme';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
+import { useBottomSheetContentAnimation } from '../bottom-sheet/bottom-sheet.animation';
+import bottomSheetStyles from '../bottom-sheet/bottom-sheet.styles';
 import { ArrowSvg } from './arrow-svg';
 import {
   PopoverAnimationProvider,
@@ -59,6 +58,8 @@ const AnimatedOverlay = Animated.createAnimatedComponent(
 const AnimatedContent = Animated.createAnimatedComponent(
   PopoverPrimitives.Content
 );
+
+const StyledBottomSheet = withUniwind(BottomSheet);
 
 const usePopover = PopoverPrimitives.useRootContext;
 
@@ -176,27 +177,35 @@ const PopoverPortal = ({
 const PopoverOverlay = forwardRef<
   PopoverPrimitivesTypes.OverlayRef,
   PopoverOverlayProps
->(({ className, style, animation, ...props }, ref) => {
-  const { progress, isDragging } = usePopoverAnimation();
+>(
+  (
+    { className, style, animation, isAnimatedStyleActive = true, ...props },
+    ref
+  ) => {
+    const { progress, isDragging } = usePopoverAnimation();
 
-  const tvStyles = popoverStyles.overlay({ className });
+    const overlayClassName = popoverStyles.overlay({ className });
 
-  const { rContainerStyle } = usePopupOverlayAnimation({
-    progress,
-    isDragging,
-    animation,
-    style: style as ViewStyle,
-  });
+    const { rContainerStyle } = usePopupOverlayAnimation({
+      progress,
+      isDragging,
+      animation,
+    });
 
-  return (
-    <AnimatedOverlay
-      ref={ref}
-      className={tvStyles}
-      style={[rContainerStyle, style]}
-      {...props}
-    />
-  );
-});
+    const overlayStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
+
+    return (
+      <AnimatedOverlay
+        ref={ref}
+        className={overlayClassName}
+        style={overlayStyle}
+        {...props}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -215,6 +224,7 @@ const PopoverContentPopover = forwardRef<
       children,
       style,
       animation,
+      isAnimatedStyleActive = true,
       ...props
     },
     ref
@@ -230,7 +240,7 @@ const PopoverContentPopover = forwardRef<
 
     const { progress } = usePopoverAnimation();
 
-    const tvStyles = popoverStyles.popoverContent({
+    const contentClassName = popoverStyles.popoverContent({
       className,
     });
 
@@ -238,8 +248,11 @@ const PopoverContentPopover = forwardRef<
       progress,
       placement,
       animation,
-      style: style as ViewStyle,
     });
+
+    const contentStyle = isAnimatedStyleActive
+      ? [styleSheet.contentContainer, rContainerStyle, style]
+      : [styleSheet.contentContainer, style];
 
     return (
       <PopoverContentContext value={{ placement }}>
@@ -251,8 +264,8 @@ const PopoverContentPopover = forwardRef<
           offset={offset}
           alignOffset={alignOffset}
           insets={insets}
-          className={tvStyles}
-          style={[styleSheet.contentContainer, rContainerStyle, style]}
+          className={contentClassName}
+          style={contentStyle}
           {...props}
         >
           {children}
@@ -269,84 +282,82 @@ const PopoverContentBottomSheet = forwardRef<
   PopoverContentProps & { presentation: 'bottom-sheet' }
 >(
   (
-    { children, bottomSheetViewClassName, bottomSheetViewProps, ...restProps },
+    {
+      children,
+      backgroundClassName,
+      handleIndicatorClassName,
+      contentContainerClassName,
+      contentContainerProps,
+      animation,
+      animationConfigs,
+      ...restProps
+    },
     ref
   ) => {
-    const insets = useSafeAreaInsets();
-
-    const bottomSheetRef = useRef<BottomSheet>(null);
-
     const { onOpenChange } = usePopover();
     const { popoverState, progress } = usePopoverAnimation();
 
-    const themeColorOverlay = useThemeColor('overlay');
-    const themeColorMuted = useThemeColor('muted');
-
-    const tvStyles = popoverStyles.bottomSheetContent({
-      className: bottomSheetViewClassName,
+    const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
+      animation,
     });
-
-    const handleIndicatorStyle = StyleSheet.flatten([
-      { backgroundColor: themeColorMuted },
-      restProps.handleIndicatorStyle,
-    ]);
-
-    useEffect(() => {
-      if (popoverState === 'open') {
-        bottomSheetRef.current?.expand();
-      } else if (popoverState === 'close') {
-        bottomSheetRef.current?.close();
-      }
-    }, [popoverState]);
-
-    useEffect(() => {
-      if (ref && bottomSheetRef.current) {
-        if (typeof ref === 'function') {
-          ref(bottomSheetRef.current);
-        } else {
-          ref.current = bottomSheetRef.current;
-        }
-      }
-    }, [ref]);
-
-    const onClose = () => {
-      onOpenChange(false);
-      restProps.onClose?.();
-    };
 
     const { animatedIndex } = usePopupBottomSheetContentAnimation({
       progress,
       componentState: popoverState,
     });
 
+    const contentBackgroundClassName = bottomSheetStyles.contentBackground({
+      className: backgroundClassName,
+    });
+
+    const contentHandleIndicatorClassName =
+      bottomSheetStyles.contentHandleIndicator({
+        className: handleIndicatorClassName,
+      });
+
+    const contentContainerClassNameValue = bottomSheetStyles.contentContainer({
+      className: contentContainerClassName,
+    });
+
+    const onClose = () => {
+      onOpenChange(false);
+      restProps.onClose?.();
+    };
+
+    const mergedAnimationConfigs = useMemo(
+      () => ({
+        ...animationConfigs,
+        reduceMotion: isAnimationDisabledValue
+          ? ReduceMotion.Always
+          : animationConfigs?.reduceMotion,
+      }),
+      [animationConfigs, isAnimationDisabledValue]
+    );
+
     return (
       <PopoverContentContext value={{ placement: 'bottom' }}>
-        <BottomSheet
-          ref={bottomSheetRef}
+        <StyledBottomSheet
+          ref={ref}
+          backgroundClassName={contentBackgroundClassName}
           backgroundStyle={[
-            {
-              backgroundColor: themeColorOverlay,
-              borderRadius: 32,
-            },
+            styleSheet.contentContainer,
             restProps.backgroundStyle,
           ]}
-          handleIndicatorStyle={handleIndicatorStyle}
+          handleIndicatorClassName={contentHandleIndicatorClassName}
           enablePanDownToClose={restProps.enablePanDownToClose ?? true}
           animatedIndex={animatedIndex ?? restProps.animatedIndex}
           onClose={onClose}
+          animationConfigs={mergedAnimationConfigs}
           {...restProps}
         >
-          <BottomSheetView
-            className={tvStyles}
-            style={[
-              { paddingBottom: insets.bottom + 12 },
-              bottomSheetViewProps?.style,
-            ]}
-            {...bottomSheetViewProps}
+          <BottomSheetContentContainer
+            state={popoverState}
+            contentContainerClassName={contentContainerClassNameValue}
+            contentContainerProps={contentContainerProps}
           >
             {children}
-          </BottomSheetView>
-        </BottomSheet>
+          </BottomSheetContentContainer>
+        </StyledBottomSheet>
       </PopoverContentContext>
     );
   }
@@ -463,8 +474,10 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
     },
     ref
   ) => {
-    const themeColorOverlay = useThemeColor('overlay');
-    const themeColorBorder = useThemeColor('border');
+    const [themeColorOverlay, themeColorBorder] = useThemeColor([
+      'overlay',
+      'border',
+    ]);
     const { triggerPosition, contentLayout } = usePopover();
     const { placement: placementContext } = use(PopoverContentContext);
 

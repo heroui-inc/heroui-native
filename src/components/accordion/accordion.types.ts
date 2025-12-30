@@ -166,6 +166,20 @@ export interface AccordionIndicatorProps
   children?: React.ReactNode;
   /**
    * Additional CSS classes
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `transform` (specifically `rotate`) - Animated for expand/collapse rotation transitions
+   *
+   * To customize this property, use the `animation` prop:
+   * ```tsx
+   * <Accordion.Indicator
+   *   animation={{
+   *     rotation: { value: [0, -180], springConfig: { damping: 140, stiffness: 1000, mass: 4 } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**
@@ -179,6 +193,13 @@ export interface AccordionIndicatorProps
    * - `object`: Custom animation configuration
    */
   animation?: AccordionIndicatorAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
 }
 
 /**

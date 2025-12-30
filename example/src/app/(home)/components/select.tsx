@@ -1,10 +1,15 @@
-/* eslint-disable react-native/no-inline-styles */
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { Button, cn, Divider, Select, useThemeColor } from 'heroui-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import {
+  Button,
+  Divider,
+  ScrollShadow,
+  Select,
+  useThemeColor,
+} from 'heroui-native';
 import React, { useState } from 'react';
 import { Platform, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -67,8 +72,7 @@ const PresentationContent = () => {
     CountryOption | undefined
   >();
 
-  const insets = useSafeAreaInsets();
-  const themeColorMuted = useThemeColor('muted');
+  const themeColorOverlay = useThemeColor('overlay');
 
   return (
     <View className="flex-1 px-5 items-center justify-center">
@@ -157,59 +161,51 @@ const PresentationContent = () => {
             <Select.Overlay className="bg-black/15" />
             <Select.Content
               presentation="bottom-sheet"
-              snapPoints={['35%']}
+              snapPoints={['35%', '50%']}
               detached
               enableDynamicSizing={false}
               enableOverDrag={false}
-              backgroundStyle={{
-                backgroundColor: 'transparent',
-              }}
-              handleStyle={{
-                height: 8,
-              }}
-              handleIndicatorStyle={{
-                width: 42,
-                backgroundColor: themeColorMuted,
-              }}
-              bottomSheetViewClassName={cn(
-                'h-full mx-2 border border-divider/20 bg-overlay overflow-hidden',
-                Platform.OS === 'ios'
-                  ? 'rounded-t-4xl rounded-b-[54px]'
-                  : 'rounded-4xl'
-              )}
-              bottomSheetViewProps={{
+              backgroundClassName="bg-transparent"
+              handleClassName="h-1"
+              handleIndicatorClassName="w-12 h-[3px]"
+              contentContainerClassName="h-full pt-1 pb-1 mx-2.5 rounded-t-[36px] border border-divider/20 bg-overlay overflow-hidden"
+              contentContainerProps={{
                 style: {
-                  padding: 0,
+                  borderCurve: 'continuous',
                 },
               }}
-              bottomInset={Platform.OS === 'ios' ? 8 : insets.bottom + 4}
             >
-              <BottomSheetScrollView
-                contentContainerClassName="p-4"
-                showsVerticalScrollIndicator={false}
+              <ScrollShadow
+                LinearGradientComponent={LinearGradient}
+                color={themeColorOverlay}
               >
-                {COUNTRIES.map((country, index) => (
-                  <React.Fragment key={country.value}>
-                    <Select.Item
-                      value={country.value}
-                      label={country.label}
-                      className="py-5 px-3"
-                    >
-                      <View className="flex-row items-center gap-3 flex-1">
-                        <AppText className="text-2xl">{country.flag}</AppText>
-                        <AppText className="text-sm text-muted font-medium w-10">
-                          {country.code}
-                        </AppText>
-                        <AppText className="text-base text-foreground flex-1">
-                          {country.label}
-                        </AppText>
-                      </View>
-                      <Select.ItemIndicator />
-                    </Select.Item>
-                    {index < COUNTRIES.length - 1 && <Divider />}
-                  </React.Fragment>
-                ))}
-              </BottomSheetScrollView>
+                <BottomSheetScrollView
+                  contentContainerClassName="p-4"
+                  showsVerticalScrollIndicator={false}
+                >
+                  {COUNTRIES.map((country, index) => (
+                    <React.Fragment key={country.value}>
+                      <Select.Item
+                        value={country.value}
+                        label={country.label}
+                        className="py-5 px-3"
+                      >
+                        <View className="flex-row items-center gap-3 flex-1">
+                          <AppText className="text-2xl">{country.flag}</AppText>
+                          <AppText className="text-sm text-muted font-medium w-10">
+                            {country.code}
+                          </AppText>
+                          <AppText className="text-base text-foreground flex-1">
+                            {country.label}
+                          </AppText>
+                        </View>
+                        <Select.ItemIndicator />
+                      </Select.Item>
+                      {index < COUNTRIES.length - 1 && <Divider />}
+                    </React.Fragment>
+                  ))}
+                </BottomSheetScrollView>
+              </ScrollShadow>
             </Select.Content>
           </Select.Portal>
         </Select>

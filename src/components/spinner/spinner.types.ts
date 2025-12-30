@@ -109,7 +109,22 @@ export interface SpinnerIndicatorProps extends AnimatedProps<ViewProps> {
   /** Props for the default icon */
   iconProps?: SpinnerIconProps;
 
-  /** Custom class name for the indicator element */
+  /** Custom class name for the indicator element
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `transform` (specifically `rotate`) - Animated for continuous rotation animation
+   *
+   * To customize this property, use the `animation` prop:
+   * ```tsx
+   * <Spinner.Indicator
+   *   animation={{
+   *     rotation: { speed: 1.1, easing: Easing.linear }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+   */
   className?: string;
 
   /**
@@ -119,6 +134,13 @@ export interface SpinnerIndicatorProps extends AnimatedProps<ViewProps> {
    * - `object`: Custom animation configuration
    */
   animation?: SpinnerIndicatorAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
 }
 
 /**

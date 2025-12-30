@@ -1,15 +1,13 @@
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback, useEffect, useMemo, useRef } from 'react';
-import type {
-  LayoutChangeEvent,
-  Text as RNText,
-  ViewStyle,
-} from 'react-native';
+import BottomSheet from '@gorhom/bottom-sheet';
+import { forwardRef, useCallback, useMemo } from 'react';
+import type { LayoutChangeEvent, Text as RNText } from 'react-native';
 import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
+import Animated, { ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { withUniwind } from 'uniwind';
 import {
+  BottomSheetContentContainer,
   CheckIcon,
   CloseIcon,
   FullWindowOverlay,
@@ -27,6 +25,8 @@ import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animat
 import { useThemeColor } from '../../helpers/theme';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
+import { useBottomSheetContentAnimation } from '../bottom-sheet/bottom-sheet.animation';
+import bottomSheetStyles from '../bottom-sheet/bottom-sheet.styles';
 import {
   SelectAnimationProvider,
   useSelectAnimation,
@@ -68,6 +68,8 @@ const AnimatedPopoverContent = Animated.createAnimatedComponent(
 const AnimatedDialogContent = Animated.createAnimatedComponent(
   SelectPrimitives.DialogContent
 );
+
+const StyledBottomSheet = withUniwind(BottomSheet);
 
 const useSelect = SelectPrimitives.useRootContext;
 
@@ -196,31 +198,39 @@ const SelectPortal = ({ className, children, ...props }: SelectPortalProps) => {
 const SelectOverlay = forwardRef<
   SelectPrimitivesTypes.OverlayRef,
   SelectOverlayProps
->(({ className, style, animation, ...props }, ref) => {
-  const { progress, isDragging, isGestureReleaseAnimationRunning } =
-    useSelectAnimation();
+>(
+  (
+    { className, style, animation, isAnimatedStyleActive = true, ...props },
+    ref
+  ) => {
+    const { progress, isDragging, isGestureReleaseAnimationRunning } =
+      useSelectAnimation();
 
-  const tvStyles = selectStyles.overlay({
-    className,
-  });
+    const overlayClassName = selectStyles.overlay({
+      className,
+    });
 
-  const { rContainerStyle } = usePopupOverlayAnimation({
-    progress,
-    isDragging,
-    isGestureReleaseAnimationRunning,
-    animation,
-    style: style as ViewStyle,
-  });
+    const { rContainerStyle } = usePopupOverlayAnimation({
+      progress,
+      isDragging,
+      isGestureReleaseAnimationRunning,
+      animation,
+    });
 
-  return (
-    <AnimatedOverlay
-      ref={ref}
-      className={tvStyles}
-      style={[rContainerStyle, style]}
-      {...props}
-    />
-  );
-});
+    const overlayStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
+
+    return (
+      <AnimatedOverlay
+        ref={ref}
+        className={overlayClassName}
+        style={overlayStyle}
+        {...props}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -239,6 +249,7 @@ const SelectContentPopover = forwardRef<
       children,
       style,
       animation,
+      isAnimatedStyleActive = true,
       ...props
     },
     ref
@@ -254,7 +265,7 @@ const SelectContentPopover = forwardRef<
 
     const { progress } = useSelectAnimation();
 
-    const tvStyles = selectStyles.popoverContent({
+    const contentClassName = selectStyles.popoverContent({
       className,
     });
 
@@ -262,8 +273,11 @@ const SelectContentPopover = forwardRef<
       progress,
       placement,
       animation,
-      style: style as ViewStyle,
     });
+
+    const contentStyle = isAnimatedStyleActive
+      ? [styleSheet.contentContainer, rContainerStyle, style]
+      : [styleSheet.contentContainer, style];
 
     return (
       <AnimatedPopoverContent
@@ -274,8 +288,8 @@ const SelectContentPopover = forwardRef<
         offset={offset}
         alignOffset={alignOffset}
         insets={insets}
-        className={tvStyles}
-        style={[styleSheet.contentContainer, rContainerStyle, style]}
+        className={contentClassName}
+        style={contentStyle}
         {...props}
       >
         {children}
@@ -291,78 +305,81 @@ const SelectContentBottomSheet = forwardRef<
   SelectContentProps & { presentation: 'bottom-sheet' }
 >(
   (
-    { children, bottomSheetViewClassName, bottomSheetViewProps, ...restProps },
+    {
+      children,
+      backgroundClassName,
+      handleIndicatorClassName,
+      contentContainerClassName,
+      contentContainerProps,
+      animation,
+      animationConfigs,
+      ...restProps
+    },
     ref
   ) => {
-    const insets = useSafeAreaInsets();
-
-    const bottomSheetRef = useRef<BottomSheet>(null);
-
     const { onOpenChange } = useSelect();
     const { selectState, progress } = useSelectAnimation();
 
-    const themeColorOverlay = useThemeColor('overlay');
-    const themeColorMuted = useThemeColor('muted');
-
-    const tvStyles = selectStyles.bottomSheetContent({
-      className: bottomSheetViewClassName,
+    const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
+      animation,
     });
-
-    useEffect(() => {
-      if (selectState === 'open') {
-        bottomSheetRef.current?.expand();
-      } else if (selectState === 'close') {
-        bottomSheetRef.current?.close();
-      }
-    }, [selectState]);
-
-    useEffect(() => {
-      if (ref && bottomSheetRef.current) {
-        if (typeof ref === 'function') {
-          ref(bottomSheetRef.current);
-        } else {
-          ref.current = bottomSheetRef.current;
-        }
-      }
-    }, [ref]);
-
-    const onClose = () => {
-      onOpenChange(false);
-      restProps.onClose?.();
-    };
 
     const { animatedIndex } = usePopupBottomSheetContentAnimation({
       progress,
       componentState: selectState,
     });
 
+    const contentBackgroundClassName = bottomSheetStyles.contentBackground({
+      className: backgroundClassName,
+    });
+
+    const contentHandleIndicatorClassName =
+      bottomSheetStyles.contentHandleIndicator({
+        className: handleIndicatorClassName,
+      });
+
+    const contentContainerClassNameValue = bottomSheetStyles.contentContainer({
+      className: contentContainerClassName,
+    });
+
+    const onClose = () => {
+      onOpenChange(false);
+      restProps.onClose?.();
+    };
+
+    const mergedAnimationConfigs = useMemo(
+      () => ({
+        ...animationConfigs,
+        reduceMotion: isAnimationDisabledValue
+          ? ReduceMotion.Always
+          : animationConfigs?.reduceMotion,
+      }),
+      [animationConfigs, isAnimationDisabledValue]
+    );
+
     return (
-      <BottomSheet
-        ref={bottomSheetRef}
+      <StyledBottomSheet
+        ref={ref}
+        backgroundClassName={contentBackgroundClassName}
         backgroundStyle={[
-          { backgroundColor: themeColorOverlay },
+          styleSheet.contentContainer,
           restProps.backgroundStyle,
         ]}
-        handleIndicatorStyle={[
-          { backgroundColor: themeColorMuted },
-          restProps.handleIndicatorStyle,
-        ]}
+        handleIndicatorClassName={contentHandleIndicatorClassName}
         enablePanDownToClose={restProps.enablePanDownToClose ?? true}
         animatedIndex={animatedIndex ?? restProps.animatedIndex}
         onClose={onClose}
+        animationConfigs={mergedAnimationConfigs}
         {...restProps}
       >
-        <BottomSheetView
-          className={tvStyles}
-          style={[
-            { paddingBottom: insets.bottom + 12 },
-            bottomSheetViewProps?.style,
-          ]}
-          {...bottomSheetViewProps}
+        <BottomSheetContentContainer
+          state={selectState}
+          contentContainerClassName={contentContainerClassNameValue}
+          contentContainerProps={contentContainerProps}
         >
           {children}
-        </BottomSheetView>
-      </BottomSheet>
+        </BottomSheetContentContainer>
+      </StyledBottomSheet>
     );
   }
 );
@@ -381,6 +398,7 @@ const SelectContentDialog = forwardRef<
       onLayout,
       animation,
       isSwipeable = true,
+      isAnimatedStyleActive = true,
       ...props
     },
     ref
@@ -397,7 +415,7 @@ const SelectContentDialog = forwardRef<
     const { wrapper, content } = selectStyles.dialogContent();
 
     const wrapperStyles = wrapper({ className: classNames?.wrapper });
-    const contentStyles = content({ className: classNames?.content });
+    const contentClassName = content({ className: classNames?.content });
 
     const {
       contentY,
@@ -412,9 +430,12 @@ const SelectContentDialog = forwardRef<
       dialogState: selectState,
       onOpenChange,
       animation,
-      style: style as ViewStyle | undefined,
       isSwipeable,
     });
+
+    const contentStyle = isAnimatedStyleActive
+      ? [styleSheet.contentContainer, rContainerStyle, style]
+      : [styleSheet.contentContainer, style];
 
     const handleLayout = useCallback(
       (event: LayoutChangeEvent) => {
@@ -435,8 +456,8 @@ const SelectContentDialog = forwardRef<
           >
             <AnimatedDialogContent
               ref={ref}
-              className={contentStyles}
-              style={[styleSheet.contentContainer, rContainerStyle, style]}
+              className={contentClassName}
+              style={contentStyle}
               {...props}
             >
               {children}
@@ -489,7 +510,6 @@ const SelectClose = forwardRef<
   SelectCloseProps
 >(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
   const themeColorMuted = useThemeColor('muted');
-  const defaultIconColor = themeColorMuted;
 
   const tvStyles = selectStyles.close({ className });
 
@@ -503,7 +523,7 @@ const SelectClose = forwardRef<
       {children || (
         <CloseIcon
           size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? defaultIconColor}
+          color={iconProps?.color ?? themeColorMuted}
         />
       )}
     </SelectPrimitives.Close>

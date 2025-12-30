@@ -1,4 +1,3 @@
-import type { ImageStyle } from 'react-native';
 import {
   Easing,
   FadeIn,
@@ -13,7 +12,6 @@ import {
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
-  getStyleProperties,
 } from '../../helpers/utils/animation';
 import * as AvatarPrimitives from '../../primitives/avatar';
 import type {
@@ -43,9 +41,8 @@ export function useAvatarRootAnimation(options: {
  */
 export function useAvatarImageAnimation(options: {
   animation: AvatarImageAnimation | undefined;
-  style: ImageStyle | undefined;
 }) {
-  const { animation, style } = options;
+  const { animation } = options;
 
   // Read from global animation context (always available in compound parts)
   const { isAllAnimationsDisabled } = useAnimationSettings();
@@ -71,8 +68,6 @@ export function useAvatarImageAnimation(options: {
     defaultValue: { duration: 200, easing: Easing.in(Easing.ease) },
   });
 
-  const styleProps = getStyleProperties(style, ['opacity']);
-
   const rImageStyle = useAnimatedStyle(() => {
     const isLoaded = status === 'loaded';
     const targetOpacity = isLoaded ? opacityValue[1] : opacityValue[0];
@@ -80,13 +75,11 @@ export function useAvatarImageAnimation(options: {
     if (isAnimationDisabledValue) {
       return {
         opacity: targetOpacity,
-        ...styleProps,
       };
     }
 
     return {
       opacity: withTiming(targetOpacity, opacityTimingConfig),
-      ...styleProps,
     };
   });
 

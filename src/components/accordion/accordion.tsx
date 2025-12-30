@@ -1,5 +1,5 @@
 import { Children, forwardRef, useMemo } from 'react';
-import { View, type ViewStyle } from 'react-native';
+import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { useThemeColor } from '../../helpers/theme/hooks/use-theme-color';
@@ -197,24 +197,39 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 // ------------------------------------------------------------------------------
 
 const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
-  const { children, className, iconProps, animation, style, ...restProps } =
-    props;
+  const {
+    children,
+    className,
+    iconProps,
+    animation,
+    isAnimatedStyleActive = true,
+    style,
+    ...restProps
+  } = props;
 
   const { isExpanded } = useAccordionItem();
 
   const themeColorForeground = useThemeColor('foreground');
 
-  const tvStyles = accordionStyles.indicator({ className });
+  const indicatorClassName = accordionStyles.indicator({ className });
 
   const { rContainerStyle } = useAccordionIndicatorAnimation({
     animation,
-    style: style as ViewStyle | undefined,
     isExpanded,
   });
 
+  const indicatorStyle = isAnimatedStyleActive
+    ? [rContainerStyle, style]
+    : style;
+
   if (children) {
     return (
-      <AnimatedIndicator ref={ref} className={tvStyles} {...restProps}>
+      <AnimatedIndicator
+        ref={ref}
+        className={indicatorClassName}
+        style={style}
+        {...restProps}
+      >
         {children}
       </AnimatedIndicator>
     );
@@ -223,8 +238,8 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
   return (
     <AnimatedIndicator
       ref={ref}
-      className={tvStyles}
-      style={rContainerStyle}
+      className={indicatorClassName}
+      style={indicatorStyle}
       {...restProps}
     >
       <ChevronDownIcon

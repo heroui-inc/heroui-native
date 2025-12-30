@@ -13,8 +13,8 @@ type Props = {
 export const SectionTitle: FC<Props> = ({ title, className }) => {
   const { isDark } = useAppTheme();
 
-  const themeColorBackgroundSecondary = useThemeColor('background-secondary');
-  const themeColorBackgroundTertiary = useThemeColor('background-tertiary');
+  const [themeColorBackgroundSecondary, themeColorBackgroundTertiary] =
+    useThemeColor(['background-secondary', 'background-tertiary']);
 
   return (
     <View className={cn('overflow-hidden -mx-5', className)}>

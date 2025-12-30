@@ -1,4 +1,3 @@
-import type { ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import {
   Extrapolation,
@@ -11,8 +10,6 @@ import {
   getAnimationState,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
-  getStyleProperties,
-  getStyleTransform,
 } from '../utils/animation';
 
 /**
@@ -36,10 +33,6 @@ export interface UsePopupPopoverContentAnimationProps {
    * Animation configuration for content
    */
   animation?: PopupPopoverContentAnimation;
-  /**
-   * Style prop for handling style overrides
-   */
-  style?: ViewStyle;
 }
 
 /**
@@ -50,7 +43,6 @@ export function usePopupPopoverContentAnimation({
   progress,
   placement,
   animation,
-  style,
 }: UsePopupPopoverContentAnimationProps) {
   const { isAllAnimationsDisabled } = useAnimationSettings();
 
@@ -111,16 +103,11 @@ export function usePopupPopoverContentAnimation({
     defaultValue: defaultTransformOrigin,
   });
 
-  // Extract style overrides OUTSIDE useAnimatedStyle
-  const styleProps = getStyleProperties(style, ['opacity', 'transformOrigin']);
-  const styleTransform = getStyleTransform(style);
-
   const rContainerStyle = useAnimatedStyle(() => {
     // Handle disabled state first
     if (isAnimationDisabledValue) {
       return {
         opacity: progress.get() > 0 ? 1 : 0,
-        ...styleProps,
       };
     }
 
@@ -157,9 +144,7 @@ export function usePopupPopoverContentAnimation({
             Extrapolation.CLAMP
           ),
         },
-        ...styleTransform,
       ],
-      ...styleProps,
     };
   });
 

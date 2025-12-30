@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import type { Text as RNText, ViewStyle } from 'react-native';
+import type { Text as RNText } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
@@ -151,29 +151,37 @@ const DialogPortal = ({
 const DialogOverlay = forwardRef<
   DialogPrimitivesTypes.OverlayRef,
   DialogOverlayProps
->(({ className, style, animation, ...props }, ref) => {
-  const { progress, isDragging, isGestureReleaseAnimationRunning } =
-    useDialogAnimation();
+>(
+  (
+    { className, style, animation, isAnimatedStyleActive = true, ...props },
+    ref
+  ) => {
+    const { progress, isDragging, isGestureReleaseAnimationRunning } =
+      useDialogAnimation();
 
-  const tvStyles = dialogStyles.overlay({ className });
+    const overlayClassName = dialogStyles.overlay({ className });
 
-  const { rContainerStyle } = usePopupOverlayAnimation({
-    progress,
-    isDragging,
-    isGestureReleaseAnimationRunning,
-    animation,
-    style: style as ViewStyle,
-  });
+    const { rContainerStyle } = usePopupOverlayAnimation({
+      progress,
+      isDragging,
+      isGestureReleaseAnimationRunning,
+      animation,
+    });
 
-  return (
-    <AnimatedOverlay
-      ref={ref}
-      className={tvStyles}
-      style={[rContainerStyle, style]}
-      {...props}
-    />
-  );
-});
+    const overlayStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
+
+    return (
+      <AnimatedOverlay
+        ref={ref}
+        className={overlayClassName}
+        style={overlayStyle}
+        {...props}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -189,6 +197,7 @@ const DialogContent = forwardRef<
       onLayout,
       animation,
       isSwipeable = true,
+      isAnimatedStyleActive = true,
       ...props
     },
     ref
@@ -202,7 +211,7 @@ const DialogContent = forwardRef<
       dialogState,
     } = useDialogAnimation();
 
-    const tvStyles = dialogStyles.content({ className });
+    const contentClassName = dialogStyles.content({ className });
 
     const {
       contentY,
@@ -217,9 +226,12 @@ const DialogContent = forwardRef<
       dialogState,
       onOpenChange,
       animation,
-      style: style as ViewStyle | undefined,
       isSwipeable,
     });
+
+    const contentStyle = isAnimatedStyleActive
+      ? [styleSheet.contentContainer, rContainerStyle, style]
+      : [styleSheet.contentContainer, style];
 
     return (
       <GestureDetector gesture={panGesture}>
@@ -234,8 +246,8 @@ const DialogContent = forwardRef<
         >
           <AnimatedContent
             ref={ref}
-            className={tvStyles}
-            style={[styleSheet.contentContainer, rContainerStyle, style]}
+            className={contentClassName}
+            style={contentStyle}
             {...props}
           >
             {children}
@@ -253,7 +265,6 @@ const DialogClose = forwardRef<
   DialogCloseProps
 >(({ className, iconProps, hitSlop = 12, children, ...props }, ref) => {
   const themeColorMuted = useThemeColor('muted');
-  const defaultIconColor = themeColorMuted;
 
   const tvStyles = dialogStyles.close({ className });
 
@@ -267,7 +278,7 @@ const DialogClose = forwardRef<
       {children || (
         <CloseIcon
           size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? defaultIconColor}
+          color={iconProps?.color ?? themeColorMuted}
         />
       )}
     </DialogPrimitives.Close>

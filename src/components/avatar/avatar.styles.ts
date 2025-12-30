@@ -62,6 +62,22 @@ const avatarRoot = tv({
 
 /**
  * Avatar image styles
+ *
+ * @note ANIMATED PROPERTIES (cannot be set via className):
+ * The following property is animated and cannot be overridden using Tailwind classes:
+ * - `opacity` - Animated for image loading transitions (from 0 to 1 when image loads)
+ *
+ * To customize this property, use the `animation` prop on `Avatar.Image`:
+ * ```tsx
+ * <Avatar.Image
+ *   animation={{
+ *     opacity: { value: [0, 1], timingConfig: { duration: 200, easing: Easing.in(Easing.ease) } }
+ *   }}
+ * />
+ * ```
+ *
+ * To completely disable animated styles and apply your own via className or style prop,
+ * set `isAnimatedStyleActive={false}` on `Avatar.Image`.
  */
 const avatarImage = tv({
   base: 'h-full w-full',

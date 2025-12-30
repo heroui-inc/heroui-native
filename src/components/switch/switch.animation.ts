@@ -18,8 +18,6 @@ import {
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-  getStyleProperties,
-  getStyleTransform,
 } from '../../helpers/utils/animation';
 import { useFormField } from '../form-field/form-field.context';
 import {
@@ -49,13 +47,14 @@ export { SwitchAnimationProvider, useSwitchAnimation };
  */
 export function useSwitchRootAnimation(options: {
   animation: SwitchRootAnimation | undefined;
-  style: ViewStyle | undefined;
   isSelected: boolean | undefined;
 }) {
-  const { animation, style, isSelected } = options;
+  const { animation, isSelected } = options;
 
-  const themeColorAccent = useThemeColor('accent');
-  const themeColorSurfaceQuaternary = useThemeColor('surface-quaternary');
+  const [themeColorAccent, themeColorSurfaceQuaternary] = useThemeColor([
+    'accent',
+    'surface-quaternary',
+  ]);
 
   const formFieldContext = useFormField();
 
@@ -101,16 +100,12 @@ export function useSwitchRootAnimation(options: {
     defaultValue: DEFAULT_TIMING_CONFIG,
   });
 
-  const styleProps = getStyleProperties(style, ['backgroundColor']);
-  const styleTransform = getStyleTransform(style);
-
   const rContainerStyle = useAnimatedStyle(() => {
     if (isAnimationDisabledValue) {
       return {
         backgroundColor: isSelected
           ? backgroundColorValue[1]
           : backgroundColorValue[0],
-        ...styleProps,
       };
     }
 
@@ -129,9 +124,7 @@ export function useSwitchRootAnimation(options: {
             scaleTimingConfig
           ),
         },
-        ...styleTransform,
       ],
-      ...styleProps,
     };
   });
 
@@ -206,8 +199,6 @@ export function useSwitchThumbAnimation(options: {
     defaultValue: DEFAULT_TIMING_CONFIG,
   });
 
-  const styleProps = getStyleProperties(style, ['backgroundColor']);
-
   const rContainerStyle = useAnimatedStyle(() => {
     const isMounted = contentContainerWidth.get() > 0;
 
@@ -219,13 +210,11 @@ export function useSwitchThumbAnimation(options: {
         return {
           right: leftValue,
           backgroundColor: backgroundColorValue[1],
-          ...styleProps,
         };
       }
       return {
         left: leftValue,
         backgroundColor: backgroundColorValue[0],
-        ...styleProps,
       };
     }
 
@@ -239,7 +228,6 @@ export function useSwitchThumbAnimation(options: {
         backgroundColor: isSelected
           ? backgroundColorValue[1]
           : backgroundColorValue[0],
-        ...styleProps,
       };
     }
 
@@ -249,7 +237,6 @@ export function useSwitchThumbAnimation(options: {
         isSelected ? backgroundColorValue[1] : backgroundColorValue[0],
         backgroundColorTimingConfig
       ),
-      ...styleProps,
     };
   });
 

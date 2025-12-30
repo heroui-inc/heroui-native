@@ -1,4 +1,3 @@
-import type { ViewStyle } from 'react-native';
 import { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { useAnimationSettings } from '../../helpers/contexts';
 import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
@@ -8,7 +7,6 @@ import {
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
-  getStyleTransform,
 } from '../../helpers/utils/animation';
 import type { RadioGroupIndicatorThumbAnimation } from './radio-group.types';
 
@@ -39,9 +37,8 @@ export function useRadioGroupRootAnimation(options: {
 export function useRadioGroupIndicatorThumbAnimation(options: {
   animation: RadioGroupIndicatorThumbAnimation | undefined;
   isSelected: boolean;
-  style: ViewStyle | undefined;
 }) {
-  const { animation, isSelected, style } = options;
+  const { animation, isSelected } = options;
 
   // Read from global animation context (always available in compound parts)
   const { isAllAnimationsDisabled } = useAnimationSettings();
@@ -66,8 +63,6 @@ export function useRadioGroupIndicatorThumbAnimation(options: {
     defaultValue: { duration: 300, easing: Easing.out(Easing.ease) },
   });
 
-  const styleTransform = getStyleTransform(style);
-
   const rContainerStyle = useAnimatedStyle(() => {
     if (isAnimationDisabledValue) {
       return {
@@ -75,7 +70,6 @@ export function useRadioGroupIndicatorThumbAnimation(options: {
           {
             scale: scaleValue[1],
           },
-          ...styleTransform,
         ],
       };
     }
@@ -88,7 +82,6 @@ export function useRadioGroupIndicatorThumbAnimation(options: {
             scaleTimingConfig
           ),
         },
-        ...styleTransform,
       ],
     };
   });

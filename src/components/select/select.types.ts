@@ -1,5 +1,4 @@
 import type BottomSheet from '@gorhom/bottom-sheet';
-import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
@@ -11,6 +10,7 @@ import type {
   PopupPopoverContentAnimation,
   PopupRootAnimationConfig,
 } from '../../helpers/types/animation';
+import type { BaseBottomSheetContentProps } from '../../helpers/types/bottom-sheet';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import type { DialogContentFallbackSlots } from './select.styles';
 
@@ -123,6 +123,20 @@ export type SelectOverlayAnimation = PopupOverlayAnimation;
 export interface SelectOverlayProps extends SelectPrimitivesTypes.OverlayProps {
   /**
    * Additional CSS class for the overlay
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `opacity` - Animated for overlay show/hide transitions (idle: 0, open: 1, close: 0)
+   *
+   * To customize this property, use the `animation` prop:
+   * ```tsx
+   * <Select.Overlay
+   *   animation={{
+   *     opacity: { value: [0, 1, 0] }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**
@@ -132,6 +146,13 @@ export interface SelectOverlayProps extends SelectPrimitivesTypes.OverlayProps {
    * - `object`: Custom animation configuration
    */
   animation?: SelectOverlayAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
 }
 
 /**
@@ -147,6 +168,27 @@ export interface SelectContentPopoverProps
   extends SelectPrimitivesTypes.PopoverContentProps {
   /**
    * Additional CSS class for the content container
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `opacity` - Animated for content show/hide transitions (idle: 0, open: 1, close: 0)
+   * - `transform` (specifically `scale`, `translateX`, `translateY`) - Animated for content show/hide transitions (scale: idle: 0.95, open: 1, close: 0.95; translateX/translateY: based on placement)
+   * - `transformOrigin` - Animated for content show/hide transitions (based on placement: 'top', 'bottom', 'left', 'right')
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <Select.Content
+   *   presentation="popover"
+   *   animation={{
+   *     opacity: { value: [0, 1, 0] },
+   *     scale: { value: [0.95, 1, 0.95] },
+   *     translateX: { value: [4, 0, 4] },
+   *     translateY: { value: [4, 0, 4] },
+   *     transformOrigin: { value: 'top' }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**
@@ -164,25 +206,25 @@ export interface SelectContentPopoverProps
    * - `object`: Custom animation configuration
    */
   animation?: SelectContentPopoverAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
 }
 
 /**
  * Select Content props for 'bottom-sheet' presentation
  */
 export interface SelectContentBottomSheetProps
-  extends Partial<React.ComponentProps<typeof BottomSheet>> {
+  extends Partial<React.ComponentProps<typeof BottomSheet>>,
+    BaseBottomSheetContentProps {
   /**
    * Presentation mode for the select
    */
   presentation: 'bottom-sheet';
-  /**
-   * Additional CSS class for the bottom sheet view
-   */
-  bottomSheetViewClassName?: string;
-  /**
-   * Props for the bottom sheet view
-   */
-  bottomSheetViewProps?: Omit<BottomSheetViewProps, 'children'>;
 }
 
 /**
@@ -198,6 +240,27 @@ export interface SelectContentDialogProps
   extends SelectPrimitivesTypes.DialogContentProps {
   /**
    * Additional CSS classes for the content container
+   *
+   * @note The `content` slot has the following animated properties that cannot be set via className:
+   * - `opacity` - Animated for content show/hide transitions (idle: 0, open: 1, close: 0)
+   * - `transform` (specifically `scale`) - Animated for content show/hide transitions (idle: 0.97, open: 1, close: 0.97)
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <Select.Content
+   *   presentation="dialog"
+   *   classNames={{
+   *     content: "custom-class", // opacity and scale cannot be overridden here
+   *     wrapper: "custom-wrapper-class"
+   *   }}
+   *   animation={{
+   *     opacity: { value: [0, 1, 0] },
+   *     scale: { value: [0.97, 1, 0.97] }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   classNames?: ElementSlots<DialogContentFallbackSlots>;
   /**
@@ -220,6 +283,13 @@ export interface SelectContentDialogProps
    * @default true
    */
   isSwipeable?: boolean;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
 }
 
 /**

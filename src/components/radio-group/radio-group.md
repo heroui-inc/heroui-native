@@ -234,6 +234,7 @@ export default function PaymentMethodExample() {
 | ----------------------- | ----------------------------------- | ----------- | ------------------------------------------------ |
 | `className`             | `string`                            | `undefined` | Custom class name                                |
 | `animation`             | `RadioGroupIndicatorThumbAnimation` | -           | Animation configuration                          |
+| `isAnimatedStyleActive` | `boolean`                            | `true`      | Whether animated styles (react-native-reanimated) are active |
 | `...Animated.ViewProps` | `AnimatedProps<ViewProps>`          | -           | All Reanimated Animated.View props are supported |
 
 #### RadioGroupIndicatorThumbAnimation
@@ -244,10 +245,11 @@ Animation configuration for RadioGroupIndicatorThumb component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                 | type               | default                                              | description                         |
-| -------------------- | ------------------ | ---------------------------------------------------- | ----------------------------------- |
-| `scale.value`        | `[number, number]` | `[1.5, 1]`                                           | Scale values [unselected, selected] |
-| `scale.timingConfig` | `WithTimingConfig` | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration      |
+| prop                 | type                          | default                                              | description                         |
+| -------------------- | ----------------------------- | ---------------------------------------------------- | ----------------------------------- |
+| `state`              | `'disabled' \| boolean`       | -                                                    | Disable animations while customizing properties |
+| `scale.value`        | `[number, number]`            | `[1.5, 1]`                                           | Scale values [unselected, selected] |
+| `scale.timingConfig` | `WithTimingConfig`            | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration      |
 
 ### RadioGroup.Label
 

@@ -1,4 +1,3 @@
-import type { ViewStyle } from 'react-native';
 import {
   useAnimatedStyle,
   useSharedValue,
@@ -13,7 +12,6 @@ import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import {
   getAnimationState,
   getIsAnimationDisabledValue,
-  getStyleProperties,
 } from '../../helpers/utils/animation';
 import * as TabsPrimitives from '../../primitives/tabs';
 import { DEFAULT_INDICATOR_SPRING_CONFIG } from './tabs.constants';
@@ -46,9 +44,8 @@ export function useTabsRootAnimation(options: {
  */
 export function useTabsIndicatorAnimation(options: {
   animation: TabsIndicatorAnimation | undefined;
-  style: ViewStyle | undefined;
 }) {
-  const { animation, style } = options;
+  const { animation } = options;
 
   // Get active measurements from tabs context
   const { value } = TabsPrimitives.useRootContext();
@@ -104,9 +101,6 @@ export function useTabsIndicatorAnimation(options: {
   const heightConfig = getPropertyConfig(animationConfig?.height);
   const leftConfig = getPropertyConfig(animationConfig?.left);
 
-  // Extract style overrides OUTSIDE useAnimatedStyle
-  const styleProps = getStyleProperties(style, ['opacity']);
-
   const rContainerStyle = useAnimatedStyle(() => {
     if (!activeMeasurements) {
       return {
@@ -114,7 +108,6 @@ export function useTabsIndicatorAnimation(options: {
         height: 0,
         left: 0,
         opacity: 0,
-        ...styleProps,
       };
     }
 
@@ -125,7 +118,6 @@ export function useTabsIndicatorAnimation(options: {
         height: activeMeasurements.height,
         left: activeMeasurements.x,
         opacity: 1,
-        ...styleProps,
       };
     }
 
@@ -136,7 +128,6 @@ export function useTabsIndicatorAnimation(options: {
         height: activeMeasurements.height,
         left: activeMeasurements.x,
         opacity: 1,
-        ...styleProps,
       };
     }
 
@@ -161,7 +152,6 @@ export function useTabsIndicatorAnimation(options: {
       height: heightAnimation,
       left: leftAnimation,
       opacity: 1,
-      ...styleProps,
     };
   }, [
     activeMeasurements,
@@ -169,7 +159,6 @@ export function useTabsIndicatorAnimation(options: {
     widthConfig,
     heightConfig,
     leftConfig,
-    styleProps,
   ]);
 
   return {

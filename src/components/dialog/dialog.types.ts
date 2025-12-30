@@ -101,6 +101,20 @@ export interface DialogOverlayProps
   extends Omit<DialogPrimitivesTypes.OverlayProps, 'asChild'> {
   /**
    * Additional CSS class for the overlay
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `opacity` - Animated for overlay show/hide transitions (idle: 0, open: 1, close: 0)
+   *
+   * To customize this property, use the `animation` prop:
+   * ```tsx
+   * <Dialog.Overlay
+   *   animation={{
+   *     opacity: { value: [0, 1, 0] }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**
@@ -110,6 +124,13 @@ export interface DialogOverlayProps
    * - `object`: Custom animation configuration
    */
   animation?: DialogOverlayAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
 }
 
 /**
@@ -125,6 +146,22 @@ export interface DialogContentProps
   extends Omit<DialogPrimitivesTypes.ContentProps, 'asChild'> {
   /**
    * Additional CSS class for the content container
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `opacity` - Animated for content show/hide transitions (idle: 0, open: 1, close: 0)
+   * - `transform` (specifically `scale`) - Animated for content show/hide transitions (idle: 0.97, open: 1, close: 0.97)
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <Dialog.Content
+   *   animation={{
+   *     opacity: { value: [0, 1, 0] },
+   *     scale: { value: [0.97, 1, 0.97] }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**
@@ -138,6 +175,13 @@ export interface DialogContentProps
    * - `object`: Custom animation configuration
    */
   animation?: DialogContentAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
   /**
    * Whether the dialog content can be swiped to dismiss
    * @default true

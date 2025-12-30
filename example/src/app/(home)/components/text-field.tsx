@@ -1,6 +1,5 @@
-/* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
-import { Button, TextField } from 'heroui-native';
+import { Button, cn, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { Pressable, useWindowDimensions, View } from 'react-native';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
@@ -187,11 +186,11 @@ const TextFieldWithCustomStylesContent = () => {
             placeholder="Enter 16-digit gift card number"
             keyboardType="number-pad"
             maxLength={16}
-            className="border-[0.5px] rounded-none"
-            style={{
-              borderColor: isDark ? '#fafafa' : '#09090b',
-            }}
-            animation="disabled"
+            className={cn(
+              'border-[0.5px] border-neutral-900 bg-background rounded-none',
+              isDark && 'border-neutral-100'
+            )}
+            isAnimatedStyleActive={false}
           />
           <TextField.Description>
             Redeem your gift card at checkout

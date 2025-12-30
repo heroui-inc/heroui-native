@@ -31,6 +31,27 @@ const label = tv({
   },
 });
 
+/**
+ * Input style definition
+ *
+ * @note ANIMATED PROPERTIES (cannot be set via className):
+ * The following properties in the `container` slot are animated and cannot be overridden using Tailwind classes:
+ * - `backgroundColor` - Animated for focus/blur and error state transitions
+ * - `borderColor` - Animated for focus/blur and error state transitions
+ *
+ * To customize these properties, use the `animation` prop on `TextField.Input`:
+ * ```tsx
+ * <TextField.Input
+ *   animation={{
+ *     backgroundColor: { value: { blur: '#fff', focus: '#f0f0f0', error: '#fee' } },
+ *     borderColor: { value: { blur: '#ccc', focus: '#007AFF', error: '#ff0000' } }
+ *   }}
+ * />
+ * ```
+ *
+ * To completely disable animated styles and apply your own via className or style prop,
+ * set `isAnimatedStyleActive={false}` on `TextField.Input`.
+ */
 const input = tv({
   slots: {
     container:

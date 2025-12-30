@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import { View, type ViewStyle } from 'react-native';
+import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
@@ -198,11 +198,17 @@ const RadioGroupIndicatorThumb = forwardRef<
   View,
   RadioGroupIndicatorThumbProps
 >((props, ref) => {
-  const { className, style, animation, ...restProps } = props;
+  const {
+    className,
+    style,
+    animation,
+    isAnimatedStyleActive = true,
+    ...restProps
+  } = props;
 
   const { isSelected, isOnSurface } = useRadioGroupItem();
 
-  const tvStyles = radioGroupStyles.itemIndicatorThumb({
+  const thumbClassName = radioGroupStyles.itemIndicatorThumb({
     isOnSurface,
     isSelected,
     className,
@@ -211,14 +217,15 @@ const RadioGroupIndicatorThumb = forwardRef<
   const { rContainerStyle } = useRadioGroupIndicatorThumbAnimation({
     animation,
     isSelected,
-    style: style as ViewStyle | undefined,
   });
+
+  const thumbStyle = isAnimatedStyleActive ? [rContainerStyle, style] : style;
 
   return (
     <Animated.View
       ref={ref}
-      className={tvStyles}
-      style={[rContainerStyle, style]}
+      className={thumbClassName}
+      style={thumbStyle}
       {...restProps}
     />
   );

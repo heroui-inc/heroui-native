@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import type { View, ViewStyle } from 'react-native';
+import type { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { useThemeColor } from '../../helpers/theme';
@@ -39,7 +39,6 @@ const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
     color = 'default',
     isLoading = true,
     className,
-    style,
     animation,
     ...restProps
   } = props;
@@ -89,7 +88,6 @@ const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
           exiting={exiting}
           isLoading={isLoading}
           className={tvStyles}
-          style={style}
           {...restProps}
         >
           {children || indicatorElement}
@@ -103,17 +101,26 @@ const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
 
 const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
   (props, ref) => {
-    const { children, className, style, iconProps, animation, ...restProps } =
-      props;
+    const {
+      children,
+      className,
+      style,
+      iconProps,
+      animation,
+      isAnimatedStyleActive = true,
+      ...restProps
+    } = props;
 
     const { size, color, isLoading } = useSpinnerContext();
 
-    const themeColorAccent = useThemeColor('accent');
-    const themeColorSuccess = useThemeColor('success');
-    const themeColorWarning = useThemeColor('warning');
-    const themeColorDanger = useThemeColor('danger');
+    const [
+      themeColorAccent,
+      themeColorSuccess,
+      themeColorWarning,
+      themeColorDanger,
+    ] = useThemeColor(['accent', 'success', 'warning', 'danger']);
 
-    const tvStyles = spinnerStyles.indicator({
+    const indicatorClassName = spinnerStyles.indicator({
       className,
     });
 
@@ -130,9 +137,12 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
 
     const { rContainerStyle } = useSpinnerIndicatorAnimation({
       animation,
-      style: style as ViewStyle | undefined,
       isLoading,
     });
+
+    const indicatorStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
 
     if (!isLoading) {
       return null;
@@ -141,8 +151,8 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
     return (
       <AnimatedIndicator
         ref={ref}
-        className={tvStyles}
-        style={[rContainerStyle, style]}
+        className={indicatorClassName}
+        style={indicatorStyle}
         {...restProps}
       >
         {children || (

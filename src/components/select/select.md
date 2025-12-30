@@ -423,6 +423,7 @@ Animation configuration for Select component. Can be:
 
 | prop             | type                                             | default | description                                    |
 | ---------------- | ------------------------------------------------ | ------- | ---------------------------------------------- |
+| `state`          | `'disabled' \| 'disable-all' \| boolean`         | -       | Disable animations while customizing properties |
 | `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | -       | Animation configuration for when select opens  |
 | `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | -       | Animation configuration for when select closes |
 
@@ -469,14 +470,15 @@ Animation configuration for Select component. Can be:
 
 ### Select.Overlay
 
-| prop                    | type                     | default | description                                         |
-| ----------------------- | ------------------------ | ------- | --------------------------------------------------- |
-| `className`             | `string`                 | -       | Additional CSS classes for the overlay              |
-| `animation`             | `SelectOverlayAnimation` | -       | Animation configuration                             |
-| `closeOnPress`          | `boolean`                | `true`  | Whether to close the select when overlay is pressed |
-| `forceMount`            | `boolean`                | -       | Whether to force mount the component in the DOM     |
-| `asChild`               | `boolean`                | `false` | Whether to render as a child element                |
-| `...Animated.ViewProps` | `Animated.ViewProps`     | -       | All Reanimated Animated.View props are supported    |
+| prop                    | type                     | default | description                                                  |
+| ----------------------- | ------------------------ | ------- | ------------------------------------------------------------ |
+| `className`             | `string`                 | -       | Additional CSS classes for the overlay                       |
+| `animation`             | `SelectOverlayAnimation` | -       | Animation configuration                                      |
+| `isAnimatedStyleActive` | `boolean`                | `true`  | Whether animated styles (react-native-reanimated) are active |
+| `closeOnPress`          | `boolean`                | `true`  | Whether to close the select when overlay is pressed          |
+| `forceMount`            | `boolean`                | -       | Whether to force mount the component in the DOM              |
+| `asChild`               | `boolean`                | `false` | Whether to render as a child element                         |
+| `...Animated.ViewProps` | `Animated.ViewProps`     | -       | All Reanimated Animated.View props are supported             |
 
 #### SelectOverlayAnimation
 
@@ -486,28 +488,30 @@ Animation configuration for Select.Overlay component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                       | default     | description                        |
-| --------------- | -------------------------- | ----------- | ---------------------------------- |
-| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close] |
+| prop            | type                          | default     | description                        |
+| --------------- | ----------------------------- | ----------- | ---------------------------------- |
+| `state`         | `'disabled' \| boolean`       | -           | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]`    | `[0, 1, 0]` | Opacity values [idle, open, close] |
 
 ### Select.Content (Popover Presentation)
 
-| prop                    | type                                             | default         | description                                            |
-| ----------------------- | ------------------------------------------------ | --------------- | ------------------------------------------------------ |
-| `children`              | `ReactNode`                                      | -               | The select content                                     |
-| `width`                 | `number \| 'trigger' \| 'content-fit' \| 'full'` | `'content-fit'` | Width sizing strategy for the content                  |
-| `presentation`          | `'popover'`                                      | `'popover'`     | Presentation mode for the select                       |
-| `placement`             | `'top' \| 'bottom' \| 'left' \| 'right'`         | `'bottom'`      | Placement of the content relative to trigger           |
-| `align`                 | `'start' \| 'center' \| 'end'`                   | `'center'`      | Alignment along the placement axis                     |
-| `avoidCollisions`       | `boolean`                                        | `true`          | Whether to flip placement when close to viewport edges |
-| `offset`                | `number`                                         | `8`             | Distance from trigger element in pixels                |
-| `alignOffset`           | `number`                                         | `0`             | Offset along the alignment axis in pixels              |
-| `className`             | `string`                                         | -               | Additional CSS classes for the content container       |
-| `animation`             | `SelectContentPopoverAnimation`                  | -               | Animation configuration                                |
-| `forceMount`            | `boolean`                                        | -               | Whether to force mount the component in the DOM        |
-| `insets`                | `Insets`                                         | -               | Screen edge insets to respect when positioning         |
-| `asChild`               | `boolean`                                        | `false`         | Whether to render as a child element                   |
-| `...Animated.ViewProps` | `Animated.ViewProps`                             | -               | All Reanimated Animated.View props are supported       |
+| prop                    | type                                             | default         | description                                                  |
+| ----------------------- | ------------------------------------------------ | --------------- | ------------------------------------------------------------ |
+| `children`              | `ReactNode`                                      | -               | The select content                                           |
+| `width`                 | `number \| 'trigger' \| 'content-fit' \| 'full'` | `'content-fit'` | Width sizing strategy for the content                        |
+| `presentation`          | `'popover'`                                      | `'popover'`     | Presentation mode for the select                             |
+| `placement`             | `'top' \| 'bottom' \| 'left' \| 'right'`         | `'bottom'`      | Placement of the content relative to trigger                 |
+| `align`                 | `'start' \| 'center' \| 'end'`                   | `'center'`      | Alignment along the placement axis                           |
+| `avoidCollisions`       | `boolean`                                        | `true`          | Whether to flip placement when close to viewport edges       |
+| `offset`                | `number`                                         | `8`             | Distance from trigger element in pixels                      |
+| `alignOffset`           | `number`                                         | `0`             | Offset along the alignment axis in pixels                    |
+| `className`             | `string`                                         | -               | Additional CSS classes for the content container             |
+| `animation`             | `SelectContentPopoverAnimation`                  | -               | Animation configuration                                      |
+| `isAnimatedStyleActive` | `boolean`                                        | `true`          | Whether animated styles (react-native-reanimated) are active |
+| `forceMount`            | `boolean`                                        | -               | Whether to force mount the component in the DOM              |
+| `insets`                | `Insets`                                         | -               | Screen edge insets to respect when positioning               |
+| `asChild`               | `boolean`                                        | `false`         | Whether to render as a child element                         |
+| `...Animated.ViewProps` | `Animated.ViewProps`                             | -               | All Reanimated Animated.View props are supported             |
 
 #### SelectContentPopoverAnimation
 
@@ -517,35 +521,37 @@ Animation configuration for Select.Content component (popover presentation). Can
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                    | type                       | default            | description                           |
-| ----------------------- | -------------------------- | ------------------ | ------------------------------------- |
-| `opacity.value`         | `[number, number, number]` | `[0, 1, 0]`        | Opacity values [idle, open, close]    |
-| `scale.value`           | `[number, number, number]` | `[0.95, 1, 0.95]`  | Scale values [idle, open, close]      |
-| `translateX.value`      | `[number, number, number]` | Based on placement | TranslateX values [idle, open, close] |
-| `translateY.value`      | `[number, number, number]` | Based on placement | TranslateY values [idle, open, close] |
-| `transformOrigin.value` | `string`                   | Based on placement | Transform origin value                |
+| prop                    | type                          | default            | description                           |
+| ----------------------- | ----------------------------- | ------------------ | ------------------------------------- |
+| `state`                 | `'disabled' \| boolean`       | -                  | Disable animations while customizing properties |
+| `opacity.value`         | `[number, number, number]`    | `[0, 1, 0]`        | Opacity values [idle, open, close]    |
+| `scale.value`           | `[number, number, number]`    | `[0.95, 1, 0.95]`  | Scale values [idle, open, close]      |
+| `translateX.value`      | `[number, number, number]`    | Based on placement | TranslateX values [idle, open, close] |
+| `translateY.value`      | `[number, number, number]`    | Based on placement | TranslateY values [idle, open, close] |
+| `transformOrigin.value` | `string`                      | Based on placement | Transform origin value                |
 
 ### Select.Content (Bottom Sheet Presentation)
 
-| prop                       | type               | default | description                                      |
-| -------------------------- | ------------------ | ------- | ------------------------------------------------ |
-| `children`                 | `ReactNode`        | -       | The bottom sheet content                         |
-| `presentation`             | `'bottom-sheet'`   | -       | Presentation mode for the select                 |
-| `bottomSheetViewClassName` | `string`           | -       | Additional CSS classes for the bottom sheet view |
-| `...BottomSheetProps`      | `BottomSheetProps` | -       | All @gorhom/bottom-sheet props are supported     |
+| prop                        | type               | default | description                                      |
+| --------------------------- | ------------------ | ------- | ------------------------------------------------ |
+| `children`                  | `ReactNode`        | -       | The bottom sheet content                         |
+| `presentation`              | `'bottom-sheet'`   | -       | Presentation mode for the select                 |
+| `contentContainerClassName` | `string`           | -       | Additional CSS classes for the content container |
+| `...BottomSheetProps`       | `BottomSheetProps` | -       | All @gorhom/bottom-sheet props are supported     |
 
 ### Select.Content (Dialog Presentation)
 
-| prop                    | type                                     | default | description                                         |
-| ----------------------- | ---------------------------------------- | ------- | --------------------------------------------------- |
-| `children`              | `ReactNode`                              | -       | The dialog content                                  |
-| `presentation`          | `'dialog'`                               | -       | Presentation mode for the select                    |
-| `classNames`            | `{ wrapper?: string; content?: string }` | -       | Additional CSS classes for wrapper and content      |
-| `animation`             | `SelectContentAnimation`                 | -       | Animation configuration                             |
-| `isSwipeable`           | `boolean`                                | `true`  | Whether the dialog content can be swiped to dismiss |
-| `forceMount`            | `boolean`                                | -       | Whether to force mount the component in the DOM     |
-| `asChild`               | `boolean`                                | `false` | Whether to render as a child element                |
-| `...Animated.ViewProps` | `Animated.ViewProps`                     | -       | All Reanimated Animated.View props are supported    |
+| prop                    | type                                     | default | description                                                  |
+| ----------------------- | ---------------------------------------- | ------- | ------------------------------------------------------------ |
+| `children`              | `ReactNode`                              | -       | The dialog content                                           |
+| `presentation`          | `'dialog'`                               | -       | Presentation mode for the select                             |
+| `classNames`            | `{ wrapper?: string; content?: string }` | -       | Additional CSS classes for wrapper and content               |
+| `animation`             | `SelectContentAnimation`                 | -       | Animation configuration                                      |
+| `isAnimatedStyleActive` | `boolean`                                | `true`  | Whether animated styles (react-native-reanimated) are active |
+| `isSwipeable`           | `boolean`                                | `true`  | Whether the dialog content can be swiped to dismiss          |
+| `forceMount`            | `boolean`                                | -       | Whether to force mount the component in the DOM              |
+| `asChild`               | `boolean`                                | `false` | Whether to render as a child element                         |
+| `...Animated.ViewProps` | `Animated.ViewProps`                     | -       | All Reanimated Animated.View props are supported             |
 
 #### SelectContentAnimation
 
@@ -555,10 +561,11 @@ Animation configuration for Select.Content component (dialog presentation). Can 
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                       | default           | description                        |
-| --------------- | -------------------------- | ----------------- | ---------------------------------- |
-| `opacity.value` | `[number, number, number]` | `[0, 1, 0]`       | Opacity values [idle, open, close] |
-| `scale.value`   | `[number, number, number]` | `[0.97, 1, 0.97]` | Scale values [idle, open, close]   |
+| prop            | type                          | default           | description                        |
+| --------------- | ----------------------------- | ----------------- | ---------------------------------- |
+| `state`         | `'disabled' \| boolean`       | -                 | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]`    | `[0, 1, 0]`       | Opacity values [idle, open, close] |
+| `scale.value`   | `[number, number, number]`     | `[0.97, 1, 0.97]` | Scale values [idle, open, close]   |
 
 ### Select.Close
 

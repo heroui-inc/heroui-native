@@ -45,12 +45,13 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       className,
       style,
       animation,
+      isAnimatedStyleActive = true,
       onPressIn,
       onPressOut,
       ...restProps
     } = props;
 
-    const tvStyles = switchStyles.root({
+    const rootClassName = switchStyles.root({
       isDisabled,
       className,
     });
@@ -62,9 +63,12 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       isAllAnimationsDisabled,
     } = useSwitchRootAnimation({
       animation,
-      style: style as ViewStyle | undefined,
       isSelected,
     });
+
+    const rootStyle = isAnimatedStyleActive
+      ? [styleSheet.borderCurve, rContainerStyle, style]
+      : [styleSheet.borderCurve, style];
 
     const contextValue = useMemo(
       () => ({
@@ -121,8 +125,8 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
           <SwitchAnimationProvider value={animationContextValue}>
             <AnimatedSwitchRoot
               ref={ref}
-              className={tvStyles}
-              style={[styleSheet.borderCurve, rContainerStyle, style]}
+              className={rootClassName}
+              style={rootStyle}
               isSelected={isSelected}
               onSelectedChange={onSelectedChange}
               isDisabled={isDisabled}
@@ -148,20 +152,31 @@ const SwitchThumb = forwardRef<
   SwitchPrimitivesTypes.ThumbRef,
   SwitchThumbProps
 >((props, ref) => {
-  const { children, className, style, animation } = props;
+  const {
+    children,
+    className,
+    style,
+    animation,
+    isAnimatedStyleActive = true,
+    ...restProps
+  } = props;
 
   const { isSelected, isDisabled } = useSwitch();
 
-  const tvStyles = switchStyles.thumb({
+  const thumbClassName = switchStyles.thumb({
     className,
   });
 
   const { rContainerStyle } = useSwitchThumbAnimation({
     animation,
     style: style as ViewStyle | undefined,
-    className: tvStyles,
+    className: thumbClassName,
     isSelected,
   });
+
+  const thumbStyle = isAnimatedStyleActive
+    ? [styleSheet.borderCurve, rContainerStyle, style]
+    : [styleSheet.borderCurve, style];
 
   const renderProps: SwitchRenderProps = {
     isSelected,
@@ -174,8 +189,9 @@ const SwitchThumb = forwardRef<
   return (
     <AnimatedSwitchThumb
       ref={ref}
-      className={tvStyles}
-      style={[styleSheet.borderCurve, rContainerStyle, style]}
+      className={thumbClassName}
+      style={thumbStyle}
+      {...restProps}
     >
       {content}
     </AnimatedSwitchThumb>

@@ -273,13 +273,14 @@ Props extend different base types depending on the `asChild` prop value:
 
 **Note:** When using `asChild={true}` with custom image components, the `className` prop may not be applied in some cases depending on the custom component's implementation. Ensure your custom component properly handles style props.
 
-| prop               | type                                           | default | description                                      |
-| ------------------ | ---------------------------------------------- | ------- | ------------------------------------------------ |
-| `source`           | `ImageSourcePropType`                          | -       | Image source (required when `asChild={false}`)   |
-| `asChild`          | `boolean`                                      | `false` | Whether to use a custom image component as child |
-| `className`        | `string`                                       | -       | Additional CSS classes to apply                  |
-| `animation`        | `AvatarImageAnimation`                         | -       | Animation configuration                          |
-| `...AnimatedProps` | `AnimatedProps<ImageProps>` or primitive props | -       | Additional props based on `asChild` value        |
+| prop                    | type                                           | default | description                                                  |
+| ----------------------- | ---------------------------------------------- | ------- | ------------------------------------------------------------ |
+| `source`                | `ImageSourcePropType`                          | -       | Image source (required when `asChild={false}`)               |
+| `asChild`               | `boolean`                                      | `false` | Whether to use a custom image component as child             |
+| `className`             | `string`                                       | -       | Additional CSS classes to apply                              |
+| `animation`             | `AvatarImageAnimation`                         | -       | Animation configuration                                      |
+| `isAnimatedStyleActive` | `boolean`                                      | `true`  | Whether animated styles (react-native-reanimated) are active |
+| `...AnimatedProps`      | `AnimatedProps<ImageProps>` or primitive props | -       | Additional props based on `asChild` value                    |
 
 #### AvatarImageAnimation
 
@@ -289,10 +290,11 @@ Animation configuration for avatar image component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                   | type               | default                                             | description                                          |
-| ---------------------- | ------------------ | --------------------------------------------------- | ---------------------------------------------------- |
-| `opacity.value`        | `[number, number]` | `[0, 1]`                                            | Opacity values [initial, loaded] for image animation |
-| `opacity.timingConfig` | `WithTimingConfig` | `{ duration: 200, easing: Easing.in(Easing.ease) }` | Animation timing configuration                       |
+| prop                   | type                          | default                                             | description                                          |
+| ---------------------- | ----------------------------- | --------------------------------------------------- | ---------------------------------------------------- |
+| `state`                | `'disabled' \| boolean`       | -                                                   | Disable animations while customizing properties      |
+| `opacity.value`        | `[number, number]`            | `[0, 1]`                                            | Opacity values [initial, loaded] for image animation |
+| `opacity.timingConfig` | `WithTimingConfig`            | `{ duration: 200, easing: Easing.in(Easing.ease) }` | Animation timing configuration                       |
 
 **Note:** Animation is automatically disabled when `asChild={true}`
 
@@ -320,9 +322,10 @@ Animation configuration for avatar fallback component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop             | type                    | default                                                                             | description                            |
-| ---------------- | ----------------------- | ----------------------------------------------------------------------------------- | -------------------------------------- |
-| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(200)`<br/>`.easing(Easing.in(Easing.ease))`<br/>`.delay(0)` | Custom entering animation for fallback |
+| prop             | type                          | default                                                                             | description                            |
+| ---------------- | ----------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------- |
+| `state`          | `'disabled' \| boolean`       | -                                                                                   | Disable animations while customizing properties |
+| `entering.value` | `EntryOrExitLayoutType`       | `FadeIn`<br/>`.duration(200)`<br/>`.easing(Easing.in(Easing.ease))`<br/>`.delay(0)` | Custom entering animation for fallback |
 
 #### PersonIconProps
 

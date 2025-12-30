@@ -4,14 +4,12 @@ import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import * as Haptics from 'expo-haptics';
 import { cn } from 'heroui-native';
 import { type FC } from 'react';
-import { Platform } from 'react-native';
-import { Pressable } from 'react-native-gesture-handler';
+import { Platform, Pressable } from 'react-native';
 import Animated, { FadeOut, ZoomIn } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
 import { useAppTheme } from '../contexts/app-theme-context';
 
 const StyledIonicons = withUniwind(Ionicons);
-const StyledPressable = withUniwind(Pressable);
 
 export const ThemeToggle: FC = () => {
   const { toggleTheme, isLight } = useAppTheme();
@@ -19,7 +17,7 @@ export const ThemeToggle: FC = () => {
   const isLGAvailable = isLiquidGlassAvailable();
 
   return (
-    <StyledPressable
+    <Pressable
       onPress={() => {
         if (Platform.OS === 'ios') {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -37,6 +35,6 @@ export const ThemeToggle: FC = () => {
           <StyledIonicons name="sunny" size={20} className="text-white" />
         </Animated.View>
       )}
-    </StyledPressable>
+    </Pressable>
   );
 };

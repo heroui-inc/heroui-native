@@ -23,21 +23,29 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   const {
     children,
     variant = 'primary',
-    feedbackVariant = 'highlight',
-    feedbackPosition = 'behind',
+    pressableFeedbackVariant = 'highlight',
+    pressableFeedbackHighlightProps,
+    pressableFeedbackRippleProps,
     size = 'md',
     isIconOnly = false,
     isDisabled = false,
     className,
     style,
-    animation,
     accessibilityRole = 'button',
     ...restProps
   } = props;
 
-  const themeColorAccentHover = useThemeColor('accent-hover');
-  const themeColorDefaultHover = useThemeColor('default-hover');
-  const themeColorDangerHover = useThemeColor('danger-hover');
+  const [
+    themeColorAccentHover,
+    themeColorDefaultHover,
+    themeColorDangerHover,
+    themeColorDangerSoftHover,
+  ] = useThemeColor([
+    'accent-hover',
+    'default-hover',
+    'danger-hover',
+    'danger-soft-hover',
+  ]);
 
   const stringifiedChildren = childrenToString(children);
 
@@ -62,46 +70,93 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
       case 'danger':
         return themeColorDangerHover;
       case 'danger-soft':
-        return themeColorDefaultHover;
+        return themeColorDangerSoftHover;
     }
   }, [
     variant,
     themeColorAccentHover,
     themeColorDefaultHover,
     themeColorDangerHover,
+    themeColorDangerSoftHover,
   ]);
 
-  const animationConfig = useMemo(() => {
-    // If animation is explicitly provided, use it
-    if (animation !== undefined) {
-      return animation;
+  const highlightAnimationConfig = useMemo(() => {
+    if (pressableFeedbackVariant !== 'highlight') {
+      return undefined;
     }
 
-    // Default animation configuration for highlight variant
-    if (feedbackVariant === 'highlight') {
+    const defaultConfig = {
+      backgroundColor: {
+        value: highlightColorMap,
+      },
+      opacity: {
+        value: [0, 1] as [number, number],
+      },
+    };
+
+    // Merge with provided animation if available
+    if (
+      pressableFeedbackHighlightProps?.animation &&
+      typeof pressableFeedbackHighlightProps.animation === 'object'
+    ) {
+      const providedAnimation = pressableFeedbackHighlightProps.animation;
       return {
-        highlight: {
-          backgroundColor: {
-            value: highlightColorMap,
-          },
-          opacity: {
-            value: [0, 1] as [number, number],
-          },
+        backgroundColor: {
+          ...defaultConfig.backgroundColor,
+          ...providedAnimation.backgroundColor,
+        },
+        opacity: {
+          ...defaultConfig.opacity,
+          ...providedAnimation.opacity,
         },
       };
     }
 
-    // Default animation configuration for ripple variant
-    if (feedbackVariant === 'ripple') {
+    return defaultConfig;
+  }, [
+    pressableFeedbackVariant,
+    highlightColorMap,
+    pressableFeedbackHighlightProps?.animation,
+  ]);
+
+  const rippleAnimationConfig = useMemo(() => {
+    if (pressableFeedbackVariant !== 'ripple') {
+      return undefined;
+    }
+
+    const defaultConfig = {
+      backgroundColor: { value: highlightColorMap },
+      opacity: { value: [0, 1, 0] as [number, number, number] },
+    };
+
+    // Merge with provided animation if available
+    if (
+      pressableFeedbackRippleProps?.animation &&
+      typeof pressableFeedbackRippleProps.animation === 'object'
+    ) {
+      const providedAnimation = pressableFeedbackRippleProps.animation;
       return {
-        ripple: {
-          backgroundColor: { value: highlightColorMap },
+        backgroundColor: {
+          ...defaultConfig.backgroundColor,
+          ...providedAnimation.backgroundColor,
         },
+        opacity: {
+          ...defaultConfig.opacity,
+          ...providedAnimation.opacity,
+        },
+        ...(providedAnimation.scale && { scale: providedAnimation.scale }),
+        ...(providedAnimation.progress && {
+          progress: providedAnimation.progress,
+        }),
       };
     }
 
-    return undefined;
-  }, [animation, feedbackVariant, highlightColorMap]);
+    return defaultConfig;
+  }, [
+    pressableFeedbackVariant,
+    highlightColorMap,
+    pressableFeedbackRippleProps?.animation,
+  ]);
 
   const contextValue = useMemo(
     () => ({
@@ -116,16 +171,25 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     <ButtonProvider value={contextValue}>
       <PressableFeedback
         ref={ref}
-        feedbackVariant={feedbackVariant}
-        feedbackPosition={feedbackPosition}
         className={tvStyles}
         style={[styleSheet.buttonRoot, style]}
         isDisabled={isDisabled}
         accessibilityRole={accessibilityRole}
         accessibilityState={{ disabled: isDisabled }}
-        animation={animationConfig}
         {...restProps}
       >
+        {pressableFeedbackVariant === 'highlight' && (
+          <PressableFeedback.Highlight
+            {...pressableFeedbackHighlightProps}
+            animation={highlightAnimationConfig}
+          />
+        )}
+        {pressableFeedbackVariant === 'ripple' && (
+          <PressableFeedback.Ripple
+            {...pressableFeedbackRippleProps}
+            animation={rippleAnimationConfig}
+          />
+        )}
         {stringifiedChildren ? (
           <ButtonLabel>{stringifiedChildren}</ButtonLabel>
         ) : (

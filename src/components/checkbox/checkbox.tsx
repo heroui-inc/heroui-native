@@ -1,5 +1,5 @@
 import { forwardRef, useCallback, useMemo } from 'react';
-import { View, type GestureResponderEvent, type ViewStyle } from 'react-native';
+import { View, type GestureResponderEvent } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { CheckIcon } from '../../helpers/components';
 import { AnimatedCheckIcon } from '../../helpers/components/animated-check-icon';
@@ -47,13 +47,14 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       onPressIn,
       onPressOut,
       animation,
+      isAnimatedStyleActive = true,
       ...restProps
     } = props;
 
     const isOnSurfaceAutoDetected = useIsOnSurface();
     const isOnSurface = isOnSurfaceProp ?? isOnSurfaceAutoDetected;
 
-    const tvStyles = checkboxStyles.root({
+    const rootClassName = checkboxStyles.root({
       isOnSurface,
       isSelected,
       isDisabled,
@@ -64,8 +65,11 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
     const { rContainerStyle, isCheckboxPressed, isAllAnimationsDisabled } =
       useCheckboxRootAnimation({
         animation,
-        style: style as ViewStyle | undefined,
       });
+
+    const rootStyle = isAnimatedStyleActive
+      ? [rContainerStyle, styleSheet.root, style]
+      : [styleSheet.root, style];
 
     const animationContextValue = useMemo(
       () => ({
@@ -113,7 +117,7 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
         <CheckboxAnimationProvider value={animationContextValue}>
           <AnimatedRootView
             ref={ref}
-            className={tvStyles}
+            className={rootClassName}
             isSelected={isSelected}
             onSelectedChange={onSelectedChange}
             isDisabled={isDisabled}
@@ -122,7 +126,7 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
             hitSlop={hitSlop}
             onPressIn={handlePressIn}
             onPressOut={handlePressOut}
-            style={[rContainerStyle, styleSheet.root, style]}
+            style={rootStyle}
             {...restProps}
           >
             {content}
@@ -139,8 +143,15 @@ const CheckboxIndicator = forwardRef<
   CheckboxPrimitivesTypes.IndicatorRef,
   CheckboxIndicatorProps
 >((props, ref) => {
-  const { children, iconProps, className, style, animation, ...restProps } =
-    props;
+  const {
+    children,
+    iconProps,
+    className,
+    style,
+    animation,
+    isAnimatedStyleActive = true,
+    ...restProps
+  } = props;
 
   const { isSelected, isDisabled, isInvalid } = useCheckbox();
 
@@ -152,7 +163,7 @@ const CheckboxIndicator = forwardRef<
   const iconEnterDuration = iconProps?.enterDuration;
   const iconExitDuration = iconProps?.exitDuration;
 
-  const tvStyles = checkboxStyles.indicator({
+  const indicatorClassName = checkboxStyles.indicator({
     isInvalid,
     className,
   });
@@ -161,8 +172,11 @@ const CheckboxIndicator = forwardRef<
     useCheckboxIndicatorAnimation({
       animation,
       isSelected,
-      style: style as ViewStyle | undefined,
     });
+
+  const indicatorStyle = isAnimatedStyleActive
+    ? [rContainerStyle, style]
+    : style;
 
   const renderProps: CheckboxRenderProps = {
     isSelected,
@@ -175,7 +189,7 @@ const CheckboxIndicator = forwardRef<
       ? children(renderProps)
       : (children ??
         (isAnimationDisabled ? (
-          <View className="translate-y-[1px]">
+          <View className="translate-y-px">
             <CheckIcon size={iconSize} color={iconColor} />
           </View>
         ) : (
@@ -192,8 +206,8 @@ const CheckboxIndicator = forwardRef<
   return (
     <AnimatedIndicatorView
       ref={ref}
-      className={tvStyles}
-      style={[rContainerStyle, style]}
+      className={indicatorClassName}
+      style={indicatorStyle}
       {...restProps}
     >
       {content}

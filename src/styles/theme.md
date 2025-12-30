@@ -306,7 +306,9 @@ All HeroUI Native components automatically use these font variables, ensuring co
 
 ### useThemeColor Hook
 
-Quick access to theme colors in hex format within your components:
+Retrieves theme color values from CSS variables. Supports both single color and multiple colors for efficient batch retrieval.
+
+**Single color usage:**
 
 ```tsx
 import { useThemeColor } from 'heroui-native';
@@ -323,15 +325,44 @@ function MyComponent() {
 }
 ```
 
-**Source:** [use-theme-color.ts](../helpers/theme/hooks/use-theme-color.ts)
-
-**Type signature:**
+**Multiple colors usage (more efficient):**
 
 ```tsx
-useThemeColor(themeColor: ThemeColor): string
+import { useThemeColor } from 'heroui-native';
+
+function MyComponent() {
+  const [accentColor, backgroundColor, dangerColor] = useThemeColor([
+    'accent',
+    'background',
+    'danger',
+  ]);
+
+  return (
+    <View style={{ borderColor: accentColor, backgroundColor }}>
+      <Text style={{ color: dangerColor }}>Error message</Text>
+    </View>
+  );
+}
 ```
 
-Available theme colors include: `background`, `foreground`, `surface`, `accent`, `default`, `success`, `warning`, `danger`, and all their variants (hover, soft, etc.).
+**Source:** [use-theme-color.ts](../helpers/theme/hooks/use-theme-color.ts)
+
+**Type signatures:**
+
+```tsx
+// Single color
+useThemeColor(themeColor: ThemeColor): string
+
+// Multiple colors (with type inference for tuples)
+useThemeColor<T extends readonly [ThemeColor, ...ThemeColor[]]>(
+  themeColor: T
+): CreateStringTuple<T['length']>
+
+// Multiple colors (array)
+useThemeColor(themeColor: ThemeColor[]): string[]
+```
+
+Available theme colors include: `background`, `foreground`, `surface`, `accent`, `default`, `success`, `warning`, `danger`, and all their variants (hover, soft, foreground, etc.), plus semantic colors like `muted`, `border`, `divider`, `field`, `overlay`, and more.
 
 ### cn Utility
 

@@ -101,6 +101,20 @@ export type AvatarImageProps =
   | (AnimatedProps<ImageProps> & {
       /**
        * Additional CSS classes
+       *
+       * @note The following style properties are occupied by animations and cannot be set via className:
+       * - `opacity` - Animated for image loading transitions (from 0 to 1 when image loads)
+       *
+       * To customize this property, use the `animation` prop:
+       * ```tsx
+       * <Avatar.Image
+       *   animation={{
+       *     opacity: { value: [0, 1], timingConfig: { duration: 200, easing: Easing.in(Easing.ease) } }
+       *   }}
+       * />
+       * ```
+       *
+       * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
        */
       className?: string;
       /**
@@ -114,6 +128,13 @@ export type AvatarImageProps =
        * - `object`: Custom animation configuration
        */
       animation?: AvatarImageAnimation;
+      /**
+       * Whether animated styles (react-native-reanimated) are active
+       * When `false`, the animated style is removed and you can implement custom logic
+       * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+       * @default true
+       */
+      isAnimatedStyleActive?: boolean;
     })
   | (PrimitiveImageProps & {
       /**

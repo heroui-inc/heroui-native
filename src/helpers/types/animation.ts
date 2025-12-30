@@ -10,10 +10,13 @@ import type {
  * - `true` or `undefined`: Use default animations
  * - `false` or `"disabled"`: Disable all animations
  * - `object`: Custom animation configuration
+ *   - Can include `state?: 'disabled' | boolean | undefined` to disable animations while customizing properties
  */
 export type Animation<
   TConfig extends Record<string, any> = Record<string, any>,
-> = boolean | 'disabled' | TConfig;
+> = boolean | 'disabled' | (TConfig & { state?: 'disabled' | boolean });
+
+export type AnimationDisabled = 'disabled' | false;
 
 /**
  * Root-level animation prop type with cascading control
@@ -21,10 +24,15 @@ export type Animation<
  * - `false` or `"disabled"`: Disable only root animations (children can still animate)
  * - `"disable-all"`: Disable all animations including children (cascades down)
  * - `object`: Custom animation configuration
+ *   - Can include `state?: 'disabled' | 'disable-all' | boolean` to disable animations while customizing properties
  */
 export type AnimationRoot<
   TConfig extends Record<string, any> = Record<string, any>,
-> = boolean | 'disabled' | 'disable-all' | TConfig;
+> =
+  | boolean
+  | 'disabled'
+  | 'disable-all'
+  | (TConfig & { state?: 'disabled' | 'disable-all' | boolean });
 
 export type AnimationRootDisableAll = Extract<AnimationRoot, 'disable-all'>;
 

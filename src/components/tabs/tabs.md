@@ -379,12 +379,13 @@ When using a render function for `children`, the following props are provided:
 
 ### Tabs.Indicator
 
-| prop                    | type                     | default | description                                      |
-| ----------------------- | ------------------------ | ------- | ------------------------------------------------ |
-| `children`              | `React.ReactNode`        | -       | Custom indicator content                         |
-| `className`             | `string`                 | -       | Additional CSS classes                           |
-| `animation`             | `TabsIndicatorAnimation` | -       | Animation configuration                          |
-| `...Animated.ViewProps` | `Animated.ViewProps`     | -       | All Reanimated Animated.View props are supported |
+| prop                    | type                     | default | description                                                  |
+| ----------------------- | ------------------------ | ------- | ------------------------------------------------------------ |
+| `children`              | `React.ReactNode`        | -       | Custom indicator content                                     |
+| `className`             | `string`                 | -       | Additional CSS classes                                       |
+| `animation`             | `TabsIndicatorAnimation` | -       | Animation configuration                                      |
+| `isAnimatedStyleActive` | `boolean`                | `true`  | Whether animated styles (react-native-reanimated) are active |
+| `...Animated.ViewProps` | `Animated.ViewProps`     | -       | All Reanimated Animated.View props are supported             |
 
 #### TabsIndicatorAnimation
 
@@ -394,14 +395,15 @@ Animation configuration for Tabs.Indicator component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                                   | default                                                                      | description                        |
-| --------------- | -------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------- |
-| `width.type`    | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use           |
-| `width.config`  | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration |
-| `height.type`   | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use           |
-| `height.config` | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration |
-| `left.type`     | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use           |
-| `left.config`   | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration |
+| prop            | type                                   | default                                                                      | description                                     |
+| --------------- | -------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------- |
+| `state`         | `'disabled' \| boolean`                | -                                                                            | Disable animations while customizing properties |
+| `width.type`    | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use                        |
+| `width.config`  | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration              |
+| `height.type`   | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use                        |
+| `height.config` | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration              |
+| `left.type`     | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use                        |
+| `left.config`   | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration              |
 
 ### Tabs.Content
 

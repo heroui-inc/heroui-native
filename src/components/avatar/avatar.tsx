@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import type { ImageSourcePropType, ImageStyle } from 'react-native';
+import type { ImageSourcePropType } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/components';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
@@ -114,23 +114,31 @@ const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
         ? props.animation
         : undefined;
 
-    const normalizedStyle =
-      styleProp && typeof styleProp === 'object' && !Array.isArray(styleProp)
-        ? (styleProp as ImageStyle)
-        : undefined;
+    const isAnimatedStyleActive = asChild
+      ? true
+      : 'isAnimatedStyleActive' in props
+        ? (props.isAnimatedStyleActive ?? true)
+        : true;
 
     const { rImageStyle } = useAvatarImageAnimation({
       animation,
-      style: normalizedStyle,
     });
 
-    const tvStyles = avatarStyles.image({
+    const imageClassName = avatarStyles.image({
       className,
     });
 
+    const imageStyle = isAnimatedStyleActive
+      ? [rImageStyle, styleProp]
+      : styleProp;
+
     if (asChild) {
       return (
-        <AvatarPrimitives.Image ref={ref} className={tvStyles} {...props} />
+        <AvatarPrimitives.Image
+          ref={ref}
+          className={imageClassName}
+          {...props}
+        />
       );
     }
 
@@ -141,8 +149,8 @@ const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
         asChild
       >
         <Animated.Image
-          style={[rImageStyle, styleProp]}
-          className={tvStyles}
+          style={imageStyle}
+          className={imageClassName}
           {...restProps}
         />
       </AvatarPrimitives.Image>
@@ -157,11 +165,19 @@ const DefaultFallbackIcon: React.FC<{
   colorVariant: AvatarColor;
   iconProps?: PersonIconProps;
 }> = ({ sizeVariant, colorVariant, iconProps }) => {
-  const themeColorDefaultForeground = useThemeColor('default-foreground');
-  const themeColorAccent = useThemeColor('accent');
-  const themeColorSuccess = useThemeColor('success');
-  const themeColorWarning = useThemeColor('warning');
-  const themeColorDanger = useThemeColor('danger');
+  const [
+    themeColorDefaultForeground,
+    themeColorAccent,
+    themeColorSuccess,
+    themeColorWarning,
+    themeColorDanger,
+  ] = useThemeColor([
+    'default-foreground',
+    'accent',
+    'success',
+    'warning',
+    'danger',
+  ]);
 
   const iconSize = iconProps?.size ?? AVATAR_DEFAULT_ICON_SIZE[sizeVariant];
 

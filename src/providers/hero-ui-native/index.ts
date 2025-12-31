@@ -1,2 +1,2 @@
-export { default as HeroUINativeProvider } from './provider';
+export { default as HeroUINativeProvider, PortalHost } from './provider';
 export * from './types';

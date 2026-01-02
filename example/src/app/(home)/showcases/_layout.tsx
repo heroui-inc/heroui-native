@@ -19,6 +19,7 @@ export default function Layout() {
       }}
     >
       <Stack.Screen name="raycast" options={{ animation: 'fade' }} />
+      <Stack.Screen name="super-app-paywall" options={{ animation: 'fade' }} />
     </Stack>
   );
 }

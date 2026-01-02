@@ -10,6 +10,23 @@ const StyledIonicons = withUniwind(Ionicons);
 const data = [
   {
     imageLight:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/super-app-paywall-light.png',
+    imageDark:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/super-app-paywall-dark.png',
+    title: 'Super App Paywall',
+    description:
+      'Modern subscription paywall, featuring animated bottom sheet, tab navigation, and flexible plan options.',
+    href: '/showcases/super-app-paywall',
+    components: [
+      { name: 'BottomSheet', href: '/components/bottom-sheet' },
+      { name: 'Tabs', href: '/components/tabs' },
+      { name: 'FormField', href: '/components/form-field' },
+      { name: 'Button', href: '/components/button' },
+      { name: 'Chip', href: '/components/chip' },
+    ],
+  },
+  {
+    imageLight:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/raycast-showcase-light.png',
     imageDark:
       'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/raycast-showcase-dark.png',

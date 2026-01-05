@@ -1,5 +1,5 @@
 import BottomSheet from '@gorhom/bottom-sheet';
-import { createContext, forwardRef, use, useMemo } from 'react';
+import { createContext, forwardRef, use, useCallback, useMemo } from 'react';
 import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
 import { View } from 'react-native';
 import Animated, { ReduceMotion } from 'react-native-reanimated';
@@ -324,10 +324,10 @@ const PopoverContentBottomSheet = forwardRef<
       className: contentContainerClassName,
     });
 
-    const onClose = () => {
+    const onClose = useCallback(() => {
+      progress.set(2);
       onOpenChange(false);
-      restProps.onClose?.();
-    };
+    }, [onOpenChange, progress]);
 
     const mergedAnimationConfigs = useMemo(
       () => ({

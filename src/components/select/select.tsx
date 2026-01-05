@@ -348,10 +348,10 @@ const SelectContentBottomSheet = forwardRef<
       className: contentContainerClassName,
     });
 
-    const onClose = () => {
+    const onClose = useCallback(() => {
+      progress.set(2);
       onOpenChange(false);
-      restProps.onClose?.();
-    };
+    }, [onOpenChange, progress]);
 
     const mergedAnimationConfigs = useMemo(
       () => ({

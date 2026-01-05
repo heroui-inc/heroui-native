@@ -1,5 +1,5 @@
 import GorhomBottomSheet from '@gorhom/bottom-sheet';
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 import type { Text as RNText } from 'react-native';
 import Animated, {
   ReduceMotion,
@@ -228,10 +228,10 @@ const BottomSheetContent = forwardRef<
       className: contentContainerClassName,
     });
 
-    const onClose = () => {
+    const onClose = useCallback(() => {
+      progress.set(2);
       onOpenChange(false);
-      restProps.onClose?.();
-    };
+    }, [onOpenChange, progress]);
 
     const mergedAnimationConfigs = useMemo(
       () => ({

@@ -13,10 +13,12 @@ import {
   FullWindowOverlay,
 } from '../../helpers/components';
 import { HeroText } from '../../helpers/components/hero-text';
+import { BottomSheetIsDraggingProvider } from '../../helpers/contexts';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
 } from '../../helpers/contexts/animation-settings-context';
+import { useBottomSheetGestureHandlers } from '../../helpers/hooks';
 import { usePopupBottomSheetContentAnimation } from '../../helpers/hooks/use-popup-bottom-sheet-content-animation';
 import { usePopupDialogContentAnimation } from '../../helpers/hooks/use-popup-dialog-content-animation';
 import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
@@ -307,6 +309,7 @@ const SelectContentBottomSheet = forwardRef<
   (
     {
       children,
+      index: initialIndex,
       backgroundClassName,
       handleIndicatorClassName,
       contentContainerClassName,
@@ -318,16 +321,19 @@ const SelectContentBottomSheet = forwardRef<
     ref
   ) => {
     const { onOpenChange } = useSelect();
-    const { selectState, progress } = useSelectAnimation();
+
+    const { selectState, progress, isDragging } = useSelectAnimation();
 
     const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
       animation,
     });
 
-    const { animatedIndex } = usePopupBottomSheetContentAnimation({
-      progress,
-      componentState: selectState,
-    });
+    const { animatedIndex, isClosingOnSwipe } =
+      usePopupBottomSheetContentAnimation({
+        progress,
+        isDragging,
+        componentState: selectState,
+      });
 
     const contentBackgroundClassName = bottomSheetStyles.contentBackground({
       className: backgroundClassName,
@@ -358,28 +364,37 @@ const SelectContentBottomSheet = forwardRef<
     );
 
     return (
-      <StyledBottomSheet
-        ref={ref}
-        backgroundClassName={contentBackgroundClassName}
-        backgroundStyle={[
-          styleSheet.contentContainer,
-          restProps.backgroundStyle,
-        ]}
-        handleIndicatorClassName={contentHandleIndicatorClassName}
-        enablePanDownToClose={restProps.enablePanDownToClose ?? true}
-        animatedIndex={animatedIndex ?? restProps.animatedIndex}
-        onClose={onClose}
-        animationConfigs={mergedAnimationConfigs}
-        {...restProps}
-      >
-        <BottomSheetContentContainer
-          state={selectState}
-          contentContainerClassName={contentContainerClassNameValue}
-          contentContainerProps={contentContainerProps}
+      <BottomSheetIsDraggingProvider value={{ isDragging }}>
+        <StyledBottomSheet
+          ref={ref}
+          index={-1}
+          backgroundClassName={contentBackgroundClassName}
+          backgroundStyle={[
+            styleSheet.contentContainer,
+            restProps.backgroundStyle,
+          ]}
+          handleIndicatorClassName={contentHandleIndicatorClassName}
+          enablePanDownToClose={restProps.enablePanDownToClose ?? true}
+          animatedIndex={animatedIndex ?? restProps.animatedIndex}
+          animationConfigs={mergedAnimationConfigs}
+          gestureEventsHandlersHook={useBottomSheetGestureHandlers}
+          onClose={onClose}
+          {...restProps}
         >
-          {children}
-        </BottomSheetContentContainer>
-      </StyledBottomSheet>
+          <BottomSheetContentContainer
+            initialIndex={initialIndex ?? 0}
+            state={selectState}
+            progress={progress}
+            isDragging={isDragging}
+            isClosingOnSwipe={isClosingOnSwipe}
+            contentContainerClassName={contentContainerClassNameValue}
+            contentContainerProps={contentContainerProps}
+            onOpenChange={onOpenChange}
+          >
+            {children}
+          </BottomSheetContentContainer>
+        </StyledBottomSheet>
+      </BottomSheetIsDraggingProvider>
     );
   }
 );

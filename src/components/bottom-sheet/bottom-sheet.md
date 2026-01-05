@@ -196,16 +196,15 @@ export default function BottomSheetExample() {
 
 ### BottomSheet
 
-| prop                       | type                       | default | description                                                                                |
-| -------------------------- | -------------------------- | ------- | ------------------------------------------------------------------------------------------ |
-| `children`                 | `React.ReactNode`          | -       | Bottom sheet content and trigger elements                                                  |
-| `isOpen`                   | `boolean`                  | -       | Controlled open state of the bottom sheet                                                  |
-| `isDefaultOpen`            | `boolean`                  | `false` | Initial open state when uncontrolled                                                       |
-| `closeDelay`               | `number`                   | `300`   | Delay in milliseconds before bottom sheet closes (should match closing animation duration) |
-| `isDismissKeyboardOnClose` | `boolean`                  | `true`  | Whether to dismiss keyboard when bottom sheet closes                                       |
-| `animation`                | `BottomSheetRootAnimation` | -       | Animation configuration                                                                    |
-| `onOpenChange`             | `(value: boolean) => void` | -       | Callback when open state changes                                                           |
-| `...ViewProps`             | `ViewProps`                | -       | All standard React Native View props are supported                                         |
+| prop                       | type                       | default | description                                          |
+| -------------------------- | -------------------------- | ------- | ---------------------------------------------------- |
+| `children`                 | `React.ReactNode`          | -       | Bottom sheet content and trigger elements            |
+| `isOpen`                   | `boolean`                  | -       | Controlled open state of the bottom sheet            |
+| `isDefaultOpen`            | `boolean`                  | `false` | Initial open state when uncontrolled                 |
+| `isDismissKeyboardOnClose` | `boolean`                  | `true`  | Whether to dismiss keyboard when bottom sheet closes |
+| `animation`                | `BottomSheetRootAnimation` | -       | Animation configuration                              |
+| `onOpenChange`             | `(value: boolean) => void` | -       | Callback when open state changes                     |
+| `...ViewProps`             | `ViewProps`                | -       | All standard React Native View props are supported   |
 
 #### BottomSheetRootAnimation
 
@@ -215,8 +214,8 @@ Animation configuration for bottom sheet root component. Can be:
 - `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop   | type                                    | default | description                                |
-| ------ | --------------------------------------- | ------- | ------------------------------------------ |
+| prop    | type                                     | default | description                                     |
+| ------- | ---------------------------------------- | ------- | ----------------------------------------------- |
 | `state` | `'disabled' \| 'disable-all' \| boolean` | -       | Disable animations while customizing properties |
 
 ### BottomSheet.Trigger
@@ -258,10 +257,10 @@ Animation configuration for bottom sheet overlay component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                          | default     | description                        |
-| --------------- | ----------------------------- | ----------- | ---------------------------------- |
-| `state`         | `'disabled' \| boolean`       | -           | Disable animations while customizing properties |
-| `opacity.value` | `[number, number, number]`     | `[0, 1, 0]` | Opacity values [idle, open, close] |
+| prop            | type                       | default     | description                                     |
+| --------------- | -------------------------- | ----------- | ----------------------------------------------- |
+| `state`         | `'disabled' \| boolean`    | -           | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close]              |
 
 ### BottomSheet.Content
 

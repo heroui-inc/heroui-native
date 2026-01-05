@@ -1,4 +1,5 @@
 export * from './use-augmented-ref';
+export * from './use-bottom-sheet-gesture-handlers';
 export * from './use-combined-animation-disabled-state';
 export * from './use-controllable-state';
 export * from './use-keyboard-status';

@@ -11,10 +11,12 @@ import {
   FullWindowOverlay,
 } from '../../helpers/components';
 import { HeroText } from '../../helpers/components/hero-text';
+import { BottomSheetIsDraggingProvider } from '../../helpers/contexts';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
 } from '../../helpers/contexts/animation-settings-context';
+import { useBottomSheetGestureHandlers } from '../../helpers/hooks';
 import { usePopupBottomSheetContentAnimation } from '../../helpers/hooks/use-popup-bottom-sheet-content-animation';
 import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
 import { usePopupPopoverContentAnimation } from '../../helpers/hooks/use-popup-popover-content-animation';
@@ -284,6 +286,7 @@ const PopoverContentBottomSheet = forwardRef<
   (
     {
       children,
+      index: initialIndex,
       backgroundClassName,
       handleIndicatorClassName,
       contentContainerClassName,
@@ -295,16 +298,18 @@ const PopoverContentBottomSheet = forwardRef<
     ref
   ) => {
     const { onOpenChange } = usePopover();
-    const { popoverState, progress } = usePopoverAnimation();
+    const { popoverState, progress, isDragging } = usePopoverAnimation();
 
     const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
       animation,
     });
 
-    const { animatedIndex } = usePopupBottomSheetContentAnimation({
-      progress,
-      componentState: popoverState,
-    });
+    const { animatedIndex, isClosingOnSwipe } =
+      usePopupBottomSheetContentAnimation({
+        progress,
+        isDragging,
+        componentState: popoverState,
+      });
 
     const contentBackgroundClassName = bottomSheetStyles.contentBackground({
       className: backgroundClassName,
@@ -336,28 +341,37 @@ const PopoverContentBottomSheet = forwardRef<
 
     return (
       <PopoverContentContext value={{ placement: 'bottom' }}>
-        <StyledBottomSheet
-          ref={ref}
-          backgroundClassName={contentBackgroundClassName}
-          backgroundStyle={[
-            styleSheet.contentContainer,
-            restProps.backgroundStyle,
-          ]}
-          handleIndicatorClassName={contentHandleIndicatorClassName}
-          enablePanDownToClose={restProps.enablePanDownToClose ?? true}
-          animatedIndex={animatedIndex ?? restProps.animatedIndex}
-          onClose={onClose}
-          animationConfigs={mergedAnimationConfigs}
-          {...restProps}
-        >
-          <BottomSheetContentContainer
-            state={popoverState}
-            contentContainerClassName={contentContainerClassNameValue}
-            contentContainerProps={contentContainerProps}
+        <BottomSheetIsDraggingProvider value={{ isDragging }}>
+          <StyledBottomSheet
+            ref={ref}
+            index={-1}
+            backgroundClassName={contentBackgroundClassName}
+            backgroundStyle={[
+              styleSheet.contentContainer,
+              restProps.backgroundStyle,
+            ]}
+            handleIndicatorClassName={contentHandleIndicatorClassName}
+            enablePanDownToClose={restProps.enablePanDownToClose ?? true}
+            animatedIndex={animatedIndex ?? restProps.animatedIndex}
+            animationConfigs={mergedAnimationConfigs}
+            gestureEventsHandlersHook={useBottomSheetGestureHandlers}
+            onClose={onClose}
+            {...restProps}
           >
-            {children}
-          </BottomSheetContentContainer>
-        </StyledBottomSheet>
+            <BottomSheetContentContainer
+              initialIndex={initialIndex ?? 0}
+              state={popoverState}
+              progress={progress}
+              isDragging={isDragging}
+              isClosingOnSwipe={isClosingOnSwipe}
+              contentContainerClassName={contentContainerClassNameValue}
+              contentContainerProps={contentContainerProps}
+              onOpenChange={onOpenChange}
+            >
+              {children}
+            </BottomSheetContentContainer>
+          </StyledBottomSheet>
+        </BottomSheetIsDraggingProvider>
       </PopoverContentContext>
     );
   }

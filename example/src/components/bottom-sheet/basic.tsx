@@ -14,7 +14,9 @@ export const BasicBottomSheetContent = () => {
       <View className="flex-1 items-center justify-center">
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
           <BottomSheet.Trigger asChild>
-            <Button variant="secondary">Basic bottom sheet</Button>
+            <Button variant="secondary" isDisabled={isOpen}>
+              Basic bottom sheet
+            </Button>
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
             <BottomSheet.Overlay />

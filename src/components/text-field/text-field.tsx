@@ -9,9 +9,8 @@ import {
 import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/components';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useThemeColor } from '../../helpers/theme';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
-import { createContext, getElementByDisplayName } from '../../helpers/utils';
+import { createContext } from '../../helpers/utils';
 import { ErrorView } from '../error-view';
 import {
   useTextFieldDescriptionAnimation,
@@ -25,9 +24,7 @@ import type {
   TextFieldContextValue,
   TextFieldDescriptionProps,
   TextFieldErrorMessageProps,
-  TextFieldInputEndContentProps,
   TextFieldInputProps,
-  TextFieldInputStartContentProps,
   TextFieldLabelProps,
   TextFieldRootProps,
 } from './text-field.types';
@@ -37,6 +34,7 @@ const [TextFieldProvider, useTextField] = createContext<TextFieldContextValue>({
 });
 
 const AnimatedText = Animated.createAnimatedComponent(HeroText);
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 // --------------------------------------------------
 
@@ -133,13 +131,13 @@ const TextFieldLabel = forwardRef<TextRef, TextFieldLabelProps>(
 const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
   (props, ref) => {
     const {
-      children,
       isInvalid: localIsInvalid,
       className,
-      classNames,
       style,
       animation,
       isAnimatedStyleActive = true,
+      selectionColorClassName: selectionColorClassNameProp,
+      placeholderColorClassName: placeholderColorClassNameProp,
       onFocus,
       onBlur,
       ...restProps
@@ -150,29 +148,18 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     const isInvalid =
       localIsInvalid !== undefined ? localIsInvalid : contextIsInvalid;
 
-    const startContent = getElementByDisplayName(
-      children,
-      DISPLAY_NAME.INPUT_START_CONTENT
-    );
-    const endContent = getElementByDisplayName(
-      children,
-      DISPLAY_NAME.INPUT_END_CONTENT
-    );
-
-    const [themeColorFieldPlaceholder, themeColorMuted] = useThemeColor([
-      'field-placeholder',
-      'muted',
-    ]);
-
-    const tvStyles = textFieldStyles.input({
-      isMultiline: Boolean(restProps.multiline),
+    const inputClassName = textFieldStyles.input({
+      className,
     });
 
-    const containerClassName = tvStyles.container({
-      className: [className, classNames?.container],
+    const placeholderColorClassName = textFieldStyles.placeholderTextColor({
+      className: placeholderColorClassNameProp,
     });
 
-    const inputStyles = tvStyles.input({ className: classNames?.input });
+    const selectionColorClassName = textFieldStyles.inputSelectionColor({
+      isInvalid,
+      className: selectionColorClassNameProp,
+    });
 
     const {
       animatedContainerStyle,
@@ -198,59 +185,19 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
     };
 
     return (
-      <Animated.View className={containerClassName} style={containerStyle}>
-        {startContent}
-        <TextInput
-          ref={ref}
-          className={inputStyles}
-          style={[styleSheet.borderCurve]}
-          placeholderTextColor={themeColorFieldPlaceholder}
-          selectionColor={themeColorMuted}
-          selectionHandleColor={themeColorMuted}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          textAlignVertical={restProps.multiline ? 'top' : 'center'}
-          {...restProps}
-        />
-        {endContent}
-      </Animated.View>
+      <AnimatedTextInput
+        ref={ref}
+        className={inputClassName}
+        style={containerStyle}
+        placeholderTextColor={placeholderColorClassName}
+        selectionColorClassName={selectionColorClassName}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        {...restProps}
+      />
     );
   }
 );
-
-// --------------------------------------------------
-
-const TextFieldInputStartContent = forwardRef<
-  ViewRef,
-  TextFieldInputStartContentProps
->((props, ref) => {
-  const { children, className, ...restProps } = props;
-
-  const tvStyles = textFieldStyles.inputStartContent({ className });
-
-  return (
-    <View ref={ref} className={tvStyles} {...restProps}>
-      {children}
-    </View>
-  );
-});
-
-// --------------------------------------------------
-
-const TextFieldInputEndContent = forwardRef<
-  ViewRef,
-  TextFieldInputEndContentProps
->((props, ref) => {
-  const { children, className, ...restProps } = props;
-
-  const tvStyles = textFieldStyles.inputEndContent({ className });
-
-  return (
-    <View ref={ref} className={tvStyles} {...restProps}>
-      {children}
-    </View>
-  );
-});
 
 // --------------------------------------------------
 
@@ -323,8 +270,6 @@ const TextFieldErrorMessage = forwardRef<TextRef, TextFieldErrorMessageProps>(
 TextFieldRoot.displayName = DISPLAY_NAME.ROOT;
 TextFieldLabel.displayName = DISPLAY_NAME.LABEL;
 TextFieldInput.displayName = DISPLAY_NAME.INPUT;
-TextFieldInputStartContent.displayName = DISPLAY_NAME.INPUT_START_CONTENT;
-TextFieldInputEndContent.displayName = DISPLAY_NAME.INPUT_END_CONTENT;
 TextFieldDescription.displayName = DISPLAY_NAME.DESCRIPTION;
 TextFieldErrorMessage.displayName = DISPLAY_NAME.ERROR_MESSAGE;
 
@@ -337,15 +282,8 @@ TextFieldErrorMessage.displayName = DISPLAY_NAME.ERROR_MESSAGE;
  * @component TextField.Label - Label with optional asterisk for required fields.
  * Changes to danger color when field is invalid.
  *
- * @component TextField.Input - Input container with animated border and background.
- * Supports start/end content slots and handles focus state animations.
+ * @component TextField.Input - Animated input with focus state animations.
  * Border turns danger color when field is invalid.
- *
- * @component TextField.InputStartContent - Optional content at the start of the input.
- * Use for icons or prefixes.
- *
- * @component TextField.InputEndContent - Optional content at the end of the input.
- * Use for icons, suffixes, or action buttons.
  *
  * @component TextField.Description - Description text with muted styling.
  * Hidden when field is invalid and error message is shown.
@@ -358,12 +296,8 @@ TextFieldErrorMessage.displayName = DISPLAY_NAME.ERROR_MESSAGE;
 const CompoundTextField = Object.assign(TextFieldRoot, {
   /** @optional Label with asterisk support */
   Label: TextFieldLabel,
-  /** @required Input container with focus animations */
+  /** @required Animated input with focus animations */
   Input: TextFieldInput,
-  /** @optional Start content for input */
-  InputStartContent: TextFieldInputStartContent,
-  /** @optional End content for input */
-  InputEndContent: TextFieldInputEndContent,
   /** @optional Description or helper text */
   Description: TextFieldDescription,
   /** @optional Error message displayed when field is invalid */

@@ -255,7 +255,7 @@ const TextInputDialogContent = () => {
                           },
                         },
                       }}
-                      selectionColor={themeColorMuted}
+                      selectionColorClassName="accent-muted"
                     />
                     <TextField.ErrorMessage>{nameError}</TextField.ErrorMessage>
                   </TextField>

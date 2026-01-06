@@ -2,13 +2,38 @@
 
 Displays a floating content panel anchored to a trigger element with placement and alignment options.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Popover } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Popover>
+  <Popover.Trigger>...</Popover.Trigger>
+  <Popover.Portal>
+    <Popover.Overlay />
+    <Popover.Content>
+      <Popover.Arrow />
+      <Popover.Close />
+      <Popover.Title>...</Popover.Title>
+      <Popover.Description>...</Popover.Description>
+    </Popover.Content>
+  </Popover.Portal>
+</Popover>
+```
+
+- **Popover**: Main container that manages open/close state, positioning, and provides context to child components.
+- **Popover.Trigger**: Clickable element that toggles popover visibility. Wraps any child element with press handlers.
+- **Popover.Portal**: Renders popover content in a portal layer above other content. Ensures proper stacking and positioning.
+- **Popover.Overlay**: Optional background overlay. Can be transparent or semi-transparent to capture outside clicks.
+- **Popover.Content**: Container for popover content with positioning, styling, and collision detection. Supports both popover and bottom-sheet presentations.
+- **Popover.Arrow**: Optional arrow element pointing to the trigger. Automatically positioned based on placement.
+- **Popover.Close**: Close button that dismisses the popover when pressed. Renders a default X icon if no children provided.
+- **Popover.Title**: Optional title text with pre-styled typography.
+- **Popover.Description**: Optional description text with muted styling.
 
 ## Usage
 
@@ -251,33 +276,6 @@ export default function PopoverExample() {
 }
 ```
 
-## Anatomy
-
-```tsx
-<Popover>
-  <Popover.Trigger>...</Popover.Trigger>
-  <Popover.Portal>
-    <Popover.Overlay />
-    <Popover.Content>
-      <Popover.Arrow />
-      <Popover.Close />
-      <Popover.Title>...</Popover.Title>
-      <Popover.Description>...</Popover.Description>
-    </Popover.Content>
-  </Popover.Portal>
-</Popover>
-```
-
-- **Popover**: Main container that manages open/close state, positioning, and provides context to child components.
-- **Popover.Trigger**: Clickable element that toggles popover visibility. Wraps any child element with press handlers.
-- **Popover.Portal**: Renders popover content in a portal layer above other content. Ensures proper stacking and positioning.
-- **Popover.Overlay**: Optional background overlay. Can be transparent or semi-transparent to capture outside clicks.
-- **Popover.Content**: Container for popover content with positioning, styling, and collision detection. Supports both popover and bottom-sheet presentations.
-- **Popover.Arrow**: Optional arrow element pointing to the trigger. Automatically positioned based on placement.
-- **Popover.Close**: Close button that dismisses the popover when pressed. Renders a default X icon if no children provided.
-- **Popover.Title**: Optional title text with pre-styled typography.
-- **Popover.Description**: Optional description text with muted styling.
-
 ## API Reference
 
 ### Popover
@@ -302,11 +300,11 @@ Animation configuration for popover root component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop             | type                                             | default                                                                                          | description                         |
-| ---------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| prop             | type                                             | default                                                                                          | description                                     |
+| ---------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
 | `state`          | `'disabled' \| 'disable-all' \| boolean`         | -                                                                                                | Disable animations while customizing properties |
-| `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 200,`<br/>`easing: Easing.out(Easing.ease) } }`     | Animation configuration for opening |
-| `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 150,`<br/>`easing: Easing.bezier(0.4, 0, 1, 1) } }` | Animation configuration for closing |
+| `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 200,`<br/>`easing: Easing.out(Easing.ease) } }`     | Animation configuration for opening             |
+| `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 150,`<br/>`easing: Easing.bezier(0.4, 0, 1, 1) } }` | Animation configuration for closing             |
 
 #### SpringAnimationConfig
 
@@ -361,10 +359,10 @@ Animation configuration for popover overlay component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                          | default     | description                        |
-| --------------- | ----------------------------- | ----------- | ---------------------------------- |
-| `state`         | `'disabled' \| boolean`       | -           | Disable animations while customizing properties |
-| `opacity.value` | `[number, number, number]`      | `[0, 1, 0]` | Opacity values [idle, open, close] |
+| prop            | type                       | default     | description                                     |
+| --------------- | -------------------------- | ----------- | ----------------------------------------------- |
+| `state`         | `'disabled' \| boolean`    | -           | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close]              |
 
 ### Popover.Content (Popover Presentation)
 
@@ -408,14 +406,14 @@ Animation configuration for popover content component (popover presentation). Ca
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                    | type                          | default                                                         | description                           |
-| ----------------------- | ----------------------------- | --------------------------------------------------------------- | ------------------------------------- |
-| `state`                 | `'disabled' \| boolean`       | -                                                               | Disable animations while customizing properties |
-| `opacity.value`         | `[number, number, number]`     | `[0, 1, 0]`                                                     | Opacity values [idle, open, close]    |
-| `scale.value`           | `[number, number, number]`     | `[0.95, 1, 0.95]`                                               | Scale values [idle, open, close]      |
-| `translateX.value`      | `[number, number, number]`     | Based on placement<br/>`(4, 0, 4)` or `(-4, 0, -4)`             | TranslateX values [idle, open, close] |
-| `translateY.value`      | `[number, number, number]`     | Based on placement<br/>`(4, 0, 4)` or `(-4, 0, -4)`             | TranslateY values [idle, open, close] |
-| `transformOrigin.value` | `string`                      | Based on placement<br/>`'top'`, `'bottom'`, `'left'`, `'right'` | Transform origin value                |
+| prop                    | type                       | default                                                         | description                                     |
+| ----------------------- | -------------------------- | --------------------------------------------------------------- | ----------------------------------------------- |
+| `state`                 | `'disabled' \| boolean`    | -                                                               | Disable animations while customizing properties |
+| `opacity.value`         | `[number, number, number]` | `[0, 1, 0]`                                                     | Opacity values [idle, open, close]              |
+| `scale.value`           | `[number, number, number]` | `[0.95, 1, 0.95]`                                               | Scale values [idle, open, close]                |
+| `translateX.value`      | `[number, number, number]` | Based on placement<br/>`(4, 0, 4)` or `(-4, 0, -4)`             | TranslateX values [idle, open, close]           |
+| `translateY.value`      | `[number, number, number]` | Based on placement<br/>`(4, 0, 4)` or `(-4, 0, -4)`             | TranslateY values [idle, open, close]           |
+| `transformOrigin.value` | `string`                   | Based on placement<br/>`'top'`, `'bottom'`, `'left'`, `'right'` | Transform origin value                          |
 
 ### Popover.Arrow
 
@@ -466,6 +464,8 @@ Animation configuration for popover content component (popover presentation). Ca
 | `children`     | `ReactNode` | -       | The description text content                       |
 | `className`    | `string`    | -       | Additional CSS classes for the description         |
 | `...TextProps` | `TextProps` | -       | All standard React Native Text props are supported |
+
+## Hooks
 
 ### usePopover
 

@@ -27,7 +27,9 @@ const DetachedBottomSheetContent = () => {
       <View className="flex-1 items-center justify-center">
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
           <BottomSheet.Trigger asChild>
-            <Button variant="secondary">Detached bottom sheet</Button>
+            <Button variant="secondary" isDisabled={isOpen}>
+              Detached bottom sheet
+            </Button>
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
             <BottomSheet.Overlay />
@@ -99,7 +101,9 @@ const WithBlurOverlayContent = () => {
       <View className="flex-1 items-center justify-center">
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
           <BottomSheet.Trigger asChild>
-            <Button variant="secondary">Bottom sheet with blur overlay</Button>
+            <Button variant="secondary" isDisabled={isOpen}>
+              Bottom sheet with blur overlay
+            </Button>
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
             <BottomSheetBlurOverlay />

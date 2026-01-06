@@ -2,13 +2,22 @@
 
 Displays a compact element in a capsule shape.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Chip } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Chip>
+  <Chip.Label>...</Chip.Label>
+</Chip>
+```
+
+- **Chip**: Main container that displays a compact element
+- **Chip.Label**: Text content of the chip
 
 ## Usage
 
@@ -133,17 +142,6 @@ export default function ChipExample() {
   );
 }
 ```
-
-## Anatomy
-
-```tsx
-<Chip>
-  <Chip.Label>...</Chip.Label>
-</Chip>
-```
-
-- **Chip**: Main container that displays a compact element
-- **Chip.Label**: Text content of the chip
 
 ## API Reference
 

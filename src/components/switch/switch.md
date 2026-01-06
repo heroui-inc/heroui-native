@@ -2,13 +2,26 @@
 
 A toggle control that allows users to switch between on and off states.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Switch } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Switch>
+  <Switch.Thumb>...</Switch.Thumb>
+  <Switch.StartContent>...</Switch.StartContent>
+  <Switch.EndContent>...</Switch.EndContent>
+</Switch>
+```
+
+- **Switch**: Main container that handles toggle state and user interaction. Renders default thumb if no children provided. Animates scale (on press) and background color based on selection state. Acts as a pressable area for toggling.
+- **Switch.Thumb**: Optional sliding thumb element that moves between positions. Uses spring animation for smooth transitions. Can contain custom content like icons or be customized with different styles and animations.
+- **Switch.StartContent**: Optional content displayed on the left side of the switch. Typically used for icons or text that appear when switch is off. Positioned absolutely within the switch container.
+- **Switch.EndContent**: Optional content displayed on the right side of the switch. Typically used for icons or text that appear when switch is on. Positioned absolutely within the switch container.
 
 ## Usage
 
@@ -169,21 +182,6 @@ export default function SwitchExample() {
 }
 ```
 
-## Anatomy
-
-```tsx
-<Switch>
-  <Switch.Thumb>...</Switch.Thumb>
-  <Switch.StartContent>...</Switch.StartContent>
-  <Switch.EndContent>...</Switch.EndContent>
-</Switch>
-```
-
-- **Switch**: Main container that handles toggle state and user interaction. Renders default thumb if no children provided. Animates scale (on press) and background color based on selection state. Acts as a pressable area for toggling.
-- **Switch.Thumb**: Optional sliding thumb element that moves between positions. Uses spring animation for smooth transitions. Can contain custom content like icons or be customized with different styles and animations.
-- **Switch.StartContent**: Optional content displayed on the left side of the switch. Typically used for icons or text that appear when switch is off. Positioned absolutely within the switch container.
-- **Switch.EndContent**: Optional content displayed on the right side of the switch. Typically used for icons or text that appear when switch is on. Positioned absolutely within the switch container.
-
 ## API Reference
 
 ### Switch
@@ -215,13 +213,13 @@ Animation configuration for Switch component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                           | type                                    | default                                                        | description                                    |
-| ------------------------------ | --------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------- |
+| prop                           | type                                     | default                                                        | description                                     |
+| ------------------------------ | ---------------------------------------- | -------------------------------------------------------------- | ----------------------------------------------- |
 | `state`                        | `'disabled' \| 'disable-all' \| boolean` | -                                                              | Disable animations while customizing properties |
-| `scale.value`                  | `[number, number]`                      | `[1, 0.96]`                                                    | Scale values [unpressed, pressed]              |
-| `scale.timingConfig`           | `WithTimingConfig`                      | `{ duration: 150 }`                                            | Animation timing configuration                 |
-| `backgroundColor.value`        | `[string, string]`                     | Uses theme colors                                              | Background color values [unselected, selected] |
-| `backgroundColor.timingConfig` | `WithTimingConfig`                      | `{ duration: 175, easing: Easing.bezier(0.25, 0.1, 0.25, 1) }` | Animation timing configuration                 |
+| `scale.value`                  | `[number, number]`                       | `[1, 0.96]`                                                    | Scale values [unpressed, pressed]               |
+| `scale.timingConfig`           | `WithTimingConfig`                       | `{ duration: 150 }`                                            | Animation timing configuration                  |
+| `backgroundColor.value`        | `[string, string]`                       | Uses theme colors                                              | Background color values [unselected, selected]  |
+| `backgroundColor.timingConfig` | `WithTimingConfig`                       | `{ duration: 175, easing: Easing.bezier(0.25, 0.1, 0.25, 1) }` | Animation timing configuration                  |
 
 ### Switch.Thumb
 
@@ -241,13 +239,13 @@ Animation configuration for Switch.Thumb component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                           | type                          | default                                                        | description                                                             |
-| ------------------------------ | ----------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `state`                        | `'disabled' \| boolean`       | -                                                              | Disable animations while customizing properties                         |
-| `left.value`                   | `number`                      | `2`                                                            | Offset value from the edges (left when unselected, right when selected) |
-| `left.springConfig`            | `WithSpringConfig`            | `{ damping: 120, stiffness: 1600, mass: 2 }`                   | Spring animation configuration for thumb position                       |
-| `backgroundColor.value`        | `[string, string]`            | `['white', theme accent-foreground color]`                     | Background color values [unselected, selected]                          |
-| `backgroundColor.timingConfig` | `WithTimingConfig`            | `{ duration: 175, easing: Easing.bezier(0.25, 0.1, 0.25, 1) }` | Animation timing configuration                                          |
+| prop                           | type                    | default                                                        | description                                                             |
+| ------------------------------ | ----------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `state`                        | `'disabled' \| boolean` | -                                                              | Disable animations while customizing properties                         |
+| `left.value`                   | `number`                | `2`                                                            | Offset value from the edges (left when unselected, right when selected) |
+| `left.springConfig`            | `WithSpringConfig`      | `{ damping: 120, stiffness: 1600, mass: 2 }`                   | Spring animation configuration for thumb position                       |
+| `backgroundColor.value`        | `[string, string]`      | `['white', theme accent-foreground color]`                     | Background color values [unselected, selected]                          |
+| `backgroundColor.timingConfig` | `WithTimingConfig`      | `{ duration: 175, easing: Easing.bezier(0.25, 0.1, 0.25, 1) }` | Animation timing configuration                                          |
 
 ### Switch.StartContent
 
@@ -264,36 +262,6 @@ Animation configuration for Switch.Thumb component. Can be:
 | `children`     | `React.ReactNode` | `undefined` | Content to render inside the switch content        |
 | `className`    | `string`          | `undefined` | Custom class name for the content element          |
 | `...ViewProps` | `ViewProps`       | -           | All standard React Native View props are supported |
-
-## Styling Notes
-
-### Border Styling
-
-If you need to apply a border to the switch root, use the `outline` style properties instead of `border`. This ensures the border doesn't affect the internal layout calculations for the thumb position:
-
-```tsx
-<Switch className="outline outline-accent">
-  <Switch.Thumb />
-</Switch>
-```
-
-Using `outline` keeps the border visual without impacting the switch's internal width calculations, ensuring the thumb animates correctly.
-
-## Integration with FormField
-
-The Switch component integrates seamlessly with FormField for press state sharing:
-
-```tsx
-<FormField isSelected={isSelected} onSelectedChange={setIsSelected}>
-  <View className="flex-1">
-    <FormField.Label>Enable notifications</FormField.Label>
-    <FormField.Description>Receive push notifications</FormField.Description>
-  </View>
-  <FormField.Indicator />
-</FormField>
-```
-
-When wrapped in FormField, the Switch will automatically respond to press events on the entire FormField container, creating a larger touch target and better user experience.
 
 ## Hooks
 
@@ -330,3 +298,33 @@ function CustomSwitchContent() {
   <Switch.Thumb />
 </Switch>;
 ```
+
+## Special Notes
+
+### Border Styling
+
+If you need to apply a border to the switch root, use the `outline` style properties instead of `border`. This ensures the border doesn't affect the internal layout calculations for the thumb position:
+
+```tsx
+<Switch className="outline outline-accent">
+  <Switch.Thumb />
+</Switch>
+```
+
+Using `outline` keeps the border visual without impacting the switch's internal width calculations, ensuring the thumb animates correctly.
+
+### Integration with FormField
+
+The Switch component integrates seamlessly with FormField for press state sharing:
+
+```tsx
+<FormField isSelected={isSelected} onSelectedChange={setIsSelected}>
+  <View className="flex-1">
+    <FormField.Label>Enable notifications</FormField.Label>
+    <FormField.Description>Receive push notifications</FormField.Description>
+  </View>
+  <FormField.Indicator />
+</FormField>
+```
+
+When wrapped in FormField, the Switch will automatically respond to press events on the entire FormField container, creating a larger touch target and better user experience.

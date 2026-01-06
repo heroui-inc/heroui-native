@@ -35,7 +35,7 @@ const label = tv({
  * Input style definition
  *
  * @note ANIMATED PROPERTIES (cannot be set via className):
- * The following properties in the `container` slot are animated and cannot be overridden using Tailwind classes:
+ * The following properties are animated and cannot be overridden using Tailwind classes:
  * - `backgroundColor` - Animated for focus/blur and error state transitions
  * - `borderColor` - Animated for focus/blur and error state transitions
  *
@@ -53,27 +53,20 @@ const label = tv({
  * set `isAnimatedStyleActive={false}` on `TextField.Input`.
  */
 const input = tv({
-  slots: {
-    container:
-      'h-[48px] px-3 rounded-2xl border-[1.5px] flex-row items-center gap-3',
-    input: 'flex-1 h-full text-foreground font-normal',
-  },
+  base: 'py-3.5 px-3 rounded-2xl border-[1.5px] text-foreground font-normal',
+});
+
+const placeholderTextColor = tv({
+  base: 'field-placeholder',
+});
+
+const inputSelectionColor = tv({
+  base: 'accent-accent',
   variants: {
-    isMultiline: {
-      true: {
-        container: 'h-[120px]',
-        input: 'py-2.5',
-      },
+    isInvalid: {
+      true: 'accent-danger',
     },
   },
-});
-
-const inputStartContent = tv({
-  base: '',
-});
-
-const inputEndContent = tv({
-  base: '',
 });
 
 const description = tv({
@@ -94,13 +87,12 @@ const textFieldStyles = combineStyles({
   root,
   label,
   input,
-  inputStartContent,
-  inputEndContent,
+  inputSelectionColor,
+  placeholderTextColor,
   description,
   errorMessage,
 });
 
 export type LabelSlots = keyof ReturnType<typeof label>;
-export type InputSlots = keyof ReturnType<typeof input>;
 
 export default textFieldStyles;

@@ -57,29 +57,29 @@ const TextFieldWithIconsContent = () => {
       <KeyboardAvoidingContainer>
         <TextField isRequired>
           <TextField.Label>Password</TextField.Label>
-          <TextField.Input
-            placeholder="Enter your password"
-            secureTextEntry={!isPasswordVisible}
-          >
-            <TextField.InputStartContent className="pointer-events-none">
+          <View className="w-full flex-row items-center">
+            <TextField.Input
+              className="flex-1 px-10"
+              placeholder="Enter your password"
+              secureTextEntry={!isPasswordVisible}
+            />
+            <StyledIonicons
+              name="lock-closed-outline"
+              size={16}
+              className="absolute left-3.5 text-muted"
+              pointerEvents="none"
+            />
+            <Pressable
+              className="absolute right-4"
+              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+            >
               <StyledIonicons
-                name="lock-closed-outline"
+                name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'}
                 size={16}
                 className="text-muted"
               />
-            </TextField.InputStartContent>
-            <TextField.InputEndContent>
-              <Pressable
-                onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-              >
-                <StyledIonicons
-                  name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'}
-                  size={16}
-                  className="text-muted"
-                />
-              </Pressable>
-            </TextField.InputEndContent>
-          </TextField.Input>
+            </Pressable>
+          </View>
         </TextField>
       </KeyboardAvoidingContainer>
     </View>

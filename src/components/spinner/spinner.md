@@ -2,13 +2,22 @@
 
 Displays an animated loading indicator.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Spinner } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Spinner>
+  <Spinner.Indicator>...</Spinner.Indicator>
+</Spinner>
+```
+
+- **Spinner**: Main container that controls loading state, size, and color. Renders a default animated indicator if no children provided.
+- **Spinner.Indicator**: Optional sub-component for customizing animation configuration and icon appearance. Accepts custom children to replace the default icon.
 
 ## Usage
 
@@ -124,17 +133,6 @@ export default function SpinnerExample() {
   );
 }
 ```
-
-## Anatomy
-
-```tsx
-<Spinner>
-  <Spinner.Indicator>...</Spinner.Indicator>
-</Spinner>
-```
-
-- **Spinner**: Main container that controls loading state, size, and color. Renders a default animated indicator if no children provided.
-- **Spinner.Indicator**: Optional sub-component for customizing animation configuration and icon appearance. Accepts custom children to replace the default icon.
 
 ## API Reference
 

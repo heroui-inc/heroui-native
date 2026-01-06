@@ -10,6 +10,29 @@ Note: Before importing this component, ensure you have completed the setup as pe
 import { FormField } from 'heroui-native';
 ```
 
+## Import
+
+```tsx
+import { FormField } from 'heroui-native';
+```
+
+## Anatomy
+
+```tsx
+<FormField>
+  <FormField.Label>...</FormField.Label>
+  <FormField.Description>...</FormField.Description>
+  <FormField.Indicator>...</FormField.Indicator>
+  <FormField.ErrorMessage>...</FormField.ErrorMessage>
+</FormField>
+```
+
+- **FormField**: Root container that manages layout and state propagation
+- **FormField.Label**: Primary text label for the control
+- **FormField.Description**: Secondary descriptive helper text
+- **FormField.Indicator**: Container for the form control component (Switch, Checkbox)
+- **FormField.ErrorMessage**: Validation error message display
+
 ## Usage
 
 ### Basic Usage
@@ -162,23 +185,6 @@ export default function FormFieldExample() {
   );
 }
 ```
-
-## Anatomy
-
-```tsx
-<FormField>
-  <FormField.Label>...</FormField.Label>
-  <FormField.Description>...</FormField.Description>
-  <FormField.Indicator>...</FormField.Indicator>
-  <FormField.ErrorMessage>...</FormField.ErrorMessage>
-</FormField>
-```
-
-- **FormField**: Root container that manages layout and state propagation
-- **FormField.Label**: Primary text label for the control
-- **FormField.Description**: Secondary descriptive helper text
-- **FormField.Indicator**: Container for the form control component (Switch, Checkbox)
-- **FormField.ErrorMessage**: Validation error message display
 
 ## API Reference
 

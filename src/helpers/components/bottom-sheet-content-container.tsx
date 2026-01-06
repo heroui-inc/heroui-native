@@ -1,5 +1,11 @@
 import { BottomSheetView, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useEffect } from 'react';
+import {
+  useAnimatedReaction,
+  useDerivedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import { scheduleOnRN } from 'react-native-worklets';
 import type { BottomSheetContentContainerProps } from '../types/bottom-sheet';
 
 /**
@@ -21,22 +27,51 @@ import type { BottomSheetContentContainerProps } from '../types/bottom-sheet';
  */
 export function BottomSheetContentContainer({
   children,
+  state,
+  progress,
+  isDragging,
+  isClosingOnSwipe,
+  initialIndex,
   contentContainerClassName,
   contentContainerProps,
-  state,
+  onOpenChange,
 }: BottomSheetContentContainerProps) {
-  const { expand, close } = useBottomSheet();
+  const { forceClose, snapToIndex } = useBottomSheet();
+
+  const isCloseBottomSheetEnabled = useDerivedValue(() => {
+    if (progress.get() > 1.75 && !isDragging.get()) {
+      return true;
+    }
+    return false;
+  });
+
+  const closeBottomSheet = () => {
+    progress.set(withTiming(2, { duration: 100 }));
+    forceClose();
+    onOpenChange(false);
+  };
+
+  useAnimatedReaction(
+    () => isCloseBottomSheetEnabled.get(),
+    (value) => {
+      if (value) {
+        if (isClosingOnSwipe.get()) {
+          return;
+        }
+        isClosingOnSwipe.set(true);
+        scheduleOnRN(closeBottomSheet);
+      }
+    }
+  );
 
   useEffect(() => {
     if (state === 'open') {
-      expand();
-    } else if (state === 'close') {
       setTimeout(() => {
-        close();
-      }, 100);
+        snapToIndex(initialIndex);
+      }, 50);
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state]);
+  }, [state, snapToIndex, initialIndex]);
 
   return (
     <BottomSheetView

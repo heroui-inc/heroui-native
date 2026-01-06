@@ -1,18 +1,37 @@
 # BottomSheet
 
-Displays a bottom sheet modal with gesture-based dismissal and snap points support.
+Displays a bottom sheet that slides up from the bottom with animated transitions and swipe-to-dismiss gestures.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
-import {
-  BottomSheet,
-  useBottomSheet,
-  useBottomSheetAnimation,
-} from 'heroui-native';
+import { BottomSheet } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<BottomSheet>
+  <BottomSheet.Trigger>...</BottomSheet.Trigger>
+  <BottomSheet.Portal>
+    <BottomSheet.Overlay>...</BottomSheet.Overlay>
+    <BottomSheet.Content>
+      <BottomSheet.Close>...</BottomSheet.Close>
+      <BottomSheet.Title>...</BottomSheet.Title>
+      <BottomSheet.Description>...</BottomSheet.Description>
+    </BottomSheet.Content>
+  </BottomSheet.Portal>
+</BottomSheet>
+```
+
+- **BottomSheet**: Root component that manages open state and provides context to child components.
+- **BottomSheet.Trigger**: Pressable element that opens the bottom sheet when pressed.
+- **BottomSheet.Portal**: Renders bottom sheet content in a portal with full window overlay.
+- **BottomSheet.Overlay**: Background overlay that covers the screen, typically closes bottom sheet when pressed.
+- **BottomSheet.Content**: Main bottom sheet container using @gorhom/bottom-sheet for rendering with gesture support.
+- **BottomSheet.Close**: Close button that dismisses the bottom sheet when pressed.
+- **BottomSheet.Title**: Bottom sheet title text with semantic heading role and accessibility linking.
+- **BottomSheet.Description**: Bottom sheet description text that provides additional context with accessibility linking.
 
 ## Usage
 
@@ -21,7 +40,7 @@ import {
 Simple bottom sheet with title, description, and close button.
 
 ```tsx
-<BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+<BottomSheet>
   <BottomSheet.Trigger asChild>
     <Button>Open Bottom Sheet</Button>
   </BottomSheet.Trigger>
@@ -41,7 +60,7 @@ Simple bottom sheet with title, description, and close button.
 Bottom sheet that appears detached from the bottom edge with custom spacing.
 
 ```tsx
-<BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+<BottomSheet>
   <BottomSheet.Trigger>...</BottomSheet.Trigger>
   <BottomSheet.Portal>
     <BottomSheet.Overlay />
@@ -62,7 +81,7 @@ Bottom sheet that appears detached from the bottom edge with custom spacing.
 Bottom sheet with multiple snap points and scrollable content.
 
 ```tsx
-<BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+<BottomSheet>
   <BottomSheet.Trigger>...</BottomSheet.Trigger>
   <BottomSheet.Portal>
     <BottomSheet.Overlay />
@@ -105,7 +124,7 @@ export const BottomSheetBlurOverlay = () => {
 ```
 
 ```tsx
-<BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+<BottomSheet>
   <BottomSheet.Trigger>...</BottomSheet.Trigger>
   <BottomSheet.Portal>
     <BottomSheetBlurOverlay />
@@ -113,6 +132,15 @@ export const BottomSheetBlurOverlay = () => {
   </BottomSheet.Portal>
 </BottomSheet>
 ```
+
+### Text Input with Keyboard Avoidance
+
+Using `TextField.Input` from heroui-native inside a bottom sheet requires special handling for proper keyboard behavior. You need to:
+
+1. Pass custom `onFocus` and `onBlur` handlers to `TextField.Input` that communicate with the bottom sheet's internal keyboard state using `useBottomSheetInternal` hook from `@gorhom/bottom-sheet`
+2. Use `BottomSheetScrollView` from `@gorhom/bottom-sheet` instead of regular `ScrollView` for proper keyboard avoidance
+
+See the complete example: [bottom-sheet-with-text-input.tsx](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/components/bottom-sheet/with-text-input.tsx)
 
 ## Example
 
@@ -167,45 +195,19 @@ export default function BottomSheetExample() {
 }
 ```
 
-## Anatomy
-
-```tsx
-<BottomSheet>
-  <BottomSheet.Trigger>...</BottomSheet.Trigger>
-  <BottomSheet.Portal>
-    <BottomSheet.Overlay>...</BottomSheet.Overlay>
-    <BottomSheet.Content>
-      <BottomSheet.Close>...</BottomSheet.Close>
-      <BottomSheet.Title>...</BottomSheet.Title>
-      <BottomSheet.Description>...</BottomSheet.Description>
-    </BottomSheet.Content>
-  </BottomSheet.Portal>
-</BottomSheet>
-```
-
-- **BottomSheet**: Root component that manages open state and provides context to child components.
-- **BottomSheet.Trigger**: Pressable element that opens the bottom sheet when pressed.
-- **BottomSheet.Portal**: Renders bottom sheet content in a portal with full window overlay.
-- **BottomSheet.Overlay**: Background overlay that covers the screen, typically closes bottom sheet when pressed.
-- **BottomSheet.Content**: Main bottom sheet container using @gorhom/bottom-sheet for rendering with gesture support.
-- **BottomSheet.Close**: Close button that dismisses the bottom sheet when pressed.
-- **BottomSheet.Title**: Bottom sheet title text with semantic heading role and accessibility linking.
-- **BottomSheet.Description**: Bottom sheet description text that provides additional context with accessibility linking.
-
 ## API Reference
 
 ### BottomSheet
 
-| prop                       | type                       | default | description                                                                                |
-| -------------------------- | -------------------------- | ------- | ------------------------------------------------------------------------------------------ |
-| `children`                 | `React.ReactNode`          | -       | Bottom sheet content and trigger elements                                                  |
-| `isOpen`                   | `boolean`                  | -       | Controlled open state of the bottom sheet                                                  |
-| `isDefaultOpen`            | `boolean`                  | `false` | Initial open state when uncontrolled                                                       |
-| `closeDelay`               | `number`                   | `300`   | Delay in milliseconds before bottom sheet closes (should match closing animation duration) |
-| `isDismissKeyboardOnClose` | `boolean`                  | `true`  | Whether to dismiss keyboard when bottom sheet closes                                       |
-| `animation`                | `BottomSheetRootAnimation` | -       | Animation configuration                                                                    |
-| `onOpenChange`             | `(value: boolean) => void` | -       | Callback when open state changes                                                           |
-| `...ViewProps`             | `ViewProps`                | -       | All standard React Native View props are supported                                         |
+| prop                       | type                       | default | description                                          |
+| -------------------------- | -------------------------- | ------- | ---------------------------------------------------- |
+| `children`                 | `React.ReactNode`          | -       | Bottom sheet content and trigger elements            |
+| `isOpen`                   | `boolean`                  | -       | Controlled open state of the bottom sheet            |
+| `isDefaultOpen`            | `boolean`                  | `false` | Initial open state when uncontrolled                 |
+| `isDismissKeyboardOnClose` | `boolean`                  | `true`  | Whether to dismiss keyboard when bottom sheet closes |
+| `animation`                | `BottomSheetRootAnimation` | -       | Animation configuration                              |
+| `onOpenChange`             | `(value: boolean) => void` | -       | Callback when open state changes                     |
+| `...ViewProps`             | `ViewProps`                | -       | All standard React Native View props are supported   |
 
 #### BottomSheetRootAnimation
 
@@ -215,8 +217,8 @@ Animation configuration for bottom sheet root component. Can be:
 - `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop   | type                                    | default | description                                |
-| ------ | --------------------------------------- | ------- | ------------------------------------------ |
+| prop    | type                                     | default | description                                     |
+| ------- | ---------------------------------------- | ------- | ----------------------------------------------- |
 | `state` | `'disabled' \| 'disable-all' \| boolean` | -       | Disable animations while customizing properties |
 
 ### BottomSheet.Trigger
@@ -258,10 +260,10 @@ Animation configuration for bottom sheet overlay component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                          | default     | description                        |
-| --------------- | ----------------------------- | ----------- | ---------------------------------- |
-| `state`         | `'disabled' \| boolean`       | -           | Disable animations while customizing properties |
-| `opacity.value` | `[number, number, number]`     | `[0, 1, 0]` | Opacity values [idle, open, close] |
+| prop            | type                       | default     | description                                     |
+| --------------- | -------------------------- | ----------- | ----------------------------------------------- |
+| `state`         | `'disabled' \| boolean`    | -           | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close]              |
 
 ### BottomSheet.Content
 
@@ -314,6 +316,8 @@ Animation configuration for bottom sheet overlay component. Can be:
 | `className`    | `string`          | -       | Additional CSS classes for description             |
 | `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported |
 
+## Hooks
+
 ### useBottomSheet
 
 Hook to access bottom sheet primitive context.
@@ -339,3 +343,27 @@ const { bottomSheetState, progress } = useBottomSheetAnimation();
 | ------------------ | ----------------------------- | -------------------------------------------- |
 | `bottomSheetState` | `'idle' \| 'open' \| 'close'` | Internal bottom sheet state                  |
 | `progress`         | `SharedValue<number>`         | Animation progress (0=idle, 1=open, 2=close) |
+
+## Special Notes
+
+### Handling Close Callbacks
+
+It's recommended to use `BottomSheet`'s `onOpenChange` prop for handling close callbacks, as it reliably fires for all close scenarios (swiping down, pressing overlay, pressing close button, programmatic close, etc.).
+
+```tsx
+<BottomSheet
+  isOpen={isOpen}
+  onOpenChange={(value) => {
+    setIsOpen(value);
+    if (!value) {
+      // This callback runs whenever the bottom sheet closes
+      // regardless of how it was closed
+      yourCallbackOnClose();
+    }
+  }}
+>
+  ...
+</BottomSheet>
+```
+
+**Note**: `BottomSheet.Content`'s `onClose` prop (from @gorhom/bottom-sheet) has limitations and will only fire when the bottom sheet is closed by swiping down. It won't fire when closing via overlay press, close button, or programmatic close. For reliable close callbacks, always use `BottomSheet`'s `onOpenChange` prop instead.

@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -13,10 +12,7 @@ import {
 import { useState } from 'react';
 import { Platform, Text, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import {
-  KeyboardAvoidingView,
-  KeyboardController,
-} from 'react-native-keyboard-controller';
+import { KeyboardController } from 'react-native-keyboard-controller';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
@@ -213,114 +209,106 @@ const TextInputDialogContent = () => {
           <Dialog.Trigger asChild>
             <Button variant="secondary">Dialog with text input</Button>
           </Dialog.Trigger>
-          <Dialog.Portal>
+          <Dialog.Portal className="justify-start">
             <DialogBlurBackdrop />
-            <KeyboardAvoidingView
-              behavior="padding"
-              keyboardVerticalOffset={24}
+            <Dialog.Content
+              className="bg-surface rounded-3xl"
+              animation={{
+                scale: {
+                  value: [1.2, 1, 0.95],
+                },
+              }}
               style={{
-                flex: 1,
-                justifyContent: 'flex-start',
+                marginTop: insetTop,
+                height: maxTextInputDialogHeight,
               }}
             >
-              <Dialog.Content
-                className="bg-surface rounded-3xl"
-                animation={{
-                  scale: {
-                    value: [0.85, 1, 0.95],
-                  },
-                }}
-                style={{
-                  marginTop: insetTop,
-                  height: maxTextInputDialogHeight,
-                }}
-              >
-                <Dialog.Close className="self-end" />
-                <Dialog.Title className="mb-6">Update Profile</Dialog.Title>
+              <Dialog.Close className="self-end" />
+              <Dialog.Title className="mb-6">Update Profile</Dialog.Title>
 
-                <View className="flex-1">
-                  <StyleScrollView contentContainerClassName="gap-5">
-                    <TextField isRequired isInvalid={!!nameError}>
-                      <TextField.Label isInvalid={false}>
-                        Full Name
-                      </TextField.Label>
-                      <TextField.Input
-                        placeholder="Enter your name"
-                        value={name}
-                        onChangeText={(text) => {
-                          setName(text);
-                          if (nameError) setNameError('');
-                        }}
-                        autoCapitalize="words"
-                        autoCorrect
-                        autoFocus
-                        isInvalid={false}
-                        animation={{
-                          backgroundColor: {
-                            value: {
-                              blur: themeColorSurfaceSecondary,
-                              focus: themeColorSurfaceSecondary,
-                            },
-                          },
-                        }}
-                        selectionColor={themeColorMuted}
-                      />
-                      <TextField.ErrorMessage>
-                        {nameError}
-                      </TextField.ErrorMessage>
-                    </TextField>
-
-                    <TextField isRequired isInvalid={!!emailError}>
-                      <TextField.Label isInvalid={false}>
-                        Email Address
-                      </TextField.Label>
-                      <TextField.Input
-                        placeholder="email@example.com"
-                        value={email}
-                        onChangeText={(text) => {
-                          setEmail(text);
-                          if (emailError) setEmailError('');
-                        }}
-                        autoCapitalize="none"
-                        isInvalid={false}
-                        animation={{
-                          backgroundColor: {
-                            value: {
-                              blur: themeColorSurfaceSecondary,
-                              focus: themeColorSurfaceSecondary,
-                            },
-                          },
-                        }}
-                        selectionColor={themeColorMuted}
-                      />
-                      <TextField.ErrorMessage>
-                        {emailError}
-                      </TextField.ErrorMessage>
-                    </TextField>
-                  </StyleScrollView>
-                </View>
-
-                <View className="flex-row justify-end gap-3 pt-3">
-                  <Dialog.Close asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onPress={() => {
-                        setName('');
-                        setEmail('');
-                        setNameError('');
-                        setEmailError('');
+              <View className="flex-1">
+                <StyleScrollView
+                  contentContainerClassName="gap-5"
+                  keyboardShouldPersistTaps="always"
+                >
+                  <TextField isRequired isInvalid={!!nameError}>
+                    <TextField.Label isInvalid={false}>
+                      Full Name
+                    </TextField.Label>
+                    <TextField.Input
+                      placeholder="Enter your name"
+                      value={name}
+                      onChangeText={(text) => {
+                        setName(text);
+                        if (nameError) setNameError('');
                       }}
-                    >
-                      Cancel
-                    </Button>
-                  </Dialog.Close>
-                  <Button size="sm" onPress={handleSubmit}>
-                    Update Profile
+                      autoCapitalize="words"
+                      autoCorrect
+                      autoFocus
+                      isInvalid={false}
+                      animation={{
+                        backgroundColor: {
+                          value: {
+                            blur: themeColorSurfaceSecondary,
+                            focus: themeColorSurfaceSecondary,
+                          },
+                        },
+                      }}
+                      selectionColorClassName="accent-muted"
+                    />
+                    <TextField.ErrorMessage>{nameError}</TextField.ErrorMessage>
+                  </TextField>
+
+                  <TextField isRequired isInvalid={!!emailError}>
+                    <TextField.Label isInvalid={false}>
+                      Email Address
+                    </TextField.Label>
+                    <TextField.Input
+                      placeholder="email@example.com"
+                      value={email}
+                      onChangeText={(text) => {
+                        setEmail(text);
+                        if (emailError) setEmailError('');
+                      }}
+                      autoCapitalize="none"
+                      isInvalid={false}
+                      animation={{
+                        backgroundColor: {
+                          value: {
+                            blur: themeColorSurfaceSecondary,
+                            focus: themeColorSurfaceSecondary,
+                          },
+                        },
+                      }}
+                      selectionColor={themeColorMuted}
+                    />
+                    <TextField.ErrorMessage>
+                      {emailError}
+                    </TextField.ErrorMessage>
+                  </TextField>
+                </StyleScrollView>
+              </View>
+
+              <View className="flex-row justify-end gap-3 pt-3">
+                <Dialog.Close asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onPress={() => {
+                      setName('');
+                      setEmail('');
+                      setNameError('');
+                      setEmailError('');
+                    }}
+                  >
+                    Cancel
                   </Button>
-                </View>
-              </Dialog.Content>
-            </KeyboardAvoidingView>
+                </Dialog.Close>
+                <Button size="sm" onPress={handleSubmit}>
+                  Update Profile
+                </Button>
+              </View>
+            </Dialog.Content>
           </Dialog.Portal>
         </Dialog>
       </View>

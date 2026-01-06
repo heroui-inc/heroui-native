@@ -78,6 +78,7 @@ export const usePopupDialogContentAnimation = ({
   const progressAnchor = useSharedValue(1);
   const contentTranslateYAnchor = useSharedValue(0);
   const contentScaleAnchor = useSharedValue(1);
+  const gestureTranslationY = useSharedValue(0);
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
@@ -86,10 +87,21 @@ export const usePopupDialogContentAnimation = ({
   const contentTranslateY = useDerivedValue(() => {
     const maxDragDistance = screenHeight - contentY.get();
 
+    if (progress.get() >= 1) {
+      return interpolate(
+        progress.get(),
+        [1, 2],
+        [0, maxDragDistance],
+        Extrapolation.CLAMP
+      );
+    }
+
+    const absoluteGestureTranslationY = Math.abs(gestureTranslationY.get());
+
     return interpolate(
-      progress.get(),
-      [0, 1, 2],
-      [-maxDragDistance * 0.1, 0, maxDragDistance],
+      absoluteGestureTranslationY,
+      [0, screenHeight],
+      [0, -50],
       Extrapolation.CLAMP
     );
   });
@@ -109,6 +121,8 @@ export const usePopupDialogContentAnimation = ({
           if (!isDragging.get()) return;
 
           const maxDragDistance = screenHeight - contentY.get();
+
+          gestureTranslationY.set(event.translationY);
 
           if (event.translationY > 0) {
             const progressValue = 1 + event.translationY / maxDragDistance;
@@ -171,6 +185,7 @@ export const usePopupDialogContentAnimation = ({
       progressAnchor,
       screenHeight,
       isAnimationDisabledValue,
+      gestureTranslationY,
     ]
   );
 

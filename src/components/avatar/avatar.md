@@ -2,13 +2,24 @@
 
 Displays a user avatar with support for images, text initials, or fallback icons.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Avatar } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Avatar>
+  <Avatar.Image />
+  <Avatar.Fallback />
+</Avatar>
+```
+
+- **Avatar**: Main container that manages avatar display state. Provides size and color context to child components. Supports animation configuration to control all child animations.
+- **Avatar.Image**: Optional image component that displays the avatar image. Handles loading states and errors automatically with opacity-based fade-in animation.
+- **Avatar.Fallback**: Optional fallback component shown when image fails to load or is unavailable. Displays a default person icon when no children are provided. Supports configurable entering animations with delay support.
 
 ## Usage
 
@@ -236,19 +247,6 @@ export default function AvatarExample() {
 }
 ```
 
-## Anatomy
-
-```tsx
-<Avatar>
-  <Avatar.Image />
-  <Avatar.Fallback />
-</Avatar>
-```
-
-- **Avatar**: Main container that manages avatar display state. Provides size and color context to child components. Supports animation configuration to control all child animations.
-- **Avatar.Image**: Optional image component that displays the avatar image. Handles loading states and errors automatically with opacity-based fade-in animation.
-- **Avatar.Fallback**: Optional fallback component shown when image fails to load or is unavailable. Displays a default person icon when no children are provided. Supports configurable entering animations with delay support.
-
 ## API Reference
 
 ### Avatar
@@ -290,11 +288,11 @@ Animation configuration for avatar image component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                   | type                          | default                                             | description                                          |
-| ---------------------- | ----------------------------- | --------------------------------------------------- | ---------------------------------------------------- |
-| `state`                | `'disabled' \| boolean`       | -                                                   | Disable animations while customizing properties      |
-| `opacity.value`        | `[number, number]`            | `[0, 1]`                                            | Opacity values [initial, loaded] for image animation |
-| `opacity.timingConfig` | `WithTimingConfig`            | `{ duration: 200, easing: Easing.in(Easing.ease) }` | Animation timing configuration                       |
+| prop                   | type                    | default                                             | description                                          |
+| ---------------------- | ----------------------- | --------------------------------------------------- | ---------------------------------------------------- |
+| `state`                | `'disabled' \| boolean` | -                                                   | Disable animations while customizing properties      |
+| `opacity.value`        | `[number, number]`      | `[0, 1]`                                            | Opacity values [initial, loaded] for image animation |
+| `opacity.timingConfig` | `WithTimingConfig`      | `{ duration: 200, easing: Easing.in(Easing.ease) }` | Animation timing configuration                       |
 
 **Note:** Animation is automatically disabled when `asChild={true}`
 
@@ -322,10 +320,10 @@ Animation configuration for avatar fallback component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop             | type                          | default                                                                             | description                            |
-| ---------------- | ----------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------- |
-| `state`          | `'disabled' \| boolean`       | -                                                                                   | Disable animations while customizing properties |
-| `entering.value` | `EntryOrExitLayoutType`       | `FadeIn`<br/>`.duration(200)`<br/>`.easing(Easing.in(Easing.ease))`<br/>`.delay(0)` | Custom entering animation for fallback |
+| prop             | type                    | default                                                                             | description                                     |
+| ---------------- | ----------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------- |
+| `state`          | `'disabled' \| boolean` | -                                                                                   | Disable animations while customizing properties |
+| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(200)`<br/>`.easing(Easing.in(Easing.ease))`<br/>`.delay(0)` | Custom entering animation for fallback          |
 
 #### PersonIconProps
 
@@ -333,6 +331,8 @@ Animation configuration for avatar fallback component. Can be:
 | ------- | -------- | ------------------------------------- |
 | `size`  | `number` | Size of the icon in pixels (optional) |
 | `color` | `string` | Color of the icon (optional)          |
+
+## Hooks
 
 ### useAvatar Hook
 

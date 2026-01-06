@@ -2,13 +2,19 @@
 
 A simple line to separate content visually.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Divider } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Divider />
+```
+
+- **Divider**: A simple line component that separates content visually. Can be oriented horizontally or vertically, with customizable thickness and variant styles.
 
 ## Usage
 

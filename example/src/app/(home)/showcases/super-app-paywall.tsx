@@ -31,7 +31,12 @@ export default function SuperAppPaywall() {
     <View className="flex-1 bg-background">
       <BottomSheet
         isOpen={isBottomSheetOpen}
-        onOpenChange={setIsBottomSheetOpen}
+        onOpenChange={(value) => {
+          setIsBottomSheetOpen(value);
+          if (!value) {
+            router.back();
+          }
+        }}
       >
         <BottomSheet.Portal>
           <BottomSheet.Overlay />
@@ -43,7 +48,6 @@ export default function SuperAppPaywall() {
             backgroundClassName="bg-background"
             contentContainerClassName="h-full rounded-t-3xl p-0 pb-0 overflow-hidden"
             footerComponent={renderFooter}
-            onClose={router.back}
           >
             <SuperAppPaywallContent />
           </BottomSheet.Content>

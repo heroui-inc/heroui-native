@@ -137,42 +137,45 @@ const BottomSheetTextInput = ({
 
   return (
     <TextField className="absolute top-0 left-0 right-0 px-5 pt-2">
-      <TextField.Input
-        ref={inputRef}
-        placeholder="Search by name or email..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-        autoCapitalize="none"
-        autoCorrect={false}
-        onFocus={handleOnFocus}
-        onBlur={handleOnBlur}
-        animation={{
-          borderColor: {
-            value: {
-              blur: colorKit.setAlpha(themeColorMuted, 0.5).hex(),
+      <View className="w-full flex-row items-center">
+        <TextField.Input
+          ref={inputRef}
+          placeholder="Search by name or email..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          className="flex-1 px-10"
+          autoCapitalize="none"
+          autoCorrect={false}
+          onFocus={handleOnFocus}
+          onBlur={handleOnBlur}
+          animation={{
+            borderColor: {
+              value: {
+                blur: colorKit.setAlpha(themeColorMuted, 0.5).hex(),
+              },
             },
-          },
-        }}
-      >
-        <TextField.InputStartContent>
-          <StyledIonicons name="search" size={20} className="text-muted" />
-        </TextField.InputStartContent>
+          }}
+        />
+        <StyledIonicons
+          name="search"
+          size={20}
+          className="absolute left-3.5 text-muted"
+          pointerEvents="none"
+        />
         {searchQuery.length > 0 && (
-          <TextField.InputEndContent>
-            <Pressable
-              className="p-1"
-              onPress={() => setSearchQuery('')}
-              hitSlop={12}
-            >
-              <StyledIonicons
-                name="close-circle"
-                size={20}
-                className="text-muted"
-              />
-            </Pressable>
-          </TextField.InputEndContent>
+          <Pressable
+            className="absolute right-3 p-1"
+            onPress={() => setSearchQuery('')}
+            hitSlop={12}
+          >
+            <StyledIonicons
+              name="close-circle"
+              size={20}
+              className="text-muted"
+            />
+          </Pressable>
         )}
-      </TextField.Input>
+      </View>
     </TextField>
   );
 };
@@ -202,7 +205,9 @@ export const WithTextInputContent = () => {
       <View className="flex-1 items-center justify-center">
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
           <BottomSheet.Trigger asChild>
-            <Button variant="secondary">Bottom sheet with text input</Button>
+            <Button variant="secondary" isDisabled={isOpen}>
+              Bottom sheet with text input
+            </Button>
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
             <BottomSheet.Overlay />

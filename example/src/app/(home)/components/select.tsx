@@ -68,6 +68,7 @@ const BasicUsageWithButtonTriggerContent = () => {
 
 const PresentationContent = () => {
   const [popoverValue, setPopoverValue] = useState<CountryOption | undefined>();
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [bottomSheetValue, setBottomSheetValue] = useState<
     CountryOption | undefined
   >();
@@ -135,6 +136,8 @@ const PresentationContent = () => {
         <SearchableDialogSelect />
 
         <Select
+          isOpen={isBottomSheetOpen}
+          onOpenChange={setIsBottomSheetOpen}
           value={bottomSheetValue}
           onValueChange={(value) => {
             const country = COUNTRIES.find((c) => c.value === value?.value);
@@ -142,7 +145,7 @@ const PresentationContent = () => {
           }}
         >
           <Select.Trigger asChild>
-            <Button variant="secondary">
+            <Button variant="secondary" isDisabled={isBottomSheetOpen}>
               {bottomSheetValue ? (
                 <View className="flex-row items-center gap-2">
                   <AppText className="text-base">

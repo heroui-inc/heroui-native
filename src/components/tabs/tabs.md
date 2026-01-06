@@ -2,13 +2,35 @@
 
 Organize content into tabbed views with animated transitions and indicators.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Tabs } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Tabs>
+  <Tabs.List>
+    <Tabs.ScrollView>
+      <Tabs.Indicator />
+      <Tabs.Trigger>
+        <Tabs.Label>...</Tabs.Label>
+      </Tabs.Trigger>
+    </Tabs.ScrollView>
+  </Tabs.List>
+  <Tabs.Content>...</Tabs.Content>
+</Tabs>
+```
+
+- **Tabs**: Main container that manages tab state and selection. Controls active tab, handles value changes, and provides context to child components.
+- **Tabs.List**: Container for tab triggers. Groups triggers together with optional styling variants (pill or line).
+- **Tabs.ScrollView**: Optional scrollable wrapper for tab triggers. Enables horizontal scrolling when tabs overflow with automatic centering of active tab.
+- **Tabs.Trigger**: Interactive button for each tab. Handles press events to change active tab and measures its position for indicator animation.
+- **Tabs.Label**: Text content for tab triggers. Displays the tab title with appropriate styling.
+- **Tabs.Indicator**: Animated visual indicator for active tab. Smoothly transitions between tabs using spring or timing animations.
+- **Tabs.Content**: Container for tab panel content. Shows content when its value matches the active tab.
 
 ## Usage
 
@@ -293,30 +315,6 @@ export default function TabsExample() {
 }
 ```
 
-## Anatomy
-
-```tsx
-<Tabs>
-  <Tabs.List>
-    <Tabs.ScrollView>
-      <Tabs.Indicator />
-      <Tabs.Trigger>
-        <Tabs.Label>...</Tabs.Label>
-      </Tabs.Trigger>
-    </Tabs.ScrollView>
-  </Tabs.List>
-  <Tabs.Content>...</Tabs.Content>
-</Tabs>
-```
-
-- **Tabs**: Main container that manages tab state and selection. Controls active tab, handles value changes, and provides context to child components.
-- **Tabs.List**: Container for tab triggers. Groups triggers together with optional styling variants (pill or line).
-- **Tabs.ScrollView**: Optional scrollable wrapper for tab triggers. Enables horizontal scrolling when tabs overflow with automatic centering of active tab.
-- **Tabs.Trigger**: Interactive button for each tab. Handles press events to change active tab and measures its position for indicator animation.
-- **Tabs.Label**: Text content for tab triggers. Displays the tab title with appropriate styling.
-- **Tabs.Indicator**: Animated visual indicator for active tab. Smoothly transitions between tabs using spring or timing animations.
-- **Tabs.Content**: Container for tab panel content. Shows content when its value matches the active tab.
-
 ## API Reference
 
 ### Tabs
@@ -413,6 +411,8 @@ Animation configuration for Tabs.Indicator component. Can be:
 | `value`        | `string`          | -       | The value of the tab this content belongs to        |
 | `className`    | `string`          | -       | Additional CSS classes                              |
 | `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported  |
+
+## Hooks
 
 ### useTabs
 

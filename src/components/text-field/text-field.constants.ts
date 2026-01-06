@@ -7,8 +7,6 @@ export const DISPLAY_NAME = {
   ROOT: 'HeroUINative.TextField.Root',
   LABEL: 'HeroUINative.TextField.Label',
   INPUT: 'HeroUINative.TextField.Input',
-  INPUT_START_CONTENT: 'HeroUINative.TextField.InputStartContent',
-  INPUT_END_CONTENT: 'HeroUINative.TextField.InputEndContent',
   DESCRIPTION: 'HeroUINative.TextField.Description',
   ERROR_MESSAGE: 'HeroUINative.TextField.ErrorMessage',
 };

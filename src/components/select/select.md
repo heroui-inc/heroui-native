@@ -2,13 +2,46 @@
 
 Displays a list of options for the user to pick from—triggered by a button.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Select } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Select>
+  <Select.Trigger>
+    <Select.Value />
+  </Select.Trigger>
+  <Select.Portal>
+    <Select.Overlay />
+    <Select.Content>
+      <Select.Close />
+      <Select.ListLabel>...</Select.ListLabel>
+      <Select.Item>
+        <Select.ItemLabel />
+        <Select.ItemDescription>...</Select.ItemDescription>
+        <Select.ItemIndicator />
+      </Select.Item>
+    </Select.Content>
+  </Select.Portal>
+</Select>
+```
+
+- **Select**: Main container that manages open/close state, value selection and provides context to child components.
+- **Select.Trigger**: Clickable element that toggles the select visibility. Wraps any child element with press handlers.
+- **Select.Value**: Displays the selected value or placeholder text. Automatically updates when selection changes.
+- **Select.Portal**: Renders select content in a portal layer above other content. Ensures proper stacking and positioning.
+- **Select.Overlay**: Optional background overlay. Can be transparent or semi-transparent to capture outside clicks.
+- **Select.Content**: Container for select content with three presentation modes: popover (floating with positioning), bottom sheet modal, or dialog modal.
+- **Select.Close**: Close button that dismisses the select when pressed. Renders a default X icon if no children provided.
+- **Select.ListLabel**: Label for the list of items with pre-styled typography.
+- **Select.Item**: Selectable option item. Handles selection state and press events.
+- **Select.ItemLabel**: Displays the label text for an item.
+- **Select.ItemDescription**: Optional description text for items with muted styling.
+- **Select.ItemIndicator**: Optional indicator shown for selected items. Renders a check icon by default.
 
 ## Usage
 
@@ -357,41 +390,6 @@ export default function SelectExample() {
 }
 ```
 
-## Anatomy
-
-```tsx
-<Select>
-  <Select.Trigger>
-    <Select.Value />
-  </Select.Trigger>
-  <Select.Portal>
-    <Select.Overlay />
-    <Select.Content>
-      <Select.Close />
-      <Select.ListLabel>...</Select.ListLabel>
-      <Select.Item>
-        <Select.ItemLabel />
-        <Select.ItemDescription>...</Select.ItemDescription>
-        <Select.ItemIndicator />
-      </Select.Item>
-    </Select.Content>
-  </Select.Portal>
-</Select>
-```
-
-- **Select**: Main container that manages open/close state, value selection and provides context to child components.
-- **Select.Trigger**: Clickable element that toggles the select visibility. Wraps any child element with press handlers.
-- **Select.Value**: Displays the selected value or placeholder text. Automatically updates when selection changes.
-- **Select.Portal**: Renders select content in a portal layer above other content. Ensures proper stacking and positioning.
-- **Select.Overlay**: Optional background overlay. Can be transparent or semi-transparent to capture outside clicks.
-- **Select.Content**: Container for select content with three presentation modes: popover (floating with positioning), bottom sheet modal, or dialog modal.
-- **Select.Close**: Close button that dismisses the select when pressed. Renders a default X icon if no children provided.
-- **Select.ListLabel**: Label for the list of items with pre-styled typography.
-- **Select.Item**: Selectable option item. Handles selection state and press events.
-- **Select.ItemLabel**: Displays the label text for an item.
-- **Select.ItemDescription**: Optional description text for items with muted styling.
-- **Select.ItemIndicator**: Optional indicator shown for selected items. Renders a check icon by default.
-
 ## API Reference
 
 ### Select
@@ -421,11 +419,11 @@ Animation configuration for Select component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop             | type                                             | default | description                                    |
-| ---------------- | ------------------------------------------------ | ------- | ---------------------------------------------- |
+| prop             | type                                             | default | description                                     |
+| ---------------- | ------------------------------------------------ | ------- | ----------------------------------------------- |
 | `state`          | `'disabled' \| 'disable-all' \| boolean`         | -       | Disable animations while customizing properties |
-| `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | -       | Animation configuration for when select opens  |
-| `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | -       | Animation configuration for when select closes |
+| `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | -       | Animation configuration for when select opens   |
+| `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | -       | Animation configuration for when select closes  |
 
 #### SpringAnimationConfig
 
@@ -488,10 +486,10 @@ Animation configuration for Select.Overlay component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                          | default     | description                        |
-| --------------- | ----------------------------- | ----------- | ---------------------------------- |
-| `state`         | `'disabled' \| boolean`       | -           | Disable animations while customizing properties |
-| `opacity.value` | `[number, number, number]`    | `[0, 1, 0]` | Opacity values [idle, open, close] |
+| prop            | type                       | default     | description                                     |
+| --------------- | -------------------------- | ----------- | ----------------------------------------------- |
+| `state`         | `'disabled' \| boolean`    | -           | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close]              |
 
 ### Select.Content (Popover Presentation)
 
@@ -521,14 +519,14 @@ Animation configuration for Select.Content component (popover presentation). Can
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                    | type                          | default            | description                           |
-| ----------------------- | ----------------------------- | ------------------ | ------------------------------------- |
-| `state`                 | `'disabled' \| boolean`       | -                  | Disable animations while customizing properties |
-| `opacity.value`         | `[number, number, number]`    | `[0, 1, 0]`        | Opacity values [idle, open, close]    |
-| `scale.value`           | `[number, number, number]`    | `[0.95, 1, 0.95]`  | Scale values [idle, open, close]      |
-| `translateX.value`      | `[number, number, number]`    | Based on placement | TranslateX values [idle, open, close] |
-| `translateY.value`      | `[number, number, number]`    | Based on placement | TranslateY values [idle, open, close] |
-| `transformOrigin.value` | `string`                      | Based on placement | Transform origin value                |
+| prop                    | type                       | default            | description                                     |
+| ----------------------- | -------------------------- | ------------------ | ----------------------------------------------- |
+| `state`                 | `'disabled' \| boolean`    | -                  | Disable animations while customizing properties |
+| `opacity.value`         | `[number, number, number]` | `[0, 1, 0]`        | Opacity values [idle, open, close]              |
+| `scale.value`           | `[number, number, number]` | `[0.95, 1, 0.95]`  | Scale values [idle, open, close]                |
+| `translateX.value`      | `[number, number, number]` | Based on placement | TranslateX values [idle, open, close]           |
+| `translateY.value`      | `[number, number, number]` | Based on placement | TranslateY values [idle, open, close]           |
+| `transformOrigin.value` | `string`                   | Based on placement | Transform origin value                          |
 
 ### Select.Content (Bottom Sheet Presentation)
 
@@ -561,11 +559,11 @@ Animation configuration for Select.Content component (dialog presentation). Can 
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                          | default           | description                        |
-| --------------- | ----------------------------- | ----------------- | ---------------------------------- |
-| `state`         | `'disabled' \| boolean`       | -                 | Disable animations while customizing properties |
-| `opacity.value` | `[number, number, number]`    | `[0, 1, 0]`       | Opacity values [idle, open, close] |
-| `scale.value`   | `[number, number, number]`     | `[0.97, 1, 0.97]` | Scale values [idle, open, close]   |
+| prop            | type                       | default           | description                                     |
+| --------------- | -------------------------- | ----------------- | ----------------------------------------------- |
+| `state`         | `'disabled' \| boolean`    | -                 | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]`       | Opacity values [idle, open, close]              |
+| `scale.value`   | `[number, number, number]` | `[0.97, 1, 0.97]` | Scale values [idle, open, close]                |
 
 ### Select.Close
 

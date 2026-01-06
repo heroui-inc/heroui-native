@@ -2,13 +2,36 @@
 
 Displays a modal overlay with animated transitions and gesture-based dismissal.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
-import { Dialog, useDialog, useDialogAnimation } from 'heroui-native';
+import { Dialog } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Dialog>
+  <Dialog.Trigger>...</Dialog.Trigger>
+  <Dialog.Portal>
+    <Dialog.Overlay>...</Dialog.Overlay>
+    <Dialog.Content>
+      <Dialog.Close>...</Dialog.Close>
+      <Dialog.Title>...</Dialog.Title>
+      <Dialog.Description>...</Dialog.Description>
+    </Dialog.Content>
+  </Dialog.Portal>
+</Dialog>
+```
+
+- **Dialog**: Root component that manages open state and provides context to child components.
+- **Dialog.Trigger**: Pressable element that opens the dialog when pressed.
+- **Dialog.Portal**: Renders dialog content in a portal with centered layout and animation control.
+- **Dialog.Overlay**: Background overlay that appears behind the dialog content, typically closes dialog when pressed.
+- **Dialog.Content**: Main dialog container with gesture support for drag-to-dismiss.
+- **Dialog.Close**: Close button that dismisses the dialog when pressed.
+- **Dialog.Title**: Dialog title text with semantic heading role.
+- **Dialog.Description**: Dialog description text that provides additional context.
 
 ## Usage
 
@@ -158,31 +181,6 @@ export default function DialogExample() {
 }
 ```
 
-## Anatomy
-
-```tsx
-<Dialog>
-  <Dialog.Trigger>...</Dialog.Trigger>
-  <Dialog.Portal>
-    <Dialog.Overlay>...</Dialog.Overlay>
-    <Dialog.Content>
-      <Dialog.Close>...</Dialog.Close>
-      <Dialog.Title>...</Dialog.Title>
-      <Dialog.Description>...</Dialog.Description>
-    </Dialog.Content>
-  </Dialog.Portal>
-</Dialog>
-```
-
-- **Dialog**: Root component that manages open state and provides context to child components.
-- **Dialog.Trigger**: Pressable element that opens the dialog when pressed.
-- **Dialog.Portal**: Renders dialog content in a portal with centered layout and animation control.
-- **Dialog.Overlay**: Background overlay that appears behind the dialog content, typically closes dialog when pressed.
-- **Dialog.Content**: Main dialog container with gesture support for drag-to-dismiss.
-- **Dialog.Close**: Close button that dismisses the dialog when pressed.
-- **Dialog.Title**: Dialog title text with semantic heading role.
-- **Dialog.Description**: Dialog description text that provides additional context.
-
 ## API Reference
 
 ### Dialog
@@ -207,11 +205,11 @@ Animation configuration for dialog root component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop             | type                                             | default                                                                                          | description                         |
-| ---------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| prop             | type                                             | default                                                                                          | description                                     |
+| ---------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
 | `state`          | `'disabled' \| 'disable-all' \| boolean`         | -                                                                                                | Disable animations while customizing properties |
-| `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 200,`<br/>`easing: Easing.out(Easing.ease) } }`     | Animation configuration for opening |
-| `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 150,`<br/>`easing: Easing.bezier(0.4, 0, 1, 1) } }` | Animation configuration for closing |
+| `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 200,`<br/>`easing: Easing.out(Easing.ease) } }`     | Animation configuration for opening             |
+| `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 150,`<br/>`easing: Easing.bezier(0.4, 0, 1, 1) } }` | Animation configuration for closing             |
 
 #### SpringAnimationConfig
 
@@ -266,10 +264,10 @@ Animation configuration for dialog overlay component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                          | default     | description                        |
-| --------------- | ----------------------------- | ----------- | ---------------------------------- |
-| `state`         | `'disabled' \| boolean`       | -           | Disable animations while customizing properties |
-| `opacity.value` | `[number, number, number]`    | `[0, 1, 0]` | Opacity values [idle, open, close] |
+| prop            | type                       | default     | description                                     |
+| --------------- | -------------------------- | ----------- | ----------------------------------------------- |
+| `state`         | `'disabled' \| boolean`    | -           | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close]              |
 
 ### Dialog.Content
 
@@ -293,11 +291,11 @@ Animation configuration for dialog content component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                          | default           | description                        |
-| --------------- | ----------------------------- | ----------------- | ---------------------------------- |
-| `state`         | `'disabled' \| boolean`       | -                 | Disable animations while customizing properties |
-| `opacity.value` | `[number, number, number]`    | `[0, 1, 0]`       | Opacity values [idle, open, close] |
-| `scale.value`   | `[number, number, number]`     | `[0.97, 1, 0.97]` | Scale values [idle, open, close]   |
+| prop            | type                       | default           | description                                     |
+| --------------- | -------------------------- | ----------------- | ----------------------------------------------- |
+| `state`         | `'disabled' \| boolean`    | -                 | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]`       | Opacity values [idle, open, close]              |
+| `scale.value`   | `[number, number, number]` | `[0.97, 1, 0.97]` | Scale values [idle, open, close]                |
 
 ### Dialog.Close
 
@@ -332,6 +330,8 @@ Animation configuration for dialog content component. Can be:
 | `children`     | `React.ReactNode` | -       | Description content                                |
 | `className`    | `string`          | -       | Additional CSS classes for description             |
 | `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported |
+
+## Hooks
 
 ### useDialog
 

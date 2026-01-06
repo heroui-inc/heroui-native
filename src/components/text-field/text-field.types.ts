@@ -11,7 +11,7 @@ import type {
   AnimationValue,
 } from '../../helpers/types/animation';
 import type { ErrorViewRootProps } from '../error-view';
-import type { InputSlots, LabelSlots } from './text-field.styles';
+import type { LabelSlots } from './text-field.styles';
 
 /**
  * Animation configuration for TextField Label component
@@ -192,10 +192,6 @@ export interface TextFieldLabelProps
  */
 export interface TextFieldInputProps extends TextInputProps {
   /**
-   * Children elements to be rendered inside the input container
-   */
-  children?: React.ReactNode;
-  /**
    * Whether the input is in an invalid state (overrides context)
    * @default undefined - uses context value
    */
@@ -204,8 +200,8 @@ export interface TextFieldInputProps extends TextInputProps {
    * Additional CSS classes
    *
    * @note The following style properties are occupied by animations and cannot be set via className:
-   * - `backgroundColor` - Animated for focus/blur and error state transitions (applied to container)
-   * - `borderColor` - Animated for focus/blur and error state transitions (applied to container)
+   * - `backgroundColor` - Animated for focus/blur and error state transitions
+   * - `borderColor` - Animated for focus/blur and error state transitions
    *
    * To customize these properties, use the `animation` prop:
    * ```tsx
@@ -221,29 +217,15 @@ export interface TextFieldInputProps extends TextInputProps {
    */
   className?: string;
   /**
-   * Additional CSS classes for different parts of the input
-   *
-   * @note The `container` slot has the following animated properties that cannot be set via className:
-   * - `backgroundColor` - Animated for focus/blur and error state transitions
-   * - `borderColor` - Animated for focus/blur and error state transitions
-   *
-   * To customize these properties, use the `animation` prop:
-   * ```tsx
-   * <TextField.Input
-   *   classNames={{
-   *     container: "custom-class", // backgroundColor and borderColor cannot be overridden here
-   *     input: "custom-input-class"
-   *   }}
-   *   animation={{
-   *     backgroundColor: { value: { blur: '#fff', focus: '#f0f0f0', error: '#fee' } },
-   *     borderColor: { value: { blur: '#ccc', focus: '#007AFF', error: '#ff0000' } }
-   *   }}
-   * />
-   * ```
-   *
-   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+   * Custom className for the selection color
+   * @default "accent-accent"
    */
-  classNames?: ElementSlots<InputSlots>;
+  selectionColorClassName?: string;
+  /**
+   * Custom className for the placeholder text color
+   * @default "field-placeholder"
+   */
+  placeholderColorClassName?: string;
   /**
    * Animation configuration for input focus/blur and error state transitions
    * - `false` or `"disabled"`: Disable all animations
@@ -258,34 +240,6 @@ export interface TextFieldInputProps extends TextInputProps {
    * @default true
    */
   isAnimatedStyleActive?: boolean;
-}
-
-/**
- * Props for the TextField.InputStartContent component
- */
-export interface TextFieldInputStartContentProps extends ViewProps {
-  /**
-   * Children elements to be rendered at the start of the input
-   */
-  children?: React.ReactNode;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-}
-
-/**
- * Props for the TextField.InputEndContent component
- */
-export interface TextFieldInputEndContentProps extends ViewProps {
-  /**
-   * Children elements to be rendered at the end of the input
-   */
-  children?: React.ReactNode;
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
 }
 
 /**

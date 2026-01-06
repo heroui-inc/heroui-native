@@ -1,5 +1,6 @@
 import type { BottomSheetViewProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetView/types';
 import type { ReactNode } from 'react';
+import type { SharedValue } from 'react-native-reanimated';
 import type { AnimationDisabled } from './animation';
 
 /**
@@ -27,6 +28,26 @@ export interface BottomSheetContentContainerProps {
    * Current state of the bottom sheet for animation coordination
    */
   state: BottomSheetContentContainerState;
+  /**
+   * Progress of the bottom sheet for animation coordination
+   */
+  progress: SharedValue<number>;
+  /**
+   * Whether the bottom sheet is dragging
+   */
+  isDragging: SharedValue<boolean>;
+  /**
+   * Whether the bottom sheet is closing on swipe
+   */
+  isClosingOnSwipe: SharedValue<boolean>;
+  /**
+   * Initial index of the bottom sheet
+   */
+  initialIndex: number;
+  /**
+   * Callback when the bottom sheet is opened
+   */
+  onOpenChange: (open: boolean) => void;
 }
 
 /**

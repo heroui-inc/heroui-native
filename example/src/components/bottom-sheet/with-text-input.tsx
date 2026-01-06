@@ -202,7 +202,9 @@ export const WithTextInputContent = () => {
       <View className="flex-1 items-center justify-center">
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
           <BottomSheet.Trigger asChild>
-            <Button variant="secondary">Bottom sheet with text input</Button>
+            <Button variant="secondary" isDisabled={isOpen}>
+              Bottom sheet with text input
+            </Button>
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
             <BottomSheet.Overlay />

@@ -22,6 +22,8 @@ export interface BottomSheetAnimationContextValue {
   bottomSheetState: BottomSheetState;
   /** Animation progress shared value (0=idle, 1=open, 2=close) */
   progress: SharedValue<number>;
+  /** Dragging state shared value */
+  isDragging: SharedValue<boolean>;
 }
 
 /**
@@ -38,11 +40,6 @@ export interface BottomSheetRootProps
    * The content of the bottom sheet
    */
   children?: ReactNode;
-  /**
-   * Delay in milliseconds before the bottom sheet closes (for exit animations)
-   * @default 300
-   */
-  closeDelay?: number;
   /**
    * Whether to dismiss the keyboard when the bottom sheet closes
    * @default true

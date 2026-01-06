@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import type { SharedValue } from 'react-native-reanimated';
 import {
+  Extrapolation,
   interpolate,
   useAnimatedReaction,
   useSharedValue,
@@ -22,6 +23,10 @@ export interface UsePopupBottomSheetContentAnimationProps {
    */
   progress: SharedValue<number>;
   /**
+   * Dragging state shared value
+   */
+  isDragging: SharedValue<boolean>;
+  /**
    * Current component state
    */
   componentState: ComponentState;
@@ -33,11 +38,14 @@ export interface UsePopupBottomSheetContentAnimationProps {
  */
 export function usePopupBottomSheetContentAnimation({
   progress,
+  isDragging,
   componentState,
 }: UsePopupBottomSheetContentAnimationProps) {
   const { isAllAnimationsDisabled } = useAnimationSettings();
 
-  const animatedIndex = useSharedValue(0);
+  const animatedIndex = useSharedValue(-1);
+  const isPanActivated = useSharedValue(false);
+  const isClosingOnSwipe = useSharedValue(false);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
     isAnimationDisabled: false,
@@ -57,21 +65,35 @@ export function usePopupBottomSheetContentAnimation({
     }
   }, [componentState, isAnimationDisabledValue, progress]);
 
-  // Handle animation enabled state - sync animatedIndex with progress
+  useAnimatedReaction(
+    () => isDragging.get(),
+    (value) => {
+      if (!isPanActivated.get() && value) {
+        isPanActivated.set(true);
+      }
+    }
+  );
+
   useAnimatedReaction(
     () => animatedIndex.get(),
     (value) => {
       if (
-        !isAnimationDisabledValue &&
-        componentState === 'open' &&
-        value <= 0
+        isAnimationDisabledValue ||
+        isClosingOnSwipe.get() ||
+        componentState === 'close'
       ) {
-        progress.set(interpolate(animatedIndex.get(), [0, -1], [1, 2]));
+        return;
+      }
+      if (isPanActivated.get()) {
+        progress.set(interpolate(value, [0, -1], [1, 2], Extrapolation.CLAMP));
+      } else {
+        progress.set(interpolate(value, [-1, 0], [0, 1], Extrapolation.CLAMP));
       }
     }
   );
 
   return {
     animatedIndex,
+    isClosingOnSwipe,
   };
 }

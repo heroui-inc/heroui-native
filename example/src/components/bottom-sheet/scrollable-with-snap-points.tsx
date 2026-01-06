@@ -84,7 +84,9 @@ export const ScrollableWithSnapPointsContent = () => {
       <View className="flex-1 items-center justify-center">
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
           <BottomSheet.Trigger asChild>
-            <Button variant="secondary">Scrollable with snap points</Button>
+            <Button variant="secondary" isDisabled={isOpen}>
+              Scrollable with snap points
+            </Button>
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
             <BottomSheet.Overlay />

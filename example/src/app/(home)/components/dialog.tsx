@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';

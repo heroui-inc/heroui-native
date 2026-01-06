@@ -2,13 +2,22 @@
 
 A selectable control that allows users to toggle between checked and unchecked states.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Checkbox } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Checkbox>
+  <Checkbox.Indicator>...</Checkbox.Indicator>
+</Checkbox>
+```
+
+- **Checkbox**: Main container that handles selection state and user interaction. Renders default indicator with animated checkmark if no children provided. Automatically detects surface context for proper styling. Features press scale animation that can be customized or disabled. Supports render function children to access state (`isSelected`, `isInvalid`, `isDisabled`).
+- **Checkbox.Indicator**: Optional checkmark container with default slide, scale, opacity, and border radius animations when selected. Renders animated check icon with SVG path drawing animation if no children provided. All animations can be individually customized or disabled. Supports render function children to access state.
 
 ## Usage
 
@@ -183,17 +192,6 @@ export default function BasicUsage() {
 }
 ```
 
-## Anatomy
-
-```tsx
-<Checkbox>
-  <Checkbox.Indicator>...</Checkbox.Indicator>
-</Checkbox>
-```
-
-- **Checkbox**: Main container that handles selection state and user interaction. Renders default indicator with animated checkmark if no children provided. Automatically detects surface context for proper styling. Features press scale animation that can be customized or disabled. Supports render function children to access state (`isSelected`, `isInvalid`, `isDisabled`).
-- **Checkbox.Indicator**: Optional checkmark container with default slide, scale, opacity, and border radius animations when selected. Renders animated check icon with SVG path drawing animation if no children provided. All animations can be individually customized or disabled. Supports render function children to access state.
-
 ## API Reference
 
 ### Checkbox
@@ -229,11 +227,11 @@ Animation configuration for checkbox root component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                 | type                                    | default             | description                       |
-| -------------------- | --------------------------------------- | ------------------- | --------------------------------- |
+| prop                 | type                                     | default             | description                                     |
+| -------------------- | ---------------------------------------- | ------------------- | ----------------------------------------------- |
 | `state`              | `'disabled' \| 'disable-all' \| boolean` | -                   | Disable animations while customizing properties |
-| `scale.value`        | `[number, number]`                      | `[1, 0.96]`         | Scale values [unpressed, pressed] |
-| `scale.timingConfig` | `WithTimingConfig`                      | `{ duration: 150 }` | Animation timing configuration    |
+| `scale.value`        | `[number, number]`                       | `[1, 0.96]`         | Scale values [unpressed, pressed]               |
+| `scale.timingConfig` | `WithTimingConfig`                       | `{ duration: 150 }` | Animation timing configuration                  |
 
 ### Checkbox.Indicator
 
@@ -266,17 +264,19 @@ Animation configuration for checkbox indicator component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                        | type                          | default             | description                                 |
-| --------------------------- | ----------------------------- | ------------------- | ------------------------------------------- |
-| `state`                     | `'disabled' \| boolean`       | -                   | Disable animations while customizing properties |
-| `opacity.value`             | `[number, number]`            | `[0, 1]`            | Opacity values [unselected, selected]       |
-| `opacity.timingConfig`      | `WithTimingConfig`            | `{ duration: 100 }` | Animation timing configuration              |
-| `borderRadius.value`        | `[number, number]`            | `[8, 0]`            | Border radius values [unselected, selected] |
-| `borderRadius.timingConfig` | `WithTimingConfig`            | `{ duration: 50 }`  | Animation timing configuration              |
-| `translateX.value`          | `[number, number]`            | `[-4, 0]`           | TranslateX values [unselected, selected]    |
-| `translateX.timingConfig`   | `WithTimingConfig`            | `{ duration: 100 }` | Animation timing configuration              |
-| `scale.value`               | `[number, number]`            | `[0.8, 1]`          | Scale values [unselected, selected]         |
-| `scale.timingConfig`        | `WithTimingConfig` | `{ duration: 100 }` | Animation timing configuration              |
+| prop                        | type                    | default             | description                                     |
+| --------------------------- | ----------------------- | ------------------- | ----------------------------------------------- |
+| `state`                     | `'disabled' \| boolean` | -                   | Disable animations while customizing properties |
+| `opacity.value`             | `[number, number]`      | `[0, 1]`            | Opacity values [unselected, selected]           |
+| `opacity.timingConfig`      | `WithTimingConfig`      | `{ duration: 100 }` | Animation timing configuration                  |
+| `borderRadius.value`        | `[number, number]`      | `[8, 0]`            | Border radius values [unselected, selected]     |
+| `borderRadius.timingConfig` | `WithTimingConfig`      | `{ duration: 50 }`  | Animation timing configuration                  |
+| `translateX.value`          | `[number, number]`      | `[-4, 0]`           | TranslateX values [unselected, selected]        |
+| `translateX.timingConfig`   | `WithTimingConfig`      | `{ duration: 100 }` | Animation timing configuration                  |
+| `scale.value`               | `[number, number]`      | `[0.8, 1]`          | Scale values [unselected, selected]             |
+| `scale.timingConfig`        | `WithTimingConfig`      | `{ duration: 100 }` | Animation timing configuration                  |
+
+## Hooks
 
 ### useCheckbox
 

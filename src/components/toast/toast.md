@@ -2,13 +2,28 @@
 
 Displays temporary notification messages that appear at the top or bottom of the screen.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Toast, useToast } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Toast>
+  <Toast.Title>...</Toast.Title>
+  <Toast.Description>...</Toast.Description>
+  <Toast.Action>...</Toast.Action>
+  <Toast.Close />
+</Toast>
+```
+
+- **Toast**: Main container that displays notification messages. Handles positioning, animations, and swipe gestures.
+- **Toast.Title**: Title text of the toast notification. Inherits variant styling from parent Toast context.
+- **Toast.Description**: Descriptive text content displayed below the title.
+- **Toast.Action**: Action button within the toast. Button variant is automatically determined based on toast variant but can be overridden.
+- **Toast.Close**: Close button for dismissing the toast. Renders as an icon-only button that calls hide when pressed.
 
 ## Usage
 
@@ -141,26 +156,11 @@ export default function ToastExample() {
 }
 ```
 
-## Anatomy
-
-```tsx
-<Toast>
-  <Toast.Title>...</Toast.Title>
-  <Toast.Description>...</Toast.Description>
-  <Toast.Action>...</Toast.Action>
-  <Toast.Close />
-</Toast>
-```
-
-- **Toast**: Main container that displays notification messages. Handles positioning, animations, and swipe gestures.
-- **Toast.Title**: Title text of the toast notification. Inherits variant styling from parent Toast context.
-- **Toast.Description**: Descriptive text content displayed below the title.
-- **Toast.Action**: Action button within the toast. Button variant is automatically determined based on toast variant but can be overridden.
-- **Toast.Close**: Close button for dismissing the toast. Renders as an icon-only button that calls hide when pressed.
-
 ## Global Configuration
 
 Configure toast behavior globally using `HeroUINativeProvider` config prop. Global configs serve as defaults for all toasts unless overridden locally.
+
+> **Note**: For complete provider configuration options, see the [Provider documentation](../../providers/hero-ui-native/provider.md).
 
 ### Insets
 
@@ -245,14 +245,6 @@ Set global defaults for variant, placement, animation, and swipe behavior:
   {children}
 </HeroUINativeProvider>
 ```
-
-## Styling Notes
-
-### Border as Padding
-
-Toast uses `border-[16px]` class which serves as padding. This is intentional because when visible toasts have different heights, the toast adapts to the last visible toast height. In cases where a toast originally has one height and gets smaller when a new toast comes to stack, content might be visible behind the last toast without proper padding. The border ensures consistent spacing regardless of toast height changes.
-
-For padding, use `border` classes. For actual borders, use `outline` classes.
 
 ## API Reference
 
@@ -368,6 +360,8 @@ Insets for spacing from screen edges. Values are added to safe area insets.
 | `left`   | `number` | -       | Inset from the left edge in pixels (added to safe area inset). Default: 12                                |
 | `right`  | `number` | -       | Inset from the right edge in pixels (added to safe area inset). Default: 12                               |
 
+## Hooks
+
 ### useToast
 
 Hook to access toast functionality. Must be used within a `ToastProvider` (provided by `HeroUINativeProvider`).
@@ -415,3 +409,13 @@ Options for showing a toast. Can be either a config object with default styling 
 | `duration`  | `number \| 'persistent'`                             | `4000`  | Duration in milliseconds before auto-hide. Set to 'persistent' to prevent auto-hide |
 | `onShow`    | `() => void`                                         | -       | Callback function called when the toast is shown                                    |
 | `onHide`    | `() => void`                                         | -       | Callback function called when the toast is hidden                                   |
+
+## Special Notes
+
+### Styling Notes
+
+#### Border as Padding
+
+Toast uses `border-[16px]` class which serves as padding. This is intentional because when visible toasts have different heights, the toast adapts to the last visible toast height. In cases where a toast originally has one height and gets smaller when a new toast comes to stack, content might be visible behind the last toast without proper padding. The border ensures consistent spacing regardless of toast height changes.
+
+For padding, use `border` classes. For actual borders, use `outline` classes.

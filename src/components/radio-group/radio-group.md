@@ -2,13 +2,34 @@
 
 A set of radio buttons where only one option can be selected at a time.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { RadioGroup } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<RadioGroup>
+  <RadioGroup.Item>
+    <RadioGroup.Label>...</RadioGroup.Label>
+    <RadioGroup.Description>...</RadioGroup.Description>
+    <RadioGroup.Indicator>
+      <RadioGroup.IndicatorThumb />
+    </RadioGroup.Indicator>
+  </RadioGroup.Item>
+  <RadioGroup.ErrorMessage>...</RadioGroup.ErrorMessage>
+</RadioGroup>
+```
+
+- **RadioGroup**: Container that manages the selection state of radio items. Supports both horizontal and vertical orientations.
+- **RadioGroup.Item**: Individual radio option within a RadioGroup. Must be used inside RadioGroup. Handles selection state and renders default indicator if no children provided. Supports render function children to access state (`isSelected`, `isInvalid`, `isDisabled`).
+- **RadioGroup.Label**: Optional clickable text label for the radio option. Linked to the radio for accessibility.
+- **RadioGroup.Description**: Optional secondary text below the label. Provides additional context about the radio option.
+- **RadioGroup.Indicator**: Optional container for the radio circle. Renders default thumb if no children provided. Manages the visual selection state.
+- **RadioGroup.IndicatorThumb**: Optional inner circle that appears when selected. Animates scale based on selection. Can be replaced with custom content.
+- **RadioGroup.ErrorMessage**: Error message displayed when radio group is invalid. Shown with animation below the radio group content.
 
 ## Usage
 
@@ -158,29 +179,6 @@ export default function PaymentMethodExample() {
 }
 ```
 
-## Anatomy
-
-```tsx
-<RadioGroup>
-  <RadioGroup.Item>
-    <RadioGroup.Label>...</RadioGroup.Label>
-    <RadioGroup.Description>...</RadioGroup.Description>
-    <RadioGroup.Indicator>
-      <RadioGroup.IndicatorThumb />
-    </RadioGroup.Indicator>
-  </RadioGroup.Item>
-  <RadioGroup.ErrorMessage>...</RadioGroup.ErrorMessage>
-</RadioGroup>
-```
-
-- **RadioGroup**: Container that manages the selection state of radio items. Supports both horizontal and vertical orientations.
-- **RadioGroup.Item**: Individual radio option within a RadioGroup. Must be used inside RadioGroup. Handles selection state and renders default indicator if no children provided. Supports render function children to access state (`isSelected`, `isInvalid`, `isDisabled`).
-- **RadioGroup.Label**: Optional clickable text label for the radio option. Linked to the radio for accessibility.
-- **RadioGroup.Description**: Optional secondary text below the label. Provides additional context about the radio option.
-- **RadioGroup.Indicator**: Optional container for the radio circle. Renders default thumb if no children provided. Manages the visual selection state.
-- **RadioGroup.IndicatorThumb**: Optional inner circle that appears when selected. Animates scale based on selection. Can be replaced with custom content.
-- **RadioGroup.ErrorMessage**: Error message displayed when radio group is invalid. Shown with animation below the radio group content.
-
 ## API Reference
 
 ### RadioGroup
@@ -230,12 +228,12 @@ export default function PaymentMethodExample() {
 
 ### RadioGroup.IndicatorThumb
 
-| prop                    | type                                | default     | description                                      |
-| ----------------------- | ----------------------------------- | ----------- | ------------------------------------------------ |
-| `className`             | `string`                            | `undefined` | Custom class name                                |
-| `animation`             | `RadioGroupIndicatorThumbAnimation` | -           | Animation configuration                          |
-| `isAnimatedStyleActive` | `boolean`                            | `true`      | Whether animated styles (react-native-reanimated) are active |
-| `...Animated.ViewProps` | `AnimatedProps<ViewProps>`          | -           | All Reanimated Animated.View props are supported |
+| prop                    | type                                | default     | description                                                  |
+| ----------------------- | ----------------------------------- | ----------- | ------------------------------------------------------------ |
+| `className`             | `string`                            | `undefined` | Custom class name                                            |
+| `animation`             | `RadioGroupIndicatorThumbAnimation` | -           | Animation configuration                                      |
+| `isAnimatedStyleActive` | `boolean`                           | `true`      | Whether animated styles (react-native-reanimated) are active |
+| `...Animated.ViewProps` | `AnimatedProps<ViewProps>`          | -           | All Reanimated Animated.View props are supported             |
 
 #### RadioGroupIndicatorThumbAnimation
 
@@ -245,11 +243,11 @@ Animation configuration for RadioGroupIndicatorThumb component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                 | type                          | default                                              | description                         |
-| -------------------- | ----------------------------- | ---------------------------------------------------- | ----------------------------------- |
-| `state`              | `'disabled' \| boolean`       | -                                                    | Disable animations while customizing properties |
-| `scale.value`        | `[number, number]`            | `[1.5, 1]`                                           | Scale values [unselected, selected] |
-| `scale.timingConfig` | `WithTimingConfig`            | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration      |
+| prop                 | type                    | default                                              | description                                     |
+| -------------------- | ----------------------- | ---------------------------------------------------- | ----------------------------------------------- |
+| `state`              | `'disabled' \| boolean` | -                                                    | Disable animations while customizing properties |
+| `scale.value`        | `[number, number]`      | `[1.5, 1]`                                           | Scale values [unselected, selected]             |
+| `scale.timingConfig` | `WithTimingConfig`      | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration                  |
 
 ### RadioGroup.Label
 

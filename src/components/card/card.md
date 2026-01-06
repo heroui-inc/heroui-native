@@ -2,13 +2,31 @@
 
 Displays a card container with flexible layout sections for structured content.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Card } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Card>
+  <Card.Header>...</Card.Header>
+  <Card.Body>
+    <Card.Title>...</Card.Title>
+    <Card.Description>...</Card.Description>
+  </Card.Body>
+  <Card.Footer>...</Card.Footer>
+</Card>
+```
+
+- **Card**: Main container that extends Surface component. Provides base card structure with configurable surface variants and handles overall layout.
+- **Card.Header**: Header section for top-aligned content like icons or badges.
+- **Card.Body**: Main content area with flex-1 that expands to fill all available space between Card.Header and Card.Footer.
+- **Card.Title**: Title text with foreground color and medium font weight.
+- **Card.Description**: Description text with muted color and smaller font size.
+- **Card.Footer**: Footer section for bottom-aligned actions like buttons.
 
 ## Usage
 
@@ -113,26 +131,6 @@ export default function CardExample() {
   );
 }
 ```
-
-## Anatomy
-
-```tsx
-<Card>
-  <Card.Header>...</Card.Header>
-  <Card.Body>
-    <Card.Title>...</Card.Title>
-    <Card.Description>...</Card.Description>
-  </Card.Body>
-  <Card.Footer>...</Card.Footer>
-</Card>
-```
-
-- **Card**: Main container that extends Surface component. Provides base card structure with configurable surface variants and handles overall layout.
-- **Card.Header**: Header section for top-aligned content like icons or badges.
-- **Card.Body**: Main content area with flex-1 that expands to fill all available space between Card.Header and Card.Footer.
-- **Card.Title**: Title text with foreground color and medium font weight.
-- **Card.Description**: Description text with muted color and smaller font size.
-- **Card.Footer**: Footer section for bottom-aligned actions like buttons.
 
 ## API Reference
 

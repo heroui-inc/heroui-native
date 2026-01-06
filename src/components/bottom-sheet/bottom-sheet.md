@@ -1,18 +1,37 @@
 # BottomSheet
 
-Displays a bottom sheet modal with gesture-based dismissal and snap points support.
+Displays a bottom sheet that slides up from the bottom with animated transitions and swipe-to-dismiss gestures.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
-import {
-  BottomSheet,
-  useBottomSheet,
-  useBottomSheetAnimation,
-} from 'heroui-native';
+import { BottomSheet } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<BottomSheet>
+  <BottomSheet.Trigger>...</BottomSheet.Trigger>
+  <BottomSheet.Portal>
+    <BottomSheet.Overlay>...</BottomSheet.Overlay>
+    <BottomSheet.Content>
+      <BottomSheet.Close>...</BottomSheet.Close>
+      <BottomSheet.Title>...</BottomSheet.Title>
+      <BottomSheet.Description>...</BottomSheet.Description>
+    </BottomSheet.Content>
+  </BottomSheet.Portal>
+</BottomSheet>
+```
+
+- **BottomSheet**: Root component that manages open state and provides context to child components.
+- **BottomSheet.Trigger**: Pressable element that opens the bottom sheet when pressed.
+- **BottomSheet.Portal**: Renders bottom sheet content in a portal with full window overlay.
+- **BottomSheet.Overlay**: Background overlay that covers the screen, typically closes bottom sheet when pressed.
+- **BottomSheet.Content**: Main bottom sheet container using @gorhom/bottom-sheet for rendering with gesture support.
+- **BottomSheet.Close**: Close button that dismisses the bottom sheet when pressed.
+- **BottomSheet.Title**: Bottom sheet title text with semantic heading role and accessibility linking.
+- **BottomSheet.Description**: Bottom sheet description text that provides additional context with accessibility linking.
 
 ## Usage
 
@@ -21,7 +40,7 @@ import {
 Simple bottom sheet with title, description, and close button.
 
 ```tsx
-<BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+<BottomSheet>
   <BottomSheet.Trigger asChild>
     <Button>Open Bottom Sheet</Button>
   </BottomSheet.Trigger>
@@ -41,7 +60,7 @@ Simple bottom sheet with title, description, and close button.
 Bottom sheet that appears detached from the bottom edge with custom spacing.
 
 ```tsx
-<BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+<BottomSheet>
   <BottomSheet.Trigger>...</BottomSheet.Trigger>
   <BottomSheet.Portal>
     <BottomSheet.Overlay />
@@ -62,7 +81,7 @@ Bottom sheet that appears detached from the bottom edge with custom spacing.
 Bottom sheet with multiple snap points and scrollable content.
 
 ```tsx
-<BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+<BottomSheet>
   <BottomSheet.Trigger>...</BottomSheet.Trigger>
   <BottomSheet.Portal>
     <BottomSheet.Overlay />
@@ -105,7 +124,7 @@ export const BottomSheetBlurOverlay = () => {
 ```
 
 ```tsx
-<BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+<BottomSheet>
   <BottomSheet.Trigger>...</BottomSheet.Trigger>
   <BottomSheet.Portal>
     <BottomSheetBlurOverlay />
@@ -175,31 +194,6 @@ export default function BottomSheetExample() {
   );
 }
 ```
-
-## Anatomy
-
-```tsx
-<BottomSheet>
-  <BottomSheet.Trigger>...</BottomSheet.Trigger>
-  <BottomSheet.Portal>
-    <BottomSheet.Overlay>...</BottomSheet.Overlay>
-    <BottomSheet.Content>
-      <BottomSheet.Close>...</BottomSheet.Close>
-      <BottomSheet.Title>...</BottomSheet.Title>
-      <BottomSheet.Description>...</BottomSheet.Description>
-    </BottomSheet.Content>
-  </BottomSheet.Portal>
-</BottomSheet>
-```
-
-- **BottomSheet**: Root component that manages open state and provides context to child components.
-- **BottomSheet.Trigger**: Pressable element that opens the bottom sheet when pressed.
-- **BottomSheet.Portal**: Renders bottom sheet content in a portal with full window overlay.
-- **BottomSheet.Overlay**: Background overlay that covers the screen, typically closes bottom sheet when pressed.
-- **BottomSheet.Content**: Main bottom sheet container using @gorhom/bottom-sheet for rendering with gesture support.
-- **BottomSheet.Close**: Close button that dismisses the bottom sheet when pressed.
-- **BottomSheet.Title**: Bottom sheet title text with semantic heading role and accessibility linking.
-- **BottomSheet.Description**: Bottom sheet description text that provides additional context with accessibility linking.
 
 ## API Reference
 
@@ -321,6 +315,8 @@ Animation configuration for bottom sheet overlay component. Can be:
 | `children`     | `React.ReactNode` | -       | Description content                                |
 | `className`    | `string`          | -       | Additional CSS classes for description             |
 | `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported |
+
+## Hooks
 
 ### useBottomSheet
 

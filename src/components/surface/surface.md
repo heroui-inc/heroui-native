@@ -2,13 +2,21 @@
 
 Container component that provides elevation and background styling.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Surface } from 'heroui-native';
 ```
+
+## Anatomy
+
+The Surface component is a container that provides elevation and background styling. It accepts children and can be customized with variants and styling props.
+
+```tsx
+<Surface>...</Surface>
+```
+
+- **Surface**: Main container component that provides consistent padding, background styling, and elevation through variants.
 
 ## Usage
 

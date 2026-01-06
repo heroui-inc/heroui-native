@@ -2,12 +2,18 @@
 
 Displays a loading placeholder with shimmer or pulse animation effects.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Skeleton } from 'heroui-native';
+```
+
+## Anatomy
+
+The Skeleton component is a simple wrapper that renders a placeholder for content that is loading. It does not have any child components.
+
+```tsx
+<Skeleton />
 ```
 
 ## Usage

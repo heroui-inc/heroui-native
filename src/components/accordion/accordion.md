@@ -1,14 +1,32 @@
 # Accordion
 
-A collapsible component that allows users to expand and collapse content sections with animated transitions.
+A collapsible content panel for organizing information in a compact space.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Accordion } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Accordion>
+  <Accordion.Item>
+    <Accordion.Trigger>
+      ...
+      <Accordion.Indicator>...</Accordion.Indicator>
+    </Accordion.Trigger>
+    <Accordion.Content>...</Accordion.Content>
+  </Accordion.Item>
+</Accordion>
+```
+
+- **Accordion**: Main container that manages the accordion state and behavior. Controls expansion/collapse of items, supports single or multiple selection modes, and provides variant styling (default or surface).
+- **Accordion.Item**: Container for individual accordion items. Wraps the trigger and content, managing the expanded state for each item.
+- **Accordion.Trigger**: Interactive element that toggles item expansion. Built on Header and Trigger primitives.
+- **Accordion.Indicator**: Optional visual indicator showing expansion state. Defaults to an animated chevron icon that rotates based on item state.
+- **Accordion.Content**: Container for expandable content. Animated with layout transitions for smooth expand/collapse effects.
 
 ## Usage
 
@@ -202,26 +220,6 @@ export default function AccordionExample() {
 }
 ```
 
-## Anatomy
-
-```tsx
-<Accordion>
-  <Accordion.Item>
-    <Accordion.Trigger>
-      ...
-      <Accordion.Indicator>...</Accordion.Indicator>
-    </Accordion.Trigger>
-    <Accordion.Content>...</Accordion.Content>
-  </Accordion.Item>
-</Accordion>
-```
-
-- **Accordion**: Main container that manages the accordion state and behavior. Controls expansion/collapse of items, supports single or multiple selection modes, and provides variant styling (default or surface).
-- **Accordion.Item**: Container for individual accordion items. Wraps the trigger and content, managing the expanded state for each item.
-- **Accordion.Trigger**: Interactive element that toggles item expansion. Built on Header and Trigger primitives.
-- **Accordion.Indicator**: Optional visual indicator showing expansion state. Defaults to an animated chevron icon that rotates based on item state.
-- **Accordion.Content**: Container for expandable content. Animated with layout transitions for smooth expand/collapse effects.
-
 ## API Reference
 
 ### Accordion
@@ -386,7 +384,7 @@ const { value, isExpanded, isDisabled, nativeID } = useAccordionItem();
 | `isDisabled` | `boolean \| undefined` | Whether this specific item is disabled               |
 | `nativeID`   | `string`               | Native ID used for accessibility and ARIA attributes |
 
-## Special Note
+## Special Notes
 
 When using the Accordion component alongside other components in the same view, you should import and apply `AccordionLayoutTransition` to those components to ensure smooth and consistent layout animations across the entire screen.
 

@@ -2,13 +2,33 @@
 
 A text input component with label, description, and error handling for collecting user input.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { TextField } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<TextField>
+  <TextField.Label>...</TextField.Label>
+  <TextField.Input>
+    <TextField.InputStartContent>...</TextField.InputStartContent>
+    <TextField.InputEndContent>...</TextField.InputEndContent>
+  </TextField.Input>
+  <TextField.Description>...</TextField.Description>
+  <TextField.ErrorMessage>...</TextField.ErrorMessage>
+</TextField>
+```
+
+- **TextField**: Root container that provides spacing and state management
+- **TextField.Label**: Label with optional asterisk for required fields
+- **TextField.Input**: Input container with animated border and background
+- **TextField.InputStartContent**: Optional content at the start of the input
+- **TextField.InputEndContent**: Optional content at the end of the input
+- **TextField.Description**: Helper text displayed below the input
+- **TextField.ErrorMessage**: Error message shown when field is invalid
 
 ## Usage
 
@@ -186,23 +206,6 @@ export const TextInputContent = () => {
 };
 ```
 
-## Anatomy
-
-```tsx
-<TextField>
-  <TextField.Label>...</TextField.Label>
-  <TextField.Input />
-  <TextField.Description>...</TextField.Description>
-  <TextField.ErrorMessage>...</TextField.ErrorMessage>
-</TextField>
-```
-
-- **TextField**: Root container that provides spacing and state management
-- **TextField.Label**: Label with optional asterisk for required fields
-- **TextField.Input**: Animated input with focus state animations
-- **TextField.Description**: Helper text displayed below the input
-- **TextField.ErrorMessage**: Error message shown when field is invalid
-
 ## API Reference
 
 ### TextField
@@ -228,7 +231,7 @@ export const TextInputContent = () => {
 | animation             | `TextFieldLabelAnimation`  | -           | Animation configuration                                      |
 | ...Animated.TextProps | `AnimatedProps<TextProps>` | -           | All Reanimated Animated.Text props are supported             |
 
-#### ElementSlots<LabelSlots>
+#### `ElementSlots<LabelSlots>`
 
 | prop     | type     | description                          |
 | -------- | -------- | ------------------------------------ |
@@ -306,6 +309,8 @@ Animation configuration for TextField.Description component. Can be:
 ### TextField.ErrorMessage
 
 > **Note**: `TextField.ErrorMessage` extends `ErrorView` component. For complete API reference, see [ErrorView documentation](../error-view/error-view.md).
+
+## Hooks
 
 ### useTextField
 

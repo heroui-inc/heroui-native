@@ -2,13 +2,22 @@
 
 Coordinates multiple skeleton loading placeholders with centralized animation control.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { SkeletonGroup } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<SkeletonGroup>
+  <SkeletonGroup.Item />
+</SkeletonGroup>
+```
+
+- **SkeletonGroup**: Root container that provides centralized control for all skeleton items
+- **SkeletonGroup.Item**: Individual skeleton item that inherits props from the parent group
 
 ## Usage
 
@@ -174,17 +183,6 @@ export default function SkeletonGroupExample() {
 }
 ```
 
-## Anatomy
-
-```tsx
-<SkeletonGroup>
-  <SkeletonGroup.Item />
-</SkeletonGroup>
-```
-
-- **SkeletonGroup**: Root container that provides centralized control for all skeleton items
-- **SkeletonGroup.Item**: Individual skeleton item that inherits props from the parent group
-
 ## API Reference
 
 ### SkeletonGroup
@@ -209,19 +207,19 @@ Animation configuration for SkeletonGroup component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                     | type                                    | default                     | description                            |
-| ------------------------ | --------------------------------------- | --------------------------- | -------------------------------------- |
-| `state`                  | `'disabled' \| 'disable-all' \| boolean` | -                          | Disable animations while customizing properties |
-| `entering.value`         | `EntryOrExitLayoutType`                 | `FadeIn`                    | Custom entering animation              |
-| `exiting.value`          | `EntryOrExitLayoutType`                 | `FadeOut`                   | Custom exiting animation               |
-| `shimmer.duration`       | `number`                                | `1500`                      | Animation duration in milliseconds     |
-| `shimmer.speed`          | `number`                                | `1`                         | Speed multiplier for the animation     |
-| `shimmer.highlightColor` | `string`                                | -                           | Highlight color for the shimmer effect |
-| `shimmer.easing`         | `EasingFunction`                        | `Easing.linear`             | Easing function for the animation      |
-| `pulse.duration`         | `number`                                | `1000`                      | Animation duration in milliseconds     |
-| `pulse.minOpacity`       | `number`                                | `0.5`                       | Minimum opacity value                  |
-| `pulse.maxOpacity`       | `number`                                | `1`                         | Maximum opacity value                  |
-| `pulse.easing`           | `EasingFunction`        | `Easing.inOut(Easing.ease)` | Easing function for the animation      |
+| prop                     | type                                     | default                     | description                                     |
+| ------------------------ | ---------------------------------------- | --------------------------- | ----------------------------------------------- |
+| `state`                  | `'disabled' \| 'disable-all' \| boolean` | -                           | Disable animations while customizing properties |
+| `entering.value`         | `EntryOrExitLayoutType`                  | `FadeIn`                    | Custom entering animation                       |
+| `exiting.value`          | `EntryOrExitLayoutType`                  | `FadeOut`                   | Custom exiting animation                        |
+| `shimmer.duration`       | `number`                                 | `1500`                      | Animation duration in milliseconds              |
+| `shimmer.speed`          | `number`                                 | `1`                         | Speed multiplier for the animation              |
+| `shimmer.highlightColor` | `string`                                 | -                           | Highlight color for the shimmer effect          |
+| `shimmer.easing`         | `EasingFunction`                         | `Easing.linear`             | Easing function for the animation               |
+| `pulse.duration`         | `number`                                 | `1000`                      | Animation duration in milliseconds              |
+| `pulse.minOpacity`       | `number`                                 | `0.5`                       | Minimum opacity value                           |
+| `pulse.maxOpacity`       | `number`                                 | `1`                         | Maximum opacity value                           |
+| `pulse.easing`           | `EasingFunction`                         | `Easing.inOut(Easing.ease)` | Easing function for the animation               |
 
 ### SkeletonGroup.Item
 
@@ -234,7 +232,7 @@ Animation configuration for SkeletonGroup component. Can be:
 | `className`             | `string`                         | -         | Additional CSS classes for styling the item                         |
 | `...Animated.ViewProps` | `AnimatedProps<ViewProps>`       | -         | All Reanimated Animated.View props are supported                    |
 
-## Important Notes
+## Special Notes
 
 ### Props Inheritance
 

@@ -2,13 +2,22 @@
 
 Interactive component that triggers an action when pressed.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { Button } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<Button>
+  <Button.Label>...</Button.Label>
+</Button>
+```
+
+- **Button**: Main container that handles press interactions, animations, and variants. Renders string children as label or accepts compound components for custom layouts.
+- **Button.Label**: Text content of the button. Inherits size and variant styling from parent Button context.
 
 ## Usage
 
@@ -256,17 +265,6 @@ export default function ButtonExample() {
   );
 }
 ```
-
-## Anatomy
-
-```tsx
-<Button>
-  <Button.Label>...</Button.Label>
-</Button>
-```
-
-- **Button**: Main container that handles press interactions, animations, and variants. Renders string children as label or accepts compound components for custom layouts.
-- **Button.Label**: Text content of the button. Inherits size and variant styling from parent Button context.
 
 ## API Reference
 

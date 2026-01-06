@@ -25,11 +25,11 @@ Inside your `global.css` file add the following imports:
 
 **Important:** The `@source` path is **relative to your CSS file location**, not the project root.
 
-| `global.css` location | `@source` path |
-|----------------------|----------------|
-| `./global.css` (root) | `@source './node_modules/heroui-native/lib';` |
-| `./app/global.css` | `@source '../node_modules/heroui-native/lib';` |
-| `./src/global.css` | `@source '../node_modules/heroui-native/lib';` |
+| `global.css` location | `@source` path                                 |
+| --------------------- | ---------------------------------------------- |
+| `./global.css` (root) | `@source './node_modules/heroui-native/lib';`  |
+| `./app/global.css`    | `@source '../node_modules/heroui-native/lib';` |
+| `./src/global.css`    | `@source '../node_modules/heroui-native/lib';` |
 
 ## Theme Structure
 

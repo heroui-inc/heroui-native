@@ -2,13 +2,19 @@
 
 Displays validation error message content with smooth animations.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
+## Import
 
 ```tsx
 import { ErrorView } from 'heroui-native';
 ```
+
+## Anatomy
+
+```tsx
+<ErrorView>Error message content</ErrorView>
+```
+
+- **ErrorView**: Main container that displays error messages with smooth animations. Accepts string children which are automatically wrapped with Text component, or custom React components for more complex layouts. Controls visibility through the `isInvalid` prop and supports custom entering/exiting animations.
 
 ## Usage
 
@@ -170,8 +176,8 @@ Animation configuration for error view root component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop             | type                                    | default                                                               | description                              |
-| ---------------- | --------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------- |
+| prop             | type                                     | default                                                               | description                                     |
+| ---------------- | ---------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------- |
 | `state`          | `'disabled' \| 'disable-all' \| boolean` | -                                                                     | Disable animations while customizing properties |
-| `entering.value` | `EntryOrExitLayoutType`                 | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation for error view |
-| `exiting.value`  | `EntryOrExitLayoutType`                 | `FadeOut`<br/>`.duration(100)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation for error view  |
+| `entering.value` | `EntryOrExitLayoutType`                  | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation for error view        |
+| `exiting.value`  | `EntryOrExitLayoutType`                  | `FadeOut`<br/>`.duration(100)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation for error view         |

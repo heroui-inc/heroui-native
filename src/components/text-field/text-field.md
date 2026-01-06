@@ -122,56 +122,68 @@ Customize the input colors for different states using the animation prop.
 
 ```tsx
 import { Ionicons } from '@expo/vector-icons';
-import { TextField, useThemeColor } from 'heroui-native';
-import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { TextField } from 'heroui-native';
+import { useState } from 'react';
+import { Pressable, View } from 'react-native';
+import { withUniwind } from 'uniwind';
 
-export default function TextFieldExample() {
-  const themeColorMuted = useThemeColor('muted');
-  const [email, setEmail] = React.useState('');
-  const isInvalidEmail =
-    email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const StyledIonicons = withUniwind(Ionicons);
+
+export const TextInputContent = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
-    <ScrollView className="bg-background p-6">
-      <View className="gap-6">
-        <TextField isRequired isInvalid={isInvalidEmail}>
-          <TextField.Label>Email Address</TextField.Label>
-          <TextField.Input
-            placeholder="Enter your email"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            value={email}
-            onChangeText={setEmail}
-          />
-          <TextField.Description>
-            We'll send a confirmation to this email
-          </TextField.Description>
-          <TextField.ErrorMessage>
-            Please enter a valid email address
-          </TextField.ErrorMessage>
-        </TextField>
+    <View className="gap-4">
+      <TextField isRequired>
+        <TextField.Label>Email</TextField.Label>
+        <TextField.Input
+          placeholder="Enter your email"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextField.Description>
+          We'll never share your email with anyone else.
+        </TextField.Description>
+      </TextField>
 
-        <TextField isRequired>
-          <TextField.Label>Password</TextField.Label>
-          <TextField.Input placeholder="Enter password" secureTextEntry />
-        </TextField>
-
-        <TextField>
-          <TextField.Label>Bio</TextField.Label>
+      <TextField isRequired>
+        <TextField.Label>New password</TextField.Label>
+        <View className="w-full flex-row items-center">
           <TextField.Input
-            placeholder="Tell us about yourself..."
-            multiline
-            numberOfLines={4}
+            value={password}
+            onChangeText={setPassword}
+            className="flex-1 px-10"
+            placeholder="Enter your password"
+            secureTextEntry={!isPasswordVisible}
           />
-          <TextField.Description>
-            Brief description for your profile
-          </TextField.Description>
-        </TextField>
-      </View>
-    </ScrollView>
+          <StyledIonicons
+            name="lock-closed-outline"
+            size={16}
+            className="absolute left-3.5 text-muted"
+            pointerEvents="none"
+          />
+          <Pressable
+            className="absolute right-4"
+            onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+          >
+            <StyledIonicons
+              name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'}
+              size={16}
+              className="text-muted"
+            />
+          </Pressable>
+        </View>
+        <TextField.Description>
+          Password must be at least 6 characters
+        </TextField.Description>
+      </TextField>
+    </View>
   );
-}
+};
 ```
 
 ## Anatomy

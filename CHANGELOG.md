@@ -1,3 +1,21 @@
+## 1.0.0-beta.11 (2026-01-06)
+
+* docs: add theming, colors and styling doc files ([bcad7bf](https://github.com/heroui-inc/heroui-native/commit/bcad7bf))
+* docs: sync doc files between local and web ([f90b254](https://github.com/heroui-inc/heroui-native/commit/f90b254))
+* docs: update @source path for relative path ([b7d744a](https://github.com/heroui-inc/heroui-native/commit/b7d744a))
+* docs(bottom-sheet): add special notes and text input example ([615b2c1](https://github.com/heroui-inc/heroui-native/commit/615b2c1))
+* docs(text-field): update example ([5242b47](https://github.com/heroui-inc/heroui-native/commit/5242b47))
+* fix(bottom-sheet): close on swipe issue ([27148ce](https://github.com/heroui-inc/heroui-native/commit/27148ce))
+* fix(bottom-sheet): close via ref issue ([380c4ad](https://github.com/heroui-inc/heroui-native/commit/380c4ad))
+* fix(dialog): negative overdrag calculation issue ([6ebbd94](https://github.com/heroui-inc/heroui-native/commit/6ebbd94))
+* fix(example-app): dialog lint warning ([b556991](https://github.com/heroui-inc/heroui-native/commit/b556991))
+* refactor(text-field): remove start and end input parts ([4063052](https://github.com/heroui-inc/heroui-native/commit/4063052))
+* feat: re-export PortalHost for advanced use cases ([a98261f](https://github.com/heroui-inc/heroui-native/commit/a98261f))
+* feat(example-app): add super app paywall showcase ([0bd7322](https://github.com/heroui-inc/heroui-native/commit/0bd7322))
+* feat(example-app): add to app paywall showcase screen fade animation ([7172a0b](https://github.com/heroui-inc/heroui-native/commit/7172a0b))
+
+
+
 ## 1.0.0-beta.10 (2025-12-30)
 
 * docs: add animated styles notes to the components className prop ([0c0fc48](https://github.com/heroui-inc/heroui-native/commit/0c0fc48))

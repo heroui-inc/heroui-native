@@ -1,0 +1,419 @@
+/**
+ * Big thank you to https://github.com/yjose/input-otp-native for logic and inspiration
+ */
+
+import {
+  createContext,
+  forwardRef,
+  useCallback,
+  useContext,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  Platform,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  View,
+  type BlurEvent,
+  type FocusEvent,
+} from 'react-native';
+import { useControllableState } from '../../helpers/hooks';
+import * as SlotPrimitive from '../slot';
+import type {
+  GroupProps,
+  GroupRef,
+  InputOTPContext,
+  RootProps,
+  RootRef,
+  SeparatorProps,
+  SeparatorRef,
+  SlotData,
+  SlotProps,
+  SlotRef,
+} from './input-otp.types';
+import { defaultPasteTransformer } from './input-otp.utils';
+
+const InputOTPContext = createContext<InputOTPContext | null>(null);
+
+/**
+ * Hook to access InputOTP context
+ * @throws Error if used outside InputOTP component
+ */
+function useInputOTPContext(): InputOTPContext {
+  const context = useContext(InputOTPContext);
+
+  if (!context) {
+    throw new Error(
+      'InputOTP compound components cannot be rendered outside the InputOTP component'
+    );
+  }
+
+  return context;
+}
+
+// --------------------------------------------------
+
+const Root = forwardRef<RootRef, RootProps>(
+  (
+    {
+      maxLength,
+      onComplete,
+      isDisabled = false,
+      isInvalid = false,
+      pattern,
+      pasteTransformer,
+      value: valueProp,
+      defaultValue,
+      onChange,
+      placeholder,
+      inputMode = 'numeric',
+      children,
+      onFocus: onFocusProp,
+      onBlur: onBlurProp,
+      ...textInputProps
+    },
+    ref
+  ) => {
+    const [value = '', setValue] = useControllableState<string>({
+      prop: valueProp,
+      defaultProp: defaultValue,
+      onChange,
+    });
+
+    const [isFocused, setIsFocused] = useState(false);
+    const inputRef = useRef<TextInput>(null);
+
+    // Convert pattern string to RegExp if provided
+    const regexp = useMemo(() => {
+      if (!pattern) return null;
+      return typeof pattern === 'string' ? new RegExp(pattern) : pattern;
+    }, [pattern]);
+
+    // Get paste transformer function
+    const pasteTransformFn = useMemo(() => {
+      return pasteTransformer ?? defaultPasteTransformer(maxLength);
+    }, [pasteTransformer, maxLength]);
+
+    // Handle text change
+    const onChangeText = useCallback(
+      (text: string) => {
+        // Detect paste operation: if text length increases by more than 1 character
+        // it's likely a paste operation rather than normal typing
+        const isPaste = text.length > value.length + 1;
+        const transformedText =
+          isPaste && pasteTransformFn ? pasteTransformFn(text) : text;
+        // Slice the text to the maxLength as we're not limiting the input length to handle paste properly
+        const newValue = transformedText.slice(0, maxLength);
+
+        // Validate against pattern if provided
+        if (newValue.length > 0 && regexp && !regexp.test(newValue)) {
+          return;
+        }
+
+        setValue(newValue);
+        if (newValue.length === maxLength) {
+          onComplete?.(newValue);
+        }
+      },
+      [maxLength, regexp, setValue, onComplete, pasteTransformFn, value.length]
+    );
+
+    // Handle focus
+    const onFocus = useCallback(
+      (e: FocusEvent) => {
+        setIsFocused(true);
+        onFocusProp?.(e);
+      },
+      [onFocusProp]
+    );
+
+    // Handle blur
+    const onBlur = useCallback(
+      (e: BlurEvent) => {
+        setIsFocused(false);
+        onBlurProp?.(e);
+      },
+      [onBlurProp]
+    );
+
+    // Focus action
+    const focus = useCallback(() => {
+      inputRef.current?.focus();
+    }, []);
+
+    // Clear action
+    const clear = useCallback(() => {
+      inputRef.current?.clear();
+      setValue('');
+    }, [setValue]);
+
+    // Generate slots data
+    const slots = useMemo<SlotData[]>(() => {
+      return Array.from({ length: maxLength }).map((_, slotIdx) => {
+        const isActive = isFocused && slotIdx === value.length;
+        const char = value[slotIdx] !== undefined ? value[slotIdx] : null;
+        const placeholderChar =
+          value[0] !== undefined ? null : (placeholder?.[slotIdx] ?? null);
+
+        return {
+          char,
+          placeholderChar,
+          isActive,
+          hasFakeCaret: isActive && char === null,
+        };
+      });
+    }, [isFocused, maxLength, value, placeholder]);
+
+    // Context value
+    const contextValue = useMemo<InputOTPContext>(
+      () => ({
+        value,
+        maxLength,
+        isFocused,
+        isDisabled,
+        isInvalid,
+        slots,
+        handlers: {
+          onChangeText,
+          onFocus,
+          onBlur,
+        },
+        actions: {
+          focus,
+          clear,
+        },
+        inputRef,
+      }),
+      [
+        value,
+        maxLength,
+        isFocused,
+        isDisabled,
+        isInvalid,
+        slots,
+        onChangeText,
+        onFocus,
+        onBlur,
+        focus,
+        clear,
+      ]
+    );
+
+    // Imperative handle
+    useImperativeHandle(
+      ref,
+      () => ({
+        setValue: (newValue: string) => {
+          onChangeText(newValue);
+        },
+        focus: () => {
+          focus();
+          // onFocus will be called automatically by React Native when input receives focus
+        },
+        blur: () => inputRef.current?.blur(),
+        clear,
+      }),
+      [focus, clear, onChangeText]
+    );
+
+    // Handle container press
+    const onPress = useCallback(() => {
+      if (isDisabled) return;
+      focus();
+      clear();
+    }, [focus, clear, isDisabled]);
+
+    // Extract accessibility props from textInputProps to allow overrides
+    const {
+      accessibilityLabel: textInputAccessibilityLabel,
+      accessibilityHint: textInputAccessibilityHint,
+      accessibilityState: textInputAccessibilityState,
+      accessibilityValue: textInputAccessibilityValue,
+      ...restTextInputProps
+    } = textInputProps;
+
+    // Compute accessibility label
+    const accessibilityLabel =
+      textInputAccessibilityLabel ??
+      `One-time passcode input, ${maxLength} digits`;
+
+    // Compute accessibility hint
+    const accessibilityHint =
+      textInputAccessibilityHint ??
+      `Enter ${maxLength} digit verification code`;
+
+    // Compute accessibility state
+    const accessibilityState = {
+      disabled: isDisabled,
+      ...textInputAccessibilityState,
+    };
+
+    // Compute accessibility value
+    const accessibilityValue = {
+      text:
+        value.length > 0
+          ? `${value.length} of ${maxLength} digits entered`
+          : `0 of ${maxLength} digits entered`,
+      ...textInputAccessibilityValue,
+    };
+
+    return (
+      <InputOTPContext.Provider value={contextValue}>
+        <Pressable
+          onPress={onPress}
+          disabled={isDisabled}
+          accessible={false}
+          accessibilityRole="none"
+        >
+          {children}
+          <TextInput
+            ref={inputRef}
+            style={[
+              StyleSheet.absoluteFillObject,
+              /**
+               * On iOS if the input has an opacity of 0, we can't paste text into it.
+               * This is a workaround to allow pasting text into the input.
+               */
+              Platform.select({
+                ios: {
+                  opacity: 0.02,
+                  color: 'transparent',
+                },
+                android: {
+                  opacity: 0,
+                },
+              }),
+            ]}
+            value={value}
+            onChangeText={onChangeText}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            placeholder={placeholder}
+            inputMode={inputMode}
+            /**
+             * On iOS if the input has an opacity of 0, we can't paste text into it.
+             * As we're setting the opacity to 0.02, we need to hide the caret.
+             */
+            caretHidden={Platform.OS === 'ios'}
+            textContentType="oneTimeCode"
+            autoComplete={
+              Platform.OS === 'android' ? 'sms-otp' : 'one-time-code'
+            }
+            clearTextOnFocus
+            accessible
+            accessibilityRole="text"
+            accessibilityLabel={accessibilityLabel}
+            accessibilityHint={accessibilityHint}
+            accessibilityState={accessibilityState}
+            accessibilityValue={accessibilityValue}
+            editable={!isDisabled}
+            {...restTextInputProps}
+          />
+        </Pressable>
+      </InputOTPContext.Provider>
+    );
+  }
+);
+
+Root.displayName = 'HeroUINative.Primitive.InputOTP.Root';
+
+// --------------------------------------------------
+
+const Group = forwardRef<GroupRef, GroupProps>(
+  (
+    { asChild, accessible = false, accessibilityRole = 'none', ...props },
+    ref
+  ) => {
+    useInputOTPContext(); // Ensure we're inside InputOTP
+
+    const Component = asChild ? SlotPrimitive.View : View;
+
+    return (
+      <Component
+        ref={ref}
+        accessible={accessible}
+        accessibilityRole={accessibilityRole}
+        {...props}
+      />
+    );
+  }
+);
+
+Group.displayName = 'HeroUINative.Primitive.InputOTP.Group';
+
+// --------------------------------------------------
+
+const Slot = forwardRef<SlotRef, SlotProps>(
+  (
+    {
+      asChild,
+      index,
+      accessible = false,
+      accessibilityRole = 'none',
+      accessibilityLabel,
+      ...props
+    },
+    ref
+  ) => {
+    const { slots, maxLength } = useInputOTPContext();
+
+    if (index < 0 || index >= slots.length) {
+      throw new Error(
+        `InputOTP.Slot index ${index} is out of range. Must be between 0 and ${slots.length - 1}.`
+      );
+    }
+
+    const slot = slots[index];
+    const computedAccessibilityLabel =
+      accessibilityLabel ??
+      (accessible && slot
+        ? `Digit ${index + 1} of ${maxLength}${slot.char ? `, value ${slot.char}` : ', empty'}`
+        : undefined);
+
+    const Component = asChild ? SlotPrimitive.View : View;
+
+    return (
+      <Component
+        ref={ref}
+        accessible={accessible}
+        accessibilityRole={accessibilityRole}
+        accessibilityLabel={computedAccessibilityLabel}
+        {...props}
+      />
+    );
+  }
+);
+
+Slot.displayName = 'HeroUINative.Primitive.InputOTP.Slot';
+
+// --------------------------------------------------
+
+const Separator = forwardRef<SeparatorRef, SeparatorProps>(
+  (
+    { asChild, accessible = false, accessibilityRole = 'none', ...props },
+    ref
+  ) => {
+    useInputOTPContext(); // Ensure we're inside InputOTP
+
+    const Component = asChild ? SlotPrimitive.View : View;
+
+    return (
+      <Component
+        ref={ref}
+        accessible={accessible}
+        accessibilityRole={accessibilityRole}
+        {...props}
+      />
+    );
+  }
+);
+
+Separator.displayName = 'HeroUINative.Primitive.InputOTP.Separator';
+
+// --------------------------------------------------
+
+export { Group, Root, Separator, Slot, useInputOTPContext };

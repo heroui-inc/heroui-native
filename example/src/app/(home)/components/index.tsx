@@ -61,6 +61,10 @@ const components: Component[] = [
     path: 'form-field',
   },
   {
+    title: 'Input OTP',
+    path: 'input-otp',
+  },
+  {
     title: 'Popover',
     path: 'popover',
   },

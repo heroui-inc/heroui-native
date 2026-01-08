@@ -145,6 +145,11 @@ const Root = forwardRef<RootRef, RootProps>(
       inputRef.current?.focus();
     }, []);
 
+    // Blur action
+    const blur = useCallback(() => {
+      inputRef.current?.blur();
+    }, []);
+
     // Clear action
     const clear = useCallback(() => {
       inputRef.current?.clear();
@@ -163,7 +168,7 @@ const Root = forwardRef<RootRef, RootProps>(
           char,
           placeholderChar,
           isActive,
-          hasFakeCaret: isActive && char === null,
+          isCaretVisible: isActive && char === null,
         };
       });
     }, [isFocused, maxLength, value, placeholder]);
@@ -210,14 +215,11 @@ const Root = forwardRef<RootRef, RootProps>(
         setValue: (newValue: string) => {
           onChangeText(newValue);
         },
-        focus: () => {
-          focus();
-          // onFocus will be called automatically by React Native when input receives focus
-        },
-        blur: () => inputRef.current?.blur(),
+        focus,
+        blur,
         clear,
       }),
-      [focus, clear, onChangeText]
+      [focus, blur, clear, onChangeText]
     );
 
     // Handle container press

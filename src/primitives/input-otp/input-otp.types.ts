@@ -17,7 +17,7 @@ export type SlotData = {
   /** Whether this slot is currently active (where cursor is) */
   isActive: boolean;
   /** Whether to show fake caret (when active but empty) */
-  hasFakeCaret: boolean;
+  isCaretVisible: boolean;
 };
 
 /**

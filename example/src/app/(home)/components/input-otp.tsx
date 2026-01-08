@@ -1,5 +1,5 @@
 import { Button, InputOTP } from 'heroui-native';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Alert, View } from 'react-native';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
@@ -10,11 +10,11 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 const BasicOTPContent = () => {
   const ref = useRef<React.ComponentRef<typeof InputOTP>>(null);
 
-  useEffect(() => {
-    setTimeout(() => {
-      ref.current?.focus();
-    }, 1000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     ref.current?.focus();
+  //   }, 1000);
+  // }, []);
 
   const onComplete = (code: string) => {
     Alert.alert('Completed', `Code: ${code}`);
@@ -23,7 +23,13 @@ const BasicOTPContent = () => {
 
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <InputOTP ref={ref} maxLength={6} onComplete={onComplete}>
+      <InputOTP
+        ref={ref}
+        maxLength={6}
+        onComplete={onComplete}
+        autoFocus
+        clearTextOnFocus
+      >
         <InputOTP.Group>
           {({ slots }) => (
             <>

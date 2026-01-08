@@ -74,6 +74,7 @@ const Root = forwardRef<RootRef, RootProps>(
       children,
       onFocus: onFocusProp,
       onBlur: onBlurProp,
+      clearTextOnFocus,
       ...textInputProps
     },
     ref
@@ -83,9 +84,29 @@ const Root = forwardRef<RootRef, RootProps>(
       defaultProp: defaultValue,
       onChange,
     });
-
     const [isFocused, setIsFocused] = useState(false);
+
     const inputRef = useRef<TextInput>(null);
+
+    const slots = useMemo<SlotData[]>(() => {
+      return Array.from({ length: maxLength }).map((_, slotIdx) => {
+        const isActive = isFocused && slotIdx === value.length;
+        const char = value[slotIdx] !== undefined ? value[slotIdx] : null;
+        const placeholderChar =
+          value[0] !== undefined ? null : (placeholder?.[slotIdx] ?? null);
+
+        return {
+          char,
+          placeholderChar,
+          isActive,
+          isCaretVisible: isActive && char === null,
+        };
+      });
+    }, [isFocused, maxLength, value, placeholder]);
+
+    // --------------------------------------------------
+    // TextInput onChangeText handler
+    // --------------------------------------------------
 
     // Convert pattern string to RegExp if provided
     const regexp = useMemo(() => {
@@ -122,7 +143,10 @@ const Root = forwardRef<RootRef, RootProps>(
       [maxLength, regexp, setValue, onComplete, pasteTransformFn, value.length]
     );
 
-    // Handle focus
+    // --------------------------------------------------
+    // TextInput event handlers
+    // --------------------------------------------------
+
     const onFocus = useCallback(
       (e: FocusEvent) => {
         setIsFocused(true);
@@ -131,7 +155,6 @@ const Root = forwardRef<RootRef, RootProps>(
       [onFocusProp]
     );
 
-    // Handle blur
     const onBlur = useCallback(
       (e: BlurEvent) => {
         setIsFocused(false);
@@ -140,40 +163,40 @@ const Root = forwardRef<RootRef, RootProps>(
       [onBlurProp]
     );
 
-    // Focus action
+    // --------------------------------------------------
+    // Imperative actions
+    // --------------------------------------------------
+
     const focus = useCallback(() => {
       inputRef.current?.focus();
     }, []);
 
-    // Blur action
     const blur = useCallback(() => {
       inputRef.current?.blur();
     }, []);
 
-    // Clear action
     const clear = useCallback(() => {
       inputRef.current?.clear();
       setValue('');
     }, [setValue]);
 
-    // Generate slots data
-    const slots = useMemo<SlotData[]>(() => {
-      return Array.from({ length: maxLength }).map((_, slotIdx) => {
-        const isActive = isFocused && slotIdx === value.length;
-        const char = value[slotIdx] !== undefined ? value[slotIdx] : null;
-        const placeholderChar =
-          value[0] !== undefined ? null : (placeholder?.[slotIdx] ?? null);
+    useImperativeHandle(
+      ref,
+      () => ({
+        setValue: (newValue: string) => {
+          onChangeText(newValue);
+        },
+        focus,
+        blur,
+        clear,
+      }),
+      [focus, blur, clear, onChangeText]
+    );
 
-        return {
-          char,
-          placeholderChar,
-          isActive,
-          isCaretVisible: isActive && char === null,
-        };
-      });
-    }, [isFocused, maxLength, value, placeholder]);
-
+    // --------------------------------------------------
     // Context value
+    // --------------------------------------------------
+
     const contextValue = useMemo<InputOTPContext>(
       () => ({
         value,
@@ -208,28 +231,10 @@ const Root = forwardRef<RootRef, RootProps>(
       ]
     );
 
-    // Imperative handle
-    useImperativeHandle(
-      ref,
-      () => ({
-        setValue: (newValue: string) => {
-          onChangeText(newValue);
-        },
-        focus,
-        blur,
-        clear,
-      }),
-      [focus, blur, clear, onChangeText]
-    );
+    // --------------------------------------------------
+    // Accessibility
+    // --------------------------------------------------
 
-    // Handle container press
-    const onPress = useCallback(() => {
-      if (isDisabled) return;
-      focus();
-      clear();
-    }, [focus, clear, isDisabled]);
-
-    // Extract accessibility props from textInputProps to allow overrides
     const {
       accessibilityLabel: textInputAccessibilityLabel,
       accessibilityHint: textInputAccessibilityHint,
@@ -238,23 +243,19 @@ const Root = forwardRef<RootRef, RootProps>(
       ...restTextInputProps
     } = textInputProps;
 
-    // Compute accessibility label
     const accessibilityLabel =
       textInputAccessibilityLabel ??
       `One-time passcode input, ${maxLength} digits`;
 
-    // Compute accessibility hint
     const accessibilityHint =
       textInputAccessibilityHint ??
       `Enter ${maxLength} digit verification code`;
 
-    // Compute accessibility state
     const accessibilityState = {
       disabled: isDisabled,
       ...textInputAccessibilityState,
     };
 
-    // Compute accessibility value
     const accessibilityValue = {
       text:
         value.length > 0
@@ -263,10 +264,14 @@ const Root = forwardRef<RootRef, RootProps>(
       ...textInputAccessibilityValue,
     };
 
+    // --------------------------------------------------
+    // Render
+    // --------------------------------------------------
+
     return (
       <InputOTPContext.Provider value={contextValue}>
         <Pressable
-          onPress={onPress}
+          onPress={focus}
           disabled={isDisabled}
           accessible={false}
           accessibilityRole="none"
@@ -294,6 +299,7 @@ const Root = forwardRef<RootRef, RootProps>(
             onChangeText={onChangeText}
             onFocus={onFocus}
             onBlur={onBlur}
+            clearTextOnFocus={clearTextOnFocus}
             placeholder={placeholder}
             inputMode={inputMode}
             /**
@@ -305,7 +311,6 @@ const Root = forwardRef<RootRef, RootProps>(
             autoComplete={
               Platform.OS === 'android' ? 'sms-otp' : 'one-time-code'
             }
-            clearTextOnFocus
             accessible
             accessibilityRole="text"
             accessibilityLabel={accessibilityLabel}

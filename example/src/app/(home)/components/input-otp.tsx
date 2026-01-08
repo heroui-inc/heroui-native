@@ -17,7 +17,12 @@ const BasicOTPContent = () => {
 
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <InputOTP ref={ref} maxLength={6} onComplete={onComplete} placeholder="*">
+      <InputOTP
+        ref={ref}
+        maxLength={6}
+        onComplete={onComplete}
+        defaultValue="1234"
+      >
         <InputOTP.Group>
           {({ slots }) => (
             <>

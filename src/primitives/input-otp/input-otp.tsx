@@ -70,13 +70,12 @@ const Root = forwardRef<RootRef, RootProps>(
       defaultValue,
       onChange,
       placeholder,
-      inputMode = 'numeric',
       children,
       onFocus: onFocusProp,
       onBlur: onBlurProp,
-      clearTextOnFocus,
+      textInputProps,
+      style,
       className,
-      ...textInputProps
     },
     ref
   ) => {
@@ -237,34 +236,22 @@ const Root = forwardRef<RootRef, RootProps>(
     // Accessibility
     // --------------------------------------------------
 
-    const {
-      accessibilityLabel: textInputAccessibilityLabel,
-      accessibilityHint: textInputAccessibilityHint,
-      accessibilityState: textInputAccessibilityState,
-      accessibilityValue: textInputAccessibilityValue,
-      ...restTextInputProps
-    } = textInputProps;
+    const accessibilityState = useMemo(
+      () => ({
+        disabled: isDisabled,
+      }),
+      [isDisabled]
+    );
 
-    const accessibilityLabel =
-      textInputAccessibilityLabel ??
-      `One-time passcode input, ${maxLength} digits`;
-
-    const accessibilityHint =
-      textInputAccessibilityHint ??
-      `Enter ${maxLength} digit verification code`;
-
-    const accessibilityState = {
-      disabled: isDisabled,
-      ...textInputAccessibilityState,
-    };
-
-    const accessibilityValue = {
-      text:
-        value.length > 0
-          ? `${value.length} of ${maxLength} digits entered`
-          : `0 of ${maxLength} digits entered`,
-      ...textInputAccessibilityValue,
-    };
+    const accessibilityValue = useMemo(
+      () => ({
+        text:
+          value.length > 0
+            ? `${value.length} of ${maxLength} digits entered`
+            : `0 of ${maxLength} digits entered`,
+      }),
+      [value, maxLength]
+    );
 
     // --------------------------------------------------
     // Render
@@ -273,11 +260,12 @@ const Root = forwardRef<RootRef, RootProps>(
     return (
       <InputOTPContext.Provider value={contextValue}>
         <Pressable
-          className={className}
           onPress={focus}
           disabled={isDisabled}
           accessible={false}
           accessibilityRole="none"
+          style={style}
+          className={className}
         >
           {children}
           <TextInput
@@ -302,26 +290,24 @@ const Root = forwardRef<RootRef, RootProps>(
             onChangeText={onChangeText}
             onFocus={onFocus}
             onBlur={onBlur}
-            clearTextOnFocus={clearTextOnFocus}
-            placeholder={placeholder}
-            inputMode={inputMode}
+            inputMode="numeric"
             /**
              * On iOS if the input has an opacity of 0, we can't paste text into it.
              * As we're setting the opacity to 0.02, we need to hide the caret.
              */
             caretHidden={Platform.OS === 'ios'}
-            textContentType="oneTimeCode"
             autoComplete={
               Platform.OS === 'android' ? 'sms-otp' : 'one-time-code'
             }
+            textContentType="oneTimeCode"
             accessible
             accessibilityRole="text"
-            accessibilityLabel={accessibilityLabel}
-            accessibilityHint={accessibilityHint}
+            accessibilityLabel={`One-time passcode input, ${maxLength} digits`}
+            accessibilityHint={`Enter ${maxLength} digit verification code`}
             accessibilityState={accessibilityState}
             accessibilityValue={accessibilityValue}
             editable={!isDisabled}
-            {...restTextInputProps}
+            {...textInputProps}
           />
         </Pressable>
       </InputOTPContext.Provider>

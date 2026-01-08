@@ -1,6 +1,7 @@
 import type {
   BlurEvent,
   FocusEvent,
+  PressableProps,
   TextInput,
   TextInputProps,
 } from 'react-native';
@@ -60,16 +61,12 @@ export type InputOTPContext = {
 
 /**
  * Props for the InputOTP root component
- * Extends TextInput props (excluding controlled props)
  */
-export type RootProps = Omit<
-  TextInputProps,
-  'value' | 'onChangeText' | 'maxLength'
-> & {
+export type RootProps = {
+  /** Children elements */
+  children?: React.ReactNode;
   /** Maximum length of the OTP (required) */
   maxLength: number;
-  /** Handler called when all slots are filled */
-  onComplete?: (value: string) => void;
   /** Whether the input is disabled @default false */
   isDisabled?: boolean;
   /** Whether the input is in an invalid state @default false */
@@ -78,10 +75,37 @@ export type RootProps = Omit<
   pattern?: string;
   /** Transform pasted text (e.g., remove hyphens) */
   pasteTransformer?: (text: string) => string;
+  /** Placeholder text for the input */
+  placeholder?: TextInputProps['placeholder'];
   /** Controlled value */
-  value?: string;
+  value?: TextInputProps['value'];
+  /** Default value for uncontrolled usage */
+  defaultValue?: TextInputProps['defaultValue'];
   /** Callback when value changes */
-  onChange?: (value: string) => void;
+  onChange?: TextInputProps['onChangeText'];
+  /** Handler for focus events */
+  onFocus?: TextInputProps['onFocus'];
+  /** Handler for blur events */
+  onBlur?: TextInputProps['onBlur'];
+  /** Handler called when all slots are filled */
+  onComplete?: (value: string) => void;
+  /** Rest props to pass to the underlying TextInput component */
+  textInputProps?: Omit<
+    TextInputProps,
+    | 'value'
+    | 'onChangeText'
+    | 'maxLength'
+    | 'placeholder'
+    | 'style'
+    | 'className'
+    | 'inputMode'
+    | 'onFocus'
+    | 'onBlur'
+  >;
+  /** Style to pass to the container Pressable component */
+  style?: PressableProps['style'];
+  /** Additional CSS classes for the container Pressable component */
+  className?: string;
 };
 
 /**

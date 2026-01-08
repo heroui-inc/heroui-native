@@ -70,6 +70,8 @@ const Root = forwardRef<RootRef, RootProps>(
       defaultValue,
       onChange,
       placeholder,
+      placeholderTextColor,
+      placeholderTextClassName,
       children,
       onFocus: onFocusProp,
       onBlur: onBlurProp,
@@ -92,18 +94,34 @@ const Root = forwardRef<RootRef, RootProps>(
       return Array.from({ length: maxLength }).map((_, slotIdx) => {
         const isActive = isFocused && slotIdx === value.length;
         const char = value[slotIdx] !== undefined ? value[slotIdx] : null;
-        const placeholderChar =
-          value[0] !== undefined ? null : (placeholder?.[slotIdx] ?? null);
+        const placeholderChar = isActive
+          ? null
+          : value[slotIdx] !== undefined
+            ? null
+            : (placeholder?.[slotIdx] ?? null);
+        const isPlaceholder = char === null && placeholderChar !== null;
+        const displayChar = isPlaceholder ? placeholderChar : char;
 
         return {
           index: slotIdx,
           char,
           placeholderChar,
+          isPlaceholder,
+          displayChar,
+          placeholderTextColor,
+          placeholderTextClassName,
           isActive,
           isCaretVisible: isActive && char === null,
         };
       });
-    }, [isFocused, maxLength, value, placeholder]);
+    }, [
+      isFocused,
+      maxLength,
+      value,
+      placeholder,
+      placeholderTextColor,
+      placeholderTextClassName,
+    ]);
 
     // --------------------------------------------------
     // TextInput onChangeText handler

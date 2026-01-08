@@ -1,5 +1,5 @@
 import type { TextProps, ViewProps } from 'react-native';
-import type { ViewRef } from '../../helpers/types/primitives';
+import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import type * as InputOTPPrimitivesTypes from '../../primitives/input-otp/input-otp.types';
 
 /**
@@ -69,16 +69,35 @@ export interface InputOTPSlotProps extends InputOTPPrimitivesTypes.SlotProps {
    * Additional CSS classes
    */
   className?: string;
-  /**
-   * Additional props to pass to the Text component that displays the character
-   */
-  textProps?: TextProps;
 }
 
 /**
  * Ref type for InputOTP.Slot component
  */
 export type InputOTPSlotRef = InputOTPPrimitivesTypes.SlotRef;
+
+/**
+ * Props for the InputOTP.SlotText component
+ */
+export interface InputOTPSlotTextProps extends TextProps {
+  /**
+   * Text content to display (required)
+   */
+  children: string;
+  /**
+   * Whether the slot is a placeholder
+   */
+  isPlaceholder: boolean;
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
+}
+
+/**
+ * Ref type for InputOTP.SlotText component
+ */
+export type InputOTPSlotTextRef = TextRef;
 
 /**
  * Props for the InputOTP.SlotCaret component

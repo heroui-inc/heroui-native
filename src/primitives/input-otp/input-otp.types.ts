@@ -17,6 +17,14 @@ export type SlotData = {
   char: string | null;
   /** Placeholder character for this slot, or null if not applicable */
   placeholderChar: string | null;
+  /** Whether this slot is displaying a placeholder */
+  isPlaceholder: boolean;
+  /** The character to display (either char or placeholderChar) */
+  displayChar: string | null;
+  /** Placeholder text color for this slot */
+  placeholderTextColor?: TextInputProps['placeholderTextColor'];
+  /** Placeholder text class name for this slot */
+  placeholderTextClassName?: string | undefined;
   /** Whether this slot is currently active (where cursor is) */
   isActive: boolean;
   /** Whether to show fake caret (when active but empty) */
@@ -77,6 +85,10 @@ export type RootProps = {
   pasteTransformer?: (text: string) => string;
   /** Placeholder text for the input */
   placeholder?: TextInputProps['placeholder'];
+  /** Placeholder text color for the input */
+  placeholderTextColor?: TextInputProps['placeholderTextColor'];
+  /** Placeholder text class name for the input */
+  placeholderTextClassName?: string | undefined;
   /** Controlled value */
   value?: TextInputProps['value'];
   /** Default value for uncontrolled usage */
@@ -96,6 +108,8 @@ export type RootProps = {
     | 'onChangeText'
     | 'maxLength'
     | 'placeholder'
+    | 'placeholderTextColor'
+    | 'placeholderTextClassName'
     | 'style'
     | 'className'
     | 'inputMode'

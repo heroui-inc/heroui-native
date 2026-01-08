@@ -32,6 +32,14 @@ const slot = tv({
 
 const slotText = tv({
   base: 'text-lg font-semibold text-foreground',
+  variants: {
+    isPlaceholder: {
+      true: 'text-muted/50',
+    },
+  },
+  defaultVariants: {
+    isPlaceholder: false,
+  },
 });
 
 const slotCaret = tv({

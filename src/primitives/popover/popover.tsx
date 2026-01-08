@@ -106,6 +106,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       isOpen,
       isDisabled: isDisabledRoot,
       setTriggerPosition,
+      setContentLayout,
       closeDelay,
       isDefaultOpen,
       triggerPosition,
@@ -128,9 +129,11 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
           onOpenChange(false);
           setTimeout(() => {
             setTriggerPosition(null);
+            setContentLayout(null);
           }, closeDelay);
         },
       },
+      deps: [isOpen, closeDelay],
     });
 
     // Open popover on mount if isDefaultOpen is true

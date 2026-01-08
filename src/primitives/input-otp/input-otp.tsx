@@ -75,6 +75,7 @@ const Root = forwardRef<RootRef, RootProps>(
       onFocus: onFocusProp,
       onBlur: onBlurProp,
       clearTextOnFocus,
+      className,
       ...textInputProps
     },
     ref
@@ -96,6 +97,7 @@ const Root = forwardRef<RootRef, RootProps>(
           value[0] !== undefined ? null : (placeholder?.[slotIdx] ?? null);
 
         return {
+          index: slotIdx,
           char,
           placeholderChar,
           isActive,
@@ -271,6 +273,7 @@ const Root = forwardRef<RootRef, RootProps>(
     return (
       <InputOTPContext.Provider value={contextValue}>
         <Pressable
+          className={className}
           onPress={focus}
           disabled={isDisabled}
           accessible={false}

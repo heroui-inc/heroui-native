@@ -10,6 +10,8 @@ import type { SlottableViewProps, ViewRef } from '../../helpers/types';
  * Slot data structure for each OTP slot
  */
 export type SlotData = {
+  /** Zero-based index of the slot */
+  index: number;
   /** The character at this slot index, or null if empty */
   char: string | null;
   /** Placeholder character for this slot, or null if not applicable */

@@ -46,6 +46,17 @@
       --border: oklch(0 0 0 / 0%);
       --divider: oklch(0.93 0.014 230);
       --link: oklch(0.6 0.13 235);
+
+      /* Shadows */
+      --surface-shadow:
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
+      /* Overlay shadow */
+      --overlay-shadow:
+        0 4px 16px 0 rgba(24, 24, 27, 0.08), 0 8px 24px 0 rgba(24, 24, 27, 0.09);
+      --field-shadow:
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
     }
 
     @variant sky-dark {
@@ -94,6 +105,11 @@
       --border: oklch(0 0 0 / 0%);
       --divider: oklch(0.27 0.044 240);
       --link: oklch(0.73 0.14 235);
+
+      /* Shadows */
+      --surface-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
+      --overlay-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
+      --field-shadow: 0 0 0 0 transparent inset; /* Transparent shadow to allow ring utilities to work */
     }
   }
 }

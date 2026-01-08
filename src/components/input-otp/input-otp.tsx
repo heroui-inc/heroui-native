@@ -95,9 +95,6 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
     });
 
     const slotTextClassName = inputOTPStyles.slotText({
-      isActive,
-      isInvalid,
-      isDisabled,
       className: textClassName,
     });
 
@@ -130,7 +127,7 @@ const InputOTPSlotCaret = forwardRef<
   InputOTPSlotCaretRef,
   InputOTPSlotCaretProps
 >((props, ref) => {
-  const { className, ...restProps } = props;
+  const { className, pointerEvents = 'none', ...restProps } = props;
 
   const opacity = useSharedValue(1);
   const height = useSharedValue(24);
@@ -169,10 +166,13 @@ const InputOTPSlotCaret = forwardRef<
   };
 
   return (
-    <View ref={ref} className={tvStyles} {...restProps}>
-      <View className="absolute w-full h-full items-center justify-center">
-        <Animated.View style={[baseStyle, animatedStyle]} />
-      </View>
+    <View
+      ref={ref}
+      className={tvStyles}
+      pointerEvents={pointerEvents}
+      {...restProps}
+    >
+      <Animated.View style={[baseStyle, animatedStyle]} />
     </View>
   );
 });

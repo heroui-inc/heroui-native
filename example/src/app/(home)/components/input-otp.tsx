@@ -10,12 +10,6 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 const BasicOTPContent = () => {
   const ref = useRef<React.ComponentRef<typeof InputOTP>>(null);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     ref.current?.focus();
-  //   }, 1000);
-  // }, []);
-
   const onComplete = (code: string) => {
     Alert.alert('Completed', `Code: ${code}`);
     ref.current?.clear();
@@ -23,18 +17,22 @@ const BasicOTPContent = () => {
 
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <InputOTP
-        ref={ref}
-        maxLength={6}
-        onComplete={onComplete}
-        autoFocus
-        clearTextOnFocus
-      >
+      <InputOTP ref={ref} maxLength={6} onComplete={onComplete} placeholder="*">
         <InputOTP.Group>
           {({ slots }) => (
             <>
-              {slots.map((_, index) => (
-                <InputOTP.Slot key={index} index={index} />
+              {slots.slice(0, 3).map((slot) => (
+                <InputOTP.Slot key={slot.index} index={slot.index} />
+              ))}
+            </>
+          )}
+        </InputOTP.Group>
+        <InputOTP.Separator />
+        <InputOTP.Group>
+          {({ slots }) => (
+            <>
+              {slots.slice(3, 6).map((slot) => (
+                <InputOTP.Slot key={slot.index} index={slot.index} />
               ))}
             </>
           )}

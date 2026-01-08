@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
-  base: '',
+  base: 'flex-row items-center gap-2',
 });
 
 const group = tv({
@@ -11,7 +11,7 @@ const group = tv({
 });
 
 const slot = tv({
-  base: 'h-12 w-12 rounded-xl border-[1.5px] border-field-border bg-field items-center justify-center',
+  base: 'h-12 w-11 items-center justify-center rounded-[14px] border-[1.5px] border-field-border bg-field shadow-field',
   variants: {
     isActive: {
       true: 'border-accent',
@@ -32,30 +32,14 @@ const slot = tv({
 
 const slotText = tv({
   base: 'text-lg font-semibold text-foreground',
-  variants: {
-    isActive: {
-      true: '',
-    },
-    isInvalid: {
-      true: '',
-    },
-    isDisabled: {
-      true: 'text-muted',
-    },
-  },
-  defaultVariants: {
-    isActive: false,
-    isInvalid: false,
-    isDisabled: false,
-  },
 });
 
 const slotCaret = tv({
-  base: '',
+  base: 'absolute inset-0 items-center justify-center',
 });
 
 const separator = tv({
-  base: 'h-0.5 w-6 bg-border',
+  base: 'h-0.5 w-2 rounded-full bg-divider/50',
 });
 
 export const styleSheet = StyleSheet.create({

@@ -46,6 +46,17 @@
       --border: oklch(0 0 0 / 0%);
       --divider: oklch(0.91 0.015 295);
       --link: oklch(0.62 0.17 310);
+
+      /* Shadows */
+      --surface-shadow:
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
+      /* Overlay shadow */
+      --overlay-shadow:
+        0 4px 16px 0 rgba(24, 24, 27, 0.08), 0 8px 24px 0 rgba(24, 24, 27, 0.09);
+      --field-shadow:
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
     }
 
     @variant lavender-dark {
@@ -94,6 +105,11 @@
       --border: oklch(0 0 0 / 0%);
       --divider: oklch(0.28 0.045 295);
       --link: oklch(0.75 0.18 320);
+
+      /* Shadows */
+      --surface-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
+      --overlay-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
+      --field-shadow: 0 0 0 0 transparent inset; /* Transparent shadow to allow ring utilities to work */
     }
   }
 }

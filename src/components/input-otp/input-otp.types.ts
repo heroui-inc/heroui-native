@@ -108,11 +108,21 @@ export interface InputOTPSlotTextProps extends TextProps {
   /**
    * Text content to display (required)
    */
-  children: string;
+  children?: string;
   /**
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Placeholder text color for this slot
+   * Takes precedence over slot-level placeholderTextColor
+   */
+  placeholderTextColor?: string | undefined;
+  /**
+   * Placeholder text class name for this slot
+   * Takes precedence over slot-level placeholderTextClassName
+   */
+  placeholderTextClassName?: string | undefined;
 }
 
 /**

@@ -108,7 +108,6 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
     const isActive = slot?.isActive ?? false;
     const isPlaceholder = slot?.isPlaceholder ?? false;
     const isCaretVisible = slot?.isCaretVisible ?? false;
-    const displayChar = slot?.displayChar ?? '';
 
     const slotClassName = inputOTPStyles.slot({
       isActive,
@@ -140,7 +139,7 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
             children
           ) : (
             <>
-              <InputOTPSlotText>{displayChar}</InputOTPSlotText>
+              <InputOTPSlotText />
               <InputOTPSlotCaret />
             </>
           )}
@@ -154,17 +153,34 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
 
 const InputOTPSlotText = forwardRef<InputOTPSlotTextRef, InputOTPSlotTextProps>(
   (props, ref) => {
-    const { className, style, children, ...restProps } = props;
+    const {
+      className,
+      style,
+      children,
+      placeholderTextColor,
+      placeholderTextClassName,
+      ...restProps
+    } = props;
 
     const { slot, isPlaceholder } = useInputOTPSlot();
 
+    const displayChar = children ?? slot?.displayChar ?? '';
+
+    const finalPlaceholderTextColor =
+      placeholderTextColor ?? slot?.placeholderTextColor;
+    const finalPlaceholderTextClassName =
+      placeholderTextClassName ??
+      slot?.placeholderTextClassName ??
+      'text-field-placeholder/50';
+
     const slotPlaceholderTextStyle =
-      isPlaceholder && slot?.placeholderTextColor
-        ? { color: slot.placeholderTextColor }
+      isPlaceholder && finalPlaceholderTextColor
+        ? { color: finalPlaceholderTextColor }
         : undefined;
+
     const slotPlaceholderTextClassName =
-      isPlaceholder && slot?.placeholderTextClassName
-        ? slot.placeholderTextClassName
+      isPlaceholder && finalPlaceholderTextClassName
+        ? finalPlaceholderTextClassName
         : undefined;
 
     const slotTextClassName = inputOTPStyles.slotText({
@@ -179,7 +195,7 @@ const InputOTPSlotText = forwardRef<InputOTPSlotTextRef, InputOTPSlotTextProps>(
         style={[slotPlaceholderTextStyle, style]}
         {...restProps}
       >
-        {children}
+        {displayChar}
       </HeroText>
     );
   }

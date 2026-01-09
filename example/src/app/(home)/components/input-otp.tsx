@@ -1,4 +1,4 @@
-import { InputOTP } from 'heroui-native';
+import { InputOTP, type InputOTPRef } from 'heroui-native';
 import { useRef } from 'react';
 import { Alert, View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
@@ -7,7 +7,7 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 // ------------------------------------------------------------------------------
 
 const BasicOTPContent = () => {
-  const ref = useRef<React.ComponentRef<typeof InputOTP>>(null);
+  const ref = useRef<InputOTPRef>(null);
 
   const onComplete = (code: string) => {
     Alert.alert('Completed', `Code: ${code}`);
@@ -26,7 +26,11 @@ const BasicOTPContent = () => {
           {({ slots }) => (
             <>
               {slots.slice(0, 3).map((slot) => (
-                <InputOTP.Slot key={slot.index} index={slot.index} />
+                <InputOTP.Slot key={slot.index} index={slot.index}>
+                  <InputOTP.SlotPlaceholder />
+                  <InputOTP.SlotValue />
+                  <InputOTP.SlotCaret />
+                </InputOTP.Slot>
               ))}
             </>
           )}

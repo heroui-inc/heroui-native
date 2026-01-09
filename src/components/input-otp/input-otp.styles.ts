@@ -11,7 +11,7 @@ const group = tv({
 });
 
 const slot = tv({
-  base: 'h-12 w-11 items-center justify-center rounded-[14px] border-[1.5px] border-field-border bg-field shadow-field',
+  base: 'h-12 w-11 items-center justify-center rounded-[14px] border-[1.5px] border-field-border bg-field shadow-field overflow-hidden',
   variants: {
     isActive: {
       true: 'border-accent',
@@ -30,16 +30,12 @@ const slot = tv({
   },
 });
 
-const slotText = tv({
+const slotPlaceholder = tv({
+  base: 'text-lg font-semibold text-field-placeholder/50',
+});
+
+const slotValue = tv({
   base: 'text-lg font-semibold text-foreground',
-  variants: {
-    isPlaceholder: {
-      true: 'text-field-placeholder/50',
-    },
-  },
-  defaultVariants: {
-    isPlaceholder: false,
-  },
 });
 
 const slotCaret = tv({
@@ -60,7 +56,8 @@ const inputOTPStyles = combineStyles({
   root,
   group,
   slot,
-  slotText,
+  slotPlaceholder,
+  slotValue,
   slotCaret,
   separator,
 });

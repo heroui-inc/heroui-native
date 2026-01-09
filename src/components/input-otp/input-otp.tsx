@@ -1,5 +1,11 @@
 import { forwardRef, useMemo } from 'react';
-import Animated from 'react-native-reanimated';
+import Animated, {
+  Easing,
+  FadeIn,
+  FadeOut,
+  FlipInXDown,
+  FlipOutXDown,
+} from 'react-native-reanimated';
 import { HeroText } from '../../helpers/components';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { createContext } from '../../helpers/utils';
@@ -14,18 +20,22 @@ import type {
   InputOTPGroupProps,
   InputOTPGroupRef,
   InputOTPGroupRenderProps,
+  InputOTPRef,
   InputOTPRootProps,
-  InputOTPRootRef,
   InputOTPSeparatorProps,
   InputOTPSeparatorRef,
   InputOTPSlotCaretProps,
   InputOTPSlotCaretRef,
   InputOTPSlotContextValue,
+  InputOTPSlotPlaceholderProps,
+  InputOTPSlotPlaceholderRef,
   InputOTPSlotProps,
   InputOTPSlotRef,
-  InputOTPSlotTextProps,
-  InputOTPSlotTextRef,
+  InputOTPSlotValueProps,
+  InputOTPSlotValueRef,
 } from './input-otp.types';
+
+const AnimatedText = Animated.createAnimatedComponent(HeroText);
 
 const [InputOTPSlotProvider, useInputOTPSlot] =
   createContext<InputOTPSlotContextValue>({
@@ -36,7 +46,7 @@ const useInputOTP = InputOTPPrimitives.useInputOTPContext;
 
 // --------------------------------------------------
 
-const InputOTPRoot = forwardRef<InputOTPRootRef, InputOTPRootProps>(
+const InputOTPRoot = forwardRef<InputOTPRef, InputOTPRootProps>(
   (props, ref) => {
     const { className, animation, ...restProps } = props;
 
@@ -106,7 +116,6 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
 
     const slot = slots[index];
     const isActive = slot?.isActive ?? false;
-    const isPlaceholder = slot?.isPlaceholder ?? false;
     const isCaretVisible = slot?.isCaretVisible ?? false;
 
     const slotClassName = inputOTPStyles.slot({
@@ -120,10 +129,9 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
       () => ({
         slot,
         isActive,
-        isPlaceholder,
         isCaretVisible,
       }),
-      [slot, isActive, isPlaceholder, isCaretVisible]
+      [slot, isActive, isCaretVisible]
     );
 
     return (
@@ -139,7 +147,8 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
             children
           ) : (
             <>
-              <InputOTPSlotText />
+              <InputOTPSlotPlaceholder />
+              <InputOTPSlotValue />
               <InputOTPSlotCaret />
             </>
           )}
@@ -151,55 +160,95 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
 
 // --------------------------------------------------
 
-const InputOTPSlotText = forwardRef<InputOTPSlotTextRef, InputOTPSlotTextProps>(
-  (props, ref) => {
-    const {
-      className,
-      style,
-      children,
-      placeholderTextColor,
-      placeholderTextClassName,
-      ...restProps
-    } = props;
+/**
+ * Component that displays the placeholder character for an InputOTP slot
+ * Used when the slot is empty and should show a placeholder
+ */
+const InputOTPSlotPlaceholder = forwardRef<
+  InputOTPSlotPlaceholderRef,
+  InputOTPSlotPlaceholderProps
+>((props, ref) => {
+  const { className, style, children, ...restProps } = props;
 
-    const { slot, isPlaceholder } = useInputOTPSlot();
+  const { slot, isActive } = useInputOTPSlot();
+  const { placeholderTextColor, placeholderTextClassName } = useInputOTP();
 
-    const displayChar = children ?? slot?.displayChar ?? '';
+  const displayChar = children ?? slot?.placeholderChar ?? '';
 
-    const finalPlaceholderTextColor =
-      placeholderTextColor ?? slot?.placeholderTextColor;
-    const finalPlaceholderTextClassName =
-      placeholderTextClassName ??
-      slot?.placeholderTextClassName ??
-      'text-field-placeholder/50';
+  if (slot?.char || isActive || !displayChar) {
+    return null;
+  }
 
-    const slotPlaceholderTextStyle =
-      isPlaceholder && finalPlaceholderTextColor
-        ? { color: finalPlaceholderTextColor }
-        : undefined;
+  const slotPlaceholderTextStyle = placeholderTextColor
+    ? { color: placeholderTextColor }
+    : undefined;
 
-    const slotPlaceholderTextClassName =
-      isPlaceholder && finalPlaceholderTextClassName
-        ? finalPlaceholderTextClassName
-        : undefined;
+  const slotPlaceholderTextClassName = placeholderTextClassName
+    ? placeholderTextClassName
+    : undefined;
 
-    const slotTextClassName = inputOTPStyles.slotText({
-      isPlaceholder,
-      className: [className, slotPlaceholderTextClassName],
-    });
+  const slotPlaceholderClassName = inputOTPStyles.slotPlaceholder({
+    className: [slotPlaceholderTextClassName, className],
+  });
 
-    return (
-      <HeroText
+  return (
+    <HeroText
+      ref={ref}
+      className={slotPlaceholderClassName}
+      style={[slotPlaceholderTextStyle, style]}
+      {...restProps}
+    >
+      {displayChar}
+    </HeroText>
+  );
+});
+
+// --------------------------------------------------
+
+/**
+ * Component that displays the actual character value for an InputOTP slot
+ * Used when the slot has a value and should display it with animations
+ */
+const InputOTPSlotValue = forwardRef<
+  InputOTPSlotValueRef,
+  InputOTPSlotValueProps
+>((props, ref) => {
+  const { className, style, children, ...restProps } = props;
+
+  const { slot } = useInputOTPSlot();
+
+  const displayChar = children ?? slot?.char ?? '';
+
+  if (!displayChar) {
+    return null;
+  }
+
+  const slotValueClassName = inputOTPStyles.slotValue({
+    className,
+  });
+
+  return (
+    <Animated.View
+      entering={FadeIn.duration(250)}
+      exiting={FadeOut.duration(100)}
+    >
+      <AnimatedText
         ref={ref}
-        className={slotTextClassName}
-        style={[slotPlaceholderTextStyle, style]}
+        entering={FlipInXDown.duration(250)
+          .easing(Easing.bezier(0, 0.75, 0.5, 0.9).factory())
+          .build()}
+        exiting={FlipOutXDown.duration(250)
+          .easing(Easing.bezier(0.6, 0.1, 0.4, 0.8).factory())
+          .build()}
+        className={slotValueClassName}
+        style={style}
         {...restProps}
       >
         {displayChar}
-      </HeroText>
-    );
-  }
-);
+      </AnimatedText>
+    </Animated.View>
+  );
+});
 
 // --------------------------------------------------
 
@@ -265,8 +314,9 @@ const InputOTPSeparator = forwardRef<
 InputOTPRoot.displayName = DISPLAY_NAME.ROOT;
 InputOTPGroup.displayName = DISPLAY_NAME.GROUP;
 InputOTPSlot.displayName = DISPLAY_NAME.SLOT;
+InputOTPSlotPlaceholder.displayName = DISPLAY_NAME.SLOT_PLACEHOLDER;
+InputOTPSlotValue.displayName = DISPLAY_NAME.SLOT_VALUE;
 InputOTPSlotCaret.displayName = DISPLAY_NAME.SLOT_CARET;
-InputOTPSlotText.displayName = DISPLAY_NAME.SLOT_TEXT;
 InputOTPSeparator.displayName = DISPLAY_NAME.SEPARATOR;
 
 /**
@@ -282,12 +332,17 @@ InputOTPSeparator.displayName = DISPLAY_NAME.SEPARATOR;
  * or placeholder. Each slot must have a unique index matching its position
  * in the OTP sequence.
  *
+ * @component InputOTP.SlotPlaceholder - Text component that displays the
+ * placeholder character for a slot when it's empty. Used by default in Slot
+ * if no children provided.
+ *
+ * @component InputOTP.SlotValue - Text component that displays the actual
+ * character value for a slot with animations. Used by default in Slot
+ * if no children provided.
+ *
  * @component InputOTP.SlotCaret - Animated caret indicator that shows the
  * current input position. Place this inside a Slot to show where the user
  * is currently typing.
- *
- * @component InputOTP.SlotText - Text component that displays the character
- * or placeholder for a slot. Used by default in Slot if no children provided.
  *
  * @component InputOTP.Separator - Visual separator between groups of slots.
  * Use this to visually separate different groups of OTP digits.
@@ -303,10 +358,12 @@ const InputOTP = Object.assign(InputOTPRoot, {
   Group: InputOTPGroup,
   /** @optional Individual slot that displays a single character or placeholder */
   Slot: InputOTPSlot,
+  /** @optional Text component that displays the placeholder character for a slot */
+  SlotPlaceholder: InputOTPSlotPlaceholder,
+  /** @optional Text component that displays the actual character value for a slot */
+  SlotValue: InputOTPSlotValue,
   /** @optional Animated caret indicator for the current input position */
   SlotCaret: InputOTPSlotCaret,
-  /** @optional Text component that displays the character or placeholder for a slot */
-  SlotText: InputOTPSlotText,
   /** @optional Visual separator between groups of slots */
   Separator: InputOTPSeparator,
 });

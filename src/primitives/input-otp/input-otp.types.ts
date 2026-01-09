@@ -17,14 +17,6 @@ export type SlotData = {
   char: string | null;
   /** Placeholder character for this slot, or null if not applicable */
   placeholderChar: string | null;
-  /** Whether this slot is displaying a placeholder */
-  isPlaceholder: boolean;
-  /** The character to display (either char or placeholderChar) */
-  displayChar: string | null;
-  /** Placeholder text color for this slot */
-  placeholderTextColor?: TextInputProps['placeholderTextColor'];
-  /** Placeholder text class name for this slot */
-  placeholderTextClassName?: string | undefined;
   /** Whether this slot is currently active (where cursor is) */
   isActive: boolean;
   /** Whether to show fake caret (when active but empty) */
@@ -47,6 +39,10 @@ export type InputOTPContext = {
   isInvalid: boolean;
   /** Array of slot data for each position */
   slots: SlotData[];
+  /** Placeholder text color for all slots */
+  placeholderTextColor?: TextInputProps['placeholderTextColor'];
+  /** Placeholder text class name for all slots */
+  placeholderTextClassName?: string | undefined;
   /** Event handlers */
   handlers: {
     /** Handler for text changes */

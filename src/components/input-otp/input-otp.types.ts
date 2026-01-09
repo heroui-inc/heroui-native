@@ -45,7 +45,7 @@ export interface InputOTPRootProps extends InputOTPPrimitivesTypes.RootProps {
 /**
  * Ref type for InputOTP.Root component
  */
-export type InputOTPRootRef = InputOTPPrimitivesTypes.RootRef;
+export type InputOTPRef = InputOTPPrimitivesTypes.RootRef;
 
 /**
  * Props for the InputOTP.Group component
@@ -95,40 +95,47 @@ export interface InputOTPSlotContextValue {
   slot: InputOTPPrimitivesTypes.SlotData | undefined;
   /** Whether this slot is currently active (where cursor is) */
   isActive: boolean;
-  /** Whether this slot is displaying a placeholder */
-  isPlaceholder: boolean;
   /** Whether to show fake caret (when active but empty) */
   isCaretVisible: boolean;
 }
 
 /**
- * Props for the InputOTP.SlotText component
+ * Props for the InputOTP.SlotPlaceholder component
  */
-export interface InputOTPSlotTextProps extends TextProps {
+export interface InputOTPSlotPlaceholderProps extends TextProps {
   /**
-   * Text content to display (required)
+   * Text content to display (optional, defaults to slot.placeholderChar)
    */
   children?: string;
   /**
    * Additional CSS classes
    */
   className?: string;
-  /**
-   * Placeholder text color for this slot
-   * Takes precedence over slot-level placeholderTextColor
-   */
-  placeholderTextColor?: string | undefined;
-  /**
-   * Placeholder text class name for this slot
-   * Takes precedence over slot-level placeholderTextClassName
-   */
-  placeholderTextClassName?: string | undefined;
 }
 
 /**
- * Ref type for InputOTP.SlotText component
+ * Ref type for InputOTP.SlotPlaceholder component
  */
-export type InputOTPSlotTextRef = TextRef;
+export type InputOTPSlotPlaceholderRef = TextRef;
+
+/**
+ * Props for the InputOTP.SlotValue component
+ */
+export interface InputOTPSlotValueProps extends TextProps {
+  /**
+   * Text content to display (optional, defaults to slot.char)
+   */
+  children?: string;
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
+}
+
+/**
+ * Ref type for InputOTP.SlotValue component
+ */
+export type InputOTPSlotValueRef = TextRef;
 
 /**
  * Animation configuration for InputOTP.SlotCaret component

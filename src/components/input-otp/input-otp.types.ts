@@ -1,4 +1,5 @@
 import type { TextProps, ViewProps } from 'react-native';
+import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import type * as InputOTPPrimitivesTypes from '../../primitives/input-otp/input-otp.types';
 
@@ -29,6 +30,12 @@ export interface InputOTPRootProps extends InputOTPPrimitivesTypes.RootProps {
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Animation configuration for InputOTP
+   * - `"disable-all"`: Disable all animations including children
+   * - `undefined`: Use default animations
+   */
+  animation?: AnimationRootDisableAll;
 }
 
 /**

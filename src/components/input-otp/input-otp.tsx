@@ -1,4 +1,4 @@
-import { forwardRef, useEffect } from 'react';
+import { forwardRef, useEffect, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -8,7 +8,9 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { HeroText } from '../../helpers/components';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import * as InputOTPPrimitives from '../../primitives/input-otp';
+import { useInputOTPRootAnimation } from './input-otp.animation';
 import { DISPLAY_NAME } from './input-otp.constants';
 import inputOTPStyles, { styleSheet } from './input-otp.styles';
 import type {
@@ -33,12 +35,29 @@ const useInputOTP = InputOTPPrimitives.useInputOTPContext;
 
 const InputOTPRoot = forwardRef<InputOTPRootRef, InputOTPRootProps>(
   (props, ref) => {
-    const { className, ...restProps } = props;
+    const { className, animation, ...restProps } = props;
 
     const tvStyles = inputOTPStyles.root({ className });
 
+    const { isAllAnimationsDisabled } = useInputOTPRootAnimation({
+      animation,
+    });
+
+    const animationSettingsContextValue = useMemo(
+      () => ({
+        isAllAnimationsDisabled,
+      }),
+      [isAllAnimationsDisabled]
+    );
+
     return (
-      <InputOTPPrimitives.Root ref={ref} className={tvStyles} {...restProps} />
+      <AnimationSettingsProvider value={animationSettingsContextValue}>
+        <InputOTPPrimitives.Root
+          ref={ref}
+          className={tvStyles}
+          {...restProps}
+        />
+      </AnimationSettingsProvider>
     );
   }
 );

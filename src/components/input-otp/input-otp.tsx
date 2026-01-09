@@ -1,11 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import Animated, {
-  Easing,
-  FadeIn,
-  FadeOut,
-  FlipInXDown,
-  FlipOutXDown,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/components';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import { createContext } from '../../helpers/utils';
@@ -13,6 +7,7 @@ import * as InputOTPPrimitives from '../../primitives/input-otp';
 import {
   useInputOTPRootAnimation,
   useInputOTPSlotCaretAnimation,
+  useInputOTPSlotValueAnimation,
 } from './input-otp.animation';
 import { DISPLAY_NAME } from './input-otp.constants';
 import inputOTPStyles, { styleSheet } from './input-otp.styles';
@@ -213,35 +208,32 @@ const InputOTPSlotValue = forwardRef<
   InputOTPSlotValueRef,
   InputOTPSlotValueProps
 >((props, ref) => {
-  const { className, style, children, ...restProps } = props;
+  const { className, children, animation, ...restProps } = props;
 
   const { slot } = useInputOTPSlot();
 
   const displayChar = children ?? slot?.char ?? '';
 
-  if (!displayChar) {
-    return null;
-  }
+  const { wrapperEntering, wrapperExiting, textEntering, textExiting } =
+    useInputOTPSlotValueAnimation({
+      animation,
+    });
 
   const slotValueClassName = inputOTPStyles.slotValue({
     className,
   });
 
+  if (!displayChar) {
+    return null;
+  }
+
   return (
-    <Animated.View
-      entering={FadeIn.duration(250)}
-      exiting={FadeOut.duration(100)}
-    >
+    <Animated.View entering={wrapperEntering} exiting={wrapperExiting}>
       <AnimatedText
         ref={ref}
-        entering={FlipInXDown.duration(250)
-          .easing(Easing.bezier(0, 0.75, 0.5, 0.9).factory())
-          .build()}
-        exiting={FlipOutXDown.duration(250)
-          .easing(Easing.bezier(0.6, 0.1, 0.4, 0.8).factory())
-          .build()}
+        entering={textEntering}
+        exiting={textExiting}
         className={slotValueClassName}
-        style={style}
         {...restProps}
       >
         {displayChar}

@@ -1,5 +1,10 @@
 import { useEffect } from 'react';
 import {
+  Easing,
+  FadeIn,
+  FadeOut,
+  FlipInXDown,
+  FlipOutXDown,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
@@ -14,13 +19,10 @@ import {
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
 } from '../../helpers/utils/animation';
-import {
-  DEFAULT_SLOT_CARET_HEIGHT,
-  DEFAULT_SLOT_CARET_HEIGHT_DURATION,
-  DEFAULT_SLOT_CARET_OPACITY,
-  DEFAULT_SLOT_CARET_OPACITY_DURATION,
-} from './input-otp.constants';
-import type { InputOTPSlotCaretAnimation } from './input-otp.types';
+import type {
+  InputOTPSlotCaretAnimation,
+  InputOTPSlotValueAnimation,
+} from './input-otp.types';
 
 /**
  * Animation hook for InputOTP root component
@@ -63,26 +65,26 @@ export function useInputOTPSlotCaretAnimation(options: {
   const opacityValue = getAnimationValueProperty({
     animationValue: animationConfig?.opacity,
     property: 'value',
-    defaultValue: DEFAULT_SLOT_CARET_OPACITY,
+    defaultValue: [0, 1] as [number, number],
   });
 
   const opacityDuration = getAnimationValueProperty({
     animationValue: animationConfig?.opacity,
     property: 'duration',
-    defaultValue: DEFAULT_SLOT_CARET_OPACITY_DURATION,
+    defaultValue: 500,
   });
 
   // Height animation configuration
   const heightValue = getAnimationValueProperty({
     animationValue: animationConfig?.height,
     property: 'value',
-    defaultValue: DEFAULT_SLOT_CARET_HEIGHT,
+    defaultValue: [16, 18] as [number, number],
   });
 
   const heightDuration = getAnimationValueProperty({
     animationValue: animationConfig?.height,
     property: 'duration',
-    defaultValue: DEFAULT_SLOT_CARET_HEIGHT_DURATION,
+    defaultValue: 500,
   });
 
   const opacity = useSharedValue(opacityValue[1]);
@@ -133,5 +135,65 @@ export function useInputOTPSlotCaretAnimation(options: {
 
   return {
     rContainerStyle,
+  };
+}
+
+// --------------------------------------------------
+
+/**
+ * Animation hook for InputOTP.SlotValue component
+ * Handles wrapper (fade) and text (flip) animations for entering/exiting
+ */
+export function useInputOTPSlotValueAnimation(options: {
+  animation: InputOTPSlotValueAnimation | undefined;
+}) {
+  const { animation } = options;
+
+  // Read from global animation context (always available in compound parts)
+  const { isAllAnimationsDisabled } = useAnimationSettings();
+
+  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
+
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
+
+  // Wrapper animation configuration (fade)
+  const wrapperEntering = getAnimationValueProperty({
+    animationValue: animationConfig?.wrapper,
+    property: 'entering',
+    defaultValue: FadeIn.duration(250),
+  });
+
+  const wrapperExiting = getAnimationValueProperty({
+    animationValue: animationConfig?.wrapper,
+    property: 'exiting',
+    defaultValue: FadeOut.duration(100),
+  });
+
+  // Text animation configuration (flip)
+  const textEntering = getAnimationValueProperty({
+    animationValue: animationConfig?.text,
+    property: 'entering',
+    defaultValue: FlipInXDown.duration(250)
+      .delay(0)
+      .easing(Easing.bezier(0, 0.75, 0.5, 0.9).factory())
+      .build(),
+  });
+
+  const textExiting = getAnimationValueProperty({
+    animationValue: animationConfig?.text,
+    property: 'exiting',
+    defaultValue: FlipOutXDown.duration(250)
+      .easing(Easing.bezier(0.6, 0.1, 0.4, 0.8).factory())
+      .build(),
+  });
+
+  return {
+    wrapperEntering: isAnimationDisabledValue ? undefined : wrapperEntering,
+    wrapperExiting: isAnimationDisabledValue ? undefined : wrapperExiting,
+    textEntering: isAnimationDisabledValue ? undefined : textEntering,
+    textExiting: isAnimationDisabledValue ? undefined : textExiting,
   };
 }

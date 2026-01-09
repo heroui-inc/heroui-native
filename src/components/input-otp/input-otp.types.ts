@@ -1,4 +1,5 @@
 import type { TextProps, ViewProps } from 'react-native';
+import type { EntryOrExitLayoutType } from 'react-native-reanimated';
 import type {
   Animation,
   AnimationRootDisableAll,
@@ -119,6 +120,42 @@ export interface InputOTPSlotPlaceholderProps extends TextProps {
 export type InputOTPSlotPlaceholderRef = TextRef;
 
 /**
+ * Animation configuration for InputOTP.SlotValue component
+ */
+export type InputOTPSlotValueAnimation = Animation<{
+  /**
+   * Wrapper animation configuration (fade in/out for the container)
+   */
+  wrapper?: AnimationValue<{
+    /**
+     * Entering animation for wrapper
+     * @default FadeIn.duration(250)
+     */
+    entering?: EntryOrExitLayoutType;
+    /**
+     * Exiting animation for wrapper
+     * @default FadeOut.duration(100)
+     */
+    exiting?: EntryOrExitLayoutType;
+  }>;
+  /**
+   * Text animation configuration (flip animations for the text)
+   */
+  text?: AnimationValue<{
+    /**
+     * Entering animation for text
+     * @default FlipInXDown.duration(250).easing(...)
+     */
+    entering?: EntryOrExitLayoutType;
+    /**
+     * Exiting animation for text
+     * @default FlipOutXDown.duration(250).easing(...)
+     */
+    exiting?: EntryOrExitLayoutType;
+  }>;
+}>;
+
+/**
  * Props for the InputOTP.SlotValue component
  */
 export interface InputOTPSlotValueProps extends TextProps {
@@ -130,6 +167,11 @@ export interface InputOTPSlotValueProps extends TextProps {
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Animation configuration for SlotValue
+   * Controls both wrapper (fade) and text (flip) animations
+   */
+  animation?: InputOTPSlotValueAnimation;
 }
 
 /**

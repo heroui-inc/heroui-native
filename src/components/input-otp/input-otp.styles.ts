@@ -34,7 +34,7 @@ const slotText = tv({
   base: 'text-lg font-semibold text-foreground',
   variants: {
     isPlaceholder: {
-      true: 'text-muted/50',
+      true: 'text-field-placeholder/50',
     },
   },
   defaultVariants: {
@@ -43,7 +43,7 @@ const slotText = tv({
 });
 
 const slotCaret = tv({
-  base: 'absolute inset-0 items-center justify-center',
+  base: 'absolute w-0.5 rounded-full bg-field-placeholder',
 });
 
 const separator = tv({

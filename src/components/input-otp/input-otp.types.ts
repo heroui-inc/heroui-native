@@ -1,5 +1,9 @@
 import type { TextProps, ViewProps } from 'react-native';
-import type { AnimationRootDisableAll } from '../../helpers/types/animation';
+import type {
+  Animation,
+  AnimationRootDisableAll,
+  AnimationValue,
+} from '../../helpers/types/animation';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import type * as InputOTPPrimitivesTypes from '../../primitives/input-otp/input-otp.types';
 
@@ -107,6 +111,42 @@ export interface InputOTPSlotTextProps extends TextProps {
 export type InputOTPSlotTextRef = TextRef;
 
 /**
+ * Animation configuration for InputOTP.SlotCaret component
+ */
+export type InputOTPSlotCaretAnimation = Animation<{
+  /**
+   * Opacity animation configuration
+   */
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [min, max]
+     * @default [0, 1]
+     */
+    value?: [number, number];
+    /**
+     * Animation duration in milliseconds
+     * @default 500
+     */
+    duration?: number;
+  }>;
+  /**
+   * Height animation configuration
+   */
+  height?: AnimationValue<{
+    /**
+     * Height values [min, max]
+     * @default [16, 18]
+     */
+    value?: [number, number];
+    /**
+     * Animation duration in milliseconds
+     * @default 500
+     */
+    duration?: number;
+  }>;
+}>;
+
+/**
  * Props for the InputOTP.SlotCaret component
  */
 export interface InputOTPSlotCaretProps extends ViewProps {
@@ -114,6 +154,17 @@ export interface InputOTPSlotCaretProps extends ViewProps {
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Animation configuration for SlotCaret
+   */
+  animation?: InputOTPSlotCaretAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
 }
 
 /**

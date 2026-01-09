@@ -1,16 +1,12 @@
-import { forwardRef, useEffect, useMemo } from 'react';
-import { View } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withSequence,
-  withTiming,
-} from 'react-native-reanimated';
+import { forwardRef, useMemo } from 'react';
+import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/components';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import * as InputOTPPrimitives from '../../primitives/input-otp';
-import { useInputOTPRootAnimation } from './input-otp.animation';
+import {
+  useInputOTPRootAnimation,
+  useInputOTPSlotCaretAnimation,
+} from './input-otp.animation';
 import { DISPLAY_NAME } from './input-otp.constants';
 import inputOTPStyles, { styleSheet } from './input-otp.styles';
 import type {
@@ -174,53 +170,33 @@ const InputOTPSlotCaret = forwardRef<
   InputOTPSlotCaretRef,
   InputOTPSlotCaretProps
 >((props, ref) => {
-  const { className, pointerEvents = 'none', ...restProps } = props;
-
-  const opacity = useSharedValue(1);
-  const height = useSharedValue(24);
-
-  useEffect(() => {
-    opacity.value = withRepeat(
-      withSequence(
-        withTiming(0, { duration: 500 }),
-        withTiming(1, { duration: 500 })
-      ),
-      -1,
-      true
-    );
-
-    height.value = withRepeat(
-      withSequence(
-        withTiming(20, { duration: 500 }),
-        withTiming(28, { duration: 500 })
-      ),
-      -1,
-      true
-    );
-  }, [opacity, height]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-    height: height.value,
-  }));
+  const {
+    className,
+    animation,
+    isAnimatedStyleActive = true,
+    pointerEvents = 'none',
+    style,
+    ...restProps
+  } = props;
 
   const tvStyles = inputOTPStyles.slotCaret({ className });
 
-  const baseStyle = {
-    width: 2,
-    backgroundColor: '#111827',
-    borderRadius: 1,
-  };
+  const { rContainerStyle } = useInputOTPSlotCaretAnimation({
+    animation,
+  });
+
+  const containerStyle = isAnimatedStyleActive
+    ? [rContainerStyle, style]
+    : style;
 
   return (
-    <View
+    <Animated.View
       ref={ref}
       className={tvStyles}
+      style={containerStyle}
       pointerEvents={pointerEvents}
       {...restProps}
-    >
-      <Animated.View style={[baseStyle, animatedStyle]} />
-    </View>
+    />
   );
 });
 

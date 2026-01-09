@@ -1,2 +1,8 @@
-export { default as InputOTP, useInputOTP } from './input-otp';
+export {
+  default as InputOTP,
+  REGEXP_ONLY_CHARS,
+  REGEXP_ONLY_DIGITS,
+  REGEXP_ONLY_DIGITS_AND_CHARS,
+  useInputOTP,
+} from './input-otp';
 export type * from './input-otp.types';

@@ -77,6 +77,8 @@ export type RootProps = {
   isInvalid?: boolean;
   /** Regex pattern for allowed characters (e.g., REGEXP_ONLY_DIGITS) */
   pattern?: string;
+  /** Input mode for the input */
+  inputMode?: TextInputProps['inputMode'];
   /** Transform pasted text (e.g., remove hyphens) */
   pasteTransformer?: (text: string) => string;
   /** Placeholder text for the input */

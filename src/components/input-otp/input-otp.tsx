@@ -39,6 +39,11 @@ const [InputOTPSlotProvider, useInputOTPSlot] =
 
 const useInputOTP = InputOTPPrimitives.useInputOTPContext;
 
+const REGEXP_ONLY_CHARS = InputOTPPrimitives.REGEXP_ONLY_CHARS;
+const REGEXP_ONLY_DIGITS = InputOTPPrimitives.REGEXP_ONLY_DIGITS;
+const REGEXP_ONLY_DIGITS_AND_CHARS =
+  InputOTPPrimitives.REGEXP_ONLY_DIGITS_AND_CHARS;
+
 // --------------------------------------------------
 
 const InputOTPRoot = forwardRef<InputOTPRef, InputOTPRootProps>(
@@ -361,4 +366,10 @@ const InputOTP = Object.assign(InputOTPRoot, {
 });
 
 export default InputOTP;
-export { useInputOTP, useInputOTPSlot };
+export {
+  REGEXP_ONLY_CHARS,
+  REGEXP_ONLY_DIGITS,
+  REGEXP_ONLY_DIGITS_AND_CHARS,
+  useInputOTP,
+  useInputOTPSlot,
+};

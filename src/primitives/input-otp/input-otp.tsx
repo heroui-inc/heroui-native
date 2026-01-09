@@ -65,6 +65,7 @@ const Root = forwardRef<RootRef, RootProps>(
       isDisabled = false,
       isInvalid = false,
       pattern,
+      inputMode = 'numeric',
       pasteTransformer,
       value: valueProp,
       defaultValue,
@@ -135,13 +136,13 @@ const Root = forwardRef<RootRef, RootProps>(
           isPaste && pasteTransformFn ? pasteTransformFn(text) : text;
         // Slice the text to the maxLength as we're not limiting the input length to handle paste properly
         const newValue = transformedText.slice(0, maxLength);
-
         // Validate against pattern if provided
         if (newValue.length > 0 && regexp && !regexp.test(newValue)) {
           return;
         }
 
         setValue(newValue);
+
         if (newValue.length === maxLength) {
           onComplete?.(newValue);
         }
@@ -299,7 +300,8 @@ const Root = forwardRef<RootRef, RootProps>(
             onChangeText={onChangeText}
             onFocus={onFocus}
             onBlur={onBlur}
-            inputMode="numeric"
+            maxLength={maxLength}
+            inputMode={inputMode}
             /**
              * On iOS if the input has an opacity of 0, we can't paste text into it.
              * As we're setting the opacity to 0.02, we need to hide the caret.

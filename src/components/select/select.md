@@ -364,7 +364,11 @@ export default function SelectExample() {
       </Select.Trigger>
       <Select.Portal>
         <Select.Overlay />
-        <Select.Content width={280} className="rounded-2xl" placement="bottom">
+        <Select.Content
+          width={280}
+          className="h-[250px] rounded-2xl"
+          placement="bottom"
+        >
           <ScrollView>
             {COUNTRIES.map((item) => (
               <Select.Item

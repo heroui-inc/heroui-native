@@ -88,6 +88,20 @@ export interface InputOTPSlotProps extends InputOTPPrimitivesTypes.SlotProps {
 export type InputOTPSlotRef = InputOTPPrimitivesTypes.SlotRef;
 
 /**
+ * Context value for InputOTP.Slot component
+ */
+export interface InputOTPSlotContextValue {
+  /** Slot data for the current slot */
+  slot: InputOTPPrimitivesTypes.SlotData | undefined;
+  /** Whether this slot is currently active (where cursor is) */
+  isActive: boolean;
+  /** Whether this slot is displaying a placeholder */
+  isPlaceholder: boolean;
+  /** Whether to show fake caret (when active but empty) */
+  isCaretVisible: boolean;
+}
+
+/**
  * Props for the InputOTP.SlotText component
  */
 export interface InputOTPSlotTextProps extends TextProps {
@@ -95,10 +109,6 @@ export interface InputOTPSlotTextProps extends TextProps {
    * Text content to display (required)
    */
   children: string;
-  /**
-   * Whether the slot is a placeholder
-   */
-  isPlaceholder: boolean;
   /**
    * Additional CSS classes
    */

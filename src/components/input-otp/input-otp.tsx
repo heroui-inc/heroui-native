@@ -2,6 +2,7 @@ import { forwardRef, useMemo } from 'react';
 import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/components';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
+import { createContext } from '../../helpers/utils';
 import * as InputOTPPrimitives from '../../primitives/input-otp';
 import {
   useInputOTPRootAnimation,
@@ -19,11 +20,17 @@ import type {
   InputOTPSeparatorRef,
   InputOTPSlotCaretProps,
   InputOTPSlotCaretRef,
+  InputOTPSlotContextValue,
   InputOTPSlotProps,
   InputOTPSlotRef,
   InputOTPSlotTextProps,
   InputOTPSlotTextRef,
 } from './input-otp.types';
+
+const [InputOTPSlotProvider, useInputOTPSlot] =
+  createContext<InputOTPSlotContextValue>({
+    name: 'InputOTPSlotContext',
+  });
 
 const useInputOTP = InputOTPPrimitives.useInputOTPContext;
 
@@ -99,7 +106,9 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
 
     const slot = slots[index];
     const isActive = slot?.isActive ?? false;
+    const isPlaceholder = slot?.isPlaceholder ?? false;
     const isCaretVisible = slot?.isCaretVisible ?? false;
+    const displayChar = slot?.displayChar ?? '';
 
     const slotClassName = inputOTPStyles.slot({
       isActive,
@@ -108,39 +117,35 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
       className,
     });
 
-    const isPlaceholder = slot?.isPlaceholder ?? false;
-    const displayChar = slot?.displayChar ?? '';
-
-    const slotTextStyle =
-      isPlaceholder && slot?.placeholderTextColor
-        ? { color: slot.placeholderTextColor }
-        : undefined;
-    const slotTextClassName =
-      isPlaceholder && slot?.placeholderTextClassName
-        ? slot.placeholderTextClassName
-        : undefined;
-
-    const defaultChildren = displayChar ? (
-      <InputOTPSlotText
-        isPlaceholder={isPlaceholder}
-        className={slotTextClassName}
-        style={slotTextStyle}
-      >
-        {displayChar}
-      </InputOTPSlotText>
-    ) : null;
+    const slotContextValue = useMemo<InputOTPSlotContextValue>(
+      () => ({
+        slot,
+        isActive,
+        isPlaceholder,
+        isCaretVisible,
+      }),
+      [slot, isActive, isPlaceholder, isCaretVisible]
+    );
 
     return (
-      <InputOTPPrimitives.Slot
-        ref={ref}
-        index={index}
-        className={slotClassName}
-        style={[styleSheet.slotRoot, style]}
-        {...restProps}
-      >
-        {children !== undefined ? children : defaultChildren}
-        {isCaretVisible ? <InputOTPSlotCaret /> : null}
-      </InputOTPPrimitives.Slot>
+      <InputOTPSlotProvider value={slotContextValue}>
+        <InputOTPPrimitives.Slot
+          ref={ref}
+          index={index}
+          className={slotClassName}
+          style={[styleSheet.slotRoot, style]}
+          {...restProps}
+        >
+          {children !== undefined ? (
+            children
+          ) : (
+            <>
+              <InputOTPSlotText>{displayChar}</InputOTPSlotText>
+              <InputOTPSlotCaret />
+            </>
+          )}
+        </InputOTPPrimitives.Slot>
+      </InputOTPSlotProvider>
     );
   }
 );
@@ -149,15 +154,31 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
 
 const InputOTPSlotText = forwardRef<InputOTPSlotTextRef, InputOTPSlotTextProps>(
   (props, ref) => {
-    const { className, children, isPlaceholder, ...restProps } = props;
+    const { className, style, children, ...restProps } = props;
+
+    const { slot, isPlaceholder } = useInputOTPSlot();
+
+    const slotPlaceholderTextStyle =
+      isPlaceholder && slot?.placeholderTextColor
+        ? { color: slot.placeholderTextColor }
+        : undefined;
+    const slotPlaceholderTextClassName =
+      isPlaceholder && slot?.placeholderTextClassName
+        ? slot.placeholderTextClassName
+        : undefined;
 
     const slotTextClassName = inputOTPStyles.slotText({
       isPlaceholder,
-      className,
+      className: [className, slotPlaceholderTextClassName],
     });
 
     return (
-      <HeroText ref={ref} className={slotTextClassName} {...restProps}>
+      <HeroText
+        ref={ref}
+        className={slotTextClassName}
+        style={[slotPlaceholderTextStyle, style]}
+        {...restProps}
+      >
         {children}
       </HeroText>
     );
@@ -178,16 +199,19 @@ const InputOTPSlotCaret = forwardRef<
     style,
     ...restProps
   } = props;
-
-  const tvStyles = inputOTPStyles.slotCaret({ className });
+  const { isCaretVisible } = useInputOTPSlot();
 
   const { rContainerStyle } = useInputOTPSlotCaretAnimation({
     animation,
   });
 
+  const tvStyles = inputOTPStyles.slotCaret({ className });
+
   const containerStyle = isAnimatedStyleActive
     ? [rContainerStyle, style]
     : style;
+
+  if (!isCaretVisible) return null;
 
   return (
     <Animated.View
@@ -272,4 +296,4 @@ const InputOTP = Object.assign(InputOTPRoot, {
 });
 
 export default InputOTP;
-export { useInputOTP };
+export { useInputOTP, useInputOTPSlot };

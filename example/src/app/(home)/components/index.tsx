@@ -45,6 +45,10 @@ const components: Component[] = [
     path: 'chip',
   },
   {
+    title: 'Description',
+    path: 'description',
+  },
+  {
     title: 'Dialog',
     path: 'dialog',
   },

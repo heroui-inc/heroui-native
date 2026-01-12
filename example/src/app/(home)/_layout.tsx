@@ -111,6 +111,10 @@ export default function Layout() {
           options={{ title: 'Dialog Native Modal', presentation: 'formSheet' }}
         />
         <Stack.Screen
+          name="components/description"
+          options={{ title: 'Description' }}
+        />
+        <Stack.Screen
           name="components/divider"
           options={{ title: 'Divider' }}
         />

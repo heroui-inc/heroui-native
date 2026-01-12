@@ -310,6 +310,8 @@ const Root = forwardRef<RootRef, RootProps>(
             autoComplete={
               Platform.OS === 'android' ? 'sms-otp' : 'one-time-code'
             }
+            autoCorrect={false}
+            autoCapitalize="none"
             textContentType="oneTimeCode"
             accessible
             accessibilityRole="text"

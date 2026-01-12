@@ -2,21 +2,20 @@
 import {
   Button,
   cn,
+  Description,
+  ErrorView,
   InputOTP,
+  Label,
   REGEXP_ONLY_CHARS,
   useToast,
   type InputOTPRef,
 } from 'heroui-native';
-import { useRef, useState } from 'react';
+import { useRef, useState, type RefObject } from 'react';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
-// ------------------------------------------------------------------------------
-
-const BasicOTPContent = () => {
-  const ref = useRef<InputOTPRef>(null);
-
+const useOnComplete = ({ ref }: { ref: RefObject<InputOTPRef | null> }) => {
   const { toast } = useToast();
 
   const onComplete = (code: string) => {
@@ -30,21 +29,65 @@ const BasicOTPContent = () => {
     }, 1000);
   };
 
+  return onComplete;
+};
+
+// ------------------------------------------------------------------------------
+
+const BasicOTPContent = () => {
+  const ref = useRef<InputOTPRef>(null);
+
+  const onComplete = useOnComplete({ ref });
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <InputOTP ref={ref} maxLength={6} onComplete={onComplete}>
-        <InputOTP.Group>
+      <View>
+        <Label>Verify account</Label>
+        <Description className="mb-3">
+          We've sent a code to a****@gmail.com
+        </Description>
+        <InputOTP ref={ref} maxLength={6} onComplete={onComplete}>
+          <InputOTP.Group>
+            <InputOTP.Slot index={0} />
+            <InputOTP.Slot index={1} />
+            <InputOTP.Slot index={2} />
+          </InputOTP.Group>
+          <InputOTP.Separator />
+          <InputOTP.Group>
+            <InputOTP.Slot index={3} />
+            <InputOTP.Slot index={4} />
+            <InputOTP.Slot index={5} />
+          </InputOTP.Group>
+        </InputOTP>
+        <View className="flex-row items-center mt-3">
+          <Description>Didn't receive a code?</Description>
+          <Button size="sm" variant="ghost" className="px-2">
+            Resend code
+          </Button>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const FourDigitsOTPContent = () => {
+  const ref = useRef<InputOTPRef>(null);
+
+  const onComplete = useOnComplete({ ref });
+
+  return (
+    <View className="flex-1 px-5 items-center justify-center">
+      <View className="gap-2">
+        <Label className="ml-1">Enter your PIN</Label>
+        <InputOTP ref={ref} maxLength={4} onComplete={onComplete}>
           <InputOTP.Slot index={0} />
           <InputOTP.Slot index={1} />
           <InputOTP.Slot index={2} />
-        </InputOTP.Group>
-        <InputOTP.Separator />
-        <InputOTP.Group>
           <InputOTP.Slot index={3} />
-          <InputOTP.Slot index={4} />
-          <InputOTP.Slot index={5} />
-        </InputOTP.Group>
-      </InputOTP>
+        </InputOTP>
+      </View>
     </View>
   );
 };
@@ -54,37 +97,29 @@ const BasicOTPContent = () => {
 const WithPlaceholderOTPContent = () => {
   const ref = useRef<InputOTPRef>(null);
 
-  const { toast } = useToast();
-
-  const onComplete = (code: string) => {
-    toast.show({
-      variant: 'success',
-      label: 'Completed',
-      description: `Code: ${code}`,
-    });
-    setTimeout(() => {
-      ref.current?.clear();
-    }, 1000);
-  };
+  const onComplete = useOnComplete({ ref });
 
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <InputOTP
-        ref={ref}
-        maxLength={6}
-        onComplete={onComplete}
-        placeholder="——————"
-      >
-        <InputOTP.Group>
-          {({ slots }) => (
-            <>
-              {slots.map((slot) => (
-                <InputOTP.Slot key={slot.index} index={slot.index} />
-              ))}
-            </>
-          )}
-        </InputOTP.Group>
-      </InputOTP>
+      <View className="gap-2">
+        <Label className="ml-1">Enter verification code</Label>
+        <InputOTP
+          ref={ref}
+          maxLength={6}
+          onComplete={onComplete}
+          placeholder="——————"
+        >
+          <InputOTP.Group>
+            {({ slots }) => (
+              <>
+                {slots.map((slot) => (
+                  <InputOTP.Slot key={slot.index} index={slot.index} />
+                ))}
+              </>
+            )}
+          </InputOTP.Group>
+        </InputOTP>
+      </View>
     </View>
   );
 };
@@ -94,19 +129,24 @@ const WithPlaceholderOTPContent = () => {
 const DisabledStateOTPContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <InputOTP maxLength={6} isDisabled>
-        <InputOTP.Group>
-          <InputOTP.Slot index={0} />
-          <InputOTP.Slot index={1} />
-          <InputOTP.Slot index={2} />
-        </InputOTP.Group>
-        <InputOTP.Separator />
-        <InputOTP.Group>
-          <InputOTP.Slot index={3} />
-          <InputOTP.Slot index={4} />
-          <InputOTP.Slot index={5} />
-        </InputOTP.Group>
-      </InputOTP>
+      <View className="gap-2">
+        <Label className="ml-1" isDisabled>
+          Enter verification code
+        </Label>
+        <InputOTP maxLength={6} isDisabled>
+          <InputOTP.Group>
+            <InputOTP.Slot index={0} />
+            <InputOTP.Slot index={1} />
+            <InputOTP.Slot index={2} />
+          </InputOTP.Group>
+          <InputOTP.Separator />
+          <InputOTP.Group>
+            <InputOTP.Slot index={3} />
+            <InputOTP.Slot index={4} />
+            <InputOTP.Slot index={5} />
+          </InputOTP.Group>
+        </InputOTP>
+      </View>
     </View>
   );
 };
@@ -133,11 +173,6 @@ const WithValidationOTPContent = () => {
           setIsInvalid(false);
         }
       } else {
-        toast.show({
-          variant: 'danger',
-          label: 'Invalid Code',
-          description: 'The code you entered is incorrect. Please try again.',
-        });
         setIsInvalid(true);
       }
     } else {
@@ -153,11 +188,63 @@ const WithValidationOTPContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="gap-5">
+        <View>
+          <Label className="mb-1">Verify account</Label>
+          <Description className="mb-3">Hint: The code is 123456</Description>
+          <InputOTP
+            value={value}
+            onChange={setValue}
+            maxLength={6}
+            isInvalid={isInvalid}
+          >
+            <InputOTP.Group>
+              <InputOTP.Slot index={0} />
+              <InputOTP.Slot index={1} />
+              <InputOTP.Slot index={2} />
+            </InputOTP.Group>
+            <InputOTP.Separator />
+            <InputOTP.Group>
+              <InputOTP.Slot index={3} />
+              <InputOTP.Slot index={4} />
+              <InputOTP.Slot index={5} />
+            </InputOTP.Group>
+          </InputOTP>
+          <ErrorView className="mt-3" isInvalid={isInvalid}>
+            The code you entered is incorrect. Please try again.
+          </ErrorView>
+          <Button
+            variant="secondary"
+            className="self-start mt-5"
+            onPress={onSubmit}
+          >
+            Submit
+          </Button>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const WithPatternOTPContent = () => {
+  const ref = useRef<InputOTPRef>(null);
+
+  const onComplete = useOnComplete({ ref });
+
+  return (
+    <View className="flex-1 px-5 items-center justify-center">
+      <View>
+        <Label className="mb-1">Enter code (letters only)</Label>
+        <Description className="mb-3">
+          Only alphabetic characters are allowed
+        </Description>
         <InputOTP
-          value={value}
-          onChange={setValue}
+          ref={ref}
           maxLength={6}
-          isInvalid={isInvalid}
+          onComplete={onComplete}
+          pattern={REGEXP_ONLY_CHARS}
+          inputMode="text"
         >
           <InputOTP.Group>
             <InputOTP.Slot index={0} />
@@ -171,56 +258,7 @@ const WithValidationOTPContent = () => {
             <InputOTP.Slot index={5} />
           </InputOTP.Group>
         </InputOTP>
-        <Button size="sm" className="self-start" onPress={onSubmit}>
-          Submit
-        </Button>
       </View>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const WithPatternOTPContent = () => {
-  const ref = useRef<InputOTPRef>(null);
-
-  const { toast } = useToast();
-
-  const onComplete = (code: string) => {
-    toast.show({
-      variant: 'success',
-      label: 'Completed',
-      description: `Code: ${code}`,
-    });
-    setTimeout(() => {
-      ref.current?.clear();
-    }, 1000);
-  };
-
-  return (
-    <View className="flex-1 px-5 items-center justify-center">
-      <InputOTP
-        ref={ref}
-        maxLength={6}
-        onComplete={onComplete}
-        pattern={REGEXP_ONLY_CHARS}
-        inputMode="text"
-        textInputProps={{
-          autoCapitalize: 'none',
-        }}
-      >
-        <InputOTP.Group>
-          <InputOTP.Slot index={0} />
-          <InputOTP.Slot index={1} />
-          <InputOTP.Slot index={2} />
-        </InputOTP.Group>
-        <InputOTP.Separator />
-        <InputOTP.Group>
-          <InputOTP.Slot index={3} />
-          <InputOTP.Slot index={4} />
-          <InputOTP.Slot index={5} />
-        </InputOTP.Group>
-      </InputOTP>
     </View>
   );
 };
@@ -252,7 +290,7 @@ const CustomStylesOTPContent = () => {
         maxLength={6}
         placeholder="——————"
         onComplete={onComplete}
-        className="w-full py-4 gap-8 rounded-2xl items-center justify-center border-2 border-pink-950/5 bg-pink-300/5"
+        className="w-full py-4 gap-8 rounded-3xl items-center justify-center bg-surface shadow-surface"
         style={{
           borderCurve: 'continuous',
         }}
@@ -269,9 +307,9 @@ const CustomStylesOTPContent = () => {
                     slot.isActive && 'border-0'
                   )}
                 >
-                  <InputOTP.SlotPlaceholder className="text-pink-950/50" />
-                  <InputOTP.SlotValue className="text-2xl text-pink-950" />
-                  <InputOTP.SlotCaret className="bg-pink-950/50" />
+                  <InputOTP.SlotPlaceholder />
+                  <InputOTP.SlotValue className="text-2xl" />
+                  <InputOTP.SlotCaret />
                 </InputOTP.Slot>
               ))}
             </>
@@ -289,9 +327,9 @@ const CustomStylesOTPContent = () => {
                     slot.isActive && 'border-0'
                   )}
                 >
-                  <InputOTP.SlotPlaceholder className="text-pink-950/50" />
-                  <InputOTP.SlotValue className="text-2xl text-pink-950" />
-                  <InputOTP.SlotCaret className="bg-pink-950/50" />
+                  <InputOTP.SlotPlaceholder />
+                  <InputOTP.SlotValue className="text-2xl" />
+                  <InputOTP.SlotCaret />
                 </InputOTP.Slot>
               ))}
             </>
@@ -306,14 +344,14 @@ const CustomStylesOTPContent = () => {
 
 const INPUT_OTP_VARIANTS: UsageVariant[] = [
   {
-    value: 'custom-styles',
-    label: 'Custom Styles',
-    content: <CustomStylesOTPContent />,
-  },
-  {
     value: 'basic',
     label: 'Basic',
     content: <BasicOTPContent />,
+  },
+  {
+    value: 'four-digits',
+    label: 'Four Digits',
+    content: <FourDigitsOTPContent />,
   },
   {
     value: 'with-placeholder',
@@ -334,6 +372,11 @@ const INPUT_OTP_VARIANTS: UsageVariant[] = [
     value: 'with-pattern',
     label: 'With Pattern',
     content: <WithPatternOTPContent />,
+  },
+  {
+    value: 'custom-styles',
+    label: 'Custom Styles',
+    content: <CustomStylesOTPContent />,
   },
 ];
 

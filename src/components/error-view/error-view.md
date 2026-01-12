@@ -151,6 +151,8 @@ export default function ErrorViewExample() {
 }
 ```
 
+You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/error-view.tsx).
+
 ## API Reference
 
 ### ErrorView

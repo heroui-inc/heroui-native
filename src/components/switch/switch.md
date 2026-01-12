@@ -182,6 +182,8 @@ export default function SwitchExample() {
 }
 ```
 
+You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/switch.tsx).
+
 ## API Reference
 
 ### Switch

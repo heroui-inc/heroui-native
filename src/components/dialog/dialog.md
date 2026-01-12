@@ -181,6 +181,8 @@ export default function DialogExample() {
 }
 ```
 
+You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/dialog.tsx).
+
 ## API Reference
 
 ### Dialog

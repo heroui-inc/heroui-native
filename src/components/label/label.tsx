@@ -1,8 +1,10 @@
 import { forwardRef, useMemo } from 'react';
 import { HeroText } from '../../helpers/components';
+import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
 import type { PressableRef, TextRef } from '../../helpers/types/primitives';
 import { childrenToString, createContext } from '../../helpers/utils';
 import * as LabelPrimitives from '../../primitives/label';
+import { useLabelRootAnimation } from './label.animation';
 import { DISPLAY_NAME } from './label.constants';
 import labelStyles from './label.styles';
 import type {
@@ -24,10 +26,22 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
     isRequired = false,
     isInvalid = false,
     className,
+    animation,
     ...restProps
   } = props;
 
   const stringifiedChildren = childrenToString(children);
+
+  const { isAllAnimationsDisabled } = useLabelRootAnimation({
+    animation,
+  });
+
+  const animationSettingsContextValue = useMemo(
+    () => ({
+      isAllAnimationsDisabled,
+    }),
+    [isAllAnimationsDisabled]
+  );
 
   const contextValue = useMemo(
     () => ({
@@ -44,20 +58,22 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
   });
 
   return (
-    <LabelProvider value={contextValue}>
-      <LabelPrimitives.Root
-        ref={ref}
-        isDisabled={isDisabled}
-        className={rootTvStyles}
-        {...restProps}
-      >
-        {stringifiedChildren ? (
-          <LabelText>{stringifiedChildren}</LabelText>
-        ) : (
-          children
-        )}
-      </LabelPrimitives.Root>
-    </LabelProvider>
+    <AnimationSettingsProvider value={animationSettingsContextValue}>
+      <LabelProvider value={contextValue}>
+        <LabelPrimitives.Root
+          ref={ref}
+          isDisabled={isDisabled}
+          className={rootTvStyles}
+          {...restProps}
+        >
+          {stringifiedChildren ? (
+            <LabelText>{stringifiedChildren}</LabelText>
+          ) : (
+            children
+          )}
+        </LabelPrimitives.Root>
+      </LabelProvider>
+    </AnimationSettingsProvider>
   );
 });
 

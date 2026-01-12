@@ -1,5 +1,6 @@
 import type { TextStyle } from 'react-native';
 import type { ElementSlots } from '../../helpers/theme/types';
+import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import type { PressableRef, TextRef } from '../../helpers/types/primitives';
 import type * as LabelPrimitivesTypes from '../../primitives/label/label.types';
 import type { LabelSlots } from './label.styles';
@@ -24,6 +25,13 @@ export interface LabelProps extends LabelPrimitivesTypes.RootProps {
    * Additional CSS classes
    */
   className?: string;
+
+  /**
+   * Animation configuration for label
+   * - `"disable-all"`: Disable all animations including children
+   * - `undefined`: Use default animations
+   */
+  animation?: AnimationRootDisableAll;
 }
 
 /**

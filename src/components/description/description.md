@@ -1,0 +1,106 @@
+# Description
+
+Text component for providing accessible descriptions and helper text for form fields and other UI elements.
+
+## Import
+
+```tsx
+import { Description } from 'heroui-native';
+```
+
+## Anatomy
+
+```tsx
+<Description>...</Description>
+```
+
+- **Description**: Text component that displays description or helper text with muted styling. Can be linked to form fields via `nativeID` for accessibility support.
+
+## Usage
+
+### Basic Usage
+
+Display description text with default muted styling.
+
+```tsx
+<Description>This is a helpful description.</Description>
+```
+
+### With Form Fields
+
+Provide accessible descriptions for form fields using the `nativeID` prop.
+
+```tsx
+<TextField>
+  <TextField.Label>Email address</TextField.Label>
+  <TextField.Input
+    placeholder="Enter your email"
+    keyboardType="email-address"
+    autoCapitalize="none"
+  />
+  <Description nativeID="email-desc">
+    We'll never share your email with anyone else.
+  </Description>
+</TextField>
+```
+
+### Accessibility Linking
+
+Link descriptions to form fields for screen reader support by using `nativeID` and `aria-describedby`.
+
+```tsx
+<TextField>
+  <TextField.Label>Password</TextField.Label>
+  <TextField.Input
+    placeholder="Create a password"
+    secureTextEntry
+    aria-describedby="password-desc"
+  />
+  <Description nativeID="password-desc">
+    Use at least 8 characters with a mix of letters, numbers, and symbols.
+  </Description>
+</TextField>
+```
+
+## Example
+
+```tsx
+import { Description, TextField } from 'heroui-native';
+import { View } from 'react-native';
+
+export default function DescriptionExample() {
+  return (
+    <View className="flex-1 justify-center px-5 gap-8">
+      <TextField>
+        <TextField.Label>Email address</TextField.Label>
+        <TextField.Input
+          placeholder="Enter your email"
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <Description nativeID="email-desc">
+          We'll never share your email with anyone else.
+        </Description>
+      </TextField>
+      <TextField>
+        <TextField.Label>Password</TextField.Label>
+        <TextField.Input placeholder="Create a password" secureTextEntry />
+        <Description nativeID="password-desc">
+          Use at least 8 characters with a mix of letters, numbers, and symbols.
+        </Description>
+      </TextField>
+    </View>
+  );
+}
+```
+
+## API Reference
+
+### Description
+
+| prop           | type              | default | description                                                                                                                                                                            |
+| -------------- | ----------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Description text content                                                                                                                                                               |
+| `className`    | `string`          | -       | Additional CSS classes to apply                                                                                                                                                        |
+| `nativeID`     | `string`          | -       | Native ID for accessibility. Used to link description to form fields via aria-describedby. When provided, form fields can reference this description using aria-describedby={nativeID} |
+| `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported                                                                                                                                     |

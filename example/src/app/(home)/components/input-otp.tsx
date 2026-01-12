@@ -14,6 +14,7 @@ import { useRef, useState, type RefObject } from 'react';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 const useOnComplete = ({ ref }: { ref: RefObject<InputOTPRef | null> }) => {
   const { toast } = useToast();
@@ -61,7 +62,12 @@ const BasicOTPContent = () => {
         </InputOTP>
         <View className="flex-row items-center mt-3">
           <Description>Didn't receive a code?</Description>
-          <Button size="sm" variant="ghost" className="px-2">
+          <Button
+            size="sm"
+            variant="ghost"
+            className="px-2"
+            onPress={simulatePress}
+          >
             Resend code
           </Button>
         </View>

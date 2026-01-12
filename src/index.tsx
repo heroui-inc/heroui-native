@@ -11,6 +11,7 @@ export * from './components/divider';
 export * from './components/error-view';
 export * from './components/form-field';
 export * from './components/input-otp';
+export * from './components/label';
 export * from './components/popover';
 export * from './components/pressable-feedback';
 export * from './components/radio-group';

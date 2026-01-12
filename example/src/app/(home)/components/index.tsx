@@ -65,6 +65,10 @@ const components: Component[] = [
     path: 'input-otp',
   },
   {
+    title: 'Label',
+    path: 'label',
+  },
+  {
     title: 'Popover',
     path: 'popover',
   },

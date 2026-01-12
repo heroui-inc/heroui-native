@@ -4,6 +4,28 @@ import type { TextComponentContextValue } from '../text-component/types';
 import type { ToastProviderProps } from '../toast/types';
 
 /**
+ * Developer information messages configuration
+ *
+ * @interface DevInfoConfig
+ *
+ * @description
+ * Controls developer-facing informational messages displayed in the console.
+ * These messages provide important guidance and best practices.
+ */
+export interface DevInfoConfig {
+  /**
+   * Show styling principles information message
+   *
+   * @description
+   * When set to `false`, disables the styling principles information message
+   * that appears in the console during development.
+   *
+   * @default true
+   */
+  stylingPrinciples?: boolean;
+}
+
+/**
  * Configuration object for HeroUINativeProvider
  *
  * @interface HeroUINativeConfig
@@ -28,6 +50,14 @@ export interface HeroUINativeConfig extends TextComponentContextValue {
    * Configure the global toast system including insets and wrapper components.
    */
   toast?: ToastProviderProps;
+  /**
+   * Developer information messages configuration
+   *
+   * @description
+   * Controls developer-facing informational messages displayed in the console.
+   * Use this to disable specific informational messages during development.
+   */
+  devInfo?: DevInfoConfig;
 }
 
 /**

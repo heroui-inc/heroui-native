@@ -52,6 +52,9 @@ function AppContent() {
           toast: {
             contentWrapper,
           },
+          devInfo: {
+            stylingPrinciples: false,
+          },
         }}
       >
         <Slot />

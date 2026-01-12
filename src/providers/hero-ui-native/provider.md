@@ -81,6 +81,23 @@ const config: HeroUINativeConfig = {
   **Note**: When set to `'disable-all'`, all animations across the application will be disabled. This is useful for accessibility or performance optimization.
 </Callout>
 
+### Developer Information Configuration
+
+Control developer-facing informational messages displayed in the console:
+
+```tsx
+const config: HeroUINativeConfig = {
+  devInfo: {
+    // Disable styling principles information message
+    stylingPrinciples: false,
+  },
+};
+```
+
+<Callout type="info">
+  **Note**: By default, informational messages are enabled. Set `stylingPrinciples: false` to disable the styling principles message that appears in the console during development.
+</Callout>
+
 ### Toast Configuration
 
 Configure the global toast system including insets, default props, and wrapper components:
@@ -139,6 +156,10 @@ const config: HeroUINativeConfig = {
   },
   // Global animation configuration
   animation: 'disable-all', // Optional: disable all animations
+  // Developer information messages configuration
+  devInfo: {
+    stylingPrinciples: true, // Optional: disable styling principles message
+  },
   // Global toast configuration
   toast: {
     defaultProps: {
@@ -299,6 +320,9 @@ const config: HeroUINativeConfig = {
     maxFontSizeMultiplier: 1.5,
   },
   animation: 'disable-all', // Optional: disable all animations
+  devInfo: {
+    stylingPrinciples: true, // Optional: disable styling principles message
+  },
   toast: {
     defaultProps: {
       variant: 'default',

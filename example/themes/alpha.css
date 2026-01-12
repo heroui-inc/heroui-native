@@ -45,6 +45,17 @@
       --border: var(--color-neutral-200);
       --divider: var(--color-neutral-400);
       --link: var(--foreground);
+
+      /* Shadows */
+      --surface-shadow:
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
+      /* Overlay shadow */
+      --overlay-shadow:
+        0 4px 16px 0 rgba(24, 24, 27, 0.08), 0 8px 24px 0 rgba(24, 24, 27, 0.09);
+      --field-shadow:
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
     }
 
     @variant alpha-dark {
@@ -92,6 +103,11 @@
       --border: var(--color-neutral-800);
       --divider: var(--color-neutral-600);
       --link: var(--foreground);
+
+      /* Shadows */
+      --surface-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
+      --overlay-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
+      --field-shadow: 0 0 0 0 transparent inset; /* Transparent shadow to allow ring utilities to work */
     }
   }
 }

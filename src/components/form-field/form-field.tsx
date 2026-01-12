@@ -140,7 +140,7 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
 const FormFieldLabel = forwardRef<RNText, FormFieldLabelProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
-  const tvStyles = formFieldStyles.title({
+  const tvStyles = formFieldStyles.label({
     className,
   });
 

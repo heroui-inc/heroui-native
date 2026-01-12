@@ -10,7 +10,7 @@ const list = tv({
   base: 'self-start flex-row items-center gap-1',
   variants: {
     variant: {
-      pill: 'rounded-full bg-default p-[3px]',
+      pill: 'rounded-3xl bg-default p-[3px]',
       line: 'border-b border-border',
     },
   },
@@ -23,7 +23,7 @@ const scrollView = tv({
   base: '',
   variants: {
     variant: {
-      pill: 'rounded-full',
+      pill: 'rounded-3xl',
       line: '',
     },
   },
@@ -90,7 +90,7 @@ const indicator = tv({
   base: 'absolute',
   variants: {
     variant: {
-      pill: 'rounded-full shadow-sm dark:shadow-none shadow-black/5 bg-segment',
+      pill: 'rounded-3xl shadow-sm dark:shadow-none shadow-black/5 bg-segment',
       line: 'border-b-2 border-accent bottom-0',
     },
   },

@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 
 const root = tv({
-  base: 'self-start flex-row items-center justify-center rounded-full gap-1 overflow-hidden',
+  base: 'self-start flex-row items-center justify-center gap-1 overflow-hidden',
   variants: {
     variant: {
       primary: 'border-0',
@@ -12,9 +12,9 @@ const root = tv({
       soft: 'border-0',
     },
     size: {
-      sm: 'px-2 h-5',
-      md: 'px-3 h-6',
-      lg: 'px-4 h-7',
+      sm: 'px-2 h-5 rounded-xl',
+      md: 'px-3 h-6 rounded-xl',
+      lg: 'px-4 h-7 rounded-2xl',
     },
     color: {
       accent: '',

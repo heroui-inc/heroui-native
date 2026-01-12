@@ -114,7 +114,7 @@ ChipLabel.displayName = DISPLAY_NAME.CHIP_LABEL_CONTENT;
  * Props flow from Chip to sub-components via context (size, variant, color).
  * All components use animated views with layout transitions for smooth animations.
  *
- * @see Full documentation: https://heroui.com/components/chip
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/chip
  */
 const CompoundChip = Object.assign(Chip, {
   /** Chip label - renders text or custom content */

@@ -265,7 +265,7 @@ SwitchEndContent.displayName = DISPLAY_NAME.SWITCH_END_CONTENT;
  * Content components provide visual feedback without affecting the toggle functionality.
  * Integrates with FormField for press state sharing and larger touch targets.
  *
- * @see Full documentation: https://heroui.com/components/switch
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/switch
  */
 const CompoundSwitch = Object.assign(Switch, {
   /** @optional Sliding thumb with spring animations */

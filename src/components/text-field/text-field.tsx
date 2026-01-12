@@ -291,7 +291,7 @@ TextFieldErrorMessage.displayName = DISPLAY_NAME.ERROR_MESSAGE;
  * @component TextField.ErrorMessage - Error message with danger styling.
  * Shown with animation when field is invalid. Automatically populated from errorMessage prop.
  *
- * @see Full documentation: https://heroui.com/components/text-field
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/text-field
  */
 const CompoundTextField = Object.assign(TextFieldRoot, {
   /** @optional Label with asterisk support */

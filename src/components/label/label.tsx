@@ -131,7 +131,7 @@ LabelText.displayName = DISPLAY_NAME.LABEL_TEXT;
  *
  * Props flow from Label to sub-components via context (isDisabled, isRequired, isInvalid).
  *
- * @see Full documentation: https://heroui.com/components/label
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/label
  */
 const CompoundLabel = Object.assign(Label, {
   /** Label text - renders text or custom content with optional asterisk */

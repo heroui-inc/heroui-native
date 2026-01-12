@@ -31,6 +31,6 @@ Description.displayName = DISPLAY_NAME.DESCRIPTION;
  * Provides accessible description text with proper styling. Can be linked to
  * form fields via the nativeID prop for accessibility support.
  *
- * @see Full documentation: https://heroui.com/components/description
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/description
  */
 export default Description;

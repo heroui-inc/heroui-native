@@ -306,7 +306,7 @@ RadioGroupErrorMessage.displayName = DISPLAY_NAME.RADIO_GROUP_ERROR_MESSAGE;
  * Props flow from RadioGroup to RadioGroupItem to sub-components via context (color, value, isSelected).
  * RadioGroup manages the overall selection state and orientation.
  *
- * @see Full documentation: https://heroui.com/components/radio-group
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/radio-group
  */
 const CompoundRadioGroup = Object.assign(RadioGroupRoot, {
   /** @optional Error message displayed when radio group is invalid */

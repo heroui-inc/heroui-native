@@ -37,6 +37,8 @@ export type InputOTPContext = {
   isDisabled: boolean;
   /** Whether the input is in an invalid state */
   isInvalid: boolean;
+  /** Variant style for the input OTP */
+  variant?: 'primary' | 'secondary';
   /** Array of slot data for each position */
   slots: SlotData[];
   /** Placeholder text color for all slots */
@@ -75,6 +77,8 @@ export type RootProps = {
   isDisabled?: boolean;
   /** Whether the input is in an invalid state @default false */
   isInvalid?: boolean;
+  /** Variant style for the input OTP */
+  variant?: 'primary' | 'secondary';
   /** Regex pattern for allowed characters (e.g., REGEXP_ONLY_DIGITS) */
   pattern?: string;
   /** Input mode for the input */

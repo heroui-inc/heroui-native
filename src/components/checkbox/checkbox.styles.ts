@@ -24,9 +24,9 @@ import { combineStyles } from '../../helpers/theme/utils/combine-styles';
 const root = tv({
   base: 'size-6 rounded-lg overflow-hidden',
   variants: {
-    isOnSurface: {
-      true: 'bg-surface-secondary',
-      false: 'bg-field',
+    variant: {
+      primary: 'bg-field shadow-field',
+      secondary: 'bg-default',
     },
     isSelected: {
       true: '',
@@ -49,6 +49,7 @@ const root = tv({
     },
   ],
   defaultVariants: {
+    variant: 'primary',
     isSelected: false,
     isDisabled: false,
     isInvalid: false,

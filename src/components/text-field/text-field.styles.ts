@@ -31,33 +31,26 @@ const label = tv({
   },
 });
 
-/**
- * Input style definition
- *
- * @note ANIMATED PROPERTIES (cannot be set via className):
- * The following properties are animated and cannot be overridden using Tailwind classes:
- * - `backgroundColor` - Animated for focus/blur and error state transitions
- * - `borderColor` - Animated for focus/blur and error state transitions
- *
- * To customize these properties, use the `animation` prop on `TextField.Input`:
- * ```tsx
- * <TextField.Input
- *   animation={{
- *     backgroundColor: { value: { blur: '#fff', focus: '#f0f0f0', error: '#fee' } },
- *     borderColor: { value: { blur: '#ccc', focus: '#007AFF', error: '#ff0000' } }
- *   }}
- * />
- * ```
- *
- * To completely disable animated styles and apply your own via className or style prop,
- * set `isAnimatedStyleActive={false}` on `TextField.Input`.
- */
 const input = tv({
-  base: 'py-3.5 px-3 rounded-2xl border-[1.5px] text-foreground font-normal',
+  base: 'py-3 px-3 rounded-2xl text-foreground font-normal border-2 focus:border-accent',
+  variants: {
+    variant: {
+      primary: 'bg-field border-field shadow-field',
+      secondary: 'bg-default border-default',
+    },
+    isInvalid: {
+      true: 'border-danger focus:border-danger',
+      false: '',
+    },
+  },
+  defaultVariants: {
+    variant: 'primary',
+    isInvalid: false,
+  },
 });
 
 const placeholderTextColor = tv({
-  base: 'field-placeholder',
+  base: 'accent-field-placeholder',
 });
 
 const inputSelectionColor = tv({

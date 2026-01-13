@@ -73,6 +73,11 @@ export interface CheckboxProps
     | React.ReactNode
     | ((props: CheckboxRenderProps) => React.ReactNode);
 
+  /** Variant style for the checkbox
+   * @default 'primary'
+   */
+  variant?: 'primary' | 'secondary';
+
   /** Custom class name for the checkbox
    *
    * @note The following style properties are occupied by animations and cannot be set via className:

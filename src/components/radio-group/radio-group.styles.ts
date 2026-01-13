@@ -21,9 +21,9 @@ const item = tv({
 const itemIndicator = tv({
   base: 'size-6 rounded-full border border-field-border items-center justify-center overflow-hidden',
   variants: {
-    isOnSurface: {
-      true: 'bg-surface-secondary',
-      false: 'bg-field',
+    variant: {
+      primary: 'bg-field shadow-field',
+      secondary: 'bg-default',
     },
     isSelected: {
       true: 'bg-accent',
@@ -42,6 +42,7 @@ const itemIndicator = tv({
     },
   ],
   defaultVariants: {
+    variant: 'primary',
     isSelected: false,
     isInvalid: false,
   },
@@ -69,14 +70,17 @@ const itemIndicator = tv({
 const itemIndicatorThumb = tv({
   base: 'size-2.5 dark:size-3 rounded-full',
   variants: {
-    isOnSurface: {
-      true: 'bg-on-surface',
-      false: 'bg-field',
+    variant: {
+      primary: 'bg-field',
+      secondary: 'bg-on-surface',
     },
     isSelected: {
       true: 'opacity-100',
       false: 'opacity-0',
     },
+  },
+  defaultVariants: {
+    variant: 'primary',
   },
 });
 

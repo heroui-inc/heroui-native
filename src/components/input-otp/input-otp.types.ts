@@ -78,6 +78,11 @@ export type InputOTPGroupRef = InputOTPPrimitivesTypes.GroupRef;
  */
 export interface InputOTPSlotProps extends InputOTPPrimitivesTypes.SlotProps {
   /**
+   * Variant style for the slot
+   * @default 'primary'
+   */
+  variant?: 'primary' | 'secondary';
+  /**
    * Additional CSS classes
    */
   className?: string;
@@ -98,6 +103,8 @@ export interface InputOTPSlotContextValue {
   isActive: boolean;
   /** Whether to show fake caret (when active but empty) */
   isCaretVisible: boolean;
+  /** Variant style for the slot */
+  variant?: 'primary' | 'secondary';
 }
 
 /**

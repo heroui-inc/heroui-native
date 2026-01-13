@@ -145,10 +145,7 @@ const TextInputDialogContent = () => {
   const insetTop = insets.top + 12;
   const maxTextInputDialogHeight = (height - insetTop) / 2;
 
-  const [themeColorSurfaceSecondary, themeColorMuted] = useThemeColor([
-    'surface-secondary',
-    'muted',
-  ]);
+  const themeColorMuted = useThemeColor('muted');
 
   const validateEmail = (emailValue: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -236,6 +233,7 @@ const TextInputDialogContent = () => {
                       Full Name
                     </TextField.Label>
                     <TextField.Input
+                      variant="secondary"
                       placeholder="Enter your name"
                       value={name}
                       onChangeText={(text) => {
@@ -246,14 +244,6 @@ const TextInputDialogContent = () => {
                       autoCorrect
                       autoFocus
                       isInvalid={false}
-                      animation={{
-                        backgroundColor: {
-                          value: {
-                            blur: themeColorSurfaceSecondary,
-                            focus: themeColorSurfaceSecondary,
-                          },
-                        },
-                      }}
                       selectionColorClassName="accent-muted"
                     />
                     <TextField.ErrorMessage>{nameError}</TextField.ErrorMessage>
@@ -264,6 +254,7 @@ const TextInputDialogContent = () => {
                       Email Address
                     </TextField.Label>
                     <TextField.Input
+                      variant="secondary"
                       placeholder="email@example.com"
                       value={email}
                       onChangeText={(text) => {
@@ -272,14 +263,6 @@ const TextInputDialogContent = () => {
                       }}
                       autoCapitalize="none"
                       isInvalid={false}
-                      animation={{
-                        backgroundColor: {
-                          value: {
-                            blur: themeColorSurfaceSecondary,
-                            focus: themeColorSurfaceSecondary,
-                          },
-                        },
-                      }}
                       selectionColor={themeColorMuted}
                     />
                     <TextField.ErrorMessage>

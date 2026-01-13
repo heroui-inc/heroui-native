@@ -2,6 +2,7 @@ import { forwardRef, useMemo } from 'react';
 import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/components';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
+import { useIsOnSurface } from '../../helpers/theme';
 import { createContext } from '../../helpers/utils';
 import * as InputOTPPrimitives from '../../primitives/input-otp';
 import {
@@ -110,15 +111,31 @@ const InputOTPGroup = forwardRef<InputOTPGroupRef, InputOTPGroupProps>(
 
 const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
   (props, ref) => {
-    const { className, style, index, children, ...restProps } = props;
+    const { className, style, index, variant, children, ...restProps } = props;
 
-    const { slots, isDisabled, isInvalid } = useInputOTP();
+    const {
+      slots,
+      isDisabled,
+      isInvalid,
+      variant: groupVariant,
+    } = useInputOTP();
 
     const slot = slots[index];
     const isActive = slot?.isActive ?? false;
     const isCaretVisible = slot?.isCaretVisible ?? false;
 
+    const isOnSurfaceAutoDetected = useIsOnSurface();
+    const finalVariant =
+      variant !== undefined
+        ? variant
+        : groupVariant !== undefined
+          ? groupVariant
+          : isOnSurfaceAutoDetected
+            ? 'secondary'
+            : 'primary';
+
     const slotClassName = inputOTPStyles.slot({
+      variant: finalVariant,
       isActive,
       isInvalid,
       isDisabled,
@@ -130,8 +147,9 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
         slot,
         isActive,
         isCaretVisible,
+        variant: finalVariant,
       }),
-      [slot, isActive, isCaretVisible]
+      [slot, isActive, isCaretVisible, finalVariant]
     );
 
     return (

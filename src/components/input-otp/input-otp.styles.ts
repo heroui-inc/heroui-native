@@ -11,8 +11,12 @@ const group = tv({
 });
 
 const slot = tv({
-  base: 'h-12 w-11 items-center justify-center rounded-[14px] border-[1.5px] border-field-border bg-field shadow-field overflow-hidden',
+  base: 'h-12 w-11 items-center justify-center rounded-[14px] border-[1.5px] overflow-hidden',
   variants: {
+    variant: {
+      primary: 'bg-field border-field-border shadow-field',
+      secondary: 'bg-default border-default',
+    },
     isActive: {
       true: 'border-accent',
     },
@@ -24,6 +28,7 @@ const slot = tv({
     },
   },
   defaultVariants: {
+    variant: 'primary',
     isActive: false,
     isInvalid: false,
     isDisabled: false,

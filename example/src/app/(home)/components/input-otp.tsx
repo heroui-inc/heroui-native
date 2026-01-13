@@ -111,6 +111,7 @@ const WithPlaceholderOTPContent = () => {
         <Label className="ml-1">Enter verification code</Label>
         <InputOTP
           ref={ref}
+          variant="secondary"
           maxLength={6}
           onComplete={onComplete}
           placeholder="——————"
@@ -216,7 +217,7 @@ const WithValidationOTPContent = () => {
             </InputOTP.Group>
           </InputOTP>
           <ErrorView className="mt-3" isInvalid={isInvalid}>
-            The code you entered is incorrect. Please try again.
+            The code you entered is incorrect.
           </ErrorView>
           <Button
             variant="secondary"

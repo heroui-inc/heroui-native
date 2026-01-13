@@ -94,15 +94,15 @@ export default function DescriptionExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/description.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/description.tsx>).
 
 ## API Reference
 
 ### Description
 
-| prop           | type              | default | description                                                                                                                                                                            |
-| -------------- | ----------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children`     | `React.ReactNode` | -       | Description text content                                                                                                                                                               |
-| `className`    | `string`          | -       | Additional CSS classes to apply                                                                                                                                                        |
-| `nativeID`     | `string`          | -       | Native ID for accessibility. Used to link description to form fields via aria-describedby. When provided, form fields can reference this description using aria-describedby={nativeID} |
-| `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported                                                                                                                                     |
+| prop           | type              | default | description                                                                                |
+| -------------- | ----------------- | ------- | ------------------------------------------------------------------------------------------ |
+| `children`     | `React.ReactNode` | -       | Description text content                                                                   |
+| `className`    | `string`          | -       | Additional CSS classes to apply                                                            |
+| `nativeID`     | `string`          | -       | Native ID for accessibility. Used to link description to form fields via aria-describedby. |
+| `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported                                         |

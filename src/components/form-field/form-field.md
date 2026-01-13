@@ -2,14 +2,6 @@
 
 Provides consistent layout and interaction for form controls with label, description, and error handling. Perfect for Switch and Checkbox components when you want the entire field to be pressable.
 
-## Imports
-
-Note: Before importing this component, ensure you have completed the setup as per the [Quick Start guide](../../../README.md).
-
-```tsx
-import { FormField } from 'heroui-native';
-```
-
 ## Import
 
 ```tsx

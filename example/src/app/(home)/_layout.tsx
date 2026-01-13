@@ -111,6 +111,10 @@ export default function Layout() {
           options={{ title: 'Dialog Native Modal', presentation: 'formSheet' }}
         />
         <Stack.Screen
+          name="components/description"
+          options={{ title: 'Description' }}
+        />
+        <Stack.Screen
           name="components/divider"
           options={{ title: 'Divider' }}
         />
@@ -122,6 +126,11 @@ export default function Layout() {
           name="components/form-field"
           options={{ title: 'Form Field' }}
         />
+        <Stack.Screen
+          name="components/input-otp"
+          options={{ title: 'Input OTP' }}
+        />
+        <Stack.Screen name="components/label" options={{ title: 'Label' }} />
         <Stack.Screen
           name="components/popover"
           options={{ title: 'Popover' }}

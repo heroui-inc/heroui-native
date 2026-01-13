@@ -83,7 +83,7 @@ SkeletonGroupItem.displayName = DISPLAY_NAME.SKELETON_GROUP_ITEM;
  * Props flow from SkeletonGroup to Items via context (isLoading, variant, animation).
  * Items can override any inherited prop by passing their own values.
  *
- * @see Full documentation: https://heroui.com/components/skeleton-group
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/skeleton-group
  */
 const SkeletonGroup = Object.assign(SkeletonGroupRoot, {
   /** @optional Individual skeleton item that inherits group settings */

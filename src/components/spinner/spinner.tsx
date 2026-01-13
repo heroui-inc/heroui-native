@@ -185,7 +185,7 @@ SpinnerIndicator.displayName = DISPLAY_NAME.INDICATOR;
  * Props flow from Spinner to Indicator via context (size, color, isLoading).
  * The indicator only renders when isLoading is true.
  *
- * @see Full documentation: https://heroui.com/components/spinner
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/spinner
  */
 const CompoundSpinner = Object.assign(SpinnerRoot, {
   /** @optional Customize animation configuration and icon appearance */

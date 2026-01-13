@@ -351,7 +351,7 @@ TabsContent.displayName = DISPLAY_NAME.CONTENT;
  *
  * Props flow from Tabs to sub-components via context.
  *
- * @see Full documentation: https://heroui.com/components/tabs
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/tabs
  */
 const Tabs = Object.assign(TabsRoot, {
   /** Container for tab triggers */

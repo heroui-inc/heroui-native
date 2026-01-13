@@ -731,7 +731,7 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
  * Props flow from Select to sub-components via context (placement, align, offset, value, etc.).
  * The select automatically positions itself relative to the trigger element.
  *
- * @see Full documentation: https://heroui.com/components/select
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/select
  */
 const Select = Object.assign(SelectRoot, {
   Trigger: SelectTrigger,

@@ -1,20 +1,14 @@
 import { forwardRef, useMemo } from 'react';
-import {
-  TextInput,
-  View,
-  type BlurEvent,
-  type FocusEvent,
-  type TextInput as TextInputType,
-} from 'react-native';
+import { TextInput, View, type TextInput as TextInputType } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/components';
 import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
+import { useIsOnSurface } from '../../helpers/theme';
 import type { TextRef, ViewRef } from '../../helpers/types/primitives';
 import { createContext } from '../../helpers/utils';
 import { ErrorView } from '../error-view';
 import {
   useTextFieldDescriptionAnimation,
-  useTextFieldInputAnimation,
   useTextFieldLabelAnimation,
   useTextFieldRootAnimation,
 } from './text-field.animation';
@@ -132,23 +126,29 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
   (props, ref) => {
     const {
       isInvalid: localIsInvalid,
+      variant,
       className,
       style,
-      animation,
-      isAnimatedStyleActive = true,
       selectionColorClassName: selectionColorClassNameProp,
       placeholderColorClassName: placeholderColorClassNameProp,
-      onFocus,
-      onBlur,
       ...restProps
     } = props;
-
     const { isInvalid: contextIsInvalid } = useTextField();
 
     const isInvalid =
       localIsInvalid !== undefined ? localIsInvalid : contextIsInvalid;
 
+    const isOnSurfaceAutoDetected = useIsOnSurface();
+    const finalVariant =
+      variant !== undefined
+        ? variant
+        : isOnSurfaceAutoDetected
+          ? 'secondary'
+          : 'primary';
+
     const inputClassName = textFieldStyles.input({
+      variant: finalVariant,
+      isInvalid,
       className,
     });
 
@@ -161,38 +161,13 @@ const TextFieldInput = forwardRef<TextInputType, TextFieldInputProps>(
       className: selectionColorClassNameProp,
     });
 
-    const {
-      animatedContainerStyle,
-      handleFocusAnimation,
-      handleBlurAnimation,
-    } = useTextFieldInputAnimation({
-      animation,
-      isInvalid,
-    });
-
-    const containerStyle = isAnimatedStyleActive
-      ? [animatedContainerStyle, styleSheet.borderCurve, style]
-      : [styleSheet.borderCurve, style];
-
-    const handleFocus = (e: FocusEvent) => {
-      handleFocusAnimation();
-      onFocus?.(e);
-    };
-
-    const handleBlur = (e: BlurEvent) => {
-      handleBlurAnimation();
-      onBlur?.(e);
-    };
-
     return (
       <AnimatedTextInput
         ref={ref}
         className={inputClassName}
-        style={containerStyle}
-        placeholderTextColor={placeholderColorClassName}
+        style={[styleSheet.borderCurve, style]}
+        placeholderTextColorClassName={placeholderColorClassName}
         selectionColorClassName={selectionColorClassName}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
         {...restProps}
       />
     );
@@ -291,7 +266,7 @@ TextFieldErrorMessage.displayName = DISPLAY_NAME.ERROR_MESSAGE;
  * @component TextField.ErrorMessage - Error message with danger styling.
  * Shown with animation when field is invalid. Automatically populated from errorMessage prop.
  *
- * @see Full documentation: https://heroui.com/components/text-field
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/text-field
  */
 const CompoundTextField = Object.assign(TextFieldRoot, {
   /** @optional Label with asterisk support */

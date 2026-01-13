@@ -156,6 +156,8 @@ export default function ToastExample() {
 }
 ```
 
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/toast.tsx>).
+
 ## Global Configuration
 
 Configure toast behavior globally using `HeroUINativeProvider` config prop. Global configs serve as defaults for all toasts unless overridden locally.

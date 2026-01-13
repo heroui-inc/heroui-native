@@ -20,8 +20,8 @@ type RootProps = Omit<SlottableViewProps, 'disabled'> & {
   isDisabled?: boolean;
   /** Whether the radio group is invalid @default false */
   isInvalid?: boolean;
-  /** Whether the radio group is on surface */
-  isOnSurface?: boolean;
+  /** Variant style for the radio group */
+  variant?: 'primary' | 'secondary';
 };
 
 /**

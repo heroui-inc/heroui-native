@@ -88,7 +88,7 @@ const RadioGroupItem = forwardRef<
     value,
     isDisabled,
     isInvalid,
-    isOnSurface: isOnSurfaceProp,
+    variant,
     className,
     ...restProps
   } = props;
@@ -102,7 +102,7 @@ const RadioGroupItem = forwardRef<
     value: groupValue,
     isInvalid: groupIsInvalid,
     isDisabled: groupIsDisabled,
-    isOnSurface: isOnSurfaceGroup,
+    variant: groupVariant,
   } = useRadioGroup();
 
   const isSelected = groupValue === value;
@@ -113,8 +113,14 @@ const RadioGroupItem = forwardRef<
 
   const isOnSurfaceAutoDetected = useIsOnSurface();
 
-  const isOnSurface =
-    isOnSurfaceProp ?? isOnSurfaceGroup ?? isOnSurfaceAutoDetected;
+  const finalVariant =
+    variant !== undefined
+      ? variant
+      : groupVariant !== undefined
+        ? groupVariant
+        : isOnSurfaceAutoDetected
+          ? 'secondary'
+          : 'primary';
 
   const tvStyles = radioGroupStyles.item({
     isDisabled: isDisabledValue,
@@ -143,9 +149,9 @@ const RadioGroupItem = forwardRef<
       isSelected,
       isDisabled: isDisabledValue,
       isInvalid: effectiveIsInvalid,
-      isOnSurface,
+      variant: finalVariant,
     }),
-    [isSelected, isDisabledValue, effectiveIsInvalid, isOnSurface]
+    [isSelected, isDisabledValue, effectiveIsInvalid, finalVariant]
   );
 
   return (
@@ -170,10 +176,10 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
   (props, ref) => {
     const { children, className, style, ...restProps } = props;
 
-    const { isSelected, isInvalid, isOnSurface } = useRadioGroupItem();
+    const { isSelected, isInvalid, variant } = useRadioGroupItem();
 
     const tvStyles = radioGroupStyles.itemIndicator({
-      isOnSurface,
+      variant,
       isSelected,
       isInvalid,
       className,
@@ -206,10 +212,10 @@ const RadioGroupIndicatorThumb = forwardRef<
     ...restProps
   } = props;
 
-  const { isSelected, isOnSurface } = useRadioGroupItem();
+  const { isSelected, variant } = useRadioGroupItem();
 
   const thumbClassName = radioGroupStyles.itemIndicatorThumb({
-    isOnSurface,
+    variant,
     isSelected,
     className,
   });
@@ -306,7 +312,7 @@ RadioGroupErrorMessage.displayName = DISPLAY_NAME.RADIO_GROUP_ERROR_MESSAGE;
  * Props flow from RadioGroup to RadioGroupItem to sub-components via context (color, value, isSelected).
  * RadioGroup manages the overall selection state and orientation.
  *
- * @see Full documentation: https://heroui.com/components/radio-group
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/radio-group
  */
 const CompoundRadioGroup = Object.assign(RadioGroupRoot, {
   /** @optional Error message displayed when radio group is invalid */

@@ -13,7 +13,7 @@ const root = tv({
   },
 });
 
-const title = tv({
+const label = tv({
   base: 'text-base font-medium text-foreground',
 });
 
@@ -31,7 +31,7 @@ const errorMessage = tv({
 
 const formFieldStyles = combineStyles({
   root,
-  title,
+  label,
   description,
   indicator,
   errorMessage,

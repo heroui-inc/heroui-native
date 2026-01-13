@@ -55,7 +55,7 @@ DividerRoot.displayName = DISPLAY_NAME.ROOT;
  * Uses hairline width utility classes for the thin variant by default.
  * Custom thickness can be provided via the thickness prop to override variant-based sizing.
  *
- * @see Full documentation: https://heroui.com/components/divider
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/divider
  */
 const Divider = DividerRoot;
 

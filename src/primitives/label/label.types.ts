@@ -13,10 +13,12 @@ import type {
  */
 type RootProps = Omit<
   SlottablePressableProps,
-  'children' | 'hitSlop' | 'style'
+  'children' | 'hitSlop' | 'disabled' | 'style'
 > & {
   /** The content to be rendered inside the label */
   children: React.ReactNode;
+  /** Whether the label is disabled */
+  isDisabled?: boolean;
   /** Style properties for the label container */
   style?: ViewStyle;
 };

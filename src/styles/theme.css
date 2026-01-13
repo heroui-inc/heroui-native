@@ -46,6 +46,10 @@
   --radius-field: var(--field-radius, var(--radius-xl));
   --border-width-field: var(--field-border-width, var(--border-width));
 
+  --shadow-surface: var(--surface-shadow);
+  --shadow-overlay: var(--overlay-shadow);
+  --shadow-field: var(--field-shadow);
+
   /* Calculated Variables */
 
   /* Colors */

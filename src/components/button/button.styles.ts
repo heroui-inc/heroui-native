@@ -22,7 +22,7 @@ import { combineStyles } from '../../helpers/theme/utils/combine-styles';
  * set `isAnimatedStyleActive={false}` on `PressableFeedback`.
  */
 const root = tv({
-  base: 'flex-row items-center justify-center rounded-full',
+  base: 'flex-row items-center justify-center',
   variants: {
     variant: {
       primary: 'bg-accent',
@@ -33,9 +33,9 @@ const root = tv({
       ['danger-soft']: 'bg-danger-soft',
     },
     size: {
-      sm: 'h-[36px] px-3.5 gap-1.5',
-      md: 'h-[48px] px-4 gap-2',
-      lg: 'h-[56px] px-5 gap-2.5',
+      sm: 'h-[36px] px-3.5 gap-1.5 rounded-2xl',
+      md: 'h-[48px] px-4 gap-2 rounded-3xl',
+      lg: 'h-[56px] px-5 gap-2.5 rounded-4xl',
     },
     isIconOnly: {
       true: 'p-0 aspect-square',

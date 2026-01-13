@@ -8,7 +8,6 @@ import {
   Avatar,
   BottomSheet,
   Button,
-  colorKit,
   ScrollShadow,
   TextField,
   useThemeColor,
@@ -99,7 +98,6 @@ const BottomSheetTextInput = ({
   searchQuery: string;
   setSearchQuery: (text: string) => void;
 }) => {
-  const themeColorMuted = useThemeColor('muted');
   const { animatedKeyboardState, textInputNodesRef } = useBottomSheetInternal();
   const inputRef = useRef<TextInput>(null);
 
@@ -140,6 +138,7 @@ const BottomSheetTextInput = ({
       <View className="w-full flex-row items-center">
         <TextField.Input
           ref={inputRef}
+          variant="secondary"
           placeholder="Search by name or email..."
           value={searchQuery}
           onChangeText={setSearchQuery}
@@ -148,13 +147,6 @@ const BottomSheetTextInput = ({
           autoCorrect={false}
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
-          animation={{
-            borderColor: {
-              value: {
-                blur: colorKit.setAlpha(themeColorMuted, 0.5).hex(),
-              },
-            },
-          }}
         />
         <StyledIonicons
           name="search"

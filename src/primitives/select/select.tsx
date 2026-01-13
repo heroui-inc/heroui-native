@@ -133,6 +133,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       isOpen,
       isDisabled: isDisabledRoot,
       setTriggerPosition,
+      setContentLayout,
       closeDelay,
       isDefaultOpen,
       triggerPosition,
@@ -155,20 +156,24 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
           onOpenChange(false);
           setTimeout(() => {
             setTriggerPosition(null);
+            setContentLayout(null);
           }, closeDelay);
         },
       },
+      deps: [isOpen, closeDelay],
     });
 
-    // Open popover on mount if isDefaultOpen is true
+    // Open popover on mount if isDefaultOpen is true or isOpen is true initially
     useEffect(() => {
-      if (isDefaultOpen && !triggerPosition) {
+      if ((isDefaultOpen || isOpen) && !triggerPosition) {
         // Use setTimeout to ensure the component is mounted and can be measured
         const timeoutId = setTimeout(() => {
           augmentedRef.current?.measure(
             (_x, _y, width, height, pageX, pageY) => {
               setTriggerPosition({ width, pageX, pageY: pageY, height });
-              onOpenChange(true);
+              if (isDefaultOpen) {
+                onOpenChange(true);
+              }
             }
           );
         }, 0);

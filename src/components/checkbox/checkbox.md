@@ -192,7 +192,7 @@ export default function BasicUsage() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/checkbox.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/checkbox.tsx>).
 
 ## API Reference
 
@@ -205,7 +205,7 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | `onSelectedChange`      | `(isSelected: boolean) => void`                                        | `undefined` | Callback fired when the checkbox selection state changes                  |
 | `isDisabled`            | `boolean`                                                              | `false`     | Whether the checkbox is disabled and cannot be interacted with            |
 | `isInvalid`             | `boolean`                                                              | `false`     | Whether the checkbox is invalid (shows danger color)                      |
-| `isOnSurface`           | `boolean`                                                              | `undefined` | Whether checkbox is on a surface background (auto-detected if not set)    |
+| `variant`               | `'primary' \| 'secondary'`                                             | `'primary'` | Variant style for the checkbox                                            |
 | `hitSlop`               | `number`                                                               | `6`         | Hit slop for the pressable area                                           |
 | `animation`             | `CheckboxRootAnimation`                                                | -           | Animation configuration                                                   |
 | `isAnimatedStyleActive` | `boolean`                                                              | `true`      | Whether animated styles (react-native-reanimated) are active              |
@@ -301,7 +301,6 @@ const CustomIndicator = () => {
 | `onSelectedChange` | `((isSelected: boolean) => void) \| undefined` | Callback function to change the checkbox selection state       |
 | `isDisabled`       | `boolean`                                      | Whether the checkbox is disabled and cannot be interacted with |
 | `isInvalid`        | `boolean`                                      | Whether the checkbox is invalid (shows danger color)           |
-| `isOnSurface`      | `boolean \| undefined`                         | Whether checkbox is on a surface background                    |
 | `nativeID`         | `string \| undefined`                          | Native ID for the checkbox element                             |
 
 **Note:** This hook must be used within a `Checkbox` component. It will throw an error if called outside of the checkbox context.

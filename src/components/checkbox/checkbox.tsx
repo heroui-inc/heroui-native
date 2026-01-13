@@ -40,7 +40,7 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       onSelectedChange,
       isDisabled = false,
       isInvalid = false,
-      isOnSurface: isOnSurfaceProp,
+      variant,
       hitSlop = DEFAULT_HIT_SLOP,
       className,
       style,
@@ -52,10 +52,15 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
     } = props;
 
     const isOnSurfaceAutoDetected = useIsOnSurface();
-    const isOnSurface = isOnSurfaceProp ?? isOnSurfaceAutoDetected;
+    const finalVariant =
+      variant !== undefined
+        ? variant
+        : isOnSurfaceAutoDetected
+          ? 'secondary'
+          : 'primary';
 
     const rootClassName = checkboxStyles.root({
-      isOnSurface,
+      variant: finalVariant,
       isSelected,
       isDisabled,
       isInvalid,
@@ -122,7 +127,6 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
             onSelectedChange={onSelectedChange}
             isDisabled={isDisabled}
             isInvalid={isInvalid}
-            isOnSurface={isOnSurface}
             hitSlop={hitSlop}
             onPressIn={handlePressIn}
             onPressOut={handlePressOut}

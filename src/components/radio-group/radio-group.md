@@ -179,7 +179,7 @@ export default function PaymentMethodExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/radio-group.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/radio-group.tsx>).
 
 ## API Reference
 
@@ -192,7 +192,7 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | `onValueChange` | `(val: string) => void`      | `undefined` | Callback fired when the selected value changes                                            |
 | `isDisabled`    | `boolean`                    | `false`     | Whether the entire radio group is disabled                                                |
 | `isInvalid`     | `boolean`                    | `false`     | Whether the radio group is invalid                                                        |
-| `isOnSurface`   | `boolean`                    | `undefined` | Whether the radio group is on surface                                                     |
+| `variant`       | `'primary' \| 'secondary'`   | `undefined` | Variant style for the radio group (inherited by items if not set on item)                 |
 | `animation`     | `"disable-all" \| undefined` | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
 | `className`     | `string`                     | `undefined` | Custom class name                                                                         |
 | `...ViewProps`  | `ViewProps`                  | -           | All standard React Native View props are supported                                        |
@@ -205,7 +205,7 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | `value`             | `string`                                                                     | `undefined` | The value associated with this radio item                                 |
 | `isDisabled`        | `boolean`                                                                    | `false`     | Whether this specific radio item is disabled                              |
 | `isInvalid`         | `boolean`                                                                    | `false`     | Whether the radio item is invalid                                         |
-| `isOnSurface`       | `boolean`                                                                    | `undefined` | Whether the radio item is on surface (auto-detected if not set)           |
+| `variant`           | `'primary' \| 'secondary'`                                                   | `'primary'` | Variant style for the radio item                                          |
 | `hitSlop`           | `number`                                                                     | `6`         | Hit slop for the pressable area                                           |
 | `className`         | `string`                                                                     | `undefined` | Custom class name                                                         |
 | `...PressableProps` | `PressableProps`                                                             | -           | All standard React Native Pressable props are supported (except disabled) |
@@ -226,7 +226,7 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | `className`             | `string`                   | `undefined` | Custom class name                                |
 | `...Animated.ViewProps` | `AnimatedProps<ViewProps>` | -           | All Reanimated Animated.View props are supported |
 
-**Note:** The `isOnSurface` state is automatically provided via context from the parent RadioGroup.Item component.
+**Note:** The `variant` state is automatically provided via context from the parent RadioGroup.Item component.
 
 ### RadioGroup.IndicatorThumb
 
@@ -284,20 +284,21 @@ Animation configuration for RadioGroupIndicatorThumb component. Can be:
 
 **Returns:**
 
-| Property        | Type                      | Description                                    |
-| --------------- | ------------------------- | ---------------------------------------------- |
-| `value`         | `string \| undefined`     | Currently selected value                       |
-| `isDisabled`    | `boolean`                 | Whether the radio group is disabled            |
-| `isInvalid`     | `boolean`                 | Whether the radio group is in an invalid state |
-| `onValueChange` | `(value: string) => void` | Function to change the selected value          |
+| Property        | Type                       | Description                                    |
+| --------------- | -------------------------- | ---------------------------------------------- |
+| `value`         | `string \| undefined`      | Currently selected value                       |
+| `isDisabled`    | `boolean`                  | Whether the radio group is disabled            |
+| `isInvalid`     | `boolean`                  | Whether the radio group is in an invalid state |
+| `variant`       | `'primary' \| 'secondary'` | Variant style for the radio group              |
+| `onValueChange` | `(value: string) => void`  | Function to change the selected value          |
 
 ### useRadioGroupItem
 
 **Returns:**
 
-| Property      | Type      | Description                          |
-| ------------- | --------- | ------------------------------------ |
-| `isSelected`  | `boolean` | Whether the radio item is selected   |
-| `isDisabled`  | `boolean` | Whether the radio item is disabled   |
-| `isInvalid`   | `boolean` | Whether the radio item is invalid    |
-| `isOnSurface` | `boolean` | Whether the radio item is on surface |
+| Property     | Type                       | Description                        |
+| ------------ | -------------------------- | ---------------------------------- |
+| `isSelected` | `boolean`                  | Whether the radio item is selected |
+| `isDisabled` | `boolean`                  | Whether the radio item is disabled |
+| `isInvalid`  | `boolean`                  | Whether the radio item is invalid  |
+| `variant`    | `'primary' \| 'secondary'` | Variant style for the radio item   |

@@ -89,7 +89,7 @@ export default function Layout() {
         <Stack.Screen name="components/avatar" options={{ title: 'Avatar' }} />
         <Stack.Screen
           name="components/bottom-sheet"
-          options={{ title: 'Bottom Sheet' }}
+          options={{ title: 'BottomSheet' }}
         />
         <Stack.Screen
           name="components/bottom-sheet-native-modal"
@@ -120,15 +120,15 @@ export default function Layout() {
         />
         <Stack.Screen
           name="components/error-view"
-          options={{ title: 'Error View' }}
+          options={{ title: 'ErrorView' }}
         />
         <Stack.Screen
           name="components/form-field"
-          options={{ title: 'Form Field' }}
+          options={{ title: 'FormField' }}
         />
         <Stack.Screen
           name="components/input-otp"
-          options={{ title: 'Input OTP' }}
+          options={{ title: 'InputOTP' }}
         />
         <Stack.Screen name="components/label" options={{ title: 'Label' }} />
         <Stack.Screen
@@ -137,7 +137,7 @@ export default function Layout() {
         />
         <Stack.Screen
           name="components/pressable-feedback"
-          options={{ title: 'Pressable Feedback' }}
+          options={{ title: 'PressableFeedback' }}
         />
         <Stack.Screen
           name="components/popover-native-modal"
@@ -145,11 +145,11 @@ export default function Layout() {
         />
         <Stack.Screen
           name="components/radio-group"
-          options={{ title: 'Radio Group' }}
+          options={{ title: 'RadioGroup' }}
         />
         <Stack.Screen
           name="components/scroll-shadow"
-          options={{ title: 'Scroll Shadow' }}
+          options={{ title: 'ScrollShadow' }}
         />
         <Stack.Screen
           name="components/select-native-modal"

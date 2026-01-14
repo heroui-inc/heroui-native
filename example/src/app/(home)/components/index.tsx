@@ -15,160 +15,110 @@ type Component = {
   path: string;
 };
 
-type ComponentGroup = {
-  title: string;
-  components: Component[];
-};
-
-const componentGroups: ComponentGroup[] = [
+const components: Component[] = [
   {
-    title: 'Buttons',
-    components: [
-      {
-        title: 'Button',
-        path: 'button',
-      },
-    ],
+    title: 'Accordion',
+    path: 'accordion',
   },
   {
-    title: 'Forms',
-    components: [
-      {
-        title: 'Checkbox',
-        path: 'checkbox',
-      },
-      {
-        title: 'Description',
-        path: 'description',
-      },
-      {
-        title: 'Error View',
-        path: 'error-view',
-      },
-      {
-        title: 'Form Field',
-        path: 'form-field',
-      },
-      {
-        title: 'Input OTP',
-        path: 'input-otp',
-      },
-      {
-        title: 'Label',
-        path: 'label',
-      },
-      {
-        title: 'Radio Group',
-        path: 'radio-group',
-      },
-      {
-        title: 'Select',
-        path: 'select',
-      },
-      {
-        title: 'Switch',
-        path: 'switch',
-      },
-      {
-        title: 'Text Field',
-        path: 'text-field',
-      },
-    ],
+    title: 'Avatar',
+    path: 'avatar',
   },
   {
-    title: 'Navigation',
-    components: [
-      {
-        title: 'Accordion',
-        path: 'accordion',
-      },
-      {
-        title: 'Tabs',
-        path: 'tabs',
-      },
-    ],
+    title: 'BottomSheet',
+    path: 'bottom-sheet',
   },
   {
-    title: 'Overlays',
-    components: [
-      {
-        title: 'Bottom Sheet',
-        path: 'bottom-sheet',
-      },
-      {
-        title: 'Dialog',
-        path: 'dialog',
-      },
-      {
-        title: 'Popover',
-        path: 'popover',
-      },
-      {
-        title: 'Toast',
-        path: 'toast',
-      },
-    ],
+    title: 'Button',
+    path: 'button',
   },
   {
-    title: 'Feedback',
-    components: [
-      {
-        title: 'Skeleton',
-        path: 'skeleton',
-      },
-      {
-        title: 'Spinner',
-        path: 'spinner',
-      },
-    ],
+    title: 'Card',
+    path: 'card',
   },
   {
-    title: 'Layout',
-    components: [
-      {
-        title: 'Card',
-        path: 'card',
-      },
-      {
-        title: 'Divider',
-        path: 'divider',
-      },
-      {
-        title: 'Surface',
-        path: 'surface',
-      },
-    ],
+    title: 'Checkbox',
+    path: 'checkbox',
   },
   {
-    title: 'Media',
-    components: [
-      {
-        title: 'Avatar',
-        path: 'avatar',
-      },
-    ],
+    title: 'Chip',
+    path: 'chip',
   },
   {
-    title: 'Data Display',
-    components: [
-      {
-        title: 'Chip',
-        path: 'chip',
-      },
-    ],
+    title: 'Description',
+    path: 'description',
   },
   {
-    title: 'Utilities',
-    components: [
-      {
-        title: 'Pressable Feedback',
-        path: 'pressable-feedback',
-      },
-      {
-        title: 'Scroll Shadow',
-        path: 'scroll-shadow',
-      },
-    ],
+    title: 'Dialog',
+    path: 'dialog',
+  },
+  {
+    title: 'Divider',
+    path: 'divider',
+  },
+  {
+    title: 'ErrorView',
+    path: 'error-view',
+  },
+  {
+    title: 'FormField',
+    path: 'form-field',
+  },
+  {
+    title: 'InputOTP',
+    path: 'input-otp',
+  },
+  {
+    title: 'Label',
+    path: 'label',
+  },
+  {
+    title: 'Popover',
+    path: 'popover',
+  },
+  {
+    title: 'PressableFeedback',
+    path: 'pressable-feedback',
+  },
+  {
+    title: 'RadioGroup',
+    path: 'radio-group',
+  },
+  {
+    title: 'ScrollShadow',
+    path: 'scroll-shadow',
+  },
+  {
+    title: 'Select',
+    path: 'select',
+  },
+  {
+    title: 'Skeleton',
+    path: 'skeleton',
+  },
+  {
+    title: 'Spinner',
+    path: 'spinner',
+  },
+  {
+    title: 'Surface',
+    path: 'surface',
+  },
+  {
+    title: 'Switch',
+    path: 'switch',
+  },
+  {
+    title: 'Tabs',
+    path: 'tabs',
+  },
+  {
+    title: 'TextField',
+    path: 'text-field',
+  },
+  {
+    title: 'Toast',
+    path: 'toast',
   },
 ];
 
@@ -188,41 +138,34 @@ export default function App() {
   return (
     <ScreenScrollView contentContainerClassName="px-4">
       <View className="h-5" />
-      {componentGroups.map((group) => (
-        <View key={group.title} className="mb-6">
-          <AppText className="text-muted text-sm text-center uppercase mb-2">
-            {group.title}
-          </AppText>
-          <Accordion isCollapsible={false} variant="surface">
-            {group.components.map((item) => (
-              <Accordion.Item key={item.title} value={item.title}>
-                <Accordion.Trigger
-                  onPress={() => {
-                    if (Platform.OS === 'ios') {
-                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    }
-                    router.push(`/components/${item.path}`);
-                  }}
-                  asChild
-                >
-                  <PressableFeedback>
-                    <AppText className="text-foreground text-base ml-1">
-                      {item.title}
-                    </AppText>
-                    <Accordion.Indicator>
-                      <StyledIonicons
-                        name="chevron-forward"
-                        size={16}
-                        className="text-muted"
-                      />
-                    </Accordion.Indicator>
-                  </PressableFeedback>
-                </Accordion.Trigger>
-              </Accordion.Item>
-            ))}
-          </Accordion>
-        </View>
-      ))}
+      <Accordion isCollapsible={false} variant="surface">
+        {components.map((item) => (
+          <Accordion.Item key={item.title} value={item.title}>
+            <Accordion.Trigger
+              onPress={() => {
+                if (Platform.OS === 'ios') {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                }
+                router.push(`/components/${item.path}`);
+              }}
+              asChild
+            >
+              <PressableFeedback>
+                <AppText className="text-foreground text-base ml-1">
+                  {item.title}
+                </AppText>
+                <Accordion.Indicator>
+                  <StyledIonicons
+                    name="chevron-forward"
+                    size={16}
+                    className="text-muted"
+                  />
+                </Accordion.Indicator>
+              </PressableFeedback>
+            </Accordion.Trigger>
+          </Accordion.Item>
+        ))}
+      </Accordion>
     </ScreenScrollView>
   );
 }

@@ -18,6 +18,10 @@ import { Tabs } from 'heroui-native';
       <Tabs.Trigger>
         <Tabs.Label>...</Tabs.Label>
       </Tabs.Trigger>
+      <Tabs.Separator />
+      <Tabs.Trigger>
+        <Tabs.Label>...</Tabs.Label>
+      </Tabs.Trigger>
     </Tabs.ScrollView>
   </Tabs.List>
   <Tabs.Content>...</Tabs.Content>
@@ -30,6 +34,7 @@ import { Tabs } from 'heroui-native';
 - **Tabs.Trigger**: Interactive button for each tab. Handles press events to change active tab and measures its position for indicator animation.
 - **Tabs.Label**: Text content for tab triggers. Displays the tab title with appropriate styling.
 - **Tabs.Indicator**: Animated visual indicator for active tab. Smoothly transitions between tabs using spring or timing animations.
+- **Tabs.Separator**: Visual separator between tabs. Shows when the current tab value is not in the `betweenValues` array, with animated opacity transitions.
 - **Tabs.Content**: Container for tab panel content. Shows content when its value matches the active tab.
 
 ## Usage
@@ -202,6 +207,34 @@ Use a render function on `Tabs.Trigger` to access state and customize content ba
     </Tabs.Trigger>
   </Tabs.List>
   <Tabs.Content value="settings">...</Tabs.Content>
+  <Tabs.Content value="profile">...</Tabs.Content>
+</Tabs>
+```
+
+### With Separators
+
+Add visual separators between tabs that show when the active tab is not between specified values.
+
+```tsx
+<Tabs value={activeTab} onValueChange={setActiveTab}>
+  <Tabs.List>
+    <Tabs.ScrollView>
+      <Tabs.Indicator />
+      <Tabs.Trigger value="general">
+        <Tabs.Label>General</Tabs.Label>
+      </Tabs.Trigger>
+      <Tabs.Separator betweenValues={['general', 'notifications']} />
+      <Tabs.Trigger value="notifications">
+        <Tabs.Label>Notifications</Tabs.Label>
+      </Tabs.Trigger>
+      <Tabs.Separator betweenValues={['notifications', 'profile']} />
+      <Tabs.Trigger value="profile">
+        <Tabs.Label>Profile</Tabs.Label>
+      </Tabs.Trigger>
+    </Tabs.ScrollView>
+  </Tabs.List>
+  <Tabs.Content value="general">...</Tabs.Content>
+  <Tabs.Content value="notifications">...</Tabs.Content>
   <Tabs.Content value="profile">...</Tabs.Content>
 </Tabs>
 ```
@@ -404,6 +437,38 @@ Animation configuration for Tabs.Indicator component. Can be:
 | `height.config`     | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration              |
 | `translateX.type`   | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use                        |
 | `translateX.config` | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration              |
+
+### Tabs.Separator
+
+| prop                    | type                     | default | description                                                                                                                            |
+| ----------------------- | ------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `betweenValues`         | `string[]`               | -       | Array of tab values between which the separator should be visible. The separator shows when the current tab value is NOT in this array |
+| `isAlwaysVisible`       | `boolean`                | `false` | If true, opacity is always 1 regardless of the current tab value                                                                       |
+| `className`             | `string`                 | -       | Additional CSS classes                                                                                                                 |
+| `animation`             | `TabsSeparatorAnimation` | -       | Animation configuration                                                                                                                |
+| `isAnimatedStyleActive` | `boolean`                | `true`  | Whether animated styles (react-native-reanimated) are active                                                                           |
+| `children`              | `React.ReactNode`        | -       | Custom separator content                                                                                                               |
+| `...Animated.ViewProps` | `Animated.ViewProps`     | -       | All Reanimated Animated.View props are supported                                                                                       |
+
+**Note:** The following style properties are occupied by animations and cannot be set via className:
+
+- `opacity` - Animated for separator visibility transitions (0 when current tab is in `betweenValues`, 1 when not)
+
+To customize these properties, use the `animation` prop. To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+
+#### TabsSeparatorAnimation
+
+Animation configuration for Tabs.Separator component. Can be:
+
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations
+- `object`: Custom animation configuration
+
+| prop                   | type                    | default             | description                                     |
+| ---------------------- | ----------------------- | ------------------- | ----------------------------------------------- |
+| `state`                | `'disabled' \| boolean` | -                   | Disable animations while customizing properties |
+| `opacity.value`        | `[number, number]`      | `[0, 1]`            | Opacity values [hidden, visible]                |
+| `opacity.timingConfig` | `WithTimingConfig`      | `{ duration: 200 }` | Animation timing configuration                  |
 
 ### Tabs.Content
 

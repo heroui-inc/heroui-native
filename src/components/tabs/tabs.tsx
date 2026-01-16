@@ -19,6 +19,7 @@ import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
 import {
   useTabsIndicatorAnimation,
   useTabsRootAnimation,
+  useTabsSeparatorAnimation,
 } from './tabs.animation';
 import { DISPLAY_NAME } from './tabs.constants';
 import { MeasurementsContext, useTabsMeasurements } from './tabs.context';
@@ -31,6 +32,7 @@ import type {
   TabsListProps,
   TabsProps,
   TabsScrollViewProps,
+  TabsSeparatorProps,
   TabsTriggerProps,
   TabsTriggerRenderProps,
 } from './tabs.types';
@@ -302,6 +304,43 @@ const TabsIndicator = forwardRef<
 
 // --------------------------------------------------
 
+const TabsSeparator = forwardRef<Animated.View, TabsSeparatorProps>(
+  (props, ref) => {
+    const {
+      betweenValues,
+      isAlwaysVisible = false,
+      animation,
+      isAnimatedStyleActive = true,
+      className,
+      style,
+      ...restProps
+    } = props;
+
+    const { rContainerStyle } = useTabsSeparatorAnimation({
+      animation,
+      betweenValues,
+      isAlwaysVisible,
+    });
+
+    const separatorClassName = tabsStyles.separator({ className });
+
+    const separatorStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
+
+    return (
+      <Animated.View
+        ref={ref}
+        className={separatorClassName}
+        style={separatorStyle}
+        {...restProps}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const TabsContent = forwardRef<
   TabsPrimitivesTypes.ContentRef,
   TabsContentProps
@@ -330,6 +369,7 @@ TabsScrollView.displayName = DISPLAY_NAME.SCROLL_VIEW;
 TabsTrigger.displayName = DISPLAY_NAME.TRIGGER;
 TabsLabel.displayName = DISPLAY_NAME.LABEL;
 TabsIndicator.displayName = DISPLAY_NAME.INDICATOR;
+TabsSeparator.displayName = DISPLAY_NAME.SEPARATOR;
 TabsContent.displayName = DISPLAY_NAME.CONTENT;
 
 /**
@@ -346,6 +386,8 @@ TabsContent.displayName = DISPLAY_NAME.CONTENT;
  * @component Tabs.Label - Label text for tab triggers
  *
  * @component Tabs.Indicator - Visual indicator for active tab
+ *
+ * @component Tabs.Separator - Visual separator between tabs
  *
  * @component Tabs.Content - Content panel for each tab
  *
@@ -364,6 +406,8 @@ const Tabs = Object.assign(TabsRoot, {
   Label: TabsLabel,
   /** Visual indicator for active tab */
   Indicator: TabsIndicator,
+  /** Visual separator between tabs */
+  Separator: TabsSeparator,
   /** Content panel for each tab */
   Content: TabsContent,
 });

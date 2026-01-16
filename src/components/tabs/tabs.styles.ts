@@ -99,6 +99,30 @@ const indicator = tv({
   },
 });
 
+/**
+ * Separator style definition
+ *
+ * @note ANIMATED PROPERTIES (cannot be set via className):
+ * The following properties are animated and cannot be overridden using Tailwind classes:
+ * - `opacity` - Animated for separator visibility transitions (0 when not between values, 1 when between values)
+ *
+ * To customize these properties, use the `animation` prop on `Tabs.Separator`:
+ * ```tsx
+ * <Tabs.Separator
+ *   betweenValues={["tab1", "tab2"]}
+ *   animation={{
+ *     opacity: { value: [0, 1], timingConfig: { duration: 200 } }
+ *   }}
+ * />
+ * ```
+ *
+ * To completely disable animated styles and apply your own via className or style prop,
+ * set `isAnimatedStyleActive={false}` on `Tabs.Separator`.
+ */
+const separator = tv({
+  base: 'w-px h-3/5 bg-divider/30 self-center',
+});
+
 const content = tv({
   base: '',
 });
@@ -120,6 +144,7 @@ const tabsStyles = combineStyles({
   trigger,
   label,
   indicator,
+  separator,
   content,
   styleSheet,
 });

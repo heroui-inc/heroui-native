@@ -315,7 +315,7 @@ export default function TabsExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/tabs.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/tabs.tsx>).
 
 ## API Reference
 
@@ -395,15 +395,15 @@ Animation configuration for Tabs.Indicator component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                                   | default                                                                      | description                                     |
-| --------------- | -------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------- |
-| `state`         | `'disabled' \| boolean`                | -                                                                            | Disable animations while customizing properties |
-| `width.type`    | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use                        |
-| `width.config`  | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration              |
-| `height.type`   | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use                        |
-| `height.config` | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration              |
-| `left.type`     | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use                        |
-| `left.config`   | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration              |
+| prop                | type                                   | default                                                                      | description                                     |
+| ------------------- | -------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------- |
+| `state`             | `'disabled' \| boolean`                | -                                                                            | Disable animations while customizing properties |
+| `width.type`        | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use                        |
+| `width.config`      | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration              |
+| `height.type`       | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use                        |
+| `height.config`     | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration              |
+| `translateX.type`   | `'spring' \| 'timing'`                 | `'spring'`                                                                   | Type of animation to use                        |
+| `translateX.config` | `WithSpringConfig \| WithTimingConfig` | `{ stiffness: 1200, damping: 120 }` (spring) or `{ duration: 200 }` (timing) | Reanimated animation configuration              |
 
 ### Tabs.Content
 

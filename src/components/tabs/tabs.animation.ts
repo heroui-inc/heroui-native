@@ -40,7 +40,7 @@ export function useTabsRootAnimation(options: {
 
 /**
  * Animation hook for Tabs Indicator component
- * Handles width, height, left position, and opacity animations
+ * Handles width, height, translateX position, and opacity animations
  */
 export function useTabsIndicatorAnimation(options: {
   animation: TabsIndicatorAnimation | undefined;
@@ -99,14 +99,14 @@ export function useTabsIndicatorAnimation(options: {
   // Get animation configs for each property
   const widthConfig = getPropertyConfig(animationConfig?.width);
   const heightConfig = getPropertyConfig(animationConfig?.height);
-  const leftConfig = getPropertyConfig(animationConfig?.left);
+  const translateXConfig = getPropertyConfig(animationConfig?.translateX);
 
   const rContainerStyle = useAnimatedStyle(() => {
     if (!activeMeasurements) {
       return {
         width: 0,
         height: 0,
-        left: 0,
+        transform: [{ translateX: 0 }],
         opacity: 0,
       };
     }
@@ -116,7 +116,7 @@ export function useTabsIndicatorAnimation(options: {
       return {
         width: activeMeasurements.width,
         height: activeMeasurements.height,
-        left: activeMeasurements.x,
+        transform: [{ translateX: activeMeasurements.x }],
         opacity: 1,
       };
     }
@@ -126,7 +126,7 @@ export function useTabsIndicatorAnimation(options: {
       return {
         width: activeMeasurements.width,
         height: activeMeasurements.height,
-        left: activeMeasurements.x,
+        transform: [{ translateX: activeMeasurements.x }],
         opacity: 1,
       };
     }
@@ -142,15 +142,15 @@ export function useTabsIndicatorAnimation(options: {
         ? withTiming(activeMeasurements.height, heightConfig.timingConfig)
         : withSpring(activeMeasurements.height, heightConfig.springConfig);
 
-    const leftAnimation =
-      leftConfig.type === 'timing'
-        ? withTiming(activeMeasurements.x, leftConfig.timingConfig)
-        : withSpring(activeMeasurements.x, leftConfig.springConfig);
+    const translateXAnimation =
+      translateXConfig.type === 'timing'
+        ? withTiming(activeMeasurements.x, translateXConfig.timingConfig)
+        : withSpring(activeMeasurements.x, translateXConfig.springConfig);
 
     return {
       width: widthAnimation,
       height: heightAnimation,
-      left: leftAnimation,
+      transform: [{ translateX: translateXAnimation }],
       opacity: 1,
     };
   }, [
@@ -158,7 +158,7 @@ export function useTabsIndicatorAnimation(options: {
     isAnimationDisabledValue,
     widthConfig,
     heightConfig,
-    leftConfig,
+    translateXConfig,
   ]);
 
   return {

@@ -69,7 +69,7 @@ const label = tv({
  * The following properties are animated and cannot be overridden using Tailwind classes:
  * - `width` - Animated for indicator width transitions when switching tabs
  * - `height` - Animated for indicator height transitions when switching tabs
- * - `left` - Animated for indicator position transitions when switching tabs
+ * - `translateX` - Animated for indicator position transitions when switching tabs (uses translateX for GPU-accelerated performance)
  * - `opacity` - Animated for indicator visibility transitions (0 when no active tab, 1 when active tab is selected)
  *
  * To customize these properties, use the `animation` prop on `Tabs.Indicator`:
@@ -78,7 +78,7 @@ const label = tv({
  *   animation={{
  *     width: { type: 'spring', config: { stiffness: 1200, damping: 120 } },
  *     height: { type: 'spring', config: { stiffness: 1200, damping: 120 } },
- *     left: { type: 'timing', config: { duration: 200 } }
+ *     translateX: { type: 'timing', config: { duration: 200 } }
  *   }}
  * />
  * ```
@@ -87,7 +87,7 @@ const label = tv({
  * set `isAnimatedStyleActive={false}` on `Tabs.Indicator`.
  */
 const indicator = tv({
-  base: 'absolute',
+  base: 'absolute left-0',
   variants: {
     variant: {
       pill: 'rounded-3xl shadow-sm dark:shadow-none shadow-black/5 bg-segment',

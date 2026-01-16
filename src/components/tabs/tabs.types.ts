@@ -155,7 +155,7 @@ type TabsIndicatorTimingAnimationValue = AnimationValue<{
 }>;
 
 /**
- * Animation value for tabs indicator properties (width, height, left)
+ * Animation value for tabs indicator properties (width, height, translateX)
  */
 type TabsIndicatorPropertyAnimationValue =
   | TabsIndicatorSpringAnimationValue
@@ -174,9 +174,10 @@ export type TabsIndicatorAnimation = Animation<{
    */
   height?: TabsIndicatorPropertyAnimationValue;
   /**
-   * Left position animation configuration
+   * TranslateX animation configuration
+   * Controls the horizontal position animation using GPU-accelerated transforms
    */
-  left?: TabsIndicatorPropertyAnimationValue;
+  translateX?: TabsIndicatorPropertyAnimationValue;
 }>;
 
 /**
@@ -189,7 +190,7 @@ export interface TabsIndicatorProps extends TabsPrimitivesTypes.IndicatorProps {
    * @note The following style properties are occupied by animations and cannot be set via className:
    * - `width` - Animated for indicator width transitions when switching tabs
    * - `height` - Animated for indicator height transitions when switching tabs
-   * - `left` - Animated for indicator position transitions when switching tabs
+   * - `translateX` - Animated for indicator position transitions when switching tabs (uses translateX for GPU-accelerated performance)
    * - `opacity` - Animated for indicator visibility transitions (0 when no active tab, 1 when active tab is selected)
    *
    * To customize these properties, use the `animation` prop:
@@ -198,7 +199,7 @@ export interface TabsIndicatorProps extends TabsPrimitivesTypes.IndicatorProps {
    *   animation={{
    *     width: { type: 'spring', config: { stiffness: 1200, damping: 120 } },
    *     height: { type: 'spring', config: { stiffness: 1200, damping: 120 } },
-   *     left: { type: 'timing', config: { duration: 200 } }
+   *     translateX: { type: 'timing', config: { duration: 200 } }
    *   }}
    * />
    * ```

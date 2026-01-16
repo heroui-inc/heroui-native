@@ -1,5 +1,7 @@
 import {
+  Children,
   forwardRef,
+  isValidElement,
   useCallback,
   useEffect,
   useMemo,
@@ -19,6 +21,7 @@ import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
 import {
   useTabsIndicatorAnimation,
   useTabsRootAnimation,
+  useTabsSeparatorAnimation,
 } from './tabs.animation';
 import { DISPLAY_NAME } from './tabs.constants';
 import { MeasurementsContext, useTabsMeasurements } from './tabs.context';
@@ -31,6 +34,7 @@ import type {
   TabsListProps,
   TabsProps,
   TabsScrollViewProps,
+  TabsSeparatorProps,
   TabsTriggerProps,
   TabsTriggerRenderProps,
 } from './tabs.types';
@@ -59,6 +63,7 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
     const [measurements, setMeasurementsState] = useState<
       Record<string, ItemMeasurements>
     >({});
+    const [isScrollView, setIsScrollView] = useState(false);
 
     const setMeasurements = useCallback(
       (key: string, newMeasurements: ItemMeasurements) => {
@@ -84,7 +89,13 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
     return (
       <AnimationSettingsProvider value={animationSettingsContextValue}>
         <MeasurementsContext.Provider
-          value={{ measurements, setMeasurements, variant }}
+          value={{
+            measurements,
+            setMeasurements,
+            variant,
+            isScrollView,
+            setIsScrollView,
+          }}
         >
           <TabsPrimitives.Root
             ref={ref}
@@ -107,7 +118,17 @@ const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
   (props, ref) => {
     const { children, className, style, ...restProps } = props;
 
-    const { variant } = useTabsMeasurements();
+    const { variant, setIsScrollView } = useTabsMeasurements();
+
+    const handleLayout = useCallback(() => {
+      const childrenArray = Children.toArray(children);
+      const hasScrollView =
+        childrenArray.length === 1 &&
+        isValidElement(childrenArray[0]) &&
+        (childrenArray[0].type as any)?.displayName ===
+          DISPLAY_NAME.SCROLL_VIEW;
+      setIsScrollView(hasScrollView);
+    }, [children, setIsScrollView]);
 
     const tvStyles = tabsStyles.list({ variant, className });
 
@@ -116,6 +137,7 @@ const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
         ref={ref}
         className={tvStyles}
         style={[tabsStyles.styleSheet.listRoot, style]}
+        onLayout={handleLayout}
         {...restProps}
       >
         {children}
@@ -276,13 +298,17 @@ const TabsIndicator = forwardRef<
     ...restProps
   } = props;
 
-  const { variant } = useTabsMeasurements();
+  const { variant, isScrollView } = useTabsMeasurements();
 
   const { rContainerStyle } = useTabsIndicatorAnimation({
     animation,
   });
 
-  const indicatorClassName = tabsStyles.indicator({ variant, className });
+  const indicatorClassName = tabsStyles.indicator({
+    variant,
+    isScrollView,
+    className,
+  });
 
   const indicatorStyle = isAnimatedStyleActive
     ? [rContainerStyle, style]
@@ -299,6 +325,43 @@ const TabsIndicator = forwardRef<
     </AnimatedIndicator>
   );
 });
+
+// --------------------------------------------------
+
+const TabsSeparator = forwardRef<Animated.View, TabsSeparatorProps>(
+  (props, ref) => {
+    const {
+      betweenValues,
+      isAlwaysVisible = false,
+      animation,
+      isAnimatedStyleActive = true,
+      className,
+      style,
+      ...restProps
+    } = props;
+
+    const { rContainerStyle } = useTabsSeparatorAnimation({
+      animation,
+      betweenValues,
+      isAlwaysVisible,
+    });
+
+    const separatorClassName = tabsStyles.separator({ className });
+
+    const separatorStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
+
+    return (
+      <Animated.View
+        ref={ref}
+        className={separatorClassName}
+        style={separatorStyle}
+        {...restProps}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -330,6 +393,7 @@ TabsScrollView.displayName = DISPLAY_NAME.SCROLL_VIEW;
 TabsTrigger.displayName = DISPLAY_NAME.TRIGGER;
 TabsLabel.displayName = DISPLAY_NAME.LABEL;
 TabsIndicator.displayName = DISPLAY_NAME.INDICATOR;
+TabsSeparator.displayName = DISPLAY_NAME.SEPARATOR;
 TabsContent.displayName = DISPLAY_NAME.CONTENT;
 
 /**
@@ -346,6 +410,8 @@ TabsContent.displayName = DISPLAY_NAME.CONTENT;
  * @component Tabs.Label - Label text for tab triggers
  *
  * @component Tabs.Indicator - Visual indicator for active tab
+ *
+ * @component Tabs.Separator - Visual separator between tabs
  *
  * @component Tabs.Content - Content panel for each tab
  *
@@ -364,6 +430,8 @@ const Tabs = Object.assign(TabsRoot, {
   Label: TabsLabel,
   /** Visual indicator for active tab */
   Indicator: TabsIndicator,
+  /** Visual separator between tabs */
+  Separator: TabsSeparator,
   /** Content panel for each tab */
   Content: TabsContent,
 });

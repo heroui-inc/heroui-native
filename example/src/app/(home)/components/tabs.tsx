@@ -117,13 +117,20 @@ const TabsContent = ({ variant }: TabsContentProps) => {
       className={cn('gap-1.5', variant === 'line' && 'gap-0')}
     >
       <Tabs.List className={cn('border-b-0', variant === 'line' && 'mx-4')}>
-        <Tabs.ScrollView
-          contentContainerClassName={cn('gap-4', variant === 'line' && 'px-0')}
-        >
+        <Tabs.ScrollView contentContainerClassName="gap-1">
           <Tabs.Indicator />
           <TabTrigger value="general" label="General" />
+          {variant === 'pill' && (
+            <Tabs.Separator betweenValues={['general', 'appearance']} />
+          )}
           <TabTrigger value="appearance" label="Appearance" />
+          {variant === 'pill' && (
+            <Tabs.Separator betweenValues={['appearance', 'notifications']} />
+          )}
           <TabTrigger value="notifications" label="Notifications" />
+          {variant === 'pill' && (
+            <Tabs.Separator betweenValues={['notifications', 'profile']} />
+          )}
           <TabTrigger value="profile" label="Profile" />
         </Tabs.ScrollView>
       </Tabs.List>

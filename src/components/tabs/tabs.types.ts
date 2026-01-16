@@ -1,5 +1,6 @@
-import type { ScrollViewProps } from 'react-native';
+import type { ScrollViewProps, ViewProps } from 'react-native';
 import type {
+  AnimatedProps,
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated';
@@ -228,6 +229,80 @@ export interface TabsIndicatorProps extends TabsPrimitivesTypes.IndicatorProps {
 }
 
 /**
+ * Animation configuration for tabs separator component
+ */
+export type TabsSeparatorAnimation = Animation<{
+  /**
+   * Opacity animation configuration
+   */
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [hidden, visible]
+     * @default [0, 1]
+     */
+    value?: [number, number];
+    /**
+     * Timing animation configuration
+     * @default { duration: 200 }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+}>;
+
+/**
+ * Props for the TabsSeparator component
+ */
+export interface TabsSeparatorProps extends AnimatedProps<ViewProps> {
+  /**
+   * Array of tab values between which the separator should be visible
+   * The separator will be visible when the current tab value is between these values
+   */
+  betweenValues: string[];
+  /**
+   * If true, opacity is always 1 regardless of the current tab value
+   * @default false
+   */
+  isAlwaysVisible?: boolean;
+  /**
+   * Animation configuration for separator
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: TabsSeparatorAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
+  /**
+   * Additional CSS classes for the separator element
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `opacity` - Animated for separator visibility transitions (0 when not between values, 1 when between values)
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <Tabs.Separator
+   *   betweenValues={["tab1", "tab2"]}
+   *   animation={{
+   *     opacity: { value: [0, 1], timingConfig: { duration: 200 } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+   */
+  className?: string;
+  /**
+   * React children elements
+   */
+  children?: React.ReactNode;
+}
+
+/**
  * Props for the TabsContent component
  */
 export interface TabsContentProps extends TabsPrimitivesTypes.ContentProps {
@@ -261,4 +336,6 @@ export type MeasurementsContextValue = {
   measurements: Record<string, ItemMeasurements>;
   setMeasurements: (key: string, measurements: ItemMeasurements) => void;
   variant: 'pill' | 'line';
+  isScrollView: boolean;
+  setIsScrollView: (isScrollView: boolean) => void;
 };

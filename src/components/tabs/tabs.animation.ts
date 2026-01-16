@@ -11,12 +11,17 @@ import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
 import type { AnimationRootDisableAll } from '../../helpers/types/animation';
 import {
   getAnimationState,
+  getAnimationValueMergedConfig,
+  getAnimationValueProperty,
   getIsAnimationDisabledValue,
 } from '../../helpers/utils/animation';
 import * as TabsPrimitives from '../../primitives/tabs';
 import { DEFAULT_INDICATOR_SPRING_CONFIG } from './tabs.constants';
 import { useTabsMeasurements } from './tabs.context';
-import type { TabsIndicatorAnimation } from './tabs.types';
+import type {
+  TabsIndicatorAnimation,
+  TabsSeparatorAnimation,
+} from './tabs.types';
 
 // --------------------------------------------------
 
@@ -159,6 +164,80 @@ export function useTabsIndicatorAnimation(options: {
     widthConfig,
     heightConfig,
     translateXConfig,
+  ]);
+
+  return {
+    rContainerStyle,
+  };
+}
+
+// --------------------------------------------------
+
+/**
+ * Animation hook for Tabs Separator component
+ * Handles opacity animation based on whether current tab value is between specified values
+ */
+export function useTabsSeparatorAnimation(options: {
+  animation: TabsSeparatorAnimation | undefined;
+  betweenValues: string[];
+  isAlwaysVisible: boolean;
+}) {
+  const { animation, betweenValues, isAlwaysVisible } = options;
+
+  // Get current tab value from tabs context
+  const { value } = TabsPrimitives.useRootContext();
+
+  // Read from global animation context (always available in compound parts)
+  const { isAllAnimationsDisabled } = useAnimationSettings();
+
+  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
+
+  // IMPORTANT: Use getIsAnimationDisabledValue to respect both own and parent states
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
+
+  // Opacity animation configuration
+  const opacityValue = getAnimationValueProperty({
+    animationValue: animationConfig?.opacity,
+    property: 'value',
+    defaultValue: [0, 1] as [number, number],
+  });
+  const opacityTimingConfig = getAnimationValueMergedConfig({
+    animationValue: animationConfig?.opacity,
+    property: 'timingConfig',
+    defaultValue: { duration: 200 },
+  });
+
+  const rContainerStyle = useAnimatedStyle(() => {
+    // If always visible, return opacity 1
+    if (isAlwaysVisible) {
+      return {
+        opacity: 1,
+      };
+    }
+
+    // Check if current value is between the specified values
+    const isVisible = !betweenValues.includes(value);
+    const targetOpacity = isVisible ? opacityValue[1] : opacityValue[0];
+
+    if (isAnimationDisabledValue) {
+      return {
+        opacity: targetOpacity,
+      };
+    }
+
+    return {
+      opacity: withTiming(targetOpacity, opacityTimingConfig),
+    };
+  }, [
+    value,
+    betweenValues,
+    isAlwaysVisible,
+    isAnimationDisabledValue,
+    opacityValue,
+    opacityTimingConfig,
   ]);
 
   return {

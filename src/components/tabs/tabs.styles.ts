@@ -10,12 +10,13 @@ const list = tv({
   base: 'self-start flex-row items-center gap-1',
   variants: {
     variant: {
-      pill: 'rounded-3xl bg-default p-[3px]',
-      line: 'border-b border-border',
+      pill: 'p-[3px] rounded-3xl bg-default',
+      line: 'p-0 border-b border-border',
     },
   },
   defaultVariants: {
     variant: 'pill',
+    isScrollView: false,
   },
 });
 
@@ -23,7 +24,7 @@ const scrollView = tv({
   base: '',
   variants: {
     variant: {
-      pill: 'rounded-3xl',
+      pill: '-my-[3px] rounded-3xl',
       line: '',
     },
   },
@@ -36,8 +37,8 @@ const scrollViewContentContainer = tv({
   base: '',
   variants: {
     variant: {
-      pill: '',
-      line: 'px-4',
+      pill: 'py-[3px] px-px',
+      line: '',
     },
   },
   defaultVariants: {
@@ -90,13 +91,49 @@ const indicator = tv({
   base: 'absolute left-0',
   variants: {
     variant: {
-      pill: 'rounded-3xl shadow-sm dark:shadow-none shadow-black/5 bg-segment',
-      line: 'border-b-2 border-accent bottom-0',
+      pill: 'rounded-3xl shadow-sm shadow-surface/25 bg-segment',
+      line: 'bottom-0 border-b-2 border-accent',
+    },
+    isScrollView: {
+      true: '',
+      false: '',
     },
   },
+  compoundVariants: [
+    {
+      variant: 'pill',
+      isScrollView: true,
+      className: 'top-[3px]',
+    },
+  ],
   defaultVariants: {
     variant: 'pill',
+    isScrollView: false,
   },
+});
+
+/**
+ * Separator style definition
+ *
+ * @note ANIMATED PROPERTIES (cannot be set via className):
+ * The following properties are animated and cannot be overridden using Tailwind classes:
+ * - `opacity` - Animated for separator visibility transitions (0 when not between values, 1 when between values)
+ *
+ * To customize these properties, use the `animation` prop on `Tabs.Separator`:
+ * ```tsx
+ * <Tabs.Separator
+ *   betweenValues={["tab1", "tab2"]}
+ *   animation={{
+ *     opacity: { value: [0, 1], timingConfig: { duration: 200 } }
+ *   }}
+ * />
+ * ```
+ *
+ * To completely disable animated styles and apply your own via className or style prop,
+ * set `isAnimatedStyleActive={false}` on `Tabs.Separator`.
+ */
+const separator = tv({
+  base: 'w-px h-3/5 bg-divider/30 self-center',
 });
 
 const content = tv({
@@ -120,6 +157,7 @@ const tabsStyles = combineStyles({
   trigger,
   label,
   indicator,
+  separator,
   content,
   styleSheet,
 });

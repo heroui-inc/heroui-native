@@ -10,12 +10,13 @@ const list = tv({
   base: 'self-start flex-row items-center gap-1',
   variants: {
     variant: {
-      pill: 'rounded-3xl bg-default p-[3px]',
-      line: 'border-b border-border',
+      pill: 'p-[3px] rounded-3xl bg-default',
+      line: 'p-0 border-b border-border',
     },
   },
   defaultVariants: {
     variant: 'pill',
+    isScrollView: false,
   },
 });
 
@@ -23,7 +24,7 @@ const scrollView = tv({
   base: '',
   variants: {
     variant: {
-      pill: 'rounded-3xl',
+      pill: '-my-[3px] rounded-3xl',
       line: '',
     },
   },
@@ -36,8 +37,8 @@ const scrollViewContentContainer = tv({
   base: '',
   variants: {
     variant: {
-      pill: '',
-      line: 'px-4',
+      pill: 'py-[3px] px-px',
+      line: '',
     },
   },
   defaultVariants: {
@@ -90,12 +91,24 @@ const indicator = tv({
   base: 'absolute left-0',
   variants: {
     variant: {
-      pill: 'rounded-3xl shadow-sm dark:shadow-none shadow-black/5 bg-segment',
-      line: 'border-b-2 border-accent bottom-0',
+      pill: 'rounded-3xl shadow-sm shadow-surface/25 bg-segment',
+      line: 'bottom-0 border-b-2 border-accent',
+    },
+    isScrollView: {
+      true: '',
+      false: '',
     },
   },
+  compoundVariants: [
+    {
+      variant: 'pill',
+      isScrollView: true,
+      className: 'top-[3px]',
+    },
+  ],
   defaultVariants: {
     variant: 'pill',
+    isScrollView: false,
   },
 });
 

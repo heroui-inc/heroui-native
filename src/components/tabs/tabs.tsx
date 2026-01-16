@@ -1,5 +1,7 @@
 import {
+  Children,
   forwardRef,
+  isValidElement,
   useCallback,
   useEffect,
   useMemo,
@@ -61,6 +63,7 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
     const [measurements, setMeasurementsState] = useState<
       Record<string, ItemMeasurements>
     >({});
+    const [isScrollView, setIsScrollView] = useState(false);
 
     const setMeasurements = useCallback(
       (key: string, newMeasurements: ItemMeasurements) => {
@@ -86,7 +89,13 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
     return (
       <AnimationSettingsProvider value={animationSettingsContextValue}>
         <MeasurementsContext.Provider
-          value={{ measurements, setMeasurements, variant }}
+          value={{
+            measurements,
+            setMeasurements,
+            variant,
+            isScrollView,
+            setIsScrollView,
+          }}
         >
           <TabsPrimitives.Root
             ref={ref}
@@ -109,7 +118,17 @@ const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
   (props, ref) => {
     const { children, className, style, ...restProps } = props;
 
-    const { variant } = useTabsMeasurements();
+    const { variant, setIsScrollView } = useTabsMeasurements();
+
+    const handleLayout = useCallback(() => {
+      const childrenArray = Children.toArray(children);
+      const hasScrollView =
+        childrenArray.length === 1 &&
+        isValidElement(childrenArray[0]) &&
+        (childrenArray[0].type as any)?.displayName ===
+          DISPLAY_NAME.SCROLL_VIEW;
+      setIsScrollView(hasScrollView);
+    }, [children, setIsScrollView]);
 
     const tvStyles = tabsStyles.list({ variant, className });
 
@@ -118,6 +137,7 @@ const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
         ref={ref}
         className={tvStyles}
         style={[tabsStyles.styleSheet.listRoot, style]}
+        onLayout={handleLayout}
         {...restProps}
       >
         {children}
@@ -278,13 +298,17 @@ const TabsIndicator = forwardRef<
     ...restProps
   } = props;
 
-  const { variant } = useTabsMeasurements();
+  const { variant, isScrollView } = useTabsMeasurements();
 
   const { rContainerStyle } = useTabsIndicatorAnimation({
     animation,
   });
 
-  const indicatorClassName = tabsStyles.indicator({ variant, className });
+  const indicatorClassName = tabsStyles.indicator({
+    variant,
+    isScrollView,
+    className,
+  });
 
   const indicatorStyle = isAnimatedStyleActive
     ? [rContainerStyle, style]

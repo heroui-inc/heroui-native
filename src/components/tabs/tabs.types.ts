@@ -336,4 +336,6 @@ export type MeasurementsContextValue = {
   measurements: Record<string, ItemMeasurements>;
   setMeasurements: (key: string, measurements: ItemMeasurements) => void;
   variant: 'pill' | 'line';
+  isScrollView: boolean;
+  setIsScrollView: (isScrollView: boolean) => void;
 };

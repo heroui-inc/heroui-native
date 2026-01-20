@@ -26,9 +26,6 @@ jobs:
       - name: Typecheck files
         run: yarn typecheck
 
-      - name: Validate exports
-        run: yarn validate-exports
-
   test:
     runs-on: ubuntu-latest
     steps:

@@ -1,10 +1,10 @@
 import { Children, forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useThemeColor } from '../../helpers/theme/hooks/use-theme-color';
-import type { ViewRef } from '../../helpers/types';
-import { createContext } from '../../helpers/utils';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { ViewRef } from '../../helpers/internal/types';
+import { createContext } from '../../helpers/internal/utils';
 import * as AccordionPrimitive from '../../primitives/accordion';
 import {
   AccordionAnimationProvider,

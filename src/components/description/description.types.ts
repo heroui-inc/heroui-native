@@ -1,5 +1,5 @@
 import type { TextProps } from 'react-native';
-import type { TextRef } from '../../helpers/types/primitives';
+import type { TextRef } from '../../helpers/internal/types';
 
 /**
  * Props for the Description component

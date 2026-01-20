@@ -5,20 +5,20 @@ import {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { useAnimationSettings } from '../../helpers/internal/contexts';
 import {
   useCombinedAnimationDisabledState,
   useResolvedStyleProperty,
-} from '../../helpers/hooks';
-import { useThemeColor } from '../../helpers/theme';
-import { createContext } from '../../helpers/utils';
+} from '../../helpers/internal/hooks';
 import {
+  createContext,
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-} from '../../helpers/utils/animation';
+} from '../../helpers/internal/utils';
 import { useFormField } from '../form-field/form-field.context';
 import {
   DEFAULT_SPRING_CONFIG,

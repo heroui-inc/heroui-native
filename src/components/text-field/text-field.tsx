@@ -1,11 +1,11 @@
 import { forwardRef, useMemo } from 'react';
 import { TextInput, View, type TextInput as TextInputType } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { HeroText } from '../../helpers/components';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useIsOnSurface } from '../../helpers/theme';
-import type { TextRef, ViewRef } from '../../helpers/types/primitives';
-import { createContext } from '../../helpers/utils';
+import { useIsOnSurface } from '../../helpers/external/hooks';
+import { HeroText } from '../../helpers/internal/components';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { TextRef, ViewRef } from '../../helpers/internal/types';
+import { createContext } from '../../helpers/internal/utils';
 import { ErrorView } from '../error-view';
 import {
   useTextFieldDescriptionAnimation,

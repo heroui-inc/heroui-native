@@ -2,16 +2,21 @@ import { forwardRef, useMemo } from 'react';
 import type { Text as RNText } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
-import { HeroText } from '../../helpers/components/hero-text';
+import { useThemeColor } from '../../helpers/external/hooks';
+import {
+  CloseIcon,
+  FullWindowOverlay,
+  HeroText,
+} from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
-} from '../../helpers/contexts/animation-settings-context';
-import { usePopupDialogContentAnimation } from '../../helpers/hooks/use-popup-dialog-content-animation';
-import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
-import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
-import { useThemeColor } from '../../helpers/theme';
+} from '../../helpers/internal/contexts';
+import {
+  usePopupDialogContentAnimation,
+  usePopupOverlayAnimation,
+  usePopupRootAnimation,
+} from '../../helpers/internal/hooks';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import {

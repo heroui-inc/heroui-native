@@ -2,15 +2,15 @@ import type BottomSheet from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
-import type { ElementSlots } from '../../helpers/theme/types';
 import type {
   AnimationRoot,
+  BaseBottomSheetContentProps,
+  ElementSlots,
   PopupDialogContentAnimation,
   PopupOverlayAnimation,
   PopupPopoverContentAnimation,
   PopupRootAnimationConfig,
-} from '../../helpers/types/animation';
-import type { BaseBottomSheetContentProps } from '../../helpers/types/bottom-sheet';
+} from '../../helpers/internal/types';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import type { DialogContentFallbackSlots } from './select.styles';
 

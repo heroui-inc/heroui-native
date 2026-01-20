@@ -2,10 +2,10 @@ import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useIsOnSurface } from '../../helpers/theme';
-import type { TextRef, ViewRef } from '../../helpers/types';
-import { childrenToString, createContext } from '../../helpers/utils';
+import { useIsOnSurface } from '../../helpers/external/hooks';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { TextRef, ViewRef } from '../../helpers/internal/types';
+import { childrenToString, createContext } from '../../helpers/internal/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
 import { ErrorView } from '../error-view';
 import { FormField } from '../form-field';

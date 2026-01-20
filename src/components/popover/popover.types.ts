@@ -4,11 +4,11 @@ import type { StyleProp, TextProps, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
   AnimationRoot,
+  BaseBottomSheetContentProps,
   PopupOverlayAnimation,
   PopupPopoverContentAnimation,
   PopupRootAnimationConfig,
-} from '../../helpers/types/animation';
-import type { BaseBottomSheetContentProps } from '../../helpers/types/bottom-sheet';
+} from '../../helpers/internal/types';
 import type * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 
 /**

@@ -7,7 +7,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
-import { useThemeColor } from '../theme';
+import { useThemeColor } from '../../external/hooks';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 

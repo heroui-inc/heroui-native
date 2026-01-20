@@ -14,13 +14,13 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
-import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
+import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
 import {
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-} from '../../helpers/utils/animation';
+} from '../../helpers/internal/utils';
 import type { UseToastRootAnimationOptions } from './toast.types';
 
 // --------------------------------------------------

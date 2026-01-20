@@ -1,6 +1,6 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { useThemeColor } from '../theme';
+import { useThemeColor } from '../../external/hooks';
 interface CheckIconProps {
   size?: number;
   color?: string;

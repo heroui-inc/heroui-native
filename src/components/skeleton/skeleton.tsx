@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 
 import LinearGradientComponent from './linear-gradient';
 import {

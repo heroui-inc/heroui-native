@@ -1,11 +1,11 @@
-import { useAnimationSettings } from '../../helpers/contexts';
-import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
-import type { AnimationRootDisableAll } from '../../helpers/types/animation';
+import { useAnimationSettings } from '../../helpers/internal/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 import {
   getAnimationState,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
-} from '../../helpers/utils/animation';
+} from '../../helpers/internal/utils';
 import {
   ENTERING_ANIMATION_CONFIG,
   EXITING_ANIMATION_CONFIG,

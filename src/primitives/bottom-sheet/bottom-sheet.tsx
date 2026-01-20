@@ -5,7 +5,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useControllableState } from '../../helpers/hooks';
+import { useControllableState } from '../../helpers/internal/hooks';
 import { Portal as PortalPrimitive } from '../portal';
 import * as Slot from '../slot';
 import type {

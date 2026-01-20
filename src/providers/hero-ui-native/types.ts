@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { AnimationRootDisableAll } from '../../helpers/types/animation';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 import type { TextComponentContextValue } from '../text-component/types';
 import type { ToastProviderProps } from '../toast/types';
 
@@ -48,8 +48,10 @@ export interface HeroUINativeConfig extends TextComponentContextValue {
    *
    * @description
    * Configure the global toast system including insets and wrapper components.
+   * Set to `false` or `'disabled'` to disable the toast provider entirely.
+   * Provide a `ToastProviderProps` object for custom configuration.
    */
-  toast?: ToastProviderProps;
+  toast?: boolean | 'disabled' | ToastProviderProps;
   /**
    * Developer information messages configuration
    *

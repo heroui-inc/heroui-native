@@ -7,8 +7,9 @@ import {
 } from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Animated, { useComposedEventHandler } from 'react-native-reanimated';
-import { colorKit, useThemeColor } from '../../helpers/theme';
-import { easeGradient } from '../../helpers/utils';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { colorKit } from '../../helpers/external/utils';
+import { easeGradient } from '../../helpers/internal/utils';
 import { useScrollShadowRootAnimation } from './scroll-shadow.animation';
 import {
   DEFAULT_SCROLL_EVENT_THROTTLE,

@@ -32,13 +32,16 @@ const LOG_COLOR = {
  * @param {HeroUINativeConfig} [props.config] - Configuration object
  *
  */
-export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
+const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   children,
   config = {},
 }) => {
   const { textProps, toast, animation, devInfo } = config;
-  const { ...toastProps } = toast || {};
   const { stylingPrinciples = true } = devInfo || {};
+
+  // Determine if toast should be enabled and get props
+  const isToastEnabled = toast !== false && toast !== 'disabled';
+  const toastProps = typeof toast === 'object' ? toast : {};
 
   useEffect(() => {
     if (__DEV__ && stylingPrinciples) {
@@ -64,24 +67,22 @@ export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
     >
       <GlobalAnimationSettingsProvider animation={animation}>
         <TextComponentProvider value={{ textProps }}>
-          <ToastProvider {...toastProps}>
-            {children}
-            <PortalHost />
-          </ToastProvider>
+          {isToastEnabled ? (
+            <ToastProvider {...toastProps}>
+              {children}
+              <PortalHost />
+            </ToastProvider>
+          ) : (
+            <>
+              {children}
+              <PortalHost />
+            </>
+          )}
         </TextComponentProvider>
       </GlobalAnimationSettingsProvider>
     </SafeAreaListener>
   );
 };
-
-/**
- * Re-export PortalHost for advanced use cases.
- *
- * @description
- * Allows consumers to manually mount a portal host in custom layouts
- * (e.g. for BottomSheet, Modal, or any overlay components).
- */
-export { PortalHost };
 
 /**
  * Default export for convenience

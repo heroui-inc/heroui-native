@@ -2,8 +2,8 @@ import { forwardRef, useCallback, useMemo } from 'react';
 import type { GestureResponderEvent } from 'react-native';
 import { View, type ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { createContext } from '../../helpers/utils';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import { createContext } from '../../helpers/internal/utils';
 import * as SwitchPrimitives from '../../primitives/switch';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
 import {

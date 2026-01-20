@@ -1,8 +1,8 @@
 import { forwardRef, useMemo } from 'react';
-import { HeroText } from '../../helpers/components';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import type { PressableRef, TextRef } from '../../helpers/types/primitives';
-import { childrenToString, createContext } from '../../helpers/utils';
+import { HeroText } from '../../helpers/internal/components';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { PressableRef, TextRef } from '../../helpers/internal/types';
+import { childrenToString, createContext } from '../../helpers/internal/utils';
 import * as LabelPrimitives from '../../primitives/label';
 import { useLabelRootAnimation } from './label.animation';
 import { DISPLAY_NAME } from './label.constants';

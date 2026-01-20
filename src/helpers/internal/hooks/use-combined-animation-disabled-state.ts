@@ -1,4 +1,4 @@
-import { useGlobalAnimationSettings } from '../../providers/animation-settings';
+import { useGlobalAnimationSettings } from '../../../providers/animation-settings';
 import { useAnimationSettings } from '../contexts/animation-settings-context';
 import type { AnimationRoot } from '../types/animation';
 import {

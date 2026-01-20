@@ -2,11 +2,11 @@ import type {
   EntryOrExitLayoutType,
   WithTimingConfig,
 } from 'react-native-reanimated';
-import type { ViewRef } from '../../helpers/types';
 import type {
   AnimationRoot,
   AnimationValue,
-} from '../../helpers/types/animation';
+  ViewRef,
+} from '../../helpers/internal/types';
 import type * as ToastPrimitive from '../../primitives/toast';
 import type {
   ToastComponentProps,

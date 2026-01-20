@@ -6,7 +6,7 @@ import type {
   PopupDialogContentAnimation,
   PopupOverlayAnimation,
   PopupRootAnimationConfig,
-} from '../../helpers/types/animation';
+} from '../../helpers/internal/types';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 
 /**

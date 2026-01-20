@@ -4,12 +4,12 @@ import type {
   SharedValue,
   WithTimingConfig,
 } from 'react-native-reanimated';
-import type { ElementSlots } from '../../helpers/theme/types';
 import type {
   Animation,
   AnimationRoot,
   AnimationValue,
-} from '../../helpers/types';
+  ElementSlots,
+} from '../../helpers/internal/types';
 import type { RippleSlots } from './pressable-feedback.styles';
 
 /**

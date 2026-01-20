@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { AnimationRootDisableAll } from '../../helpers/types/animation';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types/animation';
 
 /**
  * Props for GlobalAnimationSettingsProvider component

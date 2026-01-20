@@ -21,7 +21,7 @@ import {
   useControllableState,
   useRelativePosition,
   type LayoutPosition,
-} from '../../helpers/hooks';
+} from '../../helpers/internal/hooks';
 import { Portal as PrimitivePortal } from '../portal';
 import * as Slot from '../slot';
 import type {

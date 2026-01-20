@@ -1,4 +1,4 @@
-import { createContext } from '../../helpers/utils';
+import { createContext } from '../../helpers/internal/utils';
 import type { TextComponentContextValue } from './types';
 
 const [TextComponentProvider, useTextComponent] =

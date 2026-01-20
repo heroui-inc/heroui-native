@@ -1,5 +1,5 @@
-import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
-import type { AnimationRootDisableAll } from '../../helpers/types/animation';
+import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 
 /**
  * Animation hook for Chip root component

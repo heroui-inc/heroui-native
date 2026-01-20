@@ -1,7 +1,7 @@
 import React, { useMemo, type PropsWithChildren } from 'react';
 
 import { View } from 'react-native';
-import { createContext } from '../../helpers/utils';
+import { createContext } from '../../helpers/internal/utils';
 import Skeleton from '../skeleton/skeleton';
 import { DISPLAY_NAME } from './skeleton-group.constants';
 import { skeletonGroupStyles } from './skeleton-group.styles';

@@ -100,7 +100,24 @@ const config: HeroUINativeConfig = {
 
 ### Toast Configuration
 
-Configure the global toast system including insets, default props, and wrapper components:
+Configure the global toast system including insets, default props, and wrapper components. You can also disable the toast provider entirely:
+
+**Option 1: Disable Toast Provider**
+
+```tsx
+const config: HeroUINativeConfig = {
+  // Disable toast provider entirely
+  toast: false,
+  // or
+  toast: 'disabled',
+};
+```
+
+<Callout type="info">
+  **Note**: When toast is disabled (`false` or `'disabled'`), the `ToastProvider` will not be rendered, and toast functionality will not be available in your application.
+</Callout>
+
+**Option 2: Configure Toast Provider**
 
 ```tsx
 import { KeyboardAvoidingView } from 'react-native';
@@ -161,6 +178,7 @@ const config: HeroUINativeConfig = {
     stylingPrinciples: true, // Optional: disable styling principles message
   },
   // Global toast configuration
+  // Option 1: Configure toast with custom settings
   toast: {
     defaultProps: {
       variant: 'default',
@@ -174,6 +192,10 @@ const config: HeroUINativeConfig = {
     },
     maxVisibleToasts: 3,
   },
+  // Option 2: Disable toast entirely
+  // toast: false,
+  // or
+  // toast: 'disabled',
 };
 
 export default function App() {
@@ -224,10 +246,14 @@ HeroUINativeProvider
 ├── SafeAreaListener (handles safe area insets updates)
 │   └── GlobalAnimationSettingsProvider (animation configuration)
 │       └── TextComponentProvider (text configuration)
-│           └── ToastProvider (toast configuration)
+│           └── ToastProvider (toast configuration, conditionally rendered)
 │               └── Your App
 │               └── PortalHost (for overlays)
 ```
+
+<Callout type="info">
+  **Note**: The `ToastProvider` is conditionally rendered based on the `toast` configuration. If `toast` is set to `false` or `'disabled'`, the `ToastProvider` will not be rendered, and the app content and `PortalHost` will be rendered directly under `TextComponentProvider`.
+</Callout>
 
 ### Safe Area Insets Handling
 
@@ -323,6 +349,9 @@ const config: HeroUINativeConfig = {
   devInfo: {
     stylingPrinciples: true, // Optional: disable styling principles message
   },
+  // Toast configuration options:
+  // - false or 'disabled': Disable toast provider
+  // - ToastProviderProps object: Configure toast settings
   toast: {
     defaultProps: {
       variant: 'default',

@@ -3,16 +3,16 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts';
-import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
-import { createContext } from '../../helpers/utils';
+import { useAnimationSettings } from '../../helpers/internal/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
 import {
+  createContext,
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-} from '../../helpers/utils/animation';
+} from '../../helpers/internal/utils';
 import { useFormField } from '../form-field/form-field.context';
 import type {
   CheckboxAnimationContextValue,

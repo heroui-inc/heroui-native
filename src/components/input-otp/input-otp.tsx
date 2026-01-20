@@ -1,9 +1,9 @@
 import { forwardRef, useMemo } from 'react';
 import Animated from 'react-native-reanimated';
-import { HeroText } from '../../helpers/components';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useIsOnSurface } from '../../helpers/theme';
-import { createContext } from '../../helpers/utils';
+import { useIsOnSurface } from '../../helpers/external/hooks';
+import { HeroText } from '../../helpers/internal/components';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import { createContext } from '../../helpers/internal/utils';
 import * as InputOTPPrimitives from '../../primitives/input-otp';
 import {
   useInputOTPRootAnimation,

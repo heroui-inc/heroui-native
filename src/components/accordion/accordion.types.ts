@@ -3,13 +3,13 @@ import type {
   EntryOrExitLayoutType,
   WithSpringConfig,
 } from 'react-native-reanimated';
-import type { ElementSlots } from '../../helpers/theme/types';
 import type {
   Animation,
   AnimationRoot,
   AnimationValue,
+  ElementSlots,
   LayoutTransition,
-} from '../../helpers/types/animation';
+} from '../../helpers/internal/types';
 import type {
   ContentProps as PrimitiveContentProps,
   IndicatorProps as PrimitiveIndicatorProps,

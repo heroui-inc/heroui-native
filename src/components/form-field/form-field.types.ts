@@ -1,6 +1,6 @@
 import type { PressableProps, TextProps, ViewProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
-import type { AnimationRootDisableAll } from '../../helpers/types/animation';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 
 /**
  * Render function props for form field children

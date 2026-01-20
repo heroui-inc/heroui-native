@@ -1,5 +1,5 @@
 import type { LayoutRectangle } from 'react-native';
-import type { LayoutPosition } from '../../helpers/hooks';
+import type { LayoutPosition } from '../../helpers/internal/hooks';
 import type {
   ForceMountable,
   PositionedContentProps,
@@ -7,7 +7,7 @@ import type {
   SlottablePressableProps,
   SlottableViewProps,
   ViewRef,
-} from '../../helpers/types';
+} from '../../helpers/internal/types';
 
 /**
  * Popover internal state

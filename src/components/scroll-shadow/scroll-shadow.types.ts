@@ -3,7 +3,7 @@ import type { ViewProps } from 'react-native';
 import type {
   AnimationRoot,
   AnimationValue,
-} from '../../helpers/types/animation';
+} from '../../helpers/internal/types';
 
 /**
  * Orientation of the scroll shadow

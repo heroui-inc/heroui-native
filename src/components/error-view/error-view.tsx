@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 import Animated from 'react-native-reanimated';
-import { HeroText } from '../../helpers/components';
-import type { ViewRef } from '../../helpers/types/primitives';
-import { childrenToString } from '../../helpers/utils';
+import { HeroText } from '../../helpers/internal/components';
+import type { ViewRef } from '../../helpers/internal/types';
+import { childrenToString } from '../../helpers/internal/utils';
 import { useErrorViewRootAnimation } from './error-view.animation';
 import { DISPLAY_NAME } from './error-view.constants';
 import errorViewStyles from './error-view.styles';

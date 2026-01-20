@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
-import { colorKit } from '../../helpers/theme';
+import { colorKit } from '../../helpers/external/utils';
 import { DISPLAY_NAME } from './skeleton.constants';
 
 const LinearGradientComponent: React.FC<{ colors?: string[] }> = ({

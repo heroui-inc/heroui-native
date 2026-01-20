@@ -3,7 +3,7 @@ import type {
   ComponentPropsWithAsChild,
   SlottableViewProps,
   ViewRef,
-} from '../../helpers/types';
+} from '../../helpers/internal/types';
 
 /**
  * Represents the loading state of an avatar image.

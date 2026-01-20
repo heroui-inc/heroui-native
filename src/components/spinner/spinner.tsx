@@ -1,9 +1,12 @@
 import { forwardRef, useMemo } from 'react';
 import type { View } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useThemeColor } from '../../helpers/theme';
-import { createContext, getElementWithDefault } from '../../helpers/utils';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import {
+  createContext,
+  getElementWithDefault,
+} from '../../helpers/internal/utils';
 import * as ActivityIndicatorPrimitives from '../../primitives/activity-indicator';
 import { SpinnerIcon } from './spinner-icon';
 import {

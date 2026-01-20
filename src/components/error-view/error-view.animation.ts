@@ -1,9 +1,9 @@
-import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
+import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
 import {
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-} from '../../helpers/utils/animation';
+} from '../../helpers/internal/utils';
 import {
   ENTERING_ANIMATION_CONFIG,
   EXITING_ANIMATION_CONFIG,

@@ -5,13 +5,12 @@ import {
   View,
   type GestureResponderEvent,
 } from 'react-native';
-import { hasProp } from '../../helpers/utils';
+import { hasProp } from '../../helpers/internal/utils';
 
 import { useSharedValue } from 'react-native-reanimated';
-import { HeroText } from '../../helpers/components/hero-text';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import type { PressableRef } from '../../helpers/types';
-import type { ViewRef } from '../../helpers/types/primitives';
+import { HeroText } from '../../helpers/internal/components';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { PressableRef, ViewRef } from '../../helpers/internal/types';
 import { Checkbox } from '../checkbox';
 import { ErrorView } from '../error-view';
 import type { ErrorViewRootProps } from '../error-view/error-view.types';

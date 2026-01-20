@@ -4,7 +4,7 @@ import type {
   Animation,
   AnimationRootDisableAll,
   AnimationValue,
-} from '../../helpers/types/animation';
+} from '../../helpers/internal/types';
 import type { ItemProps, RootProps } from '../../primitives/radio-group';
 import type { ErrorViewRootProps } from '../error-view/error-view.types';
 import type {

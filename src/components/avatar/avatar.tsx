@@ -1,10 +1,10 @@
 import { forwardRef, useMemo } from 'react';
 import type { ImageSourcePropType } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { HeroText } from '../../helpers/components';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useThemeColor } from '../../helpers/theme';
-import { childrenToString } from '../../helpers/utils';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { HeroText } from '../../helpers/internal/components';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import { childrenToString } from '../../helpers/internal/utils';
 import * as AvatarPrimitives from '../../primitives/avatar';
 import {
   useAvatarFallbackAnimation,

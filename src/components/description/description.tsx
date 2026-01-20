@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
-import { HeroText } from '../../helpers/components';
-import type { TextRef } from '../../helpers/types/primitives';
+import { HeroText } from '../../helpers/internal/components';
+import type { TextRef } from '../../helpers/internal/types';
 import { DISPLAY_NAME } from './description.constants';
 import descriptionStyles from './description.styles';
 import type { DescriptionProps } from './description.types';

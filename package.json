@@ -12,11 +12,6 @@
       "default": "./lib/module/index.js"
     },
     "./styles": "./lib/module/styles/index.css",
-    "./provider": {
-      "source": "./src/components/accordion/index.ts",
-      "types": "./lib/typescript/src/components/accordion/index.d.ts",
-      "default": "./lib/module/components/accordion/index.js"
-    },
     "./package.json": "./package.json"
   },
   "files": [

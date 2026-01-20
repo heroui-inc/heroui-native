@@ -6,6 +6,7 @@ const path = require('path');
 const PACKAGE_JSON_PATH = path.join(__dirname, '..', 'package.json');
 const BACKUP_PATH = path.join(__dirname, '..', 'package.json.backup');
 const COMPONENTS_DIR = path.join(__dirname, '..', 'src', 'components');
+const INDEX_TSX_PATH = path.join(__dirname, '..', 'src', 'index.tsx');
 
 /**
  * Base exports that should always be preserved at the top
@@ -81,6 +82,69 @@ function generateComponentExport(componentName) {
 }
 
 /**
+ * Generate export entry for a source path
+ */
+function generateExportFromSource(sourcePath) {
+  // Convert src path to lib paths
+  const relativePath = sourcePath.replace('./src/', '');
+  const typesPath = `./lib/typescript/src/${relativePath}`.replace(
+    /\.tsx?$/,
+    '.d.ts'
+  );
+  const defaultPath = `./lib/module/${relativePath}`.replace(/\.tsx?$/, '.js');
+
+  return {
+    source: sourcePath,
+    types: typesPath,
+    default: defaultPath,
+  };
+}
+
+/**
+ * Parse index.tsx to extract portal, hooks, and utils exports
+ */
+function parseIndexExports() {
+  try {
+    if (!fs.existsSync(INDEX_TSX_PATH)) {
+      console.warn('⚠️  index.tsx not found:', INDEX_TSX_PATH);
+      return {};
+    }
+
+    const indexContent = fs.readFileSync(INDEX_TSX_PATH, 'utf8');
+    const exports = {};
+
+    // Parse Portal export: export * from './primitives/portal';
+    const portalMatch = indexContent.match(
+      /export\s+\*\s+from\s+['"]\.\/primitives\/portal['"]/
+    );
+    if (portalMatch) {
+      exports.portal = './src/primitives/portal/index.ts';
+    }
+
+    // Parse Hooks export: export * from './helpers/external/hooks';
+    const hooksMatch = indexContent.match(
+      /export\s+\*\s+from\s+['"]\.\/helpers\/external\/hooks['"]/
+    );
+    if (hooksMatch) {
+      exports.hooks = './src/helpers/external/hooks/index.ts';
+    }
+
+    // Parse Utils export: export * from './helpers/external/utils';
+    const utilsMatch = indexContent.match(
+      /export\s+\*\s+from\s+['"]\.\/helpers\/external\/utils['"]/
+    );
+    if (utilsMatch) {
+      exports.utils = './src/helpers/external/utils/index.ts';
+    }
+
+    return exports;
+  } catch (error) {
+    console.error('❌ Error parsing index.tsx:', error.message);
+    return {};
+  }
+}
+
+/**
  * Update exports field in package.json
  */
 function updateExports() {
@@ -104,6 +168,25 @@ function updateExports() {
       if (existingExports[baseExport]) {
         newExports[baseExport] = existingExports[baseExport];
       }
+    }
+
+    // Add hardcoded provider export
+    newExports['./provider'] = {
+      source: './src/providers/hero-ui-native/index.ts',
+      types: './lib/typescript/src/providers/hero-ui-native/index.d.ts',
+      default: './lib/module/providers/hero-ui-native/index.js',
+    };
+
+    // Parse and add portal, hooks, utils exports from index.tsx
+    const indexExports = parseIndexExports();
+    if (indexExports.portal) {
+      newExports['./portal'] = generateExportFromSource(indexExports.portal);
+    }
+    if (indexExports.hooks) {
+      newExports['./hooks'] = generateExportFromSource(indexExports.hooks);
+    }
+    if (indexExports.utils) {
+      newExports['./utils'] = generateExportFromSource(indexExports.utils);
     }
 
     // Scan and add component exports
@@ -171,9 +254,17 @@ function main() {
   } else if (command === 'postpack') {
     console.log('🔄 Running postpack: restoring package.json...');
     restorePackageJson();
+  } else if (command === 'update' || !command) {
+    // Allow running without prepack/postpack for testing
+    console.log('🔄 Running update-exports...');
+    backupPackageJson();
+    updateExports();
+    console.log('✅ Exports updated. Run with "postpack" to restore backup.');
   } else {
-    console.error('❌ Invalid command. Use "prepack" or "postpack"');
-    console.error('Usage: node scripts/update-exports.js [prepack|postpack]');
+    console.error('❌ Invalid command. Use "prepack", "postpack", or "update"');
+    console.error(
+      'Usage: node scripts/update-exports.js [prepack|postpack|update]'
+    );
     process.exit(1);
   }
 }

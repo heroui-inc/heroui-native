@@ -83,9 +83,23 @@ const customButtonVariants = tv({
   base: 'font-semibold rounded-lg',
   variants: {
     intent: {
-      primary: 'bg-blue-500 text-white',
+      primary: 'bg-blue-500',
       secondary: 'bg-gray-200',
-      danger: 'bg-red-500 text-white',
+      danger: 'bg-red-500',
+    },
+  },
+  defaultVariants: {
+    intent: 'primary',
+  },
+});
+
+const customLabelVariants = tv({
+  base: '',
+  variants: {
+    intent: {
+      primary: 'text-white',
+      secondary: 'text-gray-800',
+      danger: 'text-white',
     },
   },
   defaultVariants: {
@@ -99,17 +113,26 @@ interface CustomButtonProps
   extends Omit<ButtonRootProps, 'className' | 'variant'>,
     CustomButtonVariants {
   className?: string;
+  labelClassName?: string;
 }
 
 export function CustomButton({
   intent,
   className,
+  labelClassName,
   children,
   ...props
 }: CustomButtonProps) {
   return (
-    <Button className={customButtonVariants({ intent, className })} {...props}>
-      <Button.Label>{children}</Button.Label>
+    <Button
+      className={customButtonVariants({ intent, className })}
+      {...props}
+    >
+      <Button.Label
+        className={customLabelVariants({ intent, className: labelClassName })}
+      >
+        {children}
+      </Button.Label>
     </Button>
   );
 }

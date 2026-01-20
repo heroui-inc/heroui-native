@@ -1,4 +1,4 @@
-import { createContext } from '../../helpers/utils';
+import { createContext } from '../../helpers/internal/utils';
 import type { SelectAnimationContextValue } from './select.types';
 
 const [SelectAnimationProvider, useSelectAnimation] =

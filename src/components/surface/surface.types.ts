@@ -1,5 +1,5 @@
 import type { ViewProps } from 'react-native';
-import type { AnimationRootDisableAll } from '../../helpers/types/animation';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 
 /**
  * Variant options for the Surface component

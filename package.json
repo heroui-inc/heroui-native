@@ -12,142 +12,12 @@
       "default": "./lib/module/index.js"
     },
     "./styles": "./lib/module/styles/index.css",
-    "./package.json": "./package.json",
-    "./accordion": {
+    "./provider": {
       "source": "./src/components/accordion/index.ts",
       "types": "./lib/typescript/src/components/accordion/index.d.ts",
       "default": "./lib/module/components/accordion/index.js"
     },
-    "./avatar": {
-      "source": "./src/components/avatar/index.ts",
-      "types": "./lib/typescript/src/components/avatar/index.d.ts",
-      "default": "./lib/module/components/avatar/index.js"
-    },
-    "./bottom-sheet": {
-      "source": "./src/components/bottom-sheet/index.ts",
-      "types": "./lib/typescript/src/components/bottom-sheet/index.d.ts",
-      "default": "./lib/module/components/bottom-sheet/index.js"
-    },
-    "./button": {
-      "source": "./src/components/button/index.ts",
-      "types": "./lib/typescript/src/components/button/index.d.ts",
-      "default": "./lib/module/components/button/index.js"
-    },
-    "./card": {
-      "source": "./src/components/card/index.ts",
-      "types": "./lib/typescript/src/components/card/index.d.ts",
-      "default": "./lib/module/components/card/index.js"
-    },
-    "./checkbox": {
-      "source": "./src/components/checkbox/index.ts",
-      "types": "./lib/typescript/src/components/checkbox/index.d.ts",
-      "default": "./lib/module/components/checkbox/index.js"
-    },
-    "./chip": {
-      "source": "./src/components/chip/index.ts",
-      "types": "./lib/typescript/src/components/chip/index.d.ts",
-      "default": "./lib/module/components/chip/index.js"
-    },
-    "./description": {
-      "source": "./src/components/description/index.ts",
-      "types": "./lib/typescript/src/components/description/index.d.ts",
-      "default": "./lib/module/components/description/index.js"
-    },
-    "./dialog": {
-      "source": "./src/components/dialog/index.ts",
-      "types": "./lib/typescript/src/components/dialog/index.d.ts",
-      "default": "./lib/module/components/dialog/index.js"
-    },
-    "./divider": {
-      "source": "./src/components/divider/index.ts",
-      "types": "./lib/typescript/src/components/divider/index.d.ts",
-      "default": "./lib/module/components/divider/index.js"
-    },
-    "./error-view": {
-      "source": "./src/components/error-view/index.ts",
-      "types": "./lib/typescript/src/components/error-view/index.d.ts",
-      "default": "./lib/module/components/error-view/index.js"
-    },
-    "./form-field": {
-      "source": "./src/components/form-field/index.ts",
-      "types": "./lib/typescript/src/components/form-field/index.d.ts",
-      "default": "./lib/module/components/form-field/index.js"
-    },
-    "./input-otp": {
-      "source": "./src/components/input-otp/index.ts",
-      "types": "./lib/typescript/src/components/input-otp/index.d.ts",
-      "default": "./lib/module/components/input-otp/index.js"
-    },
-    "./label": {
-      "source": "./src/components/label/index.ts",
-      "types": "./lib/typescript/src/components/label/index.d.ts",
-      "default": "./lib/module/components/label/index.js"
-    },
-    "./popover": {
-      "source": "./src/components/popover/index.ts",
-      "types": "./lib/typescript/src/components/popover/index.d.ts",
-      "default": "./lib/module/components/popover/index.js"
-    },
-    "./pressable-feedback": {
-      "source": "./src/components/pressable-feedback/index.ts",
-      "types": "./lib/typescript/src/components/pressable-feedback/index.d.ts",
-      "default": "./lib/module/components/pressable-feedback/index.js"
-    },
-    "./radio-group": {
-      "source": "./src/components/radio-group/index.ts",
-      "types": "./lib/typescript/src/components/radio-group/index.d.ts",
-      "default": "./lib/module/components/radio-group/index.js"
-    },
-    "./scroll-shadow": {
-      "source": "./src/components/scroll-shadow/index.ts",
-      "types": "./lib/typescript/src/components/scroll-shadow/index.d.ts",
-      "default": "./lib/module/components/scroll-shadow/index.js"
-    },
-    "./select": {
-      "source": "./src/components/select/index.ts",
-      "types": "./lib/typescript/src/components/select/index.d.ts",
-      "default": "./lib/module/components/select/index.js"
-    },
-    "./skeleton": {
-      "source": "./src/components/skeleton/index.ts",
-      "types": "./lib/typescript/src/components/skeleton/index.d.ts",
-      "default": "./lib/module/components/skeleton/index.js"
-    },
-    "./skeleton-group": {
-      "source": "./src/components/skeleton-group/index.ts",
-      "types": "./lib/typescript/src/components/skeleton-group/index.d.ts",
-      "default": "./lib/module/components/skeleton-group/index.js"
-    },
-    "./spinner": {
-      "source": "./src/components/spinner/index.ts",
-      "types": "./lib/typescript/src/components/spinner/index.d.ts",
-      "default": "./lib/module/components/spinner/index.js"
-    },
-    "./surface": {
-      "source": "./src/components/surface/index.ts",
-      "types": "./lib/typescript/src/components/surface/index.d.ts",
-      "default": "./lib/module/components/surface/index.js"
-    },
-    "./switch": {
-      "source": "./src/components/switch/index.ts",
-      "types": "./lib/typescript/src/components/switch/index.d.ts",
-      "default": "./lib/module/components/switch/index.js"
-    },
-    "./tabs": {
-      "source": "./src/components/tabs/index.ts",
-      "types": "./lib/typescript/src/components/tabs/index.d.ts",
-      "default": "./lib/module/components/tabs/index.js"
-    },
-    "./text-field": {
-      "source": "./src/components/text-field/index.ts",
-      "types": "./lib/typescript/src/components/text-field/index.d.ts",
-      "default": "./lib/module/components/text-field/index.js"
-    },
-    "./toast": {
-      "source": "./src/components/toast/index.ts",
-      "types": "./lib/typescript/src/components/toast/index.d.ts",
-      "default": "./lib/module/components/toast/index.js"
-    }
+    "./package.json": "./package.json"
   },
   "files": [
     "src",
@@ -174,11 +44,8 @@
     "typecheck": "bash ./scripts/typecheck.sh",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
-    "generate-exports": "node ./scripts/generate-exports.js",
-    "validate-exports": "node ./scripts/validate-exports.js",
     "prepare": "yarn generate-exports && bob build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",
-    "sync-version": "bash ./scripts/sync-version.sh",
     "release": "bumpp --execute='yarn changelog' --all",
     "prepack": "node scripts/update-exports.js prepack",
     "postpack": "node scripts/update-exports.js postpack"

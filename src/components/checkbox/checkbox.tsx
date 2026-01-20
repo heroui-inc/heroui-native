@@ -1,10 +1,12 @@
 import { forwardRef, useCallback, useMemo } from 'react';
 import { View, type GestureResponderEvent } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { CheckIcon } from '../../helpers/components';
-import { AnimatedCheckIcon } from '../../helpers/components/animated-check-icon';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useIsOnSurface, useThemeColor } from '../../helpers/theme';
+import { useIsOnSurface, useThemeColor } from '../../helpers/external/hooks';
+import {
+  AnimatedCheckIcon,
+  CheckIcon,
+} from '../../helpers/internal/components';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 import {

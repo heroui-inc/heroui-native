@@ -6,25 +6,27 @@ import { GestureDetector } from 'react-native-gesture-handler';
 import Animated, { ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
+import { useThemeColor } from '../../helpers/external/hooks';
 import {
   BottomSheetContentContainer,
   CheckIcon,
   CloseIcon,
   FullWindowOverlay,
-} from '../../helpers/components';
-import { HeroText } from '../../helpers/components/hero-text';
-import { BottomSheetIsDraggingProvider } from '../../helpers/contexts';
+  HeroText,
+} from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
+  BottomSheetIsDraggingProvider,
   useAnimationSettings,
-} from '../../helpers/contexts/animation-settings-context';
-import { useBottomSheetGestureHandlers } from '../../helpers/hooks';
-import { usePopupBottomSheetContentAnimation } from '../../helpers/hooks/use-popup-bottom-sheet-content-animation';
-import { usePopupDialogContentAnimation } from '../../helpers/hooks/use-popup-dialog-content-animation';
-import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
-import { usePopupPopoverContentAnimation } from '../../helpers/hooks/use-popup-popover-content-animation';
-import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
-import { useThemeColor } from '../../helpers/theme';
+} from '../../helpers/internal/contexts';
+import {
+  useBottomSheetGestureHandlers,
+  usePopupBottomSheetContentAnimation,
+  usePopupDialogContentAnimation,
+  usePopupOverlayAnimation,
+  usePopupPopoverContentAnimation,
+  usePopupRootAnimation,
+} from '../../helpers/internal/hooks';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import { useBottomSheetContentAnimation } from '../bottom-sheet/bottom-sheet.animation';

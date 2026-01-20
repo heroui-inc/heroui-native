@@ -3,11 +3,11 @@ import type {
   AnimatedProps,
   EntryOrExitLayoutType,
 } from 'react-native-reanimated';
-import type { ElementSlots } from '../../helpers/theme/types';
 import type {
   AnimationRoot,
   AnimationValue,
-} from '../../helpers/types/animation';
+  ElementSlots,
+} from '../../helpers/internal/types';
 import type { ErrorViewSlots } from './error-view.styles';
 
 /**

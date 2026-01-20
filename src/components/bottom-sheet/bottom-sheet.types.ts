@@ -4,9 +4,9 @@ import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
   AnimationRootDisableAll,
+  BaseBottomSheetContentProps,
   PopupOverlayAnimation,
-} from '../../helpers/types/animation';
-import type { BaseBottomSheetContentProps } from '../../helpers/types/bottom-sheet';
+} from '../../helpers/internal/types';
 import type * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
 
 /**

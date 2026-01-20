@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { View } from 'react-native';
-import { HeroText } from '../../helpers/components';
-import type { TextRef, ViewRef } from '../../helpers/types/primitives';
+import { HeroText } from '../../helpers/internal/components';
+import type { TextRef, ViewRef } from '../../helpers/internal/types';
 import { Surface } from '../surface';
 import { DISPLAY_NAME } from './card.constants';
 import cardStyles from './card.styles';

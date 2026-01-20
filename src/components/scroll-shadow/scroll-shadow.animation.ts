@@ -7,12 +7,12 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
+import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
 import {
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-} from '../../helpers/utils/animation';
+} from '../../helpers/internal/utils';
 import { SHADOW_EXIT_ANIMATION_DURATION } from './scroll-shadow.constants';
 import type {
   ScrollShadowOrientation,

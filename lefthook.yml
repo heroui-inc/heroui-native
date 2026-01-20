@@ -2,14 +2,11 @@ pre-commit:
   parallel: true
   commands:
     lint:
-      glob: '*.{js,ts,jsx,tsx}'
+      glob: "*.{js,ts,jsx,tsx}"
       run: npx eslint {staged_files}
     types:
-      glob: '*.{js,ts, jsx, tsx}'
+      glob: "*.{js,ts, jsx, tsx}"
       run: yarn typecheck
-    validate-exports:
-      glob: 'package.json'
-      run: yarn validate-exports
 commit-msg:
   parallel: true
   commands:

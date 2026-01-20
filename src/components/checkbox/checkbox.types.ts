@@ -7,7 +7,7 @@ import type {
   Animation,
   AnimationRoot,
   AnimationValue,
-} from '../../helpers/types';
+} from '../../helpers/internal/types';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 
 /**

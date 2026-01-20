@@ -32,7 +32,7 @@ const LOG_COLOR = {
  * @param {HeroUINativeConfig} [props.config] - Configuration object
  *
  */
-export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
+const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   children,
   config = {},
 }) => {
@@ -83,15 +83,6 @@ export const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
     </SafeAreaListener>
   );
 };
-
-/**
- * Re-export PortalHost for advanced use cases.
- *
- * @description
- * Allows consumers to manually mount a portal host in custom layouts
- * (e.g. for BottomSheet, Modal, or any overlay components).
- */
-export { PortalHost };
 
 /**
  * Default export for convenience

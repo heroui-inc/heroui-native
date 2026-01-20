@@ -4,8 +4,9 @@ import type {
   Animation,
   AnimationRootDisableAll,
   AnimationValue,
-} from '../../helpers/types/animation';
-import type { TextRef, ViewRef } from '../../helpers/types/primitives';
+  TextRef,
+  ViewRef,
+} from '../../helpers/internal/types';
 import type * as InputOTPPrimitivesTypes from '../../primitives/input-otp/input-otp.types';
 
 /**

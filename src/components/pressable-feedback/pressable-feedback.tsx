@@ -7,8 +7,8 @@ import {
 } from 'react-native';
 
 import Animated from 'react-native-reanimated';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import type { PressableRef, ViewRef } from '../../helpers/types';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { PressableRef, ViewRef } from '../../helpers/internal/types';
 import {
   PressableFeedbackRootAnimationProvider,
   usePressableFeedbackHighlightAnimation,

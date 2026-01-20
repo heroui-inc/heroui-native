@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 /**
  * Main skeleton component styles

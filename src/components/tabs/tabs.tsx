@@ -15,7 +15,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import * as TabsPrimitives from '../../primitives/tabs';
 import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
 import {

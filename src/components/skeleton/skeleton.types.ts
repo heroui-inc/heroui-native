@@ -5,7 +5,7 @@ import type {
   EntryOrExitLayoutType,
   SharedValue,
 } from 'react-native-reanimated';
-import type { Animation, AnimationRoot } from '../../helpers/types';
+import type { Animation, AnimationRoot } from '../../helpers/internal/types';
 
 /**
  * Skeleton animation type - defines the animation style

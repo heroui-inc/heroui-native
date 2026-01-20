@@ -27,9 +27,14 @@ export * from './components/tabs';
 export * from './components/text-field';
 export * from './components/toast';
 
-// Theme helpers
-export * from './helpers/theme';
+// Portal
+export * from './primitives/portal';
+
+// Hooks
+export * from './helpers/external/hooks';
+
+// Utils
+export * from './helpers/external/utils';
 
 // Provider
 export * from './providers/hero-ui-native';
-export { useTextComponent } from './providers/text-component';

@@ -8,14 +8,14 @@ import {
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts';
-import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
+import { useAnimationSettings } from '../../helpers/internal/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
 import {
   getAnimationState,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-} from '../../helpers/utils/animation';
+} from '../../helpers/internal/utils';
 import {
   DEFAULT_ROTATION_DURATION,
   DEFAULT_SPINNER_INDICATOR_ENTERING,

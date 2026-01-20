@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   base: 'flex-row items-center gap-2',

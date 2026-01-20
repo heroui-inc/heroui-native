@@ -8,7 +8,7 @@ import type {
   Animation,
   AnimationRootDisableAll,
   AnimationValue,
-} from '../../helpers/types/animation';
+} from '../../helpers/internal/types';
 import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
 
 /**

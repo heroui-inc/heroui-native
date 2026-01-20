@@ -1,9 +1,9 @@
 import { forwardRef, useMemo } from 'react';
 import { Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
-import { HeroText } from '../../helpers/components';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import type { PressableRef } from '../../helpers/types';
-import { childrenToString, createContext } from '../../helpers/utils';
+import { HeroText } from '../../helpers/internal/components';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { PressableRef } from '../../helpers/internal/types';
+import { childrenToString, createContext } from '../../helpers/internal/utils';
 import { useChipRootAnimation } from './chip.animation';
 import { DISPLAY_NAME } from './chip.constants';
 import chipStyles, { styleSheet } from './chip.styles';

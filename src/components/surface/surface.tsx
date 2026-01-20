@@ -1,8 +1,8 @@
 import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import type { ViewRef } from '../../helpers/types/primitives';
-import { createContext } from '../../helpers/utils';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { ViewRef } from '../../helpers/internal/types';
+import { createContext } from '../../helpers/internal/utils';
 import { useSurfaceRootAnimation } from './surface.animation';
 import { DISPLAY_NAME } from './surface.constants';
 import surfaceStyles, { styleSheet } from './surface.styles';

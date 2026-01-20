@@ -6,22 +6,24 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
+import { useThemeColor } from '../../helpers/external/hooks';
 import {
   BottomSheetContentContainer,
   CloseIcon,
   FullWindowOverlay,
-} from '../../helpers/components';
-import { HeroText } from '../../helpers/components/hero-text';
-import { BottomSheetIsDraggingProvider } from '../../helpers/contexts';
+  HeroText,
+} from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
+  BottomSheetIsDraggingProvider,
   useAnimationSettings,
-} from '../../helpers/contexts/animation-settings-context';
-import { useBottomSheetGestureHandlers } from '../../helpers/hooks';
-import { usePopupBottomSheetContentAnimation } from '../../helpers/hooks/use-popup-bottom-sheet-content-animation';
-import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
-import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
-import { useThemeColor } from '../../helpers/theme';
+} from '../../helpers/internal/contexts';
+import {
+  useBottomSheetGestureHandlers,
+  usePopupBottomSheetContentAnimation,
+  usePopupOverlayAnimation,
+  usePopupRootAnimation,
+} from '../../helpers/internal/hooks';
 import * as BottomSheetPrimitives from '../../primitives/bottom-sheet';
 import * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
 import {

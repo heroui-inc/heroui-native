@@ -1,9 +1,10 @@
 import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
-import { HeroText } from '../../helpers/components';
-import { colorKit, useThemeColor } from '../../helpers/theme';
-import type { PressableRef } from '../../helpers/types';
-import { childrenToString, createContext } from '../../helpers/utils';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { colorKit } from '../../helpers/external/utils';
+import { HeroText } from '../../helpers/internal/components';
+import type { PressableRef } from '../../helpers/internal/types';
+import { childrenToString, createContext } from '../../helpers/internal/utils';
 import { PressableFeedback } from '../pressable-feedback';
 import { DISPLAY_NAME } from './button.constants';
 import buttonStyles, { styleSheet } from './button.styles';

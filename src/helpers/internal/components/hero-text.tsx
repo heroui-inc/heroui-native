@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
-import { useTextComponent } from '../../providers/text-component/provider';
-import { cn } from '../theme';
+import { useTextComponent } from '../../external/hooks';
+import { cn } from '../../external/utils';
 
 /**
  * Props for HeroText component

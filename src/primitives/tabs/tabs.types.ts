@@ -6,7 +6,7 @@ import type {
   SlottableViewProps,
   TextRef,
   ViewRef,
-} from '../../helpers/types';
+} from '../../helpers/internal/types';
 
 /**
  * Props for the Tabs root component

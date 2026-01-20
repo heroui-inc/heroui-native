@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { AnimationRootDisableAll } from '../../helpers/types/animation';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 import type { TextComponentContextValue } from '../text-component/types';
 import type { ToastProviderProps } from '../toast/types';
 

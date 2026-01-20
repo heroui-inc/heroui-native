@@ -5,7 +5,7 @@ import type {
   TextInput,
   TextInputProps,
 } from 'react-native';
-import type { SlottableViewProps, ViewRef } from '../../helpers/types';
+import type { SlottableViewProps, ViewRef } from '../../helpers/internal/types';
 
 /**
  * Slot data structure for each OTP slot

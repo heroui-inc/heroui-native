@@ -1,4 +1,4 @@
-import { Button, cn, TextField } from 'heroui-native';
+import { cn, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { Pressable, useWindowDimensions, View } from 'react-native';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
@@ -8,6 +8,7 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 import { EyeIcon } from '../../../components/icons/eye';
 import { EyeSlashIcon } from '../../../components/icons/eye-slash';
 import { LockIcon } from '../../../components/icons/lock';
+import { WithStateToggle } from '../../../components/with-state-toggle';
 import { useAppTheme } from '../../../contexts/app-theme-context';
 
 const KeyboardAvoidingContainer = ({
@@ -141,9 +142,14 @@ const TextFieldWithValidationContent = () => {
   const [testFieldValue, setTestFieldValue] = useState('');
 
   return (
-    <View className="flex-1 justify-center px-5">
-      <KeyboardAvoidingContainer>
-        <View className="gap-8">
+    <WithStateToggle
+      isSelected={isTestFieldInvalid}
+      onSelectedChange={setIsTestFieldInvalid}
+      label="Simulate Error"
+      description="Toggle validation error state"
+    >
+      <View className="flex-1 pt-[55%]">
+        <KeyboardAvoidingContainer>
           <TextField isRequired isInvalid={isTestFieldInvalid}>
             <TextField.Label>Promo Code</TextField.Label>
             <TextField.Input
@@ -159,17 +165,9 @@ const TextFieldWithValidationContent = () => {
               This promo code is invalid or has expired
             </TextField.ErrorMessage>
           </TextField>
-          <Button
-            onPress={() => setIsTestFieldInvalid(!isTestFieldInvalid)}
-            variant="secondary"
-            size="sm"
-            className="self-start"
-          >
-            {isTestFieldInvalid ? 'Clear Error' : 'Simulate Error'}
-          </Button>
-        </View>
-      </KeyboardAvoidingContainer>
-    </View>
+        </KeyboardAvoidingContainer>
+      </View>
+    </WithStateToggle>
   );
 };
 
@@ -189,7 +187,6 @@ const TextFieldWithCustomStylesContent = () => {
               'border-[0.5px] border-neutral-900 bg-background rounded-none',
               isDark && 'border-neutral-100'
             )}
-            isAnimatedStyleActive={false}
           />
           <TextField.Description>
             Redeem your gift card at checkout

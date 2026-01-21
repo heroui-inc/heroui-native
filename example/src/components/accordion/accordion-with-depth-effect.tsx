@@ -1,10 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
-import { useHeaderHeight } from '@react-navigation/elements';
 import {
   Accordion,
   cn,
   Divider,
-  FormField,
   useAccordion,
   useAccordionItem,
 } from 'heroui-native';
@@ -18,7 +16,6 @@ import Animated, {
   ZoomIn,
   ZoomOut,
 } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../app-text';
 import { CubesThreeIcon } from '../icons/cubes-three';
@@ -27,6 +24,7 @@ import { PersonsIcon } from '../icons/persons';
 import { PlusIcon } from '../icons/plus';
 import { ThreeDiagonalIcon } from '../icons/three-diagonal';
 import { XMarkIcon } from '../icons/x-mark';
+import { WithStateToggle } from '../with-state-toggle';
 
 const LAYOUT_TRANSITION = LinearTransition.springify()
   .damping(70)
@@ -257,17 +255,13 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
 export const AccordionWithDepthEffect: FC = () => {
   const [depth, setDepth] = useState(true);
 
-  const headerHeight = useHeaderHeight();
-  const insets = useSafeAreaInsets();
-
   return (
     <SettingsContext value={{ depth, setDepth }}>
-      <View
-        className="flex-1 justify-between px-5"
-        style={{
-          paddingTop: headerHeight + 20,
-          paddingBottom: insets.bottom + 110,
-        }}
+      <WithStateToggle
+        isSelected={depth}
+        onSelectedChange={setDepth}
+        label="Depth"
+        description="Enable depth effect for the accordion"
       >
         <Accordion
           animation={{
@@ -289,23 +283,7 @@ export const AccordionWithDepthEffect: FC = () => {
             </Accordion.Item>
           ))}
         </Accordion>
-        <View>
-          <FormField
-            isSelected={depth}
-            onSelectedChange={setDepth}
-            className="pr-2"
-          >
-            <View className="flex-1">
-              <FormField.Label>Depth</FormField.Label>
-              <FormField.Description>
-                Enable depth effect for the accordion
-              </FormField.Description>
-            </View>
-            <FormField.Indicator />
-          </FormField>
-          <Divider className="mt-6" />
-        </View>
-      </View>
+      </WithStateToggle>
     </SettingsContext>
   );
 };

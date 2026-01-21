@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Button, Spinner } from 'heroui-native';
-import React from 'react';
+import { Spinner } from 'heroui-native';
 import { Text, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
@@ -111,27 +110,6 @@ const AnimationSpeedContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const StateAnimationContent = () => {
-  const [isLoading, setIsLoading] = React.useState(true);
-
-  return (
-    <View className="flex-1 items-center justify-center">
-      <View className="items-center gap-6">
-        <Spinner size="lg" isLoading={isLoading} />
-        <Button
-          variant="secondary"
-          size="sm"
-          onPress={() => setIsLoading(!isLoading)}
-        >
-          {isLoading ? 'Tap to stop' : 'Tap to start'}
-        </Button>
-      </View>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
 const SPINNER_VARIANTS: UsageVariant[] = [
   {
     value: 'sizes',
@@ -157,11 +135,6 @@ const SPINNER_VARIANTS: UsageVariant[] = [
     value: 'animation-speed',
     label: 'Animation speed',
     content: <AnimationSpeedContent />,
-  },
-  {
-    value: 'state-animation',
-    label: 'State animation preview',
-    content: <StateAnimationContent />,
   },
 ];
 

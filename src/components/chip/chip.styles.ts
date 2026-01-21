@@ -6,10 +6,10 @@ const root = tv({
   base: 'self-start flex-row items-center justify-center gap-1 overflow-hidden',
   variants: {
     variant: {
-      primary: 'border-0',
-      secondary: 'border border-border bg-default',
-      tertiary: 'border border-border bg-transparent',
-      soft: 'border-0',
+      primary: '',
+      secondary: 'bg-default',
+      tertiary: 'bg-transparent',
+      soft: '',
     },
     size: {
       sm: 'px-2 h-5 rounded-xl',

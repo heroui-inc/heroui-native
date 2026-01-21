@@ -60,7 +60,7 @@ export const PreviewCard: FC<PreviewCardProps> = ({
       <Card
         className={cn(
           'aspect-3/5 border-0 rounded-3xl',
-          isDark && 'border border-border/70'
+          isDark && 'border border-border/50'
         )}
       >
         <Card.Body className="flex-1 p-2 mb-4">

@@ -54,7 +54,7 @@ const overlay = tv({
  * set `isAnimatedStyleActive={false}` on `Popover.Content`.
  */
 const popoverContent = tv({
-  base: 'absolute bg-overlay rounded-3xl border border-border p-3 px-4 shadow-lg shadow-black/5 dark:shadow-none',
+  base: 'absolute bg-overlay rounded-3xl p-3 px-4 shadow-lg shadow-black/5 dark:shadow-none',
 });
 
 const close = tv({

@@ -43,7 +43,7 @@ export default function PopoverNativeModalScreen() {
               Harvard Mark II computer in 1947. Grace Hopper taped it to the log
               book with the note "First actual case of bug being found."
             </Popover.Description>
-            <View className="flex-row items-center gap-2 mt-2 pt-2 border-t border-border">
+            <View className="flex-row items-center gap-2 mt-2 pt-2">
               <StyledIonicons
                 name="sparkles"
                 size={14}

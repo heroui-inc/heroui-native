@@ -66,6 +66,8 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         return themeColorDefaultHover;
       case 'tertiary':
         return themeColorDefaultHover;
+      case 'outline':
+        return colorKit.setAlpha(themeColorDefaultHover, 0.3).hex();
       case 'ghost':
         return colorKit.setAlpha(themeColorDefaultHover, 0.3).hex();
       case 'danger':

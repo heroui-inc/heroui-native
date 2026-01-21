@@ -51,7 +51,7 @@ const overlay = tv({
  * set `isAnimatedStyleActive={false}` on `Dialog.Content`.
  */
 const content = tv({
-  base: 'bg-overlay rounded-3xl border border-border p-5',
+  base: 'bg-overlay rounded-3xl p-5',
 });
 
 const close = tv({

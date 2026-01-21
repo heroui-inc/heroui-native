@@ -1,10 +1,8 @@
-import { Ionicons } from '@expo/vector-icons';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { cn, Divider, RadioGroup, Surface } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
-  FadeIn,
+  FadeInUp,
   LinearTransition,
   ZoomIn,
 } from 'react-native-reanimated';
@@ -12,12 +10,11 @@ import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { BellFillIcon } from '../../../components/icons/bell-fill';
+import { ThunderboltFillIcon } from '../../../components/icons/thunderbolt-fill';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 const StyleAnimatedView = withUniwind(Animated.View);
-
-const StyledIonicons = withUniwind(Ionicons);
-const StyledFontAwesome = withUniwind(FontAwesome);
 
 const BasicRadioGroupContent = () => {
   const [withDescSelection, setWithDescSelection] = React.useState('desc1');
@@ -383,11 +380,10 @@ const CustomIndicatorThumbContent = () => {
               <>
                 <RadioGroup.Indicator>
                   {isSelected && (
-                    <AnimatedView entering={FadeIn.duration(200)}>
-                      <StyledFontAwesome
-                        name="check"
-                        size={12}
-                        className="text-accent-foreground"
+                    <AnimatedView entering={ZoomIn.duration(200)}>
+                      <BellFillIcon
+                        size={14}
+                        colorClassName="accent-accent-foreground"
                       />
                     </AnimatedView>
                   )}
@@ -409,11 +405,10 @@ const CustomIndicatorThumbContent = () => {
               <>
                 <RadioGroup.Indicator>
                   {isSelected && (
-                    <AnimatedView entering={FadeIn.duration(200)}>
-                      <StyledIonicons
-                        name="flash"
+                    <AnimatedView entering={FadeInUp.duration(200)}>
+                      <ThunderboltFillIcon
                         size={12}
-                        className="text-background"
+                        colorClassName="accent-background"
                       />
                     </AnimatedView>
                   )}
@@ -438,7 +433,7 @@ const CustomIndicatorThumbContent = () => {
                     <AnimatedView
                       key="none"
                       entering={ZoomIn.springify()}
-                      className="h-2.5 w-2.5 bg-accent-foreground"
+                      className="h-2.5 w-2.5 rounded-xs bg-accent-foreground"
                     />
                   )}
                 </RadioGroup.Indicator>

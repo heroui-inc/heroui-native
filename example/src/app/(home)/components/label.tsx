@@ -7,11 +7,13 @@ const BasicAndRequiredContent = () => {
   return (
     <View className="flex-1 justify-center px-5 gap-8">
       <TextField>
-        <Label>Username</Label>
+        <Label className="ml-1">Username</Label>
         <TextField.Input placeholder="Choose a username" />
       </TextField>
       <TextField>
-        <Label isRequired>Password</Label>
+        <Label isRequired className="ml-1">
+          Password
+        </Label>
         <TextField.Input placeholder="Create a password" secureTextEntry />
       </TextField>
     </View>
@@ -24,17 +26,21 @@ const InvalidAndDisabledContent = () => {
   return (
     <View className="flex-1 justify-center px-5 gap-8">
       <TextField isInvalid>
-        <Label isInvalid>Confirm password</Label>
+        <Label isInvalid className="ml-1">
+          Confirm password
+        </Label>
         <TextField.Input
           placeholder="Confirm your password"
           secureTextEntry
           value="different"
           editable={false}
         />
-        <TextField.ErrorMessage>Passwords do not match</TextField.ErrorMessage>
+        <TextField.ErrorMessage className="ml-0.5">
+          Passwords do not match
+        </TextField.ErrorMessage>
       </TextField>
       <TextField isDisabled>
-        <Label>Subscription plan</Label>
+        <Label className="ml-1">Subscription plan</Label>
         <TextField.Input value="Premium" />
       </TextField>
     </View>

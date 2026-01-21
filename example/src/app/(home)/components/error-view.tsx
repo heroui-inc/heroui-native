@@ -1,21 +1,26 @@
-import { Ionicons } from '@expo/vector-icons';
-import { Button, ErrorView, TextField } from 'heroui-native';
+import { ErrorView, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { FadeInDown } from 'react-native-reanimated';
-import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
-
-const StyledIonicons = withUniwind(Ionicons);
+import { CircleInfoFillIcon } from '../../../components/icons/circle-info-fill';
+import { DiamondExclamationFillIcon } from '../../../components/icons/diamond-exclamation-fill';
+import { XMarkFillIcon } from '../../../components/icons/x-mark-fill';
+import { WithStateToggle } from '../../../components/with-state-toggle';
 
 const BasicErrorViewContent = () => {
   const [slideError, setSlideError] = useState(false);
 
   return (
-    <View className="flex-1 items-center justify-center px-5">
-      <View className="w-full h-[160px] justify-between">
+    <WithStateToggle
+      isSelected={slideError}
+      onSelectedChange={setSlideError}
+      label="Show Error"
+      description="Toggle error state for the username field"
+    >
+      <View className="flex-1 pt-[55%]">
         <TextField isInvalid={slideError} isRequired>
           <TextField.Label isInvalid={false}>Username</TextField.Label>
           <TextField.Input
@@ -27,57 +32,109 @@ const BasicErrorViewContent = () => {
             Username is already taken
           </TextField.ErrorMessage>
         </TextField>
-        <Button
-          variant="secondary"
-          onPress={() => setSlideError(!slideError)}
-          size="sm"
-          className="self-start"
-        >
-          Toggle Error
-        </Button>
       </View>
-    </View>
+    </WithStateToggle>
   );
 };
 
-const CustomTextWithIconsContent = () => {
+const MultipleErrorsContent = () => {
+  const [showMultipleErrors, setShowMultipleErrors] = useState(false);
+
+  return (
+    <WithStateToggle
+      isSelected={showMultipleErrors}
+      onSelectedChange={setShowMultipleErrors}
+      label="Validate Password"
+      description="Show password validation errors"
+    >
+      <View className="flex-1 pt-[55%]">
+        <View className="gap-2">
+          <TextField>
+            <TextField.Label>Create Password</TextField.Label>
+            <TextField.Input
+              placeholder="Enter your password"
+              secureTextEntry
+              editable={false}
+            />
+          </TextField>
+
+          <View className="gap-2 ml-1">
+            <ErrorView isInvalid={showMultipleErrors}>
+              • At least 8 characters long
+            </ErrorView>
+            <ErrorView
+              isInvalid={showMultipleErrors}
+              animation={{
+                entering: {
+                  value: FadeInDown.delay(100),
+                },
+              }}
+            >
+              • At least one uppercase letter
+            </ErrorView>
+            <ErrorView
+              isInvalid={showMultipleErrors}
+              animation={{
+                entering: {
+                  value: FadeInDown.delay(200),
+                },
+              }}
+            >
+              • At least one number
+            </ErrorView>
+            <ErrorView
+              isInvalid={showMultipleErrors}
+              animation={{
+                entering: {
+                  value: FadeInDown.delay(300),
+                },
+              }}
+            >
+              • At least one special character (!@#$%^&*)
+            </ErrorView>
+          </View>
+        </View>
+      </View>
+    </WithStateToggle>
+  );
+};
+
+const InlineErrorMessagesContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
-      <View className="gap-4">
-        <ErrorView isInvalid={true}>
+      <View className="gap-4 w-full">
+        <TextField>
+          <TextField.Label>Email Address</TextField.Label>
           <View className="flex-row items-center gap-2">
-            <StyledIonicons
-              name="close-circle"
-              size={16}
-              className="text-danger"
+            <TextField.Input
+              placeholder="user@example"
+              value="user@example"
+              editable={false}
+              className="flex-1"
             />
-            <AppText className="text-danger text-sm">
-              Payment method declined
-            </AppText>
+            <ErrorView isInvalid={true}>
+              <AppText className="text-danger text-xs">Invalid email</AppText>
+            </ErrorView>
           </View>
-        </ErrorView>
+        </TextField>
 
-        <ErrorView isInvalid={true}>
+        <TextField>
+          <TextField.Label>Phone Number</TextField.Label>
           <View className="flex-row items-center gap-2">
-            <StyledIonicons name="warning" size={16} className="text-warning" />
-            <AppText className="text-warning text-sm">
-              Account verification pending
-            </AppText>
-          </View>
-        </ErrorView>
-
-        <ErrorView isInvalid={true}>
-          <View className="flex-row items-center gap-2">
-            <StyledIonicons
-              name="information-circle"
-              size={16}
-              className="text-foreground"
+            <TextField.Input
+              placeholder="+1 (555) 000-0000"
+              value=""
+              editable={false}
+              className="flex-1"
             />
-            <AppText className="text-foreground text-sm">
-              Profile completion required
-            </AppText>
+            <ErrorView isInvalid={true}>
+              <View className="flex-row items-center gap-1">
+                <CircleInfoFillIcon size={14} colorClassName="accent-danger" />
+                <AppText className="text-danger text-xs">Required</AppText>
+              </View>
+            </ErrorView>
           </View>
-        </ErrorView>
+        </TextField>
       </View>
     </View>
   );
@@ -121,111 +178,39 @@ const CustomStylingContent = () => {
   );
 };
 
-const InlineErrorMessagesContent = () => {
+const CustomTextWithIconsContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
-      <View className="gap-4 w-full">
-        <TextField>
-          <TextField.Label>Email Address</TextField.Label>
+      <View className="gap-4">
+        <ErrorView isInvalid={true}>
           <View className="flex-row items-center gap-2">
-            <TextField.Input
-              placeholder="user@example"
-              value="user@example"
-              editable={false}
-              className="flex-1"
-            />
-            <ErrorView isInvalid={true}>
-              <AppText className="text-danger text-xs">Invalid email</AppText>
-            </ErrorView>
+            <XMarkFillIcon size={16} colorClassName="accent-danger" />
+            <AppText className="text-danger text-sm">
+              Payment method declined
+            </AppText>
           </View>
-        </TextField>
+        </ErrorView>
 
-        <TextField>
-          <TextField.Label>Phone Number</TextField.Label>
+        <ErrorView isInvalid={true}>
           <View className="flex-row items-center gap-2">
-            <TextField.Input
-              placeholder="+1 (555) 000-0000"
-              value=""
-              editable={false}
-              className="flex-1"
+            <DiamondExclamationFillIcon
+              size={16}
+              colorClassName="accent-warning"
             />
-            <ErrorView isInvalid={true}>
-              <View className="flex-row items-center gap-1">
-                <StyledIonicons
-                  name="warning"
-                  size={14}
-                  className="text-danger"
-                />
-                <AppText className="text-danger text-xs">Required</AppText>
-              </View>
-            </ErrorView>
+            <AppText className="text-warning text-sm">
+              Account verification pending
+            </AppText>
           </View>
-        </TextField>
-      </View>
-    </View>
-  );
-};
+        </ErrorView>
 
-const MultipleErrorsContent = () => {
-  const [showMultipleErrors, setShowMultipleErrors] = useState(false);
-
-  return (
-    <View className="flex-1 items-center justify-center px-5">
-      <View className="w-full h-[240px] justify-between">
-        <View className="gap-2">
-          <TextField>
-            <TextField.Label>Create Password</TextField.Label>
-            <TextField.Input
-              placeholder="Enter your password"
-              secureTextEntry
-              editable={false}
-            />
-          </TextField>
-
-          <View className="gap-2">
-            <ErrorView isInvalid={showMultipleErrors}>
-              • At least 8 characters long
-            </ErrorView>
-            <ErrorView
-              isInvalid={showMultipleErrors}
-              animation={{
-                entering: {
-                  value: FadeInDown.delay(100),
-                },
-              }}
-            >
-              • At least one uppercase letter
-            </ErrorView>
-            <ErrorView
-              isInvalid={showMultipleErrors}
-              animation={{
-                entering: {
-                  value: FadeInDown.delay(200),
-                },
-              }}
-            >
-              • At least one number
-            </ErrorView>
-            <ErrorView
-              isInvalid={showMultipleErrors}
-              animation={{
-                entering: {
-                  value: FadeInDown.delay(300),
-                },
-              }}
-            >
-              • At least one special character (!@#$%^&*)
-            </ErrorView>
+        <ErrorView isInvalid={true}>
+          <View className="flex-row items-center gap-2">
+            <CircleInfoFillIcon size={16} colorClassName="accent-foreground" />
+            <AppText className="text-foreground text-sm">
+              Profile completion required
+            </AppText>
           </View>
-        </View>
-        <Button
-          variant="secondary"
-          onPress={() => setShowMultipleErrors(!showMultipleErrors)}
-          size="sm"
-          className="self-start"
-        >
-          {showMultipleErrors ? 'Hide Errors' : 'Validate Password'}
-        </Button>
+        </ErrorView>
       </View>
     </View>
   );
@@ -238,14 +223,9 @@ const ERROR_VIEW_VARIANTS: UsageVariant[] = [
     content: <BasicErrorViewContent />,
   },
   {
-    value: 'custom-text-with-icons',
-    label: 'Custom text with icons',
-    content: <CustomTextWithIconsContent />,
-  },
-  {
-    value: 'custom-styling',
-    label: 'Custom styling',
-    content: <CustomStylingContent />,
+    value: 'multiple-errors',
+    label: 'Multiple errors',
+    content: <MultipleErrorsContent />,
   },
   {
     value: 'inline-error-messages',
@@ -253,9 +233,14 @@ const ERROR_VIEW_VARIANTS: UsageVariant[] = [
     content: <InlineErrorMessagesContent />,
   },
   {
-    value: 'multiple-errors',
-    label: 'Multiple errors',
-    content: <MultipleErrorsContent />,
+    value: 'custom-styling',
+    label: 'Custom styling',
+    content: <CustomStylingContent />,
+  },
+  {
+    value: 'custom-text-with-icons',
+    label: 'Custom text with icons',
+    content: <CustomTextWithIconsContent />,
   },
 ];
 

@@ -212,10 +212,9 @@ const RadioGroupIndicatorThumb = forwardRef<
     ...restProps
   } = props;
 
-  const { isSelected, variant } = useRadioGroupItem();
+  const { isSelected } = useRadioGroupItem();
 
   const thumbClassName = radioGroupStyles.itemIndicatorThumb({
-    variant,
     isSelected,
     className,
   });

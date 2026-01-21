@@ -68,19 +68,12 @@ const itemIndicator = tv({
  * set `isAnimatedStyleActive={false}` on `RadioGroup.IndicatorThumb`.
  */
 const itemIndicatorThumb = tv({
-  base: 'size-2.5 dark:size-3 rounded-full',
+  base: 'size-2.5 dark:size-3 rounded-full bg-accent-foreground',
   variants: {
-    variant: {
-      primary: 'bg-field',
-      secondary: 'bg-on-surface',
-    },
     isSelected: {
       true: 'opacity-100',
       false: 'opacity-0',
     },
-  },
-  defaultVariants: {
-    variant: 'primary',
   },
 });
 

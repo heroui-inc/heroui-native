@@ -1,14 +1,11 @@
-import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { usePathname, useRouter } from 'expo-router';
 import { Accordion, PressableFeedback, useToast } from 'heroui-native';
 import { useEffect } from 'react';
 import { Platform, View } from 'react-native';
-import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
+import { ChevronRightIcon } from '../../../components/icons/chevron-right';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
-
-const StyledIonicons = withUniwind(Ionicons);
 
 type Component = {
   title: string;
@@ -155,11 +152,7 @@ export default function App() {
                   {item.title}
                 </AppText>
                 <Accordion.Indicator>
-                  <StyledIonicons
-                    name="chevron-forward"
-                    size={16}
-                    className="text-muted"
-                  />
+                  <ChevronRightIcon size={16} colorClassName="accent-muted" />
                 </Accordion.Indicator>
               </PressableFeedback>
             </Accordion.Trigger>

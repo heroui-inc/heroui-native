@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import * as Haptics from 'expo-haptics';
 import { cn } from 'heroui-native';
@@ -10,6 +11,7 @@ import { withUniwind } from 'uniwind';
 import { useAppTheme } from '../contexts/app-theme-context';
 
 const StyledIonicons = withUniwind(Ionicons);
+const StyledAntDesign = withUniwind(AntDesign);
 
 export const ThemeToggle: FC = () => {
   const { toggleTheme, isLight } = useAppTheme();
@@ -28,11 +30,11 @@ export const ThemeToggle: FC = () => {
     >
       {isLight ? (
         <Animated.View key="moon" entering={ZoomIn} exiting={FadeOut}>
-          <StyledIonicons name="moon" size={20} className="text-black" />
+          <StyledAntDesign name="moon" size={20} className="text-foreground" />
         </Animated.View>
       ) : (
         <Animated.View key="sun" entering={ZoomIn} exiting={FadeOut}>
-          <StyledIonicons name="sunny" size={20} className="text-white" />
+          <StyledIonicons name="sunny" size={20} className="text-foreground" />
         </Animated.View>
       )}
     </Pressable>

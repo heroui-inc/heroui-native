@@ -87,6 +87,7 @@ nitrogen/
 
 # Claude
 .claude
+.cursor
 .workflows
 
 # Example dist

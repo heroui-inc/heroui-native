@@ -1,15 +1,14 @@
-import { Ionicons } from '@expo/vector-icons';
 import { Button, cn, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { Pressable, useWindowDimensions, View } from 'react-native';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
-import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { EyeIcon } from '../../../components/icons/eye';
+import { EyeSlashIcon } from '../../../components/icons/eye-slash';
+import { LockIcon } from '../../../components/icons/lock';
 import { useAppTheme } from '../../../contexts/app-theme-context';
-
-const StyledIonicons = withUniwind(Ionicons);
 
 const KeyboardAvoidingContainer = ({
   children,
@@ -63,21 +62,21 @@ const TextFieldWithIconsContent = () => {
               placeholder="Enter your password"
               secureTextEntry={!isPasswordVisible}
             />
-            <StyledIonicons
-              name="lock-closed-outline"
-              size={16}
-              className="absolute left-3.5 text-muted"
-              pointerEvents="none"
-            />
+            <View className="absolute left-3.5" pointerEvents="none">
+              <LockIcon size={16} colorClassName="accent-field-placeholder" />
+            </View>
             <Pressable
               className="absolute right-4"
               onPress={() => setIsPasswordVisible(!isPasswordVisible)}
             >
-              <StyledIonicons
-                name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'}
-                size={16}
-                className="text-muted"
-              />
+              {isPasswordVisible ? (
+                <EyeSlashIcon
+                  size={16}
+                  colorClassName="accent-field-placeholder"
+                />
+              ) : (
+                <EyeIcon size={16} colorClassName="accent-field-placeholder" />
+              )}
             </Pressable>
           </View>
         </TextField>

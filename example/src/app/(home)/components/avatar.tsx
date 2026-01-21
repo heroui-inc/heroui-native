@@ -1,14 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, cn } from 'heroui-native';
 import { StyleSheet, Text, View } from 'react-native';
-import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
-
-const StyledIonicons = withUniwind(Ionicons);
+import { PersonFillIcon } from '../../../components/icons/person-fill';
 
 const SizesContent = () => {
   return (
@@ -196,7 +193,7 @@ const CustomFallbackContent = () => {
         </Avatar>
         <Avatar alt="User">
           <Avatar.Fallback>
-            <StyledIonicons name="person" size={18} className="text-[#666]" />
+            <PersonFillIcon colorClassName="accent-muted" />
           </Avatar.Fallback>
         </Avatar>
       </View>

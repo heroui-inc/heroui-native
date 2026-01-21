@@ -1,11 +1,10 @@
-import { Ionicons } from '@expo/vector-icons';
 import { Button, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
-import { withUniwind } from 'uniwind';
+import { EyeIcon } from '../icons/eye';
+import { EyeSlashIcon } from '../icons/eye-slash';
+import { LockIcon } from '../icons/lock';
 import { DialogContent } from './dialog-content';
-
-const StyledIonicons = withUniwind(Ionicons);
 
 export const TextInputContent = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -69,21 +68,21 @@ export const TextInputContent = () => {
               if (passwordError) setPasswordError(false);
             }}
           />
-          <StyledIonicons
-            name="lock-closed-outline"
-            size={16}
-            className="absolute left-3.5 text-muted"
-            pointerEvents="none"
-          />
+          <View className="absolute left-3.5" pointerEvents="none">
+            <LockIcon size={16} colorClassName="accent-field-placeholder" />
+          </View>
           <Pressable
             className="absolute right-4"
             onPress={() => setIsPasswordVisible(!isPasswordVisible)}
           >
-            <StyledIonicons
-              name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'}
-              size={16}
-              className="text-muted"
-            />
+            {isPasswordVisible ? (
+              <EyeSlashIcon
+                size={16}
+                colorClassName="accent-field-placeholder"
+              />
+            ) : (
+              <EyeIcon size={16} colorClassName="accent-field-placeholder" />
+            )}
           </Pressable>
         </View>
         <TextField.Description>

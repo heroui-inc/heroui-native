@@ -13,14 +13,14 @@ const BasicContent = () => {
           keyboardType="email-address"
           autoCapitalize="none"
         />
-        <Description nativeID="email-desc">
+        <Description nativeID="email-desc" className="ml-1 mt-0.5">
           We'll never share your email with anyone else.
         </Description>
       </TextField>
       <TextField>
         <TextField.Label>Password</TextField.Label>
         <TextField.Input placeholder="Create a password" secureTextEntry />
-        <Description nativeID="password-desc">
+        <Description nativeID="password-desc" className="ml-1 mt-0.5">
           Use at least 8 characters with a mix of letters, numbers, and symbols.
         </Description>
       </TextField>

@@ -6,6 +6,11 @@ import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { ArrowDownToSquareIcon } from '../../../components/icons/arrow-down-to-square';
+import { CodeCompareIcon } from '../../../components/icons/code-compare';
+import { CopyIcon } from '../../../components/icons/copy';
+import { MapPinIcon } from '../../../components/icons/map-pin';
+import { NodesRightIcon } from '../../../components/icons/nodes-right';
 
 const StyledIonicons = withUniwind(Ionicons);
 
@@ -119,11 +124,7 @@ const PresentationVariantsContent = () => {
               <View className="gap-2">
                 <View className="flex-row items-center gap-3 p-3 rounded-lg">
                   <View className="size-10 items-center justify-center rounded-full bg-accent/10">
-                    <StyledIonicons
-                      name="share-social"
-                      size={20}
-                      className="text-accent"
-                    />
+                    <NodesRightIcon size={18} colorClassName="accent-accent" />
                   </View>
                   <View className="flex-1">
                     <AppText className="text-base font-medium text-foreground">
@@ -136,11 +137,7 @@ const PresentationVariantsContent = () => {
                 </View>
                 <View className="flex-row items-center gap-3 p-3 rounded-lg">
                   <View className="size-10 items-center justify-center rounded-full bg-warning/10">
-                    <StyledIonicons
-                      name="copy-outline"
-                      size={20}
-                      className="text-warning"
-                    />
+                    <CopyIcon size={20} colorClassName="accent-warning" />
                   </View>
                   <View className="flex-1">
                     <AppText className="text-base font-medium text-foreground">
@@ -153,10 +150,9 @@ const PresentationVariantsContent = () => {
                 </View>
                 <View className="flex-row items-center gap-3 p-3 rounded-lg">
                   <View className="size-10 items-center justify-center rounded-full bg-success/10">
-                    <StyledIonicons
-                      name="download-outline"
+                    <ArrowDownToSquareIcon
                       size={20}
-                      className="text-success"
+                      colorClassName="accent-success"
                     />
                   </View>
                   <View className="flex-1">
@@ -207,11 +203,7 @@ const PlacementPopover = ({
         <Popover.Content placement={placement} width={220} className="gap-2">
           <View className="flex-row items-center gap-2">
             <View className="size-8 items-center justify-center rounded-full bg-accent/15">
-              <StyledIonicons
-                name="location"
-                size={16}
-                className="text-accent"
-              />
+              <MapPinIcon size={16} colorClassName="accent-accent" />
             </View>
             <AppText className="text-sm font-semibold text-foreground">
               Quick Tip
@@ -265,11 +257,7 @@ const AlignmentPopover = ({ align }: { align: 'start' | 'center' | 'end' }) => {
         >
           <View className="flex-row items-center gap-2">
             <View className="size-8 items-center justify-center rounded-full bg-warning/15">
-              <StyledIonicons
-                name="git-compare-outline"
-                size={16}
-                className="text-warning"
-              />
+              <CodeCompareIcon size={16} colorClassName="accent-warning" />
             </View>
             <AppText className="text-sm font-semibold text-foreground">
               Alignment

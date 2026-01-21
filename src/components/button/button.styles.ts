@@ -33,7 +33,7 @@ const root = tv({
       ['danger-soft']: 'bg-danger-soft',
     },
     size: {
-      sm: 'h-[36px] px-3.5 gap-1.5 rounded-2xl',
+      sm: 'h-[36px] px-3.5 gap-1.5 rounded-3xl',
       md: 'h-[48px] px-4 gap-2 rounded-3xl',
       lg: 'h-[56px] px-5 gap-2.5 rounded-4xl',
     },

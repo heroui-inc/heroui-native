@@ -1,4 +1,3 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import {
@@ -19,11 +18,12 @@ import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 import { DialogBlurBackdrop } from '../../../components/dialog-blur-backdrop';
+import { FloppyDiscIcon } from '../../../components/icons/floppy-disc';
+import { TrashIcon } from '../../../components/icons/trash';
 import { useAppTheme } from '../../../contexts/app-theme-context';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 const StyleScrollView = withUniwind(ScrollView);
-const StyledIonicons = withUniwind(Ionicons);
 
 KeyboardController.preload();
 
@@ -42,11 +42,7 @@ const BasicDialogContent = () => {
             <Dialog.Content>
               <Dialog.Close className="self-end -mb-2 z-50" />
               <View className="size-9 items-center justify-center rounded-full bg-overlay-foreground/5 mb-4">
-                <StyledIonicons
-                  name="albums-outline"
-                  size={16}
-                  className="text-warning"
-                />
+                <FloppyDiscIcon size={16} colorClassName="accent-warning" />
               </View>
               <View className="mb-8 gap-1.5">
                 <Dialog.Title>Low Disk Space</Dialog.Title>
@@ -96,11 +92,7 @@ const BlurBackdropDialogContent = () => {
             <Dialog.Content className="max-w-sm mx-auto">
               <Dialog.Close className="self-end -mb-2 z-50" />
               <View className="size-10 items-center justify-center rounded-full bg-overlay-foreground/5 mb-4">
-                <StyledIonicons
-                  name="trash-outline"
-                  size={16}
-                  className="text-danger"
-                />
+                <TrashIcon size={16} colorClassName="accent-danger" />
               </View>
               <View className="mb-8 gap-1">
                 <Dialog.Title>Delete product</Dialog.Title>

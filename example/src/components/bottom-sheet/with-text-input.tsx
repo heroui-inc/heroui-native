@@ -23,6 +23,7 @@ import {
 } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../app-text';
+import { MagnifierIcon } from '../icons/magnifier';
 
 const StyledIonicons = withUniwind(Ionicons);
 
@@ -148,12 +149,9 @@ const BottomSheetTextInput = ({
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
         />
-        <StyledIonicons
-          name="search"
-          size={20}
-          className="absolute left-3.5 text-muted"
-          pointerEvents="none"
-        />
+        <View className="absolute left-3.5" pointerEvents="none">
+          <MagnifierIcon colorClassName="accent-field-placeholder" />
+        </View>
         {searchQuery.length > 0 && (
           <Pressable
             className="absolute right-3 p-1"

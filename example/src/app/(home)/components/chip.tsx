@@ -1,13 +1,12 @@
-import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Chip } from 'heroui-native';
 import { StyleSheet, View } from 'react-native';
-import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
-
-const StyledIonicons = withUniwind(Ionicons);
+import { PlusIcon } from '../../../components/icons/plus';
+import { StarFillIcon } from '../../../components/icons/star-fill';
+import { XMarkIcon } from '../../../components/icons/x-mark';
 
 const SizesContent = () => {
   return (
@@ -186,11 +185,11 @@ const WithStartContentContent = () => {
             <Chip.Label>Featured</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="success">
-            <StyledIonicons name="add" size={16} className="text-green-500" />
+            <PlusIcon size={12} colorClassName="accent-success" />
             <Chip.Label>New</Chip.Label>
           </Chip>
           <Chip size="lg" variant="tertiary" color="warning">
-            <StyledIonicons name="star" size={12} className="text-yellow-500" />
+            <StarFillIcon size={11} colorClassName="accent-warning" />
             <Chip.Label>Premium</Chip.Label>
           </Chip>
         </View>
@@ -226,11 +225,11 @@ const WithEndContentContent = () => {
       <View className="flex-row gap-4 justify-center">
         <Chip size="sm" variant="secondary">
           <Chip.Label className="text-muted">Close</Chip.Label>
-          <StyledIonicons name="close" size={12} className="text-gray-500" />
+          <XMarkIcon size={12} colorClassName="accent-muted" />
         </Chip>
         <Chip size="md" variant="primary" color="danger" className="pr-1.5">
           <Chip.Label>Remove</Chip.Label>
-          <StyledIonicons name="close" size={16} className="text-white" />
+          <XMarkIcon size={14} colorClassName="accent-danger-foreground" />
         </Chip>
         <Chip
           size="lg"
@@ -240,7 +239,7 @@ const WithEndContentContent = () => {
         >
           <Chip.Label className="text-muted">Clear</Chip.Label>
           <View className="rounded-full p-1 bg-muted/20">
-            <StyledIonicons name="close" size={12} className="text-muted" />
+            <XMarkIcon size={12} colorClassName="accent-muted" />
           </View>
         </Chip>
       </View>

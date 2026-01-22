@@ -57,7 +57,7 @@
 
       /* Misc Colors */
       --border: oklch(90% 0.004 286.32);
-      --separator: oklch(72% 0.004 286.32);
+      --separator: oklch(74% 0.004 286.32);
       --link: var(--foreground);
 
       /* Shadows */
@@ -118,7 +118,7 @@
 
       /* Misc Colors */
       --border: oklch(28% 0.006 286.033);
-      --separator: oklch(38% 0.006 286.033);
+      --separator: oklch(40% 0.006 286.033);
       --link: var(--foreground);
 
       /* Shadows */

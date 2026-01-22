@@ -44,7 +44,7 @@
 
       /* Misc Colors */
       --border: oklch(0 0 0 / 0%);
-      --divider: oklch(0.91 0.015 295);
+      --separator: oklch(0.91 0.015 295);
       --link: oklch(0.62 0.17 310);
 
       /* Shadows */
@@ -103,7 +103,7 @@
 
       /* Misc Colors */
       --border: oklch(0 0 0 / 0%);
-      --divider: oklch(0.28 0.045 295);
+      --separator: oklch(0.28 0.045 295);
       --link: oklch(0.75 0.18 320);
 
       /* Shadows */

@@ -139,7 +139,7 @@ const indicator = tv({
  * set `isAnimatedStyleActive={false}` on `Tabs.Separator`.
  */
 const separator = tv({
-  base: 'w-px h-3/5 bg-divider/30 self-center',
+  base: 'w-px h-3/5 bg-separator/30 self-center',
 });
 
 const content = tv({

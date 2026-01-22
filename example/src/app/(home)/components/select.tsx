@@ -171,7 +171,7 @@ const PresentationContent = () => {
               backgroundClassName="bg-transparent"
               handleClassName="h-1"
               handleIndicatorClassName="w-12 h-[3px]"
-              contentContainerClassName="h-full pt-1 pb-1 mx-2.5 rounded-t-[36px] border border-divider/20 bg-overlay overflow-hidden"
+              contentContainerClassName="h-full pt-1 pb-1 mx-2.5 rounded-t-[36px] border border-separator/20 bg-overlay overflow-hidden"
               contentContainerProps={{
                 style: {
                   borderCurve: 'continuous',

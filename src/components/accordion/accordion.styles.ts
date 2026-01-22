@@ -5,7 +5,7 @@ import { combineStyles } from '../../helpers/internal/utils';
 const root = tv({
   slots: {
     container: 'flex-col overflow-hidden',
-    divider: 'h-hairline bg-divider',
+    divider: 'h-hairline bg-separator',
   },
   variants: {
     variant: {
@@ -15,7 +15,7 @@ const root = tv({
       },
       surface: {
         container: 'bg-surface border border-surface rounded-3xl',
-        divider: 'mx-3 bg-divider/75',
+        divider: 'mx-3 bg-separator/75',
       },
     },
   },

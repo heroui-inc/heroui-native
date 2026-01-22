@@ -48,7 +48,7 @@ const slotCaret = tv({
 });
 
 const separator = tv({
-  base: 'h-0.5 w-2 rounded-full bg-divider/50',
+  base: 'h-0.5 w-2 rounded-full bg-separator/50',
 });
 
 export const styleSheet = StyleSheet.create({

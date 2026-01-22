@@ -33,7 +33,7 @@ const contentBackground = tv({
 });
 
 const contentHandleIndicator = tv({
-  base: 'bg-divider',
+  base: 'bg-separator',
 });
 
 const close = tv({

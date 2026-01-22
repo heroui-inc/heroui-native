@@ -1,13 +1,8 @@
 import { forwardRef, useMemo } from 'react';
-import type { Text as RNText } from 'react-native';
+import type { GestureResponderEvent, Text as RNText } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-import { useThemeColor } from '../../helpers/external/hooks';
-import {
-  CloseIcon,
-  FullWindowOverlay,
-  HeroText,
-} from '../../helpers/internal/components';
+import { FullWindowOverlay, HeroText } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
@@ -17,8 +12,10 @@ import {
   usePopupOverlayAnimation,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
+import type { PressableRef } from '../../helpers/internal/types';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
+import { CloseButton } from '../close-button';
 import {
   DialogAnimationProvider,
   useDialogAnimation,
@@ -265,29 +262,18 @@ const DialogContent = forwardRef<
 
 // --------------------------------------------------
 
-const DialogClose = forwardRef<
-  DialogPrimitivesTypes.CloseRef,
-  DialogCloseProps
->(({ className, iconProps, hitSlop = 12, children, ...props }, ref) => {
-  const themeColorMuted = useThemeColor('muted');
+const DialogClose = forwardRef<PressableRef, DialogCloseProps>((props, ref) => {
+  const { onPress: onPressProp, ...restProps } = props;
+  const { onOpenChange } = useDialog();
 
-  const tvStyles = dialogStyles.close({ className });
+  const onPress = (ev: GestureResponderEvent) => {
+    onOpenChange(false);
+    if (typeof onPressProp === 'function') {
+      onPressProp(ev);
+    }
+  };
 
-  return (
-    <DialogPrimitives.Close
-      ref={ref}
-      className={tvStyles}
-      hitSlop={hitSlop}
-      {...props}
-    >
-      {children || (
-        <CloseIcon
-          size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? themeColorMuted}
-        />
-      )}
-    </DialogPrimitives.Close>
-  );
+  return <CloseButton ref={ref} onPress={onPress} {...restProps} />;
 });
 
 // --------------------------------------------------

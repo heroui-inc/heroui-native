@@ -54,10 +54,6 @@ const content = tv({
   base: 'bg-overlay rounded-3xl p-5',
 });
 
-const close = tv({
-  base: '',
-});
-
 const label = tv({
   base: 'text-lg font-medium text-foreground',
 });
@@ -70,7 +66,6 @@ const dialogStyles = combineStyles({
   portal,
   overlay,
   content,
-  close,
   label,
   description,
 });

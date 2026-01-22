@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, RadioGroup } from 'heroui-native';
+import { Chip, Dialog, RadioGroup, useDialog } from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -16,11 +16,47 @@ import { SearchBar } from '../search-bar';
 
 const StyledFeather = withUniwind(Feather);
 const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
+const StyledScrollView = withUniwind(ScrollView);
 
 type ProjectItem = {
   value: string;
   label: string;
   indicator: React.ReactNode;
+};
+
+type ProjectRadioItemProps = {
+  item: ProjectItem;
+  value: string;
+};
+
+const ProjectRadioItem: FC<ProjectRadioItemProps> = ({ item, value }) => {
+  const { onOpenChange } = useDialog();
+
+  return (
+    <RadioGroup.Item
+      value={item.value}
+      onPress={() => {
+        if (Platform.OS === 'ios') {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        }
+        onOpenChange(false);
+      }}
+    >
+      <View className="flex-row items-center gap-2">
+        <View className="w-7 pl-0.5 justify-center">
+          <View className="scale-105">{item.indicator}</View>
+        </View>
+        <RadioGroup.Label>{item.label}</RadioGroup.Label>
+      </View>
+      <RadioGroup.Indicator className="border-none shadow-none bg-transparent">
+        {value === item.value && (
+          <Animated.View key={item.value} entering={FadeIn.duration(200)}>
+            <StyledFeather name="check" size={18} className="text-foreground" />
+          </Animated.View>
+        )}
+      </RadioGroup.Indicator>
+    </RadioGroup.Item>
+  );
 };
 
 export const Project: FC = () => {
@@ -127,7 +163,7 @@ export const Project: FC = () => {
               </View>
             )}
             {filteredItems.length > 0 && (
-              <ScrollView
+              <StyledScrollView
                 contentContainerClassName="pt-3"
                 showsVerticalScrollIndicator={false}
                 bounces={false}
@@ -139,46 +175,14 @@ export const Project: FC = () => {
                   className="gap-7"
                 >
                   {filteredItems.map((item) => (
-                    <Dialog.Close
+                    <ProjectRadioItem
                       key={item.value}
-                      className="self-stretch"
-                      asChild
-                    >
-                      <RadioGroup.Item
-                        value={item.value}
-                        onPress={() => {
-                          if (Platform.OS === 'ios') {
-                            Haptics.impactAsync(
-                              Haptics.ImpactFeedbackStyle.Light
-                            );
-                          }
-                        }}
-                      >
-                        <View className="flex-row items-center gap-2">
-                          <View className="w-7 pl-0.5 justify-center">
-                            <View className="scale-105">{item.indicator}</View>
-                          </View>
-                          <RadioGroup.Label>{item.label}</RadioGroup.Label>
-                        </View>
-                        <RadioGroup.Indicator className="border-0 bg-transparent">
-                          {value === item.value && (
-                            <Animated.View
-                              key={item.value}
-                              entering={FadeIn.duration(200)}
-                            >
-                              <StyledFeather
-                                name="check"
-                                size={18}
-                                className="text-foreground"
-                              />
-                            </Animated.View>
-                          )}
-                        </RadioGroup.Indicator>
-                      </RadioGroup.Item>
-                    </Dialog.Close>
+                      item={item}
+                      value={value}
+                    />
                   ))}
                 </RadioGroup>
-              </ScrollView>
+              </StyledScrollView>
             )}
           </Dialog.Content>
         </KeyboardAvoidingView>

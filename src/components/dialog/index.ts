@@ -1,6 +1,5 @@
 export { default as Dialog, useDialog, useDialogAnimation } from './dialog';
 export type {
-  DialogCloseIconProps,
   DialogCloseProps,
   DialogContentProps,
   DialogDescriptionProps,

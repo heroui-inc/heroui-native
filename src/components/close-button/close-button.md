@@ -92,7 +92,7 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 
 ### CloseButton
 
-CloseButton extends all props from [Button](../button/button.md) component, excluding `variant`, `size`, and `isIconOnly` which are fixed to `'tertiary'`, `'sm'`, and `true` respectively.
+CloseButton extends all props from [Button](../button/button.md) component. It defaults to `variant='tertiary'`, `size='sm'`, and `isIconOnly=true`.
 
 | prop       | type                   | default | description                                                      |
 | ---------- | ---------------------- | ------- | ---------------------------------------------------------------- |

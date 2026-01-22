@@ -16,7 +16,6 @@ export default function DialogNativeModalScreen() {
         <Dialog.Portal>
           <Dialog.Overlay />
           <Dialog.Content>
-            <Dialog.Close className="self-end -mb-2 z-50" />
             <View className="mb-5 gap-1.5">
               <Dialog.Title>Confirm Action</Dialog.Title>
               <Dialog.Description>
@@ -25,12 +24,16 @@ export default function DialogNativeModalScreen() {
               </Dialog.Description>
             </View>
             <View className="flex-row justify-end gap-3">
-              <Dialog.Close asChild>
-                <Button variant="ghost" size="sm">
-                  Cancel
-                </Button>
-              </Dialog.Close>
-              <Button size="sm">Confirm</Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onPress={() => setIsOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button size="sm" onPress={() => setIsOpen(false)}>
+                Confirm
+              </Button>
             </View>
           </Dialog.Content>
         </Dialog.Portal>

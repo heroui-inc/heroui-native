@@ -141,7 +141,6 @@ export function SuperAppPaywallContent() {
       {/* Tabs Section */}
       <View className="mb-6 px-4 pt-6">
         <Tabs
-          variant="pill"
           value={activeTab}
           onValueChange={(value) => setActiveTab(value as 'app' | 'super')}
           className="gap-2"

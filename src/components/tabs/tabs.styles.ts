@@ -10,12 +10,12 @@ const list = tv({
   base: 'self-start flex-row items-center gap-1',
   variants: {
     variant: {
-      pill: 'p-[3px] rounded-3xl bg-default',
-      line: 'p-0 border-b border-border',
+      primary: 'p-[3px] rounded-3xl bg-default',
+      secondary: 'p-0 border-b border-border',
     },
   },
   defaultVariants: {
-    variant: 'pill',
+    variant: 'primary',
     isScrollView: false,
   },
 });
@@ -24,12 +24,12 @@ const scrollView = tv({
   base: '',
   variants: {
     variant: {
-      pill: '-my-[3px] rounded-3xl',
-      line: '',
+      primary: '-my-[3px] rounded-3xl',
+      secondary: '',
     },
   },
   defaultVariants: {
-    variant: 'pill',
+    variant: 'primary',
   },
 });
 
@@ -37,12 +37,12 @@ const scrollViewContentContainer = tv({
   base: '',
   variants: {
     variant: {
-      pill: 'py-[3px] px-px',
-      line: '',
+      primary: 'py-[3px] px-px',
+      secondary: '',
     },
   },
   defaultVariants: {
-    variant: 'pill',
+    variant: 'primary',
   },
 });
 
@@ -60,7 +60,13 @@ const trigger = tv({
 });
 
 const label = tv({
-  base: 'text-base font-medium text-segment-foreground',
+  base: 'text-base font-medium',
+  variants: {
+    isSelected: {
+      true: 'text-segment-foreground',
+      false: 'text-muted',
+    },
+  },
 });
 
 /**
@@ -91,8 +97,8 @@ const indicator = tv({
   base: 'absolute left-0',
   variants: {
     variant: {
-      pill: 'rounded-3xl shadow-sm shadow-surface/25 bg-segment',
-      line: 'bottom-0 border-b-2 border-accent',
+      primary: 'rounded-3xl shadow-sm shadow-surface/25 bg-segment',
+      secondary: 'bottom-0 border-b-2 border-accent',
     },
     isScrollView: {
       true: '',
@@ -101,13 +107,13 @@ const indicator = tv({
   },
   compoundVariants: [
     {
-      variant: 'pill',
+      variant: 'primary',
       isScrollView: true,
       className: 'top-[3px]',
     },
   ],
   defaultVariants: {
-    variant: 'pill',
+    variant: 'primary',
     isScrollView: false,
   },
 });

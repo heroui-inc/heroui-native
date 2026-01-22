@@ -55,7 +55,7 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
       value,
       onValueChange,
       className,
-      variant = 'pill',
+      variant = 'primary',
       animation,
       ...restProps
     } = props;
@@ -272,8 +272,9 @@ const TabsTrigger = forwardRef<
 const TabsLabel = forwardRef<TabsPrimitivesTypes.LabelRef, TabsLabelProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
+    const { isSelected } = useTabsTrigger();
 
-    const tvStyles = tabsStyles.label({ className });
+    const tvStyles = tabsStyles.label({ isSelected, className });
 
     return (
       <TabsPrimitives.Label ref={ref} className={tvStyles} {...restProps}>

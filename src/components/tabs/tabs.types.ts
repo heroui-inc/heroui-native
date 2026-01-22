@@ -25,9 +25,9 @@ export interface TabsProps extends TabsPrimitivesTypes.RootProps {
   children?: React.ReactNode;
   /**
    * Visual variant of the tabs
-   * @default 'pill'
+   * @default 'primary'
    */
-  variant?: 'pill' | 'line';
+  variant?: 'primary' | 'secondary';
   /**
    * Animation configuration for tabs
    * - `"disable-all"`: Disable all animations including children (cascades down to all child components)
@@ -335,7 +335,7 @@ export type ItemMeasurements = {
 export type MeasurementsContextValue = {
   measurements: Record<string, ItemMeasurements>;
   setMeasurements: (key: string, measurements: ItemMeasurements) => void;
-  variant: 'pill' | 'line';
+  variant: 'primary' | 'secondary';
   isScrollView: boolean;
   setIsScrollView: (isScrollView: boolean) => void;
 };

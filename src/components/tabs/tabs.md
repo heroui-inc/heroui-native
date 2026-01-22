@@ -29,7 +29,7 @@ import { Tabs } from 'heroui-native';
 ```
 
 - **Tabs**: Main container that manages tab state and selection. Controls active tab, handles value changes, and provides context to child components.
-- **Tabs.List**: Container for tab triggers. Groups triggers together with optional styling variants (pill or line).
+- **Tabs.List**: Container for tab triggers. Groups triggers together with optional styling variants (primary or secondary).
 - **Tabs.ScrollView**: Optional scrollable wrapper for tab triggers. Enables horizontal scrolling when tabs overflow with automatic centering of active tab.
 - **Tabs.Trigger**: Interactive button for each tab. Handles press events to change active tab and measures its position for indicator animation.
 - **Tabs.Label**: Text content for tab triggers. Displays the tab title with appropriate styling.
@@ -59,12 +59,12 @@ The Tabs component uses compound parts to create navigable content sections.
 </Tabs>
 ```
 
-### Pill Variant
+### Primary Variant
 
-Default rounded pill style for tab triggers.
+Default rounded primary style for tab triggers.
 
 ```tsx
-<Tabs value={activeTab} onValueChange={setActiveTab} variant="pill">
+<Tabs value={activeTab} onValueChange={setActiveTab} variant="primary">
   <Tabs.List>
     <Tabs.Indicator />
     <Tabs.Trigger value="settings">
@@ -79,12 +79,12 @@ Default rounded pill style for tab triggers.
 </Tabs>
 ```
 
-### Line Variant
+### Secondary Variant
 
 Underline style indicator for a more minimal appearance.
 
 ```tsx
-<Tabs value={activeTab} onValueChange={setActiveTab} variant="line">
+<Tabs value={activeTab} onValueChange={setActiveTab} variant="secondary">
   <Tabs.List>
     <Tabs.Indicator />
     <Tabs.Trigger value="overview">
@@ -273,7 +273,7 @@ export default function TabsExample() {
   const [name, setName] = useState('');
 
   return (
-    <Tabs value={activeTab} onValueChange={setActiveTab} variant="pill">
+    <Tabs value={activeTab} onValueChange={setActiveTab} variant="primary">
       <Tabs.List>
         <Tabs.ScrollView>
           <Tabs.Indicator />
@@ -358,7 +358,7 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 | --------------- | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
 | `children`      | `React.ReactNode`            | -           | Children elements to be rendered inside tabs                                              |
 | `value`         | `string`                     | -           | Currently active tab value                                                                |
-| `variant`       | `'pill' \| 'line'`           | `'pill'`    | Visual variant of the tabs                                                                |
+| `variant`       | `'primary' \| 'secondary'`           | `'primary'`    | Visual variant of the tabs                                                                |
 | `className`     | `string`                     | -           | Additional CSS classes for the container                                                  |
 | `animation`     | `"disable-all" \| undefined` | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
 | `onValueChange` | `(value: string) => void`    | -           | Callback when the active tab changes                                                      |
@@ -523,7 +523,7 @@ const CustomIndicator = () => {
 | ----------------- | ------------------------------------------------------- | ------------------------------------------------- |
 | `measurements`    | `Record<string, ItemMeasurements>`                      | Record of measurements for each tab trigger       |
 | `setMeasurements` | `(key: string, measurements: ItemMeasurements) => void` | Function to update measurements for a tab trigger |
-| `variant`         | `'pill' \| 'line'`                                      | Visual variant of the tabs                        |
+| `variant`         | `'primary' \| 'secondary'`                                      | Visual variant of the tabs                        |
 
 #### ItemMeasurements
 

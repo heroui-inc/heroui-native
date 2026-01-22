@@ -55,7 +55,7 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
       value,
       onValueChange,
       className,
-      variant = 'pill',
+      variant = 'primary',
       animation,
       ...restProps
     } = props;

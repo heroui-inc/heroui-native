@@ -42,7 +42,7 @@ interface FormErrors {
 }
 
 interface TabsContentProps {
-  variant: 'pill' | 'line';
+  variant: 'primary' | 'secondary';
 }
 
 interface TabTriggerProps {
@@ -114,21 +114,23 @@ const TabsContent = ({ variant }: TabsContentProps) => {
       variant={variant}
       value={activeTab}
       onValueChange={setActiveTab}
-      className={cn('gap-1.5', variant === 'line' && 'gap-0')}
+      className={cn('gap-1.5', variant === 'secondary' && 'gap-0')}
     >
-      <Tabs.List className={cn('border-b-0', variant === 'line' && 'mx-4')}>
+      <Tabs.List
+        className={cn('border-b-0', variant === 'secondary' && 'mx-4')}
+      >
         <Tabs.ScrollView contentContainerClassName="gap-1">
           <Tabs.Indicator />
           <TabTrigger value="general" label="General" />
-          {variant === 'pill' && (
+          {variant === 'primary' && (
             <Tabs.Separator betweenValues={['general', 'appearance']} />
           )}
           <TabTrigger value="appearance" label="Appearance" />
-          {variant === 'pill' && (
+          {variant === 'primary' && (
             <Tabs.Separator betweenValues={['appearance', 'notifications']} />
           )}
           <TabTrigger value="notifications" label="Notifications" />
-          {variant === 'pill' && (
+          {variant === 'primary' && (
             <Tabs.Separator betweenValues={['notifications', 'profile']} />
           )}
           <TabTrigger value="profile" label="Profile" />
@@ -138,7 +140,8 @@ const TabsContent = ({ variant }: TabsContentProps) => {
         layout={LinearTransition.duration(DURATION)}
         className={cn(
           'px-2 py-6',
-          variant === 'line' && 'px-5 border border-foreground/10 rounded-2xl'
+          variant === 'secondary' &&
+            'px-5 border border-foreground/10 rounded-2xl'
         )}
         style={styles.borderCurve}
       >
@@ -337,7 +340,7 @@ const PillVariantContent = () => {
 
   return (
     <View className="flex-1 px-5" style={{ paddingTop: headerHeight + 20 }}>
-      <TabsContent variant="pill" />
+      <TabsContent variant="primary" />
     </View>
   );
 };
@@ -349,7 +352,7 @@ const LineVariantContent = () => {
 
   return (
     <View className="flex-1 px-5" style={{ paddingTop: headerHeight + 20 }}>
-      <TabsContent variant="line" />
+      <TabsContent variant="secondary" />
     </View>
   );
 };
@@ -358,13 +361,13 @@ const LineVariantContent = () => {
 
 const TABS_VARIANTS: UsageVariant[] = [
   {
-    value: 'pill-variant',
-    label: 'Pill variant',
+    value: 'primary-variant',
+    label: 'Primary variant',
     content: <PillVariantContent />,
   },
   {
-    value: 'line-variant',
-    label: 'Line variant',
+    value: 'secondary-variant',
+    label: 'Secondary variant',
     content: <LineVariantContent />,
   },
 ];

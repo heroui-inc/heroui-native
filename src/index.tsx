@@ -6,6 +6,7 @@ export * from './components/button';
 export * from './components/card';
 export * from './components/checkbox';
 export * from './components/chip';
+export * from './components/close-button';
 export * from './components/description';
 export * from './components/dialog';
 export * from './components/divider';

@@ -362,15 +362,15 @@ We use Tailwind's `@theme` directive to automatically create calculated variable
   --color-danger-foreground: var(--danger-foreground);
 
   /* Form Field Tokens */
-  --color-field: var(--field-background, var(--color-default));
+  --color-field: var(--field-background, var(--default));
   --color-field-hover: color-mix(
     in oklab,
-    var(--field-background, var(--color-default)) 90%,
-    var(--field-foreground, var(--color-default-foreground)) 10%
+    var(--field-background, var(--default)) 90%,
+    var(--field-foreground, var(--default-foreground)) 10%
   );
-  --color-field-foreground: var(--field-foreground, var(--color-foreground));
-  --color-field-placeholder: var(--field-placeholder, var(--color-muted));
-  --color-field-border: var(--field-border, var(--color-border));
+  --color-field-foreground: var(--field-foreground, var(--foreground));
+  --color-field-placeholder: var(--field-placeholder, var(--muted));
+  --color-field-border: var(--field-border, var(--border));
   --radius-field: var(--field-radius, var(--radius-xl));
   --border-width-field: var(--field-border-width, var(--border-width));
 
@@ -385,112 +385,112 @@ We use Tailwind's `@theme` directive to automatically create calculated variable
   /* --- background shades --- */
   --color-background-secondary: color-mix(
     in oklab,
-    var(--color-background) 96%,
-    var(--color-foreground) 4%
+    var(--background) 96%,
+    var(--foreground) 4%
   );
   --color-background-tertiary: color-mix(
     in oklab,
-    var(--color-background) 92%,
-    var(--color-foreground) 8%
+    var(--background) 92%,
+    var(--foreground) 8%
   );
   --color-background-quaternary: color-mix(
     in oklab,
-    var(--color-background) 86%,
-    var(--color-foreground) 14%
+    var(--background) 86%,
+    var(--foreground) 14%
   );
-  --color-background-inverse: var(--color-foreground);
+  --color-background-inverse: var(--foreground);
 
   /* ------------------------- */
   --color-default-hover: color-mix(
     in oklab,
-    var(--color-default) 90%,
-    var(--color-default-foreground) 2%
+    var(--default) 90%,
+    var(--default-foreground) 2%
   );
   --color-accent-hover: color-mix(
     in oklab,
-    var(--color-accent) 90%,
-    var(--color-accent-foreground) 10%
+    var(--accent) 90%,
+    var(--accent-foreground) 10%
   );
   --color-success-hover: color-mix(
     in oklab,
-    var(--color-success) 90%,
-    var(--color-success-foreground) 10%
+    var(--success) 90%,
+    var(--success-foreground) 10%
   );
   --color-warning-hover: color-mix(
     in oklab,
-    var(--color-warning) 90%,
-    var(--color-warning-foreground) 10%
+    var(--warning) 90%,
+    var(--warning-foreground) 10%
   );
   --color-danger-hover: color-mix(
     in oklab,
-    var(--color-danger) 90%,
-    var(--color-danger-foreground) 10%
+    var(--danger) 90%,
+    var(--danger-foreground) 10%
   );
 
   /* Form Field Colors */
   --color-field-hover: color-mix(
     in oklab,
-    var(--color-field) 90%,
-    var(--color-field-foreground) 2%
+    var(--field-background, var(--default)) 90%,
+    var(--field-foreground, var(--foreground)) 2%
   );
-  --color-field-focus: var(--color-field);
+  --color-field-focus: var(--field-background, var(--default));
   --color-field-border-hover: color-mix(
     in oklab,
-    var(--color-field-border) 88%,
-    var(--color-field-foreground) 10%
+    var(--field-border, var(--border)) 88%,
+    var(--field-foreground, var(--foreground)) 10%
   );
   --color-field-border-focus: color-mix(
     in oklab,
-    var(--color-field-border) 74%,
-    var(--color-field-foreground) 22%
+    var(--field-border, var(--border)) 74%,
+    var(--field-foreground, var(--foreground)) 22%
   );
 
   /* Soft Colors */
   --color-accent-soft: color-mix(
     in oklab,
-    var(--color-accent) 15%,
+    var(--accent) 15%,
     transparent
   );
-  --color-accent-soft-foreground: var(--color-accent);
+  --color-accent-soft-foreground: var(--accent);
   --color-accent-soft-hover: color-mix(
     in oklab,
-    var(--color-accent) 20%,
+    var(--accent) 20%,
     transparent
   );
 
   --color-danger-soft: color-mix(
     in oklab,
-    var(--color-danger) 15%,
+    var(--danger) 15%,
     transparent
   );
-  --color-danger-soft-foreground: var(--color-danger);
+  --color-danger-soft-foreground: var(--danger);
   --color-danger-soft-hover: color-mix(
     in oklab,
-    var(--color-danger) 20%,
+    var(--danger) 20%,
     transparent
   );
 
   --color-warning-soft: color-mix(
     in oklab,
-    var(--color-warning) 15%,
+    var(--warning) 15%,
     transparent
   );
-  --color-warning-soft-foreground: var(--color-warning);
+  --color-warning-soft-foreground: var(--warning);
   --color-warning-soft-hover: color-mix(
     in oklab,
-    var(--color-warning) 20%,
+    var(--warning) 20%,
     transparent
   );
 
   --color-success-soft: color-mix(
     in oklab,
-    var(--color-success) 15%,
+    var(--success) 15%,
     transparent
   );
-  --color-success-soft-foreground: var(--color-success);
+  --color-success-soft-foreground: var(--success);
   --color-success-soft-hover: color-mix(
     in oklab,
-    var(--color-success) 20%,
+    var(--success) 20%,
     transparent
   );
 
@@ -514,14 +514,14 @@ We use Tailwind's `@theme` directive to automatically create calculated variable
   /* On Surface Colors */
   --color-on-surface: color-mix(
     in oklab,
-    var(--color-surface) 93%,
-    var(--color-surface-foreground) 7%
+    var(--surface) 93%,
+    var(--surface-foreground) 7%
   );
-  --color-on-surface-foreground: var(--color-surface-foreground);
+  --color-on-surface-foreground: var(--surface-foreground);
   --color-on-surface-hover: color-mix(
     in oklab,
-    var(--color-surface) 91%,
-    var(--color-surface-foreground) 9%
+    var(--surface) 91%,
+    var(--surface-foreground) 9%
   );
   --color-on-surface-focus: var(--color-on-surface);
 

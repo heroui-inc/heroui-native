@@ -133,7 +133,12 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
             contentContainerClassName="gap-2"
             contentContainerStyle={{ paddingBottom: insets.bottom + 80 }}
           >
-            <Select.Close>
+            <Select.Close
+              className="h-auto w-auto bg-transparent"
+              pressableFeedbackHighlightProps={{
+                isAnimatedStyleActive: false,
+              }}
+            >
               <View style={{ height: insets.top + screenHeight * 0.25 }} />
             </Select.Close>
             {data.map((m) => (

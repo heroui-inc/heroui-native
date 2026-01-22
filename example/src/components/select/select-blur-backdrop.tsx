@@ -1,5 +1,5 @@
-import { Select, useSelectAnimation } from 'heroui-native';
-import { StyleSheet } from 'react-native';
+import { useSelect, useSelectAnimation } from 'heroui-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { interpolate, useDerivedValue } from 'react-native-reanimated';
 import { useAppTheme } from '../../contexts/app-theme-context';
 import { AnimatedBlurView } from '../animated-blur-view';
@@ -10,6 +10,7 @@ type Props = {
 
 export const SelectBlurBackdrop = ({ maxIntensity }: Props) => {
   const { isDark } = useAppTheme();
+  const { onOpenChange } = useSelect();
   const { progress, isDragging, isGestureReleaseAnimationRunning } =
     useSelectAnimation();
 
@@ -32,12 +33,15 @@ export const SelectBlurBackdrop = ({ maxIntensity }: Props) => {
   });
 
   return (
-    <Select.Close style={StyleSheet.absoluteFill}>
+    <Pressable
+      style={StyleSheet.absoluteFill}
+      onPress={() => onOpenChange(false)}
+    >
       <AnimatedBlurView
         blurIntensity={blurIntensity}
         tint={isDark ? 'dark' : 'light'}
         style={StyleSheet.absoluteFill}
       />
-    </Select.Close>
+    </Pressable>
   );
 };

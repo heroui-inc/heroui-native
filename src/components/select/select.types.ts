@@ -12,6 +12,7 @@ import type {
   PopupRootAnimationConfig,
 } from '../../helpers/internal/types';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
+import type { CloseButtonProps } from '../close-button/close-button.types';
 import type { DialogContentFallbackSlots } from './select.styles';
 
 /**
@@ -302,37 +303,11 @@ export type SelectContentProps =
 
 /**
  * Select Close component props
+ *
+ * Extends CloseButtonProps, allowing full override of all close button props.
+ * Automatically handles select close functionality when pressed.
  */
-export interface SelectCloseProps extends SelectPrimitivesTypes.CloseProps {
-  /**
-   * Additional CSS class for the close button
-   */
-  className?: string;
-  /**
-   * The close button content
-   */
-  children?: ReactNode;
-  /**
-   * Close icon props
-   */
-  iconProps?: SelectCloseIconProps;
-}
-
-/**
- * Close icon props
- */
-export interface SelectCloseIconProps {
-  /**
-   * Size of the close icon
-   * @default 18
-   */
-  size?: number;
-  /**
-   * Color of the close icon
-   * @default --colors-muted
-   */
-  color?: string;
-}
+export interface SelectCloseProps extends CloseButtonProps {}
 
 /**
  * Select Value component props

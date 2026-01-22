@@ -1,15 +1,13 @@
 import GorhomBottomSheet from '@gorhom/bottom-sheet';
 import { forwardRef, useCallback, useMemo } from 'react';
-import type { Text as RNText } from 'react-native';
+import type { GestureResponderEvent, Text as RNText } from 'react-native';
 import Animated, {
   ReduceMotion,
   useSharedValue,
 } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
-import { useThemeColor } from '../../helpers/external/hooks';
 import {
   BottomSheetContentContainer,
-  CloseIcon,
   FullWindowOverlay,
   HeroText,
 } from '../../helpers/internal/components';
@@ -24,8 +22,10 @@ import {
   usePopupOverlayAnimation,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
+import type { PressableRef } from '../../helpers/internal/types';
 import * as BottomSheetPrimitives from '../../primitives/bottom-sheet';
 import * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
+import { CloseButton } from '../close-button';
 import {
   BottomSheetAnimationProvider,
   useBottomSheetAnimation,
@@ -283,30 +283,21 @@ const BottomSheetContent = forwardRef<
 
 // --------------------------------------------------
 
-const BottomSheetClose = forwardRef<
-  BottomSheetPrimitivesTypes.CloseRef,
-  BottomSheetCloseProps
->(({ className, iconProps, hitSlop = 12, children, ...props }, ref) => {
-  const themeColorMuted = useThemeColor('muted');
+const BottomSheetClose = forwardRef<PressableRef, BottomSheetCloseProps>(
+  (props, ref) => {
+    const { onPress: onPressProp, ...restProps } = props;
+    const { onOpenChange } = useBottomSheet();
 
-  const tvStyles = bottomSheetStyles.close({ className });
+    const onPress = (ev: GestureResponderEvent) => {
+      onOpenChange(false);
+      if (typeof onPressProp === 'function') {
+        onPressProp(ev);
+      }
+    };
 
-  return (
-    <BottomSheetPrimitives.Close
-      ref={ref}
-      className={tvStyles}
-      hitSlop={hitSlop}
-      {...props}
-    >
-      {children || (
-        <CloseIcon
-          size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? themeColorMuted}
-        />
-      )}
-    </BottomSheetPrimitives.Close>
-  );
-});
+    return <CloseButton ref={ref} onPress={onPress} {...restProps} />;
+  }
+);
 
 // --------------------------------------------------
 

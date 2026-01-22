@@ -5,17 +5,17 @@ import { combineStyles } from '../../helpers/internal/utils';
 const root = tv({
   slots: {
     container: 'flex-col overflow-hidden',
-    divider: 'h-hairline bg-separator',
+    separator: 'h-hairline bg-separator',
   },
   variants: {
     variant: {
       default: {
         container: '',
-        divider: '',
+        separator: '',
       },
       surface: {
         container: 'bg-surface border border-surface rounded-3xl',
-        divider: 'mx-3 bg-separator/75',
+        separator: 'mx-3 bg-separator/75',
       },
     },
   },

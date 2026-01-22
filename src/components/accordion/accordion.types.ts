@@ -70,10 +70,10 @@ export type AccordionRootProps = Omit<
    */
   variant?: AccordionVariant;
   /**
-   * Whether to display a divider at the bottom of each accordion item
-   * @default true
+   * Whether to hide the separator between accordion items
+   * @default false
    */
-  isDividerVisible?: boolean;
+  hideSeparator?: boolean;
   /**
    * Additional CSS classes for the container
    */

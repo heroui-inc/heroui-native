@@ -54,7 +54,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
   const {
     children,
     variant = 'default',
-    isDividerVisible = true,
+    hideSeparator = false,
     className,
     classNames,
     style,
@@ -62,13 +62,13 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const { container, divider } = accordionStyles.root({ variant });
+  const { container, separator } = accordionStyles.root({ variant });
 
   const containerStyles = container({
     className: [className, classNames?.container],
   });
 
-  const dividerStyles = divider({ className: classNames?.divider });
+  const separatorStyles = separator({ className: classNames?.separator });
 
   const { layoutTransition, isAllAnimationsDisabled } =
     useAccordionRootAnimation({
@@ -110,9 +110,9 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
             {Children.map(children, (child, index) => (
               <>
                 {child}
-                {isDividerVisible && index < Children.count(children) - 1 && (
+                {!hideSeparator && index < Children.count(children) - 1 && (
                   <Animated.View
-                    className={dividerStyles}
+                    className={separatorStyles}
                     layout={layoutTransition}
                   />
                 )}

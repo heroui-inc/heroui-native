@@ -270,7 +270,7 @@ export const AccordionWithDepthEffect: FC = () => {
             },
           }}
           defaultValue="2"
-          isDividerVisible={false}
+          hideSeparator
           className="w-full overflow-visible"
         >
           {accordionData.map((item, index) => (

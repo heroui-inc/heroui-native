@@ -1,6 +1,11 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import { createContext, forwardRef, use, useCallback, useMemo } from 'react';
-import type { Text as RNText, StyleProp, ViewStyle } from 'react-native';
+import type {
+  GestureResponderEvent,
+  Text as RNText,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import { View } from 'react-native';
 import Animated, { ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -8,7 +13,6 @@ import { withUniwind } from 'uniwind';
 import { useThemeColor } from '../../helpers/external/hooks';
 import {
   BottomSheetContentContainer,
-  CloseIcon,
   FullWindowOverlay,
   HeroText,
 } from '../../helpers/internal/components';
@@ -24,10 +28,12 @@ import {
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
+import type { PressableRef } from '../../helpers/internal/types';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import { useBottomSheetContentAnimation } from '../bottom-sheet/bottom-sheet.animation';
 import bottomSheetStyles from '../bottom-sheet/bottom-sheet.styles';
+import { CloseButton } from '../close-button';
 import { ArrowSvg } from './arrow-svg';
 import {
   PopoverAnimationProvider,
@@ -406,30 +412,21 @@ const PopoverContent = forwardRef<
 
 // --------------------------------------------------
 
-const PopoverClose = forwardRef<
-  PopoverPrimitivesTypes.CloseRef,
-  PopoverCloseProps
->(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
-  const tvStyles = popoverStyles.close({ className });
+const PopoverClose = forwardRef<PressableRef, PopoverCloseProps>(
+  (props, ref) => {
+    const { onPress: onPressProp, ...restProps } = props;
+    const { onOpenChange } = usePopover();
 
-  const themeColorMuted = useThemeColor('muted');
+    const onPress = (ev: GestureResponderEvent) => {
+      onOpenChange(false);
+      if (typeof onPressProp === 'function') {
+        onPressProp(ev);
+      }
+    };
 
-  return (
-    <PopoverPrimitives.Close
-      ref={ref}
-      className={tvStyles}
-      hitSlop={hitSlop}
-      {...props}
-    >
-      {children || (
-        <CloseIcon
-          size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? themeColorMuted}
-        />
-      )}
-    </PopoverPrimitives.Close>
-  );
-});
+    return <CloseButton ref={ref} onPress={onPress} {...restProps} />;
+  }
+);
 
 // --------------------------------------------------
 
@@ -626,8 +623,8 @@ PopoverArrow.displayName = DISPLAY_NAME.ARROW;
  * @component Popover.Arrow - Optional arrow indicator pointing to the trigger element.
  * Automatically positions itself based on popover placement.
  *
- * @component Popover.Close - Close button that dismisses the popover when pressed.
- * Renders a default X icon if no children provided.
+ * @component Popover.Close - Close button for the popover.
+ * Can accept custom children or uses default close icon.
  *
  * @component Popover.Title - Optional title text with pre-styled typography.
  *

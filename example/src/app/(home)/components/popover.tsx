@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Button, Popover } from 'heroui-native';
+import { useState } from 'react';
 import { Platform, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
@@ -28,7 +29,10 @@ const WithTitleDescriptionContent = () => {
             placement="top"
             className="gap-3 px-6 py-5"
           >
-            <Popover.Close className="absolute top-4 right-4 z-50" />
+            <Popover.Close
+              variant="ghost"
+              className="absolute top-3 right-2 z-50"
+            />
             <View className="flex-row items-center gap-3 mb-1">
               <View className="size-12 items-center justify-center rounded-full bg-warning/15">
                 <StyledIonicons
@@ -64,9 +68,12 @@ const WithTitleDescriptionContent = () => {
 // ------------------------------------------------------------------------------
 
 const PresentationVariantsContent = () => {
+  const [isPopoverOpen, setPopoverOpen] = useState(false);
+  const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
+
   return (
     <View className="flex-1 px-5 items-center justify-center gap-8">
-      <Popover>
+      <Popover isOpen={isPopoverOpen} onOpenChange={setPopoverOpen}>
         <Popover.Trigger asChild>
           <Button variant="secondary">Quick Notification</Button>
         </Popover.Trigger>
@@ -99,15 +106,17 @@ const PresentationVariantsContent = () => {
                 sent to your email.
               </Popover.Description>
             </View>
-            <Popover.Close asChild>
-              <Button variant="secondary">Dismiss</Button>
-            </Popover.Close>
+            <Button variant="secondary" onPress={() => setPopoverOpen(false)}>
+              Dismiss
+            </Button>
           </Popover.Content>
         </Popover.Portal>
       </Popover>
-      <Popover>
+      <Popover isOpen={isBottomSheetOpen} onOpenChange={setBottomSheetOpen}>
         <Popover.Trigger asChild>
-          <Button variant="secondary">More Options</Button>
+          <Button variant="secondary" isDisabled={isBottomSheetOpen}>
+            More Options
+          </Button>
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Overlay className="bg-black/15" />
@@ -165,15 +174,14 @@ const PresentationVariantsContent = () => {
                   </View>
                 </View>
               </View>
-              <Popover.Close asChild>
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  className="self-stretch mt-2"
-                >
-                  Cancel
-                </Button>
-              </Popover.Close>
+              <Button
+                variant="secondary"
+                size="lg"
+                className="self-stretch mt-2"
+                onPress={() => setBottomSheetOpen(false)}
+              >
+                Cancel
+              </Button>
             </View>
           </Popover.Content>
         </Popover.Portal>

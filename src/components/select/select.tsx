@@ -1,6 +1,10 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import { forwardRef, useCallback, useMemo } from 'react';
-import type { LayoutChangeEvent, Text as RNText } from 'react-native';
+import type {
+  GestureResponderEvent,
+  LayoutChangeEvent,
+  Text as RNText,
+} from 'react-native';
 import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated, { ReduceMotion } from 'react-native-reanimated';
@@ -10,7 +14,6 @@ import { useThemeColor } from '../../helpers/external/hooks';
 import {
   BottomSheetContentContainer,
   CheckIcon,
-  CloseIcon,
   FullWindowOverlay,
   HeroText,
 } from '../../helpers/internal/components';
@@ -27,10 +30,12 @@ import {
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
+import type { PressableRef } from '../../helpers/internal/types';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import { useBottomSheetContentAnimation } from '../bottom-sheet/bottom-sheet.animation';
 import bottomSheetStyles from '../bottom-sheet/bottom-sheet.styles';
+import { CloseButton } from '../close-button';
 import {
   SelectAnimationProvider,
   useSelectAnimation,
@@ -522,29 +527,18 @@ const SelectContent = forwardRef<
 
 // --------------------------------------------------
 
-const SelectClose = forwardRef<
-  SelectPrimitivesTypes.CloseRef,
-  SelectCloseProps
->(({ className, children, iconProps, hitSlop = 12, ...props }, ref) => {
-  const themeColorMuted = useThemeColor('muted');
+const SelectClose = forwardRef<PressableRef, SelectCloseProps>((props, ref) => {
+  const { onPress: onPressProp, ...restProps } = props;
+  const { onOpenChange } = useSelect();
 
-  const tvStyles = selectStyles.close({ className });
+  const onPress = (ev: GestureResponderEvent) => {
+    onOpenChange(false);
+    if (typeof onPressProp === 'function') {
+      onPressProp(ev);
+    }
+  };
 
-  return (
-    <SelectPrimitives.Close
-      ref={ref}
-      className={tvStyles}
-      hitSlop={hitSlop}
-      {...props}
-    >
-      {children || (
-        <CloseIcon
-          size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? themeColorMuted}
-        />
-      )}
-    </SelectPrimitives.Close>
-  );
+  return <CloseButton ref={ref} onPress={onPress} {...restProps} />;
 });
 
 // --------------------------------------------------
@@ -725,8 +719,8 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
  *
  * @component Select.ListLabel - Label for the list of items.
  *
- * @component Select.Close - Close button that dismisses the select when pressed.
- * Renders a default X icon if no children provided.
+ * @component Select.Close - Close button for the select.
+ * Can accept custom children or uses default close icon.
  *
  * @component Select.ItemDescription - Optional description text for items with muted styling.
  *

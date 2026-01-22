@@ -105,6 +105,10 @@ export default function Layout() {
           options={{ title: 'Checkbox' }}
         />
         <Stack.Screen name="components/chip" options={{ title: 'Chip' }} />
+        <Stack.Screen
+          name="components/close-button"
+          options={{ title: 'CloseButton' }}
+        />
         <Stack.Screen name="components/dialog" options={{ title: 'Dialog' }} />
         <Stack.Screen
           name="components/dialog-native-modal"

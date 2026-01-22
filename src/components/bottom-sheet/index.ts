@@ -4,7 +4,6 @@ export {
   useBottomSheetAnimation,
 } from './bottom-sheet';
 export type {
-  BottomSheetCloseIconProps,
   BottomSheetCloseProps,
   BottomSheetContentProps,
   BottomSheetDescriptionProps,

@@ -14,6 +14,7 @@ import { DialogHeader } from '../dialog-header';
 import { SearchBar } from '../search-bar';
 
 const StyledFeather = withUniwind(Feather);
+const StyledScrollView = withUniwind(ScrollView);
 
 type LabelItem = {
   value: string;
@@ -163,7 +164,7 @@ export const Labels: FC = () => {
               </View>
             )}
             {filteredItems.length > 0 && (
-              <ScrollView
+              <StyledScrollView
                 contentContainerClassName="pt-3"
                 showsVerticalScrollIndicator={false}
                 bounces={false}
@@ -189,7 +190,7 @@ export const Labels: FC = () => {
                         <FormField.Indicator>
                           <Checkbox
                             isSelected={isSelected}
-                            className="bg-transparent"
+                            className="bg-transparent border-none shadow-none"
                           >
                             <Checkbox.Indicator className="bg-transparent">
                               {isSelected && (
@@ -211,7 +212,7 @@ export const Labels: FC = () => {
                     );
                   })}
                 </View>
-              </ScrollView>
+              </StyledScrollView>
             )}
           </Dialog.Content>
         </KeyboardAvoidingView>

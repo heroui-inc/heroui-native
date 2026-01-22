@@ -31,7 +31,7 @@ import { Popover } from 'heroui-native';
 - **Popover.Overlay**: Optional background overlay. Can be transparent or semi-transparent to capture outside clicks.
 - **Popover.Content**: Container for popover content with positioning, styling, and collision detection. Supports both popover and bottom-sheet presentations.
 - **Popover.Arrow**: Optional arrow element pointing to the trigger. Automatically positioned based on placement.
-- **Popover.Close**: Close button that dismisses the popover when pressed. Renders a default X icon if no children provided.
+- **Popover.Close**: Close button for the popover. Can accept custom children or uses default close icon.
 - **Popover.Title**: Optional title text with pre-styled typography.
 - **Popover.Description**: Optional description text with muted styling.
 
@@ -148,9 +148,7 @@ Use bottom sheet presentation for mobile-optimized interaction patterns.
     <Popover.Content presentation="bottom-sheet">
       <Popover.Title>...</Popover.Title>
       <Popover.Description>...</Popover.Description>
-      <Popover.Close asChild>
-        <Button>Close</Button>
-      </Popover.Close>
+      <Button>Close</Button>
     </Popover.Content>
   </Popover.Portal>
 </Popover>
@@ -435,21 +433,7 @@ Animation configuration for popover content component (popover presentation). Ca
 
 ### Popover.Close
 
-| prop                | type                    | default | description                                             |
-| ------------------- | ----------------------- | ------- | ------------------------------------------------------- |
-| `children`          | `ReactNode`             | -       | The close button content                                |
-| `className`         | `string`                | -       | Additional CSS classes for the close button             |
-| `iconProps`         | `PopoverCloseIconProps` | -       | Close icon configuration                                |
-| `hitSlop`           | `number \| Insets`      | `12`    | Additional touch area around the button                 |
-| `asChild`           | `boolean`               | -       | Whether to render as a child element                    |
-| `...PressableProps` | `PressableProps`        | -       | All standard React Native Pressable props are supported |
-
-#### PopoverCloseIconProps
-
-| prop    | type     | default          | description       |
-| ------- | -------- | ---------------- | ----------------- |
-| `size`  | `number` | `18`             | Size of the icon  |
-| `color` | `string` | `--colors.muted` | Color of the icon |
+Popover.Close extends [CloseButton](../close-button/close-button.md) and automatically handles popover dismissal when pressed.
 
 ### Popover.Title
 

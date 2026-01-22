@@ -25,7 +25,10 @@ export default function PopoverNativeModalScreen() {
             offset={insets.top + 20}
             className="gap-3 px-6 py-5"
           >
-            <Popover.Close className="absolute top-4 right-4 z-50" />
+            <Popover.Close
+              variant="ghost"
+              className="absolute top-3 right-2 z-50"
+            />
             <View className="flex-row items-center gap-3 mb-1">
               <View className="size-12 items-center justify-center rounded-full bg-warning/15">
                 <StyledIonicons

@@ -10,6 +10,7 @@ import type {
   PopupRootAnimationConfig,
 } from '../../helpers/internal/types';
 import type * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
+import type { CloseButtonProps } from '../close-button/close-button.types';
 
 /**
  * Popover internal state for animation coordination
@@ -242,37 +243,11 @@ export type PopoverContentProps =
 
 /**
  * Popover Close component props
+ *
+ * Extends CloseButtonProps, allowing full override of all close button props.
+ * Automatically handles popover close functionality when pressed.
  */
-export interface PopoverCloseProps extends PopoverPrimitivesTypes.CloseProps {
-  /**
-   * Additional CSS class for the close button
-   */
-  className?: string;
-  /**
-   * The close button content
-   */
-  children?: ReactNode;
-  /**
-   * Close icon props
-   */
-  iconProps?: PopoverCloseIconProps;
-}
-
-/**
- * Close icon props
- */
-export interface PopoverCloseIconProps {
-  /**
-   * Size of the close icon
-   * @default 18
-   */
-  size?: number;
-  /**
-   * Color of the close icon
-   * @default --colors.muted
-   */
-  color?: string;
-}
+export interface PopoverCloseProps extends CloseButtonProps {}
 
 /**
  * Popover Title component props

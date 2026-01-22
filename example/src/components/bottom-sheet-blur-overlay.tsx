@@ -1,11 +1,12 @@
-import { BottomSheet, useBottomSheetAnimation } from 'heroui-native';
-import { StyleSheet } from 'react-native';
+import { useBottomSheet, useBottomSheetAnimation } from 'heroui-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { interpolate, useDerivedValue } from 'react-native-reanimated';
 import { useAppTheme } from '../contexts/app-theme-context';
 import { AnimatedBlurView } from './animated-blur-view';
 
 export const BottomSheetBlurOverlay = () => {
   const { isDark } = useAppTheme();
+  const { onOpenChange } = useBottomSheet();
   const { progress } = useBottomSheetAnimation();
 
   const blurIntensity = useDerivedValue(() => {
@@ -13,12 +14,15 @@ export const BottomSheetBlurOverlay = () => {
   });
 
   return (
-    <BottomSheet.Close style={StyleSheet.absoluteFill}>
+    <Pressable
+      style={StyleSheet.absoluteFill}
+      onPress={() => onOpenChange(false)}
+    >
       <AnimatedBlurView
         blurIntensity={blurIntensity}
         tint={isDark ? 'dark' : 'systemUltraThinMaterialDark'}
         style={StyleSheet.absoluteFill}
       />
-    </BottomSheet.Close>
+    </Pressable>
   );
 };

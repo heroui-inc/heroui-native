@@ -36,7 +36,7 @@ import { Select } from 'heroui-native';
 - **Select.Portal**: Renders select content in a portal layer above other content. Ensures proper stacking and positioning.
 - **Select.Overlay**: Optional background overlay. Can be transparent or semi-transparent to capture outside clicks.
 - **Select.Content**: Container for select content with three presentation modes: popover (floating with positioning), bottom sheet modal, or dialog modal.
-- **Select.Close**: Close button that dismisses the select when pressed. Renders a default X icon if no children provided.
+- **Select.Close**: Close button for the select. Can accept custom children or uses default close icon.
 - **Select.ListLabel**: Label for the list of items with pre-styled typography.
 - **Select.Item**: Selectable option item. Handles selection state and press events.
 - **Select.ItemLabel**: Displays the label text for an item.
@@ -573,20 +573,7 @@ Animation configuration for Select.Content component (dialog presentation). Can 
 
 ### Select.Close
 
-| prop                | type                   | default | description                                             |
-| ------------------- | ---------------------- | ------- | ------------------------------------------------------- |
-| `children`          | `ReactNode`            | -       | The close button content                                |
-| `className`         | `string`               | -       | Additional CSS classes for the close button             |
-| `iconProps`         | `SelectCloseIconProps` | -       | Close icon configuration                                |
-| `asChild`           | `boolean`              | -       | Whether to render as a child element                    |
-| `...PressableProps` | `PressableProps`       | -       | All standard React Native Pressable props are supported |
-
-#### SelectCloseIconProps
-
-| prop    | type     | default          | description       |
-| ------- | -------- | ---------------- | ----------------- |
-| `size`  | `number` | `18`             | Size of the icon  |
-| `color` | `string` | `--colors-muted` | Color of the icon |
+Select.Close extends [CloseButton](../close-button/close-button.md) and automatically handles select dismissal when pressed.
 
 ### Select.ListLabel
 

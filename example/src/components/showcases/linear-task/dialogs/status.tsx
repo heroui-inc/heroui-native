@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, RadioGroup } from 'heroui-native';
+import { Chip, Dialog, RadioGroup, useDialog } from 'heroui-native';
 import { useState, type FC } from 'react';
 import { Platform, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
@@ -16,6 +16,41 @@ type StatusItem = {
   value: string;
   label: string;
   indicator: React.ReactNode;
+};
+
+type StatusRadioItemProps = {
+  item: StatusItem;
+  value: string;
+};
+
+const StatusRadioItem: FC<StatusRadioItemProps> = ({ item, value }) => {
+  const { onOpenChange } = useDialog();
+
+  return (
+    <RadioGroup.Item
+      value={item.value}
+      onPress={() => {
+        if (Platform.OS === 'ios') {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        }
+        onOpenChange(false);
+      }}
+    >
+      <View className="flex-row items-center">
+        <View className="w-7 pl-0.5 justify-center">
+          <View className="scale-[1.2]">{item.indicator}</View>
+        </View>
+        <RadioGroup.Label>{item.label}</RadioGroup.Label>
+      </View>
+      <RadioGroup.Indicator className="border-none shadow-none bg-transparent">
+        {value === item.value && (
+          <Animated.View key={item.value} entering={FadeIn.duration(200)}>
+            <StyledFeather name="check" size={18} className="text-foreground" />
+          </Animated.View>
+        )}
+      </RadioGroup.Indicator>
+    </RadioGroup.Item>
+  );
 };
 
 export const Status: FC = () => {
@@ -124,37 +159,7 @@ export const Status: FC = () => {
           <DialogHeader>Status</DialogHeader>
           <RadioGroup value={value} onValueChange={setValue} className="gap-7">
             {items.map((item) => (
-              <Dialog.Close key={item.value} className="self-stretch" asChild>
-                <RadioGroup.Item
-                  value={item.value}
-                  onPress={() => {
-                    if (Platform.OS === 'ios') {
-                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    }
-                  }}
-                >
-                  <View className="flex-row items-center">
-                    <View className="w-7 pl-0.5 justify-center">
-                      <View className="scale-[1.2]">{item.indicator}</View>
-                    </View>
-                    <RadioGroup.Label>{item.label}</RadioGroup.Label>
-                  </View>
-                  <RadioGroup.Indicator className="border-0 bg-transparent">
-                    {value === item.value && (
-                      <Animated.View
-                        key={item.value}
-                        entering={FadeIn.duration(200)}
-                      >
-                        <StyledFeather
-                          name="check"
-                          size={18}
-                          className="text-foreground"
-                        />
-                      </Animated.View>
-                    )}
-                  </RadioGroup.Indicator>
-                </RadioGroup.Item>
-              </Dialog.Close>
+              <StatusRadioItem key={item.value} item={item} value={value} />
             ))}
           </RadioGroup>
         </Dialog.Content>

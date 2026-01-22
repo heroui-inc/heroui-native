@@ -8,6 +8,7 @@ import type {
   PopupOverlayAnimation,
 } from '../../helpers/internal/types';
 import type * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
+import type { CloseButtonProps } from '../close-button/close-button.types';
 
 /**
  * Bottom sheet internal state for animation coordination
@@ -128,38 +129,11 @@ export interface BottomSheetContentProps
 
 /**
  * BottomSheet Close component props
+ *
+ * Extends CloseButtonProps, allowing full override of all close button props.
+ * Automatically handles bottom sheet close functionality when pressed.
  */
-export interface BottomSheetCloseProps
-  extends BottomSheetPrimitivesTypes.CloseProps {
-  /**
-   * Close icon props
-   */
-  iconProps?: BottomSheetCloseIconProps;
-  /**
-   * Additional CSS class for the close button
-   */
-  className?: string;
-  /**
-   * The close button content
-   */
-  children?: ReactNode;
-}
-
-/**
- * Close icon props
- */
-export interface BottomSheetCloseIconProps {
-  /**
-   * Size of the close icon
-   * @default 18
-   */
-  size?: number;
-  /**
-   * Color of the close icon
-   * @default theme color muted
-   */
-  color?: string;
-}
+export interface BottomSheetCloseProps extends CloseButtonProps {}
 
 /**
  * BottomSheet Title component props

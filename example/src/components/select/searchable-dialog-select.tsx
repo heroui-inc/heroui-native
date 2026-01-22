@@ -100,7 +100,7 @@ export function SearchableDialogSelect() {
           >
             <View className="flex-row items-center justify-between mb-2">
               <Select.ListLabel>Country</Select.ListLabel>
-              <Select.Close />
+              <Select.Close variant="ghost" />
             </View>
             <View className="w-full mb-2">
               <TextInput

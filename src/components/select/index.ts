@@ -6,7 +6,6 @@ export {
 } from './select';
 export type {
   SelectAlign,
-  SelectCloseIconProps,
   SelectCloseProps,
   SelectContentProps,
   SelectItemDescriptionProps,

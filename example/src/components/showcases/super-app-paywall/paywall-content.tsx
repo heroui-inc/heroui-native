@@ -134,7 +134,7 @@ export function SuperAppPaywallContent() {
         />
         <BottomSheet.Close
           className="absolute top-4 right-4"
-          iconProps={{ size: 28, color: 'gray' }}
+          iconProps={{ color: 'gray' }}
         />
       </View>
 

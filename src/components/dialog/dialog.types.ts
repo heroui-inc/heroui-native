@@ -8,6 +8,7 @@ import type {
   PopupRootAnimationConfig,
 } from '../../helpers/internal/types';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
+import type { CloseButtonProps } from '../close-button/close-button.types';
 
 /**
  * Dialog internal state for animation coordination
@@ -191,37 +192,11 @@ export interface DialogContentProps
 
 /**
  * Dialog Close component props
+ *
+ * Extends CloseButtonProps, allowing full override of all close button props.
+ * Automatically handles dialog close functionality when pressed.
  */
-export interface DialogCloseProps extends DialogPrimitivesTypes.CloseProps {
-  /**
-   * Close icon props
-   */
-  iconProps?: DialogCloseIconProps;
-  /**
-   * Additional CSS class for the close button
-   */
-  className?: string;
-  /**
-   * The close button content
-   */
-  children?: ReactNode;
-}
-
-/**
- * Close icon props
- */
-export interface DialogCloseIconProps {
-  /**
-   * Size of the close icon
-   * @default 18
-   */
-  size?: number;
-  /**
-   * Color of the close icon
-   * @default theme color muted
-   */
-  color?: string;
-}
+export interface DialogCloseProps extends CloseButtonProps {}
 
 /**
  * Dialog Title component props

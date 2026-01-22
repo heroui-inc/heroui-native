@@ -16,7 +16,7 @@ import { BottomSheet } from 'heroui-native';
   <BottomSheet.Portal>
     <BottomSheet.Overlay>...</BottomSheet.Overlay>
     <BottomSheet.Content>
-      <BottomSheet.Close>...</BottomSheet.Close>
+      <BottomSheet.Close />
       <BottomSheet.Title>...</BottomSheet.Title>
       <BottomSheet.Description>...</BottomSheet.Description>
     </BottomSheet.Content>
@@ -29,7 +29,7 @@ import { BottomSheet } from 'heroui-native';
 - **BottomSheet.Portal**: Renders bottom sheet content in a portal with full window overlay.
 - **BottomSheet.Overlay**: Background overlay that covers the screen, typically closes bottom sheet when pressed.
 - **BottomSheet.Content**: Main bottom sheet container using @gorhom/bottom-sheet for rendering with gesture support.
-- **BottomSheet.Close**: Close button that dismisses the bottom sheet when pressed.
+- **BottomSheet.Close**: Close button for the bottom sheet. Can accept custom children or uses default close icon.
 - **BottomSheet.Title**: Bottom sheet title text with semantic heading role and accessibility linking.
 - **BottomSheet.Description**: Bottom sheet description text that provides additional context with accessibility linking.
 
@@ -97,14 +97,15 @@ Bottom sheet with multiple snap points and scrollable content.
 Replace the default overlay with custom content like blur effects.
 
 ```tsx
-import { BottomSheet, useBottomSheetAnimation } from 'heroui-native';
-import { StyleSheet } from 'react-native';
+import { useBottomSheet, useBottomSheetAnimation } from 'heroui-native';
+import { StyleSheet, Pressable } from 'react-native';
 import { interpolate, useDerivedValue } from 'react-native-reanimated';
 import { AnimatedBlurView } from './animated-blur-view';
 import { useUniwind } from 'uniwind';
 
 export const BottomSheetBlurOverlay = () => {
   const { theme } = useUniwind();
+  const { onOpenChange } = useBottomSheet();
   const { progress } = useBottomSheetAnimation();
 
   const blurIntensity = useDerivedValue(() => {
@@ -112,13 +113,13 @@ export const BottomSheetBlurOverlay = () => {
   });
 
   return (
-    <BottomSheet.Close style={StyleSheet.absoluteFill}>
+    <Pressable style={StyleSheet.absoluteFill} onPress={() => onOpenChange(false)}>
       <AnimatedBlurView
         blurIntensity={blurIntensity}
         tint={theme === 'dark' ? 'dark' : 'systemUltraThinMaterialDark'}
         style={StyleSheet.absoluteFill}
       />
-    </BottomSheet.Close>
+    </Pressable>
   );
 };
 ```
@@ -286,21 +287,7 @@ Animation configuration for bottom sheet overlay component. Can be:
 
 ### BottomSheet.Close
 
-| prop                | type                        | default | description                                             |
-| ------------------- | --------------------------- | ------- | ------------------------------------------------------- |
-| `children`          | `React.ReactNode`           | -       | Custom close button content                             |
-| `className`         | `string`                    | -       | Additional CSS classes for close button                 |
-| `iconProps`         | `BottomSheetCloseIconProps` | -       | Configuration for default close icon                    |
-| `hitSlop`           | `number`                    | `12`    | Hit slop area for the close button                      |
-| `asChild`           | `boolean`                   | -       | Render as child element without wrapper                 |
-| `...PressableProps` | `PressableProps`            | -       | All standard React Native Pressable props are supported |
-
-#### BottomSheetCloseIconProps
-
-| prop    | type     | description                             |
-| ------- | -------- | --------------------------------------- |
-| `size`  | `number` | Icon size (default: 18)                 |
-| `color` | `string` | Icon color (default: theme color muted) |
+BottomSheet.Close extends [CloseButton](../close-button/close-button.md) and automatically handles bottom sheet dismissal when pressed.
 
 ### BottomSheet.Title
 

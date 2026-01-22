@@ -42,6 +42,10 @@ const components: Component[] = [
     path: 'chip',
   },
   {
+    title: 'CloseButton',
+    path: 'close-button',
+  },
+  {
     title: 'Description',
     path: 'description',
   },

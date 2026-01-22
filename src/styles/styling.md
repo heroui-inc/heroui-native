@@ -204,7 +204,7 @@ function MyComponent({ className, isActive }) {
     <View
       className={cn(
         'bg-background p-4 rounded-lg',
-        'border border-divider',
+        'border border-separator',
         isActive && 'bg-accent',
         className
       )}
@@ -283,4 +283,4 @@ useThemeColor<T extends readonly [ThemeColor, ...ThemeColor[]]>(
 useThemeColor(themeColor: ThemeColor[]): string[]
 ```
 
-Available theme colors include: `background`, `foreground`, `surface`, `accent`, `default`, `success`, `warning`, `danger`, and all their variants (hover, soft, foreground, etc.), plus semantic colors like `muted`, `border`, `divider`, `field`, `overlay`, and more.
+Available theme colors include: `background`, `foreground`, `surface`, `accent`, `default`, `success`, `warning`, `danger`, and all their variants (hover, soft, foreground, etc.), plus semantic colors like `muted`, `border`, `separator`, `field`, `overlay`, and more.

@@ -1,7 +1,7 @@
 import { tv } from 'tailwind-variants';
 
 const root = tv({
-  base: 'bg-divider',
+  base: 'bg-separator',
   variants: {
     variant: {
       thin: '',

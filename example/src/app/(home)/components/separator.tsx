@@ -1,10 +1,10 @@
-import { Divider, Surface } from 'heroui-native';
+import { Separator, Surface } from 'heroui-native';
 import { View } from 'react-native';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
-const DividerInActionContent = () => {
+const SeparatorInActionContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <Surface variant="secondary" className="px-6 py-7">
@@ -14,12 +14,12 @@ const DividerInActionContent = () => {
         <AppText className="text-sm text-muted">
           A modern React Native component library.
         </AppText>
-        <Divider className="my-4" />
+        <Separator className="my-4" />
         <View className="flex-row items-center h-5">
           <AppText className="text-sm text-foreground">Components</AppText>
-          <Divider orientation="vertical" className="mx-3" />
+          <Separator orientation="vertical" className="mx-3" />
           <AppText className="text-sm text-foreground">Themes</AppText>
-          <Divider orientation="vertical" className="mx-3" />
+          <Separator orientation="vertical" className="mx-3" />
           <AppText className="text-sm text-foreground">Examples</AppText>
         </View>
       </Surface>
@@ -35,12 +35,12 @@ const VariantsContent = () => {
       <View className="gap-8 w-full">
         <View>
           <AppText className="text-sm text-muted mb-2">Thin (default)</AppText>
-          <Divider variant="thin" />
+          <Separator variant="thin" />
         </View>
 
         <View>
           <AppText className="text-sm text-muted mb-2">Thick</AppText>
-          <Divider variant="thick" />
+          <Separator variant="thick" />
         </View>
       </View>
     </View>
@@ -57,13 +57,13 @@ const OrientationContent = () => {
           <AppText className="text-sm text-muted mb-2">
             Horizontal (default)
           </AppText>
-          <Divider />
+          <Separator />
         </View>
 
         <View>
           <AppText className="text-sm text-muted mb-2">Vertical</AppText>
           <View className="h-20 w-full flex-row justify-center">
-            <Divider orientation="vertical" />
+            <Separator orientation="vertical" />
           </View>
         </View>
       </View>
@@ -81,27 +81,27 @@ const CustomThicknessContent = () => {
           <AppText className="text-sm text-muted mb-2">
             Default (hairline width)
           </AppText>
-          <Divider />
+          <Separator />
         </View>
 
         <View>
           <AppText className="text-sm text-muted mb-2">1px</AppText>
-          <Divider thickness={1} />
+          <Separator thickness={1} />
         </View>
 
         <View>
           <AppText className="text-sm text-muted mb-2">2px</AppText>
-          <Divider thickness={2} />
+          <Separator thickness={2} />
         </View>
 
         <View>
           <AppText className="text-sm text-muted mb-2">5px</AppText>
-          <Divider thickness={5} />
+          <Separator thickness={5} />
         </View>
 
         <View>
           <AppText className="text-sm text-muted mb-2">10px</AppText>
-          <Divider thickness={10} />
+          <Separator thickness={10} />
         </View>
       </View>
     </View>
@@ -118,22 +118,22 @@ const CustomColorsContent = () => {
           <AppText className="text-sm text-muted mb-2">
             Custom Background Color
           </AppText>
-          <Divider className="bg-accent" thickness={2} />
+          <Separator className="bg-accent" thickness={2} />
         </View>
 
         <View>
           <AppText className="text-sm text-muted mb-2">Success Color</AppText>
-          <Divider className="bg-success" thickness={2} />
+          <Separator className="bg-success" thickness={2} />
         </View>
 
         <View>
           <AppText className="text-sm text-muted mb-2">Warning Color</AppText>
-          <Divider className="bg-warning" thickness={2} />
+          <Separator className="bg-warning" thickness={2} />
         </View>
 
         <View>
           <AppText className="text-sm text-muted mb-2">Danger Color</AppText>
-          <Divider className="bg-danger" thickness={2} />
+          <Separator className="bg-danger" thickness={2} />
         </View>
       </View>
     </View>
@@ -142,11 +142,11 @@ const CustomColorsContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const DIVIDER_VARIANTS: UsageVariant[] = [
+const SEPARATOR_VARIANTS: UsageVariant[] = [
   {
-    value: 'divider-in-action',
-    label: 'Divider in action',
-    content: <DividerInActionContent />,
+    value: 'separator-in-action',
+    label: 'Separator in action',
+    content: <SeparatorInActionContent />,
   },
   {
     value: 'variants',
@@ -170,6 +170,6 @@ const DIVIDER_VARIANTS: UsageVariant[] = [
   },
 ];
 
-export default function DividerScreen() {
-  return <UsageVariantFlatList data={DIVIDER_VARIANTS} />;
+export default function SeparatorScreen() {
+  return <UsageVariantFlatList data={SEPARATOR_VARIANTS} />;
 }

@@ -122,7 +122,7 @@ Create multiple themes using Uniwind's variant system. For complete custom theme
 
       /* Misc Colors */
       --border: oklch(0 0 0 / 0%);
-      --divider: oklch(0.91 0.015 230);
+      --separator: oklch(0.91 0.015 230);
       --link: oklch(0.62 0.17 230);
 
       /* Shadows */
@@ -182,7 +182,7 @@ Create multiple themes using Uniwind's variant system. For complete custom theme
 
       /* Misc Colors */
       --border: oklch(0 0 0 / 0%);
-      --divider: oklch(0.28 0.045 230);
+      --separator: oklch(0.28 0.045 230);
       --link: oklch(0.75 0.18 230);
 
       /* Shadows */
@@ -345,7 +345,7 @@ We use Tailwind's `@theme` directive to automatically create calculated variable
   --color-segment-foreground: var(--segment-foreground);
 
   --color-border: var(--border);
-  --color-divider: var(--divider);
+  --color-separator: var(--separator);
   --color-focus: var(--focus);
   --color-link: var(--link);
 

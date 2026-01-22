@@ -1,4 +1,4 @@
-import { Divider, RadioGroup, Surface } from 'heroui-native';
+import { RadioGroup, Separator, Surface } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -21,7 +21,7 @@ export const RadioGroupContent = () => {
             </RadioGroup.Description>
           </View>
         </RadioGroup.Item>
-        <Divider className="my-4" />
+        <Separator className="my-4" />
         <RadioGroup.Item value="daily">
           <RadioGroup.Indicator />
           <View className="flex-1">
@@ -31,7 +31,7 @@ export const RadioGroupContent = () => {
             </RadioGroup.Description>
           </View>
         </RadioGroup.Item>
-        <Divider className="my-4" />
+        <Separator className="my-4" />
         <RadioGroup.Item value="weekly">
           <RadioGroup.Indicator />
           <View className="flex-1">

@@ -1,5 +1,5 @@
 import { useHeaderHeight } from '@react-navigation/elements';
-import { Divider, FormField } from 'heroui-native';
+import { FormField, Separator } from 'heroui-native';
 import { type FC, type ReactNode } from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -73,7 +73,7 @@ export const WithStateToggle: FC<WithStateToggleProps> = ({
           </View>
           <FormField.Indicator />
         </FormField>
-        <Divider className="mt-6" />
+        <Separator className="mt-6" />
       </View>
     </View>
   );

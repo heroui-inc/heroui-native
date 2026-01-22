@@ -60,7 +60,7 @@ const THEME_COLORS = [
   'segment',
   'segment-foreground',
   'border',
-  'divider',
+  'separator',
   'focus',
   'link',
 ] as const;

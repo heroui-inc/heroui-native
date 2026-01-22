@@ -1,4 +1,4 @@
-import { Checkbox, Divider, FormField, Surface } from 'heroui-native';
+import { Checkbox, FormField, Separator, Surface } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
@@ -65,7 +65,7 @@ const SwitchFormFieldSetContent = () => {
       <Surface className="py-5 w-full">
         {fieldKeys.map((key, index) => (
           <React.Fragment key={key}>
-            {index > 0 && <Divider className="my-4" />}
+            {index > 0 && <Separator className="my-4" />}
             <SwitchField
               isSelected={fields[key]}
               onSelectedChange={handleFieldChange(key)}
@@ -148,7 +148,7 @@ const CheckboxFormFieldSetContent = () => {
       <Surface className="py-5 w-full">
         {fieldKeys.map((key, index) => (
           <React.Fragment key={key}>
-            {index > 0 && <Divider className="my-4" />}
+            {index > 0 && <Separator className="my-4" />}
             <CheckboxField
               isSelected={fields[key]}
               onSelectedChange={handleFieldChange(key)}

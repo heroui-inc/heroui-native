@@ -1,4 +1,4 @@
-import { cn, Divider, RadioGroup, Surface } from 'heroui-native';
+import { cn, RadioGroup, Separator, Surface } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -35,7 +35,7 @@ const BasicRadioGroupContent = () => {
             </View>
             <RadioGroup.Indicator />
           </RadioGroup.Item>
-          <Divider className="my-1" />
+          <Separator className="my-1" />
           <RadioGroup.Item value="desc2">
             <View>
               <RadioGroup.Label>Express Shipping</RadioGroup.Label>
@@ -45,7 +45,7 @@ const BasicRadioGroupContent = () => {
             </View>
             <RadioGroup.Indicator />
           </RadioGroup.Item>
-          <Divider className="my-1" />
+          <Separator className="my-1" />
           <RadioGroup.Item value="desc3">
             <View>
               <RadioGroup.Label>Overnight Shipping</RadioGroup.Label>
@@ -237,7 +237,7 @@ const RadioGroupStatesContent = () => {
               <RadioGroup.Indicator />
             </RadioGroup.Item>
 
-            <Divider />
+            <Separator />
 
             <RadioGroup.Item value="pro" isDisabled isInvalid={false}>
               <View className="flex-1">
@@ -249,7 +249,7 @@ const RadioGroupStatesContent = () => {
               <RadioGroup.Indicator />
             </RadioGroup.Item>
 
-            <Divider />
+            <Separator />
             <RadioGroup.Item value="enterprise" isInvalid>
               <View className="flex-1">
                 <RadioGroup.Label>Enterprise Plan</RadioGroup.Label>
@@ -307,7 +307,7 @@ const CustomIndicatorBackgroundContent = () => {
             )}
           </RadioGroup.Item>
 
-          <Divider />
+          <Separator />
 
           <RadioGroup.Item value="medium">
             {({ isSelected }) => (
@@ -330,7 +330,7 @@ const CustomIndicatorBackgroundContent = () => {
             )}
           </RadioGroup.Item>
 
-          <Divider />
+          <Separator />
 
           <RadioGroup.Item value="low">
             {({ isSelected }) => (
@@ -398,7 +398,7 @@ const CustomIndicatorThumbContent = () => {
             )}
           </RadioGroup.Item>
 
-          <Divider />
+          <Separator />
 
           <RadioGroup.Item value="push">
             {({ isSelected }) => (
@@ -423,7 +423,7 @@ const CustomIndicatorThumbContent = () => {
             )}
           </RadioGroup.Item>
 
-          <Divider />
+          <Separator />
 
           <RadioGroup.Item value="none">
             {({ isSelected }) => (

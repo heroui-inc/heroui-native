@@ -1,6 +1,6 @@
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Button, Divider } from 'heroui-native';
+import { Button, Separator } from 'heroui-native';
 import { type FC } from 'react';
 import { View } from 'react-native';
 import { withUniwind } from 'uniwind';
@@ -56,21 +56,21 @@ export const Ingridients: FC = () => {
       </AppText>
       <View>
         <IngredientItem name="All-purpose flour" description="250g" />
-        <Divider />
+        <Separator />
         <IngredientItem name="Baking powder" description="2 tsp" />
-        <Divider />
+        <Separator />
         <IngredientItem name="Sugar" description="2 tbsp" />
-        <Divider />
+        <Separator />
         <IngredientItem name="Salt" description="to taste" />
-        <Divider />
+        <Separator />
         <IngredientItem name="Milk" description="300ml" />
-        <Divider />
+        <Separator />
         <IngredientItem name="Eggs" description="2 large" />
-        <Divider />
+        <Separator />
         <IngredientItem name="Butter" description="50g, melted" />
-        <Divider />
+        <Separator />
         <IngredientItem name="Fresh blueberries" description="150g" />
-        <Divider />
+        <Separator />
         <IngredientItem name="Vanilla extract" description="1 tsp" />
       </View>
     </View>

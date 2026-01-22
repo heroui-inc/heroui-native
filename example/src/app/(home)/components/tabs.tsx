@@ -53,15 +53,7 @@ interface TabTriggerProps {
 const TabTrigger = ({ value, label }: TabTriggerProps) => {
   return (
     <Tabs.Trigger value={value}>
-      {({ isSelected }) => (
-        <Tabs.Label
-          className={cn(
-            isSelected ? 'text-accent font-medium' : 'text-foreground'
-          )}
-        >
-          {label}
-        </Tabs.Label>
-      )}
+      <Tabs.Label>{label}</Tabs.Label>
     </Tabs.Trigger>
   );
 };

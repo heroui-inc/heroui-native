@@ -60,7 +60,13 @@ const trigger = tv({
 });
 
 const label = tv({
-  base: 'text-base font-medium text-segment-foreground',
+  base: 'text-base font-medium',
+  variants: {
+    isSelected: {
+      true: 'text-segment-foreground',
+      false: 'text-muted',
+    },
+  },
 });
 
 /**

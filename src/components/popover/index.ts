@@ -2,7 +2,6 @@ export { default as Popover, usePopover, usePopoverAnimation } from './popover';
 export type {
   PopoverAlign,
   PopoverArrowProps,
-  PopoverCloseIconProps,
   PopoverCloseProps,
   PopoverContentProps,
   PopoverDescriptionProps,

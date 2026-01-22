@@ -2,7 +2,7 @@
 import {
   Accordion,
   cn,
-  Divider,
+  Separator,
   useAccordion,
   useAccordionItem,
 } from 'heroui-native';
@@ -243,7 +243,7 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
           entering={FadeIn.duration(200)}
           className={cn('px-3 bg-surface', depth && 'pb-3 -mb-3')}
         >
-          <Divider />
+          <Separator />
         </StyledAnimatedView>
       )}
     </Animated.View>

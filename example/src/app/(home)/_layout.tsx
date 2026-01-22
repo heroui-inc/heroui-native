@@ -119,10 +119,6 @@ export default function Layout() {
           options={{ title: 'Description' }}
         />
         <Stack.Screen
-          name="components/divider"
-          options={{ title: 'Divider' }}
-        />
-        <Stack.Screen
           name="components/error-view"
           options={{ title: 'ErrorView' }}
         />
@@ -160,6 +156,10 @@ export default function Layout() {
           options={{ title: 'Select Native Modal', presentation: 'formSheet' }}
         />
         <Stack.Screen name="components/select" options={{ title: 'Select' }} />
+        <Stack.Screen
+          name="components/separator"
+          options={{ title: 'Separator' }}
+        />
         <Stack.Screen
           name="components/skeleton"
           options={{ title: 'Skeleton' }}

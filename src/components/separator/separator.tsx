@@ -1,12 +1,12 @@
 import { forwardRef } from 'react';
 import { View } from 'react-native';
-import { DISPLAY_NAME } from './divider.constants';
-import dividerStyles from './divider.styles';
-import type { DividerProps } from './divider.types';
+import { DISPLAY_NAME } from './separator.constants';
+import separatorStyles from './separator.styles';
+import type { SeparatorProps } from './separator.types';
 
 // --------------------------------------------------
 
-const DividerRoot = forwardRef<View, DividerProps>((props, ref) => {
+const SeparatorRoot = forwardRef<View, SeparatorProps>((props, ref) => {
   const {
     variant = 'thin',
     orientation = 'horizontal',
@@ -16,7 +16,7 @@ const DividerRoot = forwardRef<View, DividerProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const tvStyles = dividerStyles({
+  const tvStyles = separatorStyles({
     variant,
     orientation,
     className,
@@ -45,18 +45,18 @@ const DividerRoot = forwardRef<View, DividerProps>((props, ref) => {
 
 // --------------------------------------------------
 
-DividerRoot.displayName = DISPLAY_NAME.ROOT;
+SeparatorRoot.displayName = DISPLAY_NAME.ROOT;
 
 /**
- * Divider component for visual separation
+ * Separator component for visual separation
  *
- * @component Divider - A simple line to separate content visually.
+ * @component Separator - A simple line to separate content visually.
  * Supports horizontal and vertical orientations with thin and thick variants.
  * Uses hairline width utility classes for the thin variant by default.
  * Custom thickness can be provided via the thickness prop to override variant-based sizing.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/divider
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/separator
  */
-const Divider = DividerRoot;
+const Separator = SeparatorRoot;
 
-export default Divider;
+export default Separator;

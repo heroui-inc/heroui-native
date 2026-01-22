@@ -2,8 +2,8 @@
 import {
   Avatar,
   Card,
-  Divider,
   RadioGroup,
+  Separator,
   Skeleton,
   SkeletonGroup,
   type SkeletonAnimation,
@@ -45,7 +45,7 @@ const SkeletonControls = ({
           <RadioGroup.Label>None</RadioGroup.Label>
         </RadioGroup.Item>
       </RadioGroup>
-      <Divider className="my-6" />
+      <Separator className="my-6" />
     </View>
   );
 };

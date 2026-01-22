@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import { Divider, FormField, Surface, Switch } from 'heroui-native';
+import { FormField, Separator, Surface, Switch } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -74,7 +74,7 @@ export const DefaultContent = () => {
       <Surface className="py-5 w-full">
         {fieldKeys.map((key, index) => (
           <React.Fragment key={key}>
-            {index > 0 && <Divider className="my-4" />}
+            {index > 0 && <Separator className="my-4" />}
             <SwitchField
               isSelected={fields[key]}
               onSelectedChange={handleFieldChange(key)}
@@ -122,7 +122,7 @@ const StatesContent = () => {
       <Surface className="py-5 w-full">
         {fieldKeys.map((key, index) => (
           <React.Fragment key={key}>
-            {index > 0 && <Divider className="my-4" />}
+            {index > 0 && <Separator className="my-4" />}
             <FormField
               isSelected={fields[key]}
               onSelectedChange={handleFieldChange(key)}

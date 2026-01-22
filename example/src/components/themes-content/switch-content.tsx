@@ -1,4 +1,4 @@
-import { Divider, FormField, Surface } from 'heroui-native';
+import { FormField, Separator, Surface } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -36,7 +36,7 @@ export const SwitchContent = () => {
         title="Email Notifications"
         description="Receive updates and newsletters via email"
       />
-      <Divider className="my-4" />
+      <Separator className="my-4" />
       <SwitchField
         isSelected={pushNotifications}
         onSelectedChange={setPushNotifications}

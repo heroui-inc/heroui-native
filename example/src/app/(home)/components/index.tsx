@@ -54,10 +54,6 @@ const components: Component[] = [
     path: 'dialog',
   },
   {
-    title: 'Divider',
-    path: 'divider',
-  },
-  {
     title: 'ErrorView',
     path: 'error-view',
   },
@@ -92,6 +88,10 @@ const components: Component[] = [
   {
     title: 'Select',
     path: 'select',
+  },
+  {
+    title: 'Separator',
+    path: 'separator',
   },
   {
     title: 'Skeleton',

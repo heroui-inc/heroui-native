@@ -53,7 +53,7 @@ const data = [
       { name: 'Popover', href: '/components/popover' },
       { name: 'Avatar', href: '/components/avatar' },
       { name: 'Button', href: '/components/button' },
-      { name: 'Divider', href: '/components/divider' },
+      { name: 'Separator', href: '/components/separator' },
     ],
   },
   {
@@ -103,7 +103,7 @@ const data = [
     components: [
       { name: 'Button', href: '/components/button' },
       { name: 'Card', href: '/components/card' },
-      { name: 'Divider', href: '/components/divider' },
+      { name: 'Separator', href: '/components/separator' },
     ],
   },
 ];

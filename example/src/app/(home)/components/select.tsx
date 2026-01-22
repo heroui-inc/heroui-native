@@ -2,9 +2,9 @@ import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
-  Divider,
   ScrollShadow,
   Select,
+  Separator,
   useThemeColor,
 } from 'heroui-native';
 import React, { useState } from 'react';
@@ -204,7 +204,7 @@ const PresentationContent = () => {
                         </View>
                         <Select.ItemIndicator />
                       </Select.Item>
-                      {index < COUNTRIES.length - 1 && <Divider />}
+                      {index < COUNTRIES.length - 1 && <Separator />}
                     </React.Fragment>
                   ))}
                 </BottomSheetScrollView>

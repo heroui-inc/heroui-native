@@ -311,7 +311,7 @@ const LongContentDialogContent = () => {
               className={cn('bg-stone-100', isDark && 'bg-stone-950')}
             />
             <Dialog.Content className="rounded-2xl px-0 shadow-2xl shadow-black/10">
-              <Dialog.Close variant="outline" className="self-end mr-4" />
+              <Dialog.Close variant="ghost" className="self-end mr-4" />
               <Dialog.Title className="text-center mb-5">
                 Upload Audio
               </Dialog.Title>

@@ -86,6 +86,8 @@ Add an arrow pointing to the trigger element for better visual connection.
 </Popover>
 ```
 
+> **Note:** When using `<Popover.Arrow />`, you need to apply a border to `Popover.Content`, for instance using the `border border-border` class. This ensures the arrow visually connects properly with the content border.
+
 ### Width Control
 
 Control the width of the popover content using the `width` prop.

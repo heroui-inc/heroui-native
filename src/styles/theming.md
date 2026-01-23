@@ -123,16 +123,16 @@ Create multiple themes using Uniwind's variant system. For complete custom theme
       /* Misc Colors */
       --border: oklch(0 0 0 / 0%);
       --separator: oklch(0.91 0.015 230);
+      --focus: var(--accent);
       --link: oklch(0.62 0.17 230);
 
       /* Shadows */
-      /* --surface-shadow: 0 0px 0px 0 rgba(24, 24, 27, 0.03), 0 2px 10px 0 rgba(24, 24, 27, 0.08); */
       --surface-shadow:
         0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
         0 0 1px 0 rgba(0, 0, 0, 0.06);
-      /* Overlay shadow */
       --overlay-shadow:
-        0 4px 16px 0 rgba(24, 24, 27, 0.08), 0 8px 24px 0 rgba(24, 24, 27, 0.09);
+        0 2px 8px 0 rgba(0, 0, 0, 0.06), 0 -6px 12px 0 rgba(0, 0, 0, 0.03),
+        0 14px 28px 0 rgba(0, 0, 0, 0.08);
       --field-shadow:
         0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
         0 0 1px 0 rgba(0, 0, 0, 0.06);
@@ -183,11 +183,12 @@ Create multiple themes using Uniwind's variant system. For complete custom theme
       /* Misc Colors */
       --border: oklch(0 0 0 / 0%);
       --separator: oklch(0.28 0.045 230);
+      --focus: var(--accent);
       --link: oklch(0.75 0.18 230);
 
       /* Shadows */
       --surface-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
-      --overlay-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
+      --overlay-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.3) inset;
       --field-shadow: 0 0 0 0 transparent inset; /* Transparent shadow to allow ring utilities to work */
     }
   }
@@ -332,6 +333,7 @@ We use Tailwind's `@theme` directive to automatically create calculated variable
 
   --color-surface: var(--surface);
   --color-surface-foreground: var(--surface-foreground);
+  --color-surface-hover: color-mix(in oklab, var(--surface) 92%, var(--surface-foreground) 8%);
 
   --color-overlay: var(--overlay);
   --color-overlay-foreground: var(--overlay-foreground);
@@ -363,11 +365,6 @@ We use Tailwind's `@theme` directive to automatically create calculated variable
 
   /* Form Field Tokens */
   --color-field: var(--field-background, var(--default));
-  --color-field-hover: color-mix(
-    in oklab,
-    var(--field-background, var(--default)) 90%,
-    var(--field-foreground, var(--default-foreground)) 10%
-  );
   --color-field-foreground: var(--field-foreground, var(--foreground));
   --color-field-placeholder: var(--field-placeholder, var(--muted));
   --color-field-border: var(--field-border, var(--border));
@@ -383,147 +380,70 @@ We use Tailwind's `@theme` directive to automatically create calculated variable
   /* Colors */
 
   /* --- background shades --- */
-  --color-background-secondary: color-mix(
-    in oklab,
-    var(--background) 96%,
-    var(--foreground) 4%
-  );
-  --color-background-tertiary: color-mix(
-    in oklab,
-    var(--background) 92%,
-    var(--foreground) 8%
-  );
-  --color-background-quaternary: color-mix(
-    in oklab,
-    var(--background) 86%,
-    var(--foreground) 14%
-  );
+  --color-background-secondary: color-mix(in oklab, var(--background) 96%, var(--foreground) 4%);
+  --color-background-tertiary: color-mix(in oklab, var(--background) 92%, var(--foreground) 8%);
   --color-background-inverse: var(--foreground);
 
   /* ------------------------- */
-  --color-default-hover: color-mix(
-    in oklab,
-    var(--default) 90%,
-    var(--default-foreground) 2%
-  );
-  --color-accent-hover: color-mix(
-    in oklab,
-    var(--accent) 90%,
-    var(--accent-foreground) 10%
-  );
-  --color-success-hover: color-mix(
-    in oklab,
-    var(--success) 90%,
-    var(--success-foreground) 10%
-  );
-  --color-warning-hover: color-mix(
-    in oklab,
-    var(--warning) 90%,
-    var(--warning-foreground) 10%
-  );
-  --color-danger-hover: color-mix(
-    in oklab,
-    var(--danger) 90%,
-    var(--danger-foreground) 10%
-  );
+  --color-default-hover: color-mix(in oklab, var(--default) 96%, var(--default-foreground) 4%);
+  --color-accent-hover: color-mix(in oklab, var(--accent) 90%, var(--accent-foreground) 10%);
+  --color-success-hover: color-mix(in oklab, var(--success) 90%, var(--success-foreground) 10%);
+  --color-warning-hover: color-mix(in oklab, var(--warning) 90%, var(--warning-foreground) 10%);
+  --color-danger-hover: color-mix(in oklab, var(--danger) 90%, var(--danger-foreground) 10%);
 
-  /* Form Field Colors */
-  --color-field-hover: color-mix(
-    in oklab,
-    var(--field-background, var(--default)) 90%,
-    var(--field-foreground, var(--foreground)) 2%
-  );
+  /* Form Field Colors */ 
+  --color-field-hover: color-mix(in oklab, var(--field-background, var(--default)) 90%, var(--field-foreground, var(--foreground)) 2%);
   --color-field-focus: var(--field-background, var(--default));
-  --color-field-border-hover: color-mix(
-    in oklab,
-    var(--field-border, var(--border)) 88%,
-    var(--field-foreground, var(--foreground)) 10%
-  );
-  --color-field-border-focus: color-mix(
-    in oklab,
-    var(--field-border, var(--border)) 74%,
-    var(--field-foreground, var(--foreground)) 22%
-  );
+  --color-field-border-hover: color-mix(in oklab, var(--field-border, var(--border)) 88%, var(--field-foreground, var(--foreground)) 10%);
+  --color-field-border-focus: color-mix(in oklab, var(--field-border, var(--border)) 74%, var(--field-foreground, var(--foreground)) 22%);
 
   /* Soft Colors */
-  --color-accent-soft: color-mix(
-    in oklab,
-    var(--accent) 15%,
-    transparent
-  );
+  --color-accent-soft: color-mix(in oklab, var(--accent) 15%, transparent);
   --color-accent-soft-foreground: var(--accent);
-  --color-accent-soft-hover: color-mix(
-    in oklab,
-    var(--accent) 20%,
-    transparent
-  );
+  --color-accent-soft-hover: color-mix(in oklab, var(--accent) 20%, transparent);
 
-  --color-danger-soft: color-mix(
-    in oklab,
-    var(--danger) 15%,
-    transparent
-  );
+  --color-danger-soft: color-mix(in oklab, var(--danger) 15%, transparent);
   --color-danger-soft-foreground: var(--danger);
-  --color-danger-soft-hover: color-mix(
-    in oklab,
-    var(--danger) 20%,
-    transparent
-  );
+  --color-danger-soft-hover: color-mix(in oklab, var(--danger) 20%, transparent);
 
-  --color-warning-soft: color-mix(
-    in oklab,
-    var(--warning) 15%,
-    transparent
-  );
+  --color-warning-soft: color-mix(in oklab, var(--warning) 15%, transparent);
   --color-warning-soft-foreground: var(--warning);
-  --color-warning-soft-hover: color-mix(
-    in oklab,
-    var(--warning) 20%,
-    transparent
-  );
+  --color-warning-soft-hover: color-mix(in oklab, var(--warning) 20%, transparent);
 
-  --color-success-soft: color-mix(
-    in oklab,
-    var(--success) 15%,
-    transparent
-  );
+  --color-success-soft: color-mix(in oklab, var(--success) 15%, transparent);
   --color-success-soft-foreground: var(--success);
-  --color-success-soft-hover: color-mix(
-    in oklab,
-    var(--success) 20%,
-    transparent
-  );
+  --color-success-soft-hover: color-mix(in oklab, var(--success) 20%, transparent);
 
   /* Surface Levels - progressively darker/lighter shades for layering */
-  --color-surface-secondary: color-mix(
-    in oklab,
-    var(--surface) 94%,
-    var(--surface-foreground) 6%
-  );
-  --color-surface-tertiary: color-mix(
-    in oklab,
-    var(--surface) 92%,
-    var(--surface-foreground) 8%
-  );
-  --color-surface-quaternary: color-mix(
-    in oklab,
-    var(--surface) 86%,
-    var(--default-foreground) 14%
-  );
+  --color-surface-secondary: color-mix(in oklab, var(--surface) 94%, var(--surface-foreground) 6%);
+  --color-surface-tertiary: color-mix(in oklab, var(--surface) 92%, var(--surface-foreground) 8%);
 
   /* On Surface Colors */
-  --color-on-surface: color-mix(
-    in oklab,
-    var(--surface) 93%,
-    var(--surface-foreground) 7%
-  );
+  --color-on-surface: color-mix(in oklab, var(--surface) 93%, var(--surface-foreground) 7%);
   --color-on-surface-foreground: var(--surface-foreground);
-  --color-on-surface-hover: color-mix(
-    in oklab,
-    var(--surface) 91%,
-    var(--surface-foreground) 9%
-  );
-  --color-on-surface-focus: var(--color-on-surface);
+  --color-on-surface-hover: color-mix(in oklab, var(--surface) 91%, var(--surface-foreground) 9%);
+  --color-on-surface-focus: color-mix(in oklab, var(--surface) 93%, var(--surface-foreground) 7%);
+
+  /* On Surface Colors - Secondary (on secondary surface) */
+  --color-on-surface-secondary: color-mix(in oklab, var(--surface) 87%, var(--surface-foreground) 13%);
+  --color-on-surface-secondary-foreground: var(--surface-foreground);
+  --color-on-surface-secondary-hover: color-mix(in oklab, var(--surface) 85%, var(--surface-foreground) 15%);
+  --color-on-surface-secondary-focus: color-mix(in oklab, var(--surface) 87%, var(--surface-foreground) 13%);
+
+   /* On Surface Colors - Tertiary (on tertiary surface) */
+  --color-on-surface-tertiary: color-mix(in oklab, var(--surface) 85%, var(--surface-foreground) 15%);
+  --color-on-surface-tertiary-foreground: var(--surface-foreground);
+  --color-on-surface-tertiary-hover: color-mix(in oklab, var(--surface) 84%, var(--surface-foreground) 16%);
+  --color-on-surface-tertiary-focus: color-mix(in oklab, var(--surface) 85%, var(--surface-foreground) 15%);
+
+  /* Separator Colors - Levels */
+  --color-separator-secondary: color-mix(in oklab, var(--surface) 85%, var(--surface-foreground) 15%);
+  --color-separator-tertiary: color-mix(in oklab, var(--surface) 81%, var(--surface-foreground) 19%);
+
+  /* Border Colors - Levels (progressive contrast: default → secondary → tertiary) */
+  /* Light mode: lighter → darker | Dark mode: darker → lighter */
+  --color-border-secondary: color-mix(in oklab, var(--surface) 78%, var(--surface-foreground) 22%);
+  --color-border-tertiary: color-mix(in oklab, var(--surface) 66%, var(--surface-foreground) 34%);
 
   /* Radius and default sizes - defaults can change by just changing the --radius */
   --radius-xs: calc(var(--radius) * 0.25); /* 0.125rem (2px) */

@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Button, Card, type CardRootProps } from 'heroui-native';
+import { Button, Card, cn, type CardRootProps } from 'heroui-native';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
@@ -243,11 +243,17 @@ type CardItemProps = {
   variant: CardRootProps['variant'];
   title: string;
   description: string;
+  className?: string;
 };
 
-const CardItem = ({ variant, title, description }: CardItemProps) => {
+const CardItem = ({
+  variant,
+  title,
+  description,
+  className,
+}: CardItemProps) => {
   return (
-    <Card variant={variant} className="gap-2">
+    <Card variant={variant} className={cn('gap-2', className)}>
       <AppText className="text-foreground font-medium">{title}</AppText>
       <AppText className="text-muted">{description}</AppText>
     </Card>
@@ -258,11 +264,6 @@ const VariantsContent = () => {
   return (
     <View className="flex-1 items-center justify-center">
       <View className="gap-2 w-full px-5">
-        <CardItem
-          variant="transparent"
-          title="Transparent"
-          description="Minimal prominence with transparent background. Use for less important content or nested cards."
-        />
         <CardItem
           variant="default"
           title="Default"
@@ -276,12 +277,13 @@ const VariantsContent = () => {
         <CardItem
           variant="tertiary"
           title="Tertiary"
-          description="Higher prominence (surface-quaternary). Use for important content."
+          description="Higher prominence (surface-tertiary). Use for important content."
         />
         <CardItem
-          variant="quaternary"
-          title="Quaternary"
-          description="Highest prominence (surface-quaternary). Use for critical content."
+          variant="transparent"
+          title="Transparent"
+          description="Minimal prominence with transparent background. Use for less important content or nested cards."
+          className="border border-border"
         />
       </View>
     </View>

@@ -8,7 +8,6 @@ const root = tv({
       default: 'bg-surface',
       secondary: 'bg-surface-secondary',
       tertiary: 'bg-surface-tertiary',
-      quaternary: 'bg-surface-quaternary',
       transparent: 'bg-transparent',
     },
   },

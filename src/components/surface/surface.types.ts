@@ -8,7 +8,6 @@ export type SurfaceVariant =
   | 'default'
   | 'secondary'
   | 'tertiary'
-  | 'quaternary'
   | 'transparent';
 
 /**

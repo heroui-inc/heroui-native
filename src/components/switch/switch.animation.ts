@@ -51,9 +51,9 @@ export function useSwitchRootAnimation(options: {
 }) {
   const { animation, isSelected } = options;
 
-  const [themeColorAccent, themeColorSurfaceQuaternary] = useThemeColor([
+  const [themeColorAccent, themeColorDefault] = useThemeColor([
     'accent',
-    'surface-quaternary',
+    'default',
   ]);
 
   const formFieldContext = useFormField();
@@ -88,10 +88,7 @@ export function useSwitchRootAnimation(options: {
   const backgroundColorValue = getAnimationValueProperty({
     animationValue: animationConfig?.backgroundColor,
     property: 'value',
-    defaultValue: [themeColorSurfaceQuaternary, themeColorAccent] as [
-      string,
-      string,
-    ],
+    defaultValue: [themeColorDefault, themeColorAccent] as [string, string],
   });
 
   const backgroundColorTimingConfig = getAnimationValueMergedConfig({

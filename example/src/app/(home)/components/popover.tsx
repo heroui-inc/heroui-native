@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { Button, Popover } from 'heroui-native';
+import { Button, colorKit, Popover, useThemeColor } from 'heroui-native';
 import { useState } from 'react';
 import { Platform, View } from 'react-native';
 import { withUniwind } from 'uniwind';
@@ -199,6 +199,9 @@ const PlacementPopover = ({
 }) => {
   const label = placement.charAt(0).toUpperCase() + placement.slice(1);
 
+  const themeColorBorder = useThemeColor('accent');
+  const arrowStroke = colorKit.setAlpha(themeColorBorder, 0.35).hex();
+
   return (
     <Popover>
       <Popover.Trigger asChild>
@@ -208,7 +211,12 @@ const PlacementPopover = ({
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Overlay />
-        <Popover.Content placement={placement} width={220} className="gap-2">
+        <Popover.Content
+          placement={placement}
+          width={220}
+          className="gap-2 border border-accent/35"
+        >
+          <Popover.Arrow stroke={arrowStroke} />
           <View className="flex-row items-center gap-2">
             <View className="size-8 items-center justify-center rounded-full bg-accent/15">
               <MapPinIcon size={16} colorClassName="accent-accent" />

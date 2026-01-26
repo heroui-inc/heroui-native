@@ -98,7 +98,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
     >
       <Card
         className={cn(
-          'p-0 border border-zinc-200',
+          'p-0 border border-zinc-200 shadow-none',
           isDark && 'border-zinc-900'
         )}
       >

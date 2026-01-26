@@ -26,7 +26,7 @@ const portal = tv({
  * set `isAnimatedStyleActive={false}` on `Dialog.Overlay`.
  */
 const overlay = tv({
-  base: 'absolute inset-0 bg-black/20',
+  base: 'absolute inset-0 bg-black/10',
 });
 
 /**
@@ -51,7 +51,7 @@ const overlay = tv({
  * set `isAnimatedStyleActive={false}` on `Dialog.Content`.
  */
 const content = tv({
-  base: 'bg-overlay rounded-3xl p-5',
+  base: 'bg-overlay p-5 rounded-3xl shadow-overlay',
 });
 
 const label = tv({

@@ -58,7 +58,7 @@ const root = tv({
  * set `isAnimatedStyleActive={false}` on `Switch.Thumb`.
  */
 const thumb = tv({
-  base: 'absolute left-[2px] items-center justify-center w-[28px] h-[20px] rounded-full shadow-sm shadow-black/5 overflow-hidden',
+  base: 'absolute left-[2px] items-center justify-center w-[28px] h-[20px] rounded-full shadow-field overflow-hidden',
 });
 
 const startContent = tv({

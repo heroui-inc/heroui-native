@@ -14,8 +14,9 @@ const root = tv({
         separator: '',
       },
       surface: {
-        container: 'bg-surface border border-surface rounded-3xl',
-        separator: 'mx-3 bg-separator/75',
+        container:
+          'bg-surface rounded-3xl border border-surface shadow-surface',
+        separator: 'mx-3',
       },
     },
   },

@@ -202,7 +202,7 @@ const TextInputDialogContent = () => {
           <Dialog.Portal className="justify-start">
             <DialogBlurBackdrop />
             <Dialog.Content
-              className="bg-surface rounded-3xl"
+              className="bg-surface"
               animation={{
                 scale: {
                   value: [1.2, 1, 0.95],
@@ -310,7 +310,7 @@ const LongContentDialogContent = () => {
             <Dialog.Overlay
               className={cn('bg-stone-100', isDark && 'bg-stone-950')}
             />
-            <Dialog.Content className="rounded-2xl px-0 shadow-2xl shadow-black/10">
+            <Dialog.Content className="rounded-2xl px-0">
               <Dialog.Close variant="ghost" className="self-end mr-4" />
               <Dialog.Title className="text-center mb-5">
                 Upload Audio

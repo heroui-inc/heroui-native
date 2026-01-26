@@ -48,7 +48,7 @@ const CardWithImageContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="flex-row gap-4">
-        <Card className="flex-1 aspect-[1/1.3] rounded-2xl">
+        <Card className="flex-1 aspect-[1/1.3]">
           <View className="flex-1 gap-4">
             <Card.Header>
               <Image
@@ -58,7 +58,7 @@ const CardWithImageContent = () => {
                 style={{
                   height: 60,
                   aspectRatio: 1,
-                  borderRadius: 12,
+                  borderRadius: 14,
                 }}
               />
             </Card.Header>
@@ -76,7 +76,7 @@ const CardWithImageContent = () => {
             </Card.Footer>
           </View>
         </Card>
-        <Card className="flex-1 aspect-[1/1.3] rounded-2xl">
+        <Card className="flex-1 aspect-[1/1.3]">
           <View className="flex-1 gap-4">
             <Card.Header>
               <Image
@@ -86,7 +86,7 @@ const CardWithImageContent = () => {
                 style={{
                   height: 60,
                   aspectRatio: 1,
-                  borderRadius: 12,
+                  borderRadius: 14,
                 }}
               />
             </Card.Header>
@@ -115,7 +115,7 @@ const HorizontalCardWithImageContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full gap-4">
-        <Card className="flex-row rounded-2xl gap-4 p-4" variant="tertiary">
+        <Card className="flex-row gap-4 p-4" variant="tertiary">
           <Image
             source={{
               uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/avocado.jpeg',
@@ -123,7 +123,7 @@ const HorizontalCardWithImageContent = () => {
             style={{
               height: 110,
               aspectRatio: 1,
-              borderRadius: 14,
+              borderRadius: 16,
             }}
             resizeMode="cover"
           />
@@ -148,7 +148,7 @@ const HorizontalCardWithImageContent = () => {
             </Card.Footer>
           </View>
         </Card>
-        <Card className="flex-row rounded-2xl gap-4 p-4" variant="tertiary">
+        <Card className="flex-row gap-4 p-4" variant="tertiary">
           <Image
             source={{
               uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/oranges.jpeg',
@@ -156,7 +156,7 @@ const HorizontalCardWithImageContent = () => {
             style={{
               height: 110,
               aspectRatio: 1,
-              borderRadius: 12,
+              borderRadius: 16,
             }}
             resizeMode="cover"
           />
@@ -283,7 +283,7 @@ const VariantsContent = () => {
           variant="transparent"
           title="Transparent"
           description="Minimal prominence with transparent background. Use for less important content or nested cards."
-          className="border border-border"
+          className="border border-border shadow-none"
         />
       </View>
     </View>

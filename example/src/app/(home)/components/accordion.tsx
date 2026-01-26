@@ -222,41 +222,6 @@ const WithoutSeparatorsContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const CustomSeparatorContent = () => {
-  return (
-    <View className="flex-1 items-center justify-center px-5">
-      <Accordion
-        variant="surface"
-        className="w-full"
-        classNames={{
-          separator: 'bg-separator/10 h-1.5 rounded-full',
-        }}
-      >
-        {accordionData.slice(0, 3).map((item) => (
-          <Accordion.Item key={item.id} value={item.id}>
-            <Accordion.Trigger>
-              <View className={classNames.triggerContentContainer}>
-                {item.icon}
-                <AppText className={classNames.triggerTitle}>
-                  {item.title}
-                </AppText>
-              </View>
-              <Accordion.Indicator />
-            </Accordion.Trigger>
-            <Accordion.Content>
-              <AppText className={classNames.contentText}>
-                {item.content}
-              </AppText>
-            </Accordion.Content>
-          </Accordion.Item>
-        ))}
-      </Accordion>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
 const CustomIndicatorContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
@@ -363,11 +328,6 @@ const ACCORDION_VARIANTS: UsageVariant[] = [
     value: 'without-separators',
     label: 'Without separators',
     content: <WithoutSeparatorsContent />,
-  },
-  {
-    value: 'custom-separator',
-    label: 'Custom separator',
-    content: <CustomSeparatorContent />,
   },
   {
     value: 'custom-indicator',

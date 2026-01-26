@@ -48,7 +48,7 @@ const VariantsContent = () => {
           variant="transparent"
           title="Surface Content"
           description="This is a transparent surface variant. It uses bg-transparent styling."
-          className="border border-border"
+          className="border border-border shadow-none"
         />
       </View>
     </View>

@@ -19,6 +19,7 @@ const Description = forwardRef<TextRef, DescriptionProps>((props, ref) => {
     className,
     nativeID,
     isInvalid: localIsInvalid,
+    isDisabled: localIsDisabled,
     animation,
     ...restProps
   } = props;
@@ -31,10 +32,16 @@ const Description = forwardRef<TextRef, DescriptionProps>((props, ref) => {
       ? localIsInvalid
       : (formItemState?.isInvalid ?? false);
 
+  const isDisabled =
+    localIsDisabled !== undefined
+      ? localIsDisabled
+      : (formItemState?.isDisabled ?? false);
+
   const isInsideTextField = Boolean(textFieldContext);
 
   const tvStyles = descriptionStyles({
     isInvalid,
+    isDisabled,
     isInsideTextField,
     className,
   });

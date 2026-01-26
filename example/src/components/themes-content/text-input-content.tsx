@@ -2,6 +2,7 @@ import {
   Button,
   Description,
   FieldError,
+  Input,
   Label,
   TextField,
 } from 'heroui-native';
@@ -42,7 +43,7 @@ export const TextInputContent = () => {
       {/* Basic TextField */}
       <TextField isRequired isInvalid={emailError}>
         <Label>Email</Label>
-        <TextField.Input
+        <Input
           placeholder="Enter your email"
           keyboardType="email-address"
           autoCapitalize="none"
@@ -62,7 +63,7 @@ export const TextInputContent = () => {
       <TextField isRequired isInvalid={passwordError} className="mb-8">
         <Label>New password</Label>
         <View className="w-full flex-row items-center">
-          <TextField.Input
+          <Input
             className="flex-1 px-10"
             placeholder="Enter your password"
             secureTextEntry={!isPasswordVisible}

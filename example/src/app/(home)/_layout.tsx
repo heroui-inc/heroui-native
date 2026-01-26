@@ -126,6 +126,7 @@ export default function Layout() {
           name="components/form-field"
           options={{ title: 'FormField' }}
         />
+        <Stack.Screen name="components/input" options={{ title: 'Input' }} />
         <Stack.Screen
           name="components/input-otp"
           options={{ title: 'InputOTP' }}

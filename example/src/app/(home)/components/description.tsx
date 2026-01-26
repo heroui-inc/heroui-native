@@ -1,4 +1,4 @@
-import { Description, Label, TextField } from 'heroui-native';
+import { Description, Input, Label, TextField } from 'heroui-native';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -8,7 +8,7 @@ const BasicContent = () => {
     <View className="flex-1 justify-center px-5 gap-8">
       <TextField>
         <Label>Email address</Label>
-        <TextField.Input
+        <Input
           placeholder="Enter your email"
           keyboardType="email-address"
           autoCapitalize="none"
@@ -19,7 +19,7 @@ const BasicContent = () => {
       </TextField>
       <TextField>
         <Label>Password</Label>
-        <TextField.Input placeholder="Create a password" secureTextEntry />
+        <Input placeholder="Create a password" secureTextEntry />
         <Description nativeID="password-desc">
           Use at least 8 characters with a mix of letters, numbers, and symbols.
         </Description>

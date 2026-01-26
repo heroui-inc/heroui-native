@@ -3,5 +3,4 @@
  */
 export const DISPLAY_NAME = {
   ROOT: 'HeroUINative.TextField.Root',
-  INPUT: 'HeroUINative.TextField.Input',
 };

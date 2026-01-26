@@ -39,10 +39,14 @@ export interface DescriptionProps
   children?: React.ReactNode;
   /**
    * Whether the description is in an invalid state (overrides context)
-   * When true, the description is hidden (similar to TextFieldDescription behavior)
-   * @default undefined - uses context value
+   * @default undefined
    */
   isInvalid?: boolean;
+  /**
+   * Whether the description is disabled (overrides context)
+   * @default undefined
+   */
+  isDisabled?: boolean;
   /**
    * Additional CSS classes
    */

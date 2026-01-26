@@ -45,7 +45,7 @@ import { FieldError, Label, TextField } from 'heroui-native';
 
 <TextField isRequired isInvalid={true}>
   <Label>Email</Label>
-  <TextField.Input placeholder="Enter your email" />
+  <Input placeholder="Enter your email" />
   <FieldError>Please enter a valid email address</FieldError>
 </TextField>
 ```
@@ -144,7 +144,7 @@ export default function FieldErrorExample() {
     <View className="p-4">
       <TextField isInvalid={isInvalid}>
         <Label>Email Address</Label>
-        <TextField.Input
+        <Input
           placeholder="Enter your email"
           value={email}
           onChangeText={setEmail}

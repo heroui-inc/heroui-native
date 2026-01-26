@@ -1,4 +1,4 @@
-import { FieldError, Label, TextField } from 'heroui-native';
+import { FieldError, Input, Label, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { FadeInDown } from 'react-native-reanimated';
@@ -23,7 +23,7 @@ const BasicFieldErrorContent = () => {
       <View className="flex-1 pt-[55%]">
         <TextField isInvalid={slideError} isRequired>
           <Label isInvalid={false}>Username</Label>
-          <TextField.Input
+          <Input
             placeholder="Enter username"
             editable={false}
             isInvalid={false}
@@ -49,7 +49,7 @@ const MultipleErrorsContent = () => {
         <View className="gap-2">
           <TextField>
             <Label>Create Password</Label>
-            <TextField.Input
+            <Input
               placeholder="Enter your password"
               secureTextEntry
               editable={false}
@@ -104,7 +104,7 @@ const InlineErrorMessagesContent = () => {
         <TextField>
           <Label>Email Address</Label>
           <View className="flex-row items-center gap-2">
-            <TextField.Input
+            <Input
               placeholder="user@example"
               value="user@example"
               editable={false}
@@ -119,7 +119,7 @@ const InlineErrorMessagesContent = () => {
         <TextField>
           <Label>Phone Number</Label>
           <View className="flex-row items-center gap-2">
-            <TextField.Input
+            <Input
               placeholder="+1 (555) 000-0000"
               value=""
               editable={false}

@@ -36,7 +36,7 @@ Use Label with form fields to provide accessible labels.
 ```tsx
 <TextField>
   <Label>Username</Label>
-  <TextField.Input placeholder="Choose a username" />
+  <Input placeholder="Choose a username" />
 </TextField>
 ```
 
@@ -47,7 +47,7 @@ Show an asterisk indicator for required fields using the `isRequired` prop.
 ```tsx
 <TextField>
   <Label isRequired>Password</Label>
-  <TextField.Input placeholder="Create a password" secureTextEntry />
+  <Input placeholder="Create a password" secureTextEntry />
 </TextField>
 ```
 
@@ -60,7 +60,7 @@ import { FieldError, Label, TextField } from 'heroui-native';
 
 <TextField isInvalid>
   <Label isInvalid>Confirm password</Label>
-  <TextField.Input
+  <Input
     placeholder="Confirm your password"
     secureTextEntry
     value="different"
@@ -77,7 +77,7 @@ Disable labels to indicate non-interactive fields.
 ```tsx
 <TextField isDisabled>
   <Label>Subscription plan</Label>
-  <TextField.Input value="Premium" />
+  <Input value="Premium" />
 </TextField>
 ```
 
@@ -120,15 +120,15 @@ export default function LabelExample() {
     <View className="flex-1 justify-center px-5 gap-8">
       <TextField>
         <Label>Username</Label>
-        <TextField.Input placeholder="Choose a username" />
+        <Input placeholder="Choose a username" />
       </TextField>
       <TextField>
         <Label isRequired>Password</Label>
-        <TextField.Input placeholder="Create a password" secureTextEntry />
+        <Input placeholder="Create a password" secureTextEntry />
       </TextField>
       <TextField isInvalid>
         <Label isInvalid>Confirm password</Label>
-        <TextField.Input
+        <Input
           placeholder="Confirm your password"
           secureTextEntry
           value="different"
@@ -138,7 +138,7 @@ export default function LabelExample() {
       </TextField>
       <TextField isDisabled>
         <Label>Subscription plan</Label>
-        <TextField.Input value="Premium" />
+        <Input value="Premium" />
       </TextField>
     </View>
   );

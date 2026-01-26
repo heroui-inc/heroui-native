@@ -5,6 +5,7 @@ import {
   cn,
   Dialog,
   FieldError,
+  Input,
   Label,
   ScrollShadow,
   TextField,
@@ -225,7 +226,7 @@ const TextInputDialogContent = () => {
                 >
                   <TextField isRequired isInvalid={!!nameError}>
                     <Label isInvalid={false}>Full Name</Label>
-                    <TextField.Input
+                    <Input
                       variant="secondary"
                       placeholder="Enter your name"
                       value={name}
@@ -244,7 +245,7 @@ const TextInputDialogContent = () => {
 
                   <TextField isRequired isInvalid={!!emailError}>
                     <Label isInvalid={false}>Email Address</Label>
-                    <TextField.Input
+                    <Input
                       variant="secondary"
                       placeholder="email@example.com"
                       value={email}

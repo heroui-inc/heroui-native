@@ -5,7 +5,7 @@ A text input component with label, description, and error handling for collectin
 ## Import
 
 ```tsx
-import { TextField } from 'heroui-native';
+import { Input, TextField } from 'heroui-native';
 ```
 
 ## Anatomy
@@ -13,7 +13,7 @@ import { TextField } from 'heroui-native';
 ```tsx
 <TextField>
   <Label>...</Label>
-  <TextField.Input />
+  <Input />
   <Description>...</Description>
   <FieldError>...</FieldError>
 </TextField>
@@ -21,7 +21,7 @@ import { TextField } from 'heroui-native';
 
 - **TextField**: Root container that provides spacing and state management
 - **Label**: Label with optional asterisk for required fields (from form-item-state context)
-- **TextField.Input**: Input container with animated border and background
+- **Input**: Input container with animated border and background
 - **Description**: Helper text displayed below the input (from form-item-state context)
 - **FieldError**: Error message shown when field is invalid (from form-item-state context)
 
@@ -34,7 +34,7 @@ TextField provides a complete form input structure with label and description.
 ```tsx
 <TextField>
   <Label>Email</Label>
-  <TextField.Input placeholder="Enter your email" />
+  <Input placeholder="Enter your email" />
   <Description>We'll never share your email</Description>
 </TextField>
 ```
@@ -46,7 +46,7 @@ Mark fields as required to show an asterisk in the label.
 ```tsx
 <TextField isRequired>
   <Label>Username</Label>
-  <TextField.Input placeholder="Choose a username" />
+  <Input placeholder="Choose a username" />
 </TextField>
 ```
 
@@ -55,11 +55,11 @@ Mark fields as required to show an asterisk in the label.
 Display error messages when the field is invalid.
 
 ```tsx
-import { FieldError, Label, TextField } from 'heroui-native';
+import { FieldError, Input, Label, TextField } from 'heroui-native';
 
 <TextField isRequired isInvalid={true}>
   <Label>Email</Label>
-  <TextField.Input placeholder="Enter your email" />
+  <Input placeholder="Enter your email" />
   <FieldError>Please enter a valid email</FieldError>
 </TextField>
 ```
@@ -69,11 +69,11 @@ import { FieldError, Label, TextField } from 'heroui-native';
 Override the context's invalid state for individual components.
 
 ```tsx
-import { Description, FieldError, Label, TextField } from 'heroui-native';
+import { Description, FieldError, Input, Label, TextField } from 'heroui-native';
 
 <TextField isInvalid={true}>
   <Label isInvalid={false}>Email</Label>
-  <TextField.Input placeholder="Enter your email" isInvalid={false} />
+  <Input placeholder="Enter your email" isInvalid={false} />
   <Description isInvalid={false}>
     This shows despite input being invalid
   </Description>
@@ -88,7 +88,7 @@ Create text areas for longer content.
 ```tsx
 <TextField>
   <Label>Message</Label>
-  <TextField.Input
+  <Input
     placeholder="Type your message..."
     multiline
     numberOfLines={4}
@@ -104,7 +104,7 @@ Disable the entire field to prevent interaction.
 ```tsx
 <TextField isDisabled>
   <Label>Disabled Field</Label>
-  <TextField.Input placeholder="Cannot edit" value="Read only value" />
+  <Input placeholder="Cannot edit" value="Read only value" />
 </TextField>
 ```
 
@@ -115,12 +115,12 @@ Use different variants to style the input based on context.
 ```tsx
 <TextField>
   <Label>Primary Variant</Label>
-  <TextField.Input placeholder="Primary style" variant="primary" />
+  <Input placeholder="Primary style" variant="primary" />
 </TextField>
 
 <TextField>
   <Label>Secondary Variant</Label>
-  <TextField.Input placeholder="Secondary style" variant="secondary" />
+  <Input placeholder="Secondary style" variant="secondary" />
 </TextField>
 ```
 
@@ -131,7 +131,7 @@ Customize the input appearance using className.
 ```tsx
 <TextField>
   <Label>Custom Styled</Label>
-  <TextField.Input
+  <Input
     placeholder="Custom colors"
     className="bg-blue-50 border-blue-500 focus:border-blue-700"
   />
@@ -142,7 +142,7 @@ Customize the input appearance using className.
 
 ```tsx
 import { Ionicons } from '@expo/vector-icons';
-import { Description, Label, TextField } from 'heroui-native';
+import { Description, Input, Label, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { withUniwind } from 'uniwind';
@@ -158,7 +158,7 @@ export const TextInputContent = () => {
     <View className="gap-4">
       <TextField isRequired>
         <Label>Email</Label>
-        <TextField.Input
+        <Input
           placeholder="Enter your email"
           keyboardType="email-address"
           autoCapitalize="none"
@@ -173,7 +173,7 @@ export const TextInputContent = () => {
       <TextField isRequired>
         <Label>New password</Label>
         <View className="w-full flex-row items-center">
-          <TextField.Input
+          <Input
             value={password}
             onChangeText={setPassword}
             className="flex-1 px-10"
@@ -222,24 +222,13 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 | animation    | `"disable-all" \| undefined` | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
 | ...ViewProps | `ViewProps`                  | -           | All standard React Native View props are supported                                        |
 
-> **Note**: For Label and Description components, see their respective documentation:
+> **Note**: For Label, Input, Description, and FieldError components, see their respective documentation:
 > - [Label documentation](../label/label.md)
+> - [Input documentation](../input/input.md)
 > - [Description documentation](../description/description.md)
+> - [FieldError documentation](../field-error/field-error.md)
 >
 > These components automatically consume form state from TextField via the form-item-state context.
-
-### TextField.Input
-
-| prop                      | type                       | default               | description                                                  |
-| ------------------------- | -------------------------- | --------------------- | ------------------------------------------------------------ |
-| isInvalid                 | `boolean`                  | `undefined`           | Whether the input is in an invalid state (overrides context) |
-| variant                   | `'primary' \| 'secondary'` | `'primary'`           | Variant style for the input                                  |
-| className                 | `string`                   | -                     | Custom class name for the input                              |
-| selectionColorClassName   | `string`                   | `"accent-accent"`     | Custom className for the selection color                     |
-| placeholderColorClassName | `string`                   | `"field-placeholder"` | Custom className for the placeholder text color              |
-| ...TextInputProps         | `TextInputProps`           | -                     | All standard React Native TextInput props are supported      |
-
-> **Note**: For FieldError component, see [FieldError documentation](../field-error/field-error.md). FieldError automatically consumes form state from TextField via the form-item-state context.
 
 ## Hooks
 

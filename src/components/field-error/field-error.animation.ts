@@ -31,14 +31,12 @@ export function useFieldErrorRootAnimation(options: {
     isAllAnimationsDisabled,
   });
 
-  // Entering animation
   const enteringValue = getAnimationValueProperty({
     animationValue: animationConfig?.entering,
     property: 'value',
     defaultValue: ENTERING_ANIMATION_CONFIG,
   });
 
-  // Exiting animation
   const exitingValue = getAnimationValueProperty({
     animationValue: animationConfig?.exiting,
     property: 'value',

@@ -136,9 +136,9 @@ export const BottomSheetBlurOverlay = () => {
 
 ### Text Input with Keyboard Avoidance
 
-Using `TextField.Input` from heroui-native inside a bottom sheet requires special handling for proper keyboard behavior. You need to:
+Using `Input` from heroui-native inside a bottom sheet requires special handling for proper keyboard behavior. You need to:
 
-1. Pass custom `onFocus` and `onBlur` handlers to `TextField.Input` that communicate with the bottom sheet's internal keyboard state using `useBottomSheetInternal` hook from `@gorhom/bottom-sheet`
+1. Pass custom `onFocus` and `onBlur` handlers to `Input` that communicate with the bottom sheet's internal keyboard state using `useBottomSheetInternal` hook from `@gorhom/bottom-sheet`
 2. Use `BottomSheetScrollView` from `@gorhom/bottom-sheet` instead of regular `ScrollView` for proper keyboard avoidance
 
 See the complete example: [bottom-sheet-with-text-input.tsx](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/components/bottom-sheet/with-text-input.tsx)

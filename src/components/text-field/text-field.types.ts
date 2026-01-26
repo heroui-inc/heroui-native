@@ -1,8 +1,8 @@
-import type { TextInputProps, ViewProps } from 'react-native';
+import type { ViewProps } from 'react-native';
 import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 
 /**
- * Props for the TextField.Root component
+ * Props for the TextField component
  */
 export interface TextFieldRootProps extends ViewProps {
   /**
@@ -34,36 +34,6 @@ export interface TextFieldRootProps extends ViewProps {
    * - `undefined`: Use default animations
    */
   animation?: AnimationRootDisableAll;
-}
-
-/**
- * Props for the TextField.Input component
- */
-export interface TextFieldInputProps extends TextInputProps {
-  /**
-   * Whether the input is in an invalid state (overrides context)
-   * @default undefined - uses context value
-   */
-  isInvalid?: boolean;
-  /**
-   * Variant style for the input
-   * @default 'primary'
-   */
-  variant?: 'primary' | 'secondary';
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-  /**
-   * Custom className for the selection color
-   * @default "accent-accent"
-   */
-  selectionColorClassName?: string;
-  /**
-   * Custom className for the placeholder text color
-   * @default "field-placeholder"
-   */
-  placeholderColorClassName?: string;
 }
 
 /**

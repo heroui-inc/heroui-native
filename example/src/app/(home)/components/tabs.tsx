@@ -5,6 +5,7 @@ import {
   Description,
   FieldError,
   FormField,
+  Input,
   Label,
   RadioGroup,
   Tabs,
@@ -144,7 +145,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
           <AnimatedContentContainer>
             <TextField>
               <Label>Homepage</Label>
-              <TextField.Input value={homepage} />
+              <Input value={homepage} />
             </TextField>
 
             <FormField
@@ -283,7 +284,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
           <AnimatedContentContainer>
             <TextField isRequired isInvalid={!!errors.name}>
               <Label>Name</Label>
-              <TextField.Input
+              <Input
                 value={name}
                 onChangeText={(text) => {
                   setName(text);
@@ -298,7 +299,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
 
             <TextField isRequired isInvalid={!!errors.username}>
               <Label>Username</Label>
-              <TextField.Input
+              <Input
                 value={username}
                 onChangeText={(text) => {
                   setUsername(text);

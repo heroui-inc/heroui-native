@@ -1,8 +1,18 @@
-import { cn, Description, FieldError, Label, TextField } from 'heroui-native';
+import {
+  cn,
+  Description,
+  FieldError,
+  Input,
+  Label,
+  TextField,
+} from 'heroui-native';
 import { useState } from 'react';
 import { Pressable, useWindowDimensions, View } from 'react-native';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
-import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 import { EyeIcon } from '../../../components/icons/eye';
@@ -22,7 +32,13 @@ const KeyboardAvoidingContainer = ({
 
   const rStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateY: progress.value === 1 ? -height * 0.15 : 0 }],
+      transform: [
+        {
+          translateY: withTiming(progress.get() === 1 ? -height * 0.15 : 0, {
+            duration: 250,
+          }),
+        },
+      ],
     };
   });
 
@@ -35,7 +51,7 @@ const BasicTextFieldContent = () => {
       <KeyboardAvoidingContainer>
         <TextField isRequired>
           <Label>Email</Label>
-          <TextField.Input
+          <Input
             placeholder="Enter your email"
             keyboardType="email-address"
             autoCapitalize="none"
@@ -58,7 +74,7 @@ const TextFieldWithIconsContent = () => {
         <TextField isRequired>
           <Label>Password</Label>
           <View className="w-full flex-row items-center">
-            <TextField.Input
+            <Input
               className="flex-1 px-10"
               placeholder="Enter your password"
               secureTextEntry={!isPasswordVisible}
@@ -93,19 +109,13 @@ const DisabledTextFieldContent = () => {
         <View className="gap-8">
           <TextField>
             <Label>Account ID</Label>
-            <TextField.Input
-              placeholder="Enter account ID"
-              value="ACC-2024-12345"
-            />
+            <Input placeholder="Enter account ID" value="ACC-2024-12345" />
             <Description>Your unique account identifier</Description>
           </TextField>
 
           <TextField isDisabled>
             <Label>User Role</Label>
-            <TextField.Input
-              placeholder="Role assignment"
-              value="Administrator"
-            />
+            <Input placeholder="Role assignment" value="Administrator" />
             <Description>Contact support to change your role</Description>
           </TextField>
         </View>
@@ -129,7 +139,7 @@ const TextFieldWithValidationContent = () => {
         <KeyboardAvoidingContainer>
           <TextField isRequired isInvalid={isTestFieldInvalid}>
             <Label>Promo Code</Label>
-            <TextField.Input
+            <Input
               placeholder="Enter promo code"
               value={testFieldValue}
               onChangeText={setTestFieldValue}
@@ -152,7 +162,7 @@ const TextFieldWithCustomStylesContent = () => {
       <KeyboardAvoidingContainer>
         <TextField>
           <Label>Gift Card Number</Label>
-          <TextField.Input
+          <Input
             placeholder="Enter 16-digit gift card number"
             keyboardType="number-pad"
             maxLength={16}

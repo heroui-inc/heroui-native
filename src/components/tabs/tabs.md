@@ -331,7 +331,7 @@ export default function TabsExample() {
           <AnimatedContentContainer>
             <TextField isRequired>
               <Label>Name</Label>
-              <TextField.Input
+              <Input
                 value={name}
                 onChangeText={setName}
                 placeholder="Enter your full name"

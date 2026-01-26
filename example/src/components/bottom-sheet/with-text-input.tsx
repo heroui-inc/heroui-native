@@ -8,6 +8,7 @@ import {
   Avatar,
   BottomSheet,
   Button,
+  Input,
   ScrollShadow,
   TextField,
   useThemeColor,
@@ -79,7 +80,7 @@ const UserSearchItem = ({ user }: { user: User }) => {
 /**
  * BottomSheetTextInput component with custom keyboard handling
  *
- * This is a workaround to enable proper keyboard handling for TextField.Input
+ * This is a workaround to enable proper keyboard handling for Input
  * inside a bottom sheet. According to the @gorhom/bottom-sheet documentation:
  * https://gorhom.dev/react-native-bottom-sheet/keyboard-handling
  *
@@ -89,7 +90,7 @@ const UserSearchItem = ({ user }: { user: User }) => {
  * The implementation is based on the official BottomSheetTextInput source code:
  * https://github.com/gorhom/react-native-bottom-sheet/blob/master/src/components/bottomSheetTextInput/BottomSheetTextInput.tsx
  *
- * This component extends TextField.Input with the necessary focus/blur handlers
+ * This component extends Input with the necessary focus/blur handlers
  * that communicate with the bottom sheet's internal keyboard state management.
  */
 const BottomSheetTextInput = ({
@@ -137,7 +138,7 @@ const BottomSheetTextInput = ({
   return (
     <TextField className="absolute top-0 left-0 right-0 px-5 pt-2">
       <View className="w-full flex-row items-center">
-        <TextField.Input
+        <Input
           ref={inputRef}
           variant="secondary"
           placeholder="Search by name or email..."

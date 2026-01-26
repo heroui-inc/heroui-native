@@ -33,7 +33,7 @@ Provide accessible descriptions for form fields using the `nativeID` prop.
 ```tsx
 <TextField>
   <Label>Email address</Label>
-  <TextField.Input
+  <Input
     placeholder="Enter your email"
     keyboardType="email-address"
     autoCapitalize="none"
@@ -51,7 +51,7 @@ Link descriptions to form fields for screen reader support by using `nativeID` a
 ```tsx
 <TextField>
   <Label>Password</Label>
-  <TextField.Input
+  <Input
     placeholder="Create a password"
     secureTextEntry
     aria-describedby="password-desc"
@@ -73,7 +73,7 @@ export default function DescriptionExample() {
     <View className="flex-1 justify-center px-5 gap-8">
       <TextField>
         <Label>Email address</Label>
-        <TextField.Input
+        <Input
           placeholder="Enter your email"
           keyboardType="email-address"
           autoCapitalize="none"
@@ -84,7 +84,7 @@ export default function DescriptionExample() {
       </TextField>
       <TextField>
         <Label>Password</Label>
-        <TextField.Input placeholder="Create a password" secureTextEntry />
+        <Input placeholder="Create a password" secureTextEntry />
         <Description nativeID="password-desc">
           Use at least 8 characters with a mix of letters, numbers, and symbols.
         </Description>

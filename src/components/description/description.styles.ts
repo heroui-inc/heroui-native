@@ -9,6 +9,13 @@ const description = tv({
     isInvalid: {
       true: 'text-danger',
     },
+    isDisabled: {
+      true: 'opacity-disabled',
+      false: '',
+    },
+  },
+  defaultVariants: {
+    isDisabled: false,
   },
 });
 

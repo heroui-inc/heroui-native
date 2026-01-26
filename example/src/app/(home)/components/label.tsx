@@ -1,4 +1,4 @@
-import { FieldError, Label, TextField } from 'heroui-native';
+import { FieldError, Input, Label, TextField } from 'heroui-native';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -8,11 +8,11 @@ const BasicAndRequiredContent = () => {
     <View className="flex-1 justify-center px-5 gap-8">
       <TextField>
         <Label>Username</Label>
-        <TextField.Input placeholder="Choose a username" />
+        <Input placeholder="Choose a username" />
       </TextField>
       <TextField>
         <Label isRequired>Password</Label>
-        <TextField.Input placeholder="Create a password" secureTextEntry />
+        <Input placeholder="Create a password" secureTextEntry />
       </TextField>
     </View>
   );
@@ -25,7 +25,7 @@ const InvalidAndDisabledContent = () => {
     <View className="flex-1 justify-center px-5 gap-8">
       <TextField isInvalid>
         <Label>Confirm password</Label>
-        <TextField.Input
+        <Input
           placeholder="Confirm your password"
           secureTextEntry
           value="different"
@@ -35,7 +35,7 @@ const InvalidAndDisabledContent = () => {
       </TextField>
       <TextField isDisabled>
         <Label>Subscription plan</Label>
-        <TextField.Input value="Premium" />
+        <Input value="Premium" />
       </TextField>
     </View>
   );

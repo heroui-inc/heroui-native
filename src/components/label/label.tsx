@@ -1,6 +1,9 @@
 import { forwardRef, useMemo } from 'react';
 import { HeroText } from '../../helpers/internal/components';
-import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import {
+  AnimationSettingsProvider,
+  useFormItemState,
+} from '../../helpers/internal/contexts';
 import type { PressableRef, TextRef } from '../../helpers/internal/types';
 import { childrenToString, createContext } from '../../helpers/internal/utils';
 import * as LabelPrimitives from '../../primitives/label';
@@ -22,13 +25,29 @@ const [LabelProvider, useLabel] = createContext<LabelContextValue>({
 const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
   const {
     children,
-    isDisabled = false,
-    isRequired = false,
-    isInvalid = false,
+    isDisabled: localIsDisabled,
+    isRequired: localIsRequired,
+    isInvalid: localIsInvalid,
     className,
     animation,
     ...restProps
   } = props;
+
+  const formItemState = useFormItemState();
+
+  // Merge form item state with local props (local takes precedence)
+  const isDisabled =
+    localIsDisabled !== undefined
+      ? localIsDisabled
+      : (formItemState?.isDisabled ?? false);
+  const isRequired =
+    localIsRequired !== undefined
+      ? localIsRequired
+      : (formItemState?.isRequired ?? false);
+  const isInvalid =
+    localIsInvalid !== undefined
+      ? localIsInvalid
+      : (formItemState?.isInvalid ?? false);
 
   const stringifiedChildren = childrenToString(children);
 

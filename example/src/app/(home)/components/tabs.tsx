@@ -2,7 +2,10 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import {
   Button,
   cn,
+  Description,
+  ErrorView,
   FormField,
+  Label,
   RadioGroup,
   Tabs,
   TextField,
@@ -140,7 +143,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
         <Tabs.Content value="general">
           <AnimatedContentContainer>
             <TextField>
-              <TextField.Label>Homepage</TextField.Label>
+              <Label>Homepage</Label>
               <TextField.Input value={homepage} />
             </TextField>
 
@@ -279,7 +282,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
         <Tabs.Content value="profile">
           <AnimatedContentContainer>
             <TextField isRequired isInvalid={!!errors.name}>
-              <TextField.Label>Name</TextField.Label>
+              <Label>Name</Label>
               <TextField.Input
                 value={name}
                 onChangeText={(text) => {
@@ -290,11 +293,11 @@ const TabsContent = ({ variant }: TabsContentProps) => {
                 }}
                 placeholder="Enter your full name"
               />
-              <TextField.ErrorMessage>{errors.name}</TextField.ErrorMessage>
+              <ErrorView>{errors.name}</ErrorView>
             </TextField>
 
             <TextField isRequired isInvalid={!!errors.username}>
-              <TextField.Label>Username</TextField.Label>
+              <Label>Username</Label>
               <TextField.Input
                 value={username}
                 onChangeText={(text) => {
@@ -306,10 +309,10 @@ const TabsContent = ({ variant }: TabsContentProps) => {
                 placeholder="Enter username"
                 autoCapitalize="none"
               />
-              <TextField.Description>
+              <Description>
                 3-20 characters, letters, numbers, and underscore only
-              </TextField.Description>
-              <TextField.ErrorMessage>{errors.username}</TextField.ErrorMessage>
+              </Description>
+              <ErrorView>{errors.username}</ErrorView>
             </TextField>
 
             <Button

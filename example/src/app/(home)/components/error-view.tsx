@@ -1,4 +1,4 @@
-import { ErrorView, TextField } from 'heroui-native';
+import { ErrorView, Label, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { FadeInDown } from 'react-native-reanimated';
@@ -22,15 +22,13 @@ const BasicErrorViewContent = () => {
     >
       <View className="flex-1 pt-[55%]">
         <TextField isInvalid={slideError} isRequired>
-          <TextField.Label isInvalid={false}>Username</TextField.Label>
+          <Label isInvalid={false}>Username</Label>
           <TextField.Input
             placeholder="Enter username"
             editable={false}
             isInvalid={false}
           />
-          <TextField.ErrorMessage>
-            Username is already taken
-          </TextField.ErrorMessage>
+          <ErrorView>Username is already taken</ErrorView>
         </TextField>
       </View>
     </WithStateToggle>
@@ -50,7 +48,7 @@ const MultipleErrorsContent = () => {
       <View className="flex-1 pt-[55%]">
         <View className="gap-2">
           <TextField>
-            <TextField.Label>Create Password</TextField.Label>
+            <Label>Create Password</Label>
             <TextField.Input
               placeholder="Enter your password"
               secureTextEntry
@@ -104,7 +102,7 @@ const InlineErrorMessagesContent = () => {
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-4 w-full">
         <TextField>
-          <TextField.Label>Email Address</TextField.Label>
+          <Label>Email Address</Label>
           <View className="flex-row items-center gap-2">
             <TextField.Input
               placeholder="user@example"
@@ -119,7 +117,7 @@ const InlineErrorMessagesContent = () => {
         </TextField>
 
         <TextField>
-          <TextField.Label>Phone Number</TextField.Label>
+          <Label>Phone Number</Label>
           <View className="flex-row items-center gap-2">
             <TextField.Input
               placeholder="+1 (555) 000-0000"

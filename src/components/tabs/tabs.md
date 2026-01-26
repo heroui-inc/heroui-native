@@ -330,7 +330,7 @@ export default function TabsExample() {
         <Tabs.Content value="profile">
           <AnimatedContentContainer>
             <TextField isRequired>
-              <TextField.Label>Name</TextField.Label>
+              <Label>Name</Label>
               <TextField.Input
                 value={name}
                 onChangeText={setName}

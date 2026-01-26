@@ -3,7 +3,7 @@ import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   slots: {
-    container: '',
+    container: 'px-1.5',
     text: 'text-sm text-danger',
   },
 });

@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/internal/components';
+import { useFormItemState } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import { childrenToString } from '../../helpers/internal/utils';
 import { useErrorViewRootAnimation } from './error-view.animation';
@@ -16,10 +17,18 @@ const ErrorViewRoot = forwardRef<ViewRef, ErrorViewRootProps>((props, ref) => {
     className,
     classNames,
     textProps,
-    isInvalid = false,
+    isInvalid: localIsInvalid,
     animation,
     ...restProps
   } = props;
+
+  const formItemState = useFormItemState();
+
+  // Merge form item state with local props (local takes precedence)
+  const isInvalid =
+    localIsInvalid !== undefined
+      ? localIsInvalid
+      : (formItemState?.isInvalid ?? false);
 
   const tvStyles = errorViewStyles.root();
 

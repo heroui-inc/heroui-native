@@ -40,8 +40,9 @@ export interface ErrorViewRootProps
   children?: React.ReactNode;
 
   /**
-   * Controls the visibility of the error field
-   * @default false
+   * Controls the visibility of the error field (overrides context)
+   * When false, the error view is hidden
+   * @default undefined - uses form-item-state context value
    */
   isInvalid?: boolean;
 

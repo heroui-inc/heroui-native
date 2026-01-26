@@ -12,18 +12,18 @@ import { TextField } from 'heroui-native';
 
 ```tsx
 <TextField>
-  <TextField.Label>...</TextField.Label>
+  <Label>...</Label>
   <TextField.Input />
-  <TextField.Description>...</TextField.Description>
-  <TextField.ErrorMessage>...</TextField.ErrorMessage>
+  <Description>...</Description>
+  <ErrorView>...</ErrorView>
 </TextField>
 ```
 
 - **TextField**: Root container that provides spacing and state management
-- **TextField.Label**: Label with optional asterisk for required fields
+- **Label**: Label with optional asterisk for required fields (from form-item-state context)
 - **TextField.Input**: Input container with animated border and background
-- **TextField.Description**: Helper text displayed below the input
-- **TextField.ErrorMessage**: Error message shown when field is invalid
+- **Description**: Helper text displayed below the input (from form-item-state context)
+- **ErrorView**: Error message shown when field is invalid (from form-item-state context)
 
 ## Usage
 
@@ -33,9 +33,9 @@ TextField provides a complete form input structure with label and description.
 
 ```tsx
 <TextField>
-  <TextField.Label>Email</TextField.Label>
+  <Label>Email</Label>
   <TextField.Input placeholder="Enter your email" />
-  <TextField.Description>We'll never share your email</TextField.Description>
+  <Description>We'll never share your email</Description>
 </TextField>
 ```
 
@@ -45,7 +45,7 @@ Mark fields as required to show an asterisk in the label.
 
 ```tsx
 <TextField isRequired>
-  <TextField.Label>Username</TextField.Label>
+  <Label>Username</Label>
   <TextField.Input placeholder="Choose a username" />
 </TextField>
 ```
@@ -55,10 +55,12 @@ Mark fields as required to show an asterisk in the label.
 Display error messages when the field is invalid.
 
 ```tsx
+import { ErrorView, Label, TextField } from 'heroui-native';
+
 <TextField isRequired isInvalid={true}>
-  <TextField.Label>Email</TextField.Label>
+  <Label>Email</Label>
   <TextField.Input placeholder="Enter your email" />
-  <TextField.ErrorMessage>Please enter a valid email</TextField.ErrorMessage>
+  <ErrorView>Please enter a valid email</ErrorView>
 </TextField>
 ```
 
@@ -67,13 +69,15 @@ Display error messages when the field is invalid.
 Override the context's invalid state for individual components.
 
 ```tsx
+import { Description, ErrorView, Label, TextField } from 'heroui-native';
+
 <TextField isInvalid={true}>
-  <TextField.Label isInvalid={false}>Email</TextField.Label>
+  <Label isInvalid={false}>Email</Label>
   <TextField.Input placeholder="Enter your email" isInvalid={false} />
-  <TextField.Description>
+  <Description isInvalid={false}>
     This shows despite input being invalid
-  </TextField.Description>
-  <TextField.ErrorMessage>Email format is incorrect</TextField.ErrorMessage>
+  </Description>
+  <ErrorView>Email format is incorrect</ErrorView>
 </TextField>
 ```
 
@@ -83,13 +87,13 @@ Create text areas for longer content.
 
 ```tsx
 <TextField>
-  <TextField.Label>Message</TextField.Label>
+  <Label>Message</Label>
   <TextField.Input
     placeholder="Type your message..."
     multiline
     numberOfLines={4}
   />
-  <TextField.Description>Maximum 500 characters</TextField.Description>
+  <Description>Maximum 500 characters</Description>
 </TextField>
 ```
 
@@ -99,7 +103,7 @@ Disable the entire field to prevent interaction.
 
 ```tsx
 <TextField isDisabled>
-  <TextField.Label>Disabled Field</TextField.Label>
+  <Label>Disabled Field</Label>
   <TextField.Input placeholder="Cannot edit" value="Read only value" />
 </TextField>
 ```
@@ -110,12 +114,12 @@ Use different variants to style the input based on context.
 
 ```tsx
 <TextField>
-  <TextField.Label>Primary Variant</TextField.Label>
+  <Label>Primary Variant</Label>
   <TextField.Input placeholder="Primary style" variant="primary" />
 </TextField>
 
 <TextField>
-  <TextField.Label>Secondary Variant</TextField.Label>
+  <Label>Secondary Variant</Label>
   <TextField.Input placeholder="Secondary style" variant="secondary" />
 </TextField>
 ```
@@ -126,7 +130,7 @@ Customize the input appearance using className.
 
 ```tsx
 <TextField>
-  <TextField.Label>Custom Styled</TextField.Label>
+  <Label>Custom Styled</Label>
   <TextField.Input
     placeholder="Custom colors"
     className="bg-blue-50 border-blue-500 focus:border-blue-700"
@@ -138,7 +142,7 @@ Customize the input appearance using className.
 
 ```tsx
 import { Ionicons } from '@expo/vector-icons';
-import { TextField } from 'heroui-native';
+import { Description, Label, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { withUniwind } from 'uniwind';
@@ -153,7 +157,7 @@ export const TextInputContent = () => {
   return (
     <View className="gap-4">
       <TextField isRequired>
-        <TextField.Label>Email</TextField.Label>
+        <Label>Email</Label>
         <TextField.Input
           placeholder="Enter your email"
           keyboardType="email-address"
@@ -161,13 +165,13 @@ export const TextInputContent = () => {
           value={email}
           onChangeText={setEmail}
         />
-        <TextField.Description>
+        <Description>
           We'll never share your email with anyone else.
-        </TextField.Description>
+        </Description>
       </TextField>
 
       <TextField isRequired>
-        <TextField.Label>New password</TextField.Label>
+        <Label>New password</Label>
         <View className="w-full flex-row items-center">
           <TextField.Input
             value={password}
@@ -193,9 +197,9 @@ export const TextInputContent = () => {
             />
           </Pressable>
         </View>
-        <TextField.Description>
+        <Description>
           Password must be at least 6 characters
-        </TextField.Description>
+        </Description>
       </TextField>
     </View>
   );
@@ -218,37 +222,11 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 | animation    | `"disable-all" \| undefined` | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
 | ...ViewProps | `ViewProps`                  | -           | All standard React Native View props are supported                                        |
 
-### TextField.Label
-
-| prop                  | type                       | default     | description                                                  |
-| --------------------- | -------------------------- | ----------- | ------------------------------------------------------------ |
-| children              | `React.ReactNode`          | -           | Label text content                                           |
-| isInvalid             | `boolean`                  | `undefined` | Whether the label is in an invalid state (overrides context) |
-| className             | `string`                   | -           | Custom class name for the label element                      |
-| classNames            | `ElementSlots<LabelSlots>` | -           | Custom class names for different parts of the label          |
-| animation             | `TextFieldLabelAnimation`  | -           | Animation configuration                                      |
-| ...Animated.TextProps | `AnimatedProps<TextProps>` | -           | All Reanimated Animated.Text props are supported             |
-
-#### `ElementSlots<LabelSlots>`
-
-| prop     | type     | description                          |
-| -------- | -------- | ------------------------------------ |
-| text     | `string` | Custom class name for the label text |
-| asterisk | `string` | Custom class name for the asterisk   |
-
-#### TextFieldLabelAnimation
-
-Animation configuration for TextField.Label component. Can be:
-
-- `false` or `"disabled"`: Disable all animations
-- `true` or `undefined`: Use default animations
-- `object`: Custom animation configuration
-
-| prop             | type                    | default                                                               | description                                     |
-| ---------------- | ----------------------- | --------------------------------------------------------------------- | ----------------------------------------------- |
-| `state`          | `'disabled' \| boolean` | -                                                                     | Disable animations while customizing properties |
-| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation                       |
-| `exiting.value`  | `EntryOrExitLayoutType` | `FadeOut`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation                        |
+> **Note**: For Label and Description components, see their respective documentation:
+> - [Label documentation](../label/label.md)
+> - [Description documentation](../description/description.md)
+>
+> These components automatically consume form state from TextField via the form-item-state context.
 
 ### TextField.Input
 
@@ -261,33 +239,7 @@ Animation configuration for TextField.Label component. Can be:
 | placeholderColorClassName | `string`                   | `"field-placeholder"` | Custom className for the placeholder text color              |
 | ...TextInputProps         | `TextInputProps`           | -                     | All standard React Native TextInput props are supported      |
 
-### TextField.Description
-
-| prop                  | type                            | default     | description                                                        |
-| --------------------- | ------------------------------- | ----------- | ------------------------------------------------------------------ |
-| children              | `React.ReactNode`               | -           | Description text content                                           |
-| isInvalid             | `boolean`                       | `undefined` | Whether the description is in an invalid state (overrides context) |
-| className             | `string`                        | -           | Custom class name for the description element                      |
-| animation             | `TextFieldDescriptionAnimation` | -           | Animation configuration                                            |
-| ...Animated.TextProps | `AnimatedProps<TextProps>`      | -           | All Reanimated Animated.Text props are supported                   |
-
-#### TextFieldDescriptionAnimation
-
-Animation configuration for TextField.Description component. Can be:
-
-- `false` or `"disabled"`: Disable all animations
-- `true` or `undefined`: Use default animations
-- `object`: Custom animation configuration
-
-| prop             | type                    | default                                                               | description                                     |
-| ---------------- | ----------------------- | --------------------------------------------------------------------- | ----------------------------------------------- |
-| `state`          | `'disabled' \| boolean` | -                                                                     | Disable animations while customizing properties |
-| `entering.value` | `EntryOrExitLayoutType` | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation                       |
-| `exiting.value`  | `EntryOrExitLayoutType` | `FadeOut`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation                        |
-
-### TextField.ErrorMessage
-
-> **Note**: `TextField.ErrorMessage` extends `ErrorView` component. For complete API reference, see [ErrorView documentation](../error-view/error-view.md).
+> **Note**: For ErrorView component, see [ErrorView documentation](../error-view/error-view.md). ErrorView automatically consumes form state from TextField via the form-item-state context.
 
 ## Hooks
 

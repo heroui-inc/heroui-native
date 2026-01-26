@@ -56,6 +56,8 @@ Show an asterisk indicator for required fields using the `isRequired` prop.
 Display labels in an invalid state to indicate validation errors.
 
 ```tsx
+import { ErrorView, Label, TextField } from 'heroui-native';
+
 <TextField isInvalid>
   <Label isInvalid>Confirm password</Label>
   <TextField.Input
@@ -64,7 +66,7 @@ Display labels in an invalid state to indicate validation errors.
     value="different"
     editable={false}
   />
-  <TextField.ErrorMessage>Passwords do not match</TextField.ErrorMessage>
+  <ErrorView>Passwords do not match</ErrorView>
 </TextField>
 ```
 
@@ -110,7 +112,7 @@ Apply custom styles using className, classNames, or styles props.
 ## Example
 
 ```tsx
-import { Label, TextField } from 'heroui-native';
+import { ErrorView, Label, TextField } from 'heroui-native';
 import { View } from 'react-native';
 
 export default function LabelExample() {
@@ -132,7 +134,7 @@ export default function LabelExample() {
           value="different"
           editable={false}
         />
-        <TextField.ErrorMessage>Passwords do not match</TextField.ErrorMessage>
+        <ErrorView>Passwords do not match</ErrorView>
       </TextField>
       <TextField isDisabled>
         <Label>Subscription plan</Label>

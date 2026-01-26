@@ -1,4 +1,10 @@
-import { Button, TextField } from 'heroui-native';
+import {
+  Button,
+  Description,
+  ErrorView,
+  Label,
+  TextField,
+} from 'heroui-native';
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { EyeIcon } from '../icons/eye';
@@ -35,7 +41,7 @@ export const TextInputContent = () => {
     <View className="gap-4">
       {/* Basic TextField */}
       <TextField isRequired isInvalid={emailError}>
-        <TextField.Label>Email</TextField.Label>
+        <Label>Email</Label>
         <TextField.Input
           placeholder="Enter your email"
           keyboardType="email-address"
@@ -46,17 +52,15 @@ export const TextInputContent = () => {
             if (emailError) setEmailError(false);
           }}
         />
-        <TextField.Description>
+        <Description>
           We'll never share your email with anyone else.
-        </TextField.Description>
-        <TextField.ErrorMessage>
-          Please enter a valid email address
-        </TextField.ErrorMessage>
+        </Description>
+        <ErrorView>Please enter a valid email address</ErrorView>
       </TextField>
 
       {/* TextField with Icons */}
       <TextField isRequired isInvalid={passwordError} className="mb-8">
-        <TextField.Label>New password</TextField.Label>
+        <Label>New password</Label>
         <View className="w-full flex-row items-center">
           <TextField.Input
             className="flex-1 px-10"
@@ -85,12 +89,8 @@ export const TextInputContent = () => {
             )}
           </Pressable>
         </View>
-        <TextField.Description>
-          Password must be at least 6 characters
-        </TextField.Description>
-        <TextField.ErrorMessage>
-          Password must be at least 6 characters long
-        </TextField.ErrorMessage>
+        <Description>Password must be at least 6 characters</Description>
+        <ErrorView>Password must be at least 6 characters long</ErrorView>
       </TextField>
 
       {/* Submit Button */}

@@ -3,32 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'gap-1',
-  variants: {
-    isDisabled: {
-      true: 'pointer-events-none opacity-disabled',
-    },
-  },
-});
-
-const label = tv({
-  slots: {
-    text: 'mx-1 text-base text-foreground font-medium',
-    asterisk: 'text-lg/6 text-danger',
-  },
-  variants: {
-    isDisabled: {
-      true: {
-        text: '',
-        asterisk: 'text-muted',
-      },
-    },
-    isInvalid: {
-      true: {
-        text: 'text-danger',
-      },
-    },
-  },
+  base: 'gap-2',
 });
 
 const input = tv({
@@ -62,14 +37,6 @@ const inputSelectionColor = tv({
   },
 });
 
-const description = tv({
-  base: 'm-1 text-sm text-muted',
-});
-
-const errorMessage = tv({
-  base: 'p-1',
-});
-
 export const styleSheet = StyleSheet.create({
   borderCurve: {
     borderCurve: 'continuous',
@@ -78,14 +45,9 @@ export const styleSheet = StyleSheet.create({
 
 const textFieldStyles = combineStyles({
   root,
-  label,
   input,
   inputSelectionColor,
   placeholderTextColor,
-  description,
-  errorMessage,
 });
-
-export type LabelSlots = keyof ReturnType<typeof label>;
 
 export default textFieldStyles;

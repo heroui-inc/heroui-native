@@ -4,6 +4,8 @@ import {
   Button,
   cn,
   Dialog,
+  ErrorView,
+  Label,
   ScrollShadow,
   TextField,
   useThemeColor,
@@ -222,9 +224,7 @@ const TextInputDialogContent = () => {
                   keyboardShouldPersistTaps="always"
                 >
                   <TextField isRequired isInvalid={!!nameError}>
-                    <TextField.Label isInvalid={false}>
-                      Full Name
-                    </TextField.Label>
+                    <Label isInvalid={false}>Full Name</Label>
                     <TextField.Input
                       variant="secondary"
                       placeholder="Enter your name"
@@ -239,13 +239,11 @@ const TextInputDialogContent = () => {
                       isInvalid={false}
                       selectionColorClassName="accent-muted"
                     />
-                    <TextField.ErrorMessage>{nameError}</TextField.ErrorMessage>
+                    <ErrorView>{nameError}</ErrorView>
                   </TextField>
 
                   <TextField isRequired isInvalid={!!emailError}>
-                    <TextField.Label isInvalid={false}>
-                      Email Address
-                    </TextField.Label>
+                    <Label isInvalid={false}>Email Address</Label>
                     <TextField.Input
                       variant="secondary"
                       placeholder="email@example.com"
@@ -258,9 +256,7 @@ const TextInputDialogContent = () => {
                       isInvalid={false}
                       selectionColor={themeColorMuted}
                     />
-                    <TextField.ErrorMessage>
-                      {emailError}
-                    </TextField.ErrorMessage>
+                    <ErrorView>{emailError}</ErrorView>
                   </TextField>
                 </StyleScrollView>
               </View>

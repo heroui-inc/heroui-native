@@ -1,4 +1,4 @@
-import { Label, TextField } from 'heroui-native';
+import { ErrorView, Label, TextField } from 'heroui-native';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -7,13 +7,11 @@ const BasicAndRequiredContent = () => {
   return (
     <View className="flex-1 justify-center px-5 gap-8">
       <TextField>
-        <Label className="ml-1">Username</Label>
+        <Label>Username</Label>
         <TextField.Input placeholder="Choose a username" />
       </TextField>
       <TextField>
-        <Label isRequired className="ml-1">
-          Password
-        </Label>
+        <Label isRequired>Password</Label>
         <TextField.Input placeholder="Create a password" secureTextEntry />
       </TextField>
     </View>
@@ -26,21 +24,17 @@ const InvalidAndDisabledContent = () => {
   return (
     <View className="flex-1 justify-center px-5 gap-8">
       <TextField isInvalid>
-        <Label isInvalid className="ml-1">
-          Confirm password
-        </Label>
+        <Label>Confirm password</Label>
         <TextField.Input
           placeholder="Confirm your password"
           secureTextEntry
           value="different"
           editable={false}
         />
-        <TextField.ErrorMessage className="ml-0.5">
-          Passwords do not match
-        </TextField.ErrorMessage>
+        <ErrorView className="ml-0.5">Passwords do not match</ErrorView>
       </TextField>
       <TextField isDisabled>
-        <Label className="ml-1">Subscription plan</Label>
+        <Label>Subscription plan</Label>
         <TextField.Input value="Premium" />
       </TextField>
     </View>

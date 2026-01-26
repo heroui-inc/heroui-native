@@ -28,12 +28,26 @@ The ErrorView component displays error messages when validation fails.
 
 ### Controlled Visibility
 
-Control when the error appears using the `isInvalid` prop.
+Control when the error appears using the `isInvalid` prop. When used inside a form field component (like TextField), ErrorView automatically consumes the form-item-state context.
 
 ```tsx
 const [isInvalid, setIsInvalid] = useState(false);
 
 <ErrorView isInvalid={isInvalid}>Please enter a valid email address</ErrorView>;
+```
+
+### With Form Fields
+
+ErrorView automatically consumes form state from TextField via the form-item-state context.
+
+```tsx
+import { ErrorView, Label, TextField } from 'heroui-native';
+
+<TextField isRequired isInvalid={true}>
+  <Label>Email</Label>
+  <TextField.Input placeholder="Enter your email" />
+  <ErrorView>Please enter a valid email address</ErrorView>
+</TextField>
 ```
 
 ### Custom Content
@@ -112,24 +126,24 @@ Pass additional props to the Text component when children is a string.
 ## Example
 
 ```tsx
-import { ErrorView, TextField } from 'heroui-native';
+import { Description, ErrorView, Label, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 
 export default function ErrorViewExample() {
   const [email, setEmail] = useState('');
-  const [showError, setShowError] = useState(false);
+  const [isInvalid, setIsInvalid] = useState(false);
 
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleBlur = () => {
-    setShowError(email !== '' && !isValidEmail);
+    setIsInvalid(email !== '' && !isValidEmail);
   };
 
   return (
     <View className="p-4">
-      <TextField>
-        <TextField.Label>Email Address</TextField.Label>
+      <TextField isInvalid={isInvalid}>
+        <Label>Email Address</Label>
         <TextField.Input
           placeholder="Enter your email"
           value={email}
@@ -138,14 +152,11 @@ export default function ErrorViewExample() {
           keyboardType="email-address"
           autoCapitalize="none"
         />
-        <TextField.Description>
+        <Description>
           We'll use this to contact you
-        </TextField.Description>
+        </Description>
+        <ErrorView>Please enter a valid email address</ErrorView>
       </TextField>
-
-      <ErrorView isInvalid={showError} className="ml-1">
-        Please enter a valid email address
-      </ErrorView>
     </View>
   );
 }
@@ -160,7 +171,7 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | prop                   | type                           | default     | description                                                              |
 | ---------------------- | ------------------------------ | ----------- | ------------------------------------------------------------------------ |
 | `children`             | `React.ReactNode`              | `undefined` | The content of the error field. String children are wrapped with Text    |
-| `isInvalid`            | `boolean`                      | `false`     | Controls the visibility of the error field                               |
+| `isInvalid`            | `boolean`                      | `undefined` | Controls the visibility of the error field (overrides form-item-state context). When used inside TextField, automatically consumes form state |
 | `animation`            | `ErrorViewRootAnimation`       | -           | Animation configuration                                                  |
 | `className`            | `string`                       | `undefined` | Additional CSS classes for the container                                 |
 | `classNames`           | `ElementSlots<ErrorViewSlots>` | `undefined` | Additional CSS classes for different parts of the component              |

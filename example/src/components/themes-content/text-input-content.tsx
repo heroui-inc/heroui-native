@@ -1,7 +1,7 @@
 import {
   Button,
   Description,
-  ErrorView,
+  FieldError,
   Label,
   TextField,
 } from 'heroui-native';
@@ -55,7 +55,7 @@ export const TextInputContent = () => {
         <Description>
           We'll never share your email with anyone else.
         </Description>
-        <ErrorView>Please enter a valid email address</ErrorView>
+        <FieldError>Please enter a valid email address</FieldError>
       </TextField>
 
       {/* TextField with Icons */}
@@ -90,7 +90,7 @@ export const TextInputContent = () => {
           </Pressable>
         </View>
         <Description>Password must be at least 6 characters</Description>
-        <ErrorView>Password must be at least 6 characters long</ErrorView>
+        <FieldError>Password must be at least 6 characters long</FieldError>
       </TextField>
 
       {/* Submit Button */}

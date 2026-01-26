@@ -1,4 +1,4 @@
-import { cn, Description, ErrorView, Label, TextField } from 'heroui-native';
+import { cn, Description, FieldError, Label, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { Pressable, useWindowDimensions, View } from 'react-native';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
@@ -136,7 +136,7 @@ const TextFieldWithValidationContent = () => {
               autoCapitalize="characters"
             />
             <Description>Enter a valid code to receive discount</Description>
-            <ErrorView>This promo code is invalid or has expired</ErrorView>
+            <FieldError>This promo code is invalid or has expired</FieldError>
           </TextField>
         </KeyboardAvoidingContainer>
       </View>

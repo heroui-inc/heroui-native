@@ -3,15 +3,15 @@ import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   slots: {
-    container: 'px-1.5',
+    container: '',
     text: 'text-sm text-danger',
   },
 });
 
-const errorViewStyles = combineStyles({
+const fieldErrorStyles = combineStyles({
   root,
 });
 
-export type ErrorViewSlots = keyof ReturnType<typeof root>;
+export type FieldErrorSlots = keyof ReturnType<typeof root>;
 
-export default errorViewStyles;
+export default fieldErrorStyles;

@@ -119,8 +119,8 @@ export default function Layout() {
           options={{ title: 'Description' }}
         />
         <Stack.Screen
-          name="components/error-view"
-          options={{ title: 'ErrorView' }}
+          name="components/field-error"
+          options={{ title: 'FieldError' }}
         />
         <Stack.Screen
           name="components/form-field"

@@ -9,7 +9,7 @@ export * from './components/chip';
 export * from './components/close-button';
 export * from './components/description';
 export * from './components/dialog';
-export * from './components/error-view';
+export * from './components/field-error';
 export * from './components/form-field';
 export * from './components/input-otp';
 export * from './components/label';

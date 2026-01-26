@@ -7,17 +7,17 @@ import {
 import {
   ENTERING_ANIMATION_CONFIG,
   EXITING_ANIMATION_CONFIG,
-} from './error-view.constants';
-import type { ErrorViewRootAnimation } from './error-view.types';
+} from './field-error.constants';
+import type { FieldErrorRootAnimation } from './field-error.types';
 
 // --------------------------------------------------
 
 /**
- * Animation hook for ErrorView root component
+ * Animation hook for FieldError root component
  * Handles entering and exiting animations for error messages
  */
-export function useErrorViewRootAnimation(options: {
-  animation: ErrorViewRootAnimation | undefined;
+export function useFieldErrorRootAnimation(options: {
+  animation: FieldErrorRootAnimation | undefined;
 }) {
   const { animation } = options;
 

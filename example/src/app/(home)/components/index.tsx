@@ -54,8 +54,8 @@ const components: Component[] = [
     path: 'dialog',
   },
   {
-    title: 'ErrorView',
-    path: 'error-view',
+    title: 'FieldError',
+    path: 'field-error',
   },
   {
     title: 'FormField',

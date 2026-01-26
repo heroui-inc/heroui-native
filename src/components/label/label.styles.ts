@@ -2,7 +2,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'px-1.5',
+  base: '',
   variants: {
     isDisabled: {
       true: 'pointer-events-none opacity-disabled',

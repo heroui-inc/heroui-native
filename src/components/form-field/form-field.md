@@ -224,7 +224,7 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 
 ### FormField.ErrorMessage
 
-FormField.ErrorMessage extends all props from [ErrorView](../error-view/error-view.md) component.
+FormField.ErrorMessage extends all props from [FieldError](../field-error/field-error.md) component.
 
 **Note**: The `isInvalid` prop is automatically passed from the FormField context. The error message visibility is controlled by the `isInvalid` state of the parent FormField.
 

@@ -12,8 +12,8 @@ import { HeroText } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { PressableRef, ViewRef } from '../../helpers/internal/types';
 import { Checkbox } from '../checkbox';
-import { ErrorView } from '../error-view';
-import type { ErrorViewRootProps } from '../error-view/error-view.types';
+import { FieldError } from '../field-error';
+import type { FieldErrorRootProps } from '../field-error/field-error.types';
 import { Switch } from '../switch';
 import { useFormFieldRootAnimation } from './form-field.animation';
 import { DISPLAY_NAME } from './form-field.constants';
@@ -237,7 +237,7 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
 
 // --------------------------------------------------
 
-const FormFieldErrorMessage = forwardRef<ViewRef, ErrorViewRootProps>(
+const FormFieldErrorMessage = forwardRef<ViewRef, FieldErrorRootProps>(
   (props, ref) => {
     const { isInvalid } = useFormField();
     const { className, ...restProps } = props;
@@ -247,7 +247,7 @@ const FormFieldErrorMessage = forwardRef<ViewRef, ErrorViewRootProps>(
     });
 
     return (
-      <ErrorView
+      <FieldError
         ref={ref}
         isInvalid={isInvalid}
         className={tvStyles}

@@ -6,7 +6,7 @@ import type {
   AnimationValue,
 } from '../../helpers/internal/types';
 import type { ItemProps, RootProps } from '../../primitives/radio-group';
-import type { ErrorViewRootProps } from '../error-view/error-view.types';
+import type { FieldErrorRootProps } from '../field-error/field-error.types';
 import type {
   FormFieldDescriptionProps,
   FormFieldLabelProps,
@@ -151,4 +151,4 @@ export interface RadioGroupDescriptionProps extends FormFieldDescriptionProps {}
 /**
  * Props for RadioGroup.ErrorMessage component
  */
-export interface RadioGroupErrorMessageProps extends ErrorViewRootProps {}
+export interface RadioGroupErrorMessageProps extends FieldErrorRootProps {}

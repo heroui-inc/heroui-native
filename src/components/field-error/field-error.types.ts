@@ -8,30 +8,30 @@ import type {
   AnimationValue,
   ElementSlots,
 } from '../../helpers/internal/types';
-import type { ErrorViewSlots } from './error-view.styles';
+import type { FieldErrorSlots } from './field-error.styles';
 
 /**
- * Animation configuration for ErrorView root component
+ * Animation configuration for FieldError root component
  */
-export type ErrorViewRootAnimation = AnimationRoot<{
+export type FieldErrorRootAnimation = AnimationRoot<{
   entering?: AnimationValue<{
     /**
-     * Custom entering animation for error view
+     * Custom entering animation for field error
      */
     value?: EntryOrExitLayoutType;
   }>;
   exiting?: AnimationValue<{
     /**
-     * Custom exiting animation for error view
+     * Custom exiting animation for field error
      */
     value?: EntryOrExitLayoutType;
   }>;
 }>;
 
 /**
- * Props for the ErrorView root component
+ * Props for the FieldError root component
  */
-export interface ErrorViewRootProps
+export interface FieldErrorRootProps
   extends Omit<AnimatedProps<ViewProps>, 'entering' | 'exiting'> {
   /**
    * The content of the error field
@@ -41,7 +41,7 @@ export interface ErrorViewRootProps
 
   /**
    * Controls the visibility of the error field (overrides context)
-   * When false, the error view is hidden
+   * When false, the field error is hidden
    * @default undefined - uses form-item-state context value
    */
   isInvalid?: boolean;
@@ -54,7 +54,7 @@ export interface ErrorViewRootProps
   /**
    * Additional CSS classes for different parts of the component
    */
-  classNames?: ElementSlots<ErrorViewSlots>;
+  classNames?: ElementSlots<FieldErrorSlots>;
 
   /**
    * Additional props to pass to the Text component when children is a string
@@ -62,10 +62,10 @@ export interface ErrorViewRootProps
   textProps?: TextProps;
 
   /**
-   * Animation configuration for error view
+   * Animation configuration for field error
    * - `false` or `"disabled"`: Disable all animations
    * - `true` or `undefined`: Use default animations
    * - `object`: Custom animation configuration
    */
-  animation?: ErrorViewRootAnimation;
+  animation?: FieldErrorRootAnimation;
 }

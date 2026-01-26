@@ -4,7 +4,7 @@ import {
   Button,
   cn,
   Dialog,
-  ErrorView,
+  FieldError,
   Label,
   ScrollShadow,
   TextField,
@@ -239,7 +239,7 @@ const TextInputDialogContent = () => {
                       isInvalid={false}
                       selectionColorClassName="accent-muted"
                     />
-                    <ErrorView>{nameError}</ErrorView>
+                    <FieldError>{nameError}</FieldError>
                   </TextField>
 
                   <TextField isRequired isInvalid={!!emailError}>
@@ -256,7 +256,7 @@ const TextInputDialogContent = () => {
                       isInvalid={false}
                       selectionColor={themeColorMuted}
                     />
-                    <ErrorView>{emailError}</ErrorView>
+                    <FieldError>{emailError}</FieldError>
                   </TextField>
                 </StyleScrollView>
               </View>

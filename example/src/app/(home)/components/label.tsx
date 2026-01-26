@@ -1,4 +1,4 @@
-import { ErrorView, Label, TextField } from 'heroui-native';
+import { FieldError, Label, TextField } from 'heroui-native';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -31,7 +31,7 @@ const InvalidAndDisabledContent = () => {
           value="different"
           editable={false}
         />
-        <ErrorView className="ml-0.5">Passwords do not match</ErrorView>
+        <FieldError>Passwords do not match</FieldError>
       </TextField>
       <TextField isDisabled>
         <Label>Subscription plan</Label>

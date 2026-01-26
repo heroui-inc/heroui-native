@@ -274,7 +274,7 @@ Animation configuration for RadioGroupIndicatorThumb component. Can be:
 | `children`              | `React.ReactNode`              | `undefined` | The content of the error field                   |
 | `isInvalid`             | `boolean`                      | `false`     | Controls the visibility of the error field       |
 | `className`             | `string`                       | `undefined` | Additional CSS class for styling                 |
-| `classNames`            | `ElementSlots<ErrorViewSlots>` | `undefined` | Additional CSS classes for different parts       |
+| `classNames`            | `ElementSlots<FieldErrorSlots>` | `undefined` | Additional CSS classes for different parts       |
 | `textProps`             | `TextProps`                    | `undefined` | Additional props to pass to the Text component   |
 | `...Animated.ViewProps` | `AnimatedProps<ViewProps>`     | -           | All Reanimated Animated.View props are supported |
 

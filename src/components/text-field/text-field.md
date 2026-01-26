@@ -15,7 +15,7 @@ import { TextField } from 'heroui-native';
   <Label>...</Label>
   <TextField.Input />
   <Description>...</Description>
-  <ErrorView>...</ErrorView>
+  <FieldError>...</FieldError>
 </TextField>
 ```
 
@@ -23,7 +23,7 @@ import { TextField } from 'heroui-native';
 - **Label**: Label with optional asterisk for required fields (from form-item-state context)
 - **TextField.Input**: Input container with animated border and background
 - **Description**: Helper text displayed below the input (from form-item-state context)
-- **ErrorView**: Error message shown when field is invalid (from form-item-state context)
+- **FieldError**: Error message shown when field is invalid (from form-item-state context)
 
 ## Usage
 
@@ -55,12 +55,12 @@ Mark fields as required to show an asterisk in the label.
 Display error messages when the field is invalid.
 
 ```tsx
-import { ErrorView, Label, TextField } from 'heroui-native';
+import { FieldError, Label, TextField } from 'heroui-native';
 
 <TextField isRequired isInvalid={true}>
   <Label>Email</Label>
   <TextField.Input placeholder="Enter your email" />
-  <ErrorView>Please enter a valid email</ErrorView>
+  <FieldError>Please enter a valid email</FieldError>
 </TextField>
 ```
 
@@ -69,7 +69,7 @@ import { ErrorView, Label, TextField } from 'heroui-native';
 Override the context's invalid state for individual components.
 
 ```tsx
-import { Description, ErrorView, Label, TextField } from 'heroui-native';
+import { Description, FieldError, Label, TextField } from 'heroui-native';
 
 <TextField isInvalid={true}>
   <Label isInvalid={false}>Email</Label>
@@ -77,7 +77,7 @@ import { Description, ErrorView, Label, TextField } from 'heroui-native';
   <Description isInvalid={false}>
     This shows despite input being invalid
   </Description>
-  <ErrorView>Email format is incorrect</ErrorView>
+  <FieldError>Email format is incorrect</FieldError>
 </TextField>
 ```
 
@@ -239,7 +239,7 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 | placeholderColorClassName | `string`                   | `"field-placeholder"` | Custom className for the placeholder text color              |
 | ...TextInputProps         | `TextInputProps`           | -                     | All standard React Native TextInput props are supported      |
 
-> **Note**: For ErrorView component, see [ErrorView documentation](../error-view/error-view.md). ErrorView automatically consumes form state from TextField via the form-item-state context.
+> **Note**: For FieldError component, see [FieldError documentation](../field-error/field-error.md). FieldError automatically consumes form state from TextField via the form-item-state context.
 
 ## Hooks
 

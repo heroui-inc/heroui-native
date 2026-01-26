@@ -7,7 +7,7 @@ import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { TextRef, ViewRef } from '../../helpers/internal/types';
 import { childrenToString, createContext } from '../../helpers/internal/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
-import { ErrorView } from '../error-view';
+import { FieldError } from '../field-error';
 import { FormField } from '../form-field';
 import {
   useRadioGroupIndicatorThumbAnimation,
@@ -265,7 +265,7 @@ const RadioGroupErrorMessage = forwardRef<ViewRef, RadioGroupErrorMessageProps>(
     });
 
     return (
-      <ErrorView
+      <FieldError
         ref={ref}
         isInvalid={isInvalid}
         className={tvStyles}

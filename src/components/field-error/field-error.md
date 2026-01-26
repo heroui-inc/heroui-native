@@ -1,52 +1,52 @@
-# ErrorView
+# FieldError
 
 Displays validation error message content with smooth animations.
 
 ## Import
 
 ```tsx
-import { ErrorView } from 'heroui-native';
+import { FieldError } from 'heroui-native';
 ```
 
 ## Anatomy
 
 ```tsx
-<ErrorView>Error message content</ErrorView>
+<FieldError>Error message content</FieldError>
 ```
 
-- **ErrorView**: Main container that displays error messages with smooth animations. Accepts string children which are automatically wrapped with Text component, or custom React components for more complex layouts. Controls visibility through the `isInvalid` prop and supports custom entering/exiting animations.
+- **FieldError**: Main container that displays error messages with smooth animations. Accepts string children which are automatically wrapped with Text component, or custom React components for more complex layouts. Controls visibility through the `isInvalid` prop and supports custom entering/exiting animations.
 
 ## Usage
 
 ### Basic Usage
 
-The ErrorView component displays error messages when validation fails.
+The FieldError component displays error messages when validation fails.
 
 ```tsx
-<ErrorView isInvalid={true}>This field is required</ErrorView>
+<FieldError isInvalid={true}>This field is required</FieldError>
 ```
 
 ### Controlled Visibility
 
-Control when the error appears using the `isInvalid` prop. When used inside a form field component (like TextField), ErrorView automatically consumes the form-item-state context.
+Control when the error appears using the `isInvalid` prop. When used inside a form field component (like TextField), FieldError automatically consumes the form-item-state context.
 
 ```tsx
 const [isInvalid, setIsInvalid] = useState(false);
 
-<ErrorView isInvalid={isInvalid}>Please enter a valid email address</ErrorView>;
+<FieldError isInvalid={isInvalid}>Please enter a valid email address</FieldError>;
 ```
 
 ### With Form Fields
 
-ErrorView automatically consumes form state from TextField via the form-item-state context.
+FieldError automatically consumes form state from TextField via the form-item-state context.
 
 ```tsx
-import { ErrorView, Label, TextField } from 'heroui-native';
+import { FieldError, Label, TextField } from 'heroui-native';
 
 <TextField isRequired isInvalid={true}>
   <Label>Email</Label>
   <TextField.Input placeholder="Enter your email" />
-  <ErrorView>Please enter a valid email address</ErrorView>
+  <FieldError>Please enter a valid email address</FieldError>
 </TextField>
 ```
 
@@ -55,12 +55,12 @@ import { ErrorView, Label, TextField } from 'heroui-native';
 Pass custom React components as children instead of strings.
 
 ```tsx
-<ErrorView isInvalid={true}>
+<FieldError isInvalid={true}>
   <View className="flex-row items-center">
     <Icon name="alert-circle" />
     <Text className="ml-2 text-danger">Invalid input</Text>
   </View>
-</ErrorView>
+</FieldError>
 ```
 
 ### Custom Animations
@@ -70,7 +70,7 @@ Override default entering and exiting animations using the `animation` prop.
 ```tsx
 import { SlideInDown, SlideOutUp } from 'react-native-reanimated';
 
-<ErrorView
+<FieldError
   isInvalid={true}
   animation={{
     entering: { value: SlideInDown.duration(200) },
@@ -78,15 +78,15 @@ import { SlideInDown, SlideOutUp } from 'react-native-reanimated';
   }}
 >
   Field validation failed
-</ErrorView>;
+</FieldError>;
 ```
 
 Disable animations entirely:
 
 ```tsx
-<ErrorView isInvalid={true} animation={false}>
+<FieldError isInvalid={true} animation={false}>
   Field validation failed
-</ErrorView>
+</FieldError>
 ```
 
 ### Custom Styling
@@ -94,7 +94,7 @@ Disable animations entirely:
 Apply custom styles to the container and text elements.
 
 ```tsx
-<ErrorView
+<FieldError
   isInvalid={true}
   className="mt-2"
   classNames={{
@@ -103,7 +103,7 @@ Apply custom styles to the container and text elements.
   }}
 >
   Password must be at least 8 characters
-</ErrorView>
+</FieldError>
 ```
 
 ### Custom Text Props
@@ -111,7 +111,7 @@ Apply custom styles to the container and text elements.
 Pass additional props to the Text component when children is a string.
 
 ```tsx
-<ErrorView
+<FieldError
   isInvalid={true}
   textProps={{
     numberOfLines: 1,
@@ -120,17 +120,17 @@ Pass additional props to the Text component when children is a string.
   }}
 >
   This is a very long error message that might need to be truncated
-</ErrorView>
+</FieldError>
 ```
 
 ## Example
 
 ```tsx
-import { Description, ErrorView, Label, TextField } from 'heroui-native';
+import { Description, FieldError, Label, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 
-export default function ErrorViewExample() {
+export default function FieldErrorExample() {
   const [email, setEmail] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
 
@@ -155,34 +155,34 @@ export default function ErrorViewExample() {
         <Description>
           We'll use this to contact you
         </Description>
-        <ErrorView>Please enter a valid email address</ErrorView>
+        <FieldError>Please enter a valid email address</FieldError>
       </TextField>
     </View>
   );
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/error-view.tsx).
+You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/field-error.tsx).
 
 ## API Reference
 
-### ErrorView
+### FieldError
 
 | prop                   | type                           | default     | description                                                              |
 | ---------------------- | ------------------------------ | ----------- | ------------------------------------------------------------------------ |
 | `children`             | `React.ReactNode`              | `undefined` | The content of the error field. String children are wrapped with Text    |
 | `isInvalid`            | `boolean`                      | `undefined` | Controls the visibility of the error field (overrides form-item-state context). When used inside TextField, automatically consumes form state |
-| `animation`            | `ErrorViewRootAnimation`       | -           | Animation configuration                                                  |
+| `animation`            | `FieldErrorRootAnimation`       | -           | Animation configuration                                                  |
 | `className`            | `string`                       | `undefined` | Additional CSS classes for the container                                 |
-| `classNames`           | `ElementSlots<ErrorViewSlots>` | `undefined` | Additional CSS classes for different parts of the component              |
+| `classNames`           | `ElementSlots<FieldErrorSlots>` | `undefined` | Additional CSS classes for different parts of the component              |
 | `textProps`            | `TextProps`                    | `undefined` | Additional props to pass to the Text component when children is a string |
 | `...AnimatedViewProps` | `AnimatedProps<ViewProps>`     | -           | All Reanimated Animated.View props are supported                         |
 
-**classNames prop:** `ElementSlots<ErrorViewSlots>` provides type-safe CSS classes for different parts of the error view component. Available slots: `container`, `text`.
+**classNames prop:** `ElementSlots<FieldErrorSlots>` provides type-safe CSS classes for different parts of the field error component. Available slots: `container`, `text`.
 
-#### ErrorViewRootAnimation
+#### FieldErrorRootAnimation
 
-Animation configuration for error view root component. Can be:
+Animation configuration for field error root component. Can be:
 
 - `false` or `"disabled"`: Disable only root animations
 - `"disable-all"`: Disable all animations including children
@@ -192,5 +192,5 @@ Animation configuration for error view root component. Can be:
 | prop             | type                                     | default                                                               | description                                     |
 | ---------------- | ---------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------- |
 | `state`          | `'disabled' \| 'disable-all' \| boolean` | -                                                                     | Disable animations while customizing properties |
-| `entering.value` | `EntryOrExitLayoutType`                  | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation for error view        |
-| `exiting.value`  | `EntryOrExitLayoutType`                  | `FadeOut`<br/>`.duration(100)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation for error view         |
+| `entering.value` | `EntryOrExitLayoutType`                  | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation for field error        |
+| `exiting.value`  | `EntryOrExitLayoutType`                  | `FadeOut`<br/>`.duration(100)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation for field error         |

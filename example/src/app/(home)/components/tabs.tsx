@@ -3,7 +3,7 @@ import {
   Button,
   cn,
   Description,
-  ErrorView,
+  FieldError,
   FormField,
   Label,
   RadioGroup,
@@ -293,7 +293,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
                 }}
                 placeholder="Enter your full name"
               />
-              <ErrorView>{errors.name}</ErrorView>
+              <FieldError>{errors.name}</FieldError>
             </TextField>
 
             <TextField isRequired isInvalid={!!errors.username}>
@@ -312,7 +312,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <Description>
                 3-20 characters, letters, numbers, and underscore only
               </Description>
-              <ErrorView>{errors.username}</ErrorView>
+              <FieldError>{errors.username}</FieldError>
             </TextField>
 
             <Button

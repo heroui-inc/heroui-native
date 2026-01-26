@@ -4,6 +4,7 @@ import { HeroText } from '../../helpers/internal/components';
 import { useFormItemState } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import { childrenToString } from '../../helpers/internal/utils';
+import { useTextField } from '../text-field';
 import { useFieldErrorRootAnimation } from './field-error.animation';
 import { DISPLAY_NAME } from './field-error.constants';
 import fieldErrorStyles from './field-error.styles';
@@ -24,6 +25,7 @@ const FieldErrorRoot = forwardRef<ViewRef, FieldErrorRootProps>(
     } = props;
 
     const formItemState = useFormItemState();
+    const textFieldContext = useTextField();
 
     // Merge form item state with local props (local takes precedence)
     const isInvalid =
@@ -31,7 +33,11 @@ const FieldErrorRoot = forwardRef<ViewRef, FieldErrorRootProps>(
         ? localIsInvalid
         : (formItemState?.isInvalid ?? false);
 
-    const tvStyles = fieldErrorStyles.root();
+    const isInsideTextField = Boolean(textFieldContext);
+
+    const tvStyles = fieldErrorStyles.root({
+      isInsideTextField,
+    });
 
     const containerStyles = tvStyles.container({
       className: [className, classNames?.container],

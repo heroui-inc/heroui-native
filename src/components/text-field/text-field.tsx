@@ -19,6 +19,7 @@ import type {
 
 const [TextFieldProvider, useTextField] = createContext<TextFieldContextValue>({
   name: 'TextFieldContext',
+  strict: false,
 });
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);

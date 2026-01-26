@@ -7,6 +7,7 @@ import {
 import type { PressableRef, TextRef } from '../../helpers/internal/types';
 import { childrenToString, createContext } from '../../helpers/internal/utils';
 import * as LabelPrimitives from '../../primitives/label';
+import { useTextField } from '../text-field';
 import { useLabelRootAnimation } from './label.animation';
 import { DISPLAY_NAME } from './label.constants';
 import labelStyles from './label.styles';
@@ -34,6 +35,9 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
   } = props;
 
   const formItemState = useFormItemState();
+  const textFieldContext = useTextField();
+
+  const isInsideTextField = Boolean(textFieldContext);
 
   // Merge form item state with local props (local takes precedence)
   const isDisabled =
@@ -73,6 +77,7 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
 
   const rootTvStyles = labelStyles.root({
     isDisabled,
+    isInsideTextField,
     className,
   });
 

@@ -6,6 +6,14 @@ const root = tv({
     container: '',
     text: 'text-sm text-danger',
   },
+  variants: {
+    isInsideTextField: {
+      true: {
+        container: 'px-1.5',
+        text: '',
+      },
+    },
+  },
 });
 
 const fieldErrorStyles = combineStyles({

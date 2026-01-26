@@ -3,6 +3,7 @@ import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/internal/components';
 import { useFormItemState } from '../../helpers/internal/contexts';
 import type { TextRef } from '../../helpers/internal/types';
+import { useTextField } from '../text-field';
 import { useDescriptionAnimation } from './description.animation';
 import { DISPLAY_NAME } from './description.constants';
 import descriptionStyles from './description.styles';
@@ -23,14 +24,18 @@ const Description = forwardRef<TextRef, DescriptionProps>((props, ref) => {
   } = props;
 
   const formItemState = useFormItemState();
+  const textFieldContext = useTextField();
 
   const isInvalid =
     localIsInvalid !== undefined
       ? localIsInvalid
       : (formItemState?.isInvalid ?? false);
 
+  const isInsideTextField = Boolean(textFieldContext);
+
   const tvStyles = descriptionStyles({
     isInvalid,
+    isInsideTextField,
     className,
   });
 

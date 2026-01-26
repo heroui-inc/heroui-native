@@ -98,8 +98,8 @@ const ShippingOptionItem = ({
       {({ isSelected }) => (
         <View
           className={cn(
-            'flex-row items-center justify-between gap-3 p-3 rounded-2xl bg-transparent',
-            isSelected && 'bg-surface',
+            'flex-row items-center justify-between gap-3 p-3 rounded-[18px] bg-transparent',
+            isSelected && 'bg-surface shadow-surface',
             containerClassName
           )}
         >

@@ -21,7 +21,7 @@ import { tv } from 'tailwind-variants';
  * set `isAnimatedStyleActive={false}` on `BottomSheet.Overlay`.
  */
 const overlay = tv({
-  base: 'absolute inset-0 bg-black/20',
+  base: 'absolute inset-0 bg-black/10',
 });
 
 const contentContainer = tv({
@@ -29,7 +29,7 @@ const contentContainer = tv({
 });
 
 const contentBackground = tv({
-  base: 'bg-overlay rounded-t-[32px]',
+  base: 'bg-overlay rounded-t-4xl shadow-overlay',
 });
 
 const contentHandleIndicator = tv({

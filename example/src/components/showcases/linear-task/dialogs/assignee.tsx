@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Avatar, Chip, Dialog, RadioGroup, useDialog } from 'heroui-native';
+import { Avatar, Chip, cn, Dialog, RadioGroup, useDialog } from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -9,6 +9,7 @@ import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
+import { useAppTheme } from '../../../../contexts/app-theme-context';
 import { AppText } from '../../../app-text';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
 import { DialogHeader } from '../dialog-header';
@@ -65,6 +66,7 @@ export const Assignee: FC = () => {
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
+  const { isDark } = useAppTheme();
 
   const insetTop = insets.top + 12;
   const dialogContentHeight = (height - insetTop) / 2;
@@ -129,7 +131,10 @@ export const Assignee: FC = () => {
     <Dialog>
       <Dialog.Trigger asChild>
         <Chip
-          className="h-7 bg-surface-quaternary pl-1 pr-2"
+          className={cn(
+            'h-7 pl-1 pr-2',
+            isDark ? 'bg-neutral-900/50' : 'bg-neutral-300/50'
+          )}
           onPress={() => {
             if (Platform.OS === 'ios') {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);

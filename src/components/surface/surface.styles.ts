@@ -2,13 +2,12 @@ import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
 
 const root = tv({
-  base: 'p-4 rounded-3xl overflow-hidden',
+  base: 'p-4 rounded-3xl shadow-surface overflow-hidden',
   variants: {
     variant: {
       default: 'bg-surface',
       secondary: 'bg-surface-secondary',
       tertiary: 'bg-surface-tertiary',
-      quaternary: 'bg-surface-quaternary',
       transparent: 'bg-transparent',
     },
   },

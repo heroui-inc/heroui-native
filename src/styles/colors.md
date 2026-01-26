@@ -49,11 +49,11 @@ These colors define the main background layers and their foreground text colors:
 --overlay-foreground: var(--foreground);
 
 /* Dark theme */
---background: var(--black);
+--background: oklch(12% 0.005 285.823);
 --foreground: var(--snow);
 --surface: oklch(0.2103 0.0059 285.89);
 --surface-foreground: var(--foreground);
---overlay: oklch(0.2563 0.0058 271.19);
+--overlay: oklch(0.2103 0.0059 285.89);
 --overlay-foreground: var(--foreground);
 ```
 
@@ -101,7 +101,7 @@ For consistent form field styling across input components:
 --field-border: transparent;
 
 /* Dark theme */
---field-background: var(--default);
+--field-background: oklch(0.2103 0.0059 285.89);
 --field-foreground: var(--foreground);
 --field-placeholder: var(--muted);
 --field-border: transparent;
@@ -111,17 +111,21 @@ For consistent form field styling across input components:
 
 ```css
 /* Light theme */
---muted: oklch(55.2% 0.016 285.938);
+--muted: oklch(0.5517 0.0138 285.94);
 --default: oklch(94% 0.001 286.375);
 --default-foreground: var(--eclipse);
---border: oklch(0 0 0 / 0%);
+--border: oklch(90% 0.004 286.32);
+--separator: oklch(74% 0.004 286.32);
+--focus: var(--accent);
 --link: var(--foreground);
 
 /* Dark theme */
 --muted: oklch(70.5% 0.015 286.067);
 --default: oklch(27.4% 0.006 286.033);
 --default-foreground: var(--snow);
---border: oklch(1 0 0 / 0%);
+--border: oklch(28% 0.006 286.033);
+--separator: oklch(40% 0.006 286.033);
+--focus: var(--accent);
 --link: var(--foreground);
 ```
 

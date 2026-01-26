@@ -44,10 +44,6 @@ Control the visual appearance with different surface levels.
 <Surface variant="tertiary">
   ...
 </Surface>
-
-<Surface variant="quaternary">
-  ...
-</Surface>
 ```
 
 ### Nested Surfaces
@@ -61,7 +57,6 @@ Create visual hierarchy by nesting surfaces with different variants.
     ...
     <Surface variant="tertiary">
       ...
-      <Surface variant="quaternary">...</Surface>
     </Surface>
   </Surface>
 </Surface>
@@ -76,7 +71,7 @@ Apply custom styles using className or style props.
   ...
 </Surface>
 
-<Surface variant="quaternary" className="p-0">
+<Surface variant="tertiary" className="p-0">
   ...
 </Surface>
 ```
@@ -123,14 +118,6 @@ export default function SurfaceExample() {
           styling.
         </AppText>
       </Surface>
-
-      <Surface variant="quaternary" className="gap-2">
-        <AppText className="text-foreground">Surface Content</AppText>
-        <AppText className="text-muted">
-          This is a quaternary surface variant. It uses bg-surface-quaternary
-          styling.
-        </AppText>
-      </Surface>
     </View>
   );
 }
@@ -144,7 +131,7 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 
 | prop           | type                                                                      | default     | description                                                                               |
 | -------------- | ------------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
-| `variant`      | `'default' \| 'secondary' \| 'tertiary' \| 'quaternary' \| 'transparent'` | `'default'` | Visual variant controlling background color and border                                    |
+| `variant`      | `'default' \| 'secondary' \| 'tertiary' \| 'transparent'` | `'default'` | Visual variant controlling background color and border                                    |
 | `children`     | `React.ReactNode`                                                         | -           | Content to be rendered inside the surface                                                 |
 | `className`    | `string`                                                                  | -           | Additional CSS classes to apply                                                           |
 | `animation`    | `"disable-all" \| undefined`                                              | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |

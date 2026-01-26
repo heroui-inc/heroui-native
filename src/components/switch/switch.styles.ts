@@ -7,7 +7,7 @@ import { combineStyles } from '../../helpers/internal/utils';
  *
  * @note ANIMATED PROPERTIES (cannot be set via className):
  * The following properties are animated and cannot be overridden using Tailwind classes:
- * - `backgroundColor` - Animated for selection transitions (unselected: surface-quaternary, selected: accent)
+ * - `backgroundColor` - Animated for selection transitions (unselected: default, selected: accent)
  * - `transform` (specifically `scale`) - Animated for press feedback transitions (unpressed: 1, pressed: 0.96)
  *
  * To customize these properties, use the `animation` prop on `Switch`:
@@ -58,7 +58,7 @@ const root = tv({
  * set `isAnimatedStyleActive={false}` on `Switch.Thumb`.
  */
 const thumb = tv({
-  base: 'absolute left-[2px] items-center justify-center w-[28px] h-[20px] rounded-full shadow-sm shadow-black/5 overflow-hidden',
+  base: 'absolute left-[2px] items-center justify-center w-[28px] h-[20px] rounded-full shadow-field overflow-hidden',
 });
 
 const startContent = tv({

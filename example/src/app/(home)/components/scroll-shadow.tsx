@@ -183,7 +183,7 @@ const HorizontalContent = () => {
             horizontal
             data={HORIZONTAL_ITEMS}
             renderItem={({ item: _item }) => (
-              <Surface variant="quaternary" className="size-32" />
+              <Surface variant="tertiary" className="size-32" />
             )}
             ItemSeparatorComponent={HorizontalSeparator}
             contentContainerStyle={styles.horizontalContent}

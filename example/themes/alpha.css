@@ -44,6 +44,7 @@
       /* Misc Colors */
       --border: var(--color-neutral-200);
       --separator: var(--color-neutral-400);
+      --focus: var(--accent);
       --link: var(--foreground);
 
       /* Shadows */
@@ -102,6 +103,7 @@
       /* Misc Colors */
       --border: var(--color-neutral-800);
       --separator: var(--color-neutral-600);
+      --focus: var(--accent);
       --link: var(--foreground);
 
       /* Shadows */

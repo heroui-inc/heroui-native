@@ -1,11 +1,12 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, RadioGroup, useDialog } from 'heroui-native';
+import { Chip, cn, Dialog, RadioGroup, useDialog } from 'heroui-native';
 import { useState, type FC } from 'react';
 import { Platform, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
+import { useAppTheme } from '../../../../contexts/app-theme-context';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
 import { DialogHeader } from '../dialog-header';
 
@@ -55,6 +56,8 @@ const StatusRadioItem: FC<StatusRadioItemProps> = ({ item, value }) => {
 
 export const Status: FC = () => {
   const [value, setValue] = useState('done');
+
+  const { isDark } = useAppTheme();
 
   const items: StatusItem[] = [
     {
@@ -140,7 +143,10 @@ export const Status: FC = () => {
     <Dialog>
       <Dialog.Trigger asChild>
         <Chip
-          className="h-7 bg-surface-quaternary px-2"
+          className={cn(
+            'h-7 px-2',
+            isDark ? 'bg-neutral-900/50' : 'bg-neutral-300/50'
+          )}
           onPress={() => {
             if (Platform.OS === 'ios') {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);

@@ -18,7 +18,7 @@ const footer = tv({
 });
 
 const label = tv({
-  base: 'text-foreground font-medium text-lg',
+  base: 'text-lg text-foreground font-medium',
 });
 
 const description = tv({

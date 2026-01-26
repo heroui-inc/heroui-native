@@ -114,7 +114,7 @@ export const ScrollableWithSnapPointsContent = () => {
                     <Card
                       key={option.id}
                       className={cn(
-                        'flex-row items-center mb-2',
+                        'flex-row items-center mb-2 shadow-none',
                         !option.highlight
                           ? 'bg-transparent'
                           : isDark

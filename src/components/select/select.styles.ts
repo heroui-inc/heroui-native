@@ -68,7 +68,7 @@ const overlay = tv({
  * set `isAnimatedStyleActive={false}` on `Select.Content`.
  */
 const popoverContent = tv({
-  base: 'bg-overlay rounded-3xl p-3 px-4 shadow-lg shadow-black/5 dark:shadow-none',
+  base: 'bg-overlay p-3 px-4 rounded-3xl shadow-overlay',
 });
 
 /**
@@ -100,7 +100,7 @@ const popoverContent = tv({
 const dialogContent = tv({
   slots: {
     wrapper: 'absolute inset-0 justify-center p-5',
-    content: 'bg-overlay rounded-lg p-5',
+    content: 'bg-overlay p-5 rounded-3xl shadow-overlay',
   },
 });
 

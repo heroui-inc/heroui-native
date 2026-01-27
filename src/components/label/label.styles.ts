@@ -10,6 +10,9 @@ const root = tv({
     isInsideTextField: {
       true: 'px-1.5',
     },
+    isInsideControlField: {
+      true: 'pointer-events-none',
+    },
   },
 });
 

@@ -2,10 +2,10 @@ import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks'
 import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 
 /**
- * Animation hook for FormField root component
+ * Animation hook for ControlField root component
  * Handles root-level animation configuration and provides context for child components
  */
-export function useFormFieldRootAnimation(options: {
+export function useControlFieldRootAnimation(options: {
   animation: AnimationRootDisableAll | undefined;
 }) {
   const { animation } = options;

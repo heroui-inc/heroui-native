@@ -13,7 +13,7 @@ import {
   getIsAnimationDisabledValue,
   getRootAnimationState,
 } from '../../helpers/internal/utils';
-import { useFormField } from '../form-field/form-field.context';
+import { useControlField } from '../control-field/control-field.context';
 import type {
   CheckboxAnimationContextValue,
   CheckboxIndicatorAnimation,
@@ -35,7 +35,7 @@ export function useCheckboxRootAnimation(options: {
   const { animation } = options;
 
   const isCheckboxPressed = useSharedValue(false);
-  const formFieldContext = useFormField();
+  const controlFieldContext = useControlField();
 
   const { animationConfig, isAnimationDisabled } =
     getRootAnimationState(animation);
@@ -65,7 +65,8 @@ export function useCheckboxRootAnimation(options: {
     }
 
     const pressed =
-      isCheckboxPressed.get() || (formFieldContext?.isPressed.get() ?? false);
+      isCheckboxPressed.get() ||
+      (controlFieldContext?.isPressed.get() ?? false);
 
     return {
       transform: [

@@ -2,8 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {
   Checkbox,
+  ControlField,
   Description,
-  FormField,
   Label,
   Separator,
   Surface,
@@ -43,19 +43,19 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
   description,
 }) => {
   return (
-    <FormField
+    <ControlField
       isSelected={isSelected}
       onSelectedChange={onSelectedChange}
       className="items-start"
     >
-      <FormField.Indicator>
+      <ControlField.Indicator>
         <Checkbox className="mt-0.5" />
-      </FormField.Indicator>
+      </ControlField.Indicator>
       <View className="flex-1">
         <Label className="text-lg">{title}</Label>
         <Description className="text-base">{description}</Description>
       </View>
-    </FormField>
+    </ControlField>
   );
 };
 

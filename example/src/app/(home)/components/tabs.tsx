@@ -2,9 +2,9 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import {
   Button,
   cn,
+  ControlField,
   Description,
   FieldError,
-  FormField,
   Input,
   Label,
   RadioGroup,
@@ -148,28 +148,28 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <Input value={homepage} />
             </TextField>
 
-            <FormField
+            <ControlField
               isSelected={showSidebar}
               onSelectedChange={setShowSidebar}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
                 <Label>Show sidebar</Label>
                 <Description>Display the sidebar navigation panel</Description>
               </View>
-            </FormField>
+            </ControlField>
 
             {/* Show Status Bar Checkbox */}
-            <FormField
+            <ControlField
               isSelected={showStatusBar}
               onSelectedChange={setShowStatusBar}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
                 <Label>Show status bar</Label>
                 <Description>Display the status bar at the bottom</Description>
               </View>
-            </FormField>
+            </ControlField>
           </AnimatedContentContainer>
         </Tabs.Content>
 
@@ -223,52 +223,52 @@ const TabsContent = ({ variant }: TabsContentProps) => {
 
         <Tabs.Content value="notifications">
           <AnimatedContentContainer>
-            <FormField
+            <ControlField
               isSelected={accountActivity}
               onSelectedChange={setAccountActivity}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
                 <Label>Account activity</Label>
                 <Description>
                   Notifications about your account activity
                 </Description>
               </View>
-            </FormField>
+            </ControlField>
 
-            <FormField isSelected={mentions} onSelectedChange={setMentions}>
-              <FormField.Indicator variant="checkbox" />
+            <ControlField isSelected={mentions} onSelectedChange={setMentions}>
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
                 <Label>Mentions</Label>
                 <Description>
                   When someone mentions you in a comment
                 </Description>
               </View>
-            </FormField>
+            </ControlField>
 
-            <FormField
+            <ControlField
               isSelected={directMessages}
               onSelectedChange={setDirectMessages}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
                 <Label>Direct messages</Label>
                 <Description>Notifications for new direct messages</Description>
               </View>
-            </FormField>
+            </ControlField>
 
-            <FormField
+            <ControlField
               isSelected={marketingEmail}
               onSelectedChange={setMarketingEmail}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
                 <Label>Marketing email</Label>
                 <Description>
                   Receive emails about new features and updates
                 </Description>
               </View>
-            </FormField>
+            </ControlField>
           </AnimatedContentContainer>
         </Tabs.Content>
 

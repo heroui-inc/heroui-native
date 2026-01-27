@@ -1,8 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import {
+  ControlField,
   Description,
-  FormField,
   Label,
   Separator,
   Surface,
@@ -36,13 +36,13 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   title,
   description,
 }) => (
-  <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
+  <ControlField isSelected={isSelected} onSelectedChange={onSelectedChange}>
     <View className="flex-1">
       <Label>{title}</Label>
       <Description>{description}</Description>
     </View>
-    <FormField.Indicator />
-  </FormField>
+    <ControlField.Indicator />
+  </ControlField>
 );
 
 export const DefaultContent = () => {
@@ -130,7 +130,7 @@ const StatesContent = () => {
         {fieldKeys.map((key, index) => (
           <React.Fragment key={key}>
             {index > 0 && <Separator className="my-4" />}
-            <FormField
+            <ControlField
               isSelected={fields[key]}
               onSelectedChange={handleFieldChange(key)}
               isDisabled={fieldConfigs[key].disabled}
@@ -139,8 +139,8 @@ const StatesContent = () => {
                 <Label>{fieldConfigs[key].title}</Label>
                 <Description>{fieldConfigs[key].description}</Description>
               </View>
-              <FormField.Indicator />
-            </FormField>
+              <ControlField.Indicator />
+            </ControlField>
           </React.Fragment>
         ))}
       </Surface>

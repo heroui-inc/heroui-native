@@ -1,8 +1,8 @@
 import {
   Checkbox,
+  ControlField,
   Description,
   FieldError,
-  FormField,
   Label,
   Separator,
   Surface,
@@ -28,13 +28,13 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   title,
   description,
 }) => (
-  <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
+  <ControlField isSelected={isSelected} onSelectedChange={onSelectedChange}>
     <View className="flex-1">
       <Label>{title}</Label>
       <Description>{description}</Description>
     </View>
-    <FormField.Indicator />
-  </FormField>
+    <ControlField.Indicator />
+  </ControlField>
 );
 
 const SwitchFormFieldSetContent = () => {
@@ -102,21 +102,21 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
   description,
 }) => {
   return (
-    <FormField
+    <ControlField
       isSelected={isSelected}
       onSelectedChange={onSelectedChange}
       className="items-start"
     >
-      <FormField.Indicator>
+      <ControlField.Indicator>
         <Checkbox className="size-5 rounded-md mt-0.5">
           <Checkbox.Indicator iconProps={{ size: 16 }} />
         </Checkbox>
-      </FormField.Indicator>
+      </ControlField.Indicator>
       <View className="flex-1">
         <Label>{title}</Label>
         <Description>{description}</Description>
       </View>
-    </FormField>
+    </ControlField>
   );
 };
 
@@ -182,16 +182,16 @@ const InlineFilter: React.FC<InlineFilterProps> = ({
   onSelectedChange,
   label,
 }) => (
-  <FormField
+  <ControlField
     isSelected={isSelected}
     onSelectedChange={onSelectedChange}
     className="gap-2"
   >
-    <FormField.Indicator>
+    <ControlField.Indicator>
       <Checkbox className="size-5 rounded-md" />
-    </FormField.Indicator>
+    </ControlField.Indicator>
     <Label>{label}</Label>
-  </FormField>
+  </ControlField>
 );
 
 const InlineLayoutCompactContent = () => {
@@ -247,17 +247,20 @@ const DisabledStateContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-8 w-full">
-        <FormField isSelected={activeSwitch} onSelectedChange={setActiveSwitch}>
+        <ControlField
+          isSelected={activeSwitch}
+          onSelectedChange={setActiveSwitch}
+        >
           <View className="flex-1">
             <Label>Two-factor authentication</Label>
             <Description>
               Add an extra layer of security to your account
             </Description>
           </View>
-          <FormField.Indicator />
-        </FormField>
+          <ControlField.Indicator />
+        </ControlField>
 
-        <FormField
+        <ControlField
           isSelected={disabledSwitch}
           onSelectedChange={setDisabledSwitch}
           isDisabled
@@ -268,8 +271,8 @@ const DisabledStateContent = () => {
               Requires device with fingerprint or face recognition support
             </Description>
           </View>
-          <FormField.Indicator />
-        </FormField>
+          <ControlField.Indicator />
+        </ControlField>
       </View>
     </View>
   );
@@ -289,7 +292,7 @@ const ValidationErrorStatesContent = () => {
         layout={LinearTransition}
       >
         <Animated.View layout={LinearTransition}>
-          <FormField
+          <ControlField
             isSelected={terms}
             onSelectedChange={setTerms}
             isInvalid={!terms}
@@ -303,14 +306,14 @@ const ValidationErrorStatesContent = () => {
                   Privacy Policy
                 </Description>
               </View>
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
             </View>
             <FieldError>You must accept the terms to continue</FieldError>
-          </FormField>
+          </ControlField>
         </Animated.View>
 
         <Animated.View layout={LinearTransition}>
-          <FormField
+          <ControlField
             isSelected={privacyAccepted}
             onSelectedChange={setPrivacyAccepted}
             isInvalid={!privacyAccepted}
@@ -323,18 +326,18 @@ const ValidationErrorStatesContent = () => {
                   You must accept our privacy policy to create an account
                 </Description>
               </View>
-              <FormField.Indicator>
+              <ControlField.Indicator>
                 <Checkbox isInvalid={false} />
-              </FormField.Indicator>
+              </ControlField.Indicator>
             </View>
             <FieldError>
               Please accept the privacy policy to continue
             </FieldError>
-          </FormField>
+          </ControlField>
         </Animated.View>
 
         <Animated.View layout={LinearTransition}>
-          <FormField
+          <ControlField
             isSelected={dataSharing}
             onSelectedChange={setDataSharing}
             isInvalid={dataSharing}
@@ -347,12 +350,12 @@ const ValidationErrorStatesContent = () => {
                   Help improve our product by sharing anonymous usage data
                 </Description>
               </View>
-              <FormField.Indicator />
+              <ControlField.Indicator />
             </View>
             <FieldError>
               Warning: This will share your usage patterns
             </FieldError>
-          </FormField>
+          </ControlField>
         </Animated.View>
       </StyleAnimatedView>
     </View>
@@ -361,15 +364,15 @@ const ValidationErrorStatesContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const FORM_FIELD_VARIANTS: UsageVariant[] = [
+const CONTROL_FIELD_VARIANTS: UsageVariant[] = [
   {
-    value: 'switch-form-field-set',
-    label: 'Switch FormField set',
+    value: 'switch-control-field-set',
+    label: 'Switch ControlField set',
     content: <SwitchFormFieldSetContent />,
   },
   {
-    value: 'checkbox-form-field-set',
-    label: 'Checkbox FormField set',
+    value: 'checkbox-control-field-set',
+    label: 'Checkbox ControlField set',
     content: <CheckboxFormFieldSetContent />,
   },
   {
@@ -389,6 +392,6 @@ const FORM_FIELD_VARIANTS: UsageVariant[] = [
   },
 ];
 
-export default function FormFieldScreen() {
-  return <UsageVariantFlatList data={FORM_FIELD_VARIANTS} />;
+export default function ControlFieldScreen() {
+  return <UsageVariantFlatList data={CONTROL_FIELD_VARIANTS} />;
 }

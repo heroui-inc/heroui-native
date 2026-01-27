@@ -1,5 +1,5 @@
 import { useHeaderHeight } from '@react-navigation/elements';
-import { Description, FormField, Label, Separator } from 'heroui-native';
+import { ControlField, Description, Label, Separator } from 'heroui-native';
 import { type FC, type ReactNode } from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -60,7 +60,7 @@ export const WithStateToggle: FC<WithStateToggleProps> = ({
     >
       {children}
       <View>
-        <FormField
+        <ControlField
           isSelected={isSelected}
           onSelectedChange={onSelectedChange}
           className="pr-2"
@@ -69,8 +69,8 @@ export const WithStateToggle: FC<WithStateToggleProps> = ({
             <Label>{label}</Label>
             {description && <Description>{description}</Description>}
           </View>
-          <FormField.Indicator />
-        </FormField>
+          <ControlField.Indicator />
+        </ControlField>
         <Separator className="mt-6" />
       </View>
     </View>

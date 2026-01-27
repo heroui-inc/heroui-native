@@ -1,4 +1,4 @@
-import { Checkbox, Chip, FormField, cn } from 'heroui-native';
+import { Checkbox, Chip, ControlField, cn } from 'heroui-native';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useAppTheme } from '../../../contexts/app-theme-context';
@@ -67,7 +67,7 @@ export function SuperTabContent() {
               )}
               style={styles.formField}
             >
-              <FormField
+              <ControlField
                 isSelected={isSelected}
                 onSelectedChange={(value) => {
                   if (value) {
@@ -81,7 +81,7 @@ export function SuperTabContent() {
               >
                 <View className="gap-2">
                   <View className="flex-row items-center gap-3">
-                    <FormField.Indicator>
+                    <ControlField.Indicator>
                       <Checkbox
                         className={cn(
                           'size-6 rounded-full',
@@ -99,7 +99,7 @@ export function SuperTabContent() {
                           }}
                         />
                       </Checkbox>
-                    </FormField.Indicator>
+                    </ControlField.Indicator>
                     <AppText className="text-foreground text-lg font-black">
                       {plan.title}
                     </AppText>
@@ -108,7 +108,7 @@ export function SuperTabContent() {
                     {plan.description}
                   </AppText>
                 </View>
-              </FormField>
+              </ControlField>
             </View>
           </View>
         );

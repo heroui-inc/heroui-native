@@ -246,7 +246,7 @@ import {
   Button,
   Checkbox,
   Description,
-  FormField,
+  ControlField,
   Label,
   Tabs,
   TextField,
@@ -303,35 +303,35 @@ export default function TabsExample() {
       >
         <Tabs.Content value="general">
           <AnimatedContentContainer>
-            <FormField
+            <ControlField
               isSelected={showSidebar}
               onSelectedChange={setShowSidebar}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
                 <Label>Show sidebar</Label>
                 <Description>
                   Display the sidebar navigation panel
                 </Description>
               </View>
-            </FormField>
+            </ControlField>
           </AnimatedContentContainer>
         </Tabs.Content>
 
         <Tabs.Content value="notifications">
           <AnimatedContentContainer>
-            <FormField
+            <ControlField
               isSelected={accountActivity}
               onSelectedChange={setAccountActivity}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
                 <Label>Account activity</Label>
                 <Description>
                   Notifications about your account activity
                 </Description>
               </View>
-            </FormField>
+            </ControlField>
           </AnimatedContentContainer>
         </Tabs.Content>
 

@@ -17,9 +17,9 @@ const indicator = tv({
   base: '',
 });
 
-const formFieldStyles = combineStyles({
+const controlFieldStyles = combineStyles({
   root,
   indicator,
 });
 
-export default formFieldStyles;
+export default controlFieldStyles;

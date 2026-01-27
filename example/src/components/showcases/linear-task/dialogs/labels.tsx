@@ -1,6 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import * as Haptics from 'expo-haptics';
-import { Checkbox, Chip, cn, Dialog, FormField, Label } from 'heroui-native';
+import { Checkbox, Chip, cn, ControlField, Dialog, Label } from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -179,7 +179,7 @@ export const Labels: FC = () => {
                   {filteredItems.map((item) => {
                     const isSelected = selectedValues.has(item.value);
                     return (
-                      <FormField
+                      <ControlField
                         key={item.value}
                         isSelected={isSelected}
                         onSelectedChange={(selected) =>
@@ -192,7 +192,7 @@ export const Labels: FC = () => {
                           </View>
                           <Label>{item.label}</Label>
                         </View>
-                        <FormField.Indicator>
+                        <ControlField.Indicator>
                           <Checkbox
                             isSelected={isSelected}
                             className="bg-transparent border-none shadow-none"
@@ -212,8 +212,8 @@ export const Labels: FC = () => {
                               )}
                             </Checkbox.Indicator>
                           </Checkbox>
-                        </FormField.Indicator>
-                      </FormField>
+                        </ControlField.Indicator>
+                      </ControlField>
                     );
                   })}
                 </View>

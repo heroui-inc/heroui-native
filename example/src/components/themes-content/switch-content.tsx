@@ -1,6 +1,6 @@
 import {
+  ControlField,
   Description,
-  FormField,
   Label,
   Separator,
   Surface,
@@ -21,13 +21,13 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   title,
   description,
 }) => (
-  <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
+  <ControlField isSelected={isSelected} onSelectedChange={onSelectedChange}>
     <View className="flex-1">
       <Label>{title}</Label>
       <Description>{description}</Description>
     </View>
-    <FormField.Indicator />
-  </FormField>
+    <ControlField.Indicator />
+  </ControlField>
 );
 
 export const SwitchContent = () => {

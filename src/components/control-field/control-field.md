@@ -1,41 +1,41 @@
-# FormField
+# ControlField
 
-Provides consistent layout and interaction for form controls with label, description, and error handling. Perfect for Switch and Checkbox components when you want the entire field to be pressable.
+A field component that combines a label, description (or other content), and a control component (Switch or Checkbox) into a single pressable area.
 
 ## Import
 
 ```tsx
-import { Description, FieldError, FormField, Label } from 'heroui-native';
+import { ControlField } from 'heroui-native';
 ```
 
 ## Anatomy
 
 ```tsx
-<FormField>
+<ControlField>
   <Label>...</Label>
   <Description>...</Description>
-  <FormField.Indicator>...</FormField.Indicator>
+  <ControlField.Indicator>...</ControlField.Indicator>
   <FieldError>...</FieldError>
-</FormField>
+</ControlField>
 ```
 
-- **FormField**: Root container that manages layout and state propagation
+- **ControlField**: Root container that manages layout and state propagation
 - **Label**: Primary text label for the control (from [Label](../label/label.md) component)
 - **Description**: Secondary descriptive helper text (from [Description](../description/description.md) component)
-- **FormField.Indicator**: Container for the form control component (Switch, Checkbox)
+- **ControlField.Indicator**: Container for the form control component (Switch, Checkbox)
 - **FieldError**: Validation error message display (from [FieldError](../field-error/field-error.md) component)
 
 ## Usage
 
 ### Basic Usage
 
-FormField wraps form controls to provide consistent layout and state management.
+ControlField wraps form controls to provide consistent layout and state management.
 
 ```tsx
-<FormField isSelected={value} onSelectedChange={setValue}>
+<ControlField isSelected={value} onSelectedChange={setValue}>
   <Label className="flex-1">Label text</Label>
-  <FormField.Indicator />
-</FormField>
+  <ControlField.Indicator />
+</ControlField>
 ```
 
 ### With Description
@@ -43,15 +43,15 @@ FormField wraps form controls to provide consistent layout and state management.
 Add helper text below the label using the Description component.
 
 ```tsx
-<FormField isSelected={value} onSelectedChange={setValue}>
+<ControlField isSelected={value} onSelectedChange={setValue}>
   <View className="flex-1">
     <Label>Enable notifications</Label>
     <Description>
       Receive push notifications about your account activity
     </Description>
   </View>
-  <FormField.Indicator />
-</FormField>
+  <ControlField.Indicator />
+</ControlField>
 ```
 
 ### With Error Message
@@ -59,7 +59,7 @@ Add helper text below the label using the Description component.
 Display validation errors using the ErrorMessage component.
 
 ```tsx
-<FormField
+<ControlField
   isSelected={value}
   onSelectedChange={setValue}
   isInvalid={!value}
@@ -72,10 +72,10 @@ Display validation errors using the ErrorMessage component.
         By checking this box, you agree to our Terms of Service
       </Description>
     </View>
-    <FormField.Indicator variant="checkbox" />
+    <ControlField.Indicator variant="checkbox" />
   </View>
   <FieldError>This field is required</FieldError>
-</FormField>
+</ControlField>
 ```
 
 ### Disabled State
@@ -83,13 +83,13 @@ Display validation errors using the ErrorMessage component.
 Control interactivity with the disabled prop.
 
 ```tsx
-<FormField isSelected={value} onSelectedChange={setValue} isDisabled>
+<ControlField isSelected={value} onSelectedChange={setValue} isDisabled>
   <View className="flex-1">
     <Label>Disabled field</Label>
     <Description>This field is disabled</Description>
   </View>
-  <FormField.Indicator />
-</FormField>
+  <ControlField.Indicator />
+</ControlField>
 ```
 
 ### Disabling All Animations
@@ -97,7 +97,7 @@ Control interactivity with the disabled prop.
 Disable all animations including children by using `"disable-all"`. This cascades down to all child components.
 
 ```tsx
-<FormField
+<ControlField
   isSelected={value}
   onSelectedChange={setValue}
   animation="disable-all"
@@ -106,8 +106,8 @@ Disable all animations including children by using `"disable-all"`. This cascade
     <Label>Label text</Label>
     <Description>Description text</Description>
   </View>
-  <FormField.Indicator />
-</FormField>
+  <ControlField.Indicator />
+</ControlField>
 ```
 
 ## Example
@@ -117,14 +117,14 @@ import {
   Checkbox,
   Description,
   FieldError,
-  FormField,
+  ControlField,
   Label,
   Switch,
 } from 'heroui-native';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 
-export default function FormFieldExample() {
+export default function ControlFieldExample() {
   const [notifications, setNotifications] = React.useState(false);
   const [terms, setTerms] = React.useState(false);
   const [newsletter, setNewsletter] = React.useState(true);
@@ -132,7 +132,7 @@ export default function FormFieldExample() {
   return (
     <ScrollView className="bg-background p-4">
       <View className="gap-4">
-        <FormField
+        <ControlField
           isSelected={notifications}
           onSelectedChange={setNotifications}
         >
@@ -142,10 +142,10 @@ export default function FormFieldExample() {
               Receive push notifications about your account activity
             </Description>
           </View>
-          <FormField.Indicator />
-        </FormField>
+          <ControlField.Indicator />
+        </ControlField>
 
-        <FormField
+        <ControlField
           isSelected={terms}
           onSelectedChange={setTerms}
           isInvalid={!terms}
@@ -158,36 +158,36 @@ export default function FormFieldExample() {
                 By checking this box, you agree to our Terms of Service
               </Description>
             </View>
-            <FormField.Indicator className="mt-0.5">
+            <ControlField.Indicator className="mt-0.5">
               <Checkbox />
-            </FormField.Indicator>
+            </ControlField.Indicator>
           </View>
           <FieldError>This field is required</FieldError>
-        </FormField>
+        </ControlField>
 
-        <FormField isSelected={newsletter} onSelectedChange={setNewsletter}>
+        <ControlField isSelected={newsletter} onSelectedChange={setNewsletter}>
           <View className="flex-1">
             <Label>Subscribe to newsletter</Label>
           </View>
-          <FormField.Indicator>
+          <ControlField.Indicator>
             <Checkbox color="warning" />
-          </FormField.Indicator>
-        </FormField>
+          </ControlField.Indicator>
+        </ControlField>
       </View>
     </ScrollView>
   );
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/form-field.tsx).
+You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/control-field.tsx).
 
 ## API Reference
 
-### FormField
+### ControlField
 
 | prop              | type                                                                    | default     | description                                                                               |
 | ----------------- | ----------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
-| children          | `React.ReactNode \| ((props: FormFieldRenderProps) => React.ReactNode)` | -           | Content to render inside the form control, or a render function                           |
+| children          | `React.ReactNode \| ((props: ControlFieldRenderProps) => React.ReactNode)` | -           | Content to render inside the form control, or a render function                           |
 | isSelected        | `boolean`                                                               | `undefined` | Whether the control is selected/checked                                                   |
 | isDisabled        | `boolean`                                                               | `false`     | Whether the form control is disabled                                                      |
 | isInvalid         | `boolean`                                                               | `false`     | Whether the form control is invalid                                                       |
@@ -198,17 +198,17 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 
 ### Label
 
-The `Label` component automatically consumes form state (`isDisabled`, `isInvalid`) from the FormField context.
+The `Label` component automatically consumes form state (`isDisabled`, `isInvalid`) from the ControlField context.
 
 **Note**: For complete prop documentation, see the [Label component documentation](../label/label.md).
 
 ### Description
 
-The `Description` component automatically consumes form state (`isDisabled`, `isInvalid`) from the FormField context.
+The `Description` component automatically consumes form state (`isDisabled`, `isInvalid`) from the ControlField context.
 
 **Note**: For complete prop documentation, see the [Description component documentation](../description/description.md).
 
-### FormField.Indicator
+### ControlField.Indicator
 
 | prop         | type                     | default    | description                                                |
 | ------------ | ------------------------ | ---------- | ---------------------------------------------------------- |
@@ -217,17 +217,17 @@ The `Description` component automatically consumes form state (`isDisabled`, `is
 | className    | `string`                 | -          | Custom class name for the indicator element                |
 | ...ViewProps | `ViewProps`              | -          | All React Native View props are supported                  |
 
-**Note**: When children are provided, the component automatically passes down `isSelected`, `onSelectedChange`, `isDisabled`, and `isInvalid` props from the FormField context if they are not already present on the child component.
+**Note**: When children are provided, the component automatically passes down `isSelected`, `onSelectedChange`, `isDisabled`, and `isInvalid` props from the ControlField context if they are not already present on the child component.
 
 ### FieldError
 
-The `FieldError` component automatically consumes form state (`isInvalid`) from the FormField context.
+The `FieldError` component automatically consumes form state (`isInvalid`) from the ControlField context.
 
-**Note**: For complete prop documentation, see the [FieldError component documentation](../field-error/field-error.md). The error message visibility is controlled by the `isInvalid` state of the parent FormField.
+**Note**: For complete prop documentation, see the [FieldError component documentation](../field-error/field-error.md). The error message visibility is controlled by the `isInvalid` state of the parent ControlField.
 
 ## Hooks
 
-### useFormField
+### useControlField
 
 **Returns:**
 

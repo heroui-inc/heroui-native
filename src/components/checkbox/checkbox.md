@@ -112,7 +112,7 @@ Customize or disable animations for both the root checkbox and indicator.
 import {
   Checkbox,
   Description,
-  FormField,
+  ControlField,
   Label,
   Separator,
   Surface,
@@ -134,17 +134,17 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
   description,
 }) => {
   return (
-    <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
-      <FormField.Indicator>
+    <ControlField isSelected={isSelected} onSelectedChange={onSelectedChange}>
+      <ControlField.Indicator>
         <Checkbox className="mt-0.5" />
-      </FormField.Indicator>
+      </ControlField.Indicator>
       <View className="flex-1">
         <Label className="text-lg">{title}</Label>
         <Description className="text-base">
           {description}
         </Description>
       </View>
-    </FormField>
+    </ControlField>
   );
 };
 

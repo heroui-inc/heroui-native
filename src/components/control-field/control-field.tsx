@@ -52,7 +52,6 @@ const ControlField = forwardRef<PressableRef, ControlFieldProps>(
       typeof children === 'function' ? children(renderProps) : children;
 
     const tvStyles = controlFieldStyles.root({
-      isDisabled,
       className,
     });
 

@@ -18,8 +18,9 @@ import type { DescriptionAnimation } from './description.types';
  */
 export function useDescriptionAnimation(options: {
   animation: DescriptionAnimation | undefined;
+  hideOnInvalid: boolean;
 }) {
-  const { animation } = options;
+  const { animation, hideOnInvalid } = options;
 
   const { animationConfig, isAnimationDisabled } =
     getRootAnimationState(animation);
@@ -44,7 +45,9 @@ export function useDescriptionAnimation(options: {
   });
 
   return {
-    entering: isAnimationDisabledValue ? undefined : enteringValue,
-    exiting: isAnimationDisabledValue ? undefined : exitingValue,
+    entering:
+      isAnimationDisabledValue || !hideOnInvalid ? undefined : enteringValue,
+    exiting:
+      isAnimationDisabledValue || !hideOnInvalid ? undefined : exitingValue,
   };
 }

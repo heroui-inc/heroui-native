@@ -53,7 +53,7 @@ export const TextInputContent = () => {
             if (emailError) setEmailError(false);
           }}
         />
-        <Description>
+        <Description hideOnInvalid>
           We'll never share your email with anyone else.
         </Description>
         <FieldError>Please enter a valid email address</FieldError>
@@ -90,7 +90,9 @@ export const TextInputContent = () => {
             )}
           </Pressable>
         </View>
-        <Description>Password must be at least 6 characters</Description>
+        <Description hideOnInvalid>
+          Password must be at least 6 characters
+        </Description>
         <FieldError>Password must be at least 6 characters long</FieldError>
       </TextField>
 

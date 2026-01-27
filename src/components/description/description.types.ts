@@ -48,6 +48,11 @@ export interface DescriptionProps
    */
   isDisabled?: boolean;
   /**
+   * Whether to hide the description when invalid
+   * @default false
+   */
+  hideOnInvalid?: boolean;
+  /**
    * Additional CSS classes
    */
   className?: string;

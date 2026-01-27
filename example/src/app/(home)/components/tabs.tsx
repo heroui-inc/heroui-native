@@ -302,8 +302,8 @@ const TabsContent = ({ variant }: TabsContentProps) => {
                 placeholder="Enter username"
                 autoCapitalize="none"
               />
-              <Description>
-                3-20 characters, letters, numbers, and underscore only
+              <Description hideOnInvalid>
+                3-20 characters, letters, numbers only
               </Description>
               <FieldError>{errors.username}</FieldError>
             </TextField>

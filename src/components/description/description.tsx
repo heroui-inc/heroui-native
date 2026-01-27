@@ -20,6 +20,7 @@ const Description = forwardRef<TextRef, DescriptionProps>((props, ref) => {
     nativeID,
     isInvalid: localIsInvalid,
     isDisabled: localIsDisabled,
+    hideOnInvalid = false,
     animation,
     ...restProps
   } = props;
@@ -48,9 +49,10 @@ const Description = forwardRef<TextRef, DescriptionProps>((props, ref) => {
 
   const { entering, exiting } = useDescriptionAnimation({
     animation,
+    hideOnInvalid,
   });
 
-  if (isInvalid) return null;
+  if (isInvalid && hideOnInvalid) return null;
 
   return (
     <AnimatedText

@@ -62,6 +62,23 @@ Link descriptions to form fields for screen reader support by using `nativeID` a
 </TextField>
 ```
 
+### Hiding on Invalid State
+
+Control whether the description should be hidden when the form field is invalid using the `hideOnInvalid` prop.
+
+```tsx
+<TextField isInvalid={isInvalid}>
+  <Label>Email</Label>
+  <Input placeholder="Enter your email" />
+  <Description hideOnInvalid>
+    We'll never share your email with anyone else.
+  </Description>
+  <FieldError>Please enter a valid email address</FieldError>
+</TextField>
+```
+
+When `hideOnInvalid` is `true`, the description will be hidden when the field is invalid. When `false` (default), the description remains visible even when invalid.
+
 ## Example
 
 ```tsx
@@ -105,4 +122,8 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 | `children`     | `React.ReactNode` | -       | Description text content                                                                   |
 | `className`    | `string`          | -       | Additional CSS classes to apply                                                            |
 | `nativeID`     | `string`          | -       | Native ID for accessibility. Used to link description to form fields via aria-describedby. |
+| `isInvalid`    | `boolean`         | -       | Whether the description is in an invalid state (overrides context)                         |
+| `isDisabled`   | `boolean`         | -       | Whether the description is disabled (overrides context)                                    |
+| `hideOnInvalid`| `boolean`         | `false` | Whether to hide the description when invalid                                                |
+| `animation`    | `DescriptionAnimation \| undefined` | - | Animation configuration for description transitions                                        |
 | `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported                                         |

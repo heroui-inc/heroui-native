@@ -145,7 +145,9 @@ const TextFieldWithValidationContent = () => {
               onChangeText={setTestFieldValue}
               autoCapitalize="characters"
             />
-            <Description>Enter a valid code to receive discount</Description>
+            <Description hideOnInvalid>
+              Enter a valid code to receive discount
+            </Description>
             <FieldError>This promo code is invalid or has expired</FieldError>
           </TextField>
         </KeyboardAvoidingContainer>

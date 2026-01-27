@@ -296,19 +296,16 @@ const ValidationErrorStatesContent = () => {
             isSelected={terms}
             onSelectedChange={setTerms}
             isInvalid={!terms}
-            className="flex-col items-start gap-1"
+            isRequired
           >
-            <View className="flex-row items-center gap-2">
-              <View className="flex-1">
-                <Label>I agree to the terms and conditions</Label>
-                <Description>
-                  By checking this box, you agree to our Terms of Service and
-                  Privacy Policy
-                </Description>
-              </View>
-              <ControlField.Indicator variant="checkbox" />
+            <View className="flex-1">
+              <Label>I agree to the terms and conditions</Label>
+              <Description isInvalid={false}>
+                By checking this box, you agree to our Terms of Service and
+                Privacy Policy
+              </Description>
             </View>
-            <FieldError>You must accept the terms to continue</FieldError>
+            <ControlField.Indicator variant="checkbox" />
           </ControlField>
         </Animated.View>
 
@@ -317,22 +314,19 @@ const ValidationErrorStatesContent = () => {
             isSelected={privacyAccepted}
             onSelectedChange={setPrivacyAccepted}
             isInvalid={!privacyAccepted}
-            className="flex-col items-start gap-1"
           >
-            <View className="flex-row items-center gap-2">
-              <View className="flex-1">
-                <Label>Accept Privacy Policy</Label>
-                <Description>
-                  You must accept our privacy policy to create an account
-                </Description>
-              </View>
-              <ControlField.Indicator>
-                <Checkbox isInvalid={false} />
-              </ControlField.Indicator>
+            <View className="flex-1">
+              <Label isInvalid={false}>Accept Privacy Policy</Label>
+              <Description hideOnInvalid>
+                The privacy policy has been accepted
+              </Description>
+              <FieldError>
+                Please accept the privacy policy to continue
+              </FieldError>
             </View>
-            <FieldError>
-              Please accept the privacy policy to continue
-            </FieldError>
+            <ControlField.Indicator>
+              <Checkbox isInvalid={false} />
+            </ControlField.Indicator>
           </ControlField>
         </Animated.View>
 
@@ -345,9 +339,10 @@ const ValidationErrorStatesContent = () => {
           >
             <View className="flex-row items-center gap-2">
               <View className="flex-1">
-                <Label>Share usage data</Label>
-                <Description>
-                  Help improve our product by sharing anonymous usage data
+                <Label isInvalid={false}>Share usage data</Label>
+                <Description isInvalid={false}>
+                  Help improve our product by sharing anonymous usage data and
+                  improving our products.
                 </Description>
               </View>
               <ControlField.Indicator />

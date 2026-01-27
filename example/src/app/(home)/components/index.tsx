@@ -1,6 +1,6 @@
 import * as Haptics from 'expo-haptics';
 import { usePathname, useRouter } from 'expo-router';
-import { Accordion, PressableFeedback, useToast } from 'heroui-native';
+import { Accordion, cn, PressableFeedback, useToast } from 'heroui-native';
 import { useEffect } from 'react';
 import { Platform, View } from 'react-native';
 import { AppText } from '../../../components/app-text';
@@ -144,7 +144,13 @@ export default function App() {
   return (
     <ScreenScrollView contentContainerClassName="px-4">
       <View className="h-5" />
-      <Accordion isCollapsible={false} variant="surface">
+      <Accordion
+        isCollapsible={false}
+        variant="surface"
+        classNames={{
+          separator: cn(Platform.OS === 'android' && 'h-px opacity-30'),
+        }}
+      >
         {components.map((item) => (
           <Accordion.Item key={item.title} value={item.title}>
             <Accordion.Trigger

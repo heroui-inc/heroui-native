@@ -242,7 +242,15 @@ Add visual separators between tabs that show when the active tab is not between 
 ## Example
 
 ```tsx
-import { Tabs, TextField, FormField, Checkbox, Button } from 'heroui-native';
+import {
+  Button,
+  Checkbox,
+  Description,
+  ControlField,
+  Label,
+  Tabs,
+  TextField,
+} from 'heroui-native';
 import { useState } from 'react';
 import { View, Text } from 'react-native';
 import Animated, {
@@ -295,43 +303,43 @@ export default function TabsExample() {
       >
         <Tabs.Content value="general">
           <AnimatedContentContainer>
-            <FormField
+            <ControlField
               isSelected={showSidebar}
               onSelectedChange={setShowSidebar}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
-                <FormField.Label>Show sidebar</FormField.Label>
-                <FormField.Description>
+                <Label>Show sidebar</Label>
+                <Description>
                   Display the sidebar navigation panel
-                </FormField.Description>
+                </Description>
               </View>
-            </FormField>
+            </ControlField>
           </AnimatedContentContainer>
         </Tabs.Content>
 
         <Tabs.Content value="notifications">
           <AnimatedContentContainer>
-            <FormField
+            <ControlField
               isSelected={accountActivity}
               onSelectedChange={setAccountActivity}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
-                <FormField.Label>Account activity</FormField.Label>
-                <FormField.Description>
+                <Label>Account activity</Label>
+                <Description>
                   Notifications about your account activity
-                </FormField.Description>
+                </Description>
               </View>
-            </FormField>
+            </ControlField>
           </AnimatedContentContainer>
         </Tabs.Content>
 
         <Tabs.Content value="profile">
           <AnimatedContentContainer>
             <TextField isRequired>
-              <TextField.Label>Name</TextField.Label>
-              <TextField.Input
+              <Label>Name</Label>
+              <Input
                 value={name}
                 onChangeText={setName}
                 placeholder="Enter your full name"

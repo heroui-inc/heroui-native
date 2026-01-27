@@ -1,4 +1,11 @@
-import { Button, TextField } from 'heroui-native';
+import {
+  Button,
+  Description,
+  FieldError,
+  Input,
+  Label,
+  TextField,
+} from 'heroui-native';
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { EyeIcon } from '../icons/eye';
@@ -35,8 +42,8 @@ export const TextInputContent = () => {
     <View className="gap-4">
       {/* Basic TextField */}
       <TextField isRequired isInvalid={emailError}>
-        <TextField.Label>Email</TextField.Label>
-        <TextField.Input
+        <Label>Email</Label>
+        <Input
           placeholder="Enter your email"
           keyboardType="email-address"
           autoCapitalize="none"
@@ -46,19 +53,17 @@ export const TextInputContent = () => {
             if (emailError) setEmailError(false);
           }}
         />
-        <TextField.Description>
+        <Description hideOnInvalid>
           We'll never share your email with anyone else.
-        </TextField.Description>
-        <TextField.ErrorMessage>
-          Please enter a valid email address
-        </TextField.ErrorMessage>
+        </Description>
+        <FieldError>Please enter a valid email address</FieldError>
       </TextField>
 
       {/* TextField with Icons */}
       <TextField isRequired isInvalid={passwordError} className="mb-8">
-        <TextField.Label>New password</TextField.Label>
+        <Label>New password</Label>
         <View className="w-full flex-row items-center">
-          <TextField.Input
+          <Input
             className="flex-1 px-10"
             placeholder="Enter your password"
             secureTextEntry={!isPasswordVisible}
@@ -85,12 +90,10 @@ export const TextInputContent = () => {
             )}
           </Pressable>
         </View>
-        <TextField.Description>
+        <Description hideOnInvalid>
           Password must be at least 6 characters
-        </TextField.Description>
-        <TextField.ErrorMessage>
-          Password must be at least 6 characters long
-        </TextField.ErrorMessage>
+        </Description>
+        <FieldError>Password must be at least 6 characters long</FieldError>
       </TextField>
 
       {/* Submit Button */}

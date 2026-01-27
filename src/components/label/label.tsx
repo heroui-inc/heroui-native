@@ -1,9 +1,15 @@
 import { forwardRef, useMemo } from 'react';
 import { HeroText } from '../../helpers/internal/components';
-import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import {
+  AnimationSettingsProvider,
+  useFormItemState,
+} from '../../helpers/internal/contexts';
 import type { PressableRef, TextRef } from '../../helpers/internal/types';
 import { childrenToString, createContext } from '../../helpers/internal/utils';
 import * as LabelPrimitives from '../../primitives/label';
+import { useControlField } from '../control-field/control-field.context';
+import { useRadioGroupItem } from '../radio-group';
+import { useTextField } from '../text-field';
 import { useLabelRootAnimation } from './label.animation';
 import { DISPLAY_NAME } from './label.constants';
 import labelStyles from './label.styles';
@@ -22,13 +28,36 @@ const [LabelProvider, useLabel] = createContext<LabelContextValue>({
 const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
   const {
     children,
-    isDisabled = false,
-    isRequired = false,
-    isInvalid = false,
+    isDisabled: localIsDisabled,
+    isRequired: localIsRequired,
+    isInvalid: localIsInvalid,
     className,
     animation,
     ...restProps
   } = props;
+
+  const formItemState = useFormItemState();
+  const textFieldContext = useTextField();
+  const controlFieldContext = useControlField();
+  const radioGroupItemContext = useRadioGroupItem();
+
+  const isInsideTextField = Boolean(textFieldContext);
+  const isInsideControlField =
+    Boolean(controlFieldContext) || Boolean(radioGroupItemContext);
+
+  // Merge form item state with local props (local takes precedence)
+  const isDisabled =
+    localIsDisabled !== undefined
+      ? localIsDisabled
+      : (formItemState?.isDisabled ?? false);
+  const isRequired =
+    localIsRequired !== undefined
+      ? localIsRequired
+      : (formItemState?.isRequired ?? false);
+  const isInvalid =
+    localIsInvalid !== undefined
+      ? localIsInvalid
+      : (formItemState?.isInvalid ?? false);
 
   const stringifiedChildren = childrenToString(children);
 
@@ -54,6 +83,8 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
 
   const rootTvStyles = labelStyles.root({
     isDisabled,
+    isInsideTextField,
+    isInsideControlField,
     className,
   });
 

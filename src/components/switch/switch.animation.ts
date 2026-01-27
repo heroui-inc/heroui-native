@@ -19,7 +19,7 @@ import {
   getIsAnimationDisabledValue,
   getRootAnimationState,
 } from '../../helpers/internal/utils';
-import { useFormField } from '../form-field/form-field.context';
+import { useControlField } from '../control-field/control-field.context';
 import {
   DEFAULT_SPRING_CONFIG,
   DEFAULT_THUMB_LEFT,
@@ -56,7 +56,7 @@ export function useSwitchRootAnimation(options: {
     'default',
   ]);
 
-  const formFieldContext = useFormField();
+  const controlFieldContext = useControlField();
 
   const isSwitchPressed = useSharedValue(false);
   const contentContainerWidth = useSharedValue(0);
@@ -107,7 +107,7 @@ export function useSwitchRootAnimation(options: {
     }
 
     const pressed =
-      isSwitchPressed.get() || (formFieldContext?.isPressed.get() ?? false);
+      isSwitchPressed.get() || (controlFieldContext?.isPressed.get() ?? false);
 
     return {
       backgroundColor: withTiming(

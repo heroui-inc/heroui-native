@@ -263,7 +263,7 @@ SwitchEndContent.displayName = DISPLAY_NAME.SWITCH_END_CONTENT;
  * The switch supports controlled and uncontrolled modes through isSelected/onSelectedChange.
  * Animations can be customized or disabled at both root and component levels.
  * Content components provide visual feedback without affecting the toggle functionality.
- * Integrates with FormField for press state sharing and larger touch targets.
+ * Integrates with ControlField for press state sharing and larger touch targets.
  *
  * @see Full documentation: https://v3.heroui.com/docs/native/components/switch
  */

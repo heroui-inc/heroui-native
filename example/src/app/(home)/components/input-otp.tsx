@@ -3,7 +3,7 @@ import {
   Button,
   cn,
   Description,
-  ErrorView,
+  FieldError,
   InputOTP,
   Label,
   REGEXP_ONLY_CHARS,
@@ -43,8 +43,8 @@ const BasicOTPContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View>
-        <Label>Verify account</Label>
-        <Description className="mb-3">
+        <Label className="px-1">Verify account</Label>
+        <Description className="px-1 mb-2.5">
           We've sent a code to a****@gmail.com
         </Description>
         <InputOTP ref={ref} maxLength={6} onComplete={onComplete}>
@@ -60,8 +60,8 @@ const BasicOTPContent = () => {
             <InputOTP.Slot index={5} />
           </InputOTP.Group>
         </InputOTP>
-        <View className="flex-row items-center mt-3">
-          <Description>Didn't receive a code?</Description>
+        <View className="flex-row items-center mt-2.5">
+          <Description className="px-1">Didn't receive a code?</Description>
           <Button
             size="sm"
             variant="ghost"
@@ -86,7 +86,7 @@ const FourDigitsOTPContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="gap-2">
-        <Label className="ml-1">Enter your PIN</Label>
+        <Label className="px-1">Enter your PIN</Label>
         <InputOTP ref={ref} maxLength={4} onComplete={onComplete}>
           <InputOTP.Slot index={0} />
           <InputOTP.Slot index={1} />
@@ -108,7 +108,7 @@ const WithPlaceholderOTPContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="gap-2">
-        <Label className="ml-1">Enter verification code</Label>
+        <Label className="px-1">Enter verification code</Label>
         <InputOTP
           ref={ref}
           variant="secondary"
@@ -137,7 +137,7 @@ const DisabledStateOTPContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="gap-2">
-        <Label className="ml-1" isDisabled>
+        <Label className="px-1" isDisabled>
           Enter verification code
         </Label>
         <InputOTP maxLength={6} isDisabled>
@@ -196,8 +196,12 @@ const WithValidationOTPContent = () => {
     <View className="flex-1 px-5 items-center justify-center">
       <View className="gap-5">
         <View>
-          <Label className="mb-1">Verify account</Label>
-          <Description className="mb-3">Hint: The code is 123456</Description>
+          <Label className="px-1" isInvalid={isInvalid}>
+            Verify account
+          </Label>
+          <Description className="px-1 mb-2.5">
+            Hint: The code is 123456
+          </Description>
           <InputOTP
             value={value}
             onChange={setValue}
@@ -216,9 +220,9 @@ const WithValidationOTPContent = () => {
               <InputOTP.Slot index={5} />
             </InputOTP.Group>
           </InputOTP>
-          <ErrorView className="mt-3" isInvalid={isInvalid}>
+          <FieldError className="mt-2.5" isInvalid={isInvalid}>
             The code you entered is incorrect.
-          </ErrorView>
+          </FieldError>
           <Button
             variant="secondary"
             className="self-start mt-5"

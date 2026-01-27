@@ -42,20 +42,20 @@ import { Button } from 'heroui-native';
 Use a render function to access component state and customize content dynamically:
 
 ```tsx
-import { RadioGroup, cn } from 'heroui-native';
+import { RadioGroup, Label, cn } from 'heroui-native';
 
 <RadioGroup value={value} onValueChange={setValue}>
   <RadioGroup.Item value="option1">
     {({ isSelected, isInvalid, isDisabled }) => (
       <>
-        <RadioGroup.Label
+        <Label
           className={cn(
             'text-foreground',
             isSelected && 'text-accent font-semibold'
           )}
         >
           Option 1
-        </RadioGroup.Label>
+        </Label>
         <RadioGroup.Indicator
           className={cn(
             'border-2 rounded-full',

@@ -6,11 +6,6 @@ import type {
   AnimationValue,
 } from '../../helpers/internal/types';
 import type { ItemProps, RootProps } from '../../primitives/radio-group';
-import type { ErrorViewRootProps } from '../error-view/error-view.types';
-import type {
-  FormFieldDescriptionProps,
-  FormFieldLabelProps,
-} from '../form-field';
 
 /**
  * Props for RadioGroup root component
@@ -137,18 +132,3 @@ export interface RadioGroupIndicatorThumbProps
    */
   isAnimatedStyleActive?: boolean;
 }
-
-/**
- * Props for RadioGroup.Label component
- */
-export interface RadioGroupLabelProps extends FormFieldLabelProps {}
-
-/**
- * Props for RadioGroup.Description component
- */
-export interface RadioGroupDescriptionProps extends FormFieldDescriptionProps {}
-
-/**
- * Props for RadioGroup.ErrorMessage component
- */
-export interface RadioGroupErrorMessageProps extends ErrorViewRootProps {}

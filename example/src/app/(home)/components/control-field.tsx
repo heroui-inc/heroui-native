@@ -1,4 +1,12 @@
-import { Checkbox, FormField, Separator, Surface } from 'heroui-native';
+import {
+  Checkbox,
+  ControlField,
+  Description,
+  FieldError,
+  Label,
+  Separator,
+  Surface,
+} from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
@@ -20,13 +28,13 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   title,
   description,
 }) => (
-  <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
+  <ControlField isSelected={isSelected} onSelectedChange={onSelectedChange}>
     <View className="flex-1">
-      <FormField.Label>{title}</FormField.Label>
-      <FormField.Description>{description}</FormField.Description>
+      <Label>{title}</Label>
+      <Description>{description}</Description>
     </View>
-    <FormField.Indicator />
-  </FormField>
+    <ControlField.Indicator />
+  </ControlField>
 );
 
 const SwitchFormFieldSetContent = () => {
@@ -94,21 +102,21 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
   description,
 }) => {
   return (
-    <FormField
+    <ControlField
       isSelected={isSelected}
       onSelectedChange={onSelectedChange}
       className="items-start"
     >
-      <FormField.Indicator>
+      <ControlField.Indicator>
         <Checkbox className="size-5 rounded-md mt-0.5">
           <Checkbox.Indicator iconProps={{ size: 16 }} />
         </Checkbox>
-      </FormField.Indicator>
+      </ControlField.Indicator>
       <View className="flex-1">
-        <FormField.Label>{title}</FormField.Label>
-        <FormField.Description>{description}</FormField.Description>
+        <Label>{title}</Label>
+        <Description>{description}</Description>
       </View>
-    </FormField>
+    </ControlField>
   );
 };
 
@@ -174,16 +182,16 @@ const InlineFilter: React.FC<InlineFilterProps> = ({
   onSelectedChange,
   label,
 }) => (
-  <FormField
+  <ControlField
     isSelected={isSelected}
     onSelectedChange={onSelectedChange}
     className="gap-2"
   >
-    <FormField.Indicator>
+    <ControlField.Indicator>
       <Checkbox className="size-5 rounded-md" />
-    </FormField.Indicator>
-    <FormField.Label>{label}</FormField.Label>
-  </FormField>
+    </ControlField.Indicator>
+    <Label>{label}</Label>
+  </ControlField>
 );
 
 const InlineLayoutCompactContent = () => {
@@ -239,29 +247,32 @@ const DisabledStateContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-8 w-full">
-        <FormField isSelected={activeSwitch} onSelectedChange={setActiveSwitch}>
+        <ControlField
+          isSelected={activeSwitch}
+          onSelectedChange={setActiveSwitch}
+        >
           <View className="flex-1">
-            <FormField.Label>Two-factor authentication</FormField.Label>
-            <FormField.Description>
+            <Label>Two-factor authentication</Label>
+            <Description>
               Add an extra layer of security to your account
-            </FormField.Description>
+            </Description>
           </View>
-          <FormField.Indicator />
-        </FormField>
+          <ControlField.Indicator />
+        </ControlField>
 
-        <FormField
+        <ControlField
           isSelected={disabledSwitch}
           onSelectedChange={setDisabledSwitch}
           isDisabled
         >
           <View className="flex-1">
-            <FormField.Label>Biometric authentication</FormField.Label>
-            <FormField.Description>
+            <Label>Biometric authentication</Label>
+            <Description>
               Requires device with fingerprint or face recognition support
-            </FormField.Description>
+            </Description>
           </View>
-          <FormField.Indicator />
-        </FormField>
+          <ControlField.Indicator />
+        </ControlField>
       </View>
     </View>
   );
@@ -281,56 +292,46 @@ const ValidationErrorStatesContent = () => {
         layout={LinearTransition}
       >
         <Animated.View layout={LinearTransition}>
-          <FormField
+          <ControlField
             isSelected={terms}
             onSelectedChange={setTerms}
             isInvalid={!terms}
-            className="flex-col items-start gap-1"
+            isRequired
           >
-            <View className="flex-row items-center gap-2">
-              <View className="flex-1">
-                <FormField.Label>
-                  I agree to the terms and conditions
-                </FormField.Label>
-                <FormField.Description>
-                  By checking this box, you agree to our Terms of Service and
-                  Privacy Policy
-                </FormField.Description>
-              </View>
-              <FormField.Indicator variant="checkbox" />
+            <View className="flex-1">
+              <Label>I agree to the terms and conditions</Label>
+              <Description isInvalid={false}>
+                By checking this box, you agree to our Terms of Service and
+                Privacy Policy
+              </Description>
             </View>
-            <FormField.ErrorMessage>
-              You must accept the terms to continue
-            </FormField.ErrorMessage>
-          </FormField>
+            <ControlField.Indicator variant="checkbox" />
+          </ControlField>
         </Animated.View>
 
         <Animated.View layout={LinearTransition}>
-          <FormField
+          <ControlField
             isSelected={privacyAccepted}
             onSelectedChange={setPrivacyAccepted}
             isInvalid={!privacyAccepted}
-            className="flex-col items-start gap-1"
           >
-            <View className="flex-row items-center gap-2">
-              <View className="flex-1">
-                <FormField.Label>Accept Privacy Policy</FormField.Label>
-                <FormField.Description>
-                  You must accept our privacy policy to create an account
-                </FormField.Description>
-              </View>
-              <FormField.Indicator>
-                <Checkbox isInvalid={false} />
-              </FormField.Indicator>
+            <View className="flex-1">
+              <Label isInvalid={false}>Accept Privacy Policy</Label>
+              <Description hideOnInvalid>
+                The privacy policy has been accepted
+              </Description>
+              <FieldError>
+                Please accept the privacy policy to continue
+              </FieldError>
             </View>
-            <FormField.ErrorMessage>
-              Please accept the privacy policy to continue
-            </FormField.ErrorMessage>
-          </FormField>
+            <ControlField.Indicator>
+              <Checkbox isInvalid={false} />
+            </ControlField.Indicator>
+          </ControlField>
         </Animated.View>
 
         <Animated.View layout={LinearTransition}>
-          <FormField
+          <ControlField
             isSelected={dataSharing}
             onSelectedChange={setDataSharing}
             isInvalid={dataSharing}
@@ -338,17 +339,18 @@ const ValidationErrorStatesContent = () => {
           >
             <View className="flex-row items-center gap-2">
               <View className="flex-1">
-                <FormField.Label>Share usage data</FormField.Label>
-                <FormField.Description>
-                  Help improve our product by sharing anonymous usage data
-                </FormField.Description>
+                <Label isInvalid={false}>Share usage data</Label>
+                <Description isInvalid={false}>
+                  Help improve our product by sharing anonymous usage data and
+                  improving our products.
+                </Description>
               </View>
-              <FormField.Indicator />
+              <ControlField.Indicator />
             </View>
-            <FormField.ErrorMessage>
+            <FieldError>
               Warning: This will share your usage patterns
-            </FormField.ErrorMessage>
-          </FormField>
+            </FieldError>
+          </ControlField>
         </Animated.View>
       </StyleAnimatedView>
     </View>
@@ -357,15 +359,15 @@ const ValidationErrorStatesContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const FORM_FIELD_VARIANTS: UsageVariant[] = [
+const CONTROL_FIELD_VARIANTS: UsageVariant[] = [
   {
-    value: 'switch-form-field-set',
-    label: 'Switch FormField set',
+    value: 'switch-control-field-set',
+    label: 'Switch ControlField set',
     content: <SwitchFormFieldSetContent />,
   },
   {
-    value: 'checkbox-form-field-set',
-    label: 'Checkbox FormField set',
+    value: 'checkbox-control-field-set',
+    label: 'Checkbox ControlField set',
     content: <CheckboxFormFieldSetContent />,
   },
   {
@@ -385,6 +387,6 @@ const FORM_FIELD_VARIANTS: UsageVariant[] = [
   },
 ];
 
-export default function FormFieldScreen() {
-  return <UsageVariantFlatList data={FORM_FIELD_VARIANTS} />;
+export default function ControlFieldScreen() {
+  return <UsageVariantFlatList data={CONTROL_FIELD_VARIANTS} />;
 }

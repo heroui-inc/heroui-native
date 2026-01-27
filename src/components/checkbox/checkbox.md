@@ -109,7 +109,14 @@ Customize or disable animations for both the root checkbox and indicator.
 ## Example
 
 ```tsx
-import { Checkbox, FormField, Separator, Surface } from "heroui-native";
+import {
+  Checkbox,
+  Description,
+  ControlField,
+  Label,
+  Separator,
+  Surface,
+} from "heroui-native";
 import React from 'react';
 import { View, Text } from 'react-native';
 
@@ -127,17 +134,17 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
   description,
 }) => {
   return (
-    <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
-      <FormField.Indicator>
+    <ControlField isSelected={isSelected} onSelectedChange={onSelectedChange}>
+      <ControlField.Indicator>
         <Checkbox className="mt-0.5" />
-      </FormField.Indicator>
+      </ControlField.Indicator>
       <View className="flex-1">
-        <FormField.Label className="text-lg">{title}</FormField.Label>
-        <FormField.Description className="text-base">
+        <Label className="text-lg">{title}</Label>
+        <Description className="text-base">
           {description}
-        </FormField.Description>
+        </Description>
       </View>
-    </FormField>
+    </ControlField>
   );
 };
 

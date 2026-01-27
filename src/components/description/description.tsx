@@ -1,23 +1,70 @@
 import { forwardRef } from 'react';
+import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/internal/components';
+import { useFormItemState } from '../../helpers/internal/contexts';
 import type { TextRef } from '../../helpers/internal/types';
+import { useTextField } from '../text-field';
+import { useDescriptionAnimation } from './description.animation';
 import { DISPLAY_NAME } from './description.constants';
 import descriptionStyles from './description.styles';
 import type { DescriptionProps } from './description.types';
 
+const AnimatedText = Animated.createAnimatedComponent(HeroText);
+
 // --------------------------------------------------
 
 const Description = forwardRef<TextRef, DescriptionProps>((props, ref) => {
-  const { children, className, nativeID, ...restProps } = props;
+  const {
+    children,
+    className,
+    nativeID,
+    isInvalid: localIsInvalid,
+    isDisabled: localIsDisabled,
+    hideOnInvalid = false,
+    animation,
+    ...restProps
+  } = props;
+
+  const formItemState = useFormItemState();
+  const textFieldContext = useTextField();
+
+  const isInvalid =
+    localIsInvalid !== undefined
+      ? localIsInvalid
+      : (formItemState?.isInvalid ?? false);
+
+  const isDisabled =
+    localIsDisabled !== undefined
+      ? localIsDisabled
+      : (formItemState?.isDisabled ?? false);
+
+  const isInsideTextField = Boolean(textFieldContext);
 
   const tvStyles = descriptionStyles({
+    isInvalid,
+    isDisabled,
+    isInsideTextField,
     className,
   });
 
+  const { entering, exiting } = useDescriptionAnimation({
+    animation,
+    hideOnInvalid,
+  });
+
+  if (isInvalid && hideOnInvalid) return null;
+
   return (
-    <HeroText ref={ref} className={tvStyles} nativeID={nativeID} {...restProps}>
+    <AnimatedText
+      ref={ref}
+      entering={entering}
+      exiting={exiting}
+      className={tvStyles}
+      nativeID={nativeID}
+      {...restProps}
+    >
       {children}
-    </HeroText>
+    </AnimatedText>
   );
 });
 

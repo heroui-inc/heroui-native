@@ -1,23 +1,23 @@
-import type { PressableProps, TextProps, ViewProps } from 'react-native';
+import type { PressableProps, ViewProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 
 /**
- * Render function props for form field children
+ * Render function props for control field children
  */
-export type FormFieldRenderProps = Pick<
-  FormFieldProps,
+export type ControlFieldRenderProps = Pick<
+  ControlFieldProps,
   'isSelected' | 'isDisabled' | 'isInvalid'
 >;
 
 /**
- * FormField component props
+ * ControlField component props
  */
-export interface FormFieldProps extends Omit<PressableProps, 'children'> {
+export interface ControlFieldProps extends Omit<PressableProps, 'children'> {
   /** Content to render inside the form control, or a render function */
   children?:
     | React.ReactNode
-    | ((props: FormFieldRenderProps) => React.ReactNode);
+    | ((props: ControlFieldRenderProps) => React.ReactNode);
 
   /** Custom class name for the root element */
   className?: string;
@@ -31,6 +31,9 @@ export interface FormFieldProps extends Omit<PressableProps, 'children'> {
   /** Whether the form control is invalid @default false */
   isInvalid?: boolean;
 
+  /** Whether the form control is required @default false */
+  isRequired?: boolean;
+
   /** Callback when selection state changes */
   onSelectedChange?: (isSelected: boolean) => void;
 
@@ -39,31 +42,9 @@ export interface FormFieldProps extends Omit<PressableProps, 'children'> {
 }
 
 /**
- * Props for the FormFieldLabel component
+ * Props for the ControlFieldIndicator component
  */
-export interface FormFieldLabelProps extends TextProps {
-  /** Label text content */
-  children?: React.ReactNode;
-
-  /** Custom class name for the label element */
-  className?: string;
-}
-
-/**
- * Props for the FormFieldDescription component
- */
-export interface FormFieldDescriptionProps extends TextProps {
-  /** Description text content */
-  children?: React.ReactNode;
-
-  /** Custom class name for the description element */
-  className?: string;
-}
-
-/**
- * Props for the FormFieldIndicator component
- */
-export interface FormFieldIndicatorProps extends ViewProps {
+export interface ControlFieldIndicatorProps extends ViewProps {
   /** Control component to render (Switch, Checkbox) */
   children?: React.ReactNode;
 
@@ -77,9 +58,9 @@ export interface FormFieldIndicatorProps extends ViewProps {
 /**
  * Context value for form control components
  */
-export interface FormFieldContextValue
+export interface ControlFieldContextValue
   extends Pick<
-    FormFieldProps,
+    ControlFieldProps,
     'isSelected' | 'onSelectedChange' | 'isDisabled' | 'isInvalid'
   > {
   isPressed: SharedValue<boolean>;

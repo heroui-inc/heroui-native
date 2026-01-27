@@ -46,6 +46,10 @@ const components: Component[] = [
     path: 'close-button',
   },
   {
+    title: 'ControlField',
+    path: 'control-field',
+  },
+  {
     title: 'Description',
     path: 'description',
   },
@@ -54,12 +58,13 @@ const components: Component[] = [
     path: 'dialog',
   },
   {
-    title: 'ErrorView',
-    path: 'error-view',
+    title: 'FieldError',
+    path: 'field-error',
   },
+
   {
-    title: 'FormField',
-    path: 'form-field',
+    title: 'Input',
+    path: 'input',
   },
   {
     title: 'InputOTP',

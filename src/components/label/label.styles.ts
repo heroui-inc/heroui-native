@@ -7,6 +7,12 @@ const root = tv({
     isDisabled: {
       true: 'pointer-events-none opacity-disabled',
     },
+    isInsideTextField: {
+      true: 'px-1.5',
+    },
+    isInsideControlField: {
+      true: 'pointer-events-none',
+    },
   },
 });
 

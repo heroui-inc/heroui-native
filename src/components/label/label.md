@@ -36,7 +36,7 @@ Use Label with form fields to provide accessible labels.
 ```tsx
 <TextField>
   <Label>Username</Label>
-  <TextField.Input placeholder="Choose a username" />
+  <Input placeholder="Choose a username" />
 </TextField>
 ```
 
@@ -47,7 +47,7 @@ Show an asterisk indicator for required fields using the `isRequired` prop.
 ```tsx
 <TextField>
   <Label isRequired>Password</Label>
-  <TextField.Input placeholder="Create a password" secureTextEntry />
+  <Input placeholder="Create a password" secureTextEntry />
 </TextField>
 ```
 
@@ -56,15 +56,17 @@ Show an asterisk indicator for required fields using the `isRequired` prop.
 Display labels in an invalid state to indicate validation errors.
 
 ```tsx
+import { FieldError, Label, TextField } from 'heroui-native';
+
 <TextField isInvalid>
   <Label isInvalid>Confirm password</Label>
-  <TextField.Input
+  <Input
     placeholder="Confirm your password"
     secureTextEntry
     value="different"
     editable={false}
   />
-  <TextField.ErrorMessage>Passwords do not match</TextField.ErrorMessage>
+  <FieldError>Passwords do not match</FieldError>
 </TextField>
 ```
 
@@ -75,7 +77,7 @@ Disable labels to indicate non-interactive fields.
 ```tsx
 <TextField isDisabled>
   <Label>Subscription plan</Label>
-  <TextField.Input value="Premium" />
+  <Input value="Premium" />
 </TextField>
 ```
 
@@ -110,7 +112,7 @@ Apply custom styles using className, classNames, or styles props.
 ## Example
 
 ```tsx
-import { Label, TextField } from 'heroui-native';
+import { FieldError, Label, TextField } from 'heroui-native';
 import { View } from 'react-native';
 
 export default function LabelExample() {
@@ -118,25 +120,25 @@ export default function LabelExample() {
     <View className="flex-1 justify-center px-5 gap-8">
       <TextField>
         <Label>Username</Label>
-        <TextField.Input placeholder="Choose a username" />
+        <Input placeholder="Choose a username" />
       </TextField>
       <TextField>
         <Label isRequired>Password</Label>
-        <TextField.Input placeholder="Create a password" secureTextEntry />
+        <Input placeholder="Create a password" secureTextEntry />
       </TextField>
       <TextField isInvalid>
         <Label isInvalid>Confirm password</Label>
-        <TextField.Input
+        <Input
           placeholder="Confirm your password"
           secureTextEntry
           value="different"
           editable={false}
         />
-        <TextField.ErrorMessage>Passwords do not match</TextField.ErrorMessage>
+        <FieldError>Passwords do not match</FieldError>
       </TextField>
       <TextField isDisabled>
         <Label>Subscription plan</Label>
-        <TextField.Input value="Premium" />
+        <Input value="Premium" />
       </TextField>
     </View>
   );

@@ -109,6 +109,10 @@ export default function Layout() {
           name="components/close-button"
           options={{ title: 'CloseButton' }}
         />
+        <Stack.Screen
+          name="components/control-field"
+          options={{ title: 'ControlField' }}
+        />
         <Stack.Screen name="components/dialog" options={{ title: 'Dialog' }} />
         <Stack.Screen
           name="components/dialog-native-modal"
@@ -119,13 +123,11 @@ export default function Layout() {
           options={{ title: 'Description' }}
         />
         <Stack.Screen
-          name="components/error-view"
-          options={{ title: 'ErrorView' }}
+          name="components/field-error"
+          options={{ title: 'FieldError' }}
         />
-        <Stack.Screen
-          name="components/form-field"
-          options={{ title: 'FormField' }}
-        />
+
+        <Stack.Screen name="components/input" options={{ title: 'Input' }} />
         <Stack.Screen
           name="components/input-otp"
           options={{ title: 'InputOTP' }}

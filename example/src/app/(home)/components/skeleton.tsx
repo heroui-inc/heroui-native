@@ -2,6 +2,7 @@
 import {
   Avatar,
   Card,
+  Label,
   RadioGroup,
   Separator,
   Skeleton,
@@ -34,15 +35,15 @@ const SkeletonControls = ({
       >
         <RadioGroup.Item value="shimmer">
           <RadioGroup.Indicator />
-          <RadioGroup.Label>Shimmer</RadioGroup.Label>
+          <Label>Shimmer</Label>
         </RadioGroup.Item>
         <RadioGroup.Item value="pulse">
           <RadioGroup.Indicator />
-          <RadioGroup.Label>Pulse</RadioGroup.Label>
+          <Label>Pulse</Label>
         </RadioGroup.Item>
         <RadioGroup.Item value="none">
           <RadioGroup.Indicator />
-          <RadioGroup.Label>None</RadioGroup.Label>
+          <Label>None</Label>
         </RadioGroup.Item>
       </RadioGroup>
       <Separator className="my-6" />

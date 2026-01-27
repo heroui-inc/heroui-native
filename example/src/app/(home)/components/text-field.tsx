@@ -1,8 +1,18 @@
-import { cn, TextField } from 'heroui-native';
+import {
+  cn,
+  Description,
+  FieldError,
+  Input,
+  Label,
+  TextField,
+} from 'heroui-native';
 import { useState } from 'react';
 import { Pressable, useWindowDimensions, View } from 'react-native';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
-import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 import { EyeIcon } from '../../../components/icons/eye';
@@ -22,7 +32,13 @@ const KeyboardAvoidingContainer = ({
 
   const rStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateY: progress.value === 1 ? -height * 0.15 : 0 }],
+      transform: [
+        {
+          translateY: withTiming(progress.get() === 1 ? -height * 0.15 : 0, {
+            duration: 250,
+          }),
+        },
+      ],
     };
   });
 
@@ -34,15 +50,15 @@ const BasicTextFieldContent = () => {
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <TextField isRequired>
-          <TextField.Label>Email</TextField.Label>
-          <TextField.Input
+          <Label>Email</Label>
+          <Input
             placeholder="Enter your email"
             keyboardType="email-address"
             autoCapitalize="none"
           />
-          <TextField.Description>
+          <Description>
             We'll never share your email with anyone else.
-          </TextField.Description>
+          </Description>
         </TextField>
       </KeyboardAvoidingContainer>
     </View>
@@ -56,9 +72,9 @@ const TextFieldWithIconsContent = () => {
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <TextField isRequired>
-          <TextField.Label>Password</TextField.Label>
+          <Label>Password</Label>
           <View className="w-full flex-row items-center">
-            <TextField.Input
+            <Input
               className="flex-1 px-10"
               placeholder="Enter your password"
               secureTextEntry={!isPasswordVisible}
@@ -92,46 +108,17 @@ const DisabledTextFieldContent = () => {
       <KeyboardAvoidingContainer>
         <View className="gap-8">
           <TextField>
-            <TextField.Label>Account ID</TextField.Label>
-            <TextField.Input
-              placeholder="Enter account ID"
-              value="ACC-2024-12345"
-            />
-            <TextField.Description>
-              Your unique account identifier
-            </TextField.Description>
+            <Label>Account ID</Label>
+            <Input placeholder="Enter account ID" value="ACC-2024-12345" />
+            <Description>Your unique account identifier</Description>
           </TextField>
 
           <TextField isDisabled>
-            <TextField.Label>User Role</TextField.Label>
-            <TextField.Input
-              placeholder="Role assignment"
-              value="Administrator"
-            />
-            <TextField.Description>
-              Contact support to change your role
-            </TextField.Description>
+            <Label>User Role</Label>
+            <Input placeholder="Role assignment" value="Administrator" />
+            <Description>Contact support to change your role</Description>
           </TextField>
         </View>
-      </KeyboardAvoidingContainer>
-    </View>
-  );
-};
-
-const MultilineTextFieldContent = () => {
-  return (
-    <View className="flex-1 justify-center px-5">
-      <KeyboardAvoidingContainer>
-        <TextField>
-          <TextField.Label>Message</TextField.Label>
-          <TextField.Input
-            placeholder="Type your message here..."
-            multiline
-            numberOfLines={4}
-            textAlignVertical="top"
-          />
-          <TextField.Description>Maximum 500 characters</TextField.Description>
-        </TextField>
       </KeyboardAvoidingContainer>
     </View>
   );
@@ -151,19 +138,17 @@ const TextFieldWithValidationContent = () => {
       <View className="flex-1 pt-[55%]">
         <KeyboardAvoidingContainer>
           <TextField isRequired isInvalid={isTestFieldInvalid}>
-            <TextField.Label>Promo Code</TextField.Label>
-            <TextField.Input
+            <Label>Promo Code</Label>
+            <Input
               placeholder="Enter promo code"
               value={testFieldValue}
               onChangeText={setTestFieldValue}
               autoCapitalize="characters"
             />
-            <TextField.Description>
+            <Description hideOnInvalid>
               Enter a valid code to receive discount
-            </TextField.Description>
-            <TextField.ErrorMessage>
-              This promo code is invalid or has expired
-            </TextField.ErrorMessage>
+            </Description>
+            <FieldError>This promo code is invalid or has expired</FieldError>
           </TextField>
         </KeyboardAvoidingContainer>
       </View>
@@ -178,8 +163,8 @@ const TextFieldWithCustomStylesContent = () => {
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <TextField>
-          <TextField.Label>Gift Card Number</TextField.Label>
-          <TextField.Input
+          <Label>Gift Card Number</Label>
+          <Input
             placeholder="Enter 16-digit gift card number"
             keyboardType="number-pad"
             maxLength={16}
@@ -188,9 +173,7 @@ const TextFieldWithCustomStylesContent = () => {
               isDark && 'border-neutral-100'
             )}
           />
-          <TextField.Description>
-            Redeem your gift card at checkout
-          </TextField.Description>
+          <Description>Redeem your gift card at checkout</Description>
         </TextField>
       </KeyboardAvoidingContainer>
     </View>
@@ -212,11 +195,6 @@ const TEXT_FIELD_VARIANTS: UsageVariant[] = [
     value: 'disabled-text-field',
     label: 'Disabled TextField',
     content: <DisabledTextFieldContent />,
-  },
-  {
-    value: 'multiline-text-field',
-    label: 'Multiline TextField',
-    content: <MultilineTextFieldContent />,
   },
   {
     value: 'text-field-with-validation',

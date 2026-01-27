@@ -183,15 +183,15 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <View className="gap-3">
                 <RadioGroup.Item value="auto" className="self-start">
                   <RadioGroup.Indicator />
-                  <RadioGroup.Label>Auto</RadioGroup.Label>
+                  <Label>Auto</Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="light" className="self-start">
                   <RadioGroup.Indicator />
-                  <RadioGroup.Label>Light</RadioGroup.Label>
+                  <Label>Light</Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="dark" className="self-start">
                   <RadioGroup.Indicator />
-                  <RadioGroup.Label>Dark</RadioGroup.Label>
+                  <Label>Dark</Label>
                 </RadioGroup.Item>
               </View>
             </RadioGroup>
@@ -206,15 +206,15 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <View className="gap-3">
                 <RadioGroup.Item value="small" className="self-start">
                   <RadioGroup.Indicator />
-                  <RadioGroup.Label>Small</RadioGroup.Label>
+                  <Label>Small</Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="medium" className="self-start">
                   <RadioGroup.Indicator />
-                  <RadioGroup.Label>Medium</RadioGroup.Label>
+                  <Label>Medium</Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="large" className="self-start">
                   <RadioGroup.Indicator />
-                  <RadioGroup.Label>Large</RadioGroup.Label>
+                  <Label>Large</Label>
                 </RadioGroup.Item>
               </View>
             </RadioGroup>

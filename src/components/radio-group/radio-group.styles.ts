@@ -77,13 +77,8 @@ const itemIndicatorThumb = tv({
   },
 });
 
-const errorMessage = tv({
-  base: '',
-});
-
 const radioGroupStyles = combineStyles({
   root,
-  errorMessage,
   item,
   itemIndicator,
   itemIndicatorThumb,

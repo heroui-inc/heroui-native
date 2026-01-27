@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, cn, Dialog, RadioGroup, useDialog } from 'heroui-native';
+import { Chip, cn, Dialog, Label, RadioGroup, useDialog } from 'heroui-native';
 import { useState, type FC } from 'react';
 import { Platform, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
@@ -41,7 +41,7 @@ const StatusRadioItem: FC<StatusRadioItemProps> = ({ item, value }) => {
         <View className="w-7 pl-0.5 justify-center">
           <View className="scale-[1.2]">{item.indicator}</View>
         </View>
-        <RadioGroup.Label>{item.label}</RadioGroup.Label>
+        <Label>{item.label}</Label>
       </View>
       <RadioGroup.Indicator className="border-none shadow-none bg-transparent">
         {value === item.value && (

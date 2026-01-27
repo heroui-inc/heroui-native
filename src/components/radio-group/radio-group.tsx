@@ -36,6 +36,7 @@ const AnimatedRadioIndicator = Animated.createAnimatedComponent(
 const [RadioGroupItemProvider, useRadioGroupItem] =
   createContext<RadioGroupItemContextValue>({
     name: 'RadioGroupItemContext',
+    strict: false,
   });
 
 const useRadioGroup = RadioGroupPrimitives.useRadioGroupContext;
@@ -121,7 +122,6 @@ const RadioGroupItem = forwardRef<
           : 'primary';
 
   const tvStyles = radioGroupStyles.item({
-    isDisabled: isDisabledValue,
     className,
   });
 

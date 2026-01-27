@@ -38,6 +38,8 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
   const formItemState = useFormItemState();
   const textFieldContext = useTextField();
   const controlFieldContext = useControlField();
+  // VS -----------
+  // const radioGroupContext = useRadioGroup();
 
   const isInsideTextField = Boolean(textFieldContext);
   const isInsideControlField = Boolean(controlFieldContext);

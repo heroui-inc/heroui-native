@@ -215,7 +215,7 @@ const RadioGroupStatesContent = () => {
       <StyleAnimatedView className="w-full" layout={LinearTransition}>
         <Surface className="gap-6">
           <View>
-            <AppText className="text-foreground font-semibold text-base">
+            <AppText className="text-foreground font-medium text-lg">
               Choose Your Plan
             </AppText>
             <AppText className="text-muted text-sm">
@@ -246,16 +246,21 @@ const RadioGroupStatesContent = () => {
             </RadioGroup.Item>
 
             <Separator />
-            <RadioGroup.Item value="enterprise" isInvalid>
+            <RadioGroup.Item
+              value="enterprise"
+              isInvalid={plan === 'enterprise'}
+            >
               <View className="flex-1">
                 <Label>Enterprise Plan</Label>
-                <Description>Not available in your region</Description>
+                <Description className="text-danger" hideOnInvalid>
+                  Not available in your region
+                </Description>
+                <FieldError>
+                  Enterprise plan is not available in your region!
+                </FieldError>
               </View>
               <RadioGroup.Indicator />
             </RadioGroup.Item>
-            <FieldError isInvalid={plan === 'enterprise'}>
-              Enterprise plan is not available in your region
-            </FieldError>
           </RadioGroup>
         </Surface>
       </StyleAnimatedView>

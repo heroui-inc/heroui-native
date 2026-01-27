@@ -8,14 +8,6 @@ const root = tv({
 
 const item = tv({
   base: 'flex-row items-center justify-between gap-3',
-  variants: {
-    isDisabled: {
-      true: 'opacity-disabled pointer-events-none',
-    },
-  },
-  defaultVariants: {
-    isDisabled: false,
-  },
 });
 
 const itemIndicator = tv({

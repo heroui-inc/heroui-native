@@ -32,6 +32,7 @@ const ControlField = forwardRef<PressableRef, ControlFieldProps>(
       onSelectedChange,
       isDisabled = false,
       isInvalid = false,
+      isRequired = false,
       onPressIn,
       onPressOut,
       animation,
@@ -113,9 +114,9 @@ const ControlField = forwardRef<PressableRef, ControlFieldProps>(
       () => ({
         isDisabled: isDisabled ?? false,
         isInvalid: isInvalid ?? false,
-        isRequired: false,
+        isRequired: isRequired ?? false,
       }),
-      [isDisabled, isInvalid]
+      [isDisabled, isInvalid, isRequired]
     );
 
     return (

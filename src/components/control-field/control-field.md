@@ -191,6 +191,7 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | isSelected        | `boolean`                                                               | `undefined` | Whether the control is selected/checked                                                   |
 | isDisabled        | `boolean`                                                               | `false`     | Whether the form control is disabled                                                      |
 | isInvalid         | `boolean`                                                               | `false`     | Whether the form control is invalid                                                       |
+| isRequired        | `boolean`                                                               | `false`     | Whether the form control is required                                                       |
 | className         | `string`                                                                | -           | Custom class name for the root element                                                    |
 | onSelectedChange  | `(isSelected: boolean) => void`                                         | -           | Callback when selection state changes                                                     |
 | animation         | `"disable-all" \| undefined`                                            | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |

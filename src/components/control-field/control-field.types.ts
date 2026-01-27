@@ -31,6 +31,9 @@ export interface ControlFieldProps extends Omit<PressableProps, 'children'> {
   /** Whether the form control is invalid @default false */
   isInvalid?: boolean;
 
+  /** Whether the form control is required @default false */
+  isRequired?: boolean;
+
   /** Callback when selection state changes */
   onSelectedChange?: (isSelected: boolean) => void;
 

@@ -242,7 +242,15 @@ Add visual separators between tabs that show when the active tab is not between 
 ## Example
 
 ```tsx
-import { Tabs, TextField, FormField, Checkbox, Button } from 'heroui-native';
+import {
+  Button,
+  Checkbox,
+  Description,
+  FormField,
+  Label,
+  Tabs,
+  TextField,
+} from 'heroui-native';
 import { useState } from 'react';
 import { View, Text } from 'react-native';
 import Animated, {
@@ -301,10 +309,10 @@ export default function TabsExample() {
             >
               <FormField.Indicator variant="checkbox" />
               <View className="flex-1">
-                <FormField.Label>Show sidebar</FormField.Label>
-                <FormField.Description>
+                <Label>Show sidebar</Label>
+                <Description>
                   Display the sidebar navigation panel
-                </FormField.Description>
+                </Description>
               </View>
             </FormField>
           </AnimatedContentContainer>
@@ -318,10 +326,10 @@ export default function TabsExample() {
             >
               <FormField.Indicator variant="checkbox" />
               <View className="flex-1">
-                <FormField.Label>Account activity</FormField.Label>
-                <FormField.Description>
+                <Label>Account activity</Label>
+                <Description>
                   Notifications about your account activity
-                </FormField.Description>
+                </Description>
               </View>
             </FormField>
           </AnimatedContentContainer>

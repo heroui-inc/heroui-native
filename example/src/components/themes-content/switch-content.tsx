@@ -1,4 +1,10 @@
-import { FormField, Separator, Surface } from 'heroui-native';
+import {
+  Description,
+  FormField,
+  Label,
+  Separator,
+  Surface,
+} from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -17,8 +23,8 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
 }) => (
   <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
     <View className="flex-1">
-      <FormField.Label>{title}</FormField.Label>
-      <FormField.Description>{description}</FormField.Description>
+      <Label>{title}</Label>
+      <Description>{description}</Description>
     </View>
     <FormField.Indicator />
   </FormField>

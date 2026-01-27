@@ -320,10 +320,12 @@ Using `outline` keeps the border visual without impacting the switch's internal 
 The Switch component integrates seamlessly with FormField for press state sharing:
 
 ```tsx
+import { Description, FormField, Label } from 'heroui-native';
+
 <FormField isSelected={isSelected} onSelectedChange={setIsSelected}>
   <View className="flex-1">
-    <FormField.Label>Enable notifications</FormField.Label>
-    <FormField.Description>Receive push notifications</FormField.Description>
+    <Label>Enable notifications</Label>
+    <Description>Receive push notifications</Description>
   </View>
   <FormField.Indicator />
 </FormField>

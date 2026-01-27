@@ -3,12 +3,16 @@ import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { useIsOnSurface } from '../../helpers/external/hooks';
-import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import {
+  AnimationSettingsProvider,
+  FormItemStateProvider,
+} from '../../helpers/internal/contexts';
 import type { TextRef, ViewRef } from '../../helpers/internal/types';
 import { childrenToString, createContext } from '../../helpers/internal/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
+import { Description } from '../description';
 import { FieldError } from '../field-error';
-import { FormField } from '../form-field';
+import { Label } from '../label';
 import {
   useRadioGroupIndicatorThumbAnimation,
   useRadioGroupRootAnimation,
@@ -154,19 +158,30 @@ const RadioGroupItem = forwardRef<
     [isSelected, isDisabledValue, effectiveIsInvalid, finalVariant]
   );
 
+  const formItemStateContextValue = useMemo(
+    () => ({
+      isDisabled: isDisabledValue,
+      isInvalid: effectiveIsInvalid,
+      isRequired: false,
+    }),
+    [isDisabledValue, effectiveIsInvalid]
+  );
+
   return (
-    <RadioGroupItemProvider value={contextValue}>
-      <AnimatedRadioItem
-        ref={ref}
-        value={value}
-        className={tvStyles}
-        isDisabled={isDisabledValue}
-        hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
-        {...restProps}
-      >
-        {content}
-      </AnimatedRadioItem>
-    </RadioGroupItemProvider>
+    <FormItemStateProvider value={formItemStateContextValue}>
+      <RadioGroupItemProvider value={contextValue}>
+        <AnimatedRadioItem
+          ref={ref}
+          value={value}
+          className={tvStyles}
+          isDisabled={isDisabledValue}
+          hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
+          {...restProps}
+        >
+          {content}
+        </AnimatedRadioItem>
+      </RadioGroupItemProvider>
+    </FormItemStateProvider>
   );
 });
 
@@ -240,7 +255,7 @@ const RadioGroupIndicatorThumb = forwardRef<
 
 const RadioGroupLabel = forwardRef<TextRef, RadioGroupLabelProps>(
   (props, ref) => {
-    return <FormField.Label ref={ref} {...props} />;
+    return <Label ref={ref} {...props} />;
   }
 );
 
@@ -248,7 +263,7 @@ const RadioGroupLabel = forwardRef<TextRef, RadioGroupLabelProps>(
 
 const RadioGroupDescription = forwardRef<TextRef, RadioGroupDescriptionProps>(
   (props, ref) => {
-    return <FormField.Description ref={ref} {...props} />;
+    return <Description ref={ref} {...props} />;
   }
 );
 

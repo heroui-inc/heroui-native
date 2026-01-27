@@ -13,28 +13,13 @@ const root = tv({
   },
 });
 
-const label = tv({
-  base: 'text-base font-medium text-foreground',
-});
-
-const description = tv({
-  base: 'text-sm text-muted',
-});
-
 const indicator = tv({
-  base: '',
-});
-
-const errorMessage = tv({
   base: '',
 });
 
 const formFieldStyles = combineStyles({
   root,
-  label,
-  description,
   indicator,
-  errorMessage,
 });
 
 export default formFieldStyles;

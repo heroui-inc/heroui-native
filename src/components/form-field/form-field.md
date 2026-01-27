@@ -5,25 +5,25 @@ Provides consistent layout and interaction for form controls with label, descrip
 ## Import
 
 ```tsx
-import { FormField } from 'heroui-native';
+import { Description, FieldError, FormField, Label } from 'heroui-native';
 ```
 
 ## Anatomy
 
 ```tsx
 <FormField>
-  <FormField.Label>...</FormField.Label>
-  <FormField.Description>...</FormField.Description>
+  <Label>...</Label>
+  <Description>...</Description>
   <FormField.Indicator>...</FormField.Indicator>
-  <FormField.ErrorMessage>...</FormField.ErrorMessage>
+  <FieldError>...</FieldError>
 </FormField>
 ```
 
 - **FormField**: Root container that manages layout and state propagation
-- **FormField.Label**: Primary text label for the control
-- **FormField.Description**: Secondary descriptive helper text
+- **Label**: Primary text label for the control (from [Label](../label/label.md) component)
+- **Description**: Secondary descriptive helper text (from [Description](../description/description.md) component)
 - **FormField.Indicator**: Container for the form control component (Switch, Checkbox)
-- **FormField.ErrorMessage**: Validation error message display
+- **FieldError**: Validation error message display (from [FieldError](../field-error/field-error.md) component)
 
 ## Usage
 
@@ -33,9 +33,7 @@ FormField wraps form controls to provide consistent layout and state management.
 
 ```tsx
 <FormField isSelected={value} onSelectedChange={setValue}>
-  <View className="flex-1">
-    <FormField.Label>Label text</FormField.Label>
-  </View>
+  <Label className="flex-1">Label text</Label>
   <FormField.Indicator />
 </FormField>
 ```
@@ -47,10 +45,10 @@ Add helper text below the label using the Description component.
 ```tsx
 <FormField isSelected={value} onSelectedChange={setValue}>
   <View className="flex-1">
-    <FormField.Label>Enable notifications</FormField.Label>
-    <FormField.Description>
+    <Label>Enable notifications</Label>
+    <Description>
       Receive push notifications about your account activity
-    </FormField.Description>
+    </Description>
   </View>
   <FormField.Indicator />
 </FormField>
@@ -69,14 +67,14 @@ Display validation errors using the ErrorMessage component.
 >
   <View className="flex-row items-center gap-2">
     <View className="flex-1">
-      <FormField.Label>I agree to the terms</FormField.Label>
-      <FormField.Description>
+      <Label>I agree to the terms</Label>
+      <Description>
         By checking this box, you agree to our Terms of Service
-      </FormField.Description>
+      </Description>
     </View>
     <FormField.Indicator variant="checkbox" />
   </View>
-  <FormField.ErrorMessage>This field is required</FormField.ErrorMessage>
+  <FieldError>This field is required</FieldError>
 </FormField>
 ```
 
@@ -87,8 +85,8 @@ Control interactivity with the disabled prop.
 ```tsx
 <FormField isSelected={value} onSelectedChange={setValue} isDisabled>
   <View className="flex-1">
-    <FormField.Label>Disabled field</FormField.Label>
-    <FormField.Description>This field is disabled</FormField.Description>
+    <Label>Disabled field</Label>
+    <Description>This field is disabled</Description>
   </View>
   <FormField.Indicator />
 </FormField>
@@ -105,8 +103,8 @@ Disable all animations including children by using `"disable-all"`. This cascade
   animation="disable-all"
 >
   <View className="flex-1">
-    <FormField.Label>Label text</FormField.Label>
-    <FormField.Description>Description text</FormField.Description>
+    <Label>Label text</Label>
+    <Description>Description text</Description>
   </View>
   <FormField.Indicator />
 </FormField>
@@ -115,7 +113,14 @@ Disable all animations including children by using `"disable-all"`. This cascade
 ## Example
 
 ```tsx
-import { Checkbox, FormField, Switch } from 'heroui-native';
+import {
+  Checkbox,
+  Description,
+  FieldError,
+  FormField,
+  Label,
+  Switch,
+} from 'heroui-native';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 
@@ -132,10 +137,10 @@ export default function FormFieldExample() {
           onSelectedChange={setNotifications}
         >
           <View className="flex-1">
-            <FormField.Label>Enable notifications</FormField.Label>
-            <FormField.Description>
+            <Label>Enable notifications</Label>
+            <Description>
               Receive push notifications about your account activity
-            </FormField.Description>
+            </Description>
           </View>
           <FormField.Indicator />
         </FormField>
@@ -148,25 +153,21 @@ export default function FormFieldExample() {
         >
           <View className="flex-row items-center gap-2">
             <View className="flex-1">
-              <FormField.Label>
-                I agree to the terms and conditions
-              </FormField.Label>
-              <FormField.Description>
+              <Label>I agree to the terms and conditions</Label>
+              <Description>
                 By checking this box, you agree to our Terms of Service
-              </FormField.Description>
+              </Description>
             </View>
             <FormField.Indicator className="mt-0.5">
               <Checkbox />
             </FormField.Indicator>
           </View>
-          <FormField.ErrorMessage>
-            This field is required
-          </FormField.ErrorMessage>
+          <FieldError>This field is required</FieldError>
         </FormField>
 
         <FormField isSelected={newsletter} onSelectedChange={setNewsletter}>
           <View className="flex-1">
-            <FormField.Label>Subscribe to newsletter</FormField.Label>
+            <Label>Subscribe to newsletter</Label>
           </View>
           <FormField.Indicator>
             <Checkbox color="warning" />
@@ -195,21 +196,17 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | animation         | `"disable-all" \| undefined`                                            | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
 | ...PressableProps | `PressableProps`                                                        | -           | All React Native Pressable props are supported                                            |
 
-### FormField.Label
+### Label
 
-| prop         | type              | default | description                               |
-| ------------ | ----------------- | ------- | ----------------------------------------- |
-| children     | `React.ReactNode` | -       | Label text content                        |
-| className    | `string`          | -       | Custom class name for the label element   |
-| ...TextProps | `TextProps`       | -       | All React Native Text props are supported |
+The `Label` component automatically consumes form state (`isDisabled`, `isInvalid`) from the FormField context.
 
-### FormField.Description
+**Note**: For complete prop documentation, see the [Label component documentation](../label/label.md).
 
-| prop         | type              | default | description                                   |
-| ------------ | ----------------- | ------- | --------------------------------------------- |
-| children     | `React.ReactNode` | -       | Description text content                      |
-| className    | `string`          | -       | Custom class name for the description element |
-| ...TextProps | `TextProps`       | -       | All React Native Text props are supported     |
+### Description
+
+The `Description` component automatically consumes form state (`isDisabled`, `isInvalid`) from the FormField context.
+
+**Note**: For complete prop documentation, see the [Description component documentation](../description/description.md).
 
 ### FormField.Indicator
 
@@ -222,11 +219,11 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 
 **Note**: When children are provided, the component automatically passes down `isSelected`, `onSelectedChange`, `isDisabled`, and `isInvalid` props from the FormField context if they are not already present on the child component.
 
-### FormField.ErrorMessage
+### FieldError
 
-FormField.ErrorMessage extends all props from [FieldError](../field-error/field-error.md) component.
+The `FieldError` component automatically consumes form state (`isInvalid`) from the FormField context.
 
-**Note**: The `isInvalid` prop is automatically passed from the FormField context. The error message visibility is controlled by the `isInvalid` state of the parent FormField.
+**Note**: For complete prop documentation, see the [FieldError component documentation](../field-error/field-error.md). The error message visibility is controlled by the `isInvalid` state of the parent FormField.
 
 ## Hooks
 

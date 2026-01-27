@@ -6,11 +6,9 @@ import type {
   AnimationValue,
 } from '../../helpers/internal/types';
 import type { ItemProps, RootProps } from '../../primitives/radio-group';
+import type { DescriptionProps } from '../description/description.types';
 import type { FieldErrorRootProps } from '../field-error/field-error.types';
-import type {
-  FormFieldDescriptionProps,
-  FormFieldLabelProps,
-} from '../form-field';
+import type { LabelProps } from '../label/label.types';
 
 /**
  * Props for RadioGroup root component
@@ -141,12 +139,12 @@ export interface RadioGroupIndicatorThumbProps
 /**
  * Props for RadioGroup.Label component
  */
-export interface RadioGroupLabelProps extends FormFieldLabelProps {}
+export interface RadioGroupLabelProps extends LabelProps {}
 
 /**
  * Props for RadioGroup.Description component
  */
-export interface RadioGroupDescriptionProps extends FormFieldDescriptionProps {}
+export interface RadioGroupDescriptionProps extends DescriptionProps {}
 
 /**
  * Props for RadioGroup.ErrorMessage component

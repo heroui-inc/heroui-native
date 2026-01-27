@@ -1,4 +1,12 @@
-import { Checkbox, FormField, Separator, Surface } from 'heroui-native';
+import {
+  Checkbox,
+  Description,
+  FieldError,
+  FormField,
+  Label,
+  Separator,
+  Surface,
+} from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
@@ -22,8 +30,8 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
 }) => (
   <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
     <View className="flex-1">
-      <FormField.Label>{title}</FormField.Label>
-      <FormField.Description>{description}</FormField.Description>
+      <Label>{title}</Label>
+      <Description>{description}</Description>
     </View>
     <FormField.Indicator />
   </FormField>
@@ -105,8 +113,8 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
         </Checkbox>
       </FormField.Indicator>
       <View className="flex-1">
-        <FormField.Label>{title}</FormField.Label>
-        <FormField.Description>{description}</FormField.Description>
+        <Label>{title}</Label>
+        <Description>{description}</Description>
       </View>
     </FormField>
   );
@@ -182,7 +190,7 @@ const InlineFilter: React.FC<InlineFilterProps> = ({
     <FormField.Indicator>
       <Checkbox className="size-5 rounded-md" />
     </FormField.Indicator>
-    <FormField.Label>{label}</FormField.Label>
+    <Label>{label}</Label>
   </FormField>
 );
 
@@ -241,10 +249,10 @@ const DisabledStateContent = () => {
       <View className="gap-8 w-full">
         <FormField isSelected={activeSwitch} onSelectedChange={setActiveSwitch}>
           <View className="flex-1">
-            <FormField.Label>Two-factor authentication</FormField.Label>
-            <FormField.Description>
+            <Label>Two-factor authentication</Label>
+            <Description>
               Add an extra layer of security to your account
-            </FormField.Description>
+            </Description>
           </View>
           <FormField.Indicator />
         </FormField>
@@ -255,10 +263,10 @@ const DisabledStateContent = () => {
           isDisabled
         >
           <View className="flex-1">
-            <FormField.Label>Biometric authentication</FormField.Label>
-            <FormField.Description>
+            <Label>Biometric authentication</Label>
+            <Description>
               Requires device with fingerprint or face recognition support
-            </FormField.Description>
+            </Description>
           </View>
           <FormField.Indicator />
         </FormField>
@@ -289,19 +297,15 @@ const ValidationErrorStatesContent = () => {
           >
             <View className="flex-row items-center gap-2">
               <View className="flex-1">
-                <FormField.Label>
-                  I agree to the terms and conditions
-                </FormField.Label>
-                <FormField.Description>
+                <Label>I agree to the terms and conditions</Label>
+                <Description>
                   By checking this box, you agree to our Terms of Service and
                   Privacy Policy
-                </FormField.Description>
+                </Description>
               </View>
               <FormField.Indicator variant="checkbox" />
             </View>
-            <FormField.ErrorMessage>
-              You must accept the terms to continue
-            </FormField.ErrorMessage>
+            <FieldError>You must accept the terms to continue</FieldError>
           </FormField>
         </Animated.View>
 
@@ -314,18 +318,18 @@ const ValidationErrorStatesContent = () => {
           >
             <View className="flex-row items-center gap-2">
               <View className="flex-1">
-                <FormField.Label>Accept Privacy Policy</FormField.Label>
-                <FormField.Description>
+                <Label>Accept Privacy Policy</Label>
+                <Description>
                   You must accept our privacy policy to create an account
-                </FormField.Description>
+                </Description>
               </View>
               <FormField.Indicator>
                 <Checkbox isInvalid={false} />
               </FormField.Indicator>
             </View>
-            <FormField.ErrorMessage>
+            <FieldError>
               Please accept the privacy policy to continue
-            </FormField.ErrorMessage>
+            </FieldError>
           </FormField>
         </Animated.View>
 
@@ -338,16 +342,16 @@ const ValidationErrorStatesContent = () => {
           >
             <View className="flex-row items-center gap-2">
               <View className="flex-1">
-                <FormField.Label>Share usage data</FormField.Label>
-                <FormField.Description>
+                <Label>Share usage data</Label>
+                <Description>
                   Help improve our product by sharing anonymous usage data
-                </FormField.Description>
+                </Description>
               </View>
               <FormField.Indicator />
             </View>
-            <FormField.ErrorMessage>
+            <FieldError>
               Warning: This will share your usage patterns
-            </FormField.ErrorMessage>
+            </FieldError>
           </FormField>
         </Animated.View>
       </StyleAnimatedView>

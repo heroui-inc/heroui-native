@@ -1,4 +1,4 @@
-import type { PressableProps, TextProps, ViewProps } from 'react-native';
+import type { PressableProps, ViewProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 
@@ -36,28 +36,6 @@ export interface FormFieldProps extends Omit<PressableProps, 'children'> {
 
   /** Animation configuration. Use `"disable-all"` to disable all animations including children */
   animation?: AnimationRootDisableAll;
-}
-
-/**
- * Props for the FormFieldLabel component
- */
-export interface FormFieldLabelProps extends TextProps {
-  /** Label text content */
-  children?: React.ReactNode;
-
-  /** Custom class name for the label element */
-  className?: string;
-}
-
-/**
- * Props for the FormFieldDescription component
- */
-export interface FormFieldDescriptionProps extends TextProps {
-  /** Description text content */
-  children?: React.ReactNode;
-
-  /** Custom class name for the description element */
-  className?: string;
 }
 
 /**

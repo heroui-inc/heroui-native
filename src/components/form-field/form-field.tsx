@@ -1,19 +1,14 @@
 import React, { cloneElement, forwardRef, useCallback, useMemo } from 'react';
-import {
-  Pressable,
-  Text as RNText,
-  View,
-  type GestureResponderEvent,
-} from 'react-native';
+import { Pressable, View, type GestureResponderEvent } from 'react-native';
 import { hasProp } from '../../helpers/internal/utils';
 
 import { useSharedValue } from 'react-native-reanimated';
-import { HeroText } from '../../helpers/internal/components';
-import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
-import type { PressableRef, ViewRef } from '../../helpers/internal/types';
+import {
+  AnimationSettingsProvider,
+  FormItemStateProvider,
+} from '../../helpers/internal/contexts';
+import type { PressableRef } from '../../helpers/internal/types';
 import { Checkbox } from '../checkbox';
-import { FieldError } from '../field-error';
-import type { FieldErrorRootProps } from '../field-error/field-error.types';
 import { Switch } from '../switch';
 import { useFormFieldRootAnimation } from './form-field.animation';
 import { DISPLAY_NAME } from './form-field.constants';
@@ -21,9 +16,7 @@ import { FormFieldProvider, useFormField } from './form-field.context';
 import formFieldStyles from './form-field.styles';
 import type {
   FormFieldContextValue,
-  FormFieldDescriptionProps,
   FormFieldIndicatorProps,
-  FormFieldLabelProps,
   FormFieldProps,
   FormFieldRenderProps,
 } from './form-field.types';
@@ -115,58 +108,35 @@ const FormField = forwardRef<PressableRef, FormFieldProps>((props, ref) => {
     [isSelected, onSelectedChange, isDisabled, isInvalid, isPressed]
   );
 
+  const formItemStateContextValue = useMemo(
+    () => ({
+      isDisabled: isDisabled ?? false,
+      isInvalid: isInvalid ?? false,
+      isRequired: false,
+    }),
+    [isDisabled, isInvalid]
+  );
+
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
-      <FormFieldProvider value={contextValue}>
-        <Pressable
-          ref={ref}
-          className={tvStyles}
-          onPress={handlePress}
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          disabled={isDisabled}
-          {...restProps}
-        >
-          {content}
-        </Pressable>
-      </FormFieldProvider>
+      <FormItemStateProvider value={formItemStateContextValue}>
+        <FormFieldProvider value={contextValue}>
+          <Pressable
+            ref={ref}
+            className={tvStyles}
+            onPress={handlePress}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+            disabled={isDisabled}
+            {...restProps}
+          >
+            {content}
+          </Pressable>
+        </FormFieldProvider>
+      </FormItemStateProvider>
     </AnimationSettingsProvider>
   );
 });
-
-// --------------------------------------------------
-
-const FormFieldLabel = forwardRef<RNText, FormFieldLabelProps>((props, ref) => {
-  const { children, className, ...restProps } = props;
-
-  const tvStyles = formFieldStyles.label({
-    className,
-  });
-
-  return (
-    <HeroText ref={ref} className={tvStyles} {...restProps}>
-      {children}
-    </HeroText>
-  );
-});
-
-// --------------------------------------------------
-
-const FormFieldDescription = forwardRef<RNText, FormFieldDescriptionProps>(
-  (props, ref) => {
-    const { children, className, ...restProps } = props;
-
-    const tvStyles = formFieldStyles.description({
-      className,
-    });
-
-    return (
-      <HeroText ref={ref} className={tvStyles} {...restProps}>
-        {children}
-      </HeroText>
-    );
-  }
-);
 
 // --------------------------------------------------
 
@@ -237,33 +207,8 @@ const FormFieldIndicator = forwardRef<View, FormFieldIndicatorProps>(
 
 // --------------------------------------------------
 
-const FormFieldErrorMessage = forwardRef<ViewRef, FieldErrorRootProps>(
-  (props, ref) => {
-    const { isInvalid } = useFormField();
-    const { className, ...restProps } = props;
-
-    const tvStyles = formFieldStyles.errorMessage({
-      className,
-    });
-
-    return (
-      <FieldError
-        ref={ref}
-        isInvalid={isInvalid}
-        className={tvStyles}
-        {...restProps}
-      />
-    );
-  }
-);
-
-// --------------------------------------------------
-
 FormField.displayName = DISPLAY_NAME.FORM_FIELD;
-FormFieldLabel.displayName = DISPLAY_NAME.FORM_FIELD_LABEL;
-FormFieldDescription.displayName = DISPLAY_NAME.FORM_FIELD_DESCRIPTION;
 FormFieldIndicator.displayName = DISPLAY_NAME.FORM_FIELD_INDICATOR;
-FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
 
 /**
  * Compound FormField component with sub-components
@@ -271,29 +216,26 @@ FormFieldErrorMessage.displayName = DISPLAY_NAME.FORM_FIELD_ERROR_MESSAGE;
  * @component FormField - Wrapper that provides consistent layout and interaction for form controls.
  * Handles press events to toggle selection state and manages disabled states.
  *
- * @component FormField.Label - Primary text label for the form control. Renders as
- * Text component when children is a string.
- *
- * @component FormField.Description - Secondary descriptive text. Renders as Text
- * component when children is a string.
- *
  * @component FormField.Indicator - Container for the control component (Switch, Checkbox).
  * Automatically passes down isSelected, onSelectedChange, isDisabled, and isInvalid props.
  *
- * @component FormField.ErrorMessage - Error message displayed when field is invalid.
- * Shown with animation below the form field content.
- *
  * Props flow from FormField to sub-components via context.
+ *
+ * @example
+ * ```tsx
+ * import { Description, FieldError, FormField, Label } from 'heroui-native';
+ *
+ * <FormField isSelected={value} onSelectedChange={setValue}>
+ *   <Label>Enable notifications</Label>
+ *   <Description>Receive push notifications</Description>
+ *   <FormField.Indicator />
+ *   <FieldError>This field is required</FieldError>
+ * </FormField>
+ * ```
  */
 const CompoundFormField = Object.assign(FormField, {
-  /** @optional Primary text label */
-  Label: FormFieldLabel,
-  /** @optional Secondary descriptive text */
-  Description: FormFieldDescription,
   /** @optional Container for control component */
   Indicator: FormFieldIndicator,
-  /** @optional Error message displayed when field is invalid */
-  ErrorMessage: FormFieldErrorMessage,
 });
 
 export { useFormField } from './form-field.context';

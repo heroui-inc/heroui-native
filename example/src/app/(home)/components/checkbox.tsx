@@ -1,6 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Checkbox, FormField, Separator, Surface } from 'heroui-native';
+import {
+  Checkbox,
+  Description,
+  FormField,
+  Label,
+  Separator,
+  Surface,
+} from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -45,10 +52,8 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
         <Checkbox className="mt-0.5" />
       </FormField.Indicator>
       <View className="flex-1">
-        <FormField.Label className="text-lg">{title}</FormField.Label>
-        <FormField.Description className="text-base">
-          {description}
-        </FormField.Description>
+        <Label className="text-lg">{title}</Label>
+        <Description className="text-base">{description}</Description>
       </View>
     </FormField>
   );

@@ -1,6 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import { FormField, Separator, Surface, Switch } from 'heroui-native';
+import {
+  Description,
+  FormField,
+  Label,
+  Separator,
+  Surface,
+  Switch,
+} from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -31,8 +38,8 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
 }) => (
   <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
     <View className="flex-1">
-      <FormField.Label>{title}</FormField.Label>
-      <FormField.Description>{description}</FormField.Description>
+      <Label>{title}</Label>
+      <Description>{description}</Description>
     </View>
     <FormField.Indicator />
   </FormField>
@@ -129,10 +136,8 @@ const StatesContent = () => {
               isDisabled={fieldConfigs[key].disabled}
             >
               <View className="flex-1">
-                <FormField.Label>{fieldConfigs[key].title}</FormField.Label>
-                <FormField.Description>
-                  {fieldConfigs[key].description}
-                </FormField.Description>
+                <Label>{fieldConfigs[key].title}</Label>
+                <Description>{fieldConfigs[key].description}</Description>
               </View>
               <FormField.Indicator />
             </FormField>

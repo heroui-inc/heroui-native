@@ -8,6 +8,7 @@ import type { PressableRef, TextRef } from '../../helpers/internal/types';
 import { childrenToString, createContext } from '../../helpers/internal/utils';
 import * as LabelPrimitives from '../../primitives/label';
 import { useControlField } from '../control-field/control-field.context';
+import { useRadioGroupItem } from '../radio-group';
 import { useTextField } from '../text-field';
 import { useLabelRootAnimation } from './label.animation';
 import { DISPLAY_NAME } from './label.constants';
@@ -38,11 +39,11 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
   const formItemState = useFormItemState();
   const textFieldContext = useTextField();
   const controlFieldContext = useControlField();
-  // VS -----------
-  // const radioGroupContext = useRadioGroup();
+  const radioGroupItemContext = useRadioGroupItem();
 
   const isInsideTextField = Boolean(textFieldContext);
-  const isInsideControlField = Boolean(controlFieldContext);
+  const isInsideControlField =
+    Boolean(controlFieldContext) || Boolean(radioGroupItemContext);
 
   // Merge form item state with local props (local takes precedence)
   const isDisabled =

@@ -7,19 +7,22 @@ import {
   AnimationSettingsProvider,
   FormItemStateProvider,
 } from '../../helpers/internal/contexts';
-import { childrenToString, createContext } from '../../helpers/internal/utils';
+import { childrenToString } from '../../helpers/internal/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
-import { Label } from '../label';
+import Label from '../label/label';
 import {
   useRadioGroupIndicatorThumbAnimation,
   useRadioGroupRootAnimation,
 } from './radio-group.animation';
 import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './radio-group.constants';
+import {
+  RadioGroupItemProvider,
+  useRadioGroupItem,
+} from './radio-group.context';
 import radioGroupStyles, { styleSheet } from './radio-group.styles';
 import type {
   RadioGroupIndicatorProps,
   RadioGroupIndicatorThumbProps,
-  RadioGroupItemContextValue,
   RadioGroupItemProps,
   RadioGroupItemRenderProps,
   RadioGroupProps,
@@ -32,12 +35,6 @@ const AnimatedRadioItem = Animated.createAnimatedComponent(
 const AnimatedRadioIndicator = Animated.createAnimatedComponent(
   RadioGroupPrimitives.Indicator
 );
-
-const [RadioGroupItemProvider, useRadioGroupItem] =
-  createContext<RadioGroupItemContextValue>({
-    name: 'RadioGroupItemContext',
-    strict: false,
-  });
 
 const useRadioGroup = RadioGroupPrimitives.useRadioGroupContext;
 
@@ -281,4 +278,4 @@ const CompoundRadioGroup = Object.assign(RadioGroupRoot, {
 });
 
 export default CompoundRadioGroup;
-export { useRadioGroup, useRadioGroupItem };
+export { useRadioGroup };

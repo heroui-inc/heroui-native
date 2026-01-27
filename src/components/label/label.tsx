@@ -8,7 +8,7 @@ import type { PressableRef, TextRef } from '../../helpers/internal/types';
 import { childrenToString, createContext } from '../../helpers/internal/utils';
 import * as LabelPrimitives from '../../primitives/label';
 import { useControlField } from '../control-field/control-field.context';
-import { useRadioGroupItem } from '../radio-group';
+import { useRadioGroupItem } from '../radio-group/radio-group.context';
 import { useTextField } from '../text-field';
 import { useLabelRootAnimation } from './label.animation';
 import { DISPLAY_NAME } from './label.constants';

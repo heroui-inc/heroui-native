@@ -1,8 +1,5 @@
-export {
-  default as RadioGroup,
-  useRadioGroup,
-  useRadioGroupItem,
-} from './radio-group';
+export { default as RadioGroup, useRadioGroup } from './radio-group';
+export { useRadioGroupItem } from './radio-group.context';
 export type {
   RadioGroupIndicatorProps,
   RadioGroupIndicatorThumbAnimation,

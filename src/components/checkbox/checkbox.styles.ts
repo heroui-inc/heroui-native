@@ -93,15 +93,13 @@ const indicator = tv({
   },
 });
 
-const checkboxStyles = combineStyles({
+export const checkboxClassNames = combineStyles({
   root,
   indicator,
 });
 
-export const styleSheet = StyleSheet.create({
+export const checkboxStyleSheet = StyleSheet.create({
   root: {
     borderCurve: 'continuous',
   },
 });
-
-export default checkboxStyles;

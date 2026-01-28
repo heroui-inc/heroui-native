@@ -15,7 +15,7 @@ import {
   useCheckboxRootAnimation,
 } from './checkbox.animation';
 import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './checkbox.constants';
-import checkboxStyles, { styleSheet } from './checkbox.styles';
+import { checkboxClassNames, checkboxStyleSheet } from './checkbox.styles';
 import type {
   CheckboxIndicatorProps,
   CheckboxProps,
@@ -61,7 +61,7 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
           ? 'secondary'
           : 'primary';
 
-    const rootClassName = checkboxStyles.root({
+    const rootClassName = checkboxClassNames.root({
       variant: finalVariant,
       isSelected,
       isDisabled,
@@ -75,8 +75,8 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       });
 
     const rootStyle = isAnimatedStyleActive
-      ? [rContainerStyle, styleSheet.root, style]
-      : [styleSheet.root, style];
+      ? [rContainerStyle, checkboxStyleSheet.root, style]
+      : [checkboxStyleSheet.root, style];
 
     const animationContextValue = useMemo(
       () => ({
@@ -169,7 +169,7 @@ const CheckboxIndicator = forwardRef<
   const iconEnterDuration = iconProps?.enterDuration;
   const iconExitDuration = iconProps?.exitDuration;
 
-  const indicatorClassName = checkboxStyles.indicator({
+  const indicatorClassName = checkboxClassNames.indicator({
     isInvalid,
     className,
   });

@@ -6,7 +6,7 @@ import type { TextRef } from '../../helpers/internal/types';
 import { useTextField } from '../text-field';
 import { useDescriptionAnimation } from './description.animation';
 import { DISPLAY_NAME } from './description.constants';
-import descriptionStyles from './description.styles';
+import { descriptionClassNames } from './description.styles';
 import type { DescriptionProps } from './description.types';
 
 const AnimatedText = Animated.createAnimatedComponent(HeroText);
@@ -40,7 +40,7 @@ const Description = forwardRef<TextRef, DescriptionProps>((props, ref) => {
 
   const isInsideTextField = Boolean(textFieldContext);
 
-  const tvStyles = descriptionStyles({
+  const rootClassName = descriptionClassNames.root({
     isInvalid,
     isDisabled,
     isInsideTextField,
@@ -59,7 +59,7 @@ const Description = forwardRef<TextRef, DescriptionProps>((props, ref) => {
       ref={ref}
       entering={entering}
       exiting={exiting}
-      className={tvStyles}
+      className={rootClassName}
       nativeID={nativeID}
       {...restProps}
     >

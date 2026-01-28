@@ -25,7 +25,7 @@ const description = tv({
   base: 'text-base text-muted',
 });
 
-const cardStyles = combineStyles({
+export const cardClassNames = combineStyles({
   root,
   header,
   body,
@@ -33,5 +33,3 @@ const cardStyles = combineStyles({
   label,
   description,
 });
-
-export default cardStyles;

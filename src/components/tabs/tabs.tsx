@@ -25,7 +25,7 @@ import {
 } from './tabs.animation';
 import { DISPLAY_NAME } from './tabs.constants';
 import { MeasurementsContext, useTabsMeasurements } from './tabs.context';
-import tabsStyles from './tabs.styles';
+import { tabsClassNames, tabsStyleSheet } from './tabs.styles';
 import type {
   ItemMeasurements,
   TabsContentProps,
@@ -84,7 +84,7 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
       [isAllAnimationsDisabled]
     );
 
-    const tvStyles = tabsStyles.root({ className });
+    const rootClassName = tabsClassNames.root({ className });
 
     return (
       <AnimationSettingsProvider value={animationSettingsContextValue}>
@@ -101,7 +101,7 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
             ref={ref}
             value={value}
             onValueChange={onValueChange}
-            className={tvStyles}
+            className={rootClassName}
             {...restProps}
           >
             {children}
@@ -130,13 +130,13 @@ const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
       setIsScrollView(hasScrollView);
     }, [children, setIsScrollView]);
 
-    const tvStyles = tabsStyles.list({ variant, className });
+    const listClassName = tabsClassNames.list({ variant, className });
 
     return (
       <TabsPrimitives.List
         ref={ref}
-        className={tvStyles}
-        style={[tabsStyles.styleSheet.listRoot, style]}
+        className={listClassName}
+        style={[tabsStyleSheet.listRoot, style]}
         onLayout={handleLayout}
         {...restProps}
       >
@@ -163,11 +163,15 @@ const TabsScrollView = forwardRef<ScrollView, TabsScrollViewProps>(
     const { measurements, variant } = useTabsMeasurements();
     const { width: screenWidth } = useWindowDimensions();
 
-    const scrollViewStyles = tabsStyles.scrollView({ variant, className });
-    const contentContainerStyles = tabsStyles.scrollViewContentContainer({
+    const scrollViewClassName = tabsClassNames.scrollView({
       variant,
-      className: contentContainerClassName,
+      className,
     });
+    const contentContainerClassNameValue =
+      tabsClassNames.scrollViewContentContainer({
+        variant,
+        className: contentContainerClassName,
+      });
 
     const scrollRef = useRef<ScrollView>(null);
 
@@ -204,8 +208,8 @@ const TabsScrollView = forwardRef<ScrollView, TabsScrollViewProps>(
         }}
         horizontal
         showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
-        className={scrollViewStyles}
-        contentContainerClassName={contentContainerStyles}
+        className={scrollViewClassName}
+        contentContainerClassName={contentContainerClassNameValue}
         {...restProps}
       >
         {children}
@@ -233,7 +237,7 @@ const TabsTrigger = forwardRef<
 
   const isSelected = rootValue === value;
 
-  const tvStyles = tabsStyles.trigger({ isDisabled, className });
+  const triggerClassName = tabsClassNames.trigger({ isDisabled, className });
 
   const handleLayout = useCallback(
     (event: LayoutChangeEvent) => {
@@ -257,8 +261,8 @@ const TabsTrigger = forwardRef<
       ref={ref}
       value={value}
       disabled={isDisabled}
-      className={tvStyles}
-      style={[tabsStyles.styleSheet.triggerRoot, style as ViewStyle]}
+      className={triggerClassName}
+      style={[tabsStyleSheet.triggerRoot, style as ViewStyle]}
       onLayout={handleLayout}
       {...restProps}
     >
@@ -274,10 +278,10 @@ const TabsLabel = forwardRef<TabsPrimitivesTypes.LabelRef, TabsLabelProps>(
     const { children, className, ...restProps } = props;
     const { isSelected } = useTabsTrigger();
 
-    const tvStyles = tabsStyles.label({ isSelected, className });
+    const labelClassName = tabsClassNames.label({ isSelected, className });
 
     return (
-      <TabsPrimitives.Label ref={ref} className={tvStyles} {...restProps}>
+      <TabsPrimitives.Label ref={ref} className={labelClassName} {...restProps}>
         {children}
       </TabsPrimitives.Label>
     );
@@ -305,7 +309,7 @@ const TabsIndicator = forwardRef<
     animation,
   });
 
-  const indicatorClassName = tabsStyles.indicator({
+  const indicatorClassName = tabsClassNames.indicator({
     variant,
     isScrollView,
     className,
@@ -347,7 +351,7 @@ const TabsSeparator = forwardRef<Animated.View, TabsSeparatorProps>(
       isAlwaysVisible,
     });
 
-    const separatorClassName = tabsStyles.separator({ className });
+    const separatorClassName = tabsClassNames.separator({ className });
 
     const separatorStyle = isAnimatedStyleActive
       ? [rContainerStyle, style]
@@ -372,13 +376,13 @@ const TabsContent = forwardRef<
 >((props, ref) => {
   const { children, value, className, ...restProps } = props;
 
-  const tvStyles = tabsStyles.content({ className });
+  const contentClassName = tabsClassNames.content({ className });
 
   return (
     <TabsPrimitives.Content
       ref={ref}
       value={value}
-      className={tvStyles}
+      className={contentClassName}
       {...restProps}
     >
       {children}

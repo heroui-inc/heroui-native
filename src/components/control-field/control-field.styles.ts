@@ -9,9 +9,7 @@ const indicator = tv({
   base: '',
 });
 
-const controlFieldStyles = combineStyles({
+export const controlFieldClassNames = combineStyles({
   root,
   indicator,
 });
-
-export default controlFieldStyles;

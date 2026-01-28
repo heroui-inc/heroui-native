@@ -16,10 +16,8 @@ const root = tv({
   },
 });
 
-const fieldErrorStyles = combineStyles({
+export const fieldErrorClassNames = combineStyles({
   root,
 });
 
 export type FieldErrorSlots = keyof ReturnType<typeof root>;
-
-export default fieldErrorStyles;

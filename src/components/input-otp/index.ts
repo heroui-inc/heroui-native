@@ -5,4 +5,5 @@ export {
   REGEXP_ONLY_DIGITS_AND_CHARS,
   useInputOTP,
 } from './input-otp';
+export { inputOTPClassNames } from './input-otp.styles';
 export type * from './input-otp.types';

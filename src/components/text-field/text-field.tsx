@@ -8,7 +8,7 @@ import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
 import { useTextFieldRootAnimation } from './text-field.animation';
 import { DISPLAY_NAME } from './text-field.constants';
-import textFieldStyles from './text-field.styles';
+import { textFieldClassNames } from './text-field.styles';
 import type {
   TextFieldContextValue,
   TextFieldRootProps,
@@ -32,7 +32,7 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const tvStyles = textFieldStyles.root({ className });
+  const rootClassName = textFieldClassNames.root({ className });
 
   const { isAllAnimationsDisabled } = useTextFieldRootAnimation({ animation });
 
@@ -57,7 +57,7 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
     <AnimationSettingsProvider value={animationSettingsContextValue}>
       <FormItemStateProvider value={formItemStateContextValue}>
         <TextFieldProvider value={contextValue}>
-          <View ref={ref} className={tvStyles} {...restProps}>
+          <View ref={ref} className={rootClassName} {...restProps}>
             {children}
           </View>
         </TextFieldProvider>

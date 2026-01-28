@@ -21,7 +21,7 @@ import {
   useDialogAnimation,
 } from './dialog.animation';
 import { DISPLAY_NAME } from './dialog.constants';
-import dialogStyles, { styleSheet } from './dialog.styles';
+import { dialogClassNames, dialogStyleSheet } from './dialog.styles';
 import type {
   DialogCloseProps,
   DialogContentProps,
@@ -131,14 +131,14 @@ const DialogPortal = ({
   const animationSettingsContext = useAnimationSettings();
   const animationContext = useDialogAnimation();
 
-  const tvStyles = dialogStyles.portal({ className });
+  const portalClassName = dialogClassNames.portal({ className });
 
   return (
     <DialogPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <DialogAnimationProvider value={animationContext}>
           <FullWindowOverlay>
-            <Animated.View className={tvStyles} style={style}>
+            <Animated.View className={portalClassName} style={style}>
               {children}
             </Animated.View>
           </FullWindowOverlay>
@@ -161,7 +161,7 @@ const DialogOverlay = forwardRef<
     const { progress, isDragging, isGestureReleaseAnimationRunning } =
       useDialogAnimation();
 
-    const overlayClassName = dialogStyles.overlay({ className });
+    const overlayClassName = dialogClassNames.overlay({ className });
 
     const { rContainerStyle } = usePopupOverlayAnimation({
       progress,
@@ -213,7 +213,7 @@ const DialogContent = forwardRef<
       dialogState,
     } = useDialogAnimation();
 
-    const contentClassName = dialogStyles.content({ className });
+    const contentClassName = dialogClassNames.content({ className });
 
     const {
       contentY,
@@ -232,8 +232,8 @@ const DialogContent = forwardRef<
     });
 
     const contentStyle = isAnimatedStyleActive
-      ? [styleSheet.contentContainer, rContainerStyle, style]
-      : [styleSheet.contentContainer, style];
+      ? [dialogStyleSheet.contentContainer, rContainerStyle, style]
+      : [dialogStyleSheet.contentContainer, style];
 
     return (
       <GestureDetector gesture={panGesture}>
@@ -281,7 +281,7 @@ const DialogClose = forwardRef<PressableRef, DialogCloseProps>((props, ref) => {
 const DialogTitle = forwardRef<RNText, DialogTitleProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useDialog();
-    const tvStyles = dialogStyles.label({ className });
+    const titleClassName = dialogClassNames.label({ className });
 
     return (
       <HeroText
@@ -289,7 +289,7 @@ const DialogTitle = forwardRef<RNText, DialogTitleProps>(
         role="heading"
         accessibilityRole="header"
         nativeID={`${nativeID}_label`}
-        className={tvStyles}
+        className={titleClassName}
         {...props}
       >
         {children}
@@ -304,7 +304,7 @@ const DialogDescription = forwardRef<RNText, DialogDescriptionProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useDialog();
 
-    const tvStyles = dialogStyles.description({
+    const descriptionClassName = dialogClassNames.description({
       className,
     });
 
@@ -313,7 +313,7 @@ const DialogDescription = forwardRef<RNText, DialogDescriptionProps>(
         ref={ref}
         accessibilityRole="text"
         nativeID={`${nativeID}_desc`}
-        className={tvStyles}
+        className={descriptionClassName}
         {...props}
       >
         {children}

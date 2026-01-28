@@ -5,8 +5,6 @@ const root = tv({
   base: 'gap-1.5',
 });
 
-const textFieldStyles = combineStyles({
+export const textFieldClassNames = combineStyles({
   root,
 });
-
-export default textFieldStyles;

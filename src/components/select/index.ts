@@ -4,6 +4,7 @@ export {
   useSelectAnimation,
   useSelectItem,
 } from './select';
+export { selectClassNames } from './select.styles';
 export type {
   SelectAlign,
   SelectCloseProps,

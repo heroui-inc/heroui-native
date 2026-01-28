@@ -69,17 +69,15 @@ const itemIndicatorThumb = tv({
   },
 });
 
-const radioGroupStyles = combineStyles({
+export const radioGroupClassNames = combineStyles({
   root,
   item,
   itemIndicator,
   itemIndicatorThumb,
 });
 
-export const styleSheet = StyleSheet.create({
+export const radioGroupStyleSheet = StyleSheet.create({
   borderCurve: {
     borderCurve: 'continuous',
   },
 });
-
-export default radioGroupStyles;

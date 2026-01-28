@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { View } from 'react-native';
 import { DISPLAY_NAME } from './separator.constants';
-import separatorStyles from './separator.styles';
+import { separatorClassNames } from './separator.styles';
 import type { SeparatorProps } from './separator.types';
 
 // --------------------------------------------------
@@ -16,7 +16,7 @@ const SeparatorRoot = forwardRef<View, SeparatorProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const tvStyles = separatorStyles({
+  const rootClassName = separatorClassNames.root({
     variant,
     orientation,
     className,
@@ -36,7 +36,7 @@ const SeparatorRoot = forwardRef<View, SeparatorProps>((props, ref) => {
   return (
     <View
       ref={ref}
-      className={tvStyles}
+      className={rootClassName}
       style={customThicknessStyle ? [customThicknessStyle, style] : style}
       {...restProps}
     />

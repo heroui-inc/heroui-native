@@ -3,7 +3,7 @@ import { TextInput, type TextInput as TextInputType } from 'react-native';
 import { useIsOnSurface } from '../../helpers/external/hooks';
 import { useFormItemState } from '../../helpers/internal/contexts';
 import { DISPLAY_NAME } from './input.constants';
-import inputStyles, { styleSheet } from './input.styles';
+import { inputClassNames, inputStyleSheet } from './input.styles';
 import type { InputProps } from './input.types';
 
 // --------------------------------------------------
@@ -39,18 +39,18 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
         ? 'secondary'
         : 'primary';
 
-  const inputClassName = inputStyles.input({
+  const inputClassName = inputClassNames.input({
     variant: finalVariant,
     isInvalid,
     isDisabled,
     className,
   });
 
-  const placeholderColorClassName = inputStyles.placeholderTextColor({
+  const placeholderColorClassName = inputClassNames.placeholderTextColor({
     className: placeholderColorClassNameProp,
   });
 
-  const selectionColorClassName = inputStyles.inputSelectionColor({
+  const selectionColorClassName = inputClassNames.inputSelectionColor({
     isInvalid,
     className: selectionColorClassNameProp,
   });
@@ -59,7 +59,7 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
     <TextInput
       ref={ref}
       className={inputClassName}
-      style={[styleSheet.borderCurve, style]}
+      style={[inputStyleSheet.borderCurve, style]}
       placeholderTextColorClassName={placeholderColorClassName}
       selectionColorClassName={selectionColorClassName}
       editable={!isDisabled}

@@ -14,7 +14,7 @@ import {
   useSpinnerRootAnimation,
 } from './spinner.animation';
 import { DISPLAY_NAME, SPINNER_SIZE_MAP } from './spinner.constants';
-import spinnerStyles from './spinner.styles';
+import { spinnerClassNames } from './spinner.styles';
 import type {
   SpinnerContextValue,
   SpinnerIndicatorProps,
@@ -46,7 +46,7 @@ const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const tvStyles = spinnerStyles.root({
+  const rootClassName = spinnerClassNames.root({
     size,
     className,
   });
@@ -90,7 +90,7 @@ const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
           entering={entering}
           exiting={exiting}
           isLoading={isLoading}
-          className={tvStyles}
+          className={rootClassName}
           {...restProps}
         >
           {children || indicatorElement}
@@ -123,7 +123,7 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
       themeColorDanger,
     ] = useThemeColor(['accent', 'success', 'warning', 'danger']);
 
-    const indicatorClassName = spinnerStyles.indicator({
+    const indicatorClassName = spinnerClassNames.indicator({
       className,
     });
 

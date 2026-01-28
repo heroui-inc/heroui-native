@@ -78,13 +78,7 @@ const content = tv({
   },
 });
 
-export const styleSheet = StyleSheet.create({
-  root: {
-    borderCurve: 'continuous',
-  },
-});
-
-const accordionStyles = combineStyles({
+export const accordionClassNames = combineStyles({
   root,
   item,
   trigger,
@@ -92,5 +86,10 @@ const accordionStyles = combineStyles({
   content,
 });
 
+export const accordionStyleSheet = StyleSheet.create({
+  root: {
+    borderCurve: 'continuous',
+  },
+});
+
 export type RootSlots = keyof ReturnType<typeof root>;
-export default accordionStyles;

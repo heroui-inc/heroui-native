@@ -1,4 +1,5 @@
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   base: 'bg-separator',
@@ -44,4 +45,6 @@ const root = tv({
   },
 });
 
-export default root;
+export const separatorClassNames = combineStyles({
+  root,
+});

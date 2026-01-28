@@ -16,8 +16,9 @@ import {
   usePressableFeedbackRootAnimation,
 } from './pressable-feedback.animation';
 import { DISPLAY_NAME } from './pressable-feedback.constants';
-import pressableFeedbackStyles, {
-  styleSheet,
+import {
+  pressableFeedbackClassNames,
+  pressableFeedbackStyleSheet,
 } from './pressable-feedback.styles';
 import type {
   PressableFeedbackHighlightProps,
@@ -44,7 +45,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       ...restProps
     } = props;
 
-    const rootClassName = pressableFeedbackStyles.root({ className });
+    const rootClassName = pressableFeedbackClassNames.root({ className });
 
     const {
       isPressed,
@@ -59,8 +60,8 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
     });
 
     const rootStyle = isAnimatedStyleActive
-      ? [rContainerStyle, styleSheet.root, style]
-      : [styleSheet.root, style];
+      ? [rContainerStyle, pressableFeedbackStyleSheet.root, style]
+      : [pressableFeedbackStyleSheet.root, style];
 
     const handleLayout = useCallback(
       (event: LayoutChangeEvent) => {
@@ -149,7 +150,9 @@ const PressableFeedbackHighlight = forwardRef<
     animation,
   });
 
-  const highlightClassName = pressableFeedbackStyles.highlight({ className });
+  const highlightClassName = pressableFeedbackClassNames.highlight({
+    className,
+  });
 
   const highlightStyle = isAnimatedStyleActive
     ? [rContainerStyle, style]
@@ -196,7 +199,8 @@ const PressableFeedbackRipple = forwardRef<
     animationOnTouchStart,
   } = usePressableFeedbackRippleAnimation({ animation });
 
-  const { container, ripple: rippleSlot } = pressableFeedbackStyles.ripple();
+  const { container, ripple: rippleSlot } =
+    pressableFeedbackClassNames.ripple();
 
   const containerClassName = container({
     className: [className, classNames?.container],

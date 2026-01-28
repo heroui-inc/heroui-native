@@ -38,16 +38,14 @@ const inputSelectionColor = tv({
   },
 });
 
-export const styleSheet = StyleSheet.create({
-  borderCurve: {
-    borderCurve: 'continuous',
-  },
-});
-
-const inputStyles = combineStyles({
+export const inputClassNames = combineStyles({
   input,
   inputSelectionColor,
   placeholderTextColor,
 });
 
-export default inputStyles;
+export const inputStyleSheet = StyleSheet.create({
+  borderCurve: {
+    borderCurve: 'continuous',
+  },
+});

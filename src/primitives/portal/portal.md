@@ -2,15 +2,6 @@
 
 Portals let you render its children into a different part of your app. This is particularly useful for components that need to render above other content, such as modals, overlays, and popups.
 
-## Components Using Portal
-
-The following HeroUI Native components use Portal internally to ensure proper rendering above other content:
-
-- **BottomSheet** - Uses `BottomSheet.Portal` to render bottom sheet content in a portal layer
-- **Dialog** - Uses `Dialog.Portal` to render dialog content in a portal layer
-- **Popover** - Uses `Popover.Portal` to render popover content in a portal layer
-- **Select** - Uses `Select.Portal` to render select content in a portal layer
-
 ## Default Setup
 
 By default, the `PortalHost` is included in the `HeroUINativeProvider`, so there is no need to add it manually. The provider automatically sets up the portal system for all components that use portals.

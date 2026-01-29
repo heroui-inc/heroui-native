@@ -119,6 +119,10 @@ const components: Component[] = [
     path: 'tabs',
   },
   {
+    title: 'TextArea',
+    path: 'text-area',
+  },
+  {
     title: 'TextField',
     path: 'text-field',
   },

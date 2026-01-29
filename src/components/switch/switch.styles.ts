@@ -69,17 +69,15 @@ const endContent = tv({
   base: 'absolute right-[2px]',
 });
 
-const switchStyles = combineStyles({
+export const switchClassNames = combineStyles({
   root,
   thumb,
   startContent,
   endContent,
 });
 
-export const styleSheet = StyleSheet.create({
+export const switchStyleSheet = StyleSheet.create({
   borderCurve: {
     borderCurve: 'continuous',
   },
 });
-
-export default switchStyles;

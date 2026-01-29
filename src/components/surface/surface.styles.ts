@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   base: 'p-4 rounded-3xl shadow-surface overflow-hidden',
@@ -16,10 +17,12 @@ const root = tv({
   },
 });
 
-export const styleSheet = StyleSheet.create({
+export const surfaceClassNames = combineStyles({
+  root,
+});
+
+export const surfaceStyleSheet = StyleSheet.create({
   root: {
     borderCurve: 'continuous',
   },
 });
-
-export default root;

@@ -7,7 +7,7 @@ import { childrenToString } from '../../helpers/internal/utils';
 import { useTextField } from '../text-field';
 import { useFieldErrorRootAnimation } from './field-error.animation';
 import { DISPLAY_NAME } from './field-error.constants';
-import fieldErrorStyles from './field-error.styles';
+import { fieldErrorClassNames } from './field-error.styles';
 import type { FieldErrorRootProps } from './field-error.types';
 
 // --------------------------------------------------
@@ -35,15 +35,15 @@ const FieldErrorRoot = forwardRef<ViewRef, FieldErrorRootProps>(
 
     const isInsideTextField = Boolean(textFieldContext);
 
-    const tvStyles = fieldErrorStyles.root({
+    const { container, text } = fieldErrorClassNames.root({
       isInsideTextField,
     });
 
-    const containerStyles = tvStyles.container({
+    const containerClassName = container({
       className: [className, classNames?.container],
     });
 
-    const textStyles = tvStyles.text({
+    const textClassName = text({
       className: [classNames?.text, textProps?.className],
     });
 
@@ -53,7 +53,7 @@ const FieldErrorRoot = forwardRef<ViewRef, FieldErrorRootProps>(
 
     const stringifiedChildren = childrenToString(children);
     const renderedChildren = stringifiedChildren ? (
-      <HeroText className={textStyles} {...textProps}>
+      <HeroText className={textClassName} {...textProps}>
         {stringifiedChildren}
       </HeroText>
     ) : (
@@ -65,7 +65,7 @@ const FieldErrorRoot = forwardRef<ViewRef, FieldErrorRootProps>(
         ref={ref}
         entering={entering}
         exiting={exiting}
-        className={containerStyles}
+        className={containerClassName}
         {...restProps}
       >
         {renderedChildren}

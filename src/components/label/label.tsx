@@ -12,7 +12,7 @@ import { useRadioGroupItem } from '../radio-group/radio-group.context';
 import { useTextField } from '../text-field';
 import { useLabelRootAnimation } from './label.animation';
 import { DISPLAY_NAME } from './label.constants';
-import labelStyles from './label.styles';
+import { labelClassNames } from './label.styles';
 import type {
   LabelContextValue,
   LabelProps,
@@ -81,7 +81,7 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
     [isDisabled, isRequired, isInvalid]
   );
 
-  const rootTvStyles = labelStyles.root({
+  const rootClassName = labelClassNames.root({
     isDisabled,
     isInsideTextField,
     isInsideControlField,
@@ -94,7 +94,7 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
         <LabelPrimitives.Root
           ref={ref}
           isDisabled={isDisabled}
-          className={rootTvStyles}
+          className={rootClassName}
           {...restProps}
         >
           {stringifiedChildren ? (
@@ -115,29 +115,29 @@ const LabelText = forwardRef<TextRef, LabelTextProps>((props, ref) => {
 
   const { isDisabled, isRequired, isInvalid } = useLabel();
 
-  const tvStyles = labelStyles.label({
+  const { text, asterisk } = labelClassNames.label({
     isDisabled,
     isInvalid,
   });
 
-  const textStyles = tvStyles.text({
+  const textClassName = text({
     className: [className, classNames?.text],
   });
 
-  const asteriskStyles = tvStyles.asterisk({
+  const asteriskClassName = asterisk({
     className: classNames?.asterisk,
   });
 
   return (
     <HeroText
       ref={ref}
-      className={textStyles}
+      className={textClassName}
       style={styles?.text}
       {...restProps}
     >
       {children}
       {isRequired && (
-        <HeroText className={asteriskStyles} style={styles?.asterisk}>
+        <HeroText className={asteriskClassName} style={styles?.asterisk}>
           {' '}
           *
         </HeroText>

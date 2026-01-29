@@ -6,7 +6,7 @@ import type { PressableRef } from '../../helpers/internal/types';
 import { childrenToString, createContext } from '../../helpers/internal/utils';
 import { useChipRootAnimation } from './chip.animation';
 import { DISPLAY_NAME } from './chip.constants';
-import chipStyles, { styleSheet } from './chip.styles';
+import { chipClassNames, chipStyleSheet } from './chip.styles';
 import type { ChipContextValue, ChipLabelProps, ChipProps } from './chip.types';
 
 const [ChipProvider, useChip] = createContext<ChipContextValue>({
@@ -29,7 +29,7 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
 
   const stringifiedChildren = childrenToString(children);
 
-  const tvStyles = chipStyles.root({
+  const rootClassName = chipClassNames.root({
     size,
     variant,
     color,
@@ -61,8 +61,8 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
       <ChipProvider value={contextValue}>
         <Pressable
           ref={ref}
-          className={tvStyles}
-          style={[styleSheet.root, style] as StyleProp<ViewStyle>}
+          className={rootClassName}
+          style={[chipStyleSheet.root, style] as StyleProp<ViewStyle>}
           {...restProps}
         >
           {stringifiedChildren ? (
@@ -83,7 +83,7 @@ const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
 
   const { size, variant, color } = useChip();
 
-  const tvStyles = chipStyles.label({
+  const labelClassName = chipClassNames.label({
     size,
     variant,
     color,
@@ -91,7 +91,7 @@ const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
   });
 
   return (
-    <HeroText ref={ref} className={tvStyles} {...restProps}>
+    <HeroText ref={ref} className={labelClassName} {...restProps}>
       {children}
     </HeroText>
   );

@@ -62,7 +62,7 @@ const description = tv({
   base: 'text-base text-muted',
 });
 
-const dialogStyles = combineStyles({
+export const dialogClassNames = combineStyles({
   portal,
   overlay,
   content,
@@ -70,10 +70,8 @@ const dialogStyles = combineStyles({
   description,
 });
 
-export const styleSheet = StyleSheet.create({
+export const dialogStyleSheet = StyleSheet.create({
   contentContainer: {
     borderCurve: 'continuous',
   },
 });
-
-export default dialogStyles;

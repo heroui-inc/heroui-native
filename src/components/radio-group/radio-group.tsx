@@ -19,7 +19,10 @@ import {
   RadioGroupItemProvider,
   useRadioGroupItem,
 } from './radio-group.context';
-import radioGroupStyles, { styleSheet } from './radio-group.styles';
+import {
+  radioGroupClassNames,
+  radioGroupStyleSheet,
+} from './radio-group.styles';
 import type {
   RadioGroupIndicatorProps,
   RadioGroupIndicatorThumbProps,
@@ -46,7 +49,7 @@ const RadioGroupRoot = forwardRef<
 >((props, ref) => {
   const { className, isInvalid = false, animation, ...restProps } = props;
 
-  const tvStyles = radioGroupStyles.root({
+  const rootClassName = radioGroupClassNames.root({
     className,
   });
 
@@ -65,7 +68,7 @@ const RadioGroupRoot = forwardRef<
     <AnimationSettingsProvider value={animationSettingsContextValue}>
       <RadioGroupPrimitives.Root
         ref={ref}
-        className={tvStyles}
+        className={rootClassName}
         isInvalid={isInvalid}
         {...restProps}
       />
@@ -118,7 +121,7 @@ const RadioGroupItem = forwardRef<
           ? 'secondary'
           : 'primary';
 
-  const tvStyles = radioGroupStyles.item({
+  const itemClassName = radioGroupClassNames.item({
     className,
   });
 
@@ -164,7 +167,7 @@ const RadioGroupItem = forwardRef<
         <AnimatedRadioItem
           ref={ref}
           value={value}
-          className={tvStyles}
+          className={itemClassName}
           isDisabled={isDisabledValue}
           hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
           {...restProps}
@@ -184,7 +187,7 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
 
     const { isSelected, isInvalid, variant } = useRadioGroupItem();
 
-    const tvStyles = radioGroupStyles.itemIndicator({
+    const indicatorClassName = radioGroupClassNames.itemIndicator({
       variant,
       isSelected,
       isInvalid,
@@ -194,8 +197,8 @@ const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
     return (
       <AnimatedRadioIndicator
         ref={ref}
-        className={tvStyles}
-        style={[styleSheet.borderCurve, style]}
+        className={indicatorClassName}
+        style={[radioGroupStyleSheet.borderCurve, style]}
         {...restProps}
       >
         {children ?? <RadioGroupIndicatorThumb />}
@@ -220,7 +223,7 @@ const RadioGroupIndicatorThumb = forwardRef<
 
   const { isSelected } = useRadioGroupItem();
 
-  const thumbClassName = radioGroupStyles.itemIndicatorThumb({
+  const thumbClassName = radioGroupClassNames.itemIndicatorThumb({
     isSelected,
     className,
   });

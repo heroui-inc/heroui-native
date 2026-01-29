@@ -38,9 +38,7 @@ const indicator = tv({
   base: 'size-full items-center justify-center',
 });
 
-const spinnerStyles = combineStyles({
+export const spinnerClassNames = combineStyles({
   root,
   indicator,
 });
-
-export default spinnerStyles;

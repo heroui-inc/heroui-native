@@ -12,7 +12,7 @@ import {
   useSwitchThumbAnimation,
 } from './switch.animation';
 import { DISPLAY_NAME } from './switch.constants';
-import switchStyles, { styleSheet } from './switch.styles';
+import { switchClassNames, switchStyleSheet } from './switch.styles';
 import type {
   SwitchContentProps,
   SwitchContextValue,
@@ -51,7 +51,7 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       ...restProps
     } = props;
 
-    const rootClassName = switchStyles.root({
+    const rootClassName = switchClassNames.root({
       isDisabled,
       className,
     });
@@ -67,8 +67,8 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
     });
 
     const rootStyle = isAnimatedStyleActive
-      ? [styleSheet.borderCurve, rContainerStyle, style]
-      : [styleSheet.borderCurve, style];
+      ? [switchStyleSheet.borderCurve, rContainerStyle, style]
+      : [switchStyleSheet.borderCurve, style];
 
     const contextValue = useMemo(
       () => ({
@@ -163,7 +163,7 @@ const SwitchThumb = forwardRef<
 
   const { isSelected, isDisabled } = useSwitch();
 
-  const thumbClassName = switchStyles.thumb({
+  const thumbClassName = switchClassNames.thumb({
     className,
   });
 
@@ -175,8 +175,8 @@ const SwitchThumb = forwardRef<
   });
 
   const thumbStyle = isAnimatedStyleActive
-    ? [styleSheet.borderCurve, rContainerStyle, style]
-    : [styleSheet.borderCurve, style];
+    ? [switchStyleSheet.borderCurve, rContainerStyle, style]
+    : [switchStyleSheet.borderCurve, style];
 
   const renderProps: SwitchRenderProps = {
     isSelected,
@@ -204,12 +204,12 @@ const SwitchStartContent = forwardRef<View, SwitchContentProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
-    const tvStyles = switchStyles.startContent({
+    const startContentClassName = switchClassNames.startContent({
       className,
     });
 
     return (
-      <View ref={ref} className={tvStyles} {...restProps}>
+      <View ref={ref} className={startContentClassName} {...restProps}>
         {children}
       </View>
     );
@@ -221,12 +221,12 @@ const SwitchStartContent = forwardRef<View, SwitchContentProps>(
 const SwitchEndContent = forwardRef<View, SwitchContentProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
-  const tvStyles = switchStyles.endContent({
+  const endContentClassName = switchClassNames.endContent({
     className,
   });
 
   return (
-    <View ref={ref} className={tvStyles} {...restProps}>
+    <View ref={ref} className={endContentClassName} {...restProps}>
       {children}
     </View>
   );

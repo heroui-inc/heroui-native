@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const trigger = tv({
   base: '',
@@ -67,7 +68,7 @@ const overlay = tv({
  * To completely disable animated styles and apply your own via className or style prop,
  * set `isAnimatedStyleActive={false}` on `Select.Content`.
  */
-const popoverContent = tv({
+const content = tv({
   base: 'bg-overlay p-3 px-4 rounded-3xl shadow-overlay',
 });
 
@@ -104,6 +105,12 @@ const dialogContent = tv({
   },
 });
 
+/**
+ * @note When Select.Content uses `presentation="bottom-sheet"`, it uses `bottomSheetClassNames`
+ * from `../bottom-sheet/bottom-sheet.styles` instead of `selectClassNames.content`.
+ * See `select.tsx` SelectContentBottomSheet component for usage.
+ */
+
 const close = tv({
   base: '',
 });
@@ -128,11 +135,11 @@ const itemIndicator = tv({
   base: 'size-5 items-center justify-center',
 });
 
-const selectStyles = {
+export const selectClassNames = combineStyles({
   trigger,
   portal,
   overlay,
-  popoverContent,
+  content,
   dialogContent,
   close,
   value,
@@ -141,14 +148,12 @@ const selectStyles = {
   itemDescription,
   itemIndicator,
   listLabel,
-};
+});
 
-export type DialogContentFallbackSlots = keyof ReturnType<typeof dialogContent>;
-
-export const styleSheet = StyleSheet.create({
+export const selectStyleSheet = StyleSheet.create({
   contentContainer: {
     borderCurve: 'continuous',
   },
 });
 
-export default selectStyles;
+export type DialogContentFallbackSlots = keyof ReturnType<typeof dialogContent>;

@@ -13,7 +13,7 @@ import { Switch } from '../switch';
 import { useControlFieldRootAnimation } from './control-field.animation';
 import { DISPLAY_NAME } from './control-field.constants';
 import { ControlFieldProvider, useControlField } from './control-field.context';
-import controlFieldStyles from './control-field.styles';
+import { controlFieldClassNames } from './control-field.styles';
 import type {
   ControlFieldContextValue,
   ControlFieldIndicatorProps,
@@ -51,7 +51,7 @@ const ControlField = forwardRef<PressableRef, ControlFieldProps>(
     const content =
       typeof children === 'function' ? children(renderProps) : children;
 
-    const tvStyles = controlFieldStyles.root({
+    const rootClassName = controlFieldClassNames.root({
       className,
     });
 
@@ -124,7 +124,7 @@ const ControlField = forwardRef<PressableRef, ControlFieldProps>(
           <ControlFieldProvider value={contextValue}>
             <Pressable
               ref={ref}
-              className={tvStyles}
+              className={rootClassName}
               onPress={handlePress}
               onPressIn={handlePressIn}
               onPressOut={handlePressOut}
@@ -148,7 +148,7 @@ const ControlFieldIndicator = forwardRef<View, ControlFieldIndicatorProps>(
     const { isSelected, onSelectedChange, isDisabled, isInvalid } =
       useControlField();
 
-    const tvStyles = controlFieldStyles.indicator({
+    const indicatorClassName = controlFieldClassNames.indicator({
       className,
     });
 
@@ -200,7 +200,7 @@ const ControlFieldIndicator = forwardRef<View, ControlFieldIndicatorProps>(
     ]);
 
     return (
-      <View ref={ref} className={tvStyles} {...restProps}>
+      <View ref={ref} className={indicatorClassName} {...restProps}>
         {enhancedChildren}
       </View>
     );

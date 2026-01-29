@@ -34,7 +34,7 @@ import type { PressableRef } from '../../helpers/internal/types';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import { useBottomSheetContentAnimation } from '../bottom-sheet/bottom-sheet.animation';
-import bottomSheetStyles from '../bottom-sheet/bottom-sheet.styles';
+import { bottomSheetClassNames } from '../bottom-sheet/bottom-sheet.styles';
 import { CloseButton } from '../close-button';
 import {
   SelectAnimationProvider,
@@ -46,7 +46,7 @@ import {
   DEFAULT_OFFSET,
   DISPLAY_NAME,
 } from './select.constants';
-import selectStyles, { styleSheet } from './select.styles';
+import { selectClassNames, selectStyleSheet } from './select.styles';
 import type {
   SelectCloseProps,
   SelectContentBottomSheetProps,
@@ -163,11 +163,17 @@ const SelectTrigger = forwardRef<
 
   const { isDisabled } = useSelect();
 
-  const tvStyles = selectStyles.trigger({
+  const triggerClassName = selectClassNames.trigger({
     isDisabled: isDisabledProp || isDisabled,
   });
 
-  return <SelectPrimitives.Trigger ref={ref} className={tvStyles} {...props} />;
+  return (
+    <SelectPrimitives.Trigger
+      ref={ref}
+      className={triggerClassName}
+      {...props}
+    />
+  );
 });
 
 // --------------------------------------------------
@@ -176,9 +182,11 @@ const SelectValue = forwardRef<
   SelectPrimitivesTypes.ValueRef,
   SelectValueProps
 >(({ className, ...props }, ref) => {
-  const tvStyles = selectStyles.value({ className });
+  const valueClassName = selectClassNames.value({ className });
 
-  return <SelectPrimitives.Value ref={ref} className={tvStyles} {...props} />;
+  return (
+    <SelectPrimitives.Value ref={ref} className={valueClassName} {...props} />
+  );
 });
 
 // --------------------------------------------------
@@ -187,14 +195,14 @@ const SelectPortal = ({ className, children, ...props }: SelectPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
   const animationContext = useSelectAnimation();
 
-  const tvStyles = selectStyles.portal({ className });
+  const portalClassName = selectClassNames.portal({ className });
 
   return (
     <SelectPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <SelectAnimationProvider value={animationContext}>
           <FullWindowOverlay>
-            <View className={tvStyles}>{children}</View>
+            <View className={portalClassName}>{children}</View>
           </FullWindowOverlay>
         </SelectAnimationProvider>
       </AnimationSettingsProvider>
@@ -215,7 +223,7 @@ const SelectOverlay = forwardRef<
     const { progress, isDragging, isGestureReleaseAnimationRunning } =
       useSelectAnimation();
 
-    const overlayClassName = selectStyles.overlay({
+    const overlayClassName = selectClassNames.overlay({
       className,
     });
 
@@ -274,7 +282,7 @@ const SelectContentPopover = forwardRef<
 
     const { progress } = useSelectAnimation();
 
-    const contentClassName = selectStyles.popoverContent({
+    const contentClassName = selectClassNames.content({
       className,
     });
 
@@ -285,8 +293,8 @@ const SelectContentPopover = forwardRef<
     });
 
     const contentStyle = isAnimatedStyleActive
-      ? [styleSheet.contentContainer, rContainerStyle, style]
-      : [styleSheet.contentContainer, style];
+      ? [selectStyleSheet.contentContainer, rContainerStyle, style]
+      : [selectStyleSheet.contentContainer, style];
 
     return (
       <AnimatedPopoverContent
@@ -319,7 +327,7 @@ const SelectContentBottomSheet = forwardRef<
       index: initialIndex,
       backgroundClassName,
       handleIndicatorClassName,
-      contentContainerClassName,
+      contentContainerClassName: contentContainerClassNameProp,
       contentContainerProps,
       animation,
       animationConfigs,
@@ -342,17 +350,17 @@ const SelectContentBottomSheet = forwardRef<
         componentState: selectState,
       });
 
-    const contentBackgroundClassName = bottomSheetStyles.contentBackground({
+    const contentBackgroundClassName = bottomSheetClassNames.contentBackground({
       className: backgroundClassName,
     });
 
     const contentHandleIndicatorClassName =
-      bottomSheetStyles.contentHandleIndicator({
+      bottomSheetClassNames.contentHandleIndicator({
         className: handleIndicatorClassName,
       });
 
-    const contentContainerClassNameValue = bottomSheetStyles.contentContainer({
-      className: contentContainerClassName,
+    const contentContainerClassName = bottomSheetClassNames.contentContainer({
+      className: contentContainerClassNameProp,
     });
 
     const onClose = useCallback(() => {
@@ -377,7 +385,7 @@ const SelectContentBottomSheet = forwardRef<
           index={-1}
           backgroundClassName={contentBackgroundClassName}
           backgroundStyle={[
-            styleSheet.contentContainer,
+            selectStyleSheet.contentContainer,
             restProps.backgroundStyle,
           ]}
           handleIndicatorClassName={contentHandleIndicatorClassName}
@@ -394,7 +402,7 @@ const SelectContentBottomSheet = forwardRef<
             progress={progress}
             isDragging={isDragging}
             isClosingOnSwipe={isClosingOnSwipe}
-            contentContainerClassName={contentContainerClassNameValue}
+            contentContainerClassName={contentContainerClassName}
             contentContainerProps={contentContainerProps}
             onOpenChange={onOpenChange}
           >
@@ -434,9 +442,9 @@ const SelectContentDialog = forwardRef<
       selectState,
     } = useSelectAnimation();
 
-    const { wrapper, content } = selectStyles.dialogContent();
+    const { wrapper, content } = selectClassNames.dialogContent();
 
-    const wrapperStyles = wrapper({ className: classNames?.wrapper });
+    const wrapperClassName = wrapper({ className: classNames?.wrapper });
     const contentClassName = content({ className: classNames?.content });
 
     const {
@@ -456,8 +464,8 @@ const SelectContentDialog = forwardRef<
     });
 
     const contentStyle = isAnimatedStyleActive
-      ? [styleSheet.contentContainer, rContainerStyle, style]
-      : [styleSheet.contentContainer, style];
+      ? [selectStyleSheet.contentContainer, rContainerStyle, style]
+      : [selectStyleSheet.contentContainer, style];
 
     const handleLayout = useCallback(
       (event: LayoutChangeEvent) => {
@@ -469,7 +477,7 @@ const SelectContentDialog = forwardRef<
     );
 
     return (
-      <View className={wrapperStyles}>
+      <View className={wrapperClassName}>
         <GestureDetector gesture={panGesture}>
           <Animated.View
             style={rDragContainerStyle}
@@ -560,7 +568,7 @@ const SelectItem = forwardRef<SelectPrimitivesTypes.ItemRef, SelectItemProps>(
     const isSelected = value?.value === itemValue;
     const isDisabled = disabled ?? false;
 
-    const tvStyles = selectStyles.item({ className });
+    const itemClassName = selectClassNames.item({ className });
 
     const renderProps: SelectItemRenderProps = {
       isSelected,
@@ -581,7 +589,7 @@ const SelectItem = forwardRef<SelectPrimitivesTypes.ItemRef, SelectItemProps>(
     return (
       <SelectPrimitives.Item
         ref={ref}
-        className={tvStyles}
+        className={itemClassName}
         disabled={disabled}
         value={itemValue}
         label={label}
@@ -601,13 +609,13 @@ const SelectItemLabel = forwardRef<
 >(({ className, ...props }, ref) => {
   const { label } = useSelectItem();
 
-  const tvStyles = selectStyles.itemLabel({ className });
+  const itemLabelClassName = selectClassNames.itemLabel({ className });
 
   return (
     <HeroText
       ref={ref}
       accessibilityRole="text"
-      className={tvStyles}
+      className={itemLabelClassName}
       {...props}
     >
       {label}
@@ -619,7 +627,7 @@ const SelectItemLabel = forwardRef<
 
 const SelectItemDescription = forwardRef<RNText, SelectItemDescriptionProps>(
   ({ className, ...props }, ref) => {
-    const tvStyles = selectStyles.itemDescription({
+    const itemDescriptionClassName = selectClassNames.itemDescription({
       className,
     });
 
@@ -627,7 +635,7 @@ const SelectItemDescription = forwardRef<RNText, SelectItemDescriptionProps>(
       <HeroText
         ref={ref}
         accessibilityRole="summary"
-        className={tvStyles}
+        className={itemDescriptionClassName}
         {...props}
       />
     );
@@ -645,10 +653,14 @@ const SelectItemIndicator = forwardRef<
   const iconSize = iconProps?.size ?? 16;
   const iconColor = iconProps?.color ?? themeColorAccent;
 
-  const tvStyles = selectStyles.itemIndicator({ className });
+  const itemIndicatorClassName = selectClassNames.itemIndicator({ className });
 
   return (
-    <SelectPrimitives.ItemIndicator ref={ref} className={tvStyles} {...props}>
+    <SelectPrimitives.ItemIndicator
+      ref={ref}
+      className={itemIndicatorClassName}
+      {...props}
+    >
       {children || <CheckIcon size={iconSize} color={iconColor} />}
     </SelectPrimitives.ItemIndicator>
   );
@@ -660,14 +672,14 @@ const SelectListLabel = forwardRef<
   SelectPrimitivesTypes.GroupLabelRef,
   SelectListLabelProps
 >(({ className, ...props }, ref) => {
-  const tvStyles = selectStyles.listLabel({
+  const listLabelClassName = selectClassNames.listLabel({
     className,
   });
 
   return (
     <HeroText
       ref={ref}
-      className={tvStyles}
+      className={listLabelClassName}
       accessibilityRole="header"
       {...props}
     />

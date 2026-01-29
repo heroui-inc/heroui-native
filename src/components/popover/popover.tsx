@@ -32,7 +32,7 @@ import type { PressableRef } from '../../helpers/internal/types';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import { useBottomSheetContentAnimation } from '../bottom-sheet/bottom-sheet.animation';
-import bottomSheetStyles from '../bottom-sheet/bottom-sheet.styles';
+import { bottomSheetClassNames } from '../bottom-sheet/bottom-sheet.styles';
 import { CloseButton } from '../close-button';
 import { ArrowSvg } from './arrow-svg';
 import {
@@ -45,7 +45,7 @@ import {
   DEFAULT_OFFSET,
   DISPLAY_NAME,
 } from './popover.constants';
-import popoverStyles, { styleSheet } from './popover.styles';
+import { popoverClassNames, popoverStyleSheet } from './popover.styles';
 import type {
   PopoverArrowProps,
   PopoverCloseProps,
@@ -165,14 +165,14 @@ const PopoverPortal = ({
   const animationSettingsContext = useAnimationSettings();
   const animationContext = usePopoverAnimation();
 
-  const tvStyles = popoverStyles.portal({ className });
+  const portalClassName = popoverClassNames.portal({ className });
 
   return (
     <PopoverPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <PopoverAnimationProvider value={animationContext}>
           <FullWindowOverlay>
-            <Animated.View className={tvStyles} pointerEvents="box-none">
+            <Animated.View className={portalClassName} pointerEvents="box-none">
               {children}
             </Animated.View>
           </FullWindowOverlay>
@@ -194,7 +194,7 @@ const PopoverOverlay = forwardRef<
   ) => {
     const { progress, isDragging } = usePopoverAnimation();
 
-    const overlayClassName = popoverStyles.overlay({ className });
+    const overlayClassName = popoverClassNames.overlay({ className });
 
     const { rContainerStyle } = usePopupOverlayAnimation({
       progress,
@@ -250,7 +250,7 @@ const PopoverContentPopover = forwardRef<
 
     const { progress } = usePopoverAnimation();
 
-    const contentClassName = popoverStyles.popoverContent({
+    const contentClassName = popoverClassNames.content({
       className,
     });
 
@@ -261,8 +261,8 @@ const PopoverContentPopover = forwardRef<
     });
 
     const contentStyle = isAnimatedStyleActive
-      ? [styleSheet.contentContainer, rContainerStyle, style]
-      : [styleSheet.contentContainer, style];
+      ? [popoverStyleSheet.contentContainer, rContainerStyle, style]
+      : [popoverStyleSheet.contentContainer, style];
 
     return (
       <PopoverContentContext value={{ placement }}>
@@ -297,7 +297,7 @@ const PopoverContentBottomSheet = forwardRef<
       index: initialIndex,
       backgroundClassName,
       handleIndicatorClassName,
-      contentContainerClassName,
+      contentContainerClassName: contentContainerClassNameProp,
       contentContainerProps,
       animation,
       animationConfigs,
@@ -319,17 +319,17 @@ const PopoverContentBottomSheet = forwardRef<
         componentState: popoverState,
       });
 
-    const contentBackgroundClassName = bottomSheetStyles.contentBackground({
+    const contentBackgroundClassName = bottomSheetClassNames.contentBackground({
       className: backgroundClassName,
     });
 
     const contentHandleIndicatorClassName =
-      bottomSheetStyles.contentHandleIndicator({
+      bottomSheetClassNames.contentHandleIndicator({
         className: handleIndicatorClassName,
       });
 
-    const contentContainerClassNameValue = bottomSheetStyles.contentContainer({
-      className: contentContainerClassName,
+    const contentContainerClassName = bottomSheetClassNames.contentContainer({
+      className: contentContainerClassNameProp,
     });
 
     const onClose = useCallback(() => {
@@ -355,7 +355,7 @@ const PopoverContentBottomSheet = forwardRef<
             index={-1}
             backgroundClassName={contentBackgroundClassName}
             backgroundStyle={[
-              styleSheet.contentContainer,
+              popoverStyleSheet.contentContainer,
               restProps.backgroundStyle,
             ]}
             handleIndicatorClassName={contentHandleIndicatorClassName}
@@ -372,7 +372,7 @@ const PopoverContentBottomSheet = forwardRef<
               progress={progress}
               isDragging={isDragging}
               isClosingOnSwipe={isClosingOnSwipe}
-              contentContainerClassName={contentContainerClassNameValue}
+              contentContainerClassName={contentContainerClassName}
               contentContainerProps={contentContainerProps}
               onOpenChange={onOpenChange}
             >
@@ -432,14 +432,14 @@ const PopoverClose = forwardRef<PressableRef, PopoverCloseProps>(
 
 const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
   ({ className, children, ...props }, ref) => {
-    const tvStyles = popoverStyles.label({ className });
+    const titleClassName = popoverClassNames.label({ className });
 
     return (
       <HeroText
         ref={ref}
         role="heading"
         accessibilityRole="header"
-        className={tvStyles}
+        className={titleClassName}
         {...props}
       >
         {children}
@@ -452,7 +452,7 @@ const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
 
 const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
   ({ className, children, ...props }, ref) => {
-    const tvStyles = popoverStyles.description({
+    const descriptionClassName = popoverClassNames.description({
       className,
     });
 
@@ -460,7 +460,7 @@ const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
       <HeroText
         ref={ref}
         accessibilityRole="text"
-        className={tvStyles}
+        className={descriptionClassName}
         {...props}
       >
         {children}
@@ -496,7 +496,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
 
     const placement = placementLocal || placementContext;
 
-    const tvStyles = popoverStyles.arrow({ className });
+    const arrowClassName = popoverClassNames.arrow({ className });
 
     if (
       !triggerPosition ||
@@ -568,7 +568,7 @@ const PopoverArrow = forwardRef<View, PopoverArrowProps>(
     return (
       <Animated.View
         ref={ref}
-        className={tvStyles}
+        className={arrowClassName}
         style={[arrowPositionStyle, style]}
         pointerEvents="none"
       >

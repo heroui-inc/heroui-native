@@ -5,7 +5,7 @@ import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
 import { useSurfaceRootAnimation } from './surface.animation';
 import { DISPLAY_NAME } from './surface.constants';
-import surfaceStyles, { styleSheet } from './surface.styles';
+import { surfaceClassNames, surfaceStyleSheet } from './surface.styles';
 import type { SurfaceContextValue, SurfaceRootProps } from './surface.types';
 
 const [SurfaceProvider, useSurface] = createContext<SurfaceContextValue>({
@@ -18,7 +18,7 @@ const Surface = forwardRef<ViewRef, SurfaceRootProps>(
     { children, variant = 'default', className, style, animation, ...props },
     ref
   ) => {
-    const tvStyles = surfaceStyles({ variant, className });
+    const rootClassName = surfaceClassNames.root({ variant, className });
 
     const { isAllAnimationsDisabled } = useSurfaceRootAnimation({
       animation,
@@ -38,8 +38,8 @@ const Surface = forwardRef<ViewRef, SurfaceRootProps>(
         <SurfaceProvider value={contextValue}>
           <View
             ref={ref}
-            className={tvStyles}
-            style={[styleSheet.root, style]}
+            className={rootClassName}
+            style={[surfaceStyleSheet.root, style]}
             {...props}
           >
             {children}

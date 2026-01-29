@@ -34,24 +34,16 @@ import { combineStyles } from '../../helpers/internal/utils';
  * To completely disable animated styles and apply your own via className or style prop,
  * set `isAnimatedStyleActive={false}` on `Skeleton`.
  */
-const skeleton = tv({
+const root = tv({
   base: 'bg-muted/30 overflow-hidden',
 });
 
-/**
- * Native styles for border curve
- */
-export const nativeStyles = StyleSheet.create({
+export const skeletonClassNames = combineStyles({
+  root,
+});
+
+export const skeletonStyleSheet = StyleSheet.create({
   borderCurve: {
     borderCurve: 'continuous',
   },
 });
-
-/**
- * Combined skeleton styles
- */
-const styleSheet = combineStyles({
-  skeleton,
-});
-
-export default styleSheet;

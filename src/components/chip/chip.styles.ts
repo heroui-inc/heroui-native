@@ -220,16 +220,15 @@ const label = tv({
   },
 });
 
-const chipStyles = combineStyles({
+export const chipClassNames = combineStyles({
   root,
   label,
 });
 
-export const styleSheet = StyleSheet.create({
+export const chipStyleSheet = StyleSheet.create({
   root: {
     borderCurve: 'continuous',
   },
 });
 
 export type LabelContentSlots = keyof ReturnType<typeof label>;
-export default chipStyles;

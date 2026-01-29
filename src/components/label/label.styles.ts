@@ -36,11 +36,9 @@ const label = tv({
   },
 });
 
-const labelStyles = combineStyles({
+export const labelClassNames = combineStyles({
   root,
   label,
 });
 
 export type LabelSlots = keyof ReturnType<typeof label>;
-
-export default labelStyles;

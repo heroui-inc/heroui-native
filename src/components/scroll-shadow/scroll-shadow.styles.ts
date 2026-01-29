@@ -1,17 +1,22 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../helpers/internal/utils';
 
 /**
  * ScrollShadow component styles using tailwind-variants
  */
-export const scrollShadowStyles = tv({
+const root = tv({
   base: '',
+});
+
+export const scrollShadowClassNames = combineStyles({
+  root,
 });
 
 /**
  * Native styles for properties not supported by NativeWind
  */
-export const nativeStyles = StyleSheet.create({
+export const scrollShadowStyleSheet = StyleSheet.create({
   topShadow: {
     position: 'absolute',
     top: 0,

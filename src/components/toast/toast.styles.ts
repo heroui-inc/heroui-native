@@ -75,17 +75,15 @@ const action = tv({
   },
 });
 
-const toastStyles = combineStyles({
+export const toastClassNames = combineStyles({
   root,
   label,
   description,
   action,
 });
 
-export const styleSheet = StyleSheet.create({
+export const toastStyleSheet = StyleSheet.create({
   root: {
     borderCurve: 'continuous',
   },
 });
-
-export default toastStyles;

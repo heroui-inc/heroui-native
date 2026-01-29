@@ -146,16 +146,7 @@ const content = tv({
   base: '',
 });
 
-export const styleSheet = StyleSheet.create({
-  listRoot: {
-    borderCurve: 'continuous',
-  },
-  triggerRoot: {
-    borderCurve: 'continuous',
-  },
-});
-
-const tabsStyles = combineStyles({
+export const tabsClassNames = combineStyles({
   root,
   list,
   scrollView,
@@ -165,7 +156,13 @@ const tabsStyles = combineStyles({
   indicator,
   separator,
   content,
-  styleSheet,
 });
 
-export default tabsStyles;
+export const tabsStyleSheet = StyleSheet.create({
+  listRoot: {
+    borderCurve: 'continuous',
+  },
+  triggerRoot: {
+    borderCurve: 'continuous',
+  },
+});

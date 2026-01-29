@@ -128,8 +128,11 @@ const BlurBackdropDialogContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const TextInputDialogContent = () => {
-  const [textInputDialogOpen, setTextInputDialogOpen] = useState(false);
+/**
+ * Component containing the form content and state logic for the text input dialog.
+ * Manages form state, validation, and UI rendering.
+ */
+const UpdateProfileDialogForm = ({ onClose }: { onClose: () => void }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [nameError, setNameError] = useState('');
@@ -143,11 +146,22 @@ const TextInputDialogContent = () => {
 
   const themeColorMuted = useThemeColor('muted');
 
+  /**
+   * Validates email format using regex pattern.
+   * @param emailValue - The email string to validate
+   * @returns True if email is valid, false otherwise
+   */
   const validateEmail = (emailValue: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(emailValue);
   };
 
+  /**
+   * Handles form submission with validation.
+   * Validates name and email fields, shows errors if invalid.
+   * On success, simulates press action and resets form.
+   * @returns True if validation passes, false otherwise
+   */
   const handleSubmit = () => {
     let hasError = false;
 
@@ -183,6 +197,91 @@ const TextInputDialogContent = () => {
     return false;
   };
 
+  /**
+   * Resets all form fields and errors, then closes the dialog.
+   */
+  const handleCancel = () => {
+    setName('');
+    setEmail('');
+    setNameError('');
+    setEmailError('');
+    onClose();
+  };
+
+  return (
+    <Dialog.Content
+      className="bg-surface"
+      animation={{
+        scale: {
+          value: [1.2, 1, 0.95],
+        },
+      }}
+      style={{
+        marginTop: insetTop,
+        height: maxTextInputDialogHeight,
+      }}
+    >
+      <Dialog.Close className="self-end" />
+      <Dialog.Title className="mb-6">Update Profile</Dialog.Title>
+
+      <View className="flex-1">
+        <StyleScrollView
+          contentContainerClassName="gap-5"
+          keyboardShouldPersistTaps="always"
+        >
+          <TextField isRequired isInvalid={!!nameError}>
+            <Label isInvalid={false}>Full Name</Label>
+            <Input
+              variant="secondary"
+              placeholder="Enter your name"
+              value={name}
+              onChangeText={(text) => {
+                setName(text);
+                if (nameError) setNameError('');
+              }}
+              autoCapitalize="words"
+              autoCorrect
+              autoFocus
+              isInvalid={false}
+              selectionColorClassName="accent-muted"
+            />
+            <FieldError>{nameError}</FieldError>
+          </TextField>
+
+          <TextField isRequired isInvalid={!!emailError}>
+            <Label isInvalid={false}>Email Address</Label>
+            <Input
+              variant="secondary"
+              placeholder="email@example.com"
+              value={email}
+              onChangeText={(text) => {
+                setEmail(text);
+                if (emailError) setEmailError('');
+              }}
+              autoCapitalize="none"
+              isInvalid={false}
+              selectionColor={themeColorMuted}
+            />
+            <FieldError>{emailError}</FieldError>
+          </TextField>
+        </StyleScrollView>
+      </View>
+
+      <View className="flex-row justify-end gap-3 pt-3">
+        <Button variant="ghost" size="sm" onPress={handleCancel}>
+          Cancel
+        </Button>
+        <Button size="sm" onPress={handleSubmit}>
+          Update Profile
+        </Button>
+      </View>
+    </Dialog.Content>
+  );
+};
+
+const TextInputDialogContent = () => {
+  const [textInputDialogOpen, setTextInputDialogOpen] = useState(false);
+
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
@@ -190,13 +289,6 @@ const TextInputDialogContent = () => {
           isOpen={textInputDialogOpen}
           onOpenChange={(isOpen) => {
             setTextInputDialogOpen(isOpen);
-            // Reset form and errors when dialog closes
-            if (!isOpen) {
-              setName('');
-              setEmail('');
-              setNameError('');
-              setEmailError('');
-            }
           }}
         >
           <Dialog.Trigger asChild>
@@ -204,83 +296,9 @@ const TextInputDialogContent = () => {
           </Dialog.Trigger>
           <Dialog.Portal className="justify-start">
             <DialogBlurBackdrop />
-            <Dialog.Content
-              className="bg-surface"
-              animation={{
-                scale: {
-                  value: [1.2, 1, 0.95],
-                },
-              }}
-              style={{
-                marginTop: insetTop,
-                height: maxTextInputDialogHeight,
-              }}
-            >
-              <Dialog.Close className="self-end" />
-              <Dialog.Title className="mb-6">Update Profile</Dialog.Title>
-
-              <View className="flex-1">
-                <StyleScrollView
-                  contentContainerClassName="gap-5"
-                  keyboardShouldPersistTaps="always"
-                >
-                  <TextField isRequired isInvalid={!!nameError}>
-                    <Label isInvalid={false}>Full Name</Label>
-                    <Input
-                      variant="secondary"
-                      placeholder="Enter your name"
-                      value={name}
-                      onChangeText={(text) => {
-                        setName(text);
-                        if (nameError) setNameError('');
-                      }}
-                      autoCapitalize="words"
-                      autoCorrect
-                      autoFocus
-                      isInvalid={false}
-                      selectionColorClassName="accent-muted"
-                    />
-                    <FieldError>{nameError}</FieldError>
-                  </TextField>
-
-                  <TextField isRequired isInvalid={!!emailError}>
-                    <Label isInvalid={false}>Email Address</Label>
-                    <Input
-                      variant="secondary"
-                      placeholder="email@example.com"
-                      value={email}
-                      onChangeText={(text) => {
-                        setEmail(text);
-                        if (emailError) setEmailError('');
-                      }}
-                      autoCapitalize="none"
-                      isInvalid={false}
-                      selectionColor={themeColorMuted}
-                    />
-                    <FieldError>{emailError}</FieldError>
-                  </TextField>
-                </StyleScrollView>
-              </View>
-
-              <View className="flex-row justify-end gap-3 pt-3">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onPress={() => {
-                    setName('');
-                    setEmail('');
-                    setNameError('');
-                    setEmailError('');
-                    setTextInputDialogOpen(false);
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button size="sm" onPress={handleSubmit}>
-                  Update Profile
-                </Button>
-              </View>
-            </Dialog.Content>
+            <UpdateProfileDialogForm
+              onClose={() => setTextInputDialogOpen(false)}
+            />
           </Dialog.Portal>
         </Dialog>
       </View>

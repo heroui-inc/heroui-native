@@ -77,15 +77,13 @@ const label = tv({
   },
 });
 
-export const styleSheet = StyleSheet.create({
-  buttonRoot: {
-    borderCurve: 'continuous',
-  },
-});
-
-const buttonStyles = combineStyles({
+export const buttonClassNames = combineStyles({
   root,
   label,
 });
 
-export default buttonStyles;
+export const buttonStyleSheet = StyleSheet.create({
+  buttonRoot: {
+    borderCurve: 'continuous',
+  },
+});

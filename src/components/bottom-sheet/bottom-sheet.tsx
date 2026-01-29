@@ -32,7 +32,10 @@ import {
   useBottomSheetContentAnimation,
 } from './bottom-sheet.animation';
 import { DISPLAY_NAME } from './bottom-sheet.constants';
-import bottomSheetStyles, { styleSheet } from './bottom-sheet.styles';
+import {
+  bottomSheetClassNames,
+  bottomSheetStyleSheet,
+} from './bottom-sheet.styles';
 import type {
   BottomSheetCloseProps,
   BottomSheetContentProps,
@@ -158,7 +161,7 @@ const BottomSheetOverlay = forwardRef<
     const { progress } = useBottomSheetAnimation();
     const isDragging = useSharedValue(false);
 
-    const overlayClassName = bottomSheetStyles.overlay({ className });
+    const overlayClassName = bottomSheetClassNames.overlay({ className });
 
     const { rContainerStyle } = usePopupOverlayAnimation({
       progress,
@@ -193,7 +196,7 @@ const BottomSheetContent = forwardRef<
       index: initialIndex,
       backgroundClassName,
       handleIndicatorClassName,
-      contentContainerClassName,
+      contentContainerClassName: contentContainerClassNameProp,
       contentContainerProps,
       animationConfigs,
       animation,
@@ -217,17 +220,17 @@ const BottomSheetContent = forwardRef<
         componentState: bottomSheetState,
       });
 
-    const contentBackgroundClassName = bottomSheetStyles.contentBackground({
+    const contentBackgroundClassName = bottomSheetClassNames.contentBackground({
       className: backgroundClassName,
     });
 
     const contentHandleIndicatorClassName =
-      bottomSheetStyles.contentHandleIndicator({
+      bottomSheetClassNames.contentHandleIndicator({
         className: handleIndicatorClassName,
       });
 
-    const contentContainerClassNameValue = bottomSheetStyles.contentContainer({
-      className: contentContainerClassName,
+    const contentContainerClassName = bottomSheetClassNames.contentContainer({
+      className: contentContainerClassNameProp,
     });
 
     const onClose = useCallback(() => {
@@ -252,7 +255,7 @@ const BottomSheetContent = forwardRef<
           index={-1}
           backgroundClassName={contentBackgroundClassName}
           backgroundStyle={[
-            styleSheet.contentContainer,
+            bottomSheetStyleSheet.contentContainer,
             restProps.backgroundStyle,
           ]}
           handleIndicatorClassName={contentHandleIndicatorClassName}
@@ -269,7 +272,7 @@ const BottomSheetContent = forwardRef<
             progress={progress}
             isDragging={isDragging}
             isClosingOnSwipe={isClosingOnSwipe}
-            contentContainerClassName={contentContainerClassNameValue}
+            contentContainerClassName={contentContainerClassName}
             contentContainerProps={contentContainerProps}
             onOpenChange={onOpenChange}
           >
@@ -304,7 +307,7 @@ const BottomSheetClose = forwardRef<PressableRef, BottomSheetCloseProps>(
 const BottomSheetTitle = forwardRef<RNText, BottomSheetTitleProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useBottomSheet();
-    const tvStyles = bottomSheetStyles.label({ className });
+    const titleClassName = bottomSheetClassNames.label({ className });
 
     return (
       <HeroText
@@ -312,7 +315,7 @@ const BottomSheetTitle = forwardRef<RNText, BottomSheetTitleProps>(
         role="heading"
         accessibilityRole="header"
         nativeID={`${nativeID}_label`}
-        className={tvStyles}
+        className={titleClassName}
         {...props}
       >
         {children}
@@ -327,7 +330,7 @@ const BottomSheetDescription = forwardRef<RNText, BottomSheetDescriptionProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useBottomSheet();
 
-    const tvStyles = bottomSheetStyles.description({
+    const descriptionClassName = bottomSheetClassNames.description({
       className,
     });
 
@@ -336,7 +339,7 @@ const BottomSheetDescription = forwardRef<RNText, BottomSheetDescriptionProps>(
         ref={ref}
         accessibilityRole="text"
         nativeID={`${nativeID}_desc`}
-        className={tvStyles}
+        className={descriptionClassName}
         {...props}
       >
         {children}

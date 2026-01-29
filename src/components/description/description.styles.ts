@@ -1,6 +1,7 @@
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../helpers/internal/utils';
 
-const description = tv({
+const root = tv({
   base: 'text-sm text-muted',
   variants: {
     isInsideTextField: {
@@ -19,4 +20,6 @@ const description = tv({
   },
 });
 
-export default description;
+export const descriptionClassNames = combineStyles({
+  root,
+});

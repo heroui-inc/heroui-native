@@ -177,6 +177,10 @@ export default function Layout() {
         <Stack.Screen name="components/switch" options={{ title: 'Switch' }} />
         <Stack.Screen name="components/tabs" options={{ title: 'Tabs' }} />
         <Stack.Screen
+          name="components/text-area"
+          options={{ title: 'TextArea' }}
+        />
+        <Stack.Screen
           name="components/text-field"
           options={{ title: 'TextField' }}
         />

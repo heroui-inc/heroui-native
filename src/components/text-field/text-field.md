@@ -5,7 +5,7 @@ A text input component with label, description, and error handling for collectin
 ## Import
 
 ```tsx
-import { Input, TextField } from 'heroui-native';
+import { TextField } from 'heroui-native';
 ```
 
 ## Anatomy
@@ -20,10 +20,10 @@ import { Input, TextField } from 'heroui-native';
 ```
 
 - **TextField**: Root container that provides spacing and state management
-- **Label**: Label with optional asterisk for required fields (from form-item-state context)
-- **Input**: Input container with animated border and background
-- **Description**: Helper text displayed below the input (from form-item-state context)
-- **FieldError**: Error message shown when field is invalid (from form-item-state context)
+- **Label**: Label with optional asterisk for required fields (from [Label](../label/label.md) component)
+- **Input**: Input container with animated border and background (from [Input](../input/input.md) component)
+- **Description**: Secondary descriptive helper text (from [Description](../description/description.md) component)
+- **FieldError**: Validation error message display (from [FieldError](../field-error/field-error.md) component)
 
 ## Usage
 

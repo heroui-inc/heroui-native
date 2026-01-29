@@ -22,7 +22,7 @@ import { ControlField } from 'heroui-native';
 - **ControlField**: Root container that manages layout and state propagation
 - **Label**: Primary text label for the control (from [Label](../label/label.md) component)
 - **Description**: Secondary descriptive helper text (from [Description](../description/description.md) component)
-- **ControlField.Indicator**: Container for the form control component (Switch, Checkbox)
+- **ControlField.Indicator**: Container for the form control component ([Switch](../switch/switch.md), [Checkbox](../checkbox/checkbox.md))
 - **FieldError**: Validation error message display (from [FieldError](../field-error/field-error.md) component)
 
 ## Usage

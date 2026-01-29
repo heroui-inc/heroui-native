@@ -190,4 +190,4 @@ export const TextInputContent = () => {
 | animation                 | `AnimationRoot`            | `undefined`           | Animation configuration for the input                        |
 | ...TextInputProps         | `TextInputProps`           | -                     | All standard React Native TextInput props are supported      |
 
-> **Note**: When used within a TextField component, Input automatically consumes form state (isDisabled, isInvalid, isRequired) from TextField via the form-item-state context.
+> **Note**: When used within a TextField component, Input automatically consumes form state (isDisabled, isInvalid) from TextField via the form-item-state context.

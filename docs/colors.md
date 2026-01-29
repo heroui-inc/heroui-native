@@ -217,9 +217,9 @@ import { View, Text } from 'react-native';
 
 > **Note**: To learn more about theme variables and how they work in Tailwind CSS v4, see the [Tailwind CSS Theme documentation](https://tailwindcss.com/docs/theme).
 
-## use-theme-color Hook
+## useThemeColor Hook Hook
 
-The `use-theme-color` hook has been enhanced to support multiple colors selection, making it more flexible for complex theming scenarios.
+The `useThemeColor` hook has been enhanced to support multiple colors selection, making it more flexible for complex theming scenarios.
 
 **Multiple Colors Selection:**
 

@@ -44,7 +44,6 @@ export const UsageVariantsSelect = ({
     <Select
       value={variant}
       onValueChange={(value) => {
-        if (Array.isArray(value)) return;
         const variantValue = data.find((m) => m.value === value?.value);
         setVariant(variantValue!);
         setTimeout(() => {

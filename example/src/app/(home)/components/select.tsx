@@ -82,7 +82,6 @@ const PresentationContent = () => {
         <Select
           value={popoverValue}
           onValueChange={(value) => {
-            if (Array.isArray(value)) return;
             const country = COUNTRIES.find((c) => c.value === value?.value);
             setPopoverValue(country);
           }}
@@ -142,7 +141,6 @@ const PresentationContent = () => {
           onOpenChange={setIsBottomSheetOpen}
           value={bottomSheetValue}
           onValueChange={(value) => {
-            if (Array.isArray(value)) return;
             const country = COUNTRIES.find((c) => c.value === value?.value);
             setBottomSheetValue(country);
           }}

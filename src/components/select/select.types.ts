@@ -54,21 +54,13 @@ export type SelectAlign = 'start' | 'center' | 'end';
 export type SelectRootAnimation = AnimationRoot<PopupRootAnimationConfig>;
 
 /**
- * Select Root component props
+ * Additional props for the Select Root component (beyond primitives)
  */
-export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
+type SelectRootExtraProps = {
   /**
    * The content of the select
    */
   children?: ReactNode;
-  /**
-   * The controlled open state of the select
-   */
-  isOpen?: boolean;
-  /**
-   * The open state of the select when initially rendered (uncontrolled)
-   */
-  isDefaultOpen?: boolean;
   /**
    * Whether to dismiss the keyboard when the select closes
    * @default true
@@ -82,7 +74,13 @@ export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
    * - `object`: Custom animation configuration
    */
   animation?: SelectRootAnimation;
-}
+};
+
+/**
+ * Select Root component props (discriminated union based on multi prop)
+ */
+export type SelectRootProps = SelectPrimitivesTypes.RootProps &
+  SelectRootExtraProps;
 
 /**
  * Select Trigger component props

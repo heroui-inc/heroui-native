@@ -43,7 +43,6 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
     <Select
       value={model}
       onValueChange={(value) => {
-        if (Array.isArray(value)) return;
         const modelValue = data.find((m) => m.value === value?.value);
         setModel(modelValue!);
       }}

@@ -563,8 +563,8 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
         itemValue;
 
     function onPress(ev: GestureResponderEvent) {
+      // Multi: toggle item in/out of selection array. Single: replace value.
       if (multi) {
-        // Toggle selection in array
         const currentValue =
           (value as Array<{ value: string; label: string }>) ?? [];
         const existingIndex = currentValue.findIndex(
@@ -576,7 +576,6 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
             : [...currentValue, { value: itemValue, label }];
         onValueChange(newValue);
       } else {
-        // Single selection - replace value
         onValueChange({ value: itemValue, label });
       }
 
@@ -642,7 +641,7 @@ const ItemIndicator = React.forwardRef<ItemIndicatorRef, ItemIndicatorProps>(
     const { itemValue } = useItemContext();
     const { value, multi } = useRootContext();
 
-    // Check if this item is selected
+    // Multi: check array membership. Single: compare value directly.
     const isSelected = multi
       ? ((value as Array<{ value: string; label: string }>)?.some(
           (opt) => opt.value === itemValue

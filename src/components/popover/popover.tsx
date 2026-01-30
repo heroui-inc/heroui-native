@@ -6,11 +6,16 @@ import type {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import { View } from 'react-native';
-import Animated, { ReduceMotion } from 'react-native-reanimated';
+import { useWindowDimensions, View } from 'react-native';
+import Animated, {
+  FadeIn,
+  FadeOut,
+  ReduceMotion,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
 import { useThemeColor } from '../../helpers/external/hooks';
+import { cn } from '../../helpers/external/utils';
 import {
   BottomSheetContentContainer,
   FullWindowOverlay,
@@ -24,7 +29,6 @@ import {
 import {
   useBottomSheetGestureHandlers,
   usePopupBottomSheetContentAnimation,
-  usePopupOverlayAnimation,
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
@@ -132,10 +136,10 @@ const PopoverRoot = forwardRef<
         <PopoverAnimationProvider value={animationContextValue}>
           <PopoverPrimitives.Root
             ref={ref}
-            isOpen={internalIsOpen}
+            isOpen={isOpenProp}
             isDefaultOpen={isDefaultOpen}
-            onOpenChange={onOpenChange}
-            closeDelay={closeDelay}
+            onOpenChange={onOpenChangeProp}
+            closeDelay={0}
             {...props}
           >
             {children}
@@ -192,25 +196,27 @@ const PopoverOverlay = forwardRef<
     { className, style, animation, isAnimatedStyleActive = true, ...props },
     ref
   ) => {
-    const { progress, isDragging } = usePopoverAnimation();
+    // const { progress, isDragging } = usePopoverAnimation();
 
     const overlayClassName = popoverClassNames.overlay({ className });
 
-    const { rContainerStyle } = usePopupOverlayAnimation({
-      progress,
-      isDragging,
-      animation,
-    });
+    // const { rContainerStyle } = usePopupOverlayAnimation({
+    //   progress,
+    //   isDragging,
+    //   animation,
+    // });
 
-    const overlayStyle = isAnimatedStyleActive
-      ? [rContainerStyle, style]
-      : style;
+    // const overlayStyle = isAnimatedStyleActive
+    //   ? [rContainerStyle, style]
+    //   : style;
 
     return (
       <AnimatedOverlay
         ref={ref}
+        entering={FadeIn.duration(200)}
+        exiting={FadeOut.duration(150)}
         className={overlayClassName}
-        style={overlayStyle}
+        style={style}
         {...props}
       />
     );
@@ -234,12 +240,18 @@ const PopoverContentPopover = forwardRef<
       children,
       style,
       animation,
-      isAnimatedStyleActive = true,
       ...props
     },
     ref
   ) => {
+    const { contentLayout } = usePopover();
+
     const safeAreaInsets = useSafeAreaInsets();
+    const { height: screenHeight } = useWindowDimensions();
+
+    // Initially useRelativePosition returns { position: 'absolute', opacity: 0, top: dimensions.height }
+    // So we need to wait for the content to be ready before showing it
+    const isReady = Boolean(contentLayout?.y && contentLayout.y < screenHeight);
 
     const insets = {
       top: DEFAULT_INSETS.top + safeAreaInsets.top,
@@ -248,34 +260,50 @@ const PopoverContentPopover = forwardRef<
       right: DEFAULT_INSETS.right + safeAreaInsets.right,
     };
 
-    const { progress } = usePopoverAnimation();
-
     const contentClassName = popoverClassNames.content({
       className,
     });
 
-    const { rContainerStyle } = usePopupPopoverContentAnimation({
-      progress,
+    const { entering, exiting } = usePopupPopoverContentAnimation({
       placement,
+      offset,
       animation,
     });
 
-    const contentStyle = isAnimatedStyleActive
-      ? [popoverStyleSheet.contentContainer, rContainerStyle, style]
-      : [popoverStyleSheet.contentContainer, style];
-
     return (
       <PopoverContentContext value={{ placement }}>
+        {isReady && (
+          <AnimatedContent
+            ref={ref}
+            entering={entering}
+            exiting={exiting}
+            placement={placement}
+            align={align}
+            avoidCollisions={avoidCollisions}
+            offset={offset}
+            alignOffset={alignOffset}
+            insets={insets}
+            className={contentClassName}
+            style={[popoverStyleSheet.contentContainer, style]}
+            {...props}
+          >
+            {children}
+          </AnimatedContent>
+        )}
         <AnimatedContent
-          ref={ref}
           placement={placement}
+          accessible={false}
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no"
+          pointerEvents="none"
+          collapsable={false}
           align={align}
           avoidCollisions={avoidCollisions}
           offset={offset}
           alignOffset={alignOffset}
           insets={insets}
-          className={contentClassName}
-          style={contentStyle}
+          className={cn(contentClassName, 'absolute opacity-0')}
+          style={[popoverStyleSheet.contentContainer, style]}
           {...props}
         >
           {children}

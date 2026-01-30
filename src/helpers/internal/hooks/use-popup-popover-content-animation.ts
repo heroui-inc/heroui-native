@@ -1,14 +1,12 @@
-import type { SharedValue } from 'react-native-reanimated';
 import {
-  Extrapolation,
-  interpolate,
-  useAnimatedStyle,
+  Easing,
+  Keyframe,
+  type EntryOrExitLayoutType,
 } from 'react-native-reanimated';
 import { useAnimationSettings } from '../contexts/animation-settings-context';
 import type { PopupPopoverContentAnimation } from '../types/animation';
 import {
   getAnimationState,
-  getAnimationValueProperty,
   getIsAnimationDisabledValue,
 } from '../utils/animation';
 
@@ -22,26 +20,157 @@ export type PopoverContentPlacement = 'top' | 'bottom' | 'left' | 'right';
  */
 export interface UsePopupPopoverContentAnimationProps {
   /**
-   * Animation progress shared value (0=idle, 1=open, 2=close)
-   */
-  progress: SharedValue<number>;
-  /**
    * Placement of the popover/select content
    */
   placement: PopoverContentPlacement;
+  /**
+   * Alignment offset for the popover content
+   */
+  offset: number;
   /**
    * Animation configuration for content
    */
   animation?: PopupPopoverContentAnimation;
 }
+/**
+ * Get default entering animation based on placement
+ * Uses Keyframes with translateY/translateX, scale, and opacity transitions
+ */
+function getDefaultEnteringAnimation(
+  placement: PopoverContentPlacement,
+  offset: number
+): EntryOrExitLayoutType {
+  const translateDistance = Math.min(offset, 12);
+
+  switch (placement) {
+    case 'top':
+      // Content comes from below (translateY: translateDistance -> 0)
+      return new Keyframe({
+        0: {
+          transform: [{ translateY: translateDistance }, { scale: 0.97 }],
+          opacity: 0.25,
+        },
+        100: {
+          transform: [{ translateY: 0 }, { scale: 1 }],
+          opacity: 1,
+          easing: Easing.out(Easing.ease),
+        },
+      }).duration(200);
+    case 'bottom':
+      // Content comes from above (translateY: -translateDistance -> 0)
+      return new Keyframe({
+        0: {
+          transform: [{ translateY: -translateDistance }, { scale: 0.97 }],
+          opacity: 0.25,
+        },
+        100: {
+          transform: [{ translateY: 0 }, { scale: 1 }],
+          opacity: 1,
+          easing: Easing.out(Easing.ease),
+        },
+      }).duration(200);
+    case 'left':
+      // Content comes from right (translateX: translateDistance -> 0)
+      return new Keyframe({
+        0: {
+          transform: [{ translateX: translateDistance }, { scale: 0.97 }],
+          opacity: 0.25,
+        },
+        100: {
+          transform: [{ translateX: 0 }, { scale: 1 }],
+          opacity: 1,
+          easing: Easing.out(Easing.ease),
+        },
+      }).duration(200);
+    case 'right':
+      // Content comes from left (translateX: -translateDistance -> 0)
+      return new Keyframe({
+        0: {
+          transform: [{ translateX: -translateDistance }, { scale: 0.97 }],
+          opacity: 0.25,
+        },
+        100: {
+          transform: [{ translateX: 0 }, { scale: 1 }],
+          opacity: 1,
+          easing: Easing.out(Easing.ease),
+        },
+      }).duration(200);
+  }
+}
+
+/**
+ * Get default exiting animation based on placement
+ * Mirrors the entering animation for each placement
+ */
+function getDefaultExitingAnimation(
+  placement: PopoverContentPlacement,
+  offset: number
+): EntryOrExitLayoutType {
+  const translateDistance = Math.min(offset, 12);
+
+  switch (placement) {
+    case 'top':
+      // Content exits downward (translateY: 0 -> translateDistance)
+      return new Keyframe({
+        0: {
+          transform: [{ translateY: 0 }, { scale: 1 }],
+          opacity: 1,
+        },
+        100: {
+          transform: [{ translateY: translateDistance }, { scale: 0.97 }],
+          opacity: 0,
+          easing: Easing.out(Easing.ease),
+        },
+      }).duration(150);
+    case 'bottom':
+      // Content exits upward (translateY: 0 -> -translateDistance)
+      return new Keyframe({
+        0: {
+          transform: [{ translateY: 0 }, { scale: 1 }],
+          opacity: 1,
+        },
+        100: {
+          transform: [{ translateY: -translateDistance }, { scale: 0.97 }],
+          opacity: 0,
+          easing: Easing.out(Easing.ease),
+        },
+      }).duration(150);
+    case 'left':
+      // Content exits rightward (translateX: 0 -> translateDistance)
+      return new Keyframe({
+        0: {
+          transform: [{ translateX: 0 }, { scale: 1 }],
+          opacity: 1,
+        },
+        100: {
+          transform: [{ translateX: translateDistance }, { scale: 0.97 }],
+          opacity: 0,
+          easing: Easing.out(Easing.ease),
+        },
+      }).duration(150);
+    case 'right':
+      // Content exits leftward (translateX: 0 -> -translateDistance)
+      return new Keyframe({
+        0: {
+          transform: [{ translateX: 0 }, { scale: 1 }],
+          opacity: 1,
+        },
+        100: {
+          transform: [{ translateX: -translateDistance }, { scale: 0.97 }],
+          opacity: 0,
+          easing: Easing.out(Easing.ease),
+        },
+      }).duration(150);
+  }
+}
 
 /**
  * Animation hook for popover/select content components
- * Handles placement-based animations (opacity, scale, translate) based on popup progress state
+ * Returns entering and exiting animations based on configuration and placement
  */
 export function usePopupPopoverContentAnimation({
-  progress,
   placement,
+  offset,
   animation,
 }: UsePopupPopoverContentAnimationProps) {
   const { isAllAnimationsDisabled } = useAnimationSettings();
@@ -53,102 +182,18 @@ export function usePopupPopoverContentAnimation({
     isAllAnimationsDisabled,
   });
 
-  // Calculate default transform values based on placement
-  let defaultTransformOrigin = 'top';
-  let defaultTranslateX: [number, number, number] = [0, 0, 0];
-  let defaultTranslateY: [number, number, number] = [0, 0, 0];
+  // Get entering animation value with default based on placement
+  const enteringValue =
+    animationConfig?.entering ?? getDefaultEnteringAnimation(placement, offset);
 
-  if (placement === 'top') {
-    defaultTransformOrigin = 'bottom';
-    defaultTranslateY = [4, 0, 4];
-  } else if (placement === 'bottom') {
-    defaultTransformOrigin = 'top';
-    defaultTranslateY = [-4, 0, -4];
-  } else if (placement === 'left') {
-    defaultTransformOrigin = 'right';
-    defaultTranslateX = [4, 0, 4];
-  } else if (placement === 'right') {
-    defaultTransformOrigin = 'left';
-    defaultTranslateX = [-4, 0, -4];
-  }
+  // Get exiting animation value with default based on placement
+  const exitingValue =
+    animationConfig?.exiting ?? getDefaultExitingAnimation(placement, offset);
 
-  // Get animation values with defaults
-  const opacityValue = getAnimationValueProperty({
-    animationValue: animationConfig?.opacity,
-    property: 'value',
-    defaultValue: [0, 1, 0] as [number, number, number],
-  });
-
-  const scaleValue = getAnimationValueProperty({
-    animationValue: animationConfig?.scale,
-    property: 'value',
-    defaultValue: [0.95, 1, 0.95] as [number, number, number],
-  });
-
-  const translateXValue = getAnimationValueProperty({
-    animationValue: animationConfig?.translateX,
-    property: 'value',
-    defaultValue: defaultTranslateX,
-  });
-
-  const translateYValue = getAnimationValueProperty({
-    animationValue: animationConfig?.translateY,
-    property: 'value',
-    defaultValue: defaultTranslateY,
-  });
-
-  const transformOriginValue = getAnimationValueProperty({
-    animationValue: animationConfig?.transformOrigin,
-    property: 'value',
-    defaultValue: defaultTransformOrigin,
-  });
-
-  const rContainerStyle = useAnimatedStyle(() => {
-    // Handle disabled state first
-    if (isAnimationDisabledValue) {
-      return {
-        opacity: progress.get() > 0 ? 1 : 0,
-      };
-    }
-
-    return {
-      opacity: interpolate(
-        progress.get(),
-        [0, 1, 2],
-        opacityValue,
-        Extrapolation.CLAMP
-      ),
-      transformOrigin: transformOriginValue,
-      transform: [
-        {
-          translateX: interpolate(
-            progress.get(),
-            [0, 1, 2],
-            translateXValue,
-            Extrapolation.CLAMP
-          ),
-        },
-        {
-          translateY: interpolate(
-            progress.get(),
-            [0, 1, 2],
-            translateYValue,
-            Extrapolation.CLAMP
-          ),
-        },
-        {
-          scale: interpolate(
-            progress.get(),
-            [0, 1, 2],
-            scaleValue,
-            Extrapolation.CLAMP
-          ),
-        },
-      ],
-    };
-  });
-
+  // Return entering and exiting animations
+  // If animations are disabled, return undefined to disable animations
   return {
-    rContainerStyle,
+    entering: isAnimationDisabledValue ? undefined : enteringValue,
+    exiting: isAnimationDisabledValue ? undefined : exitingValue,
   };
 }

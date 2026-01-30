@@ -1,5 +1,6 @@
 import type {
   BaseAnimationBuilder,
+  EntryOrExitLayoutType,
   LayoutAnimationFunction,
   WithSpringConfig,
   WithTimingConfig,
@@ -127,57 +128,17 @@ export type PopupDialogContentAnimation = Animation<{
 
 /**
  * Animation configuration for popup popover content components (Popover, Select popover presentation)
- * Supports opacity, scale, translate, and transform origin animations
+ * Supports custom Keyframe animations for entering and exiting transitions
  */
 export type PopupPopoverContentAnimation = Animation<{
   /**
-   * Opacity animation configuration
+   * Custom Keyframe animation for entering transition
+   * @default Keyframe with translateY/translateX, scale, and opacity (200ms)
    */
-  opacity?: AnimationValue<{
-    /**
-     * Opacity values [idle, open, close]
-     * @default [0, 1, 0]
-     */
-    value?: [number, number, number];
-  }>;
+  entering?: EntryOrExitLayoutType;
   /**
-   * Scale animation configuration
+   * Custom Keyframe animation for exiting transition
+   * @default Keyframe mirroring entering animation (150ms)
    */
-  scale?: AnimationValue<{
-    /**
-     * Scale values [idle, open, close]
-     * @default [0.95, 1, 0.95]
-     */
-    value?: [number, number, number];
-  }>;
-  /**
-   * TranslateX animation configuration
-   */
-  translateX?: AnimationValue<{
-    /**
-     * TranslateX values [idle, open, close]
-     * @default Based on placement (4, 0, 4) or (-4, 0, -4)
-     */
-    value?: [number, number, number];
-  }>;
-  /**
-   * TranslateY animation configuration
-   */
-  translateY?: AnimationValue<{
-    /**
-     * TranslateY values [idle, open, close]
-     * @default Based on placement (4, 0, 4) or (-4, 0, -4)
-     */
-    value?: [number, number, number];
-  }>;
-  /**
-   * Transform origin configuration
-   */
-  transformOrigin?: AnimationValue<{
-    /**
-     * Transform origin value
-     * @default Based on placement ('top', 'bottom', 'left', 'right')
-     */
-    value?: string;
-  }>;
+  exiting?: EntryOrExitLayoutType;
 }>;

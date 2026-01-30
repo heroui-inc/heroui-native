@@ -176,26 +176,6 @@ export interface PopoverContentPopoverProps
   extends PopoverPrimitivesTypes.ContentProps {
   /**
    * Additional CSS class for the content container
-   *
-   * @note The following style properties are occupied by animations and cannot be set via className:
-   * - `opacity` - Animated for content show/hide transitions (idle: 0, open: 1, close: 0)
-   * - `transform` (specifically `scale`, `translateX`, `translateY`) - Animated for content show/hide transitions (scale: idle: 0.95, open: 1, close: 0.95; translateX/translateY: based on placement)
-   * - `transformOrigin` - Animated for content show/hide transitions (based on placement: 'top', 'bottom', 'left', 'right')
-   *
-   * To customize these properties, use the `animation` prop:
-   * ```tsx
-   * <Popover.Content
-   *   animation={{
-   *     opacity: { value: [0, 1, 0] },
-   *     scale: { value: [0.95, 1, 0.95] },
-   *     translateX: { value: [4, 0, 4] },
-   *     translateY: { value: [4, 0, 4] },
-   *     transformOrigin: { value: 'top' }
-   *   }}
-   * />
-   * ```
-   *
-   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**
@@ -213,13 +193,6 @@ export interface PopoverContentPopoverProps
    * - `object`: Custom animation configuration
    */
   animation?: PopupPopoverContentAnimation;
-  /**
-   * Whether animated styles (react-native-reanimated) are active
-   * When `false`, the animated style is removed and you can implement custom logic
-   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
-   * @default true
-   */
-  isAnimatedStyleActive?: boolean;
 }
 
 /**

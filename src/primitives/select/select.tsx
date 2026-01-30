@@ -40,12 +40,14 @@ import type {
   ItemLabelRef,
   ItemProps,
   ItemRef,
+  MultiSelectOption,
   OverlayProps,
   OverlayRef,
   PopoverContentProps,
   PortalProps,
   RootProps,
   RootRef,
+  SelectOption,
   TriggerProps,
   TriggerRef,
   ValueProps,
@@ -68,6 +70,7 @@ const Root = forwardRef<RootRef, RootProps>(
   (
     {
       asChild,
+      multi = false,
       value: valueProp,
       defaultValue,
       onValueChange: onValueChangeProp,
@@ -82,11 +85,19 @@ const Root = forwardRef<RootRef, RootProps>(
   ) => {
     const nativeID = useId();
 
-    const [value, onValueChange] = useControllableState({
+    const [value, setValueInternal] = useControllableState<
+      SelectOption | MultiSelectOption
+    >({
       prop: valueProp,
-      defaultProp: defaultValue,
-      onChange: onValueChangeProp,
+      defaultProp: defaultValue ?? (multi ? [] : undefined),
+      onChange: onValueChangeProp as
+        | ((state: SelectOption | MultiSelectOption) => void)
+        | undefined,
     });
+
+    const onValueChange = setValueInternal as (
+      option: SelectOption | MultiSelectOption
+    ) => void;
 
     const [isOpen = false, onOpenChange] = useControllableState({
       prop: isOpenProp,
@@ -104,6 +115,7 @@ const Root = forwardRef<RootRef, RootProps>(
     return (
       <RootContext.Provider
         value={{
+          multi,
           value,
           onValueChange,
           isOpen,
@@ -210,14 +222,36 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
 // --------------------------------------------------
 
 const Value = React.forwardRef<ValueRef, ValueProps>(
-  ({ asChild, placeholder, ...props }, ref) => {
-    const { value } = useRootContext();
+  (
+    { asChild, placeholder, renderMultiple, maxDisplayLabels = 3, ...props },
+    ref
+  ) => {
+    const { value, multi } = useRootContext();
 
     const Component = asChild ? Slot.Text : Text;
 
+    let displayText: string;
+
+    if (multi) {
+      const multiValue =
+        (value as Array<{ value: string; label: string }>) ?? [];
+      if (multiValue.length === 0) {
+        displayText = placeholder;
+      } else if (renderMultiple) {
+        displayText = renderMultiple(multiValue);
+      } else if (multiValue.length <= maxDisplayLabels) {
+        displayText = multiValue.map((opt) => opt.label).join(', ');
+      } else {
+        displayText = `${multiValue.length} selected`;
+      }
+    } else {
+      const singleValue = value as { value: string; label: string } | undefined;
+      displayText = singleValue?.label ?? placeholder;
+    }
+
     return (
       <Component ref={ref} {...props}>
-        {value?.label ?? placeholder}
+        {displayText}
       </Component>
     );
   }
@@ -500,7 +534,7 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
       label,
       onPress: onPressProp,
       disabled = false,
-      closeOnPress = true,
+      closeOnPress: closeOnPressProp,
       ...props
     },
     ref
@@ -512,12 +546,39 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
       setTriggerPosition,
       setContentLayout,
       closeDelay,
+      multi,
     } = useRootContext();
+
+    // Default closeOnPress based on multi mode: false for multi, true for single
+    const closeOnPress = closeOnPressProp ?? !multi;
 
     const baseOnCloseDelay = 150; // This delay is needed to see change of indicator position first
 
+    // Check if this item is currently selected
+    const isSelected = multi
+      ? ((value as Array<{ value: string; label: string }>)?.some(
+          (opt) => opt.value === itemValue
+        ) ?? false)
+      : (value as { value: string; label: string } | undefined)?.value ===
+        itemValue;
+
     function onPress(ev: GestureResponderEvent) {
-      onValueChange({ value: itemValue, label });
+      if (multi) {
+        // Toggle selection in array
+        const currentValue =
+          (value as Array<{ value: string; label: string }>) ?? [];
+        const existingIndex = currentValue.findIndex(
+          (opt) => opt.value === itemValue
+        );
+        const newValue =
+          existingIndex >= 0
+            ? currentValue.filter((_, index) => index !== existingIndex)
+            : [...currentValue, { value: itemValue, label }];
+        onValueChange(newValue);
+      } else {
+        // Single selection - replace value
+        onValueChange({ value: itemValue, label });
+      }
 
       if (closeOnPress) {
         setTimeout(
@@ -544,12 +605,12 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
           role="option"
           onPress={onPress}
           disabled={disabled}
-          aria-checked={value?.value === itemValue}
+          aria-checked={isSelected}
           aria-valuetext={label}
           aria-disabled={!!disabled}
           accessibilityState={{
             disabled: !!disabled,
-            checked: value?.value === itemValue,
+            checked: isSelected,
           }}
           {...props}
         />
@@ -579,10 +640,18 @@ const ItemLabel = React.forwardRef<ItemLabelRef, ItemLabelProps>(
 const ItemIndicator = React.forwardRef<ItemIndicatorRef, ItemIndicatorProps>(
   ({ asChild, forceMount, ...props }, ref) => {
     const { itemValue } = useItemContext();
-    const { value } = useRootContext();
+    const { value, multi } = useRootContext();
+
+    // Check if this item is selected
+    const isSelected = multi
+      ? ((value as Array<{ value: string; label: string }>)?.some(
+          (opt) => opt.value === itemValue
+        ) ?? false)
+      : (value as { value: string; label: string } | undefined)?.value ===
+        itemValue;
 
     if (!forceMount) {
-      if (value?.value !== itemValue) {
+      if (!isSelected) {
         return null;
       }
     }

@@ -19,7 +19,8 @@ export const SelectItem: FC<Props> = ({ data }) => {
 
   const { value: selectedValue } = useSelect();
 
-  const isSelected = selectedValue?.value === data.value;
+  const isSelected =
+    !Array.isArray(selectedValue) && selectedValue?.value === data.value;
   const isSelectedAndroid = isSelected && Platform.OS === 'android';
 
   return (

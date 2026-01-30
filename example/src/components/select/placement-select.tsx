@@ -93,7 +93,11 @@ const PlacementContent = () => {
   const { value } = useSelect();
 
   const valueIndex = useMemo(
-    () => US_STATES.findIndex((item) => item.value === (value?.value ?? 'CA')),
+    () =>
+      US_STATES.findIndex(
+        (item) =>
+          item.value === (!Array.isArray(value) ? (value?.value ?? 'CA') : 'CA')
+      ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );

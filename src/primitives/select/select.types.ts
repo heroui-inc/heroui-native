@@ -102,27 +102,9 @@ interface IRootContext {
 }
 
 /**
- * Props for the Select Root component
+ * Base props shared by single and multi select modes
  */
-type RootProps = SlottableViewProps & {
-  /**
-   * Whether multiple selection is enabled
-   * @default false
-   */
-  multi?: boolean;
-  /**
-   * The controlled selected value of the select (single mode: SelectOption, multi mode: MultiSelectOption)
-   */
-  value?: SelectOption | MultiSelectOption;
-  /**
-   * The default selected value (uncontrolled)
-   */
-  defaultValue?: SelectOption | MultiSelectOption;
-  /**
-   * Callback fired when the selected value changes
-   * @param option - The newly selected option(s)
-   */
-  onValueChange?: (option: SelectOption | MultiSelectOption) => void;
+type BaseRootProps = SlottableViewProps & {
   /**
    * The controlled open state of the select
    */
@@ -146,6 +128,56 @@ type RootProps = SlottableViewProps & {
    */
   isDisabled?: boolean;
 };
+
+/**
+ * Props for single-select mode (multi=false or undefined)
+ */
+type SingleSelectRootProps = BaseRootProps & {
+  /**
+   * Whether multiple selection is enabled
+   * @default false
+   */
+  multi?: false;
+  /**
+   * The controlled selected value
+   */
+  value?: SelectOption;
+  /**
+   * The default selected value (uncontrolled)
+   */
+  defaultValue?: SelectOption;
+  /**
+   * Callback fired when the selected value changes
+   */
+  onValueChange?: (option: SelectOption) => void;
+};
+
+/**
+ * Props for multi-select mode (multi=true)
+ */
+type MultiSelectRootProps = BaseRootProps & {
+  /**
+   * Enable multiple selection mode
+   */
+  multi: true;
+  /**
+   * The controlled selected values
+   */
+  value?: MultiSelectOption;
+  /**
+   * The default selected values (uncontrolled)
+   */
+  defaultValue?: MultiSelectOption;
+  /**
+   * Callback fired when the selected values change
+   */
+  onValueChange?: (option: MultiSelectOption) => void;
+};
+
+/**
+ * Props for the Select Root component (discriminated union based on multi prop)
+ */
+type RootProps = SingleSelectRootProps | MultiSelectRootProps;
 /**
  * Props for the Select Portal component
  */
@@ -331,6 +363,7 @@ type GroupRef = ViewRef;
 type GroupLabelRef = TextRef;
 
 export type {
+  BaseRootProps,
   CloseProps,
   CloseRef,
   ContentRef,
@@ -348,6 +381,7 @@ export type {
   ItemProps,
   ItemRef,
   MultiSelectOption,
+  MultiSelectRootProps,
   OverlayProps,
   OverlayRef,
   PopoverContentProps,
@@ -356,6 +390,7 @@ export type {
   RootRef,
   SelectOption,
   SelectState,
+  SingleSelectRootProps,
   TriggerProps,
   TriggerRef,
   ValueProps,

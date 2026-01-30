@@ -1,6 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import { Divider, Select, useSelectAnimation } from 'heroui-native';
-import React, { useState, type FC } from 'react';
+import React, { type FC, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
@@ -68,7 +68,6 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
     <Select
       value={basicValue}
       onValueChange={(value) => {
-        if (Array.isArray(value)) return;
         setBasicValue(value);
       }}
     >

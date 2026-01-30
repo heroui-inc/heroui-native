@@ -61,6 +61,7 @@ export function SearchableSelect() {
     <Select
       value={value}
       onValueChange={(newValue) => {
+        if (Array.isArray(newValue)) return;
         setValue(newValue);
         setSearchQuery('');
       }}

@@ -559,9 +559,15 @@ const SelectItem = forwardRef<SelectPrimitivesTypes.ItemRef, SelectItemProps>(
     },
     ref
   ) => {
-    const { value } = useSelect();
+    const { value, multi } = useSelect();
 
-    const isSelected = value?.value === itemValue;
+    // Check selection based on multi mode
+    const isSelected = multi
+      ? ((value as Array<{ value: string; label: string }>)?.some(
+          (opt) => opt.value === itemValue
+        ) ?? false)
+      : (value as { value: string; label: string } | undefined)?.value ===
+        itemValue;
     const isDisabled = disabled ?? false;
 
     const tvStyles = selectStyles.item({ className });

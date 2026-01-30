@@ -16,6 +16,7 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 import { PlacementSelect } from '../../../components/select/placement-select';
 import { SearchableDialogSelect } from '../../../components/select/searchable-dialog-select';
 import { SelectButtonTrigger } from '../../../components/select/select-button-trigger';
+import { SelectMultiple } from '../../../components/select/select-multiple';
 
 type SelectOption = {
   value: string;
@@ -81,6 +82,7 @@ const PresentationContent = () => {
         <Select
           value={popoverValue}
           onValueChange={(value) => {
+            if (Array.isArray(value)) return;
             const country = COUNTRIES.find((c) => c.value === value?.value);
             setPopoverValue(country);
           }}
@@ -140,6 +142,7 @@ const PresentationContent = () => {
           onOpenChange={setIsBottomSheetOpen}
           value={bottomSheetValue}
           onValueChange={(value) => {
+            if (Array.isArray(value)) return;
             const country = COUNTRIES.find((c) => c.value === value?.value);
             setBottomSheetValue(country);
           }}
@@ -321,6 +324,16 @@ const AlignmentOptionsContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const MultipleSelectionContent = () => {
+  return (
+    <View className="flex-1 px-5 items-center justify-center">
+      <SelectMultiple />
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const NativeModalTestContent = () => {
   const router = require('expo-router').useRouter();
 
@@ -343,6 +356,11 @@ const SELECT_VARIANTS: UsageVariant[] = [
     value: 'basic-usage-button-trigger',
     label: 'Select with indicator',
     content: <BasicUsageWithButtonTriggerContent />,
+  },
+  {
+    value: 'multiple-selection',
+    label: 'Multiple selection',
+    content: <MultipleSelectionContent />,
   },
   {
     value: 'presentation',

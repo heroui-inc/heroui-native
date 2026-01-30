@@ -59,6 +59,7 @@ export function SearchableDialogSelect() {
     <Select
       value={value}
       onValueChange={(newValue) => {
+        if (Array.isArray(newValue)) return;
         const country = COUNTRIES.find((c) => c.value === newValue?.value);
         setValue(country);
         setSearchQuery('');

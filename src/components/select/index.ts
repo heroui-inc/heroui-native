@@ -1,3 +1,7 @@
+export type {
+  MultiSelectOption,
+  SelectOption,
+} from '../../primitives/select/select.types';
 export {
   default as Select,
   useSelect,

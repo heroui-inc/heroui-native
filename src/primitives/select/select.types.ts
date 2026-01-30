@@ -17,7 +17,7 @@ import type {
 type SelectState = 'idle' | 'open' | 'close';
 
 /**
- * Select option type
+ * Select option type for single selection
  */
 type SelectOption =
   | {
@@ -25,6 +25,14 @@ type SelectOption =
       label: string;
     }
   | undefined;
+
+/**
+ * Select option type for multiple selection
+ */
+type MultiSelectOption = Array<{
+  value: string;
+  label: string;
+}>;
 
 /**
  * Content sizing strategy
@@ -39,6 +47,10 @@ type ContentSizing = 'trigger' | 'content-fit' | 'full' | number;
  * Internal context interface for managing select state and positioning
  */
 interface IRootContext {
+  /**
+   * Whether multiple selection is enabled
+   */
+  multi: boolean;
   /**
    * Whether the select is currently open
    */
@@ -80,13 +92,13 @@ interface IRootContext {
    */
   closeDelay?: number;
   /**
-   * The currently selected option
+   * The currently selected option(s)
    */
-  value: SelectOption;
+  value: SelectOption | MultiSelectOption;
   /**
    * Callback fired when the selected value changes
    */
-  onValueChange: (option: SelectOption) => void;
+  onValueChange: (option: SelectOption | MultiSelectOption) => void;
 }
 
 /**
@@ -94,18 +106,23 @@ interface IRootContext {
  */
 type RootProps = SlottableViewProps & {
   /**
-   * The controlled selected value of the select
+   * Whether multiple selection is enabled
+   * @default false
    */
-  value?: SelectOption;
+  multi?: boolean;
+  /**
+   * The controlled selected value of the select (single mode: SelectOption, multi mode: MultiSelectOption)
+   */
+  value?: SelectOption | MultiSelectOption;
   /**
    * The default selected value (uncontrolled)
    */
-  defaultValue?: SelectOption;
+  defaultValue?: SelectOption | MultiSelectOption;
   /**
    * Callback fired when the selected value changes
-   * @param option - The newly selected option
+   * @param option - The newly selected option(s)
    */
-  onValueChange?: (option: SelectOption) => void;
+  onValueChange?: (option: SelectOption | MultiSelectOption) => void;
   /**
    * The controlled open state of the select
    */
@@ -196,6 +213,18 @@ type ValueProps = SlottableTextProps & {
    * Placeholder text to show when no value is selected
    */
   placeholder: string;
+  /**
+   * Custom render function for multiple selection display
+   * @param selected - Array of selected options
+   * @returns String to display
+   */
+  renderMultiple?: (selected: MultiSelectOption) => string;
+  /**
+   * Maximum number of labels to show before switching to count display
+   * Only applies to multiple selection mode
+   * @default 3
+   */
+  maxDisplayLabels?: number;
 };
 
 /**
@@ -318,6 +347,7 @@ export type {
   ItemLabelRef,
   ItemProps,
   ItemRef,
+  MultiSelectOption,
   OverlayProps,
   OverlayRef,
   PopoverContentProps,

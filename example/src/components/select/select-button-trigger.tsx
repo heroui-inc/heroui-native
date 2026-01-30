@@ -65,7 +65,13 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
   const [basicValue, setBasicValue] = useState<SelectOption | undefined>();
 
   return (
-    <Select value={basicValue} onValueChange={setBasicValue}>
+    <Select
+      value={basicValue}
+      onValueChange={(value) => {
+        if (Array.isArray(value)) return;
+        setBasicValue(value);
+      }}
+    >
       <Select.Trigger>
         <AnimatedTrigger />
       </Select.Trigger>

@@ -288,7 +288,6 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | `isOpen`        | `boolean`                   | -       | Whether the popover is open (controlled mode)                             |
 | `isDefaultOpen` | `boolean`                   | -       | The open state of the popover when initially rendered (uncontrolled mode) |
 | `onOpenChange`  | `(isOpen: boolean) => void` | -       | Callback when the popover open state changes                              |
-| `closeDelay`    | `number`                    | `400`   | Delay in milliseconds before closing the popover                          |
 | `animation`     | `AnimationRootDisableAll`      | -       | Animation configuration. Can be `false`, `"disabled"`, `"disable-all"`, `true`, or `undefined` |
 | `presentation` | `'popover' \| 'bottom-sheet'`  | `'popover'` | Presentation mode for the popover content                                 |
 | `asChild`       | `boolean`                   | `false` | Whether to render as a child element                                      |
@@ -458,7 +457,6 @@ const CustomContent = () => {
 | `contentLayout`      | `LayoutRectangle \| null`                           | The layout measurements of the popover content                    |
 | `setContentLayout`   | `(contentLayout: LayoutRectangle \| null) => void`  | Function to update the content layout measurements                |
 | `nativeID`           | `string`                                            | Unique identifier for the popover instance                        |
-| `closeDelay`         | `number \| undefined`                               | Delay in milliseconds before the popover closes                   |
 
 **Note:** This hook must be used within a `Popover` component. It will throw an error if called outside of the popover context.
 

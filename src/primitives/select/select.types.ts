@@ -76,10 +76,6 @@ interface IRootContext {
    */
   nativeID: string;
   /**
-   * Delay in milliseconds before the select closes
-   */
-  closeDelay?: number;
-  /**
    * The currently selected option
    */
   value: SelectOption;
@@ -119,11 +115,6 @@ type RootProps = SlottableViewProps & {
    * @param open - Whether the select is open or closed
    */
   onOpenChange?: (open: boolean) => void;
-  /**
-   * Delay in milliseconds before the select closes (for exit animations)
-   * @default 300
-   */
-  closeDelay?: number;
   /**
    * Whether the select is disabled
    */

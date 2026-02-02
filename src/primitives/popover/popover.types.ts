@@ -64,10 +64,6 @@ interface IRootContext {
    */
   nativeID: string;
   /**
-   * Delay in milliseconds before the popover closes
-   */
-  closeDelay?: number;
-  /**
    * Presentation mode for the popover content
    * - 'popover': Default floating popover with positioning
    * - 'bottom-sheet': Bottom sheet modal presentation

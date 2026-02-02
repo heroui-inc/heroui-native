@@ -409,9 +409,7 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | `isOpen`                   | `boolean`                       | -       | Whether the select is open (controlled mode)                           |
 | `isDefaultOpen`            | `boolean`                       | -       | Whether the select is open when initially rendered (uncontrolled mode) |
 | `onOpenChange`             | `(isOpen: boolean) => void`     | -       | Callback when the select open state changes                            |
-| `closeDelay`               | `number`                        | `400`   | Delay in milliseconds before closing the select                        |
 | `isDisabled`               | `boolean`                       | `false` | Whether the select is disabled                                         |
-| `isDismissKeyboardOnClose` | `boolean`                       | `true`  | Whether to dismiss keyboard when select closes                         |
 | `animation`                | `SelectRootAnimation`           | -       | Animation configuration                                                |
 | `asChild`                  | `boolean`                       | `false` | Whether to render as a child element                                   |
 | `...ViewProps`             | `ViewProps`                     | -       | All standard React Native View props are supported                     |
@@ -654,7 +652,6 @@ const {
   contentLayout,
   setContentLayout,
   nativeID,
-  closeDelay,
   value,
   onValueChange,
 } = useSelect();
@@ -673,7 +670,6 @@ const {
 | `contentLayout`      | `LayoutRectangle \| null`                    | Layout measurements of the select content                 |
 | `setContentLayout`   | `(layout: LayoutRectangle \| null) => void`  | Updates the content layout measurements                   |
 | `nativeID`           | `string`                                     | Unique identifier for the select instance                 |
-| `closeDelay`         | `number \| undefined`                        | Delay in milliseconds before the select closes            |
 | `value`              | `SelectOption`                               | Currently selected option                                 |
 | `onValueChange`      | `(option: SelectOption) => void`             | Callback fired when the selected value changes            |
 

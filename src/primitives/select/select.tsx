@@ -74,7 +74,6 @@ const Root = forwardRef<RootRef, RootProps>(
       isOpen: isOpenProp,
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
-      closeDelay,
       isDisabled,
       ...viewProps
     },
@@ -115,7 +114,6 @@ const Root = forwardRef<RootRef, RootProps>(
           setContentLayout,
           setTriggerPosition,
           triggerPosition,
-          closeDelay,
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -134,7 +132,6 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       isDisabled: isDisabledRoot,
       setTriggerPosition,
       setContentLayout,
-      closeDelay,
       isDefaultOpen,
       triggerPosition,
     } = useRootContext();
@@ -154,13 +151,11 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
         },
         close: () => {
           onOpenChange(false);
-          setTimeout(() => {
-            setTriggerPosition(null);
-            setContentLayout(null);
-          }, closeDelay);
+          setTriggerPosition(null);
+          setContentLayout(null);
         },
       },
-      deps: [isOpen, closeDelay],
+      deps: [isOpen],
     });
 
     // Open popover on mount if isDefaultOpen is true or isOpen is true initially
@@ -261,20 +256,13 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
     },
     ref
   ) => {
-    const {
-      isOpen,
-      onOpenChange,
-      setTriggerPosition,
-      setContentLayout,
-      closeDelay,
-    } = useRootContext();
+    const { isOpen, onOpenChange, setTriggerPosition, setContentLayout } =
+      useRootContext();
 
     function onPress(ev: GestureResponderEvent) {
       if (closeOnPress) {
-        setTimeout(() => {
-          setTriggerPosition(null);
-          setContentLayout(null);
-        }, closeDelay);
+        setTriggerPosition(null);
+        setContentLayout(null);
         onOpenChange(false);
       }
       OnPressProp?.(ev);
@@ -323,18 +311,15 @@ const PopoverContent = forwardRef<ContentRef, PopoverContentProps>(
       setContentLayout,
       setTriggerPosition,
       triggerPosition,
-      closeDelay,
     } = useRootContext();
 
     useEffect(() => {
       const backHandler = BackHandler.addEventListener(
         'hardwareBackPress',
         () => {
-          setTimeout(() => {
-            setTriggerPosition(null);
-            setContentLayout(null);
-          }, closeDelay);
           onOpenChange(false);
+          setTriggerPosition(null);
+          setContentLayout(null);
           return true;
         }
       );
@@ -445,16 +430,14 @@ const DialogContent = forwardRef<ContentRef, DialogContentProps>(
 
 const Close = forwardRef<CloseRef, CloseProps>(
   ({ asChild, onPress: onPressProp, disabled = false, ...props }, ref) => {
-    const { onOpenChange, setContentLayout, setTriggerPosition, closeDelay } =
+    const { onOpenChange, setContentLayout, setTriggerPosition } =
       useRootContext();
 
     function onPress(ev: GestureResponderEvent) {
       if (disabled) return;
-      setTimeout(() => {
-        setTriggerPosition(null);
-        setContentLayout(null);
-      }, closeDelay);
       onOpenChange(false);
+      setTriggerPosition(null);
+      setContentLayout(null);
       onPressProp?.(ev);
     }
 
@@ -511,24 +494,19 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
       onValueChange,
       setTriggerPosition,
       setContentLayout,
-      closeDelay,
     } = useRootContext();
 
+    // VS -------------
     const baseOnCloseDelay = 150; // This delay is needed to see change of indicator position first
 
     function onPress(ev: GestureResponderEvent) {
       onValueChange({ value: itemValue, label });
 
       if (closeOnPress) {
-        setTimeout(
-          () => {
-            setTriggerPosition(null);
-            setContentLayout(null);
-          },
-          baseOnCloseDelay + (closeDelay ?? 0)
-        );
         setTimeout(() => {
           onOpenChange(false);
+          setTriggerPosition(null);
+          setContentLayout(null);
         }, baseOnCloseDelay);
       }
 

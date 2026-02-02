@@ -55,50 +55,6 @@ Simple dialog with title, description, and close button.
 </Dialog>
 ```
 
-### Custom Animations
-
-Configure open and close animations with spring or timing. The `closeDelay` should typically match your closing animation duration.
-
-```tsx
-<Dialog
-  isOpen={isOpen}
-  onOpenChange={setIsOpen}
-  closeDelay={200} // Match this with closing animation duration
-  animation={{
-    entering: {
-      type: 'spring',
-      config: { damping: 130, stiffness: 1100 },
-    },
-    exiting: {
-      type: 'timing',
-      config: { duration: 200 }, // Should match closeDelay
-    },
-  }}
->
-  <Dialog.Trigger>...</Dialog.Trigger>
-  <Dialog.Portal>
-    <Dialog.Overlay />
-    <Dialog.Content>...</Dialog.Content>
-  </Dialog.Portal>
-</Dialog>
-```
-
-### Custom Backdrop
-
-Replace the default overlay with custom content.
-
-```tsx
-<Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
-  <Dialog.Trigger>...</Dialog.Trigger>
-  <Dialog.Portal>
-    <Dialog.Overlay className="bg-transparent">
-      <BlurView style={StyleSheet.absoluteFill} />
-    </Dialog.Overlay>
-    <Dialog.Content>...</Dialog.Content>
-  </Dialog.Portal>
-</Dialog>
-```
-
 ### Scrollable Content
 
 Handle long content with scroll views.
@@ -190,8 +146,6 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | `children`                 | `React.ReactNode`          | -       | Dialog content and trigger elements                                                  |
 | `isOpen`                   | `boolean`                  | -       | Controlled open state of the dialog                                                  |
 | `isDefaultOpen`            | `boolean`                  | `false` | Initial open state when uncontrolled                                                 |
-| `closeDelay`               | `number`                   | `300`   | Delay in milliseconds before dialog closes (should match closing animation duration) |
-| `isDismissKeyboardOnClose` | `boolean`                  | `true`  | Whether to dismiss keyboard when dialog closes                                       |
 | `animation`                | `DialogRootAnimation`      | -       | Animation configuration                                                              |
 | `onOpenChange`             | `(value: boolean) => void` | -       | Callback when open state changes                                                     |
 | `...ViewProps`             | `ViewProps`                | -       | All standard React Native View props are supported                                   |

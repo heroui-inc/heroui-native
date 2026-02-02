@@ -90,8 +90,6 @@ const SelectRoot = forwardRef<SelectPrimitivesTypes.RootRef, SelectRootProps>(
   (
     {
       children,
-      closeDelay = 400,
-      isDismissKeyboardOnClose = true,
       isOpen: isOpenProp,
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
@@ -112,8 +110,6 @@ const SelectRoot = forwardRef<SelectPrimitivesTypes.RootRef, SelectRootProps>(
       isOpen: isOpenProp,
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
-      closeDelay,
-      isDismissKeyboardOnClose,
       animation,
     });
 
@@ -142,7 +138,6 @@ const SelectRoot = forwardRef<SelectPrimitivesTypes.RootRef, SelectRootProps>(
             isOpen={internalIsOpen}
             isDefaultOpen={isDefaultOpen}
             onOpenChange={onOpenChange}
-            closeDelay={closeDelay}
             {...props}
           >
             {children}

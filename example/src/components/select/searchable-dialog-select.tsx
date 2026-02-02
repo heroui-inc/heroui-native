@@ -143,7 +143,6 @@ export function SearchableDialogSelect() {
         const country = COUNTRIES.find((c) => c.value === newValue?.value);
         setValue(country);
       }}
-      closeDelay={300}
       animation={{
         exiting: {
           type: 'timing',

@@ -49,8 +49,6 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
   (
     {
       children,
-      closeDelay = 300,
-      isDismissKeyboardOnClose = true,
       isOpen: isOpenProp,
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
@@ -71,8 +69,6 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
       isOpen: isOpenProp,
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
-      closeDelay,
-      isDismissKeyboardOnClose,
       animation,
     });
 

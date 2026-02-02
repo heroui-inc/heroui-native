@@ -53,10 +53,10 @@ const components: Component[] = [
   //   title: 'Description',
   //   path: 'description',
   // },
-  // {
-  //   title: 'Dialog',
-  //   path: 'dialog',
-  // },
+  {
+    title: 'Dialog',
+    path: 'dialog',
+  },
   // {
   //   title: 'FieldError',
   //   path: 'field-error',

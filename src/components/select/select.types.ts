@@ -65,11 +65,6 @@ export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
    */
   isDefaultOpen?: boolean;
   /**
-   * Whether to dismiss the keyboard when the select closes
-   * @default true
-   */
-  isDismissKeyboardOnClose?: boolean;
-  /**
    * Animation configuration for select root
    * - `"disable-all"`: Disable all animations including children
    * - `false` or `"disabled"`: Disable only root animations

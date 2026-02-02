@@ -37,16 +37,6 @@ export interface DialogRootProps extends DialogPrimitivesTypes.RootProps {
    */
   children?: ReactNode;
   /**
-   * Delay in milliseconds before the dialog closes (for exit animations)
-   * @default 300
-   */
-  closeDelay?: number;
-  /**
-   * Whether to dismiss the keyboard when the dialog closes
-   * @default true
-   */
-  isDismissKeyboardOnClose?: boolean;
-  /**
    * Animation configuration for dialog root
    * - `"disable-all"`: Disable all animations including children
    * - `false` or `"disabled"`: Disable only root animations

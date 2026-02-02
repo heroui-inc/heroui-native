@@ -23,7 +23,7 @@ const WithTitleDescriptionContent = () => {
           <Button variant="secondary">Did you know?</Button>
         </Popover.Trigger>
         <Popover.Portal>
-          <Popover.Overlay className="bg-red-500/30" />
+          <Popover.Overlay />
           <Popover.Content
             width={320}
             placement="top"

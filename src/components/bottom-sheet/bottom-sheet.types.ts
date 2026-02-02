@@ -11,26 +11,14 @@ import type * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/
 import type { CloseButtonProps } from '../close-button/close-button.types';
 
 /**
- * Bottom sheet internal state for animation coordination
- */
-export type BottomSheetState = 'idle' | 'open' | 'close';
-
-/**
  * Context value for bottom sheet animation state
  */
 export interface BottomSheetAnimationContextValue {
-  /** Extended internal state for animation control */
-  bottomSheetState: BottomSheetState;
   /** Animation progress shared value (0=idle, 1=open, 2=close) */
   progress: SharedValue<number>;
   /** Dragging state shared value */
   isDragging: SharedValue<boolean>;
 }
-
-/**
- * Animation configuration for BottomSheet root component
- */
-export type BottomSheetRootAnimation = AnimationRootDisableAll;
 
 /**
  * BottomSheet Root component props
@@ -42,16 +30,11 @@ export interface BottomSheetRootProps
    */
   children?: ReactNode;
   /**
-   * Whether to dismiss the keyboard when the bottom sheet closes
-   * @default true
-   */
-  isDismissKeyboardOnClose?: boolean;
-  /**
    * Animation configuration for bottom sheet root
    * - `"disable-all"`: Disable all animations including children
    * - `undefined`: Use default animations
    */
-  animation?: BottomSheetRootAnimation;
+  animation?: AnimationRootDisableAll;
 }
 
 /**
@@ -75,11 +58,6 @@ export interface BottomSheetPortalProps
    */
   children: ReactNode;
 }
-
-/**
- * Animation configuration for BottomSheet Overlay component
- */
-export type BottomSheetOverlayAnimation = PopupOverlayAnimation;
 
 /**
  * BottomSheet Overlay component props
@@ -110,7 +88,7 @@ export interface BottomSheetOverlayProps
    * - `true` or `undefined`: Use default animations
    * - `object`: Custom animation configuration
    */
-  animation?: BottomSheetOverlayAnimation;
+  animation?: Omit<PopupOverlayAnimation, 'entering' | 'exiting'>;
   /**
    * Whether animated styles (react-native-reanimated) are active
    * When `false`, the animated style is removed and you can implement custom logic
@@ -159,10 +137,6 @@ export interface BottomSheetDescriptionProps extends TextProps {
  * Return type for the useBottomSheetAnimation hook
  */
 export interface UseBottomSheetAnimationReturn {
-  /**
-   * Extended internal state for coordinating animations
-   */
-  bottomSheetState: BottomSheetState;
   /**
    * Animation progress shared value (0=idle, 1=open, 2=close)
    */

@@ -7,24 +7,20 @@ import type {
   ViewStyle,
 } from 'react-native';
 import { Pressable, useWindowDimensions, View } from 'react-native';
-import Animated, { ReduceMotion } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { withUniwind } from 'uniwind';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
 import {
-  BottomSheetContentContainer,
+  BottomSheetContent,
   FullWindowOverlay,
   HeroText,
 } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
-  BottomSheetIsDraggingProvider,
   useAnimationSettings,
 } from '../../helpers/internal/contexts';
 import {
-  useBottomSheetGestureHandlers,
-  usePopupBottomSheetContentAnimation,
   usePopupOverlayAnimation,
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
@@ -32,8 +28,6 @@ import {
 import type { PressableRef } from '../../helpers/internal/types';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
-import { useBottomSheetContentAnimation } from '../bottom-sheet/bottom-sheet.animation';
-import { bottomSheetClassNames } from '../bottom-sheet/bottom-sheet.styles';
 import { CloseButton } from '../close-button';
 import { ArrowSvg } from './arrow-svg';
 import {
@@ -67,8 +61,6 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const AnimatedContent = Animated.createAnimatedComponent(
   PopoverPrimitives.Content
 );
-
-const StyledBottomSheet = withUniwind(BottomSheet);
 
 const usePopover = PopoverPrimitives.useRootContext;
 
@@ -338,73 +330,28 @@ const PopoverContentBottomSheet = forwardRef<
 
     const { progress, isDragging } = usePopoverAnimation();
 
-    const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
-      animation,
-    });
-
-    const { animatedIndex, isClosingOnSwipe, isPanActivated } =
-      usePopupBottomSheetContentAnimation({
-        progress,
-        isDragging,
-      });
-
-    const contentBackgroundClassName = bottomSheetClassNames.contentBackground({
-      className: backgroundClassName,
-    });
-
-    const contentHandleIndicatorClassName =
-      bottomSheetClassNames.contentHandleIndicator({
-        className: handleIndicatorClassName,
-      });
-
-    const contentContainerClassName = bottomSheetClassNames.contentContainer({
-      className: contentContainerClassNameProp,
-    });
-
-    const mergedAnimationConfigs = useMemo(
-      () => ({
-        ...animationConfigs,
-        reduceMotion: isAnimationDisabledValue
-          ? ReduceMotion.Always
-          : animationConfigs?.reduceMotion,
-      }),
-      [animationConfigs, isAnimationDisabledValue]
-    );
-
     return (
-      <PopoverContentContext value={{ placement: 'bottom' }}>
-        <BottomSheetIsDraggingProvider value={{ isDragging }}>
-          <StyledBottomSheet
-            ref={ref}
-            index={-1}
-            backgroundClassName={contentBackgroundClassName}
-            backgroundStyle={[
-              popoverStyleSheet.contentContainer,
-              restProps.backgroundStyle,
-            ]}
-            handleIndicatorClassName={contentHandleIndicatorClassName}
-            enablePanDownToClose={restProps.enablePanDownToClose ?? true}
-            animatedIndex={animatedIndex ?? restProps.animatedIndex}
-            animationConfigs={mergedAnimationConfigs}
-            gestureEventsHandlersHook={useBottomSheetGestureHandlers}
-            {...restProps}
-          >
-            <BottomSheetContentContainer
-              initialIndex={initialIndex ?? 0}
-              isOpen={isOpen}
-              progress={progress}
-              isDragging={isDragging}
-              isPanActivated={isPanActivated}
-              isClosingOnSwipe={isClosingOnSwipe}
-              contentContainerClassName={contentContainerClassName}
-              contentContainerProps={contentContainerProps}
-              onOpenChange={onOpenChange}
-            >
-              {children}
-            </BottomSheetContentContainer>
-          </StyledBottomSheet>
-        </BottomSheetIsDraggingProvider>
-      </PopoverContentContext>
+      <BottomSheetContent
+        ref={ref}
+        index={initialIndex}
+        backgroundClassName={backgroundClassName}
+        handleIndicatorClassName={handleIndicatorClassName}
+        contentContainerClassName={contentContainerClassNameProp}
+        contentContainerProps={contentContainerProps}
+        animation={animation}
+        animationConfigs={animationConfigs}
+        backgroundStyle={[
+          popoverStyleSheet.contentContainer,
+          restProps.backgroundStyle,
+        ]}
+        isOpen={isOpen}
+        progress={progress}
+        isDragging={isDragging}
+        onOpenChange={onOpenChange}
+        {...restProps}
+      >
+        {children}
+      </BottomSheetContent>
     );
   }
 );

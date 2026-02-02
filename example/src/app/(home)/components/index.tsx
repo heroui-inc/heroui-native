@@ -21,10 +21,10 @@ const components: Component[] = [
   //   title: 'Avatar',
   //   path: 'avatar',
   // },
-  // {
-  //   title: 'BottomSheet',
-  //   path: 'bottom-sheet',
-  // },
+  {
+    title: 'BottomSheet',
+    path: 'bottom-sheet',
+  },
   // {
   //   title: 'Button',
   //   path: 'button',

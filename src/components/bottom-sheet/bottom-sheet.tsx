@@ -1,24 +1,21 @@
 import GorhomBottomSheet from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback, useMemo } from 'react';
-import type { GestureResponderEvent, Text as RNText } from 'react-native';
-import Animated, {
-  ReduceMotion,
-  useSharedValue,
-} from 'react-native-reanimated';
-import { withUniwind } from 'uniwind';
+import { forwardRef, useMemo } from 'react';
 import {
-  BottomSheetContentContainer,
+  StyleSheet,
+  type GestureResponderEvent,
+  type Text as RNText,
+} from 'react-native';
+import Animated, { useSharedValue } from 'react-native-reanimated';
+import {
   FullWindowOverlay,
   HeroText,
+  BottomSheetContent as InternalBottomSheetContent,
 } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
-  BottomSheetIsDraggingProvider,
   useAnimationSettings,
 } from '../../helpers/internal/contexts';
 import {
-  useBottomSheetGestureHandlers,
-  usePopupBottomSheetContentAnimation,
   usePopupOverlayAnimation,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
@@ -29,7 +26,6 @@ import { CloseButton } from '../close-button';
 import {
   BottomSheetAnimationProvider,
   useBottomSheetAnimation,
-  useBottomSheetContentAnimation,
 } from './bottom-sheet.animation';
 import { DISPLAY_NAME } from './bottom-sheet.constants';
 import {
@@ -51,8 +47,6 @@ const AnimatedOverlay = Animated.createAnimatedComponent(
   BottomSheetPrimitives.Overlay
 );
 
-const StyledGorhomBottomSheet = withUniwind(GorhomBottomSheet);
-
 const useBottomSheet = BottomSheetPrimitives.useRootContext;
 
 // --------------------------------------------------
@@ -62,39 +56,20 @@ const BottomSheetRoot = forwardRef<
   BottomSheetRootProps
 >(
   (
-    {
-      children,
-      isDismissKeyboardOnClose = true,
-      isOpen: isOpenProp,
-      isDefaultOpen,
-      onOpenChange: onOpenChangeProp,
-      animation,
-      ...props
-    },
+    { children, isOpen, isDefaultOpen, onOpenChange, animation, ...props },
     ref
   ) => {
-    const {
-      internalIsOpen,
-      componentState,
-      progress,
-      isDragging,
-      onOpenChange,
-      isAllAnimationsDisabled,
-    } = usePopupRootAnimation({
-      isOpen: isOpenProp,
-      isDefaultOpen,
-      onOpenChange: onOpenChangeProp,
-      isDismissKeyboardOnClose,
-      animation,
-    });
+    const { progress, isDragging, isAllAnimationsDisabled } =
+      usePopupRootAnimation({
+        animation,
+      });
 
     const animationContextValue = useMemo(
       () => ({
-        bottomSheetState: componentState,
         progress,
         isDragging,
       }),
-      [componentState, progress, isDragging]
+      [progress, isDragging]
     );
 
     const animationSettingsContextValue = useMemo(
@@ -109,7 +84,7 @@ const BottomSheetRoot = forwardRef<
         <BottomSheetAnimationProvider value={animationContextValue}>
           <BottomSheetPrimitives.Root
             ref={ref}
-            isOpen={internalIsOpen}
+            isOpen={isOpen}
             isDefaultOpen={isDefaultOpen}
             onOpenChange={onOpenChange}
             {...props}
@@ -141,7 +116,14 @@ const BottomSheetPortal = ({ children, ...props }: BottomSheetPortalProps) => {
     <BottomSheetPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <BottomSheetAnimationProvider value={animationContext}>
-          <FullWindowOverlay>{children}</FullWindowOverlay>
+          <FullWindowOverlay>
+            <Animated.View
+              style={StyleSheet.absoluteFill}
+              pointerEvents="box-none"
+            >
+              {children}
+            </Animated.View>
+          </FullWindowOverlay>
         </BottomSheetAnimationProvider>
       </AnimationSettingsProvider>
     </BottomSheetPrimitives.Portal>
@@ -158,6 +140,7 @@ const BottomSheetOverlay = forwardRef<
     { className, style, animation, isAnimatedStyleActive = true, ...props },
     ref
   ) => {
+    const { isOpen } = useBottomSheet();
     const { progress } = useBottomSheetAnimation();
     const isDragging = useSharedValue(false);
 
@@ -168,6 +151,10 @@ const BottomSheetOverlay = forwardRef<
       isDragging,
       animation,
     });
+
+    if (!isOpen) {
+      return null;
+    }
 
     const overlayStyle = isAnimatedStyleActive
       ? [rContainerStyle, style]
@@ -204,82 +191,32 @@ const BottomSheetContent = forwardRef<
     },
     ref
   ) => {
-    const { onOpenChange } = useBottomSheet();
+    const { isOpen, onOpenChange } = useBottomSheet();
 
-    const { bottomSheetState, progress, isDragging } =
-      useBottomSheetAnimation();
-
-    const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
-      animation,
-    });
-
-    const { animatedIndex, isClosingOnSwipe } =
-      usePopupBottomSheetContentAnimation({
-        progress,
-        isDragging,
-        componentState: bottomSheetState,
-      });
-
-    const contentBackgroundClassName = bottomSheetClassNames.contentBackground({
-      className: backgroundClassName,
-    });
-
-    const contentHandleIndicatorClassName =
-      bottomSheetClassNames.contentHandleIndicator({
-        className: handleIndicatorClassName,
-      });
-
-    const contentContainerClassName = bottomSheetClassNames.contentContainer({
-      className: contentContainerClassNameProp,
-    });
-
-    const onClose = useCallback(() => {
-      progress.set(2);
-      onOpenChange(false);
-    }, [onOpenChange, progress]);
-
-    const mergedAnimationConfigs = useMemo(
-      () => ({
-        ...animationConfigs,
-        reduceMotion: isAnimationDisabledValue
-          ? ReduceMotion.Always
-          : animationConfigs?.reduceMotion,
-      }),
-      [animationConfigs, isAnimationDisabledValue]
-    );
+    const { progress, isDragging } = useBottomSheetAnimation();
 
     return (
-      <BottomSheetIsDraggingProvider value={{ isDragging }}>
-        <StyledGorhomBottomSheet
-          ref={ref}
-          index={-1}
-          backgroundClassName={contentBackgroundClassName}
-          backgroundStyle={[
-            bottomSheetStyleSheet.contentContainer,
-            restProps.backgroundStyle,
-          ]}
-          handleIndicatorClassName={contentHandleIndicatorClassName}
-          enablePanDownToClose={restProps.enablePanDownToClose ?? true}
-          animatedIndex={animatedIndex ?? restProps.animatedIndex}
-          animationConfigs={mergedAnimationConfigs}
-          gestureEventsHandlersHook={useBottomSheetGestureHandlers}
-          onClose={onClose}
-          {...restProps}
-        >
-          <BottomSheetContentContainer
-            initialIndex={initialIndex ?? 0}
-            state={bottomSheetState}
-            progress={progress}
-            isDragging={isDragging}
-            isClosingOnSwipe={isClosingOnSwipe}
-            contentContainerClassName={contentContainerClassName}
-            contentContainerProps={contentContainerProps}
-            onOpenChange={onOpenChange}
-          >
-            {children}
-          </BottomSheetContentContainer>
-        </StyledGorhomBottomSheet>
-      </BottomSheetIsDraggingProvider>
+      <InternalBottomSheetContent
+        ref={ref}
+        index={initialIndex}
+        backgroundClassName={backgroundClassName}
+        handleIndicatorClassName={handleIndicatorClassName}
+        contentContainerClassName={contentContainerClassNameProp}
+        contentContainerProps={contentContainerProps}
+        animation={animation}
+        animationConfigs={animationConfigs}
+        backgroundStyle={[
+          bottomSheetStyleSheet.contentContainer,
+          restProps.backgroundStyle,
+        ]}
+        isOpen={isOpen}
+        progress={progress}
+        isDragging={isDragging}
+        onOpenChange={onOpenChange}
+        {...restProps}
+      >
+        {children}
+      </InternalBottomSheetContent>
     );
   }
 );

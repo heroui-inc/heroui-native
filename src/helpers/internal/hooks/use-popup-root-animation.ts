@@ -1,8 +1,5 @@
 import { useSharedValue } from 'react-native-reanimated';
-import type {
-  AnimationRoot,
-  PopupRootAnimationConfig,
-} from '../types/animation';
+import type { AnimationRootDisableAll } from '../types/animation';
 import { useCombinedAnimationDisabledState } from './use-combined-animation-disabled-state';
 
 /**
@@ -10,8 +7,7 @@ import { useCombinedAnimationDisabledState } from './use-combined-animation-disa
  * Manages component state transitions and animation coordination
  */
 export function usePopupRootAnimation(options: {
-  /** Animation configuration for component root */
-  animation?: AnimationRoot<PopupRootAnimationConfig>;
+  animation?: AnimationRootDisableAll;
 }) {
   const isAllAnimationsDisabled = useCombinedAnimationDisabledState(
     options.animation

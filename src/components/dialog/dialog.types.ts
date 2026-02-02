@@ -2,10 +2,9 @@ import type { ReactNode } from 'react';
 import type { StyleProp, TextProps, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
-  AnimationRoot,
+  AnimationRootDisableAll,
   PopupDialogContentAnimation,
   PopupOverlayAnimation,
-  PopupRootAnimationConfig,
 } from '../../helpers/internal/types';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
@@ -30,11 +29,6 @@ export interface DialogAnimationContextValue {
 }
 
 /**
- * Animation configuration for Dialog root component
- */
-export type DialogRootAnimation = AnimationRoot<PopupRootAnimationConfig>;
-
-/**
  * Dialog Root component props
  */
 export interface DialogRootProps extends DialogPrimitivesTypes.RootProps {
@@ -57,9 +51,8 @@ export interface DialogRootProps extends DialogPrimitivesTypes.RootProps {
    * - `"disable-all"`: Disable all animations including children
    * - `false` or `"disabled"`: Disable only root animations
    * - `true` or `undefined`: Use default animations
-   * - `object`: Custom animation configuration
    */
-  animation?: DialogRootAnimation;
+  animation?: AnimationRootDisableAll;
 }
 
 /**

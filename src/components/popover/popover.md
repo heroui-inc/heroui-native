@@ -143,11 +143,11 @@ Control the width of the popover content using the `width` prop.
 Use bottom sheet presentation for mobile-optimized interaction patterns.
 
 ```tsx
-<Popover>
+<Popover presentation="bottom-sheet">
   <Popover.Trigger>...</Popover.Trigger>
   <Popover.Portal>
     <Popover.Overlay />
-    <Popover.Content presentation="bottom-sheet">
+    <Popover.Content>
       <Popover.Title>...</Popover.Title>
       <Popover.Description>...</Popover.Description>
       <Button>Close</Button>
@@ -289,38 +289,18 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | `isDefaultOpen` | `boolean`                   | -       | The open state of the popover when initially rendered (uncontrolled mode) |
 | `onOpenChange`  | `(isOpen: boolean) => void` | -       | Callback when the popover open state changes                              |
 | `closeDelay`    | `number`                    | `400`   | Delay in milliseconds before closing the popover                          |
-| `animation`     | `PopoverRootAnimation`      | -       | Animation configuration                                                   |
+| `animation`     | `AnimationRootDisableAll`      | -       | Animation configuration. Can be `false`, `"disabled"`, `"disable-all"`, `true`, or `undefined` |
+| `presentation` | `'popover' \| 'bottom-sheet'`  | `'popover'` | Presentation mode for the popover content                                 |
 | `asChild`       | `boolean`                   | `false` | Whether to render as a child element                                      |
 | `...ViewProps`  | `ViewProps`                 | -       | All standard React Native View props are supported                        |
 
-#### PopoverRootAnimation
+#### AnimationRootDisableAll
 
 Animation configuration for popover root component. Can be:
 
 - `false` or `"disabled"`: Disable only root animations
 - `"disable-all"`: Disable all animations including children
 - `true` or `undefined`: Use default animations
-- `object`: Custom animation configuration
-
-| prop             | type                                             | default                                                                                          | description                                     |
-| ---------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
-| `state`          | `'disabled' \| 'disable-all' \| boolean`         | -                                                                                                | Disable animations while customizing properties |
-| `entering.value` | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 200,`<br/>`easing: Easing.out(Easing.ease) } }`     | Animation configuration for opening             |
-| `exiting.value`  | `SpringAnimationConfig \| TimingAnimationConfig` | `{ type: 'timing',`<br/>`config: { duration: 150,`<br/>`easing: Easing.bezier(0.4, 0, 1, 1) } }` | Animation configuration for closing             |
-
-#### SpringAnimationConfig
-
-| prop     | type               | default | description                               |
-| -------- | ------------------ | ------- | ----------------------------------------- |
-| `type`   | `'spring'`         | -       | Animation type (must be `'spring'`)       |
-| `config` | `WithSpringConfig` | -       | Reanimated spring animation configuration |
-
-#### TimingAnimationConfig
-
-| prop     | type               | default | description                               |
-| -------- | ------------------ | ------- | ----------------------------------------- |
-| `type`   | `'timing'`         | -       | Animation type (must be `'timing'`)       |
-| `config` | `WithTimingConfig` | -       | Reanimated timing animation configuration |
 
 ### Popover.Trigger
 
@@ -361,10 +341,12 @@ Animation configuration for popover overlay component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop            | type                       | default     | description                                     |
-| --------------- | -------------------------- | ----------- | ----------------------------------------------- |
-| `state`         | `'disabled' \| boolean`    | -           | Disable animations while customizing properties |
-| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close]              |
+| prop      | type                    | default     | description                                     |
+| --------- | ----------------------- | ----------- | ----------------------------------------------- |
+| `state`   | `'disabled' \| boolean` | -           | Disable animations while customizing properties |
+| `opacity.value` | `[number, number, number]` | `[0, 1, 0]` | Opacity values [idle, open, close] - Takes effect for bottom-sheet/dialog presentation |
+| `entering` | `EntryOrExitLayoutType` | FadeIn with duration 200ms | Custom Keyframe animation for entering transition - Takes effect for popover presentation |
+| `exiting` | `EntryOrExitLayoutType` | FadeOut with duration 150ms | Custom Keyframe animation for exiting transition - Takes effect for popover presentation |
 
 ### Popover.Content (Popover Presentation)
 
@@ -375,13 +357,12 @@ Animation configuration for popover overlay component. Can be:
 | `placement`               | `'top' \| 'bottom' \| 'left' \| 'right'`         | `'bottom'`      | Placement of the popover relative to trigger                 |
 | `align`                   | `'start' \| 'center' \| 'end'`                   | `'center'`      | Alignment along the placement axis                           |
 | `avoidCollisions`         | `boolean`                                        | `true`          | Whether to flip placement when close to viewport edges       |
-| `offset`                  | `number`                                         | `8`             | Distance from trigger element in pixels                      |
+| `offset`                  | `number`                                         | `9`             | Distance from trigger element in pixels                      |
 | `alignOffset`             | `number`                                         | `0`             | Offset along the alignment axis in pixels                    |
 | `disablePositioningStyle` | `boolean`                                        | `false`         | Whether to disable automatic positioning styles              |
 | `forceMount`              | `boolean`                                        | -               | Whether to force mount the component in the DOM              |
 | `insets`                  | `Insets`                                         | -               | Screen edge insets to respect when positioning               |
 | `className`               | `string`                                         | -               | Additional CSS classes for the content container             |
-| `presentation`            | `'popover'`                                      | -               | Presentation mode for the popover                            |
 | `animation`               | `PopupPopoverContentAnimation`                   | -               | Animation configuration                                      |
 | `isAnimatedStyleActive`   | `boolean`                                        | `true`          | Whether animated styles (react-native-reanimated) are active |
 | `asChild`                 | `boolean`                                        | `false`         | Whether to render as a child element                         |
@@ -392,7 +373,6 @@ Animation configuration for popover overlay component. Can be:
 | prop                        | type                   | default | description                                      |
 | --------------------------- | ---------------------- | ------- | ------------------------------------------------ |
 | `children`                  | `ReactNode`            | -       | The bottom sheet content                         |
-| `presentation`              | `'bottom-sheet'`       | -       | Presentation mode for the popover                |
 | `contentContainerClassName` | `string`               | -       | Additional CSS classes for the content container |
 | `contentContainerProps`     | `BottomSheetViewProps` | -       | Props for the content container                  |
 | `enablePanDownToClose`      | `boolean`              | `true`  | Whether pan down gesture closes the sheet        |
@@ -408,22 +388,19 @@ Animation configuration for popover content component (popover presentation). Ca
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                    | type                       | default                                                         | description                                     |
-| ----------------------- | -------------------------- | --------------------------------------------------------------- | ----------------------------------------------- |
-| `state`                 | `'disabled' \| boolean`    | -                                                               | Disable animations while customizing properties |
-| `opacity.value`         | `[number, number, number]` | `[0, 1, 0]`                                                     | Opacity values [idle, open, close]              |
-| `scale.value`           | `[number, number, number]` | `[0.95, 1, 0.95]`                                               | Scale values [idle, open, close]                |
-| `translateX.value`      | `[number, number, number]` | Based on placement<br/>`(4, 0, 4)` or `(-4, 0, -4)`             | TranslateX values [idle, open, close]           |
-| `translateY.value`      | `[number, number, number]` | Based on placement<br/>`(4, 0, 4)` or `(-4, 0, -4)`             | TranslateY values [idle, open, close]           |
-| `transformOrigin.value` | `string`                   | Based on placement<br/>`'top'`, `'bottom'`, `'left'`, `'right'` | Transform origin value                          |
+| prop      | type                    | default                                                         | description                                     |
+| --------- | ----------------------- | --------------------------------------------------------------- | ----------------------------------------------- |
+| `state`   | `'disabled' \| boolean` | -                                                               | Disable animations while customizing properties |
+| `entering` | `EntryOrExitLayoutType` | Keyframe with translateY/translateX, scale, and opacity (200ms) | Custom Keyframe animation for entering transition |
+| `exiting` | `EntryOrExitLayoutType` | Keyframe mirroring entering animation (150ms)                   | Custom Keyframe animation for exiting transition |
 
 ### Popover.Arrow
 
 | prop                  | type                                     | default | description                                                           |
 | --------------------- | ---------------------------------------- | ------- | --------------------------------------------------------------------- |
 | `className`           | `string`                                 | -       | Additional CSS classes for the arrow                                  |
-| `height`              | `number`                                 | `8`     | Height of the arrow in pixels                                         |
-| `width`               | `number`                                 | `16`    | Width of the arrow in pixels                                          |
+| `height`              | `number`                                 | `12`    | Height of the arrow in pixels                                         |
+| `width`               | `number`                                 | `20`    | Width of the arrow in pixels                                          |
 | `fill`                | `string`                                 | -       | Fill color of the arrow (defaults to content background)              |
 | `stroke`              | `string`                                 | -       | Stroke (border) color of the arrow (defaults to content border color) |
 | `strokeWidth`         | `number`                                 | `1`     | Stroke width of the arrow border in pixels                            |
@@ -493,17 +470,16 @@ Hook to access popover animation state values within custom components or compou
 import { usePopoverAnimation } from 'heroui-native';
 
 const CustomContent = () => {
-  const { popoverState, progress, isDragging } = usePopoverAnimation();
+  const { progress, isDragging } = usePopoverAnimation();
   // ... your implementation
 };
 ```
 
 **Returns:** `UsePopoverAnimationReturn`
 
-| property       | type                          | description                                                        |
-| -------------- | ----------------------------- | ------------------------------------------------------------------ |
-| `popoverState` | `'idle' \| 'open' \| 'close'` | Extended internal state for coordinating animations                |
-| `progress`     | `SharedValue<number>`         | Progress value for the popover animation (0=idle, 1=open, 2=close) |
-| `isDragging`   | `SharedValue<boolean>`        | Dragging state shared value                                        |
+| property     | type                  | description                                                        |
+| ------------ | --------------------- | ------------------------------------------------------------------ |
+| `progress`   | `SharedValue<number>` | Progress value for the popover animation (0=idle, 1=open, 2=close) |
+| `isDragging` | `SharedValue<boolean>` | Dragging state shared value                                        |
 
 **Note:** This hook must be used within a `Popover` component. It will throw an error if called outside of the popover animation context.

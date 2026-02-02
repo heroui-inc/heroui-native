@@ -1,147 +1,122 @@
 import { Ionicons } from '@expo/vector-icons';
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useRouter } from 'expo-router';
 import { Button, colorKit, Popover, useThemeColor } from 'heroui-native';
-import { useCallback, useRef, useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import { Platform, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 import { ArrowDownToSquareIcon } from '../../../components/icons/arrow-down-to-square';
 import { CodeCompareIcon } from '../../../components/icons/code-compare';
+import { CopyIcon } from '../../../components/icons/copy';
 import { MapPinIcon } from '../../../components/icons/map-pin';
 import { NodesRightIcon } from '../../../components/icons/nodes-right';
 
 const StyledIonicons = withUniwind(Ionicons);
 
 const WithTitleDescriptionContent = () => {
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const bottomSheetRef = useRef<BottomSheet>(null);
-
-  // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
   return (
-    <>
-      <View className="flex-1 px-5 items-center justify-center">
-        <Button
-          variant="secondary"
-          onPress={() => {
-            if (isBottomSheetOpen) {
-              setIsBottomSheetOpen(false);
-              bottomSheetRef.current?.close();
-            } else {
-              setIsBottomSheetOpen(true);
-              bottomSheetRef.current?.expand();
-            }
-          }}
-        >
-          Did you know?
-        </Button>
-        {/* <Popover>
-          <Popover.Trigger asChild>
-            <Button variant="secondary">Did you know?</Button>
-          </Popover.Trigger>
-          <Popover.Portal>
-            <Popover.Overlay />
-            <Popover.Content
-              width={320}
-              placement="top"
-              className="gap-3 px-6 py-5"
-            >
-              <Popover.Close
-                variant="ghost"
-                className="absolute top-3 right-2 z-50"
-              />
-              <View className="flex-row items-center gap-3 mb-1">
-                <View className="size-12 items-center justify-center rounded-full bg-warning/15">
-                  <StyledIonicons
-                    name="rocket"
-                    size={26}
-                    className="text-warning"
-                  />
-                </View>
-                <View className="flex-1">
-                  <Popover.Title>Fun Fact!</Popover.Title>
-                </View>
-              </View>
-              <Popover.Description className="text-sm">
-                The first computer bug was an actual moth found trapped in a
-                Harvard Mark II computer in 1947. Grace Hopper taped it to the log
-                book with the note "First actual case of bug being found."
-              </Popover.Description>
-              <View className="flex-row items-center gap-2 mt-2 pt-2">
+    <View className="flex-1 px-5 items-center justify-center">
+      <Popover>
+        <Popover.Trigger asChild>
+          <Button variant="secondary">Did you know?</Button>
+        </Popover.Trigger>
+        <Popover.Portal>
+          <Popover.Overlay className="bg-red-500/30" />
+          <Popover.Content
+            width={320}
+            placement="top"
+            className="gap-3 px-6 py-5"
+          >
+            <Popover.Close
+              variant="ghost"
+              className="absolute top-3 right-2 z-50"
+            />
+            <View className="flex-row items-center gap-3 mb-1">
+              <View className="size-12 items-center justify-center rounded-full bg-warning/15">
                 <StyledIonicons
-                  name="sparkles"
-                  size={14}
-                  className="text-accent"
+                  name="rocket"
+                  size={26}
+                  className="text-warning"
                 />
-                <AppText className="text-xs text-muted">Tech History</AppText>
               </View>
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover> */}
-      </View>
-      <BottomSheet
-        index={-1}
-        ref={bottomSheetRef}
-        onChange={handleSheetChanges}
-      >
-        <BottomSheetView style={styles.contentContainer}>
-          <AppText>Awesome 🎉</AppText>
-        </BottomSheetView>
-      </BottomSheet>
-    </>
+              <View className="flex-1">
+                <Popover.Title>Fun Fact!</Popover.Title>
+              </View>
+            </View>
+            <Popover.Description className="text-sm">
+              The first computer bug was an actual moth found trapped in a
+              Harvard Mark II computer in 1947. Grace Hopper taped it to the log
+              book with the note "First actual case of bug being found."
+            </Popover.Description>
+            <View className="flex-row items-center gap-2 mt-2 pt-2">
+              <StyledIonicons
+                name="sparkles"
+                size={14}
+                className="text-accent"
+              />
+              <AppText className="text-xs text-muted">Tech History</AppText>
+            </View>
+          </Popover.Content>
+        </Popover.Portal>
+      </Popover>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'grey',
-  },
-  contentContainer: {
-    flex: 1,
-    padding: 36,
-    alignItems: 'center',
-  },
-});
 
 // ------------------------------------------------------------------------------
 
 const PresentationVariantsContent = () => {
+  const [isPopoverOpen, setPopoverOpen] = useState(false);
   const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
-
-  const bottomSheetRef = useRef<BottomSheet>(null);
 
   return (
     <View className="flex-1 px-5 items-center justify-center gap-8">
-      <Popover
-        isOpen={isBottomSheetOpen}
-        onOpenChange={(open) => {
-          // if (open) {
-          //   console.log('expanding bottom sheet');
-          //   bottomSheetRef.current?.expand();
-          // }
-          // if (!open) {
-          //   console.log('closing bottom sheet');
-          //   bottomSheetRef.current?.close();
-          // }
-          setBottomSheetOpen(open);
-        }}
-        presentation="bottom-sheet"
-        bottomSheetRef={bottomSheetRef}
-      >
+      <Popover isOpen={isPopoverOpen} onOpenChange={setPopoverOpen}>
         <Popover.Trigger asChild>
-          <Button variant={isBottomSheetOpen ? 'danger-soft' : 'secondary'}>
-            More Options
-          </Button>
+          <Button variant="secondary">Quick Notification</Button>
         </Popover.Trigger>
         <Popover.Portal>
-          {/* <Popover.Overlay className="bg-red-500/15" /> */}
+          <Popover.Overlay />
+          <Popover.Content width={300} className="gap-3" placement="top">
+            <View className="items-start gap-2">
+              <View className="flex-row items-center gap-3 self-stretch">
+                <View className="size-10 items-center justify-center rounded-full bg-success/15">
+                  <StyledIonicons
+                    name="checkmark-circle"
+                    size={24}
+                    className="text-success"
+                  />
+                </View>
+                <View className="flex-1">
+                  <Popover.Title>Payment Successful</Popover.Title>
+                  <AppText className="text-xs text-muted">
+                    2 minutes ago
+                  </AppText>
+                </View>
+              </View>
+              <Popover.Description>
+                Your payment of $49.99 has been processed successfully. Receipt
+                sent to your email.
+              </Popover.Description>
+            </View>
+            <Button variant="secondary" onPress={() => setPopoverOpen(false)}>
+              Dismiss
+            </Button>
+          </Popover.Content>
+        </Popover.Portal>
+      </Popover>
+      <Popover
+        presentation="bottom-sheet"
+        isOpen={isBottomSheetOpen}
+        onOpenChange={setBottomSheetOpen}
+      >
+        <Popover.Trigger asChild>
+          <Button variant="secondary">More Options</Button>
+        </Popover.Trigger>
+        <Popover.Portal>
+          <Popover.Overlay className="bg-black/15" />
           <Popover.Content>
             <View className="gap-4">
               <View className="mb-2">
@@ -166,7 +141,7 @@ const PresentationVariantsContent = () => {
                     </AppText>
                   </View>
                 </View>
-                {/* <View className="flex-row items-center gap-3 p-3 rounded-lg">
+                <View className="flex-row items-center gap-3 p-3 rounded-lg">
                   <View className="size-10 items-center justify-center rounded-full bg-warning/10">
                     <CopyIcon size={20} colorClassName="accent-warning" />
                   </View>
@@ -178,7 +153,7 @@ const PresentationVariantsContent = () => {
                       Copy to clipboard
                     </AppText>
                   </View>
-                </View> */}
+                </View>
                 <View className="flex-row items-center gap-3 p-3 rounded-lg">
                   <View className="size-10 items-center justify-center rounded-full bg-success/10">
                     <ArrowDownToSquareIcon

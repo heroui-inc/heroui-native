@@ -68,27 +68,14 @@ export interface TimingAnimationConfig {
 }
 
 /**
- * Animation configuration for popup root components (Dialog, Select, etc.)
- * Supports entering and exiting animations with spring or timing types
- */
-export type PopupRootAnimationConfig = {
-  /**
-   * Animation configuration for entering (opening)
-   */
-  entering?: AnimationValue<SpringAnimationConfig | TimingAnimationConfig>;
-  /**
-   * Animation configuration for exiting (closing)
-   */
-  exiting?: AnimationValue<SpringAnimationConfig | TimingAnimationConfig>;
-};
-
-/**
- * Animation configuration for popup overlay components (Dialog, Select, etc.)
- * Supports opacity animation configuration
+ * Animation configuration for popup overlay components (Dialog, Select, BottomSheet, Popover, etc.)
+ * Supports both progress-based opacity animation and entering/exiting animations
  */
 export type PopupOverlayAnimation = Animation<{
   /**
-   * Opacity animation configuration
+   * Opacity animation configuration (progress-based)
+   * Takes effect for bottom-sheet/dialog presentation
+   * @default [0, 1, 0] - opacity values for [idle, open, close] states
    */
   opacity?: AnimationValue<{
     /**
@@ -97,6 +84,16 @@ export type PopupOverlayAnimation = Animation<{
      */
     value?: [number, number, number];
   }>;
+  /**
+   * Takes effect for popover presentation
+   * @default FadeIn with duration 200ms
+   */
+  entering?: EntryOrExitLayoutType;
+  /**
+   * Takes effect for popover presentation
+   * @default FadeOut with duration 150ms
+   */
+  exiting?: EntryOrExitLayoutType;
 }>;
 
 /**

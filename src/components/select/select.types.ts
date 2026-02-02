@@ -3,13 +3,12 @@ import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
-  AnimationRoot,
+  AnimationRootDisableAll,
   BaseBottomSheetContentProps,
   ElementSlots,
   PopupDialogContentAnimation,
   PopupOverlayAnimation,
   PopupPopoverContentAnimation,
-  PopupRootAnimationConfig,
 } from '../../helpers/internal/types';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
@@ -50,11 +49,6 @@ export type SelectPlacement = 'top' | 'bottom' | 'left' | 'right';
 export type SelectAlign = 'start' | 'center' | 'end';
 
 /**
- * Animation configuration for Select root component
- */
-export type SelectRootAnimation = AnimationRoot<PopupRootAnimationConfig>;
-
-/**
  * Select Root component props
  */
 export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
@@ -80,9 +74,8 @@ export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
    * - `"disable-all"`: Disable all animations including children
    * - `false` or `"disabled"`: Disable only root animations
    * - `true` or `undefined`: Use default animations
-   * - `object`: Custom animation configuration
    */
-  animation?: SelectRootAnimation;
+  animation?: AnimationRootDisableAll;
 }
 
 /**

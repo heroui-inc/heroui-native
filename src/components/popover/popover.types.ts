@@ -3,11 +3,10 @@ import type { ReactNode } from 'react';
 import type { StyleProp, TextProps, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
-  AnimationRoot,
+  AnimationRootDisableAll,
   BaseBottomSheetContentProps,
   PopupOverlayAnimation,
   PopupPopoverContentAnimation,
-  PopupRootAnimationConfig,
 } from '../../helpers/internal/types';
 import type * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
@@ -58,11 +57,6 @@ export interface PopoverContentContextValue {
 }
 
 /**
- * Animation configuration for Popover root component
- */
-export type PopoverRootAnimation = AnimationRoot<PopupRootAnimationConfig>;
-
-/**
  * Popover Root component props
  */
 export interface PopoverRootProps extends PopoverPrimitivesTypes.RootProps {
@@ -75,9 +69,8 @@ export interface PopoverRootProps extends PopoverPrimitivesTypes.RootProps {
    * - `"disable-all"`: Disable all animations including children
    * - `false` or `"disabled"`: Disable only root animations
    * - `true` or `undefined`: Use default animations
-   * - `object`: Custom animation configuration
    */
-  animation?: PopoverRootAnimation;
+  animation?: AnimationRootDisableAll;
 }
 
 /**
@@ -110,26 +103,21 @@ export interface PopoverPortalProps extends PopoverPrimitivesTypes.PortalProps {
 }
 
 /**
- * Animation configuration for Popover Overlay component
- */
-export type PopoverOverlayAnimation = PopupOverlayAnimation;
-
-/**
  * Popover Overlay component props
  */
 export interface PopoverOverlayProps
-  extends PopoverPrimitivesTypes.OverlayProps {
+  extends Omit<PopoverPrimitivesTypes.OverlayProps, 'asChild'> {
   /**
    * Additional CSS class for the overlay
    *
    * @note The following style properties are occupied by animations and cannot be set via className:
-   * - `opacity` - Animated for overlay show/hide transitions (idle: 0, open: 1, close: 0)
+   * - `opacity` - Animated for overlay show/hide transitions (idle: 0, open: 1, close: 0) - only for bottom-sheet/dialog presentation
    *
    * To customize this property, use the `animation` prop:
    * ```tsx
    * <Popover.Overlay
    *   animation={{
-   *     opacity: { value: [0, 1, 0] }
+   *     opacity: { value: [0, 1, 0] } // for bottom-sheet/dialog
    *   }}
    * />
    * ```
@@ -139,12 +127,14 @@ export interface PopoverOverlayProps
   className?: string;
   /**
    * Animation configuration for overlay
-   * - `"disable-all"`: Disable all animations including children
-   * - `false` or `"disabled"`: Disable only overlay animations
+   * - `false` or `"disabled"`: Disable all animations
    * - `true` or `undefined`: Use default animations
    * - `object`: Custom animation configuration
+   *   - `opacity`: Progress-based opacity animation (for bottom-sheet/dialog presentation)
+   *   - `entering`: Entering animation (for popover presentation)
+   *   - `exiting`: Exiting animation (for popover presentation)
    */
-  animation?: PopoverOverlayAnimation;
+  animation?: PopupOverlayAnimation;
   /**
    * Whether animated styles (react-native-reanimated) are active
    * When `false`, the animated style is removed and you can implement custom logic
@@ -241,12 +231,12 @@ export interface PopoverArrowProps {
   className?: string;
   /**
    * Height of the arrow in pixels
-   * @default 8
+   * @default 12
    */
   height?: number;
   /**
    * Width of the arrow in pixels
-   * @default 16
+   * @default 20
    */
   width?: number;
   /**
@@ -279,10 +269,6 @@ export interface PopoverArrowProps {
  * Return type for the usePopoverAnimation hook
  */
 export interface UsePopoverAnimationReturn {
-  /**
-   * Extended internal state for coordinating animations
-   */
-  popoverState: PopoverState;
   /**
    * Animation progress shared value (0=idle, 1=open, 2=close)
    */

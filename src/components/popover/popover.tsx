@@ -1,5 +1,5 @@
 import BottomSheet from '@gorhom/bottom-sheet';
-import { createContext, forwardRef, use, useCallback, useMemo } from 'react';
+import { createContext, forwardRef, use, useMemo } from 'react';
 import type {
   GestureResponderEvent,
   Text as RNText,
@@ -25,6 +25,7 @@ import {
 import {
   useBottomSheetGestureHandlers,
   usePopupBottomSheetContentAnimation,
+  usePopupOverlayAnimation,
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
@@ -62,10 +63,6 @@ import type {
 } from './popover.types';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-
-const AnimatedOverlay = Animated.createAnimatedComponent(
-  PopoverPrimitives.Overlay
-);
 
 const AnimatedContent = Animated.createAnimatedComponent(
   PopoverPrimitives.Content
@@ -179,41 +176,50 @@ const PopoverOverlay = forwardRef<
   PopoverOverlayProps
 >(
   (
-    {
-      children,
-      className,
-      style,
-      animation,
-      isAnimatedStyleActive = true,
-      ...props
-    },
+    { className, style, animation, isAnimatedStyleActive = true, ...props },
     ref
   ) => {
-    // const { progress, isDragging } = usePopoverAnimation();
+    const { presentation } = usePopover();
+    const { progress, isDragging } = usePopoverAnimation();
 
     const overlayClassName = popoverClassNames.overlay({ className });
 
-    // const { rContainerStyle } = usePopupOverlayAnimation({
-    //   progress,
-    //   isDragging,
-    //   animation,
-    // });
+    const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
+      progress: presentation === 'bottom-sheet' ? progress : undefined,
+      isDragging: presentation === 'bottom-sheet' ? isDragging : undefined,
+      animation,
+    });
 
-    // const overlayStyle = isAnimatedStyleActive
-    //   ? [rContainerStyle, style]
-    //   : style;
+    if (presentation === 'bottom-sheet') {
+      const overlayStyle = isAnimatedStyleActive
+        ? [rContainerStyle, style]
+        : style;
+
+      return (
+        <PopoverPrimitives.Overlay
+          ref={ref}
+          className={overlayClassName}
+          {...props}
+          asChild
+        >
+          <AnimatedPressable style={overlayStyle} />
+        </PopoverPrimitives.Overlay>
+      );
+    }
 
     return (
-      // <PopoverPrimitives.Overlay ref={ref} className={overlayClassName} asChild>
-      //   <AnimatedPressable
-      //     style={StyleSheet.absoluteFill}
-      //     entering={FadeIn.duration(200)}
-      //     exiting={FadeOut.duration(150)}
-      //   >
-      //     {children}
-      //   </AnimatedPressable>
-      // </PopoverPrimitives.Overlay>
-      <PopoverPrimitives.Overlay ref={ref} className={overlayClassName} />
+      <PopoverPrimitives.Overlay
+        ref={ref}
+        className={overlayClassName}
+        {...props}
+        asChild
+      >
+        <AnimatedPressable
+          entering={entering}
+          exiting={exiting}
+          style={style}
+        />
+      </PopoverPrimitives.Overlay>
     );
   }
 );
@@ -330,14 +336,13 @@ const PopoverContentBottomSheet = forwardRef<
   ) => {
     const { isOpen, onOpenChange } = usePopover();
 
-    const { progress, isDragging } =
-      usePopoverAnimation();
+    const { progress, isDragging } = usePopoverAnimation();
 
     const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
       animation,
     });
 
-    const { animatedIndex, isClosingOnSwipe } =
+    const { animatedIndex, isClosingOnSwipe, isPanActivated } =
       usePopupBottomSheetContentAnimation({
         progress,
         isDragging,
@@ -355,10 +360,6 @@ const PopoverContentBottomSheet = forwardRef<
     const contentContainerClassName = bottomSheetClassNames.contentContainer({
       className: contentContainerClassNameProp,
     });
-
-    const onClose = useCallback(() => {
-      onOpenChange(false);
-    }, [onOpenChange]);
 
     const mergedAnimationConfigs = useMemo(
       () => ({
@@ -386,7 +387,6 @@ const PopoverContentBottomSheet = forwardRef<
             animatedIndex={animatedIndex ?? restProps.animatedIndex}
             animationConfigs={mergedAnimationConfigs}
             gestureEventsHandlersHook={useBottomSheetGestureHandlers}
-            onClose={onClose}
             {...restProps}
           >
             <BottomSheetContentContainer
@@ -394,6 +394,7 @@ const PopoverContentBottomSheet = forwardRef<
               isOpen={isOpen}
               progress={progress}
               isDragging={isDragging}
+              isPanActivated={isPanActivated}
               isClosingOnSwipe={isClosingOnSwipe}
               contentContainerClassName={contentContainerClassName}
               contentContainerProps={contentContainerProps}

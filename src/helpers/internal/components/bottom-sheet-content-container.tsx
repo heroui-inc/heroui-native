@@ -17,6 +17,7 @@ export function BottomSheetContentContainer({
   isOpen,
   progress,
   isDragging,
+  isPanActivated,
   isClosingOnSwipe,
   initialIndex,
   contentContainerClassName,
@@ -36,16 +37,20 @@ export function BottomSheetContentContainer({
         isClosingOnSwipe.set(true);
         scheduleOnRN(closeBottomSheet);
       }
+      if (value === 2) {
+        isPanActivated.set(false);
+      }
     }
   );
 
   useEffect(() => {
     if (isOpen) {
+      isPanActivated.set(false);
       snapToIndex(initialIndex);
     } else {
       close();
     }
-  }, [isOpen, snapToIndex, initialIndex, close]);
+  }, [isOpen, snapToIndex, initialIndex, close, isPanActivated]);
 
   return (
     <BottomSheetView

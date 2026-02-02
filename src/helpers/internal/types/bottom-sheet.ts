@@ -37,6 +37,10 @@ export interface BottomSheetContentContainerProps {
    */
   isDragging: SharedValue<boolean>;
   /**
+   * Whether the bottom sheet is pan activated
+   */
+  isPanActivated: SharedValue<boolean>;
+  /**
    * Whether the bottom sheet is closing on swipe
    */
   isClosingOnSwipe: SharedValue<boolean>;

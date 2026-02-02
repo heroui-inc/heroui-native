@@ -5,8 +5,6 @@ import {
   useAnimatedReaction,
   useSharedValue,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../contexts/animation-settings-context';
-import { getIsAnimationDisabledValue } from '../utils';
 
 /**
  * Props for usePopupBottomSheetContentAnimation hook
@@ -30,16 +28,9 @@ export function usePopupBottomSheetContentAnimation({
   progress,
   isDragging,
 }: UsePopupBottomSheetContentAnimationProps) {
-  const { isAllAnimationsDisabled } = useAnimationSettings();
-
   const animatedIndex = useSharedValue(-1);
   const isPanActivated = useSharedValue(false);
   const isClosingOnSwipe = useSharedValue(false);
-
-  const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    isAnimationDisabled: false,
-    isAllAnimationsDisabled,
-  });
 
   useAnimatedReaction(
     () => isDragging.get(),
@@ -55,20 +46,22 @@ export function usePopupBottomSheetContentAnimation({
 
   useAnimatedReaction(
     () => animatedIndex.get(),
-    (value) => {
-      if (isAnimationDisabledValue || isClosingOnSwipe.get()) {
-        return;
-      }
-      if (isPanActivated.get()) {
-        progress.set(interpolate(value, [0, -1], [1, 2], Extrapolation.CLAMP));
+    (current) => {
+      if (!isPanActivated.get()) {
+        progress.set(
+          interpolate(current, [-1, 0], [0, 1], Extrapolation.CLAMP)
+        );
       } else {
-        progress.set(interpolate(value, [-1, 0], [0, 1], Extrapolation.CLAMP));
+        progress.set(
+          interpolate(current, [0, -1], [1, 2], Extrapolation.CLAMP)
+        );
       }
     }
   );
 
   return {
     animatedIndex,
+    isPanActivated,
     isClosingOnSwipe,
   };
 }

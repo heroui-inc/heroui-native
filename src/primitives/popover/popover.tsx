@@ -55,8 +55,8 @@ const Root = forwardRef<RootRef, RootProps>(
       isOpen: isOpenProp,
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
-      closeDelay,
       isDisabled,
+      presentation = 'popover',
       ...viewProps
     },
     ref
@@ -86,8 +86,8 @@ const Root = forwardRef<RootRef, RootProps>(
           setContentLayout,
           setTriggerPosition,
           triggerPosition,
-          closeDelay,
           isDefaultOpen,
+          presentation,
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -183,11 +183,13 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
 function Portal({ forceMount, hostName, children }: PortalProps) {
   const value = useRootContext();
 
-  if (!value.triggerPosition) {
+  const isBottomSheet = value.presentation === 'bottom-sheet';
+
+  if (!value.triggerPosition && !isBottomSheet) {
     return null;
   }
 
-  if (!forceMount) {
+  if (!forceMount && !isBottomSheet) {
     if (!value.isOpen) {
       return null;
     }
@@ -218,9 +220,9 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
 
     function onPress(ev: GestureResponderEvent) {
       if (closeOnPress) {
+        onOpenChange(false);
         setTriggerPosition(null);
         setContentLayout(null);
-        onOpenChange(false);
       }
       OnPressProp?.(ev);
     }

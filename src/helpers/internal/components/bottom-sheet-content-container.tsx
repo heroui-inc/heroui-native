@@ -15,19 +15,10 @@ import type { BottomSheetContentContainerProps } from '../types/bottom-sheet';
  * BottomSheet, Popover, and Select components. It manages the expand/close
  * behavior based on the provided state and applies consistent styling.
  *
- * @example
- * ```tsx
- * <BottomSheetContentContainer
- *   state={bottomSheetState}
- *   contentContainerClassName="custom-class"
- * >
- *   {children}
- * </BottomSheetContentContainer>
- * ```
  */
 export function BottomSheetContentContainer({
   children,
-  state,
+  isOpen,
   progress,
   isDragging,
   isClosingOnSwipe,
@@ -36,9 +27,10 @@ export function BottomSheetContentContainer({
   contentContainerProps,
   onOpenChange,
 }: BottomSheetContentContainerProps) {
-  const { forceClose, snapToIndex } = useBottomSheet();
+  const { close, snapToIndex } = useBottomSheet();
 
   const isCloseBottomSheetEnabled = useDerivedValue(() => {
+    console.log('🔴 progress 🔴', progress.get()); // VS remove
     if (progress.get() > 1.75 && !isDragging.get()) {
       return true;
     }
@@ -47,7 +39,6 @@ export function BottomSheetContentContainer({
 
   const closeBottomSheet = () => {
     progress.set(withTiming(2, { duration: 100 }));
-    forceClose();
     onOpenChange(false);
   };
 
@@ -65,13 +56,12 @@ export function BottomSheetContentContainer({
   );
 
   useEffect(() => {
-    if (state === 'open') {
-      setTimeout(() => {
-        snapToIndex(initialIndex);
-      }, 50);
-      return;
+    if (isOpen) {
+      snapToIndex(initialIndex);
+    } else {
+      close();
     }
-  }, [state, snapToIndex, initialIndex]);
+  }, [isOpen, snapToIndex, initialIndex, close]);
 
   return (
     <BottomSheetView

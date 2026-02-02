@@ -25,9 +25,9 @@ export interface BottomSheetContentContainerProps {
    */
   contentContainerProps?: Omit<BottomSheetViewProps, 'children'>;
   /**
-   * Current state of the bottom sheet for animation coordination
+   * Whether the bottom sheet is open
    */
-  state: BottomSheetContentContainerState;
+  isOpen: boolean;
   /**
    * Progress of the bottom sheet for animation coordination
    */

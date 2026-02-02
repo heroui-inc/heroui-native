@@ -67,12 +67,26 @@ interface IRootContext {
    * Delay in milliseconds before the popover closes
    */
   closeDelay?: number;
+  /**
+   * Presentation mode for the popover content
+   * - 'popover': Default floating popover with positioning
+   * - 'bottom-sheet': Bottom sheet modal presentation
+   * @default 'popover'
+   */
+  presentation?: 'popover' | 'bottom-sheet';
 }
 
 /**
  * Props for the Popover Root component
  */
 type RootProps = SlottableViewProps & {
+  /**
+   * Presentation mode for the popover content
+   * - 'popover': Default floating popover with positioning
+   * - 'bottom-sheet': Bottom sheet modal presentation
+   * @default 'popover'
+   */
+  presentation?: 'popover' | 'bottom-sheet';
   /**
    * The controlled open state of the popover
    */
@@ -82,19 +96,14 @@ type RootProps = SlottableViewProps & {
    */
   isDefaultOpen?: boolean;
   /**
+   * Whether the popover is disabled
+   */
+  isDisabled?: boolean;
+  /**
    * Callback fired when the popover open state changes
    * @param open - Whether the popover is open or closed
    */
   onOpenChange?: (open: boolean) => void;
-  /**
-   * Delay in milliseconds before the popover closes (for exit animations)
-   * @default 300
-   */
-  closeDelay?: number;
-  /**
-   * Whether the popover is disabled
-   */
-  isDisabled?: boolean;
 };
 /**
  * Props for the Popover Portal component

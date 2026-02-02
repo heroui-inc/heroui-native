@@ -1,5 +1,5 @@
 import type BottomSheet from '@gorhom/bottom-sheet';
-import type { ReactNode } from 'react';
+import type { ReactNode, Ref } from 'react';
 import type { StyleProp, TextProps, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
@@ -21,8 +21,6 @@ export type PopoverState = 'idle' | 'open' | 'close';
  * Context value for popover animation state
  */
 export interface PopoverAnimationContextValue {
-  /** Extended internal state for animation control */
-  popoverState: PopoverState;
   /** Animation progress shared value (0=idle, 1=open, 2=close) */
   progress: SharedValue<number>;
   /** Dragging state shared value */
@@ -72,19 +70,6 @@ export interface PopoverRootProps extends PopoverPrimitivesTypes.RootProps {
    * The content of the popover
    */
   children?: ReactNode;
-  /**
-   * The controlled open state of the popover
-   */
-  isOpen?: boolean;
-  /**
-   * The open state of the popover when initially rendered (uncontrolled)
-   */
-  isDefaultOpen?: boolean;
-  /**
-   * Delay in milliseconds before the popover closes (for exit animations)
-   * @default 400
-   */
-  closeDelay?: number;
   /**
    * Animation configuration for popover root
    * - `"disable-all"`: Disable all animations including children
@@ -183,10 +168,6 @@ export interface PopoverContentPopoverProps
    */
   children?: ReactNode;
   /**
-   * Presentation mode for the popover
-   */
-  presentation?: 'popover';
-  /**
    * Animation configuration for content
    * - `false` or `"disabled"`: Disable all animations
    * - `true` or `undefined`: Use default animations
@@ -200,12 +181,7 @@ export interface PopoverContentPopoverProps
  */
 export interface PopoverContentBottomSheetProps
   extends Partial<React.ComponentProps<typeof BottomSheet>>,
-    BaseBottomSheetContentProps {
-  /**
-   * Presentation mode for the popover
-   */
-  presentation: 'bottom-sheet';
-}
+    BaseBottomSheetContentProps {}
 
 /**
  * Popover Content component props

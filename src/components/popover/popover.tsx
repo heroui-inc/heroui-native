@@ -6,12 +6,8 @@ import type {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import { useWindowDimensions, View } from 'react-native';
-import Animated, {
-  FadeIn,
-  FadeOut,
-  ReduceMotion,
-} from 'react-native-reanimated';
+import { Pressable, useWindowDimensions, View } from 'react-native';
+import Animated, { ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
 import { useThemeColor } from '../../helpers/external/hooks';
@@ -65,6 +61,8 @@ import type {
   PopoverTriggerProps,
 } from './popover.types';
 
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
 const AnimatedOverlay = Animated.createAnimatedComponent(
   PopoverPrimitives.Overlay
 );
@@ -90,38 +88,26 @@ const PopoverRoot = forwardRef<
   (
     {
       children,
-      closeDelay = 400,
       isOpen: isOpenProp,
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
+      presentation,
       animation,
       ...props
     },
     ref
   ) => {
-    const {
-      internalIsOpen,
-      componentState,
-      progress,
-      isDragging,
-      onOpenChange,
-      isAllAnimationsDisabled,
-    } = usePopupRootAnimation({
-      isOpen: isOpenProp,
-      isDefaultOpen,
-      onOpenChange: onOpenChangeProp,
-      closeDelay,
-      isDismissKeyboardOnClose: false,
-      animation,
-    });
+    const { isAllAnimationsDisabled, progress, isDragging } =
+      usePopupRootAnimation({
+        animation,
+      });
 
     const animationContextValue = useMemo(
       () => ({
-        popoverState: componentState,
         progress,
         isDragging,
       }),
-      [componentState, progress, isDragging]
+      [progress, isDragging]
     );
 
     const animationSettingsContextValue = useMemo(
@@ -136,10 +122,10 @@ const PopoverRoot = forwardRef<
         <PopoverAnimationProvider value={animationContextValue}>
           <PopoverPrimitives.Root
             ref={ref}
+            presentation={presentation}
             isOpen={isOpenProp}
             isDefaultOpen={isDefaultOpen}
             onOpenChange={onOpenChangeProp}
-            closeDelay={0}
             {...props}
           >
             {children}
@@ -193,7 +179,14 @@ const PopoverOverlay = forwardRef<
   PopoverOverlayProps
 >(
   (
-    { className, style, animation, isAnimatedStyleActive = true, ...props },
+    {
+      children,
+      className,
+      style,
+      animation,
+      isAnimatedStyleActive = true,
+      ...props
+    },
     ref
   ) => {
     // const { progress, isDragging } = usePopoverAnimation();
@@ -211,14 +204,16 @@ const PopoverOverlay = forwardRef<
     //   : style;
 
     return (
-      <AnimatedOverlay
-        ref={ref}
-        entering={FadeIn.duration(200)}
-        exiting={FadeOut.duration(150)}
-        className={overlayClassName}
-        style={style}
-        {...props}
-      />
+      // <PopoverPrimitives.Overlay ref={ref} className={overlayClassName} asChild>
+      //   <AnimatedPressable
+      //     style={StyleSheet.absoluteFill}
+      //     entering={FadeIn.duration(200)}
+      //     exiting={FadeOut.duration(150)}
+      //   >
+      //     {children}
+      //   </AnimatedPressable>
+      // </PopoverPrimitives.Overlay>
+      <PopoverPrimitives.Overlay ref={ref} className={overlayClassName} />
     );
   }
 );
@@ -227,7 +222,7 @@ const PopoverOverlay = forwardRef<
 
 const PopoverContentPopover = forwardRef<
   PopoverPrimitivesTypes.ContentRef,
-  PopoverContentProps & { presentation?: 'popover' }
+  PopoverContentPopoverProps
 >(
   (
     {
@@ -317,7 +312,7 @@ const PopoverContentPopover = forwardRef<
 
 const PopoverContentBottomSheet = forwardRef<
   BottomSheet,
-  PopoverContentProps & { presentation: 'bottom-sheet' }
+  PopoverContentBottomSheetProps
 >(
   (
     {
@@ -333,8 +328,9 @@ const PopoverContentBottomSheet = forwardRef<
     },
     ref
   ) => {
-    const { onOpenChange } = usePopover();
-    const { popoverState, progress, isDragging } = usePopoverAnimation();
+    const { isOpen, onOpenChange } = usePopover();
+
+    const { progress, isDragging } = usePopoverAnimation();
 
     const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
       animation,
@@ -344,7 +340,6 @@ const PopoverContentBottomSheet = forwardRef<
       usePopupBottomSheetContentAnimation({
         progress,
         isDragging,
-        componentState: popoverState,
       });
 
     const contentBackgroundClassName = bottomSheetClassNames.contentBackground({
@@ -361,9 +356,8 @@ const PopoverContentBottomSheet = forwardRef<
     });
 
     const onClose = useCallback(() => {
-      progress.set(2);
       onOpenChange(false);
-    }, [onOpenChange, progress]);
+    }, [onOpenChange]);
 
     const mergedAnimationConfigs = useMemo(
       () => ({
@@ -396,7 +390,7 @@ const PopoverContentBottomSheet = forwardRef<
           >
             <BottomSheetContentContainer
               initialIndex={initialIndex ?? 0}
-              state={popoverState}
+              isOpen={isOpen}
               progress={progress}
               isDragging={isDragging}
               isClosingOnSwipe={isClosingOnSwipe}
@@ -419,7 +413,7 @@ const PopoverContent = forwardRef<
   PopoverPrimitivesTypes.ContentRef | BottomSheet,
   PopoverContentProps
 >((props, ref) => {
-  const presentation = props.presentation || 'popover';
+  const { presentation = 'popover' } = usePopover();
 
   if (presentation === 'bottom-sheet') {
     return (

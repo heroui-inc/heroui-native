@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import type { SharedValue } from 'react-native-reanimated';
 import {
   Extrapolation,
@@ -8,11 +7,6 @@ import {
 } from 'react-native-reanimated';
 import { useAnimationSettings } from '../contexts/animation-settings-context';
 import { getIsAnimationDisabledValue } from '../utils';
-
-/**
- * Component state type for popup-like components
- */
-type ComponentState = 'idle' | 'open' | 'close';
 
 /**
  * Props for usePopupBottomSheetContentAnimation hook
@@ -26,10 +20,6 @@ export interface UsePopupBottomSheetContentAnimationProps {
    * Dragging state shared value
    */
   isDragging: SharedValue<boolean>;
-  /**
-   * Current component state
-   */
-  componentState: ComponentState;
 }
 
 /**
@@ -39,7 +29,6 @@ export interface UsePopupBottomSheetContentAnimationProps {
 export function usePopupBottomSheetContentAnimation({
   progress,
   isDragging,
-  componentState,
 }: UsePopupBottomSheetContentAnimationProps) {
   const { isAllAnimationsDisabled } = useAnimationSettings();
 
@@ -51,19 +40,6 @@ export function usePopupBottomSheetContentAnimation({
     isAnimationDisabled: false,
     isAllAnimationsDisabled,
   });
-
-  // Handle animation disabled state - set progress directly based on component state
-  useEffect(() => {
-    if (isAnimationDisabledValue) {
-      if (componentState === 'open') {
-        progress.set(1);
-      } else if (componentState === 'close') {
-        progress.set(2);
-      } else {
-        progress.set(0);
-      }
-    }
-  }, [componentState, isAnimationDisabledValue, progress]);
 
   useAnimatedReaction(
     () => isDragging.get(),
@@ -77,13 +53,11 @@ export function usePopupBottomSheetContentAnimation({
   useAnimatedReaction(
     () => animatedIndex.get(),
     (value) => {
-      if (
-        isAnimationDisabledValue ||
-        isClosingOnSwipe.get() ||
-        componentState === 'close'
-      ) {
+      // console.log('🔴 animatedIndex', value); // VS remove
+      if (isAnimationDisabledValue || isClosingOnSwipe.get()) {
         return;
       }
+      // console.log('🔴 🔴', isPanActivated.get()); // VS remove
       if (isPanActivated.get()) {
         progress.set(interpolate(value, [0, -1], [1, 2], Extrapolation.CLAMP));
       } else {

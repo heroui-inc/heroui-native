@@ -18,13 +18,11 @@ export function usePopupRootAnimation(options: {
   );
 
   const progress = useSharedValue(0);
-  const bottomSheetCloseProgress = useSharedValue(0);
   const isDragging = useSharedValue(false);
 
   return {
     isAllAnimationsDisabled,
     progress,
-    bottomSheetCloseProgress,
     isDragging,
   };
 }

@@ -1,5 +1,5 @@
 import type BottomSheet from '@gorhom/bottom-sheet';
-import type { ReactNode, Ref } from 'react';
+import type { ReactNode } from 'react';
 import type { StyleProp, TextProps, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {

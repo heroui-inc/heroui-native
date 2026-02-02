@@ -29,7 +29,7 @@ export interface BottomSheetContentContainerProps {
    */
   isOpen: boolean;
   /**
-   * Progress of the bottom sheet for animation coordination
+   * Animation progress shared value (0=idle, 1=open, 2=close)
    */
   progress: SharedValue<number>;
   /**

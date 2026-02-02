@@ -330,7 +330,8 @@ const PopoverContentBottomSheet = forwardRef<
   ) => {
     const { isOpen, onOpenChange } = usePopover();
 
-    const { progress, isDragging } = usePopoverAnimation();
+    const { progress, isDragging } =
+      usePopoverAnimation();
 
     const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
       animation,

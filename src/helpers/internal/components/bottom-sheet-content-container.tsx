@@ -1,10 +1,6 @@
 import { BottomSheetView, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useEffect } from 'react';
-import {
-  useAnimatedReaction,
-  useDerivedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import { useAnimatedReaction } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import type { BottomSheetContentContainerProps } from '../types/bottom-sheet';
 
@@ -29,26 +25,14 @@ export function BottomSheetContentContainer({
 }: BottomSheetContentContainerProps) {
   const { close, snapToIndex } = useBottomSheet();
 
-  const isCloseBottomSheetEnabled = useDerivedValue(() => {
-    console.log('🔴 progress 🔴', progress.get()); // VS remove
-    if (progress.get() > 1.75 && !isDragging.get()) {
-      return true;
-    }
-    return false;
-  });
-
   const closeBottomSheet = () => {
-    progress.set(withTiming(2, { duration: 100 }));
     onOpenChange(false);
   };
 
   useAnimatedReaction(
-    () => isCloseBottomSheetEnabled.get(),
+    () => progress.get(),
     (value) => {
-      if (value) {
-        if (isClosingOnSwipe.get()) {
-          return;
-        }
+      if (value > 1.5 && !isDragging.get() && !isClosingOnSwipe.get()) {
         isClosingOnSwipe.set(true);
         scheduleOnRN(closeBottomSheet);
       }

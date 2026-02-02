@@ -43,8 +43,11 @@ export function usePopupBottomSheetContentAnimation({
 
   useAnimatedReaction(
     () => isDragging.get(),
-    (value) => {
-      if (!isPanActivated.get() && value) {
+    (current, previous) => {
+      if (current && !previous) {
+        isClosingOnSwipe.set(false);
+      }
+      if (!isPanActivated.get() && current) {
         isPanActivated.set(true);
       }
     }
@@ -53,11 +56,9 @@ export function usePopupBottomSheetContentAnimation({
   useAnimatedReaction(
     () => animatedIndex.get(),
     (value) => {
-      // console.log('🔴 animatedIndex', value); // VS remove
       if (isAnimationDisabledValue || isClosingOnSwipe.get()) {
         return;
       }
-      // console.log('🔴 🔴', isPanActivated.get()); // VS remove
       if (isPanActivated.get()) {
         progress.set(interpolate(value, [0, -1], [1, 2], Extrapolation.CLAMP));
       } else {

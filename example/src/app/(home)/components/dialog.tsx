@@ -227,7 +227,7 @@ const UpdateProfileDialogForm = ({ onClose }: { onClose: () => void }) => {
       <View className="flex-1">
         <StyleScrollView
           contentContainerClassName="gap-5"
-          keyboardShouldPersistTaps="always"
+          // keyboardShouldPersistTaps="always"
         >
           <TextField isRequired isInvalid={!!nameError}>
             <Label isInvalid={false}>Full Name</Label>

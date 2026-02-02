@@ -18,8 +18,6 @@ export type DialogState = 'idle' | 'open' | 'close';
  * Context value for dialog animation state
  */
 export interface DialogAnimationContextValue {
-  /** Extended internal state for animation control */
-  dialogState: DialogState;
   /** Animation progress shared value (0=idle, 1=open, 2=close) */
   progress: SharedValue<number>;
   /** Dragging state shared value */
@@ -159,13 +157,6 @@ export interface DialogContentProps
    * - `object`: Custom animation configuration
    */
   animation?: DialogContentAnimation;
-  /**
-   * Whether animated styles (react-native-reanimated) are active
-   * When `false`, the animated style is removed and you can implement custom logic
-   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
-   * @default true
-   */
-  isAnimatedStyleActive?: boolean;
   /**
    * Whether the dialog content can be swiped to dismiss
    * @default true

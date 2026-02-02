@@ -102,25 +102,15 @@ export type PopupOverlayAnimation = Animation<{
  */
 export type PopupDialogContentAnimation = Animation<{
   /**
-   * Opacity animation configuration
+   * Custom Keyframe animation for entering transition
+   * @default Keyframe with scale, and opacity (200ms)
    */
-  opacity?: AnimationValue<{
-    /**
-     * Opacity values [idle, open, close]
-     * @default [0, 1, 0]
-     */
-    value?: [number, number, number];
-  }>;
+  entering?: EntryOrExitLayoutType;
   /**
-   * Scale animation configuration
+   * Custom Keyframe animation for exiting transition
+   * @default Keyframe mirroring entering animation (150ms)
    */
-  scale?: AnimationValue<{
-    /**
-     * Scale values [idle, open, close]
-     * @default [0.97, 1, 0.97]
-     */
-    value?: [number, number, number];
-  }>;
+  exiting?: EntryOrExitLayoutType;
 }>;
 
 /**

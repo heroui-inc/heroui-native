@@ -1,26 +1,31 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Keyboard, useWindowDimensions } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
 import type { SharedValue } from 'react-native-reanimated';
 import {
+  Easing,
   Extrapolation,
   interpolate,
+  Keyframe,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
   withSpring,
+  type EntryOrExitLayoutType,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import { useAnimationSettings } from '../contexts/animation-settings-context';
 import type { PopupDialogContentAnimation } from '../types/animation';
 import {
   getAnimationState,
-  getAnimationValueProperty,
   getIsAnimationDisabledValue,
 } from '../utils/animation';
-import { useKeyboardStatus } from './use-keyboard-status';
 
 export interface UsePopupDialogContentAnimationProps {
+  /**
+   * Whether the dialog is open
+   */
+  isOpen: boolean;
   /**
    * Progress shared value (0 = closed, 1 = open, 2 = closing)
    */
@@ -33,10 +38,6 @@ export interface UsePopupDialogContentAnimationProps {
    * Gesture release animation running state shared value
    */
   isGestureReleaseAnimationRunning: SharedValue<boolean>;
-  /**
-   * Current dialog state
-   */
-  dialogState: 'idle' | 'open' | 'close';
   /**
    * Callback when dialog open state changes
    */
@@ -52,17 +53,48 @@ export interface UsePopupDialogContentAnimationProps {
   isSwipeable?: boolean;
 }
 
+/**
+ * Default entering animation for dialog content
+ * Dialog content animates with scale and opacity transitions
+ */
+const DEFAULT_ENTERING_ANIMATION: EntryOrExitLayoutType = new Keyframe({
+  0: {
+    transform: [{ scale: 0.96 }],
+    opacity: 0,
+  },
+  100: {
+    transform: [{ scale: 1 }],
+    opacity: 1,
+    easing: Easing.out(Easing.ease),
+  },
+}).duration(200);
+
+/**
+ * Default exiting animation for dialog content
+ * Mirrors the entering animation - content exits with fade out and scale down
+ */
+const DEFAULT_EXITING_ANIMATION: EntryOrExitLayoutType = new Keyframe({
+  0: {
+    transform: [{ scale: 1 }],
+    opacity: 1,
+  },
+  100: {
+    transform: [{ scale: 0.96 }],
+    opacity: 0,
+    easing: Easing.in(Easing.ease),
+  },
+}).duration(150);
+
 export const usePopupDialogContentAnimation = ({
+  isOpen,
   progress,
   isDragging,
   isGestureReleaseAnimationRunning,
-  dialogState,
   onOpenChange,
   animation,
   isSwipeable = true,
 }: UsePopupDialogContentAnimationProps) => {
   const { height: screenHeight } = useWindowDimensions();
-  const isKeyboardOpen = useKeyboardStatus();
 
   const { isAllAnimationsDisabled } = useAnimationSettings();
 
@@ -73,12 +105,26 @@ export const usePopupDialogContentAnimation = ({
     isAllAnimationsDisabled,
   });
 
+  // Get entering animation value with default Keyframe animation
+  const enteringValue = animationConfig?.entering ?? DEFAULT_ENTERING_ANIMATION;
+
+  // Get exiting animation value with default Keyframe animation
+  const exitingValue = animationConfig?.exiting ?? DEFAULT_EXITING_ANIMATION;
+
   const contentY = useSharedValue(0);
   const contentHeight = useSharedValue(0);
   const progressAnchor = useSharedValue(1);
   const contentTranslateYAnchor = useSharedValue(0);
   const contentScaleAnchor = useSharedValue(1);
   const gestureTranslationY = useSharedValue(0);
+
+  useEffect(() => {
+    if (isOpen) {
+      progress.set(1);
+    } else {
+      progress.set(2);
+    }
+  }, [isOpen, progress]);
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
@@ -113,9 +159,7 @@ export const usePopupDialogContentAnimation = ({
   const panGesture = useMemo(
     () =>
       Gesture.Pan()
-        .enabled(
-          isSwipeable && dialogState === 'open' && !isAnimationDisabledValue
-        )
+        .enabled(isSwipeable && isOpen && !isAnimationDisabledValue)
         .onStart(() => isDragging.set(true))
         .onUpdate((event) => {
           if (!isDragging.get()) return;
@@ -126,11 +170,11 @@ export const usePopupDialogContentAnimation = ({
 
           if (event.translationY > 0) {
             const progressValue = 1 + event.translationY / maxDragDistance;
-            progress.set(progressValue);
-          } else if (event.translationY < 0 && !isKeyboardOpen) {
+            progress.set(Math.max(1, Math.min(progressValue, 2)));
+          } else if (event.translationY < 0) {
             const progressValue =
               1 - Math.abs(event.translationY) / contentY.get();
-            progress.set(progressValue);
+            progress.set(Math.max(0, Math.min(progressValue, 1)));
           }
         })
         .onFinalize(() => {
@@ -175,9 +219,8 @@ export const usePopupDialogContentAnimation = ({
       contentTranslateY,
       contentTranslateYAnchor,
       contentY,
-      dialogState,
+      isOpen,
       isDragging,
-      isKeyboardOpen,
       isGestureReleaseAnimationRunning,
       isSwipeable,
       onOpenChange,
@@ -190,10 +233,6 @@ export const usePopupDialogContentAnimation = ({
   );
 
   const rDragContainerStyle = useAnimatedStyle(() => {
-    if (!isDragging.get() && !isGestureReleaseAnimationRunning.get()) {
-      return {};
-    }
-
     if (isGestureReleaseAnimationRunning.get()) {
       return {
         opacity: interpolate(
@@ -244,51 +283,12 @@ export const usePopupDialogContentAnimation = ({
     };
   });
 
-  // Opacity animation
-  const opacityValue = getAnimationValueProperty({
-    animationValue: animationConfig?.opacity,
-    property: 'value',
-    defaultValue: [0, 1, 0] as [number, number, number],
-  });
-
-  // Scale animation
-  const scaleValue = getAnimationValueProperty({
-    animationValue: animationConfig?.scale,
-    property: 'value',
-    defaultValue: [0.97, 1, 0.97] as [number, number, number],
-  });
-
-  const rContainerStyle = useAnimatedStyle(() => {
-    // Handle disabled state first
-    if (isAnimationDisabledValue) {
-      return {
-        opacity: progress.get() > 0 ? 1 : 0,
-      };
-    }
-
-    // Handle dragging state - when dragging, opacity should be 1
-    if (isDragging.get() || isGestureReleaseAnimationRunning.get()) {
-      return {
-        opacity: 1,
-      };
-    }
-
-    // Animated state
-    const currentProgress = progress.get();
-    const targetOpacity = interpolate(currentProgress, [0, 1, 2], opacityValue);
-    const targetScale = interpolate(currentProgress, [0, 1, 2], scaleValue);
-
-    return {
-      opacity: targetOpacity,
-      transform: [{ scale: targetScale }],
-    };
-  });
-
   return {
     contentY,
     contentHeight,
     panGesture,
     rDragContainerStyle,
-    rContainerStyle,
+    entering: isAnimationDisabledValue ? undefined : enteringValue,
+    exiting: isAnimationDisabledValue ? undefined : exitingValue,
   };
 };

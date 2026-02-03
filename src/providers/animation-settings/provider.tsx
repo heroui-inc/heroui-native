@@ -1,6 +1,6 @@
 import React from 'react';
 import { useReducedMotion } from 'react-native-reanimated';
-import { createContext } from '../../helpers/utils';
+import { createContext } from '../../helpers/internal/utils';
 import type {
   GlobalAnimationSettingsContextValue,
   GlobalAnimationSettingsProviderProps,

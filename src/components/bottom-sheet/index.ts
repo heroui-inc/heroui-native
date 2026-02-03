@@ -3,8 +3,8 @@ export {
   useBottomSheet,
   useBottomSheetAnimation,
 } from './bottom-sheet';
+export { bottomSheetClassNames } from './bottom-sheet.styles';
 export type {
-  BottomSheetCloseIconProps,
   BottomSheetCloseProps,
   BottomSheetContentProps,
   BottomSheetDescriptionProps,

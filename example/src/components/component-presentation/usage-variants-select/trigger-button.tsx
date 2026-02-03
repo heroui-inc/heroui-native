@@ -1,8 +1,12 @@
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import { useSelectAnimation, useThemeColor } from 'heroui-native';
+import { useSelect, useThemeColor } from 'heroui-native';
+import { useEffect } from 'react';
 import Animated, {
+  Easing,
   interpolate,
   useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
@@ -12,10 +16,20 @@ const StyleAnimatedView = withUniwind(Animated.View);
 export const TriggerButton = () => {
   const insets = useSafeAreaInsets();
   const themeColorAccentForeground = useThemeColor('accent-foreground');
-  const { progress } = useSelectAnimation();
+  const { isOpen } = useSelect();
+  const animatedValue = useSharedValue(0);
+
+  useEffect(() => {
+    animatedValue.set(
+      withTiming(isOpen ? 0 : 1, {
+        duration: 200,
+        easing: Easing.out(Easing.ease),
+      })
+    );
+  }, [isOpen, animatedValue]);
 
   const animatedStyle = useAnimatedStyle(() => {
-    const opacity = interpolate(progress.get(), [0, 1, 1.5], [1, 0, 1]);
+    const opacity = interpolate(animatedValue.get(), [0, 1], [0, 1]);
 
     return {
       opacity,

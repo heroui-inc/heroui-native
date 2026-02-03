@@ -8,7 +8,7 @@ import type {
   Animation,
   AnimationRoot,
   AnimationValue,
-} from '../../helpers/types/animation';
+} from '../../helpers/internal/types';
 
 /**
  * Base spinner size variants

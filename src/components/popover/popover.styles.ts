@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const portal = tv({
   base: 'absolute inset-0',
@@ -40,6 +41,7 @@ const overlay = tv({
  * To customize these properties, use the `animation` prop on `Popover.Content`:
  * ```tsx
  * <Popover.Content
+ *   presentation="popover"
  *   animation={{
  *     opacity: { value: [0, 1, 0] },
  *     scale: { value: [0.95, 1, 0.95] },
@@ -53,9 +55,15 @@ const overlay = tv({
  * To completely disable animated styles and apply your own via className or style prop,
  * set `isAnimatedStyleActive={false}` on `Popover.Content`.
  */
-const popoverContent = tv({
-  base: 'absolute bg-overlay rounded-3xl border border-border p-3 px-4 shadow-lg shadow-black/5 dark:shadow-none',
+const content = tv({
+  base: 'absolute bg-overlay p-3 px-4 rounded-3xl shadow-overlay',
 });
+
+/**
+ * @note When Popover.Content uses `presentation="bottom-sheet"`, it uses `bottomSheetClassNames`
+ * from `../bottom-sheet/bottom-sheet.styles` instead of `popoverClassNames.content`.
+ * See `popover.tsx` PopoverContentBottomSheet component for usage.
+ */
 
 const close = tv({
   base: '',
@@ -73,20 +81,18 @@ const arrow = tv({
   base: 'absolute z-50',
 });
 
-const popoverStyles = {
+export const popoverClassNames = combineStyles({
   portal,
   overlay,
-  popoverContent,
+  content,
   close,
   label,
   description,
   arrow,
-};
+});
 
-export const styleSheet = StyleSheet.create({
+export const popoverStyleSheet = StyleSheet.create({
   contentContainer: {
     borderCurve: 'continuous',
   },
 });
-
-export default popoverStyles;

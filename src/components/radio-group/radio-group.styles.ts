@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   base: 'gap-3',
@@ -8,14 +8,6 @@ const root = tv({
 
 const item = tv({
   base: 'flex-row items-center justify-between gap-3',
-  variants: {
-    isDisabled: {
-      true: 'opacity-disabled pointer-events-none',
-    },
-  },
-  defaultVariants: {
-    isDisabled: false,
-  },
 });
 
 const itemIndicator = tv({
@@ -68,38 +60,24 @@ const itemIndicator = tv({
  * set `isAnimatedStyleActive={false}` on `RadioGroup.IndicatorThumb`.
  */
 const itemIndicatorThumb = tv({
-  base: 'size-2.5 dark:size-3 rounded-full',
+  base: 'size-2.5 rounded-full bg-accent-foreground shadow-field',
   variants: {
-    variant: {
-      primary: 'bg-field',
-      secondary: 'bg-on-surface',
-    },
     isSelected: {
       true: 'opacity-100',
       false: 'opacity-0',
     },
   },
-  defaultVariants: {
-    variant: 'primary',
-  },
 });
 
-const errorMessage = tv({
-  base: '',
-});
-
-const radioGroupStyles = combineStyles({
+export const radioGroupClassNames = combineStyles({
   root,
-  errorMessage,
   item,
   itemIndicator,
   itemIndicatorThumb,
 });
 
-export const styleSheet = StyleSheet.create({
+export const radioGroupStyleSheet = StyleSheet.create({
   borderCurve: {
     borderCurve: 'continuous',
   },
 });
-
-export default radioGroupStyles;

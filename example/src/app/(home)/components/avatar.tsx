@@ -1,14 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, cn } from 'heroui-native';
 import { StyleSheet, Text, View } from 'react-native';
-import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
-
-const StyledIonicons = withUniwind(Ionicons);
+import { PersonFillIcon } from '../../../components/icons/person-fill';
 
 const SizesContent = () => {
   return (
@@ -17,7 +14,7 @@ const SizesContent = () => {
         <Avatar size="sm" alt="Small Avatar">
           <Avatar.Image
             source={{
-              uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
+              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg',
             }}
           />
           <Avatar.Fallback />
@@ -25,7 +22,7 @@ const SizesContent = () => {
         <Avatar size="md" alt="Medium Avatar">
           <Avatar.Image
             source={{
-              uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
+              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg',
             }}
           />
           <Avatar.Fallback>MD</Avatar.Fallback>
@@ -33,7 +30,7 @@ const SizesContent = () => {
         <Avatar size="lg" alt="Large Avatar">
           <Avatar.Image
             source={{
-              uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
+              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg',
             }}
           />
           <Avatar.Fallback>LG</Avatar.Fallback>
@@ -196,7 +193,7 @@ const CustomFallbackContent = () => {
         </Avatar>
         <Avatar alt="User">
           <Avatar.Fallback>
-            <StyledIonicons name="person" size={18} className="text-[#666]" />
+            <PersonFillIcon colorClassName="accent-muted" />
           </Avatar.Fallback>
         </Avatar>
       </View>
@@ -206,38 +203,41 @@ const CustomFallbackContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const avatarGroupData = [
+  {
+    id: 1,
+    image:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg',
+    name: 'John Doe',
+  },
+  {
+    id: 2,
+    image:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/green.jpg',
+    name: 'Kate Wilson',
+  },
+  {
+    id: 3,
+    image:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg',
+    name: 'Emily Chen',
+  },
+  {
+    id: 4,
+    image:
+      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg',
+    name: 'Michael Brown',
+  },
+];
+
 const AvatarGroupContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <View className="flex-row">
-        {[
-          {
-            id: 1,
-            image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
-            name: 'John Doe',
-          },
-          {
-            id: 2,
-            image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
-            name: 'Kate Wilson',
-          },
-          {
-            id: 3,
-            image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
-            name: 'Emily Chen',
-          },
-          {
-            id: 4,
-            image: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=23',
-            name: 'Michael Brown',
-          },
-        ].map((user, index) => (
+      <View className="flex-row mb-6">
+        {avatarGroupData.map((user, index) => (
           <Avatar
             key={user.id}
-            className={cn(
-              'border-background border-[2px]',
-              index !== 0 && '-ml-3'
-            )}
+            className={cn('border-background border-2', index !== 0 && '-ml-4')}
             alt={user.name}
           >
             <Avatar.Image source={{ uri: user.image }} />
@@ -254,6 +254,31 @@ const AvatarGroupContent = () => {
             </Avatar.Fallback>
           </Avatar>
         ))}
+      </View>
+      <View className="flex-row">
+        {avatarGroupData.slice(0, 3).map((user, index) => (
+          <Avatar
+            key={user.id}
+            className={cn('border-background border-2', index !== 0 && '-ml-4')}
+            alt={user.name}
+          >
+            <Avatar.Image source={{ uri: user.image }} />
+            <Avatar.Fallback
+              classNames={{
+                container: 'bg-warning',
+                text: 'text-warning-foreground',
+              }}
+            >
+              {user.name
+                .split(' ')
+                .map((n) => n[0])
+                .join('')}
+            </Avatar.Fallback>
+          </Avatar>
+        ))}
+        <Avatar className="border-background border-2 -ml-4" alt="More">
+          <Avatar.Fallback>+2</Avatar.Fallback>
+        </Avatar>
       </View>
     </View>
   );

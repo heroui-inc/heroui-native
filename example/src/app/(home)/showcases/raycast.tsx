@@ -79,7 +79,10 @@ export default function Raycast() {
           />
         </Pressable>
         <Pressable
-          className="flex-1 flex-row items-center gap-2 px-3 py-2.5 rounded-[14px] bg-surface-quaternary/70"
+          className={cn(
+            'flex-1 flex-row items-center gap-2 px-3 py-2.5 rounded-[14px]',
+            isDark ? 'bg-neutral-900/50' : 'bg-neutral-300/50'
+          )}
           style={styles.borderCurve}
           onPress={simulatePress}
         >
@@ -119,8 +122,9 @@ export default function Raycast() {
       </View>
       <View
         className={cn(
-          'p-2 bg-surface-quaternary/70 rounded-3xl border border-neutral-400/10 gap-7',
-          isDark && 'border-neutral-600/10'
+          'p-2 rounded-3xl border gap-7',
+          isDark ? 'bg-neutral-900/50' : 'bg-neutral-300/50',
+          isDark ? 'border-neutral-600/10' : 'border-neutral-400/10'
         )}
         style={styles.borderCurve}
       >

@@ -1,8 +1,10 @@
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../helpers/internal/utils';
 
-/**
- * SkeletonGroup component styles using tailwind-variants
- */
-export const skeletonGroupStyles = tv({
+const root = tv({
   base: '',
+});
+
+export const skeletonGroupClassNames = combineStyles({
+  root,
 });

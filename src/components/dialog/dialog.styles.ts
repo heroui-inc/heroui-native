@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const portal = tv({
   base: 'absolute inset-0 justify-center p-5',
@@ -26,7 +26,7 @@ const portal = tv({
  * set `isAnimatedStyleActive={false}` on `Dialog.Overlay`.
  */
 const overlay = tv({
-  base: 'absolute inset-0 bg-black/20',
+  base: 'absolute inset-0 bg-black/10',
 });
 
 /**
@@ -51,11 +51,7 @@ const overlay = tv({
  * set `isAnimatedStyleActive={false}` on `Dialog.Content`.
  */
 const content = tv({
-  base: 'bg-overlay rounded-3xl border border-border p-5',
-});
-
-const close = tv({
-  base: '',
+  base: 'bg-overlay p-5 rounded-3xl shadow-overlay',
 });
 
 const label = tv({
@@ -66,19 +62,16 @@ const description = tv({
   base: 'text-base text-muted',
 });
 
-const dialogStyles = combineStyles({
+export const dialogClassNames = combineStyles({
   portal,
   overlay,
   content,
-  close,
   label,
   description,
 });
 
-export const styleSheet = StyleSheet.create({
+export const dialogStyleSheet = StyleSheet.create({
   contentContainer: {
     borderCurve: 'continuous',
   },
 });
-
-export default dialogStyles;

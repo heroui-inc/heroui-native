@@ -1,15 +1,15 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   base: 'self-start flex-row items-center justify-center gap-1 overflow-hidden',
   variants: {
     variant: {
-      primary: 'border-0',
-      secondary: 'border border-border bg-default',
-      tertiary: 'border border-border bg-transparent',
-      soft: 'border-0',
+      primary: '',
+      secondary: 'bg-default',
+      tertiary: 'bg-transparent',
+      soft: '',
     },
     size: {
       sm: 'px-2 h-5 rounded-xl',
@@ -220,16 +220,15 @@ const label = tv({
   },
 });
 
-const chipStyles = combineStyles({
+export const chipClassNames = combineStyles({
   root,
   label,
 });
 
-export const styleSheet = StyleSheet.create({
+export const chipStyleSheet = StyleSheet.create({
   root: {
     borderCurve: 'continuous',
   },
 });
 
 export type LabelContentSlots = keyof ReturnType<typeof label>;
-export default chipStyles;

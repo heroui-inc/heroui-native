@@ -4,7 +4,7 @@ import type {
   SlottablePressableProps,
   SlottableTextProps,
   TextRef,
-} from '../../helpers/types';
+} from '../../helpers/internal/types';
 
 /**
  * Props for the label root component.

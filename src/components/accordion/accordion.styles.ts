@@ -1,21 +1,22 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   slots: {
     container: 'flex-col overflow-hidden',
-    divider: 'h-hairline bg-divider',
+    separator: 'h-hairline bg-separator',
   },
   variants: {
     variant: {
       default: {
         container: '',
-        divider: '',
+        separator: '',
       },
       surface: {
-        container: 'bg-surface border border-surface rounded-3xl',
-        divider: 'mx-3 bg-divider/75',
+        container:
+          'bg-surface rounded-3xl border border-surface shadow-surface',
+        separator: 'mx-3',
       },
     },
   },
@@ -77,13 +78,7 @@ const content = tv({
   },
 });
 
-export const styleSheet = StyleSheet.create({
-  root: {
-    borderCurve: 'continuous',
-  },
-});
-
-const accordionStyles = combineStyles({
+export const accordionClassNames = combineStyles({
   root,
   item,
   trigger,
@@ -91,5 +86,10 @@ const accordionStyles = combineStyles({
   content,
 });
 
+export const accordionStyleSheet = StyleSheet.create({
+  root: {
+    borderCurve: 'continuous',
+  },
+});
+
 export type RootSlots = keyof ReturnType<typeof root>;
-export default accordionStyles;

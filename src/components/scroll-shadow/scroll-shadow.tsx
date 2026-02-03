@@ -7,15 +7,19 @@ import {
 } from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Animated, { useComposedEventHandler } from 'react-native-reanimated';
-import { colorKit, useThemeColor } from '../../helpers/theme';
-import { easeGradient } from '../../helpers/utils';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { colorKit } from '../../helpers/external/utils';
+import { easeGradient } from '../../helpers/internal/utils';
 import { useScrollShadowRootAnimation } from './scroll-shadow.animation';
 import {
   DEFAULT_SCROLL_EVENT_THROTTLE,
   DEFAULT_SHADOW_SIZE,
   SCROLL_SHADOW_DISPLAY_NAME,
 } from './scroll-shadow.constants';
-import { nativeStyles, scrollShadowStyles } from './scroll-shadow.styles';
+import {
+  scrollShadowClassNames,
+  scrollShadowStyleSheet,
+} from './scroll-shadow.styles';
 import type { ScrollShadowProps } from './scroll-shadow.types';
 
 /**
@@ -70,7 +74,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
   const themeColorBackground = useThemeColor('background');
   const shadowColor = color || themeColorBackground;
 
-  const containerStyles = scrollShadowStyles({ className });
+  const rootClassName = scrollShadowClassNames.root({ className });
 
   const childHorizontal =
     children?.props &&
@@ -167,13 +171,17 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
     });
 
   return (
-    <View ref={ref} className={containerStyles} style={style} {...restProps}>
+    <View ref={ref} className={rootClassName} style={style} {...restProps}>
       {enhancedChild}
 
       {/* Top/Left Shadow */}
       {orientation === 'vertical' ? (
         <Animated.View
-          style={[nativeStyles.topShadow, { height: size }, topShadowStyle]}
+          style={[
+            scrollShadowStyleSheet.topShadow,
+            { height: size },
+            topShadowStyle,
+          ]}
         >
           <LinearGradientComponent
             colors={topLeftColors}
@@ -183,7 +191,11 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
         </Animated.View>
       ) : (
         <Animated.View
-          style={[nativeStyles.leftShadow, { width: size }, topShadowStyle]}
+          style={[
+            scrollShadowStyleSheet.leftShadow,
+            { width: size },
+            topShadowStyle,
+          ]}
         >
           <LinearGradientComponent
             colors={topLeftColors}
@@ -199,7 +211,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
       {orientation === 'vertical' ? (
         <Animated.View
           style={[
-            nativeStyles.bottomShadow,
+            scrollShadowStyleSheet.bottomShadow,
             { height: size },
             bottomShadowStyle,
           ]}
@@ -212,7 +224,11 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
         </Animated.View>
       ) : (
         <Animated.View
-          style={[nativeStyles.rightShadow, { width: size }, bottomShadowStyle]}
+          style={[
+            scrollShadowStyleSheet.rightShadow,
+            { width: size },
+            bottomShadowStyle,
+          ]}
         >
           <LinearGradientComponent
             colors={bottomRightColors}

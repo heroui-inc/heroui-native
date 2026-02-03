@@ -6,17 +6,22 @@ import {
   type WithSpringConfig,
   type WithTimingConfig,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts/animation-settings-context';
-import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
-import type { AnimationRootDisableAll } from '../../helpers/types/animation';
+import { useAnimationSettings } from '../../helpers/internal/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 import {
   getAnimationState,
+  getAnimationValueMergedConfig,
+  getAnimationValueProperty,
   getIsAnimationDisabledValue,
-} from '../../helpers/utils/animation';
+} from '../../helpers/internal/utils';
 import * as TabsPrimitives from '../../primitives/tabs';
 import { DEFAULT_INDICATOR_SPRING_CONFIG } from './tabs.constants';
 import { useTabsMeasurements } from './tabs.context';
-import type { TabsIndicatorAnimation } from './tabs.types';
+import type {
+  TabsIndicatorAnimation,
+  TabsSeparatorAnimation,
+} from './tabs.types';
 
 // --------------------------------------------------
 
@@ -40,7 +45,7 @@ export function useTabsRootAnimation(options: {
 
 /**
  * Animation hook for Tabs Indicator component
- * Handles width, height, left position, and opacity animations
+ * Handles width, height, translateX position, and opacity animations
  */
 export function useTabsIndicatorAnimation(options: {
   animation: TabsIndicatorAnimation | undefined;
@@ -99,14 +104,14 @@ export function useTabsIndicatorAnimation(options: {
   // Get animation configs for each property
   const widthConfig = getPropertyConfig(animationConfig?.width);
   const heightConfig = getPropertyConfig(animationConfig?.height);
-  const leftConfig = getPropertyConfig(animationConfig?.left);
+  const translateXConfig = getPropertyConfig(animationConfig?.translateX);
 
   const rContainerStyle = useAnimatedStyle(() => {
     if (!activeMeasurements) {
       return {
         width: 0,
         height: 0,
-        left: 0,
+        transform: [{ translateX: 0 }],
         opacity: 0,
       };
     }
@@ -116,7 +121,7 @@ export function useTabsIndicatorAnimation(options: {
       return {
         width: activeMeasurements.width,
         height: activeMeasurements.height,
-        left: activeMeasurements.x,
+        transform: [{ translateX: activeMeasurements.x }],
         opacity: 1,
       };
     }
@@ -126,7 +131,7 @@ export function useTabsIndicatorAnimation(options: {
       return {
         width: activeMeasurements.width,
         height: activeMeasurements.height,
-        left: activeMeasurements.x,
+        transform: [{ translateX: activeMeasurements.x }],
         opacity: 1,
       };
     }
@@ -142,15 +147,15 @@ export function useTabsIndicatorAnimation(options: {
         ? withTiming(activeMeasurements.height, heightConfig.timingConfig)
         : withSpring(activeMeasurements.height, heightConfig.springConfig);
 
-    const leftAnimation =
-      leftConfig.type === 'timing'
-        ? withTiming(activeMeasurements.x, leftConfig.timingConfig)
-        : withSpring(activeMeasurements.x, leftConfig.springConfig);
+    const translateXAnimation =
+      translateXConfig.type === 'timing'
+        ? withTiming(activeMeasurements.x, translateXConfig.timingConfig)
+        : withSpring(activeMeasurements.x, translateXConfig.springConfig);
 
     return {
       width: widthAnimation,
       height: heightAnimation,
-      left: leftAnimation,
+      transform: [{ translateX: translateXAnimation }],
       opacity: 1,
     };
   }, [
@@ -158,7 +163,81 @@ export function useTabsIndicatorAnimation(options: {
     isAnimationDisabledValue,
     widthConfig,
     heightConfig,
-    leftConfig,
+    translateXConfig,
+  ]);
+
+  return {
+    rContainerStyle,
+  };
+}
+
+// --------------------------------------------------
+
+/**
+ * Animation hook for Tabs Separator component
+ * Handles opacity animation based on whether current tab value is between specified values
+ */
+export function useTabsSeparatorAnimation(options: {
+  animation: TabsSeparatorAnimation | undefined;
+  betweenValues: string[];
+  isAlwaysVisible: boolean;
+}) {
+  const { animation, betweenValues, isAlwaysVisible } = options;
+
+  // Get current tab value from tabs context
+  const { value } = TabsPrimitives.useRootContext();
+
+  // Read from global animation context (always available in compound parts)
+  const { isAllAnimationsDisabled } = useAnimationSettings();
+
+  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
+
+  // IMPORTANT: Use getIsAnimationDisabledValue to respect both own and parent states
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
+
+  // Opacity animation configuration
+  const opacityValue = getAnimationValueProperty({
+    animationValue: animationConfig?.opacity,
+    property: 'value',
+    defaultValue: [0, 1] as [number, number],
+  });
+  const opacityTimingConfig = getAnimationValueMergedConfig({
+    animationValue: animationConfig?.opacity,
+    property: 'timingConfig',
+    defaultValue: { duration: 200 },
+  });
+
+  const rContainerStyle = useAnimatedStyle(() => {
+    // If always visible, return opacity 1
+    if (isAlwaysVisible) {
+      return {
+        opacity: 1,
+      };
+    }
+
+    // Check if current value is between the specified values
+    const isVisible = !betweenValues.includes(value);
+    const targetOpacity = isVisible ? opacityValue[1] : opacityValue[0];
+
+    if (isAnimationDisabledValue) {
+      return {
+        opacity: targetOpacity,
+      };
+    }
+
+    return {
+      opacity: withTiming(targetOpacity, opacityTimingConfig),
+    };
+  }, [
+    value,
+    betweenValues,
+    isAlwaysVisible,
+    isAnimationDisabledValue,
+    opacityValue,
+    opacityTimingConfig,
   ]);
 
   return {

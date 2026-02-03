@@ -4,32 +4,21 @@ import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
   AnimationRootDisableAll,
+  BaseBottomSheetContentProps,
   PopupOverlayAnimation,
-} from '../../helpers/types/animation';
-import type { BaseBottomSheetContentProps } from '../../helpers/types/bottom-sheet';
+} from '../../helpers/internal/types';
 import type * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
-
-/**
- * Bottom sheet internal state for animation coordination
- */
-export type BottomSheetState = 'idle' | 'open' | 'close';
+import type { CloseButtonProps } from '../close-button/close-button.types';
 
 /**
  * Context value for bottom sheet animation state
  */
 export interface BottomSheetAnimationContextValue {
-  /** Extended internal state for animation control */
-  bottomSheetState: BottomSheetState;
   /** Animation progress shared value (0=idle, 1=open, 2=close) */
   progress: SharedValue<number>;
   /** Dragging state shared value */
   isDragging: SharedValue<boolean>;
 }
-
-/**
- * Animation configuration for BottomSheet root component
- */
-export type BottomSheetRootAnimation = AnimationRootDisableAll;
 
 /**
  * BottomSheet Root component props
@@ -41,16 +30,11 @@ export interface BottomSheetRootProps
    */
   children?: ReactNode;
   /**
-   * Whether to dismiss the keyboard when the bottom sheet closes
-   * @default true
-   */
-  isDismissKeyboardOnClose?: boolean;
-  /**
    * Animation configuration for bottom sheet root
    * - `"disable-all"`: Disable all animations including children
    * - `undefined`: Use default animations
    */
-  animation?: BottomSheetRootAnimation;
+  animation?: AnimationRootDisableAll;
 }
 
 /**
@@ -74,11 +58,6 @@ export interface BottomSheetPortalProps
    */
   children: ReactNode;
 }
-
-/**
- * Animation configuration for BottomSheet Overlay component
- */
-export type BottomSheetOverlayAnimation = PopupOverlayAnimation;
 
 /**
  * BottomSheet Overlay component props
@@ -109,7 +88,7 @@ export interface BottomSheetOverlayProps
    * - `true` or `undefined`: Use default animations
    * - `object`: Custom animation configuration
    */
-  animation?: BottomSheetOverlayAnimation;
+  animation?: Omit<PopupOverlayAnimation, 'entering' | 'exiting'>;
   /**
    * Whether animated styles (react-native-reanimated) are active
    * When `false`, the animated style is removed and you can implement custom logic
@@ -128,38 +107,11 @@ export interface BottomSheetContentProps
 
 /**
  * BottomSheet Close component props
+ *
+ * Extends CloseButtonProps, allowing full override of all close button props.
+ * Automatically handles bottom sheet close functionality when pressed.
  */
-export interface BottomSheetCloseProps
-  extends BottomSheetPrimitivesTypes.CloseProps {
-  /**
-   * Close icon props
-   */
-  iconProps?: BottomSheetCloseIconProps;
-  /**
-   * Additional CSS class for the close button
-   */
-  className?: string;
-  /**
-   * The close button content
-   */
-  children?: ReactNode;
-}
-
-/**
- * Close icon props
- */
-export interface BottomSheetCloseIconProps {
-  /**
-   * Size of the close icon
-   * @default 18
-   */
-  size?: number;
-  /**
-   * Color of the close icon
-   * @default theme color muted
-   */
-  color?: string;
-}
+export interface BottomSheetCloseProps extends CloseButtonProps {}
 
 /**
  * BottomSheet Title component props
@@ -185,10 +137,6 @@ export interface BottomSheetDescriptionProps extends TextProps {
  * Return type for the useBottomSheetAnimation hook
  */
 export interface UseBottomSheetAnimationReturn {
-  /**
-   * Extended internal state for coordinating animations
-   */
-  bottomSheetState: BottomSheetState;
   /**
    * Animation progress shared value (0=idle, 1=open, 2=close)
    */

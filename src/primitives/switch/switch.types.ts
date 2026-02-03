@@ -3,7 +3,7 @@ import type {
   SlottablePressableProps,
   SlottableViewProps,
   ViewRef,
-} from '../../helpers/types';
+} from '../../helpers/internal/types';
 
 /**
  * Props for the primitive Root Switch component

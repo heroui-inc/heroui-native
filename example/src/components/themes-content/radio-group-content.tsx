@@ -1,4 +1,10 @@
-import { Divider, RadioGroup, Surface } from 'heroui-native';
+import {
+  Description,
+  Label,
+  RadioGroup,
+  Separator,
+  Surface,
+} from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -15,30 +21,24 @@ export const RadioGroupContent = () => {
         <RadioGroup.Item value="instant">
           <RadioGroup.Indicator />
           <View className="flex-1">
-            <RadioGroup.Label>Instant</RadioGroup.Label>
-            <RadioGroup.Description>
-              Get notifications immediately
-            </RadioGroup.Description>
+            <Label>Instant</Label>
+            <Description>Get notifications immediately</Description>
           </View>
         </RadioGroup.Item>
-        <Divider className="my-4" />
+        <Separator className="my-4" />
         <RadioGroup.Item value="daily">
           <RadioGroup.Indicator />
           <View className="flex-1">
-            <RadioGroup.Label>Daily</RadioGroup.Label>
-            <RadioGroup.Description>
-              Once per day summary of all updates
-            </RadioGroup.Description>
+            <Label>Daily</Label>
+            <Description>Once per day summary of all updates</Description>
           </View>
         </RadioGroup.Item>
-        <Divider className="my-4" />
+        <Separator className="my-4" />
         <RadioGroup.Item value="weekly">
           <RadioGroup.Indicator />
           <View className="flex-1">
-            <RadioGroup.Label>Weekly</RadioGroup.Label>
-            <RadioGroup.Description>
-              Weekly digest every Monday morning
-            </RadioGroup.Description>
+            <Label>Weekly</Label>
+            <Description>Weekly digest every Monday morning</Description>
           </View>
         </RadioGroup.Item>
       </RadioGroup>

@@ -1,5 +1,5 @@
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   base: '',
@@ -18,14 +18,14 @@ const footer = tv({
 });
 
 const label = tv({
-  base: 'text-foreground font-medium text-lg',
+  base: 'text-lg text-foreground font-medium',
 });
 
 const description = tv({
   base: 'text-base text-muted',
 });
 
-const cardStyles = combineStyles({
+export const cardClassNames = combineStyles({
   root,
   header,
   body,
@@ -33,5 +33,3 @@ const cardStyles = combineStyles({
   label,
   description,
 });
-
-export default cardStyles;

@@ -7,6 +7,7 @@ export const DISPLAY_NAME = {
   TRIGGER: 'HeroUINative.Tabs.Trigger',
   LABEL: 'HeroUINative.Tabs.Label',
   INDICATOR: 'HeroUINative.Tabs.Indicator',
+  SEPARATOR: 'HeroUINative.Tabs.Separator',
   CONTENT: 'HeroUINative.Tabs.Content',
 } as const;
 

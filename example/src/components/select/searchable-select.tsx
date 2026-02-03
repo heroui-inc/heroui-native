@@ -1,6 +1,6 @@
 import {
-  Divider,
   Select,
+  Separator,
   useSelectAnimation,
   useThemeColor,
   type SelectTriggerRef,
@@ -92,7 +92,7 @@ export function SearchableSelect() {
           className="bg-transparent"
           onPress={() => KeyboardController.dismiss()}
         />
-        <Select.Content width="trigger">
+        <Select.Content presentation="popover" width="trigger">
           {US_STATES.filter((state) =>
             state.label.toLowerCase().includes(searchQuery.toLowerCase())
           ).map((state, index, filteredArray) => (
@@ -102,7 +102,7 @@ export function SearchableSelect() {
                 label={state.label}
                 onPress={() => KeyboardController.dismiss()}
               />
-              {index < filteredArray.length - 1 && <Divider />}
+              {index < filteredArray.length - 1 && <Separator />}
             </React.Fragment>
           ))}
           {US_STATES.filter((state) =>

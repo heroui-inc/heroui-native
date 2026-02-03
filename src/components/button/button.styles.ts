@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 /**
  * Button root style definition
@@ -28,12 +28,13 @@ const root = tv({
       primary: 'bg-accent',
       secondary: 'bg-default',
       tertiary: 'bg-default',
+      outline: 'bg-transparent border border-border',
       ghost: 'bg-transparent',
       danger: 'bg-danger',
       ['danger-soft']: 'bg-danger-soft',
     },
     size: {
-      sm: 'h-[36px] px-3.5 gap-1.5 rounded-2xl',
+      sm: 'h-[36px] px-3.5 gap-1.5 rounded-3xl',
       md: 'h-[48px] px-4 gap-2 rounded-3xl',
       lg: 'h-[56px] px-5 gap-2.5 rounded-4xl',
     },
@@ -59,6 +60,7 @@ const label = tv({
       primary: 'text-accent-foreground',
       secondary: 'text-accent-soft-foreground',
       tertiary: 'text-default-foreground',
+      outline: 'text-default-foreground',
       ghost: 'text-default-foreground',
       danger: 'text-danger-foreground',
       ['danger-soft']: 'text-danger',
@@ -75,15 +77,13 @@ const label = tv({
   },
 });
 
-export const styleSheet = StyleSheet.create({
-  buttonRoot: {
-    borderCurve: 'continuous',
-  },
-});
-
-const buttonStyles = combineStyles({
+export const buttonClassNames = combineStyles({
   root,
   label,
 });
 
-export default buttonStyles;
+export const buttonStyleSheet = StyleSheet.create({
+  buttonRoot: {
+    borderCurve: 'continuous',
+  },
+});

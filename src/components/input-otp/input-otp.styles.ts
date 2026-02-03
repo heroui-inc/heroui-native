@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   base: 'flex-row items-center gap-2',
@@ -11,7 +11,7 @@ const group = tv({
 });
 
 const slot = tv({
-  base: 'h-12 w-11 items-center justify-center rounded-[14px] border-[1.5px] overflow-hidden',
+  base: 'h-12 w-11 items-center justify-center rounded-xl border-[1.5px] overflow-hidden',
   variants: {
     variant: {
       primary: 'bg-field border-field-border shadow-field',
@@ -48,16 +48,10 @@ const slotCaret = tv({
 });
 
 const separator = tv({
-  base: 'h-0.5 w-2 rounded-full bg-divider/50',
+  base: 'h-0.5 w-2 rounded-full bg-separator/50',
 });
 
-export const styleSheet = StyleSheet.create({
-  slotRoot: {
-    borderCurve: 'continuous',
-  },
-});
-
-const inputOTPStyles = combineStyles({
+export const inputOTPClassNames = combineStyles({
   root,
   group,
   slot,
@@ -67,4 +61,8 @@ const inputOTPStyles = combineStyles({
   separator,
 });
 
-export default inputOTPStyles;
+export const inputOTPStyleSheet = StyleSheet.create({
+  slotRoot: {
+    borderCurve: 'continuous',
+  },
+});

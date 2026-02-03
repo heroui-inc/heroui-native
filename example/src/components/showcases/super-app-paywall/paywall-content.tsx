@@ -134,14 +134,13 @@ export function SuperAppPaywallContent() {
         />
         <BottomSheet.Close
           className="absolute top-4 right-4"
-          iconProps={{ size: 28, color: 'gray' }}
+          iconProps={{ color: 'gray' }}
         />
       </View>
 
       {/* Tabs Section */}
       <View className="mb-6 px-4 pt-6">
         <Tabs
-          variant="pill"
           value={activeTab}
           onValueChange={(value) => setActiveTab(value as 'app' | 'super')}
           className="gap-2"

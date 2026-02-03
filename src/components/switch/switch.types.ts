@@ -8,7 +8,7 @@ import type {
   Animation,
   AnimationRoot,
   AnimationValue,
-} from '../../helpers/types/animation';
+} from '../../helpers/internal/types';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
 
 /**
@@ -40,7 +40,7 @@ export type SwitchRootAnimation = AnimationRoot<{
   backgroundColor?: AnimationValue<{
     /**
      * Background color values [unselected, selected]
-     * @default Uses theme colors (surface-quaternary, accent)
+     * @default Uses theme colors (default, accent)
      */
     value?: [string, string];
     /**
@@ -65,7 +65,7 @@ export interface SwitchProps
   /** Custom class name for the switch
    *
    * @note The following style properties are occupied by animations and cannot be set via className:
-   * - `backgroundColor` - Animated for selection transitions (unselected: surface-quaternary, selected: accent)
+   * - `backgroundColor` - Animated for selection transitions (unselected: default, selected: accent)
    * - `transform` (specifically `scale`) - Animated for press feedback transitions (unpressed: 1, pressed: 0.96)
    *
    * To customize these properties, use the `animation` prop:

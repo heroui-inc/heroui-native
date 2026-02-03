@@ -1,4 +1,3 @@
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Accordion, PressableFeedback, useAccordionItem } from 'heroui-native';
 import { View } from 'react-native';
 import Animated, {
@@ -8,14 +7,16 @@ import Animated, {
   ZoomIn,
   ZoomOut,
 } from 'react-native-reanimated';
-import { withUniwind } from 'uniwind';
 import { AccordionWithDepthEffect } from '../../../components/accordion/accordion-with-depth-effect';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
-
-const StyledIonicons = withUniwind(Ionicons);
-const StyledMaterialIcons = withUniwind(MaterialIcons);
+import { BoxIcon } from '../../../components/icons/box';
+import { MinusIcon } from '../../../components/icons/minus';
+import { PlanetEarthIcon } from '../../../components/icons/planet-earth';
+import { PlusIcon } from '../../../components/icons/plus';
+import { ReceiptIcon } from '../../../components/icons/receipt';
+import { ShoppingBagIcon } from '../../../components/icons/shopping-bag';
 
 const ICON_SIZE = 16;
 
@@ -37,7 +38,7 @@ const CustomIndicator = () => {
           entering={CUSTOM_INDICATOR_ENTERING}
           exiting={CUSTOM_INDICATOR_EXITING}
         >
-          <StyledIonicons name="remove" size={18} className="text-muted" />
+          <MinusIcon size={14} colorClassName="accent-muted" />
         </Animated.View>
       ) : (
         <Animated.View
@@ -45,7 +46,7 @@ const CustomIndicator = () => {
           entering={CUSTOM_INDICATOR_ENTERING}
           exiting={CUSTOM_INDICATOR_EXITING}
         >
-          <StyledIonicons name="add" size={18} className="text-muted" />
+          <PlusIcon size={14} colorClassName="accent-muted" />
         </Animated.View>
       )}
     </View>
@@ -58,52 +59,28 @@ const accordionData = [
   {
     id: '1',
     title: 'How do I place an order?',
-    icon: (
-      <StyledIonicons
-        name="bag-outline"
-        size={ICON_SIZE}
-        className="text-muted"
-      />
-    ),
+    icon: <ShoppingBagIcon size={ICON_SIZE} colorClassName="accent-muted" />,
     content:
       'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
   },
   {
     id: '2',
     title: 'Can I modify or cancel my order?',
-    icon: (
-      <StyledIonicons
-        name="receipt-outline"
-        size={ICON_SIZE}
-        className="text-muted"
-      />
-    ),
+    icon: <ReceiptIcon size={ICON_SIZE} colorClassName="accent-muted" />,
     content:
       'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
   },
   {
     id: '3',
     title: 'How much does shipping cost?',
-    icon: (
-      <StyledMaterialIcons
-        name="inventory-2"
-        size={ICON_SIZE}
-        className="text-muted"
-      />
-    ),
+    icon: <BoxIcon size={ICON_SIZE} colorClassName="accent-muted" />,
     content:
       'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat.',
   },
   {
     id: '4',
     title: 'Do you ship internationally?',
-    icon: (
-      <StyledIonicons
-        name="globe-outline"
-        size={ICON_SIZE}
-        className="text-muted"
-      />
-    ),
+    icon: <PlanetEarthIcon size={ICON_SIZE} colorClassName="accent-muted" />,
     content:
       'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
   },
@@ -216,10 +193,10 @@ const MultipleSelectionContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const WithoutDividersContent = () => {
+const WithoutSeparatorsContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
-      <Accordion isDividerVisible={false} className="w-full">
+      <Accordion hideSeparator className="w-full">
         {accordionData.slice(0, 3).map((item) => (
           <Accordion.Item key={item.id} value={item.id}>
             <Accordion.Trigger className="rounded-lg">
@@ -348,9 +325,9 @@ const ACCORDION_VARIANTS: UsageVariant[] = [
     content: <MultipleSelectionContent />,
   },
   {
-    value: 'without-dividers',
-    label: 'Without dividers',
-    content: <WithoutDividersContent />,
+    value: 'without-separators',
+    label: 'Without separators',
+    content: <WithoutSeparatorsContent />,
   },
   {
     value: 'custom-indicator',

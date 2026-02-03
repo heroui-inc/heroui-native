@@ -1,10 +1,10 @@
 import { Children, forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useThemeColor } from '../../helpers/theme/hooks/use-theme-color';
-import type { ViewRef } from '../../helpers/types';
-import { createContext } from '../../helpers/utils';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { ViewRef } from '../../helpers/internal/types';
+import { createContext } from '../../helpers/internal/utils';
 import * as AccordionPrimitive from '../../primitives/accordion';
 import {
   AccordionAnimationProvider,
@@ -14,7 +14,7 @@ import {
   useAccordionRootAnimation,
 } from './accordion.animation';
 import { DEFAULT_ICON_SIZE, DISPLAY_NAME } from './accordion.constants';
-import accordionStyles, { styleSheet } from './accordion.styles';
+import { accordionClassNames, accordionStyleSheet } from './accordion.styles';
 import type {
   AccordionContentProps,
   AccordionContextValue,
@@ -54,7 +54,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
   const {
     children,
     variant = 'default',
-    isDividerVisible = true,
+    hideSeparator = false,
     className,
     classNames,
     style,
@@ -62,13 +62,13 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const { container, divider } = accordionStyles.root({ variant });
+  const { container, separator } = accordionClassNames.root({ variant });
 
   const containerStyles = container({
     className: [className, classNames?.container],
   });
 
-  const dividerStyles = divider({ className: classNames?.divider });
+  const separatorStyles = separator({ className: classNames?.separator });
 
   const { layoutTransition, isAllAnimationsDisabled } =
     useAccordionRootAnimation({
@@ -103,16 +103,16 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
           <AnimatedRootView
             ref={ref}
             className={containerStyles}
-            style={[styleSheet.root, style]}
+            style={[accordionStyleSheet.root, style]}
             layout={layoutTransition}
             {...restProps}
           >
             {Children.map(children, (child, index) => (
               <>
                 {child}
-                {isDividerVisible && index < Children.count(children) - 1 && (
+                {!hideSeparator && index < Children.count(children) - 1 && (
                   <Animated.View
-                    className={dividerStyles}
+                    className={separatorStyles}
                     layout={layoutTransition}
                   />
                 )}
@@ -137,7 +137,7 @@ const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const tvStyles = accordionStyles.item({ className });
+  const itemClassName = accordionClassNames.item({ className });
 
   const { layoutTransition } = useAccordionAnimation();
   const { value: rootValue } = useAccordion();
@@ -164,7 +164,7 @@ const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
       ref={ref}
       layout={layoutProp || layoutTransition}
       value={value}
-      className={tvStyles}
+      className={itemClassName}
       isDisabled={isDisabledProp}
       {...restProps}
     >
@@ -180,14 +180,18 @@ const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
 
   const { variant } = useAccordionInnerContext();
 
-  const tvStyles = accordionStyles.trigger({
+  const triggerClassName = accordionClassNames.trigger({
     variant,
     className,
   });
 
   return (
     <AccordionPrimitive.Header>
-      <AccordionPrimitive.Trigger ref={ref} className={tvStyles} {...restProps}>
+      <AccordionPrimitive.Trigger
+        ref={ref}
+        className={triggerClassName}
+        {...restProps}
+      >
         {children}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
@@ -211,7 +215,7 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
 
   const themeColorForeground = useThemeColor('foreground');
 
-  const indicatorClassName = accordionStyles.indicator({ className });
+  const indicatorClassName = accordionClassNames.indicator({ className });
 
   const { rContainerStyle } = useAccordionIndicatorAnimation({
     animation,
@@ -259,7 +263,7 @@ const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
 
   const { isExpanded } = useAccordionItem();
 
-  const tvStyles = accordionStyles.content({ variant, className });
+  const contentClassName = accordionClassNames.content({ variant, className });
 
   const { entering: animatedEntering, exiting: animatedExiting } =
     useAccordionContentAnimation({
@@ -272,7 +276,11 @@ const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
 
   return (
     <Animated.View entering={animatedEntering} exiting={animatedExiting}>
-      <AccordionPrimitive.Content ref={ref} className={tvStyles} {...restProps}>
+      <AccordionPrimitive.Content
+        ref={ref}
+        className={contentClassName}
+        {...restProps}
+      >
         {children}
       </AccordionPrimitive.Content>
     </Animated.View>

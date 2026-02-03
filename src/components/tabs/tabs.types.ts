@@ -1,5 +1,6 @@
-import type { ScrollViewProps } from 'react-native';
+import type { ScrollViewProps, ViewProps } from 'react-native';
 import type {
+  AnimatedProps,
   WithSpringConfig,
   WithTimingConfig,
 } from 'react-native-reanimated';
@@ -7,7 +8,7 @@ import type {
   Animation,
   AnimationRootDisableAll,
   AnimationValue,
-} from '../../helpers/types/animation';
+} from '../../helpers/internal/types';
 import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
 
 /**
@@ -24,9 +25,9 @@ export interface TabsProps extends TabsPrimitivesTypes.RootProps {
   children?: React.ReactNode;
   /**
    * Visual variant of the tabs
-   * @default 'pill'
+   * @default 'primary'
    */
-  variant?: 'pill' | 'line';
+  variant?: 'primary' | 'secondary';
   /**
    * Animation configuration for tabs
    * - `"disable-all"`: Disable all animations including children (cascades down to all child components)
@@ -155,7 +156,7 @@ type TabsIndicatorTimingAnimationValue = AnimationValue<{
 }>;
 
 /**
- * Animation value for tabs indicator properties (width, height, left)
+ * Animation value for tabs indicator properties (width, height, translateX)
  */
 type TabsIndicatorPropertyAnimationValue =
   | TabsIndicatorSpringAnimationValue
@@ -174,9 +175,10 @@ export type TabsIndicatorAnimation = Animation<{
    */
   height?: TabsIndicatorPropertyAnimationValue;
   /**
-   * Left position animation configuration
+   * TranslateX animation configuration
+   * Controls the horizontal position animation using GPU-accelerated transforms
    */
-  left?: TabsIndicatorPropertyAnimationValue;
+  translateX?: TabsIndicatorPropertyAnimationValue;
 }>;
 
 /**
@@ -189,7 +191,7 @@ export interface TabsIndicatorProps extends TabsPrimitivesTypes.IndicatorProps {
    * @note The following style properties are occupied by animations and cannot be set via className:
    * - `width` - Animated for indicator width transitions when switching tabs
    * - `height` - Animated for indicator height transitions when switching tabs
-   * - `left` - Animated for indicator position transitions when switching tabs
+   * - `translateX` - Animated for indicator position transitions when switching tabs (uses translateX for GPU-accelerated performance)
    * - `opacity` - Animated for indicator visibility transitions (0 when no active tab, 1 when active tab is selected)
    *
    * To customize these properties, use the `animation` prop:
@@ -198,7 +200,7 @@ export interface TabsIndicatorProps extends TabsPrimitivesTypes.IndicatorProps {
    *   animation={{
    *     width: { type: 'spring', config: { stiffness: 1200, damping: 120 } },
    *     height: { type: 'spring', config: { stiffness: 1200, damping: 120 } },
-   *     left: { type: 'timing', config: { duration: 200 } }
+   *     translateX: { type: 'timing', config: { duration: 200 } }
    *   }}
    * />
    * ```
@@ -224,6 +226,80 @@ export interface TabsIndicatorProps extends TabsPrimitivesTypes.IndicatorProps {
    * @default true
    */
   isAnimatedStyleActive?: boolean;
+}
+
+/**
+ * Animation configuration for tabs separator component
+ */
+export type TabsSeparatorAnimation = Animation<{
+  /**
+   * Opacity animation configuration
+   */
+  opacity?: AnimationValue<{
+    /**
+     * Opacity values [hidden, visible]
+     * @default [0, 1]
+     */
+    value?: [number, number];
+    /**
+     * Timing animation configuration
+     * @default { duration: 200 }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+}>;
+
+/**
+ * Props for the TabsSeparator component
+ */
+export interface TabsSeparatorProps extends AnimatedProps<ViewProps> {
+  /**
+   * Array of tab values between which the separator should be visible
+   * The separator will be visible when the current tab value is between these values
+   */
+  betweenValues: string[];
+  /**
+   * If true, opacity is always 1 regardless of the current tab value
+   * @default false
+   */
+  isAlwaysVisible?: boolean;
+  /**
+   * Animation configuration for separator
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: TabsSeparatorAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
+  /**
+   * Additional CSS classes for the separator element
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `opacity` - Animated for separator visibility transitions (0 when not between values, 1 when between values)
+   *
+   * To customize these properties, use the `animation` prop:
+   * ```tsx
+   * <Tabs.Separator
+   *   betweenValues={["tab1", "tab2"]}
+   *   animation={{
+   *     opacity: { value: [0, 1], timingConfig: { duration: 200 } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+   */
+  className?: string;
+  /**
+   * React children elements
+   */
+  children?: React.ReactNode;
 }
 
 /**
@@ -259,5 +335,7 @@ export type ItemMeasurements = {
 export type MeasurementsContextValue = {
   measurements: Record<string, ItemMeasurements>;
   setMeasurements: (key: string, measurements: ItemMeasurements) => void;
-  variant: 'pill' | 'line';
+  variant: 'primary' | 'secondary';
+  isScrollView: boolean;
+  setIsScrollView: (isScrollView: boolean) => void;
 };

@@ -5,7 +5,7 @@ import type {
   SlottableViewProps,
   TextRef,
   ViewRef,
-} from '../../helpers/types';
+} from '../../helpers/internal/types';
 
 /**
  * Context for the bottom sheet root component

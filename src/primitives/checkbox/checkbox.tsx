@@ -3,7 +3,7 @@ import { type GestureResponderEvent, Pressable, View } from 'react-native';
 import type {
   PressableRef,
   SlottablePressableProps,
-} from '../../helpers/types';
+} from '../../helpers/internal/types';
 import * as Slot from '../slot';
 import type {
   IndicatorProps,

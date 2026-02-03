@@ -23,12 +23,12 @@ export const DialogBlurBackdrop = () => {
   });
 
   return (
-    <Dialog.Close style={StyleSheet.absoluteFill}>
+    <Dialog.Overlay className="bg-transparent" isAnimatedStyleActive={false}>
       <AnimatedBlurView
         blurIntensity={blurIntensity}
         tint={isDark ? 'dark' : 'systemUltraThinMaterialDark'}
         style={StyleSheet.absoluteFill}
       />
-    </Dialog.Close>
+    </Dialog.Overlay>
   );
 };

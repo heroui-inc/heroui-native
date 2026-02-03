@@ -21,11 +21,15 @@ export default function PopoverNativeModalScreen() {
         <Popover.Portal>
           <Popover.Overlay />
           <Popover.Content
+            presentation="popover"
             width={320}
             offset={insets.top + 20}
             className="gap-3 px-6 py-5"
           >
-            <Popover.Close className="absolute top-4 right-4 z-50" />
+            <Popover.Close
+              variant="ghost"
+              className="absolute top-3 right-2 z-50"
+            />
             <View className="flex-row items-center gap-3 mb-1">
               <View className="size-12 items-center justify-center rounded-full bg-warning/15">
                 <StyledIonicons
@@ -43,7 +47,7 @@ export default function PopoverNativeModalScreen() {
               Harvard Mark II computer in 1947. Grace Hopper taped it to the log
               book with the note "First actual case of bug being found."
             </Popover.Description>
-            <View className="flex-row items-center gap-2 mt-2 pt-2 border-t border-border">
+            <View className="flex-row items-center gap-2 mt-2 pt-2">
               <StyledIonicons
                 name="sparkles"
                 size={14}

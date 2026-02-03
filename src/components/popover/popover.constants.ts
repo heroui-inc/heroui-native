@@ -16,7 +16,7 @@ export const DISPLAY_NAME = {
 /**
  * Default offset from trigger element
  */
-export const DEFAULT_OFFSET = 8;
+export const DEFAULT_OFFSET = 9;
 
 /**
  * Default alignment offset

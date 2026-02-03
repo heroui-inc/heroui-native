@@ -1,10 +1,16 @@
-import { Ionicons } from '@expo/vector-icons';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { cn, Divider, RadioGroup, Surface } from 'heroui-native';
+import {
+  cn,
+  Description,
+  FieldError,
+  Label,
+  RadioGroup,
+  Separator,
+  Surface,
+} from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
-  FadeIn,
+  FadeInUp,
   LinearTransition,
   ZoomIn,
 } from 'react-native-reanimated';
@@ -12,12 +18,11 @@ import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { BellFillIcon } from '../../../components/icons/bell-fill';
+import { ThunderboltFillIcon } from '../../../components/icons/thunderbolt-fill';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 const StyleAnimatedView = withUniwind(Animated.View);
-
-const StyledIonicons = withUniwind(Ionicons);
-const StyledFontAwesome = withUniwind(FontAwesome);
 
 const BasicRadioGroupContent = () => {
   const [withDescSelection, setWithDescSelection] = React.useState('desc1');
@@ -31,30 +36,24 @@ const BasicRadioGroupContent = () => {
         >
           <RadioGroup.Item value="desc1">
             <View>
-              <RadioGroup.Label>Standard Shipping</RadioGroup.Label>
-              <RadioGroup.Description>
-                Delivered in 5-7 business days
-              </RadioGroup.Description>
+              <Label>Standard Shipping</Label>
+              <Description>Delivered in 5-7 business days</Description>
             </View>
             <RadioGroup.Indicator />
           </RadioGroup.Item>
-          <Divider className="my-1" />
+          <Separator className="my-1" />
           <RadioGroup.Item value="desc2">
             <View>
-              <RadioGroup.Label>Express Shipping</RadioGroup.Label>
-              <RadioGroup.Description>
-                Delivered in 2-3 business days
-              </RadioGroup.Description>
+              <Label>Express Shipping</Label>
+              <Description>Delivered in 2-3 business days</Description>
             </View>
             <RadioGroup.Indicator />
           </RadioGroup.Item>
-          <Divider className="my-1" />
+          <Separator className="my-1" />
           <RadioGroup.Item value="desc3">
             <View>
-              <RadioGroup.Label>Overnight Shipping</RadioGroup.Label>
-              <RadioGroup.Description>
-                Delivered next business day
-              </RadioGroup.Description>
+              <Label>Overnight Shipping</Label>
+              <Description>Delivered next business day</Description>
             </View>
             <RadioGroup.Indicator />
           </RadioGroup.Item>
@@ -101,8 +100,8 @@ const ShippingOptionItem = ({
       {({ isSelected }) => (
         <View
           className={cn(
-            'flex-row items-center justify-between gap-3 p-3 rounded-2xl bg-transparent',
-            isSelected && 'bg-surface',
+            'flex-row items-center justify-between gap-3 p-3 rounded-[18px] bg-transparent',
+            isSelected && 'bg-surface shadow-surface',
             containerClassName
           )}
         >
@@ -113,8 +112,8 @@ const ShippingOptionItem = ({
             )}
           />
           <View className="flex-1">
-            <RadioGroup.Label>{label}</RadioGroup.Label>
-            <RadioGroup.Description>{description}</RadioGroup.Description>
+            <Label>{label}</Label>
+            <Description>{description}</Description>
           </View>
           <AppText
             className={cn(
@@ -140,7 +139,7 @@ const StartIndicatorAlignmentContent = () => {
         value={shippingSpeed}
         onValueChange={setShippingSpeed}
         className="gap-4"
-        isOnSurface
+        variant="secondary"
       >
         <ShippingOptionItem
           value="standard"
@@ -194,9 +193,7 @@ const InlineRadioOptionsContent = () => {
               className="flex-1 gap-1.5"
             >
               <RadioGroup.Indicator />
-              <RadioGroup.Label className="flex-1">
-                {sizeOption}
-              </RadioGroup.Label>
+              <Label className="flex-1">{sizeOption}</Label>
             </RadioGroup.Item>
           ))}
         </RadioGroup>
@@ -218,7 +215,7 @@ const RadioGroupStatesContent = () => {
       <StyleAnimatedView className="w-full" layout={LinearTransition}>
         <Surface className="gap-6">
           <View>
-            <AppText className="text-foreground font-semibold text-base">
+            <AppText className="text-foreground font-medium text-lg">
               Choose Your Plan
             </AppText>
             <AppText className="text-muted text-sm">
@@ -232,39 +229,38 @@ const RadioGroupStatesContent = () => {
           >
             <RadioGroup.Item value="basic" isInvalid={false}>
               <View className="flex-1">
-                <RadioGroup.Label>Basic Plan</RadioGroup.Label>
-                <RadioGroup.Description>
-                  Perfect for individuals - $9/month
-                </RadioGroup.Description>
+                <Label>Basic Plan</Label>
+                <Description>Perfect for individuals - $9/month</Description>
               </View>
               <RadioGroup.Indicator />
             </RadioGroup.Item>
 
-            <Divider />
+            <Separator />
 
             <RadioGroup.Item value="pro" isDisabled isInvalid={false}>
               <View className="flex-1">
-                <RadioGroup.Label>Pro Plan</RadioGroup.Label>
-                <RadioGroup.Description>
-                  Coming soon - Advanced features
-                </RadioGroup.Description>
+                <Label>Pro Plan</Label>
+                <Description>Coming soon - Advanced features</Description>
               </View>
               <RadioGroup.Indicator />
             </RadioGroup.Item>
 
-            <Divider />
-            <RadioGroup.Item value="enterprise" isInvalid>
+            <Separator />
+            <RadioGroup.Item
+              value="enterprise"
+              isInvalid={plan === 'enterprise'}
+            >
               <View className="flex-1">
-                <RadioGroup.Label>Enterprise Plan</RadioGroup.Label>
-                <RadioGroup.Description>
+                <Label>Enterprise Plan</Label>
+                <Description className="text-danger" hideOnInvalid>
                   Not available in your region
-                </RadioGroup.Description>
+                </Description>
+                <FieldError>
+                  Enterprise plan is not available in your region!
+                </FieldError>
               </View>
               <RadioGroup.Indicator />
             </RadioGroup.Item>
-            <RadioGroup.ErrorMessage>
-              Enterprise plan is not available in your region
-            </RadioGroup.ErrorMessage>
           </RadioGroup>
         </Surface>
       </StyleAnimatedView>
@@ -293,10 +289,10 @@ const CustomIndicatorBackgroundContent = () => {
             {({ isSelected }) => (
               <>
                 <View className="flex-1">
-                  <RadioGroup.Label>High Priority</RadioGroup.Label>
-                  <RadioGroup.Description>
+                  <Label>High Priority</Label>
+                  <Description>
                     Urgent - requires immediate attention
-                  </RadioGroup.Description>
+                  </Description>
                 </View>
                 <RadioGroup.Indicator
                   className={cn(
@@ -310,16 +306,16 @@ const CustomIndicatorBackgroundContent = () => {
             )}
           </RadioGroup.Item>
 
-          <Divider />
+          <Separator />
 
           <RadioGroup.Item value="medium">
             {({ isSelected }) => (
               <>
                 <View className="flex-1">
-                  <RadioGroup.Label>Medium Priority</RadioGroup.Label>
-                  <RadioGroup.Description>
+                  <Label>Medium Priority</Label>
+                  <Description>
                     Important - complete within this week
-                  </RadioGroup.Description>
+                  </Description>
                 </View>
                 <RadioGroup.Indicator
                   className={cn(
@@ -333,16 +329,14 @@ const CustomIndicatorBackgroundContent = () => {
             )}
           </RadioGroup.Item>
 
-          <Divider />
+          <Separator />
 
           <RadioGroup.Item value="low">
             {({ isSelected }) => (
               <>
                 <View className="flex-1">
-                  <RadioGroup.Label>Low Priority</RadioGroup.Label>
-                  <RadioGroup.Description>
-                    Standard - complete when possible
-                  </RadioGroup.Description>
+                  <Label>Low Priority</Label>
+                  <Description>Standard - complete when possible</Description>
                 </View>
                 <RadioGroup.Indicator
                   className={cn(
@@ -383,52 +377,46 @@ const CustomIndicatorThumbContent = () => {
               <>
                 <RadioGroup.Indicator>
                   {isSelected && (
-                    <AnimatedView entering={FadeIn.duration(200)}>
-                      <StyledFontAwesome
-                        name="check"
-                        size={12}
-                        className="text-accent-foreground"
+                    <AnimatedView entering={ZoomIn.duration(200)}>
+                      <BellFillIcon
+                        size={14}
+                        colorClassName="accent-accent-foreground"
                       />
                     </AnimatedView>
                   )}
                 </RadioGroup.Indicator>
                 <View className="flex-1">
-                  <RadioGroup.Label>Email Notifications</RadioGroup.Label>
-                  <RadioGroup.Description>
-                    Get updates via email
-                  </RadioGroup.Description>
+                  <Label>Email Notifications</Label>
+                  <Description>Get updates via email</Description>
                 </View>
               </>
             )}
           </RadioGroup.Item>
 
-          <Divider />
+          <Separator />
 
           <RadioGroup.Item value="push">
             {({ isSelected }) => (
               <>
                 <RadioGroup.Indicator>
                   {isSelected && (
-                    <AnimatedView entering={FadeIn.duration(200)}>
-                      <StyledIonicons
-                        name="flash"
+                    <AnimatedView entering={FadeInUp.duration(200)}>
+                      <ThunderboltFillIcon
                         size={12}
-                        className="text-background"
+                        colorClassName="accent-background"
                       />
                     </AnimatedView>
                   )}
                 </RadioGroup.Indicator>
                 <View className="flex-1">
-                  <RadioGroup.Label>Push Notifications</RadioGroup.Label>
-                  <RadioGroup.Description>
-                    Get instant push alerts
-                  </RadioGroup.Description>
+                  <Label>Push Notifications</Label>
+                  <Description>Get instant push alerts</Description>
                 </View>
               </>
             )}
           </RadioGroup.Item>
 
-          <Divider />
+          <Separator />
 
           <RadioGroup.Item value="none">
             {({ isSelected }) => (
@@ -438,15 +426,13 @@ const CustomIndicatorThumbContent = () => {
                     <AnimatedView
                       key="none"
                       entering={ZoomIn.springify()}
-                      className="h-2.5 w-2.5 bg-accent-foreground"
+                      className="h-2.5 w-2.5 rounded-xs bg-accent-foreground"
                     />
                   )}
                 </RadioGroup.Indicator>
                 <View className="flex-1">
-                  <RadioGroup.Label>No Notifications</RadioGroup.Label>
-                  <RadioGroup.Description>
-                    Only check updates manually
-                  </RadioGroup.Description>
+                  <Label>No Notifications</Label>
+                  <Description>Only check updates manually</Description>
                 </View>
               </>
             )}

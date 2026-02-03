@@ -1,25 +1,32 @@
-import { forwardRef, useMemo } from 'react';
-import type { Text as RNText } from 'react-native';
+import { forwardRef, useLayoutEffect, useMemo, useRef } from 'react';
+import {
+  StyleSheet,
+  type GestureResponderEvent,
+  type Text as RNText,
+  type View,
+} from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-import { CloseIcon, FullWindowOverlay } from '../../helpers/components';
-import { HeroText } from '../../helpers/components/hero-text';
+import { FullWindowOverlay, HeroText } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
-} from '../../helpers/contexts/animation-settings-context';
-import { usePopupDialogContentAnimation } from '../../helpers/hooks/use-popup-dialog-content-animation';
-import { usePopupOverlayAnimation } from '../../helpers/hooks/use-popup-overlay-animation';
-import { usePopupRootAnimation } from '../../helpers/hooks/use-popup-root-animation';
-import { useThemeColor } from '../../helpers/theme';
+} from '../../helpers/internal/contexts';
+import {
+  usePopupDialogContentAnimation,
+  usePopupOverlayAnimation,
+  usePopupRootAnimation,
+} from '../../helpers/internal/hooks';
+import type { PressableRef } from '../../helpers/internal/types';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
+import { CloseButton } from '../close-button';
 import {
   DialogAnimationProvider,
   useDialogAnimation,
 } from './dialog.animation';
 import { DISPLAY_NAME } from './dialog.constants';
-import dialogStyles, { styleSheet } from './dialog.styles';
+import { dialogClassNames, dialogStyleSheet } from './dialog.styles';
 import type {
   DialogCloseProps,
   DialogContentProps,
@@ -35,53 +42,31 @@ const AnimatedOverlay = Animated.createAnimatedComponent(
   DialogPrimitives.Overlay
 );
 
-const AnimatedContent = Animated.createAnimatedComponent(
-  DialogPrimitives.Content
-);
-
 const useDialog = DialogPrimitives.useRootContext;
 
 // --------------------------------------------------
 
 const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
   (
-    {
-      children,
-      closeDelay = 300,
-      isDismissKeyboardOnClose = true,
-      isOpen: isOpenProp,
-      isDefaultOpen,
-      onOpenChange: onOpenChangeProp,
-      animation,
-      ...props
-    },
+    { children, isOpen, isDefaultOpen, onOpenChange, animation, ...props },
     ref
   ) => {
     const {
-      internalIsOpen,
-      componentState,
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
-      onOpenChange,
       isAllAnimationsDisabled,
     } = usePopupRootAnimation({
-      isOpen: isOpenProp,
-      isDefaultOpen,
-      onOpenChange: onOpenChangeProp,
-      closeDelay,
-      isDismissKeyboardOnClose,
       animation,
     });
 
     const animationContextValue = useMemo(
       () => ({
-        dialogState: componentState,
         progress,
         isDragging,
         isGestureReleaseAnimationRunning,
       }),
-      [componentState, progress, isDragging, isGestureReleaseAnimationRunning]
+      [progress, isDragging, isGestureReleaseAnimationRunning]
     );
 
     const animationSettingsContextValue = useMemo(
@@ -96,7 +81,7 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
         <DialogAnimationProvider value={animationContextValue}>
           <DialogPrimitives.Root
             ref={ref}
-            isOpen={internalIsOpen}
+            isOpen={isOpen}
             isDefaultOpen={isDefaultOpen}
             onOpenChange={onOpenChange}
             {...props}
@@ -129,14 +114,18 @@ const DialogPortal = ({
   const animationSettingsContext = useAnimationSettings();
   const animationContext = useDialogAnimation();
 
-  const tvStyles = dialogStyles.portal({ className });
+  const portalClassName = dialogClassNames.portal({ className });
 
   return (
     <DialogPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <DialogAnimationProvider value={animationContext}>
           <FullWindowOverlay>
-            <Animated.View className={tvStyles} style={style}>
+            <Animated.View
+              className={portalClassName}
+              style={style}
+              pointerEvents="box-none"
+            >
               {children}
             </Animated.View>
           </FullWindowOverlay>
@@ -159,9 +148,9 @@ const DialogOverlay = forwardRef<
     const { progress, isDragging, isGestureReleaseAnimationRunning } =
       useDialogAnimation();
 
-    const overlayClassName = dialogStyles.overlay({ className });
+    const overlayClassName = dialogClassNames.overlay({ className });
 
-    const { rContainerStyle } = usePopupOverlayAnimation({
+    const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
@@ -173,12 +162,18 @@ const DialogOverlay = forwardRef<
       : style;
 
     return (
-      <AnimatedOverlay
-        ref={ref}
-        className={overlayClassName}
-        style={overlayStyle}
-        {...props}
-      />
+      <Animated.View
+        entering={entering}
+        exiting={exiting}
+        style={StyleSheet.absoluteFill}
+      >
+        <AnimatedOverlay
+          ref={ref}
+          className={overlayClassName}
+          style={overlayStyle}
+          {...props}
+        />
+      </Animated.View>
     );
   }
 );
@@ -190,68 +185,62 @@ const DialogContent = forwardRef<
   DialogContentProps
 >(
   (
-    {
-      className,
-      style,
-      children,
-      onLayout,
-      animation,
-      isSwipeable = true,
-      isAnimatedStyleActive = true,
-      ...props
-    },
+    { className, style, children, animation, isSwipeable = true, ...props },
     ref
   ) => {
-    const { onOpenChange } = useDialog();
+    const { isOpen, onOpenChange } = useDialog();
 
-    const {
-      progress,
-      isDragging,
-      isGestureReleaseAnimationRunning,
-      dialogState,
-    } = useDialogAnimation();
+    const { progress, isDragging, isGestureReleaseAnimationRunning } =
+      useDialogAnimation();
 
-    const contentClassName = dialogStyles.content({ className });
+    const contentClassName = dialogClassNames.content({ className });
+
+    const dragContainerRef = useRef<View>(null);
 
     const {
       contentY,
       contentHeight,
       panGesture,
       rDragContainerStyle,
-      rContainerStyle,
+      entering,
+      exiting,
     } = usePopupDialogContentAnimation({
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
-      dialogState,
+      isOpen,
       onOpenChange,
       animation,
       isSwipeable,
     });
 
-    const contentStyle = isAnimatedStyleActive
-      ? [styleSheet.contentContainer, rContainerStyle, style]
-      : [styleSheet.contentContainer, style];
+    useLayoutEffect(() => {
+      dragContainerRef.current?.measure(
+        (_x, _y, _width, height, _pageX, pageY) => {
+          contentY.set(pageY);
+          contentHeight.set(height);
+        }
+      );
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
       <GestureDetector gesture={panGesture}>
         <Animated.View
-          style={rDragContainerStyle}
-          pointerEvents="box-none"
-          onLayout={(event) => {
-            contentY.set(event.nativeEvent.layout.y);
-            contentHeight.set(event.nativeEvent.layout.height);
-            onLayout?.(event);
-          }}
+          ref={dragContainerRef}
+          entering={entering}
+          exiting={exiting}
         >
-          <AnimatedContent
-            ref={ref}
-            className={contentClassName}
-            style={contentStyle}
-            {...props}
-          >
-            {children}
-          </AnimatedContent>
+          <Animated.View style={rDragContainerStyle} pointerEvents="box-none">
+            <DialogPrimitives.Content
+              ref={ref}
+              className={contentClassName}
+              style={[dialogStyleSheet.contentContainer, style]}
+              {...props}
+            >
+              {children}
+            </DialogPrimitives.Content>
+          </Animated.View>
         </Animated.View>
       </GestureDetector>
     );
@@ -260,29 +249,18 @@ const DialogContent = forwardRef<
 
 // --------------------------------------------------
 
-const DialogClose = forwardRef<
-  DialogPrimitivesTypes.CloseRef,
-  DialogCloseProps
->(({ className, iconProps, hitSlop = 12, children, ...props }, ref) => {
-  const themeColorMuted = useThemeColor('muted');
+const DialogClose = forwardRef<PressableRef, DialogCloseProps>((props, ref) => {
+  const { onPress: onPressProp, ...restProps } = props;
+  const { onOpenChange } = useDialog();
 
-  const tvStyles = dialogStyles.close({ className });
+  const onPress = (ev: GestureResponderEvent) => {
+    onOpenChange(false);
+    if (typeof onPressProp === 'function') {
+      onPressProp(ev);
+    }
+  };
 
-  return (
-    <DialogPrimitives.Close
-      ref={ref}
-      className={tvStyles}
-      hitSlop={hitSlop}
-      {...props}
-    >
-      {children || (
-        <CloseIcon
-          size={iconProps?.size ?? 18}
-          color={iconProps?.color ?? themeColorMuted}
-        />
-      )}
-    </DialogPrimitives.Close>
-  );
+  return <CloseButton ref={ref} onPress={onPress} {...restProps} />;
 });
 
 // --------------------------------------------------
@@ -290,7 +268,7 @@ const DialogClose = forwardRef<
 const DialogTitle = forwardRef<RNText, DialogTitleProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useDialog();
-    const tvStyles = dialogStyles.label({ className });
+    const titleClassName = dialogClassNames.label({ className });
 
     return (
       <HeroText
@@ -298,7 +276,7 @@ const DialogTitle = forwardRef<RNText, DialogTitleProps>(
         role="heading"
         accessibilityRole="header"
         nativeID={`${nativeID}_label`}
-        className={tvStyles}
+        className={titleClassName}
         {...props}
       >
         {children}
@@ -313,7 +291,7 @@ const DialogDescription = forwardRef<RNText, DialogDescriptionProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useDialog();
 
-    const tvStyles = dialogStyles.description({
+    const descriptionClassName = dialogClassNames.description({
       className,
     });
 
@@ -322,7 +300,7 @@ const DialogDescription = forwardRef<RNText, DialogDescriptionProps>(
         ref={ref}
         accessibilityRole="text"
         nativeID={`${nativeID}_desc`}
-        className={tvStyles}
+        className={descriptionClassName}
         {...props}
       >
         {children}

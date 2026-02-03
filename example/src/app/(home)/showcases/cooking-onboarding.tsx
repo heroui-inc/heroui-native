@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import {
   colorKit,
-  Divider,
+  Separator,
   useThemeColor,
   type PopoverTriggerRef,
 } from 'heroui-native';
@@ -200,7 +200,7 @@ export default function CookingOnboardingScreen() {
           great source of antioxidants and fiber, making them a healthy choice
           for breakfast.
         </AppText>
-        <Divider className="my-5" />
+        <Separator className="my-5" />
         <Highlights />
         <Ingridients />
       </ParallaxScrollView>

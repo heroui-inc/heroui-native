@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import Animated, { Easing, SlideInDown } from 'react-native-reanimated';
+import Animated, { SlideInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
 import { useAppTheme } from '../../../../contexts/app-theme-context';
@@ -41,28 +41,13 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
 
   return (
     <Select
+      presentation="dialog"
       value={model}
       onValueChange={(value) => {
         const modelValue = data.find((m) => m.value === value?.value);
         setModel(modelValue!);
       }}
       defaultValue={data[0]}
-      animation={{
-        entering: {
-          type: 'timing',
-          config: {
-            duration: 400,
-            easing: Easing.out(Easing.quad),
-          },
-        },
-        exiting: {
-          type: 'timing',
-          config: {
-            duration: 200,
-            easing: Easing.out(Easing.quad),
-          },
-        },
-      }}
     >
       <Select.Trigger asChild>
         <Button
@@ -133,7 +118,12 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
             contentContainerClassName="gap-2"
             contentContainerStyle={{ paddingBottom: insets.bottom + 80 }}
           >
-            <Select.Close>
+            <Select.Close
+              className="h-auto w-auto bg-transparent"
+              pressableFeedbackHighlightProps={{
+                isAnimatedStyleActive: false,
+              }}
+            >
               <View style={{ height: insets.top + screenHeight * 0.25 }} />
             </Select.Close>
             {data.map((m) => (

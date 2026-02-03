@@ -105,6 +105,14 @@ export default function Layout() {
           options={{ title: 'Checkbox' }}
         />
         <Stack.Screen name="components/chip" options={{ title: 'Chip' }} />
+        <Stack.Screen
+          name="components/close-button"
+          options={{ title: 'CloseButton' }}
+        />
+        <Stack.Screen
+          name="components/control-field"
+          options={{ title: 'ControlField' }}
+        />
         <Stack.Screen name="components/dialog" options={{ title: 'Dialog' }} />
         <Stack.Screen
           name="components/dialog-native-modal"
@@ -115,17 +123,11 @@ export default function Layout() {
           options={{ title: 'Description' }}
         />
         <Stack.Screen
-          name="components/divider"
-          options={{ title: 'Divider' }}
+          name="components/field-error"
+          options={{ title: 'FieldError' }}
         />
-        <Stack.Screen
-          name="components/error-view"
-          options={{ title: 'ErrorView' }}
-        />
-        <Stack.Screen
-          name="components/form-field"
-          options={{ title: 'FormField' }}
-        />
+
+        <Stack.Screen name="components/input" options={{ title: 'Input' }} />
         <Stack.Screen
           name="components/input-otp"
           options={{ title: 'InputOTP' }}
@@ -157,6 +159,10 @@ export default function Layout() {
         />
         <Stack.Screen name="components/select" options={{ title: 'Select' }} />
         <Stack.Screen
+          name="components/separator"
+          options={{ title: 'Separator' }}
+        />
+        <Stack.Screen
           name="components/skeleton"
           options={{ title: 'Skeleton' }}
         />
@@ -170,6 +176,10 @@ export default function Layout() {
         />
         <Stack.Screen name="components/switch" options={{ title: 'Switch' }} />
         <Stack.Screen name="components/tabs" options={{ title: 'Tabs' }} />
+        <Stack.Screen
+          name="components/text-area"
+          options={{ title: 'TextArea' }}
+        />
         <Stack.Screen
           name="components/text-field"
           options={{ title: 'TextField' }}

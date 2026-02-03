@@ -1,6 +1,6 @@
 import { createContext, forwardRef, useContext, useId } from 'react';
 import { Pressable, View, type GestureResponderEvent } from 'react-native';
-import { useControllableState } from '../../helpers/hooks';
+import { useControllableState } from '../../helpers/internal/hooks';
 import * as Slot from '../slot';
 import type {
   ContentProps,

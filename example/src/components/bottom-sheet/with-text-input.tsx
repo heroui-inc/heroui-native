@@ -8,6 +8,7 @@ import {
   Avatar,
   BottomSheet,
   Button,
+  Input,
   ScrollShadow,
   TextField,
   useThemeColor,
@@ -23,6 +24,7 @@ import {
 } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../app-text';
+import { MagnifierIcon } from '../icons/magnifier';
 
 const StyledIonicons = withUniwind(Ionicons);
 
@@ -78,7 +80,7 @@ const UserSearchItem = ({ user }: { user: User }) => {
 /**
  * BottomSheetTextInput component with custom keyboard handling
  *
- * This is a workaround to enable proper keyboard handling for TextField.Input
+ * This is a workaround to enable proper keyboard handling for Input
  * inside a bottom sheet. According to the @gorhom/bottom-sheet documentation:
  * https://gorhom.dev/react-native-bottom-sheet/keyboard-handling
  *
@@ -88,7 +90,7 @@ const UserSearchItem = ({ user }: { user: User }) => {
  * The implementation is based on the official BottomSheetTextInput source code:
  * https://github.com/gorhom/react-native-bottom-sheet/blob/master/src/components/bottomSheetTextInput/BottomSheetTextInput.tsx
  *
- * This component extends TextField.Input with the necessary focus/blur handlers
+ * This component extends Input with the necessary focus/blur handlers
  * that communicate with the bottom sheet's internal keyboard state management.
  */
 const BottomSheetTextInput = ({
@@ -136,7 +138,7 @@ const BottomSheetTextInput = ({
   return (
     <TextField className="absolute top-0 left-0 right-0 px-5 pt-2">
       <View className="w-full flex-row items-center">
-        <TextField.Input
+        <Input
           ref={inputRef}
           variant="secondary"
           placeholder="Search by name or email..."
@@ -148,12 +150,9 @@ const BottomSheetTextInput = ({
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
         />
-        <StyledIonicons
-          name="search"
-          size={20}
-          className="absolute left-3.5 text-muted"
-          pointerEvents="none"
-        />
+        <View className="absolute left-3.5" pointerEvents="none">
+          <MagnifierIcon colorClassName="accent-field-placeholder" />
+        </View>
         {searchQuery.length > 0 && (
           <Pressable
             className="absolute right-3 p-1"
@@ -172,14 +171,21 @@ const BottomSheetTextInput = ({
   );
 };
 
-export const WithTextInputContent = () => {
-  const [isOpen, setIsOpen] = useState(false);
+/**
+ * Component containing the bottom sheet content with search functionality and state logic.
+ * Manages search query state, filtering, and UI rendering.
+ */
+const UserSearchBottomSheetContent = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const themeColorOverlay = useThemeColor('overlay');
 
   const snapPoints = useMemo(() => ['50%', '90%'], []);
 
+  /**
+   * Filters users based on the search query.
+   * Searches in both name and email fields, case-insensitive.
+   */
   const filteredUsers = useMemo(() => {
     if (!searchQuery.trim()) {
       return MOCK_USERS;
@@ -193,6 +199,55 @@ export const WithTextInputContent = () => {
   }, [searchQuery]);
 
   return (
+    <BottomSheet.Content
+      snapPoints={snapPoints}
+      enableOverDrag={false}
+      enableDynamicSizing={false}
+      contentContainerClassName="h-full pt-16 pb-2"
+      keyboardBehavior="extend"
+    >
+      <BottomSheetTextInput
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
+      <ScrollShadow
+        LinearGradientComponent={LinearGradient}
+        color={themeColorOverlay}
+      >
+        <BottomSheetScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerClassName="pt-3"
+          keyboardShouldPersistTaps="handled"
+        >
+          {filteredUsers.length > 0 ? (
+            <View>
+              {filteredUsers.map((user) => (
+                <UserSearchItem key={user.id} user={user} />
+              ))}
+            </View>
+          ) : (
+            <View className="items-center justify-center py-8">
+              <StyledIonicons
+                name="search-outline"
+                size={48}
+                className="text-muted mb-3"
+              />
+              <AppText className="text-base text-muted">No users found</AppText>
+              <AppText className="text-sm text-muted mt-1">
+                Try a different search term
+              </AppText>
+            </View>
+          )}
+        </BottomSheetScrollView>
+      </ScrollShadow>
+    </BottomSheet.Content>
+  );
+};
+
+export const WithTextInputContent = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
@@ -203,50 +258,7 @@ export const WithTextInputContent = () => {
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
             <BottomSheet.Overlay />
-            <BottomSheet.Content
-              snapPoints={snapPoints}
-              enableOverDrag={false}
-              enableDynamicSizing={false}
-              contentContainerClassName="h-full pt-16 pb-2"
-              keyboardBehavior="extend"
-            >
-              <BottomSheetTextInput
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-              />
-              <ScrollShadow
-                LinearGradientComponent={LinearGradient}
-                color={themeColorOverlay}
-              >
-                <BottomSheetScrollView
-                  showsVerticalScrollIndicator={false}
-                  contentContainerClassName="pt-3"
-                  keyboardShouldPersistTaps="handled"
-                >
-                  {filteredUsers.length > 0 ? (
-                    <View>
-                      {filteredUsers.map((user) => (
-                        <UserSearchItem key={user.id} user={user} />
-                      ))}
-                    </View>
-                  ) : (
-                    <View className="items-center justify-center py-8">
-                      <StyledIonicons
-                        name="search-outline"
-                        size={48}
-                        className="text-muted mb-3"
-                      />
-                      <AppText className="text-base text-muted">
-                        No users found
-                      </AppText>
-                      <AppText className="text-sm text-muted mt-1">
-                        Try a different search term
-                      </AppText>
-                    </View>
-                  )}
-                </BottomSheetScrollView>
-              </ScrollShadow>
-            </BottomSheet.Content>
+            <UserSearchBottomSheetContent />
           </BottomSheet.Portal>
         </BottomSheet>
       </View>

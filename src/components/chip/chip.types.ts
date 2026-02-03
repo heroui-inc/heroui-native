@@ -1,5 +1,5 @@
 import type { PressableProps, TextProps } from 'react-native';
-import type { AnimationRootDisableAll } from '../../helpers/types/animation';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 
 /**
  * Chip size variants

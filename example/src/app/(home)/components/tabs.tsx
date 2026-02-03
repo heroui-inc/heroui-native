@@ -2,7 +2,11 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import {
   Button,
   cn,
-  FormField,
+  ControlField,
+  Description,
+  FieldError,
+  Input,
+  Label,
   RadioGroup,
   Tabs,
   TextField,
@@ -42,7 +46,7 @@ interface FormErrors {
 }
 
 interface TabsContentProps {
-  variant: 'pill' | 'line';
+  variant: 'primary' | 'secondary';
 }
 
 interface TabTriggerProps {
@@ -53,15 +57,7 @@ interface TabTriggerProps {
 const TabTrigger = ({ value, label }: TabTriggerProps) => {
   return (
     <Tabs.Trigger value={value}>
-      {({ isSelected }) => (
-        <Tabs.Label
-          className={cn(
-            isSelected ? 'text-accent font-medium' : 'text-foreground'
-          )}
-        >
-          {label}
-        </Tabs.Label>
-      )}
+      <Tabs.Label>{label}</Tabs.Label>
     </Tabs.Trigger>
   );
 };
@@ -114,16 +110,25 @@ const TabsContent = ({ variant }: TabsContentProps) => {
       variant={variant}
       value={activeTab}
       onValueChange={setActiveTab}
-      className={cn('gap-1.5', variant === 'line' && 'gap-0')}
+      className={cn('gap-1.5', variant === 'secondary' && 'gap-0')}
     >
-      <Tabs.List className={cn('border-b-0', variant === 'line' && 'mx-4')}>
-        <Tabs.ScrollView
-          contentContainerClassName={cn('gap-4', variant === 'line' && 'px-0')}
-        >
+      <Tabs.List
+        className={cn('border-b-0', variant === 'secondary' && 'mx-4')}
+      >
+        <Tabs.ScrollView contentContainerClassName="gap-1">
           <Tabs.Indicator />
           <TabTrigger value="general" label="General" />
+          {variant === 'primary' && (
+            <Tabs.Separator betweenValues={['general', 'appearance']} />
+          )}
           <TabTrigger value="appearance" label="Appearance" />
+          {variant === 'primary' && (
+            <Tabs.Separator betweenValues={['appearance', 'notifications']} />
+          )}
           <TabTrigger value="notifications" label="Notifications" />
+          {variant === 'primary' && (
+            <Tabs.Separator betweenValues={['notifications', 'profile']} />
+          )}
           <TabTrigger value="profile" label="Profile" />
         </Tabs.ScrollView>
       </Tabs.List>
@@ -131,43 +136,40 @@ const TabsContent = ({ variant }: TabsContentProps) => {
         layout={LinearTransition.duration(DURATION)}
         className={cn(
           'px-2 py-6',
-          variant === 'line' && 'px-5 border border-foreground/10 rounded-2xl'
+          variant === 'secondary' &&
+            'px-5 border border-foreground/10 rounded-2xl'
         )}
         style={styles.borderCurve}
       >
         <Tabs.Content value="general">
           <AnimatedContentContainer>
             <TextField>
-              <TextField.Label>Homepage</TextField.Label>
-              <TextField.Input value={homepage} />
+              <Label>Homepage</Label>
+              <Input value={homepage} />
             </TextField>
 
-            <FormField
+            <ControlField
               isSelected={showSidebar}
               onSelectedChange={setShowSidebar}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
-                <FormField.Label>Show sidebar</FormField.Label>
-                <FormField.Description>
-                  Display the sidebar navigation panel
-                </FormField.Description>
+                <Label>Show sidebar</Label>
+                <Description>Display the sidebar navigation panel</Description>
               </View>
-            </FormField>
+            </ControlField>
 
             {/* Show Status Bar Checkbox */}
-            <FormField
+            <ControlField
               isSelected={showStatusBar}
               onSelectedChange={setShowStatusBar}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
-                <FormField.Label>Show status bar</FormField.Label>
-                <FormField.Description>
-                  Display the status bar at the bottom
-                </FormField.Description>
+                <Label>Show status bar</Label>
+                <Description>Display the status bar at the bottom</Description>
               </View>
-            </FormField>
+            </ControlField>
           </AnimatedContentContainer>
         </Tabs.Content>
 
@@ -175,46 +177,44 @@ const TabsContent = ({ variant }: TabsContentProps) => {
           <AnimatedContentContainer>
             <RadioGroup value={theme} onValueChange={setTheme} className="mb-6">
               <View className="mb-2">
-                <FormField.Label>Theme</FormField.Label>
-                <FormField.Description>
-                  Select your preferred color theme
-                </FormField.Description>
+                <Label>Theme</Label>
+                <Description>Select your preferred color theme</Description>
               </View>
               <View className="gap-3">
                 <RadioGroup.Item value="auto" className="self-start">
                   <RadioGroup.Indicator />
-                  <RadioGroup.Label>Auto</RadioGroup.Label>
+                  <Label>Auto</Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="light" className="self-start">
                   <RadioGroup.Indicator />
-                  <RadioGroup.Label>Light</RadioGroup.Label>
+                  <Label>Light</Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="dark" className="self-start">
                   <RadioGroup.Indicator />
-                  <RadioGroup.Label>Dark</RadioGroup.Label>
+                  <Label>Dark</Label>
                 </RadioGroup.Item>
               </View>
             </RadioGroup>
 
             <RadioGroup value={fontSize} onValueChange={setFontSize}>
               <View className="mb-2">
-                <FormField.Label>Font Size</FormField.Label>
-                <FormField.Description>
+                <Label>Font Size</Label>
+                <Description>
                   Adjust the text size throughout the app
-                </FormField.Description>
+                </Description>
               </View>
               <View className="gap-3">
                 <RadioGroup.Item value="small" className="self-start">
                   <RadioGroup.Indicator />
-                  <RadioGroup.Label>Small</RadioGroup.Label>
+                  <Label>Small</Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="medium" className="self-start">
                   <RadioGroup.Indicator />
-                  <RadioGroup.Label>Medium</RadioGroup.Label>
+                  <Label>Medium</Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="large" className="self-start">
                   <RadioGroup.Indicator />
-                  <RadioGroup.Label>Large</RadioGroup.Label>
+                  <Label>Large</Label>
                 </RadioGroup.Item>
               </View>
             </RadioGroup>
@@ -223,62 +223,60 @@ const TabsContent = ({ variant }: TabsContentProps) => {
 
         <Tabs.Content value="notifications">
           <AnimatedContentContainer>
-            <FormField
+            <ControlField
               isSelected={accountActivity}
               onSelectedChange={setAccountActivity}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
-                <FormField.Label>Account activity</FormField.Label>
-                <FormField.Description>
+                <Label>Account activity</Label>
+                <Description>
                   Notifications about your account activity
-                </FormField.Description>
+                </Description>
               </View>
-            </FormField>
+            </ControlField>
 
-            <FormField isSelected={mentions} onSelectedChange={setMentions}>
-              <FormField.Indicator variant="checkbox" />
+            <ControlField isSelected={mentions} onSelectedChange={setMentions}>
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
-                <FormField.Label>Mentions</FormField.Label>
-                <FormField.Description>
+                <Label>Mentions</Label>
+                <Description>
                   When someone mentions you in a comment
-                </FormField.Description>
+                </Description>
               </View>
-            </FormField>
+            </ControlField>
 
-            <FormField
+            <ControlField
               isSelected={directMessages}
               onSelectedChange={setDirectMessages}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
-                <FormField.Label>Direct messages</FormField.Label>
-                <FormField.Description>
-                  Notifications for new direct messages
-                </FormField.Description>
+                <Label>Direct messages</Label>
+                <Description>Notifications for new direct messages</Description>
               </View>
-            </FormField>
+            </ControlField>
 
-            <FormField
+            <ControlField
               isSelected={marketingEmail}
               onSelectedChange={setMarketingEmail}
             >
-              <FormField.Indicator variant="checkbox" />
+              <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
-                <FormField.Label>Marketing email</FormField.Label>
-                <FormField.Description>
+                <Label>Marketing email</Label>
+                <Description>
                   Receive emails about new features and updates
-                </FormField.Description>
+                </Description>
               </View>
-            </FormField>
+            </ControlField>
           </AnimatedContentContainer>
         </Tabs.Content>
 
         <Tabs.Content value="profile">
           <AnimatedContentContainer>
             <TextField isRequired isInvalid={!!errors.name}>
-              <TextField.Label>Name</TextField.Label>
-              <TextField.Input
+              <Label>Name</Label>
+              <Input
                 value={name}
                 onChangeText={(text) => {
                   setName(text);
@@ -288,12 +286,12 @@ const TabsContent = ({ variant }: TabsContentProps) => {
                 }}
                 placeholder="Enter your full name"
               />
-              <TextField.ErrorMessage>{errors.name}</TextField.ErrorMessage>
+              <FieldError>{errors.name}</FieldError>
             </TextField>
 
             <TextField isRequired isInvalid={!!errors.username}>
-              <TextField.Label>Username</TextField.Label>
-              <TextField.Input
+              <Label>Username</Label>
+              <Input
                 value={username}
                 onChangeText={(text) => {
                   setUsername(text);
@@ -304,10 +302,10 @@ const TabsContent = ({ variant }: TabsContentProps) => {
                 placeholder="Enter username"
                 autoCapitalize="none"
               />
-              <TextField.Description>
-                3-20 characters, letters, numbers, and underscore only
-              </TextField.Description>
-              <TextField.ErrorMessage>{errors.username}</TextField.ErrorMessage>
+              <Description hideOnInvalid>
+                3-20 characters, letters, numbers only
+              </Description>
+              <FieldError>{errors.username}</FieldError>
             </TextField>
 
             <Button
@@ -330,7 +328,7 @@ const PillVariantContent = () => {
 
   return (
     <View className="flex-1 px-5" style={{ paddingTop: headerHeight + 20 }}>
-      <TabsContent variant="pill" />
+      <TabsContent variant="primary" />
     </View>
   );
 };
@@ -342,7 +340,7 @@ const LineVariantContent = () => {
 
   return (
     <View className="flex-1 px-5" style={{ paddingTop: headerHeight + 20 }}>
-      <TabsContent variant="line" />
+      <TabsContent variant="secondary" />
     </View>
   );
 };
@@ -351,13 +349,13 @@ const LineVariantContent = () => {
 
 const TABS_VARIANTS: UsageVariant[] = [
   {
-    value: 'pill-variant',
-    label: 'Pill variant',
+    value: 'primary-variant',
+    label: 'Primary variant',
     content: <PillVariantContent />,
   },
   {
-    value: 'line-variant',
-    label: 'Line variant',
+    value: 'secondary-variant',
+    label: 'Secondary variant',
     content: <LineVariantContent />,
   },
 ];

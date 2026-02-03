@@ -1,11 +1,17 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { Button, Popover } from 'heroui-native';
+import { Button, colorKit, Popover, useThemeColor } from 'heroui-native';
+import { useState } from 'react';
 import { Platform, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { ArrowDownToSquareIcon } from '../../../components/icons/arrow-down-to-square';
+import { CodeCompareIcon } from '../../../components/icons/code-compare';
+import { CopyIcon } from '../../../components/icons/copy';
+import { MapPinIcon } from '../../../components/icons/map-pin';
+import { NodesRightIcon } from '../../../components/icons/nodes-right';
 
 const StyledIonicons = withUniwind(Ionicons);
 
@@ -19,11 +25,15 @@ const WithTitleDescriptionContent = () => {
         <Popover.Portal>
           <Popover.Overlay />
           <Popover.Content
+            presentation="popover"
             width={320}
             placement="top"
             className="gap-3 px-6 py-5"
           >
-            <Popover.Close className="absolute top-4 right-4 z-50" />
+            <Popover.Close
+              variant="ghost"
+              className="absolute top-3 right-2 z-50"
+            />
             <View className="flex-row items-center gap-3 mb-1">
               <View className="size-12 items-center justify-center rounded-full bg-warning/15">
                 <StyledIonicons
@@ -41,7 +51,7 @@ const WithTitleDescriptionContent = () => {
               Harvard Mark II computer in 1947. Grace Hopper taped it to the log
               book with the note "First actual case of bug being found."
             </Popover.Description>
-            <View className="flex-row items-center gap-2 mt-2 pt-2 border-t border-border">
+            <View className="flex-row items-center gap-2 mt-2 pt-2">
               <StyledIonicons
                 name="sparkles"
                 size={14}
@@ -59,18 +69,21 @@ const WithTitleDescriptionContent = () => {
 // ------------------------------------------------------------------------------
 
 const PresentationVariantsContent = () => {
+  const [isPopoverOpen, setPopoverOpen] = useState(false);
+  const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
+
   return (
     <View className="flex-1 px-5 items-center justify-center gap-8">
-      <Popover>
+      <Popover isOpen={isPopoverOpen} onOpenChange={setPopoverOpen}>
         <Popover.Trigger asChild>
           <Button variant="secondary">Quick Notification</Button>
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Overlay />
           <Popover.Content
+            presentation="popover"
             width={300}
             className="gap-3"
-            presentation="popover"
             placement="top"
           >
             <View className="items-start gap-2">
@@ -94,13 +107,17 @@ const PresentationVariantsContent = () => {
                 sent to your email.
               </Popover.Description>
             </View>
-            <Popover.Close asChild>
-              <Button variant="secondary">Dismiss</Button>
-            </Popover.Close>
+            <Button variant="secondary" onPress={() => setPopoverOpen(false)}>
+              Dismiss
+            </Button>
           </Popover.Content>
         </Popover.Portal>
       </Popover>
-      <Popover>
+      <Popover
+        presentation="bottom-sheet"
+        isOpen={isBottomSheetOpen}
+        onOpenChange={setBottomSheetOpen}
+      >
         <Popover.Trigger asChild>
           <Button variant="secondary">More Options</Button>
         </Popover.Trigger>
@@ -119,11 +136,7 @@ const PresentationVariantsContent = () => {
               <View className="gap-2">
                 <View className="flex-row items-center gap-3 p-3 rounded-lg">
                   <View className="size-10 items-center justify-center rounded-full bg-accent/10">
-                    <StyledIonicons
-                      name="share-social"
-                      size={20}
-                      className="text-accent"
-                    />
+                    <NodesRightIcon size={18} colorClassName="accent-accent" />
                   </View>
                   <View className="flex-1">
                     <AppText className="text-base font-medium text-foreground">
@@ -136,11 +149,7 @@ const PresentationVariantsContent = () => {
                 </View>
                 <View className="flex-row items-center gap-3 p-3 rounded-lg">
                   <View className="size-10 items-center justify-center rounded-full bg-warning/10">
-                    <StyledIonicons
-                      name="copy-outline"
-                      size={20}
-                      className="text-warning"
-                    />
+                    <CopyIcon size={20} colorClassName="accent-warning" />
                   </View>
                   <View className="flex-1">
                     <AppText className="text-base font-medium text-foreground">
@@ -153,10 +162,9 @@ const PresentationVariantsContent = () => {
                 </View>
                 <View className="flex-row items-center gap-3 p-3 rounded-lg">
                   <View className="size-10 items-center justify-center rounded-full bg-success/10">
-                    <StyledIonicons
-                      name="download-outline"
+                    <ArrowDownToSquareIcon
                       size={20}
-                      className="text-success"
+                      colorClassName="accent-success"
                     />
                   </View>
                   <View className="flex-1">
@@ -169,15 +177,14 @@ const PresentationVariantsContent = () => {
                   </View>
                 </View>
               </View>
-              <Popover.Close asChild>
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  className="self-stretch mt-2"
-                >
-                  Cancel
-                </Button>
-              </Popover.Close>
+              <Button
+                variant="secondary"
+                size="lg"
+                className="self-stretch mt-2"
+                onPress={() => setBottomSheetOpen(false)}
+              >
+                Cancel
+              </Button>
             </View>
           </Popover.Content>
         </Popover.Portal>
@@ -195,6 +202,9 @@ const PlacementPopover = ({
 }) => {
   const label = placement.charAt(0).toUpperCase() + placement.slice(1);
 
+  const themeColorBorder = useThemeColor('accent');
+  const arrowStroke = colorKit.setAlpha(themeColorBorder, 0.35).hex();
+
   return (
     <Popover>
       <Popover.Trigger asChild>
@@ -204,14 +214,16 @@ const PlacementPopover = ({
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Overlay />
-        <Popover.Content placement={placement} width={220} className="gap-2">
+        <Popover.Content
+          presentation="popover"
+          placement={placement}
+          width={220}
+          className="gap-2 border border-accent/35"
+        >
+          <Popover.Arrow stroke={arrowStroke} />
           <View className="flex-row items-center gap-2">
             <View className="size-8 items-center justify-center rounded-full bg-accent/15">
-              <StyledIonicons
-                name="location"
-                size={16}
-                className="text-accent"
-              />
+              <MapPinIcon size={16} colorClassName="accent-accent" />
             </View>
             <AppText className="text-sm font-semibold text-foreground">
               Quick Tip
@@ -258,6 +270,7 @@ const AlignmentPopover = ({ align }: { align: 'start' | 'center' | 'end' }) => {
       <Popover.Portal>
         <Popover.Overlay />
         <Popover.Content
+          presentation="popover"
           placement="top"
           align={align}
           width={200}
@@ -265,11 +278,7 @@ const AlignmentPopover = ({ align }: { align: 'start' | 'center' | 'end' }) => {
         >
           <View className="flex-row items-center gap-2">
             <View className="size-8 items-center justify-center rounded-full bg-warning/15">
-              <StyledIonicons
-                name="git-compare-outline"
-                size={16}
-                className="text-warning"
-              />
+              <CodeCompareIcon size={16} colorClassName="accent-warning" />
             </View>
             <AppText className="text-sm font-semibold text-foreground">
               Alignment

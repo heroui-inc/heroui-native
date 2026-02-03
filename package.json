@@ -41,8 +41,9 @@
     "clean": "del-cli lib",
     "prepare": "bob build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",
-    "sync-version": "bash ./scripts/sync-version.sh",
-    "release": "bumpp --execute='yarn changelog' --all"
+    "release": "bumpp --execute='yarn changelog' --all",
+    "prepack": "node scripts/update-exports.js prepack",
+    "postpack": "node scripts/update-exports.js postpack"
   },
   "keywords": [
     "react-native",
@@ -103,7 +104,7 @@
     "tailwind-variants": "^3.2.2",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.8.3",
-    "uniwind": "1.2.4"
+    "uniwind": "1.2.7"
   },
   "peerDependencies": {
     "@gorhom/bottom-sheet": "^5",

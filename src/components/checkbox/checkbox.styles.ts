@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 /**
  * Root style definition
@@ -93,15 +93,13 @@ const indicator = tv({
   },
 });
 
-const checkboxStyles = combineStyles({
+export const checkboxClassNames = combineStyles({
   root,
   indicator,
 });
 
-export const styleSheet = StyleSheet.create({
+export const checkboxStyleSheet = StyleSheet.create({
   root: {
     borderCurve: 'continuous',
   },
 });
-
-export default checkboxStyles;

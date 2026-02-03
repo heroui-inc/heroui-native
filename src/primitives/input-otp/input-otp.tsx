@@ -21,7 +21,7 @@ import {
   type BlurEvent,
   type FocusEvent,
 } from 'react-native';
-import { useControllableState } from '../../helpers/hooks';
+import { useControllableState } from '../../helpers/internal/hooks';
 import * as SlotPrimitive from '../slot';
 import type {
   GroupProps,

@@ -1,10 +1,10 @@
 import { forwardRef } from 'react';
 import { View } from 'react-native';
-import { HeroText } from '../../helpers/components';
-import type { TextRef, ViewRef } from '../../helpers/types/primitives';
+import { HeroText } from '../../helpers/internal/components';
+import type { TextRef, ViewRef } from '../../helpers/internal/types';
 import { Surface } from '../surface';
 import { DISPLAY_NAME } from './card.constants';
-import cardStyles from './card.styles';
+import { cardClassNames } from './card.styles';
 import type {
   CardBodyProps,
   CardDescriptionProps,
@@ -19,10 +19,15 @@ import type {
 const CardRoot = forwardRef<ViewRef, CardRootProps>((props, ref) => {
   const { children, variant = 'default', className, ...restProps } = props;
 
-  const tvStyles = cardStyles.root({ className });
+  const rootClassName = cardClassNames.root({ className });
 
   return (
-    <Surface ref={ref} variant={variant} className={tvStyles} {...restProps}>
+    <Surface
+      ref={ref}
+      variant={variant}
+      className={rootClassName}
+      {...restProps}
+    >
       {children}
     </Surface>
   );
@@ -33,10 +38,10 @@ const CardRoot = forwardRef<ViewRef, CardRootProps>((props, ref) => {
 const CardHeader = forwardRef<ViewRef, CardHeaderProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
-  const tvStyles = cardStyles.header({ className });
+  const headerClassName = cardClassNames.header({ className });
 
   return (
-    <View ref={ref} className={tvStyles} {...restProps}>
+    <View ref={ref} className={headerClassName} {...restProps}>
       {children}
     </View>
   );
@@ -47,10 +52,10 @@ const CardHeader = forwardRef<ViewRef, CardHeaderProps>((props, ref) => {
 const CardBody = forwardRef<ViewRef, CardBodyProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
-  const tvStyles = cardStyles.body({ className });
+  const bodyClassName = cardClassNames.body({ className });
 
   return (
-    <View ref={ref} className={tvStyles} {...restProps}>
+    <View ref={ref} className={bodyClassName} {...restProps}>
       {children}
     </View>
   );
@@ -61,10 +66,10 @@ const CardBody = forwardRef<ViewRef, CardBodyProps>((props, ref) => {
 const CardFooter = forwardRef<ViewRef, CardFooterProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
-  const tvStyles = cardStyles.footer({ className });
+  const footerClassName = cardClassNames.footer({ className });
 
   return (
-    <View ref={ref} className={tvStyles} {...restProps}>
+    <View ref={ref} className={footerClassName} {...restProps}>
       {children}
     </View>
   );
@@ -75,10 +80,10 @@ const CardFooter = forwardRef<ViewRef, CardFooterProps>((props, ref) => {
 const CardTitle = forwardRef<TextRef, CardTitleProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
-  const tvStyles = cardStyles.label({ className });
+  const titleClassName = cardClassNames.label({ className });
 
   return (
-    <HeroText ref={ref} className={tvStyles} {...restProps}>
+    <HeroText ref={ref} className={titleClassName} {...restProps}>
       {children}
     </HeroText>
   );
@@ -90,12 +95,12 @@ const CardDescription = forwardRef<TextRef, CardDescriptionProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
-    const tvStyles = cardStyles.description({
+    const descriptionClassName = cardClassNames.description({
       className,
     });
 
     return (
-      <HeroText ref={ref} className={tvStyles} {...restProps}>
+      <HeroText ref={ref} className={descriptionClassName} {...restProps}>
         {children}
       </HeroText>
     );

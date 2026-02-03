@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 /**
  * PressableFeedback root style definition
@@ -89,18 +89,16 @@ const ripple = tv({
   },
 });
 
-const pressableFeedbackStyles = combineStyles({
+export const pressableFeedbackClassNames = combineStyles({
   root,
   highlight,
   ripple,
 });
 
-export const styleSheet = StyleSheet.create({
+export const pressableFeedbackStyleSheet = StyleSheet.create({
   root: {
     borderCurve: 'continuous',
   },
 });
 
 export type RippleSlots = keyof ReturnType<typeof ripple>;
-
-export default pressableFeedbackStyles;

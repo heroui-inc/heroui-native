@@ -3,17 +3,17 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts';
-import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
-import { createContext } from '../../helpers/utils';
+import { useAnimationSettings } from '../../helpers/internal/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
 import {
+  createContext,
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-} from '../../helpers/utils/animation';
-import { useFormField } from '../form-field/form-field.context';
+} from '../../helpers/internal/utils';
+import { useControlField } from '../control-field/control-field.context';
 import type {
   CheckboxAnimationContextValue,
   CheckboxIndicatorAnimation,
@@ -35,7 +35,7 @@ export function useCheckboxRootAnimation(options: {
   const { animation } = options;
 
   const isCheckboxPressed = useSharedValue(false);
-  const formFieldContext = useFormField();
+  const controlFieldContext = useControlField();
 
   const { animationConfig, isAnimationDisabled } =
     getRootAnimationState(animation);
@@ -65,7 +65,8 @@ export function useCheckboxRootAnimation(options: {
     }
 
     const pressed =
-      isCheckboxPressed.get() || (formFieldContext?.isPressed.get() ?? false);
+      isCheckboxPressed.get() ||
+      (controlFieldContext?.isPressed.get() ?? false);
 
     return {
       transform: [

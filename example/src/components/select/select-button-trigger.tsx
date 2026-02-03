@@ -1,10 +1,13 @@
 import Feather from '@expo/vector-icons/Feather';
-import { Divider, Select, useSelectAnimation } from 'heroui-native';
-import React, { useState, type FC } from 'react';
+import { Select, Separator, useSelect } from 'heroui-native';
+import React, { useEffect, useState, type FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
+  Easing,
   interpolate,
   useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
 
@@ -24,17 +27,25 @@ const US_STATES: SelectOption[] = [
 ];
 
 const AnimatedTrigger: FC = () => {
-  const { progress } = useSelectAnimation();
+  const { isOpen } = useSelect();
+  const animatedValue = useSharedValue(isOpen ? 1 : 0);
+
+  useEffect(() => {
+    animatedValue.value = withTiming(isOpen ? 1 : 0, {
+      duration: 200,
+      easing: Easing.out(Easing.ease),
+    });
+  }, [isOpen, animatedValue]);
 
   const rContainerStyle = useAnimatedStyle(() => {
-    const opacity = interpolate(progress.value, [0, 1, 2], [0, 1, 0]);
+    const opacity = interpolate(animatedValue.value, [0, 1], [0, 1]);
     return {
       opacity,
     };
   });
 
   const rChevronStyle = useAnimatedStyle(() => {
-    const rotate = interpolate(progress.value, [0, 1, 2], [0, -180, 0]);
+    const rotate = interpolate(animatedValue.value, [0, 1], [0, -180]);
     return {
       transform: [{ rotate: `${rotate}deg` }],
     };
@@ -72,6 +83,7 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
       <Select.Portal>
         <Select.Overlay />
         <Select.Content
+          presentation="popover"
           width="trigger"
           offset={contentOffset}
           className="w-[256px]"
@@ -80,7 +92,7 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
           {US_STATES.map((state, index) => (
             <React.Fragment key={state.value}>
               <Select.Item value={state.value} label={state.label} />
-              {index < US_STATES.length - 1 && <Divider />}
+              {index < US_STATES.length - 1 && <Separator />}
             </React.Fragment>
           ))}
         </Select.Content>

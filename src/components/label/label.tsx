@@ -1,12 +1,18 @@
 import { forwardRef, useMemo } from 'react';
-import { HeroText } from '../../helpers/components';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import type { PressableRef, TextRef } from '../../helpers/types/primitives';
-import { childrenToString, createContext } from '../../helpers/utils';
+import { HeroText } from '../../helpers/internal/components';
+import {
+  AnimationSettingsProvider,
+  useFormItemState,
+} from '../../helpers/internal/contexts';
+import type { PressableRef, TextRef } from '../../helpers/internal/types';
+import { childrenToString, createContext } from '../../helpers/internal/utils';
 import * as LabelPrimitives from '../../primitives/label';
+import { useControlField } from '../control-field/control-field.context';
+import { useRadioGroupItem } from '../radio-group/radio-group.context';
+import { useTextField } from '../text-field';
 import { useLabelRootAnimation } from './label.animation';
 import { DISPLAY_NAME } from './label.constants';
-import labelStyles from './label.styles';
+import { labelClassNames } from './label.styles';
 import type {
   LabelContextValue,
   LabelProps,
@@ -22,13 +28,36 @@ const [LabelProvider, useLabel] = createContext<LabelContextValue>({
 const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
   const {
     children,
-    isDisabled = false,
-    isRequired = false,
-    isInvalid = false,
+    isDisabled: localIsDisabled,
+    isRequired: localIsRequired,
+    isInvalid: localIsInvalid,
     className,
     animation,
     ...restProps
   } = props;
+
+  const formItemState = useFormItemState();
+  const textFieldContext = useTextField();
+  const controlFieldContext = useControlField();
+  const radioGroupItemContext = useRadioGroupItem();
+
+  const isInsideTextField = Boolean(textFieldContext);
+  const isInsideControlField =
+    Boolean(controlFieldContext) || Boolean(radioGroupItemContext);
+
+  // Merge form item state with local props (local takes precedence)
+  const isDisabled =
+    localIsDisabled !== undefined
+      ? localIsDisabled
+      : (formItemState?.isDisabled ?? false);
+  const isRequired =
+    localIsRequired !== undefined
+      ? localIsRequired
+      : (formItemState?.isRequired ?? false);
+  const isInvalid =
+    localIsInvalid !== undefined
+      ? localIsInvalid
+      : (formItemState?.isInvalid ?? false);
 
   const stringifiedChildren = childrenToString(children);
 
@@ -52,8 +81,10 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
     [isDisabled, isRequired, isInvalid]
   );
 
-  const rootTvStyles = labelStyles.root({
+  const rootClassName = labelClassNames.root({
     isDisabled,
+    isInsideTextField,
+    isInsideControlField,
     className,
   });
 
@@ -63,7 +94,7 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
         <LabelPrimitives.Root
           ref={ref}
           isDisabled={isDisabled}
-          className={rootTvStyles}
+          className={rootClassName}
           {...restProps}
         >
           {stringifiedChildren ? (
@@ -84,29 +115,29 @@ const LabelText = forwardRef<TextRef, LabelTextProps>((props, ref) => {
 
   const { isDisabled, isRequired, isInvalid } = useLabel();
 
-  const tvStyles = labelStyles.label({
+  const { text, asterisk } = labelClassNames.label({
     isDisabled,
     isInvalid,
   });
 
-  const textStyles = tvStyles.text({
+  const textClassName = text({
     className: [className, classNames?.text],
   });
 
-  const asteriskStyles = tvStyles.asterisk({
+  const asteriskClassName = asterisk({
     className: classNames?.asterisk,
   });
 
   return (
     <HeroText
       ref={ref}
-      className={textStyles}
+      className={textClassName}
       style={styles?.text}
       {...restProps}
     >
       {children}
       {isRequired && (
-        <HeroText className={asteriskStyles} style={styles?.asterisk}>
+        <HeroText className={asteriskClassName} style={styles?.asterisk}>
           {' '}
           *
         </HeroText>

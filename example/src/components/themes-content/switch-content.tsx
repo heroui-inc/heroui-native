@@ -1,4 +1,10 @@
-import { Divider, FormField, Surface } from 'heroui-native';
+import {
+  ControlField,
+  Description,
+  Label,
+  Separator,
+  Surface,
+} from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -15,13 +21,13 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   title,
   description,
 }) => (
-  <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
+  <ControlField isSelected={isSelected} onSelectedChange={onSelectedChange}>
     <View className="flex-1">
-      <FormField.Label>{title}</FormField.Label>
-      <FormField.Description>{description}</FormField.Description>
+      <Label>{title}</Label>
+      <Description>{description}</Description>
     </View>
-    <FormField.Indicator />
-  </FormField>
+    <ControlField.Indicator />
+  </ControlField>
 );
 
 export const SwitchContent = () => {
@@ -36,7 +42,7 @@ export const SwitchContent = () => {
         title="Email Notifications"
         description="Receive updates and newsletters via email"
       />
-      <Divider className="my-4" />
+      <Separator className="my-4" />
       <SwitchField
         isSelected={pushNotifications}
         onSelectedChange={setPushNotifications}

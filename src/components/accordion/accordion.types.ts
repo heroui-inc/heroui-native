@@ -3,13 +3,13 @@ import type {
   EntryOrExitLayoutType,
   WithSpringConfig,
 } from 'react-native-reanimated';
-import type { ElementSlots } from '../../helpers/theme/types';
 import type {
   Animation,
   AnimationRoot,
   AnimationValue,
+  ElementSlots,
   LayoutTransition,
-} from '../../helpers/types/animation';
+} from '../../helpers/internal/types';
 import type {
   ContentProps as PrimitiveContentProps,
   IndicatorProps as PrimitiveIndicatorProps,
@@ -70,10 +70,10 @@ export type AccordionRootProps = Omit<
    */
   variant?: AccordionVariant;
   /**
-   * Whether to display a divider at the bottom of each accordion item
-   * @default true
+   * Whether to hide the separator between accordion items
+   * @default false
    */
-  isDividerVisible?: boolean;
+  hideSeparator?: boolean;
   /**
    * Additional CSS classes for the container
    */

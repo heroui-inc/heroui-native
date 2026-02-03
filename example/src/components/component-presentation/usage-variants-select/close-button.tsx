@@ -1,17 +1,16 @@
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Haptics from 'expo-haptics';
-import {
-  Button,
-  useSelect,
-  useSelectAnimation,
-  useThemeColor,
-} from 'heroui-native';
+import { Button, useSelect, useThemeColor } from 'heroui-native';
+import { useEffect } from 'react';
 import { Platform } from 'react-native';
 import Animated, {
+  Easing,
   Extrapolation,
   interpolate,
   useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
@@ -21,11 +20,20 @@ const StyleAnimatedView = withUniwind(Animated.View);
 export const CloseButton = () => {
   const insets = useSafeAreaInsets();
   const themeColorAccentForeground = useThemeColor('accent-foreground');
-  const { onOpenChange } = useSelect();
-  const { progress } = useSelectAnimation();
+  const { isOpen, onOpenChange } = useSelect();
+  const animatedValue = useSharedValue(0);
+
+  useEffect(() => {
+    animatedValue.set(
+      withTiming(isOpen ? 1 : 0, {
+        duration: 250,
+        easing: Easing.out(Easing.ease),
+      })
+    );
+  }, [isOpen, animatedValue]);
 
   const buttonAnimatedStyle = useAnimatedStyle(() => {
-    const scale = interpolate(progress.get(), [0, 1, 2], [0, 1, 1]);
+    const scale = interpolate(animatedValue.get(), [0, 1], [0, 1]);
 
     return {
       transform: [{ scale }],
@@ -34,14 +42,14 @@ export const CloseButton = () => {
 
   const listIconAnimatedStyle = useAnimatedStyle(() => {
     const rotate = interpolate(
-      progress.get(),
-      [0, 1, 2],
+      animatedValue.get(),
+      [0, 1],
       [0, 360],
       Extrapolation.CLAMP
     );
     const opacity = interpolate(
-      progress.get(),
-      [0, 1, 2],
+      animatedValue.get(),
+      [0, 1],
       [1, 0],
       Extrapolation.CLAMP
     );
@@ -54,12 +62,12 @@ export const CloseButton = () => {
 
   const closeIconAnimatedStyle = useAnimatedStyle(() => {
     const rotate = interpolate(
-      progress.get(),
-      [0, 1, 2],
+      animatedValue.get(),
+      [0, 1],
       [0, -360],
       Extrapolation.CLAMP
     );
-    const opacity = interpolate(progress.get(), [0, 1, 2], [0, 1, 0]);
+    const opacity = interpolate(animatedValue.value, [0, 1], [0, 1]);
 
     return {
       opacity,

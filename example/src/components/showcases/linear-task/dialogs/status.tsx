@@ -1,11 +1,12 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, Dialog, RadioGroup } from 'heroui-native';
+import { Chip, cn, Dialog, Label, RadioGroup, useDialog } from 'heroui-native';
 import { useState, type FC } from 'react';
 import { Platform, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
+import { useAppTheme } from '../../../../contexts/app-theme-context';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
 import { DialogHeader } from '../dialog-header';
 
@@ -18,8 +19,45 @@ type StatusItem = {
   indicator: React.ReactNode;
 };
 
+type StatusRadioItemProps = {
+  item: StatusItem;
+  value: string;
+};
+
+const StatusRadioItem: FC<StatusRadioItemProps> = ({ item, value }) => {
+  const { onOpenChange } = useDialog();
+
+  return (
+    <RadioGroup.Item
+      value={item.value}
+      onPress={() => {
+        if (Platform.OS === 'ios') {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        }
+        onOpenChange(false);
+      }}
+    >
+      <View className="flex-row items-center">
+        <View className="w-7 pl-0.5 justify-center">
+          <View className="scale-[1.2]">{item.indicator}</View>
+        </View>
+        <Label>{item.label}</Label>
+      </View>
+      <RadioGroup.Indicator className="border-none shadow-none bg-transparent">
+        {value === item.value && (
+          <Animated.View key={item.value} entering={FadeIn.duration(200)}>
+            <StyledFeather name="check" size={18} className="text-foreground" />
+          </Animated.View>
+        )}
+      </RadioGroup.Indicator>
+    </RadioGroup.Item>
+  );
+};
+
 export const Status: FC = () => {
   const [value, setValue] = useState('done');
+
+  const { isDark } = useAppTheme();
 
   const items: StatusItem[] = [
     {
@@ -105,7 +143,10 @@ export const Status: FC = () => {
     <Dialog>
       <Dialog.Trigger asChild>
         <Chip
-          className="h-7 bg-surface-quaternary px-2"
+          className={cn(
+            'h-7 px-2',
+            isDark ? 'bg-neutral-900/50' : 'bg-neutral-300/50'
+          )}
           onPress={() => {
             if (Platform.OS === 'ios') {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -124,37 +165,7 @@ export const Status: FC = () => {
           <DialogHeader>Status</DialogHeader>
           <RadioGroup value={value} onValueChange={setValue} className="gap-7">
             {items.map((item) => (
-              <Dialog.Close key={item.value} className="self-stretch" asChild>
-                <RadioGroup.Item
-                  value={item.value}
-                  onPress={() => {
-                    if (Platform.OS === 'ios') {
-                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    }
-                  }}
-                >
-                  <View className="flex-row items-center">
-                    <View className="w-7 pl-0.5 justify-center">
-                      <View className="scale-[1.2]">{item.indicator}</View>
-                    </View>
-                    <RadioGroup.Label>{item.label}</RadioGroup.Label>
-                  </View>
-                  <RadioGroup.Indicator className="border-0 bg-transparent">
-                    {value === item.value && (
-                      <Animated.View
-                        key={item.value}
-                        entering={FadeIn.duration(200)}
-                      >
-                        <StyledFeather
-                          name="check"
-                          size={18}
-                          className="text-foreground"
-                        />
-                      </Animated.View>
-                    )}
-                  </RadioGroup.Indicator>
-                </RadioGroup.Item>
-              </Dialog.Close>
+              <StatusRadioItem key={item.value} item={item} value={value} />
             ))}
           </RadioGroup>
         </Dialog.Content>

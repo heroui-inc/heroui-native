@@ -1,6 +1,4 @@
-import Entypo from '@expo/vector-icons/Entypo';
 import Feather from '@expo/vector-icons/Feather';
-import Octicons from '@expo/vector-icons/Octicons';
 import { useRouter } from 'expo-router';
 import {
   Button,
@@ -13,6 +11,9 @@ import { Platform, TextInput, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { CircleInfoFillIcon } from '../../../components/icons/circle-info-fill';
+import { ShieldCheckIcon } from '../../../components/icons/shield-check';
+import { ShieldExclamationIcon } from '../../../components/icons/shield-exclamation';
 import { Logo } from '../../../components/logo';
 import { AchievementToast } from '../../../components/toast/achievement-toast';
 import {
@@ -25,8 +26,6 @@ import {
 } from '../../../components/toast/progress-toast';
 
 const StyledFeather = withUniwind(Feather);
-const StyledOcticons = withUniwind(Octicons);
-const StyledEntypo = withUniwind(Entypo);
 
 // ------------------------------------------------------------------------------
 
@@ -68,11 +67,9 @@ const DefaultVariantsContent = () => {
             label: 'You have 2 credits left',
             description: 'Get a paid plan for more credits',
             icon: (
-              <StyledEntypo
-                name="info-with-circle"
-                size={18}
-                className="text-accent mt-0.5"
-              />
+              <View className="mt-0.5">
+                <CircleInfoFillIcon size={18} colorClassName="accent-accent" />
+              </View>
             ),
             actionLabel: 'Close',
             onActionPress: ({ hide }) => hide(),
@@ -89,11 +86,9 @@ const DefaultVariantsContent = () => {
             label: 'You have upgraded your plan',
             description: 'You can continue using HeroUI Chat',
             icon: (
-              <StyledOcticons
-                name="shield-check"
-                size={16}
-                className="text-success mt-[3px]"
-              />
+              <View className="mt-0.5">
+                <ShieldCheckIcon size={20} colorClassName="accent-success" />
+              </View>
             ),
             actionLabel: 'Close',
             onActionPress: ({ hide }) => hide(),
@@ -110,11 +105,12 @@ const DefaultVariantsContent = () => {
             label: 'You have no credits left',
             description: 'Upgrade to a paid plan to continue',
             icon: (
-              <StyledOcticons
-                name="shield"
-                size={16}
-                className="text-warning mt-[3px]"
-              />
+              <View className="mt-0.5">
+                <ShieldExclamationIcon
+                  size={20}
+                  colorClassName="accent-warning"
+                />
+              </View>
             ),
             actionLabel: 'Close',
             onActionPress: ({ hide }) => hide(),
@@ -167,11 +163,9 @@ const PlacementVariantsContent = () => {
       label: 'You have upgraded your plan',
       description: 'You can continue using HeroUI Chat',
       icon: (
-        <StyledOcticons
-          name="shield-check"
-          size={16}
-          className="text-success mt-[3px]"
-        />
+        <View className="mt-0.5">
+          <ShieldCheckIcon size={20} colorClassName="accent-success" />
+        </View>
       ),
       actionLabel: 'Close',
       onActionPress: ({ hide }) => hide(),
@@ -184,11 +178,9 @@ const PlacementVariantsContent = () => {
       label: 'You have no credits left',
       description: 'Upgrade to a paid plan to continue',
       icon: (
-        <StyledOcticons
-          name="shield"
-          size={16}
-          className="text-warning mt-[3px]"
-        />
+        <View className="mt-0.5">
+          <ShieldExclamationIcon size={20} colorClassName="accent-warning" />
+        </View>
       ),
       actionLabel: 'Close',
       onActionPress: ({ hide }) => hide(),

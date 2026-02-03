@@ -2,8 +2,8 @@ import { forwardRef, useCallback, useMemo } from 'react';
 import type { GestureResponderEvent } from 'react-native';
 import { View, type ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { createContext } from '../../helpers/utils';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import { createContext } from '../../helpers/internal/utils';
 import * as SwitchPrimitives from '../../primitives/switch';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
 import {
@@ -12,7 +12,7 @@ import {
   useSwitchThumbAnimation,
 } from './switch.animation';
 import { DISPLAY_NAME } from './switch.constants';
-import switchStyles, { styleSheet } from './switch.styles';
+import { switchClassNames, switchStyleSheet } from './switch.styles';
 import type {
   SwitchContentProps,
   SwitchContextValue,
@@ -51,7 +51,7 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       ...restProps
     } = props;
 
-    const rootClassName = switchStyles.root({
+    const rootClassName = switchClassNames.root({
       isDisabled,
       className,
     });
@@ -67,8 +67,8 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
     });
 
     const rootStyle = isAnimatedStyleActive
-      ? [styleSheet.borderCurve, rContainerStyle, style]
-      : [styleSheet.borderCurve, style];
+      ? [switchStyleSheet.borderCurve, rContainerStyle, style]
+      : [switchStyleSheet.borderCurve, style];
 
     const contextValue = useMemo(
       () => ({
@@ -163,7 +163,7 @@ const SwitchThumb = forwardRef<
 
   const { isSelected, isDisabled } = useSwitch();
 
-  const thumbClassName = switchStyles.thumb({
+  const thumbClassName = switchClassNames.thumb({
     className,
   });
 
@@ -175,8 +175,8 @@ const SwitchThumb = forwardRef<
   });
 
   const thumbStyle = isAnimatedStyleActive
-    ? [styleSheet.borderCurve, rContainerStyle, style]
-    : [styleSheet.borderCurve, style];
+    ? [switchStyleSheet.borderCurve, rContainerStyle, style]
+    : [switchStyleSheet.borderCurve, style];
 
   const renderProps: SwitchRenderProps = {
     isSelected,
@@ -204,12 +204,12 @@ const SwitchStartContent = forwardRef<View, SwitchContentProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
-    const tvStyles = switchStyles.startContent({
+    const startContentClassName = switchClassNames.startContent({
       className,
     });
 
     return (
-      <View ref={ref} className={tvStyles} {...restProps}>
+      <View ref={ref} className={startContentClassName} {...restProps}>
         {children}
       </View>
     );
@@ -221,12 +221,12 @@ const SwitchStartContent = forwardRef<View, SwitchContentProps>(
 const SwitchEndContent = forwardRef<View, SwitchContentProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
-  const tvStyles = switchStyles.endContent({
+  const endContentClassName = switchClassNames.endContent({
     className,
   });
 
   return (
-    <View ref={ref} className={tvStyles} {...restProps}>
+    <View ref={ref} className={endContentClassName} {...restProps}>
       {children}
     </View>
   );
@@ -263,7 +263,7 @@ SwitchEndContent.displayName = DISPLAY_NAME.SWITCH_END_CONTENT;
  * The switch supports controlled and uncontrolled modes through isSelected/onSelectedChange.
  * Animations can be customized or disabled at both root and component levels.
  * Content components provide visual feedback without affecting the toggle functionality.
- * Integrates with FormField for press state sharing and larger touch targets.
+ * Integrates with ControlField for press state sharing and larger touch targets.
  *
  * @see Full documentation: https://v3.heroui.com/docs/native/components/switch
  */

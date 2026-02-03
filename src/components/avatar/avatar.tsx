@@ -1,10 +1,10 @@
 import { forwardRef, useMemo } from 'react';
 import type { ImageSourcePropType } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { HeroText } from '../../helpers/components';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useThemeColor } from '../../helpers/theme';
-import { childrenToString } from '../../helpers/utils';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { HeroText } from '../../helpers/internal/components';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import { childrenToString } from '../../helpers/internal/utils';
 import * as AvatarPrimitives from '../../primitives/avatar';
 import {
   useAvatarFallbackAnimation,
@@ -16,7 +16,7 @@ import {
   AVATAR_DISPLAY_NAME,
 } from './avatar.constants';
 import { AvatarProvider, useInnerAvatarContext } from './avatar.context';
-import avatarStyles, { styleSheet } from './avatar.styles';
+import { avatarClassNames, avatarStyleSheet } from './avatar.styles';
 import type {
   AvatarColor,
   AvatarFallbackProps,
@@ -54,7 +54,7 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const tvStyles = avatarStyles.root({
+  const rootClassName = avatarClassNames.root({
     variant,
     size,
     color,
@@ -85,8 +85,8 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
       <AvatarProvider value={contextValue}>
         <AvatarPrimitives.Root
           ref={ref}
-          className={tvStyles}
-          style={[styleSheet.borderCurve, style]}
+          className={rootClassName}
+          style={[avatarStyleSheet.borderCurve, style]}
           {...restProps}
         >
           {children}
@@ -124,7 +124,7 @@ const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
       animation,
     });
 
-    const imageClassName = avatarStyles.image({
+    const imageClassName = avatarClassNames.image({
       className,
     });
 
@@ -217,16 +217,16 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
 
     const color = colorProp ?? contextColor;
 
-    const { container, text } = avatarStyles.fallback({
+    const { container, text } = avatarClassNames.fallback({
       size,
       color,
     });
 
-    const tvContainerStyles = container({
+    const fallbackContainerClassName = container({
       className: [className, classNames?.container],
     });
 
-    const tvTextStyles = text({
+    const fallbackTextClassName = text({
       className: [classNames?.text, textProps?.className],
     });
 
@@ -240,13 +240,13 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
         key={AVATAR_DISPLAY_NAME.FALLBACK}
         ref={ref}
         entering={entering}
-        className={tvContainerStyles}
-        style={[styleSheet.borderCurve, style]}
+        className={fallbackContainerClassName}
+        style={[avatarStyleSheet.borderCurve, style]}
         {...restProps}
       >
         {children ? (
           stringifiedChildren ? (
-            <HeroText className={tvTextStyles} {...textProps}>
+            <HeroText className={fallbackTextClassName} {...textProps}>
               {stringifiedChildren}
             </HeroText>
           ) : (

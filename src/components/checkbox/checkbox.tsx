@@ -1,10 +1,12 @@
 import { forwardRef, useCallback, useMemo } from 'react';
 import { View, type GestureResponderEvent } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { CheckIcon } from '../../helpers/components';
-import { AnimatedCheckIcon } from '../../helpers/components/animated-check-icon';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useIsOnSurface, useThemeColor } from '../../helpers/theme';
+import { useIsOnSurface, useThemeColor } from '../../helpers/external/hooks';
+import {
+  AnimatedCheckIcon,
+  CheckIcon,
+} from '../../helpers/internal/components';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 import {
@@ -13,7 +15,7 @@ import {
   useCheckboxRootAnimation,
 } from './checkbox.animation';
 import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './checkbox.constants';
-import checkboxStyles, { styleSheet } from './checkbox.styles';
+import { checkboxClassNames, checkboxStyleSheet } from './checkbox.styles';
 import type {
   CheckboxIndicatorProps,
   CheckboxProps,
@@ -59,7 +61,7 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
           ? 'secondary'
           : 'primary';
 
-    const rootClassName = checkboxStyles.root({
+    const rootClassName = checkboxClassNames.root({
       variant: finalVariant,
       isSelected,
       isDisabled,
@@ -73,8 +75,8 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       });
 
     const rootStyle = isAnimatedStyleActive
-      ? [rContainerStyle, styleSheet.root, style]
-      : [styleSheet.root, style];
+      ? [rContainerStyle, checkboxStyleSheet.root, style]
+      : [checkboxStyleSheet.root, style];
 
     const animationContextValue = useMemo(
       () => ({
@@ -167,7 +169,7 @@ const CheckboxIndicator = forwardRef<
   const iconEnterDuration = iconProps?.enterDuration;
   const iconExitDuration = iconProps?.exitDuration;
 
-  const indicatorClassName = checkboxStyles.indicator({
+  const indicatorClassName = checkboxClassNames.indicator({
     isInvalid,
     className,
   });

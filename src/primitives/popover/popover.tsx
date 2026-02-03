@@ -8,7 +8,6 @@ import React, {
 import {
   BackHandler,
   Pressable,
-  StyleSheet,
   View,
   type GestureResponderEvent,
   type LayoutChangeEvent,
@@ -19,7 +18,7 @@ import {
   useControllableState,
   useRelativePosition,
   type LayoutPosition,
-} from '../../helpers/hooks';
+} from '../../helpers/internal/hooks';
 import { Portal as PrimitivePortal } from '../portal';
 import * as Slot from '../slot';
 import type {
@@ -56,8 +55,8 @@ const Root = forwardRef<RootRef, RootProps>(
       isOpen: isOpenProp,
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
-      closeDelay,
       isDisabled,
+      presentation = 'popover',
       ...viewProps
     },
     ref
@@ -87,8 +86,8 @@ const Root = forwardRef<RootRef, RootProps>(
           setContentLayout,
           setTriggerPosition,
           triggerPosition,
-          closeDelay,
           isDefaultOpen,
+          presentation,
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -107,7 +106,6 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       isDisabled: isDisabledRoot,
       setTriggerPosition,
       setContentLayout,
-      closeDelay,
       isDefaultOpen,
       triggerPosition,
     } = useRootContext();
@@ -118,22 +116,20 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       ref,
       methods: {
         open: () => {
-          onOpenChange(true);
           augmentedRef.current?.measure(
             (_x, _y, width, height, pageX, pageY) => {
               setTriggerPosition({ width, pageX, pageY: pageY, height });
             }
           );
+          onOpenChange(true);
         },
         close: () => {
           onOpenChange(false);
-          setTimeout(() => {
-            setTriggerPosition(null);
-            setContentLayout(null);
-          }, closeDelay);
+          setTriggerPosition(null);
+          setContentLayout(null);
         },
       },
-      deps: [isOpen, closeDelay],
+      deps: [isOpen],
     });
 
     // Open popover on mount if isDefaultOpen is true
@@ -157,9 +153,8 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
     }, []);
 
     function onPress(ev: GestureResponderEvent) {
-      if (isDisabledValue) return;
       augmentedRef.current?.measure((_x, _y, width, height, pageX, pageY) => {
-        setTriggerPosition({ width, pageX, pageY: pageY, height });
+        setTriggerPosition({ width, pageX, pageY, height });
       });
       onOpenChange(!isOpen);
       onPressProp?.(ev);
@@ -188,11 +183,13 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
 function Portal({ forceMount, hostName, children }: PortalProps) {
   const value = useRootContext();
 
-  if (!value.triggerPosition) {
+  const isBottomSheet = value.presentation === 'bottom-sheet';
+
+  if (!value.triggerPosition && !isBottomSheet) {
     return null;
   }
 
-  if (!forceMount) {
+  if (!forceMount && !isBottomSheet) {
     if (!value.isOpen) {
       return null;
     }
@@ -218,21 +215,14 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
     },
     ref
   ) => {
-    const {
-      isOpen,
-      onOpenChange,
-      setTriggerPosition,
-      setContentLayout,
-      closeDelay,
-    } = useRootContext();
+    const { isOpen, onOpenChange, setTriggerPosition, setContentLayout } =
+      useRootContext();
 
     function onPress(ev: GestureResponderEvent) {
       if (closeOnPress) {
-        setTimeout(() => {
-          setTriggerPosition(null);
-          setContentLayout(null);
-        }, closeDelay);
         onOpenChange(false);
+        setTriggerPosition(null);
+        setContentLayout(null);
       }
       OnPressProp?.(ev);
     }
@@ -244,6 +234,7 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
     }
 
     const Component = asChild ? Slot.Pressable : Pressable;
+
     return <Component ref={ref} onPress={onPress} {...props} />;
   }
 );
@@ -280,19 +271,15 @@ const Content = forwardRef<ContentRef, ContentProps>(
       setContentLayout,
       setTriggerPosition,
       triggerPosition,
-      closeDelay,
     } = useRootContext();
 
     useEffect(() => {
       const backHandler = BackHandler.addEventListener(
         'hardwareBackPress',
         () => {
-          setTimeout(() => {
-            setTriggerPosition(null);
-            setContentLayout(null);
-          }, closeDelay);
-
           onOpenChange(false);
+          setTriggerPosition(null);
+          setContentLayout(null);
           return true;
         }
       );
@@ -327,8 +314,6 @@ const Content = forwardRef<ContentRef, ContentProps>(
     }
     // 'content-fit' is default - no explicit width set
 
-    const flatStyle = StyleSheet.flatten([positionStyle, widthStyle, style]);
-
     function onLayout(event: LayoutChangeEvent) {
       setContentLayout(event.nativeEvent.layout);
       onLayoutProp?.(event);
@@ -348,7 +333,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
         role="dialog"
         nativeID={nativeID}
         aria-modal={true}
-        style={flatStyle}
+        style={[positionStyle, widthStyle, style]}
         onLayout={onLayout}
         {...props}
       />
@@ -360,16 +345,14 @@ const Content = forwardRef<ContentRef, ContentProps>(
 
 const Close = forwardRef<CloseRef, CloseProps>(
   ({ asChild, onPress: onPressProp, disabled = false, ...props }, ref) => {
-    const { onOpenChange, setContentLayout, setTriggerPosition, closeDelay } =
+    const { onOpenChange, setContentLayout, setTriggerPosition } =
       useRootContext();
 
     function onPress(ev: GestureResponderEvent) {
       if (disabled) return;
-      setTimeout(() => {
-        setTriggerPosition(null);
-        setContentLayout(null);
-      }, closeDelay);
       onOpenChange(false);
+      setTriggerPosition(null);
+      setContentLayout(null);
       onPressProp?.(ev);
     }
 

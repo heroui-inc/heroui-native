@@ -1,5 +1,5 @@
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   base: 'items-center justify-center',
@@ -38,9 +38,7 @@ const indicator = tv({
   base: 'size-full items-center justify-center',
 });
 
-const spinnerStyles = combineStyles({
+export const spinnerClassNames = combineStyles({
   root,
   indicator,
 });
-
-export default spinnerStyles;

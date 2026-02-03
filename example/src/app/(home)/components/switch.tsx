@@ -1,6 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import { Divider, FormField, Surface, Switch } from 'heroui-native';
+import {
+  ControlField,
+  Description,
+  Label,
+  Separator,
+  Surface,
+  Switch,
+} from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -29,13 +36,13 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
   title,
   description,
 }) => (
-  <FormField isSelected={isSelected} onSelectedChange={onSelectedChange}>
+  <ControlField isSelected={isSelected} onSelectedChange={onSelectedChange}>
     <View className="flex-1">
-      <FormField.Label>{title}</FormField.Label>
-      <FormField.Description>{description}</FormField.Description>
+      <Label>{title}</Label>
+      <Description>{description}</Description>
     </View>
-    <FormField.Indicator />
-  </FormField>
+    <ControlField.Indicator />
+  </ControlField>
 );
 
 export const DefaultContent = () => {
@@ -74,7 +81,7 @@ export const DefaultContent = () => {
       <Surface className="py-5 w-full">
         {fieldKeys.map((key, index) => (
           <React.Fragment key={key}>
-            {index > 0 && <Divider className="my-4" />}
+            {index > 0 && <Separator className="my-4" />}
             <SwitchField
               isSelected={fields[key]}
               onSelectedChange={handleFieldChange(key)}
@@ -122,20 +129,18 @@ const StatesContent = () => {
       <Surface className="py-5 w-full">
         {fieldKeys.map((key, index) => (
           <React.Fragment key={key}>
-            {index > 0 && <Divider className="my-4" />}
-            <FormField
+            {index > 0 && <Separator className="my-4" />}
+            <ControlField
               isSelected={fields[key]}
               onSelectedChange={handleFieldChange(key)}
               isDisabled={fieldConfigs[key].disabled}
             >
               <View className="flex-1">
-                <FormField.Label>{fieldConfigs[key].title}</FormField.Label>
-                <FormField.Description>
-                  {fieldConfigs[key].description}
-                </FormField.Description>
+                <Label>{fieldConfigs[key].title}</Label>
+                <Description>{fieldConfigs[key].description}</Description>
               </View>
-              <FormField.Indicator />
-            </FormField>
+              <ControlField.Indicator />
+            </ControlField>
           </React.Fragment>
         ))}
       </Surface>

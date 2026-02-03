@@ -1,6 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
-import { Button, cn, Divider } from 'heroui-native';
+import { Button, cn, Separator } from 'heroui-native';
 import { View } from 'react-native';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -115,7 +115,7 @@ const OnboardingScreen = () => {
       </AnimatedView>
 
       <AnimatedView entering={FadeIn.delay(350)}>
-        <Divider variant="thick" className="my-8 opacity-20" />
+        <Separator variant="thick" className="my-8 opacity-20" />
       </AnimatedView>
 
       <AnimatedView entering={FadeInDown.delay(400).springify()}>

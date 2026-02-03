@@ -1,7 +1,10 @@
 import type { TextStyle } from 'react-native';
-import type { ElementSlots } from '../../helpers/theme/types';
-import type { AnimationRootDisableAll } from '../../helpers/types/animation';
-import type { PressableRef, TextRef } from '../../helpers/types/primitives';
+import type {
+  AnimationRootDisableAll,
+  ElementSlots,
+  PressableRef,
+  TextRef,
+} from '../../helpers/internal/types';
 import type * as LabelPrimitivesTypes from '../../primitives/label/label.types';
 import type { LabelSlots } from './label.styles';
 

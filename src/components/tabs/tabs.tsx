@@ -1,5 +1,7 @@
 import {
+  Children,
   forwardRef,
+  isValidElement,
   useCallback,
   useEffect,
   useMemo,
@@ -13,16 +15,17 @@ import {
   type ViewStyle,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import * as TabsPrimitives from '../../primitives/tabs';
 import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
 import {
   useTabsIndicatorAnimation,
   useTabsRootAnimation,
+  useTabsSeparatorAnimation,
 } from './tabs.animation';
 import { DISPLAY_NAME } from './tabs.constants';
 import { MeasurementsContext, useTabsMeasurements } from './tabs.context';
-import tabsStyles from './tabs.styles';
+import { tabsClassNames, tabsStyleSheet } from './tabs.styles';
 import type {
   ItemMeasurements,
   TabsContentProps,
@@ -31,6 +34,7 @@ import type {
   TabsListProps,
   TabsProps,
   TabsScrollViewProps,
+  TabsSeparatorProps,
   TabsTriggerProps,
   TabsTriggerRenderProps,
 } from './tabs.types';
@@ -51,7 +55,7 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
       value,
       onValueChange,
       className,
-      variant = 'pill',
+      variant = 'primary',
       animation,
       ...restProps
     } = props;
@@ -59,6 +63,7 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
     const [measurements, setMeasurementsState] = useState<
       Record<string, ItemMeasurements>
     >({});
+    const [isScrollView, setIsScrollView] = useState(false);
 
     const setMeasurements = useCallback(
       (key: string, newMeasurements: ItemMeasurements) => {
@@ -79,18 +84,24 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
       [isAllAnimationsDisabled]
     );
 
-    const tvStyles = tabsStyles.root({ className });
+    const rootClassName = tabsClassNames.root({ className });
 
     return (
       <AnimationSettingsProvider value={animationSettingsContextValue}>
         <MeasurementsContext.Provider
-          value={{ measurements, setMeasurements, variant }}
+          value={{
+            measurements,
+            setMeasurements,
+            variant,
+            isScrollView,
+            setIsScrollView,
+          }}
         >
           <TabsPrimitives.Root
             ref={ref}
             value={value}
             onValueChange={onValueChange}
-            className={tvStyles}
+            className={rootClassName}
             {...restProps}
           >
             {children}
@@ -107,15 +118,26 @@ const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
   (props, ref) => {
     const { children, className, style, ...restProps } = props;
 
-    const { variant } = useTabsMeasurements();
+    const { variant, setIsScrollView } = useTabsMeasurements();
 
-    const tvStyles = tabsStyles.list({ variant, className });
+    const handleLayout = useCallback(() => {
+      const childrenArray = Children.toArray(children);
+      const hasScrollView =
+        childrenArray.length === 1 &&
+        isValidElement(childrenArray[0]) &&
+        (childrenArray[0].type as any)?.displayName ===
+          DISPLAY_NAME.SCROLL_VIEW;
+      setIsScrollView(hasScrollView);
+    }, [children, setIsScrollView]);
+
+    const listClassName = tabsClassNames.list({ variant, className });
 
     return (
       <TabsPrimitives.List
         ref={ref}
-        className={tvStyles}
-        style={[tabsStyles.styleSheet.listRoot, style]}
+        className={listClassName}
+        style={[tabsStyleSheet.listRoot, style]}
+        onLayout={handleLayout}
         {...restProps}
       >
         {children}
@@ -141,11 +163,15 @@ const TabsScrollView = forwardRef<ScrollView, TabsScrollViewProps>(
     const { measurements, variant } = useTabsMeasurements();
     const { width: screenWidth } = useWindowDimensions();
 
-    const scrollViewStyles = tabsStyles.scrollView({ variant, className });
-    const contentContainerStyles = tabsStyles.scrollViewContentContainer({
+    const scrollViewClassName = tabsClassNames.scrollView({
       variant,
-      className: contentContainerClassName,
+      className,
     });
+    const contentContainerClassNameValue =
+      tabsClassNames.scrollViewContentContainer({
+        variant,
+        className: contentContainerClassName,
+      });
 
     const scrollRef = useRef<ScrollView>(null);
 
@@ -182,8 +208,8 @@ const TabsScrollView = forwardRef<ScrollView, TabsScrollViewProps>(
         }}
         horizontal
         showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
-        className={scrollViewStyles}
-        contentContainerClassName={contentContainerStyles}
+        className={scrollViewClassName}
+        contentContainerClassName={contentContainerClassNameValue}
         {...restProps}
       >
         {children}
@@ -211,7 +237,7 @@ const TabsTrigger = forwardRef<
 
   const isSelected = rootValue === value;
 
-  const tvStyles = tabsStyles.trigger({ isDisabled, className });
+  const triggerClassName = tabsClassNames.trigger({ isDisabled, className });
 
   const handleLayout = useCallback(
     (event: LayoutChangeEvent) => {
@@ -235,8 +261,8 @@ const TabsTrigger = forwardRef<
       ref={ref}
       value={value}
       disabled={isDisabled}
-      className={tvStyles}
-      style={[tabsStyles.styleSheet.triggerRoot, style as ViewStyle]}
+      className={triggerClassName}
+      style={[tabsStyleSheet.triggerRoot, style as ViewStyle]}
       onLayout={handleLayout}
       {...restProps}
     >
@@ -250,11 +276,12 @@ const TabsTrigger = forwardRef<
 const TabsLabel = forwardRef<TabsPrimitivesTypes.LabelRef, TabsLabelProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
+    const { isSelected } = useTabsTrigger();
 
-    const tvStyles = tabsStyles.label({ className });
+    const labelClassName = tabsClassNames.label({ isSelected, className });
 
     return (
-      <TabsPrimitives.Label ref={ref} className={tvStyles} {...restProps}>
+      <TabsPrimitives.Label ref={ref} className={labelClassName} {...restProps}>
         {children}
       </TabsPrimitives.Label>
     );
@@ -276,13 +303,17 @@ const TabsIndicator = forwardRef<
     ...restProps
   } = props;
 
-  const { variant } = useTabsMeasurements();
+  const { variant, isScrollView } = useTabsMeasurements();
 
   const { rContainerStyle } = useTabsIndicatorAnimation({
     animation,
   });
 
-  const indicatorClassName = tabsStyles.indicator({ variant, className });
+  const indicatorClassName = tabsClassNames.indicator({
+    variant,
+    isScrollView,
+    className,
+  });
 
   const indicatorStyle = isAnimatedStyleActive
     ? [rContainerStyle, style]
@@ -302,19 +333,56 @@ const TabsIndicator = forwardRef<
 
 // --------------------------------------------------
 
+const TabsSeparator = forwardRef<Animated.View, TabsSeparatorProps>(
+  (props, ref) => {
+    const {
+      betweenValues,
+      isAlwaysVisible = false,
+      animation,
+      isAnimatedStyleActive = true,
+      className,
+      style,
+      ...restProps
+    } = props;
+
+    const { rContainerStyle } = useTabsSeparatorAnimation({
+      animation,
+      betweenValues,
+      isAlwaysVisible,
+    });
+
+    const separatorClassName = tabsClassNames.separator({ className });
+
+    const separatorStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
+
+    return (
+      <Animated.View
+        ref={ref}
+        className={separatorClassName}
+        style={separatorStyle}
+        {...restProps}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const TabsContent = forwardRef<
   TabsPrimitivesTypes.ContentRef,
   TabsContentProps
 >((props, ref) => {
   const { children, value, className, ...restProps } = props;
 
-  const tvStyles = tabsStyles.content({ className });
+  const contentClassName = tabsClassNames.content({ className });
 
   return (
     <TabsPrimitives.Content
       ref={ref}
       value={value}
-      className={tvStyles}
+      className={contentClassName}
       {...restProps}
     >
       {children}
@@ -330,6 +398,7 @@ TabsScrollView.displayName = DISPLAY_NAME.SCROLL_VIEW;
 TabsTrigger.displayName = DISPLAY_NAME.TRIGGER;
 TabsLabel.displayName = DISPLAY_NAME.LABEL;
 TabsIndicator.displayName = DISPLAY_NAME.INDICATOR;
+TabsSeparator.displayName = DISPLAY_NAME.SEPARATOR;
 TabsContent.displayName = DISPLAY_NAME.CONTENT;
 
 /**
@@ -346,6 +415,8 @@ TabsContent.displayName = DISPLAY_NAME.CONTENT;
  * @component Tabs.Label - Label text for tab triggers
  *
  * @component Tabs.Indicator - Visual indicator for active tab
+ *
+ * @component Tabs.Separator - Visual separator between tabs
  *
  * @component Tabs.Content - Content panel for each tab
  *
@@ -364,6 +435,8 @@ const Tabs = Object.assign(TabsRoot, {
   Label: TabsLabel,
   /** Visual indicator for active tab */
   Indicator: TabsIndicator,
+  /** Visual separator between tabs */
+  Separator: TabsSeparator,
   /** Content panel for each tab */
   Content: TabsContent,
 });

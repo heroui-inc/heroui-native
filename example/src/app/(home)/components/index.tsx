@@ -1,14 +1,11 @@
-import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { usePathname, useRouter } from 'expo-router';
-import { Accordion, PressableFeedback, useToast } from 'heroui-native';
+import { Accordion, cn, PressableFeedback, useToast } from 'heroui-native';
 import { useEffect } from 'react';
 import { Platform, View } from 'react-native';
-import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
+import { ChevronRightIcon } from '../../../components/icons/chevron-right';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
-
-const StyledIonicons = withUniwind(Ionicons);
 
 type Component = {
   title: string;
@@ -45,6 +42,14 @@ const components: Component[] = [
     path: 'chip',
   },
   {
+    title: 'CloseButton',
+    path: 'close-button',
+  },
+  {
+    title: 'ControlField',
+    path: 'control-field',
+  },
+  {
     title: 'Description',
     path: 'description',
   },
@@ -53,16 +58,12 @@ const components: Component[] = [
     path: 'dialog',
   },
   {
-    title: 'Divider',
-    path: 'divider',
+    title: 'FieldError',
+    path: 'field-error',
   },
   {
-    title: 'ErrorView',
-    path: 'error-view',
-  },
-  {
-    title: 'FormField',
-    path: 'form-field',
+    title: 'Input',
+    path: 'input',
   },
   {
     title: 'InputOTP',
@@ -93,6 +94,10 @@ const components: Component[] = [
     path: 'select',
   },
   {
+    title: 'Separator',
+    path: 'separator',
+  },
+  {
     title: 'Skeleton',
     path: 'skeleton',
   },
@@ -111,6 +116,10 @@ const components: Component[] = [
   {
     title: 'Tabs',
     path: 'tabs',
+  },
+  {
+    title: 'TextArea',
+    path: 'text-area',
   },
   {
     title: 'TextField',
@@ -138,7 +147,13 @@ export default function App() {
   return (
     <ScreenScrollView contentContainerClassName="px-4">
       <View className="h-5" />
-      <Accordion isCollapsible={false} variant="surface">
+      <Accordion
+        isCollapsible={false}
+        variant="surface"
+        classNames={{
+          separator: cn(Platform.OS === 'android' && 'h-px opacity-30'),
+        }}
+      >
         {components.map((item) => (
           <Accordion.Item key={item.title} value={item.title}>
             <Accordion.Trigger
@@ -155,11 +170,7 @@ export default function App() {
                   {item.title}
                 </AppText>
                 <Accordion.Indicator>
-                  <StyledIonicons
-                    name="chevron-forward"
-                    size={16}
-                    className="text-muted"
-                  />
+                  <ChevronRightIcon size={16} colorClassName="accent-muted" />
                 </Accordion.Indicator>
               </PressableFeedback>
             </Accordion.Trigger>

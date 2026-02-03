@@ -1,6 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import * as Haptics from 'expo-haptics';
-import { Checkbox, Chip, Dialog, FormField } from 'heroui-native';
+import { Checkbox, Chip, cn, ControlField, Dialog, Label } from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -8,12 +8,14 @@ import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
+import { useAppTheme } from '../../../../contexts/app-theme-context';
 import { AppText } from '../../../app-text';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
 import { DialogHeader } from '../dialog-header';
 import { SearchBar } from '../search-bar';
 
 const StyledFeather = withUniwind(Feather);
+const StyledScrollView = withUniwind(ScrollView);
 
 type LabelItem = {
   value: string;
@@ -29,6 +31,7 @@ export const Labels: FC = () => {
 
   const { height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
+  const { isDark } = useAppTheme();
 
   const insetTop = insets.top + 12;
   const dialogContentHeight = (height - insetTop) / 2;
@@ -130,7 +133,10 @@ export const Labels: FC = () => {
     <Dialog>
       <Dialog.Trigger asChild>
         <Chip
-          className="h-7 bg-surface-quaternary px-2"
+          className={cn(
+            'h-7 px-2',
+            isDark ? 'bg-neutral-900/50' : 'bg-neutral-300/50'
+          )}
           onPress={() => {
             if (Platform.OS === 'ios') {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -163,7 +169,7 @@ export const Labels: FC = () => {
               </View>
             )}
             {filteredItems.length > 0 && (
-              <ScrollView
+              <StyledScrollView
                 contentContainerClassName="pt-3"
                 showsVerticalScrollIndicator={false}
                 bounces={false}
@@ -173,7 +179,7 @@ export const Labels: FC = () => {
                   {filteredItems.map((item) => {
                     const isSelected = selectedValues.has(item.value);
                     return (
-                      <FormField
+                      <ControlField
                         key={item.value}
                         isSelected={isSelected}
                         onSelectedChange={(selected) =>
@@ -184,12 +190,12 @@ export const Labels: FC = () => {
                           <View className="w-5 pl-0.5 justify-center">
                             <View className="scale-105">{item.indicator}</View>
                           </View>
-                          <FormField.Label>{item.label}</FormField.Label>
+                          <Label>{item.label}</Label>
                         </View>
-                        <FormField.Indicator>
+                        <ControlField.Indicator>
                           <Checkbox
                             isSelected={isSelected}
-                            className="bg-transparent"
+                            className="bg-transparent border-none shadow-none"
                           >
                             <Checkbox.Indicator className="bg-transparent">
                               {isSelected && (
@@ -206,12 +212,12 @@ export const Labels: FC = () => {
                               )}
                             </Checkbox.Indicator>
                           </Checkbox>
-                        </FormField.Indicator>
-                      </FormField>
+                        </ControlField.Indicator>
+                      </ControlField>
                     );
                   })}
                 </View>
-              </ScrollView>
+              </StyledScrollView>
             )}
           </Dialog.Content>
         </KeyboardAvoidingView>

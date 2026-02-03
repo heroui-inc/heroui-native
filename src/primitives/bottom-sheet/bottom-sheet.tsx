@@ -5,7 +5,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useControllableState } from '../../helpers/hooks';
+import { useControllableState } from '../../helpers/internal/hooks';
 import { Portal as PortalPrimitive } from '../portal';
 import * as Slot from '../slot';
 import type {
@@ -115,10 +115,6 @@ Trigger.displayName = 'HeroUINative.Primitive.BottomSheet.Trigger';
 function Portal({ hostName, children }: PortalProps) {
   const value = useRootContext();
 
-  if (!value.isOpen) {
-    return null;
-  }
-
   return (
     <PortalPrimitive hostName={hostName} name={`${value.nativeID}_portal`}>
       <BottomSheetContext.Provider value={value}>
@@ -141,11 +137,8 @@ const Overlay = forwardRef<OverlayRef, OverlayProps>(
       OnPressProp?.(ev);
     }
 
-    if (!isOpen) {
-      return null;
-    }
-
     const Component = asChild ? Slot.Pressable : Pressable;
+
     return <Component ref={ref} onPress={onPress} {...props} />;
   }
 );
@@ -156,11 +149,7 @@ Overlay.displayName = 'HeroUINative.Primitive.BottomSheet.Overlay';
 
 const Content = forwardRef<ContentRef, ContentProps>(
   ({ asChild, ...props }, ref) => {
-    const { isOpen, nativeID } = useRootContext();
-
-    if (!isOpen) {
-      return null;
-    }
+    const { nativeID } = useRootContext();
 
     const Component = asChild ? Slot.View : View;
 

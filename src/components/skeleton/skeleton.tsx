@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 
 import LinearGradientComponent from './linear-gradient';
 import {
@@ -22,7 +22,7 @@ import {
   useSkeletonShimmerAnimation,
 } from './skeleton.animation';
 import { DISPLAY_NAME } from './skeleton.constants';
-import styleSheet, { nativeStyles } from './skeleton.styles';
+import { skeletonClassNames, skeletonStyleSheet } from './skeleton.styles';
 import type { SkeletonProps } from './skeleton.types';
 
 // --------------------------------------------------
@@ -36,8 +36,8 @@ const ShimmerAnimation: React.FC<{
   });
 
   const shimmerStyle = isAnimatedStyleActive
-    ? [StyleSheet.absoluteFill, nativeStyles.borderCurve, rContainerStyle]
-    : [StyleSheet.absoluteFill, nativeStyles.borderCurve];
+    ? [StyleSheet.absoluteFill, skeletonStyleSheet.borderCurve, rContainerStyle]
+    : [StyleSheet.absoluteFill, skeletonStyleSheet.borderCurve];
 
   return (
     <Animated.View style={shimmerStyle}>
@@ -97,7 +97,7 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
       progress,
     });
 
-  const tvStyles = styleSheet.skeleton({ className });
+  const rootClassName = skeletonClassNames.root({ className });
 
   const handleLayout = useCallback(
     (event: LayoutChangeEvent) => {
@@ -149,8 +149,8 @@ const Skeleton: React.FC<SkeletonProps> = (props) => {
             entering={entering}
             exiting={exiting}
             onLayout={handleLayout}
-            style={[nativeStyles.borderCurve, style]}
-            className={tvStyles}
+            style={[skeletonStyleSheet.borderCurve, style]}
+            className={rootClassName}
             {...restProps}
           >
             {variant === 'shimmer' && componentWidth > 0 && (

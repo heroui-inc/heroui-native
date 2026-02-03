@@ -5,21 +5,21 @@ import {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../../helpers/contexts';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { useAnimationSettings } from '../../helpers/internal/contexts';
 import {
   useCombinedAnimationDisabledState,
   useResolvedStyleProperty,
-} from '../../helpers/hooks';
-import { useThemeColor } from '../../helpers/theme';
-import { createContext } from '../../helpers/utils';
+} from '../../helpers/internal/hooks';
 import {
+  createContext,
   getAnimationState,
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-} from '../../helpers/utils/animation';
-import { useFormField } from '../form-field/form-field.context';
+} from '../../helpers/internal/utils';
+import { useControlField } from '../control-field/control-field.context';
 import {
   DEFAULT_SPRING_CONFIG,
   DEFAULT_THUMB_LEFT,
@@ -51,12 +51,12 @@ export function useSwitchRootAnimation(options: {
 }) {
   const { animation, isSelected } = options;
 
-  const [themeColorAccent, themeColorSurfaceQuaternary] = useThemeColor([
+  const [themeColorAccent, themeColorDefault] = useThemeColor([
     'accent',
-    'surface-quaternary',
+    'default',
   ]);
 
-  const formFieldContext = useFormField();
+  const controlFieldContext = useControlField();
 
   const isSwitchPressed = useSharedValue(false);
   const contentContainerWidth = useSharedValue(0);
@@ -88,10 +88,7 @@ export function useSwitchRootAnimation(options: {
   const backgroundColorValue = getAnimationValueProperty({
     animationValue: animationConfig?.backgroundColor,
     property: 'value',
-    defaultValue: [themeColorSurfaceQuaternary, themeColorAccent] as [
-      string,
-      string,
-    ],
+    defaultValue: [themeColorDefault, themeColorAccent] as [string, string],
   });
 
   const backgroundColorTimingConfig = getAnimationValueMergedConfig({
@@ -110,7 +107,7 @@ export function useSwitchRootAnimation(options: {
     }
 
     const pressed =
-      isSwitchPressed.get() || (formFieldContext?.isPressed.get() ?? false);
+      isSwitchPressed.get() || (controlFieldContext?.isPressed.get() ?? false);
 
     return {
       backgroundColor: withTiming(

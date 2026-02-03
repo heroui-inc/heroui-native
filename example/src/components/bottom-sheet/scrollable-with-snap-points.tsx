@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { BottomSheetFooter, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { BottomSheet, Button, Card, cn, Divider } from 'heroui-native';
+import { BottomSheet, Button, Card, cn, Separator } from 'heroui-native';
 import { useCallback, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { withUniwind } from 'uniwind';
@@ -69,7 +69,7 @@ export const ScrollableWithSnapPointsContent = () => {
     (props: { animatedFooterPosition: any }) => (
       <BottomSheetFooter {...props}>
         <View className="px-4 pb-safe-offset-3 bg-overlay">
-          <Divider className="-mx-4 mb-3" />
+          <Separator className="-mx-4 mb-3" />
           <Button variant="danger" onPress={() => setIsOpen(false)}>
             Order Premium now
           </Button>
@@ -104,7 +104,7 @@ export const ScrollableWithSnapPointsContent = () => {
                 </BottomSheet.Title>
                 <BottomSheet.Close />
               </View>
-              <Divider className="-mx-5" />
+              <Separator className="-mx-5" />
               <BottomSheetScrollView
                 contentContainerClassName="pb-safe-offset-12"
                 showsVerticalScrollIndicator={false}
@@ -114,7 +114,7 @@ export const ScrollableWithSnapPointsContent = () => {
                     <Card
                       key={option.id}
                       className={cn(
-                        'flex-row items-center mb-2',
+                        'flex-row items-center mb-2 shadow-none',
                         !option.highlight
                           ? 'bg-transparent'
                           : isDark

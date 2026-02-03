@@ -7,7 +7,7 @@ import { AppText } from '../app-text';
 export const CardContent = () => {
   return (
     <View className="flex-row gap-4">
-      <PressableFeedback className="flex-1 aspect-[1/1.3] rounded-3xl">
+      <PressableFeedback className="flex-1 aspect-[1/1.3] rounded-3xl shadow-surface">
         <Card className="flex-1">
           <View className="flex-1 gap-4">
             <Card.Header>
@@ -43,7 +43,7 @@ export const CardContent = () => {
           }}
         />
       </PressableFeedback>
-      <PressableFeedback className="flex-1 aspect-[1/1.3] rounded-3xl">
+      <PressableFeedback className="flex-1 aspect-[1/1.3] rounded-3xl shadow-surface">
         <Card className="flex-1">
           <View className="flex-1 gap-4">
             <Card.Header>

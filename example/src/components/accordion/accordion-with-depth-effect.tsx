@@ -1,14 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
-import { Ionicons } from '@expo/vector-icons';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import Entypo from '@expo/vector-icons/Entypo';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { useHeaderHeight } from '@react-navigation/elements';
 import {
   Accordion,
   cn,
-  Divider,
-  FormField,
+  Separator,
   useAccordion,
   useAccordionItem,
 } from 'heroui-native';
@@ -22,9 +16,15 @@ import Animated, {
   ZoomIn,
   ZoomOut,
 } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../app-text';
+import { CubesThreeIcon } from '../icons/cubes-three';
+import { MagicWandIcon } from '../icons/magic-wand';
+import { PersonsIcon } from '../icons/persons';
+import { PlusIcon } from '../icons/plus';
+import { ThreeDiagonalIcon } from '../icons/three-diagonal';
+import { XMarkIcon } from '../icons/x-mark';
+import { WithStateToggle } from '../with-state-toggle';
 
 const LAYOUT_TRANSITION = LinearTransition.springify()
   .damping(70)
@@ -32,10 +32,6 @@ const LAYOUT_TRANSITION = LinearTransition.springify()
   .mass(2);
 
 const StyledAnimatedView = withUniwind(Animated.View);
-const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
-const StyledAntDesign = withUniwind(AntDesign);
-const StyledIonicons = withUniwind(Ionicons);
-const StyledEntypo = withUniwind(Entypo);
 
 const TRIGGER_ICON_SIZE = 16;
 
@@ -44,10 +40,9 @@ const accordionData = [
     id: '1',
     title: 'What is design engineering?',
     icon: (
-      <StyledAntDesign
-        name="tool"
+      <ThreeDiagonalIcon
         size={TRIGGER_ICON_SIZE}
-        className="text-muted"
+        colorClassName="accent-muted"
       />
     ),
     content:
@@ -57,11 +52,7 @@ const accordionData = [
     id: '2',
     title: 'What defines UI craftsmanship?',
     icon: (
-      <StyledMaterialCommunityIcons
-        name="minecraft"
-        size={TRIGGER_ICON_SIZE}
-        className="text-muted"
-      />
+      <CubesThreeIcon size={TRIGGER_ICON_SIZE} colorClassName="accent-muted" />
     ),
     content:
       "The art of building things with excellence - achieving platform mastery so you're never constrained by frameworks or tooling",
@@ -70,11 +61,7 @@ const accordionData = [
     id: '3',
     title: 'Why is craftsmanship important?',
     icon: (
-      <StyledIonicons
-        name="sparkles-sharp"
-        size={TRIGGER_ICON_SIZE}
-        className="text-muted"
-      />
+      <MagicWandIcon size={TRIGGER_ICON_SIZE} colorClassName="accent-muted" />
     ),
     content:
       "Because it transcends mere functionality - it's about creating experiences that feel intuitive: accessible, robust and maintainable.",
@@ -83,11 +70,7 @@ const accordionData = [
     id: '4',
     title: 'Who should embrace this?',
     icon: (
-      <StyledEntypo
-        name="users"
-        size={TRIGGER_ICON_SIZE}
-        className="text-muted"
-      />
+      <PersonsIcon size={TRIGGER_ICON_SIZE} colorClassName="accent-muted" />
     ),
     content:
       'Creative coders and technical designers - individuals prepared to move beyond copy-paste solutions and evolve into builders who *can create anything*.',
@@ -144,7 +127,7 @@ const CustomIndicator = () => {
           entering={CLOSE_INDICATOR_ENTERING.duration(250)}
           exiting={CUSTOM_INDICATOR_EXITING}
         >
-          <StyledIonicons name="close" size={18} className="text-muted" />
+          <XMarkIcon size={14} colorClassName="accent-muted" />
         </Animated.View>
       ) : (
         <Animated.View
@@ -152,7 +135,7 @@ const CustomIndicator = () => {
           entering={CUSTOM_INDICATOR_ENTERING}
           exiting={CUSTOM_INDICATOR_EXITING}
         >
-          <StyledIonicons name="add" size={18} className="text-muted" />
+          <PlusIcon size={14} colorClassName="accent-muted" />
         </Animated.View>
       )}
     </View>
@@ -260,7 +243,7 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
           entering={FadeIn.duration(200)}
           className={cn('px-3 bg-surface', depth && 'pb-3 -mb-3')}
         >
-          <Divider />
+          <Separator />
         </StyledAnimatedView>
       )}
     </Animated.View>
@@ -272,17 +255,13 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
 export const AccordionWithDepthEffect: FC = () => {
   const [depth, setDepth] = useState(true);
 
-  const headerHeight = useHeaderHeight();
-  const insets = useSafeAreaInsets();
-
   return (
     <SettingsContext value={{ depth, setDepth }}>
-      <View
-        className="flex-1 justify-between px-5"
-        style={{
-          paddingTop: headerHeight + 20,
-          paddingBottom: insets.bottom + 110,
-        }}
+      <WithStateToggle
+        isSelected={depth}
+        onSelectedChange={setDepth}
+        label="Depth"
+        description="Enable depth effect for the accordion"
       >
         <Accordion
           animation={{
@@ -291,7 +270,7 @@ export const AccordionWithDepthEffect: FC = () => {
             },
           }}
           defaultValue="2"
-          isDividerVisible={false}
+          hideSeparator
           className="w-full overflow-visible"
         >
           {accordionData.map((item, index) => (
@@ -304,23 +283,7 @@ export const AccordionWithDepthEffect: FC = () => {
             </Accordion.Item>
           ))}
         </Accordion>
-        <View>
-          <FormField
-            isSelected={depth}
-            onSelectedChange={setDepth}
-            className="pr-2"
-          >
-            <View className="flex-1">
-              <FormField.Label>Depth</FormField.Label>
-              <FormField.Description>
-                Enable depth effect for the accordion
-              </FormField.Description>
-            </View>
-            <FormField.Indicator />
-          </FormField>
-          <Divider className="mt-6" />
-        </View>
-      </View>
+      </WithStateToggle>
     </SettingsContext>
   );
 };

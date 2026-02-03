@@ -1,11 +1,17 @@
 import { tv } from 'tailwind-variants';
-import { combineStyles } from '../../helpers/theme/utils/combine-styles';
+import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   base: '',
   variants: {
     isDisabled: {
       true: 'pointer-events-none opacity-disabled',
+    },
+    isInsideTextField: {
+      true: 'px-1.5',
+    },
+    isInsideControlField: {
+      true: 'pointer-events-none',
     },
   },
 });
@@ -30,11 +36,9 @@ const label = tv({
   },
 });
 
-const labelStyles = combineStyles({
+export const labelClassNames = combineStyles({
   root,
   label,
 });
 
 export type LabelSlots = keyof ReturnType<typeof label>;
-
-export default labelStyles;

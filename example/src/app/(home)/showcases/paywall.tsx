@@ -17,7 +17,7 @@ import { Uniwind, useUniwind, withUniwind } from 'uniwind';
 import BG from '../../../../assets/images/paywall-showcase-bg.jpeg';
 import LogoDark from '../../../../assets/logo-dark.png';
 import { AppText } from '../../../components/app-text';
-import { StyledFormField } from '../../../components/showcases/paywall/styled-form-field';
+import { StyledControlField } from '../../../components/showcases/paywall/styled-control-field';
 import { StyledRadio } from '../../../components/showcases/paywall/styled-radio';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
@@ -84,7 +84,7 @@ export default function Paywall() {
           .easing(Easing.out(Easing.ease))}
         className="flex-1 justify-end"
       >
-        <StyledFormField
+        <StyledControlField
           isSelected={isFreeTrialEnabled}
           onSelectedChange={setIsFreeTrialEnabled}
         />

@@ -2,12 +2,12 @@ import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-import { CloseIcon } from '../../helpers/components/close-icon';
-import { HeroText } from '../../helpers/components/hero-text';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { cn, useThemeColor } from '../../helpers/theme';
-import type { ViewRef } from '../../helpers/types';
-import { createContext } from '../../helpers/utils';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { cn } from '../../helpers/external/utils';
+import { CloseIcon, HeroText } from '../../helpers/internal/components';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { ViewRef } from '../../helpers/internal/types';
+import { createContext } from '../../helpers/internal/utils';
 import * as ToastPrimitive from '../../primitives/toast';
 import type { ToastComponentProps } from '../../providers/toast';
 import { useToastConfig } from '../../providers/toast/toast-config.context';
@@ -15,7 +15,7 @@ import { Button } from '../button';
 import type { PressableFeedbackHighlightAnimation } from '../pressable-feedback';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
-import toastStyles, { styleSheet } from './toast.styles';
+import { toastClassNames, toastStyleSheet } from './toast.styles';
 import type {
   DefaultToastProps,
   ToastActionProps,
@@ -66,7 +66,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   const toastProps = props as ToastRootProps & Pick<ToastComponentProps, 'id'>;
   const { id } = toastProps;
 
-  const rootClassName = toastStyles.root({
+  const rootClassName = toastClassNames.root({
     className,
   });
 
@@ -89,8 +89,8 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   });
 
   const rootStyle = isAnimatedStyleActive
-    ? [styleSheet.root, rContainerStyle, style]
-    : [styleSheet.root, style];
+    ? [toastStyleSheet.root, rContainerStyle, style]
+    : [toastStyleSheet.root, style];
 
   const animationSettingsContextValue = useMemo(
     () => ({
@@ -133,7 +133,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
             <AnimatedToastRoot
               pointerEvents="none"
               className={cn(rootClassName, 'absolute opacity-0')}
-              style={[styleSheet.root, style]}
+              style={[toastStyleSheet.root, style]}
               onLayout={(event) => {
                 const measuredHeight = event.nativeEvent.layout.height;
                 heights.modify((value) => {
@@ -159,13 +159,13 @@ const ToastTitle = forwardRef<View, ToastTitleProps>((props, ref) => {
 
   const { variant } = useToast();
 
-  const tvStyles = toastStyles.label({
+  const labelClassName = toastClassNames.label({
     variant,
     className,
   });
 
   return (
-    <HeroText ref={ref} className={tvStyles} {...restProps}>
+    <HeroText ref={ref} className={labelClassName} {...restProps}>
       {children}
     </HeroText>
   );
@@ -177,12 +177,12 @@ const ToastDescription = forwardRef<View, ToastDescriptionProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
-    const tvStyles = toastStyles.description({
+    const descriptionClassName = toastClassNames.description({
       className,
     });
 
     return (
-      <HeroText ref={ref} className={tvStyles} {...restProps}>
+      <HeroText ref={ref} className={descriptionClassName} {...restProps}>
         {children}
       </HeroText>
     );
@@ -196,7 +196,7 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
 
   const { variant: toastVariant } = useToast();
 
-  const tvStyles = toastStyles.action({
+  const actionClassName = toastClassNames.action({
     variant: toastVariant,
     className,
   });
@@ -263,7 +263,7 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
       ref={ref}
       variant={buttonVariant}
       size={size}
-      className={tvStyles}
+      className={actionClassName}
       pressableFeedbackVariant="highlight"
       pressableFeedbackHighlightProps={{
         animation: highlightAnimationConfig,

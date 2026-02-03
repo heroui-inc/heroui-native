@@ -2,12 +2,12 @@ import type { ReactNode } from 'react';
 import type { StyleProp, TextProps, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
-  AnimationRoot,
+  AnimationRootDisableAll,
   PopupDialogContentAnimation,
   PopupOverlayAnimation,
-  PopupRootAnimationConfig,
-} from '../../helpers/types/animation';
+} from '../../helpers/internal/types';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
+import type { CloseButtonProps } from '../close-button/close-button.types';
 
 /**
  * Dialog internal state for animation coordination
@@ -18,8 +18,6 @@ export type DialogState = 'idle' | 'open' | 'close';
  * Context value for dialog animation state
  */
 export interface DialogAnimationContextValue {
-  /** Extended internal state for animation control */
-  dialogState: DialogState;
   /** Animation progress shared value (0=idle, 1=open, 2=close) */
   progress: SharedValue<number>;
   /** Dragging state shared value */
@@ -27,11 +25,6 @@ export interface DialogAnimationContextValue {
   /** Gesture release animation running state shared value */
   isGestureReleaseAnimationRunning: SharedValue<boolean>;
 }
-
-/**
- * Animation configuration for Dialog root component
- */
-export type DialogRootAnimation = AnimationRoot<PopupRootAnimationConfig>;
 
 /**
  * Dialog Root component props
@@ -42,23 +35,12 @@ export interface DialogRootProps extends DialogPrimitivesTypes.RootProps {
    */
   children?: ReactNode;
   /**
-   * Delay in milliseconds before the dialog closes (for exit animations)
-   * @default 300
-   */
-  closeDelay?: number;
-  /**
-   * Whether to dismiss the keyboard when the dialog closes
-   * @default true
-   */
-  isDismissKeyboardOnClose?: boolean;
-  /**
    * Animation configuration for dialog root
    * - `"disable-all"`: Disable all animations including children
    * - `false` or `"disabled"`: Disable only root animations
    * - `true` or `undefined`: Use default animations
-   * - `object`: Custom animation configuration
    */
-  animation?: DialogRootAnimation;
+  animation?: AnimationRootDisableAll;
 }
 
 /**
@@ -176,13 +158,6 @@ export interface DialogContentProps
    */
   animation?: DialogContentAnimation;
   /**
-   * Whether animated styles (react-native-reanimated) are active
-   * When `false`, the animated style is removed and you can implement custom logic
-   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
-   * @default true
-   */
-  isAnimatedStyleActive?: boolean;
-  /**
    * Whether the dialog content can be swiped to dismiss
    * @default true
    */
@@ -191,37 +166,11 @@ export interface DialogContentProps
 
 /**
  * Dialog Close component props
+ *
+ * Extends CloseButtonProps, allowing full override of all close button props.
+ * Automatically handles dialog close functionality when pressed.
  */
-export interface DialogCloseProps extends DialogPrimitivesTypes.CloseProps {
-  /**
-   * Close icon props
-   */
-  iconProps?: DialogCloseIconProps;
-  /**
-   * Additional CSS class for the close button
-   */
-  className?: string;
-  /**
-   * The close button content
-   */
-  children?: ReactNode;
-}
-
-/**
- * Close icon props
- */
-export interface DialogCloseIconProps {
-  /**
-   * Size of the close icon
-   * @default 18
-   */
-  size?: number;
-  /**
-   * Color of the close icon
-   * @default theme color muted
-   */
-  color?: string;
-}
+export interface DialogCloseProps extends CloseButtonProps {}
 
 /**
  * Dialog Title component props

@@ -1,9 +1,12 @@
 import { forwardRef, useMemo } from 'react';
 import type { View } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useThemeColor } from '../../helpers/theme';
-import { createContext, getElementWithDefault } from '../../helpers/utils';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import {
+  createContext,
+  getElementWithDefault,
+} from '../../helpers/internal/utils';
 import * as ActivityIndicatorPrimitives from '../../primitives/activity-indicator';
 import { SpinnerIcon } from './spinner-icon';
 import {
@@ -11,7 +14,7 @@ import {
   useSpinnerRootAnimation,
 } from './spinner.animation';
 import { DISPLAY_NAME, SPINNER_SIZE_MAP } from './spinner.constants';
-import spinnerStyles from './spinner.styles';
+import { spinnerClassNames } from './spinner.styles';
 import type {
   SpinnerContextValue,
   SpinnerIndicatorProps,
@@ -43,7 +46,7 @@ const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
     ...restProps
   } = props;
 
-  const tvStyles = spinnerStyles.root({
+  const rootClassName = spinnerClassNames.root({
     size,
     className,
   });
@@ -87,7 +90,7 @@ const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
           entering={entering}
           exiting={exiting}
           isLoading={isLoading}
-          className={tvStyles}
+          className={rootClassName}
           {...restProps}
         >
           {children || indicatorElement}
@@ -120,7 +123,7 @@ const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
       themeColorDanger,
     ] = useThemeColor(['accent', 'success', 'warning', 'danger']);
 
-    const indicatorClassName = spinnerStyles.indicator({
+    const indicatorClassName = spinnerClassNames.indicator({
       className,
     });
 

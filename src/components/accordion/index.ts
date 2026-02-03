@@ -4,6 +4,7 @@ export {
   useAccordionItem,
 } from './accordion';
 export { ACCORDION_LAYOUT_TRANSITION as AccordionLayoutTransition } from './accordion.constants';
+export { accordionClassNames } from './accordion.styles';
 
 export type {
   AccordionContentProps,

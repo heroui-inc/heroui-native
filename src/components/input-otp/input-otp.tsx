@@ -1,9 +1,9 @@
 import { forwardRef, useMemo } from 'react';
 import Animated from 'react-native-reanimated';
-import { HeroText } from '../../helpers/components';
-import { AnimationSettingsProvider } from '../../helpers/contexts/animation-settings-context';
-import { useIsOnSurface } from '../../helpers/theme';
-import { createContext } from '../../helpers/utils';
+import { useIsOnSurface } from '../../helpers/external/hooks';
+import { HeroText } from '../../helpers/internal/components';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import { createContext } from '../../helpers/internal/utils';
 import * as InputOTPPrimitives from '../../primitives/input-otp';
 import {
   useInputOTPRootAnimation,
@@ -11,7 +11,7 @@ import {
   useInputOTPSlotValueAnimation,
 } from './input-otp.animation';
 import { DISPLAY_NAME } from './input-otp.constants';
-import inputOTPStyles, { styleSheet } from './input-otp.styles';
+import { inputOTPClassNames, inputOTPStyleSheet } from './input-otp.styles';
 import type {
   InputOTPGroupProps,
   InputOTPGroupRef,
@@ -51,7 +51,7 @@ const InputOTPRoot = forwardRef<InputOTPRef, InputOTPRootProps>(
   (props, ref) => {
     const { className, animation, ...restProps } = props;
 
-    const tvStyles = inputOTPStyles.root({ className });
+    const rootClassName = inputOTPClassNames.root({ className });
 
     const { isAllAnimationsDisabled } = useInputOTPRootAnimation({
       animation,
@@ -68,7 +68,7 @@ const InputOTPRoot = forwardRef<InputOTPRef, InputOTPRootProps>(
       <AnimationSettingsProvider value={animationSettingsContextValue}>
         <InputOTPPrimitives.Root
           ref={ref}
-          className={tvStyles}
+          className={rootClassName}
           {...restProps}
         />
       </AnimationSettingsProvider>
@@ -85,7 +85,7 @@ const InputOTPGroup = forwardRef<InputOTPGroupRef, InputOTPGroupProps>(
     const { slots, maxLength, value, isFocused, isDisabled, isInvalid } =
       useInputOTP();
 
-    const tvStyles = inputOTPStyles.group({ className });
+    const groupClassName = inputOTPClassNames.group({ className });
 
     const renderProps: InputOTPGroupRenderProps = {
       slots,
@@ -100,7 +100,11 @@ const InputOTPGroup = forwardRef<InputOTPGroupRef, InputOTPGroupProps>(
       typeof children === 'function' ? children(renderProps) : children;
 
     return (
-      <InputOTPPrimitives.Group ref={ref} className={tvStyles} {...restProps}>
+      <InputOTPPrimitives.Group
+        ref={ref}
+        className={groupClassName}
+        {...restProps}
+      >
         {content}
       </InputOTPPrimitives.Group>
     );
@@ -134,7 +138,7 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
             ? 'secondary'
             : 'primary';
 
-    const slotClassName = inputOTPStyles.slot({
+    const slotClassName = inputOTPClassNames.slot({
       variant: finalVariant,
       isActive,
       isInvalid,
@@ -158,7 +162,7 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
           ref={ref}
           index={index}
           className={slotClassName}
-          style={[styleSheet.slotRoot, style]}
+          style={[inputOTPStyleSheet.slotRoot, style]}
           {...restProps}
         >
           {children !== undefined ? (
@@ -205,7 +209,7 @@ const InputOTPSlotPlaceholder = forwardRef<
     ? placeholderTextClassName
     : undefined;
 
-  const slotPlaceholderClassName = inputOTPStyles.slotPlaceholder({
+  const slotPlaceholderClassName = inputOTPClassNames.slotPlaceholder({
     className: [slotPlaceholderTextClassName, className],
   });
 
@@ -242,7 +246,7 @@ const InputOTPSlotValue = forwardRef<
       animation,
     });
 
-  const slotValueClassName = inputOTPStyles.slotValue({
+  const slotValueClassName = inputOTPClassNames.slotValue({
     className,
   });
 
@@ -285,7 +289,7 @@ const InputOTPSlotCaret = forwardRef<
     animation,
   });
 
-  const tvStyles = inputOTPStyles.slotCaret({ className });
+  const slotCaretClassName = inputOTPClassNames.slotCaret({ className });
 
   const containerStyle = isAnimatedStyleActive
     ? [rContainerStyle, style]
@@ -296,7 +300,7 @@ const InputOTPSlotCaret = forwardRef<
   return (
     <Animated.View
       ref={ref}
-      className={tvStyles}
+      className={slotCaretClassName}
       style={containerStyle}
       pointerEvents={pointerEvents}
       {...restProps}
@@ -312,12 +316,12 @@ const InputOTPSeparator = forwardRef<
 >((props, ref) => {
   const { className, ...restProps } = props;
 
-  const tvStyles = inputOTPStyles.separator({ className });
+  const separatorClassName = inputOTPClassNames.separator({ className });
 
   return (
     <InputOTPPrimitives.Separator
       ref={ref}
-      className={tvStyles}
+      className={separatorClassName}
       {...restProps}
     />
   );

@@ -4,4 +4,5 @@ export {
   useTabsMeasurements,
   useTabsTrigger,
 } from './tabs';
+export { tabsClassNames } from './tabs.styles';
 export type * from './tabs.types';

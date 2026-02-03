@@ -1,6 +1,6 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useRouter } from 'expo-router';
-import { Avatar, Card, Divider } from 'heroui-native';
+import { Avatar, Card, Separator } from 'heroui-native';
 import { Pressable, View } from 'react-native';
 import { KeyboardController } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
@@ -15,6 +15,7 @@ import { Status } from '../../../components/showcases/linear-task/dialogs/status
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 const StyledMaterialCommunityIcons = withUniwind(MaterialCommunityIcons);
+const StyledAnimatedScrollView = withUniwind(Animated.ScrollView);
 
 KeyboardController.preload();
 
@@ -24,7 +25,7 @@ export default function LinearTaskScreen() {
   const router = useRouter();
 
   return (
-    <Animated.ScrollView
+    <StyledAnimatedScrollView
       entering={FadeIn.delay(100)}
       className="flex-1 bg-background px-6"
       style={{ paddingTop: insets.top + 12, paddingBottom: insets.bottom + 12 }}
@@ -95,7 +96,7 @@ export default function LinearTaskScreen() {
         </Card>
       </Pressable>
 
-      <Divider className="mb-6 -mx-6" />
+      <Separator className="mb-6 -mx-6" />
 
       <View className="mb-8">
         <View className="flex-row items-center justify-between mb-4">
@@ -220,6 +221,6 @@ export default function LinearTaskScreen() {
           </View>
         </View>
       </View>
-    </Animated.ScrollView>
+    </StyledAnimatedScrollView>
   );
 }

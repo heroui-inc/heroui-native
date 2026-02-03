@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../helpers/internal/utils';
 
 /**
  * Overlay style definition
@@ -21,7 +22,7 @@ import { tv } from 'tailwind-variants';
  * set `isAnimatedStyleActive={false}` on `BottomSheet.Overlay`.
  */
 const overlay = tv({
-  base: 'absolute inset-0 bg-black/20',
+  base: 'absolute inset-0 bg-black/10',
 });
 
 const contentContainer = tv({
@@ -29,11 +30,11 @@ const contentContainer = tv({
 });
 
 const contentBackground = tv({
-  base: 'bg-overlay rounded-t-[32px]',
+  base: 'bg-overlay rounded-t-4xl shadow-overlay',
 });
 
 const contentHandleIndicator = tv({
-  base: 'bg-divider',
+  base: 'bg-separator',
 });
 
 const close = tv({
@@ -48,7 +49,7 @@ const description = tv({
   base: 'text-base text-muted',
 });
 
-const bottomSheetStyles = {
+export const bottomSheetClassNames = combineStyles({
   overlay,
   contentContainer,
   contentBackground,
@@ -56,12 +57,10 @@ const bottomSheetStyles = {
   close,
   label,
   description,
-};
+});
 
-export const styleSheet = StyleSheet.create({
+export const bottomSheetStyleSheet = StyleSheet.create({
   contentContainer: {
     borderCurve: 'continuous',
   },
 });
-
-export default bottomSheetStyles;

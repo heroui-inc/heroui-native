@@ -20,7 +20,7 @@ const data = [
     components: [
       { name: 'BottomSheet', href: '/components/bottom-sheet' },
       { name: 'Tabs', href: '/components/tabs' },
-      { name: 'FormField', href: '/components/form-field' },
+      { name: 'ControlField', href: '/components/control-field' },
       { name: 'Button', href: '/components/button' },
       { name: 'Chip', href: '/components/chip' },
     ],
@@ -53,7 +53,7 @@ const data = [
       { name: 'Popover', href: '/components/popover' },
       { name: 'Avatar', href: '/components/avatar' },
       { name: 'Button', href: '/components/button' },
-      { name: 'Divider', href: '/components/divider' },
+      { name: 'Separator', href: '/components/separator' },
     ],
   },
   {
@@ -70,7 +70,7 @@ const data = [
       { name: 'Card', href: '/components/card' },
       { name: 'Chip', href: '/components/chip' },
       { name: 'RadioGroup', href: '/components/radio-group' },
-      { name: 'FormField', href: '/components/form-field' },
+      { name: 'ControlField', href: '/components/control-field' },
       { name: 'Checkbox', href: '/components/checkbox' },
       { name: 'Button', href: '/components/button' },
       { name: 'Avatar', href: '/components/avatar' },
@@ -87,7 +87,7 @@ const data = [
     href: '/showcases/paywall',
     components: [
       { name: 'Switch', href: '/components/switch' },
-      { name: 'FormField', href: '/components/form-field' },
+      { name: 'ControlField', href: '/components/control-field' },
       { name: 'RadioGroup', href: '/components/radio-group' },
       { name: 'Button', href: '/components/button' },
     ],
@@ -103,7 +103,7 @@ const data = [
     components: [
       { name: 'Button', href: '/components/button' },
       { name: 'Card', href: '/components/card' },
-      { name: 'Divider', href: '/components/divider' },
+      { name: 'Separator', href: '/components/separator' },
     ],
   },
 ];

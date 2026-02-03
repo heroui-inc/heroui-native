@@ -1,12 +1,13 @@
 import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
-import { HeroText } from '../../helpers/components';
-import { colorKit, useThemeColor } from '../../helpers/theme';
-import type { PressableRef } from '../../helpers/types';
-import { childrenToString, createContext } from '../../helpers/utils';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { colorKit } from '../../helpers/external/utils';
+import { HeroText } from '../../helpers/internal/components';
+import type { PressableRef } from '../../helpers/internal/types';
+import { childrenToString, createContext } from '../../helpers/internal/utils';
 import { PressableFeedback } from '../pressable-feedback';
 import { DISPLAY_NAME } from './button.constants';
-import buttonStyles, { styleSheet } from './button.styles';
+import { buttonClassNames, buttonStyleSheet } from './button.styles';
 import type {
   ButtonContextValue,
   ButtonLabelProps,
@@ -49,7 +50,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
 
   const stringifiedChildren = childrenToString(children);
 
-  const tvStyles = buttonStyles.root({
+  const rootClassName = buttonClassNames.root({
     variant,
     size,
     isIconOnly,
@@ -65,6 +66,8 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         return themeColorDefaultHover;
       case 'tertiary':
         return themeColorDefaultHover;
+      case 'outline':
+        return colorKit.setAlpha(themeColorDefaultHover, 0.3).hex();
       case 'ghost':
         return colorKit.setAlpha(themeColorDefaultHover, 0.3).hex();
       case 'danger':
@@ -171,8 +174,8 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     <ButtonProvider value={contextValue}>
       <PressableFeedback
         ref={ref}
-        className={tvStyles}
-        style={[styleSheet.buttonRoot, style]}
+        className={rootClassName}
+        style={[buttonStyleSheet.buttonRoot, style]}
         isDisabled={isDisabled}
         accessibilityRole={accessibilityRole}
         accessibilityState={{ disabled: isDisabled }}
@@ -207,14 +210,14 @@ const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
 
   const { size, variant } = useButton();
 
-  const tvStyles = buttonStyles.label({
+  const labelClassName = buttonClassNames.label({
     size,
     variant,
     className,
   });
 
   return (
-    <HeroText ref={ref} className={tvStyles} {...restProps}>
+    <HeroText ref={ref} className={labelClassName} {...restProps}>
       {children}
     </HeroText>
   );

@@ -1,10 +1,10 @@
-import { useAnimationSettings } from '../../helpers/contexts';
-import type { AnimationDisabled } from '../../helpers/types/animation';
-import { createContext } from '../../helpers/utils';
+import { useAnimationSettings } from '../../helpers/internal/contexts';
+import type { AnimationDisabled } from '../../helpers/internal/types';
 import {
+  createContext,
   getAnimationState,
   getIsAnimationDisabledValue,
-} from '../../helpers/utils/animation';
+} from '../../helpers/internal/utils';
 import type { BottomSheetAnimationContextValue } from './bottom-sheet.types';
 
 const [BottomSheetAnimationProvider, useBottomSheetAnimation] =

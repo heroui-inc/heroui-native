@@ -12,16 +12,17 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import { useUniwind } from 'uniwind';
-import { useAnimationSettings } from '../../helpers/contexts';
-import { useCombinedAnimationDisabledState } from '../../helpers/hooks';
-import { colorKit, useThemeColor } from '../../helpers/theme';
-import { createContext } from '../../helpers/utils';
+import { useThemeColor } from '../../helpers/external/hooks';
+import { colorKit } from '../../helpers/external/utils';
+import { useAnimationSettings } from '../../helpers/internal/contexts';
+import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
 import {
+  createContext,
   getAnimationState,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
   getRootAnimationState,
-} from '../../helpers/utils/animation';
+} from '../../helpers/internal/utils';
 import {
   DEFAULT_EASING,
   DEFAULT_PULSE_DURATION,

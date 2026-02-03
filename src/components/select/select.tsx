@@ -449,6 +449,15 @@ const SelectContent = forwardRef<
   SelectContentProps
 >((props, ref) => {
   const presentation = props.presentation || 'popover';
+  const { presentation: contextPresentation } = useSelect();
+
+  if (__DEV__) {
+    if (presentation !== contextPresentation) {
+      throw new Error(
+        `Select.Content presentation prop ("${props.presentation}") does not match Select.Root presentation prop ("${contextPresentation}"). They must be the same.`
+      );
+    }
+  }
 
   if (presentation === 'bottom-sheet') {
     return (

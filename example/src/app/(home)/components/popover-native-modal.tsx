@@ -21,6 +21,7 @@ export default function PopoverNativeModalScreen() {
         <Popover.Portal>
           <Popover.Overlay />
           <Popover.Content
+            presentation="popover"
             width={320}
             offset={insets.top + 20}
             className="gap-3 px-6 py-5"

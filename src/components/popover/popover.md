@@ -46,7 +46,7 @@ The Popover component uses compound parts to create floating content panels.
   <Popover.Trigger>...</Popover.Trigger>
   <Popover.Portal>
     <Popover.Overlay />
-    <Popover.Content>...</Popover.Content>
+    <Popover.Content presentation="popover">...</Popover.Content>
   </Popover.Portal>
 </Popover>
 ```
@@ -60,7 +60,7 @@ Structure popover content with title and description for better information hier
   <Popover.Trigger>...</Popover.Trigger>
   <Popover.Portal>
     <Popover.Overlay />
-    <Popover.Content>
+    <Popover.Content presentation="popover">
       <Popover.Close />
       <Popover.Title>...</Popover.Title>
       <Popover.Description>...</Popover.Description>
@@ -78,7 +78,7 @@ Add an arrow pointing to the trigger element for better visual connection.
   <Popover.Trigger>...</Popover.Trigger>
   <Popover.Portal>
     <Popover.Overlay />
-    <Popover.Content placement="top">
+    <Popover.Content presentation="popover" placement="top">
       <Popover.Arrow />
       ...
     </Popover.Content>
@@ -100,7 +100,7 @@ Control the width of the popover content using the `width` prop.
   <Popover.Trigger>...</Popover.Trigger>
   <Popover.Portal>
     <Popover.Overlay />
-    <Popover.Content width={320}>...</Popover.Content>
+    <Popover.Content presentation="popover" width={320}>...</Popover.Content>
   </Popover.Portal>
 </Popover>;
 
@@ -111,7 +111,7 @@ Control the width of the popover content using the `width` prop.
   <Popover.Trigger>...</Popover.Trigger>
   <Popover.Portal>
     <Popover.Overlay />
-    <Popover.Content width="trigger">...</Popover.Content>
+    <Popover.Content presentation="popover" width="trigger">...</Popover.Content>
   </Popover.Portal>
 </Popover>;
 
@@ -122,7 +122,7 @@ Control the width of the popover content using the `width` prop.
   <Popover.Trigger>...</Popover.Trigger>
   <Popover.Portal>
     <Popover.Overlay />
-    <Popover.Content width="full">...</Popover.Content>
+    <Popover.Content presentation="popover" width="full">...</Popover.Content>
   </Popover.Portal>
 </Popover>;
 
@@ -133,7 +133,7 @@ Control the width of the popover content using the `width` prop.
   <Popover.Trigger>...</Popover.Trigger>
   <Popover.Portal>
     <Popover.Overlay />
-    <Popover.Content width="content-fit">...</Popover.Content>
+    <Popover.Content presentation="popover" width="content-fit">...</Popover.Content>
   </Popover.Portal>
 </Popover>;
 ```
@@ -142,12 +142,14 @@ Control the width of the popover content using the `width` prop.
 
 Use bottom sheet presentation for mobile-optimized interaction patterns.
 
+> **Important:** The `presentation` prop on `Popover.Content` must match the `presentation` prop on `Popover.Root`. In development mode, a mismatch will throw an error.
+
 ```tsx
 <Popover presentation="bottom-sheet">
   <Popover.Trigger>...</Popover.Trigger>
   <Popover.Portal>
     <Popover.Overlay />
-    <Popover.Content>
+    <Popover.Content presentation="bottom-sheet">
       <Popover.Title>...</Popover.Title>
       <Popover.Description>...</Popover.Description>
       <Button>Close</Button>
@@ -164,7 +166,7 @@ Control where the popover appears relative to the trigger element.
 <Popover>
   <Popover.Trigger>...</Popover.Trigger>
   <Popover.Portal>
-    <Popover.Content placement="left">...</Popover.Content>
+    <Popover.Content presentation="popover" placement="left">...</Popover.Content>
   </Popover.Portal>
 </Popover>
 ```
@@ -177,7 +179,7 @@ Fine-tune content alignment along the placement axis.
 <Popover>
   <Popover.Trigger>...</Popover.Trigger>
   <Popover.Portal>
-    <Popover.Content placement="top" align="start">
+    <Popover.Content presentation="popover" placement="top" align="start">
       ...
     </Popover.Content>
   </Popover.Portal>
@@ -204,7 +206,7 @@ Configure custom animations for open and close transitions using the `animation`
   <Popover.Trigger>...</Popover.Trigger>
   <Popover.Portal>
     <Popover.Overlay />
-    <Popover.Content>...</Popover.Content>
+    <Popover.Content presentation="popover">...</Popover.Content>
   </Popover.Portal>
 </Popover>
 ```
@@ -228,7 +230,7 @@ popoverRef.current?.close();
   </Popover.Trigger>
   <Popover.Portal>
     <Popover.Overlay />
-    <Popover.Content>
+    <Popover.Content presentation="popover">
       <Text>Content</Text>
       <Button onPress={() => popoverRef.current?.close()}>Close</Button>
     </Popover.Content>
@@ -262,7 +264,7 @@ export default function PopoverExample() {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Overlay />
-        <Popover.Content width={320} className="gap-1 rounded-xl px-6 py-4">
+        <Popover.Content presentation="popover" width={320} className="gap-1 rounded-xl px-6 py-4">
           <Popover.Close className="absolute top-3 right-3 z-50" />
           <Popover.Title>Information</Popover.Title>
           <Popover.Description>
@@ -352,6 +354,7 @@ Animation configuration for popover overlay component. Can be:
 | prop                      | type                                             | default         | description                                                  |
 | ------------------------- | ------------------------------------------------ | --------------- | ------------------------------------------------------------ |
 | `children`                | `ReactNode`                                      | -               | The popover content                                          |
+| `presentation`            | `'popover'`                                      | `'popover'`     | Presentation mode - must match Popover.Root presentation prop. When not provided, defaults to 'popover' |
 | `width`                   | `number \| 'trigger' \| 'content-fit' \| 'full'` | `'content-fit'` | Width sizing strategy for the content                        |
 | `placement`               | `'top' \| 'bottom' \| 'left' \| 'right'`         | `'bottom'`      | Placement of the popover relative to trigger                 |
 | `align`                   | `'start' \| 'center' \| 'end'`                   | `'center'`      | Alignment along the placement axis                           |
@@ -372,6 +375,7 @@ Animation configuration for popover overlay component. Can be:
 | prop                        | type                   | default | description                                      |
 | --------------------------- | ---------------------- | ------- | ------------------------------------------------ |
 | `children`                  | `ReactNode`            | -       | The bottom sheet content                         |
+| `presentation`              | `'bottom-sheet'`       | -       | Presentation mode - must be 'bottom-sheet' and match Popover.Root presentation prop (required) |
 | `contentContainerClassName` | `string`               | -       | Additional CSS classes for the content container |
 | `contentContainerProps`     | `BottomSheetViewProps` | -       | Props for the content container                  |
 | `enablePanDownToClose`      | `boolean`              | `true`  | Whether pan down gesture closes the sheet        |

@@ -82,7 +82,7 @@ const PopoverRoot = forwardRef<
       isOpen: isOpenProp,
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
-      presentation,
+      presentation = 'popover',
       animation,
       ...props
     },
@@ -353,9 +353,17 @@ const PopoverContent = forwardRef<
   PopoverPrimitivesTypes.ContentRef | BottomSheet,
   PopoverContentProps
 >((props, ref) => {
-  const { presentation = 'popover' } = usePopover();
+  const { presentation: contextPresentation } = usePopover();
 
-  if (presentation === 'bottom-sheet') {
+  if (__DEV__) {
+    if (props.presentation !== contextPresentation) {
+      throw new Error(
+        `Popover.Content presentation prop ("${props.presentation}") does not match Popover.Root presentation prop ("${contextPresentation}"). They must be the same.`
+      );
+    }
+  }
+
+  if (props.presentation === 'bottom-sheet') {
     return (
       <PopoverContentBottomSheet
         ref={ref as React.Ref<BottomSheet>}

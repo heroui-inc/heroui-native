@@ -40,7 +40,11 @@ export const Plan: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
         </Button>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content className={className.popoverContent} placement="top">
+        <Popover.Content
+          presentation="popover"
+          className={className.popoverContent}
+          placement="top"
+        >
           <Popover.Arrow
             stroke={themeColorForeground}
             fill={themeColorForeground}

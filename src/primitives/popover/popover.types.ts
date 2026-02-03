@@ -69,7 +69,7 @@ interface IRootContext {
    * - 'bottom-sheet': Bottom sheet modal presentation
    * @default 'popover'
    */
-  presentation?: 'popover' | 'bottom-sheet';
+  presentation: 'popover' | 'bottom-sheet';
 }
 
 /**

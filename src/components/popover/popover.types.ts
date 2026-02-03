@@ -150,6 +150,10 @@ export interface PopoverOverlayProps
 export interface PopoverContentPopoverProps
   extends PopoverPrimitivesTypes.ContentProps {
   /**
+   * Presentation mode for the popover content
+   */
+  presentation: 'popover';
+  /**
    * Additional CSS class for the content container
    */
   className?: string;
@@ -171,7 +175,12 @@ export interface PopoverContentPopoverProps
  */
 export interface PopoverContentBottomSheetProps
   extends Partial<React.ComponentProps<typeof BottomSheet>>,
-    BaseBottomSheetContentProps {}
+    BaseBottomSheetContentProps {
+  /**
+   * Presentation mode for the popover
+   */
+  presentation: 'bottom-sheet';
+}
 
 /**
  * Popover Content component props

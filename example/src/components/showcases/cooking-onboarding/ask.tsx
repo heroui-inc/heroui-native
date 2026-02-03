@@ -45,6 +45,7 @@ export const Ask: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
+          presentation="popover"
           className={cn(className.popoverContent, 'w-[240px]')}
           placement="top"
         >

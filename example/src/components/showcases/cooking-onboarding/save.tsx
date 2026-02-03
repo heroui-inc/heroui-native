@@ -10,7 +10,6 @@ import { type FC, type RefObject } from 'react';
 import { withUniwind } from 'uniwind';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
-import { popoverAnimation } from './constants';
 import { className } from './styles';
 
 const StyledFeather = withUniwind(Feather);
@@ -24,7 +23,7 @@ export const Save: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
   const themeColorForeground = useThemeColor('foreground');
 
   return (
-    <Popover animation={popoverAnimation}>
+    <Popover>
       <Popover.Trigger ref={triggerRef}>
         <Button
           variant="secondary"
@@ -39,7 +38,10 @@ export const Save: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
         </Button>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content className={className.popoverContent}>
+        <Popover.Content
+          presentation="popover"
+          className={className.popoverContent}
+        >
           <Popover.Arrow
             stroke={themeColorForeground}
             fill={themeColorForeground}

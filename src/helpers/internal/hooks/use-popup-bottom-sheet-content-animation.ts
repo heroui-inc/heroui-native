@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import type { SharedValue } from 'react-native-reanimated';
 import {
   Extrapolation,
@@ -6,13 +5,6 @@ import {
   useAnimatedReaction,
   useSharedValue,
 } from 'react-native-reanimated';
-import { useAnimationSettings } from '../contexts/animation-settings-context';
-import { getIsAnimationDisabledValue } from '../utils';
-
-/**
- * Component state type for popup-like components
- */
-type ComponentState = 'idle' | 'open' | 'close';
 
 /**
  * Props for usePopupBottomSheetContentAnimation hook
@@ -26,10 +18,6 @@ export interface UsePopupBottomSheetContentAnimationProps {
    * Dragging state shared value
    */
   isDragging: SharedValue<boolean>;
-  /**
-   * Current component state
-   */
-  componentState: ComponentState;
 }
 
 /**
@@ -39,36 +27,18 @@ export interface UsePopupBottomSheetContentAnimationProps {
 export function usePopupBottomSheetContentAnimation({
   progress,
   isDragging,
-  componentState,
 }: UsePopupBottomSheetContentAnimationProps) {
-  const { isAllAnimationsDisabled } = useAnimationSettings();
-
   const animatedIndex = useSharedValue(-1);
   const isPanActivated = useSharedValue(false);
   const isClosingOnSwipe = useSharedValue(false);
 
-  const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    isAnimationDisabled: false,
-    isAllAnimationsDisabled,
-  });
-
-  // Handle animation disabled state - set progress directly based on component state
-  useEffect(() => {
-    if (isAnimationDisabledValue) {
-      if (componentState === 'open') {
-        progress.set(1);
-      } else if (componentState === 'close') {
-        progress.set(2);
-      } else {
-        progress.set(0);
-      }
-    }
-  }, [componentState, isAnimationDisabledValue, progress]);
-
   useAnimatedReaction(
     () => isDragging.get(),
-    (value) => {
-      if (!isPanActivated.get() && value) {
+    (current, previous) => {
+      if (current && !previous) {
+        isClosingOnSwipe.set(false);
+      }
+      if (!isPanActivated.get() && current) {
         isPanActivated.set(true);
       }
     }
@@ -76,24 +46,22 @@ export function usePopupBottomSheetContentAnimation({
 
   useAnimatedReaction(
     () => animatedIndex.get(),
-    (value) => {
-      if (
-        isAnimationDisabledValue ||
-        isClosingOnSwipe.get() ||
-        componentState === 'close'
-      ) {
-        return;
-      }
-      if (isPanActivated.get()) {
-        progress.set(interpolate(value, [0, -1], [1, 2], Extrapolation.CLAMP));
+    (current) => {
+      if (!isPanActivated.get()) {
+        progress.set(
+          interpolate(current, [-1, 0], [0, 1], Extrapolation.CLAMP)
+        );
       } else {
-        progress.set(interpolate(value, [-1, 0], [0, 1], Extrapolation.CLAMP));
+        progress.set(
+          interpolate(current, [0, -1], [1, 2], Extrapolation.CLAMP)
+        );
       }
     }
   );
 
   return {
     animatedIndex,
+    isPanActivated,
     isClosingOnSwipe,
   };
 }

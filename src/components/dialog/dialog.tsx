@@ -1,5 +1,10 @@
-import { forwardRef, useMemo } from 'react';
-import type { GestureResponderEvent, Text as RNText } from 'react-native';
+import { forwardRef, useLayoutEffect, useMemo, useRef } from 'react';
+import {
+  StyleSheet,
+  type GestureResponderEvent,
+  type Text as RNText,
+  type View,
+} from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { FullWindowOverlay, HeroText } from '../../helpers/internal/components';
@@ -37,53 +42,31 @@ const AnimatedOverlay = Animated.createAnimatedComponent(
   DialogPrimitives.Overlay
 );
 
-const AnimatedContent = Animated.createAnimatedComponent(
-  DialogPrimitives.Content
-);
-
 const useDialog = DialogPrimitives.useRootContext;
 
 // --------------------------------------------------
 
 const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
   (
-    {
-      children,
-      closeDelay = 300,
-      isDismissKeyboardOnClose = true,
-      isOpen: isOpenProp,
-      isDefaultOpen,
-      onOpenChange: onOpenChangeProp,
-      animation,
-      ...props
-    },
+    { children, isOpen, isDefaultOpen, onOpenChange, animation, ...props },
     ref
   ) => {
     const {
-      internalIsOpen,
-      componentState,
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
-      onOpenChange,
       isAllAnimationsDisabled,
     } = usePopupRootAnimation({
-      isOpen: isOpenProp,
-      isDefaultOpen,
-      onOpenChange: onOpenChangeProp,
-      closeDelay,
-      isDismissKeyboardOnClose,
       animation,
     });
 
     const animationContextValue = useMemo(
       () => ({
-        dialogState: componentState,
         progress,
         isDragging,
         isGestureReleaseAnimationRunning,
       }),
-      [componentState, progress, isDragging, isGestureReleaseAnimationRunning]
+      [progress, isDragging, isGestureReleaseAnimationRunning]
     );
 
     const animationSettingsContextValue = useMemo(
@@ -98,7 +81,7 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
         <DialogAnimationProvider value={animationContextValue}>
           <DialogPrimitives.Root
             ref={ref}
-            isOpen={internalIsOpen}
+            isOpen={isOpen}
             isDefaultOpen={isDefaultOpen}
             onOpenChange={onOpenChange}
             {...props}
@@ -138,7 +121,11 @@ const DialogPortal = ({
       <AnimationSettingsProvider value={animationSettingsContext}>
         <DialogAnimationProvider value={animationContext}>
           <FullWindowOverlay>
-            <Animated.View className={portalClassName} style={style}>
+            <Animated.View
+              className={portalClassName}
+              style={style}
+              pointerEvents="box-none"
+            >
               {children}
             </Animated.View>
           </FullWindowOverlay>
@@ -163,7 +150,7 @@ const DialogOverlay = forwardRef<
 
     const overlayClassName = dialogClassNames.overlay({ className });
 
-    const { rContainerStyle } = usePopupOverlayAnimation({
+    const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
@@ -175,12 +162,18 @@ const DialogOverlay = forwardRef<
       : style;
 
     return (
-      <AnimatedOverlay
-        ref={ref}
-        className={overlayClassName}
-        style={overlayStyle}
-        {...props}
-      />
+      <Animated.View
+        entering={entering}
+        exiting={exiting}
+        style={StyleSheet.absoluteFill}
+      >
+        <AnimatedOverlay
+          ref={ref}
+          className={overlayClassName}
+          style={overlayStyle}
+          {...props}
+        />
+      </Animated.View>
     );
   }
 );
@@ -192,68 +185,62 @@ const DialogContent = forwardRef<
   DialogContentProps
 >(
   (
-    {
-      className,
-      style,
-      children,
-      onLayout,
-      animation,
-      isSwipeable = true,
-      isAnimatedStyleActive = true,
-      ...props
-    },
+    { className, style, children, animation, isSwipeable = true, ...props },
     ref
   ) => {
-    const { onOpenChange } = useDialog();
+    const { isOpen, onOpenChange } = useDialog();
 
-    const {
-      progress,
-      isDragging,
-      isGestureReleaseAnimationRunning,
-      dialogState,
-    } = useDialogAnimation();
+    const { progress, isDragging, isGestureReleaseAnimationRunning } =
+      useDialogAnimation();
 
     const contentClassName = dialogClassNames.content({ className });
+
+    const dragContainerRef = useRef<View>(null);
 
     const {
       contentY,
       contentHeight,
       panGesture,
       rDragContainerStyle,
-      rContainerStyle,
+      entering,
+      exiting,
     } = usePopupDialogContentAnimation({
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
-      dialogState,
+      isOpen,
       onOpenChange,
       animation,
       isSwipeable,
     });
 
-    const contentStyle = isAnimatedStyleActive
-      ? [dialogStyleSheet.contentContainer, rContainerStyle, style]
-      : [dialogStyleSheet.contentContainer, style];
+    useLayoutEffect(() => {
+      dragContainerRef.current?.measure(
+        (_x, _y, _width, height, _pageX, pageY) => {
+          contentY.set(pageY);
+          contentHeight.set(height);
+        }
+      );
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
       <GestureDetector gesture={panGesture}>
         <Animated.View
-          style={rDragContainerStyle}
-          pointerEvents="box-none"
-          onLayout={(event) => {
-            contentY.set(event.nativeEvent.layout.y);
-            contentHeight.set(event.nativeEvent.layout.height);
-            onLayout?.(event);
-          }}
+          ref={dragContainerRef}
+          entering={entering}
+          exiting={exiting}
         >
-          <AnimatedContent
-            ref={ref}
-            className={contentClassName}
-            style={contentStyle}
-            {...props}
-          >
-            {children}
-          </AnimatedContent>
+          <Animated.View style={rDragContainerStyle} pointerEvents="box-none">
+            <DialogPrimitives.Content
+              ref={ref}
+              className={contentClassName}
+              style={[dialogStyleSheet.contentContainer, style]}
+              {...props}
+            >
+              {children}
+            </DialogPrimitives.Content>
+          </Animated.View>
         </Animated.View>
       </GestureDetector>
     );

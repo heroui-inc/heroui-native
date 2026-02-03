@@ -25,6 +25,7 @@ const WithTitleDescriptionContent = () => {
         <Popover.Portal>
           <Popover.Overlay />
           <Popover.Content
+            presentation="popover"
             width={320}
             placement="top"
             className="gap-3 px-6 py-5"
@@ -80,9 +81,9 @@ const PresentationVariantsContent = () => {
         <Popover.Portal>
           <Popover.Overlay />
           <Popover.Content
+            presentation="popover"
             width={300}
             className="gap-3"
-            presentation="popover"
             placement="top"
           >
             <View className="items-start gap-2">
@@ -112,11 +113,13 @@ const PresentationVariantsContent = () => {
           </Popover.Content>
         </Popover.Portal>
       </Popover>
-      <Popover isOpen={isBottomSheetOpen} onOpenChange={setBottomSheetOpen}>
+      <Popover
+        presentation="bottom-sheet"
+        isOpen={isBottomSheetOpen}
+        onOpenChange={setBottomSheetOpen}
+      >
         <Popover.Trigger asChild>
-          <Button variant="secondary" isDisabled={isBottomSheetOpen}>
-            More Options
-          </Button>
+          <Button variant="secondary">More Options</Button>
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Overlay className="bg-black/15" />
@@ -212,6 +215,7 @@ const PlacementPopover = ({
       <Popover.Portal>
         <Popover.Overlay />
         <Popover.Content
+          presentation="popover"
           placement={placement}
           width={220}
           className="gap-2 border border-accent/35"
@@ -266,6 +270,7 @@ const AlignmentPopover = ({ align }: { align: 'start' | 'center' | 'end' }) => {
       <Popover.Portal>
         <Popover.Overlay />
         <Popover.Content
+          presentation="popover"
           placement="top"
           align={align}
           width={200}

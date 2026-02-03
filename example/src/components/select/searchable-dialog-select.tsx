@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   KeyboardController,
 } from 'react-native-keyboard-controller';
-import { Easing } from 'react-native-reanimated';
+import { Easing, FadeInDown, FadeOutDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppTheme } from '../../contexts/app-theme-context';
 import { AppText } from '../app-text';
@@ -73,11 +73,15 @@ const SearchableSelectContent = () => {
   return (
     <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
       <Select.Content
+        presentation="dialog"
         classNames={{
           content: cn('gap-2 rounded-3xl', isDark && 'bg-surface'),
         }}
         style={{ marginTop: insetTop, height: maxDialogHeight }}
-        presentation="dialog"
+        animation={{
+          entering: FadeInDown.duration(250).easing(Easing.out(Easing.ease)),
+          exiting: FadeOutDown.duration(200).easing(Easing.in(Easing.ease)),
+        }}
       >
         <View className="flex-row items-center justify-between mb-2">
           <Select.ListLabel>Country</Select.ListLabel>
@@ -138,20 +142,11 @@ export function SearchableDialogSelect() {
 
   return (
     <Select
+      presentation="dialog"
       value={value}
       onValueChange={(newValue) => {
         const country = COUNTRIES.find((c) => c.value === newValue?.value);
         setValue(country);
-      }}
-      closeDelay={300}
-      animation={{
-        exiting: {
-          type: 'timing',
-          config: {
-            duration: 250,
-            easing: Easing.out(Easing.quad),
-          },
-        },
       }}
     >
       <Select.Trigger asChild>

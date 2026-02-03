@@ -41,6 +41,7 @@ const overlay = tv({
  * To customize these properties, use the `animation` prop on `Popover.Content`:
  * ```tsx
  * <Popover.Content
+ *   presentation="popover"
  *   animation={{
  *     opacity: { value: [0, 1, 0] },
  *     scale: { value: [0.95, 1, 0.95] },

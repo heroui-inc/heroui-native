@@ -16,6 +16,7 @@ import { Platform, Text, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardController } from 'react-native-keyboard-controller';
 
+import { Easing, FadeInDown, FadeOutDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
@@ -212,9 +213,8 @@ const UpdateProfileDialogForm = ({ onClose }: { onClose: () => void }) => {
     <Dialog.Content
       className="bg-surface"
       animation={{
-        scale: {
-          value: [1.2, 1, 0.95],
-        },
+        entering: FadeInDown.duration(200).easing(Easing.out(Easing.ease)),
+        exiting: FadeOutDown.duration(150).easing(Easing.in(Easing.ease)),
       }}
       style={{
         marginTop: insetTop,

@@ -3,13 +3,12 @@ import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
-  AnimationRoot,
+  AnimationRootDisableAll,
   BaseBottomSheetContentProps,
   ElementSlots,
   PopupDialogContentAnimation,
   PopupOverlayAnimation,
   PopupPopoverContentAnimation,
-  PopupRootAnimationConfig,
 } from '../../helpers/internal/types';
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
@@ -24,8 +23,6 @@ export type SelectState = 'idle' | 'open' | 'close';
  * Context value for select animation state
  */
 export interface SelectAnimationContextValue {
-  /** Extended internal state for animation control */
-  selectState: SelectState;
   /** Animation progress shared value (0=idle, 1=open, 2=close) */
   progress: SharedValue<number>;
   /** Dragging state shared value */
@@ -50,11 +47,6 @@ export type SelectPlacement = 'top' | 'bottom' | 'left' | 'right';
 export type SelectAlign = 'start' | 'center' | 'end';
 
 /**
- * Animation configuration for Select root component
- */
-export type SelectRootAnimation = AnimationRoot<PopupRootAnimationConfig>;
-
-/**
  * Select Root component props
  */
 export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
@@ -71,18 +63,12 @@ export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
    */
   isDefaultOpen?: boolean;
   /**
-   * Whether to dismiss the keyboard when the select closes
-   * @default true
-   */
-  isDismissKeyboardOnClose?: boolean;
-  /**
    * Animation configuration for select root
    * - `"disable-all"`: Disable all animations including children
    * - `false` or `"disabled"`: Disable only root animations
    * - `true` or `undefined`: Use default animations
-   * - `object`: Custom animation configuration
    */
-  animation?: SelectRootAnimation;
+  animation?: AnimationRootDisableAll;
 }
 
 /**
@@ -124,27 +110,15 @@ export type SelectOverlayAnimation = PopupOverlayAnimation;
 export interface SelectOverlayProps extends SelectPrimitivesTypes.OverlayProps {
   /**
    * Additional CSS class for the overlay
-   *
-   * @note The following style properties are occupied by animations and cannot be set via className:
-   * - `opacity` - Animated for overlay show/hide transitions (idle: 0, open: 1, close: 0)
-   *
-   * To customize this property, use the `animation` prop:
-   * ```tsx
-   * <Select.Overlay
-   *   animation={{
-   *     opacity: { value: [0, 1, 0] }
-   *   }}
-   * />
-   * ```
-   *
-   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**
    * Animation configuration for overlay
    * - `false` or `"disabled"`: Disable all animations
-   * - `true` or `undefined`: Use default animations
+   * - `true` or `undefined`: Use default animations (progress-based opacity for bottom-sheet/dialog, Keyframe animations for popover)
    * - `object`: Custom animation configuration
+   *   - For bottom-sheet/dialog: `opacity` with progress-based values
+   *   - For popover: `entering` and/or `exiting` Keyframe animations
    */
   animation?: SelectOverlayAnimation;
   /**
@@ -169,27 +143,6 @@ export interface SelectContentPopoverProps
   extends SelectPrimitivesTypes.PopoverContentProps {
   /**
    * Additional CSS class for the content container
-   *
-   * @note The following style properties are occupied by animations and cannot be set via className:
-   * - `opacity` - Animated for content show/hide transitions (idle: 0, open: 1, close: 0)
-   * - `transform` (specifically `scale`, `translateX`, `translateY`) - Animated for content show/hide transitions (scale: idle: 0.95, open: 1, close: 0.95; translateX/translateY: based on placement)
-   * - `transformOrigin` - Animated for content show/hide transitions (based on placement: 'top', 'bottom', 'left', 'right')
-   *
-   * To customize these properties, use the `animation` prop:
-   * ```tsx
-   * <Select.Content
-   *   presentation="popover"
-   *   animation={{
-   *     opacity: { value: [0, 1, 0] },
-   *     scale: { value: [0.95, 1, 0.95] },
-   *     translateX: { value: [4, 0, 4] },
-   *     translateY: { value: [4, 0, 4] },
-   *     transformOrigin: { value: 'top' }
-   *   }}
-   * />
-   * ```
-   *
-   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**
@@ -199,21 +152,14 @@ export interface SelectContentPopoverProps
   /**
    * Presentation mode for the select
    */
-  presentation?: 'popover';
+  presentation: 'popover';
   /**
    * Animation configuration for content
    * - `false` or `"disabled"`: Disable all animations
-   * - `true` or `undefined`: Use default animations
-   * - `object`: Custom animation configuration
+   * - `true` or `undefined`: Use default Keyframe animations (translateY/translateX, scale, opacity based on placement)
+   * - `object`: Custom animation configuration with `entering` and/or `exiting` Keyframe animations
    */
   animation?: SelectContentPopoverAnimation;
-  /**
-   * Whether animated styles (react-native-reanimated) are active
-   * When `false`, the animated style is removed and you can implement custom logic
-   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
-   * @default true
-   */
-  isAnimatedStyleActive?: boolean;
 }
 
 /**
@@ -241,27 +187,6 @@ export interface SelectContentDialogProps
   extends SelectPrimitivesTypes.DialogContentProps {
   /**
    * Additional CSS classes for the content container
-   *
-   * @note The `content` slot has the following animated properties that cannot be set via className:
-   * - `opacity` - Animated for content show/hide transitions (idle: 0, open: 1, close: 0)
-   * - `transform` (specifically `scale`) - Animated for content show/hide transitions (idle: 0.97, open: 1, close: 0.97)
-   *
-   * To customize these properties, use the `animation` prop:
-   * ```tsx
-   * <Select.Content
-   *   presentation="dialog"
-   *   classNames={{
-   *     content: "custom-class", // opacity and scale cannot be overridden here
-   *     wrapper: "custom-wrapper-class"
-   *   }}
-   *   animation={{
-   *     opacity: { value: [0, 1, 0] },
-   *     scale: { value: [0.97, 1, 0.97] }
-   *   }}
-   * />
-   * ```
-   *
-   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   classNames?: ElementSlots<DialogContentFallbackSlots>;
   /**
@@ -275,8 +200,8 @@ export interface SelectContentDialogProps
   /**
    * Animation configuration for content
    * - `false` or `"disabled"`: Disable all animations
-   * - `true` or `undefined`: Use default animations
-   * - `object`: Custom animation configuration
+   * - `true` or `undefined`: Use default Keyframe animations (scale and opacity transitions)
+   * - `object`: Custom animation configuration with `entering` and/or `exiting` Keyframe animations
    */
   animation?: SelectContentAnimation;
   /**
@@ -284,13 +209,6 @@ export interface SelectContentDialogProps
    * @default true
    */
   isSwipeable?: boolean;
-  /**
-   * Whether animated styles (react-native-reanimated) are active
-   * When `false`, the animated style is removed and you can implement custom logic
-   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
-   * @default true
-   */
-  isAnimatedStyleActive?: boolean;
 }
 
 /**

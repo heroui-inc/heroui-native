@@ -1,10 +1,6 @@
 import { BottomSheetView, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useEffect } from 'react';
-import {
-  useAnimatedReaction,
-  useDerivedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import { useAnimatedReaction } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import type { BottomSheetContentContainerProps } from '../types/bottom-sheet';
 
@@ -15,63 +11,46 @@ import type { BottomSheetContentContainerProps } from '../types/bottom-sheet';
  * BottomSheet, Popover, and Select components. It manages the expand/close
  * behavior based on the provided state and applies consistent styling.
  *
- * @example
- * ```tsx
- * <BottomSheetContentContainer
- *   state={bottomSheetState}
- *   contentContainerClassName="custom-class"
- * >
- *   {children}
- * </BottomSheetContentContainer>
- * ```
  */
 export function BottomSheetContentContainer({
   children,
-  state,
+  isOpen,
   progress,
   isDragging,
+  isPanActivated,
   isClosingOnSwipe,
   initialIndex,
   contentContainerClassName,
   contentContainerProps,
   onOpenChange,
 }: BottomSheetContentContainerProps) {
-  const { forceClose, snapToIndex } = useBottomSheet();
-
-  const isCloseBottomSheetEnabled = useDerivedValue(() => {
-    if (progress.get() > 1.75 && !isDragging.get()) {
-      return true;
-    }
-    return false;
-  });
+  const { close, snapToIndex } = useBottomSheet();
 
   const closeBottomSheet = () => {
-    progress.set(withTiming(2, { duration: 100 }));
-    forceClose();
     onOpenChange(false);
   };
 
   useAnimatedReaction(
-    () => isCloseBottomSheetEnabled.get(),
+    () => progress.get(),
     (value) => {
-      if (value) {
-        if (isClosingOnSwipe.get()) {
-          return;
-        }
+      if (value > 1.5 && !isDragging.get() && !isClosingOnSwipe.get()) {
         isClosingOnSwipe.set(true);
         scheduleOnRN(closeBottomSheet);
+      }
+      if (value === 2) {
+        isPanActivated.set(false);
       }
     }
   );
 
   useEffect(() => {
-    if (state === 'open') {
-      setTimeout(() => {
-        snapToIndex(initialIndex);
-      }, 50);
-      return;
+    if (isOpen) {
+      isPanActivated.set(false);
+      snapToIndex(initialIndex);
+    } else {
+      close();
     }
-  }, [state, snapToIndex, initialIndex]);
+  }, [isOpen, snapToIndex, initialIndex, close, isPanActivated]);
 
   return (
     <BottomSheetView

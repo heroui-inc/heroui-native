@@ -1,12 +1,11 @@
-import { useDialog, useDialogAnimation } from 'heroui-native';
-import { Pressable, StyleSheet } from 'react-native';
+import { Dialog, useDialogAnimation } from 'heroui-native';
+import { StyleSheet } from 'react-native';
 import { interpolate, useDerivedValue } from 'react-native-reanimated';
 import { useAppTheme } from '../contexts/app-theme-context';
 import { AnimatedBlurView } from './animated-blur-view';
 
 export const DialogBlurBackdrop = () => {
   const { isDark } = useAppTheme();
-  const { onOpenChange } = useDialog();
   const { progress, isDragging, isGestureReleaseAnimationRunning } =
     useDialogAnimation();
 
@@ -24,15 +23,12 @@ export const DialogBlurBackdrop = () => {
   });
 
   return (
-    <Pressable
-      style={StyleSheet.absoluteFill}
-      onPress={() => onOpenChange(false)}
-    >
+    <Dialog.Overlay className="bg-transparent" isAnimatedStyleActive={false}>
       <AnimatedBlurView
         blurIntensity={blurIntensity}
         tint={isDark ? 'dark' : 'systemUltraThinMaterialDark'}
         style={StyleSheet.absoluteFill}
       />
-    </Pressable>
+    </Dialog.Overlay>
   );
 };

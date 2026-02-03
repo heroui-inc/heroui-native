@@ -1,5 +1,6 @@
 import type {
   BaseAnimationBuilder,
+  EntryOrExitLayoutType,
   LayoutAnimationFunction,
   WithSpringConfig,
   WithTimingConfig,
@@ -67,27 +68,14 @@ export interface TimingAnimationConfig {
 }
 
 /**
- * Animation configuration for popup root components (Dialog, Select, etc.)
- * Supports entering and exiting animations with spring or timing types
- */
-export type PopupRootAnimationConfig = {
-  /**
-   * Animation configuration for entering (opening)
-   */
-  entering?: AnimationValue<SpringAnimationConfig | TimingAnimationConfig>;
-  /**
-   * Animation configuration for exiting (closing)
-   */
-  exiting?: AnimationValue<SpringAnimationConfig | TimingAnimationConfig>;
-};
-
-/**
- * Animation configuration for popup overlay components (Dialog, Select, etc.)
- * Supports opacity animation configuration
+ * Animation configuration for popup overlay components (Dialog, Select, BottomSheet, Popover, etc.)
+ * Supports both progress-based opacity animation and entering/exiting animations
  */
 export type PopupOverlayAnimation = Animation<{
   /**
-   * Opacity animation configuration
+   * Opacity animation configuration (progress-based)
+   * Takes effect for bottom-sheet/dialog presentation
+   * @default [0, 1, 0] - opacity values for [idle, open, close] states
    */
   opacity?: AnimationValue<{
     /**
@@ -96,6 +84,16 @@ export type PopupOverlayAnimation = Animation<{
      */
     value?: [number, number, number];
   }>;
+  /**
+   * Takes effect for popover presentation
+   * @default FadeIn with duration 200ms
+   */
+  entering?: EntryOrExitLayoutType;
+  /**
+   * Takes effect for popover presentation
+   * @default FadeOut with duration 150ms
+   */
+  exiting?: EntryOrExitLayoutType;
 }>;
 
 /**
@@ -104,80 +102,30 @@ export type PopupOverlayAnimation = Animation<{
  */
 export type PopupDialogContentAnimation = Animation<{
   /**
-   * Opacity animation configuration
+   * Custom Keyframe animation for entering transition
+   * @default Keyframe with scale, and opacity (200ms)
    */
-  opacity?: AnimationValue<{
-    /**
-     * Opacity values [idle, open, close]
-     * @default [0, 1, 0]
-     */
-    value?: [number, number, number];
-  }>;
+  entering?: EntryOrExitLayoutType;
   /**
-   * Scale animation configuration
+   * Custom Keyframe animation for exiting transition
+   * @default Keyframe mirroring entering animation (150ms)
    */
-  scale?: AnimationValue<{
-    /**
-     * Scale values [idle, open, close]
-     * @default [0.97, 1, 0.97]
-     */
-    value?: [number, number, number];
-  }>;
+  exiting?: EntryOrExitLayoutType;
 }>;
 
 /**
  * Animation configuration for popup popover content components (Popover, Select popover presentation)
- * Supports opacity, scale, translate, and transform origin animations
+ * Supports custom Keyframe animations for entering and exiting transitions
  */
 export type PopupPopoverContentAnimation = Animation<{
   /**
-   * Opacity animation configuration
+   * Custom Keyframe animation for entering transition
+   * @default Keyframe with translateY/translateX, scale, and opacity (200ms)
    */
-  opacity?: AnimationValue<{
-    /**
-     * Opacity values [idle, open, close]
-     * @default [0, 1, 0]
-     */
-    value?: [number, number, number];
-  }>;
+  entering?: EntryOrExitLayoutType;
   /**
-   * Scale animation configuration
+   * Custom Keyframe animation for exiting transition
+   * @default Keyframe mirroring entering animation (150ms)
    */
-  scale?: AnimationValue<{
-    /**
-     * Scale values [idle, open, close]
-     * @default [0.95, 1, 0.95]
-     */
-    value?: [number, number, number];
-  }>;
-  /**
-   * TranslateX animation configuration
-   */
-  translateX?: AnimationValue<{
-    /**
-     * TranslateX values [idle, open, close]
-     * @default Based on placement (4, 0, 4) or (-4, 0, -4)
-     */
-    value?: [number, number, number];
-  }>;
-  /**
-   * TranslateY animation configuration
-   */
-  translateY?: AnimationValue<{
-    /**
-     * TranslateY values [idle, open, close]
-     * @default Based on placement (4, 0, 4) or (-4, 0, -4)
-     */
-    value?: [number, number, number];
-  }>;
-  /**
-   * Transform origin configuration
-   */
-  transformOrigin?: AnimationValue<{
-    /**
-     * Transform origin value
-     * @default Based on placement ('top', 'bottom', 'left', 'right')
-     */
-    value?: string;
-  }>;
+  exiting?: EntryOrExitLayoutType;
 }>;

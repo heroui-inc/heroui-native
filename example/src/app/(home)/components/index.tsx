@@ -61,7 +61,6 @@ const components: Component[] = [
     title: 'FieldError',
     path: 'field-error',
   },
-
   {
     title: 'Input',
     path: 'input',

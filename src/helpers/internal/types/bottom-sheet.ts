@@ -25,17 +25,21 @@ export interface BottomSheetContentContainerProps {
    */
   contentContainerProps?: Omit<BottomSheetViewProps, 'children'>;
   /**
-   * Current state of the bottom sheet for animation coordination
+   * Whether the bottom sheet is open
    */
-  state: BottomSheetContentContainerState;
+  isOpen: boolean;
   /**
-   * Progress of the bottom sheet for animation coordination
+   * Animation progress shared value (0=idle, 1=open, 2=close)
    */
   progress: SharedValue<number>;
   /**
    * Whether the bottom sheet is dragging
    */
   isDragging: SharedValue<boolean>;
+  /**
+   * Whether the bottom sheet is pan activated
+   */
+  isPanActivated: SharedValue<boolean>;
   /**
    * Whether the bottom sheet is closing on swipe
    */

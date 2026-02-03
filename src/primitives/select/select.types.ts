@@ -76,10 +76,6 @@ interface IRootContext {
    */
   nativeID: string;
   /**
-   * Delay in milliseconds before the select closes
-   */
-  closeDelay?: number;
-  /**
    * The currently selected option
    */
   value: SelectOption;
@@ -87,6 +83,14 @@ interface IRootContext {
    * Callback fired when the selected value changes
    */
   onValueChange: (option: SelectOption) => void;
+  /**
+   * Presentation mode for the select content
+   * - 'popover': Default floating popover with positioning
+   * - 'bottom-sheet': Bottom sheet modal presentation
+   * - 'dialog': Modal dialog presentation
+   * @default 'popover'
+   */
+  presentation: 'popover' | 'bottom-sheet' | 'dialog';
 }
 
 /**
@@ -120,14 +124,17 @@ type RootProps = SlottableViewProps & {
    */
   onOpenChange?: (open: boolean) => void;
   /**
-   * Delay in milliseconds before the select closes (for exit animations)
-   * @default 300
-   */
-  closeDelay?: number;
-  /**
    * Whether the select is disabled
    */
   isDisabled?: boolean;
+  /**
+   * Presentation mode for the select content
+   * - 'popover': Default floating popover with positioning
+   * - 'bottom-sheet': Bottom sheet modal presentation
+   * - 'dialog': Modal dialog presentation
+   * @default 'popover'
+   */
+  presentation?: 'popover' | 'bottom-sheet' | 'dialog';
 };
 /**
  * Props for the Select Portal component

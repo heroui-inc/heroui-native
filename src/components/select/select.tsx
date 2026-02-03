@@ -1,30 +1,23 @@
 import BottomSheet from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback, useMemo } from 'react';
-import type {
-  GestureResponderEvent,
-  LayoutChangeEvent,
-  Text as RNText,
-} from 'react-native';
-import { View } from 'react-native';
+import { forwardRef, useLayoutEffect, useMemo, useRef } from 'react';
+import type { GestureResponderEvent, Text as RNText } from 'react-native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated, { ReduceMotion } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { withUniwind } from 'uniwind';
 import { useThemeColor } from '../../helpers/external/hooks';
+import { cn } from '../../helpers/external/utils';
 import {
-  BottomSheetContentContainer,
+  BottomSheetContent,
   CheckIcon,
   FullWindowOverlay,
   HeroText,
 } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
-  BottomSheetIsDraggingProvider,
   useAnimationSettings,
 } from '../../helpers/internal/contexts';
 import {
-  useBottomSheetGestureHandlers,
-  usePopupBottomSheetContentAnimation,
   usePopupDialogContentAnimation,
   usePopupOverlayAnimation,
   usePopupPopoverContentAnimation,
@@ -33,8 +26,6 @@ import {
 import type { PressableRef } from '../../helpers/internal/types';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
-import { useBottomSheetContentAnimation } from '../bottom-sheet/bottom-sheet.animation';
-import { bottomSheetClassNames } from '../bottom-sheet/bottom-sheet.styles';
 import { CloseButton } from '../close-button';
 import {
   SelectAnimationProvider,
@@ -74,12 +65,6 @@ const AnimatedPopoverContent = Animated.createAnimatedComponent(
   SelectPrimitives.PopoverContent
 );
 
-const AnimatedDialogContent = Animated.createAnimatedComponent(
-  SelectPrimitives.DialogContent
-);
-
-const StyledBottomSheet = withUniwind(BottomSheet);
-
 const useSelect = SelectPrimitives.useRootContext;
 
 const useSelectItem = SelectPrimitives.useItemContext;
@@ -88,43 +73,25 @@ const useSelectItem = SelectPrimitives.useItemContext;
 
 const SelectRoot = forwardRef<SelectPrimitivesTypes.RootRef, SelectRootProps>(
   (
-    {
-      children,
-      closeDelay = 400,
-      isDismissKeyboardOnClose = true,
-      isOpen: isOpenProp,
-      isDefaultOpen,
-      onOpenChange: onOpenChangeProp,
-      animation,
-      ...props
-    },
+    { children, isOpen, isDefaultOpen, onOpenChange, animation, ...props },
     ref
   ) => {
     const {
-      internalIsOpen,
-      componentState,
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
-      onOpenChange,
       isAllAnimationsDisabled,
     } = usePopupRootAnimation({
-      isOpen: isOpenProp,
-      isDefaultOpen,
-      onOpenChange: onOpenChangeProp,
-      closeDelay,
-      isDismissKeyboardOnClose,
       animation,
     });
 
     const animationContextValue = useMemo(
       () => ({
-        selectState: componentState,
         progress,
         isDragging,
         isGestureReleaseAnimationRunning,
       }),
-      [componentState, progress, isDragging, isGestureReleaseAnimationRunning]
+      [progress, isDragging, isGestureReleaseAnimationRunning]
     );
 
     const animationSettingsContextValue = useMemo(
@@ -139,10 +106,9 @@ const SelectRoot = forwardRef<SelectPrimitivesTypes.RootRef, SelectRootProps>(
         <SelectAnimationProvider value={animationContextValue}>
           <SelectPrimitives.Root
             ref={ref}
-            isOpen={internalIsOpen}
+            isOpen={isOpen}
             isDefaultOpen={isDefaultOpen}
             onOpenChange={onOpenChange}
-            closeDelay={closeDelay}
             {...props}
           >
             {children}
@@ -220,6 +186,7 @@ const SelectOverlay = forwardRef<
     { className, style, animation, isAnimatedStyleActive = true, ...props },
     ref
   ) => {
+    const { isOpen, presentation } = useSelect();
     const { progress, isDragging, isGestureReleaseAnimationRunning } =
       useSelectAnimation();
 
@@ -227,10 +194,13 @@ const SelectOverlay = forwardRef<
       className,
     });
 
-    const { rContainerStyle } = usePopupOverlayAnimation({
-      progress,
-      isDragging,
-      isGestureReleaseAnimationRunning,
+    const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
+      progress: presentation !== 'popover' ? progress : undefined,
+      isDragging: presentation === 'popover' ? isDragging : undefined,
+      isGestureReleaseAnimationRunning:
+        presentation === 'dialog'
+          ? isGestureReleaseAnimationRunning
+          : undefined,
       animation,
     });
 
@@ -239,12 +209,21 @@ const SelectOverlay = forwardRef<
       : style;
 
     return (
-      <AnimatedOverlay
-        ref={ref}
-        className={overlayClassName}
-        style={overlayStyle}
-        {...props}
-      />
+      <Animated.View
+        entering={entering}
+        exiting={exiting}
+        style={StyleSheet.absoluteFill}
+        pointerEvents="box-none"
+      >
+        <AnimatedOverlay
+          ref={ref}
+          className={overlayClassName}
+          style={overlayStyle}
+          forceMount={presentation === 'bottom-sheet' ? true : undefined}
+          pointerEvents={isOpen ? 'auto' : 'none'}
+          {...props}
+        />
+      </Animated.View>
     );
   }
 );
@@ -266,12 +245,18 @@ const SelectContentPopover = forwardRef<
       children,
       style,
       animation,
-      isAnimatedStyleActive = true,
       ...props
     },
     ref
   ) => {
+    const { contentLayout } = useSelect();
+
     const safeAreaInsets = useSafeAreaInsets();
+    const { height: screenHeight } = useWindowDimensions();
+
+    // Initially useRelativePosition returns { position: 'absolute', opacity: 0, top: dimensions.height }
+    // So we need to wait for the content to be ready before showing it
+    const isReady = Boolean(contentLayout?.y && contentLayout.y < screenHeight);
 
     const insets = {
       top: DEFAULT_INSETS.top + safeAreaInsets.top,
@@ -280,37 +265,55 @@ const SelectContentPopover = forwardRef<
       right: DEFAULT_INSETS.right + safeAreaInsets.right,
     };
 
-    const { progress } = useSelectAnimation();
-
     const contentClassName = selectClassNames.content({
       className,
     });
 
-    const { rContainerStyle } = usePopupPopoverContentAnimation({
-      progress,
+    const { entering, exiting } = usePopupPopoverContentAnimation({
       placement,
+      offset,
       animation,
     });
 
-    const contentStyle = isAnimatedStyleActive
-      ? [selectStyleSheet.contentContainer, rContainerStyle, style]
-      : [selectStyleSheet.contentContainer, style];
-
     return (
-      <AnimatedPopoverContent
-        ref={ref}
-        placement={placement}
-        align={align}
-        avoidCollisions={avoidCollisions}
-        offset={offset}
-        alignOffset={alignOffset}
-        insets={insets}
-        className={contentClassName}
-        style={contentStyle}
-        {...props}
-      >
-        {children}
-      </AnimatedPopoverContent>
+      <>
+        {isReady && (
+          <AnimatedPopoverContent
+            ref={ref}
+            entering={entering}
+            exiting={exiting}
+            placement={placement}
+            align={align}
+            avoidCollisions={avoidCollisions}
+            offset={offset}
+            alignOffset={alignOffset}
+            insets={insets}
+            className={contentClassName}
+            style={[selectStyleSheet.contentContainer, style]}
+            {...props}
+          >
+            {children}
+          </AnimatedPopoverContent>
+        )}
+        <AnimatedPopoverContent
+          placement={placement}
+          accessible={false}
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no"
+          pointerEvents="none"
+          collapsable={false}
+          align={align}
+          avoidCollisions={avoidCollisions}
+          offset={offset}
+          alignOffset={alignOffset}
+          insets={insets}
+          className={cn(contentClassName, 'absolute opacity-0')}
+          style={[selectStyleSheet.contentContainer, style]}
+          {...props}
+        >
+          {children}
+        </AnimatedPopoverContent>
+      </>
     );
   }
 );
@@ -335,81 +338,32 @@ const SelectContentBottomSheet = forwardRef<
     },
     ref
   ) => {
-    const { onOpenChange } = useSelect();
+    const { isOpen, onOpenChange } = useSelect();
 
-    const { selectState, progress, isDragging } = useSelectAnimation();
-
-    const { isAnimationDisabledValue } = useBottomSheetContentAnimation({
-      animation,
-    });
-
-    const { animatedIndex, isClosingOnSwipe } =
-      usePopupBottomSheetContentAnimation({
-        progress,
-        isDragging,
-        componentState: selectState,
-      });
-
-    const contentBackgroundClassName = bottomSheetClassNames.contentBackground({
-      className: backgroundClassName,
-    });
-
-    const contentHandleIndicatorClassName =
-      bottomSheetClassNames.contentHandleIndicator({
-        className: handleIndicatorClassName,
-      });
-
-    const contentContainerClassName = bottomSheetClassNames.contentContainer({
-      className: contentContainerClassNameProp,
-    });
-
-    const onClose = useCallback(() => {
-      progress.set(2);
-      onOpenChange(false);
-    }, [onOpenChange, progress]);
-
-    const mergedAnimationConfigs = useMemo(
-      () => ({
-        ...animationConfigs,
-        reduceMotion: isAnimationDisabledValue
-          ? ReduceMotion.Always
-          : animationConfigs?.reduceMotion,
-      }),
-      [animationConfigs, isAnimationDisabledValue]
-    );
+    const { progress, isDragging } = useSelectAnimation();
 
     return (
-      <BottomSheetIsDraggingProvider value={{ isDragging }}>
-        <StyledBottomSheet
-          ref={ref}
-          index={-1}
-          backgroundClassName={contentBackgroundClassName}
-          backgroundStyle={[
-            selectStyleSheet.contentContainer,
-            restProps.backgroundStyle,
-          ]}
-          handleIndicatorClassName={contentHandleIndicatorClassName}
-          enablePanDownToClose={restProps.enablePanDownToClose ?? true}
-          animatedIndex={animatedIndex ?? restProps.animatedIndex}
-          animationConfigs={mergedAnimationConfigs}
-          gestureEventsHandlersHook={useBottomSheetGestureHandlers}
-          onClose={onClose}
-          {...restProps}
-        >
-          <BottomSheetContentContainer
-            initialIndex={initialIndex ?? 0}
-            state={selectState}
-            progress={progress}
-            isDragging={isDragging}
-            isClosingOnSwipe={isClosingOnSwipe}
-            contentContainerClassName={contentContainerClassName}
-            contentContainerProps={contentContainerProps}
-            onOpenChange={onOpenChange}
-          >
-            {children}
-          </BottomSheetContentContainer>
-        </StyledBottomSheet>
-      </BottomSheetIsDraggingProvider>
+      <BottomSheetContent
+        ref={ref}
+        index={initialIndex}
+        backgroundClassName={backgroundClassName}
+        handleIndicatorClassName={handleIndicatorClassName}
+        contentContainerClassName={contentContainerClassNameProp}
+        contentContainerProps={contentContainerProps}
+        animation={animation}
+        animationConfigs={animationConfigs}
+        backgroundStyle={[
+          selectStyleSheet.contentContainer,
+          restProps.backgroundStyle,
+        ]}
+        isOpen={isOpen}
+        progress={progress}
+        isDragging={isDragging}
+        onOpenChange={onOpenChange}
+        {...restProps}
+      >
+        {children}
+      </BottomSheetContent>
     );
   }
 );
@@ -421,77 +375,66 @@ const SelectContentDialog = forwardRef<
   SelectContentProps & { presentation: 'dialog' }
 >(
   (
-    {
-      classNames,
-      style,
-      children,
-      onLayout,
-      animation,
-      isSwipeable = true,
-      isAnimatedStyleActive = true,
-      ...props
-    },
+    { classNames, style, children, animation, isSwipeable = true, ...props },
     ref
   ) => {
-    const { onOpenChange } = useSelect();
+    const { isOpen, onOpenChange } = useSelect();
 
-    const {
-      progress,
-      isDragging,
-      isGestureReleaseAnimationRunning,
-      selectState,
-    } = useSelectAnimation();
+    const { progress, isDragging, isGestureReleaseAnimationRunning } =
+      useSelectAnimation();
 
     const { wrapper, content } = selectClassNames.dialogContent();
 
     const wrapperClassName = wrapper({ className: classNames?.wrapper });
     const contentClassName = content({ className: classNames?.content });
 
+    const dragContainerRef = useRef<View>(null);
+
     const {
       contentY,
       contentHeight,
       panGesture,
       rDragContainerStyle,
-      rContainerStyle,
+      entering,
+      exiting,
     } = usePopupDialogContentAnimation({
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
-      dialogState: selectState,
+      isOpen,
       onOpenChange,
       animation,
       isSwipeable,
     });
 
-    const contentStyle = isAnimatedStyleActive
-      ? [selectStyleSheet.contentContainer, rContainerStyle, style]
-      : [selectStyleSheet.contentContainer, style];
-
-    const handleLayout = useCallback(
-      (event: LayoutChangeEvent) => {
-        contentY.set(event.nativeEvent.layout.y);
-        contentHeight.set(event.nativeEvent.layout.height);
-        onLayout?.(event);
-      },
-      [contentY, contentHeight, onLayout]
-    );
+    useLayoutEffect(() => {
+      dragContainerRef.current?.measure(
+        (_x, _y, _width, height, _pageX, pageY) => {
+          contentY.set(pageY);
+          contentHeight.set(height);
+        }
+      );
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
       <View className={wrapperClassName}>
         <GestureDetector gesture={panGesture}>
           <Animated.View
-            style={rDragContainerStyle}
-            pointerEvents="box-none"
-            onLayout={handleLayout}
+            ref={dragContainerRef}
+            entering={entering}
+            exiting={exiting}
           >
-            <AnimatedDialogContent
-              ref={ref}
-              className={contentClassName}
-              style={contentStyle}
-              {...props}
-            >
-              {children}
-            </AnimatedDialogContent>
+            <Animated.View style={rDragContainerStyle} pointerEvents="box-none">
+              <SelectPrimitives.DialogContent
+                ref={ref}
+                className={contentClassName}
+                style={[selectStyleSheet.contentContainer, style]}
+                {...props}
+              >
+                {children}
+              </SelectPrimitives.DialogContent>
+            </Animated.View>
           </Animated.View>
         </GestureDetector>
       </View>
@@ -506,6 +449,15 @@ const SelectContent = forwardRef<
   SelectContentProps
 >((props, ref) => {
   const presentation = props.presentation || 'popover';
+  const { presentation: contextPresentation } = useSelect();
+
+  if (__DEV__) {
+    if (presentation !== contextPresentation) {
+      throw new Error(
+        `Select.Content presentation prop ("${props.presentation}") does not match Select.Root presentation prop ("${contextPresentation}"). They must be the same.`
+      );
+    }
+  }
 
   if (presentation === 'bottom-sheet') {
     return (

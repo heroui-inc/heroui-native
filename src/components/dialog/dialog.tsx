@@ -1,7 +1,12 @@
 import { forwardRef, useLayoutEffect, useMemo, useRef } from 'react';
-import type { GestureResponderEvent, Text as RNText, View } from 'react-native';
+import {
+  StyleSheet,
+  type GestureResponderEvent,
+  type Text as RNText,
+  type View,
+} from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { FullWindowOverlay, HeroText } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
@@ -145,7 +150,7 @@ const DialogOverlay = forwardRef<
 
     const overlayClassName = dialogClassNames.overlay({ className });
 
-    const { rContainerStyle } = usePopupOverlayAnimation({
+    const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
@@ -157,14 +162,18 @@ const DialogOverlay = forwardRef<
       : style;
 
     return (
-      <AnimatedOverlay
-        ref={ref}
-        entering={FadeIn.duration(200)}
-        exiting={FadeOut.duration(150)}
-        className={overlayClassName}
-        // style={overlayStyle}
-        {...props}
-      />
+      <Animated.View
+        entering={entering}
+        exiting={exiting}
+        style={StyleSheet.absoluteFill}
+      >
+        <AnimatedOverlay
+          ref={ref}
+          className={overlayClassName}
+          style={overlayStyle}
+          {...props}
+        />
+      </Animated.View>
     );
   }
 );
@@ -176,15 +185,7 @@ const DialogContent = forwardRef<
   DialogContentProps
 >(
   (
-    {
-      className,
-      style,
-      children,
-      onLayout,
-      animation,
-      isSwipeable = true,
-      ...props
-    },
+    { className, style, children, animation, isSwipeable = true, ...props },
     ref
   ) => {
     const { isOpen, onOpenChange } = useDialog();

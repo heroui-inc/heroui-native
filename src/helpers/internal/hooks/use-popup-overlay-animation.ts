@@ -27,7 +27,8 @@ export function usePopupOverlayAnimation(options: {
   /** Animation configuration for overlay */
   animation?: PopupOverlayAnimation;
 }) {
-  const { progress, animation } = options;
+  const { progress, isDragging, isGestureReleaseAnimationRunning, animation } =
+    options;
 
   const { isAllAnimationsDisabled } = useAnimationSettings();
 
@@ -46,27 +47,24 @@ export function usePopupOverlayAnimation(options: {
   });
 
   const rContainerStyle = useAnimatedStyle(() => {
-    // Only apply progress-based opacity if progress is provided
-    if (!progress) {
+    if (progress?.get() === undefined) {
       return {};
     }
 
-    // Handle disabled state first
     if (isAnimationDisabledValue) {
       return {
         opacity: progress.get() > 0 ? 1 : 0,
       };
     }
 
-    // Handle dragging state - when dragging and progress <= 1, opacity should be 1
-    // if (
-    //   isDragging?.get() ||
-    //   (isGestureReleaseAnimationRunning?.get() && progress.get() <= 1)
-    // ) {
-    //   return {
-    //     opacity: 1,
-    //   };
-    // }
+    if (
+      (isDragging?.get() || isGestureReleaseAnimationRunning?.get()) &&
+      progress.get() <= 1
+    ) {
+      return {
+        opacity: 1,
+      };
+    }
 
     return {
       opacity: interpolate(progress.get(), [0, 1, 2], opacityValue),

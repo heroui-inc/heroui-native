@@ -173,7 +173,7 @@ const PopoverOverlay = forwardRef<
     { className, style, animation, isAnimatedStyleActive = true, ...props },
     ref
   ) => {
-    const { presentation } = usePopover();
+    const { isOpen, presentation } = usePopover();
     const { progress, isDragging } = usePopoverAnimation();
 
     const overlayClassName = popoverClassNames.overlay({ className });
@@ -200,6 +200,7 @@ const PopoverOverlay = forwardRef<
           className={overlayClassName}
           style={overlayStyle}
           forceMount={presentation === 'bottom-sheet' ? true : undefined}
+          pointerEvents={isOpen ? 'auto' : 'none'}
           {...props}
         />
       </Animated.View>

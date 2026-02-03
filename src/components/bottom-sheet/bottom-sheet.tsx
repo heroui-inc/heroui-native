@@ -165,6 +165,7 @@ const BottomSheetOverlay = forwardRef<
         ref={ref}
         className={overlayClassName}
         style={overlayStyle}
+        pointerEvents={isOpen ? 'auto' : 'none'}
         {...props}
       />
     );

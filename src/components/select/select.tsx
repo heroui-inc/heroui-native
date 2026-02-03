@@ -186,7 +186,7 @@ const SelectOverlay = forwardRef<
     { className, style, animation, isAnimatedStyleActive = true, ...props },
     ref
   ) => {
-    const { presentation } = useSelect();
+    const { isOpen, presentation } = useSelect();
     const { progress, isDragging, isGestureReleaseAnimationRunning } =
       useSelectAnimation();
 
@@ -220,6 +220,7 @@ const SelectOverlay = forwardRef<
           className={overlayClassName}
           style={overlayStyle}
           forceMount={presentation === 'bottom-sheet' ? true : undefined}
+          pointerEvents={isOpen ? 'auto' : 'none'}
           {...props}
         />
       </Animated.View>

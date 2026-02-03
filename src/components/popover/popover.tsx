@@ -6,7 +6,7 @@ import type {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import { Pressable, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useThemeColor } from '../../helpers/external/hooks';
@@ -56,7 +56,9 @@ import type {
   PopoverTriggerProps,
 } from './popover.types';
 
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+const AnimatedOverlay = Animated.createAnimatedComponent(
+  PopoverPrimitives.Overlay
+);
 
 const AnimatedContent = Animated.createAnimatedComponent(
   PopoverPrimitives.Content
@@ -151,9 +153,9 @@ const PopoverPortal = ({
       <AnimationSettingsProvider value={animationSettingsContext}>
         <PopoverAnimationProvider value={animationContext}>
           <FullWindowOverlay>
-            <Animated.View className={portalClassName} pointerEvents="box-none">
+            <View className={portalClassName} pointerEvents="box-none">
               {children}
-            </Animated.View>
+            </View>
           </FullWindowOverlay>
         </PopoverAnimationProvider>
       </AnimationSettingsProvider>
@@ -182,36 +184,25 @@ const PopoverOverlay = forwardRef<
       animation,
     });
 
-    if (presentation === 'bottom-sheet') {
-      const overlayStyle = isAnimatedStyleActive
-        ? [rContainerStyle, style]
-        : style;
-
-      return (
-        <PopoverPrimitives.Overlay
-          ref={ref}
-          className={overlayClassName}
-          {...props}
-          asChild
-        >
-          <AnimatedPressable style={overlayStyle} />
-        </PopoverPrimitives.Overlay>
-      );
-    }
+    const overlayStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
 
     return (
-      <PopoverPrimitives.Overlay
-        ref={ref}
-        className={overlayClassName}
-        {...props}
-        asChild
+      <Animated.View
+        entering={entering}
+        exiting={exiting}
+        style={StyleSheet.absoluteFill}
+        pointerEvents="box-none"
       >
-        <AnimatedPressable
-          entering={entering}
-          exiting={exiting}
-          style={style}
+        <AnimatedOverlay
+          ref={ref}
+          className={overlayClassName}
+          style={overlayStyle}
+          forceMount={presentation === 'bottom-sheet' ? true : undefined}
+          {...props}
         />
-      </PopoverPrimitives.Overlay>
+      </Animated.View>
     );
   }
 );

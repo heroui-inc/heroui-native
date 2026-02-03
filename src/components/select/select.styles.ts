@@ -44,29 +44,6 @@ const overlay = tv({
 
 /**
  * Popover content style definition
- *
- * @note ANIMATED PROPERTIES (cannot be set via className):
- * The following properties are animated and cannot be overridden using Tailwind classes:
- * - `opacity` - Animated for content show/hide transitions (idle: 0, open: 1, close: 0)
- * - `transform` (specifically `scale`, `translateX`, `translateY`) - Animated for content show/hide transitions (scale: idle: 0.95, open: 1, close: 0.95; translateX/translateY: based on placement)
- * - `transformOrigin` - Animated for content show/hide transitions (based on placement: 'top', 'bottom', 'left', 'right')
- *
- * To customize these properties, use the `animation` prop on `Select.Content` (popover presentation):
- * ```tsx
- * <Select.Content
- *   presentation="popover"
- *   animation={{
- *     opacity: { value: [0, 1, 0] },
- *     scale: { value: [0.95, 1, 0.95] },
- *     translateX: { value: [4, 0, 4] },
- *     translateY: { value: [4, 0, 4] },
- *     transformOrigin: { value: 'top' }
- *   }}
- * />
- * ```
- *
- * To completely disable animated styles and apply your own via className or style prop,
- * set `isAnimatedStyleActive={false}` on `Select.Content`.
  */
 const content = tv({
   base: 'bg-overlay p-3 px-4 rounded-3xl shadow-overlay',
@@ -74,29 +51,6 @@ const content = tv({
 
 /**
  * Dialog content style definition
- *
- * @note ANIMATED PROPERTIES (cannot be set via className):
- * The `content` slot has the following animated properties that cannot be overridden using Tailwind classes:
- * - `opacity` - Animated for content show/hide transitions (idle: 0, open: 1, close: 0)
- * - `transform` (specifically `scale`) - Animated for content show/hide transitions (idle: 0.97, open: 1, close: 0.97)
- *
- * To customize these properties, use the `animation` prop on `Select.Content` (dialog presentation):
- * ```tsx
- * <Select.Content
- *   presentation="dialog"
- *   classNames={{
- *     content: "custom-class", // opacity and scale cannot be overridden here
- *     wrapper: "custom-wrapper-class"
- *   }}
- *   animation={{
- *     opacity: { value: [0, 1, 0] },
- *     scale: { value: [0.97, 1, 0.97] }
- *   }}
- * />
- * ```
- *
- * To completely disable animated styles and apply your own via className or style prop,
- * set `isAnimatedStyleActive={false}` on `Select.Content`.
  */
 const dialogContent = tv({
   slots: {

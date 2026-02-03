@@ -120,7 +120,12 @@ export const PlacementSelect: FC<Props> = ({ placeholder, placement }) => {
       </Select.Trigger>
       <Select.Portal>
         <Select.Overlay />
-        <Select.Content width={200} placement={placement} className="h-[150px]">
+        <Select.Content
+          presentation="popover"
+          width={200}
+          placement={placement}
+          className="h-[150px]"
+        >
           <PlacementContent />
         </Select.Content>
       </Select.Portal>

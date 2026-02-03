@@ -75,6 +75,7 @@ const Root = forwardRef<RootRef, RootProps>(
       isDefaultOpen,
       onOpenChange: onOpenChangeProp,
       isDisabled,
+      presentation = 'popover',
       ...viewProps
     },
     ref
@@ -114,6 +115,7 @@ const Root = forwardRef<RootRef, RootProps>(
           setContentLayout,
           setTriggerPosition,
           triggerPosition,
+          presentation,
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -226,11 +228,16 @@ const Value = React.forwardRef<ValueRef, ValueProps>(
 function Portal({ forceMount, hostName, children }: PortalProps) {
   const value = useRootContext();
 
-  if (!value.triggerPosition) {
+  const isBottomSheet = value.presentation === 'bottom-sheet';
+  const isDialog = value.presentation === 'dialog';
+
+  // For popover presentation, triggerPosition is required
+  // For bottom-sheet and dialog, triggerPosition is not required
+  if (!value.triggerPosition && !isBottomSheet && !isDialog) {
     return null;
   }
 
-  if (!forceMount) {
+  if (!forceMount && !isBottomSheet) {
     if (!value.isOpen) {
       return null;
     }

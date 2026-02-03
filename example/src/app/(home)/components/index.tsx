@@ -13,123 +13,122 @@ type Component = {
 };
 
 const components: Component[] = [
-  // {
-  //   title: 'Accordion',
-  //   path: 'accordion',
-  // },
-  // {
-  //   title: 'Avatar',
-  //   path: 'avatar',
-  // },
+  {
+    title: 'Accordion',
+    path: 'accordion',
+  },
+  {
+    title: 'Avatar',
+    path: 'avatar',
+  },
   {
     title: 'BottomSheet',
     path: 'bottom-sheet',
   },
-  // {
-  //   title: 'Button',
-  //   path: 'button',
-  // },
-  // {
-  //   title: 'Card',
-  //   path: 'card',
-  // },
-  // {
-  //   title: 'Checkbox',
-  //   path: 'checkbox',
-  // },
-  // {
-  //   title: 'Chip',
-  //   path: 'chip',
-  // },
-  // {
-  //   title: 'CloseButton',
-  //   path: 'close-button',
-  // },
-  // {
-  //   title: 'ControlField',
-  //   path: 'control-field',
-  // },
-  // {
-  //   title: 'Description',
-  //   path: 'description',
-  // },
+  {
+    title: 'Button',
+    path: 'button',
+  },
+  {
+    title: 'Card',
+    path: 'card',
+  },
+  {
+    title: 'Checkbox',
+    path: 'checkbox',
+  },
+  {
+    title: 'Chip',
+    path: 'chip',
+  },
+  {
+    title: 'CloseButton',
+    path: 'close-button',
+  },
+  {
+    title: 'ControlField',
+    path: 'control-field',
+  },
+  {
+    title: 'Description',
+    path: 'description',
+  },
   {
     title: 'Dialog',
     path: 'dialog',
   },
-  // {
-  //   title: 'FieldError',
-  //   path: 'field-error',
-  // },
-
-  // {
-  //   title: 'Input',
-  //   path: 'input',
-  // },
-  // {
-  //   title: 'InputOTP',
-  //   path: 'input-otp',
-  // },
-  // {
-  //   title: 'Label',
-  //   path: 'label',
-  // },
+  {
+    title: 'FieldError',
+    path: 'field-error',
+  },
+  {
+    title: 'Input',
+    path: 'input',
+  },
+  {
+    title: 'InputOTP',
+    path: 'input-otp',
+  },
+  {
+    title: 'Label',
+    path: 'label',
+  },
   {
     title: 'Popover',
     path: 'popover',
   },
-  // {
-  //   title: 'PressableFeedback',
-  //   path: 'pressable-feedback',
-  // },
-  // {
-  //   title: 'RadioGroup',
-  //   path: 'radio-group',
-  // },
-  // {
-  //   title: 'ScrollShadow',
-  //   path: 'scroll-shadow',
-  // },
-  // {
-  //   title: 'Select',
-  //   path: 'select',
-  // },
-  // {
-  //   title: 'Separator',
-  //   path: 'separator',
-  // },
-  // {
-  //   title: 'Skeleton',
-  //   path: 'skeleton',
-  // },
-  // {
-  //   title: 'Spinner',
-  //   path: 'spinner',
-  // },
-  // {
-  //   title: 'Surface',
-  //   path: 'surface',
-  // },
-  // {
-  //   title: 'Switch',
-  //   path: 'switch',
-  // },
-  // {
-  //   title: 'Tabs',
-  //   path: 'tabs',
-  // },
-  // {
-  //   title: 'TextArea',
-  //   path: 'text-area',
-  // },
-  // {
-  //   title: 'TextField',
-  //   path: 'text-field',
-  // },
-  // {
-  //   title: 'Toast',
-  //   path: 'toast',
-  // },
+  {
+    title: 'PressableFeedback',
+    path: 'pressable-feedback',
+  },
+  {
+    title: 'RadioGroup',
+    path: 'radio-group',
+  },
+  {
+    title: 'ScrollShadow',
+    path: 'scroll-shadow',
+  },
+  {
+    title: 'Select',
+    path: 'select',
+  },
+  {
+    title: 'Separator',
+    path: 'separator',
+  },
+  {
+    title: 'Skeleton',
+    path: 'skeleton',
+  },
+  {
+    title: 'Spinner',
+    path: 'spinner',
+  },
+  {
+    title: 'Surface',
+    path: 'surface',
+  },
+  {
+    title: 'Switch',
+    path: 'switch',
+  },
+  {
+    title: 'Tabs',
+    path: 'tabs',
+  },
+  {
+    title: 'TextArea',
+    path: 'text-area',
+  },
+  {
+    title: 'TextField',
+    path: 'text-field',
+  },
+  {
+    title: 'Toast',
+    path: 'toast',
+  },
 ];
 
 export default function App() {

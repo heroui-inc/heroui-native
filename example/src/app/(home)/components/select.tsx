@@ -102,9 +102,9 @@ const PresentationContent = () => {
           <Select.Portal>
             <Select.Overlay />
             <Select.Content
+              presentation="popover"
               width={300}
               className="aspect-[1.2]"
-              presentation="popover"
               placement="top"
               align="start"
               alignOffset={-20}
@@ -136,6 +136,7 @@ const PresentationContent = () => {
         <SearchableDialogSelect />
 
         <Select
+          presentation="bottom-sheet"
           isOpen={isBottomSheetOpen}
           onOpenChange={setIsBottomSheetOpen}
           value={bottomSheetValue}
@@ -161,7 +162,7 @@ const PresentationContent = () => {
             </Button>
           </Select.Trigger>
           <Select.Portal>
-            <Select.Overlay className="bg-black/15" />
+            <Select.Overlay className="bg-black/10" />
             <Select.Content
               presentation="bottom-sheet"
               snapPoints={['35%', '50%']}
@@ -255,7 +256,12 @@ const AlignmentOptionsContent = () => {
           </Select.Trigger>
           <Select.Portal>
             <Select.Overlay />
-            <Select.Content width={200} placement="top" align="start">
+            <Select.Content
+              presentation="popover"
+              width={200}
+              placement="top"
+              align="start"
+            >
               {US_STATES.slice(0, 3).map((state) => (
                 <Select.Item
                   key={state.value}
@@ -279,7 +285,12 @@ const AlignmentOptionsContent = () => {
           </Select.Trigger>
           <Select.Portal>
             <Select.Overlay />
-            <Select.Content width={200} placement="top" align="center">
+            <Select.Content
+              presentation="popover"
+              width={200}
+              placement="top"
+              align="center"
+            >
               {US_STATES.slice(0, 3).map((state) => (
                 <Select.Item
                   key={state.value}
@@ -303,7 +314,12 @@ const AlignmentOptionsContent = () => {
           </Select.Trigger>
           <Select.Portal>
             <Select.Overlay />
-            <Select.Content width={200} placement="top" align="end">
+            <Select.Content
+              presentation="popover"
+              width={200}
+              placement="top"
+              align="end"
+            >
               {US_STATES.slice(0, 3).map((state) => (
                 <Select.Item
                   key={state.value}

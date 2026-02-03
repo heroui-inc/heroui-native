@@ -83,6 +83,14 @@ interface IRootContext {
    * Callback fired when the selected value changes
    */
   onValueChange: (option: SelectOption) => void;
+  /**
+   * Presentation mode for the select content
+   * - 'popover': Default floating popover with positioning
+   * - 'bottom-sheet': Bottom sheet modal presentation
+   * - 'dialog': Modal dialog presentation
+   * @default 'popover'
+   */
+  presentation: 'popover' | 'bottom-sheet' | 'dialog';
 }
 
 /**
@@ -119,6 +127,14 @@ type RootProps = SlottableViewProps & {
    * Whether the select is disabled
    */
   isDisabled?: boolean;
+  /**
+   * Presentation mode for the select content
+   * - 'popover': Default floating popover with positioning
+   * - 'bottom-sheet': Bottom sheet modal presentation
+   * - 'dialog': Modal dialog presentation
+   * @default 'popover'
+   */
+  presentation?: 'popover' | 'bottom-sheet' | 'dialog';
 };
 /**
  * Props for the Select Portal component

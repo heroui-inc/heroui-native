@@ -202,7 +202,7 @@ export const UsageVariantFlatList = ({
         />
       )}
       <View
-        className="absolute left-6"
+        className="absolute left-6 right-22"
         style={{ bottom: insets.bottom + 34 }}
         pointerEvents="none"
       >

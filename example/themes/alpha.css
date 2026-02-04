@@ -1,6 +1,13 @@
 @layer theme {
   :root {
     @variant alpha-light {
+      --font-normal: 'Inter-Regular';
+      --font-medium: 'Inter-Medium';
+      --font-semibold: 'Inter-SemiBold';
+      --font-bold: 'Inter-Bold';
+
+      --radius: 0.5rem;
+
       /* Base Colors */
       --background: var(--white);
       --foreground: var(--eclipse);
@@ -60,6 +67,13 @@
     }
 
     @variant alpha-dark {
+      --font-normal: 'Inter-Regular';
+      --font-medium: 'Inter-Medium';
+      --font-semibold: 'Inter-SemiBold';
+      --font-bold: 'Inter-Bold';
+
+      --radius: 0.5rem;
+
       /* Base Colors */
       --background: var(--black);
       --foreground: var(--snow);
@@ -108,7 +122,7 @@
 
       /* Shadows */
       --surface-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
-      --overlay-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
+      --overlay-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.2) inset;
       --field-shadow: 0 0 0 0 transparent inset; /* Transparent shadow to allow ring utilities to work */
     }
   }

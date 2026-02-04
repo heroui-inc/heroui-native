@@ -1,6 +1,13 @@
 @layer theme {
   :root {
     @variant sky-light {
+      --font-normal: 'SpaceGrotesk-Regular';
+      --font-medium: 'SpaceGrotesk-Medium';
+      --font-semibold: 'SpaceGrotesk-SemiBold';
+      --font-bold: 'SpaceGrotesk-Bold';
+      
+      --radius: 0.1rem;
+
       /* Base Colors - Airy, serene sky blue */
       --background: oklch(97.02% 0.0048 225.00);
       --foreground: oklch(21.03% 0.0059 225.00);
@@ -61,6 +68,13 @@
     }
 
     @variant sky-dark {
+      --font-normal: 'SpaceGrotesk-Regular';
+      --font-medium: 'SpaceGrotesk-Medium';
+      --font-semibold: 'SpaceGrotesk-SemiBold';
+      --font-bold: 'SpaceGrotesk-Bold';
+
+      --radius: 0.1rem;
+
       /* Base Colors - Deep twilight blue */
       --background: oklch(12.00% 0.0048 225.00);
       --foreground: oklch(99.11% 0.0000 0.00);
@@ -110,7 +124,7 @@
 
       /* Shadows */
       --surface-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
-      --overlay-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
+      --overlay-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.2) inset;
       --field-shadow: 0 0 0 0 transparent inset; /* Transparent shadow to allow ring utilities to work */
     }
   }

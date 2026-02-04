@@ -1,8 +1,10 @@
-/* eslint-disable react-native/no-inline-styles */
 import { Image } from 'expo-image';
 import { Card, PressableFeedback } from 'heroui-native';
 import { View } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../app-text';
+
+const StyledImage = withUniwind(Image);
 
 export const CardContent = () => {
   return (
@@ -11,15 +13,11 @@ export const CardContent = () => {
         <Card className="flex-1">
           <View className="flex-1 gap-4">
             <Card.Header>
-              <Image
+              <StyledImage
                 source={{
                   uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo1.jpg',
                 }}
-                style={{
-                  height: 60,
-                  aspectRatio: 1,
-                  borderRadius: 14,
-                }}
+                className="h-16 aspect-square rounded-xl"
               />
             </Card.Header>
             <Card.Body className="flex-1">
@@ -47,15 +45,11 @@ export const CardContent = () => {
         <Card className="flex-1">
           <View className="flex-1 gap-4">
             <Card.Header>
-              <Image
+              <StyledImage
                 source={{
                   uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo2.jpg',
                 }}
-                style={{
-                  height: 60,
-                  aspectRatio: 1,
-                  borderRadius: 14,
-                }}
+                className="h-16 aspect-square rounded-xl"
               />
             </Card.Header>
             <Card.Body className="flex-1">

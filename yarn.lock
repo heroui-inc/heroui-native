@@ -2000,6 +2000,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@expo-google-fonts/saira@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "@expo-google-fonts/saira@npm:0.4.2"
+  checksum: 69b0c9ed50f95347111a965f423f1f52547e5b41dcea80dc9e13985a97d23e1f4df9492e8ad195444938b0c3a27b3cd243a9b4678e3386f2f0ce5f941aba9ffe
+  languageName: node
+  linkType: hard
+
+"@expo-google-fonts/sn-pro@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@expo-google-fonts/sn-pro@npm:0.4.0"
+  checksum: bf79c58dfff8b9bcfae2e2c266a851858664d48bc0796af36c5dee88b92522b160d47bbac5cb675f6e9cdd74b34a71fa0dd583973a263a089e77dbcfa1d90305
+  languageName: node
+  linkType: hard
+
+"@expo-google-fonts/space-grotesk@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "@expo-google-fonts/space-grotesk@npm:0.4.1"
+  checksum: b56343248f1acf252acc29820662c01c4bd889618f939d315c3d87b1220429e76a6fefd18e2e6aca9b0ae17ecf7140486a454670ea1f06e382bea3b06e827c75
+  languageName: node
+  linkType: hard
+
 "@expo/cli@npm:54.0.21":
   version: 54.0.21
   resolution: "@expo/cli@npm:54.0.21"
@@ -8721,6 +8742,9 @@ __metadata:
   dependencies:
     "@babel/core": ^7.20.0
     "@expo-google-fonts/inter": ^0.4.1
+    "@expo-google-fonts/saira": ^0.4.2
+    "@expo-google-fonts/sn-pro": ^0.4.0
+    "@expo-google-fonts/space-grotesk": ^0.4.1
     "@expo/metro-runtime": ~6.1.1
     "@gorhom/bottom-sheet": ^5
     "@react-native-masked-view/masked-view": 0.3.2

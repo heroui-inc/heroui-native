@@ -37,7 +37,7 @@ const DetachedBottomSheetContent = () => {
               detached={true}
               bottomInset={insets.bottom + 12}
               className="mx-4"
-              backgroundClassName="rounded-[32px]"
+              backgroundClassName="rounded-4xl"
               contentContainerClassName="pb-4"
             >
               <View className="items-center mb-5">

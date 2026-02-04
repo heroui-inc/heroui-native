@@ -127,7 +127,7 @@
 
       /* Shadows */
       --surface-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
-      --overlay-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+      --overlay-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.2) inset;
       --field-shadow: 0 0 0 0 transparent inset; /* Transparent shadow to allow ring utilities to work */
     }
   }

@@ -1,6 +1,13 @@
 @layer theme {
   :root {
     @variant lavender-light {
+      --font-normal: 'SNPro-Regular';
+      --font-medium: 'SNPro-Medium';
+      --font-semibold: 'SNPro-SemiBold';
+      --font-bold: 'SNPro-Bold';
+
+      --radius: 0.65rem;
+      
       /* Base Colors - Soft, dreamy lavender with warmth */
       --background: oklch(97.02% 0.0151 305.00);
       --foreground: oklch(21.03% 0.0059 305.00);
@@ -49,18 +56,20 @@
       --link: oklch(0.62 0.17 310);
 
       /* Shadows */
-      --surface-shadow:
-        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
-        0 0 1px 0 rgba(0, 0, 0, 0.06);
+      --surface-shadow: transparent;
       /* Overlay shadow */
-      --overlay-shadow:
-        0 4px 16px 0 rgba(24, 24, 27, 0.08), 0 8px 24px 0 rgba(24, 24, 27, 0.09);
-      --field-shadow:
-        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
-        0 0 1px 0 rgba(0, 0, 0, 0.06);
+      --overlay-shadow: transparent;
+      --field-shadow: transparent;
     }
 
     @variant lavender-dark {
+      --font-normal: 'SNPro-Regular';
+      --font-medium: 'SNPro-Medium';
+      --font-semibold: 'SNPro-SemiBold';
+      --font-bold: 'SNPro-Bold';
+
+      --radius: 0.65rem;
+
       /* Base Colors - Deep cosmic lavender */
       --background: oklch(12.00% 0.0151 305.00);
       --foreground: oklch(99.11% 0.0000 0.00);
@@ -110,7 +119,7 @@
 
       /* Shadows */
       --surface-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
-      --overlay-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
+      --overlay-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.2) inset;
       --field-shadow: 0 0 0 0 transparent inset; /* Transparent shadow to allow ring utilities to work */
     }
   }

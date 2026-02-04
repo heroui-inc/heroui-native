@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.4.1",
+    "@expo-google-fonts/saira": "^0.4.2",
+    "@expo-google-fonts/sn-pro": "^0.4.0",
+    "@expo-google-fonts/space-grotesk": "^0.4.1",
     "@expo/metro-runtime": "~6.1.1",
     "@gorhom/bottom-sheet": "^5",
     "@react-native-masked-view/masked-view": "0.3.2",

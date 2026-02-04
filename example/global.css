@@ -11,8 +11,25 @@
 /* Development only: In your app, use @source './node_modules/heroui-native/lib' */
 @source '../src';
 
-@theme {
-  --font-normal: 'Inter-Regular';
-  --font-medium: 'Inter-Medium';
-  --font-semibold: 'Inter-SemiBold';
+@layer theme {
+  :root {
+    @variant light {
+      --font-normal: 'Inter-Regular';
+      --font-medium: 'Inter-Medium';
+      --font-semibold: 'Inter-SemiBold';
+      --font-bold: 'Inter-Bold';
+      
+      --radius: 0.5rem;
+    }
+
+    @variant dark {
+      --font-normal: 'Inter-Regular';
+      --font-medium: 'Inter-Medium';
+      --font-semibold: 'Inter-SemiBold';
+      --font-bold: 'Inter-Bold';
+
+      --radius: 0.5rem;
+    }
+  }
 }
+

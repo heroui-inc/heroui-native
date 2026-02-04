@@ -5,6 +5,24 @@ import {
   Inter_700Bold,
   useFonts,
 } from '@expo-google-fonts/inter';
+import {
+  Saira_400Regular,
+  Saira_500Medium,
+  Saira_600SemiBold,
+  Saira_700Bold,
+} from '@expo-google-fonts/saira';
+import {
+  SNPro_400Regular,
+  SNPro_500Medium,
+  SNPro_600SemiBold,
+  SNPro_700Bold,
+} from '@expo-google-fonts/sn-pro';
+import {
+  SpaceGrotesk_400Regular,
+  SpaceGrotesk_500Medium,
+  SpaceGrotesk_600SemiBold,
+  SpaceGrotesk_700Bold,
+} from '@expo-google-fonts/space-grotesk';
 import { Slot } from 'expo-router';
 import { HeroUINativeProvider } from 'heroui-native';
 import { useCallback } from 'react';
@@ -69,6 +87,18 @@ export default function Layout() {
     Inter_500Medium,
     Inter_600SemiBold,
     Inter_700Bold,
+    SpaceGrotesk_400Regular,
+    SpaceGrotesk_500Medium,
+    SpaceGrotesk_600SemiBold,
+    SpaceGrotesk_700Bold,
+    Saira_400Regular,
+    Saira_500Medium,
+    Saira_600SemiBold,
+    Saira_700Bold,
+    SNPro_400Regular,
+    SNPro_500Medium,
+    SNPro_600SemiBold,
+    SNPro_700Bold,
   });
 
   if (!fonts) {

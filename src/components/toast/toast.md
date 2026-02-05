@@ -412,12 +412,3 @@ Options for showing a toast. Can be either a config object with default styling 
 | `onShow`    | `() => void`                                         | -       | Callback function called when the toast is shown                                    |
 | `onHide`    | `() => void`                                         | -       | Callback function called when the toast is hidden                                   |
 
-## Special Notes
-
-### Styling Notes
-
-#### Border as Padding
-
-Toast uses `border-[16px]` class which serves as padding. This is intentional because when visible toasts have different heights, the toast adapts to the last visible toast height. In cases where a toast originally has one height and gets smaller when a new toast comes to stack, content might be visible behind the last toast without proper padding. The border ensures consistent spacing regardless of toast height changes.
-
-For padding, use `border` classes. For actual borders, use `outline` classes.

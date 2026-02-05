@@ -36,7 +36,7 @@ import { combineStyles } from '../../helpers/internal/utils';
  * set `isAnimatedStyleActive={false}` on `Toast.Root`.
  */
 const root = tv({
-  base: 'bg-surface rounded-3xl border-[16px] border-surface outline outline-surface-secondary shadow-2xl shadow-background-inverse/5 dark:shadow-none overflow-hidden',
+  base: 'bg-surface rounded-3xl p-4 shadow-overlay overflow-hidden',
 });
 
 const label = tv({

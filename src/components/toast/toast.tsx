@@ -15,6 +15,7 @@ import { Button } from '../button';
 import type { PressableFeedbackHighlightAnimation } from '../pressable-feedback';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
+import { useVerticalPlaceholderStyles } from './toast.hooks';
 import { toastClassNames, toastStyleSheet } from './toast.styles';
 import type {
   DefaultToastProps,
@@ -68,6 +69,12 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
 
   const rootClassName = toastClassNames.root({
     className,
+  });
+
+  // Extract padding and backgroundColor for placeholder Views
+  const { topStyle, bottomStyle } = useVerticalPlaceholderStyles({
+    rootClassName,
+    style,
   });
 
   const {
@@ -128,6 +135,20 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
               {...restProps}
             >
               {children}
+              {/* 
+                When visible toasts have different heights, the toast adapts to the last visible toast height.
+                In cases where a toast originally has one height and gets smaller when a new toast comes to stack,
+                content might be visible behind the last toast without proper padding.
+                The placeholder Views ensure that the content under active toast is hidden.
+              */}
+              <View
+                className="absolute left-0 right-0 top-0"
+                style={topStyle}
+              />
+              <View
+                className="absolute left-0 right-0 bottom-0"
+                style={bottomStyle}
+              />
             </AnimatedToastRoot>
             {/* Hidden toast instance for height measurement */}
             <AnimatedToastRoot

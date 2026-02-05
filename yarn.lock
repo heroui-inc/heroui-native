@@ -7760,6 +7760,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-splash-screen@npm:~31.0.13":
+  version: 31.0.13
+  resolution: "expo-splash-screen@npm:31.0.13"
+  dependencies:
+    "@expo/prebuild-config": ^54.0.8
+  peerDependencies:
+    expo: "*"
+  checksum: 8d3a352766224be728af798354030b4f71c405ad751a48beaa434857036a21430f832267ff332b11476028a574e17bc4e0b7acf0a7344e69210edc7e2b51e304
+  languageName: node
+  linkType: hard
+
 "expo-status-bar@npm:~3.0.9":
   version: 3.0.9
   resolution: "expo-status-bar@npm:3.0.9"
@@ -8761,6 +8772,7 @@ __metadata:
     expo-linear-gradient: ~15.0.8
     expo-linking: ~8.0.11
     expo-router: ~6.0.21
+    expo-splash-screen: ~31.0.13
     expo-status-bar: ~3.0.9
     expo-updates: ~29.0.16
     prettier-plugin-tailwindcss: ^0.5.11

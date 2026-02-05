@@ -24,6 +24,7 @@ import {
   SpaceGrotesk_700Bold,
 } from '@expo-google-fonts/space-grotesk';
 import { Slot } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import { HeroUINativeProvider } from 'heroui-native';
 import { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
@@ -32,16 +33,12 @@ import {
   KeyboardAvoidingView,
   KeyboardProvider,
 } from 'react-native-keyboard-controller';
-import {
-  configureReanimatedLogger,
-  ReanimatedLogLevel,
-} from 'react-native-reanimated';
 import '../../global.css';
 import { AppThemeProvider } from '../contexts/app-theme-context';
 
-configureReanimatedLogger({
-  level: ReanimatedLogLevel.warn,
-  strict: false,
+SplashScreen.setOptions({
+  duration: 300,
+  fade: true,
 });
 
 /**

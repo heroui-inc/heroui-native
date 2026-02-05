@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Card, Chip, cn } from 'heroui-native';
 import type { FC } from 'react';
-import { Image, Pressable, View } from 'react-native';
+import { Image, Pressable, View, type ImageSourcePropType } from 'react-native';
 import Animated, {
   Easing,
   FadeIn,
@@ -12,6 +12,12 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
+import HomeComponentsDark from '../../../assets/images/home-components-dark.png';
+import HomeComponentsLight from '../../../assets/images/home-components-light.png';
+import HomeShowcasesDark from '../../../assets/images/home-showcases-dark.png';
+import HomeShowcasesLight from '../../../assets/images/home-showcases-light.png';
+import HomeThemesDark from '../../../assets/images/home-themes-dark.png';
+import HomeThemesLight from '../../../assets/images/home-themes-light.png';
 import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { useAppTheme } from '../../contexts/app-theme-context';
@@ -24,8 +30,8 @@ const StyledFeather = withUniwind(Feather);
 
 type HomeCardProps = {
   title: string;
-  imageLight: string;
-  imageDark: string;
+  imageLight: ImageSourcePropType;
+  imageDark: ImageSourcePropType;
   count: number;
   footer: string;
   path: string;
@@ -34,30 +40,24 @@ type HomeCardProps = {
 const cards: HomeCardProps[] = [
   {
     title: 'Components',
-    imageLight:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-components-light.png',
-    imageDark:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-components-dark.png',
+    imageLight: HomeComponentsLight,
+    imageDark: HomeComponentsDark,
     count: 29,
     footer: 'Explore all components',
     path: 'components',
   },
   {
     title: 'Themes',
-    imageLight:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-themes-light.png',
-    imageDark:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-themes-dark.png',
+    imageLight: HomeThemesLight,
+    imageDark: HomeThemesDark,
     count: 4,
     footer: 'Try different themes',
     path: 'themes',
   },
   {
     title: 'Showcases',
-    imageLight:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-showcases-light.png',
-    imageDark:
-      'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-example/home-showcases-dark-1.png',
+    imageLight: HomeShowcasesLight,
+    imageDark: HomeShowcasesDark,
     count: 6,
     footer: 'View components in action',
     path: 'showcases',
@@ -107,13 +107,13 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
           className="absolute inset-0 w-full h-full"
         >
           <AnimatedImage
-            source={{ uri: imageLight }}
+            source={imageLight}
             className="absolute inset-0 w-full h-full"
             resizeMode="cover"
             style={rLightImageStyle}
           />
           <AnimatedImage
-            source={{ uri: imageDark }}
+            source={imageDark}
             className="absolute inset-0 w-full h-full"
             resizeMode="cover"
             style={rDarkImageStyle}

@@ -5,15 +5,13 @@
     "scheme": "herouinative",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#000000"
-    },
     "ios": {
+      "icon": {
+        "dark": "./assets/ios-icon-dark.png",
+        "light": "./assets/ios-icon-light.png",
+      },
       "supportsTablet": true,
       "bundleIdentifier": "com.herouinative.ios",
       "infoPlist": {
@@ -22,19 +20,30 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#000000"
+        "foregroundImage": "./assets/android-adaptive-icon.png",
+        "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.herouinative.android"
     },
     "web": {
-      "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#ECEDEE",
+          "image": "./assets/splash-icon-light.png",
+          "dark": {
+            "image": "./assets/splash-icon-dark.png",
+            "backgroundColor": "#151718"
+          },
+          "imageWidth": 200
+        }
+      ]
     ],
     "extra": {
       "router": {

@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Card, cn, type CardRootProps } from 'heroui-native';
@@ -8,6 +7,7 @@ import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
+const StyledImage = withUniwind(Image);
 const StyledIonicons = withUniwind(Ionicons);
 
 const BasicCardContent = () => {
@@ -51,15 +51,11 @@ const CardWithImageContent = () => {
         <Card className="flex-1 aspect-[1/1.3]">
           <View className="flex-1 gap-4">
             <Card.Header>
-              <Image
+              <StyledImage
                 source={{
                   uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo1.jpg',
                 }}
-                style={{
-                  height: 60,
-                  aspectRatio: 1,
-                  borderRadius: 14,
-                }}
+                className="h-16 aspect-square rounded-xl"
               />
             </Card.Header>
             <Card.Body className="flex-1">
@@ -79,15 +75,11 @@ const CardWithImageContent = () => {
         <Card className="flex-1 aspect-[1/1.3]">
           <View className="flex-1 gap-4">
             <Card.Header>
-              <Image
+              <StyledImage
                 source={{
                   uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo2.jpg',
                 }}
-                style={{
-                  height: 60,
-                  aspectRatio: 1,
-                  borderRadius: 14,
-                }}
+                className="h-16 aspect-square rounded-xl"
               />
             </Card.Header>
             <Card.Body className="flex-1">
@@ -116,15 +108,11 @@ const HorizontalCardWithImageContent = () => {
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full gap-4">
         <Card className="flex-row gap-4 p-4" variant="tertiary">
-          <Image
+          <StyledImage
             source={{
               uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/avocado.jpeg',
             }}
-            style={{
-              height: 110,
-              aspectRatio: 1,
-              borderRadius: 16,
-            }}
+            className="h-28 aspect-square rounded-2xl"
             resizeMode="cover"
           />
           <View className="flex-1 gap-4">
@@ -149,15 +137,11 @@ const HorizontalCardWithImageContent = () => {
           </View>
         </Card>
         <Card className="flex-row gap-4 p-4" variant="tertiary">
-          <Image
+          <StyledImage
             source={{
               uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/oranges.jpeg',
             }}
-            style={{
-              height: 110,
-              aspectRatio: 1,
-              borderRadius: 16,
-            }}
+            className="h-28 aspect-square rounded-2xl"
             resizeMode="cover"
           />
           <View className="flex-1 gap-4">

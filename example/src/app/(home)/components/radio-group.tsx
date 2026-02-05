@@ -100,7 +100,7 @@ const ShippingOptionItem = ({
       {({ isSelected }) => (
         <View
           className={cn(
-            'flex-row items-center justify-between gap-3 p-3 rounded-[18px] bg-transparent',
+            'flex-row items-center justify-between gap-3 p-3 rounded-2xl bg-transparent',
             isSelected && 'bg-surface shadow-surface',
             containerClassName
           )}
@@ -403,7 +403,7 @@ const CustomIndicatorThumbContent = () => {
                     <AnimatedView entering={FadeInUp.duration(200)}>
                       <ThunderboltFillIcon
                         size={12}
-                        colorClassName="accent-background"
+                        colorClassName="accent-accent-foreground"
                       />
                     </AnimatedView>
                   )}

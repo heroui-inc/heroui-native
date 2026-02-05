@@ -137,7 +137,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
                 {footer}
               </Card.Description>
             </View>
-            <View className="size-9 rounded-full bg-background/25 items-center justify-center">
+            <View className="size-9 rounded-3xl bg-background/25 items-center justify-center">
               <StyledFeather
                 name="arrow-up-right"
                 size={20}

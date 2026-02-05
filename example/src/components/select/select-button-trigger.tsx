@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
-import { Select, Separator, useSelect } from 'heroui-native';
+import { cn, Select, Separator, useSelect } from 'heroui-native';
 import React, { useEffect, useState, type FC } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, {
   Easing,
   interpolate,
@@ -37,13 +37,6 @@ const AnimatedTrigger: FC = () => {
     });
   }, [isOpen, animatedValue]);
 
-  const rContainerStyle = useAnimatedStyle(() => {
-    const opacity = interpolate(animatedValue.value, [0, 1], [0, 1]);
-    return {
-      opacity,
-    };
-  });
-
   const rChevronStyle = useAnimatedStyle(() => {
     const rotate = interpolate(animatedValue.value, [0, 1], [0, -180]);
     return {
@@ -53,13 +46,11 @@ const AnimatedTrigger: FC = () => {
 
   return (
     <View
-      className="bg-surface h-[48px] w-[256px] px-3 rounded-2xl justify-center shadow-md shadow-black/5"
-      style={styles.borderCurve}
+      className={cn(
+        'bg-surface h-[48px] w-[256px] px-3 rounded-2xl justify-center shadow-surface outline-[3px]',
+        isOpen ? 'outline-accent' : 'outline-transparent'
+      )}
     >
-      <StyleAnimatedView
-        style={[rContainerStyle, styles.borderCurve]}
-        className="absolute -inset-1 border-[2.5px] border-accent rounded-[18px] pointer-events-none"
-      />
       <Select.Value placeholder="Select a state" />
       <StyleAnimatedView style={rChevronStyle} className="absolute right-3">
         <StyledFeather name="chevron-down" size={18} className="text-muted" />
@@ -100,9 +91,3 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
     </Select>
   );
 }
-
-const styles = StyleSheet.create({
-  borderCurve: {
-    borderCurve: 'continuous',
-  },
-});

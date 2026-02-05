@@ -1,12 +1,14 @@
-/* eslint-disable react-native/no-inline-styles */
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Card, PressableFeedback } from 'heroui-native';
 import { StyleSheet, View } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
+
+const StyledImage = withUniwind(Image);
 
 const BackgroundImageCardContent = () => {
   return (
@@ -77,15 +79,11 @@ const CardWithImageContent = () => {
           <Card className="flex-1">
             <View className="flex-1 gap-4">
               <Card.Header>
-                <Image
+                <StyledImage
                   source={{
                     uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo1.jpg',
                   }}
-                  style={{
-                    height: 60,
-                    aspectRatio: 1,
-                    borderRadius: 14,
-                  }}
+                  className="h-16 aspect-square rounded-xl"
                 />
               </Card.Header>
               <Card.Body className="flex-1">
@@ -113,15 +111,11 @@ const CardWithImageContent = () => {
           <Card className="flex-1">
             <View className="flex-1 gap-4">
               <Card.Header>
-                <Image
+                <StyledImage
                   source={{
                     uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/demo2.jpg',
                   }}
-                  style={{
-                    height: 60,
-                    aspectRatio: 1,
-                    borderRadius: 14,
-                  }}
+                  className="h-16 aspect-square rounded-xl"
                 />
               </Card.Header>
               <Card.Body className="flex-1">

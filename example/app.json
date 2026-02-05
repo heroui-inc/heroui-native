@@ -13,7 +13,7 @@
         "light": "./assets/ios-icon-light.png",
       },
       "supportsTablet": true,
-      "bundleIdentifier": "com.herouinative.ios",
+      "bundleIdentifier": "com.herouinative.app",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }

@@ -799,10 +799,5 @@ const Select = Object.assign(SelectRoot, {
   Close: SelectClose,
 });
 
-export {
-  useSelect,
-  useSelectAnimation,
-  useSelectItem,
-  useSelectTriggerIndicatorAnimation,
-};
+export { useSelect, useSelectAnimation, useSelectItem };
 export default Select;

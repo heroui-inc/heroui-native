@@ -3,7 +3,6 @@ export {
   useSelect,
   useSelectAnimation,
   useSelectItem,
-  useSelectTriggerIndicatorAnimation,
 } from './select';
 export { selectClassNames } from './select.styles';
 export type {

@@ -14,6 +14,7 @@ import { Select } from 'heroui-native';
 <Select>
   <Select.Trigger>
     <Select.Value />
+    <Select.TriggerIndicator />
   </Select.Trigger>
   <Select.Portal>
     <Select.Overlay />
@@ -31,8 +32,9 @@ import { Select } from 'heroui-native';
 ```
 
 - **Select**: Main container that manages open/close state, value selection and provides context to child components.
-- **Select.Trigger**: Clickable element that toggles the select visibility. Wraps any child element with press handlers.
-- **Select.Value**: Displays the selected value or placeholder text. Automatically updates when selection changes.
+- **Select.Trigger**: Clickable element that toggles the select visibility. Wraps any child element with press handlers. Supports `variant` prop (`'default'` or `'unstyled'`).
+- **Select.Value**: Displays the selected value or placeholder text. Automatically updates when selection changes. Styling changes based on selection state.
+- **Select.TriggerIndicator**: Optional visual indicator showing open/close state. Renders an animated chevron icon by default that rotates when the select opens/closes.
 - **Select.Portal**: Renders select content in a portal layer above other content. Ensures proper stacking and positioning.
 - **Select.Overlay**: Optional background overlay. Can be transparent or semi-transparent to capture outside clicks.
 - **Select.Content**: Container for select content with three presentation modes: popover (floating with positioning), bottom sheet modal, or dialog modal.
@@ -70,6 +72,7 @@ Display the selected value in the trigger using the Value component.
 <Select>
   <Select.Trigger>
     <Select.Value placeholder="Choose an option" />
+    <Select.TriggerIndicator />
   </Select.Trigger>
   <Select.Portal>
     <Select.Overlay />
@@ -291,6 +294,48 @@ Add descriptions to items for additional context.
 </Select>
 ```
 
+### With Trigger Indicator
+
+Add a visual indicator to show the open/close state of the select. The indicator rotates when the select opens/closes.
+
+```tsx
+<Select>
+  <Select.Trigger>
+    <Select.Value placeholder="Select one" />
+    <Select.TriggerIndicator />
+  </Select.Trigger>
+  <Select.Portal>
+    <Select.Overlay />
+    <Select.Content presentation="popover">
+      <Select.Item value="1" label="Option 1" />
+      <Select.Item value="2" label="Option 2" />
+    </Select.Content>
+  </Select.Portal>
+</Select>
+```
+
+### Custom Trigger with Unstyled Variant
+
+Use the `unstyled` variant when composing a custom trigger with other components like Button.
+
+```tsx
+<Select>
+  <Select.Trigger variant="unstyled" asChild>
+    <Button variant="secondary">
+      <Select.Value placeholder="Select..." />
+      <Select.TriggerIndicator />
+    </Button>
+  </Select.Trigger>
+  <Select.Portal>
+    <Select.Overlay />
+    <Select.Content presentation="popover">
+      <Select.Item value="1" label="Option 1" />
+      <Select.Item value="2" label="Option 2" />
+    </Select.Content>
+  </Select.Portal>
+</Select>
+```
+
 ### Controlled Mode
 
 Control the select state programmatically.
@@ -307,6 +352,7 @@ const [isOpen, setIsOpen] = useState(false);
 >
   <Select.Trigger>
     <Select.Value placeholder="Select..." />
+    <Select.TriggerIndicator />
   </Select.Trigger>
   <Select.Portal>
     <Select.Overlay />
@@ -321,73 +367,40 @@ const [isOpen, setIsOpen] = useState(false);
 ## Example
 
 ```tsx
-import { Button, Select } from 'heroui-native';
-import { useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Select, Separator } from 'heroui-native';
+import React, { useState } from 'react';
 
-type CountryOption = {
+type SelectOption = {
   value: string;
   label: string;
-  flag: string;
-  code: string;
 };
 
-const COUNTRIES: CountryOption[] = [
-  { value: 'US', label: 'United States', flag: '🇺🇸', code: '+1' },
-  { value: 'GB', label: 'United Kingdom', flag: '🇬🇧', code: '+44' },
-  { value: 'CA', label: 'Canada', flag: '🇨🇦', code: '+1' },
-  { value: 'AU', label: 'Australia', flag: '🇦🇺', code: '+61' },
+const US_STATES: SelectOption[] = [
+  { value: 'CA', label: 'California' },
+  { value: 'NY', label: 'New York' },
+  { value: 'TX', label: 'Texas' },
+  { value: 'FL', label: 'Florida' },
 ];
 
 export default function SelectExample() {
-  const [country, setCountry] = useState<CountryOption>();
+  const [value, setValue] = useState<SelectOption | undefined>();
 
   return (
-    <Select
-      value={country}
-      onValueChange={(value) => {
-        const selected = COUNTRIES.find((c) => c.value === value?.value);
-        setCountry(selected);
-      }}
-    >
-      <Select.Trigger asChild>
-        <Button variant="tertiary" size="sm">
-          {country ? (
-            <View className="flex-row items-center gap-2">
-              <Text className="text-base">{country.flag}</Text>
-              <Text className="text-sm text-foreground">{country.code}</Text>
-            </View>
-          ) : (
-            <Text className="text-foreground">Select Country</Text>
-          )}
-        </Button>
+    <Select value={value} onValueChange={setValue}>
+      <Select.Trigger>
+        <Select.Value placeholder="Select one" />
+        <Select.TriggerIndicator />
       </Select.Trigger>
       <Select.Portal>
         <Select.Overlay />
-        <Select.Content
-          presentation="popover"
-          width={280}
-          className="h-[250px] rounded-2xl"
-          placement="bottom"
-        >
-          <ScrollView>
-            {COUNTRIES.map((item) => (
-              <Select.Item
-                key={item.value}
-                value={item.value}
-                label={item.label}
-              >
-                <View className="flex-row items-center gap-3 flex-1">
-                  <Text className="text-2xl">{item.flag}</Text>
-                  <Text className="text-sm text-muted w-10">{item.code}</Text>
-                  <Text className="text-base text-foreground flex-1">
-                    {item.label}
-                  </Text>
-                </View>
-                <Select.ItemIndicator />
-              </Select.Item>
-            ))}
-          </ScrollView>
+        <Select.Content presentation="popover" width="trigger">
+          <Select.ListLabel className="mb-2">Choose a state</Select.ListLabel>
+          {US_STATES.map((state, index) => (
+            <React.Fragment key={state.value}>
+              <Select.Item value={state.value} label={state.label} />
+              {index < US_STATES.length - 1 && <Separator />}
+            </React.Fragment>
+          ))}
         </Select.Content>
       </Select.Portal>
     </Select>
@@ -447,12 +460,14 @@ Animation configuration for Select component. Can be:
 
 ### Select.Trigger
 
-| prop                | type             | default | description                                             |
-| ------------------- | ---------------- | ------- | ------------------------------------------------------- |
-| `children`          | `ReactNode`      | -       | The trigger element content                             |
-| `className`         | `string`         | -       | Additional CSS classes for the trigger                  |
-| `asChild`           | `boolean`        | `true`  | Whether to render as a child element                    |
-| `...PressableProps` | `PressableProps` | -       | All standard React Native Pressable props are supported |
+| prop                | type                        | default     | description                                             |
+| ------------------- | --------------------------- | ----------- | ------------------------------------------------------- |
+| `variant`           | `'default' \| 'unstyled'`  | `'default'` | The variant of the trigger. `'default'` applies pre-styled container styles, `'unstyled'` removes default styling |
+| `children`          | `ReactNode`                 | -           | The trigger element content                             |
+| `className`         | `string`                    | -           | Additional CSS classes for the trigger                  |
+| `asChild`           | `boolean`                   | `true`      | Whether to render as a child element                    |
+| `isDisabled`        | `boolean`                   | -           | Whether the trigger is disabled                         |
+| `...PressableProps` | `PressableProps`            | -           | All standard React Native Pressable props are supported |
 
 ### Select.Value
 
@@ -461,6 +476,48 @@ Animation configuration for Select component. Can be:
 | `placeholder`  | `string`    | -       | Placeholder text when no value is selected         |
 | `className`    | `string`    | -       | Additional CSS classes for the value               |
 | `...TextProps` | `TextProps` | -       | All standard React Native Text props are supported |
+
+**Note:** The value component automatically applies different text colors based on selection state:
+- When a value is selected: `text-foreground`
+- When no value is selected (placeholder): `text-field-placeholder`
+
+### Select.TriggerIndicator
+
+| prop                    | type                                 | default | description                                                  |
+| ----------------------- | ------------------------------------ | ------- | ------------------------------------------------------------ |
+| `children`              | `ReactNode`                          | -       | Custom indicator content. Defaults to animated chevron icon  |
+| `className`             | `string`                             | -       | Additional CSS classes for the trigger indicator             |
+| `style`                 | `ViewStyle`                          | -       | Custom styles for the trigger indicator                      |
+| `iconProps`             | `SelectTriggerIndicatorIconProps`     | -       | Chevron icon configuration                                   |
+| `animation`             | `SelectTriggerIndicatorAnimation`   | -       | Animation configuration                                      |
+| `isAnimatedStyleActive` | `boolean`                            | `true`  | Whether animated styles (react-native-reanimated) are active |
+| `...ViewProps`          | `ViewProps`                          | -       | All standard React Native View props are supported           |
+
+**Note:** The following style properties are occupied by animations and cannot be set via className:
+- `transform` (specifically `rotate`) - Animated for open/close rotation transitions
+
+To customize this property, use the `animation` prop. To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+
+#### SelectTriggerIndicatorIconProps
+
+| prop    | type     | default | description       |
+| ------- | -------- | ------- | ----------------- |
+| `size`  | `number` | `16`    | Size of the icon  |
+| `color` | `string` | -       | Color of the icon (defaults to foreground theme color) |
+
+#### SelectTriggerIndicatorAnimation
+
+Animation configuration for Select.TriggerIndicator component. Can be:
+
+- `false` or `"disabled"`: Disable all animations
+- `true` or `undefined`: Use default animations (rotation from 0° to -180°)
+- `object`: Custom animation configuration
+
+| prop                    | type               | default                        | description                                     |
+| ----------------------- | ------------------ | ------------------------------ | ----------------------------------------------- |
+| `state`                 | `'disabled' \| boolean` | -                          | Disable animations while customizing properties |
+| `rotation.value`         | `[number, number]` | `[0, -180]`                    | Rotation values [closed, open] in degrees       |
+| `rotation.springConfig` | `WithSpringConfig` | `{ damping: 140, stiffness: 1000, mass: 4 }` | Spring animation configuration for rotation      |
 
 ### Select.Portal
 

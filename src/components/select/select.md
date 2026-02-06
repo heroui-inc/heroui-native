@@ -548,11 +548,19 @@ Animation configuration for Select.Content component (popover presentation). Can
 | `children`              | `ReactNode`                              | -       | The dialog content                                           |
 | `presentation`          | `'dialog'`                               | -       | Presentation mode for the select                             |
 | `classNames`            | `{ wrapper?: string; content?: string }` | -       | Additional CSS classes for wrapper and content               |
+| `styles`                | `Partial<Record<DialogContentFallbackSlots, ViewStyle>>` | - | Styles for different parts of the dialog content            |
 | `animation`             | `SelectContentAnimation`                 | -       | Animation configuration                                      |
 | `isSwipeable`           | `boolean`                                | `true`  | Whether the dialog content can be swiped to dismiss          |
 | `forceMount`            | `boolean`                                | -       | Whether to force mount the component in the DOM              |
 | `asChild`               | `boolean`                                | `false` | Whether to render as a child element                         |
 | `...ViewProps`          | `ViewProps`                              | -       | All standard React Native View props are supported           |
+
+#### `styles`
+
+| prop      | type        | description                          |
+| --------- | ----------- | ------------------------------------ |
+| `wrapper` | `ViewStyle` | Styles for the wrapper container     |
+| `content` | `ViewStyle` | Styles for the dialog content         |
 
 #### SelectContentAnimation
 

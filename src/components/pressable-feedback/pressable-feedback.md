@@ -209,11 +209,17 @@ Animation configuration for highlight overlay. Can be:
 | ----------------------- | ---------------------------------- | ------- | ------------------------------------------------------------ |
 | `className`             | `string`                           | -       | Additional CSS classes for container slot                    |
 | `classNames`            | `ElementSlots<RippleSlots>`        | -       | Additional CSS classes for slots (container, ripple)         |
-| `containerStyle`        | `ViewStyle`                        | -       | Style for the container slot                                 |
-| `rippleStyle`           | `ViewStyle`                        | -       | Style for the ripple slot                                    |
+| `styles`                | `Partial<Record<RippleSlots, ViewStyle>>` | - | Styles for different parts of the ripple overlay            |
 | `animation`             | `PressableFeedbackRippleAnimation` | -       | Animation configuration for ripple overlay                   |
 | `isAnimatedStyleActive` | `boolean`                          | `true`  | Whether animated styles (react-native-reanimated) are active |
 | `...ViewProps`          | `Omit<ViewProps, 'style'>`         | -       | All View props except style are supported                    |
+
+#### `styles`
+
+| prop        | type        | description                          |
+| ----------- | ----------- | ------------------------------------ |
+| `container` | `ViewStyle` | Styles for the container slot        |
+| `ripple`    | `ViewStyle` | Styles for the ripple slot           |
 
 #### PressableFeedbackRippleAnimation
 

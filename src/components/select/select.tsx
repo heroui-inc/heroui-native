@@ -375,7 +375,15 @@ const SelectContentDialog = forwardRef<
   SelectContentProps & { presentation: 'dialog' }
 >(
   (
-    { classNames, style, children, animation, isSwipeable = true, ...props },
+    {
+      classNames,
+      styles,
+      style,
+      children,
+      animation,
+      isSwipeable = true,
+      ...props
+    },
     ref
   ) => {
     const { isOpen, onOpenChange } = useSelect();
@@ -418,7 +426,7 @@ const SelectContentDialog = forwardRef<
     }, []);
 
     return (
-      <View className={wrapperClassName}>
+      <View className={wrapperClassName} style={styles?.wrapper}>
         <GestureDetector gesture={panGesture}>
           <Animated.View
             ref={dragContainerRef}
@@ -429,7 +437,11 @@ const SelectContentDialog = forwardRef<
               <SelectPrimitives.DialogContent
                 ref={ref}
                 className={contentClassName}
-                style={[selectStyleSheet.contentContainer, style]}
+                style={[
+                  selectStyleSheet.contentContainer,
+                  styles?.content,
+                  style,
+                ]}
                 {...props}
               >
                 {children}

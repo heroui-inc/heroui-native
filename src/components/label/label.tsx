@@ -111,7 +111,8 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
 // --------------------------------------------------
 
 const LabelText = forwardRef<TextRef, LabelTextProps>((props, ref) => {
-  const { children, className, classNames, styles, ...restProps } = props;
+  const { children, className, classNames, styles, style, ...restProps } =
+    props;
 
   const { isDisabled, isRequired, isInvalid } = useLabel();
 
@@ -132,7 +133,7 @@ const LabelText = forwardRef<TextRef, LabelTextProps>((props, ref) => {
     <HeroText
       ref={ref}
       className={textClassName}
-      style={styles?.text}
+      style={[style, styles?.text]}
       {...restProps}
     >
       {children}

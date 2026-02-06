@@ -1,3 +1,4 @@
+import type { ViewStyle } from 'react-native';
 import type {
   AnimatedProps,
   EntryOrExitLayoutType,
@@ -82,6 +83,10 @@ export type AccordionRootProps = Omit<
    * Additional CSS classes for the slots
    */
   classNames?: ElementSlots<RootSlots>;
+  /**
+   * Styles for different parts of the accordion root
+   */
+  styles?: Partial<Record<RootSlots, ViewStyle>>;
   /**
    * Animation configuration for accordion
    * - `false` or `"disabled"`: Disable only root animations

@@ -175,10 +175,18 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | `animation`            | `FieldErrorRootAnimation`       | -           | Animation configuration                                                  |
 | `className`            | `string`                       | `undefined` | Additional CSS classes for the container                                 |
 | `classNames`           | `ElementSlots<FieldErrorSlots>` | `undefined` | Additional CSS classes for different parts of the component              |
+| `styles`                | `{ container?: ViewStyle; text?: TextStyle }` | `undefined` | Styles for different parts of the field error                            |
 | `textProps`            | `TextProps`                    | `undefined` | Additional props to pass to the Text component when children is a string |
 | `...AnimatedViewProps` | `AnimatedProps<ViewProps>`     | -           | All Reanimated Animated.View props are supported                         |
 
 **classNames prop:** `ElementSlots<FieldErrorSlots>` provides type-safe CSS classes for different parts of the field error component. Available slots: `container`, `text`.
+
+#### `styles`
+
+| prop        | type                    | description                          |
+| ----------- | ----------------------- | ------------------------------------ |
+| `container` | `ViewStyle`              | Styles for the container             |
+| `text`      | `TextStyle`             | Styles for the text content          |
 
 #### FieldErrorRootAnimation
 

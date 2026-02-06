@@ -1,4 +1,4 @@
-import type { TextProps, ViewProps } from 'react-native';
+import type { TextProps, TextStyle, ViewProps, ViewStyle } from 'react-native';
 import type {
   AnimatedProps,
   EntryOrExitLayoutType,
@@ -55,6 +55,14 @@ export interface FieldErrorRootProps
    * Additional CSS classes for different parts of the component
    */
   classNames?: ElementSlots<FieldErrorSlots>;
+
+  /**
+   * Styles for different parts of the field error
+   */
+  styles?: {
+    container?: ViewStyle;
+    text?: TextStyle;
+  };
 
   /**
    * Additional props to pass to the Text component when children is a string

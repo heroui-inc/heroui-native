@@ -178,3 +178,10 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | ---------- | -------- | ------------------------------ |
 | `text`     | `string` | CSS classes for the label text |
 | `asterisk` | `string` | CSS classes for the asterisk   |
+
+#### `styles`
+
+| prop       | type        | description                    |
+| ---------- | ----------- | ------------------------------ |
+| `text`     | `TextStyle` | Styles for the label text      |
+| `asterisk` | `TextStyle` | Styles for the asterisk        |

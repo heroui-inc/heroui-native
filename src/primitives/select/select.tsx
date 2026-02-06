@@ -33,6 +33,8 @@ import type {
   GroupLabelRef,
   GroupProps,
   GroupRef,
+  IndicatorProps,
+  IndicatorRef,
   IRootContext,
   ItemIndicatorProps,
   ItemIndicatorRef,
@@ -216,6 +218,18 @@ const Value = React.forwardRef<ValueRef, ValueProps>(
       <Component ref={ref} {...props}>
         {value?.label ?? placeholder}
       </Component>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const Indicator = forwardRef<IndicatorRef, IndicatorProps>(
+  ({ asChild, ...props }, ref) => {
+    const Component = asChild ? Slot.View : View;
+
+    return (
+      <Component ref={ref} role="presentation" aria-hidden={true} {...props} />
     );
   }
 );
@@ -601,6 +615,7 @@ const GroupLabel = React.forwardRef<GroupLabelRef, GroupLabelProps>(
 
 Root.displayName = 'HeroUINative.Primitive.Select.Root';
 Trigger.displayName = 'HeroUINative.Primitive.Select.Trigger';
+Indicator.displayName = 'HeroUINative.Primitive.Select.Indicator';
 Value.displayName = 'HeroUINative.Primitive.Select.Value';
 Overlay.displayName = 'HeroUINative.Primitive.Select.Overlay';
 PopoverContent.displayName = 'HeroUINative.Primitive.Select.PopoverContent';
@@ -617,6 +632,7 @@ export {
   DialogContent,
   Group,
   GroupLabel,
+  Indicator,
   Item,
   ItemIndicator,
   ItemLabel,

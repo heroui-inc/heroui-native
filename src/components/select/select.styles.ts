@@ -15,6 +15,29 @@ const value = tv({
   base: 'text-base text-foreground',
 });
 
+/**
+ * Indicator style definition
+ *
+ * @note ANIMATED PROPERTIES (cannot be set via className):
+ * The following property is animated and cannot be overridden using Tailwind classes:
+ * - `transform` (specifically `rotate`) - Animated for open/close rotation transitions
+ *
+ * To customize this property, use the `animation` prop on `Select.Indicator`:
+ * ```tsx
+ * <Select.Indicator
+ *   animation={{
+ *     rotation: { value: [0, -180], springConfig: { damping: 140, stiffness: 1000, mass: 4 } }
+ *   }}
+ * />
+ * ```
+ *
+ * To completely disable animated styles and apply your own via className or style prop,
+ * set `isAnimatedStyleActive={false}` on `Select.Indicator`.
+ */
+const indicator = tv({
+  base: 'items-center justify-center',
+});
+
 const portal = tv({
   base: 'absolute inset-0',
 });
@@ -102,6 +125,7 @@ export const selectClassNames = combineStyles({
   itemDescription,
   itemIndicator,
   listLabel,
+  indicator,
 });
 
 export const selectStyleSheet = StyleSheet.create({

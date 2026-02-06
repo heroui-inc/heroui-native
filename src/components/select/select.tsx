@@ -23,16 +23,19 @@ import {
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
-import type { PressableRef } from '../../helpers/internal/types';
+import type { PressableRef, ViewRef } from '../../helpers/internal/types';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import { CloseButton } from '../close-button';
+import { ChevronDownIcon } from './chevron-down-icon';
 import {
   SelectAnimationProvider,
   useSelectAnimation,
+  useSelectIndicatorAnimation,
 } from './select.animation';
 import {
   DEFAULT_ALIGN_OFFSET,
+  DEFAULT_ICON_SIZE,
   DEFAULT_INSETS,
   DEFAULT_OFFSET,
   DISPLAY_NAME,
@@ -44,6 +47,7 @@ import type {
   SelectContentDialogProps,
   SelectContentPopoverProps,
   SelectContentProps,
+  SelectIndicatorProps,
   SelectItemDescriptionProps,
   SelectItemIndicatorProps,
   SelectItemLabelProps,
@@ -63,6 +67,10 @@ const AnimatedOverlay = Animated.createAnimatedComponent(
 
 const AnimatedPopoverContent = Animated.createAnimatedComponent(
   SelectPrimitives.PopoverContent
+);
+
+const AnimatedIndicator = Animated.createAnimatedComponent(
+  SelectPrimitives.Indicator
 );
 
 const useSelect = SelectPrimitives.useRootContext;
@@ -154,6 +162,64 @@ const SelectValue = forwardRef<
     <SelectPrimitives.Value ref={ref} className={valueClassName} {...props} />
   );
 });
+
+// --------------------------------------------------
+
+const SelectIndicator = forwardRef<ViewRef, SelectIndicatorProps>(
+  (props, ref) => {
+    const {
+      children,
+      className,
+      iconProps,
+      animation,
+      isAnimatedStyleActive = true,
+      style,
+      ...restProps
+    } = props;
+
+    const { isOpen } = useSelect();
+
+    const themeColorForeground = useThemeColor('foreground');
+
+    const indicatorClassName = selectClassNames.indicator({ className });
+
+    const { rContainerStyle } = useSelectIndicatorAnimation({
+      animation,
+      isOpen,
+    });
+
+    const indicatorStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
+
+    if (children) {
+      return (
+        <AnimatedIndicator
+          ref={ref}
+          className={indicatorClassName}
+          style={style}
+          {...restProps}
+        >
+          {children}
+        </AnimatedIndicator>
+      );
+    }
+
+    return (
+      <AnimatedIndicator
+        ref={ref}
+        className={indicatorClassName}
+        style={indicatorStyle}
+        {...restProps}
+      >
+        <ChevronDownIcon
+          size={iconProps?.size ?? DEFAULT_ICON_SIZE}
+          color={iconProps?.color ?? themeColorForeground}
+        />
+      </AnimatedIndicator>
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -654,12 +720,13 @@ const SelectListLabel = forwardRef<
 
 SelectRoot.displayName = DISPLAY_NAME.ROOT;
 SelectTrigger.displayName = DISPLAY_NAME.TRIGGER;
+SelectIndicator.displayName = DISPLAY_NAME.INDICATOR;
+SelectValue.displayName = DISPLAY_NAME.VALUE;
 SelectPortal.displayName = DISPLAY_NAME.PORTAL;
 SelectOverlay.displayName = DISPLAY_NAME.OVERLAY;
 SelectContent.displayName = DISPLAY_NAME.CONTENT;
 SelectClose.displayName = DISPLAY_NAME.CLOSE;
 SelectItemDescription.displayName = DISPLAY_NAME.ITEM_DESCRIPTION;
-SelectValue.displayName = DISPLAY_NAME.VALUE;
 SelectItem.displayName = DISPLAY_NAME.ITEM;
 SelectItemLabel.displayName = DISPLAY_NAME.ITEM_LABEL;
 SelectItemIndicator.displayName = DISPLAY_NAME.ITEM_INDICATOR;
@@ -673,6 +740,10 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
  *
  * @component Select.Trigger - Clickable element that toggles the select visibility.
  * Wraps any child element with press handlers.
+ *
+ * @component Select.Indicator - Optional visual indicator showing open/close state.
+ * Defaults to an animated chevron icon that rotates based on select state.
+ * Supports custom animation configuration.
  *
  * @component Select.Value - Displays the selected value or placeholder text.
  * Automatically updates when selection changes.
@@ -707,6 +778,8 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
  */
 const Select = Object.assign(SelectRoot, {
   Trigger: SelectTrigger,
+  /** @optional Visual indicator showing open/close state (defaults to chevron) */
+  Indicator: SelectIndicator,
   Value: SelectValue,
   Portal: SelectPortal,
   Overlay: SelectOverlay,

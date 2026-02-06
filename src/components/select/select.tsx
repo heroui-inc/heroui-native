@@ -10,6 +10,7 @@ import { cn } from '../../helpers/external/utils';
 import {
   BottomSheetContent,
   CheckIcon,
+  ChevronDownIcon,
   FullWindowOverlay,
   HeroText,
 } from '../../helpers/internal/components';
@@ -27,7 +28,6 @@ import type { PressableRef, ViewRef } from '../../helpers/internal/types';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import { CloseButton } from '../close-button';
-import { ChevronDownIcon } from './chevron-down-icon';
 import {
   SelectAnimationProvider,
   useSelectAnimation,

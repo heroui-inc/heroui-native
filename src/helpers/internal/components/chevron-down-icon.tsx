@@ -1,12 +1,15 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { DISPLAY_NAME } from './select.constants';
 
 interface ChevronDownIconProps {
   size?: number;
   color?: string;
 }
 
+/**
+ * Chevron down icon component
+ * Reusable SVG icon used in Select and Accordion components
+ */
 export const ChevronDownIcon: React.FC<ChevronDownIconProps> = ({
   size = 16,
   color = 'currentColor',
@@ -22,4 +25,4 @@ export const ChevronDownIcon: React.FC<ChevronDownIconProps> = ({
   );
 };
 
-ChevronDownIcon.displayName = DISPLAY_NAME.CHEVRON_DOWN_ICON;
+ChevronDownIcon.displayName = 'HeroUINative.ChevronDownIcon';

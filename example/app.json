@@ -9,8 +9,8 @@
     "newArchEnabled": true,
     "ios": {
       "icon": {
-        "dark": "./assets/ios-icon-dark.png",
         "light": "./assets/ios-icon-light.png",
+        "dark": "./assets/ios-icon-dark.png"
       },
       "supportsTablet": true,
       "bundleIdentifier": "com.herouinative.app",

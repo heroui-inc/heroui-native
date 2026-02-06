@@ -109,7 +109,7 @@ type Props = {
 export const PlacementSelect: FC<Props> = ({ placeholder, placement }) => {
   return (
     <Select>
-      <Select.Trigger asChild>
+      <Select.Trigger variant="unstyled" asChild>
         <Button variant="secondary" className="w-32">
           <Select.Value
             placeholder={placeholder}

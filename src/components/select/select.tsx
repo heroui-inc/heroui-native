@@ -133,11 +133,12 @@ const SelectTrigger = forwardRef<
   SelectPrimitivesTypes.TriggerRef,
   SelectTriggerProps
 >((props, ref) => {
-  const { isDisabled: isDisabledProp } = props;
+  const { variant = 'default', isDisabled: isDisabledProp } = props;
 
   const { isDisabled } = useSelect();
 
   const triggerClassName = selectClassNames.trigger({
+    variant,
     isDisabled: isDisabledProp || isDisabled,
   });
 
@@ -156,7 +157,11 @@ const SelectValue = forwardRef<
   SelectPrimitivesTypes.ValueRef,
   SelectValueProps
 >(({ className, ...props }, ref) => {
-  const valueClassName = selectClassNames.value({ className });
+  const { value } = useSelect();
+
+  const isSelected = Boolean(value?.value);
+
+  const valueClassName = selectClassNames.value({ isSelected, className });
 
   return (
     <SelectPrimitives.Value ref={ref} className={valueClassName} {...props} />

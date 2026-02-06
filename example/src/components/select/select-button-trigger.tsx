@@ -1,18 +1,5 @@
-import Feather from '@expo/vector-icons/Feather';
-import { cn, Select, Separator, useSelect } from 'heroui-native';
-import React, { useEffect, useState, type FC } from 'react';
-import { View } from 'react-native';
-import Animated, {
-  Easing,
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
-import { withUniwind } from 'uniwind';
-
-const StyledFeather = withUniwind(Feather);
-const StyleAnimatedView = withUniwind(Animated.View);
+import { Select, Separator } from 'heroui-native';
+import React, { useState } from 'react';
 
 type SelectOption = {
   value: string;
@@ -26,39 +13,6 @@ const US_STATES: SelectOption[] = [
   { value: 'FL', label: 'Florida' },
 ];
 
-const AnimatedTrigger: FC = () => {
-  const { isOpen } = useSelect();
-  const animatedValue = useSharedValue(isOpen ? 1 : 0);
-
-  useEffect(() => {
-    animatedValue.value = withTiming(isOpen ? 1 : 0, {
-      duration: 200,
-      easing: Easing.out(Easing.ease),
-    });
-  }, [isOpen, animatedValue]);
-
-  const rChevronStyle = useAnimatedStyle(() => {
-    const rotate = interpolate(animatedValue.value, [0, 1], [0, -180]);
-    return {
-      transform: [{ rotate: `${rotate}deg` }],
-    };
-  });
-
-  return (
-    <View
-      className={cn(
-        'bg-surface h-[48px] w-[256px] px-3 rounded-2xl justify-center shadow-surface outline-[3px]',
-        isOpen ? 'outline-accent' : 'outline-transparent'
-      )}
-    >
-      <Select.Value placeholder="Select a state" />
-      <StyleAnimatedView style={rChevronStyle} className="absolute right-3">
-        <StyledFeather name="chevron-down" size={18} className="text-muted" />
-      </StyleAnimatedView>
-    </View>
-  );
-};
-
 type Props = {
   contentOffset?: number;
 };
@@ -69,7 +23,8 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
   return (
     <Select value={basicValue} onValueChange={setBasicValue}>
       <Select.Trigger>
-        <AnimatedTrigger />
+        <Select.Value placeholder="Select one" />
+        <Select.TriggerIndicator />
       </Select.Trigger>
       <Select.Portal>
         <Select.Overlay />
@@ -77,7 +32,6 @@ export function SelectButtonTrigger({ contentOffset }: Props) {
           presentation="popover"
           width="trigger"
           offset={contentOffset}
-          className="w-[256px]"
         >
           <Select.ListLabel className="mb-2">Choose a state</Select.ListLabel>
           {US_STATES.map((state, index) => (

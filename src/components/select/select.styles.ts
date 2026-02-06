@@ -5,14 +5,26 @@ import { combineStyles } from '../../helpers/internal/utils';
 const trigger = tv({
   base: '',
   variants: {
+    variant: {
+      default:
+        'flex-row items-center justify-between h-12 px-4 rounded-2xl bg-surface shadow-surface',
+      unstyled: '',
+    },
     isDisabled: {
-      true: 'opacity-disabled',
+      true: 'opacity-disabled pointer-events-none',
+      false: '',
     },
   },
 });
 
 const value = tv({
-  base: 'text-base text-foreground',
+  base: 'text-base',
+  variants: {
+    isSelected: {
+      true: 'text-foreground',
+      false: 'text-field-placeholder',
+    },
+  },
 });
 
 /**
@@ -69,7 +81,7 @@ const overlay = tv({
  * Popover content style definition
  */
 const content = tv({
-  base: 'bg-overlay p-3 px-4 rounded-3xl shadow-overlay',
+  base: 'bg-overlay p-3 rounded-3xl shadow-overlay',
 });
 
 /**

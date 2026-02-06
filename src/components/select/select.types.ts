@@ -61,6 +61,10 @@ export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
    */
   children?: ReactNode;
   /**
+   * Additional CSS classes for the select root
+   */
+  className?: string;
+  /**
    * The controlled open state of the select
    */
   isOpen?: boolean;
@@ -81,6 +85,11 @@ export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
  * Select Trigger component props
  */
 export interface SelectTriggerProps extends SelectPrimitivesTypes.TriggerProps {
+  /**
+   * The variant of the trigger
+   * @default 'default'
+   */
+  variant?: 'default' | 'unstyled';
   /**
    * The trigger element content
    */

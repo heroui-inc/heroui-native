@@ -49,7 +49,7 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
       }}
       defaultValue={data[0]}
     >
-      <Select.Trigger asChild>
+      <Select.Trigger variant="unstyled" asChild>
         <Button
           variant="tertiary"
           size="sm"

@@ -33,8 +33,6 @@ import type {
   GroupLabelRef,
   GroupProps,
   GroupRef,
-  IndicatorProps,
-  IndicatorRef,
   IRootContext,
   ItemIndicatorProps,
   ItemIndicatorRef,
@@ -48,6 +46,8 @@ import type {
   PortalProps,
   RootProps,
   RootRef,
+  TriggerIndicatorProps,
+  TriggerIndicatorRef,
   TriggerProps,
   TriggerRef,
   ValueProps,
@@ -224,7 +224,7 @@ const Value = React.forwardRef<ValueRef, ValueProps>(
 
 // --------------------------------------------------
 
-const Indicator = forwardRef<IndicatorRef, IndicatorProps>(
+const TriggerIndicator = forwardRef<TriggerIndicatorRef, TriggerIndicatorProps>(
   ({ asChild, ...props }, ref) => {
     const Component = asChild ? Slot.View : View;
 
@@ -615,7 +615,7 @@ const GroupLabel = React.forwardRef<GroupLabelRef, GroupLabelProps>(
 
 Root.displayName = 'HeroUINative.Primitive.Select.Root';
 Trigger.displayName = 'HeroUINative.Primitive.Select.Trigger';
-Indicator.displayName = 'HeroUINative.Primitive.Select.Indicator';
+TriggerIndicator.displayName = 'HeroUINative.Primitive.Select.TriggerIndicator';
 Value.displayName = 'HeroUINative.Primitive.Select.Value';
 Overlay.displayName = 'HeroUINative.Primitive.Select.Overlay';
 PopoverContent.displayName = 'HeroUINative.Primitive.Select.PopoverContent';
@@ -632,7 +632,6 @@ export {
   DialogContent,
   Group,
   GroupLabel,
-  Indicator,
   Item,
   ItemIndicator,
   ItemLabel,
@@ -641,6 +640,7 @@ export {
   Portal,
   Root,
   Trigger,
+  TriggerIndicator,
   useItemContext,
   useRootContext,
   Value,

@@ -31,7 +31,7 @@ import { ChevronDownIcon } from './chevron-down-icon';
 import {
   SelectAnimationProvider,
   useSelectAnimation,
-  useSelectIndicatorAnimation,
+  useSelectTriggerIndicatorAnimation,
 } from './select.animation';
 import {
   DEFAULT_ALIGN_OFFSET,
@@ -47,7 +47,6 @@ import type {
   SelectContentDialogProps,
   SelectContentPopoverProps,
   SelectContentProps,
-  SelectIndicatorProps,
   SelectItemDescriptionProps,
   SelectItemIndicatorProps,
   SelectItemLabelProps,
@@ -57,6 +56,7 @@ import type {
   SelectOverlayProps,
   SelectPortalProps,
   SelectRootProps,
+  SelectTriggerIndicatorProps,
   SelectTriggerProps,
   SelectValueProps,
 } from './select.types';
@@ -69,8 +69,8 @@ const AnimatedPopoverContent = Animated.createAnimatedComponent(
   SelectPrimitives.PopoverContent
 );
 
-const AnimatedIndicator = Animated.createAnimatedComponent(
-  SelectPrimitives.Indicator
+const AnimatedTriggerIndicator = Animated.createAnimatedComponent(
+  SelectPrimitives.TriggerIndicator
 );
 
 const useSelect = SelectPrimitives.useRootContext;
@@ -165,7 +165,7 @@ const SelectValue = forwardRef<
 
 // --------------------------------------------------
 
-const SelectIndicator = forwardRef<ViewRef, SelectIndicatorProps>(
+const SelectTriggerIndicator = forwardRef<ViewRef, SelectTriggerIndicatorProps>(
   (props, ref) => {
     const {
       children,
@@ -181,42 +181,44 @@ const SelectIndicator = forwardRef<ViewRef, SelectIndicatorProps>(
 
     const themeColorForeground = useThemeColor('foreground');
 
-    const indicatorClassName = selectClassNames.indicator({ className });
+    const triggerIndicatorClassName = selectClassNames.triggerIndicator({
+      className,
+    });
 
-    const { rContainerStyle } = useSelectIndicatorAnimation({
+    const { rContainerStyle } = useSelectTriggerIndicatorAnimation({
       animation,
       isOpen,
     });
 
-    const indicatorStyle = isAnimatedStyleActive
+    const triggerIndicatorStyle = isAnimatedStyleActive
       ? [rContainerStyle, style]
       : style;
 
     if (children) {
       return (
-        <AnimatedIndicator
+        <AnimatedTriggerIndicator
           ref={ref}
-          className={indicatorClassName}
+          className={triggerIndicatorClassName}
           style={style}
           {...restProps}
         >
           {children}
-        </AnimatedIndicator>
+        </AnimatedTriggerIndicator>
       );
     }
 
     return (
-      <AnimatedIndicator
+      <AnimatedTriggerIndicator
         ref={ref}
-        className={indicatorClassName}
-        style={indicatorStyle}
+        className={triggerIndicatorClassName}
+        style={triggerIndicatorStyle}
         {...restProps}
       >
         <ChevronDownIcon
           size={iconProps?.size ?? DEFAULT_ICON_SIZE}
           color={iconProps?.color ?? themeColorForeground}
         />
-      </AnimatedIndicator>
+      </AnimatedTriggerIndicator>
     );
   }
 );
@@ -720,7 +722,7 @@ const SelectListLabel = forwardRef<
 
 SelectRoot.displayName = DISPLAY_NAME.ROOT;
 SelectTrigger.displayName = DISPLAY_NAME.TRIGGER;
-SelectIndicator.displayName = DISPLAY_NAME.INDICATOR;
+SelectTriggerIndicator.displayName = DISPLAY_NAME.TRIGGER_INDICATOR;
 SelectValue.displayName = DISPLAY_NAME.VALUE;
 SelectPortal.displayName = DISPLAY_NAME.PORTAL;
 SelectOverlay.displayName = DISPLAY_NAME.OVERLAY;
@@ -741,7 +743,7 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
  * @component Select.Trigger - Clickable element that toggles the select visibility.
  * Wraps any child element with press handlers.
  *
- * @component Select.Indicator - Optional visual indicator showing open/close state.
+ * @component Select.TriggerIndicator - Optional visual indicator showing open/close state.
  * Defaults to an animated chevron icon that rotates based on select state.
  * Supports custom animation configuration.
  *
@@ -779,7 +781,7 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
 const Select = Object.assign(SelectRoot, {
   Trigger: SelectTrigger,
   /** @optional Visual indicator showing open/close state (defaults to chevron) */
-  Indicator: SelectIndicator,
+  TriggerIndicator: SelectTriggerIndicator,
   Value: SelectValue,
   Portal: SelectPortal,
   Overlay: SelectOverlay,
@@ -792,5 +794,10 @@ const Select = Object.assign(SelectRoot, {
   Close: SelectClose,
 });
 
-export { useSelect, useSelectAnimation, useSelectItem };
+export {
+  useSelect,
+  useSelectAnimation,
+  useSelectItem,
+  useSelectTriggerIndicatorAnimation,
+};
 export default Select;

@@ -3,15 +3,13 @@ export {
   useSelect,
   useSelectAnimation,
   useSelectItem,
+  useSelectTriggerIndicatorAnimation,
 } from './select';
 export { selectClassNames } from './select.styles';
 export type {
   SelectAlign,
   SelectCloseProps,
   SelectContentProps,
-  SelectIndicatorAnimation,
-  SelectIndicatorIconProps,
-  SelectIndicatorProps,
   SelectItemDescriptionProps,
   SelectItemIndicatorIconProps,
   SelectItemIndicatorProps,
@@ -22,6 +20,9 @@ export type {
   SelectPlacement,
   SelectPortalProps,
   SelectRootProps,
+  SelectTriggerIndicatorAnimation,
+  SelectTriggerIndicatorIconProps,
+  SelectTriggerIndicatorProps,
   SelectTriggerProps,
   SelectTriggerRef,
   SelectValueProps,

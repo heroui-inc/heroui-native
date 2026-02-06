@@ -92,9 +92,9 @@ export interface SelectTriggerProps extends SelectPrimitivesTypes.TriggerProps {
 }
 
 /**
- * Icon props for the Select.Indicator component
+ * Icon props for the Select.TriggerIndicator component
  */
-export interface SelectIndicatorIconProps {
+export interface SelectTriggerIndicatorIconProps {
   /**
    * Size of the icon
    * @default 16
@@ -108,9 +108,9 @@ export interface SelectIndicatorIconProps {
 }
 
 /**
- * Animation configuration for select indicator component
+ * Animation configuration for select trigger indicator component
  */
-export type SelectIndicatorAnimation = Animation<{
+export type SelectTriggerIndicatorAnimation = Animation<{
   rotation?: AnimationValue<{
     /**
      * Rotation values [closed, open] in degrees
@@ -126,12 +126,12 @@ export type SelectIndicatorAnimation = Animation<{
 }>;
 
 /**
- * Props for the Select.Indicator component
+ * Props for the Select.TriggerIndicator component
  */
-export interface SelectIndicatorProps
-  extends AnimatedProps<SelectPrimitivesTypes.IndicatorProps> {
+export interface SelectTriggerIndicatorProps
+  extends AnimatedProps<SelectPrimitivesTypes.TriggerIndicatorProps> {
   /**
-   * Custom indicator content, if not provided defaults to animated chevron
+   * Custom trigger indicator content, if not provided defaults to animated chevron
    */
   children?: ReactNode;
   /**
@@ -142,7 +142,7 @@ export interface SelectIndicatorProps
    *
    * To customize this property, use the `animation` prop:
    * ```tsx
-   * <Select.Indicator
+   * <Select.TriggerIndicator
    *   animation={{
    *     rotation: { value: [0, -180], springConfig: { damping: 140, stiffness: 1000, mass: 4 } }
    *   }}
@@ -153,20 +153,20 @@ export interface SelectIndicatorProps
    */
   className?: string;
   /**
-   * Custom styles for the indicator
+   * Custom styles for the trigger indicator
    */
   style?: ViewStyle;
   /**
    * Icon configuration
    */
-  iconProps?: SelectIndicatorIconProps;
+  iconProps?: SelectTriggerIndicatorIconProps;
   /**
-   * Animation configuration for indicator
+   * Animation configuration for trigger indicator
    * - `false` or `"disabled"`: Disable all animations
    * - `true` or `undefined`: Use default animations
    * - `object`: Custom animation configuration
    */
-  animation?: SelectIndicatorAnimation;
+  animation?: SelectTriggerIndicatorAnimation;
   /**
    * Whether animated styles (react-native-reanimated) are active
    * When `false`, the animated style is removed and you can implement custom logic

@@ -14,7 +14,7 @@ export const DISPLAY_NAME = {
   ITEM_INDICATOR: 'HeroUINative.Select.ItemIndicator',
   LIST_LABEL: 'HeroUINative.Select.ListLabel',
   CLOSE: 'HeroUINative.Select.Close',
-  INDICATOR: 'HeroUINative.Select.Indicator',
+  TRIGGER_INDICATOR: 'HeroUINative.Select.TriggerIndicator',
   CHEVRON_DOWN_ICON: 'HeroUINative.Select.ChevronDownIcon',
 } as const;
 

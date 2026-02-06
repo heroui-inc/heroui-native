@@ -16,15 +16,15 @@ const value = tv({
 });
 
 /**
- * Indicator style definition
+ * Trigger Indicator style definition
  *
  * @note ANIMATED PROPERTIES (cannot be set via className):
  * The following property is animated and cannot be overridden using Tailwind classes:
  * - `transform` (specifically `rotate`) - Animated for open/close rotation transitions
  *
- * To customize this property, use the `animation` prop on `Select.Indicator`:
+ * To customize this property, use the `animation` prop on `Select.TriggerIndicator`:
  * ```tsx
- * <Select.Indicator
+ * <Select.TriggerIndicator
  *   animation={{
  *     rotation: { value: [0, -180], springConfig: { damping: 140, stiffness: 1000, mass: 4 } }
  *   }}
@@ -32,9 +32,9 @@ const value = tv({
  * ```
  *
  * To completely disable animated styles and apply your own via className or style prop,
- * set `isAnimatedStyleActive={false}` on `Select.Indicator`.
+ * set `isAnimatedStyleActive={false}` on `Select.TriggerIndicator`.
  */
-const indicator = tv({
+const triggerIndicator = tv({
   base: 'items-center justify-center',
 });
 
@@ -125,7 +125,7 @@ export const selectClassNames = combineStyles({
   itemDescription,
   itemIndicator,
   listLabel,
-  indicator,
+  triggerIndicator,
 });
 
 export const selectStyleSheet = StyleSheet.create({

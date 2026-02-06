@@ -16,7 +16,7 @@ import {
 import { INDICATOR_SPRING_CONFIG } from './select.constants';
 import type {
   SelectAnimationContextValue,
-  SelectIndicatorAnimation,
+  SelectTriggerIndicatorAnimation,
 } from './select.types';
 
 const [SelectAnimationProvider, useSelectAnimation] =
@@ -29,11 +29,11 @@ export { SelectAnimationProvider, useSelectAnimation };
 // --------------------------------------------------
 
 /**
- * Animation hook for Select Indicator component
+ * Animation hook for Select Trigger Indicator component
  * Handles rotation animation for the chevron icon
  */
-export function useSelectIndicatorAnimation(options: {
-  animation: SelectIndicatorAnimation | undefined;
+export function useSelectTriggerIndicatorAnimation(options: {
+  animation: SelectTriggerIndicatorAnimation | undefined;
   isOpen: boolean;
 }) {
   const { animation, isOpen } = options;

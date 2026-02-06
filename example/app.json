@@ -12,7 +12,7 @@
         "light": "./assets/ios-icon-light.png",
         "dark": "./assets/ios-icon-dark.png"
       },
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.herouinative.app",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false

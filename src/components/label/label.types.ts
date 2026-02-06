@@ -40,8 +40,7 @@ export interface LabelProps extends LabelPrimitivesTypes.RootProps {
 /**
  * Props for the Label.Text component
  */
-export interface LabelTextProps
-  extends Omit<LabelPrimitivesTypes.TextProps, 'style'> {
+export interface LabelTextProps extends LabelPrimitivesTypes.TextProps {
   /**
    * Additional CSS classes
    */

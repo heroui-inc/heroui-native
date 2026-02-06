@@ -18,6 +18,8 @@ const FieldErrorRoot = forwardRef<ViewRef, FieldErrorRootProps>(
       children,
       className,
       classNames,
+      style,
+      styles,
       textProps,
       isInvalid: localIsInvalid,
       animation,
@@ -53,7 +55,7 @@ const FieldErrorRoot = forwardRef<ViewRef, FieldErrorRootProps>(
 
     const stringifiedChildren = childrenToString(children);
     const renderedChildren = stringifiedChildren ? (
-      <HeroText className={textClassName} {...textProps}>
+      <HeroText className={textClassName} style={styles?.text} {...textProps}>
         {stringifiedChildren}
       </HeroText>
     ) : (
@@ -66,6 +68,7 @@ const FieldErrorRoot = forwardRef<ViewRef, FieldErrorRootProps>(
         entering={entering}
         exiting={exiting}
         className={containerClassName}
+        style={[style, styles?.container]}
         {...restProps}
       >
         {renderedChildren}

@@ -1,6 +1,6 @@
 import type BottomSheet from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
-import type { TextProps } from 'react-native';
+import type { TextProps, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
   AnimationRootDisableAll,
@@ -189,6 +189,10 @@ export interface SelectContentDialogProps
    * Additional CSS classes for the content container
    */
   classNames?: ElementSlots<DialogContentFallbackSlots>;
+  /**
+   * Styles for different parts of the dialog content
+   */
+  styles?: Partial<Record<DialogContentFallbackSlots, ViewStyle>>;
   /**
    * The select content
    */

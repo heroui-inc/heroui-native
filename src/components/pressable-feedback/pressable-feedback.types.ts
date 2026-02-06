@@ -1,4 +1,4 @@
-import type { PressableProps, ViewProps } from 'react-native';
+import type { PressableProps, ViewProps, ViewStyle } from 'react-native';
 import type {
   AnimatedProps,
   SharedValue,
@@ -281,7 +281,7 @@ export interface PressableFeedbackHighlightProps
 /**
  * Props for PressableFeedback ripple component
  */
-export interface PressableFeedbackRippleProps extends Omit<ViewProps, 'style'> {
+export interface PressableFeedbackRippleProps extends ViewProps {
   /**
    * Additional CSS classes for the container slot
    *
@@ -317,13 +317,9 @@ export interface PressableFeedbackRippleProps extends Omit<ViewProps, 'style'> {
    */
   classNames?: ElementSlots<RippleSlots>;
   /**
-   * Style for the container slot
+   * Styles for different parts of the ripple overlay
    */
-  containerStyle?: ViewProps['style'];
-  /**
-   * Style for the ripple slot
-   */
-  rippleStyle?: ViewProps['style'];
+  styles?: Partial<Record<RippleSlots, ViewStyle>>;
   /**
    * Animation configuration for the ripple overlay
    */

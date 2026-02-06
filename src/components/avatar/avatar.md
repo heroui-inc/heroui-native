@@ -307,12 +307,20 @@ Animation configuration for avatar image component. Can be:
 | `color`                 | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'` | inherited from parent | Color variant of the fallback                                                     |
 | `className`             | `string`                                                      | -                     | Additional CSS classes for the container                                          |
 | `classNames`            | `ElementSlots<AvatarFallbackSlots>`                           | -                     | Additional CSS classes for different parts                                        |
+| `styles`                | `{ container?: ViewStyle; text?: TextStyle }` | - | Styles for different parts of the avatar fallback                                 |
 | `textProps`             | `TextProps`                                                   | -                     | Props to pass to Text component when children is a string                         |
 | `iconProps`             | `PersonIconProps`                                             | -                     | Props to customize the default person icon                                        |
 | `animation`             | `AvatarFallbackAnimation`                                     | -                     | Animation configuration                                                           |
 | `...Animated.ViewProps` | `Animated.ViewProps`                                          | -                     | All Reanimated Animated.View props are supported                                  |
 
 **classNames prop:** `ElementSlots<AvatarFallbackSlots>` provides type-safe CSS classes for different parts of the fallback component. Available slots: `container`, `text`.
+
+#### `styles`
+
+| prop        | type                    | description                          |
+| ----------- | ----------------------- | ------------------------------------ |
+| `container` | `ViewStyle`             | Styles for the container             |
+| `text`      | `TextStyle`             | Styles for the text content          |
 
 #### AvatarFallbackAnimation
 

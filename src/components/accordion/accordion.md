@@ -135,6 +135,29 @@ Hide the separators between accordion items.
 </Accordion>
 ```
 
+### Custom Styling
+
+Apply custom styles using className, classNames, or styles props.
+
+```tsx
+<Accordion
+  className="rounded-lg"
+  classNames={{
+    container: "bg-surface",
+    separator: "bg-separator/50"
+  }}
+  styles={{
+    container: { padding: 16 },
+    separator: { height: 2 }
+  }}
+>
+  <Accordion.Item value="1">
+    <Accordion.Trigger>...</Accordion.Trigger>
+    <Accordion.Content>...</Accordion.Content>
+  </Accordion.Item>
+</Accordion>
+```
+
 ### With PressableFeedback
 
 Use `Accordion.Trigger` with `asChild` prop and wrap content with `PressableFeedback` to add custom press feedback animations.
@@ -239,6 +262,7 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | `animation`             | `AccordionRootAnimation`                           | -           | Animation configuration for accordion                             |
 | `className`             | `string`                                           | -           | Additional CSS classes for the container                          |
 | `classNames`            | `ElementSlots<RootSlots>`                          | -           | Additional CSS classes for the slots                              |
+| `styles`                | `Partial<Record<RootSlots, ViewStyle>>`            | -           | Styles for different parts of the accordion root                  |
 | `onValueChange`         | `(value: string \| string[] \| undefined) => void` | -           | Callback when expanded items change                               |
 | `...Animated.ViewProps` | `Animated.ViewProps`                               | -           | All Reanimated Animated.View props are supported                  |
 
@@ -248,6 +272,13 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | ----------- | -------- | ----------------------------------------------- |
 | `container` | `string` | Custom class name for the accordion container   |
 | `separator` | `string` | Custom class name for the separator between items |
+
+#### `styles`
+
+| prop        | type        | description                                   |
+| ----------- | ----------- | --------------------------------------------- |
+| `container` | `ViewStyle` | Styles for the accordion container            |
+| `separator` | `ViewStyle` | Styles for the separator between items        |
 
 #### AccordionRootAnimation
 

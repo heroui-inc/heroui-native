@@ -183,8 +183,8 @@ const PressableFeedbackRipple = forwardRef<
     animation,
     className,
     classNames,
-    containerStyle,
-    rippleStyle: rippleStyleProp,
+    style,
+    styles,
     isAnimatedStyleActive = true,
     onTouchStart,
     onTouchEnd,
@@ -199,17 +199,16 @@ const PressableFeedbackRipple = forwardRef<
     animationOnTouchStart,
   } = usePressableFeedbackRippleAnimation({ animation });
 
-  const { container, ripple: rippleSlot } =
-    pressableFeedbackClassNames.ripple();
+  const { container, ripple } = pressableFeedbackClassNames.ripple();
 
   const containerClassName = container({
     className: [className, classNames?.container],
   });
-  const rippleClassName = rippleSlot({ className: classNames?.ripple });
+  const rippleClassName = ripple({ className: classNames?.ripple });
 
   const rippleStyle = isAnimatedStyleActive
-    ? [rContainerStyle, rippleStyleProp]
-    : rippleStyleProp;
+    ? [rContainerStyle, styles?.ripple]
+    : styles?.ripple;
 
   const handleTouchStart = useCallback(
     (event: GestureResponderEvent) => {
@@ -238,7 +237,7 @@ const PressableFeedbackRipple = forwardRef<
     <View
       ref={ref}
       className={containerClassName}
-      style={containerStyle}
+      style={[style, styles?.container]}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchCancel}

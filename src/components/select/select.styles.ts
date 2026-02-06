@@ -5,14 +5,49 @@ import { combineStyles } from '../../helpers/internal/utils';
 const trigger = tv({
   base: '',
   variants: {
+    variant: {
+      default:
+        'flex-row items-center justify-between h-12 px-4 rounded-2xl bg-surface shadow-surface',
+      unstyled: '',
+    },
     isDisabled: {
-      true: 'opacity-disabled',
+      true: 'opacity-disabled pointer-events-none',
+      false: '',
     },
   },
 });
 
 const value = tv({
-  base: 'text-base text-foreground',
+  base: 'text-base',
+  variants: {
+    isSelected: {
+      true: 'text-foreground',
+      false: 'text-field-placeholder',
+    },
+  },
+});
+
+/**
+ * Trigger Indicator style definition
+ *
+ * @note ANIMATED PROPERTIES (cannot be set via className):
+ * The following property is animated and cannot be overridden using Tailwind classes:
+ * - `transform` (specifically `rotate`) - Animated for open/close rotation transitions
+ *
+ * To customize this property, use the `animation` prop on `Select.TriggerIndicator`:
+ * ```tsx
+ * <Select.TriggerIndicator
+ *   animation={{
+ *     rotation: { value: [0, -180], springConfig: { damping: 140, stiffness: 1000, mass: 4 } }
+ *   }}
+ * />
+ * ```
+ *
+ * To completely disable animated styles and apply your own via className or style prop,
+ * set `isAnimatedStyleActive={false}` on `Select.TriggerIndicator`.
+ */
+const triggerIndicator = tv({
+  base: 'items-center justify-center',
 });
 
 const portal = tv({
@@ -46,7 +81,7 @@ const overlay = tv({
  * Popover content style definition
  */
 const content = tv({
-  base: 'bg-overlay p-3 px-4 rounded-3xl shadow-overlay',
+  base: 'bg-overlay p-3 rounded-3xl shadow-overlay',
 });
 
 /**
@@ -102,6 +137,7 @@ export const selectClassNames = combineStyles({
   itemDescription,
   itemIndicator,
   listLabel,
+  triggerIndicator,
 });
 
 export const selectStyleSheet = StyleSheet.create({

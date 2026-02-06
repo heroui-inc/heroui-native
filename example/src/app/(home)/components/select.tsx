@@ -2,6 +2,7 @@ import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
+  Label,
   ScrollShadow,
   Select,
   Separator,
@@ -58,7 +59,10 @@ const COUNTRIES: CountryOption[] = [
 
 const BasicUsageWithButtonTriggerContent = () => {
   return (
-    <View className="flex-1 px-5 items-center justify-center">
+    <View className="flex-1 px-5 justify-center">
+      <Label className="ml-1.5 mb-1" isRequired>
+        State
+      </Label>
       <SelectButtonTrigger />
     </View>
   );
@@ -76,16 +80,17 @@ const PresentationContent = () => {
   const themeColorOverlay = useThemeColor('overlay');
 
   return (
-    <View className="flex-1 px-5 items-center justify-center">
-      <View className="flex-row items-center justify-center gap-4">
+    <View className="flex-1 px-5 justify-center">
+      <View className="flex-row gap-4">
         <Select
           value={popoverValue}
           onValueChange={(value) => {
             const country = COUNTRIES.find((c) => c.value === value?.value);
             setPopoverValue(country);
           }}
+          className="flex-1"
         >
-          <Select.Trigger asChild>
+          <Select.Trigger variant="unstyled" asChild>
             <Button variant="secondary">
               {popoverValue ? (
                 <View className="flex-row items-center gap-2">
@@ -144,9 +149,10 @@ const PresentationContent = () => {
             const country = COUNTRIES.find((c) => c.value === value?.value);
             setBottomSheetValue(country);
           }}
+          className="flex-1"
         >
-          <Select.Trigger asChild>
-            <Button variant="secondary" isDisabled={isBottomSheetOpen}>
+          <Select.Trigger variant="unstyled" asChild>
+            <Button variant="secondary">
               {bottomSheetValue ? (
                 <View className="flex-row items-center gap-2">
                   <AppText className="text-base">
@@ -243,10 +249,10 @@ const PlacementOptionsContent = () => {
 const AlignmentOptionsContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <View className="flex-row justify-center gap-4">
-        <Select>
-          <Select.Trigger asChild>
-            <Button variant="secondary" className="w-24">
+      <View className="flex-row gap-4">
+        <Select className="flex-1">
+          <Select.Trigger variant="unstyled" asChild>
+            <Button variant="secondary">
               <Select.Value
                 placeholder="Start"
                 numberOfLines={1}
@@ -273,9 +279,9 @@ const AlignmentOptionsContent = () => {
           </Select.Portal>
         </Select>
 
-        <Select>
-          <Select.Trigger asChild>
-            <Button variant="secondary" className="w-24">
+        <Select className="flex-1">
+          <Select.Trigger variant="unstyled" asChild>
+            <Button variant="secondary">
               <Select.Value
                 placeholder="Center"
                 numberOfLines={1}
@@ -302,9 +308,9 @@ const AlignmentOptionsContent = () => {
           </Select.Portal>
         </Select>
 
-        <Select>
-          <Select.Trigger asChild>
-            <Button variant="secondary" className="w-24">
+        <Select className="flex-1">
+          <Select.Trigger variant="unstyled" asChild>
+            <Button variant="secondary">
               <Select.Value
                 placeholder="End"
                 numberOfLines={1}

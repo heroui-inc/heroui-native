@@ -2,6 +2,7 @@ import { Children, forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
+import { ChevronDownIcon } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
@@ -24,7 +25,6 @@ import type {
   AccordionRootProps,
   AccordionTriggerProps,
 } from './accordion.types';
-import { ChevronDownIcon } from './chevron-down-icon';
 
 const AnimatedRootView = Animated.createAnimatedComponent(
   AccordionPrimitive.Root

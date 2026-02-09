@@ -14,6 +14,10 @@ type Component = {
 
 const components: Component[] = [
   {
+    title: 'OTP Bottom Sheet Test',
+    path: 'otp-bottom-sheet-test',
+  },
+  {
     title: 'Accordion',
     path: 'accordion',
   },

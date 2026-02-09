@@ -145,6 +145,8 @@ const DialogOverlay = forwardRef<
     { className, style, animation, isAnimatedStyleActive = true, ...props },
     ref
   ) => {
+    const { isOpen } = useDialog();
+
     const { progress, isDragging, isGestureReleaseAnimationRunning } =
       useDialogAnimation();
 
@@ -156,6 +158,10 @@ const DialogOverlay = forwardRef<
       isGestureReleaseAnimationRunning,
       animation,
     });
+
+    if (!isOpen) {
+      return null;
+    }
 
     const overlayStyle = isAnimatedStyleActive
       ? [rContainerStyle, style]

@@ -12,6 +12,7 @@ import {
 } from 'heroui-native';
 import { useRef, useState, type RefObject } from 'react';
 import { View } from 'react-native';
+import { WithOTPInputContent } from '../../../components/bottom-sheet/with-otp-input';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
@@ -388,6 +389,11 @@ const INPUT_OTP_VARIANTS: UsageVariant[] = [
     value: 'custom-styles',
     label: 'Custom Styles',
     content: <CustomStylesOTPContent />,
+  },
+  {
+    value: 'with-bottom-sheet',
+    label: 'With bottom sheet',
+    content: <WithOTPInputContent />,
   },
 ];
 

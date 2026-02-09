@@ -136,12 +136,98 @@ export const BottomSheetBlurOverlay = () => {
 
 ### Text Input with Keyboard Avoidance
 
-Using `Input` from heroui-native inside a bottom sheet requires special handling for proper keyboard behavior. You need to:
+When using text input components (like `Input`, `InputOTP`, or `TextField`) inside a bottom sheet, you need to handle keyboard interactions properly to ensure the bottom sheet adjusts its position when the keyboard appears.
 
-1. Pass custom `onFocus` and `onBlur` handlers to `Input` that communicate with the bottom sheet's internal keyboard state using `useBottomSheetInternal` hook from `@gorhom/bottom-sheet`
-2. Use `BottomSheetScrollView` from `@gorhom/bottom-sheet` instead of regular `ScrollView` for proper keyboard avoidance
+#### When to Use `useBottomSheetInputHandlers`
 
-See the complete example: [bottom-sheet-with-text-input.tsx](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/components/bottom-sheet/with-text-input.tsx)
+Use the `useBottomSheetInputHandlers` hook when:
+- You have text input components (`Input`, `InputOTP`, `TextField`) inside a `BottomSheet.Content`
+- You need the bottom sheet to automatically adjust its position when the keyboard appears
+- You want proper keyboard avoidance behavior
+
+**Important**: This hook must be called inside a `BottomSheet.Content` component. Calling it outside this context will throw an error.
+
+#### How to Use
+
+1. Import the hook from `heroui-native`:
+```tsx
+import { useBottomSheetInputHandlers, Input } from 'heroui-native';
+```
+
+2. Call the hook inside your bottom sheet content component:
+```tsx
+const MyBottomSheetContent = () => {
+  const { onFocus, onBlur } = useBottomSheetInputHandlers();
+  const [value, setValue] = useState('');
+
+  return (
+    <BottomSheet.Content>
+      <Input
+        value={value}
+        onChangeText={setValue}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
+    </BottomSheet.Content>
+  );
+};
+```
+
+#### Complete Example
+
+```tsx
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {
+  BottomSheet,
+  Button,
+  Input,
+  useBottomSheetInputHandlers,
+} from 'heroui-native';
+import { useState } from 'react';
+import { View } from 'react-native';
+
+const SearchBottomSheetContent = () => {
+  const { onFocus, onBlur } = useBottomSheetInputHandlers();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  return (
+    <BottomSheet.Content>
+      <BottomSheetScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerClassName="p-5"
+      >
+        <Input
+          placeholder="Search..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          onFocus={onFocus}
+          onBlur={onBlur}
+        />
+      </BottomSheetScrollView>
+    </BottomSheet.Content>
+  );
+};
+
+export default function Example() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+      <BottomSheet.Trigger asChild>
+        <Button variant="secondary">Open Search</Button>
+      </BottomSheet.Trigger>
+      <BottomSheet.Portal>
+        <BottomSheet.Overlay />
+        <SearchBottomSheetContent />
+      </BottomSheet.Portal>
+    </BottomSheet>
+  );
+}
+```
+
+See more examples:
+- [Bottom sheet with text input](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/components/bottom-sheet/with-text-input.tsx)
+- [Bottom sheet with OTP input](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/components/bottom-sheet/with-otp-input.tsx)
 
 ## Example
 
@@ -324,6 +410,42 @@ const { progress } = useBottomSheetAnimation();
 | property   | type                  | description                                  |
 | ---------- | --------------------- | -------------------------------------------- |
 | `progress` | `SharedValue<number>` | Animation progress (0=idle, 1=open, 2=close) |
+
+### useBottomSheetInputHandlers
+
+Hook that provides keyboard handling functions for text inputs inside bottom sheets. This hook manages focus and blur events to properly communicate with the bottom sheet's internal keyboard state management.
+
+**Important**: This hook must be called inside a `BottomSheet.Content` component. Calling it outside this context will throw an error.
+
+```tsx
+const { onFocus, onBlur } = useBottomSheetInputHandlers();
+```
+
+| property | type                    | description                                                      |
+| -------- | ----------------------- | ---------------------------------------------------------------- |
+| `onFocus`| `(e: FocusEvent) => void` | Handler function to attach to input's `onFocus` prop            |
+| `onBlur` | `(e: BlurEvent) => void` | Handler function to attach to input's `onBlur` prop             |
+
+**Usage Example:**
+
+```tsx
+import { useBottomSheetInputHandlers, Input } from 'heroui-native';
+
+const MyContent = () => {
+  const { onFocus, onBlur } = useBottomSheetInputHandlers();
+  
+  return (
+    <BottomSheet.Content>
+      <Input
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
+    </BottomSheet.Content>
+  );
+};
+```
+
+See the [Text Input with Keyboard Avoidance](#text-input-with-keyboard-avoidance) section for more details and complete examples.
 
 ## Special Notes
 

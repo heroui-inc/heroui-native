@@ -121,8 +121,6 @@ export const usePopupDialogContentAnimation = ({
   useEffect(() => {
     if (isOpen) {
       progress.set(1);
-    } else {
-      progress.set(2);
     }
   }, [isOpen, progress]);
 
@@ -201,8 +199,12 @@ export const usePopupDialogContentAnimation = ({
             );
             isDragging.set(false);
             setTimeout(() => {
+              progress.set(2);
               scheduleOnRN(onOpenChange, false);
             }, 300);
+            setTimeout(() => {
+              progress.set(0);
+            }, 350);
           } else {
             isGestureReleaseAnimationRunning.set(true);
             progress.set(

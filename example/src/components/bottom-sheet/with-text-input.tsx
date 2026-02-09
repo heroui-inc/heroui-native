@@ -1,8 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import {
-  BottomSheetScrollView,
-  useBottomSheetInternal,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   Avatar,
@@ -11,17 +8,11 @@ import {
   Input,
   ScrollShadow,
   TextField,
+  useBottomSheetInputHandlers,
   useThemeColor,
 } from 'heroui-native';
-import { useCallback, useMemo, useRef, useState } from 'react';
-import {
-  findNodeHandle,
-  Pressable,
-  TextInput,
-  View,
-  type BlurEvent,
-  type FocusEvent,
-} from 'react-native';
+import { useMemo, useState } from 'react';
+import { Pressable, View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../app-text';
 import { MagnifierIcon } from '../icons/magnifier';
@@ -78,20 +69,10 @@ const UserSearchItem = ({ user }: { user: User }) => {
 };
 
 /**
- * BottomSheetTextInput component with custom keyboard handling
+ * BottomSheetTextInput component with keyboard handling
  *
- * This is a workaround to enable proper keyboard handling for Input
- * inside a bottom sheet. According to the @gorhom/bottom-sheet documentation:
- * https://gorhom.dev/react-native-bottom-sheet/keyboard-handling
- *
- * "To use custom TextInput, you will need to copy the handleOnFocus and handleOnBlur
- * from BottomSheetTextInput into your own component."
- *
- * The implementation is based on the official BottomSheetTextInput source code:
- * https://github.com/gorhom/react-native-bottom-sheet/blob/master/src/components/bottomSheetTextInput/BottomSheetTextInput.tsx
- *
- * This component extends Input with the necessary focus/blur handlers
- * that communicate with the bottom sheet's internal keyboard state management.
+ * Uses the useBottomSheetInputHandlers hook to properly handle keyboard
+ * interactions inside a bottom sheet.
  */
 const BottomSheetTextInput = ({
   searchQuery,
@@ -100,46 +81,12 @@ const BottomSheetTextInput = ({
   searchQuery: string;
   setSearchQuery: (text: string) => void;
 }) => {
-  const { animatedKeyboardState, textInputNodesRef } = useBottomSheetInternal();
-  const inputRef = useRef<TextInput>(null);
-
-  const handleOnFocus = useCallback(
-    (e: FocusEvent) => {
-      animatedKeyboardState.set((state) => ({
-        ...state,
-        target: e.nativeEvent.target,
-      }));
-    },
-    [animatedKeyboardState]
-  );
-
-  const handleOnBlur = useCallback(
-    (e: BlurEvent) => {
-      const keyboardState = animatedKeyboardState.get();
-      const currentFocusedInput = findNodeHandle(
-        TextInput.State.currentlyFocusedInput() as TextInput | null
-      );
-      const shouldRemoveCurrentTarget =
-        keyboardState.target === e.nativeEvent.target;
-      const shouldIgnoreBlurEvent =
-        currentFocusedInput &&
-        textInputNodesRef.current.has(currentFocusedInput);
-
-      if (shouldRemoveCurrentTarget && !shouldIgnoreBlurEvent) {
-        animatedKeyboardState.set((state) => ({
-          ...state,
-          target: undefined,
-        }));
-      }
-    },
-    [animatedKeyboardState, textInputNodesRef]
-  );
+  const { onFocus, onBlur } = useBottomSheetInputHandlers();
 
   return (
     <TextField className="absolute top-0 left-0 right-0 px-5 pt-2">
       <View className="w-full flex-row items-center">
         <Input
-          ref={inputRef}
           variant="secondary"
           placeholder="Search by name or email..."
           value={searchQuery}
@@ -147,8 +94,8 @@ const BottomSheetTextInput = ({
           className="flex-1 px-10"
           autoCapitalize="none"
           autoCorrect={false}
-          onFocus={handleOnFocus}
-          onBlur={handleOnBlur}
+          onFocus={onFocus}
+          onBlur={onBlur}
         />
         <View className="absolute left-3.5" pointerEvents="none">
           <MagnifierIcon colorClassName="accent-field-placeholder" />

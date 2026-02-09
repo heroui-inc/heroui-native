@@ -1,34 +1,19 @@
-import {
-  BottomSheetScrollView,
-  useBottomSheetInternal,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import {
   BottomSheet,
   Button,
   Description,
   InputOTP,
   Label,
+  useBottomSheetInputHandlers,
   useToast,
   type InputOTPRef,
 } from 'heroui-native';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
-import {
-  findNodeHandle,
-  TextInput,
-  View,
-  type BlurEvent,
-  type FocusEvent,
-} from 'react-native';
+import { View } from 'react-native';
 import { KeyboardController } from 'react-native-keyboard-controller';
 import { AppText } from '../../../components/app-text';
 
-/**
- * Component that wraps InputOTP with bottom sheet keyboard handling
- *
- * This component extends InputOTP with the necessary focus/blur handlers
- * that communicate with the bottom sheet's internal keyboard state management.
- * Based on @gorhom/bottom-sheet documentation for custom TextInput handling.
- */
 const BottomSheetInputOTP = memo(
   ({
     otpRef,
@@ -41,46 +26,7 @@ const BottomSheetInputOTP = memo(
     onChange: (value: string) => void;
     onComplete: (code: string) => void;
   }) => {
-    const { animatedKeyboardState, textInputNodesRef } =
-      useBottomSheetInternal();
-
-    /**
-     * Handles focus event to notify bottom sheet about keyboard target
-     */
-    const handleOnFocus = useCallback(
-      (e: FocusEvent) => {
-        animatedKeyboardState.set((state) => ({
-          ...state,
-          target: e.nativeEvent.target,
-        }));
-      },
-      [animatedKeyboardState]
-    );
-
-    /**
-     * Handles blur event to clean up keyboard state when input loses focus
-     */
-    const handleOnBlur = useCallback(
-      (e: BlurEvent) => {
-        const keyboardState = animatedKeyboardState.get();
-        const currentFocusedInput = findNodeHandle(
-          TextInput.State.currentlyFocusedInput() as TextInput | null
-        );
-        const shouldRemoveCurrentTarget =
-          keyboardState.target === e.nativeEvent.target;
-        const shouldIgnoreBlurEvent =
-          currentFocusedInput &&
-          textInputNodesRef.current.has(currentFocusedInput);
-
-        if (shouldRemoveCurrentTarget && !shouldIgnoreBlurEvent) {
-          animatedKeyboardState.set((state) => ({
-            ...state,
-            target: undefined,
-          }));
-        }
-      },
-      [animatedKeyboardState, textInputNodesRef]
-    );
+    const { onFocus, onBlur } = useBottomSheetInputHandlers();
 
     return (
       <View className="gap-2 items-center">
@@ -95,8 +41,8 @@ const BottomSheetInputOTP = memo(
           value={value}
           onChange={onChange}
           onComplete={onComplete}
-          onFocus={handleOnFocus}
-          onBlur={handleOnBlur}
+          onFocus={onFocus}
+          onBlur={onBlur}
         >
           <InputOTP.Group>
             <InputOTP.Slot index={0} />

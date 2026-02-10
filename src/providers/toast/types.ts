@@ -42,6 +42,12 @@ export interface ToastInsets {
  */
 export interface ToastProviderProps {
   /**
+   * When true, uses a regular View instead of FullWindowOverlay on iOS for toasts.
+   * Enables React Native element inspector but toasts won't appear above native modals.
+   * @default false
+   */
+  disableFullWindowOverlay?: boolean;
+  /**
    * Global toast configuration
    * These values are used as defaults for all toasts unless overridden locally
    * Local configs have precedence over global config

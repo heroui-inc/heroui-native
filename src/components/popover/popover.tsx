@@ -141,6 +141,7 @@ const PopoverTrigger = forwardRef<
 const PopoverPortal = ({
   className,
   children,
+  disableFullWindowOverlay = false,
   ...props
 }: PopoverPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
@@ -152,7 +153,9 @@ const PopoverPortal = ({
     <PopoverPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <PopoverAnimationProvider value={animationContext}>
-          <FullWindowOverlay>
+          <FullWindowOverlay
+            disableFullWindowOverlay={disableFullWindowOverlay}
+          >
             <View className={portalClassName} pointerEvents="box-none">
               {children}
             </View>

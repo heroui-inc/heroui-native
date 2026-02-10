@@ -108,7 +108,11 @@ const BottomSheetTrigger = forwardRef<
 
 // --------------------------------------------------
 
-const BottomSheetPortal = ({ children, ...props }: BottomSheetPortalProps) => {
+const BottomSheetPortal = ({
+  children,
+  disableFullWindowOverlay = false,
+  ...props
+}: BottomSheetPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
   const animationContext = useBottomSheetAnimation();
 
@@ -116,7 +120,9 @@ const BottomSheetPortal = ({ children, ...props }: BottomSheetPortalProps) => {
     <BottomSheetPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <BottomSheetAnimationProvider value={animationContext}>
-          <FullWindowOverlay>
+          <FullWindowOverlay
+            disableFullWindowOverlay={disableFullWindowOverlay}
+          >
             <Animated.View
               style={StyleSheet.absoluteFill}
               pointerEvents="box-none"

@@ -58,6 +58,12 @@ export interface DialogTriggerProps extends DialogPrimitivesTypes.TriggerProps {
  */
 export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
   /**
+   * When true, uses a regular View instead of FullWindowOverlay on iOS.
+   * Enables React Native element inspector but overlay won't appear above native modals.
+   * @default false
+   */
+  disableFullWindowOverlay?: boolean;
+  /**
    * Additional CSS class for the portal container
    */
   className?: string;

@@ -314,13 +314,14 @@ Animation configuration for bottom sheet root component. Can be:
 
 ### BottomSheet.Portal
 
-| prop         | type                   | default | description                                      |
-| ------------ | ---------------------- | ------- | ------------------------------------------------ |
-| `children`   | `React.ReactNode`      | -       | Portal content (overlay and bottom sheet)        |
-| `className`  | `string`               | -       | Additional CSS classes for portal container      |
-| `style`      | `StyleProp<ViewStyle>` | -       | Additional styles for portal container           |
-| `hostName`   | `string`               | -       | Optional portal host name for specific container |
-| `forceMount` | `boolean`              | -       | Force mount when closed for animation purposes   |
+| prop                     | type                   | default | description                                                                                           |
+| ------------------------ | ---------------------- | ------- | ----------------------------------------------------------------------------------------------------- |
+| `children`               | `React.ReactNode`      | -       | Portal content (overlay and bottom sheet)                                                              |
+| `disableFullWindowOverlay` | `boolean`            | `false` | When true on iOS, uses View instead of FullWindowOverlay. Enables element inspector; overlay won't appear above native modals |
+| `className`              | `string`               | -       | Additional CSS classes for portal container                                                           |
+| `style`                  | `StyleProp<ViewStyle>` | -       | Additional styles for portal container                                                                |
+| `hostName`               | `string`               | -       | Optional portal host name for specific container                                                      |
+| `forceMount`             | `boolean`              | -       | Force mount when closed for animation purposes                                                        |
 
 ### BottomSheet.Overlay
 
@@ -448,6 +449,10 @@ const MyContent = () => {
 See the [Text Input with Keyboard Avoidance](#text-input-with-keyboard-avoidance) section for more details and complete examples.
 
 ## Special Notes
+
+### Element Inspector (iOS)
+
+BottomSheet uses FullWindowOverlay on iOS, which renders in a separate native window. This breaks the React Native element inspector. To enable the inspector during development, set `disableFullWindowOverlay={true}` on `BottomSheet.Portal`. Tradeoff: the bottom sheet will not appear above native modals when disabled.
 
 ### Handling Close Callbacks
 

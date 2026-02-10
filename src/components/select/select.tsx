@@ -230,7 +230,12 @@ const SelectTriggerIndicator = forwardRef<ViewRef, SelectTriggerIndicatorProps>(
 
 // --------------------------------------------------
 
-const SelectPortal = ({ className, children, ...props }: SelectPortalProps) => {
+const SelectPortal = ({
+  className,
+  children,
+  disableFullWindowOverlay = false,
+  ...props
+}: SelectPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
   const animationContext = useSelectAnimation();
 
@@ -240,7 +245,9 @@ const SelectPortal = ({ className, children, ...props }: SelectPortalProps) => {
     <SelectPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <SelectAnimationProvider value={animationContext}>
-          <FullWindowOverlay>
+          <FullWindowOverlay
+            disableFullWindowOverlay={disableFullWindowOverlay}
+          >
             <View className={portalClassName}>{children}</View>
           </FullWindowOverlay>
         </SelectAnimationProvider>

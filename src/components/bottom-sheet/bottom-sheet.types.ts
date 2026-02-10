@@ -54,6 +54,12 @@ export interface BottomSheetTriggerProps
 export interface BottomSheetPortalProps
   extends BottomSheetPrimitivesTypes.PortalProps {
   /**
+   * When true, uses a regular View instead of FullWindowOverlay on iOS.
+   * Enables React Native element inspector but overlay won't appear above native modals.
+   * @default false
+   */
+  disableFullWindowOverlay?: boolean;
+  /**
    * The portal content
    */
   children: ReactNode;

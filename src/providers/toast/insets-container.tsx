@@ -1,11 +1,17 @@
 import type { ReactNode } from 'react';
-import { Fragment, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FullWindowOverlay } from 'react-native-screens';
+import { FullWindowOverlay } from '../../helpers/internal/components';
 import type { ToastInsets } from './types';
 
 interface InsetsContainerProps {
+  /**
+   * When true, uses a regular View instead of FullWindowOverlay on iOS.
+   * Enables element inspector but toasts won't appear above native modals.
+   * @default false
+   */
+  disableFullWindowOverlay: boolean;
   /**
    * Optional inset values for all edges
    * If not provided, defaults to platform-specific values:
@@ -40,6 +46,7 @@ export function InsetsContainer({
   insets,
   contentWrapper,
   children,
+  disableFullWindowOverlay,
 }: InsetsContainerProps) {
   const safeAreaInsets = useSafeAreaInsets();
 
@@ -54,21 +61,27 @@ export function InsetsContainer({
     };
   }, [safeAreaInsets, insets]);
 
-  const WindowOverlay = Platform.OS === 'ios' ? FullWindowOverlay : Fragment;
+  const content = (
+    <View
+      className="absolute inset-0 pointer-events-box-none"
+      style={{
+        paddingTop: finalInsets.top,
+        paddingBottom: finalInsets.bottom,
+        paddingLeft: finalInsets.left,
+        paddingRight: finalInsets.right,
+      }}
+    >
+      {contentWrapper ? contentWrapper(children) : children}
+    </View>
+  );
+
+  if (Platform.OS !== 'ios') {
+    return content;
+  }
 
   return (
-    <WindowOverlay>
-      <View
-        className="absolute inset-0 pointer-events-box-none"
-        style={{
-          paddingTop: finalInsets.top,
-          paddingBottom: finalInsets.bottom,
-          paddingLeft: finalInsets.left,
-          paddingRight: finalInsets.right,
-        }}
-      >
-        {contentWrapper ? contentWrapper(children) : children}
-      </View>
-    </WindowOverlay>
+    <FullWindowOverlay disableFullWindowOverlay={disableFullWindowOverlay}>
+      {content}
+    </FullWindowOverlay>
   );
 }

@@ -10,4 +10,4 @@ export const DISPLAY_NAME = {
 };
 
 /** Default icon size in pixels */
-export const DEFAULT_ICON_SIZE = 20;
+export const DEFAULT_ICON_SIZE = 18;

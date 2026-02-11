@@ -1,18 +1,29 @@
-import { Alert } from 'heroui-native';
+import { Alert, Button, CloseButton, Spinner } from 'heroui-native';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
-const DefaultContent = () => {
+const DefaultAndAccentContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full gap-4">
         <Alert>
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>Information</Alert.Title>
+            <Alert.Title>New features available</Alert.Title>
             <Alert.Description>
-              This is a default alert with an informational message.
+              Check out our latest updates including dark mode support and
+              improved accessibility features.
+            </Alert.Description>
+          </Alert.Content>
+        </Alert>
+        <Alert status="accent">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Title>Update available</Alert.Title>
+            <Alert.Description>
+              A new version of the application is available. Please refresh to
+              get the latest features and bug fixes.
             </Alert.Description>
           </Alert.Content>
         </Alert>
@@ -23,114 +34,35 @@ const DefaultContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const StatusesContent = () => {
+const SuccessWarningDangerContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full gap-4">
-        <Alert status="default">
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>Default</Alert.Title>
-            <Alert.Description>
-              This is a default status alert.
-            </Alert.Description>
-          </Alert.Content>
-        </Alert>
-
-        <Alert status="accent">
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>Accent</Alert.Title>
-            <Alert.Description>
-              This is an accent status alert.
-            </Alert.Description>
-          </Alert.Content>
-        </Alert>
-
         <Alert status="success">
           <Alert.Indicator />
           <Alert.Content>
             <Alert.Title>Success</Alert.Title>
-            <Alert.Description>
-              Your changes have been saved successfully.
-            </Alert.Description>
-          </Alert.Content>
-        </Alert>
-
-        <Alert status="warning">
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>Warning</Alert.Title>
-            <Alert.Description>
-              Your session is about to expire in 5 minutes.
-            </Alert.Description>
-          </Alert.Content>
-        </Alert>
-
-        <Alert status="danger">
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>Danger</Alert.Title>
-            <Alert.Description>
-              Failed to save your changes. Please try again.
-            </Alert.Description>
-          </Alert.Content>
-        </Alert>
-      </View>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const TitleOnlyContent = () => {
-  return (
-    <View className="flex-1 items-center justify-center px-5">
-      <View className="w-full gap-4">
-        <Alert status="default">
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>A simple informational alert</Alert.Title>
-          </Alert.Content>
-        </Alert>
-
-        <Alert status="success">
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>Operation completed</Alert.Title>
-          </Alert.Content>
-        </Alert>
-
-        <Alert status="warning">
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>Proceed with caution</Alert.Title>
-          </Alert.Content>
-        </Alert>
-      </View>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const DescriptionOnlyContent = () => {
-  return (
-    <View className="flex-1 items-center justify-center px-5">
-      <View className="w-full gap-4">
-        <Alert status="default">
-          <Alert.Indicator />
-          <Alert.Content>
             <Alert.Description>
               Your profile information has been updated. Review the changes in
               your account settings.
             </Alert.Description>
           </Alert.Content>
         </Alert>
+        <Alert status="warning">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Title>Scheduled maintenance</Alert.Title>
+            <Alert.Description>
+              Our services will be unavailable on Sunday, March 15th from 2:00
+              AM to 6:00 AM UTC for scheduled maintenance.
+            </Alert.Description>
+          </Alert.Content>
+        </Alert>
 
         <Alert status="danger">
           <Alert.Indicator />
           <Alert.Content>
+            <Alert.Title>Unable to connect to server</Alert.Title>
             <Alert.Description>
               Unable to connect to the server. Check your internet connection
               and try again.
@@ -144,26 +76,44 @@ const DescriptionOnlyContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const WithoutIndicatorContent = () => {
+const WithButtonsContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full gap-4">
-        <Alert status="default">
+        <Alert status="accent">
+          <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>No indicator</Alert.Title>
+            <Alert.Title>Update available</Alert.Title>
             <Alert.Description>
-              This alert does not have an indicator icon.
+              A new version of the application is available. Please refresh to
+              get the latest features and bug fixes.
             </Alert.Description>
           </Alert.Content>
+          <Button size="sm" variant="primary">
+            Refresh
+          </Button>
         </Alert>
 
-        <Alert status="success">
+        <Alert status="danger">
+          <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>Saved</Alert.Title>
+            <Alert.Title>Unable to connect to server</Alert.Title>
             <Alert.Description>
-              All changes were saved without an icon.
+              Unable to connect to the server. Check your internet connection
+              and try again.
             </Alert.Description>
           </Alert.Content>
+          <Button size="sm" variant="danger">
+            Retry
+          </Button>
+        </Alert>
+
+        <Alert status="success" className="items-center">
+          <Alert.Indicator className="pt-0" />
+          <Alert.Content>
+            <Alert.Title>Profile updated successfully</Alert.Title>
+          </Alert.Content>
+          <CloseButton />
         </Alert>
       </View>
     </View>
@@ -172,45 +122,20 @@ const WithoutIndicatorContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const CustomStylingContent = () => {
+const WithCustomIndicatorContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full gap-4">
-        <Alert
-          status="accent"
-          className="p-3 flex-row gap-2 rounded-3xl bg-accent-soft shadow-surface"
-        >
-          <Alert.Indicator />
+        <Alert status="accent">
+          <Alert.Indicator className="pt-px">
+            <Spinner>
+              <Spinner.Indicator iconProps={{ width: 20, height: 20 }} />
+            </Spinner>
+          </Alert.Indicator>
           <Alert.Content>
-            <Alert.Title className="text-accent">Custom accent</Alert.Title>
+            <Alert.Title>Processing your request</Alert.Title>
             <Alert.Description>
-              This alert uses a custom soft accent background.
-            </Alert.Description>
-          </Alert.Content>
-        </Alert>
-
-        <Alert
-          status="danger"
-          className="p-3 flex-row gap-2 rounded-3xl bg-danger-soft shadow-surface"
-        >
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>Critical error</Alert.Title>
-            <Alert.Description>
-              This alert uses a custom soft danger background.
-            </Alert.Description>
-          </Alert.Content>
-        </Alert>
-
-        <Alert
-          status="success"
-          className="p-3 flex-row gap-2 rounded-3xl bg-success-soft shadow-surface"
-        >
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>All systems go</Alert.Title>
-            <Alert.Description>
-              This alert uses a custom soft success background.
+              Please wait while we sync your data. This may take a few moments.
             </Alert.Description>
           </Alert.Content>
         </Alert>
@@ -224,33 +149,23 @@ const CustomStylingContent = () => {
 const ALERT_VARIANTS: UsageVariant[] = [
   {
     value: 'default',
-    label: 'Default',
-    content: <DefaultContent />,
+    label: 'Default & Accent',
+    content: <DefaultAndAccentContent />,
   },
   {
-    value: 'statuses',
-    label: 'Statuses',
-    content: <StatusesContent />,
+    value: 'success-warning-danger',
+    label: 'Success, Warning, Danger',
+    content: <SuccessWarningDangerContent />,
   },
   {
     value: 'title-only',
-    label: 'Title only',
-    content: <TitleOnlyContent />,
+    label: 'With buttons',
+    content: <WithButtonsContent />,
   },
   {
-    value: 'description-only',
-    label: 'Description only',
-    content: <DescriptionOnlyContent />,
-  },
-  {
-    value: 'without-indicator',
-    label: 'Without indicator',
-    content: <WithoutIndicatorContent />,
-  },
-  {
-    value: 'custom-styling',
-    label: 'Custom styling',
-    content: <CustomStylingContent />,
+    value: 'with-custom-indicator',
+    label: 'With custom indicator',
+    content: <WithCustomIndicatorContent />,
   },
 ];
 

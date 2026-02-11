@@ -6,14 +6,14 @@ import { combineStyles } from '../../helpers/internal/utils';
  * Root style definition for the Alert container
  */
 const root = tv({
-  base: 'p-3 flex-row gap-2 rounded-3xl bg-surface shadow-surface',
+  base: 'p-3 flex-row gap-3 rounded-3xl bg-surface shadow-surface',
 });
 
 /**
  * Indicator style definition for the status icon container
  */
 const indicator = tv({
-  base: '',
+  base: 'pt-[3.5px]',
 });
 
 /**
@@ -31,7 +31,7 @@ const title = tv({
   variants: {
     status: {
       default: 'text-foreground',
-      accent: 'text-foreground',
+      accent: 'text-accent',
       success: 'text-success',
       warning: 'text-warning',
       danger: 'text-danger',
@@ -46,7 +46,7 @@ const title = tv({
  * Description style definition
  */
 const description = tv({
-  base: 'text-base text-muted',
+  base: 'text-sm text-muted',
 });
 
 export const alertClassNames = combineStyles({

@@ -18,6 +18,10 @@ const components: Component[] = [
     path: 'accordion',
   },
   {
+    title: 'Alert',
+    path: 'alert',
+  },
+  {
     title: 'Avatar',
     path: 'avatar',
   },

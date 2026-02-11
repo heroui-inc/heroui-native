@@ -1,5 +1,6 @@
 // Components
 export * from './components/accordion';
+export * from './components/alert';
 export * from './components/avatar';
 export * from './components/bottom-sheet';
 export * from './components/button';

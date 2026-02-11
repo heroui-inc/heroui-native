@@ -17,6 +17,7 @@ export * from './components/input-otp';
 export * from './components/label';
 export * from './components/popover';
 export * from './components/pressable-feedback';
+export * from './components/radio';
 export * from './components/radio-group';
 export * from './components/scroll-shadow';
 export * from './components/select';

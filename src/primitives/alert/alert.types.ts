@@ -6,12 +6,24 @@ import type {
 } from '../../helpers/internal/types';
 
 /**
- * Context for the alert root component.
- * Provides unique identifier for accessibility labelling.
+ * Alert status type controlling the visual treatment and icon displayed.
  */
-type RootContext = {
+export type AlertStatus =
+  | 'default'
+  | 'accent'
+  | 'success'
+  | 'warning'
+  | 'danger';
+
+/**
+ * Context for the alert root component.
+ * Provides unique identifier for accessibility labelling and the current status.
+ */
+export type RootContext = {
   /** Unique identifier for the alert, used for aria-labelledby and aria-describedby */
   nativeID: string;
+  /** Current alert status for sub-component styling */
+  status: AlertStatus;
 };
 
 /**
@@ -20,9 +32,15 @@ type RootContext = {
  *
  * @extends SlottableViewProps Inherits view props for slot-based composition
  */
-type RootProps = SlottableViewProps & {
+export type RootProps = SlottableViewProps & {
   /** Unique identifier for the alert. Auto-generated when not provided. */
   id?: string | number;
+  /**
+   * The status of the alert, controlling its icon and color treatment.
+   *
+   * @default "default"
+   */
+  status?: AlertStatus;
 };
 
 /**
@@ -31,7 +49,7 @@ type RootProps = SlottableViewProps & {
  *
  * @extends SlottableViewProps Inherits view props for slot-based composition
  */
-type IndicatorProps = SlottableViewProps;
+export type IndicatorProps = SlottableViewProps;
 
 /**
  * Props for the Alert content wrapper component.
@@ -39,7 +57,7 @@ type IndicatorProps = SlottableViewProps;
  *
  * @extends SlottableViewProps Inherits view props for slot-based composition
  */
-type ContentProps = SlottableViewProps;
+export type ContentProps = SlottableViewProps;
 
 /**
  * Props for the Alert title component.
@@ -47,7 +65,7 @@ type ContentProps = SlottableViewProps;
  *
  * @extends SlottableTextProps Inherits text props for slot-based composition
  */
-type TitleProps = SlottableTextProps;
+export type TitleProps = SlottableTextProps;
 
 /**
  * Props for the Alert description component.
@@ -55,29 +73,15 @@ type TitleProps = SlottableTextProps;
  *
  * @extends SlottableTextProps Inherits text props for slot-based composition
  */
-type DescriptionProps = SlottableTextProps;
+export type DescriptionProps = SlottableTextProps;
 
 /** Reference type for the Alert root component */
-type RootRef = ViewRef;
+export type RootRef = ViewRef;
 /** Reference type for the Alert indicator component */
-type IndicatorRef = ViewRef;
+export type IndicatorRef = ViewRef;
 /** Reference type for the Alert content component */
-type ContentRef = ViewRef;
+export type ContentRef = ViewRef;
 /** Reference type for the Alert title component */
-type TitleRef = TextRef;
+export type TitleRef = TextRef;
 /** Reference type for the Alert description component */
-type DescriptionRef = TextRef;
-
-export type {
-  ContentProps,
-  ContentRef,
-  DescriptionProps,
-  DescriptionRef,
-  IndicatorProps,
-  IndicatorRef,
-  RootContext,
-  RootProps,
-  RootRef,
-  TitleProps,
-  TitleRef,
-};
+export type DescriptionRef = TextRef;

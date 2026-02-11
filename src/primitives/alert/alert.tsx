@@ -36,14 +36,14 @@ function useRootContext(): RootContext & { nativeID: string } {
 // --------------------------------------------------
 
 const Root = forwardRef<RootRef, RootProps>(
-  ({ asChild, id, ...viewProps }, ref) => {
+  ({ asChild, id, status = 'default', ...viewProps }, ref) => {
     const generatedId = useId();
     const nativeID = id != null ? String(id) : generatedId;
 
     const Component = asChild ? Slot.View : View;
 
     return (
-      <AlertContext.Provider value={{ nativeID }}>
+      <AlertContext.Provider value={{ nativeID, status }}>
         <Component
           ref={ref}
           role="alert"

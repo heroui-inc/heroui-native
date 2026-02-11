@@ -2,6 +2,7 @@ export * from './use-augmented-ref';
 export * from './use-bottom-sheet-gesture-handlers';
 export * from './use-combined-animation-disabled-state';
 export * from './use-controllable-state';
+export * from './use-dev-info';
 export * from './use-keyboard-status';
 export * from './use-popup-bottom-sheet-content-animation';
 export * from './use-popup-dialog-content-animation';

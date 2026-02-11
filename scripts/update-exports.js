@@ -177,6 +177,13 @@ function updateExports() {
       default: './lib/module/providers/hero-ui-native/index.js',
     };
 
+    // Add hardcoded raw provider export
+    newExports['./provider-raw'] = {
+      source: './src/providers/hero-ui-native-raw/index.ts',
+      types: './lib/typescript/src/providers/hero-ui-native-raw/index.d.ts',
+      default: './lib/module/providers/hero-ui-native-raw/index.js',
+    };
+
     // Parse and add portal, hooks, utils exports from index.tsx
     const indexExports = parseIndexExports();
     if (indexExports.portal) {

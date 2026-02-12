@@ -1,6 +1,6 @@
 # Alert
 
-A status-aware notification banner for displaying contextual messages with an icon, title, and description.
+Displays important messages and notifications to users with status indicators.
 
 ## Import
 

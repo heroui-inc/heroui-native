@@ -55,9 +55,7 @@ Create visual hierarchy by nesting surfaces with different variants.
   ...
   <Surface variant="secondary">
     ...
-    <Surface variant="tertiary">
-      ...
-    </Surface>
+    <Surface variant="tertiary">...</Surface>
   </Surface>
 </Surface>
 ```
@@ -123,16 +121,16 @@ export default function SurfaceExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/surface.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/surface.tsx>).
 
 ## API Reference
 
 ### Surface
 
-| prop           | type                                                                      | default     | description                                                                               |
-| -------------- | ------------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
+| prop           | type                                                      | default     | description                                                                               |
+| -------------- | --------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
 | `variant`      | `'default' \| 'secondary' \| 'tertiary' \| 'transparent'` | `'default'` | Visual variant controlling background color and border                                    |
-| `children`     | `React.ReactNode`                                                         | -           | Content to be rendered inside the surface                                                 |
-| `className`    | `string`                                                                  | -           | Additional CSS classes to apply                                                           |
-| `animation`    | `"disable-all" \| undefined`                                              | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
-| `...ViewProps` | `ViewProps`                                                               | -           | All standard React Native View props are supported                                        |
+| `children`     | `React.ReactNode`                                         | -           | Content to be rendered inside the surface                                                 |
+| `className`    | `string`                                                  | -           | Additional CSS classes to apply                                                           |
+| `animation`    | `"disable-all" \| undefined`                              | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
+| `...ViewProps` | `ViewProps`                                               | -           | All standard React Native View props are supported                                        |

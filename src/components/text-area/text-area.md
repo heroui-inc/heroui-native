@@ -17,7 +17,7 @@ TextArea can be used standalone or within a TextField component.
 ```tsx
 import { TextArea } from 'heroui-native';
 
-<TextArea placeholder="Enter your message" />
+<TextArea placeholder="Enter your message" />;
 ```
 
 ### Within TextField
@@ -31,7 +31,7 @@ import { Description, Label, TextArea, TextField } from 'heroui-native';
   <Label>Message</Label>
   <TextArea placeholder="Enter your message here..." />
   <Description>Please provide as much detail as possible.</Description>
-</TextField>
+</TextField>;
 ```
 
 ### With Validation
@@ -45,7 +45,7 @@ import { FieldError, Label, TextArea, TextField } from 'heroui-native';
   <Label>Message</Label>
   <TextArea placeholder="Enter your message" />
   <FieldError>Please enter a valid message</FieldError>
-</TextField>
+</TextField>;
 ```
 
 ### Disabled State
@@ -58,7 +58,7 @@ import { Label, TextArea, TextField } from 'heroui-native';
 <TextField isDisabled>
   <Label>Disabled Field</Label>
   <TextArea placeholder="Cannot edit" value="Read only value" />
-</TextField>
+</TextField>;
 ```
 
 ### With Variant
@@ -92,13 +92,19 @@ import { Label, TextArea, TextField } from 'heroui-native';
     placeholder="Custom colors"
     className="bg-blue-50 border-blue-500 focus:border-blue-700"
   />
-</TextField>
+</TextField>;
 ```
 
 ## Example
 
 ```tsx
-import { Description, FieldError, Label, TextArea, TextField } from 'heroui-native';
+import {
+  Description,
+  FieldError,
+  Label,
+  TextArea,
+  TextField,
+} from 'heroui-native';
 import { View } from 'react-native';
 
 export default function TextAreaExample() {
@@ -112,10 +118,7 @@ export default function TextAreaExample() {
 
       <TextField>
         <Label>Secondary Variant</Label>
-        <TextArea
-          placeholder="Secondary style text area"
-          variant="secondary"
-        />
+        <TextArea placeholder="Secondary style text area" variant="secondary" />
         <Description>Secondary variant for surfaces</Description>
       </TextField>
     </View>
@@ -123,7 +126,7 @@ export default function TextAreaExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/text-area.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/text-area.tsx>).
 
 ## API Reference
 

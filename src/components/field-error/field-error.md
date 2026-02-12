@@ -33,7 +33,9 @@ Control when the error appears using the `isInvalid` prop. When used inside a fo
 ```tsx
 const [isInvalid, setIsInvalid] = useState(false);
 
-<FieldError isInvalid={isInvalid}>Please enter a valid email address</FieldError>;
+<FieldError isInvalid={isInvalid}>
+  Please enter a valid email address
+</FieldError>;
 ```
 
 ### With Form Fields
@@ -47,7 +49,7 @@ import { FieldError, Label, TextField } from 'heroui-native';
   <Label>Email</Label>
   <Input placeholder="Enter your email" />
   <FieldError>Please enter a valid email address</FieldError>
-</TextField>
+</TextField>;
 ```
 
 ### Custom Content
@@ -152,9 +154,7 @@ export default function FieldErrorExample() {
           keyboardType="email-address"
           autoCapitalize="none"
         />
-        <Description>
-          We'll use this to contact you
-        </Description>
+        <Description>We'll use this to contact you</Description>
         <FieldError>Please enter a valid email address</FieldError>
       </TextField>
     </View>
@@ -162,31 +162,31 @@ export default function FieldErrorExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/field-error.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/field-error.tsx>).
 
 ## API Reference
 
 ### FieldError
 
-| prop                   | type                           | default     | description                                                              |
-| ---------------------- | ------------------------------ | ----------- | ------------------------------------------------------------------------ |
-| `children`             | `React.ReactNode`              | `undefined` | The content of the error field. String children are wrapped with Text    |
-| `isInvalid`            | `boolean`                      | `undefined` | Controls the visibility of the error field (overrides form-item-state context). When used inside TextField, automatically consumes form state |
-| `animation`            | `FieldErrorRootAnimation`       | -           | Animation configuration                                                  |
-| `className`            | `string`                       | `undefined` | Additional CSS classes for the container                                 |
-| `classNames`           | `ElementSlots<FieldErrorSlots>` | `undefined` | Additional CSS classes for different parts of the component              |
-| `styles`                | `{ container?: ViewStyle; text?: TextStyle }` | `undefined` | Styles for different parts of the field error                            |
-| `textProps`            | `TextProps`                    | `undefined` | Additional props to pass to the Text component when children is a string |
-| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`     | -           | All Reanimated Animated.View props are supported                         |
+| prop                   | type                                          | default     | description                                                                                                                                   |
+| ---------------------- | --------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`             | `React.ReactNode`                             | `undefined` | The content of the error field. String children are wrapped with Text                                                                         |
+| `isInvalid`            | `boolean`                                     | `undefined` | Controls the visibility of the error field (overrides form-item-state context). When used inside TextField, automatically consumes form state |
+| `animation`            | `FieldErrorRootAnimation`                     | -           | Animation configuration                                                                                                                       |
+| `className`            | `string`                                      | `undefined` | Additional CSS classes for the container                                                                                                      |
+| `classNames`           | `ElementSlots<FieldErrorSlots>`               | `undefined` | Additional CSS classes for different parts of the component                                                                                   |
+| `styles`               | `{ container?: ViewStyle; text?: TextStyle }` | `undefined` | Styles for different parts of the field error                                                                                                 |
+| `textProps`            | `TextProps`                                   | `undefined` | Additional props to pass to the Text component when children is a string                                                                      |
+| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`                    | -           | All Reanimated Animated.View props are supported                                                                                              |
 
 **classNames prop:** `ElementSlots<FieldErrorSlots>` provides type-safe CSS classes for different parts of the field error component. Available slots: `container`, `text`.
 
 #### `styles`
 
-| prop        | type                    | description                          |
-| ----------- | ----------------------- | ------------------------------------ |
-| `container` | `ViewStyle`              | Styles for the container             |
-| `text`      | `TextStyle`             | Styles for the text content          |
+| prop        | type        | description                 |
+| ----------- | ----------- | --------------------------- |
+| `container` | `ViewStyle` | Styles for the container    |
+| `text`      | `TextStyle` | Styles for the text content |
 
 #### FieldErrorRootAnimation
 
@@ -200,5 +200,5 @@ Animation configuration for field error root component. Can be:
 | prop             | type                                     | default                                                               | description                                     |
 | ---------------- | ---------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------- |
 | `state`          | `'disabled' \| 'disable-all' \| boolean` | -                                                                     | Disable animations while customizing properties |
-| `entering.value` | `EntryOrExitLayoutType`                  | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation for field error        |
-| `exiting.value`  | `EntryOrExitLayoutType`                  | `FadeOut`<br/>`.duration(100)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation for field error         |
+| `entering.value` | `EntryOrExitLayoutType`                  | `FadeIn`<br/>`.duration(150)`<br/>`.easing(Easing.out(Easing.ease))`  | Custom entering animation for field error       |
+| `exiting.value`  | `EntryOrExitLayoutType`                  | `FadeOut`<br/>`.duration(100)`<br/>`.easing(Easing.out(Easing.ease))` | Custom exiting animation for field error        |

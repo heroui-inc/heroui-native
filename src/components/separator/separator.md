@@ -5,7 +5,7 @@ A simple line to separate content visually.
 ## Import
 
 ```tsx
-import { Separator } from "heroui-native";
+import { Separator } from 'heroui-native';
 ```
 
 ## Anatomy
@@ -66,8 +66,8 @@ Set a specific thickness value for precise control.
 ## Example
 
 ```tsx
-import { Separator, Surface } from "heroui-native";
-import { Text, View } from "react-native";
+import { Separator, Surface } from 'heroui-native';
+import { Text, View } from 'react-native';
 
 export default function SeparatorExample() {
   return (
@@ -91,7 +91,7 @@ export default function SeparatorExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/separator.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/separator.tsx>).
 
 ## API Reference
 
@@ -100,7 +100,7 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | prop           | type                         | default        | description                                                                                  |
 | -------------- | ---------------------------- | -------------- | -------------------------------------------------------------------------------------------- |
 | `variant`      | `'thin' \| 'thick'`          | `'thin'`       | Variant style of the separator                                                               |
-| `orientation`  | `'horizontal' \| 'vertical'` | `'horizontal'` | Orientation of the separator                                                                |
+| `orientation`  | `'horizontal' \| 'vertical'` | `'horizontal'` | Orientation of the separator                                                                 |
 | `thickness`    | `number`                     | `undefined`    | Custom thickness in pixels. Controls height for horizontal or width for vertical orientation |
 | `className`    | `string`                     | `undefined`    | Additional CSS classes to apply                                                              |
 | `...ViewProps` | `ViewProps`                  | -              | All standard React Native View props are supported                                           |

@@ -116,7 +116,7 @@ import {
   Label,
   Separator,
   Surface,
-} from "heroui-native";
+} from 'heroui-native';
 import React from 'react';
 import { View, Text } from 'react-native';
 
@@ -140,9 +140,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
       </ControlField.Indicator>
       <View className="flex-1">
         <Label className="text-lg">{title}</Label>
-        <Description className="text-base">
-          {description}
-        </Description>
+        <Description className="text-base">{description}</Description>
       </View>
     </ControlField>
   );
@@ -199,7 +197,7 @@ export default function BasicUsage() {
 }
 ```
 
-You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/checkbox.tsx>).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/checkbox.tsx>).
 
 ## API Reference
 

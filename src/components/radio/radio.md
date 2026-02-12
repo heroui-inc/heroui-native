@@ -84,9 +84,7 @@ Replace the default thumb with custom content inside the indicator.
   {({ isSelected }) => (
     <>
       <Radio>
-        <Radio.Indicator>
-          {isSelected && <CustomIcon />}
-        </Radio.Indicator>
+        <Radio.Indicator>{isSelected && <CustomIcon />}</Radio.Indicator>
       </Radio>
       <Label>Email Notifications</Label>
     </>
@@ -101,10 +99,10 @@ Use a render function on the Radio root to access selection state for conditiona
 ```tsx
 <RadioGroup.Item value="item1">
   {({ isSelected }) => (
-    <View className={cn("p-3 rounded-2xl", isSelected && "bg-surface")}>
+    <View className={cn('p-3 rounded-2xl', isSelected && 'bg-surface')}>
       <Radio>
         <Radio.Indicator
-          className={cn(!isSelected && "border border-muted/10")}
+          className={cn(!isSelected && 'border border-muted/10')}
         />
       </Radio>
       <Label>Item Label</Label>
@@ -159,12 +157,12 @@ import {
   RadioGroup,
   Separator,
   Surface,
-} from "heroui-native";
-import React from "react";
-import { View, Text } from "react-native";
+} from 'heroui-native';
+import React from 'react';
+import { View, Text } from 'react-native';
 
 export default function RadioExample() {
-  const [priority, setPriority] = React.useState("medium");
+  const [priority, setPriority] = React.useState('medium');
 
   return (
     <Surface className="w-full gap-6">
@@ -182,15 +180,13 @@ export default function RadioExample() {
             <>
               <View className="flex-1">
                 <Label>High Priority</Label>
-                <Description>
-                  Urgent - requires immediate attention
-                </Description>
+                <Description>Urgent - requires immediate attention</Description>
               </View>
               <Radio>
                 <Radio.Indicator
                   className={cn(
-                    "size-8",
-                    isSelected && "bg-red-500 border-red-400"
+                    'size-8',
+                    isSelected && 'bg-red-500 border-red-400'
                   )}
                 >
                   <Radio.IndicatorThumb className="size-3.5 bg-red-100" />
@@ -207,15 +203,13 @@ export default function RadioExample() {
             <>
               <View className="flex-1">
                 <Label>Medium Priority</Label>
-                <Description>
-                  Important - complete within this week
-                </Description>
+                <Description>Important - complete within this week</Description>
               </View>
               <Radio>
                 <Radio.Indicator
                   className={cn(
-                    "size-8",
-                    isSelected && "bg-amber-500 border-amber-400"
+                    'size-8',
+                    isSelected && 'bg-amber-500 border-amber-400'
                   )}
                 >
                   <Radio.IndicatorThumb className="size-3.5 bg-amber-100" />
@@ -237,8 +231,8 @@ export default function RadioExample() {
               <Radio>
                 <Radio.Indicator
                   className={cn(
-                    "size-8",
-                    isSelected && "bg-emerald-500 border-emerald-400"
+                    'size-8',
+                    isSelected && 'bg-emerald-500 border-emerald-400'
                   )}
                 >
                   <Radio.IndicatorThumb className="size-3.5 bg-emerald-100" />
@@ -253,7 +247,7 @@ export default function RadioExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/radio-group.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/radio-group.tsx>).
 
 ## API Reference
 
@@ -262,22 +256,22 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 | prop                | type                                                                | default     | description                                                               |
 | ------------------- | ------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------- |
 | `children`          | `React.ReactNode \| ((props: RadioRenderProps) => React.ReactNode)` | `undefined` | Child elements or render function to customize the radio                  |
-| `variant`           | `'primary' \| 'secondary'`                                         | `'primary'` | Variant style for the radio                                               |
-| `isSelected`        | `boolean`                                                          | `undefined` | Whether the radio is currently selected                                   |
-| `isDisabled`        | `boolean`                                                          | `undefined` | Whether the radio is disabled and cannot be interacted with               |
-| `isInvalid`         | `boolean`                                                          | `false`     | Whether the radio is invalid (shows danger color)                         |
-| `className`         | `string`                                                           | `undefined` | Additional CSS classes to apply                                           |
-| `animation`         | `RadioRootAnimation`                                               | -           | Animation configuration for radio                                         |
-| `onSelectedChange`  | `(isSelected: boolean) => void`                                    | `undefined` | Callback fired when the radio selection state changes                     |
-| `...PressableProps` | `PressableProps`                                                   | -           | All standard React Native Pressable props are supported (except disabled) |
+| `variant`           | `'primary' \| 'secondary'`                                          | `'primary'` | Variant style for the radio                                               |
+| `isSelected`        | `boolean`                                                           | `undefined` | Whether the radio is currently selected                                   |
+| `isDisabled`        | `boolean`                                                           | `undefined` | Whether the radio is disabled and cannot be interacted with               |
+| `isInvalid`         | `boolean`                                                           | `false`     | Whether the radio is invalid (shows danger color)                         |
+| `className`         | `string`                                                            | `undefined` | Additional CSS classes to apply                                           |
+| `animation`         | `RadioRootAnimation`                                                | -           | Animation configuration for radio                                         |
+| `onSelectedChange`  | `(isSelected: boolean) => void`                                     | `undefined` | Callback fired when the radio selection state changes                     |
+| `...PressableProps` | `PressableProps`                                                    | -           | All standard React Native Pressable props are supported (except disabled) |
 
 #### RadioRenderProps
 
-| prop         | type      | description                    |
-| ------------ | --------- | ------------------------------ |
-| `isSelected` | `boolean` | Whether the radio is selected  |
-| `isDisabled` | `boolean` | Whether the radio is disabled  |
-| `isInvalid`  | `boolean` | Whether the radio is invalid   |
+| prop         | type      | description                   |
+| ------------ | --------- | ----------------------------- |
+| `isSelected` | `boolean` | Whether the radio is selected |
+| `isDisabled` | `boolean` | Whether the radio is disabled |
+| `isInvalid`  | `boolean` | Whether the radio is invalid  |
 
 #### RadioRootAnimation
 
@@ -288,20 +282,20 @@ Animation configuration for radio root component. Can be:
 
 ### Radio.Indicator
 
-| prop                   | type                       | default     | description                                                 |
-| ---------------------- | -------------------------- | ----------- | ----------------------------------------------------------- |
-| `children`             | `React.ReactNode`          | `undefined` | Content for the radio indicator                             |
-| `className`            | `string`                   | `undefined` | Additional CSS classes for the indicator                    |
-| `...AnimatedViewProps` | `AnimatedProps<ViewProps>`  | -           | All Reanimated Animated.View props are supported            |
+| prop                   | type                       | default     | description                                      |
+| ---------------------- | -------------------------- | ----------- | ------------------------------------------------ |
+| `children`             | `React.ReactNode`          | `undefined` | Content for the radio indicator                  |
+| `className`            | `string`                   | `undefined` | Additional CSS classes for the indicator         |
+| `...AnimatedViewProps` | `AnimatedProps<ViewProps>` | -           | All Reanimated Animated.View props are supported |
 
 ### Radio.IndicatorThumb
 
-| prop                    | type                              | default     | description                                                  |
-| ----------------------- | --------------------------------- | ----------- | ------------------------------------------------------------ |
-| `className`             | `string`                          | `undefined` | Additional CSS classes for the thumb                         |
-| `animation`             | `RadioIndicatorThumbAnimation`    | -           | Animation configuration for the thumb                        |
-| `isAnimatedStyleActive` | `boolean`                         | `true`      | Whether animated styles (react-native-reanimated) are active |
-| `...AnimatedViewProps`  | `AnimatedProps<ViewProps>`        | -           | All Reanimated Animated.View props are supported             |
+| prop                    | type                           | default     | description                                                  |
+| ----------------------- | ------------------------------ | ----------- | ------------------------------------------------------------ |
+| `className`             | `string`                       | `undefined` | Additional CSS classes for the thumb                         |
+| `animation`             | `RadioIndicatorThumbAnimation` | -           | Animation configuration for the thumb                        |
+| `isAnimatedStyleActive` | `boolean`                      | `true`      | Whether animated styles (react-native-reanimated) are active |
+| `...AnimatedViewProps`  | `AnimatedProps<ViewProps>`     | -           | All Reanimated Animated.View props are supported             |
 
 #### RadioIndicatorThumbAnimation
 
@@ -311,11 +305,11 @@ Animation configuration for radio indicator thumb component. Can be:
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
-| prop                 | type               | default                                          | description                       |
-| -------------------- | ------------------ | ------------------------------------------------ | --------------------------------- |
-| `state`              | `'disabled' \| boolean` | -                                           | Disable animations while customizing properties |
-| `scale.value`        | `[number, number]` | `[1.5, 1]`                                      | Scale values [unselected, selected]             |
-| `scale.timingConfig` | `WithTimingConfig` | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration             |
+| prop                 | type                    | default                                              | description                                     |
+| -------------------- | ----------------------- | ---------------------------------------------------- | ----------------------------------------------- |
+| `state`              | `'disabled' \| boolean` | -                                                    | Disable animations while customizing properties |
+| `scale.value`        | `[number, number]`      | `[1.5, 1]`                                           | Scale values [unselected, selected]             |
+| `scale.timingConfig` | `WithTimingConfig`      | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration                  |
 
 ## Hooks
 
@@ -333,13 +327,13 @@ const CustomIndicator = () => {
 
 **Returns:** `UseRadioReturn`
 
-| property           | type                                           | description                                                  |
-| ------------------ | ---------------------------------------------- | ------------------------------------------------------------ |
-| `isSelected`       | `boolean \| undefined`                         | Whether the radio is currently selected                      |
-| `onSelectedChange` | `((isSelected: boolean) => void) \| undefined` | Callback function to change the radio selection state        |
-| `isDisabled`       | `boolean`                                      | Whether the radio is disabled and cannot be interacted with  |
-| `isInvalid`        | `boolean`                                      | Whether the radio is invalid (shows danger color)            |
-| `variant`          | `'primary' \| 'secondary' \| undefined`        | Current variant style of the radio                           |
-| `nativeID`         | `string \| undefined`                          | Native ID for the radio element                              |
+| property           | type                                           | description                                                 |
+| ------------------ | ---------------------------------------------- | ----------------------------------------------------------- |
+| `isSelected`       | `boolean \| undefined`                         | Whether the radio is currently selected                     |
+| `onSelectedChange` | `((isSelected: boolean) => void) \| undefined` | Callback function to change the radio selection state       |
+| `isDisabled`       | `boolean`                                      | Whether the radio is disabled and cannot be interacted with |
+| `isInvalid`        | `boolean`                                      | Whether the radio is invalid (shows danger color)           |
+| `variant`          | `'primary' \| 'secondary' \| undefined`        | Current variant style of the radio                          |
+| `nativeID`         | `string \| undefined`                          | Native ID for the radio element                             |
 
 **Note:** This hook must be used within a `Radio` component. It will throw an error if called outside of the radio context.

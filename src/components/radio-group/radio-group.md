@@ -60,22 +60,18 @@ import { View } from 'react-native';
   <RadioGroup.Item value="standard">
     <View>
       <Label>Standard Shipping</Label>
-      <Description>
-        Delivered in 5-7 business days
-      </Description>
+      <Description>Delivered in 5-7 business days</Description>
     </View>
     <Radio />
   </RadioGroup.Item>
   <RadioGroup.Item value="express">
     <View>
       <Label>Express Shipping</Label>
-      <Description>
-        Delivered in 2-3 business days
-      </Description>
+      <Description>Delivered in 2-3 business days</Description>
     </View>
     <Radio />
   </RadioGroup.Item>
-</RadioGroup>
+</RadioGroup>;
 ```
 
 ### Custom Indicator
@@ -102,7 +98,7 @@ import { RadioGroup, Radio, Label } from 'heroui-native';
       </>
     )}
   </RadioGroup.Item>
-</RadioGroup>
+</RadioGroup>;
 ```
 
 ### With Render Function
@@ -118,14 +114,12 @@ import { RadioGroup, Radio, Label } from 'heroui-native';
       <>
         <Label>Option 1</Label>
         <Radio>
-          <Radio.Indicator>
-            {isSelected && <CustomIcon />}
-          </Radio.Indicator>
+          <Radio.Indicator>{isSelected && <CustomIcon />}</Radio.Indicator>
         </Radio>
       </>
     )}
   </RadioGroup.Item>
-</RadioGroup>
+</RadioGroup>;
 ```
 
 ### With Error Message
@@ -199,7 +193,7 @@ export default function RadioGroupExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/radio-group.tsx>).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/radio-group.tsx>).
 
 ## API Reference
 
@@ -247,6 +241,7 @@ Use `<Radio />` for the default indicator, or compose with `Radio.Indicator` and
 **Note:** For complete Radio prop documentation (including `Radio.Indicator` and `Radio.IndicatorThumb`), see the [Radio component documentation](../radio/radio.md).
 
 **Note:** For labels, descriptions, and error messages, use the base components directly:
+
 - Use [Label](../label/label.md) component for labels
 - Use [Description](../description/description.md) component for descriptions
 - Use [FieldError](../field-error/field-error.md) component for error messages
@@ -269,10 +264,10 @@ Use `<Radio />` for the default indicator, or compose with `Radio.Indicator` and
 
 **Returns:**
 
-| Property           | Type                                           | Description                                                          |
-| ------------------ | ---------------------------------------------- | -------------------------------------------------------------------- |
-| `isSelected`       | `boolean`                                      | Whether the radio item is selected                                   |
-| `isDisabled`       | `boolean \| undefined`                         | Whether the radio item is disabled                                   |
-| `isInvalid`        | `boolean \| undefined`                         | Whether the radio item is invalid                                    |
-| `variant`          | `'primary' \| 'secondary' \| undefined`        | Variant style for the radio item                                     |
+| Property           | Type                                           | Description                                                             |
+| ------------------ | ---------------------------------------------- | ----------------------------------------------------------------------- |
+| `isSelected`       | `boolean`                                      | Whether the radio item is selected                                      |
+| `isDisabled`       | `boolean \| undefined`                         | Whether the radio item is disabled                                      |
+| `isInvalid`        | `boolean \| undefined`                         | Whether the radio item is invalid                                       |
+| `variant`          | `'primary' \| 'secondary' \| undefined`        | Variant style for the radio item                                        |
 | `onSelectedChange` | `((isSelected: boolean) => void) \| undefined` | Callback to change the selection state (selects this item in the group) |

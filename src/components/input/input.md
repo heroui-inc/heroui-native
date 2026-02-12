@@ -17,7 +17,7 @@ Input can be used standalone or within a TextField component.
 ```tsx
 import { Input } from 'heroui-native';
 
-<Input placeholder="Enter your email" />
+<Input placeholder="Enter your email" />;
 ```
 
 ### Within TextField
@@ -30,7 +30,7 @@ import { Input, Label, TextField } from 'heroui-native';
 <TextField>
   <Label>Email</Label>
   <Input placeholder="Enter your email" />
-</TextField>
+</TextField>;
 ```
 
 ### With Validation
@@ -44,7 +44,7 @@ import { FieldError, Input, Label, TextField } from 'heroui-native';
   <Label>Email</Label>
   <Input placeholder="Enter your email" />
   <FieldError>Please enter a valid email</FieldError>
-</TextField>
+</TextField>;
 ```
 
 ### With Local Invalid State Override
@@ -58,7 +58,7 @@ import { FieldError, Input, Label, TextField } from 'heroui-native';
   <Label isInvalid={false}>Email</Label>
   <Input placeholder="Enter your email" isInvalid={false} />
   <FieldError>Email format is incorrect</FieldError>
-</TextField>
+</TextField>;
 ```
 
 ### Disabled State
@@ -71,7 +71,7 @@ import { Input, Label, TextField } from 'heroui-native';
 <TextField isDisabled>
   <Label>Disabled Field</Label>
   <Input placeholder="Cannot edit" value="Read only value" />
-</TextField>
+</TextField>;
 ```
 
 ### With Variant
@@ -105,7 +105,7 @@ import { Input, Label, TextField } from 'heroui-native';
     placeholder="Custom colors"
     className="bg-blue-50 border-blue-500 focus:border-blue-700"
   />
-</TextField>
+</TextField>;
 ```
 
 ## Example
@@ -167,16 +167,14 @@ export const TextInputContent = () => {
             />
           </Pressable>
         </View>
-        <Description>
-          Password must be at least 6 characters
-        </Description>
+        <Description>Password must be at least 6 characters</Description>
       </TextField>
     </View>
   );
 };
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/input.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/input.tsx>).
 
 ## API Reference
 

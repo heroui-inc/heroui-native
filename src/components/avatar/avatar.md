@@ -247,7 +247,7 @@ export default function AvatarExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/avatar.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/avatar.tsx>).
 
 ## API Reference
 
@@ -307,7 +307,7 @@ Animation configuration for avatar image component. Can be:
 | `color`                 | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'` | inherited from parent | Color variant of the fallback                                                     |
 | `className`             | `string`                                                      | -                     | Additional CSS classes for the container                                          |
 | `classNames`            | `ElementSlots<AvatarFallbackSlots>`                           | -                     | Additional CSS classes for different parts                                        |
-| `styles`                | `{ container?: ViewStyle; text?: TextStyle }` | - | Styles for different parts of the avatar fallback                                 |
+| `styles`                | `{ container?: ViewStyle; text?: TextStyle }`                 | -                     | Styles for different parts of the avatar fallback                                 |
 | `textProps`             | `TextProps`                                                   | -                     | Props to pass to Text component when children is a string                         |
 | `iconProps`             | `PersonIconProps`                                             | -                     | Props to customize the default person icon                                        |
 | `animation`             | `AvatarFallbackAnimation`                                     | -                     | Animation configuration                                                           |
@@ -317,10 +317,10 @@ Animation configuration for avatar image component. Can be:
 
 #### `styles`
 
-| prop        | type                    | description                          |
-| ----------- | ----------------------- | ------------------------------------ |
-| `container` | `ViewStyle`             | Styles for the container             |
-| `text`      | `TextStyle`             | Styles for the text content          |
+| prop        | type        | description                 |
+| ----------- | ----------- | --------------------------- |
+| `container` | `ViewStyle` | Styles for the container    |
+| `text`      | `TextStyle` | Styles for the text content |
 
 #### AvatarFallbackAnimation
 

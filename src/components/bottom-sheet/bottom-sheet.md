@@ -113,7 +113,10 @@ export const BottomSheetBlurOverlay = () => {
   });
 
   return (
-    <Pressable style={StyleSheet.absoluteFill} onPress={() => onOpenChange(false)}>
+    <Pressable
+      style={StyleSheet.absoluteFill}
+      onPress={() => onOpenChange(false)}
+    >
       <AnimatedBlurView
         blurIntensity={blurIntensity}
         tint={theme === 'dark' ? 'dark' : 'systemUltraThinMaterialDark'}
@@ -187,20 +190,20 @@ export default function BottomSheetExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/bottom-sheet.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/bottom-sheet.tsx>).
 
 ## API Reference
 
 ### BottomSheet
 
-| prop           | type                       | default | description                                          |
-| -------------- | -------------------------- | ------- | ---------------------------------------------------- |
-| `children`     | `React.ReactNode`          | -       | Bottom sheet content and trigger elements            |
-| `isOpen`       | `boolean`                  | -       | Controlled open state of the bottom sheet            |
-| `isDefaultOpen`| `boolean`                  | `false` | Initial open state when uncontrolled                 |
-| `animation`    | `AnimationRootDisableAll`  | -       | Animation configuration                              |
-| `onOpenChange` | `(value: boolean) => void` | -       | Callback when open state changes                     |
-| `...ViewProps` | `ViewProps`                | -       | All standard React Native View props are supported   |
+| prop            | type                       | default | description                                        |
+| --------------- | -------------------------- | ------- | -------------------------------------------------- |
+| `children`      | `React.ReactNode`          | -       | Bottom sheet content and trigger elements          |
+| `isOpen`        | `boolean`                  | -       | Controlled open state of the bottom sheet          |
+| `isDefaultOpen` | `boolean`                  | `false` | Initial open state when uncontrolled               |
+| `animation`     | `AnimationRootDisableAll`  | -       | Animation configuration                            |
+| `onOpenChange`  | `(value: boolean) => void` | -       | Callback when open state changes                   |
+| `...ViewProps`  | `ViewProps`                | -       | All standard React Native View props are supported |
 
 #### Animation Configuration
 
@@ -219,26 +222,26 @@ Animation configuration for bottom sheet root component. Can be:
 
 ### BottomSheet.Portal
 
-| prop                     | type                   | default | description                                                                                           |
-| ------------------------ | ---------------------- | ------- | ----------------------------------------------------------------------------------------------------- |
-| `children`               | `React.ReactNode`      | -       | Portal content (overlay and bottom sheet)                                                              |
-| `disableFullWindowOverlay` | `boolean`            | `false` | When true on iOS, uses View instead of FullWindowOverlay. Enables element inspector; overlay won't appear above native modals |
-| `className`              | `string`               | -       | Additional CSS classes for portal container                                                           |
-| `style`                  | `StyleProp<ViewStyle>` | -       | Additional styles for portal container                                                                |
-| `hostName`               | `string`               | -       | Optional portal host name for specific container                                                      |
-| `forceMount`             | `boolean`              | -       | Force mount when closed for animation purposes                                                        |
+| prop                       | type                   | default | description                                                                                                                   |
+| -------------------------- | ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `children`                 | `React.ReactNode`      | -       | Portal content (overlay and bottom sheet)                                                                                     |
+| `disableFullWindowOverlay` | `boolean`              | `false` | When true on iOS, uses View instead of FullWindowOverlay. Enables element inspector; overlay won't appear above native modals |
+| `className`                | `string`               | -       | Additional CSS classes for portal container                                                                                   |
+| `style`                    | `StyleProp<ViewStyle>` | -       | Additional styles for portal container                                                                                        |
+| `hostName`                 | `string`               | -       | Optional portal host name for specific container                                                                              |
+| `forceMount`               | `boolean`              | -       | Force mount when closed for animation purposes                                                                                |
 
 ### BottomSheet.Overlay
 
-| prop                    | type                          | default | description                                                  |
-| ----------------------- | ----------------------------- | ------- | ------------------------------------------------------------ |
-| `children`              | `React.ReactNode`             | -       | Custom overlay content                                       |
-| `className`             | `string`                      | -       | Additional CSS classes for overlay                           |
-| `style`                 | `ViewStyle`                   | -       | Additional styles for overlay container                      |
+| prop                    | type                                                   | default | description                                                  |
+| ----------------------- | ------------------------------------------------------ | ------- | ------------------------------------------------------------ |
+| `children`              | `React.ReactNode`                                      | -       | Custom overlay content                                       |
+| `className`             | `string`                                               | -       | Additional CSS classes for overlay                           |
+| `style`                 | `ViewStyle`                                            | -       | Additional styles for overlay container                      |
 | `animation`             | `Omit<PopupOverlayAnimation, 'entering' \| 'exiting'>` | -       | Animation configuration                                      |
-| `isAnimatedStyleActive` | `boolean`                                                | `true`  | Whether animated styles (react-native-reanimated) are active |
-| `isCloseOnPress`        | `boolean`                                                | `true`  | Whether pressing overlay closes bottom sheet                 |
-| `...PressableProps`     | `PressableProps`                                         | -       | All standard React Native Pressable props are supported      |
+| `isAnimatedStyleActive` | `boolean`                                              | `true`  | Whether animated styles (react-native-reanimated) are active |
+| `isCloseOnPress`        | `boolean`                                              | `true`  | Whether pressing overlay closes bottom sheet                 |
+| `...PressableProps`     | `PressableProps`                                       | -       | All standard React Native Pressable props are supported      |
 
 #### Animation Configuration
 

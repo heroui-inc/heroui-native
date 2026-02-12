@@ -3,6 +3,7 @@ import Animated from 'react-native-reanimated';
 import { useIsOnSurface } from '../../helpers/external/hooks';
 import { HeroText } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import { useBottomSheetAwareHandlers } from '../../helpers/internal/hooks';
 import { createContext } from '../../helpers/internal/utils';
 import * as InputOTPPrimitives from '../../primitives/input-otp';
 import {
@@ -49,12 +50,26 @@ const REGEXP_ONLY_DIGITS_AND_CHARS =
 
 const InputOTPRoot = forwardRef<InputOTPRef, InputOTPRootProps>(
   (props, ref) => {
-    const { className, animation, ...restProps } = props;
+    const {
+      className,
+      animation,
+      isBottomSheetAware,
+      onFocus: onFocusProp,
+      onBlur: onBlurProp,
+      ...restProps
+    } = props;
 
     const rootClassName = inputOTPClassNames.root({ className });
 
     const { isAllAnimationsDisabled } = useInputOTPRootAnimation({
       animation,
+    });
+
+    /** Merge user-provided onFocus/onBlur with bottom sheet keyboard handlers */
+    const { onFocus, onBlur } = useBottomSheetAwareHandlers({
+      onFocus: onFocusProp,
+      onBlur: onBlurProp,
+      isBottomSheetAware,
     });
 
     const animationSettingsContextValue = useMemo(
@@ -69,6 +84,8 @@ const InputOTPRoot = forwardRef<InputOTPRef, InputOTPRootProps>(
         <InputOTPPrimitives.Root
           ref={ref}
           className={rootClassName}
+          onFocus={onFocus}
+          onBlur={onBlur}
           {...restProps}
         />
       </AnimationSettingsProvider>

@@ -6,7 +6,6 @@ import {
   Description,
   InputOTP,
   Label,
-  useBottomSheetInputHandlers,
   useToast,
   type InputOTPRef,
 } from 'heroui-native';
@@ -29,6 +28,9 @@ const formatPhoneNumber = (phone: string): string => {
 
 /**
  * OTP Input component with enhanced UI
+ *
+ * InputOTP automatically handles keyboard interactions inside a bottom sheet
+ * via the isBottomSheetAware prop (enabled by default).
  */
 const BottomSheetInputOTP = memo(
   ({
@@ -44,8 +46,6 @@ const BottomSheetInputOTP = memo(
     onComplete: (code: string) => void;
     phoneNumber: string;
   }) => {
-    const { onFocus, onBlur } = useBottomSheetInputHandlers();
-
     return (
       <View className="gap-6 items-center">
         <Avatar size="lg" color="accent" variant="soft" alt="Verification icon">
@@ -74,8 +74,6 @@ const BottomSheetInputOTP = memo(
             value={value}
             onChange={onChange}
             onComplete={onComplete}
-            onFocus={onFocus}
-            onBlur={onBlur}
           >
             <InputOTP.Group>
               <InputOTP.Slot index={0} />

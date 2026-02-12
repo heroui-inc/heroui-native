@@ -221,7 +221,9 @@ const UpdateProfileDialogForm = ({ onClose }: { onClose: () => void }) => {
         height: maxTextInputDialogHeight,
       }}
     >
-      <Dialog.Close className="self-end" />
+      <View className="items-end">
+        <Dialog.Close />
+      </View>
       <Dialog.Title className="mb-6">Update Profile</Dialog.Title>
 
       <View className="flex-1">

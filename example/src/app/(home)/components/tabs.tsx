@@ -7,6 +7,7 @@ import {
   FieldError,
   Input,
   Label,
+  Radio,
   RadioGroup,
   Tabs,
   TextField,
@@ -182,15 +183,15 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               </View>
               <View className="gap-3">
                 <RadioGroup.Item value="auto" className="self-start">
-                  <RadioGroup.Indicator />
+                  <Radio />
                   <Label>Auto</Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="light" className="self-start">
-                  <RadioGroup.Indicator />
+                  <Radio />
                   <Label>Light</Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="dark" className="self-start">
-                  <RadioGroup.Indicator />
+                  <Radio />
                   <Label>Dark</Label>
                 </RadioGroup.Item>
               </View>
@@ -205,15 +206,15 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               </View>
               <View className="gap-3">
                 <RadioGroup.Item value="small" className="self-start">
-                  <RadioGroup.Indicator />
+                  <Radio />
                   <Label>Small</Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="medium" className="self-start">
-                  <RadioGroup.Indicator />
+                  <Radio />
                   <Label>Medium</Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="large" className="self-start">
-                  <RadioGroup.Indicator />
+                  <Radio />
                   <Label>Large</Label>
                 </RadioGroup.Item>
               </View>

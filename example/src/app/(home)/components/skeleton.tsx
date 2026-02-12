@@ -3,6 +3,7 @@ import {
   Avatar,
   Card,
   Label,
+  Radio,
   RadioGroup,
   Separator,
   Skeleton,
@@ -34,15 +35,15 @@ const SkeletonControls = ({
         className="flex-row gap-6"
       >
         <RadioGroup.Item value="shimmer">
-          <RadioGroup.Indicator />
+          <Radio />
           <Label>Shimmer</Label>
         </RadioGroup.Item>
         <RadioGroup.Item value="pulse">
-          <RadioGroup.Indicator />
+          <Radio />
           <Label>Pulse</Label>
         </RadioGroup.Item>
         <RadioGroup.Item value="none">
-          <RadioGroup.Indicator />
+          <Radio />
           <Label>None</Label>
         </RadioGroup.Item>
       </RadioGroup>

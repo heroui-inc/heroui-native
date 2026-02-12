@@ -2,6 +2,7 @@ import {
   cn,
   Description,
   Label,
+  Radio,
   RadioGroup,
   useRadioGroup,
 } from 'heroui-native';
@@ -41,11 +42,13 @@ export const StyledRadio: FC<Props> = ({
     >
       <BlurContainer>
         <RadioGroup.Item value={value} className="flex-1 px-6">
-          <RadioGroup.Indicator
-            className={cn('border-white/25', isSelected && 'bg-white')}
-          >
-            <RadioGroup.IndicatorThumb className="bg-[#262626]" />
-          </RadioGroup.Indicator>
+          <Radio>
+            <Radio.Indicator
+              className={cn('border-white/25', isSelected && 'bg-white')}
+            >
+              <Radio.IndicatorThumb className="bg-[#262626]" />
+            </Radio.Indicator>
+          </Radio>
           <View className="flex-1 flex-row items-center justify-between gap-3">
             <View>
               <Label className={className.title}>{title1}</Label>

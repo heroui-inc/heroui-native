@@ -3,11 +3,9 @@ import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { useIsOnSurface } from '../../helpers/external/hooks';
-import {
-  AnimationSettingsProvider,
-  FormItemStateProvider,
-} from '../../helpers/internal/contexts';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import * as RadioPrimitives from '../../primitives/radio';
+import { useRadioGroupItem } from '../radio-group/radio-group.context';
 import {
   useRadioIndicatorThumbAnimation,
   useRadioRootAnimation,
@@ -23,37 +21,53 @@ import type {
 
 const useRadio = RadioPrimitives.useRadioContext;
 
-const AnimatedRadioRoot = Animated.createAnimatedComponent(
-  RadioPrimitives.Root
-);
-
 const AnimatedRadioIndicator = Animated.createAnimatedComponent(
   RadioPrimitives.Indicator
 );
 
 // --------------------------------------------------
 
+/**
+ * Radio root component.
+ *
+ * Operates in two modes:
+ * - **Standalone**: Renders a Pressable trigger with `isSelected`/`onSelectedChange`.
+ * - **Inside RadioGroupItem**: Detects parent context automatically, derives state from
+ *   the RadioGroupItem, and pressing selects this item in the group.
+ */
 const RadioRoot = forwardRef<RadioPrimitives.RootRef, RadioProps>(
   (props, ref) => {
     const {
       children,
-      isSelected,
-      onSelectedChange,
-      isDisabled,
-      isInvalid,
-      variant,
+      isSelected: isSelectedProp,
+      onSelectedChange: onSelectedChangeProp,
+      isDisabled: isDisabledProp,
+      isInvalid: isInvalidProp,
+      variant: variantProp,
       className,
       animation,
       ...restProps
     } = props;
 
+    // Detect RadioGroupItem context (non-strict: returns undefined outside a group)
+    const radioGroupItemContext = useRadioGroupItem();
+
+    // Merge props with RadioGroupItem context (explicit props take precedence)
+    const isSelected = isSelectedProp ?? radioGroupItemContext?.isSelected;
+    const isDisabled = isDisabledProp ?? radioGroupItemContext?.isDisabled;
+    const isInvalid = isInvalidProp ?? radioGroupItemContext?.isInvalid;
+    const onSelectedChange =
+      onSelectedChangeProp ?? radioGroupItemContext?.onSelectedChange;
+
     const isOnSurfaceAutoDetected = useIsOnSurface();
     const finalVariant =
-      variant !== undefined
-        ? variant
-        : isOnSurfaceAutoDetected
-          ? 'secondary'
-          : 'primary';
+      variantProp !== undefined
+        ? variantProp
+        : radioGroupItemContext?.variant !== undefined
+          ? radioGroupItemContext.variant
+          : isOnSurfaceAutoDetected
+            ? 'secondary'
+            : 'primary';
 
     const rootClassName = radioClassNames.root({
       className,
@@ -70,15 +84,6 @@ const RadioRoot = forwardRef<RadioPrimitives.RootRef, RadioProps>(
         ? children(renderProps)
         : (children ?? <RadioIndicator />);
 
-    const formItemStateContextValue = useMemo(
-      () => ({
-        isDisabled: isDisabled ?? false,
-        isInvalid: isInvalid ?? false,
-        isRequired: false,
-      }),
-      [isDisabled, isInvalid]
-    );
-
     const { isAllAnimationsDisabled } = useRadioRootAnimation({
       animation,
     });
@@ -92,21 +97,19 @@ const RadioRoot = forwardRef<RadioPrimitives.RootRef, RadioProps>(
 
     return (
       <AnimationSettingsProvider value={animationSettingsContextValue}>
-        <FormItemStateProvider value={formItemStateContextValue}>
-          <AnimatedRadioRoot
-            ref={ref}
-            variant={finalVariant}
-            className={rootClassName}
-            isSelected={isSelected}
-            onSelectedChange={onSelectedChange}
-            isDisabled={isDisabled}
-            isInvalid={isInvalid}
-            hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
-            {...restProps}
-          >
-            {content}
-          </AnimatedRadioRoot>
-        </FormItemStateProvider>
+        <RadioPrimitives.Root
+          ref={ref}
+          variant={finalVariant}
+          className={rootClassName}
+          isSelected={isSelected}
+          onSelectedChange={onSelectedChange}
+          isDisabled={isDisabled}
+          isInvalid={isInvalid}
+          hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
+          {...restProps}
+        >
+          {content}
+        </RadioPrimitives.Root>
       </AnimationSettingsProvider>
     );
   }
@@ -186,10 +189,14 @@ RadioIndicatorThumb.displayName = DISPLAY_NAME.RADIO_INDICATOR_THUMB;
 /**
  * Compound Radio component with sub-components.
  *
- * @component Radio - Individual radio option. Works standalone with `isSelected`/`onSelectedChange`,
- * or inside a RadioGroup with `value` prop. Handles selection state and renders default indicator
- * if no children provided. Supports render function children to access state
- * (`isSelected`, `isInvalid`, `isDisabled`).
+ * @component Radio - Individual radio option that operates in two modes:
+ * - **Standalone**: Uses `isSelected`/`onSelectedChange` directly.
+ * - **Inside RadioGroupItem**: Automatically detects the parent context, derives
+ *   `isSelected`/`isDisabled`/`isInvalid`/`variant` from it. Pressing selects this
+ *   item in the group via the group's `onValueChange`.
+ *
+ * Renders a default indicator if no children are provided. Supports render function
+ * children to access state (`isSelected`, `isInvalid`, `isDisabled`).
  *
  * @component Radio.Indicator - Optional container for the radio circle. Renders default thumb
  * if no children provided. Manages the visual selection state.

@@ -267,7 +267,7 @@ export default function ButtonExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/button.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/button.tsx>).
 
 ## API Reference
 
@@ -275,14 +275,14 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 
 Button extends all props from [PressableFeedback](../pressable-feedback/pressable-feedback.md) component with additional button-specific props.
 
-| prop                              | type                                                                                  | default       | description                                                    |
-| --------------------------------- | ------------------------------------------------------------------------------------- | ------------- | -------------------------------------------------------------- |
+| prop                              | type                                                                                          | default       | description                                                    |
+| --------------------------------- | --------------------------------------------------------------------------------------------- | ------------- | -------------------------------------------------------------- |
 | `variant`                         | `'primary' \| 'secondary' \| 'tertiary' \| 'outline' \| 'ghost' \| 'danger' \| 'danger-soft'` | `'primary'`   | Visual variant of the button                                   |
-| `size`                            | `'sm' \| 'md' \| 'lg'`                                                           | `'md'`        | Size of the button                                             |
-| `isIconOnly`                      | `boolean`                                                                        | `false`       | Whether the button displays an icon only (square aspect ratio) |
-| `pressableFeedbackVariant`        | `'highlight' \| 'ripple' \| 'none'`                                              | `'highlight'` | Variant of pressable feedback effect                           |
-| `pressableFeedbackHighlightProps` | `PressableFeedbackHighlightProps`                                                | -             | Props for PressableFeedback.Highlight component                |
-| `pressableFeedbackRippleProps`    | `PressableFeedbackRippleProps`                                                   | -             | Props for PressableFeedback.Ripple component                   |
+| `size`                            | `'sm' \| 'md' \| 'lg'`                                                                        | `'md'`        | Size of the button                                             |
+| `isIconOnly`                      | `boolean`                                                                                     | `false`       | Whether the button displays an icon only (square aspect ratio) |
+| `pressableFeedbackVariant`        | `'highlight' \| 'ripple' \| 'none'`                                                           | `'highlight'` | Variant of pressable feedback effect                           |
+| `pressableFeedbackHighlightProps` | `PressableFeedbackHighlightProps`                                                             | -             | Props for PressableFeedback.Highlight component                |
+| `pressableFeedbackRippleProps`    | `PressableFeedbackRippleProps`                                                                | -             | Props for PressableFeedback.Ripple component                   |
 
 For inherited props including `animation` (for root scale animation), `isDisabled`, `className`, `children`, and all Pressable props, see [PressableFeedback API Reference](../pressable-feedback/pressable-feedback.md#api-reference).
 
@@ -308,10 +308,10 @@ const { size, variant, isDisabled } = useButton();
 
 #### Return Value
 
-| property     | type                                                                                  | description                    |
-| ------------ | ------------------------------------------------------------------------------------- | ------------------------------ |
-| `size`       | `'sm' \| 'md' \| 'lg'`                                                               | Size of the button             |
+| property     | type                                                                                          | description                    |
+| ------------ | --------------------------------------------------------------------------------------------- | ------------------------------ |
+| `size`       | `'sm' \| 'md' \| 'lg'`                                                                        | Size of the button             |
 | `variant`    | `'primary' \| 'secondary' \| 'tertiary' \| 'outline' \| 'ghost' \| 'danger' \| 'danger-soft'` | Visual variant of the button   |
-| `isDisabled` | `boolean`                                                                             | Whether the button is disabled |
+| `isDisabled` | `boolean`                                                                                     | Whether the button is disabled |
 
 **Note:** This hook must be used within a `Button` component. It will throw an error if called outside of the button context.

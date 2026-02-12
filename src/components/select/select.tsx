@@ -10,6 +10,7 @@ import { cn } from '../../helpers/external/utils';
 import {
   BottomSheetContent,
   CheckIcon,
+  ChevronDownIcon,
   FullWindowOverlay,
   HeroText,
 } from '../../helpers/internal/components';
@@ -23,16 +24,18 @@ import {
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
-import type { PressableRef } from '../../helpers/internal/types';
+import type { PressableRef, ViewRef } from '../../helpers/internal/types';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import { CloseButton } from '../close-button';
 import {
   SelectAnimationProvider,
   useSelectAnimation,
+  useSelectTriggerIndicatorAnimation,
 } from './select.animation';
 import {
   DEFAULT_ALIGN_OFFSET,
+  DEFAULT_ICON_SIZE,
   DEFAULT_INSETS,
   DEFAULT_OFFSET,
   DISPLAY_NAME,
@@ -53,6 +56,7 @@ import type {
   SelectOverlayProps,
   SelectPortalProps,
   SelectRootProps,
+  SelectTriggerIndicatorProps,
   SelectTriggerProps,
   SelectValueProps,
 } from './select.types';
@@ -63,6 +67,10 @@ const AnimatedOverlay = Animated.createAnimatedComponent(
 
 const AnimatedPopoverContent = Animated.createAnimatedComponent(
   SelectPrimitives.PopoverContent
+);
+
+const AnimatedTriggerIndicator = Animated.createAnimatedComponent(
+  SelectPrimitives.TriggerIndicator
 );
 
 const useSelect = SelectPrimitives.useRootContext;
@@ -125,11 +133,12 @@ const SelectTrigger = forwardRef<
   SelectPrimitivesTypes.TriggerRef,
   SelectTriggerProps
 >((props, ref) => {
-  const { isDisabled: isDisabledProp } = props;
+  const { variant = 'default', isDisabled: isDisabledProp } = props;
 
   const { isDisabled } = useSelect();
 
   const triggerClassName = selectClassNames.trigger({
+    variant,
     isDisabled: isDisabledProp || isDisabled,
   });
 
@@ -148,7 +157,11 @@ const SelectValue = forwardRef<
   SelectPrimitivesTypes.ValueRef,
   SelectValueProps
 >(({ className, ...props }, ref) => {
-  const valueClassName = selectClassNames.value({ className });
+  const { value } = useSelect();
+
+  const isSelected = Boolean(value?.value);
+
+  const valueClassName = selectClassNames.value({ isSelected, className });
 
   return (
     <SelectPrimitives.Value ref={ref} className={valueClassName} {...props} />
@@ -157,7 +170,72 @@ const SelectValue = forwardRef<
 
 // --------------------------------------------------
 
-const SelectPortal = ({ className, children, ...props }: SelectPortalProps) => {
+const SelectTriggerIndicator = forwardRef<ViewRef, SelectTriggerIndicatorProps>(
+  (props, ref) => {
+    const {
+      children,
+      className,
+      iconProps,
+      animation,
+      isAnimatedStyleActive = true,
+      style,
+      ...restProps
+    } = props;
+
+    const { isOpen } = useSelect();
+
+    const themeColorForeground = useThemeColor('foreground');
+
+    const triggerIndicatorClassName = selectClassNames.triggerIndicator({
+      className,
+    });
+
+    const { rContainerStyle } = useSelectTriggerIndicatorAnimation({
+      animation,
+      isOpen,
+    });
+
+    const triggerIndicatorStyle = isAnimatedStyleActive
+      ? [rContainerStyle, style]
+      : style;
+
+    if (children) {
+      return (
+        <AnimatedTriggerIndicator
+          ref={ref}
+          className={triggerIndicatorClassName}
+          style={style}
+          {...restProps}
+        >
+          {children}
+        </AnimatedTriggerIndicator>
+      );
+    }
+
+    return (
+      <AnimatedTriggerIndicator
+        ref={ref}
+        className={triggerIndicatorClassName}
+        style={triggerIndicatorStyle}
+        {...restProps}
+      >
+        <ChevronDownIcon
+          size={iconProps?.size ?? DEFAULT_ICON_SIZE}
+          color={iconProps?.color ?? themeColorForeground}
+        />
+      </AnimatedTriggerIndicator>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const SelectPortal = ({
+  className,
+  children,
+  disableFullWindowOverlay = false,
+  ...props
+}: SelectPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
   const animationContext = useSelectAnimation();
 
@@ -167,7 +245,9 @@ const SelectPortal = ({ className, children, ...props }: SelectPortalProps) => {
     <SelectPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <SelectAnimationProvider value={animationContext}>
-          <FullWindowOverlay>
+          <FullWindowOverlay
+            disableFullWindowOverlay={disableFullWindowOverlay}
+          >
             <View className={portalClassName}>{children}</View>
           </FullWindowOverlay>
         </SelectAnimationProvider>
@@ -375,7 +455,15 @@ const SelectContentDialog = forwardRef<
   SelectContentProps & { presentation: 'dialog' }
 >(
   (
-    { classNames, style, children, animation, isSwipeable = true, ...props },
+    {
+      classNames,
+      styles,
+      style,
+      children,
+      animation,
+      isSwipeable = true,
+      ...props
+    },
     ref
   ) => {
     const { isOpen, onOpenChange } = useSelect();
@@ -418,7 +506,7 @@ const SelectContentDialog = forwardRef<
     }, []);
 
     return (
-      <View className={wrapperClassName}>
+      <View className={wrapperClassName} style={styles?.wrapper}>
         <GestureDetector gesture={panGesture}>
           <Animated.View
             ref={dragContainerRef}
@@ -429,7 +517,11 @@ const SelectContentDialog = forwardRef<
               <SelectPrimitives.DialogContent
                 ref={ref}
                 className={contentClassName}
-                style={[selectStyleSheet.contentContainer, style]}
+                style={[
+                  selectStyleSheet.contentContainer,
+                  styles?.content,
+                  style,
+                ]}
                 {...props}
               >
                 {children}
@@ -642,12 +734,13 @@ const SelectListLabel = forwardRef<
 
 SelectRoot.displayName = DISPLAY_NAME.ROOT;
 SelectTrigger.displayName = DISPLAY_NAME.TRIGGER;
+SelectTriggerIndicator.displayName = DISPLAY_NAME.TRIGGER_INDICATOR;
+SelectValue.displayName = DISPLAY_NAME.VALUE;
 SelectPortal.displayName = DISPLAY_NAME.PORTAL;
 SelectOverlay.displayName = DISPLAY_NAME.OVERLAY;
 SelectContent.displayName = DISPLAY_NAME.CONTENT;
 SelectClose.displayName = DISPLAY_NAME.CLOSE;
 SelectItemDescription.displayName = DISPLAY_NAME.ITEM_DESCRIPTION;
-SelectValue.displayName = DISPLAY_NAME.VALUE;
 SelectItem.displayName = DISPLAY_NAME.ITEM;
 SelectItemLabel.displayName = DISPLAY_NAME.ITEM_LABEL;
 SelectItemIndicator.displayName = DISPLAY_NAME.ITEM_INDICATOR;
@@ -661,6 +754,10 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
  *
  * @component Select.Trigger - Clickable element that toggles the select visibility.
  * Wraps any child element with press handlers.
+ *
+ * @component Select.TriggerIndicator - Optional visual indicator showing open/close state.
+ * Defaults to an animated chevron icon that rotates based on select state.
+ * Supports custom animation configuration.
  *
  * @component Select.Value - Displays the selected value or placeholder text.
  * Automatically updates when selection changes.
@@ -695,6 +792,8 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
  */
 const Select = Object.assign(SelectRoot, {
   Trigger: SelectTrigger,
+  /** @optional Visual indicator showing open/close state (defaults to chevron) */
+  TriggerIndicator: SelectTriggerIndicator,
   Value: SelectValue,
   Portal: SelectPortal,
   Overlay: SelectOverlay,

@@ -13,8 +13,14 @@
       --foreground: oklch(21.03% 0.0059 305.00);
 
       /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
-      --surface: oklch(100.00% 0.0076 305.00);
-      --surface-foreground: oklch(21.03% 0.0059 305.00);
+      --surface: oklch(100.00% 0.0100 305.00);
+      --surface-foreground: oklch(21.03% 0.0100 305.00);
+
+      --surface-secondary: oklch(95.24% 0.0160 305.00);
+      --surface-secondary-foreground: oklch(21.03% 0.0200 305.00);
+
+      --surface-tertiary: oklch(93.73% 0.0160 305.00);
+      --surface-tertiary-foreground: oklch(21.03% 0.0200 305.00);
 
       /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
       --overlay: oklch(100.00% 0.0045 305.00);
@@ -75,8 +81,14 @@
       --foreground: oklch(99.11% 0.0000 0.00);
 
       /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
-      --surface: oklch(21.03% 0.0302 305.00);
-      --surface-foreground: oklch(99.11% 0.0000 0.00);
+      --surface: oklch(21.03% 0.0400 305.00);
+      --surface-foreground: oklch(99.11% 0.0200 305.00);
+
+      --surface-secondary: oklch(25.70% 0.0300 305.00);
+      --surface-secondary-foreground: oklch(99.11% 0.0200 305.00);
+  
+      --surface-tertiary: oklch(27.21% 0.0300 305.00);
+      --surface-tertiary-foreground: oklch(99.11% 0.0200 305.00);
 
       /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
       --overlay: oklch(21.03% 0.0302 305.00);

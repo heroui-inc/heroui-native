@@ -205,9 +205,10 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
       color: colorProp,
       className,
       classNames,
+      style,
+      styles,
       textProps,
       iconProps,
-      style,
       delayMs,
       animation,
       ...restProps
@@ -241,12 +242,16 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
         ref={ref}
         entering={entering}
         className={fallbackContainerClassName}
-        style={[avatarStyleSheet.borderCurve, style]}
+        style={[avatarStyleSheet.borderCurve, style, styles?.container]}
         {...restProps}
       >
         {children ? (
           stringifiedChildren ? (
-            <HeroText className={fallbackTextClassName} {...textProps}>
+            <HeroText
+              className={fallbackTextClassName}
+              style={styles?.text}
+              {...textProps}
+            >
               {stringifiedChildren}
             </HeroText>
           ) : (

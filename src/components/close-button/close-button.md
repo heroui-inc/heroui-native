@@ -86,7 +86,7 @@ export default function CloseButtonExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/close-button.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/close-button.tsx>).
 
 ## API Reference
 
@@ -94,16 +94,16 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 
 CloseButton extends all props from [Button](../button/button.md) component. It defaults to `variant='tertiary'`, `size='sm'`, and `isIconOnly=true`.
 
-| prop       | type                   | default | description                                                      |
-| ---------- | ---------------------- | ------- | ---------------------------------------------------------------- |
-| `iconProps` | `CloseButtonIconProps` | -       | Props for customizing the close icon                             |
-| `children` | `React.ReactNode`      | -       | Custom content to replace the default close icon                 |
+| prop        | type                   | default | description                                      |
+| ----------- | ---------------------- | ------- | ------------------------------------------------ |
+| `iconProps` | `CloseButtonIconProps` | -       | Props for customizing the close icon             |
+| `children`  | `React.ReactNode`      | -       | Custom content to replace the default close icon |
 
 For inherited props including `isDisabled`, `className`, `animation`, `pressableFeedbackVariant`, `pressableFeedbackHighlightProps`, `pressableFeedbackRippleProps`, and all Pressable props, see [Button API Reference](../button/button.md#api-reference).
 
 #### CloseButtonIconProps
 
-| prop    | type     | default                  | description                      |
-| ------- | -------- | ------------------------ | -------------------------------- |
-| `size`  | `number` | `20`                     | Size of the icon                 |
-| `color` | `string` | Uses theme muted color   | Color of the icon                |
+| prop    | type     | default                | description       |
+| ------- | -------- | ---------------------- | ----------------- |
+| `size`  | `number` | `20`                   | Size of the icon  |
+| `color` | `string` | Uses theme muted color | Color of the icon |

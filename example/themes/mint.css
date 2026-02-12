@@ -13,8 +13,14 @@
       --foreground: oklch(21.03% 0.0059 155.00);
 
       /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
-      --surface: oklch(100.00% 0.0060 155.00);
-      --surface-foreground: oklch(21.03% 0.0059 155.00);
+      --surface: oklch(100.00% 0.0065 155.00);
+      --surface-foreground: oklch(21.03% 0.0130 155.00);
+
+      --surface-secondary: oklch(95.24% 0.0104 155.00);
+      --surface-secondary-foreground: oklch(21.03% 0.0130 155.00);
+
+      --surface-tertiary: oklch(93.73% 0.0104 155.00);
+      --surface-tertiary-foreground: oklch(21.03% 0.0130 155.00);
 
       /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
       --overlay: oklch(100.00% 0.0036 155.00);
@@ -57,14 +63,14 @@
 
       /* Shadows */
       --surface-shadow:
-        0 2px 4px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.03),
-        0 0 1px 0 rgba(0, 0, 0, 0.03);
-      /* Overlay shadow */
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
       --overlay-shadow:
-        0 4px 16px 0 rgba(24, 24, 27, 0.04), 0 8px 24px 0 rgba(24, 24, 27, 0.045);
+        0 2px 8px 0 rgba(0, 0, 0, 0.02), 0 -6px 12px 0 rgba(0, 0, 0, 0.01),
+        0 14px 28px 0 rgba(0, 0, 0, 0.03);
       --field-shadow:
-        0 2px 4px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.03),
-        0 0 1px 0 rgba(0, 0, 0, 0.03);
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
     }
 
     @variant mint-dark {
@@ -80,8 +86,14 @@
       --foreground: oklch(99.11% 0.0000 0.00);
 
       /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
-      --surface: oklch(21.03% 0.0242 155.00);
-      --surface-foreground: oklch(99.11% 0.0000 0.00);
+      --surface: oklch(21.03% 0.0260 155.00);
+      --surface-foreground: oklch(99.11% 0.0130 155.00);
+
+      --surface-secondary: oklch(25.70% 0.0195 155.00);
+      --surface-secondary-foreground: oklch(99.11% 0.0130 155.00);
+      
+      --surface-tertiary: oklch(27.21% 0.0195 155.00);
+      --surface-tertiary-foreground: oklch(99.11% 0.0130 155.00);
 
       /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
       --overlay: oklch(21.03% 0.0242 155.00);

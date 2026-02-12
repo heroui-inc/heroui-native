@@ -1,6 +1,4 @@
-import { forwardRef, useMemo } from 'react';
-import { View } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { forwardRef, useCallback, useMemo } from 'react';
 
 import { useIsOnSurface } from '../../helpers/external/hooks';
 import {
@@ -10,34 +8,16 @@ import {
 import { childrenToString } from '../../helpers/internal/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
 import Label from '../label/label';
-import {
-  useRadioGroupIndicatorThumbAnimation,
-  useRadioGroupRootAnimation,
-} from './radio-group.animation';
-import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './radio-group.constants';
-import {
-  RadioGroupItemProvider,
-  useRadioGroupItem,
-} from './radio-group.context';
-import {
-  radioGroupClassNames,
-  radioGroupStyleSheet,
-} from './radio-group.styles';
+import Radio from '../radio/radio';
+import { useRadioGroupRootAnimation } from './radio-group.animation';
+import { DISPLAY_NAME } from './radio-group.constants';
+import { RadioGroupItemProvider } from './radio-group.context';
+import { radioGroupClassNames } from './radio-group.styles';
 import type {
-  RadioGroupIndicatorProps,
-  RadioGroupIndicatorThumbProps,
   RadioGroupItemProps,
   RadioGroupItemRenderProps,
   RadioGroupProps,
 } from './radio-group.types';
-
-const AnimatedRadioItem = Animated.createAnimatedComponent(
-  RadioGroupPrimitives.Item
-);
-
-const AnimatedRadioIndicator = Animated.createAnimatedComponent(
-  RadioGroupPrimitives.Indicator
-);
 
 const useRadioGroup = RadioGroupPrimitives.useRadioGroupContext;
 
@@ -47,7 +27,13 @@ const RadioGroupRoot = forwardRef<
   RadioGroupPrimitives.RootRef,
   RadioGroupProps
 >((props, ref) => {
-  const { className, isInvalid = false, animation, ...restProps } = props;
+  const {
+    className,
+    isDisabled = false,
+    isInvalid = false,
+    animation,
+    ...restProps
+  } = props;
 
   const rootClassName = radioGroupClassNames.root({
     className,
@@ -64,14 +50,26 @@ const RadioGroupRoot = forwardRef<
     [isAllAnimationsDisabled]
   );
 
+  const formItemStateContextValue = useMemo(
+    () => ({
+      isDisabled,
+      isInvalid,
+      isRequired: false,
+    }),
+    [isDisabled, isInvalid]
+  );
+
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
-      <RadioGroupPrimitives.Root
-        ref={ref}
-        className={rootClassName}
-        isInvalid={isInvalid}
-        {...restProps}
-      />
+      <FormItemStateProvider value={formItemStateContextValue}>
+        <RadioGroupPrimitives.Root
+          ref={ref}
+          className={rootClassName}
+          isDisabled={isDisabled}
+          isInvalid={isInvalid}
+          {...restProps}
+        />
+      </FormItemStateProvider>
     </AnimationSettingsProvider>
   );
 });
@@ -99,16 +97,20 @@ const RadioGroupItem = forwardRef<
 
   const {
     value: groupValue,
+    onValueChange: groupOnValueChange,
     isInvalid: groupIsInvalid,
     isDisabled: groupIsDisabled,
     variant: groupVariant,
   } = useRadioGroup();
 
   const isSelected = groupValue === value;
-
   const isDisabledValue = isDisabled ?? groupIsDisabled ?? false;
-
   const effectiveIsInvalid = isInvalid ?? groupIsInvalid ?? false;
+
+  /** Selects this item in the group (radio behavior: always selects, never deselects) */
+  const handleSelectedChange = useCallback(() => {
+    groupOnValueChange(value);
+  }, [groupOnValueChange, value]);
 
   const isOnSurfaceAutoDetected = useIsOnSurface();
 
@@ -134,7 +136,7 @@ const RadioGroupItem = forwardRef<
   const content = stringifiedChildren ? (
     <>
       <Label>{stringifiedChildren}</Label>
-      <RadioGroupIndicator />
+      <Radio />
     </>
   ) : typeof children === 'function' ? (
     children(renderProps)
@@ -148,8 +150,15 @@ const RadioGroupItem = forwardRef<
       isDisabled: isDisabledValue,
       isInvalid: effectiveIsInvalid,
       variant: finalVariant,
+      onSelectedChange: handleSelectedChange,
     }),
-    [isSelected, isDisabledValue, effectiveIsInvalid, finalVariant]
+    [
+      isSelected,
+      isDisabledValue,
+      effectiveIsInvalid,
+      finalVariant,
+      handleSelectedChange,
+    ]
   );
 
   const formItemStateContextValue = useMemo(
@@ -164,109 +173,38 @@ const RadioGroupItem = forwardRef<
   return (
     <FormItemStateProvider value={formItemStateContextValue}>
       <RadioGroupItemProvider value={contextValue}>
-        <AnimatedRadioItem
+        <RadioGroupPrimitives.Item
           ref={ref}
           value={value}
           className={itemClassName}
           isDisabled={isDisabledValue}
-          hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
           {...restProps}
         >
           {content}
-        </AnimatedRadioItem>
+        </RadioGroupPrimitives.Item>
       </RadioGroupItemProvider>
     </FormItemStateProvider>
   );
 });
 
-// --------------------------------------------------
-
-const RadioGroupIndicator = forwardRef<Animated.View, RadioGroupIndicatorProps>(
-  (props, ref) => {
-    const { children, className, style, ...restProps } = props;
-
-    const { isSelected, isInvalid, variant } = useRadioGroupItem();
-
-    const indicatorClassName = radioGroupClassNames.itemIndicator({
-      variant,
-      isSelected,
-      isInvalid,
-      className,
-    });
-
-    return (
-      <AnimatedRadioIndicator
-        ref={ref}
-        className={indicatorClassName}
-        style={[radioGroupStyleSheet.borderCurve, style]}
-        {...restProps}
-      >
-        {children ?? <RadioGroupIndicatorThumb />}
-      </AnimatedRadioIndicator>
-    );
-  }
-);
-
-// --------------------------------------------------
-
-const RadioGroupIndicatorThumb = forwardRef<
-  View,
-  RadioGroupIndicatorThumbProps
->((props, ref) => {
-  const {
-    className,
-    style,
-    animation,
-    isAnimatedStyleActive = true,
-    ...restProps
-  } = props;
-
-  const { isSelected } = useRadioGroupItem();
-
-  const thumbClassName = radioGroupClassNames.itemIndicatorThumb({
-    isSelected,
-    className,
-  });
-
-  const { rContainerStyle } = useRadioGroupIndicatorThumbAnimation({
-    animation,
-    isSelected,
-  });
-
-  const thumbStyle = isAnimatedStyleActive ? [rContainerStyle, style] : style;
-
-  return (
-    <Animated.View
-      ref={ref}
-      className={thumbClassName}
-      style={thumbStyle}
-      {...restProps}
-    />
-  );
-});
-
 RadioGroupRoot.displayName = DISPLAY_NAME.RADIO_GROUP_ROOT;
 RadioGroupItem.displayName = DISPLAY_NAME.RADIO_GROUP_ITEM;
-RadioGroupIndicator.displayName = DISPLAY_NAME.RADIO_GROUP_INDICATOR;
-RadioGroupIndicatorThumb.displayName = DISPLAY_NAME.RADIO_GROUP_INDICATOR_THUMB;
 
 /**
- * Compound RadioGroup component with sub-components
+ * Compound RadioGroup component with sub-components.
  *
  * @component RadioGroup - Container that manages the selection state of RadioGroupItem components.
  * Supports both horizontal and vertical orientations.
  *
- * @component RadioGroup.Item - Individual radio option within a RadioGroup. Must be used inside RadioGroup.
- * Handles selection state and renders default indicator if no children provided. Animates border
- * color based on selection state.
+ * @component RadioGroup.Item - Individual radio option within a RadioGroup. Must be used inside
+ * RadioGroup. Handles selection state and renders a default `<Radio />` indicator if text children
+ * are provided. Supports render function children to access state.
  *
- * @component RadioGroup.Indicator - Optional container for the radio circle. Renders default thumb
- * if no children provided. Manages the visual selection state.
+ * Use the `Radio` component (and its sub-components `Radio.Indicator`, `Radio.IndicatorThumb`)
+ * inside RadioGroup.Item for custom indicator rendering. The Radio component automatically detects
+ * the RadioGroupItem context and derives selection state from it.
  *
- * @component RadioGroup.IndicatorThumb - Optional inner circle that appears when selected. Animates
- * scale based on selection. Can be replaced with custom content.
- *
- * Props flow from RadioGroup to RadioGroupItem to sub-components via context (color, value, isSelected).
+ * Props flow from RadioGroup to RadioGroupItem to Radio via context (variant, value, isSelected).
  * RadioGroup manages the overall selection state and orientation.
  *
  * @see Full documentation: https://v3.heroui.com/docs/native/components/radio-group
@@ -274,10 +212,6 @@ RadioGroupIndicatorThumb.displayName = DISPLAY_NAME.RADIO_GROUP_INDICATOR_THUMB;
 const CompoundRadioGroup = Object.assign(RadioGroupRoot, {
   /** Individual radio option within a RadioGroup */
   Item: RadioGroupItem,
-  /** @optional Custom radio indicator container */
-  Indicator: RadioGroupIndicator,
-  /** @optional Custom indicator thumb that appears when selected */
-  IndicatorThumb: RadioGroupIndicatorThumb,
 });
 
 export default CompoundRadioGroup;

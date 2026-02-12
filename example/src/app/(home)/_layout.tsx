@@ -86,6 +86,7 @@ export default function Layout() {
           name="components/accordion"
           options={{ title: 'Accordion' }}
         />
+        <Stack.Screen name="components/alert" options={{ title: 'Alert' }} />
         <Stack.Screen name="components/avatar" options={{ title: 'Avatar' }} />
         <Stack.Screen
           name="components/bottom-sheet"

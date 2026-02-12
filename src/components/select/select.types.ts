@@ -1,9 +1,15 @@
 import type BottomSheet from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
-import type { TextProps } from 'react-native';
-import type { SharedValue } from 'react-native-reanimated';
+import type { TextProps, ViewStyle } from 'react-native';
 import type {
+  AnimatedProps,
+  SharedValue,
+  WithSpringConfig,
+} from 'react-native-reanimated';
+import type {
+  Animation,
   AnimationRootDisableAll,
+  AnimationValue,
   BaseBottomSheetContentProps,
   ElementSlots,
   PopupDialogContentAnimation,
@@ -55,6 +61,10 @@ export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
    */
   children?: ReactNode;
   /**
+   * Additional CSS classes for the select root
+   */
+  className?: string;
+  /**
    * The controlled open state of the select
    */
   isOpen?: boolean;
@@ -76,6 +86,11 @@ export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
  */
 export interface SelectTriggerProps extends SelectPrimitivesTypes.TriggerProps {
   /**
+   * The variant of the trigger
+   * @default 'default'
+   */
+  variant?: 'default' | 'unstyled';
+  /**
    * The trigger element content
    */
   children?: ReactNode;
@@ -86,9 +101,100 @@ export interface SelectTriggerProps extends SelectPrimitivesTypes.TriggerProps {
 }
 
 /**
+ * Icon props for the Select.TriggerIndicator component
+ */
+export interface SelectTriggerIndicatorIconProps {
+  /**
+   * Size of the icon
+   * @default 16
+   */
+  size?: number;
+  /**
+   * Color of the icon
+   * @default foreground
+   */
+  color?: string;
+}
+
+/**
+ * Animation configuration for select trigger indicator component
+ */
+export type SelectTriggerIndicatorAnimation = Animation<{
+  rotation?: AnimationValue<{
+    /**
+     * Rotation values [closed, open] in degrees
+     * @default [0, -180]
+     */
+    value?: [number, number];
+    /**
+     * Spring animation configuration for rotation
+     * @default { damping: 140, stiffness: 1000, mass: 4 }
+     */
+    springConfig?: WithSpringConfig;
+  }>;
+}>;
+
+/**
+ * Props for the Select.TriggerIndicator component
+ */
+export interface SelectTriggerIndicatorProps
+  extends AnimatedProps<SelectPrimitivesTypes.TriggerIndicatorProps> {
+  /**
+   * Custom trigger indicator content, if not provided defaults to animated chevron
+   */
+  children?: ReactNode;
+  /**
+   * Additional CSS classes
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `transform` (specifically `rotate`) - Animated for open/close rotation transitions
+   *
+   * To customize this property, use the `animation` prop:
+   * ```tsx
+   * <Select.TriggerIndicator
+   *   animation={{
+   *     rotation: { value: [0, -180], springConfig: { damping: 140, stiffness: 1000, mass: 4 } }
+   *   }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+   */
+  className?: string;
+  /**
+   * Custom styles for the trigger indicator
+   */
+  style?: ViewStyle;
+  /**
+   * Icon configuration
+   */
+  iconProps?: SelectTriggerIndicatorIconProps;
+  /**
+   * Animation configuration for trigger indicator
+   * - `false` or `"disabled"`: Disable all animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: SelectTriggerIndicatorAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active
+   * When `false`, the animated style is removed and you can implement custom logic
+   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
+}
+
+/**
  * Select Portal component props
  */
 export interface SelectPortalProps extends SelectPrimitivesTypes.PortalProps {
+  /**
+   * When true, uses a regular View instead of FullWindowOverlay on iOS.
+   * Enables React Native element inspector but overlay won't appear above native modals.
+   * @default false
+   */
+  disableFullWindowOverlay?: boolean;
   /**
    * Additional CSS class for the portal container
    */
@@ -189,6 +295,10 @@ export interface SelectContentDialogProps
    * Additional CSS classes for the content container
    */
   classNames?: ElementSlots<DialogContentFallbackSlots>;
+  /**
+   * Styles for different parts of the dialog content
+   */
+  styles?: Partial<Record<DialogContentFallbackSlots, ViewStyle>>;
   /**
    * The select content
    */

@@ -42,7 +42,7 @@ const cards: HomeCardProps[] = [
     title: 'Components',
     imageLight: HomeComponentsLight,
     imageDark: HomeComponentsDark,
-    count: 29,
+    count: 30,
     footer: 'Explore all components',
     path: 'components',
   },
@@ -157,7 +157,7 @@ export default function App() {
   return (
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
-        <AppText className="text-muted text-base">v1.0.0-beta.13</AppText>
+        <AppText className="text-muted text-base">v1.0.0-rc.1</AppText>
       </View>
       <View className="gap-6">
         {cards.map((card, index) => (

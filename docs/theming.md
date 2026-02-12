@@ -87,6 +87,12 @@ Create multiple themes using Uniwind's variant system. For complete custom theme
       --surface: oklch(0.98 0.01 230);
       --surface-foreground: oklch(0.3 0.045 230);
 
+      --surface-secondary: oklch(0.96 0.012 230);
+      --surface-secondary-foreground: oklch(0.3 0.045 230);
+
+      --surface-tertiary: oklch(0.94 0.015 230);
+      --surface-tertiary-foreground: oklch(0.3 0.045 230);
+
       /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
       --overlay: oklch(0.998 0.003 230);
       --overlay-foreground: oklch(0.3 0.045 230);
@@ -131,8 +137,8 @@ Create multiple themes using Uniwind's variant system. For complete custom theme
         0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
         0 0 1px 0 rgba(0, 0, 0, 0.06);
       --overlay-shadow:
-        0 2px 8px 0 rgba(0, 0, 0, 0.06), 0 -6px 12px 0 rgba(0, 0, 0, 0.03),
-        0 14px 28px 0 rgba(0, 0, 0, 0.08);
+        0 2px 8px 0 rgba(0, 0, 0, 0.02), 0 -6px 12px 0 rgba(0, 0, 0, 0.01),
+        0 14px 28px 0 rgba(0, 0, 0, 0.03);
       --field-shadow:
         0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
         0 0 1px 0 rgba(0, 0, 0, 0.06);
@@ -146,6 +152,12 @@ Create multiple themes using Uniwind's variant system. For complete custom theme
       /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
       --surface: oklch(0.2 0.048 230);
       --surface-foreground: oklch(0.9 0.015 230);
+
+      --surface-secondary: oklch(0.24 0.046 230);
+      --surface-secondary-foreground: oklch(0.9 0.015 230);
+
+      --surface-tertiary: oklch(0.27 0.044 230);
+      --surface-tertiary-foreground: oklch(0.9 0.015 230);
 
       /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
       --overlay: oklch(0.23 0.045 230);
@@ -335,6 +347,12 @@ We use Tailwind's `@theme` directive to automatically create calculated variable
   --color-surface-foreground: var(--surface-foreground);
   --color-surface-hover: color-mix(in oklab, var(--surface) 92%, var(--surface-foreground) 8%);
 
+  --color-surface-secondary: var(--surface-secondary);
+  --color-surface-secondary-foreground: var(--surface-secondary-foreground);
+
+  --color-surface-tertiary: var(--surface-tertiary);
+  --color-surface-tertiary-foreground: var(--surface-tertiary-foreground);
+
   --color-overlay: var(--overlay);
   --color-overlay-foreground: var(--overlay-foreground);
 
@@ -413,28 +431,6 @@ We use Tailwind's `@theme` directive to automatically create calculated variable
   --color-success-soft: color-mix(in oklab, var(--success) 15%, transparent);
   --color-success-soft-foreground: var(--success);
   --color-success-soft-hover: color-mix(in oklab, var(--success) 20%, transparent);
-
-  /* Surface Levels - progressively darker/lighter shades for layering */
-  --color-surface-secondary: color-mix(in oklab, var(--surface) 94%, var(--surface-foreground) 6%);
-  --color-surface-tertiary: color-mix(in oklab, var(--surface) 92%, var(--surface-foreground) 8%);
-
-  /* On Surface Colors */
-  --color-on-surface: color-mix(in oklab, var(--surface) 93%, var(--surface-foreground) 7%);
-  --color-on-surface-foreground: var(--surface-foreground);
-  --color-on-surface-hover: color-mix(in oklab, var(--surface) 91%, var(--surface-foreground) 9%);
-  --color-on-surface-focus: color-mix(in oklab, var(--surface) 93%, var(--surface-foreground) 7%);
-
-  /* On Surface Colors - Secondary (on secondary surface) */
-  --color-on-surface-secondary: color-mix(in oklab, var(--surface) 87%, var(--surface-foreground) 13%);
-  --color-on-surface-secondary-foreground: var(--surface-foreground);
-  --color-on-surface-secondary-hover: color-mix(in oklab, var(--surface) 85%, var(--surface-foreground) 15%);
-  --color-on-surface-secondary-focus: color-mix(in oklab, var(--surface) 87%, var(--surface-foreground) 13%);
-
-   /* On Surface Colors - Tertiary (on tertiary surface) */
-  --color-on-surface-tertiary: color-mix(in oklab, var(--surface) 85%, var(--surface-foreground) 15%);
-  --color-on-surface-tertiary-foreground: var(--surface-foreground);
-  --color-on-surface-tertiary-hover: color-mix(in oklab, var(--surface) 84%, var(--surface-foreground) 16%);
-  --color-on-surface-tertiary-focus: color-mix(in oklab, var(--surface) 85%, var(--surface-foreground) 15%);
 
   /* Separator Colors - Levels */
   --color-separator-secondary: color-mix(in oklab, var(--surface) 85%, var(--surface-foreground) 15%);

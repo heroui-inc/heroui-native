@@ -57,6 +57,7 @@ export const UsageVariantsSelect = ({
       defaultValue={data[0]}
     >
       <Select.Trigger
+        variant="unstyled"
         isDisabled={data.length === 1}
         hitSlop={12}
         onPress={() => {

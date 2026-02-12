@@ -1,6 +1,6 @@
 # ControlField
 
-A field component that combines a label, description (or other content), and a control component (Switch or Checkbox) into a single pressable area.
+A field component that combines a label, description (or other content), and a control component (Switch, Checkbox, or Radio) into a single pressable area.
 
 ## Import
 
@@ -22,7 +22,7 @@ import { ControlField } from 'heroui-native';
 - **ControlField**: Root container that manages layout and state propagation
 - **Label**: Primary text label for the control (from [Label](../label/label.md) component)
 - **Description**: Secondary descriptive helper text (from [Description](../description/description.md) component)
-- **ControlField.Indicator**: Container for the form control component ([Switch](../switch/switch.md), [Checkbox](../checkbox/checkbox.md))
+- **ControlField.Indicator**: Container for the form control component ([Switch](../switch/switch.md), [Checkbox](../checkbox/checkbox.md), [Radio](../radio/radio.md))
 - **FieldError**: Validation error message display (from [FieldError](../field-error/field-error.md) component)
 
 ## Usage
@@ -179,23 +179,23 @@ export default function ControlFieldExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/control-field.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/control-field.tsx>).
 
 ## API Reference
 
 ### ControlField
 
-| prop              | type                                                                    | default     | description                                                                               |
-| ----------------- | ----------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
+| prop              | type                                                                       | default     | description                                                                               |
+| ----------------- | -------------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
 | children          | `React.ReactNode \| ((props: ControlFieldRenderProps) => React.ReactNode)` | -           | Content to render inside the form control, or a render function                           |
-| isSelected        | `boolean`                                                               | `undefined` | Whether the control is selected/checked                                                   |
-| isDisabled        | `boolean`                                                               | `false`     | Whether the form control is disabled                                                      |
-| isInvalid         | `boolean`                                                               | `false`     | Whether the form control is invalid                                                       |
-| isRequired        | `boolean`                                                               | `false`     | Whether the form control is required                                                       |
-| className         | `string`                                                                | -           | Custom class name for the root element                                                    |
-| onSelectedChange  | `(isSelected: boolean) => void`                                         | -           | Callback when selection state changes                                                     |
-| animation         | `"disable-all" \| undefined`                                            | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
-| ...PressableProps | `PressableProps`                                                        | -           | All React Native Pressable props are supported                                            |
+| isSelected        | `boolean`                                                                  | `undefined` | Whether the control is selected/checked                                                   |
+| isDisabled        | `boolean`                                                                  | `false`     | Whether the form control is disabled                                                      |
+| isInvalid         | `boolean`                                                                  | `false`     | Whether the form control is invalid                                                       |
+| isRequired        | `boolean`                                                                  | `false`     | Whether the form control is required                                                      |
+| className         | `string`                                                                   | -           | Custom class name for the root element                                                    |
+| onSelectedChange  | `(isSelected: boolean) => void`                                            | -           | Callback when selection state changes                                                     |
+| animation         | `"disable-all" \| undefined`                                               | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
+| ...PressableProps | `PressableProps`                                                           | -           | All React Native Pressable props are supported                                            |
 
 ### Label
 
@@ -211,14 +211,14 @@ The `Description` component automatically consumes form state (`isDisabled`, `is
 
 ### ControlField.Indicator
 
-| prop         | type                     | default    | description                                                |
-| ------------ | ------------------------ | ---------- | ---------------------------------------------------------- |
-| children     | `React.ReactNode`        | -          | Control component to render (Switch, Checkbox)             |
-| variant      | `'checkbox' \| 'switch'` | `'switch'` | Variant of the control to render when no children provided |
-| className    | `string`                 | -          | Custom class name for the indicator element                |
-| ...ViewProps | `ViewProps`              | -          | All React Native View props are supported                  |
+| prop         | type                                | default    | description                                                |
+| ------------ | ----------------------------------- | ---------- | ---------------------------------------------------------- |
+| children     | `React.ReactNode`                   | -          | Control component to render (Switch, Checkbox, Radio)      |
+| variant      | `'checkbox' \| 'radio' \| 'switch'` | `'switch'` | Variant of the control to render when no children provided |
+| className    | `string`                            | -          | Custom class name for the indicator element                |
+| ...ViewProps | `ViewProps`                         | -          | All React Native View props are supported                  |
 
-**Note**: When children are provided, the component automatically passes down `isSelected`, `onSelectedChange`, `isDisabled`, and `isInvalid` props from the ControlField context if they are not already present on the child component.
+**Note**: When children are provided, the component automatically passes down `isSelected`, `onSelectedChange`, `isDisabled`, and `isInvalid` props from the ControlField context if they are not already present on the child component. When using the `radio` variant, the Radio component renders in standalone mode (outside of a RadioGroup).
 
 ### FieldError
 

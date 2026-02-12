@@ -148,8 +148,9 @@ export function SearchableDialogSelect() {
         const country = COUNTRIES.find((c) => c.value === newValue?.value);
         setValue(country);
       }}
+      className="flex-1"
     >
-      <Select.Trigger asChild>
+      <Select.Trigger variant="unstyled" asChild>
         <Button variant="tertiary">
           {value ? (
             <View className="flex-row items-center gap-2">

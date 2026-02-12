@@ -61,7 +61,7 @@ import { FieldError, Input, Label, TextField } from 'heroui-native';
   <Label>Email</Label>
   <Input placeholder="Enter your email" />
   <FieldError>Please enter a valid email</FieldError>
-</TextField>
+</TextField>;
 ```
 
 ### With Local Invalid State Override
@@ -69,7 +69,13 @@ import { FieldError, Input, Label, TextField } from 'heroui-native';
 Override the context's invalid state for individual components.
 
 ```tsx
-import { Description, FieldError, Input, Label, TextField } from 'heroui-native';
+import {
+  Description,
+  FieldError,
+  Input,
+  Label,
+  TextField,
+} from 'heroui-native';
 
 <TextField isInvalid={true}>
   <Label isInvalid={false}>Email</Label>
@@ -78,7 +84,7 @@ import { Description, FieldError, Input, Label, TextField } from 'heroui-native'
     This shows despite input being invalid
   </Description>
   <FieldError>Email format is incorrect</FieldError>
-</TextField>
+</TextField>;
 ```
 
 ### Multiline Input
@@ -88,11 +94,7 @@ Create text areas for longer content.
 ```tsx
 <TextField>
   <Label>Message</Label>
-  <Input
-    placeholder="Type your message..."
-    multiline
-    numberOfLines={4}
-  />
+  <Input placeholder="Type your message..." multiline numberOfLines={4} />
   <Description>Maximum 500 characters</Description>
 </TextField>
 ```
@@ -197,16 +199,14 @@ export const TextInputContent = () => {
             />
           </Pressable>
         </View>
-        <Description>
-          Password must be at least 6 characters
-        </Description>
+        <Description>Password must be at least 6 characters</Description>
       </TextField>
     </View>
   );
 };
 ```
 
-You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/text-field.tsx>).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/text-field.tsx>).
 
 ## API Reference
 
@@ -223,6 +223,7 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 | ...ViewProps | `ViewProps`                  | -           | All standard React Native View props are supported                                        |
 
 > **Note**: For Label, Input, Description, and FieldError components, see their respective documentation:
+>
 > - [Label documentation](../label/label.md)
 > - [Input documentation](../input/input.md)
 > - [Description documentation](../description/description.md)

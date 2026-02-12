@@ -14,6 +14,22 @@ export const DISPLAY_NAME = {
   ITEM_INDICATOR: 'HeroUINative.Select.ItemIndicator',
   LIST_LABEL: 'HeroUINative.Select.ListLabel',
   CLOSE: 'HeroUINative.Select.Close',
+  TRIGGER_INDICATOR: 'HeroUINative.Select.TriggerIndicator',
+  CHEVRON_DOWN_ICON: 'HeroUINative.Select.ChevronDownIcon',
+} as const;
+
+/**
+ * Default icon size for the indicator
+ */
+export const DEFAULT_ICON_SIZE = 16;
+
+/**
+ * Spring configuration for indicator animation
+ */
+export const INDICATOR_SPRING_CONFIG = {
+  damping: 140,
+  stiffness: 1000,
+  mass: 4,
 };
 
 /**

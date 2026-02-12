@@ -7,6 +7,7 @@ import {
   cn,
   Dialog,
   Label,
+  Radio,
   RadioGroup,
   useDialog,
 } from 'heroui-native';
@@ -57,13 +58,19 @@ const AssigneeRadioItem: FC<AssigneeRadioItemProps> = ({ item, value }) => {
         </View>
         <Label>{item.label}</Label>
       </View>
-      <RadioGroup.Indicator className="border-none shadow-none bg-transparent">
-        {value === item.value && (
-          <Animated.View key={item.value} entering={FadeIn.duration(200)}>
-            <StyledFeather name="check" size={18} className="text-foreground" />
-          </Animated.View>
-        )}
-      </RadioGroup.Indicator>
+      <Radio>
+        <Radio.Indicator className="border-none shadow-none bg-transparent">
+          {value === item.value && (
+            <Animated.View key={item.value} entering={FadeIn.duration(200)}>
+              <StyledFeather
+                name="check"
+                size={18}
+                className="text-foreground"
+              />
+            </Animated.View>
+          )}
+        </Radio.Indicator>
+      </Radio>
     </RadioGroup.Item>
   );
 };

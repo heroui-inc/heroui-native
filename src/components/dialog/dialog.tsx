@@ -109,6 +109,7 @@ const DialogPortal = ({
   className,
   children,
   style,
+  disableFullWindowOverlay = false,
   ...props
 }: DialogPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
@@ -120,7 +121,9 @@ const DialogPortal = ({
     <DialogPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <DialogAnimationProvider value={animationContext}>
-          <FullWindowOverlay>
+          <FullWindowOverlay
+            disableFullWindowOverlay={disableFullWindowOverlay}
+          >
             <Animated.View
               className={portalClassName}
               style={style}
@@ -145,6 +148,8 @@ const DialogOverlay = forwardRef<
     { className, style, animation, isAnimatedStyleActive = true, ...props },
     ref
   ) => {
+    const { isOpen } = useDialog();
+
     const { progress, isDragging, isGestureReleaseAnimationRunning } =
       useDialogAnimation();
 
@@ -156,6 +161,10 @@ const DialogOverlay = forwardRef<
       isGestureReleaseAnimationRunning,
       animation,
     });
+
+    if (!isOpen) {
+      return null;
+    }
 
     const overlayStyle = isAnimatedStyleActive
       ? [rContainerStyle, style]

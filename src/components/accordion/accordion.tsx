@@ -2,6 +2,7 @@ import { Children, forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
+import { ChevronDownIcon } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
@@ -24,7 +25,6 @@ import type {
   AccordionRootProps,
   AccordionTriggerProps,
 } from './accordion.types';
-import { ChevronDownIcon } from './chevron-down-icon';
 
 const AnimatedRootView = Animated.createAnimatedComponent(
   AccordionPrimitive.Root
@@ -57,6 +57,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     hideSeparator = false,
     className,
     classNames,
+    styles,
     style,
     animation,
     ...restProps
@@ -64,11 +65,11 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
 
   const { container, separator } = accordionClassNames.root({ variant });
 
-  const containerStyles = container({
+  const containerClassName = container({
     className: [className, classNames?.container],
   });
 
-  const separatorStyles = separator({ className: classNames?.separator });
+  const separatorClassName = separator({ className: classNames?.separator });
 
   const { layoutTransition, isAllAnimationsDisabled } =
     useAccordionRootAnimation({
@@ -102,8 +103,8 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
         <AccordionInnerProvider value={contextValue}>
           <AnimatedRootView
             ref={ref}
-            className={containerStyles}
-            style={[accordionStyleSheet.root, style]}
+            className={containerClassName}
+            style={[accordionStyleSheet.root, style, styles?.container]}
             layout={layoutTransition}
             {...restProps}
           >
@@ -112,7 +113,8 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
                 {child}
                 {!hideSeparator && index < Children.count(children) - 1 && (
                   <Animated.View
-                    className={separatorStyles}
+                    className={separatorClassName}
+                    style={styles?.separator}
                     layout={layoutTransition}
                   />
                 )}

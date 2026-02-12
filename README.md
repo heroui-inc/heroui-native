@@ -4,7 +4,7 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://github.com/heroui-inc/heroui-native/blob/beta/LICENSE">
+  <a href="https://github.com/heroui-inc/heroui-native/blob/rc/LICENSE">
     <img src="https://img.shields.io/npm/l/@heroui/react?style=flat" alt="License">
   </a>
   <a href="https://www.npmjs.com/package/heroui-native">
@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  v1.0.0-beta.13
+  v1.0.0-rc.1
 </p>
 
 ## Getting Started

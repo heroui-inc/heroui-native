@@ -3,6 +3,7 @@ import {
   Description,
   FieldError,
   Label,
+  Radio,
   RadioGroup,
   Separator,
   Surface,
@@ -39,7 +40,7 @@ const BasicRadioGroupContent = () => {
               <Label>Standard Shipping</Label>
               <Description>Delivered in 5-7 business days</Description>
             </View>
-            <RadioGroup.Indicator />
+            <Radio />
           </RadioGroup.Item>
           <Separator className="my-1" />
           <RadioGroup.Item value="desc2">
@@ -47,7 +48,7 @@ const BasicRadioGroupContent = () => {
               <Label>Express Shipping</Label>
               <Description>Delivered in 2-3 business days</Description>
             </View>
-            <RadioGroup.Indicator />
+            <Radio />
           </RadioGroup.Item>
           <Separator className="my-1" />
           <RadioGroup.Item value="desc3">
@@ -55,7 +56,7 @@ const BasicRadioGroupContent = () => {
               <Label>Overnight Shipping</Label>
               <Description>Delivered next business day</Description>
             </View>
-            <RadioGroup.Indicator />
+            <Radio />
           </RadioGroup.Item>
         </RadioGroup>
       </Surface>
@@ -105,12 +106,14 @@ const ShippingOptionItem = ({
             containerClassName
           )}
         >
-          <RadioGroup.Indicator
-            className={cn(
-              !isSelected && 'border border-muted/10',
-              indicatorClassName
-            )}
-          />
+          <Radio>
+            <Radio.Indicator
+              className={cn(
+                !isSelected && 'border border-muted/10',
+                indicatorClassName
+              )}
+            />
+          </Radio>
           <View className="flex-1">
             <Label>{label}</Label>
             <Description>{description}</Description>
@@ -192,7 +195,7 @@ const InlineRadioOptionsContent = () => {
               value={sizeOption}
               className="flex-1 gap-1.5"
             >
-              <RadioGroup.Indicator />
+              <Radio />
               <Label className="flex-1">{sizeOption}</Label>
             </RadioGroup.Item>
           ))}
@@ -232,7 +235,7 @@ const RadioGroupStatesContent = () => {
                 <Label>Basic Plan</Label>
                 <Description>Perfect for individuals - $9/month</Description>
               </View>
-              <RadioGroup.Indicator />
+              <Radio />
             </RadioGroup.Item>
 
             <Separator />
@@ -242,7 +245,7 @@ const RadioGroupStatesContent = () => {
                 <Label>Pro Plan</Label>
                 <Description>Coming soon - Advanced features</Description>
               </View>
-              <RadioGroup.Indicator />
+              <Radio />
             </RadioGroup.Item>
 
             <Separator />
@@ -252,14 +255,14 @@ const RadioGroupStatesContent = () => {
             >
               <View className="flex-1">
                 <Label>Enterprise Plan</Label>
-                <Description className="text-danger" hideOnInvalid>
+                <Description hideOnInvalid>
                   Not available in your region
                 </Description>
                 <FieldError>
                   Enterprise plan is not available in your region!
                 </FieldError>
               </View>
-              <RadioGroup.Indicator />
+              <Radio />
             </RadioGroup.Item>
           </RadioGroup>
         </Surface>
@@ -294,14 +297,16 @@ const CustomIndicatorBackgroundContent = () => {
                     Urgent - requires immediate attention
                   </Description>
                 </View>
-                <RadioGroup.Indicator
-                  className={cn(
-                    'size-8',
-                    isSelected && 'bg-red-500 border-red-400'
-                  )}
-                >
-                  <RadioGroup.IndicatorThumb className="size-3.5 bg-red-100" />
-                </RadioGroup.Indicator>
+                <Radio>
+                  <Radio.Indicator
+                    className={cn(
+                      'size-8',
+                      isSelected && 'bg-red-500 border-red-400'
+                    )}
+                  >
+                    <Radio.IndicatorThumb className="size-3.5 bg-red-100" />
+                  </Radio.Indicator>
+                </Radio>
               </>
             )}
           </RadioGroup.Item>
@@ -317,14 +322,16 @@ const CustomIndicatorBackgroundContent = () => {
                     Important - complete within this week
                   </Description>
                 </View>
-                <RadioGroup.Indicator
-                  className={cn(
-                    'size-8',
-                    isSelected && 'bg-amber-500 border-amber-400'
-                  )}
-                >
-                  <RadioGroup.IndicatorThumb className="size-3.5 bg-amber-100" />
-                </RadioGroup.Indicator>
+                <Radio>
+                  <Radio.Indicator
+                    className={cn(
+                      'size-8',
+                      isSelected && 'bg-amber-500 border-amber-400'
+                    )}
+                  >
+                    <Radio.IndicatorThumb className="size-3.5 bg-amber-100" />
+                  </Radio.Indicator>
+                </Radio>
               </>
             )}
           </RadioGroup.Item>
@@ -338,14 +345,16 @@ const CustomIndicatorBackgroundContent = () => {
                   <Label>Low Priority</Label>
                   <Description>Standard - complete when possible</Description>
                 </View>
-                <RadioGroup.Indicator
-                  className={cn(
-                    'size-8',
-                    isSelected && 'bg-emerald-500 border-emerald-400'
-                  )}
-                >
-                  <RadioGroup.IndicatorThumb className="size-3.5 bg-emerald-100" />
-                </RadioGroup.Indicator>
+                <Radio>
+                  <Radio.Indicator
+                    className={cn(
+                      'size-8',
+                      isSelected && 'bg-emerald-500 border-emerald-400'
+                    )}
+                  >
+                    <Radio.IndicatorThumb className="size-3.5 bg-emerald-100" />
+                  </Radio.Indicator>
+                </Radio>
               </>
             )}
           </RadioGroup.Item>
@@ -375,16 +384,18 @@ const CustomIndicatorThumbContent = () => {
           <RadioGroup.Item value="email">
             {({ isSelected }) => (
               <>
-                <RadioGroup.Indicator>
-                  {isSelected && (
-                    <AnimatedView entering={ZoomIn.duration(200)}>
-                      <BellFillIcon
-                        size={14}
-                        colorClassName="accent-accent-foreground"
-                      />
-                    </AnimatedView>
-                  )}
-                </RadioGroup.Indicator>
+                <Radio>
+                  <Radio.Indicator>
+                    {isSelected && (
+                      <AnimatedView entering={ZoomIn.duration(200)}>
+                        <BellFillIcon
+                          size={14}
+                          colorClassName="accent-accent-foreground"
+                        />
+                      </AnimatedView>
+                    )}
+                  </Radio.Indicator>
+                </Radio>
                 <View className="flex-1">
                   <Label>Email Notifications</Label>
                   <Description>Get updates via email</Description>
@@ -398,16 +409,18 @@ const CustomIndicatorThumbContent = () => {
           <RadioGroup.Item value="push">
             {({ isSelected }) => (
               <>
-                <RadioGroup.Indicator>
-                  {isSelected && (
-                    <AnimatedView entering={FadeInUp.duration(200)}>
-                      <ThunderboltFillIcon
-                        size={12}
-                        colorClassName="accent-accent-foreground"
-                      />
-                    </AnimatedView>
-                  )}
-                </RadioGroup.Indicator>
+                <Radio>
+                  <Radio.Indicator>
+                    {isSelected && (
+                      <AnimatedView entering={FadeInUp.duration(200)}>
+                        <ThunderboltFillIcon
+                          size={12}
+                          colorClassName="accent-accent-foreground"
+                        />
+                      </AnimatedView>
+                    )}
+                  </Radio.Indicator>
+                </Radio>
                 <View className="flex-1">
                   <Label>Push Notifications</Label>
                   <Description>Get instant push alerts</Description>
@@ -421,15 +434,17 @@ const CustomIndicatorThumbContent = () => {
           <RadioGroup.Item value="none">
             {({ isSelected }) => (
               <>
-                <RadioGroup.Indicator>
-                  {isSelected && (
-                    <AnimatedView
-                      key="none"
-                      entering={ZoomIn.springify()}
-                      className="h-2.5 w-2.5 rounded-xs bg-accent-foreground"
-                    />
-                  )}
-                </RadioGroup.Indicator>
+                <Radio>
+                  <Radio.Indicator>
+                    {isSelected && (
+                      <AnimatedView
+                        key="none"
+                        entering={ZoomIn.springify()}
+                        className="h-2.5 w-2.5 rounded-xs bg-accent-foreground"
+                      />
+                    )}
+                  </Radio.Indicator>
+                </Radio>
                 <View className="flex-1">
                   <Label>No Notifications</Label>
                   <Description>Only check updates manually</Description>

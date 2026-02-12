@@ -1,4 +1,4 @@
-import type { ImageProps, TextProps } from 'react-native';
+import type { ImageProps, TextProps, TextStyle, ViewStyle } from 'react-native';
 import type {
   AnimatedProps,
   EntryOrExitLayoutType,
@@ -186,6 +186,14 @@ export interface AvatarFallbackProps
    * Additional CSS classes for different parts of the fallback
    */
   classNames?: ElementSlots<AvatarFallbackSlots>;
+
+  /**
+   * Styles for different parts of the avatar fallback
+   */
+  styles?: {
+    container?: ViewStyle;
+    text?: TextStyle;
+  };
 
   /**
    * Props to pass to the Text component when children is a string

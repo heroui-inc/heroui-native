@@ -46,6 +46,8 @@ import type {
   PortalProps,
   RootProps,
   RootRef,
+  TriggerIndicatorProps,
+  TriggerIndicatorRef,
   TriggerProps,
   TriggerRef,
   ValueProps,
@@ -216,6 +218,18 @@ const Value = React.forwardRef<ValueRef, ValueProps>(
       <Component ref={ref} {...props}>
         {value?.label ?? placeholder}
       </Component>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const TriggerIndicator = forwardRef<TriggerIndicatorRef, TriggerIndicatorProps>(
+  ({ asChild, ...props }, ref) => {
+    const Component = asChild ? Slot.View : View;
+
+    return (
+      <Component ref={ref} role="presentation" aria-hidden={true} {...props} />
     );
   }
 );
@@ -503,18 +517,13 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
       setContentLayout,
     } = useRootContext();
 
-    // VS -------------
-    const baseOnCloseDelay = 150; // This delay is needed to see change of indicator position first
-
     function onPress(ev: GestureResponderEvent) {
       onValueChange({ value: itemValue, label });
 
       if (closeOnPress) {
-        setTimeout(() => {
-          onOpenChange(false);
-          setTriggerPosition(null);
-          setContentLayout(null);
-        }, baseOnCloseDelay);
+        onOpenChange(false);
+        setTriggerPosition(null);
+        setContentLayout(null);
       }
 
       onPressProp?.(ev);
@@ -601,6 +610,7 @@ const GroupLabel = React.forwardRef<GroupLabelRef, GroupLabelProps>(
 
 Root.displayName = 'HeroUINative.Primitive.Select.Root';
 Trigger.displayName = 'HeroUINative.Primitive.Select.Trigger';
+TriggerIndicator.displayName = 'HeroUINative.Primitive.Select.TriggerIndicator';
 Value.displayName = 'HeroUINative.Primitive.Select.Value';
 Overlay.displayName = 'HeroUINative.Primitive.Select.Overlay';
 PopoverContent.displayName = 'HeroUINative.Primitive.Select.PopoverContent';
@@ -625,6 +635,7 @@ export {
   Portal,
   Root,
   Trigger,
+  TriggerIndicator,
   useItemContext,
   useRootContext,
   Value,

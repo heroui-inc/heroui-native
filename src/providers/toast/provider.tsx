@@ -122,6 +122,7 @@ export function ToastProvider({
   maxVisibleToasts = 3,
   contentWrapper,
   children,
+  disableFullWindowOverlay = false,
 }: ToastProviderProps) {
   const [toasts, dispatch] = useReducer(toastReducer, []);
 
@@ -369,7 +370,11 @@ export function ToastProvider({
       <ToasterContext.Provider value={contextValue}>
         {children}
         {toasts.length > 0 && (
-          <InsetsContainer insets={insets} contentWrapper={contentWrapper}>
+          <InsetsContainer
+            insets={insets}
+            contentWrapper={contentWrapper}
+            disableFullWindowOverlay={disableFullWindowOverlay}
+          >
             <View className="flex-1">
               {toasts.map((toastItem, index) => (
                 <ToastItemRenderer

@@ -310,9 +310,7 @@ export default function TabsExample() {
               <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
                 <Label>Show sidebar</Label>
-                <Description>
-                  Display the sidebar navigation panel
-                </Description>
+                <Description>Display the sidebar navigation panel</Description>
               </View>
             </ControlField>
           </AnimatedContentContainer>
@@ -356,7 +354,7 @@ export default function TabsExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/beta/example/src/app/(home)/components/tabs.tsx>).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/tabs.tsx>).
 
 ## API Reference
 
@@ -366,7 +364,7 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 | --------------- | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
 | `children`      | `React.ReactNode`            | -           | Children elements to be rendered inside tabs                                              |
 | `value`         | `string`                     | -           | Currently active tab value                                                                |
-| `variant`       | `'primary' \| 'secondary'`           | `'primary'`    | Visual variant of the tabs                                                                |
+| `variant`       | `'primary' \| 'secondary'`   | `'primary'` | Visual variant of the tabs                                                                |
 | `className`     | `string`                     | -           | Additional CSS classes for the container                                                  |
 | `animation`     | `"disable-all" \| undefined` | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
 | `onValueChange` | `(value: string) => void`    | -           | Callback when the active tab changes                                                      |
@@ -531,7 +529,7 @@ const CustomIndicator = () => {
 | ----------------- | ------------------------------------------------------- | ------------------------------------------------- |
 | `measurements`    | `Record<string, ItemMeasurements>`                      | Record of measurements for each tab trigger       |
 | `setMeasurements` | `(key: string, measurements: ItemMeasurements) => void` | Function to update measurements for a tab trigger |
-| `variant`         | `'primary' \| 'secondary'`                                      | Visual variant of the tabs                        |
+| `variant`         | `'primary' \| 'secondary'`                              | Visual variant of the tabs                        |
 
 #### ItemMeasurements
 

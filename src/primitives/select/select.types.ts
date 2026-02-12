@@ -170,6 +170,11 @@ type TriggerProps = Omit<SlottablePressableProps, 'disabled'> & {
 };
 
 /**
+ * Props for the Select Trigger Indicator component
+ */
+type TriggerIndicatorProps = SlottableViewProps;
+
+/**
  * Props for the Select Content component
  */
 type PopoverContentProps = SlottableViewProps &
@@ -279,6 +284,11 @@ type TriggerRef = PressableRef & {
 };
 
 /**
+ * Ref type for the Select Trigger Indicator component
+ */
+type TriggerIndicatorRef = ViewRef;
+
+/**
  * Ref type for the Select Value component
  */
 type ValueRef = TextRef;
@@ -333,6 +343,8 @@ export type {
   RootRef,
   SelectOption,
   SelectState,
+  TriggerIndicatorProps,
+  TriggerIndicatorRef,
   TriggerProps,
   TriggerRef,
   ValueProps,

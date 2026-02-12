@@ -1,6 +1,7 @@
 import {
   Description,
   Label,
+  Radio,
   RadioGroup,
   Separator,
   Surface,
@@ -19,7 +20,7 @@ export const RadioGroupContent = () => {
         className="gap-0"
       >
         <RadioGroup.Item value="instant">
-          <RadioGroup.Indicator />
+          <Radio />
           <View className="flex-1">
             <Label>Instant</Label>
             <Description>Get notifications immediately</Description>
@@ -27,7 +28,7 @@ export const RadioGroupContent = () => {
         </RadioGroup.Item>
         <Separator className="my-4" />
         <RadioGroup.Item value="daily">
-          <RadioGroup.Indicator />
+          <Radio />
           <View className="flex-1">
             <Label>Daily</Label>
             <Description>Once per day summary of all updates</Description>
@@ -35,7 +36,7 @@ export const RadioGroupContent = () => {
         </RadioGroup.Item>
         <Separator className="my-4" />
         <RadioGroup.Item value="weekly">
-          <RadioGroup.Indicator />
+          <Radio />
           <View className="flex-1">
             <Label>Weekly</Label>
             <Description>Weekly digest every Monday morning</Description>

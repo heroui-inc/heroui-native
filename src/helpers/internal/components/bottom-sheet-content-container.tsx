@@ -1,5 +1,5 @@
 import { BottomSheetView, useBottomSheet } from '@gorhom/bottom-sheet';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useAnimatedReaction } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import type { BottomSheetContentContainerProps } from '../types/bottom-sheet';
@@ -25,6 +25,7 @@ export function BottomSheetContentContainer({
   onOpenChange,
 }: BottomSheetContentContainerProps) {
   const { close, snapToIndex } = useBottomSheet();
+  const prevIsOpenRef = useRef(isOpen);
 
   const closeBottomSheet = () => {
     onOpenChange(false);
@@ -44,13 +45,22 @@ export function BottomSheetContentContainer({
   );
 
   useEffect(() => {
-    if (isOpen) {
+    const wasOpen = prevIsOpenRef.current;
+    prevIsOpenRef.current = isOpen;
+
+    if (isOpen && !wasOpen) {
+      // Only snap to initial index when transitioning from closed to open
       isPanActivated.set(false);
       snapToIndex(initialIndex);
-    } else {
+    } else if (!isOpen && wasOpen) {
+      // Close when transitioning from open to closed
       close();
     }
-  }, [isOpen, snapToIndex, initialIndex, close, isPanActivated]);
+    // Note: We intentionally don't include snapToIndex, close, or isPanActivated
+    // in the dependency array to prevent re-snapping when content re-renders.
+    // We only want to snap when isOpen or initialIndex changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, initialIndex]);
 
   return (
     <BottomSheetView

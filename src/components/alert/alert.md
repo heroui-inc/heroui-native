@@ -22,7 +22,7 @@ import { Alert } from 'heroui-native';
 
 - **Alert**: Main container with `role="alert"` and status-based styling. Provides status context to sub-components via a primitive context.
 - **Alert.Indicator**: Renders a status-appropriate icon by default. Accepts custom children to override the default icon. Supports `iconProps` for customising size and color.
-- **Alert.Content**: Flex-1 wrapper for the title and description. Provides layout structure for text content.
+- **Alert.Content**: Wrapper for the title and description. Provides layout structure for text content.
 - **Alert.Title**: Heading text with status-based color. Connected to root via `aria-labelledby`.
 - **Alert.Description**: Body text rendered with muted color. Connected to root via `aria-describedby`.
 

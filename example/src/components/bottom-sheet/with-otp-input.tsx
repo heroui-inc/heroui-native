@@ -61,7 +61,7 @@ const BottomSheetInputOTP = memo(
           <Description className="text-base text-center text-muted">
             We sent a verification code to
           </Description>
-          <AppText className="text-base font-semibold text-center mt-1">
+          <AppText className="text-base font-semibold text-center text-foreground mt-1">
             {formatPhoneNumber(phoneNumber)}
           </AppText>
         </View>

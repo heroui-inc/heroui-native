@@ -52,7 +52,7 @@ export interface ControlFieldIndicatorProps extends ViewProps {
   className?: string;
 
   /** Variant of the control to render when no children provided @default 'switch' */
-  variant?: 'checkbox' | 'switch';
+  variant?: 'checkbox' | 'radio' | 'switch';
 }
 
 /**

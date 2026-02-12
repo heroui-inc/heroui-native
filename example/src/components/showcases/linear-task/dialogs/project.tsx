@@ -1,7 +1,15 @@
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
-import { Chip, cn, Dialog, Label, RadioGroup, useDialog } from 'heroui-native';
+import {
+  Chip,
+  cn,
+  Dialog,
+  Label,
+  Radio,
+  RadioGroup,
+  useDialog,
+} from 'heroui-native';
 import { useMemo, useState, type FC } from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -49,13 +57,19 @@ const ProjectRadioItem: FC<ProjectRadioItemProps> = ({ item, value }) => {
         </View>
         <Label>{item.label}</Label>
       </View>
-      <RadioGroup.Indicator className="border-none shadow-none bg-transparent">
-        {value === item.value && (
-          <Animated.View key={item.value} entering={FadeIn.duration(200)}>
-            <StyledFeather name="check" size={18} className="text-foreground" />
-          </Animated.View>
-        )}
-      </RadioGroup.Indicator>
+      <Radio>
+        <Radio.Indicator className="border-none shadow-none bg-transparent">
+          {value === item.value && (
+            <Animated.View key={item.value} entering={FadeIn.duration(200)}>
+              <StyledFeather
+                name="check"
+                size={18}
+                className="text-foreground"
+              />
+            </Animated.View>
+          )}
+        </Radio.Indicator>
+      </Radio>
     </RadioGroup.Item>
   );
 };

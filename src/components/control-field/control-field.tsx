@@ -9,6 +9,7 @@ import {
 } from '../../helpers/internal/contexts';
 import type { PressableRef } from '../../helpers/internal/types';
 import { Checkbox } from '../checkbox';
+import { Radio } from '../radio';
 import { Switch } from '../switch';
 import { useControlFieldRootAnimation } from './control-field.animation';
 import { DISPLAY_NAME } from './control-field.constants';
@@ -183,6 +184,17 @@ const ControlFieldIndicator = forwardRef<View, ControlFieldIndicatorProps>(
         );
       }
 
+      if (variant === 'radio') {
+        return (
+          <Radio
+            isSelected={isSelected}
+            onSelectedChange={onSelectedChange}
+            isDisabled={isDisabled}
+            isInvalid={isInvalid}
+          />
+        );
+      }
+
       return (
         <Switch
           isSelected={isSelected}
@@ -218,7 +230,7 @@ ControlFieldIndicator.displayName = DISPLAY_NAME.CONTROL_FIELD_INDICATOR;
  * @component ControlField - Wrapper that provides consistent layout and interaction for form controls.
  * Handles press events to toggle selection state and manages disabled states.
  *
- * @component ControlField.Indicator - Container for the control component (Switch, Checkbox).
+ * @component ControlField.Indicator - Container for the control component (Switch, Checkbox, Radio).
  * Automatically passes down isSelected, onSelectedChange, isDisabled, and isInvalid props.
  *
  * Props flow from ControlField to sub-components via context.

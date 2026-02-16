@@ -133,13 +133,14 @@ const SelectTrigger = forwardRef<
   SelectPrimitivesTypes.TriggerRef,
   SelectTriggerProps
 >((props, ref) => {
-  const { variant = 'default', isDisabled: isDisabledProp } = props;
+  const { variant = 'default', isDisabled: isDisabledProp, className } = props;
 
   const { isDisabled } = useSelect();
 
   const triggerClassName = selectClassNames.trigger({
     variant,
     isDisabled: isDisabledProp || isDisabled,
+    className,
   });
 
   return (

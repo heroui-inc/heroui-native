@@ -8870,7 +8870,7 @@ __metadata:
     typescript: ^5.8.3
     uniwind: 1.3.1
   peerDependencies:
-    "@gorhom/bottom-sheet": ^5
+    "@gorhom/bottom-sheet": ^5.2.8
     react: ">=19.0.0"
     react-native: ">=0.81.0"
     react-native-reanimated: ^4.1.1

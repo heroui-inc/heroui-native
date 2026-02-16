@@ -144,22 +144,16 @@ const IconOnlyContent = () => {
       <View className="flex-1 items-center justify-center">
         <View className="flex-row gap-8">
           <Button size="sm" isIconOnly>
-            <Button.Label>
-              <PaperClipIcon
-                size={16}
-                colorClassName="accent-accent-foreground"
-              />
-            </Button.Label>
+            <PaperClipIcon
+              size={16}
+              colorClassName="accent-accent-foreground"
+            />
           </Button>
           <Button size="md" variant="secondary" isIconOnly>
-            <Button.Label>
-              <HeartFillIcon size={18} colorClassName="accent-danger" />
-            </Button.Label>
+            <HeartFillIcon size={18} colorClassName="accent-danger" />
           </Button>
           <Button size="lg" variant="danger" isIconOnly>
-            <Button.Label>
-              <TrashIcon size={18} colorClassName="accent-danger-foreground" />
-            </Button.Label>
+            <TrashIcon size={18} colorClassName="accent-danger-foreground" />
           </Button>
         </View>
       </View>

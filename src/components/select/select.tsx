@@ -79,78 +79,86 @@ const useSelectItem = SelectPrimitives.useItemContext;
 
 // --------------------------------------------------
 
-const SelectRoot = forwardRef<SelectPrimitivesTypes.RootRef, SelectRootProps>(
-  (
-    { children, isOpen, isDefaultOpen, onOpenChange, animation, ...props },
-    ref
-  ) => {
-    const {
+function SelectRoot<M extends SelectPrimitivesTypes.SelectionMode = 'single'>({
+  children,
+  ref,
+  isOpen,
+  isDefaultOpen,
+  onOpenChange,
+  animation,
+  ...props
+}: SelectRootProps<M> & {
+  ref?: React.Ref<SelectPrimitivesTypes.RootRef>;
+}) {
+  const {
+    progress,
+    isDragging,
+    isGestureReleaseAnimationRunning,
+    isAllAnimationsDisabled,
+  } = usePopupRootAnimation({
+    animation,
+  });
+
+  const animationContextValue = useMemo(
+    () => ({
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
+    }),
+    [progress, isDragging, isGestureReleaseAnimationRunning]
+  );
+
+  const animationSettingsContextValue = useMemo(
+    () => ({
       isAllAnimationsDisabled,
-    } = usePopupRootAnimation({
-      animation,
-    });
+    }),
+    [isAllAnimationsDisabled]
+  );
 
-    const animationContextValue = useMemo(
-      () => ({
-        progress,
-        isDragging,
-        isGestureReleaseAnimationRunning,
-      }),
-      [progress, isDragging, isGestureReleaseAnimationRunning]
-    );
-
-    const animationSettingsContextValue = useMemo(
-      () => ({
-        isAllAnimationsDisabled,
-      }),
-      [isAllAnimationsDisabled]
-    );
-
-    return (
-      <AnimationSettingsProvider value={animationSettingsContextValue}>
-        <SelectAnimationProvider value={animationContextValue}>
-          <SelectPrimitives.Root
-            ref={ref}
-            isOpen={isOpen}
-            isDefaultOpen={isDefaultOpen}
-            onOpenChange={onOpenChange}
-            {...props}
-          >
-            {children}
-          </SelectPrimitives.Root>
-        </SelectAnimationProvider>
-      </AnimationSettingsProvider>
-    );
-  }
-);
+  return (
+    <AnimationSettingsProvider value={animationSettingsContextValue}>
+      <SelectAnimationProvider value={animationContextValue}>
+        <SelectPrimitives.Root
+          ref={ref}
+          isOpen={isOpen}
+          isDefaultOpen={isDefaultOpen}
+          onOpenChange={onOpenChange}
+          {...props}
+        >
+          {children}
+        </SelectPrimitives.Root>
+      </SelectAnimationProvider>
+    </AnimationSettingsProvider>
+  );
+}
 
 // --------------------------------------------------
 
 const SelectTrigger = forwardRef<
   SelectPrimitivesTypes.TriggerRef,
   SelectTriggerProps
->((props, ref) => {
-  const { variant = 'default', isDisabled: isDisabledProp, className } = props;
+>(
+  (
+    { variant = 'default', isDisabled: isDisabledProp, className, ...props },
+    ref
+  ) => {
+    const { isDisabled } = useSelect();
 
-  const { isDisabled } = useSelect();
+    const triggerClassName = selectClassNames.trigger({
+      variant,
+      isDisabled: isDisabledProp || isDisabled,
+      className,
+    });
 
-  const triggerClassName = selectClassNames.trigger({
-    variant,
-    isDisabled: isDisabledProp || isDisabled,
-    className,
-  });
-
-  return (
-    <SelectPrimitives.Trigger
-      ref={ref}
-      className={triggerClassName}
-      {...props}
-    />
-  );
-});
+    return (
+      <SelectPrimitives.Trigger
+        ref={ref}
+        className={triggerClassName}
+        {...props}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -160,9 +168,14 @@ const SelectValue = forwardRef<
 >(({ className, ...props }, ref) => {
   const { value } = useSelect();
 
-  const isSelected = Boolean(value?.value);
+  const isSelected = Array.isArray(value)
+    ? value.length > 0
+    : Boolean(value?.value);
 
-  const valueClassName = selectClassNames.value({ isSelected, className });
+  const valueClassName = selectClassNames.value({
+    isSelected,
+    className,
+  });
 
   return (
     <SelectPrimitives.Value ref={ref} className={valueClassName} {...props} />
@@ -610,7 +623,9 @@ const SelectItem = forwardRef<SelectPrimitivesTypes.ItemRef, SelectItemProps>(
   ) => {
     const { value } = useSelect();
 
-    const isSelected = value?.value === itemValue;
+    const isSelected = Array.isArray(value)
+      ? value.some((v) => v?.value === itemValue)
+      : value?.value === itemValue;
     const isDisabled = disabled ?? false;
 
     const itemClassName = selectClassNames.item({ className });

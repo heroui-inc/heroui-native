@@ -43,7 +43,8 @@
           },
           "imageWidth": 200
         }
-      ]
+      ],
+      "expo-image"
     ],
     "extra": {
       "router": {

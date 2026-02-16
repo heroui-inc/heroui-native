@@ -2,7 +2,14 @@
 // The code is licensed under the MIT License.
 // https://github.com/radix-ui/primitives/tree/main
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 /**
  * Parameters for the useControllableState hook
@@ -41,6 +48,21 @@ function useControllableState<T>({
   const isControlled = prop !== undefined;
   const value = isControlled ? prop : uncontrolledProp;
   const handleChange = useCallbackRef(onChange);
+
+  /**
+   * When the component transitions from controlled (prop !== undefined)
+   * back to uncontrolled (prop === undefined), the internal uncontrolled
+   * state may hold a stale value from a previous selection. Reset it so
+   * the component correctly reflects the "no value" state.
+   */
+  const prevPropRef = useRef(prop);
+  useLayoutEffect(() => {
+    const wasControlled = prevPropRef.current !== undefined;
+    if (wasControlled && prop === undefined) {
+      setUncontrolledProp(undefined);
+    }
+    prevPropRef.current = prop;
+  }, [prop, setUncontrolledProp]);
 
   const setValue: React.Dispatch<React.SetStateAction<T | undefined>> =
     useCallback(

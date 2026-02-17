@@ -78,6 +78,10 @@ const components: Component[] = [
     path: 'label',
   },
   {
+    title: 'ListGroup',
+    path: 'list-group',
+  },
+  {
     title: 'Popover',
     path: 'popover',
   },

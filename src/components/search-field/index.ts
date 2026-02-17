@@ -8,6 +8,7 @@ export { searchFieldClassNames } from './search-field.styles';
 export type {
   SearchFieldClearButtonIconProps,
   SearchFieldClearButtonProps,
+  SearchFieldContextType,
   SearchFieldGroupProps,
   SearchFieldInputProps,
   SearchFieldProps,

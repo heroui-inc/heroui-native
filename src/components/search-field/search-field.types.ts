@@ -4,6 +4,24 @@ import type { ButtonRootProps } from '../button/button.types';
 import type { InputProps } from '../input/input.types';
 
 /**
+ * Context value provided by SearchField root to child components.
+ * Carries the controlled value, onChange callback, and form-field
+ * state so that Input and ClearButton can consume them.
+ */
+export interface SearchFieldContextType {
+  /** Current search text (undefined when uncontrolled) */
+  value: string | undefined;
+  /** Callback invoked when the search text changes */
+  onChange: ((value: string) => void) | undefined;
+  /** Whether the search field is disabled */
+  isDisabled: boolean;
+  /** Whether the search field is in an invalid state */
+  isInvalid: boolean;
+  /** Whether the search field is required */
+  isRequired: boolean;
+}
+
+/**
  * Props for the SearchField root component
  */
 export interface SearchFieldProps extends ViewProps {
@@ -11,6 +29,16 @@ export interface SearchFieldProps extends ViewProps {
    * Children elements to be rendered inside the search field
    */
   children?: React.ReactNode;
+
+  /**
+   * Controlled search text value
+   */
+  value?: string;
+
+  /**
+   * Callback fired when the search text changes
+   */
+  onChange?: (value: string) => void;
 
   /**
    * Whether the search field is disabled
@@ -98,8 +126,11 @@ export interface SearchFieldSearchIconProps extends ViewProps {
 /**
  * Props for the SearchField.Input component.
  * Extends InputProps with search-specific defaults (placeholder, a11y role).
+ * Omits `value` and `onChangeText` because they are provided by SearchField
+ * root through SearchFieldValueContext.
  */
-export interface SearchFieldInputProps extends InputProps {}
+export interface SearchFieldInputProps
+  extends Omit<InputProps, 'value' | 'onChangeText'> {}
 
 /**
  * Props for customizing the clear button icon

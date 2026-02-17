@@ -3,7 +3,9 @@ import { type TextInput as TextInputType, View } from 'react-native';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { CloseIcon } from '../../helpers/internal/components';
 import {
+  type FieldContainerContextValue,
   AnimationSettingsProvider,
+  FieldContainerProvider,
   FormItemStateProvider,
   useFormItemState,
 } from '../../helpers/internal/contexts';
@@ -54,12 +56,19 @@ const SearchFieldRoot = forwardRef<ViewRef, SearchFieldProps>((props, ref) => {
     [isAllAnimationsDisabled]
   );
 
+  const fieldContainerContextValue = useMemo<FieldContainerContextValue>(
+    () => ({ isFieldContainer: true }),
+    []
+  );
+
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
       <FormItemStateProvider value={formItemStateContextValue}>
-        <View ref={ref} className={rootClassName} {...restProps}>
-          {children}
-        </View>
+        <FieldContainerProvider value={fieldContainerContextValue}>
+          <View ref={ref} className={rootClassName} {...restProps}>
+            {children}
+          </View>
+        </FieldContainerProvider>
       </FormItemStateProvider>
     </AnimationSettingsProvider>
   );

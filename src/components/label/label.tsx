@@ -2,6 +2,7 @@ import { forwardRef, useMemo } from 'react';
 import { HeroText } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
+  useFieldContainer,
   useFormItemState,
 } from '../../helpers/internal/contexts';
 import type { PressableRef, TextRef } from '../../helpers/internal/types';
@@ -9,7 +10,6 @@ import { childrenToString, createContext } from '../../helpers/internal/utils';
 import * as LabelPrimitives from '../../primitives/label';
 import { useControlField } from '../control-field/control-field.context';
 import { useRadioGroupItem } from '../radio-group/radio-group.context';
-import { useTextField } from '../text-field';
 import { useLabelRootAnimation } from './label.animation';
 import { DISPLAY_NAME } from './label.constants';
 import { labelClassNames } from './label.styles';
@@ -37,11 +37,11 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
   } = props;
 
   const formItemState = useFormItemState();
-  const textFieldContext = useTextField();
+  const fieldContainerContext = useFieldContainer();
   const controlFieldContext = useControlField();
   const radioGroupItemContext = useRadioGroupItem();
 
-  const isInsideTextField = Boolean(textFieldContext);
+  const isInsideField = Boolean(fieldContainerContext);
   const isInsideControlField =
     Boolean(controlFieldContext) || Boolean(radioGroupItemContext);
 
@@ -83,7 +83,7 @@ const Label = forwardRef<PressableRef, LabelProps>((props, ref) => {
 
   const rootClassName = labelClassNames.root({
     isDisabled,
-    isInsideTextField,
+    isInsideField,
     isInsideControlField,
     className,
   });

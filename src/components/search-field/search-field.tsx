@@ -113,6 +113,7 @@ const SearchFieldInput = forwardRef<TextInputType, SearchFieldInputProps>(
     const {
       className,
       placeholder = 'Search...',
+      returnKeyType = 'search',
       accessibilityRole = 'search',
       accessibilityLabel = 'Search',
       ...restProps
@@ -125,6 +126,7 @@ const SearchFieldInput = forwardRef<TextInputType, SearchFieldInputProps>(
         ref={ref}
         className={inputClassName}
         placeholder={placeholder}
+        returnKeyType={returnKeyType}
         accessibilityRole={accessibilityRole}
         accessibilityLabel={accessibilityLabel}
         {...restProps}

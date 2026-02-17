@@ -19,7 +19,7 @@ const searchIcon = tv({
  * @see {@link ../input/input.styles.ts} for the base Input styles.
  */
 const input = tv({
-  base: 'flex-1 pl-9',
+  base: 'flex-1 pl-9 pr-12',
 });
 
 const clearButton = tv({

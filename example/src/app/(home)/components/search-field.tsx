@@ -1,6 +1,6 @@
 import { Description, FieldError, Label, SearchField } from 'heroui-native';
 import { useState } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { Text, useWindowDimensions, View } from 'react-native';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
 import Animated, {
   useAnimatedStyle,
@@ -43,7 +43,6 @@ const BasicSearchFieldContent = () => {
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <SearchField>
-          <Label>Search</Label>
           <SearchField.Group>
             <SearchField.SearchIcon />
             <SearchField.Input
@@ -129,6 +128,36 @@ const WithValidationContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const CustomSearchIconContent = () => {
+  const [searchValue, setSearchValue] = useState('');
+
+  return (
+    <View className="flex-1 justify-center px-5">
+      <KeyboardAvoidingContainer>
+        <SearchField>
+          <Label>Search</Label>
+          <SearchField.Group>
+            <SearchField.SearchIcon>
+              <Text className="text-base">🔍</Text>
+            </SearchField.SearchIcon>
+            <SearchField.Input
+              value={searchValue}
+              onChangeText={setSearchValue}
+              className="pl-10"
+            />
+            {searchValue.length > 0 && (
+              <SearchField.ClearButton onPress={() => setSearchValue('')} />
+            )}
+          </SearchField.Group>
+          <Description>Uses a custom search emoji icon</Description>
+        </SearchField>
+      </KeyboardAvoidingContainer>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const DisabledContent = () => {
   return (
     <View className="flex-1 justify-center px-5">
@@ -166,14 +195,19 @@ const SEARCH_FIELD_VARIANTS: UsageVariant[] = [
     content: <BasicSearchFieldContent />,
   },
   {
-    value: 'with-description',
-    label: 'With description',
+    value: 'with-label-and-description',
+    label: 'With label & description',
     content: <WithDescriptionContent />,
   },
   {
     value: 'with-validation',
     label: 'With validation',
     content: <WithValidationContent />,
+  },
+  {
+    value: 'custom-search-icon',
+    label: 'Custom search icon',
+    content: <CustomSearchIconContent />,
   },
   {
     value: 'disabled',

@@ -155,6 +155,10 @@ export default function Layout() {
           options={{ title: 'ScrollShadow' }}
         />
         <Stack.Screen
+          name="components/search-field"
+          options={{ title: 'SearchField' }}
+        />
+        <Stack.Screen
           name="components/select-native-modal"
           options={{ title: 'Select Native Modal', presentation: 'formSheet' }}
         />

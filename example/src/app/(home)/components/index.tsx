@@ -94,6 +94,10 @@ const components: Component[] = [
     path: 'scroll-shadow',
   },
   {
+    title: 'SearchField',
+    path: 'search-field',
+  },
+  {
     title: 'Select',
     path: 'select',
   },

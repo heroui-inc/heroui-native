@@ -6,6 +6,7 @@ import { HeroText } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import { childrenToString } from '../../helpers/internal/utils';
 import * as AvatarPrimitives from '../../primitives/avatar';
+import type { ImageProps } from '../../primitives/avatar/avatar.types';
 import {
   useAvatarFallbackAnimation,
   useAvatarImageAnimation,
@@ -136,8 +137,11 @@ const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
       return (
         <AvatarPrimitives.Image
           ref={ref}
+          source={source}
           className={imageClassName}
-          {...props}
+          style={styleProp}
+          asChild
+          {...(restProps as Omit<ImageProps, 'source' | 'style' | 'asChild'>)}
         />
       );
     }

@@ -7,7 +7,7 @@ const root = tv({
     text: 'text-sm text-danger',
   },
   variants: {
-    isInsideTextField: {
+    isInsideField: {
       true: {
         container: 'px-1.5',
         text: '',

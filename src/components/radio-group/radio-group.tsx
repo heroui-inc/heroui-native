@@ -3,7 +3,7 @@ import { forwardRef, useCallback, useMemo } from 'react';
 import { useIsOnSurface } from '../../helpers/external/hooks';
 import {
   AnimationSettingsProvider,
-  FormItemStateProvider,
+  FormFieldProvider,
 } from '../../helpers/internal/contexts';
 import { childrenToString } from '../../helpers/internal/utils';
 import * as RadioGroupPrimitives from '../../primitives/radio-group';
@@ -50,18 +50,19 @@ const RadioGroupRoot = forwardRef<
     [isAllAnimationsDisabled]
   );
 
-  const formItemStateContextValue = useMemo(
+  const formFieldContextValue = useMemo(
     () => ({
       isDisabled,
       isInvalid,
       isRequired: false,
+      hasFieldPadding: false,
     }),
     [isDisabled, isInvalid]
   );
 
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
-      <FormItemStateProvider value={formItemStateContextValue}>
+      <FormFieldProvider value={formFieldContextValue}>
         <RadioGroupPrimitives.Root
           ref={ref}
           className={rootClassName}
@@ -69,7 +70,7 @@ const RadioGroupRoot = forwardRef<
           isInvalid={isInvalid}
           {...restProps}
         />
-      </FormItemStateProvider>
+      </FormFieldProvider>
     </AnimationSettingsProvider>
   );
 });
@@ -105,7 +106,7 @@ const RadioGroupItem = forwardRef<
 
   const isSelected = groupValue === value;
   const isDisabledValue = isDisabled ?? groupIsDisabled ?? false;
-  const effectiveIsInvalid = isInvalid ?? groupIsInvalid ?? false;
+  const isInvalidValue = isInvalid ?? groupIsInvalid ?? false;
 
   /** Selects this item in the group (radio behavior: always selects, never deselects) */
   const handleSelectedChange = useCallback(() => {
@@ -130,7 +131,7 @@ const RadioGroupItem = forwardRef<
   const renderProps: RadioGroupItemRenderProps = {
     isSelected,
     isDisabled: isDisabledValue,
-    isInvalid: effectiveIsInvalid,
+    isInvalid: isInvalidValue,
   };
 
   const content = stringifiedChildren ? (
@@ -148,30 +149,31 @@ const RadioGroupItem = forwardRef<
     () => ({
       isSelected,
       isDisabled: isDisabledValue,
-      isInvalid: effectiveIsInvalid,
+      isInvalid: isInvalidValue,
       variant: finalVariant,
       onSelectedChange: handleSelectedChange,
     }),
     [
       isSelected,
       isDisabledValue,
-      effectiveIsInvalid,
+      isInvalidValue,
       finalVariant,
       handleSelectedChange,
     ]
   );
 
-  const formItemStateContextValue = useMemo(
+  const formFieldContextValue = useMemo(
     () => ({
       isDisabled: isDisabledValue,
-      isInvalid: effectiveIsInvalid,
+      isInvalid: isInvalidValue,
       isRequired: false,
+      hasFieldPadding: false,
     }),
-    [isDisabledValue, effectiveIsInvalid]
+    [isDisabledValue, isInvalidValue]
   );
 
   return (
-    <FormItemStateProvider value={formItemStateContextValue}>
+    <FormFieldProvider value={formFieldContextValue}>
       <RadioGroupItemProvider value={contextValue}>
         <RadioGroupPrimitives.Item
           ref={ref}
@@ -183,7 +185,7 @@ const RadioGroupItem = forwardRef<
           {content}
         </RadioGroupPrimitives.Item>
       </RadioGroupItemProvider>
-    </FormItemStateProvider>
+    </FormFieldProvider>
   );
 });
 

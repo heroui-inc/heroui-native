@@ -1,10 +1,7 @@
 import { forwardRef } from 'react';
 import Animated from 'react-native-reanimated';
 import { HeroText } from '../../helpers/internal/components';
-import {
-  useFieldContainer,
-  useFormItemState,
-} from '../../helpers/internal/contexts';
+import { useFormField } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import { childrenToString } from '../../helpers/internal/utils';
 import { useFieldErrorRootAnimation } from './field-error.animation';
@@ -28,16 +25,15 @@ const FieldErrorRoot = forwardRef<ViewRef, FieldErrorRootProps>(
       ...restProps
     } = props;
 
-    const formItemState = useFormItemState();
-    const fieldContainerContext = useFieldContainer();
+    const formField = useFormField();
 
-    // Merge form item state with local props (local takes precedence)
+    // Merge form field state with local props (local takes precedence)
     const isInvalid =
       localIsInvalid !== undefined
         ? localIsInvalid
-        : (formItemState?.isInvalid ?? false);
+        : (formField?.isInvalid ?? false);
 
-    const isInsideField = Boolean(fieldContainerContext);
+    const isInsideField = formField?.hasFieldPadding ?? false;
 
     const { container, text } = fieldErrorClassNames.root({
       isInsideField,

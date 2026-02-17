@@ -1,10 +1,8 @@
 import { forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import {
-  type FieldContainerContextValue,
   AnimationSettingsProvider,
-  FieldContainerProvider,
-  FormItemStateProvider,
+  FormFieldProvider,
 } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
@@ -43,8 +41,8 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
     [isDisabled, isInvalid, isRequired]
   );
 
-  const formItemStateContextValue = useMemo(
-    () => ({ isDisabled, isInvalid, isRequired }),
+  const formFieldContextValue = useMemo(
+    () => ({ isDisabled, isInvalid, isRequired, hasFieldPadding: true }),
     [isDisabled, isInvalid, isRequired]
   );
 
@@ -55,22 +53,15 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
     [isAllAnimationsDisabled]
   );
 
-  const fieldContainerContextValue = useMemo<FieldContainerContextValue>(
-    () => ({ isFieldContainer: true }),
-    []
-  );
-
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
-      <FormItemStateProvider value={formItemStateContextValue}>
-        <FieldContainerProvider value={fieldContainerContextValue}>
-          <TextFieldProvider value={contextValue}>
-            <View ref={ref} className={rootClassName} {...restProps}>
-              {children}
-            </View>
-          </TextFieldProvider>
-        </FieldContainerProvider>
-      </FormItemStateProvider>
+      <FormFieldProvider value={formFieldContextValue}>
+        <TextFieldProvider value={contextValue}>
+          <View ref={ref} className={rootClassName} {...restProps}>
+            {children}
+          </View>
+        </TextFieldProvider>
+      </FormFieldProvider>
     </AnimationSettingsProvider>
   );
 });

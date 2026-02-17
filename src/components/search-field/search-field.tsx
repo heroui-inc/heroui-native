@@ -3,11 +3,9 @@ import { type TextInput as TextInputType, View } from 'react-native';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { CloseIcon } from '../../helpers/internal/components';
 import {
-  type FieldContainerContextValue,
   AnimationSettingsProvider,
-  FieldContainerProvider,
-  FormItemStateProvider,
-  useFormItemState,
+  FormFieldProvider,
+  useFormField,
 } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import { Button } from '../button';
@@ -24,7 +22,7 @@ import type {
 } from './search-field.types';
 import { SearchIcon } from './search-icon';
 
-const useSearchField = useFormItemState;
+const useSearchField = useFormField;
 
 // --------------------------------------------------
 const SearchFieldRoot = forwardRef<ViewRef, SearchFieldProps>((props, ref) => {
@@ -44,8 +42,8 @@ const SearchFieldRoot = forwardRef<ViewRef, SearchFieldProps>((props, ref) => {
     animation,
   });
 
-  const formItemStateContextValue = useMemo(
-    () => ({ isDisabled, isInvalid, isRequired }),
+  const formFieldContextValue = useMemo(
+    () => ({ isDisabled, isInvalid, isRequired, hasFieldPadding: true }),
     [isDisabled, isInvalid, isRequired]
   );
 
@@ -56,20 +54,13 @@ const SearchFieldRoot = forwardRef<ViewRef, SearchFieldProps>((props, ref) => {
     [isAllAnimationsDisabled]
   );
 
-  const fieldContainerContextValue = useMemo<FieldContainerContextValue>(
-    () => ({ isFieldContainer: true }),
-    []
-  );
-
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
-      <FormItemStateProvider value={formItemStateContextValue}>
-        <FieldContainerProvider value={fieldContainerContextValue}>
-          <View ref={ref} className={rootClassName} {...restProps}>
-            {children}
-          </View>
-        </FieldContainerProvider>
-      </FormItemStateProvider>
+      <FormFieldProvider value={formFieldContextValue}>
+        <View ref={ref} className={rootClassName} {...restProps}>
+          {children}
+        </View>
+      </FormFieldProvider>
     </AnimationSettingsProvider>
   );
 });
@@ -197,12 +188,12 @@ SearchFieldClearButton.displayName = DISPLAY_NAME.SEARCH_FIELD_CLEAR_BUTTON;
  *
  * @component SearchField.Input - Wraps the Input component with search-specific defaults:
  * "Search..." placeholder, left padding for the search icon, and search a11y role.
- * Consumes form state from FormItemStateProvider context automatically.
+ * Consumes form state from FormFieldProvider context automatically.
  *
  * @component SearchField.ClearButton - Small button to clear the search input,
  * styled similarly to CloseButton with size-5 and 8px icon.
  *
- * Props flow from SearchField to sub-components via FormItemStateProvider context.
+ * Props flow from SearchField to sub-components via FormFieldProvider context.
  *
  * @see Full documentation: https://v3.heroui.com/docs/native/components/search-field
  */

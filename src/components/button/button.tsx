@@ -175,29 +175,35 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
       <PressableFeedback
         ref={ref}
         className={rootClassName}
-        style={[buttonStyleSheet.buttonRoot, style]}
+        style={
+          typeof style === 'function'
+            ? (state) => [buttonStyleSheet.buttonRoot, style(state)]
+            : [buttonStyleSheet.buttonRoot, style]
+        }
         isDisabled={isDisabled}
         accessibilityRole={accessibilityRole}
         accessibilityState={{ disabled: isDisabled }}
         {...restProps}
       >
-        {pressableFeedbackVariant === 'highlight' && (
-          <PressableFeedback.Highlight
-            {...pressableFeedbackHighlightProps}
-            animation={highlightAnimationConfig}
-          />
-        )}
-        {pressableFeedbackVariant === 'ripple' && (
-          <PressableFeedback.Ripple
-            {...pressableFeedbackRippleProps}
-            animation={rippleAnimationConfig}
-          />
-        )}
-        {stringifiedChildren ? (
-          <ButtonLabel>{stringifiedChildren}</ButtonLabel>
-        ) : (
-          children
-        )}
+        <PressableFeedback.Scale>
+          {pressableFeedbackVariant === 'highlight' && (
+            <PressableFeedback.Highlight
+              {...pressableFeedbackHighlightProps}
+              animation={highlightAnimationConfig}
+            />
+          )}
+          {pressableFeedbackVariant === 'ripple' && (
+            <PressableFeedback.Ripple
+              {...pressableFeedbackRippleProps}
+              animation={rippleAnimationConfig}
+            />
+          )}
+          {stringifiedChildren ? (
+            <ButtonLabel>{stringifiedChildren}</ButtonLabel>
+          ) : (
+            children
+          )}
+        </PressableFeedback.Scale>
       </PressableFeedback>
     </ButtonProvider>
   );

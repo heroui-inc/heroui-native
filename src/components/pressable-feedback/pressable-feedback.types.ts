@@ -6,7 +6,7 @@ import type {
 } from 'react-native-reanimated';
 import type {
   Animation,
-  AnimationRoot,
+  AnimationRootDisableAll,
   AnimationValue,
   ElementSlots,
 } from '../../helpers/internal/types';
@@ -18,9 +18,14 @@ import type { RippleSlots } from './pressable-feedback.styles';
 export type PressableFeedbackVariant = 'highlight' | 'ripple';
 
 /**
- * Scale animation configuration for PressableFeedback root container
+ * Scale animation configuration for PressableFeedback.Scale compound part
+ *
+ * Supports the standard Animation control flow:
+ * - `true` or `undefined`: Use default scale animation
+ * - `false` or `"disabled"`: Disable scale animation
+ * - `object`: Custom scale configuration (value, timingConfig, ignoreScaleCoefficient)
  */
-export type PressableFeedbackScaleAnimation = AnimationValue<{
+export type PressableFeedbackScaleAnimation = Animation<{
   /**
    * Scale value when pressed
    * @default 0.985
@@ -186,55 +191,70 @@ export type PressableFeedbackRippleAnimation = Animation<{
 
 /**
  * Animation configuration for PressableFeedback root component
- * Only contains scale animation configuration
  */
-export type PressableFeedbackRootAnimation = AnimationRoot<{
-  /**
-   * Scale animation for the root container
-   */
-  scale?: PressableFeedbackScaleAnimation;
-}>;
+export type PressableFeedbackRootAnimation = AnimationRootDisableAll;
 
 /**
  * Props for PressableFeedback root component
  */
 export interface PressableFeedbackProps
-  extends AnimatedProps<Omit<PressableProps, 'disabled'>> {
+  extends Omit<PressableProps, 'disabled'> {
   /**
    * Whether the pressable component is disabled
    * @default false
    */
   isDisabled?: boolean;
   /**
+   * When true, the root renders via Slot.Pressable (merging props onto
+   * the single child element) instead of a plain Pressable.
+   * @default false
+   */
+  asChild?: boolean;
+  /**
    * Children elements
    */
   children?: React.ReactNode;
   /**
    * Additional CSS classes
-   *
-   * @note The following style properties are occupied by animations and cannot be set via className:
-   * - `transform` (specifically `scale`) - Animated for press feedback transitions (unpressed: 1, pressed: adjusted scale based on container width, default: 0.985)
-   *
-   * To customize this property, use the `animation` prop:
-   * ```tsx
-   * <PressableFeedback
-   *   animation={{
-   *     scale: { value: 0.985, timingConfig: { duration: 300, easing: Easing.out(Easing.ease) } }
-   *   }}
-   * />
-   * ```
-   *
-   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
   /**
-   * Animation configuration for the root component (scale only)
+   * Animation configuration for the root component.
+   * Set to `'disable-all'` to cascade-disable all child animations
+   * (Scale, Highlight, Ripple). Otherwise leave undefined for defaults.
    */
   animation?: PressableFeedbackRootAnimation;
+}
+
+/**
+ * Props for PressableFeedback.Scale compound part
+ */
+export interface PressableFeedbackScaleProps extends AnimatedProps<ViewProps> {
+  /**
+   * Additional CSS classes
+   *
+   * @note The following style properties are occupied by animations and cannot be set via className:
+   * - `transform` (specifically `scale`) - Animated for press feedback transitions
+   *   (unpressed: 1, pressed: adjusted scale based on container width, default: 0.985)
+   *
+   * To customize this property, use the `animation` prop:
+   * ```tsx
+   * <PressableFeedback.Scale
+   *   animation={{ value: 0.985, timingConfig: { duration: 300, easing: Easing.out(Easing.ease) } }}
+   * />
+   * ```
+   *
+   * To completely disable animated styles and use your own via className or style prop,
+   * set `isAnimatedStyleActive={false}`.
+   */
+  className?: string;
+  /**
+   * Animation configuration for the scale effect
+   */
+  animation?: PressableFeedbackScaleAnimation;
   /**
    * Whether animated styles (react-native-reanimated) are active
    * When `false`, the animated style is removed and you can implement custom logic
-   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
    * @default true
    */
   isAnimatedStyleActive?: boolean;

@@ -22,10 +22,7 @@ const BasicContent = () => {
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full">
         <ListGroup>
-          <PressableFeedback
-            animation={{ scale: { value: 1 } }}
-            onPress={() => console.log('General')}
-          >
+          <PressableFeedback onPress={() => console.log('General')}>
             <ListGroup.Item>
               <ListGroup.ItemContent>
                 <ListGroup.ItemTitle>General</ListGroup.ItemTitle>
@@ -38,10 +35,7 @@ const BasicContent = () => {
             <PressableFeedback.Ripple />
           </PressableFeedback>
           <Separator className="mx-4" />
-          <PressableFeedback
-            animation={{ scale: { value: 1 } }}
-            onPress={() => console.log('Notifications')}
-          >
+          <PressableFeedback onPress={() => console.log('Notifications')}>
             <ListGroup.Item>
               <ListGroup.ItemContent>
                 <ListGroup.ItemTitle>Notifications</ListGroup.ItemTitle>

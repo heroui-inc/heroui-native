@@ -13,57 +13,61 @@ const StyledImage = withUniwind(Image);
 const BackgroundImageCardContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
-      <PressableFeedback className="w-full aspect-square rounded-3xl shadow-surface">
-        <Card className="flex-1">
-          <Image
-            source={{
-              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/neo2.jpeg',
-            }}
-            style={StyleSheet.absoluteFill}
-            contentFit="cover"
-          />
-          <LinearGradient
-            colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.4)']}
-            style={StyleSheet.absoluteFill}
-          />
-          <PressableFeedback.Ripple
-            animation={{
-              backgroundColor: { value: 'white' },
-              opacity: { value: [0, 0.3, 0] },
-            }}
-          />
-          <View className="flex-1 gap-4" pointerEvents="box-none">
-            <Card.Body className="flex-1" pointerEvents="none">
-              <Card.Title className="text-base text-zinc-50 uppercase mb-0.5">
-                Neo
-              </Card.Title>
-              <Card.Description className="text-zinc-50 font-medium text-base">
-                Home robot
-              </Card.Description>
-            </Card.Body>
-            <Card.Footer className="gap-3">
-              <View className="flex-row items-center justify-between">
-                <View pointerEvents="none">
-                  <AppText className="text-base text-white">
-                    Available soon
-                  </AppText>
-                  <AppText className="text-base text-zinc-300">
-                    Get notified
-                  </AppText>
-                </View>
+      <PressableFeedback className="w-full aspect-square overflow-auto">
+        <PressableFeedback.Scale className="flex-1">
+          <Card className="flex-1">
+            <Image
+              source={{
+                uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/neo2.jpeg',
+              }}
+              style={StyleSheet.absoluteFill}
+              contentFit="cover"
+            />
+            <LinearGradient
+              colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.4)']}
+              style={StyleSheet.absoluteFill}
+            />
+            <PressableFeedback.Ripple
+              animation={{
+                backgroundColor: { value: 'white' },
+                opacity: { value: [0, 0.3, 0] },
+              }}
+            />
+            <View className="flex-1 gap-4" pointerEvents="box-none">
+              <Card.Body className="flex-1" pointerEvents="none">
+                <Card.Title className="text-base text-zinc-50 uppercase mb-0.5">
+                  Neo
+                </Card.Title>
+                <Card.Description className="text-zinc-50 font-medium text-base">
+                  Home robot
+                </Card.Description>
+              </Card.Body>
+              <Card.Footer className="gap-3">
+                <View className="flex-row items-center justify-between">
+                  <View pointerEvents="none">
+                    <AppText className="text-base text-white">
+                      Available soon
+                    </AppText>
+                    <AppText className="text-base text-zinc-300">
+                      Get notified
+                    </AppText>
+                  </View>
 
-                <Button
-                  size="sm"
-                  className="bg-white"
-                  pressableFeedbackVariant="none"
-                  onPress={simulatePress}
-                >
-                  <Button.Label className="text-black">Notify me</Button.Label>
-                </Button>
-              </View>
-            </Card.Footer>
-          </View>
-        </Card>
+                  <Button
+                    size="sm"
+                    className="bg-white"
+                    pressableFeedbackVariant="none"
+                    onPress={simulatePress}
+                  >
+                    <Button.Label className="text-black">
+                      Notify me
+                    </Button.Label>
+                  </Button>
+                </View>
+              </Card.Footer>
+            </View>
+          </Card>
+        </PressableFeedback.Scale>
       </PressableFeedback>
     </View>
   );
@@ -75,7 +79,7 @@ const CardWithImageContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="flex-row gap-4">
-        <PressableFeedback className="flex-1 aspect-[1/1.3] rounded-3xl shadow-surface">
+        <PressableFeedback className="flex-1 aspect-[1/1.3] overflow-auto">
           <Card className="flex-1">
             <View className="flex-1 gap-4">
               <Card.Header>
@@ -99,15 +103,15 @@ const CardWithImageContent = () => {
                 </AppText>
               </Card.Footer>
             </View>
+            <PressableFeedback.Ripple
+              animation={{
+                backgroundColor: { value: '#fecdd3' },
+                opacity: { value: [0, 0.2, 0] },
+              }}
+            />
           </Card>
-          <PressableFeedback.Ripple
-            animation={{
-              backgroundColor: { value: '#fecdd3' },
-              opacity: { value: [0, 0.2, 0] },
-            }}
-          />
         </PressableFeedback>
-        <PressableFeedback className="flex-1 aspect-[1/1.3] rounded-3xl shadow-surface">
+        <PressableFeedback className="flex-1 aspect-[1/1.3] overflow-auto">
           <Card className="flex-1">
             <View className="flex-1 gap-4">
               <Card.Header>
@@ -131,12 +135,12 @@ const CardWithImageContent = () => {
                 </AppText>
               </Card.Footer>
             </View>
+            <PressableFeedback.Ripple
+              animation={{
+                backgroundColor: { value: '#67e8f9' },
+              }}
+            />
           </Card>
-          <PressableFeedback.Ripple
-            animation={{
-              backgroundColor: { value: '#67e8f9' },
-            }}
-          />
         </PressableFeedback>
       </View>
     </View>

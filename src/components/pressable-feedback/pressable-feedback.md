@@ -10,12 +10,16 @@ import { PressableFeedback } from 'heroui-native';
 
 ## Usage
 
-### Basic Usage
+### Scale Effect
 
-The PressableFeedback component wraps content to provide press feedback effects. By default, it applies a subtle scale animation when pressed.
+Add a scale animation component for press-down shrink feedback. The scale value is automatically adjusted based on container width for a consistent feel across sizes.
 
 ```tsx
-<PressableFeedback>...</PressableFeedback>
+<PressableFeedback>
+  <PressableFeedback.Scale>
+    ...
+  </PressableFeedback.Scale>
+</PressableFeedback>
 ```
 
 ### Highlight Effect
@@ -40,20 +44,33 @@ Add a ripple overlay component for Android-style feedback effect that emanates f
 </PressableFeedback>
 ```
 
-### Custom Scale Animation
+### Scale with Highlight
 
-Customize or disable the default scale animation on press.
+Combine the Scale and Highlight compound parts for a press-down shrink effect together with an iOS-style highlight overlay.
 
 ```tsx
-<PressableFeedback
-  animation={{
-    scale: {
+<PressableFeedback>
+  <PressableFeedback.Scale>
+    <PressableFeedback.Highlight />
+    ...
+  </PressableFeedback.Scale>
+</PressableFeedback>
+```
+
+### Custom Scale Animation
+
+Customize the scale animation on the Scale compound part.
+
+```tsx
+<PressableFeedback>
+  <PressableFeedback.Scale
+    animation={{
       value: 0.9,
       timingConfig: { duration: 150 },
-    },
-  }}
->
-  ...
+    }}
+  >
+    ...
+  </PressableFeedback.Scale>
 </PressableFeedback>
 ```
 
@@ -65,8 +82,8 @@ Configure highlight overlay opacity and background color.
 <PressableFeedback>
   <PressableFeedback.Highlight
     animation={{
-      opacity: { value: [0, 0.2] },
       backgroundColor: { value: '#3b82f6' },
+      opacity: { value: [0, 0.2] },
     }}
   />
   ...
@@ -90,6 +107,19 @@ Configure ripple effect color, opacity, and duration.
 </PressableFeedback>
 ```
 
+### Disable All Animations
+
+Set `animation="disable-all"` on the root to cascade-disable all child animations (Scale, Highlight, Ripple).
+
+```tsx
+<PressableFeedback animation="disable-all">
+  <PressableFeedback.Scale>
+    <PressableFeedback.Highlight />
+    ...
+  </PressableFeedback.Scale>
+</PressableFeedback>
+```
+
 ## Example
 
 ```tsx
@@ -100,47 +130,49 @@ import { StyleSheet, View } from 'react-native';
 
 export default function PressableFeedbackExample() {
   return (
-    <PressableFeedback className="w-full aspect-square rounded-3xl">
-      <Card className="flex-1">
-        <Image
-          source={{
-            uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/neo2.jpeg',
-          }}
-          style={StyleSheet.absoluteFill}
-          contentFit="cover"
-        />
-        <LinearGradient
-          colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.4)']}
-          style={StyleSheet.absoluteFill}
-        />
-        <PressableFeedback.Ripple
-          animation={{
-            backgroundColor: { value: 'white' },
-            opacity: { value: [0, 0.3, 0] },
-          }}
-        />
-        <View className="flex-1 gap-4" pointerEvents="box-none">
-          <Card.Body className="flex-1" pointerEvents="none">
-            <Card.Title className="text-base text-zinc-50 uppercase mb-0.5">
-              Neo
-            </Card.Title>
-            <Card.Description className="text-zinc-50 font-medium text-base">
-              Home robot
-            </Card.Description>
-          </Card.Body>
-          <Card.Footer className="gap-3">
-            <View className="flex-row items-center justify-between">
-              <View pointerEvents="none">
-                <Text className="text-base text-white">Available soon</Text>
-                <Text className="text-base text-zinc-300">Get notified</Text>
+    <PressableFeedback className="w-full aspect-square overflow-auto">
+      <PressableFeedback.Scale className="flex-1">
+        <Card className="flex-1">
+          <Image
+            source={{
+              uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/neo2.jpeg',
+            }}
+            style={StyleSheet.absoluteFill}
+            contentFit="cover"
+          />
+          <LinearGradient
+            colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.4)']}
+            style={StyleSheet.absoluteFill}
+          />
+          <PressableFeedback.Ripple
+            animation={{
+              backgroundColor: { value: 'white' },
+              opacity: { value: [0, 0.3, 0] },
+            }}
+          />
+          <View className="flex-1 gap-4" pointerEvents="box-none">
+            <Card.Body className="flex-1" pointerEvents="none">
+              <Card.Title className="text-base text-zinc-50 uppercase mb-0.5">
+                Neo
+              </Card.Title>
+              <Card.Description className="text-zinc-50 font-medium text-base">
+                Home robot
+              </Card.Description>
+            </Card.Body>
+            <Card.Footer className="gap-3">
+              <View className="flex-row items-center justify-between">
+                <View pointerEvents="none">
+                  <Text className="text-base text-white">Available soon</Text>
+                  <Text className="text-base text-zinc-300">Get notified</Text>
+                </View>
+                <Button size="sm" className="bg-white">
+                  <Button.Label className="text-black">Notify me</Button.Label>
+                </Button>
               </View>
-              <Button size="sm" className="bg-white">
-                <Button.Label className="text-black">Notify me</Button.Label>
-              </Button>
-            </View>
-          </Card.Footer>
-        </View>
-      </Card>
+            </Card.Footer>
+          </View>
+        </Card>
+      </PressableFeedback.Scale>
     </PressableFeedback>
   );
 }
@@ -152,30 +184,46 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 
 ### PressableFeedback
 
-| prop                    | type                             | default | description                                                  |
-| ----------------------- | -------------------------------- | ------- | ------------------------------------------------------------ |
-| `children`              | `React.ReactNode`                | -       | Content to be wrapped with press feedback                    |
-| `isDisabled`            | `boolean`                        | `false` | Whether the pressable component is disabled                  |
-| `className`             | `string`                         | -       | Additional CSS classes                                       |
-| `animation`             | `PressableFeedbackRootAnimation` | -       | Animation configuration for scale animation only             |
-| `isAnimatedStyleActive` | `boolean`                        | `true`  | Whether animated styles (react-native-reanimated) are active |
-| `...AnimatedProps`      | `AnimatedProps<PressableProps>`  | -       | All Reanimated Animated Pressable props are supported        |
+| prop         | type                             | default | description                                                                                  |
+| ------------ | -------------------------------- | ------- | -------------------------------------------------------------------------------------------- |
+| `children`   | `React.ReactNode`                | -       | Content to be wrapped with press feedback                                                    |
+| `isDisabled` | `boolean`                        | `false` | Whether the pressable component is disabled                                                  |
+| `asChild`    | `boolean`                        | `false` | Render as Slot.Pressable, merging props onto the single child element                        |
+| `className`  | `string`                         | -       | Additional CSS classes                                                                       |
+| `animation`  | `PressableFeedbackRootAnimation` | -       | Set to `'disable-all'` to cascade-disable all child animations, or leave undefined           |
+| `...rest`    | `PressableProps`                 | -       | All React Native Pressable props (except `disabled`, use `isDisabled` instead) are supported |
 
 #### PressableFeedbackRootAnimation
 
-Animation configuration for PressableFeedback root component (scale only). Can be:
+The root animation prop accepts only:
 
-- `false` or `"disabled"`: Disable only root animations
-- `"disable-all"`: Disable all animations including children
-- `true` or `undefined`: Use default animations
-- `object`: Custom animation configuration
+- `'disable-all'`: Disable all animations including children (Scale, Highlight, Ripple)
+- `undefined`: Use default animations
 
-| prop                           | type                                     | default                                              | description                                                                |
-| ------------------------------ | ---------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------- |
-| `state`                        | `'disabled' \| 'disable-all' \| boolean` | -                                                    | Disable animations while customizing properties                            |
-| `scale.value`                  | `number`                                 | `0.985`                                              | Scale value when pressed (automatically adjusted based on container width) |
-| `scale.timingConfig`           | `WithTimingConfig`                       | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration                                             |
-| `scale.ignoreScaleCoefficient` | `boolean`                                | `false`                                              | Ignore automatic scale coefficient and use the scale value directly        |
+### PressableFeedback.Scale
+
+| prop                    | type                              | default | description                                                  |
+| ----------------------- | --------------------------------- | ------- | ------------------------------------------------------------ |
+| `className`             | `string`                          | -       | Additional CSS classes                                       |
+| `animation`             | `PressableFeedbackScaleAnimation` | -       | Animation configuration for scale effect                     |
+| `isAnimatedStyleActive` | `boolean`                         | `true`  | Whether animated styles (react-native-reanimated) are active |
+| `style`                 | `ViewStyle`                       | -       | Additional styles                                            |
+| `...AnimatedProps`      | `AnimatedProps<ViewProps>`        | -       | All Reanimated Animated View props are supported             |
+
+#### PressableFeedbackScaleAnimation
+
+Animation configuration for scale effect. Can be:
+
+- `false` or `"disabled"`: Disable scale animation
+- `true` or `undefined`: Use default scale animation
+- `object`: Custom scale configuration
+
+| prop                    | type               | default                                              | description                                                                |
+| ----------------------- | ------------------ | ---------------------------------------------------- | -------------------------------------------------------------------------- |
+| `state`                 | `'disabled' \| boolean` | -                                               | Disable animations while customizing properties                            |
+| `value`                 | `number`           | `0.985`                                              | Scale value when pressed (automatically adjusted based on container width) |
+| `timingConfig`          | `WithTimingConfig` | `{ duration: 300, easing: Easing.out(Easing.ease) }` | Animation timing configuration                                            |
+| `ignoreScaleCoefficient`| `boolean`          | `false`                                              | Ignore automatic scale coefficient and use the scale value directly        |
 
 ### PressableFeedback.Highlight
 
@@ -192,7 +240,6 @@ Animation configuration for PressableFeedback root component (scale only). Can b
 Animation configuration for highlight overlay. Can be:
 
 - `false` or `"disabled"`: Disable highlight animations
-- `"disable-all"`: Disable all animations including children
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 
@@ -226,7 +273,6 @@ Animation configuration for highlight overlay. Can be:
 Animation configuration for ripple overlay. Can be:
 
 - `false` or `"disabled"`: Disable ripple animations
-- `"disable-all"`: Disable all animations including children
 - `true` or `undefined`: Use default animations
 - `object`: Custom animation configuration
 

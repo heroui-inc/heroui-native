@@ -18,7 +18,6 @@ import {
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
-  getRootAnimationState,
 } from '../../helpers/internal/utils';
 import {
   BASE_RIPPLE_PROGRESS_DURATION,
@@ -29,6 +28,7 @@ import type {
   PressableFeedbackRippleAnimation,
   PressableFeedbackRootAnimation,
   PressableFeedbackRootAnimationContextValue,
+  PressableFeedbackScaleAnimation,
 } from './pressable-feedback.types';
 
 const [
@@ -47,51 +47,79 @@ export {
 
 /**
  * Animation hook for PressableFeedback root component
- * Handles scale animation only
+ * Manages press state and container dimensions for child compound parts
  */
 export function usePressableFeedbackRootAnimation(options: {
   animation?: PressableFeedbackRootAnimation;
 }) {
   const { animation } = options;
 
-  const { animationConfig, isAnimationDisabled } =
-    getRootAnimationState(animation);
-
   const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+
+  const isPressed = useSharedValue(false);
+  const containerWidth = useSharedValue(0);
+  const containerHeight = useSharedValue(0);
+
+  const animationOnPressIn = useCallback(() => {
+    isPressed.set(true);
+  }, [isPressed]);
+
+  const animationOnPressOut = useCallback(() => {
+    isPressed.set(false);
+  }, [isPressed]);
+
+  return {
+    isAllAnimationsDisabled,
+    animationOnPressIn,
+    animationOnPressOut,
+    isPressed,
+    containerWidth,
+    containerHeight,
+  };
+}
+
+// --------------------------------------------------
+
+/**
+ * Animation hook for PressableFeedback.Scale compound part
+ * Handles scale animation reacting to the root's press state via context
+ */
+export function usePressableFeedbackScaleAnimation(options: {
+  animation?: PressableFeedbackScaleAnimation;
+}) {
+  const { animation } = options;
+
+  const { isAllAnimationsDisabled } = useAnimationSettings();
+
+  const { isPressed, containerWidth } =
+    usePressableFeedbackRootAnimationContext();
+
+  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
   const isAnimationDisabledValue = getIsAnimationDisabledValue({
     isAnimationDisabled,
     isAllAnimationsDisabled,
   });
 
-  // Scale animation values
   const scaleValue = getAnimationValueProperty({
-    animationValue: animationConfig?.scale,
+    animationValue: animationConfig,
     property: 'value',
     defaultValue: 0.985,
   });
 
   const scaleTimingConfig = getAnimationValueMergedConfig({
-    animationValue: animationConfig?.scale,
+    animationValue: animationConfig,
     property: 'timingConfig',
     defaultValue: { duration: 300, easing: Easing.out(Easing.ease) },
   });
 
   const ignoreScaleCoefficient = getAnimationValueProperty({
-    animationValue: animationConfig?.scale,
+    animationValue: animationConfig,
     property: 'ignoreScaleCoefficient',
     defaultValue: false,
   });
 
-  // Shared values
-  const isPressed = useSharedValue(false);
-  const scale = useSharedValue(0);
-  const containerWidth = useSharedValue(0);
-  const containerHeight = useSharedValue(0);
-
   const adjustedScaleValue = useDerivedValue(() => {
-    // Calculate scale coefficient to maintain consistent scale effect across different sizes
-    // Can be disabled by setting ignoreScaleCoefficient to true
     const coefficient = ignoreScaleCoefficient
       ? 1
       : containerWidth.get() > 0
@@ -100,34 +128,19 @@ export function usePressableFeedbackRootAnimation(options: {
     return 1 - (1 - scaleValue) * coefficient;
   });
 
-  const animationOnPressIn = useCallback(() => {
-    isPressed.set(true);
-    scale.set(withTiming(1, scaleTimingConfig));
-  }, [isPressed, scale, scaleTimingConfig]);
-
-  const animationOnPressOut = useCallback(() => {
-    isPressed.set(false);
-    scale.set(withTiming(0, scaleTimingConfig));
-  }, [isPressed, scale, scaleTimingConfig]);
-
   const rContainerStyle = useAnimatedStyle(() => {
     if (isAnimationDisabledValue) {
       return {
-        transform: [
-          {
-            scale: 1,
-          },
-        ],
+        transform: [{ scale: 1 }],
       };
     }
 
     return {
       transform: [
         {
-          scale: interpolate(
-            scale.get(),
-            [0, 1],
-            [1, adjustedScaleValue.get()]
+          scale: withTiming(
+            isPressed.get() ? adjustedScaleValue.get() : 1,
+            scaleTimingConfig
           ),
         },
       ],
@@ -136,12 +149,6 @@ export function usePressableFeedbackRootAnimation(options: {
 
   return {
     rContainerStyle,
-    isAllAnimationsDisabled,
-    animationOnPressIn,
-    animationOnPressOut,
-    isPressed,
-    containerWidth,
-    containerHeight,
   };
 }
 

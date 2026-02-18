@@ -170,9 +170,9 @@ import { View } from 'react-native';
   <Accordion.Item value="1">
     <Accordion.Trigger asChild>
       <PressableFeedback>
-        <View className="flex-row items-center flex-1 gap-3">
+        <PressableFeedback.Scale className="flex-row items-center flex-1 gap-3">
           <Text>Item Title</Text>
-        </View>
+        </PressableFeedback.Scale>
         <Accordion.Indicator />
         <PressableFeedback.Highlight
           animation={{ opacity: { value: [0, 0.05] } }}

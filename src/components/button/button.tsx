@@ -5,7 +5,12 @@ import { colorKit } from '../../helpers/external/utils';
 import { HeroText } from '../../helpers/internal/components';
 import type { PressableRef } from '../../helpers/internal/types';
 import { childrenToString, createContext } from '../../helpers/internal/utils';
-import { PressableFeedback } from '../pressable-feedback';
+import {
+  PressableFeedback,
+  type PressableFeedbackHighlightAnimation,
+  type PressableFeedbackRippleAnimation,
+  type PressableFeedbackScaleAnimation,
+} from '../pressable-feedback';
 import { DISPLAY_NAME } from './button.constants';
 import { buttonClassNames, buttonStyleSheet } from './button.styles';
 import type {
@@ -13,6 +18,7 @@ import type {
   ButtonLabelProps,
   ButtonRootProps,
 } from './button.types';
+import { isAnimationDisabled, resolveAnimationObject } from './button.utils';
 
 const [ButtonProvider, useButton] = createContext<ButtonContextValue>({
   name: 'ButtonContext',
@@ -24,9 +30,8 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   const {
     children,
     variant = 'primary',
-    pressableFeedbackVariant = 'highlight',
-    pressableFeedbackHighlightProps,
-    pressableFeedbackRippleProps,
+    feedbackVariant = 'scale-highlight',
+    animation,
     size = 'md',
     isIconOnly = false,
     isDisabled = false,
@@ -58,6 +63,9 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     className,
   });
 
+  const resolvedAnimation = resolveAnimationObject(animation);
+  const allAnimationsDisabled = isAnimationDisabled(animation);
+
   const highlightColorMap = useMemo(() => {
     switch (variant) {
       case 'primary':
@@ -84,7 +92,15 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
   ]);
 
   const highlightAnimationConfig = useMemo(() => {
-    if (pressableFeedbackVariant !== 'highlight') {
+    if (feedbackVariant !== 'scale-highlight') {
+      return undefined;
+    }
+
+    const highlightAnimation = resolvedAnimation?.highlight as
+      | PressableFeedbackHighlightAnimation
+      | undefined;
+
+    if (highlightAnimation === false || highlightAnimation === 'disabled') {
       return undefined;
     }
 
@@ -97,33 +113,32 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
       },
     };
 
-    // Merge with provided animation if available
-    if (
-      pressableFeedbackHighlightProps?.animation &&
-      typeof pressableFeedbackHighlightProps.animation === 'object'
-    ) {
-      const providedAnimation = pressableFeedbackHighlightProps.animation;
+    if (typeof highlightAnimation === 'object' && highlightAnimation !== null) {
       return {
         backgroundColor: {
           ...defaultConfig.backgroundColor,
-          ...providedAnimation.backgroundColor,
+          ...(highlightAnimation.backgroundColor ?? {}),
         },
         opacity: {
           ...defaultConfig.opacity,
-          ...providedAnimation.opacity,
+          ...(highlightAnimation.opacity ?? {}),
         },
       };
     }
 
     return defaultConfig;
-  }, [
-    pressableFeedbackVariant,
-    highlightColorMap,
-    pressableFeedbackHighlightProps?.animation,
-  ]);
+  }, [feedbackVariant, highlightColorMap, resolvedAnimation?.highlight]);
 
   const rippleAnimationConfig = useMemo(() => {
-    if (pressableFeedbackVariant !== 'ripple') {
+    if (feedbackVariant !== 'scale-ripple') {
+      return undefined;
+    }
+
+    const rippleAnimation = resolvedAnimation?.ripple as
+      | PressableFeedbackRippleAnimation
+      | undefined;
+
+    if (rippleAnimation === false || rippleAnimation === 'disabled') {
       return undefined;
     }
 
@@ -132,34 +147,47 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
       opacity: { value: [0, 1, 0] as [number, number, number] },
     };
 
-    // Merge with provided animation if available
-    if (
-      pressableFeedbackRippleProps?.animation &&
-      typeof pressableFeedbackRippleProps.animation === 'object'
-    ) {
-      const providedAnimation = pressableFeedbackRippleProps.animation;
+    if (typeof rippleAnimation === 'object' && rippleAnimation !== null) {
       return {
         backgroundColor: {
           ...defaultConfig.backgroundColor,
-          ...providedAnimation.backgroundColor,
+          ...(rippleAnimation.backgroundColor ?? {}),
         },
         opacity: {
           ...defaultConfig.opacity,
-          ...providedAnimation.opacity,
+          ...(rippleAnimation.opacity ?? {}),
         },
-        ...(providedAnimation.scale && { scale: providedAnimation.scale }),
-        ...(providedAnimation.progress && {
-          progress: providedAnimation.progress,
+        ...(rippleAnimation.scale !== undefined && {
+          scale: rippleAnimation.scale,
+        }),
+        ...(rippleAnimation.progress !== undefined && {
+          progress: rippleAnimation.progress,
         }),
       };
     }
 
     return defaultConfig;
-  }, [
-    pressableFeedbackVariant,
-    highlightColorMap,
-    pressableFeedbackRippleProps?.animation,
-  ]);
+  }, [feedbackVariant, highlightColorMap, resolvedAnimation?.ripple]);
+
+  const scaleAnimation = resolvedAnimation?.scale as
+    | PressableFeedbackScaleAnimation
+    | undefined;
+
+  const rootAnimation = useMemo(() => {
+    if (allAnimationsDisabled) {
+      return 'disable-all' as const;
+    }
+    if (feedbackVariant === 'none') {
+      return false as const;
+    }
+    if (scaleAnimation === false || scaleAnimation === 'disabled') {
+      return false as const;
+    }
+    if (typeof scaleAnimation === 'object' && scaleAnimation !== null) {
+      return { scale: scaleAnimation };
+    }
+    return undefined;
+  }, [allAnimationsDisabled, feedbackVariant, scaleAnimation]);
 
   const contextValue = useMemo(
     () => ({
@@ -170,40 +198,37 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     [size, variant, isDisabled]
   );
 
+  const content = stringifiedChildren ? (
+    <ButtonLabel>{stringifiedChildren}</ButtonLabel>
+  ) : (
+    children
+  );
+
   return (
     <ButtonProvider value={contextValue}>
       <PressableFeedback
         ref={ref}
+        isDisabled={isDisabled}
         className={rootClassName}
         style={
           typeof style === 'function'
             ? (state) => [buttonStyleSheet.buttonRoot, style(state)]
             : [buttonStyleSheet.buttonRoot, style]
         }
-        isDisabled={isDisabled}
         accessibilityRole={accessibilityRole}
         accessibilityState={{ disabled: isDisabled }}
+        animation={rootAnimation}
         {...restProps}
       >
-        <PressableFeedback.Scale>
-          {pressableFeedbackVariant === 'highlight' && (
-            <PressableFeedback.Highlight
-              {...pressableFeedbackHighlightProps}
-              animation={highlightAnimationConfig}
-            />
+        {feedbackVariant === 'scale-highlight' &&
+          highlightAnimationConfig !== undefined && (
+            <PressableFeedback.Highlight animation={highlightAnimationConfig} />
           )}
-          {pressableFeedbackVariant === 'ripple' && (
-            <PressableFeedback.Ripple
-              {...pressableFeedbackRippleProps}
-              animation={rippleAnimationConfig}
-            />
+        {feedbackVariant === 'scale-ripple' &&
+          rippleAnimationConfig !== undefined && (
+            <PressableFeedback.Ripple animation={rippleAnimationConfig} />
           )}
-          {stringifiedChildren ? (
-            <ButtonLabel>{stringifiedChildren}</ButtonLabel>
-          ) : (
-            children
-          )}
-        </PressableFeedback.Scale>
+        {content}
       </PressableFeedback>
     </ButtonProvider>
   );
@@ -235,16 +260,18 @@ ButtonRoot.displayName = DISPLAY_NAME.BUTTON_ROOT;
 ButtonLabel.displayName = DISPLAY_NAME.BUTTON_LABEL;
 
 /**
- * Compound Button component with sub-components
+ * Compound Button component with sub-components.
  *
- * @component Button - Main button container that handles press interactions, animations, and variants.
- * Renders with string children as label or accepts compound components for custom layouts.
+ * @component Button - Main button container wrapping `PressableFeedback`. Handles press
+ * interactions, visual variants, and feedback animations. The `feedbackVariant` prop controls
+ * which effects are rendered (`scale-highlight`, `scale-ripple`, `scale`, or `none`), while the
+ * `animation` prop provides granular control over each sub-animation (scale, highlight, ripple).
+ * String children are automatically rendered as a label.
  *
- * @component Button.Label - Text content of the button. When string is provided,
- * it renders as Text. Otherwise renders children as-is.
+ * @component Button.Label - Text content of the button. Inherits size and variant styling
+ * from the parent Button context.
  *
  * Props flow from Button to sub-components via context (size, variant, isDisabled).
- * All components use animated views with layout transitions for smooth animations.
  *
  * @see Full documentation: https://v3.heroui.com/docs/native/components/button
  */

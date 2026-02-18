@@ -12,7 +12,6 @@ import * as ToastPrimitive from '../../primitives/toast';
 import type { ToastComponentProps } from '../../providers/toast';
 import { useToastConfig } from '../../providers/toast/toast-config.context';
 import { Button } from '../button';
-import type { PressableFeedbackHighlightAnimation } from '../pressable-feedback';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
 import { useVerticalPlaceholderStyles } from './toast.hooks';
@@ -213,7 +212,14 @@ const ToastDescription = forwardRef<View, ToastDescriptionProps>(
 // --------------------------------------------------
 
 const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
-  const { children, variant, size = 'sm', className, ...restProps } = props;
+  const {
+    children,
+    variant,
+    size = 'sm',
+    animation,
+    className,
+    ...restProps
+  } = props;
 
   const { variant: toastVariant } = useToast();
 
@@ -271,13 +277,32 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
     }
   }, [toastVariant, variant]);
 
-  const highlightAnimationConfig = useMemo<PressableFeedbackHighlightAnimation>(
+  const defaultHighlightConfig = useMemo(
     () => ({
       backgroundColor: { value: highlightColorMap },
-      opacity: { value: [0, 1] },
+      opacity: { value: [0, 1] as [number, number] },
     }),
     [highlightColorMap]
   );
+
+  const resolvedAnimation =
+    typeof animation === 'object' && animation !== null ? animation : undefined;
+
+  const mergedAnimation = useMemo<ToastActionProps['animation']>(() => {
+    if (
+      animation === false ||
+      animation === 'disabled' ||
+      animation === 'disable-all'
+    ) {
+      return animation;
+    }
+
+    return {
+      scale: false,
+      ...resolvedAnimation,
+      highlight: resolvedAnimation?.highlight ?? defaultHighlightConfig,
+    };
+  }, [animation, resolvedAnimation, defaultHighlightConfig]);
 
   return (
     <Button
@@ -285,10 +310,8 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
       variant={buttonVariant}
       size={size}
       className={actionClassName}
-      pressableFeedbackVariant="highlight"
-      pressableFeedbackHighlightProps={{
-        animation: highlightAnimationConfig,
-      }}
+      feedbackVariant="scale-highlight"
+      animation={mergedAnimation}
       {...restProps}
     >
       {children}

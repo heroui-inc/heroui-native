@@ -103,7 +103,7 @@ const DefaultVariantContent = () => {
         {accordionData.map((item) => (
           <Accordion.Item key={item.id} value={item.id}>
             <Accordion.Trigger asChild>
-              <PressableFeedback>
+              <PressableFeedback animation={{ scale: false }}>
                 <PressableFeedback.Scale
                   className={classNames.triggerContentContainer}
                 >

@@ -120,9 +120,7 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
           >
             <Select.Close
               className="h-auto w-auto bg-transparent"
-              pressableFeedbackHighlightProps={{
-                isAnimatedStyleActive: false,
-              }}
+              animation={{ highlight: false }}
             >
               <View style={{ height: insets.top + screenHeight * 0.25 }} />
             </Select.Close>

@@ -338,7 +338,7 @@ export type SelectContentProps =
  * Extends CloseButtonProps, allowing full override of all close button props.
  * Automatically handles select close functionality when pressed.
  */
-export interface SelectCloseProps extends CloseButtonProps {}
+export type SelectCloseProps = CloseButtonProps;
 
 /**
  * Select Value component props

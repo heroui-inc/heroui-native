@@ -99,7 +99,7 @@ CloseButton extends all props from [Button](../button/button.md) component. It d
 | `iconProps` | `CloseButtonIconProps` | -       | Props for customizing the close icon             |
 | `children`  | `React.ReactNode`      | -       | Custom content to replace the default close icon |
 
-For inherited props including `isDisabled`, `className`, `animation`, `pressableFeedbackVariant`, `pressableFeedbackHighlightProps`, `pressableFeedbackRippleProps`, and all Pressable props, see [Button API Reference](../button/button.md#api-reference).
+For inherited props including `isDisabled`, `className`, `animation`, `feedbackVariant`, and all Pressable props, see [Button API Reference](../button/button.md#api-reference).
 
 #### CloseButtonIconProps
 

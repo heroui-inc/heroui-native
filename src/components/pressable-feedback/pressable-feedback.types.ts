@@ -6,19 +6,14 @@ import type {
 } from 'react-native-reanimated';
 import type {
   Animation,
-  AnimationRootDisableAll,
+  AnimationRoot,
   AnimationValue,
   ElementSlots,
 } from '../../helpers/internal/types';
 import type { RippleSlots } from './pressable-feedback.styles';
 
 /**
- * Variant of the feedback effect
- */
-export type PressableFeedbackVariant = 'highlight' | 'ripple';
-
-/**
- * Scale animation configuration for PressableFeedback.Scale compound part
+ * Scale animation configuration shared by the root's built-in scale and the PressableFeedback.Scale compound part.
  *
  * Supports the standard Animation control flow:
  * - `true` or `undefined`: Use default scale animation
@@ -190,26 +185,36 @@ export type PressableFeedbackRippleAnimation = Animation<{
 }>;
 
 /**
- * Animation configuration for PressableFeedback root component
+ * Animation configuration for PressableFeedback root component.
+ *
+ * Supports the standard AnimationRoot control flow:
+ * - `true` or `undefined`: Use the default built-in scale animation
+ * - `false` or `"disabled"`: Disable the root's built-in scale (use this when applying scale
+ *   via PressableFeedback.Scale instead)
+ * - `"disable-all"`: Cascade-disable all animations including the built-in scale and children
+ *   (Scale, Highlight, Ripple)
+ * - `object`: Custom configuration for the built-in scale
+ *   - `scale`: Customize the built-in scale animation (value, timingConfig, etc.)
+ *   - `state`: Control animation state while keeping configuration (e.g. for runtime toggling)
  */
-export type PressableFeedbackRootAnimation = AnimationRootDisableAll;
+export type PressableFeedbackRootAnimation = AnimationRoot<{
+  /**
+   * Customize the built-in scale animation on the root component.
+   * Accepts the same `PressableFeedbackScaleAnimation` configuration as the Scale compound part.
+   */
+  scale?: PressableFeedbackScaleAnimation;
+}>;
 
 /**
  * Props for PressableFeedback root component
  */
 export interface PressableFeedbackProps
-  extends Omit<PressableProps, 'disabled'> {
+  extends Omit<AnimatedProps<PressableProps>, 'disabled'> {
   /**
    * Whether the pressable component is disabled
    * @default false
    */
   isDisabled?: boolean;
-  /**
-   * When true, the root renders via Slot.Pressable (merging props onto
-   * the single child element) instead of a plain Pressable.
-   * @default false
-   */
-  asChild?: boolean;
   /**
    * Children elements
    */
@@ -220,10 +225,25 @@ export interface PressableFeedbackProps
   className?: string;
   /**
    * Animation configuration for the root component.
-   * Set to `'disable-all'` to cascade-disable all child animations
-   * (Scale, Highlight, Ripple). Otherwise leave undefined for defaults.
+   *
+   * - Leave `undefined` or `true` for the default built-in scale animation.
+   * - Provide an object with `scale` to customize the built-in scale:
+   *   ```tsx
+   *   <PressableFeedback animation={{ scale: { value: 0.97 } }}>
+   *     {content}
+   *   </PressableFeedback>
+   *   ```
+   * - Set to `false` or `"disabled"` to disable the built-in scale (use when applying
+   *   scale via `PressableFeedback.Scale` on a specific child instead).
+   * - Set to `'disable-all'` to cascade-disable all animations including children.
    */
   animation?: PressableFeedbackRootAnimation;
+  /**
+   * Whether the root's built-in animated styles (react-native-reanimated) are active.
+   * When `false`, the animated scale style is not applied and you can implement custom logic.
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
 }
 
 /**

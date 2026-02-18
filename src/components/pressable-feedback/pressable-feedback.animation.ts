@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import type { GestureResponderEvent } from 'react-native';
+import type { SharedValue } from 'react-native-reanimated';
 import {
   Easing,
   interpolate,
@@ -18,6 +19,7 @@ import {
   getAnimationValueMergedConfig,
   getAnimationValueProperty,
   getIsAnimationDisabledValue,
+  getRootAnimationState,
 } from '../../helpers/internal/utils';
 import {
   BASE_RIPPLE_PROGRESS_DURATION,
@@ -46,60 +48,24 @@ export {
 // --------------------------------------------------
 
 /**
- * Animation hook for PressableFeedback root component
- * Manages press state and container dimensions for child compound parts
+ * Shared hook that produces an animated scale style from press state and container width.
+ * Reused by both the root's built-in scale and the PressableFeedback.Scale compound part.
+ *
+ * @param options.isPressed        - Shared value tracking whether the component is pressed
+ * @param options.containerWidth   - Shared value tracking the container width (for scale coefficient)
+ * @param options.animation        - Scale animation configuration (value, timingConfig, ignoreScaleCoefficient)
+ * @param options.isAnimationDisabledValue - Final resolved boolean: true when scale should be disabled
  */
-export function usePressableFeedbackRootAnimation(options: {
-  animation?: PressableFeedbackRootAnimation;
-}) {
-  const { animation } = options;
-
-  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
-
-  const isPressed = useSharedValue(false);
-  const containerWidth = useSharedValue(0);
-  const containerHeight = useSharedValue(0);
-
-  const animationOnPressIn = useCallback(() => {
-    isPressed.set(true);
-  }, [isPressed]);
-
-  const animationOnPressOut = useCallback(() => {
-    isPressed.set(false);
-  }, [isPressed]);
-
-  return {
-    isAllAnimationsDisabled,
-    animationOnPressIn,
-    animationOnPressOut,
-    isPressed,
-    containerWidth,
-    containerHeight,
-  };
-}
-
-// --------------------------------------------------
-
-/**
- * Animation hook for PressableFeedback.Scale compound part
- * Handles scale animation reacting to the root's press state via context
- */
-export function usePressableFeedbackScaleAnimation(options: {
+function useScaleAnimatedStyle(options: {
+  isPressed: SharedValue<boolean>;
+  containerWidth: SharedValue<number>;
   animation?: PressableFeedbackScaleAnimation;
+  isAnimationDisabledValue: boolean;
 }) {
-  const { animation } = options;
+  const { isPressed, containerWidth, animation, isAnimationDisabledValue } =
+    options;
 
-  const { isAllAnimationsDisabled } = useAnimationSettings();
-
-  const { isPressed, containerWidth } =
-    usePressableFeedbackRootAnimationContext();
-
-  const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
-
-  const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    isAnimationDisabled,
-    isAllAnimationsDisabled,
-  });
+  const { animationConfig } = getAnimationState(animation);
 
   const scaleValue = getAnimationValueProperty({
     animationValue: animationConfig,
@@ -128,7 +94,7 @@ export function usePressableFeedbackScaleAnimation(options: {
     return 1 - (1 - scaleValue) * coefficient;
   });
 
-  const rContainerStyle = useAnimatedStyle(() => {
+  const rScaleStyle = useAnimatedStyle(() => {
     if (isAnimationDisabledValue) {
       return {
         transform: [{ scale: 1 }],
@@ -147,8 +113,104 @@ export function usePressableFeedbackScaleAnimation(options: {
     };
   });
 
+  return { rScaleStyle };
+}
+
+// --------------------------------------------------
+
+/**
+ * Animation hook for PressableFeedback root component.
+ * Manages press state and container dimensions for child compound parts.
+ * Produces the built-in scale animated style by default.
+ * Use `animation.scale` to customize, or `animation={false}` to disable.
+ */
+export function usePressableFeedbackRootAnimation(options: {
+  animation?: PressableFeedbackRootAnimation;
+}) {
+  const { animation } = options;
+
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+
+  const isPressed = useSharedValue(false);
+  const containerWidth = useSharedValue(0);
+  const containerHeight = useSharedValue(0);
+
+  const animationOnPressIn = useCallback(() => {
+    isPressed.set(true);
+  }, [isPressed]);
+
+  const animationOnPressOut = useCallback(() => {
+    isPressed.set(false);
+  }, [isPressed]);
+
+  // Extract root-level config to check for built-in scale
+  const { animationConfig: rootConfig, isAnimationDisabled: isRootDisabled } =
+    getRootAnimationState(animation);
+
+  const scaleAnimation = rootConfig?.scale;
+  const hasRootScale = scaleAnimation !== undefined;
+
+  // Resolve scale-specific disabled state (root disabled OR scale's own disabled OR cascade)
+  const { isAnimationDisabled: isScaleOwnDisabled } =
+    getAnimationState(scaleAnimation);
+
+  const isScaleDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled: isRootDisabled || isScaleOwnDisabled,
+    isAllAnimationsDisabled,
+  });
+
+  const { rScaleStyle } = useScaleAnimatedStyle({
+    isPressed,
+    containerWidth,
+    animation: scaleAnimation,
+    isAnimationDisabledValue: isScaleDisabledValue,
+  });
+
   return {
-    rContainerStyle,
+    isAllAnimationsDisabled,
+    animationOnPressIn,
+    animationOnPressOut,
+    isPressed,
+    containerWidth,
+    containerHeight,
+    hasRootScale,
+    rScaleStyle,
+  };
+}
+
+// --------------------------------------------------
+
+/**
+ * Animation hook for PressableFeedback.Scale compound part.
+ * Used when applying scale to a specific child element instead of the root.
+ * Reads the root's press state via context and delegates to the shared `useScaleAnimatedStyle` hook.
+ */
+export function usePressableFeedbackScaleAnimation(options: {
+  animation?: PressableFeedbackScaleAnimation;
+}) {
+  const { animation } = options;
+
+  const { isAllAnimationsDisabled } = useAnimationSettings();
+
+  const { isPressed, containerWidth } =
+    usePressableFeedbackRootAnimationContext();
+
+  const { isAnimationDisabled } = getAnimationState(animation);
+
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
+
+  const { rScaleStyle } = useScaleAnimatedStyle({
+    isPressed,
+    containerWidth,
+    animation,
+    isAnimationDisabledValue,
+  });
+
+  return {
+    rContainerStyle: rScaleStyle,
   };
 }
 

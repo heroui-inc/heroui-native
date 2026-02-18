@@ -169,7 +169,7 @@ import { View } from 'react-native';
 <Accordion>
   <Accordion.Item value="1">
     <Accordion.Trigger asChild>
-      <PressableFeedback>
+      <PressableFeedback animation={{ scale: false }}>
         <PressableFeedback.Scale className="flex-row items-center flex-1 gap-3">
           <Text>Item Title</Text>
         </PressableFeedback.Scale>

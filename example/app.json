@@ -3,10 +3,9 @@
     "name": "HeroUI Native",
     "slug": "heroui-native",
     "scheme": "herouinative",
-    "version": "1.0.0",
+    "version": "1.0.0-rc.2",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "ios": {
       "icon": {
         "light": "./assets/ios-icon-light.png",
@@ -23,7 +22,6 @@
         "foregroundImage": "./assets/android-adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true,
       "package": "com.herouinative.android"
     },
     "web": {

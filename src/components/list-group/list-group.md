@@ -187,7 +187,7 @@ Customise the default chevron icon size and color using `iconProps`.
 
 ### With PressableFeedback
 
-Wrap items with `PressableFeedback` to add scale and ripple press feedback animations. When using this pattern, pass `onPress` on `PressableFeedback` instead of `ListGroup.Item`.
+Wrap items with `PressableFeedback` to add scale and ripple press feedback animations. When using this pattern, pass `onPress` on `PressableFeedback` instead of `ListGroup.Item` and disable the item with `disabled` prop.
 
 ```tsx
 import { ListGroup, PressableFeedback, Separator } from 'heroui-native';
@@ -195,7 +195,7 @@ import { ListGroup, PressableFeedback, Separator } from 'heroui-native';
 <ListGroup>
   <PressableFeedback animation={false} onPress={() => {}}>
     <PressableFeedback.Scale>
-      <ListGroup.Item>
+      <ListGroup.Item disabled>
         <ListGroup.ItemContent>
           <ListGroup.ItemTitle>Appearance</ListGroup.ItemTitle>
           <ListGroup.ItemDescription>
@@ -210,7 +210,7 @@ import { ListGroup, PressableFeedback, Separator } from 'heroui-native';
   <Separator className="mx-4" />
   <PressableFeedback animation={false} onPress={() => {}}>
     <PressableFeedback.Scale>
-      <ListGroup.Item>
+      <ListGroup.Item disabled>
         <ListGroup.ItemContent>
           <ListGroup.ItemTitle>Notifications</ListGroup.ItemTitle>
           <ListGroup.ItemDescription>

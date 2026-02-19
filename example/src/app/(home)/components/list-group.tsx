@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import {
   Chip,
   ControlField,
@@ -10,21 +9,27 @@ import {
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
-
-const StyledIonicons = withUniwind(Ionicons);
-
-// ------------------------------------------------------------------------------
+import { BellIcon } from '../../../components/icons/bell';
+import { CreditCardIcon } from '../../../components/icons/credit-card';
+import { GlobeIcon } from '../../../components/icons/globe';
+import { MoonIcon } from '../../../components/icons/moon';
+import { PaletteIcon } from '../../../components/icons/palette';
+import { PersonIcon } from '../../../components/icons/person';
 
 const BasicContent = () => {
+  const mutedColor = useThemeColor('muted');
+
   return (
     <View className="flex-1 justify-center px-5">
       <AppText className="text-sm text-muted mb-2 ml-2">Account</AppText>
       <ListGroup className="mb-6">
         <ListGroup.Item>
+          <ListGroup.ItemPrefix>
+            <PersonIcon size={20} colorClassName="accent-foreground" />
+          </ListGroup.ItemPrefix>
           <ListGroup.ItemContent>
             <ListGroup.ItemTitle>Personal Info</ListGroup.ItemTitle>
             <ListGroup.ItemDescription>
@@ -35,6 +40,9 @@ const BasicContent = () => {
         </ListGroup.Item>
         <Separator className="mx-4" />
         <ListGroup.Item>
+          <ListGroup.ItemPrefix>
+            <CreditCardIcon size={20} colorClassName="accent-foreground" />
+          </ListGroup.ItemPrefix>
           <ListGroup.ItemContent>
             <ListGroup.ItemTitle>Payment Methods</ListGroup.ItemTitle>
             <ListGroup.ItemDescription>
@@ -47,6 +55,9 @@ const BasicContent = () => {
       <AppText className="text-sm text-muted mb-2 ml-2">Preferences</AppText>
       <ListGroup>
         <ListGroup.Item>
+          <ListGroup.ItemPrefix>
+            <PaletteIcon size={20} colorClassName="accent-foreground" />
+          </ListGroup.ItemPrefix>
           <ListGroup.ItemContent>
             <ListGroup.ItemTitle>Appearance</ListGroup.ItemTitle>
             <ListGroup.ItemDescription>
@@ -57,23 +68,16 @@ const BasicContent = () => {
         </ListGroup.Item>
         <Separator className="mx-4" />
         <ListGroup.Item>
+          <ListGroup.ItemPrefix>
+            <BellIcon size={20} colorClassName="accent-foreground" />
+          </ListGroup.ItemPrefix>
           <ListGroup.ItemContent>
             <ListGroup.ItemTitle>Notifications</ListGroup.ItemTitle>
             <ListGroup.ItemDescription>
               Alerts, sounds, badges
             </ListGroup.ItemDescription>
           </ListGroup.ItemContent>
-          <ListGroup.ItemSuffix />
-        </ListGroup.Item>
-        <Separator className="mx-4" />
-        <ListGroup.Item>
-          <ListGroup.ItemContent>
-            <ListGroup.ItemTitle>Privacy & Security</ListGroup.ItemTitle>
-            <ListGroup.ItemDescription>
-              Two-factor auth, app lock
-            </ListGroup.ItemDescription>
-          </ListGroup.ItemContent>
-          <ListGroup.ItemSuffix />
+          <ListGroup.ItemSuffix iconProps={{ size: 18, color: mutedColor }} />
         </ListGroup.Item>
       </ListGroup>
     </View>
@@ -133,7 +137,6 @@ const PressableListGroupItem = ({
 const WithPressableFeedbackContent = () => {
   return (
     <View className="flex-1 justify-center px-5">
-      <AppText className="text-sm text-muted mb-2 ml-2">Account</AppText>
       <ListGroup>
         <PressableListGroupItem
           title="Appearance"
@@ -159,125 +162,6 @@ const WithPressableFeedbackContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const WithIconsContent = () => {
-  const mutedColor = useThemeColor('muted');
-
-  return (
-    <View className="flex-1 items-center justify-center px-5">
-      <View className="w-full">
-        <ListGroup>
-          <ListGroup.Item>
-            <ListGroup.ItemPrefix>
-              <StyledIonicons
-                name="person-outline"
-                size={22}
-                className="text-foreground"
-              />
-            </ListGroup.ItemPrefix>
-            <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Profile</ListGroup.ItemTitle>
-              <ListGroup.ItemDescription>
-                Name, photo, bio
-              </ListGroup.ItemDescription>
-            </ListGroup.ItemContent>
-            <ListGroup.ItemSuffix />
-          </ListGroup.Item>
-          <Separator className="mx-4" />
-          <ListGroup.Item>
-            <ListGroup.ItemPrefix>
-              <StyledIonicons
-                name="lock-closed-outline"
-                size={22}
-                className="text-foreground"
-              />
-            </ListGroup.ItemPrefix>
-            <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Security</ListGroup.ItemTitle>
-              <ListGroup.ItemDescription>
-                Password, 2FA
-              </ListGroup.ItemDescription>
-            </ListGroup.ItemContent>
-            <ListGroup.ItemSuffix />
-          </ListGroup.Item>
-          <Separator className="mx-4" />
-          <ListGroup.Item>
-            <ListGroup.ItemPrefix>
-              <StyledIonicons
-                name="cloud-outline"
-                size={22}
-                className="text-foreground"
-              />
-            </ListGroup.ItemPrefix>
-            <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Storage</ListGroup.ItemTitle>
-              <ListGroup.ItemDescription>
-                12.4 GB of 50 GB used
-              </ListGroup.ItemDescription>
-            </ListGroup.ItemContent>
-            <ListGroup.ItemSuffix iconProps={{ size: 18, color: mutedColor }} />
-          </ListGroup.Item>
-        </ListGroup>
-      </View>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const TitleOnlyContent = () => {
-  return (
-    <View className="flex-1 items-center justify-center px-5">
-      <View className="w-full">
-        <ListGroup variant="transparent">
-          <ListGroup.Item>
-            <ListGroup.ItemPrefix>
-              <StyledIonicons
-                name="wifi-outline"
-                size={22}
-                className="text-foreground"
-              />
-            </ListGroup.ItemPrefix>
-            <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Wi-Fi</ListGroup.ItemTitle>
-            </ListGroup.ItemContent>
-            <ListGroup.ItemSuffix />
-          </ListGroup.Item>
-          <Separator className="mx-4" />
-          <ListGroup.Item>
-            <ListGroup.ItemPrefix>
-              <StyledIonicons
-                name="bluetooth-outline"
-                size={22}
-                className="text-foreground"
-              />
-            </ListGroup.ItemPrefix>
-            <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Bluetooth</ListGroup.ItemTitle>
-            </ListGroup.ItemContent>
-            <ListGroup.ItemSuffix />
-          </ListGroup.Item>
-          <Separator className="mx-4" />
-          <ListGroup.Item>
-            <ListGroup.ItemPrefix>
-              <StyledIonicons
-                name="cellular-outline"
-                size={22}
-                className="text-foreground"
-              />
-            </ListGroup.ItemPrefix>
-            <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Cellular</ListGroup.ItemTitle>
-            </ListGroup.ItemContent>
-            <ListGroup.ItemSuffix />
-          </ListGroup.Item>
-        </ListGroup>
-      </View>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
 const WithCustomSuffixContent = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -290,11 +174,7 @@ const WithCustomSuffixContent = () => {
             onSelectedChange={setIsDarkMode}
             className="flex-row items-center gap-3 py-4 px-4"
           >
-            <StyledIonicons
-              name="moon-outline"
-              size={22}
-              className="text-foreground"
-            />
+            <MoonIcon size={18} colorClassName="accent-foreground" />
             <ListGroup.ItemContent>
               <ListGroup.ItemTitle>Dark mode</ListGroup.ItemTitle>
             </ListGroup.ItemContent>
@@ -303,32 +183,20 @@ const WithCustomSuffixContent = () => {
           <Separator className="mx-4" />
           <ListGroup.Item>
             <ListGroup.ItemPrefix>
-              <StyledIonicons
-                name="language-outline"
-                size={22}
-                className="text-foreground"
-              />
+              <GlobeIcon size={18} colorClassName="accent-foreground" />
             </ListGroup.ItemPrefix>
             <ListGroup.ItemContent>
               <ListGroup.ItemTitle>Language</ListGroup.ItemTitle>
               <ListGroup.ItemDescription>English</ListGroup.ItemDescription>
             </ListGroup.ItemContent>
             <ListGroup.ItemSuffix>
-              <StyledIonicons
-                name="arrow-forward"
-                size={18}
-                className="text-muted"
-              />
+              <AppText className="text-sm text-muted">Select</AppText>
             </ListGroup.ItemSuffix>
           </ListGroup.Item>
           <Separator className="mx-4" />
           <ListGroup.Item>
             <ListGroup.ItemPrefix>
-              <StyledIonicons
-                name="notifications-outline"
-                size={22}
-                className="text-foreground"
-              />
+              <BellIcon size={18} colorClassName="accent-foreground" />
             </ListGroup.ItemPrefix>
             <ListGroup.ItemContent>
               <ListGroup.ItemTitle>Notifications</ListGroup.ItemTitle>
@@ -357,16 +225,6 @@ const LIST_GROUP_VARIANTS: UsageVariant[] = [
     value: 'with-pressable-feedback',
     label: 'With pressable feedback',
     content: <WithPressableFeedbackContent />,
-  },
-  {
-    value: 'with-icons',
-    label: 'With icons',
-    content: <WithIconsContent />,
-  },
-  {
-    value: 'title-only',
-    label: 'Title only',
-    content: <TitleOnlyContent />,
   },
   {
     value: 'custom-suffix',

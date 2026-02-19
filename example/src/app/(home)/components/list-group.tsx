@@ -7,9 +7,11 @@ import {
   Separator,
   useThemeColor,
 } from 'heroui-native';
+import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { withUniwind } from 'uniwind';
+import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
@@ -19,46 +21,138 @@ const StyledIonicons = withUniwind(Ionicons);
 
 const BasicContent = () => {
   return (
-    <View className="flex-1 items-center justify-center px-5">
-      <View className="w-full">
-        <ListGroup>
-          <PressableFeedback onPress={() => console.log('General')}>
-            <ListGroup.Item>
-              <ListGroup.ItemContent>
-                <ListGroup.ItemTitle>General</ListGroup.ItemTitle>
-                <ListGroup.ItemDescription>
-                  App language, appearance
-                </ListGroup.ItemDescription>
-              </ListGroup.ItemContent>
-              <ListGroup.ItemSuffix />
-            </ListGroup.Item>
-            <PressableFeedback.Ripple />
-          </PressableFeedback>
-          <Separator className="mx-4" />
-          <PressableFeedback onPress={() => console.log('Notifications')}>
-            <ListGroup.Item>
-              <ListGroup.ItemContent>
-                <ListGroup.ItemTitle>Notifications</ListGroup.ItemTitle>
-                <ListGroup.ItemDescription>
-                  Push, email preferences
-                </ListGroup.ItemDescription>
-              </ListGroup.ItemContent>
-              <ListGroup.ItemSuffix />
-            </ListGroup.Item>
-            <PressableFeedback.Ripple />
-          </PressableFeedback>
-          <Separator className="mx-4" />
-          <ListGroup.Item>
-            <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Privacy</ListGroup.ItemTitle>
+    <View className="flex-1 justify-center px-5">
+      <AppText className="text-sm text-muted mb-2 ml-2">Account</AppText>
+      <ListGroup className="mb-6">
+        <ListGroup.Item>
+          <ListGroup.ItemContent>
+            <ListGroup.ItemTitle>Personal Info</ListGroup.ItemTitle>
+            <ListGroup.ItemDescription>
+              Name, email, phone number
+            </ListGroup.ItemDescription>
+          </ListGroup.ItemContent>
+          <ListGroup.ItemSuffix />
+        </ListGroup.Item>
+        <Separator className="mx-4" />
+        <ListGroup.Item>
+          <ListGroup.ItemContent>
+            <ListGroup.ItemTitle>Payment Methods</ListGroup.ItemTitle>
+            <ListGroup.ItemDescription>
+              Visa ending in 4829
+            </ListGroup.ItemDescription>
+          </ListGroup.ItemContent>
+          <ListGroup.ItemSuffix />
+        </ListGroup.Item>
+      </ListGroup>
+      <AppText className="text-sm text-muted mb-2 ml-2">Preferences</AppText>
+      <ListGroup>
+        <ListGroup.Item>
+          <ListGroup.ItemContent>
+            <ListGroup.ItemTitle>Appearance</ListGroup.ItemTitle>
+            <ListGroup.ItemDescription>
+              Theme, font size, display
+            </ListGroup.ItemDescription>
+          </ListGroup.ItemContent>
+          <ListGroup.ItemSuffix />
+        </ListGroup.Item>
+        <Separator className="mx-4" />
+        <ListGroup.Item>
+          <ListGroup.ItemContent>
+            <ListGroup.ItemTitle>Notifications</ListGroup.ItemTitle>
+            <ListGroup.ItemDescription>
+              Alerts, sounds, badges
+            </ListGroup.ItemDescription>
+          </ListGroup.ItemContent>
+          <ListGroup.ItemSuffix />
+        </ListGroup.Item>
+        <Separator className="mx-4" />
+        <ListGroup.Item>
+          <ListGroup.ItemContent>
+            <ListGroup.ItemTitle>Privacy & Security</ListGroup.ItemTitle>
+            <ListGroup.ItemDescription>
+              Two-factor auth, app lock
+            </ListGroup.ItemDescription>
+          </ListGroup.ItemContent>
+          <ListGroup.ItemSuffix />
+        </ListGroup.Item>
+      </ListGroup>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+interface PressableListGroupItemProps {
+  /** Primary text label */
+  title: string;
+  /** Secondary descriptive text */
+  description?: string;
+  /** Called when the item is pressed */
+  onPress?: () => void;
+  /** Custom trailing content; defaults to a chevron icon when omitted */
+  suffix?: ReactNode;
+  /** Custom leading content rendered before the title/description */
+  prefix?: ReactNode;
+}
+
+/**
+ * Reusable list-group row wrapped in PressableFeedback with scale + ripple.
+ * Combines PressableFeedback (animation disabled on root), PressableFeedback.Scale,
+ * ListGroup.Item, and PressableFeedback.Ripple into a single composable unit.
+ */
+const PressableListGroupItem = ({
+  title,
+  description,
+  onPress,
+  suffix,
+  prefix,
+}: PressableListGroupItemProps) => {
+  return (
+    <PressableFeedback animation={false} onPress={onPress}>
+      <PressableFeedback.Scale>
+        <ListGroup.Item>
+          {prefix !== undefined && (
+            <ListGroup.ItemPrefix>{prefix}</ListGroup.ItemPrefix>
+          )}
+          <ListGroup.ItemContent>
+            <ListGroup.ItemTitle>{title}</ListGroup.ItemTitle>
+            {description !== undefined && (
               <ListGroup.ItemDescription>
-                Data sharing, permissions
+                {description}
               </ListGroup.ItemDescription>
-            </ListGroup.ItemContent>
-            <ListGroup.ItemSuffix />
-          </ListGroup.Item>
-        </ListGroup>
-      </View>
+            )}
+          </ListGroup.ItemContent>
+          <ListGroup.ItemSuffix>{suffix}</ListGroup.ItemSuffix>
+        </ListGroup.Item>
+      </PressableFeedback.Scale>
+      <PressableFeedback.Ripple />
+    </PressableFeedback>
+  );
+};
+
+const WithPressableFeedbackContent = () => {
+  return (
+    <View className="flex-1 justify-center px-5">
+      <AppText className="text-sm text-muted mb-2 ml-2">Account</AppText>
+      <ListGroup>
+        <PressableListGroupItem
+          title="Appearance"
+          description="Theme, font size, display"
+          onPress={() => console.log('Appearance')}
+        />
+        <Separator className="mx-4" />
+        <PressableListGroupItem
+          title="Notifications"
+          description="Alerts, sounds, badges"
+          onPress={() => console.log('Notifications')}
+        />
+        <Separator className="mx-4" />
+        <PressableListGroupItem
+          title="Privacy & Security"
+          description="Two-factor auth, app lock"
+          onPress={() => console.log('Privacy & Security')}
+        />
+      </ListGroup>
     </View>
   );
 };
@@ -243,51 +337,7 @@ const WithCustomSuffixContent = () => {
               <Chip variant="primary" color="danger">
                 <Chip.Label className="font-bold">7</Chip.Label>
               </Chip>
-              {/* <View className="bg-danger rounded-full size-5 items-center justify-center">
-                <StyledIonicons name="alert" size={12} className="text-white" />
-              </View> */}
             </ListGroup.ItemSuffix>
-          </ListGroup.Item>
-        </ListGroup>
-      </View>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const VariantsContent = () => {
-  return (
-    <View className="flex-1 items-center justify-center px-5">
-      <View className="w-full gap-4">
-        <ListGroup variant="default">
-          <ListGroup.Item>
-            <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Default variant</ListGroup.ItemTitle>
-              <ListGroup.ItemDescription>
-                Uses bg-surface styling
-              </ListGroup.ItemDescription>
-            </ListGroup.ItemContent>
-          </ListGroup.Item>
-        </ListGroup>
-        <ListGroup variant="secondary">
-          <ListGroup.Item>
-            <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Secondary variant</ListGroup.ItemTitle>
-              <ListGroup.ItemDescription>
-                Uses bg-surface-secondary styling
-              </ListGroup.ItemDescription>
-            </ListGroup.ItemContent>
-          </ListGroup.Item>
-        </ListGroup>
-        <ListGroup variant="tertiary">
-          <ListGroup.Item>
-            <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Tertiary variant</ListGroup.ItemTitle>
-              <ListGroup.ItemDescription>
-                Uses bg-surface-tertiary styling
-              </ListGroup.ItemDescription>
-            </ListGroup.ItemContent>
           </ListGroup.Item>
         </ListGroup>
       </View>
@@ -304,6 +354,11 @@ const LIST_GROUP_VARIANTS: UsageVariant[] = [
     content: <BasicContent />,
   },
   {
+    value: 'with-pressable-feedback',
+    label: 'With pressable feedback',
+    content: <WithPressableFeedbackContent />,
+  },
+  {
     value: 'with-icons',
     label: 'With icons',
     content: <WithIconsContent />,
@@ -317,11 +372,6 @@ const LIST_GROUP_VARIANTS: UsageVariant[] = [
     value: 'custom-suffix',
     label: 'Custom suffix',
     content: <WithCustomSuffixContent />,
-  },
-  {
-    value: 'variants',
-    label: 'Variants',
-    content: <VariantsContent />,
   },
 ];
 

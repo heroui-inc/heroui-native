@@ -47,17 +47,12 @@ const ListGroupRoot = forwardRef<ViewRef, ListGroupRootProps>((props, ref) => {
 
 const ListGroupItem = forwardRef<PressableRef, ListGroupItemProps>(
   (props, ref) => {
-    const { children, className, style, ...restProps } = props;
+    const { children, className, ...restProps } = props;
 
     const itemClassName = listGroupClassNames.item({ className });
 
     return (
-      <Pressable
-        ref={ref}
-        className={itemClassName}
-        style={style}
-        {...restProps}
-      >
+      <Pressable ref={ref} className={itemClassName} {...restProps}>
         {children}
       </Pressable>
     );
@@ -68,12 +63,10 @@ const ListGroupItem = forwardRef<PressableRef, ListGroupItemProps>(
 
 const ListGroupItemPrefix = forwardRef<ViewRef, ListGroupItemPrefixProps>(
   (props, ref) => {
-    const { children, className, style, ...restProps } = props;
-
-    const prefixClassName = listGroupClassNames.itemPrefix({ className });
+    const { children, ...restProps } = props;
 
     return (
-      <View ref={ref} className={prefixClassName} style={style} {...restProps}>
+      <View ref={ref} {...restProps}>
         {children}
       </View>
     );
@@ -136,11 +129,9 @@ const ListGroupItemDescription = forwardRef<
 
 const ListGroupItemSuffix = forwardRef<ViewRef, ListGroupItemSuffixProps>(
   (props, ref) => {
-    const { children, className, style, iconProps, ...restProps } = props;
+    const { children, iconProps, ...restProps } = props;
 
     const themeColorMuted = useThemeColor('muted');
-
-    const suffixClassName = listGroupClassNames.itemSuffix({ className });
 
     const resolvedIconProps: ListGroupIconProps = {
       size: iconProps?.size ?? DEFAULT_ICON_SIZE,
@@ -148,7 +139,7 @@ const ListGroupItemSuffix = forwardRef<ViewRef, ListGroupItemSuffixProps>(
     };
 
     return (
-      <View ref={ref} className={suffixClassName} style={style} {...restProps}>
+      <View ref={ref} {...restProps}>
         {children ?? (
           <ChevronRightIcon
             size={resolvedIconProps.size}
@@ -175,7 +166,6 @@ ListGroupItemSuffix.displayName = DISPLAY_NAME.ITEM_SUFFIX;
  *
  * @component ListGroup - Surface-based container that groups related list items.
  * Supports all Surface variants (default, secondary, tertiary, transparent).
- * Use the Separator component between items for visual dividers.
  *
  * @component ListGroup.Item - Horizontal flex-row container for a single item,
  * providing consistent spacing and alignment.

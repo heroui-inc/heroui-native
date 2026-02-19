@@ -10,10 +10,6 @@ const item = tv({
   base: 'flex-row items-center p-4 gap-3',
 });
 
-const itemPrefix = tv({
-  base: '',
-});
-
 const itemContent = tv({
   base: 'flex-1',
 });
@@ -26,18 +22,12 @@ const itemDescription = tv({
   base: 'text-sm text-muted',
 });
 
-const itemSuffix = tv({
-  base: '',
-});
-
 const listGroupClassNames = combineStyles({
   root,
   item,
-  itemPrefix,
   itemContent,
   itemTitle,
   itemDescription,
-  itemSuffix,
 });
 
 export const styleSheet = StyleSheet.create({

@@ -135,6 +135,10 @@ export default function Layout() {
         />
         <Stack.Screen name="components/label" options={{ title: 'Label' }} />
         <Stack.Screen
+          name="components/list-group"
+          options={{ title: 'ListGroup' }}
+        />
+        <Stack.Screen
           name="components/popover"
           options={{ title: 'Popover' }}
         />

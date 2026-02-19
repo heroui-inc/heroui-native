@@ -13,6 +13,7 @@ import type {
   ToastShowOptions,
 } from '../../providers/toast';
 import type { ButtonRootProps } from '../button';
+import type { ButtonRootPropsScaleHighlight } from '../button/button.types';
 
 /**
  * Toast variant types
@@ -211,7 +212,10 @@ export interface ToastDescriptionProps extends ToastPrimitive.DescriptionProps {
 /**
  * Props for the Toast.Action component
  */
-export type ToastActionProps = ButtonRootProps;
+export type ToastActionProps = Omit<
+  ButtonRootPropsScaleHighlight,
+  'feedbackVariant'
+>;
 
 /**
  * Props for the Toast.Close component

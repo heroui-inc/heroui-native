@@ -132,7 +132,7 @@ export default function Paywall() {
           size="lg"
           className="rounded-full bg-white mb-5"
           onPress={simulatePress}
-          pressableFeedbackVariant="none"
+          feedbackVariant="scale"
         >
           <Button.Label className="text-black">Continue</Button.Label>
         </Button>

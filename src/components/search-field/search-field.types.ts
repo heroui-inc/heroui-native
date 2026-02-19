@@ -152,9 +152,9 @@ export interface SearchFieldClearButtonIconProps {
 /**
  * Props for the SearchField.ClearButton component
  */
-export interface SearchFieldClearButtonProps extends ButtonRootProps {
+export type SearchFieldClearButtonProps = ButtonRootProps & {
   /**
    * Props for customizing the clear button icon
    */
   iconProps?: SearchFieldClearButtonIconProps;
-}
+};

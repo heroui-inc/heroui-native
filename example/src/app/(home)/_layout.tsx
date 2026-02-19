@@ -176,6 +176,10 @@ export default function Layout() {
           options={{ title: 'Skeleton' }}
         />
         <Stack.Screen
+          name="components/slider"
+          options={{ title: 'Slider' }}
+        />
+        <Stack.Screen
           name="components/spinner"
           options={{ title: 'Spinner' }}
         />

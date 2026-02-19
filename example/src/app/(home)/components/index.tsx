@@ -117,6 +117,10 @@ const components: Component[] = [
     path: 'skeleton',
   },
   {
+    title: 'Slider',
+    path: 'slider',
+  },
+  {
     title: 'Spinner',
     path: 'spinner',
   },

@@ -1,5 +1,3 @@
-import type { SliderSize } from './slider.types';
-
 /**
  * Display names for Slider components
  */
@@ -12,31 +10,19 @@ export const DISPLAY_NAME = {
 };
 
 /**
- * Thumb size mappings by slider size variant (diameter in pixels)
+ * Thumb diameter in pixels
  */
-export const THUMB_SIZE_MAP: Record<SliderSize, number> = {
-  sm: 16,
-  md: 20,
-  lg: 24,
-};
+export const THUMB_SIZE = 20;
 
 /**
- * Track height mappings by slider size variant (height in pixels for horizontal)
+ * Track cross-axis thickness in pixels (height for horizontal, width for vertical)
  */
-export const TRACK_HEIGHT_MAP: Record<SliderSize, number> = {
-  sm: 4,
-  md: 6,
-  lg: 8,
-};
+export const TRACK_HEIGHT = 6;
 
 /**
- * Hit slop for the thumb to improve touch target
+ * Extra hit-slop around the thumb to improve touch target
  */
-export const THUMB_HIT_SLOP_MAP: Record<SliderSize, number> = {
-  sm: 12,
-  md: 10,
-  lg: 8,
-};
+export const THUMB_HIT_SLOP = 10;
 
 /**
  * Spring animation configuration for thumb scale feedback

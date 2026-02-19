@@ -77,6 +77,10 @@ interface SliderContextValue {
   setThumbDragging: (index: number, dragging: boolean) => void;
   /** Snaps the closest thumb to a target value (used for tap-to-position) */
   handleTapAtValue: (targetValue: number) => void;
+  /** Track layout width (horizontal) or height (vertical) in pixels */
+  trackSize: number;
+  /** Set the track layout size after measurement */
+  setTrackSize: (size: number) => void;
 }
 
 // ---------------------------------------------------------------------------

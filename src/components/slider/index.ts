@@ -1,5 +1,5 @@
 // Component export
-export { default as Slider, useSliderContext, useSliderStyle } from './slider';
+export { default as Slider, useSliderContext } from './slider';
 
 // ClassNames export for external reuse
 export { sliderClassNames } from './slider.styles';
@@ -15,12 +15,9 @@ export type {
 
 // Component-level type exports
 export type {
-  SliderColor,
   SliderFillProps,
   SliderOutputProps,
   SliderProps,
-  SliderSize,
-  SliderStyleContextValue,
   SliderThumbProps,
   SliderTrackProps,
 } from './slider.types';

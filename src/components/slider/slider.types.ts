@@ -7,35 +7,6 @@ import type {
 import type { RootSlots } from './slider.styles';
 
 /**
- * Size variants for the slider component
- */
-type SliderSize = 'sm' | 'md' | 'lg';
-
-/**
- * Color variants for the slider component
- */
-type SliderColor = 'default' | 'accent' | 'success' | 'warning' | 'danger';
-
-/**
- * Visual styling context shared between slider compound components.
- * Extends the primitive value-logic context with layout and appearance data.
- */
-interface SliderStyleContextValue {
-  /** Size variant */
-  size: SliderSize;
-  /** Color variant */
-  color: SliderColor;
-  /** Track layout width (horizontal) or height (vertical) in pixels */
-  trackSize: number;
-  /** Set the track layout size after measurement */
-  setTrackSize: (size: number) => void;
-}
-
-// ---------------------------------------------------------------------------
-// Component prop interfaces
-// ---------------------------------------------------------------------------
-
-/**
  * Props for the Slider root component.
  * Extends the primitive Root props with visual styling props.
  *
@@ -44,18 +15,6 @@ interface SliderStyleContextValue {
  * inherited from the primitive and do not need to be redeclared.
  */
 interface SliderProps extends Omit<PrimitiveRootProps, 'asChild'> {
-  /**
-   * Size variant of the slider
-   * @default "md"
-   */
-  size?: SliderSize;
-
-  /**
-   * Color variant of the slider
-   * @default "accent"
-   */
-  color?: SliderColor;
-
   /**
    * Additional CSS classes for different parts of the component
    */
@@ -133,12 +92,9 @@ interface SliderThumbProps extends ViewProps {
 }
 
 export type {
-  SliderColor,
   SliderFillProps,
   SliderOutputProps,
   SliderProps,
-  SliderSize,
-  SliderStyleContextValue,
   SliderThumbProps,
   SliderTrackProps,
 };

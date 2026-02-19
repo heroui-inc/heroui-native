@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useMemo, useRef, useState } from 'react';
+import { forwardRef, useCallback, useMemo, useRef } from 'react';
 import type { LayoutChangeEvent } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
@@ -8,23 +8,21 @@ import Animated, {
 } from 'react-native-reanimated';
 import { HeroText } from '../../helpers/internal/components';
 import type { ViewRef } from '../../helpers/internal/types';
-import { createContext } from '../../helpers/internal/utils';
 import * as SliderPrimitives from '../../primitives/slider';
 import { useSliderContext } from '../../primitives/slider';
 import { clamp } from '../../primitives/slider/slider.utils';
 import {
   DISPLAY_NAME,
-  THUMB_HIT_SLOP_MAP,
-  THUMB_SIZE_MAP,
+  THUMB_HIT_SLOP,
+  THUMB_SIZE,
   THUMB_SPRING_CONFIG,
-  TRACK_HEIGHT_MAP,
+  TRACK_HEIGHT,
 } from './slider.constants';
 import sliderClassNames, { styleSheet } from './slider.styles';
 import type {
   SliderFillProps,
   SliderOutputProps,
   SliderProps,
-  SliderStyleContextValue,
   SliderThumbProps,
   SliderTrackProps,
 } from './slider.types';
@@ -35,26 +33,13 @@ import type {
 
 const AnimatedThumb = Animated.createAnimatedComponent(SliderPrimitives.Thumb);
 
-// ---------------------------------------------------------------------------
-// Style context – visual properties shared between compound sub-components
-// ---------------------------------------------------------------------------
-
-const [SliderStyleProvider, useSliderStyle] =
-  createContext<SliderStyleContextValue>({
-    name: 'SliderStyleContext',
-    errorMessage:
-      'Slider style compound components cannot be rendered outside the Slider component',
-  });
-
 // --------------------------------------------------
-// Root – wraps primitive Root with styling + visual context
+// Root – wraps primitive Root with styling
 // --------------------------------------------------
 
 const SliderRoot = forwardRef<ViewRef, SliderProps>((props, ref) => {
   const {
     children,
-    size = 'md',
-    color = 'accent',
     orientation = 'horizontal',
     isDisabled = false,
     className,
@@ -63,8 +48,6 @@ const SliderRoot = forwardRef<ViewRef, SliderProps>((props, ref) => {
     style,
     ...primitiveProps
   } = props;
-
-  const [trackSize, setTrackSize] = useState(0);
 
   const { container: containerSlot } = sliderClassNames.root({
     orientation,
@@ -75,24 +58,17 @@ const SliderRoot = forwardRef<ViewRef, SliderProps>((props, ref) => {
     className: [className, classNames?.container],
   });
 
-  const styleContextValue = useMemo<SliderStyleContextValue>(
-    () => ({ size, color, trackSize, setTrackSize }),
-    [size, color, trackSize]
-  );
-
   return (
-    <SliderStyleProvider value={styleContextValue}>
-      <SliderPrimitives.Root
-        ref={ref}
-        orientation={orientation}
-        isDisabled={isDisabled}
-        className={containerClassName}
-        style={[stylesProp?.container, style]}
-        {...primitiveProps}
-      >
-        {children}
-      </SliderPrimitives.Root>
-    </SliderStyleProvider>
+    <SliderPrimitives.Root
+      ref={ref}
+      orientation={orientation}
+      isDisabled={isDisabled}
+      className={containerClassName}
+      style={[stylesProp?.container, style]}
+      {...primitiveProps}
+    >
+      {children}
+    </SliderPrimitives.Root>
   );
 });
 
@@ -127,16 +103,18 @@ const SliderOutput = forwardRef<ViewRef, SliderOutputProps>((props, ref) => {
 const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
   const { children, className, style, ...restProps } = props;
 
-  const { minValue, maxValue, orientation, isDisabled, handleTapAtValue } =
-    useSliderContext();
-
-  const { size, trackSize, setTrackSize } = useSliderStyle();
-
-  const thumbSize = THUMB_SIZE_MAP[size];
+  const {
+    minValue,
+    maxValue,
+    orientation,
+    isDisabled,
+    handleTapAtValue,
+    trackSize,
+    setTrackSize,
+  } = useSliderContext();
 
   const trackClassName = sliderClassNames.track({
     orientation,
-    size,
     className,
   });
 
@@ -153,14 +131,14 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
   handleTapRef.current = handleTapAtValue;
 
   const tapGesture = useMemo(() => {
-    const effectiveTrackSize = trackSize - thumbSize;
+    const effectiveTrackSize = trackSize - THUMB_SIZE;
 
     return Gesture.Tap()
       .runOnJS(true)
       .enabled(!isDisabled)
       .hitSlop({
-        top: thumbSize,
-        bottom: thumbSize,
+        top: THUMB_SIZE,
+        bottom: THUMB_SIZE,
       })
       .onEnd((event) => {
         if (effectiveTrackSize <= 0) return;
@@ -168,14 +146,14 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
         const pos = orientation === 'horizontal' ? event.x : event.y;
         const adjustedPos =
           orientation === 'horizontal'
-            ? pos - thumbSize / 2
-            : trackSize - pos - thumbSize / 2;
+            ? pos - THUMB_SIZE / 2
+            : trackSize - pos - THUMB_SIZE / 2;
 
         const pct = clamp(adjustedPos / effectiveTrackSize, 0, 1);
         const rawValue = minValue + pct * (maxValue - minValue);
         handleTapRef.current(rawValue);
       });
-  }, [trackSize, thumbSize, isDisabled, orientation, minValue, maxValue]);
+  }, [trackSize, isDisabled, orientation, minValue, maxValue]);
 
   return (
     <GestureDetector gesture={tapGesture}>
@@ -199,14 +177,12 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
 const SliderFill = forwardRef<ViewRef, SliderFillProps>((props, ref) => {
   const { className, style, ...restProps } = props;
 
-  const { values, orientation, getThumbPercent } = useSliderContext();
-  const { size, color, trackSize } = useSliderStyle();
+  const { values, orientation, getThumbPercent, trackSize } =
+    useSliderContext();
 
-  const fillClassName = sliderClassNames.fill({ color, className });
+  const fillClassName = sliderClassNames.fill({ className });
 
-  const thumbSize = THUMB_SIZE_MAP[size];
-  const trackCrossAxisSize = TRACK_HEIGHT_MAP[size];
-  const centerOffset = -(thumbSize - trackCrossAxisSize) / 2;
+  const centerOffset = -(THUMB_SIZE - TRACK_HEIGHT) / 2;
 
   const isSingleThumb = values.length <= 1;
   const startPercent = isSingleThumb ? 0 : getThumbPercent(0);
@@ -214,40 +190,33 @@ const SliderFill = forwardRef<ViewRef, SliderFillProps>((props, ref) => {
     ? getThumbPercent(0)
     : getThumbPercent(values.length - 1);
 
-  const effectiveTrackSize = trackSize - thumbSize;
+  const effectiveTrackSize = trackSize - THUMB_SIZE;
 
   const fillStyle = useMemo(() => {
     if (orientation === 'horizontal') {
       const left = startPercent * effectiveTrackSize;
       const width =
-        (endPercent - startPercent) * effectiveTrackSize + thumbSize;
+        (endPercent - startPercent) * effectiveTrackSize + THUMB_SIZE;
 
       return {
         left,
-        width: Math.max(width, thumbSize),
-        height: thumbSize,
+        width: Math.max(width, THUMB_SIZE),
+        height: THUMB_SIZE,
         top: centerOffset,
       };
     }
 
     const bottom = startPercent * effectiveTrackSize;
     const height =
-      (endPercent - startPercent) * effectiveTrackSize + thumbSize;
+      (endPercent - startPercent) * effectiveTrackSize + THUMB_SIZE;
 
     return {
       bottom,
-      height: Math.max(height, thumbSize),
-      width: thumbSize,
+      height: Math.max(height, THUMB_SIZE),
+      width: THUMB_SIZE,
       left: centerOffset,
     };
-  }, [
-    orientation,
-    startPercent,
-    endPercent,
-    effectiveTrackSize,
-    thumbSize,
-    centerOffset,
-  ]);
+  }, [orientation, startPercent, endPercent, effectiveTrackSize, centerOffset]);
 
   return (
     <SliderPrimitives.Fill
@@ -285,16 +254,12 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     getThumbPercent,
     updateValue,
     setThumbDragging,
+    trackSize,
   } = useSliderContext();
 
-  const { size, color, trackSize } = useSliderStyle();
-
   const disabled = thumbDisabled ?? sliderDisabled;
-  const thumbSize = THUMB_SIZE_MAP[size];
-  const hitSlop = THUMB_HIT_SLOP_MAP[size];
-  const trackCrossAxisSize = TRACK_HEIGHT_MAP[size];
 
-  const thumbClassName = sliderClassNames.thumb({ size, color, className });
+  const thumbClassName = sliderClassNames.thumb({ className });
 
   const percent = getThumbPercent(index);
   const thumbScale = useSharedValue(1);
@@ -311,16 +276,16 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
   setThumbDraggingRef.current = setThumbDragging;
 
   const panGesture = useMemo(() => {
-    const effectiveTrackSize = trackSize - thumbSize;
+    const effectiveTrackSize = trackSize - THUMB_SIZE;
 
     const gesture = Gesture.Pan()
       .runOnJS(true)
       .enabled(!disabled)
       .hitSlop({
-        top: hitSlop,
-        bottom: hitSlop,
-        left: hitSlop,
-        right: hitSlop,
+        top: THUMB_HIT_SLOP,
+        bottom: THUMB_HIT_SLOP,
+        left: THUMB_HIT_SLOP,
+        right: THUMB_HIT_SLOP,
       })
       .onStart(() => {
         startValue.value = valuesRef.current[index] ?? minValue;
@@ -357,14 +322,12 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     return gesture;
   }, [
     disabled,
-    hitSlop,
     index,
     minValue,
     maxValue,
     step,
     orientation,
     trackSize,
-    thumbSize,
     startValue,
     thumbScale,
   ]);
@@ -374,15 +337,15 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
   }));
 
   const positionStyle = useMemo(() => {
-    const effectiveTrackSize = trackSize - thumbSize;
+    const effectiveTrackSize = trackSize - THUMB_SIZE;
     const offset = percent * effectiveTrackSize;
-    const centerOffset = -(thumbSize - trackCrossAxisSize) / 2;
+    const centerOffset = -(THUMB_SIZE - TRACK_HEIGHT) / 2;
 
     if (orientation === 'horizontal') {
       return { left: offset, top: centerOffset };
     }
     return { bottom: offset, left: centerOffset };
-  }, [percent, trackSize, thumbSize, trackCrossAxisSize, orientation]);
+  }, [percent, trackSize, orientation]);
 
   return (
     <GestureDetector gesture={panGesture}>
@@ -392,7 +355,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
         className={thumbClassName}
         style={[
           styleSheet.thumb,
-          { width: thumbSize, height: thumbSize },
+          { width: THUMB_SIZE, height: THUMB_SIZE },
           positionStyle,
           animatedThumbStyle,
           style,
@@ -437,15 +400,15 @@ SliderThumb.displayName = DISPLAY_NAME.THUMB;
  * start to wrap around the active thumb(s). Same height as the thumb for a cohesive look.
  *
  * @component Slider.Thumb - Draggable thumb element using react-native-gesture-handler.
- * Animates scale to 0.95 on press via react-native-reanimated. Has a colored border
- * matching the fill. Supports multiple thumbs for range sliders via the index prop.
+ * Animates scale to 0.95 on press via react-native-reanimated. Has an accent-colored
+ * border matching the fill. Supports multiple thumbs for range sliders via the index prop.
  * Each thumb gets `role="slider"` with full `accessibilityValue` (min, max, now, text)
  * from the primitive layer.
  *
  * Architecture:
- * - Primitive context (`useSliderContext`): value logic, accessibility, state management,
- *   dragging state, onChangeEnd lifecycle
- * - Style context (`useSliderStyle`): size, color, track measurement
+ * All value logic, accessibility, state management, dragging state, track measurement,
+ * and onChangeEnd lifecycle are managed by the primitive context (`useSliderContext`).
+ * The component layer is purely for styling, animations, and gesture handling.
  *
  * @see Full documentation: https://v3.heroui.com/docs/native/components/slider
  */
@@ -460,5 +423,5 @@ const CompoundSlider = Object.assign(SliderRoot, {
   Thumb: SliderThumb,
 });
 
-export { useSliderContext, useSliderStyle };
+export { useSliderContext };
 export default CompoundSlider;

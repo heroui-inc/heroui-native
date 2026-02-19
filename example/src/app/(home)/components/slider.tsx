@@ -26,114 +26,6 @@ const DefaultContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const SizesContent = () => {
-  return (
-    <View className="flex-1 items-center justify-center px-8">
-      <View className="w-full gap-8">
-        <Slider defaultValue={40} size="sm">
-          <View className="flex-row items-center justify-between mb-1">
-            <Label>Small</Label>
-            <Slider.Output />
-          </View>
-          <Slider.Track>
-            <Slider.Fill />
-            <Slider.Thumb />
-          </Slider.Track>
-        </Slider>
-
-        <Slider defaultValue={50} size="md">
-          <View className="flex-row items-center justify-between mb-1">
-            <Label>Medium</Label>
-            <Slider.Output />
-          </View>
-          <Slider.Track>
-            <Slider.Fill />
-            <Slider.Thumb />
-          </Slider.Track>
-        </Slider>
-
-        <Slider defaultValue={60} size="lg">
-          <View className="flex-row items-center justify-between mb-1">
-            <Label>Large</Label>
-            <Slider.Output />
-          </View>
-          <Slider.Track>
-            <Slider.Fill />
-            <Slider.Thumb />
-          </Slider.Track>
-        </Slider>
-      </View>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const ColorsContent = () => {
-  return (
-    <View className="flex-1 items-center justify-center px-8">
-      <View className="w-full gap-8">
-        <Slider defaultValue={30} color="default">
-          <View className="flex-row items-center justify-between mb-1">
-            <Label>Default</Label>
-            <Slider.Output />
-          </View>
-          <Slider.Track>
-            <Slider.Fill />
-            <Slider.Thumb />
-          </Slider.Track>
-        </Slider>
-
-        <Slider defaultValue={40} color="accent">
-          <View className="flex-row items-center justify-between mb-1">
-            <Label>Accent</Label>
-            <Slider.Output />
-          </View>
-          <Slider.Track>
-            <Slider.Fill />
-            <Slider.Thumb />
-          </Slider.Track>
-        </Slider>
-
-        <Slider defaultValue={50} color="success">
-          <View className="flex-row items-center justify-between mb-1">
-            <Label>Success</Label>
-            <Slider.Output />
-          </View>
-          <Slider.Track>
-            <Slider.Fill />
-            <Slider.Thumb />
-          </Slider.Track>
-        </Slider>
-
-        <Slider defaultValue={60} color="warning">
-          <View className="flex-row items-center justify-between mb-1">
-            <Label>Warning</Label>
-            <Slider.Output />
-          </View>
-          <Slider.Track>
-            <Slider.Fill />
-            <Slider.Thumb />
-          </Slider.Track>
-        </Slider>
-
-        <Slider defaultValue={70} color="danger">
-          <View className="flex-row items-center justify-between mb-1">
-            <Label>Danger</Label>
-            <Slider.Output />
-          </View>
-          <Slider.Track>
-            <Slider.Fill />
-            <Slider.Thumb />
-          </Slider.Track>
-        </Slider>
-      </View>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
 const RangeContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-8">
@@ -291,21 +183,21 @@ const VerticalContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-8">
       <View className="h-48 flex-row gap-12 items-center justify-center">
-        <Slider defaultValue={30} orientation="vertical" size="sm">
+        <Slider defaultValue={30} orientation="vertical">
           <Slider.Track>
             <Slider.Fill />
             <Slider.Thumb />
           </Slider.Track>
         </Slider>
 
-        <Slider defaultValue={50} orientation="vertical" size="md">
+        <Slider defaultValue={50} orientation="vertical">
           <Slider.Track>
             <Slider.Fill />
             <Slider.Thumb />
           </Slider.Track>
         </Slider>
 
-        <Slider defaultValue={70} orientation="vertical" size="lg">
+        <Slider defaultValue={70} orientation="vertical">
           <Slider.Track>
             <Slider.Fill />
             <Slider.Thumb />
@@ -323,16 +215,6 @@ const SLIDER_VARIANTS: UsageVariant[] = [
     value: 'default',
     label: 'Default',
     content: <DefaultContent />,
-  },
-  {
-    value: 'sizes',
-    label: 'Sizes',
-    content: <SizesContent />,
-  },
-  {
-    value: 'colors',
-    label: 'Colors',
-    content: <ColorsContent />,
   },
   {
     value: 'range',

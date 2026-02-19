@@ -73,6 +73,9 @@ const Root = forwardRef<RootRef, RootProps>(
       Array.isArray(valueProp) || Array.isArray(defaultValue)
     );
 
+    /** Track layout width (horizontal) or height (vertical) in pixels */
+    const [trackSize, setTrackSize] = useState(0);
+
     const [internalValue, setInternalValue] = useControllableState<SliderValue>(
       {
         prop: valueProp,
@@ -263,6 +266,8 @@ const Root = forwardRef<RootRef, RootProps>(
         isThumbDragging,
         setThumbDragging,
         handleTapAtValue,
+        trackSize,
+        setTrackSize,
       }),
       [
         values,
@@ -280,6 +285,7 @@ const Root = forwardRef<RootRef, RootProps>(
         isThumbDragging,
         setThumbDragging,
         handleTapAtValue,
+        trackSize,
       ]
     );
 

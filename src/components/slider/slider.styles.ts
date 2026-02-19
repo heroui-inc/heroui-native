@@ -35,65 +35,21 @@ const track = tv({
   base: 'justify-center rounded-full bg-default overflow-visible',
   variants: {
     orientation: {
-      horizontal: 'w-full',
-      vertical: 'h-full',
-    },
-    size: {
-      sm: '',
-      md: '',
-      lg: '',
+      horizontal: 'w-full h-1.5',
+      vertical: 'h-full w-1.5',
     },
   },
-  compoundVariants: [
-    { orientation: 'horizontal', size: 'sm', className: 'h-1' },
-    { orientation: 'horizontal', size: 'md', className: 'h-1.5' },
-    { orientation: 'horizontal', size: 'lg', className: 'h-2' },
-    { orientation: 'vertical', size: 'sm', className: 'w-1' },
-    { orientation: 'vertical', size: 'md', className: 'w-1.5' },
-    { orientation: 'vertical', size: 'lg', className: 'w-2' },
-  ],
   defaultVariants: {
     orientation: 'horizontal',
-    size: 'md',
   },
 });
 
 const fill = tv({
-  base: 'absolute rounded-full',
-  variants: {
-    color: {
-      default: 'bg-foreground',
-      accent: 'bg-accent',
-      success: 'bg-success',
-      warning: 'bg-warning',
-      danger: 'bg-danger',
-    },
-  },
-  defaultVariants: {
-    color: 'accent',
-  },
+  base: 'absolute rounded-full bg-accent',
 });
 
 const thumb = tv({
-  base: 'absolute rounded-full bg-white border-2 items-center justify-center',
-  variants: {
-    size: {
-      sm: 'h-4 w-4',
-      md: 'h-5 w-5',
-      lg: 'h-6 w-6',
-    },
-    color: {
-      default: 'border-foreground',
-      accent: 'border-accent',
-      success: 'border-success',
-      warning: 'border-warning',
-      danger: 'border-danger',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-    color: 'accent',
-  },
+  base: 'absolute rounded-full bg-white border-2 border-accent items-center justify-center h-5 w-5',
 });
 
 const sliderClassNames = combineStyles({

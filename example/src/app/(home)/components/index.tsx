@@ -183,7 +183,9 @@ export default function App() {
               <PressableFeedback.Scale>
                 <ListGroup.Item disabled>
                   <ListGroup.ItemContent>
-                    <ListGroup.ItemTitle>{item.title}</ListGroup.ItemTitle>
+                    <ListGroup.ItemTitle className="font-normal">
+                      {item.title}
+                    </ListGroup.ItemTitle>
                   </ListGroup.ItemContent>
                   <ListGroup.ItemSuffix />
                 </ListGroup.Item>

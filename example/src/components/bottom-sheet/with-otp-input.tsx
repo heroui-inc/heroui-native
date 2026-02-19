@@ -50,7 +50,9 @@ const BottomSheetInputOTP = memo(
       <View className="gap-6 items-center">
         <Avatar size="lg" color="accent" variant="soft" alt="Verification icon">
           <Avatar.Fallback>
-            <AppText className="text-2xl font-semibold">✓</AppText>
+            <AppText className="text-2xl text-foreground font-semibold">
+              ✓
+            </AppText>
           </Avatar.Fallback>
         </Avatar>
 

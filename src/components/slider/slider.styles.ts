@@ -3,22 +3,14 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  slots: {
-    container: 'gap-2',
-  },
+  base: 'gap-2',
   variants: {
     orientation: {
-      horizontal: {
-        container: 'w-full',
-      },
-      vertical: {
-        container: 'h-full items-center',
-      },
+      horizontal: 'w-full',
+      vertical: 'h-full items-center',
     },
     isDisabled: {
-      true: {
-        container: 'opacity-disabled',
-      },
+      true: 'opacity-disabled',
     },
   },
   defaultVariants: {
@@ -32,10 +24,10 @@ const output = tv({
 });
 
 const track = tv({
-  base: 'justify-center rounded-full bg-default overflow-visible',
+  base: 'rounded-full bg-default',
   variants: {
     orientation: {
-      horizontal: 'w-full h-1.5',
+      horizontal: 'w-full h-5',
       vertical: 'h-full w-1.5',
     },
   },
@@ -49,7 +41,7 @@ const fill = tv({
 });
 
 const thumb = tv({
-  base: 'absolute rounded-full bg-white border-2 border-accent items-center justify-center h-5 w-5',
+  base: 'absolute bg-accent-foreground border-2 border-accent rounded-2xl shadow-field',
 });
 
 const sliderClassNames = combineStyles({
@@ -60,16 +52,8 @@ const sliderClassNames = combineStyles({
   thumb,
 });
 
-export type RootSlots = keyof ReturnType<typeof root>;
-
 export const styleSheet = StyleSheet.create({
-  thumb: {
-    borderCurve: 'continuous',
-  },
-  track: {
-    borderCurve: 'continuous',
-  },
-  fill: {
+  borderCurve: {
     borderCurve: 'continuous',
   },
 });

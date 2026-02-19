@@ -17,7 +17,7 @@ export const THUMB_SIZE = 20;
 /**
  * Track cross-axis thickness in pixels (height for horizontal, width for vertical)
  */
-export const TRACK_HEIGHT = 6;
+export const TRACK_HEIGHT = 20;
 
 /**
  * Extra hit-slop around the thumb to improve touch target

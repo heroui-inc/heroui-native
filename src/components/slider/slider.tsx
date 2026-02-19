@@ -43,19 +43,14 @@ const SliderRoot = forwardRef<ViewRef, SliderProps>((props, ref) => {
     orientation = 'horizontal',
     isDisabled = false,
     className,
-    classNames,
-    styles: stylesProp,
     style,
     ...primitiveProps
   } = props;
 
-  const { container: containerSlot } = sliderClassNames.root({
+  const rootClassName = sliderClassNames.root({
     orientation,
     isDisabled,
-  });
-
-  const containerClassName = containerSlot({
-    className: [className, classNames?.container],
+    className,
   });
 
   return (
@@ -63,8 +58,8 @@ const SliderRoot = forwardRef<ViewRef, SliderProps>((props, ref) => {
       ref={ref}
       orientation={orientation}
       isDisabled={isDisabled}
-      className={containerClassName}
-      style={[stylesProp?.container, style]}
+      className={rootClassName}
+      style={style}
       {...primitiveProps}
     >
       {children}
@@ -160,7 +155,7 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
       <SliderPrimitives.Track
         ref={ref}
         className={trackClassName}
-        style={[styleSheet.track, style]}
+        style={[styleSheet.borderCurve, style]}
         onLayout={handleLayout}
         {...restProps}
       >
@@ -222,7 +217,7 @@ const SliderFill = forwardRef<ViewRef, SliderFillProps>((props, ref) => {
     <SliderPrimitives.Fill
       ref={ref}
       className={fillClassName}
-      style={[styleSheet.fill, fillStyle, style]}
+      style={[styleSheet.borderCurve, fillStyle, style]}
       {...restProps}
     />
   );
@@ -289,7 +284,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
       })
       .onStart(() => {
         startValue.value = valuesRef.current[index] ?? minValue;
-        thumbScale.value = withSpring(0.95, THUMB_SPRING_CONFIG);
+        thumbScale.value = withSpring(0.85, THUMB_SPRING_CONFIG);
         setThumbDraggingRef.current(index, true);
       })
       .onUpdate((event) => {
@@ -354,8 +349,8 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
         index={index}
         className={thumbClassName}
         style={[
-          styleSheet.thumb,
-          { width: THUMB_SIZE, height: THUMB_SIZE },
+          styleSheet.borderCurve,
+          { width: 28, height: 20 },
           positionStyle,
           animatedThumbStyle,
           style,

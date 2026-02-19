@@ -1,44 +1,30 @@
-import type { ViewProps, ViewStyle } from 'react-native';
-import type { ElementSlots } from '../../helpers/internal/types/theme';
 import type {
+  FillProps as PrimitiveFillProps,
+  OutputProps as PrimitiveOutputProps,
   RootProps as PrimitiveRootProps,
-  SliderRenderProps,
+  ThumbProps as PrimitiveThumbProps,
+  TrackProps as PrimitiveTrackProps,
 } from '../../primitives/slider/slider.types';
-import type { RootSlots } from './slider.styles';
 
 /**
  * Props for the Slider root component.
- * Extends the primitive Root props with visual styling props.
+ * Extends the primitive Root props with visual styling.
  *
  * Value-related props (value, defaultValue, onChange, onChangeEnd, minValue,
  * maxValue, step, formatOptions, orientation, isDisabled, aria-label) are
  * inherited from the primitive and do not need to be redeclared.
  */
-interface SliderProps extends Omit<PrimitiveRootProps, 'asChild'> {
-  /**
-   * Additional CSS classes for different parts of the component
-   */
-  classNames?: ElementSlots<RootSlots>;
-
-  /**
-   * Styles for different parts of the component
-   */
-  styles?: Partial<Record<RootSlots, ViewStyle>>;
+interface SliderProps extends PrimitiveRootProps {
+  /** Additional CSS classes */
+  className?: string;
 }
 
 /**
  * Props for the Slider.Output sub-component.
  * Displays the current slider value as formatted text.
  */
-interface SliderOutputProps extends Omit<ViewProps, 'children'> {
-  /**
-   * Children content or render function receiving slider state
-   */
-  children?: React.ReactNode | ((props: SliderRenderProps) => React.ReactNode);
-
-  /**
-   * Additional CSS classes
-   */
+interface SliderOutputProps extends PrimitiveOutputProps {
+  /** Additional CSS classes */
   className?: string;
 }
 
@@ -46,15 +32,8 @@ interface SliderOutputProps extends Omit<ViewProps, 'children'> {
  * Props for the Slider.Track sub-component.
  * Container for Fill and Thumb elements.
  */
-interface SliderTrackProps extends Omit<ViewProps, 'children'> {
-  /**
-   * Children content or render function receiving slider state
-   */
-  children?: React.ReactNode | ((props: SliderRenderProps) => React.ReactNode);
-
-  /**
-   * Additional CSS classes
-   */
+interface SliderTrackProps extends PrimitiveTrackProps {
+  /** Additional CSS classes */
   className?: string;
 }
 
@@ -62,10 +41,8 @@ interface SliderTrackProps extends Omit<ViewProps, 'children'> {
  * Props for the Slider.Fill sub-component.
  * Visual representation of the selected range.
  */
-interface SliderFillProps extends ViewProps {
-  /**
-   * Additional CSS classes
-   */
+interface SliderFillProps extends PrimitiveFillProps {
+  /** Additional CSS classes */
   className?: string;
 }
 
@@ -73,21 +50,13 @@ interface SliderFillProps extends ViewProps {
  * Props for the Slider.Thumb sub-component.
  * Draggable thumb element within the track.
  */
-interface SliderThumbProps extends ViewProps {
-  /**
-   * Index of this thumb within the slider (for range sliders)
-   * @default 0
-   */
-  index?: number;
-
+interface SliderThumbProps extends PrimitiveThumbProps {
   /**
    * Whether this individual thumb is disabled
    */
   isDisabled?: boolean;
 
-  /**
-   * Additional CSS classes
-   */
+  /** Additional CSS classes */
   className?: string;
 }
 

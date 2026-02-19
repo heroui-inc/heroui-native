@@ -1,13 +1,19 @@
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
 import { useThemeColor, useToast } from 'heroui-native';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Image, Platform, StyleSheet, View } from 'react-native';
 import { useReducedMotion } from 'react-native-reanimated';
 import LogoDark from '../../../assets/logo-dark.png';
 import LogoLight from '../../../assets/logo-light.png';
+import {
+  UpdateBottomSheet,
+  type UpdateBottomSheetMode,
+} from '../../components/bottom-sheet/update-bottom-sheet';
 import { ThemeToggle } from '../../components/theme-toggle';
 import { useAppTheme } from '../../contexts/app-theme-context';
+import { useOtaUpdate } from '../../helpers/hooks/use-ota-update';
+import { useVersionCheck } from '../../helpers/hooks/use-version-check';
 
 export default function Layout() {
   const { isDark } = useAppTheme();
@@ -18,6 +24,36 @@ export default function Layout() {
 
   const reducedMotion = useReducedMotion();
   const { toast } = useToast();
+
+  // -- Update management state --
+  const [isVersionChecked, setIsVersionChecked] = useState(false);
+  const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
+  const [updateSheetOpen, setUpdateSheetOpen] = useState(true);
+  const [updateSheetMode, setUpdateSheetMode] =
+    useState<UpdateBottomSheetMode>('new-version');
+
+  const handleVersionChecked = useCallback((isNew: boolean) => {
+    setIsVersionChecked(true);
+    setIsNewVersionAvailable(isNew);
+
+    if (isNew) {
+      setUpdateSheetMode('new-version');
+      setUpdateSheetOpen(true);
+    }
+  }, []);
+
+  const handleOtaUpdateReady = useCallback(() => {
+    setUpdateSheetMode('ota-update');
+    setUpdateSheetOpen(true);
+  }, []);
+
+  useVersionCheck({ onVersionChecked: handleVersionChecked });
+
+  useOtaUpdate({
+    isVersionChecked,
+    isNewVersionAvailable,
+    onUpdateReady: handleOtaUpdateReady,
+  });
 
   useEffect(() => {
     if (reducedMotion) {
@@ -203,6 +239,11 @@ export default function Layout() {
           }}
         />
       </Stack>
+      <UpdateBottomSheet
+        isOpen={updateSheetOpen}
+        onOpenChange={setUpdateSheetOpen}
+        mode={updateSheetMode}
+      />
     </View>
   );
 }

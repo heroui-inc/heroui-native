@@ -45,7 +45,7 @@ export function useVersionCheck({ onVersionChecked }: UseVersionCheckOptions) {
           onVersionChecked(false);
         }
       } catch (error) {
-        console.error('[useVersionCheck] Failed to check for updates:', error);
+        console.log('[useVersionCheck] Failed to check for updates:', error);
 
         if (!cancelled) {
           onVersionChecked(false);

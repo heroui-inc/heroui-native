@@ -33,7 +33,7 @@ export function useOtaUpdate({
       await Updates.fetchUpdateAsync();
       onUpdateReady();
     } catch (error) {
-      console.error('[useOtaUpdate] Failed to fetch update:', error);
+      console.log('[useOtaUpdate] Failed to fetch update:', error);
     }
   }, [
     isUpdateAvailable,
@@ -64,7 +64,7 @@ export function useOtaUpdate({
         Updates.checkForUpdateAsync()
           .then(() => handleUpdate())
           .catch((error) => {
-            console.error(
+            console.log(
               '[useOtaUpdate] Failed to check for update on foreground:',
               error
             );

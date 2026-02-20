@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import { Label, Slider } from 'heroui-native';
+import { BottomSheet, Button, Label, Slider } from 'heroui-native';
+import { useState } from 'react';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -250,6 +251,70 @@ const CustomStylesContent = () => {
   );
 };
 
+// ==============================================================================
+// Inside Bottom Sheet
+// ==============================================================================
+
+const InsideBottomSheetContent = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <View className="flex-1">
+      <View className="flex-1 items-center justify-center">
+        <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+          <BottomSheet.Trigger asChild>
+            <Button variant="secondary" isDisabled={isOpen}>
+              Open slider settings
+            </Button>
+          </BottomSheet.Trigger>
+          <BottomSheet.Portal>
+            <BottomSheet.Overlay />
+            <BottomSheet.Content>
+              <BottomSheet.Title className="text-xl font-semibold mb-4">
+                Audio settings
+              </BottomSheet.Title>
+              <View className="gap-6">
+                <Slider defaultValue={70}>
+                  <View className="flex-row items-center justify-between">
+                    <Label>Volume</Label>
+                    <Slider.Output />
+                  </View>
+                  <Slider.Track>
+                    <Slider.Fill />
+                    <Slider.Thumb />
+                  </Slider.Track>
+                </Slider>
+
+                <Slider defaultValue={50}>
+                  <View className="flex-row items-center justify-between">
+                    <Label>Bass</Label>
+                    <Slider.Output />
+                  </View>
+                  <Slider.Track>
+                    <Slider.Fill />
+                    <Slider.Thumb />
+                  </Slider.Track>
+                </Slider>
+
+                <Slider defaultValue={40}>
+                  <View className="flex-row items-center justify-between">
+                    <Label>Treble</Label>
+                    <Slider.Output />
+                  </View>
+                  <Slider.Track>
+                    <Slider.Fill />
+                    <Slider.Thumb />
+                  </Slider.Track>
+                </Slider>
+              </View>
+            </BottomSheet.Content>
+          </BottomSheet.Portal>
+        </BottomSheet>
+      </View>
+    </View>
+  );
+};
+
 const SLIDER_VARIANTS: UsageVariant[] = [
   {
     value: 'basic',
@@ -270,6 +335,11 @@ const SLIDER_VARIANTS: UsageVariant[] = [
     value: 'custom-styles',
     label: 'Custom styles',
     content: <CustomStylesContent />,
+  },
+  {
+    value: 'inside-bottom-sheet',
+    label: 'Inside bottom sheet',
+    content: <InsideBottomSheetContent />,
   },
 ];
 

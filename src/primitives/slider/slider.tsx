@@ -39,7 +39,7 @@ import {
 // Slider context – provides all value logic to sub-components
 // ---------------------------------------------------------------------------
 
-const [SliderProvider, useSliderContext] = createContext<SliderContextValue>({
+const [SliderProvider, useSlider] = createContext<SliderContextValue>({
   name: 'SliderPrimitiveContext',
   errorMessage:
     'Slider compound components cannot be rendered outside the Slider.Root component',
@@ -331,7 +331,7 @@ const Track = forwardRef<TrackRef, TrackProps>(
       isDisabled,
       getThumbValueLabel,
       setTrackSize,
-    } = useSliderContext();
+    } = useSlider();
 
     const state = useMemo<SliderState>(
       () => ({ values, getThumbValueLabel }),
@@ -388,7 +388,7 @@ const Thumb = forwardRef<ThumbRef, ThumbProps>(
       getThumbPercent,
       getThumbValueLabel,
       setThumbSize,
-    } = useSliderContext();
+    } = useSlider();
 
     const Component = asChild ? Slot.View : View;
 
@@ -436,8 +436,7 @@ Thumb.displayName = 'HeroUINative.Primitive.Slider.Thumb';
 
 const Output = forwardRef<OutputRef, OutputProps>(
   ({ asChild, children, ...restProps }, ref) => {
-    const { values, orientation, isDisabled, getThumbValueLabel } =
-      useSliderContext();
+    const { values, orientation, isDisabled, getThumbValueLabel } = useSlider();
 
     const state = useMemo<SliderState>(
       () => ({ values, getThumbValueLabel }),
@@ -461,4 +460,4 @@ const Output = forwardRef<OutputRef, OutputProps>(
 
 Output.displayName = 'HeroUINative.Primitive.Slider.Output';
 
-export { Fill, Output, Root, Thumb, Track, useSliderContext };
+export { Fill, Output, Root, Thumb, Track, useSlider };

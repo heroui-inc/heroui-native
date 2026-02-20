@@ -6,7 +6,7 @@ import { HeroText } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import * as SliderPrimitives from '../../primitives/slider';
-import { useSliderContext } from '../../primitives/slider';
+import { useSlider } from '../../primitives/slider';
 import { clamp } from '../../primitives/slider/slider.utils';
 import {
   useSliderRootAnimation,
@@ -73,8 +73,7 @@ const SliderRoot = forwardRef<ViewRef, SliderProps>((props, ref) => {
 const SliderOutput = forwardRef<ViewRef, SliderOutputProps>((props, ref) => {
   const { children, className, style, ...restProps } = props;
 
-  const { values, orientation, isDisabled, getThumbValueLabel } =
-    useSliderContext();
+  const { values, orientation, isDisabled, getThumbValueLabel } = useSlider();
 
   const outputClassName = sliderClassNames.output({ className });
 
@@ -113,7 +112,7 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
     handleTapAtValue,
     trackSize,
     thumbSize,
-  } = useSliderContext();
+  } = useSlider();
 
   const trackClassName = sliderClassNames.track({
     orientation,
@@ -165,7 +164,7 @@ const SliderFill = forwardRef<ViewRef, SliderFillProps>((props, ref) => {
   const { className, style, ...restProps } = props;
 
   const { values, orientation, getThumbPercent, trackSize, thumbSize } =
-    useSliderContext();
+    useSlider();
 
   const fillClassName = sliderClassNames.fill({ orientation, className });
 
@@ -238,7 +237,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     setThumbDragging,
     trackSize,
     thumbSize,
-  } = useSliderContext();
+  } = useSlider();
 
   const disabled = thumbDisabled ?? sliderDisabled;
   const isDragging = isThumbDragging(index);
@@ -277,7 +276,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
       .runOnJS(true)
       .enabled(!disabled)
       .onBegin(() => {
-        startValue.value = valuesRef.current[index] ?? minValue;
+        startValue.set(valuesRef.current[index] ?? minValue);
         setThumbDraggingRef.current(index, true);
       })
       .onUpdate((event) => {
@@ -290,7 +289,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
             ? (delta / effectiveTrackSize) * (maxValue - minValue)
             : 0;
         const newValue = clamp(
-          startValue.value + valueDelta,
+          startValue.get() + valueDelta,
           minValue,
           maxValue
         );
@@ -394,7 +393,7 @@ SliderThumb.displayName = DISPLAY_NAME.THUMB;
  * Architecture:
  * All value logic, accessibility, state management, dragging state, track/thumb
  * measurement, and onChangeEnd lifecycle are managed by the primitive context
- * (`useSliderContext`). The component layer is purely for styling, animations,
+ * (`useSlider`). The component layer is purely for styling, animations,
  * and gesture handling.
  *
  * @see Full documentation: https://v3.heroui.com/docs/native/components/slider
@@ -410,5 +409,5 @@ const CompoundSlider = Object.assign(SliderRoot, {
   Thumb: SliderThumb,
 });
 
-export { useSliderContext };
+export { useSlider };
 export default CompoundSlider;

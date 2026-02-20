@@ -24,6 +24,7 @@
 | Radio             | [radio.md](../src/components/radio/radio.md)                                        |
 | RadioGroup        | [radio-group.md](../src/components/radio-group/radio-group.md)                      |
 | ScrollShadow      | [scroll-shadow.md](../src/components/scroll-shadow/scroll-shadow.md)                |
+| SearchField       | [search-field.md](../src/components/search-field/search-field.md)                   |
 | Select            | [select.md](../src/components/select/select.md)                                     |
 | Separator         | [separator.md](../src/components/separator/separator.md)                            |
 | Skeleton          | [skeleton.md](../src/components/skeleton/skeleton.md)                               |

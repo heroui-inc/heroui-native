@@ -28,6 +28,7 @@
 | Separator         | [separator.md](../src/components/separator/separator.md)                            |
 | Skeleton          | [skeleton.md](../src/components/skeleton/skeleton.md)                               |
 | SkeletonGroup     | [skeleton-group.md](../src/components/skeleton-group/skeleton-group.md)             |
+| Slider            | [slider.md](../src/components/slider/slider.md)                                     |
 | Spinner           | [spinner.md](../src/components/spinner/spinner.md)                                  |
 | Surface           | [surface.md](../src/components/surface/surface.md)                                  |
 | Switch            | [switch.md](../src/components/switch/switch.md)                                     |

@@ -26,6 +26,7 @@ export * from './components/select';
 export * from './components/separator';
 export * from './components/skeleton';
 export * from './components/skeleton-group';
+export * from './components/slider';
 export * from './components/spinner';
 export * from './components/surface';
 export * from './components/switch';

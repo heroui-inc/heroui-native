@@ -1,3 +1,5 @@
+import type { ViewStyle } from 'react-native';
+import type { ElementSlots } from '../../helpers/internal/types/theme';
 import type {
   FillProps as PrimitiveFillProps,
   OutputProps as PrimitiveOutputProps,
@@ -5,6 +7,7 @@ import type {
   ThumbProps as PrimitiveThumbProps,
   TrackProps as PrimitiveTrackProps,
 } from '../../primitives/slider/slider.types';
+import type { ThumbSlots } from './slider.styles';
 
 /**
  * Props for the Slider root component.
@@ -48,7 +51,8 @@ interface SliderFillProps extends PrimitiveFillProps {
 
 /**
  * Props for the Slider.Thumb sub-component.
- * Draggable thumb element within the track.
+ * Two-slot thumb: outer container (positioning + accent bg) wrapping
+ * an inner knob (foreground + shadow + scale animation).
  */
 interface SliderThumbProps extends PrimitiveThumbProps {
   /**
@@ -56,8 +60,14 @@ interface SliderThumbProps extends PrimitiveThumbProps {
    */
   isDisabled?: boolean;
 
-  /** Additional CSS classes */
+  /** Additional CSS classes for the thumb container */
   className?: string;
+
+  /** Additional CSS classes for thumb slots (thumbContainer, thumbKnob) */
+  classNames?: ElementSlots<ThumbSlots>;
+
+  /** Inline styles for thumb slots (thumbContainer, thumbKnob) */
+  styles?: Partial<Record<ThumbSlots, ViewStyle>>;
 }
 
 export type {

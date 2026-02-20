@@ -1,5 +1,6 @@
 import { forwardRef, useCallback, useMemo, useRef } from 'react';
 import type { LayoutChangeEvent } from 'react-native';
+import { View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedStyle,
@@ -25,11 +26,7 @@ import type {
   SliderTrackProps,
 } from './slider.types';
 
-// ---------------------------------------------------------------------------
-// Animated primitive wrappers
-// ---------------------------------------------------------------------------
-
-const AnimatedThumb = Animated.createAnimatedComponent(SliderPrimitives.Thumb);
+const AnimatedKnob = Animated.createAnimatedComponent(View);
 
 // --------------------------------------------------
 // Root – wraps primitive Root with styling
@@ -229,6 +226,8 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     index = 0,
     isDisabled: thumbDisabled,
     className,
+    classNames,
+    styles: stylesProp,
     style,
     children,
     ...restProps
@@ -250,7 +249,15 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
 
   const disabled = thumbDisabled ?? sliderDisabled;
 
-  const thumbClassName = sliderClassNames.thumb({ className });
+  const { thumbContainer: containerSlot, thumbKnob: knobSlot } =
+    sliderClassNames.thumb({});
+
+  const thumbContainerClassName = containerSlot({
+    className: [className, classNames?.thumbContainer],
+  });
+  const thumbKnobClassName = knobSlot({
+    className: classNames?.thumbKnob,
+  });
 
   const percent = getThumbPercent(index);
   const thumbScale = useSharedValue(1);
@@ -274,7 +281,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
       .hitSlop(THUMB_HIT_SLOP)
       .onStart(() => {
         startValue.value = valuesRef.current[index] ?? minValue;
-        thumbScale.value = withSpring(0.85, THUMB_SPRING_CONFIG);
+        thumbScale.value = withSpring(0.9, THUMB_SPRING_CONFIG);
         setThumbDraggingRef.current(index, true);
       })
       .onUpdate((event) => {
@@ -296,12 +303,13 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
         const clampedSnapped = clamp(snapped, minValue, maxValue);
         updateValueRef.current(index, clampedSnapped);
       })
-      .onEnd(() => {
+      .onFinalize(() => {
         thumbScale.value = withSpring(1, THUMB_SPRING_CONFIG);
         setThumbDraggingRef.current(index, false);
       })
-      .onFinalize(() => {
+      .onTouchesCancelled(() => {
         thumbScale.value = withSpring(1, THUMB_SPRING_CONFIG);
+        setThumbDraggingRef.current(index, false);
       });
 
     return gesture;
@@ -319,7 +327,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
   ]);
 
   const animatedThumbStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: thumbScale.value }],
+    transform: [{ scale: thumbScale.get() }],
   }));
 
   const positionStyle = useMemo(() => {
@@ -334,20 +342,29 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
 
   return (
     <GestureDetector gesture={panGesture}>
-      <AnimatedThumb
+      <SliderPrimitives.Thumb
         ref={ref}
         index={index}
-        className={thumbClassName}
+        className={thumbContainerClassName}
         style={[
           styleSheet.borderCurve,
           positionStyle,
-          // animatedThumbStyle,
+          stylesProp?.thumbContainer,
           style,
         ]}
         {...restProps}
       >
-        {children}
-      </AnimatedThumb>
+        {children ?? (
+          <AnimatedKnob
+            className={thumbKnobClassName}
+            style={[
+              styleSheet.borderCurve,
+              animatedThumbStyle,
+              stylesProp?.thumbKnob,
+            ]}
+          />
+        )}
+      </SliderPrimitives.Thumb>
     </GestureDetector>
   );
 });

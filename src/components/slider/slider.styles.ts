@@ -24,7 +24,7 @@ const output = tv({
 });
 
 const track = tv({
-  base: 'rounded-full bg-default',
+  base: 'rounded-xl bg-default',
   variants: {
     orientation: {
       horizontal: 'w-full h-5 justify-center',
@@ -37,7 +37,7 @@ const track = tv({
 });
 
 const fill = tv({
-  base: 'absolute rounded-full bg-accent',
+  base: 'absolute rounded-xl bg-accent',
   variants: {
     orientation: {
       horizontal: 'inset-y-0',
@@ -50,7 +50,10 @@ const fill = tv({
 });
 
 const thumb = tv({
-  base: 'absolute w-7 h-5 bg-accent-foreground border-2 border-accent rounded-2xl shadow-field',
+  slots: {
+    thumbContainer: 'absolute w-7 h-5 p-[2px] bg-accent rounded-xl',
+    thumbKnob: 'flex-1 bg-accent-foreground rounded-xl shadow-field',
+  },
 });
 
 const sliderClassNames = combineStyles({
@@ -66,6 +69,8 @@ export const styleSheet = StyleSheet.create({
     borderCurve: 'continuous',
   },
 });
+
+export type ThumbSlots = keyof ReturnType<typeof thumb>;
 
 export { sliderClassNames };
 export default sliderClassNames;

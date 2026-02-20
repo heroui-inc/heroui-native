@@ -12,7 +12,7 @@ import {
   useSliderRootAnimation,
   useSliderThumbAnimation,
 } from './slider.animation';
-import { DISPLAY_NAME, THUMB_HIT_SLOP } from './slider.constants';
+import { DISPLAY_NAME } from './slider.constants';
 import sliderClassNames, { styleSheet } from './slider.styles';
 import type {
   SliderFillProps,
@@ -103,7 +103,7 @@ const SliderOutput = forwardRef<ViewRef, SliderOutputProps>((props, ref) => {
 // --------------------------------------------------
 
 const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
-  const { children, className, style, ...restProps } = props;
+  const { children, className, style, hitSlop = 8, ...restProps } = props;
 
   const {
     minValue,
@@ -129,10 +129,6 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
     return Gesture.Tap()
       .runOnJS(true)
       .enabled(!isDisabled)
-      .hitSlop({
-        top: thumbSize,
-        bottom: thumbSize,
-      })
       .onEnd((event) => {
         if (effectiveTrackSize <= 0) return;
 
@@ -154,6 +150,7 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
         ref={ref}
         className={trackClassName}
         style={[styleSheet.borderCurve, style]}
+        hitSlop={hitSlop}
         {...restProps}
       >
         {children}
@@ -222,6 +219,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     classNames,
     styles: stylesProp,
     style,
+    hitSlop = 12,
     onTouchEnd,
     children,
     ...restProps
@@ -278,8 +276,6 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     const gesture = Gesture.Pan()
       .runOnJS(true)
       .enabled(!disabled)
-      .minDistance(0)
-      .hitSlop(THUMB_HIT_SLOP)
       .onBegin(() => {
         startValue.value = valuesRef.current[index] ?? minValue;
         setThumbDraggingRef.current(index, true);
@@ -348,6 +344,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
           style,
         ]}
         onTouchEnd={handleTouchEnd}
+        hitSlop={hitSlop}
         {...restProps}
       >
         {children ?? (

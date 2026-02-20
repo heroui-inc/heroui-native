@@ -211,7 +211,7 @@ const CustomStylesContent = () => {
             <Slider.Thumb
               classNames={{
                 thumbContainer: 'size-5 rounded-sm bg-warning',
-                thumbKnob: 'bg-amber-900 rounded-sm',
+                thumbKnob: 'bg-amber-900 border border-warning rounded-sm',
               }}
               animation={{
                 scale: { value: [1, 1.5] },

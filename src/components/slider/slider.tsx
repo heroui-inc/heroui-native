@@ -250,7 +250,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
   const disabled = thumbDisabled ?? sliderDisabled;
 
   const { thumbContainer: containerSlot, thumbKnob: knobSlot } =
-    sliderClassNames.thumb({});
+    sliderClassNames.thumb({ orientation });
 
   const thumbContainerClassName = containerSlot({
     className: [className, classNames?.thumbContainer],

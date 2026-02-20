@@ -51,8 +51,17 @@ const fill = tv({
 
 const thumb = tv({
   slots: {
-    thumbContainer: 'absolute w-7 h-5 p-[2px] bg-accent rounded-xl',
+    thumbContainer: 'absolute p-[2px] bg-accent rounded-xl',
     thumbKnob: 'flex-1 bg-accent-foreground rounded-xl shadow-field',
+  },
+  variants: {
+    orientation: {
+      horizontal: { thumbContainer: 'w-7 h-5' },
+      vertical: { thumbContainer: 'w-5 h-7' },
+    },
+  },
+  defaultVariants: {
+    orientation: 'horizontal',
   },
 });
 

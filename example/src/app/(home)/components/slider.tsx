@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import { Label, Slider } from 'heroui-native';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
@@ -179,11 +180,17 @@ const CustomStylesContent = () => {
             <Label>Battery</Label>
             <Slider.Output />
           </View>
-          <Slider.Track className="h-3 bg-success/15">
-            <Slider.Fill className="bg-success" />
+          <Slider.Track className="h-3 rounded-full bg-success/10">
+            <Slider.Fill
+              className="rounded-full"
+              style={{
+                experimental_backgroundImage:
+                  'linear-gradient(to right, #f87171, #facc15, #4ade80)',
+              }}
+            />
             <Slider.Thumb
               classNames={{
-                thumbContainer: 'w-6 h-6 rounded-full bg-success',
+                thumbContainer: 'size-6 rounded-full bg-success',
                 thumbKnob: 'bg-success-foreground rounded-full',
               }}
             />
@@ -196,46 +203,35 @@ const CustomStylesContent = () => {
             <Label>Volume</Label>
             <Slider.Output />
           </View>
-          <Slider.Track className="h-1.5 rounded-full bg-warning/15">
+          <Slider.Track className="h-1 rounded-full bg-warning/15">
             <Slider.Fill className="bg-warning rounded-full" />
             <Slider.Thumb
               classNames={{
-                thumbContainer: 'w-5 h-5 rounded-full bg-warning p-[1.5px]',
-                thumbKnob: 'bg-warning-foreground rounded-full',
+                thumbContainer: 'size-5 rounded-sm bg-warning',
+                thumbKnob: 'bg-amber-900 rounded-sm',
               }}
             />
           </Slider.Track>
         </Slider>
 
-        {/* Danger / wide track */}
-        <Slider defaultValue={80}>
+        {/* Gradient / wide track */}
+        <Slider defaultValue={70}>
           <View className="flex-row items-center justify-between mb-1">
-            <Label>CPU Load</Label>
+            <Label>Mood</Label>
             <Slider.Output />
           </View>
-          <Slider.Track className="h-7 rounded-2xl bg-danger/10">
-            <Slider.Fill className="bg-danger/80 rounded-2xl" />
-            <Slider.Thumb
-              classNames={{
-                thumbContainer: 'w-4 h-7 rounded-xl bg-danger p-[2px]',
-                thumbKnob: 'bg-danger-foreground rounded-xl',
+          <Slider.Track className="h-7 rounded-2xl bg-default/40">
+            <Slider.Fill
+              className="rounded-2xl"
+              style={{
+                experimental_backgroundImage:
+                  'linear-gradient(to right, #a78bfa, #7dd3fc, #6ee7b7)',
               }}
             />
-          </Slider.Track>
-        </Slider>
-
-        {/* Minimal / solid dot */}
-        <Slider defaultValue={50}>
-          <View className="flex-row items-center justify-between mb-1">
-            <Label>Brightness</Label>
-            <Slider.Output />
-          </View>
-          <Slider.Track className="h-2 rounded-full bg-muted/20">
-            <Slider.Fill className="bg-foreground rounded-full" />
             <Slider.Thumb
               classNames={{
-                thumbContainer: 'w-5 h-5 rounded-full bg-foreground p-0',
-                thumbKnob: 'bg-foreground rounded-full',
+                thumbContainer: 'w-5 h-7 rounded-xl bg-teal-200',
+                thumbKnob: 'bg-white rounded-xl',
               }}
             />
           </Slider.Track>

@@ -49,7 +49,10 @@ export function valueToPercent(
 }
 
 /**
- * Formats a slider value using Intl.NumberFormat
+ * Formats a slider value using Intl.NumberFormat.
+ * Values are passed directly to the formatter — consumers are responsible
+ * for providing values in the scale the formatter expects (e.g. 0–1 for
+ * `style: 'percent'`).
  * @param value - The numeric value
  * @param formatOptions - Intl.NumberFormat options
  * @returns The formatted string

@@ -27,6 +27,7 @@ import type {
   TrackRef,
 } from './slider.types';
 import {
+  clamp,
   denormalizeValue,
   formatValue,
   normalizeValue,
@@ -88,8 +89,11 @@ const Root = forwardRef<RootRef, RootProps>(
     );
 
     const values = useMemo(
-      () => normalizeValue(internalValue ?? minValue),
-      [internalValue, minValue]
+      () =>
+        normalizeValue(internalValue ?? minValue).map((v) =>
+          clamp(v, minValue, maxValue)
+        ),
+      [internalValue, minValue, maxValue]
     );
 
     // -----------------------------------------------------------------

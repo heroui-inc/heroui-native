@@ -324,9 +324,14 @@ Root.displayName = 'HeroUINative.Primitive.Slider.Root';
 // --------------------------------------------------
 
 const Track = forwardRef<TrackRef, TrackProps>(
-  ({ asChild, children, ...restProps }, ref) => {
-    const { values, orientation, isDisabled, getThumbValueLabel } =
-      useSliderContext();
+  ({ asChild, children, onLayout, ...restProps }, ref) => {
+    const {
+      values,
+      orientation,
+      isDisabled,
+      getThumbValueLabel,
+      setTrackSize,
+    } = useSliderContext();
 
     const state = useMemo<SliderState>(
       () => ({ values, getThumbValueLabel }),
@@ -338,10 +343,19 @@ const Track = forwardRef<TrackRef, TrackProps>(
     const resolvedChildren =
       typeof children === 'function' ? children(renderProps) : children;
 
+    const handleLayout = useCallback(
+      (event: import('react-native').LayoutChangeEvent) => {
+        const { width, height } = event.nativeEvent.layout;
+        setTrackSize(orientation === 'horizontal' ? width : height);
+        onLayout?.(event);
+      },
+      [orientation, setTrackSize, onLayout]
+    );
+
     const Component = asChild ? Slot.View : View;
 
     return (
-      <Component ref={ref} {...restProps}>
+      <Component ref={ref} onLayout={handleLayout} {...restProps}>
         {resolvedChildren}
       </Component>
     );

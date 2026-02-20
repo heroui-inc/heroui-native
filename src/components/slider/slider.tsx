@@ -1,5 +1,4 @@
-import { forwardRef, useCallback, useMemo, useRef } from 'react';
-import type { LayoutChangeEvent } from 'react-native';
+import { forwardRef, useMemo, useRef } from 'react';
 import { View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
@@ -30,8 +29,6 @@ import type {
 
 const AnimatedKnob = Animated.createAnimatedComponent(View);
 
-// --------------------------------------------------
-// Root – wraps primitive Root with styling
 // --------------------------------------------------
 
 const SliderRoot = forwardRef<ViewRef, SliderProps>((props, ref) => {
@@ -77,8 +74,6 @@ const SliderRoot = forwardRef<ViewRef, SliderProps>((props, ref) => {
 });
 
 // --------------------------------------------------
-// Output – styled value display
-// --------------------------------------------------
 
 const SliderOutput = forwardRef<ViewRef, SliderOutputProps>((props, ref) => {
   const { children, className, style, ...restProps } = props;
@@ -111,8 +106,6 @@ const SliderOutput = forwardRef<ViewRef, SliderOutputProps>((props, ref) => {
 });
 
 // --------------------------------------------------
-// Track – styled + tap gesture + layout measurement
-// --------------------------------------------------
 
 const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
   const { children, className, style, ...restProps } = props;
@@ -124,7 +117,6 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
     isDisabled,
     handleTapAtValue,
     trackSize,
-    setTrackSize,
     thumbSize,
   } = useSliderContext();
 
@@ -132,14 +124,6 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
     orientation,
     className,
   });
-
-  const handleLayout = useCallback(
-    (event: LayoutChangeEvent) => {
-      const { width, height } = event.nativeEvent.layout;
-      setTrackSize(orientation === 'horizontal' ? width : height);
-    },
-    [orientation, setTrackSize]
-  );
 
   const handleTapRef = useRef(handleTapAtValue);
   handleTapRef.current = handleTapAtValue;
@@ -175,7 +159,6 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
         ref={ref}
         className={trackClassName}
         style={[styleSheet.borderCurve, style]}
-        onLayout={handleLayout}
         {...restProps}
       >
         {children}
@@ -184,10 +167,6 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
   );
 });
 
-// --------------------------------------------------
-// Fill – responsive bar that stretches full cross-axis
-// via inset-y-0 / inset-x-0, only computes main-axis
-// left + width (horizontal) or bottom + height (vertical).
 // --------------------------------------------------
 
 const SliderFill = forwardRef<ViewRef, SliderFillProps>((props, ref) => {
@@ -237,12 +216,6 @@ const SliderFill = forwardRef<ViewRef, SliderFillProps>((props, ref) => {
   );
 });
 
-// --------------------------------------------------
-// Thumb – styled + pan gesture + scale animation.
-// Centered on the cross-axis by Track's justify-center
-// (horizontal) or items-center (vertical) via Yoga.
-// Size is set via className; measured via onLayout and
-// stored as thumbSize in the primitive context.
 // --------------------------------------------------
 
 const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
@@ -394,8 +367,6 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
 });
 
 // --------------------------------------------------
-// Display names
-// --------------------------------------------------
 
 SliderRoot.displayName = DISPLAY_NAME.ROOT;
 SliderOutput.displayName = DISPLAY_NAME.OUTPUT;
@@ -403,8 +374,6 @@ SliderTrack.displayName = DISPLAY_NAME.TRACK;
 SliderFill.displayName = DISPLAY_NAME.FILL;
 SliderThumb.displayName = DISPLAY_NAME.THUMB;
 
-// --------------------------------------------------
-// Compound export
 // --------------------------------------------------
 
 /**

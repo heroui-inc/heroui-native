@@ -22,9 +22,9 @@ export interface CloseButtonIconProps {
  * Extends ButtonRootProps, allowing full override of all button props.
  * Defaults to variant='tertiary', size='sm', and isIconOnly=true.
  */
-export interface CloseButtonProps extends ButtonRootProps {
+export type CloseButtonProps = ButtonRootProps & {
   /**
    * Props for customizing the close icon
    */
   iconProps?: CloseButtonIconProps;
-}
+};

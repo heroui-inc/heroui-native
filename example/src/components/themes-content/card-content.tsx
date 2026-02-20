@@ -9,7 +9,10 @@ const StyledImage = withUniwind(Image);
 export const CardContent = () => {
   return (
     <View className="flex-row gap-4">
-      <PressableFeedback className="flex-1 aspect-[1/1.3] rounded-3xl shadow-surface">
+      <PressableFeedback
+        className="flex-1 aspect-[1/1.3] overflow-auto"
+        animation={{ scale: { value: 0.995 } }}
+      >
         <Card className="flex-1">
           <View className="flex-1 gap-4">
             <Card.Header>
@@ -33,15 +36,18 @@ export const CardContent = () => {
               </AppText>
             </Card.Footer>
           </View>
+          <PressableFeedback.Ripple
+            animation={{
+              backgroundColor: { value: '#fecdd3' },
+              opacity: { value: [0, 0.2, 0] },
+            }}
+          />
         </Card>
-        <PressableFeedback.Ripple
-          animation={{
-            backgroundColor: { value: '#fecdd3' },
-            opacity: { value: [0, 0.2, 0] },
-          }}
-        />
       </PressableFeedback>
-      <PressableFeedback className="flex-1 aspect-[1/1.3] rounded-3xl shadow-surface">
+      <PressableFeedback
+        className="flex-1 aspect-[1/1.3] overflow-auto"
+        animation={{ scale: { value: 0.995 } }}
+      >
         <Card className="flex-1">
           <View className="flex-1 gap-4">
             <Card.Header>
@@ -65,12 +71,12 @@ export const CardContent = () => {
               </AppText>
             </Card.Footer>
           </View>
+          <PressableFeedback.Ripple
+            animation={{
+              backgroundColor: { value: '#67e8f9' },
+            }}
+          />
         </Card>
-        <PressableFeedback.Ripple
-          animation={{
-            backgroundColor: { value: '#67e8f9' },
-          }}
-        />
       </PressableFeedback>
     </View>
   );

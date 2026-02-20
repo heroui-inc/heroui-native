@@ -14,6 +14,7 @@ import {
   usePressableFeedbackHighlightAnimation,
   usePressableFeedbackRippleAnimation,
   usePressableFeedbackRootAnimation,
+  usePressableFeedbackScaleAnimation,
 } from './pressable-feedback.animation';
 import { DISPLAY_NAME } from './pressable-feedback.constants';
 import {
@@ -24,6 +25,7 @@ import type {
   PressableFeedbackHighlightProps,
   PressableFeedbackProps,
   PressableFeedbackRippleProps,
+  PressableFeedbackScaleProps,
 } from './pressable-feedback.types';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -34,10 +36,10 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
   (props, ref) => {
     const {
       isDisabled = false,
+      isAnimatedStyleActive = true,
       className,
       style,
       animation,
-      isAnimatedStyleActive = true,
       children,
       onLayout,
       onPressIn,
@@ -45,30 +47,31 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       ...restProps
     } = props;
 
-    const rootClassName = pressableFeedbackClassNames.root({ className });
-
     const {
       isPressed,
       containerWidth,
       containerHeight,
-      rContainerStyle,
       isAllAnimationsDisabled,
       animationOnPressIn,
       animationOnPressOut,
+      rScaleStyle,
     } = usePressableFeedbackRootAnimation({
       animation,
     });
 
+    const rootClassName = pressableFeedbackClassNames.root({ className });
+
     const rootStyle = isAnimatedStyleActive
-      ? [rContainerStyle, pressableFeedbackStyleSheet.root, style]
+      ? [pressableFeedbackStyleSheet.root, rScaleStyle, style]
       : [pressableFeedbackStyleSheet.root, style];
 
     const handleLayout = useCallback(
       (event: LayoutChangeEvent) => {
         containerWidth.set(event.nativeEvent.layout.width);
         containerHeight.set(event.nativeEvent.layout.height);
-        // @ts-ignore
-        onLayout?.(event);
+        if (onLayout && typeof onLayout === 'function') {
+          onLayout(event);
+        }
       },
       [containerWidth, containerHeight, onLayout]
     );
@@ -76,8 +79,9 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
     const handlePressIn = useCallback(
       (event: GestureResponderEvent) => {
         animationOnPressIn();
-        // @ts-ignore
-        onPressIn?.(event);
+        if (onPressIn && typeof onPressIn === 'function') {
+          onPressIn(event);
+        }
       },
       [animationOnPressIn, onPressIn]
     );
@@ -85,8 +89,9 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
     const handlePressOut = useCallback(
       (event: GestureResponderEvent) => {
         animationOnPressOut();
-        // @ts-ignore
-        onPressOut?.(event);
+        if (onPressOut && typeof onPressOut === 'function') {
+          onPressOut(event);
+        }
       },
       [animationOnPressOut, onPressOut]
     );
@@ -130,10 +135,32 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
 
 // --------------------------------------------------
 
-/**
- * Highlight component for PressableFeedback that renders highlight feedback effect
- * Must be used within PressableFeedback component
- */
+const PressableFeedbackScale = forwardRef<ViewRef, PressableFeedbackScaleProps>(
+  (props, ref) => {
+    const {
+      animation,
+      isAnimatedStyleActive = true,
+      style,
+      children,
+      ...restProps
+    } = props;
+
+    const { rContainerStyle } = usePressableFeedbackScaleAnimation({
+      animation,
+    });
+
+    const scaleStyle = isAnimatedStyleActive ? [rContainerStyle, style] : style;
+
+    return (
+      <Animated.View ref={ref} style={scaleStyle} {...restProps}>
+        {children}
+      </Animated.View>
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const PressableFeedbackHighlight = forwardRef<
   ViewRef,
   PressableFeedbackHighlightProps
@@ -171,10 +198,6 @@ const PressableFeedbackHighlight = forwardRef<
 
 // --------------------------------------------------
 
-/**
- * Ripple component for PressableFeedback that renders ripple feedback effect
- * Must be used within PressableFeedback component
- */
 const PressableFeedbackRipple = forwardRef<
   ViewRef,
   PressableFeedbackRippleProps
@@ -260,34 +283,47 @@ const PressableFeedbackRipple = forwardRef<
 // --------------------------------------------------
 
 PressableFeedback.displayName = DISPLAY_NAME.ROOT;
+PressableFeedbackScale.displayName = DISPLAY_NAME.SCALE;
 PressableFeedbackHighlight.displayName = DISPLAY_NAME.HIGHLIGHT;
 PressableFeedbackRipple.displayName = DISPLAY_NAME.RIPPLE;
 
 /**
- * Container component that provides visual feedback for press interactions with automatic scale animation.
+ * Pressable container with built-in scale animation and composable feedback compound parts.
  *
  * @component PressableFeedback
- * @description Wraps content to provide consistent press feedback across the app. Features platform-aware
- * feedback with highlight effect (iOS-style) or ripple effect (Android-style) that emanates from press point.
- * Includes intelligent scale animation that automatically adjusts based on container size for consistent feel.
+ * @description Wraps content to provide consistent press feedback across the app. Provides built-in
+ * scale animation by default. Manages press state and container dimensions, providing them to child
+ * compound parts via context. Supports `asChild` for rendering as a Slot (polymorphic).
+ * Use `animation={{ scale: ... }}` to customize the built-in scale, `animation={false}` to disable
+ * it (when using PressableFeedback.Scale on a specific child instead), or `animation="disable-all"`
+ * to cascade-disable all animations.
  * @features
- * - Automatic scale animation with smart size adjustment
- * - Customizable animations for opacity, color, duration, and scale
+ * - Built-in scale animation enabled by default
+ * - Composable compound parts: Scale, Highlight, Ripple
  * - Full gesture handling with press, long press, and disabled states
+ * - Polymorphic via `asChild` prop (Slot pattern)
  * - Used as foundation for interactive components like Button, Card, and Accordion
  *
+ * @component PressableFeedback.Scale
+ * @description Scale animation wrapper for applying scale to a specific child element. Use this
+ * instead of the root's built-in scale when you need control over which element scales or need
+ * to apply className/style to the scale wrapper. Set `animation={false}` on the root to disable
+ * its built-in scale when using this component.
+ *
  * @component PressableFeedback.Highlight
- * @description Highlight component that renders highlight feedback effect (iOS-style).
- * Must be used within PressableFeedback component. Uses root's isPressed state from context.
+ * @description Highlight overlay for iOS-style press feedback. Renders an absolute-positioned
+ * layer that fades in on press. Must be used within PressableFeedback.
  *
  * @component PressableFeedback.Ripple
- * @description Ripple component that renders ripple feedback effect (Android-style).
- * Must be used within PressableFeedback component. Handles touch events to track position.
+ * @description Ripple overlay for Android-style press feedback. Renders a radial gradient circle
+ * that expands from the touch point. Must be used within PressableFeedback.
  */
 const PressableFeedbackCompound = Object.assign(PressableFeedback, {
-  /** Highlight component that renders highlight feedback effect */
+  /** Scale animation wrapper for applying scale to a specific child element */
+  Scale: PressableFeedbackScale,
+  /** Highlight overlay for iOS-style press feedback */
   Highlight: PressableFeedbackHighlight,
-  /** Ripple component that renders ripple feedback effect */
+  /** Ripple overlay for Android-style press feedback */
   Ripple: PressableFeedbackRipple,
 });
 

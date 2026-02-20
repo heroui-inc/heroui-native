@@ -119,17 +119,8 @@ const TabsContent = ({ variant }: TabsContentProps) => {
         <Tabs.ScrollView contentContainerClassName="gap-1">
           <Tabs.Indicator />
           <TabTrigger value="general" label="General" />
-          {variant === 'primary' && (
-            <Tabs.Separator betweenValues={['general', 'appearance']} />
-          )}
           <TabTrigger value="appearance" label="Appearance" />
-          {variant === 'primary' && (
-            <Tabs.Separator betweenValues={['appearance', 'notifications']} />
-          )}
           <TabTrigger value="notifications" label="Notifications" />
-          {variant === 'primary' && (
-            <Tabs.Separator betweenValues={['notifications', 'profile']} />
-          )}
           <TabTrigger value="profile" label="Profile" />
         </Tabs.ScrollView>
       </Tabs.List>

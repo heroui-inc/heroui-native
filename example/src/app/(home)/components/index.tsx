@@ -1,10 +1,13 @@
 import * as Haptics from 'expo-haptics';
 import { usePathname, useRouter } from 'expo-router';
-import { Accordion, cn, PressableFeedback, useToast } from 'heroui-native';
-import { useEffect } from 'react';
+import {
+  ListGroup,
+  PressableFeedback,
+  Separator,
+  useToast,
+} from 'heroui-native';
+import { Fragment, useEffect } from 'react';
 import { Platform, View } from 'react-native';
-import { AppText } from '../../../components/app-text';
-import { ChevronRightIcon } from '../../../components/icons/chevron-right';
 import { ScreenScrollView } from '../../../components/screen-scroll-view';
 
 type Component = {
@@ -78,6 +81,10 @@ const components: Component[] = [
     path: 'label',
   },
   {
+    title: 'ListGroup',
+    path: 'list-group',
+  },
+  {
     title: 'Popover',
     path: 'popover',
   },
@@ -94,6 +101,10 @@ const components: Component[] = [
     path: 'scroll-shadow',
   },
   {
+    title: 'SearchField',
+    path: 'search-field',
+  },
+  {
     title: 'Select',
     path: 'select',
   },
@@ -104,6 +115,10 @@ const components: Component[] = [
   {
     title: 'Skeleton',
     path: 'skeleton',
+  },
+  {
+    title: 'Slider',
+    path: 'slider',
   },
   {
     title: 'Spinner',
@@ -151,36 +166,34 @@ export default function App() {
   return (
     <ScreenScrollView contentContainerClassName="px-4">
       <View className="h-5" />
-      <Accordion
-        isCollapsible={false}
-        variant="surface"
-        classNames={{
-          separator: cn(Platform.OS === 'android' && 'h-px opacity-30'),
-        }}
-      >
-        {components.map((item) => (
-          <Accordion.Item key={item.title} value={item.title}>
-            <Accordion.Trigger
+      <ListGroup>
+        {components.map((item, index) => (
+          <Fragment key={item.title}>
+            {index > 0 && <Separator className="mx-4" />}
+            <PressableFeedback
+              animation={false}
               onPress={() => {
+                console.log('onPress', item.path);
                 if (Platform.OS === 'ios') {
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                 }
                 router.push(`/components/${item.path}`);
               }}
-              asChild
             >
-              <PressableFeedback>
-                <AppText className="text-foreground text-base ml-1">
-                  {item.title}
-                </AppText>
-                <Accordion.Indicator>
-                  <ChevronRightIcon size={16} colorClassName="accent-muted" />
-                </Accordion.Indicator>
-              </PressableFeedback>
-            </Accordion.Trigger>
-          </Accordion.Item>
+              <PressableFeedback.Scale>
+                <ListGroup.Item disabled>
+                  <ListGroup.ItemContent>
+                    <ListGroup.ItemTitle className="font-normal">
+                      {item.title}
+                    </ListGroup.ItemTitle>
+                  </ListGroup.ItemContent>
+                  <ListGroup.ItemSuffix />
+                </ListGroup.Item>
+              </PressableFeedback.Scale>
+            </PressableFeedback>
+          </Fragment>
         ))}
-      </Accordion>
+      </ListGroup>
     </ScreenScrollView>
   );
 }

@@ -13,7 +13,10 @@ const StyledImage = withUniwind(Image);
 const BackgroundImageCardContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
-      <PressableFeedback className="w-full aspect-square rounded-3xl shadow-surface">
+      <PressableFeedback
+        className="w-full aspect-square overflow-auto"
+        animation={{ scale: { value: 0.995 } }}
+      >
         <Card className="flex-1">
           <Image
             source={{
@@ -55,7 +58,7 @@ const BackgroundImageCardContent = () => {
                 <Button
                   size="sm"
                   className="bg-white"
-                  pressableFeedbackVariant="none"
+                  feedbackVariant="scale"
                   onPress={simulatePress}
                 >
                   <Button.Label className="text-black">Notify me</Button.Label>
@@ -75,7 +78,10 @@ const CardWithImageContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="flex-row gap-4">
-        <PressableFeedback className="flex-1 aspect-[1/1.3] rounded-3xl shadow-surface">
+        <PressableFeedback
+          className="flex-1 aspect-[1/1.3] overflow-auto"
+          animation={{ scale: { value: 0.995 } }}
+        >
           <Card className="flex-1">
             <View className="flex-1 gap-4">
               <Card.Header>
@@ -99,15 +105,18 @@ const CardWithImageContent = () => {
                 </AppText>
               </Card.Footer>
             </View>
+            <PressableFeedback.Ripple
+              animation={{
+                backgroundColor: { value: '#fecdd3' },
+                opacity: { value: [0, 0.2, 0] },
+              }}
+            />
           </Card>
-          <PressableFeedback.Ripple
-            animation={{
-              backgroundColor: { value: '#fecdd3' },
-              opacity: { value: [0, 0.2, 0] },
-            }}
-          />
         </PressableFeedback>
-        <PressableFeedback className="flex-1 aspect-[1/1.3] rounded-3xl shadow-surface">
+        <PressableFeedback
+          className="flex-1 aspect-[1/1.3] overflow-auto"
+          animation={{ scale: { value: 0.995 } }}
+        >
           <Card className="flex-1">
             <View className="flex-1 gap-4">
               <Card.Header>
@@ -131,12 +140,12 @@ const CardWithImageContent = () => {
                 </AppText>
               </Card.Footer>
             </View>
+            <PressableFeedback.Ripple
+              animation={{
+                backgroundColor: { value: '#67e8f9' },
+              }}
+            />
           </Card>
-          <PressableFeedback.Ripple
-            animation={{
-              backgroundColor: { value: '#67e8f9' },
-            }}
-          />
         </PressableFeedback>
       </View>
     </View>

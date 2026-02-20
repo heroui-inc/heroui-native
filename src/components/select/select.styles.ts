@@ -7,7 +7,7 @@ const trigger = tv({
   variants: {
     variant: {
       default:
-        'flex-row items-center justify-between h-12 px-4 rounded-2xl bg-surface shadow-surface',
+        'flex-row items-center justify-between gap-3 py-3.5 px-4 rounded-2xl bg-surface shadow-surface',
       unstyled: '',
     },
     isDisabled: {
@@ -18,7 +18,7 @@ const trigger = tv({
 });
 
 const value = tv({
-  base: 'text-base',
+  base: 'flex-1 text-base',
   variants: {
     isSelected: {
       true: 'text-foreground',

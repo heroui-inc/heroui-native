@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { TextInput, type TextInput as TextInputType } from 'react-native';
 import { useIsOnSurface } from '../../helpers/external/hooks';
-import { useFormItemState } from '../../helpers/internal/contexts';
+import { useFormField } from '../../helpers/internal/contexts';
 import { useBottomSheetAwareHandlers } from '../../helpers/internal/hooks';
 import { DISPLAY_NAME } from './input.constants';
 import { inputClassNames, inputStyleSheet } from './input.styles';
@@ -23,17 +23,17 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
     onBlur: onBlurProp,
     ...restProps
   } = props;
-  const formItemState = useFormItemState();
+  const formField = useFormField();
 
   const isInvalid =
     localIsInvalid !== undefined
       ? localIsInvalid
-      : (formItemState?.isInvalid ?? false);
+      : (formField?.isInvalid ?? false);
 
   const isDisabled =
     localIsDisabled !== undefined
       ? localIsDisabled
-      : (formItemState?.isDisabled ?? false);
+      : (formField?.isDisabled ?? false);
 
   const isOnSurfaceAutoDetected = useIsOnSurface();
   const finalVariant =

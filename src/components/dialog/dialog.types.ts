@@ -176,7 +176,7 @@ export interface DialogContentProps
  * Extends CloseButtonProps, allowing full override of all close button props.
  * Automatically handles dialog close functionality when pressed.
  */
-export interface DialogCloseProps extends CloseButtonProps {}
+export type DialogCloseProps = CloseButtonProps;
 
 /**
  * Dialog Title component props

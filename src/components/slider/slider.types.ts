@@ -1,4 +1,5 @@
 import type { ViewStyle } from 'react-native';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 import type { ElementSlots } from '../../helpers/internal/types/theme';
 import type {
   FillProps as PrimitiveFillProps,
@@ -20,6 +21,13 @@ import type { ThumbSlots } from './slider.styles';
 interface SliderProps extends PrimitiveRootProps {
   /** Additional CSS classes */
   className?: string;
+
+  /**
+   * Animation configuration for slider
+   * - `"disable-all"`: Disable all animations including children
+   * - `undefined`: Use default animations
+   */
+  animation?: AnimationRootDisableAll;
 }
 
 /**

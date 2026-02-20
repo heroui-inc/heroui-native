@@ -8,10 +8,12 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { HeroText } from '../../helpers/internal/components';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import * as SliderPrimitives from '../../primitives/slider';
 import { useSliderContext } from '../../primitives/slider';
 import { clamp } from '../../primitives/slider/slider.utils';
+import { useSliderRootAnimation } from './slider.animation';
 import {
   DISPLAY_NAME,
   THUMB_HIT_SLOP,
@@ -37,10 +39,20 @@ const SliderRoot = forwardRef<ViewRef, SliderProps>((props, ref) => {
     children,
     orientation = 'horizontal',
     isDisabled = false,
+    animation,
     className,
     style,
     ...primitiveProps
   } = props;
+
+  const { isAllAnimationsDisabled } = useSliderRootAnimation({ animation });
+
+  const animationSettingsContextValue = useMemo(
+    () => ({
+      isAllAnimationsDisabled,
+    }),
+    [isAllAnimationsDisabled]
+  );
 
   const rootClassName = sliderClassNames.root({
     orientation,
@@ -49,16 +61,18 @@ const SliderRoot = forwardRef<ViewRef, SliderProps>((props, ref) => {
   });
 
   return (
-    <SliderPrimitives.Root
-      ref={ref}
-      orientation={orientation}
-      isDisabled={isDisabled}
-      className={rootClassName}
-      style={style}
-      {...primitiveProps}
-    >
-      {children}
-    </SliderPrimitives.Root>
+    <AnimationSettingsProvider value={animationSettingsContextValue}>
+      <SliderPrimitives.Root
+        ref={ref}
+        orientation={orientation}
+        isDisabled={isDisabled}
+        className={rootClassName}
+        style={style}
+        {...primitiveProps}
+      >
+        {children}
+      </SliderPrimitives.Root>
+    </AnimationSettingsProvider>
   );
 });
 
@@ -69,7 +83,8 @@ const SliderRoot = forwardRef<ViewRef, SliderProps>((props, ref) => {
 const SliderOutput = forwardRef<ViewRef, SliderOutputProps>((props, ref) => {
   const { children, className, style, ...restProps } = props;
 
-  const { values, getThumbValueLabel } = useSliderContext();
+  const { values, orientation, isDisabled, getThumbValueLabel } =
+    useSliderContext();
 
   const outputClassName = sliderClassNames.output({ className });
 
@@ -77,10 +92,19 @@ const SliderOutput = forwardRef<ViewRef, SliderOutputProps>((props, ref) => {
     .map((_, i) => getThumbValueLabel(i))
     .join(' – ');
 
+  const resolvedChildren =
+    typeof children === 'function'
+      ? children({
+          state: { values, getThumbValueLabel },
+          orientation,
+          isDisabled,
+        })
+      : children;
+
   return (
     <SliderPrimitives.Output ref={ref} style={style} {...restProps}>
       <HeroText className={outputClassName}>
-        {children ?? defaultContent}
+        {resolvedChildren ?? defaultContent}
       </HeroText>
     </SliderPrimitives.Output>
   );

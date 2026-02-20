@@ -1,5 +1,10 @@
 import type { ViewStyle } from 'react-native';
-import type { AnimationRootDisableAll } from '../../helpers/internal/types';
+import type { WithSpringConfig } from 'react-native-reanimated';
+import type {
+  Animation,
+  AnimationRootDisableAll,
+  AnimationValue,
+} from '../../helpers/internal/types';
 import type { ElementSlots } from '../../helpers/internal/types/theme';
 import type {
   FillProps as PrimitiveFillProps,
@@ -58,6 +63,25 @@ interface SliderFillProps extends PrimitiveFillProps {
 }
 
 /**
+ * Animation configuration for the Slider.Thumb knob scale effect.
+ * Animates between idle and dragging states using spring physics.
+ */
+type SliderThumbAnimation = Animation<{
+  scale?: AnimationValue<{
+    /**
+     * Scale values [idle, dragging]
+     * @default [1, 0.9]
+     */
+    value?: [number, number];
+    /**
+     * Spring animation configuration
+     * @default { damping: 15, stiffness: 200, mass: 0.5 }
+     */
+    springConfig?: WithSpringConfig;
+  }>;
+}>;
+
+/**
  * Props for the Slider.Thumb sub-component.
  * Two-slot thumb: outer container (positioning + accent bg) wrapping
  * an inner knob (foreground + shadow + scale animation).
@@ -67,6 +91,14 @@ interface SliderThumbProps extends PrimitiveThumbProps {
    * Whether this individual thumb is disabled
    */
   isDisabled?: boolean;
+
+  /**
+   * Animation configuration for the thumb knob
+   * - `false` or `"disabled"`: Disable thumb animation
+   * - `object`: Custom scale animation configuration
+   * - `undefined`: Use default animations
+   */
+  animation?: SliderThumbAnimation;
 
   /** Additional CSS classes for the thumb container */
   className?: string;
@@ -82,6 +114,7 @@ export type {
   SliderFillProps,
   SliderOutputProps,
   SliderProps,
+  SliderThumbAnimation,
   SliderThumbProps,
   SliderTrackProps,
 };

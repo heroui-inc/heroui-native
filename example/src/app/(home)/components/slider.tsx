@@ -193,6 +193,9 @@ const CustomStylesContent = () => {
                 thumbContainer: 'size-6 rounded-full bg-success',
                 thumbKnob: 'bg-success-foreground rounded-full',
               }}
+              animation={{
+                scale: { value: [1, 0.7] },
+              }}
             />
           </Slider.Track>
         </Slider>
@@ -209,6 +212,9 @@ const CustomStylesContent = () => {
               classNames={{
                 thumbContainer: 'size-5 rounded-sm bg-warning',
                 thumbKnob: 'bg-amber-900 rounded-sm',
+              }}
+              animation={{
+                scale: { value: [1, 1.5] },
               }}
             />
           </Slider.Track>
@@ -232,6 +238,9 @@ const CustomStylesContent = () => {
               classNames={{
                 thumbContainer: 'w-5 h-7 rounded-xl bg-teal-200',
                 thumbKnob: 'bg-white rounded-xl',
+              }}
+              animation={{
+                scale: { value: [1, 1.25] },
               }}
             />
           </Slider.Track>

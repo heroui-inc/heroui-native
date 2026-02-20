@@ -1,23 +1,18 @@
 import { forwardRef, useMemo, useRef } from 'react';
-import { View } from 'react-native';
+import { View, type GestureResponderEvent } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated';
+import Animated, { useSharedValue } from 'react-native-reanimated';
 import { HeroText } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import * as SliderPrimitives from '../../primitives/slider';
 import { useSliderContext } from '../../primitives/slider';
 import { clamp } from '../../primitives/slider/slider.utils';
-import { useSliderRootAnimation } from './slider.animation';
 import {
-  DISPLAY_NAME,
-  THUMB_HIT_SLOP,
-  THUMB_SPRING_CONFIG,
-} from './slider.constants';
+  useSliderRootAnimation,
+  useSliderThumbAnimation,
+} from './slider.animation';
+import { DISPLAY_NAME, THUMB_HIT_SLOP } from './slider.constants';
 import sliderClassNames, { styleSheet } from './slider.styles';
 import type {
   SliderFillProps,
@@ -222,10 +217,12 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
   const {
     index = 0,
     isDisabled: thumbDisabled,
+    animation,
     className,
     classNames,
     styles: stylesProp,
     style,
+    onTouchEnd,
     children,
     ...restProps
   } = props;
@@ -238,6 +235,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     orientation,
     isDisabled: sliderDisabled,
     getThumbPercent,
+    isThumbDragging,
     updateValue,
     setThumbDragging,
     trackSize,
@@ -245,6 +243,12 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
   } = useSliderContext();
 
   const disabled = thumbDisabled ?? sliderDisabled;
+  const isDragging = isThumbDragging(index);
+
+  const { rKnobStyle } = useSliderThumbAnimation({
+    animation,
+    isDragging,
+  });
 
   const { thumbContainer: containerSlot, thumbKnob: knobSlot } =
     sliderClassNames.thumb({ orientation });
@@ -257,7 +261,6 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
   });
 
   const percent = getThumbPercent(index);
-  const thumbScale = useSharedValue(1);
   const startValue = useSharedValue(0);
 
   const valuesRef = useRef(values);
@@ -275,10 +278,10 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     const gesture = Gesture.Pan()
       .runOnJS(true)
       .enabled(!disabled)
+      .minDistance(0)
       .hitSlop(THUMB_HIT_SLOP)
-      .onStart(() => {
+      .onBegin(() => {
         startValue.value = valuesRef.current[index] ?? minValue;
-        thumbScale.value = withSpring(0.9, THUMB_SPRING_CONFIG);
         setThumbDraggingRef.current(index, true);
       })
       .onUpdate((event) => {
@@ -301,11 +304,6 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
         updateValueRef.current(index, clampedSnapped);
       })
       .onFinalize(() => {
-        thumbScale.value = withSpring(1, THUMB_SPRING_CONFIG);
-        setThumbDraggingRef.current(index, false);
-      })
-      .onTouchesCancelled(() => {
-        thumbScale.value = withSpring(1, THUMB_SPRING_CONFIG);
         setThumbDraggingRef.current(index, false);
       });
 
@@ -320,12 +318,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     trackSize,
     thumbSize,
     startValue,
-    thumbScale,
   ]);
-
-  const animatedThumbStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: thumbScale.get() }],
-  }));
 
   const positionStyle = useMemo(() => {
     const effectiveTrackSize = trackSize - thumbSize;
@@ -336,6 +329,11 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     }
     return { bottom: offset };
   }, [percent, trackSize, thumbSize, orientation]);
+
+  const handleTouchEnd = (event: GestureResponderEvent) => {
+    setThumbDraggingRef.current(index, false);
+    onTouchEnd?.(event);
+  };
 
   return (
     <GestureDetector gesture={panGesture}>
@@ -349,16 +347,13 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
           stylesProp?.thumbContainer,
           style,
         ]}
+        onTouchEnd={handleTouchEnd}
         {...restProps}
       >
         {children ?? (
           <AnimatedKnob
             className={thumbKnobClassName}
-            style={[
-              styleSheet.borderCurve,
-              animatedThumbStyle,
-              stylesProp?.thumbKnob,
-            ]}
+            style={[styleSheet.borderCurve, rKnobStyle, stylesProp?.thumbKnob]}
           />
         )}
       </SliderPrimitives.Thumb>

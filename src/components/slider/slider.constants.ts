@@ -10,19 +10,9 @@ export const DISPLAY_NAME = {
 };
 
 /**
- * Thumb diameter in pixels
- */
-export const THUMB_SIZE = 20;
-
-/**
- * Track cross-axis thickness in pixels (height for horizontal, width for vertical)
- */
-export const TRACK_HEIGHT = 20;
-
-/**
  * Extra hit-slop around the thumb to improve touch target
  */
-export const THUMB_HIT_SLOP = 10;
+export const THUMB_HIT_SLOP = 16;
 
 /**
  * Spring animation configuration for thumb scale feedback

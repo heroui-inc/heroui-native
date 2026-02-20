@@ -14,9 +14,7 @@ import { clamp } from '../../primitives/slider/slider.utils';
 import {
   DISPLAY_NAME,
   THUMB_HIT_SLOP,
-  THUMB_SIZE,
   THUMB_SPRING_CONFIG,
-  TRACK_HEIGHT,
 } from './slider.constants';
 import sliderClassNames, { styleSheet } from './slider.styles';
 import type {
@@ -106,6 +104,7 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
     handleTapAtValue,
     trackSize,
     setTrackSize,
+    thumbSize,
   } = useSliderContext();
 
   const trackClassName = sliderClassNames.track({
@@ -121,19 +120,18 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
     [orientation, setTrackSize]
   );
 
-  // Stable ref avoids recreating the gesture when handleTapAtValue changes
   const handleTapRef = useRef(handleTapAtValue);
   handleTapRef.current = handleTapAtValue;
 
   const tapGesture = useMemo(() => {
-    const effectiveTrackSize = trackSize - THUMB_SIZE;
+    const effectiveTrackSize = trackSize - thumbSize;
 
     return Gesture.Tap()
       .runOnJS(true)
       .enabled(!isDisabled)
       .hitSlop({
-        top: THUMB_SIZE,
-        bottom: THUMB_SIZE,
+        top: thumbSize,
+        bottom: thumbSize,
       })
       .onEnd((event) => {
         if (effectiveTrackSize <= 0) return;
@@ -141,14 +139,14 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
         const pos = orientation === 'horizontal' ? event.x : event.y;
         const adjustedPos =
           orientation === 'horizontal'
-            ? pos - THUMB_SIZE / 2
-            : trackSize - pos - THUMB_SIZE / 2;
+            ? pos - thumbSize / 2
+            : trackSize - pos - thumbSize / 2;
 
         const pct = clamp(adjustedPos / effectiveTrackSize, 0, 1);
         const rawValue = minValue + pct * (maxValue - minValue);
         handleTapRef.current(rawValue);
       });
-  }, [trackSize, isDisabled, orientation, minValue, maxValue]);
+  }, [trackSize, thumbSize, isDisabled, orientation, minValue, maxValue]);
 
   return (
     <GestureDetector gesture={tapGesture}>
@@ -166,18 +164,18 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
 });
 
 // --------------------------------------------------
-// Fill – styled bar that hugs the thumb(s)
+// Fill – responsive bar that stretches full cross-axis
+// via inset-y-0 / inset-x-0, only computes main-axis
+// left + width (horizontal) or bottom + height (vertical).
 // --------------------------------------------------
 
 const SliderFill = forwardRef<ViewRef, SliderFillProps>((props, ref) => {
   const { className, style, ...restProps } = props;
 
-  const { values, orientation, getThumbPercent, trackSize } =
+  const { values, orientation, getThumbPercent, trackSize, thumbSize } =
     useSliderContext();
 
-  const fillClassName = sliderClassNames.fill({ className });
-
-  const centerOffset = -(THUMB_SIZE - TRACK_HEIGHT) / 2;
+  const fillClassName = sliderClassNames.fill({ orientation, className });
 
   const isSingleThumb = values.length <= 1;
   const startPercent = isSingleThumb ? 0 : getThumbPercent(0);
@@ -185,33 +183,28 @@ const SliderFill = forwardRef<ViewRef, SliderFillProps>((props, ref) => {
     ? getThumbPercent(0)
     : getThumbPercent(values.length - 1);
 
-  const effectiveTrackSize = trackSize - THUMB_SIZE;
+  const effectiveTrackSize = trackSize - thumbSize;
 
   const fillStyle = useMemo(() => {
     if (orientation === 'horizontal') {
       const left = startPercent * effectiveTrackSize;
       const width =
-        (endPercent - startPercent) * effectiveTrackSize + THUMB_SIZE;
+        (endPercent - startPercent) * effectiveTrackSize + thumbSize;
 
       return {
         left,
-        width: Math.max(width, THUMB_SIZE),
-        height: THUMB_SIZE,
-        top: centerOffset,
+        width: Math.max(width, thumbSize),
       };
     }
 
     const bottom = startPercent * effectiveTrackSize;
-    const height =
-      (endPercent - startPercent) * effectiveTrackSize + THUMB_SIZE;
+    const height = (endPercent - startPercent) * effectiveTrackSize + thumbSize;
 
     return {
       bottom,
-      height: Math.max(height, THUMB_SIZE),
-      width: THUMB_SIZE,
-      left: centerOffset,
+      height: Math.max(height, thumbSize),
     };
-  }, [orientation, startPercent, endPercent, effectiveTrackSize, centerOffset]);
+  }, [orientation, startPercent, endPercent, effectiveTrackSize, thumbSize]);
 
   return (
     <SliderPrimitives.Fill
@@ -224,9 +217,11 @@ const SliderFill = forwardRef<ViewRef, SliderFillProps>((props, ref) => {
 });
 
 // --------------------------------------------------
-// Thumb – styled + pan gesture + scale animation
-// Uses AnimatedThumb (primitive) so accessibility props
-// (role="slider", accessibilityValue) are applied automatically.
+// Thumb – styled + pan gesture + scale animation.
+// Centered on the cross-axis by Track's justify-center
+// (horizontal) or items-center (vertical) via Yoga.
+// Size is set via className; measured via onLayout and
+// stored as thumbSize in the primitive context.
 // --------------------------------------------------
 
 const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
@@ -250,6 +245,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     updateValue,
     setThumbDragging,
     trackSize,
+    thumbSize,
   } = useSliderContext();
 
   const disabled = thumbDisabled ?? sliderDisabled;
@@ -260,7 +256,6 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
   const thumbScale = useSharedValue(1);
   const startValue = useSharedValue(0);
 
-  // Stable refs prevent gesture recreation when values/callbacks change
   const valuesRef = useRef(values);
   valuesRef.current = values;
 
@@ -271,17 +266,12 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
   setThumbDraggingRef.current = setThumbDragging;
 
   const panGesture = useMemo(() => {
-    const effectiveTrackSize = trackSize - THUMB_SIZE;
+    const effectiveTrackSize = trackSize - thumbSize;
 
     const gesture = Gesture.Pan()
       .runOnJS(true)
       .enabled(!disabled)
-      .hitSlop({
-        top: THUMB_HIT_SLOP,
-        bottom: THUMB_HIT_SLOP,
-        left: THUMB_HIT_SLOP,
-        right: THUMB_HIT_SLOP,
-      })
+      .hitSlop(THUMB_HIT_SLOP)
       .onStart(() => {
         startValue.value = valuesRef.current[index] ?? minValue;
         thumbScale.value = withSpring(0.85, THUMB_SPRING_CONFIG);
@@ -323,6 +313,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     step,
     orientation,
     trackSize,
+    thumbSize,
     startValue,
     thumbScale,
   ]);
@@ -332,15 +323,14 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
   }));
 
   const positionStyle = useMemo(() => {
-    const effectiveTrackSize = trackSize - THUMB_SIZE;
+    const effectiveTrackSize = trackSize - thumbSize;
     const offset = percent * effectiveTrackSize;
-    const centerOffset = -(THUMB_SIZE - TRACK_HEIGHT) / 2;
 
     if (orientation === 'horizontal') {
-      return { left: offset, top: centerOffset };
+      return { left: offset };
     }
-    return { bottom: offset, left: centerOffset };
-  }, [percent, trackSize, orientation]);
+    return { bottom: offset };
+  }, [percent, trackSize, thumbSize, orientation]);
 
   return (
     <GestureDetector gesture={panGesture}>
@@ -350,9 +340,8 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
         className={thumbClassName}
         style={[
           styleSheet.borderCurve,
-          { width: 28, height: 20 },
           positionStyle,
-          animatedThumbStyle,
+          // animatedThumbStyle,
           style,
         ]}
         {...restProps}
@@ -386,35 +375,36 @@ SliderThumb.displayName = DISPLAY_NAME.THUMB;
  * @component Slider.Output - Optional display of current value(s). Supports render
  * functions for custom formatting. Shows formatted value label by default.
  *
- * @component Slider.Track - Container for Fill and Thumb elements. Reports its layout
- * size for position calculations. Supports tap-to-position (tapping on the track
- * snaps the nearest thumb to that position). Supports render functions for dynamic
- * content (e.g. rendering multiple thumbs for range sliders).
+ * @component Slider.Track - Sizing container for Fill and Thumb elements. Sets the
+ * cross-axis dimension (h-5 horizontal, w-5 vertical) and centers Thumb via Yoga
+ * alignment. Reports its layout size for position calculations. Supports tap-to-position
+ * and render functions for dynamic content (e.g. multiple thumbs for range sliders).
  *
- * @component Slider.Fill - Pill-shaped bar that hugs the thumb, extending from the
- * start to wrap around the active thumb(s). Same height as the thumb for a cohesive look.
+ * @component Slider.Fill - Responsive fill bar that stretches full cross-axis of Track
+ * (via inset-y-0 / inset-x-0). Only main-axis position (left + width) is computed.
  *
  * @component Slider.Thumb - Draggable thumb element using react-native-gesture-handler.
- * Animates scale to 0.95 on press via react-native-reanimated. Has an accent-colored
- * border matching the fill. Supports multiple thumbs for range sliders via the index prop.
- * Each thumb gets `role="slider"` with full `accessibilityValue` (min, max, now, text)
- * from the primitive layer.
+ * Centered on the cross-axis by Track's Yoga alignment (no manual offset needed).
+ * Size is set via className and measured via onLayout into thumbSize context.
+ * Animates scale on press via react-native-reanimated. Each thumb gets `role="slider"`
+ * with full `accessibilityValue` from the primitive layer.
  *
  * Architecture:
- * All value logic, accessibility, state management, dragging state, track measurement,
- * and onChangeEnd lifecycle are managed by the primitive context (`useSliderContext`).
- * The component layer is purely for styling, animations, and gesture handling.
+ * All value logic, accessibility, state management, dragging state, track/thumb
+ * measurement, and onChangeEnd lifecycle are managed by the primitive context
+ * (`useSliderContext`). The component layer is purely for styling, animations,
+ * and gesture handling.
  *
  * @see Full documentation: https://v3.heroui.com/docs/native/components/slider
  */
 const CompoundSlider = Object.assign(SliderRoot, {
   /** @optional Value display with optional render function */
   Output: SliderOutput,
-  /** @optional Track container for fill and thumbs, supports tap-to-position */
+  /** @optional Sizing container for fill and thumbs, supports tap-to-position */
   Track: SliderTrack,
-  /** @optional Pill-shaped fill bar that hugs the thumb */
+  /** @optional Responsive fill bar stretching full cross-axis */
   Fill: SliderFill,
-  /** @optional Draggable thumb with gesture support and accent border */
+  /** @optional Draggable thumb with gesture support, centered by Track alignment */
   Thumb: SliderThumb,
 });
 

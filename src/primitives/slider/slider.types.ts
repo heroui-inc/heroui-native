@@ -81,6 +81,10 @@ interface SliderContextValue {
   trackSize: number;
   /** Set the track layout size after measurement */
   setTrackSize: (size: number) => void;
+  /** Measured thumb size (main-axis dimension) in pixels, populated via onLayout */
+  thumbSize: number;
+  /** Set the thumb size after measurement */
+  setThumbSize: (size: number) => void;
 }
 
 // ---------------------------------------------------------------------------

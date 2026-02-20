@@ -27,8 +27,8 @@ const track = tv({
   base: 'rounded-full bg-default',
   variants: {
     orientation: {
-      horizontal: 'w-full h-5',
-      vertical: 'h-full w-1.5',
+      horizontal: 'w-full h-5 justify-center',
+      vertical: 'h-full w-5 items-center',
     },
   },
   defaultVariants: {
@@ -38,10 +38,19 @@ const track = tv({
 
 const fill = tv({
   base: 'absolute rounded-full bg-accent',
+  variants: {
+    orientation: {
+      horizontal: 'inset-y-0',
+      vertical: 'inset-x-0',
+    },
+  },
+  defaultVariants: {
+    orientation: 'horizontal',
+  },
 });
 
 const thumb = tv({
-  base: 'absolute bg-accent-foreground border-2 border-accent rounded-2xl shadow-field',
+  base: 'absolute w-7 h-5 bg-accent-foreground border-2 border-accent rounded-2xl shadow-field',
 });
 
 const sliderClassNames = combineStyles({

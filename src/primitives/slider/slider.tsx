@@ -76,6 +76,9 @@ const Root = forwardRef<RootRef, RootProps>(
     /** Track layout width (horizontal) or height (vertical) in pixels */
     const [trackSize, setTrackSize] = useState(0);
 
+    /** Measured thumb dimension (main-axis) in pixels, set via onLayout at the component level */
+    const [thumbSize, setThumbSize] = useState(0);
+
     const [internalValue, setInternalValue] = useControllableState<SliderValue>(
       {
         prop: valueProp,
@@ -268,6 +271,8 @@ const Root = forwardRef<RootRef, RootProps>(
         handleTapAtValue,
         trackSize,
         setTrackSize,
+        thumbSize,
+        setThumbSize,
       }),
       [
         values,
@@ -286,6 +291,7 @@ const Root = forwardRef<RootRef, RootProps>(
         setThumbDragging,
         handleTapAtValue,
         trackSize,
+        thumbSize,
       ]
     );
 
@@ -357,9 +363,14 @@ Fill.displayName = 'HeroUINative.Primitive.Slider.Fill';
 // --------------------------------------------------
 
 const Thumb = forwardRef<ThumbRef, ThumbProps>(
-  ({ asChild, index = 0, ...props }, ref) => {
-    const { isDisabled, getThumbPercent, getThumbValueLabel } =
-      useSliderContext();
+  ({ asChild, index = 0, onLayout, ...props }, ref) => {
+    const {
+      orientation,
+      isDisabled,
+      getThumbPercent,
+      getThumbValueLabel,
+      setThumbSize,
+    } = useSliderContext();
 
     const Component = asChild ? Slot.View : View;
 
@@ -370,6 +381,15 @@ const Thumb = forwardRef<ThumbRef, ThumbProps>(
      * human-readable label.
      */
     const percentNow = Math.round(getThumbPercent(index) * 100);
+
+    const handleLayout = useCallback(
+      (event: import('react-native').LayoutChangeEvent) => {
+        const { width, height } = event.nativeEvent.layout;
+        setThumbSize(orientation === 'horizontal' ? width : height);
+        onLayout?.(event);
+      },
+      [orientation, setThumbSize, onLayout]
+    );
 
     return (
       <Component
@@ -383,6 +403,7 @@ const Thumb = forwardRef<ThumbRef, ThumbProps>(
           text: getThumbValueLabel(index),
         }}
         accessibilityState={{ disabled: isDisabled }}
+        onLayout={handleLayout}
         {...props}
       />
     );

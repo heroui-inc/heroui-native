@@ -1,5 +1,6 @@
 import { BottomSheetView, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useEffect, useRef } from 'react';
+import { BackHandler } from 'react-native';
 import { useAnimatedReaction } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import type { BottomSheetContentContainerProps } from '../types/bottom-sheet';
@@ -43,6 +44,29 @@ export function BottomSheetContentContainer({
       }
     }
   );
+
+  /**
+   * Dismiss the bottom sheet when the Android hardware back button is pressed.
+   * Only registers the listener while the sheet is open so that closed
+   * instances (Popover, Select, other BottomSheets) don't consume the event.
+   */
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        close();
+        onOpenChange(false);
+        return true;
+      }
+    );
+
+    return () => {
+      backHandler.remove();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   useEffect(() => {
     const wasOpen = prevIsOpenRef.current;

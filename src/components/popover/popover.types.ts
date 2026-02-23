@@ -201,7 +201,7 @@ export type PopoverContentProps =
  * Extends CloseButtonProps, allowing full override of all close button props.
  * Automatically handles popover close functionality when pressed.
  */
-export interface PopoverCloseProps extends CloseButtonProps {}
+export type PopoverCloseProps = CloseButtonProps;
 
 /**
  * Popover Title component props

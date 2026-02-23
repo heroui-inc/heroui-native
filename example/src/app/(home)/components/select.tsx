@@ -57,13 +57,26 @@ const COUNTRIES: CountryOption[] = [
 
 // ------------------------------------------------------------------------------
 
-const BasicUsageWithButtonTriggerContent = () => {
+const BasicUsageSingleSelectContent = () => {
   return (
     <View className="flex-1 px-5 justify-center">
       <Label className="ml-1.5 mb-1" isRequired>
         State
       </Label>
       <SelectButtonTrigger />
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const BasicUsageMultipleSelectContent = () => {
+  return (
+    <View className="flex-1 px-5 justify-center">
+      <Label className="ml-1.5 mb-1" isRequired>
+        States
+      </Label>
+      <SelectButtonTrigger selectionMode="multiple" />
     </View>
   );
 };
@@ -363,8 +376,13 @@ const NativeModalTestContent = () => {
 const SELECT_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-usage-button-trigger',
-    label: 'Select with indicator',
-    content: <BasicUsageWithButtonTriggerContent />,
+    label: 'Single select',
+    content: <BasicUsageSingleSelectContent />,
+  },
+  {
+    value: 'basic-usage-multiple-select',
+    label: 'Multiple select',
+    content: <BasicUsageMultipleSelectContent />,
   },
   {
     value: 'presentation',

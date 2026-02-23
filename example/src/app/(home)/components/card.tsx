@@ -206,11 +206,7 @@ const BackgroundImageCardContent = () => {
                   Get notified
                 </AppText>
               </View>
-              <Button
-                size="sm"
-                className="bg-white"
-                pressableFeedbackVariant="none"
-              >
+              <Button size="sm" className="bg-white" feedbackVariant="scale">
                 <Button.Label className="text-black">Notify me</Button.Label>
               </Button>
             </View>

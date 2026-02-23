@@ -53,9 +53,12 @@ export type SelectPlacement = 'top' | 'bottom' | 'left' | 'right';
 export type SelectAlign = 'start' | 'center' | 'end';
 
 /**
- * Select Root component props
+ * Select Root component props.
+ * Generic on `M extends SelectionMode` — inherits value/onChange typing from the primitive.
  */
-export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
+export type SelectRootProps<
+  M extends SelectPrimitivesTypes.SelectionMode = 'single',
+> = SelectPrimitivesTypes.RootProps<M> & {
   /**
    * The content of the select
    */
@@ -79,7 +82,7 @@ export interface SelectRootProps extends SelectPrimitivesTypes.RootProps {
    * - `true` or `undefined`: Use default animations
    */
   animation?: AnimationRootDisableAll;
-}
+};
 
 /**
  * Select Trigger component props
@@ -335,7 +338,7 @@ export type SelectContentProps =
  * Extends CloseButtonProps, allowing full override of all close button props.
  * Automatically handles select close functionality when pressed.
  */
-export interface SelectCloseProps extends CloseButtonProps {}
+export type SelectCloseProps = CloseButtonProps;
 
 /**
  * Select Value component props

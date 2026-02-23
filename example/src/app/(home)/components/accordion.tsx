@@ -103,13 +103,15 @@ const DefaultVariantContent = () => {
         {accordionData.map((item) => (
           <Accordion.Item key={item.id} value={item.id}>
             <Accordion.Trigger asChild>
-              <PressableFeedback>
-                <View className={classNames.triggerContentContainer}>
+              <PressableFeedback animation={{ scale: false }}>
+                <PressableFeedback.Scale
+                  className={classNames.triggerContentContainer}
+                >
                   {item.icon}
-                  <AppText className={classNames.triggerTitle}>
+                  <AppText className="text-foreground text-base flex-1">
                     {item.title}
                   </AppText>
-                </View>
+                </PressableFeedback.Scale>
                 <Accordion.Indicator />
                 <PressableFeedback.Highlight
                   animation={{ opacity: { value: [0, 0.05] } }}

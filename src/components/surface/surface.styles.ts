@@ -9,7 +9,7 @@ const root = tv({
       default: 'bg-surface',
       secondary: 'bg-surface-secondary',
       tertiary: 'bg-surface-tertiary',
-      transparent: 'bg-transparent',
+      transparent: 'bg-transparent shadow-none',
     },
   },
   defaultVariants: {

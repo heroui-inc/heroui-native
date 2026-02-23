@@ -5,7 +5,7 @@ import { hasProp } from '../../helpers/internal/utils';
 import { useSharedValue } from 'react-native-reanimated';
 import {
   AnimationSettingsProvider,
-  FormItemStateProvider,
+  FormFieldProvider,
 } from '../../helpers/internal/contexts';
 import type { PressableRef } from '../../helpers/internal/types';
 import { Checkbox } from '../checkbox';
@@ -110,18 +110,19 @@ const ControlField = forwardRef<PressableRef, ControlFieldProps>(
       [isSelected, onSelectedChange, isDisabled, isInvalid, isPressed]
     );
 
-    const formItemStateContextValue = useMemo(
+    const formFieldContextValue = useMemo(
       () => ({
         isDisabled: isDisabled ?? false,
         isInvalid: isInvalid ?? false,
         isRequired: isRequired ?? false,
+        hasFieldPadding: false,
       }),
       [isDisabled, isInvalid, isRequired]
     );
 
     return (
       <AnimationSettingsProvider value={animationSettingsContextValue}>
-        <FormItemStateProvider value={formItemStateContextValue}>
+        <FormFieldProvider value={formFieldContextValue}>
           <ControlFieldProvider value={contextValue}>
             <Pressable
               ref={ref}
@@ -135,7 +136,7 @@ const ControlField = forwardRef<PressableRef, ControlFieldProps>(
               {content}
             </Pressable>
           </ControlFieldProvider>
-        </FormItemStateProvider>
+        </FormFieldProvider>
       </AnimationSettingsProvider>
     );
   }

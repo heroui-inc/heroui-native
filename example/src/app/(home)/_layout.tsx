@@ -171,6 +171,10 @@ export default function Layout() {
         />
         <Stack.Screen name="components/label" options={{ title: 'Label' }} />
         <Stack.Screen
+          name="components/list-group"
+          options={{ title: 'ListGroup' }}
+        />
+        <Stack.Screen
           name="components/popover"
           options={{ title: 'Popover' }}
         />
@@ -191,6 +195,10 @@ export default function Layout() {
           options={{ title: 'ScrollShadow' }}
         />
         <Stack.Screen
+          name="components/search-field"
+          options={{ title: 'SearchField' }}
+        />
+        <Stack.Screen
           name="components/select-native-modal"
           options={{ title: 'Select Native Modal', presentation: 'formSheet' }}
         />
@@ -203,6 +211,7 @@ export default function Layout() {
           name="components/skeleton"
           options={{ title: 'Skeleton' }}
         />
+        <Stack.Screen name="components/slider" options={{ title: 'Slider' }} />
         <Stack.Screen
           name="components/spinner"
           options={{ title: 'Spinner' }}

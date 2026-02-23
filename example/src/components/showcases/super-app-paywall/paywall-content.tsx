@@ -76,9 +76,7 @@ export function PaywallFooter(props: BottomSheetFooterProps) {
           size="lg"
           className={cn('bg-black', isDark && 'bg-white')}
           onPress={simulatePress}
-          pressableFeedbackHighlightProps={{
-            isAnimatedStyleActive: false,
-          }}
+          animation={{ highlight: false }}
         >
           <Button.Label
             className={cn(

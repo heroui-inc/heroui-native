@@ -3,6 +3,7 @@
  */
 export const DISPLAY_NAME = {
   ROOT: 'HeroUINative.PressableFeedback.Root',
+  SCALE: 'HeroUINative.PressableFeedback.Scale',
   HIGHLIGHT: 'HeroUINative.PressableFeedback.Highlight',
   RIPPLE: 'HeroUINative.PressableFeedback.Ripple',
 } as const;

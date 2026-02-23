@@ -117,7 +117,7 @@ export interface BottomSheetContentProps
  * Extends CloseButtonProps, allowing full override of all close button props.
  * Automatically handles bottom sheet close functionality when pressed.
  */
-export interface BottomSheetCloseProps extends CloseButtonProps {}
+export type BottomSheetCloseProps = CloseButtonProps;
 
 /**
  * BottomSheet Title component props

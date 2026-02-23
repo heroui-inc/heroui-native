@@ -4,6 +4,7 @@ import React, {
   useContext,
   useEffect,
   useId,
+  useMemo,
   useState,
 } from 'react';
 import {
@@ -46,6 +47,8 @@ import type {
   PortalProps,
   RootProps,
   RootRef,
+  SelectionMode,
+  SelectValue,
   TriggerIndicatorProps,
   TriggerIndicatorRef,
   TriggerProps,
@@ -53,6 +56,7 @@ import type {
   ValueProps,
   ValueRef,
 } from './select.types';
+import { formatSelectedLabels, isItemSelected } from './select.utils';
 
 const RootContext = createContext<IRootContext | null>(null);
 
@@ -66,70 +70,79 @@ const useRootContext = () => {
   return context;
 };
 
-const Root = forwardRef<RootRef, RootProps>(
-  (
-    {
-      asChild,
-      value: valueProp,
-      defaultValue,
-      onValueChange: onValueChangeProp,
-      isOpen: isOpenProp,
-      isDefaultOpen,
-      onOpenChange: onOpenChangeProp,
-      isDisabled,
-      presentation = 'popover',
-      ...viewProps
-    },
-    ref
-  ) => {
-    const nativeID = useId();
+function Root<M extends SelectionMode = 'single'>({
+  asChild,
+  ref,
+  value: valueProp,
+  defaultValue,
+  onValueChange: onValueChangeProp,
+  isOpen: isOpenProp,
+  isDefaultOpen,
+  onOpenChange: onOpenChangeProp,
+  isDisabled,
+  selectionMode = 'single' as M,
+  presentation = 'popover',
+  ...viewProps
+}: RootProps<M> & { ref?: React.Ref<RootRef> }) {
+  const nativeID = useId();
 
-    const [value, onValueChange] = useControllableState({
-      prop: valueProp,
-      defaultProp: defaultValue,
-      onChange: onValueChangeProp,
-    });
+  // Widen to SelectValue internally so the context can serve both modes.
+  const [value, onValueChange] = useControllableState<SelectValue>({
+    prop: valueProp as SelectValue,
+    defaultProp: defaultValue as SelectValue,
+    onChange: onValueChangeProp as ((value: SelectValue) => void) | undefined,
+  });
 
-    const [isOpen = false, onOpenChange] = useControllableState({
-      prop: isOpenProp,
-      defaultProp: isDefaultOpen,
-      onChange: onOpenChangeProp,
-    });
+  const [isOpen = false, onOpenChange] = useControllableState({
+    prop: isOpenProp,
+    defaultProp: isDefaultOpen,
+    onChange: onOpenChangeProp,
+  });
 
-    const [triggerPosition, setTriggerPosition] =
-      useState<LayoutPosition | null>(null);
-    const [contentLayout, setContentLayout] = useState<LayoutRectangle | null>(
-      null
-    );
+  const [triggerPosition, setTriggerPosition] = useState<LayoutPosition | null>(
+    null
+  );
+  const [contentLayout, setContentLayout] = useState<LayoutRectangle | null>(
+    null
+  );
 
-    const Component = asChild ? Slot.View : View;
-    return (
-      <RootContext.Provider
-        value={{
-          value,
-          onValueChange,
-          isOpen,
-          onOpenChange,
-          isDefaultOpen,
-          isDisabled,
-          contentLayout,
-          nativeID,
-          setContentLayout,
-          setTriggerPosition,
-          triggerPosition,
-          presentation,
-        }}
-      >
-        <Component ref={ref} {...viewProps} />
-      </RootContext.Provider>
-    );
-  }
-);
+  const Component = asChild ? Slot.View : View;
+  return (
+    <RootContext.Provider
+      value={{
+        value,
+        onValueChange,
+        isOpen,
+        onOpenChange,
+        isDefaultOpen,
+        isDisabled,
+        contentLayout,
+        nativeID,
+        selectionMode,
+        setContentLayout,
+        setTriggerPosition,
+        triggerPosition,
+        presentation,
+      }}
+    >
+      <Component ref={ref} {...viewProps} />
+    </RootContext.Provider>
+  );
+}
 
 // --------------------------------------------------
 
 const Trigger = forwardRef<TriggerRef, TriggerProps>(
-  ({ asChild, onPress: onPressProp, isDisabled = false, ...props }, ref) => {
+  (
+    {
+      asChild,
+      onPress: onPressProp,
+      onLayout: onLayoutProp,
+      isDisabled = false,
+      ...props
+    },
+    ref
+  ) => {
     const {
       onOpenChange,
       isOpen,
@@ -191,6 +204,16 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       onPressProp?.(ev);
     }
 
+    function onLayout(event: LayoutChangeEvent) {
+      augmentedRef.current?.measure((_x, _y, width, height, pageX, pageY) => {
+        setTriggerPosition({ width, pageX, pageY: pageY, height });
+        if (isDefaultOpen) {
+          onOpenChange(true);
+        }
+      });
+      onLayoutProp?.(event);
+    }
+
     const Component = asChild ? Slot.Pressable : Pressable;
 
     return (
@@ -200,6 +223,7 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
         role="combobox"
         onPress={onPress}
         disabled={isDisabledValue}
+        onLayout={onLayout}
         {...props}
       />
     );
@@ -210,13 +234,32 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
 
 const Value = React.forwardRef<ValueRef, ValueProps>(
   ({ asChild, placeholder, ...props }, ref) => {
-    const { value } = useRootContext();
+    const { value, selectionMode } = useRootContext();
+
+    /** Resolves the display text based on selection mode and current value */
+    const displayText = useMemo(() => {
+      if (selectionMode === 'multiple') {
+        const values = Array.isArray(value) ? value : value ? [value] : [];
+        const labels = values
+          .map((v) => v?.label)
+          .filter((label): label is string => typeof label === 'string');
+
+        return formatSelectedLabels(labels) ?? placeholder;
+      }
+
+      // Single mode — preserve backward-compatible behavior
+      if (Array.isArray(value)) {
+        return value[0]?.label ?? placeholder;
+      }
+
+      return value?.label ?? placeholder;
+    }, [value, selectionMode, placeholder]);
 
     const Component = asChild ? Slot.Text : Text;
 
     return (
       <Component ref={ref} {...props}>
-        {value?.label ?? placeholder}
+        {displayText}
       </Component>
     );
   }
@@ -504,7 +547,7 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
       label,
       onPress: onPressProp,
       disabled = false,
-      closeOnPress = true,
+      closeOnPress: closeOnPressProp,
       ...props
     },
     ref
@@ -513,12 +556,32 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
       onOpenChange,
       value,
       onValueChange,
+      selectionMode,
       setTriggerPosition,
       setContentLayout,
     } = useRootContext();
 
+    /** Default closeOnPress to `true` for single mode, `false` for multiple mode */
+    const closeOnPress = closeOnPressProp ?? selectionMode === 'single';
+    const checked = isItemSelected(value, itemValue);
+
     function onPress(ev: GestureResponderEvent) {
-      onValueChange({ value: itemValue, label });
+      if (selectionMode === 'multiple') {
+        // Toggle item in the selected values array
+        const currentValues = Array.isArray(value)
+          ? value
+          : value
+            ? [value]
+            : [];
+
+        const nextValues = checked
+          ? currentValues.filter((v) => v?.value !== itemValue)
+          : [...currentValues, { value: itemValue, label }];
+
+        onValueChange(nextValues);
+      } else {
+        onValueChange({ value: itemValue, label });
+      }
 
       if (closeOnPress) {
         onOpenChange(false);
@@ -538,12 +601,12 @@ const Item = React.forwardRef<ItemRef, ItemProps>(
           role="option"
           onPress={onPress}
           disabled={disabled}
-          aria-checked={value?.value === itemValue}
+          aria-checked={checked}
           aria-valuetext={label}
           aria-disabled={!!disabled}
           accessibilityState={{
             disabled: !!disabled,
-            checked: value?.value === itemValue,
+            checked,
           }}
           {...props}
         />
@@ -576,7 +639,7 @@ const ItemIndicator = React.forwardRef<ItemIndicatorRef, ItemIndicatorProps>(
     const { value } = useRootContext();
 
     if (!forceMount) {
-      if (value?.value !== itemValue) {
+      if (!isItemSelected(value, itemValue)) {
         return null;
       }
     }

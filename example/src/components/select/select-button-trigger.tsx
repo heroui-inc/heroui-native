@@ -15,15 +15,28 @@ const US_STATES: SelectOption[] = [
 
 type Props = {
   contentOffset?: number;
+  selectionMode?: 'single' | 'multiple';
 };
 
-export function SelectButtonTrigger({ contentOffset }: Props) {
+export function SelectButtonTrigger({
+  contentOffset,
+  selectionMode = 'single',
+}: Props) {
   const [basicValue, setBasicValue] = useState<SelectOption | undefined>();
+  const [basicValues, setBasicValues] = useState<SelectOption[]>([]);
 
   return (
-    <Select value={basicValue} onValueChange={setBasicValue}>
+    <Select
+      value={selectionMode === 'single' ? basicValue : basicValues}
+      onValueChange={
+        selectionMode === 'single'
+          ? (value) => setBasicValue(value as SelectOption)
+          : (value) => setBasicValues(value as SelectOption[])
+      }
+      selectionMode={selectionMode}
+    >
       <Select.Trigger>
-        <Select.Value placeholder="Select one" />
+        <Select.Value placeholder="Select one" numberOfLines={1} />
         <Select.TriggerIndicator />
       </Select.Trigger>
       <Select.Portal>

@@ -414,20 +414,20 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 
 ### Select
 
-| prop            | type                                      | default     | description                                                            |
-| --------------- | ----------------------------------------- | ----------- | ---------------------------------------------------------------------- |
-| `children`      | `ReactNode`                               | -           | The content of the select                                              |
-| `value`         | `SelectOption`                            | -           | The selected value (controlled mode)                                   |
-| `onValueChange` | `(value: SelectOption) => void`           | -           | Callback when the value changes                                        |
-| `defaultValue`  | `SelectOption`                            | -           | The default selected value (uncontrolled mode)                         |
-| `isOpen`        | `boolean`                                 | -           | Whether the select is open (controlled mode)                           |
-| `isDefaultOpen` | `boolean`                                 | -           | Whether the select is open when initially rendered (uncontrolled mode) |
-| `onOpenChange`  | `(isOpen: boolean) => void`               | -           | Callback when the select open state changes                            |
-| `isDisabled`    | `boolean`                                 | `false`     | Whether the select is disabled                                         |
-| `presentation`  | `'popover' \| 'bottom-sheet' \| 'dialog'` | `'popover'` | Presentation mode for the select content                               |
-| `animation`     | `SelectRootAnimation`                     | -           | Animation configuration                                                |
-| `asChild`       | `boolean`                                 | `false`     | Whether to render as a child element                                   |
-| `...ViewProps`  | `ViewProps`                               | -           | All standard React Native View props are supported                     |
+| prop            | type                                              | default     | description                                                            |
+| --------------- | ------------------------------------------------- | ----------- | ---------------------------------------------------------------------- |
+| `children`      | `ReactNode`                                       | -           | The content of the select                                              |
+| `value`         | `SelectOption \| SelectOption[]`                  | -           | The selected value(s) (controlled mode)                                |
+| `onValueChange` | `(value: SelectOption \| SelectOption[]) => void` | -           | Callback when the value changes                                        |
+| `defaultValue`  | `SelectOption \| SelectOption[]`                  | -           | The default selected value(s) (uncontrolled mode)                      |
+| `isOpen`        | `boolean`                                         | -           | Whether the select is open (controlled mode)                           |
+| `isDefaultOpen` | `boolean`                                         | -           | Whether the select is open when initially rendered (uncontrolled mode) |
+| `onOpenChange`  | `(isOpen: boolean) => void`                       | -           | Callback when the select open state changes                            |
+| `isDisabled`    | `boolean`                                         | `false`     | Whether the select is disabled                                         |
+| `presentation`  | `'popover' \| 'bottom-sheet' \| 'dialog'`         | `'popover'` | Presentation mode for the select content                               |
+| `animation`     | `SelectRootAnimation`                             | -           | Animation configuration                                                |
+| `asChild`       | `boolean`                                         | `false`     | Whether to render as a child element                                   |
+| `...ViewProps`  | `ViewProps`                                       | -           | All standard React Native View props are supported                     |
 
 #### SelectRootAnimation
 
@@ -727,20 +727,20 @@ const {
 
 #### Return Value
 
-| property             | type                                         | description                                               |
-| -------------------- | -------------------------------------------- | --------------------------------------------------------- |
-| `isOpen`             | `boolean`                                    | Whether the select is currently open                      |
-| `onOpenChange`       | `(open: boolean) => void`                    | Callback to change the open state                         |
-| `isDefaultOpen`      | `boolean \| undefined`                       | Whether the select is open by default (uncontrolled mode) |
-| `isDisabled`         | `boolean \| undefined`                       | Whether the select is disabled                            |
-| `presentation`       | `'popover' \| 'bottom-sheet' \| 'dialog'`    | Presentation mode for the select content                  |
-| `triggerPosition`    | `LayoutPosition \| null`                     | Position of the trigger element relative to viewport      |
-| `setTriggerPosition` | `(position: LayoutPosition \| null) => void` | Updates the trigger element's position                    |
-| `contentLayout`      | `LayoutRectangle \| null`                    | Layout measurements of the select content                 |
-| `setContentLayout`   | `(layout: LayoutRectangle \| null) => void`  | Updates the content layout measurements                   |
-| `nativeID`           | `string`                                     | Unique identifier for the select instance                 |
-| `value`              | `SelectOption`                               | Currently selected option                                 |
-| `onValueChange`      | `(option: SelectOption) => void`             | Callback fired when the selected value changes            |
+| property             | type                                               | description                                               |
+| -------------------- | -------------------------------------------------- | --------------------------------------------------------- |
+| `isOpen`             | `boolean`                                          | Whether the select is currently open                      |
+| `onOpenChange`       | `(open: boolean) => void`                          | Callback to change the open state                         |
+| `isDefaultOpen`      | `boolean \| undefined`                             | Whether the select is open by default (uncontrolled mode) |
+| `isDisabled`         | `boolean \| undefined`                             | Whether the select is disabled                            |
+| `presentation`       | `'popover' \| 'bottom-sheet' \| 'dialog'`          | Presentation mode for the select content                  |
+| `triggerPosition`    | `LayoutPosition \| null`                           | Position of the trigger element relative to viewport      |
+| `setTriggerPosition` | `(position: LayoutPosition \| null) => void`       | Updates the trigger element's position                    |
+| `contentLayout`      | `LayoutRectangle \| null`                          | Layout measurements of the select content                 |
+| `setContentLayout`   | `(layout: LayoutRectangle \| null) => void`        | Updates the content layout measurements                   |
+| `nativeID`           | `string`                                           | Unique identifier for the select instance                 |
+| `value`              | `SelectOption \| SelectOption[]`                   | Currently selected option                                 |
+| `onValueChange`      | `(option: SelectOption \| SelectOption[]) => void` | Callback fired when the selected value changes            |
 
 **Note:** This hook must be used within a `Select` component. It will throw an error if called outside of the select context.
 

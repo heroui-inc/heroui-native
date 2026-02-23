@@ -27,6 +27,27 @@ type SelectOption =
   | undefined;
 
 /**
+ * Selection mode for the select component.
+ * - 'single': Only one option can be selected at a time (default)
+ * - 'multiple': Multiple options can be selected simultaneously
+ */
+type SelectionMode = 'single' | 'multiple';
+
+/**
+ * Resolves the value type based on selection mode.
+ * - `'single'`  → `SelectOption`
+ * - `'multiple'` → `SelectOption[]`
+ */
+type SelectValueType<M extends SelectionMode> = M extends 'single'
+  ? SelectOption
+  : SelectOption[];
+
+/**
+ * Internal wide union used by context (covers both modes).
+ */
+type SelectValue = SelectOption | SelectOption[];
+
+/**
  * Content sizing strategy
  * - 'content-fit': Auto-size to content width (default)
  * - 'trigger': Match trigger width exactly
@@ -76,13 +97,23 @@ interface IRootContext {
    */
   nativeID: string;
   /**
-   * The currently selected option
+   * The currently selected value.
+   * - Single mode: `SelectOption`
+   * - Multiple mode: `SelectOption[]`
    */
-  value: SelectOption;
+  value: SelectValue;
   /**
-   * Callback fired when the selected value changes
+   * Callback fired when the selected value changes.
+   * Internally uses the wide `SelectValue` union to handle both modes.
    */
-  onValueChange: (option: SelectOption) => void;
+  onValueChange: (value: SelectValue) => void;
+  /**
+   * The selection mode of the select
+   * - 'single': Only one option can be selected at a time
+   * - 'multiple': Multiple options can be selected simultaneously
+   * @default 'single'
+   */
+  selectionMode: SelectionMode;
   /**
    * Presentation mode for the select content
    * - 'popover': Default floating popover with positioning
@@ -94,22 +125,45 @@ interface IRootContext {
 }
 
 /**
- * Props for the Select Root component
+ * Props for the Select Root component.
+ *
+ * Generic on `M extends SelectionMode` (defaults to `'single'`).
+ * TypeScript resolves `value` / `onValueChange` types via the conditional
+ * `SelectValueType<M>`.
+ *
+ * @example
+ * ```tsx
+ * // Single mode — value is SelectOption
+ * <Root value={option} onValueChange={setOption} />
+ *
+ * // Multiple mode — value is SelectOption[]
+ * <Root selectionMode="multiple" value={options} onValueChange={setOptions} />
+ * ```
  */
-type RootProps = SlottableViewProps & {
+type RootProps<M extends SelectionMode = 'single'> = SlottableViewProps & {
   /**
-   * The controlled selected value of the select
+   * Whether single or multiple selection is enabled.
+   * @default 'single'
    */
-  value?: SelectOption;
+  selectionMode?: M;
   /**
-   * The default selected value (uncontrolled)
+   * The controlled selected value of the select.
+   * - Single mode: `SelectOption`
+   * - Multiple mode: `SelectOption[]`
    */
-  defaultValue?: SelectOption;
+  value?: SelectValueType<M>;
   /**
-   * Callback fired when the selected value changes
-   * @param option - The newly selected option
+   * The default selected value (uncontrolled).
+   * - Single mode: `SelectOption`
+   * - Multiple mode: `SelectOption[]`
    */
-  onValueChange?: (option: SelectOption) => void;
+  defaultValue?: SelectValueType<M>;
+  /**
+   * Callback fired when the selected value changes.
+   * - Single mode: receives `SelectOption`
+   * - Multiple mode: receives `SelectOption[]`
+   */
+  onValueChange?: (value: SelectValueType<M>) => void;
   /**
    * The controlled open state of the select
    */
@@ -341,8 +395,11 @@ export type {
   PortalProps,
   RootProps,
   RootRef,
+  SelectionMode,
   SelectOption,
   SelectState,
+  SelectValue,
+  SelectValueType,
   TriggerIndicatorProps,
   TriggerIndicatorRef,
   TriggerProps,

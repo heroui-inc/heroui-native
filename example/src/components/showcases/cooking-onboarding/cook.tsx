@@ -25,7 +25,7 @@ export const Cook: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
     <Popover>
       <Popover.Trigger ref={triggerRef}>
         <Button
-          pressableFeedbackVariant="none"
+          feedbackVariant="scale"
           className="h-12 px-4 rounded-[14px] flex-row items-center gap-1 bg-orange-300"
           onPress={isOnboardingDone ? simulatePress : undefined}
         >

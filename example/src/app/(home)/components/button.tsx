@@ -172,8 +172,8 @@ const CustomStylingContent = () => {
         <View className="gap-8 w-full px-8">
           <Button
             className="bg-purple-600"
-            pressableFeedbackHighlightProps={{
-              animation: {
+            animation={{
+              highlight: {
                 backgroundColor: {
                   value: '#c084fc',
                 },
@@ -188,7 +188,7 @@ const CustomStylingContent = () => {
             </Button.Label>
           </Button>
 
-          <Button pressableFeedbackVariant="none">
+          <Button feedbackVariant="scale">
             <LinearGradient
               colors={['#0d9488', '#ec4899']}
               start={{ x: 0, y: 0 }}
@@ -210,7 +210,7 @@ const CustomStylingContent = () => {
               'bg-neutral-950 rounded-md',
               isDark && 'bg-neutral-50'
             )}
-            pressableFeedbackVariant="none"
+            feedbackVariant="scale"
           >
             <ShoppingCartIcon
               size={18}

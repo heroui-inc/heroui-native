@@ -73,7 +73,7 @@ const OnboardingScreen = () => {
           className={cn('rounded-full bg-black/10', isDark && 'bg-white/20')}
           isIconOnly
           onPress={router.back}
-          pressableFeedbackVariant="none"
+          feedbackVariant="scale"
         >
           <StyledFeather
             name="chevron-left"
@@ -86,7 +86,7 @@ const OnboardingScreen = () => {
           className={cn('rounded-full bg-black/10', isDark && 'bg-white/20')}
           isIconOnly
           onPress={router.back}
-          pressableFeedbackVariant="none"
+          feedbackVariant="scale"
         >
           <StyledFeather
             name="x"
@@ -122,7 +122,7 @@ const OnboardingScreen = () => {
         <Button
           onPress={() => console.log('Next pressed')}
           className="mx-8 rounded-full bg-[#F8DD00]"
-          pressableFeedbackVariant="none"
+          feedbackVariant="scale"
         >
           <Button.Label className="text-lg font-semibold text-black">
             Next

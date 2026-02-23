@@ -62,7 +62,7 @@ const DetachedBottomSheetContent = () => {
                 variant="primary"
                 className="bg-green-500 mb-2"
                 onPress={() => setIsOpen(false)}
-                pressableFeedbackVariant="none"
+                feedbackVariant="scale"
               >
                 <Button.Label className="text-white font-semibold">
                   Add Cash

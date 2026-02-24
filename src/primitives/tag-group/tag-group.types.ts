@@ -32,9 +32,26 @@ type RootProps = SlottableViewProps & {
   disabledKeys?: Iterable<TagKey>;
   /** Whether the entire tag group is disabled */
   isDisabled?: boolean;
+  /** Whether the tag group is in an invalid state (e.g. form validation) */
+  isInvalid?: boolean;
+  /** Whether the tag group is required (e.g. form validation) */
+  isRequired?: boolean;
   /** Handler called when tags are removed */
   onRemove?: (keys: Set<TagKey>) => void;
 };
+
+/**
+ * Root context value for TagGroup.
+ * Derived from RootProps with internal Set representation for key collections.
+ */
+type RootContextValue = Required<
+  Pick<RootProps, 'selectionMode' | 'isDisabled' | 'isInvalid' | 'isRequired'>
+> &
+  Pick<RootProps, 'onRemove'> & {
+    selectedKeys: Set<TagKey>;
+    disabledKeys: Set<TagKey>;
+    onSelectionChange: NonNullable<RootProps['onSelectionChange']>;
+  };
 
 /**
  * Props for the TagGroup list container component.
@@ -94,6 +111,7 @@ export type {
   ListRef,
   RemoveButtonProps,
   RemoveButtonRef,
+  RootContextValue,
   RootProps,
   RootRef,
   SelectionMode,

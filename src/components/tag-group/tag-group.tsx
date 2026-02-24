@@ -1,8 +1,12 @@
 import { Children, forwardRef, useMemo } from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
+import { useThemeColor } from '../../helpers/external/hooks';
 import { HeroText } from '../../helpers/internal/components';
 import { CloseIcon } from '../../helpers/internal/components/close-icon';
-import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import {
+  AnimationSettingsProvider,
+  FormFieldProvider,
+} from '../../helpers/internal/contexts';
 import type { PressableRef, ViewRef } from '../../helpers/internal/types';
 import { childrenToString, createContext } from '../../helpers/internal/utils';
 import * as TagGroupPrimitives from '../../primitives/tag-group';
@@ -56,6 +60,9 @@ const TagGroupRoot = forwardRef<ViewRef, TagGroupProps>((props, ref) => {
     className,
     style,
     animation,
+    isDisabled = false,
+    isInvalid = false,
+    isRequired = false,
     ...restProps
   } = props;
 
@@ -74,6 +81,16 @@ const TagGroupRoot = forwardRef<ViewRef, TagGroupProps>((props, ref) => {
     [isAllAnimationsDisabled]
   );
 
+  const formFieldContextValue = useMemo(
+    () => ({
+      isDisabled: isDisabled ?? false,
+      isInvalid: isInvalid ?? false,
+      isRequired: isRequired ?? false,
+      hasFieldPadding: false,
+    }),
+    [isDisabled, isInvalid, isRequired]
+  );
+
   const contextValue = useMemo(
     () => ({
       size,
@@ -84,16 +101,19 @@ const TagGroupRoot = forwardRef<ViewRef, TagGroupProps>((props, ref) => {
 
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
-      <TagGroupProvider value={contextValue}>
-        <TagGroupPrimitives.Root
-          ref={ref}
-          className={rootClassName}
-          style={style}
-          {...restProps}
-        >
-          {children}
-        </TagGroupPrimitives.Root>
-      </TagGroupProvider>
+      <FormFieldProvider value={formFieldContextValue}>
+        <TagGroupProvider value={contextValue}>
+          <TagGroupPrimitives.Root
+            ref={ref}
+            className={rootClassName}
+            style={style}
+            isDisabled={isDisabled}
+            {...restProps}
+          >
+            {children}
+          </TagGroupPrimitives.Root>
+        </TagGroupProvider>
+      </FormFieldProvider>
     </AnimationSettingsProvider>
   );
 });
@@ -216,18 +236,38 @@ const TagLabel = forwardRef<View, TagLabelProps>((props, ref) => {
 // --------------------------------------------------
 // TagRemoveButton
 // --------------------------------------------------
-
 const TagRemoveButton = forwardRef<PressableRef, TagRemoveButtonProps>(
   (props, ref) => {
-    const { children, className, ...restProps } = props;
+    const { children, className, iconProps, hitSlop = 8, ...restProps } = props;
+
+    const { isSelected } = usePrimitiveItemContext();
+
+    const [themeColorFieldForeground, themeColorAccentForeground] =
+      useThemeColor(['field-foreground', 'accent-soft-foreground']);
+
+    const removeButtonClassName = tagGroupClassNames.removeButton({
+      className,
+    });
+
+    const defaultIconColor = isSelected
+      ? themeColorAccentForeground
+      : themeColorFieldForeground;
+
+    const defaultIcon = (
+      <CloseIcon
+        size={iconProps?.size ?? 12}
+        color={iconProps?.color ?? defaultIconColor}
+      />
+    );
 
     return (
       <TagGroupPrimitives.RemoveButton
         ref={ref}
-        className={className}
+        className={removeButtonClassName}
+        hitSlop={hitSlop}
         {...restProps}
       >
-        {children ?? <CloseIcon size={12} />}
+        {children ?? defaultIcon}
       </TagGroupPrimitives.RemoveButton>
     );
   }

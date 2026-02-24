@@ -22,9 +22,9 @@ import type {
   ListRef,
   RemoveButtonProps,
   RemoveButtonRef,
+  RootContextValue,
   RootProps,
   RootRef,
-  SelectionMode,
   TagKey,
 } from './tag-group.types';
 
@@ -32,16 +32,7 @@ import type {
 // Root Context
 // --------------------------------------------------
 
-interface IRootContext {
-  selectionMode: SelectionMode;
-  selectedKeys: Set<TagKey>;
-  onSelectionChange: (keys: Set<TagKey>) => void;
-  disabledKeys: Set<TagKey>;
-  isDisabled: boolean;
-  onRemove: ((keys: Set<TagKey>) => void) | undefined;
-}
-
-const RootContext = createContext<IRootContext | null>(null);
+const RootContext = createContext<RootContextValue | null>(null);
 
 /**
  * Hook to access TagGroup root context.
@@ -106,6 +97,8 @@ const Root = forwardRef<RootRef, RootProps>(
       onSelectionChange: onSelectionChangeProp,
       disabledKeys: disabledKeysProp,
       isDisabled = false,
+      isInvalid = false,
+      isRequired = false,
       onRemove,
       ...viewProps
     },
@@ -115,15 +108,16 @@ const Root = forwardRef<RootRef, RootProps>(
 
     const [internalSelectedKeys, setInternalSelectedKeys] = useState<
       Set<TagKey>
-    >(() => new Set(defaultSelectedKeys));
+    >(() => new Set(defaultSelectedKeys ?? []));
 
     const selectedKeys = useMemo(
-      () => (isControlled ? new Set(selectedKeysProp) : internalSelectedKeys),
+      () =>
+        isControlled ? new Set(selectedKeysProp ?? []) : internalSelectedKeys,
       [isControlled, selectedKeysProp, internalSelectedKeys]
     );
 
     const disabledKeys = useMemo(
-      () => new Set(disabledKeysProp),
+      () => new Set(disabledKeysProp ?? []),
       [disabledKeysProp]
     );
 
@@ -137,13 +131,15 @@ const Root = forwardRef<RootRef, RootProps>(
       [isControlled, onSelectionChangeProp]
     );
 
-    const contextValue = useMemo<IRootContext>(
+    const contextValue = useMemo<RootContextValue>(
       () => ({
         selectionMode,
         selectedKeys,
         onSelectionChange,
         disabledKeys,
         isDisabled,
+        isInvalid,
+        isRequired,
         onRemove,
       }),
       [
@@ -152,6 +148,8 @@ const Root = forwardRef<RootRef, RootProps>(
         onSelectionChange,
         disabledKeys,
         isDisabled,
+        isInvalid,
+        isRequired,
         onRemove,
       ]
     );

@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'gap-2',
+  base: 'gap-3',
 });
 
 const list = tv({
@@ -43,11 +43,16 @@ const tagLabel = tv({
   },
 });
 
+const removeButton = tv({
+  base: 'rounded-lg items-center justify-center',
+});
+
 export const tagGroupClassNames = combineStyles({
   root,
   list,
   tag,
   tagLabel,
+  removeButton,
 });
 
 export const tagGroupStyleSheet = StyleSheet.create({

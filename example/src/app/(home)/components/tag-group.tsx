@@ -1,30 +1,108 @@
 import {
   Avatar,
+  Chip,
+  cn,
   Description,
   FieldError,
   Label,
   Tag,
   TagGroup,
+  useThemeColor,
 } from 'heroui-native';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View } from 'react-native';
+import Animated, { LinearTransition } from 'react-native-reanimated';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { GlobeIcon } from '../../../components/icons/globe';
+import { RocketIcon } from '../../../components/icons/rocket';
+import { SquareArticleIcon } from '../../../components/icons/square-article';
+
+const AnimatedTag = Animated.createAnimatedComponent(Tag);
+const AnimatedChip = Animated.createAnimatedComponent(Chip);
+
+// ------------------------------------------------------------------------------
+
+type CategoriesTagGroupProps = {
+  /** Selection mode: single or multiple */
+  selectionMode: 'single' | 'multiple';
+  /** Controlled selected keys (optional for uncontrolled mode) */
+  selectedKeys?: Set<string | number>;
+  /** Callback when selection changes (optional for uncontrolled mode) */
+  onSelectionChange?: (keys: Set<string | number>) => void;
+  /** Accessible label for the tag group */
+  ariaLabel?: string;
+};
+
+/**
+ * Reusable Categories TagGroup with News, Travel, and Gaming tags and icons.
+ * Supports both single and multiple selection modes.
+ */
+const CategoriesTagGroup: React.FC<CategoriesTagGroupProps> = ({
+  selectionMode,
+  selectedKeys,
+  onSelectionChange,
+  ariaLabel = 'Categories',
+}) => {
+  const getColorClassName = (isSelected: boolean) => {
+    return cn(
+      isSelected ? 'accent-accent-soft-foreground' : 'accent-field-foreground'
+    );
+  };
+
+  return (
+    <TagGroup
+      aria-label={ariaLabel}
+      selectionMode={selectionMode}
+      selectedKeys={selectedKeys}
+      onSelectionChange={onSelectionChange}
+    >
+      <TagGroup.List className="justify-center">
+        <Tag id="news">
+          {({ isSelected }) => (
+            <>
+              <SquareArticleIcon
+                size={16}
+                colorClassName={getColorClassName(isSelected)}
+              />
+              <Tag.Label>News</Tag.Label>
+            </>
+          )}
+        </Tag>
+        <Tag id="travel">
+          {({ isSelected }) => (
+            <>
+              <GlobeIcon
+                size={14}
+                colorClassName={getColorClassName(isSelected)}
+              />
+              <Tag.Label>Travel</Tag.Label>
+            </>
+          )}
+        </Tag>
+        <Tag id="gaming">
+          {({ isSelected }) => (
+            <>
+              <RocketIcon
+                size={14}
+                colorClassName={getColorClassName(isSelected)}
+              />
+              <Tag.Label>Gaming</Tag.Label>
+            </>
+          )}
+        </Tag>
+      </TagGroup.List>
+    </TagGroup>
+  );
+};
 
 // ------------------------------------------------------------------------------
 
 const BasicContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <TagGroup aria-label="Categories" selectionMode="single">
-        <TagGroup.List>
-          <Tag id="news">News</Tag>
-          <Tag id="travel">Travel</Tag>
-          <Tag id="gaming">Gaming</Tag>
-          <Tag id="shopping">Shopping</Tag>
-        </TagGroup.List>
-      </TagGroup>
+      <CategoriesTagGroup selectionMode="single" />
     </View>
   );
 };
@@ -67,18 +145,11 @@ const SingleSelectionContent = () => {
 
   return (
     <View className="flex-1 px-5 items-center justify-center gap-4">
-      <TagGroup
+      <CategoriesTagGroup
         selectionMode="single"
         selectedKeys={selected}
         onSelectionChange={setSelected}
-      >
-        <TagGroup.List>
-          <Tag id="news">News</Tag>
-          <Tag id="travel">Travel</Tag>
-          <Tag id="gaming">Gaming</Tag>
-          <Tag id="shopping">Shopping</Tag>
-        </TagGroup.List>
-      </TagGroup>
+      />
       <AppText className="text-sm text-muted">
         Selected: {Array.from(selected).join(', ') || 'None'}
       </AppText>
@@ -95,18 +166,11 @@ const MultipleSelectionContent = () => {
 
   return (
     <View className="flex-1 px-5 items-center justify-center gap-4">
-      <TagGroup
+      <CategoriesTagGroup
         selectionMode="multiple"
         selectedKeys={selected}
         onSelectionChange={setSelected}
-      >
-        <TagGroup.List>
-          <Tag id="news">News</Tag>
-          <Tag id="travel">Travel</Tag>
-          <Tag id="gaming">Gaming</Tag>
-          <Tag id="shopping">Shopping</Tag>
-        </TagGroup.List>
-      </TagGroup>
+      />
       <AppText className="text-sm text-muted">
         Selected: {Array.from(selected).join(', ') || 'None'}
       </AppText>
@@ -123,19 +187,20 @@ const DisabledContent = () => {
         <AppText className="text-sm text-muted">Individual disabled</AppText>
         <TagGroup selectionMode="single">
           <TagGroup.List>
-            <Tag id="news" isDisabled>
-              News
+            <Tag id="news">News</Tag>
+            <Tag id="travel" isDisabled>
+              Travel
             </Tag>
-            <Tag id="travel">Travel</Tag>
-            <Tag id="gaming" isDisabled>
-              Gaming
-            </Tag>
+            <Tag id="gaming">Gaming</Tag>
           </TagGroup.List>
         </TagGroup>
       </View>
       <View className="gap-2">
         <AppText className="text-sm text-muted">Disabled keys</AppText>
-        <TagGroup selectionMode="single" disabledKeys={new Set(['travel'])}>
+        <TagGroup
+          selectionMode="single"
+          disabledKeys={new Set(['travel', 'gaming'])}
+        >
           <TagGroup.List>
             <Tag id="news">News</Tag>
             <Tag id="travel">Travel</Tag>
@@ -143,103 +208,6 @@ const DisabledContent = () => {
           </TagGroup.List>
         </TagGroup>
       </View>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const WithRemoveButtonContent = () => {
-  const [tags, setTags] = useState([
-    { id: 'news', name: 'News' },
-    { id: 'travel', name: 'Travel' },
-    { id: 'gaming', name: 'Gaming' },
-    { id: 'shopping', name: 'Shopping' },
-  ]);
-
-  const handleRemove = (keys: Set<string | number>) => {
-    setTags((prev) => prev.filter((tag) => !keys.has(tag.id)));
-  };
-
-  return (
-    <View className="flex-1 px-5 items-center justify-center">
-      <TagGroup selectionMode="single" onRemove={handleRemove}>
-        <TagGroup.List
-          renderEmptyState={() => (
-            <AppText className="text-sm text-muted p-2">
-              No tags remaining
-            </AppText>
-          )}
-        >
-          {tags.map((tag) => (
-            <Tag key={tag.id} id={tag.id}>
-              {tag.name}
-            </Tag>
-          ))}
-        </TagGroup.List>
-      </TagGroup>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const WithCustomLabelContent = () => {
-  return (
-    <View className="flex-1 px-5 items-center justify-center">
-      <TagGroup selectionMode="single">
-        <TagGroup.List>
-          <Tag id="featured">
-            <AppText className="text-xs">📌</AppText>
-            <Tag.Label>Featured</Tag.Label>
-          </Tag>
-          <Tag id="new">
-            <AppText className="text-xs">🆕</AppText>
-            <Tag.Label>New</Tag.Label>
-          </Tag>
-          <Tag id="popular">
-            <AppText className="text-xs">🔥</AppText>
-            <Tag.Label>Popular</Tag.Label>
-          </Tag>
-        </TagGroup.List>
-      </TagGroup>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const RenderFunctionContent = () => {
-  return (
-    <View className="flex-1 px-5 items-center justify-center">
-      <TagGroup selectionMode="multiple" onRemove={() => {}}>
-        <TagGroup.List>
-          <Tag id="react">
-            {({ isSelected, allowsRemoving }) => (
-              <>
-                <Tag.Label>{isSelected ? '✓ React' : 'React'}</Tag.Label>
-                {allowsRemoving && <Tag.RemoveButton />}
-              </>
-            )}
-          </Tag>
-          <Tag id="vue">
-            {({ isSelected, allowsRemoving }) => (
-              <>
-                <Tag.Label>{isSelected ? '✓ Vue' : 'Vue'}</Tag.Label>
-                {allowsRemoving && <Tag.RemoveButton />}
-              </>
-            )}
-          </Tag>
-          <Tag id="angular">
-            {({ isSelected, allowsRemoving }) => (
-              <>
-                <Tag.Label>{isSelected ? '✓ Angular' : 'Angular'}</Tag.Label>
-                {allowsRemoving && <Tag.RemoveButton />}
-              </>
-            )}
-          </Tag>
-        </TagGroup.List>
-      </TagGroup>
     </View>
   );
 };
@@ -260,8 +228,9 @@ const WithErrorMessageContent = () => {
         selectedKeys={selected}
         selectionMode="multiple"
         onSelectionChange={setSelected}
+        isInvalid={isInvalid}
       >
-        <Label>Amenities</Label>
+        <Label isInvalid={false}>Amenities</Label>
         <TagGroup.List>
           <Tag id="laundry">Laundry</Tag>
           <Tag id="fitness">Fitness center</Tag>
@@ -269,14 +238,10 @@ const WithErrorMessageContent = () => {
           <Tag id="pool">Swimming pool</Tag>
           <Tag id="breakfast">Breakfast</Tag>
         </TagGroup.List>
-        <Description>
-          {isInvalid
-            ? 'Select at least one category'
-            : `Selected: ${Array.from(selected).join(', ')}`}
+        <Description hideOnInvalid>
+          {`Selected: ${Array.from(selected).join(', ')}`}
         </Description>
-        <FieldError isInvalid={isInvalid}>
-          Please select at least one category
-        </FieldError>
+        <FieldError>Please select at least one category</FieldError>
       </TagGroup>
     </View>
   );
@@ -291,7 +256,6 @@ const WithRemoveButtonFullContent = () => {
     { id: 'news', name: 'News' },
     { id: 'travel', name: 'Travel' },
     { id: 'gaming', name: 'Gaming' },
-    { id: 'shopping', name: 'Shopping' },
   ]);
 
   const [frameworks, setFrameworks] = useState<TagItem[]>([
@@ -300,6 +264,9 @@ const WithRemoveButtonFullContent = () => {
     { id: 'angular', name: 'Angular' },
     { id: 'svelte', name: 'Svelte' },
   ]);
+
+  const themeColorBackground = useThemeColor('background');
+  const themeColorAccentForeground = useThemeColor('accent-foreground');
 
   const onRemoveTags = (keys: Set<string | number>) => {
     setTags((prev) => prev.filter((tag) => !keys.has(tag.id)));
@@ -323,10 +290,14 @@ const WithRemoveButtonFullContent = () => {
           )}
         >
           {tags.map((tag) => (
-            <Tag key={tag.id} id={tag.id}>
+            <AnimatedTag
+              key={tag.id}
+              id={tag.id}
+              layout={LinearTransition.springify()}
+            >
               <Tag.Label>{tag.name}</Tag.Label>
               <Tag.RemoveButton />
-            </Tag>
+            </AnimatedTag>
           ))}
         </TagGroup.List>
         <Description>Tap the X to remove tags</Description>
@@ -342,17 +313,31 @@ const WithRemoveButtonFullContent = () => {
           )}
         >
           {frameworks.map((fw) => (
-            <Tag key={fw.id} id={fw.id}>
-              {(renderProps) => (
+            <AnimatedTag
+              key={fw.id}
+              id={fw.id}
+              layout={LinearTransition.springify()}
+            >
+              {({ isSelected }) => (
                 <>
                   <Tag.Label>{fw.name}</Tag.Label>
-                  {renderProps.allowsRemoving && <Tag.RemoveButton />}
+                  <Tag.RemoveButton
+                    className={cn(
+                      'p-0.5 bg-muted',
+                      isSelected && 'bg-accent-soft-foreground'
+                    )}
+                    iconProps={{
+                      color: isSelected
+                        ? themeColorAccentForeground
+                        : themeColorBackground,
+                    }}
+                  />
                 </>
               )}
-            </Tag>
+            </AnimatedTag>
           ))}
         </TagGroup.List>
-        <Description>Custom remove button with render props</Description>
+        <Description>Custom remove button styles</Description>
       </TagGroup>
     </View>
   );
@@ -405,7 +390,7 @@ const INITIAL_USERS: User[] = [
   },
 ];
 
-const WithListDataContent = () => {
+const WithAvatarAndRemoveButtonContent = () => {
   const [users, setUsers] = useState<User[]>(INITIAL_USERS);
   const [selectedKeys, setSelectedKeys] = useState<Set<string | number>>(
     new Set(['fred', 'michael'])
@@ -421,7 +406,7 @@ const WithListDataContent = () => {
   };
 
   return (
-    <View className="flex-1 px-5 justify-center gap-4">
+    <View className="flex-1 px-5 justify-center gap-8">
       <TagGroup
         selectedKeys={selectedKeys}
         selectionMode="multiple"
@@ -437,7 +422,12 @@ const WithListDataContent = () => {
           )}
         >
           {users.map((user) => (
-            <Tag key={user.id} id={user.id}>
+            <AnimatedTag
+              key={user.id}
+              id={user.id}
+              className="pl-1.5 pr-2"
+              layout={LinearTransition.springify()}
+            >
               <Avatar size="sm" alt={user.name} className="size-4">
                 <Avatar.Image source={{ uri: user.avatar }} />
                 <Avatar.Fallback>
@@ -446,7 +436,7 @@ const WithListDataContent = () => {
               </Avatar>
               <Tag.Label>{user.name}</Tag.Label>
               <Tag.RemoveButton />
-            </Tag>
+            </AnimatedTag>
           ))}
         </TagGroup.List>
         <Description>Select team members for your project</Description>
@@ -464,9 +454,12 @@ const WithListDataContent = () => {
               if (!user) return null;
 
               return (
-                <View
+                <AnimatedChip
                   key={`${user.id}-selected`}
-                  className="flex-row items-center gap-2 rounded-lg bg-surface px-2 py-1"
+                  variant="secondary"
+                  color="success"
+                  className="pl-1.5 pr-2"
+                  layout={LinearTransition.springify()}
                 >
                   <Avatar size="sm" alt={user.name} className="size-4">
                     <Avatar.Image source={{ uri: user.avatar }} />
@@ -474,8 +467,8 @@ const WithListDataContent = () => {
                       <AppText className="text-xs">{user.fallback}</AppText>
                     </Avatar.Fallback>
                   </Avatar>
-                  <AppText className="text-sm">{user.name}</AppText>
-                </View>
+                  <Chip.Label>{user.name}</Chip.Label>
+                </AnimatedChip>
               );
             })}
           </View>
@@ -514,34 +507,19 @@ const TAG_GROUP_VARIANTS: UsageVariant[] = [
     content: <DisabledContent />,
   },
   {
-    value: 'with-remove-button',
-    label: 'With remove button',
-    content: <WithRemoveButtonContent />,
-  },
-  {
-    value: 'with-custom-label',
-    label: 'With custom label',
-    content: <WithCustomLabelContent />,
-  },
-  {
-    value: 'render-function',
-    label: 'Render function',
-    content: <RenderFunctionContent />,
-  },
-  {
     value: 'with-error-message',
     label: 'With error message',
     content: <WithErrorMessageContent />,
   },
   {
     value: 'with-remove-button-full',
-    label: 'With remove button (full)',
+    label: 'With remove button',
     content: <WithRemoveButtonFullContent />,
   },
   {
-    value: 'with-list-data',
-    label: 'With list data',
-    content: <WithListDataContent />,
+    value: 'with-avatar-and-remove-button',
+    label: 'With avatar and remove button',
+    content: <WithAvatarAndRemoveButtonContent />,
   },
 ];
 

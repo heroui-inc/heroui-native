@@ -90,6 +90,16 @@ export interface TagLabelProps extends TextProps {
 }
 
 /**
+ * Props for customizing the default remove icon
+ */
+export interface TagRemoveButtonIconProps {
+  /** Size of the icon @default 12 */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+}
+
+/**
  * Props for the Tag.RemoveButton component.
  * Renders a button to remove the tag from the group.
  */
@@ -100,6 +110,9 @@ export interface TagRemoveButtonProps
 
   /** Additional CSS classes for the remove button */
   className?: string;
+
+  /** Props for customizing the default close icon. Only applies when no children are provided */
+  iconProps?: TagRemoveButtonIconProps;
 }
 
 /**

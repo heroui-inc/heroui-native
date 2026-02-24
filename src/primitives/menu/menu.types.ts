@@ -19,23 +19,23 @@ import type {
 type ContentSizing = 'trigger' | 'content-fit' | 'full' | number;
 
 /**
- * Internal context interface for managing popover state and positioning
+ * Internal context interface for managing menu state and positioning
  */
 interface IRootContext {
   /**
-   * Whether the popover is currently open
+   * Whether the menu is currently open
    */
   isOpen: boolean;
   /**
-   * Callback to change the open state of the popover
+   * Callback to change the open state of the menu
    */
   onOpenChange: (open: boolean) => void;
   /**
-   * Whether the popover should be open by default (uncontrolled mode)
+   * Whether the menu should be open by default (uncontrolled mode)
    */
   isDefaultOpen?: boolean;
   /**
-   * Whether the popover is disabled
+   * Whether the menu is disabled
    */
   isDisabled?: boolean;
   /**
@@ -47,7 +47,7 @@ interface IRootContext {
    */
   setTriggerPosition: (triggerPosition: LayoutPosition | null) => void;
   /**
-   * The layout measurements of the popover content
+   * The layout measurements of the menu content
    */
   contentLayout: LayoutRectangle | null;
   /**
@@ -55,11 +55,11 @@ interface IRootContext {
    */
   setContentLayout: (contentLayout: LayoutRectangle | null) => void;
   /**
-   * Unique identifier for the popover instance
+   * Unique identifier for the menu instance
    */
   nativeID: string;
   /**
-   * Presentation mode for the popover content
+   * Presentation mode for the menu content
    * - 'popover': Default floating popover with positioning
    * - 'bottom-sheet': Bottom sheet modal presentation
    * @default 'popover'
@@ -68,36 +68,36 @@ interface IRootContext {
 }
 
 /**
- * Props for the Popover Root component
+ * Props for the Menu Root component
  */
 type RootProps = SlottableViewProps & {
   /**
-   * Presentation mode for the popover content
+   * Presentation mode for the menu content
    * - 'popover': Default floating popover with positioning
    * - 'bottom-sheet': Bottom sheet modal presentation
    * @default 'popover'
    */
   presentation?: 'popover' | 'bottom-sheet';
   /**
-   * The controlled open state of the popover
+   * The controlled open state of the menu
    */
   isOpen?: boolean;
   /**
-   * The open state of the popover when initially rendered (uncontrolled)
+   * The open state of the menu when initially rendered (uncontrolled)
    */
   isDefaultOpen?: boolean;
   /**
-   * Whether the popover is disabled
+   * Whether the menu is disabled
    */
   isDisabled?: boolean;
   /**
-   * Callback fired when the popover open state changes
-   * @param open - Whether the popover is open or closed
+   * Callback fired when the menu open state changes
+   * @param open - Whether the menu is open or closed
    */
   onOpenChange?: (open: boolean) => void;
 };
 /**
- * Props for the Popover Portal component
+ * Props for the Menu Portal component
  */
 interface PortalProps extends ForceMountable {
   /**
@@ -111,26 +111,26 @@ interface PortalProps extends ForceMountable {
 }
 
 /**
- * Props for the Popover Overlay component
+ * Props for the Menu Overlay component
  */
 type OverlayProps = ForceMountable &
   SlottablePressableProps & {
     /**
-     * Whether to close the popover when the overlay is pressed
+     * Whether to close the menu when the overlay is pressed
      * @default true
      */
     closeOnPress?: boolean;
   };
 
 /**
- * Props for the Popover Trigger component
+ * Props for the Menu Trigger component
  */
 type TriggerProps = Omit<SlottablePressableProps, 'disabled'> & {
   isDisabled?: boolean;
 };
 
 /**
- * Props for the Popover Content component
+ * Props for the Menu Content component
  */
 type ContentProps = SlottableViewProps &
   PositionedContentProps & {
@@ -146,40 +146,40 @@ type ContentProps = SlottableViewProps &
   };
 
 /**
- * Props for the Popover Close component
+ * Props for the Menu Close component
  */
 type CloseProps = SlottablePressableProps;
 
 /**
- * Ref type for the Popover Close component
+ * Ref type for the Menu Close component
  */
 type CloseRef = PressableRef;
 
 /**
- * Ref type for the Popover Content component
+ * Ref type for the Menu Content component
  */
 type ContentRef = ViewRef;
 
 /**
- * Ref type for the Popover Overlay component
+ * Ref type for the Menu Overlay component
  */
 type OverlayRef = PressableRef;
 
 /**
- * Ref type for the Popover Root component
+ * Ref type for the Menu Root component
  */
 type RootRef = ViewRef;
 
 /**
- * Ref type for the Popover Trigger component
+ * Ref type for the Menu Trigger component
  */
 type TriggerRef = PressableRef & {
   /**
-   * Programmatically open the popover
+   * Programmatically open the menu
    */
   open: () => void;
   /**
-   * Programmatically close the popover
+   * Programmatically close the menu
    */
   close: () => void;
 };

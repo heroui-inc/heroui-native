@@ -1,13 +1,17 @@
 import React, {
+  createContext,
   forwardRef,
+  useCallback,
   useContext,
   useEffect,
   useId,
+  useMemo,
   useState,
 } from 'react';
 import {
   BackHandler,
   Pressable,
+  Text,
   View,
   type GestureResponderEvent,
   type LayoutChangeEvent,
@@ -26,7 +30,20 @@ import type {
   CloseRef,
   ContentProps,
   ContentRef,
+  GroupContextValue,
+  GroupProps,
+  GroupRef,
+  IItemContext,
   IRootContext,
+  ItemDescriptionProps,
+  ItemDescriptionRef,
+  ItemIndicatorProps,
+  ItemIndicatorRef,
+  ItemProps,
+  ItemRef,
+  ItemTitleProps,
+  ItemTitleRef,
+  MenuKey,
   OverlayProps,
   OverlayRef,
   PortalProps,
@@ -372,11 +389,347 @@ const Close = forwardRef<CloseRef, CloseProps>(
 );
 
 // --------------------------------------------------
+// Group Context
+// --------------------------------------------------
+
+const GroupContext = createContext<GroupContextValue | null>(null);
+
+/**
+ * Hook to access Menu Group context.
+ * Provides selection state, disabled state, and selection mode.
+ *
+ * @throws Error if used outside a Menu Group component
+ */
+function useGroupContext() {
+  const context = useContext(GroupContext);
+
+  if (!context) {
+    throw new Error(
+      'Menu.Group compound components cannot be rendered outside Menu.Group'
+    );
+  }
+
+  return context;
+}
+
+/**
+ * Reads the Group context without throwing if absent.
+ * Returns `null` when Item is used outside a Group (standalone mode).
+ */
+function useOptionalGroupContext() {
+  return useContext(GroupContext);
+}
+
+// --------------------------------------------------
+// Item Context
+// --------------------------------------------------
+
+const ItemContext = createContext<IItemContext | null>(null);
+
+/**
+ * Hook to access Menu Item context.
+ * Provides the item's id, selected state, and disabled state.
+ *
+ * @throws Error if used outside a Menu Item component
+ */
+function useItemContext() {
+  const context = useContext(ItemContext);
+
+  if (!context) {
+    throw new Error(
+      'Menu.Item compound components cannot be rendered outside Menu.Item'
+    );
+  }
+
+  return context;
+}
+
+// --------------------------------------------------
+// Group
+// --------------------------------------------------
+
+const Group = forwardRef<GroupRef, GroupProps>(
+  (
+    {
+      asChild,
+      selectionMode = 'none',
+      selectedKeys: selectedKeysProp,
+      defaultSelectedKeys,
+      onSelectionChange: onSelectionChangeProp,
+      disabledKeys: disabledKeysProp,
+      isDisabled = false,
+      ...viewProps
+    },
+    ref
+  ) => {
+    const isControlled = selectedKeysProp !== undefined;
+
+    const [internalSelectedKeys, setInternalSelectedKeys] = useState<
+      Set<MenuKey>
+    >(() => new Set(defaultSelectedKeys ?? []));
+
+    const selectedKeys = useMemo(
+      () =>
+        isControlled ? new Set(selectedKeysProp ?? []) : internalSelectedKeys,
+      [isControlled, selectedKeysProp, internalSelectedKeys]
+    );
+
+    const disabledKeys = useMemo(
+      () => new Set(disabledKeysProp ?? []),
+      [disabledKeysProp]
+    );
+
+    const onSelectionChange = useCallback(
+      (keys: Set<MenuKey>) => {
+        if (!isControlled) {
+          setInternalSelectedKeys(keys);
+        }
+        onSelectionChangeProp?.(keys);
+      },
+      [isControlled, onSelectionChangeProp]
+    );
+
+    const contextValue = useMemo<GroupContextValue>(
+      () => ({
+        selectionMode,
+        selectedKeys,
+        onSelectionChange,
+        disabledKeys,
+        isDisabled,
+      }),
+      [selectionMode, selectedKeys, onSelectionChange, disabledKeys, isDisabled]
+    );
+
+    const Component = asChild ? Slot.View : View;
+
+    return (
+      <GroupContext.Provider value={contextValue}>
+        <Component ref={ref} role="group" {...viewProps} />
+      </GroupContext.Provider>
+    );
+  }
+);
+
+// --------------------------------------------------
+// Item
+// --------------------------------------------------
+
+const Item = forwardRef<ItemRef, ItemProps>(
+  (
+    {
+      asChild,
+      id: itemId,
+      isDisabled: isDisabledProp = false,
+      shouldCloseOnSelect: shouldCloseOnSelectProp,
+      isSelected: isSelectedProp,
+      onSelectedChange,
+      onPress: onPressProp,
+      ...props
+    },
+    ref
+  ) => {
+    const { onOpenChange, setTriggerPosition, setContentLayout } =
+      useRootContext();
+
+    const groupContext = useOptionalGroupContext();
+    const isInsideGroup = groupContext !== null;
+
+    if (isInsideGroup && itemId === undefined) {
+      throw new Error(
+        'Menu.Item requires an `id` prop when used inside Menu.Group'
+      );
+    }
+
+    // -- Resolve disabled state --
+    const effectiveDisabled = isInsideGroup
+      ? groupContext.isDisabled ||
+        isDisabledProp ||
+        (itemId !== undefined && groupContext.disabledKeys.has(itemId))
+      : isDisabledProp;
+
+    // -- Resolve selected state --
+    const isSelected = isInsideGroup
+      ? itemId !== undefined && groupContext.selectedKeys.has(itemId)
+      : (isSelectedProp ?? false);
+
+    // -- Resolve shouldCloseOnSelect --
+    const effectiveCloseOnSelect = isInsideGroup
+      ? groupContext.selectionMode === 'multiple'
+        ? false
+        : (shouldCloseOnSelectProp ?? true)
+      : (shouldCloseOnSelectProp ?? true);
+
+    // -- Resolve ARIA role --
+    // RN's Role type only supports "menuitem"; selection semantics are
+    // conveyed via aria-checked and accessibilityState.checked instead.
+    const role = 'menuitem' as const;
+
+    const closeMenu = useCallback(() => {
+      onOpenChange(false);
+      setTriggerPosition(null);
+      setContentLayout(null);
+    }, [onOpenChange, setTriggerPosition, setContentLayout]);
+
+    const onPress = useCallback(
+      (ev: GestureResponderEvent) => {
+        if (effectiveDisabled) return;
+
+        if (isInsideGroup && itemId !== undefined) {
+          const { selectionMode, selectedKeys, onSelectionChange } =
+            groupContext;
+
+          if (selectionMode === 'single') {
+            const newKeys = isSelected
+              ? new Set<MenuKey>()
+              : new Set<MenuKey>([itemId]);
+            onSelectionChange(newKeys);
+          } else if (selectionMode === 'multiple') {
+            const newKeys = new Set(selectedKeys);
+            if (isSelected) {
+              newKeys.delete(itemId);
+            } else {
+              newKeys.add(itemId);
+            }
+            onSelectionChange(newKeys);
+          }
+        } else {
+          // Standalone: toggle via callback if provided
+          onSelectedChange?.(!isSelected);
+        }
+
+        onPressProp?.(ev);
+
+        if (effectiveCloseOnSelect) {
+          closeMenu();
+        }
+      },
+      [
+        effectiveDisabled,
+        isInsideGroup,
+        itemId,
+        groupContext,
+        isSelected,
+        onSelectedChange,
+        onPressProp,
+        effectiveCloseOnSelect,
+        closeMenu,
+      ]
+    );
+
+    const itemContextValue = useMemo<IItemContext>(
+      () => ({
+        id: itemId,
+        isSelected,
+        isDisabled: effectiveDisabled,
+      }),
+      [itemId, isSelected, effectiveDisabled]
+    );
+
+    const isCheckable = isInsideGroup
+      ? groupContext.selectionMode !== 'none'
+      : isSelectedProp !== undefined || onSelectedChange !== undefined;
+
+    const Component = asChild ? Slot.Pressable : Pressable;
+
+    return (
+      <ItemContext.Provider value={itemContextValue}>
+        <Component
+          ref={ref}
+          role={role}
+          aria-checked={isCheckable ? isSelected : undefined}
+          aria-disabled={effectiveDisabled}
+          disabled={effectiveDisabled}
+          accessibilityState={{
+            disabled: effectiveDisabled,
+            ...(isCheckable ? { checked: isSelected } : {}),
+          }}
+          onPress={onPress}
+          {...props}
+        />
+      </ItemContext.Provider>
+    );
+  }
+);
+
+// --------------------------------------------------
+// ItemTitle
+// --------------------------------------------------
+
+const ItemTitle = forwardRef<ItemTitleRef, ItemTitleProps>(
+  ({ asChild, ...props }, ref) => {
+    useItemContext();
+
+    const Component = asChild ? Slot.Text : Text;
+
+    return <Component ref={ref} {...props} />;
+  }
+);
+
+// --------------------------------------------------
+// ItemDescription
+// --------------------------------------------------
+
+const ItemDescription = forwardRef<ItemDescriptionRef, ItemDescriptionProps>(
+  ({ asChild, ...props }, ref) => {
+    useItemContext();
+
+    const Component = asChild ? Slot.Text : Text;
+
+    return <Component ref={ref} {...props} />;
+  }
+);
+
+// --------------------------------------------------
+// ItemIndicator
+// --------------------------------------------------
+
+const ItemIndicator = forwardRef<ItemIndicatorRef, ItemIndicatorProps>(
+  ({ asChild, forceMount, ...props }, ref) => {
+    const { isSelected } = useItemContext();
+
+    if (!forceMount && !isSelected) {
+      return null;
+    }
+
+    const Component = asChild ? Slot.View : View;
+
+    return (
+      <Component
+        ref={ref}
+        role="presentation"
+        aria-hidden={!isSelected}
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
 
 Root.displayName = 'HeroUINative.Menu.Root';
 Trigger.displayName = 'HeroUINative.Menu.Trigger';
 Overlay.displayName = 'HeroUINative.Menu.Overlay';
 Content.displayName = 'HeroUINative.Menu.Content';
 Close.displayName = 'HeroUINative.Menu.Close';
+Group.displayName = 'HeroUINative.Menu.Group';
+Item.displayName = 'HeroUINative.Menu.Item';
+ItemTitle.displayName = 'HeroUINative.Menu.ItemTitle';
+ItemDescription.displayName = 'HeroUINative.Menu.ItemDescription';
+ItemIndicator.displayName = 'HeroUINative.Menu.ItemIndicator';
 
-export { Close, Content, Overlay, Portal, Root, Trigger, useRootContext };
+export {
+  Close,
+  Content,
+  Group,
+  Item,
+  ItemDescription,
+  ItemIndicator,
+  ItemTitle,
+  Overlay,
+  Portal,
+  Root,
+  Trigger,
+  useGroupContext,
+  useItemContext,
+  useRootContext,
+};

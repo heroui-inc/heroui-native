@@ -5,7 +5,9 @@ import type {
   PositionedContentProps,
   PressableRef,
   SlottablePressableProps,
+  SlottableTextProps,
   SlottableViewProps,
+  TextRef,
   ViewRef,
 } from '../../helpers/internal/types';
 
@@ -150,39 +152,176 @@ type ContentProps = SlottableViewProps &
  */
 type CloseProps = SlottablePressableProps;
 
+// --------------------------------------------------
+// Menu Key
+// --------------------------------------------------
+
+/** Key type for identifying items within a Menu Group */
+type MenuKey = string | number;
+
+/** Selection mode for a Menu Group */
+type GroupSelectionMode = 'none' | 'single' | 'multiple';
+
+// --------------------------------------------------
+// Group
+// --------------------------------------------------
+
 /**
- * Ref type for the Menu Close component
+ * Props for the Menu Group component.
+ * Manages selection state and disabled keys for grouped menu items.
+ *
+ * @extends SlottableViewProps Inherits view props with asChild support
  */
+type GroupProps = SlottableViewProps & {
+  /** The type of selection allowed in the group @default "none" */
+  selectionMode?: GroupSelectionMode;
+  /** The currently selected keys (controlled) */
+  selectedKeys?: Iterable<MenuKey>;
+  /** The initial selected keys (uncontrolled) */
+  defaultSelectedKeys?: Iterable<MenuKey>;
+  /** Handler called when the selection changes */
+  onSelectionChange?: (keys: Set<MenuKey>) => void;
+  /** Keys of items that should be disabled */
+  disabledKeys?: Iterable<MenuKey>;
+  /** Whether the entire group is disabled */
+  isDisabled?: boolean;
+};
+
+/**
+ * Internal context value for a Menu Group.
+ * Holds resolved selection state and callbacks.
+ */
+type GroupContextValue = Required<
+  Pick<GroupProps, 'selectionMode' | 'isDisabled'>
+> & {
+  /** Resolved set of currently selected keys */
+  selectedKeys: Set<MenuKey>;
+  /** Resolved set of disabled keys */
+  disabledKeys: Set<MenuKey>;
+  /** Callback to update the selection */
+  onSelectionChange: NonNullable<GroupProps['onSelectionChange']>;
+};
+
+// --------------------------------------------------
+// Item
+// --------------------------------------------------
+
+/**
+ * Internal context value exposed to Menu Item children
+ * (ItemTitle, ItemDescription, ItemIndicator).
+ */
+interface IItemContext {
+  /** Item identifier (undefined for standalone items without id) */
+  id: MenuKey | undefined;
+  /** Whether the item is currently selected */
+  isSelected: boolean;
+  /** Whether the item is disabled */
+  isDisabled: boolean;
+}
+
+/**
+ * Props for the Menu Item component.
+ * When used standalone, acts as a regular pressable with optional selection.
+ * When used inside a Menu Group, participates in the group's selection logic.
+ *
+ * @extends SlottablePressableProps Inherits pressable props except 'disabled'
+ */
+type ItemProps = Omit<SlottablePressableProps, 'disabled'> & {
+  /**
+   * Unique identifier for this item. Required when inside a Menu Group.
+   */
+  id?: MenuKey;
+  /** Whether this item is disabled */
+  isDisabled?: boolean;
+  /**
+   * Whether pressing this item should close the menu.
+   * Defaults to `true`. Forced to `false` when inside a Group with
+   * `selectionMode="multiple"`.
+   * @default true
+   */
+  shouldCloseOnSelect?: boolean;
+  /**
+   * Controlled selected state for standalone items.
+   * Enables ItemIndicator support without a Group.
+   * Ignored when inside a Group (selection is managed by Group).
+   */
+  isSelected?: boolean;
+  /**
+   * Callback fired when the standalone item's selected state changes.
+   * Ignored when inside a Group (selection is managed by Group).
+   * @param selected - The new selected state
+   */
+  onSelectedChange?: (selected: boolean) => void;
+};
+
+// --------------------------------------------------
+// Item sub-components
+// --------------------------------------------------
+
+/**
+ * Props for the Menu ItemTitle component.
+ * Renders the primary label text of a menu item.
+ *
+ * @extends SlottableTextProps Inherits text props with asChild support
+ */
+type ItemTitleProps = SlottableTextProps;
+
+/**
+ * Props for the Menu ItemDescription component.
+ * Renders secondary description text of a menu item.
+ *
+ * @extends SlottableTextProps Inherits text props with asChild support
+ */
+type ItemDescriptionProps = SlottableTextProps;
+
+/**
+ * Props for the Menu ItemIndicator component.
+ * Renders a visual selection indicator (e.g. checkmark) within a menu item.
+ * Only visible when the parent item is selected unless `forceMount` is set.
+ *
+ * @extends SlottableViewProps Inherits view props with asChild support
+ * @extends ForceMountable Supports forced mounting behavior
+ */
+type ItemIndicatorProps = SlottableViewProps & ForceMountable;
+
+// --------------------------------------------------
+// Ref types
+// --------------------------------------------------
+
+/** Ref type for the Menu Close component */
 type CloseRef = PressableRef;
 
-/**
- * Ref type for the Menu Content component
- */
+/** Ref type for the Menu Content component */
 type ContentRef = ViewRef;
 
-/**
- * Ref type for the Menu Overlay component
- */
+/** Ref type for the Menu Overlay component */
 type OverlayRef = PressableRef;
 
-/**
- * Ref type for the Menu Root component
- */
+/** Ref type for the Menu Root component */
 type RootRef = ViewRef;
 
-/**
- * Ref type for the Menu Trigger component
- */
+/** Ref type for the Menu Trigger component */
 type TriggerRef = PressableRef & {
-  /**
-   * Programmatically open the menu
-   */
+  /** Programmatically open the menu */
   open: () => void;
-  /**
-   * Programmatically close the menu
-   */
+  /** Programmatically close the menu */
   close: () => void;
 };
+
+/** Ref type for the Menu Group component */
+type GroupRef = ViewRef;
+
+/** Ref type for the Menu Item component */
+type ItemRef = PressableRef;
+
+/** Ref type for the Menu ItemTitle component */
+type ItemTitleRef = TextRef;
+
+/** Ref type for the Menu ItemDescription component */
+type ItemDescriptionRef = TextRef;
+
+/** Ref type for the Menu ItemIndicator component */
+type ItemIndicatorRef = ViewRef;
 
 export type {
   CloseProps,
@@ -190,7 +329,21 @@ export type {
   ContentProps,
   ContentRef,
   ContentSizing,
+  GroupContextValue,
+  GroupProps,
+  GroupRef,
+  GroupSelectionMode,
+  IItemContext,
   IRootContext,
+  ItemDescriptionProps,
+  ItemDescriptionRef,
+  ItemIndicatorProps,
+  ItemIndicatorRef,
+  ItemProps,
+  ItemRef,
+  ItemTitleProps,
+  ItemTitleRef,
+  MenuKey,
   OverlayProps,
   OverlayRef,
   PortalProps,

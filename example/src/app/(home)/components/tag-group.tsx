@@ -5,7 +5,6 @@ import {
   Description,
   FieldError,
   Label,
-  Tag,
   TagGroup,
   useThemeColor,
 } from 'heroui-native';
@@ -19,7 +18,7 @@ import { GlobeIcon } from '../../../components/icons/globe';
 import { RocketIcon } from '../../../components/icons/rocket';
 import { SquareArticleIcon } from '../../../components/icons/square-article';
 
-const AnimatedTag = Animated.createAnimatedComponent(Tag);
+const AnimatedTagGroupItem = Animated.createAnimatedComponent(TagGroup.Item);
 const AnimatedChip = Animated.createAnimatedComponent(Chip);
 
 // ------------------------------------------------------------------------------
@@ -59,39 +58,39 @@ const CategoriesTagGroup: React.FC<CategoriesTagGroupProps> = ({
       onSelectionChange={onSelectionChange}
     >
       <TagGroup.List className="justify-center">
-        <Tag id="news">
+        <TagGroup.Item id="news">
           {({ isSelected }) => (
             <>
               <SquareArticleIcon
                 size={16}
                 colorClassName={getColorClassName(isSelected)}
               />
-              <Tag.Label>News</Tag.Label>
+              <TagGroup.ItemLabel>News</TagGroup.ItemLabel>
             </>
           )}
-        </Tag>
-        <Tag id="travel">
+        </TagGroup.Item>
+        <TagGroup.Item id="travel">
           {({ isSelected }) => (
             <>
               <GlobeIcon
                 size={14}
                 colorClassName={getColorClassName(isSelected)}
               />
-              <Tag.Label>Travel</Tag.Label>
+              <TagGroup.ItemLabel>Travel</TagGroup.ItemLabel>
             </>
           )}
-        </Tag>
-        <Tag id="gaming">
+        </TagGroup.Item>
+        <TagGroup.Item id="gaming">
           {({ isSelected }) => (
             <>
               <RocketIcon
                 size={14}
                 colorClassName={getColorClassName(isSelected)}
               />
-              <Tag.Label>Gaming</Tag.Label>
+              <TagGroup.ItemLabel>Gaming</TagGroup.ItemLabel>
             </>
           )}
-        </Tag>
+        </TagGroup.Item>
       </TagGroup.List>
     </TagGroup>
   );
@@ -116,9 +115,9 @@ const VariantsContent = () => {
         <AppText className="text-sm text-muted">Default</AppText>
         <TagGroup selectionMode="single" variant="default">
           <TagGroup.List>
-            <Tag id="news">News</Tag>
-            <Tag id="travel">Travel</Tag>
-            <Tag id="gaming">Gaming</Tag>
+            <TagGroup.Item id="news">News</TagGroup.Item>
+            <TagGroup.Item id="travel">Travel</TagGroup.Item>
+            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
@@ -126,9 +125,48 @@ const VariantsContent = () => {
         <AppText className="text-sm text-muted">Surface</AppText>
         <TagGroup selectionMode="single" variant="surface">
           <TagGroup.List>
-            <Tag id="news">News</Tag>
-            <Tag id="travel">Travel</Tag>
-            <Tag id="gaming">Gaming</Tag>
+            <TagGroup.Item id="news">News</TagGroup.Item>
+            <TagGroup.Item id="travel">Travel</TagGroup.Item>
+            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
+          </TagGroup.List>
+        </TagGroup>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const SizesContent = () => {
+  return (
+    <View className="flex-1 px-5 items-center justify-center gap-6">
+      <View className="gap-2">
+        <AppText className="text-sm text-muted text-center">sm</AppText>
+        <TagGroup selectionMode="single" size="sm">
+          <TagGroup.List>
+            <TagGroup.Item id="news">News</TagGroup.Item>
+            <TagGroup.Item id="travel">Travel</TagGroup.Item>
+            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
+          </TagGroup.List>
+        </TagGroup>
+      </View>
+      <View className="gap-2">
+        <AppText className="text-sm text-muted text-center">md</AppText>
+        <TagGroup selectionMode="single" size="md">
+          <TagGroup.List>
+            <TagGroup.Item id="news">News</TagGroup.Item>
+            <TagGroup.Item id="travel">Travel</TagGroup.Item>
+            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
+          </TagGroup.List>
+        </TagGroup>
+      </View>
+      <View className="gap-2">
+        <AppText className="text-sm text-muted text-center">lg</AppText>
+        <TagGroup selectionMode="single" size="lg">
+          <TagGroup.List>
+            <TagGroup.Item id="news">News</TagGroup.Item>
+            <TagGroup.Item id="travel">Travel</TagGroup.Item>
+            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
@@ -187,11 +225,11 @@ const DisabledContent = () => {
         <AppText className="text-sm text-muted">Individual disabled</AppText>
         <TagGroup selectionMode="single">
           <TagGroup.List>
-            <Tag id="news">News</Tag>
-            <Tag id="travel" isDisabled>
+            <TagGroup.Item id="news">News</TagGroup.Item>
+            <TagGroup.Item id="travel" isDisabled>
               Travel
-            </Tag>
-            <Tag id="gaming">Gaming</Tag>
+            </TagGroup.Item>
+            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
@@ -202,9 +240,9 @@ const DisabledContent = () => {
           disabledKeys={new Set(['travel', 'gaming'])}
         >
           <TagGroup.List>
-            <Tag id="news">News</Tag>
-            <Tag id="travel">Travel</Tag>
-            <Tag id="gaming">Gaming</Tag>
+            <TagGroup.Item id="news">News</TagGroup.Item>
+            <TagGroup.Item id="travel">Travel</TagGroup.Item>
+            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
@@ -232,11 +270,11 @@ const WithErrorMessageContent = () => {
       >
         <Label isInvalid={false}>Amenities</Label>
         <TagGroup.List>
-          <Tag id="laundry">Laundry</Tag>
-          <Tag id="fitness">Fitness center</Tag>
-          <Tag id="parking">Parking</Tag>
-          <Tag id="pool">Swimming pool</Tag>
-          <Tag id="breakfast">Breakfast</Tag>
+          <TagGroup.Item id="laundry">Laundry</TagGroup.Item>
+          <TagGroup.Item id="fitness">Fitness center</TagGroup.Item>
+          <TagGroup.Item id="parking">Parking</TagGroup.Item>
+          <TagGroup.Item id="pool">Swimming pool</TagGroup.Item>
+          <TagGroup.Item id="breakfast">Breakfast</TagGroup.Item>
         </TagGroup.List>
         <Description hideOnInvalid>
           {`Selected: ${Array.from(selected).join(', ')}`}
@@ -290,14 +328,14 @@ const WithRemoveButtonFullContent = () => {
           )}
         >
           {tags.map((tag) => (
-            <AnimatedTag
+            <AnimatedTagGroupItem
               key={tag.id}
               id={tag.id}
               layout={LinearTransition.springify()}
             >
-              <Tag.Label>{tag.name}</Tag.Label>
-              <Tag.RemoveButton />
-            </AnimatedTag>
+              <TagGroup.ItemLabel>{tag.name}</TagGroup.ItemLabel>
+              <TagGroup.ItemRemoveButton />
+            </AnimatedTagGroupItem>
           ))}
         </TagGroup.List>
         <Description>Tap the X to remove tags</Description>
@@ -313,15 +351,15 @@ const WithRemoveButtonFullContent = () => {
           )}
         >
           {frameworks.map((fw) => (
-            <AnimatedTag
+            <AnimatedTagGroupItem
               key={fw.id}
               id={fw.id}
               layout={LinearTransition.springify()}
             >
               {({ isSelected }) => (
                 <>
-                  <Tag.Label>{fw.name}</Tag.Label>
-                  <Tag.RemoveButton
+                  <TagGroup.ItemLabel>{fw.name}</TagGroup.ItemLabel>
+                  <TagGroup.ItemRemoveButton
                     className={cn(
                       'p-0.5 bg-muted',
                       isSelected && 'bg-accent-soft-foreground'
@@ -334,7 +372,7 @@ const WithRemoveButtonFullContent = () => {
                   />
                 </>
               )}
-            </AnimatedTag>
+            </AnimatedTagGroupItem>
           ))}
         </TagGroup.List>
         <Description>Custom remove button styles</Description>
@@ -422,7 +460,7 @@ const WithAvatarAndRemoveButtonContent = () => {
           )}
         >
           {users.map((user) => (
-            <AnimatedTag
+            <AnimatedTagGroupItem
               key={user.id}
               id={user.id}
               className="pl-1.5 pr-2"
@@ -434,9 +472,9 @@ const WithAvatarAndRemoveButtonContent = () => {
                   <AppText className="text-xs">{user.fallback}</AppText>
                 </Avatar.Fallback>
               </Avatar>
-              <Tag.Label>{user.name}</Tag.Label>
-              <Tag.RemoveButton />
-            </AnimatedTag>
+              <TagGroup.ItemLabel>{user.name}</TagGroup.ItemLabel>
+              <TagGroup.ItemRemoveButton />
+            </AnimatedTagGroupItem>
           ))}
         </TagGroup.List>
         <Description>Select team members for your project</Description>
@@ -490,6 +528,11 @@ const TAG_GROUP_VARIANTS: UsageVariant[] = [
     value: 'variants',
     label: 'Variants',
     content: <VariantsContent />,
+  },
+  {
+    value: 'sizes',
+    label: 'Sizes',
+    content: <SizesContent />,
   },
   {
     value: 'single-selection',

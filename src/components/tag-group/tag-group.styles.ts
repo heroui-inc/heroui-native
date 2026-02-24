@@ -11,34 +11,46 @@ const list = tv({
 });
 
 const tag = tv({
-  base: 'p-1 px-2.5 gap-1 rounded-2xl flex-row items-center',
+  base: 'gap-1 flex-row items-center',
   variants: {
     variant: {
       default: 'bg-default',
       surface: 'bg-surface',
     },
+    size: {
+      sm: 'p-0.5 px-2 gap-1 rounded-xl',
+      md: 'p-1 px-2.5 gap-1 rounded-2xl',
+      lg: 'p-1.5 px-3 gap-1.5 rounded-3xl',
+    },
     isSelected: {
       true: 'bg-accent-soft',
     },
     isDisabled: {
-      true: 'opacity-disabled',
+      true: 'opacity-disabled pointer-events-none',
     },
   },
   defaultVariants: {
     variant: 'default',
+    size: 'md',
     isSelected: false,
     isDisabled: false,
   },
 });
 
 const tagLabel = tv({
-  base: 'text-sm font-medium text-field-foreground',
+  base: 'font-medium text-field-foreground',
   variants: {
+    size: {
+      sm: 'text-xs',
+      md: 'text-sm',
+      lg: 'text-base',
+    },
     isSelected: {
       true: 'text-accent-soft-foreground',
     },
   },
   defaultVariants: {
+    size: 'md',
     isSelected: false,
   },
 });

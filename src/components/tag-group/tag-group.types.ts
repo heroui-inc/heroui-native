@@ -13,15 +13,13 @@ export type TagGroupSize = 'sm' | 'md' | 'lg';
 export type TagGroupVariant = 'default' | 'surface';
 
 /**
- * Render props passed to Tag's render function children
+ * Render props passed to TagGroup.Item's render function children
  */
 export interface TagRenderProps {
   /** Whether the tag is currently selected */
   isSelected: boolean;
-  /** Whether the tag is disabled */
+  /** Whether the tag is disabled (merged from root, disabledKeys, and item prop) */
   isDisabled: boolean;
-  /** Whether the tag can be removed */
-  allowsRemoving: boolean;
 }
 
 /**
@@ -63,10 +61,10 @@ export interface TagGroupListProps extends ViewProps {
 }
 
 /**
- * Props for the Tag component.
+ * Props for the TagGroup.Item component.
  * Represents an individual tag within a TagGroup.
  */
-export interface TagProps
+export interface TagGroupItemProps
   extends Omit<TagGroupPrimitivesTypes.ItemProps, 'asChild' | 'children'> {
   /** Tag content: string, elements, or a render function receiving TagRenderProps */
   children?:
@@ -78,10 +76,10 @@ export interface TagProps
 }
 
 /**
- * Props for the Tag.Label component.
+ * Props for the TagGroup.ItemLabel component.
  * Renders the text label of a tag.
  */
-export interface TagLabelProps extends TextProps {
+export interface TagGroupItemLabelProps extends TextProps {
   /** Text content to render */
   children?: React.ReactNode;
 
@@ -100,10 +98,10 @@ export interface TagRemoveButtonIconProps {
 }
 
 /**
- * Props for the Tag.RemoveButton component.
+ * Props for the TagGroup.ItemRemoveButton component.
  * Renders a button to remove the tag from the group.
  */
-export interface TagRemoveButtonProps
+export interface TagGroupItemRemoveButtonProps
   extends Omit<TagGroupPrimitivesTypes.RemoveButtonProps, 'asChild'> {
   /** Custom icon or content for the remove button */
   children?: React.ReactNode;

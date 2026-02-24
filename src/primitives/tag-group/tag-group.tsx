@@ -76,7 +76,7 @@ export function useItemContext() {
 
   if (!context) {
     throw new Error(
-      'Tag compound components cannot be rendered outside the Tag component'
+      'TagGroup.Item compound components cannot be rendered outside TagGroup.Item'
     );
   }
 

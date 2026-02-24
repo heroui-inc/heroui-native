@@ -137,6 +137,10 @@ const components: Component[] = [
     path: 'tabs',
   },
   {
+    title: 'TagGroup',
+    path: 'tag-group',
+  },
+  {
     title: 'TextArea',
     path: 'text-area',
   },

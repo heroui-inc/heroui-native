@@ -435,7 +435,7 @@ const MenuItemComponent = forwardRef<
     const { rItemStyle, isPressed, animationOnPressIn, animationOnPressOut } =
       useMenuItemAnimation({ animation, variant });
 
-    const itemClassName = menuClassNames.item({ className });
+    const itemClassName = menuClassNames.item({ className, isDisabled });
 
     const isSelected = props.isSelected ?? false;
 

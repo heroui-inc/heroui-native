@@ -25,7 +25,7 @@ const overlay = tv({
  * - `transformOrigin` - Animated based on placement
  */
 const content = tv({
-  base: 'absolute bg-overlay p-1.5 rounded-3xl shadow-overlay',
+  base: 'absolute bg-overlay px-1.5 py-3 rounded-3xl shadow-overlay',
 });
 
 /**
@@ -49,7 +49,12 @@ const group = tv({
  * - `transform` (scale) - Animated for press feedback (1 → 0.98 on press)
  */
 const item = tv({
-  base: 'flex-row items-center gap-2 px-2.5 py-2 rounded-2xl',
+  base: 'flex-row items-center gap-2.5 px-2.5 py-2 rounded-2xl',
+  variants: {
+    isDisabled: {
+      true: 'opacity-disabled pointer-events-none',
+    },
+  },
 });
 
 const itemTitle = tv({

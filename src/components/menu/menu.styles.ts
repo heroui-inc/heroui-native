@@ -1,0 +1,76 @@
+import { StyleSheet } from 'react-native';
+import { tv } from 'tailwind-variants';
+import { combineStyles } from '../../helpers/internal/utils';
+
+const portal = tv({
+  base: 'absolute inset-0',
+});
+
+/**
+ * Overlay style definition
+ *
+ * @note ANIMATED PROPERTIES (cannot be set via className):
+ * - `opacity` - Animated for overlay show/hide transitions (idle: 0, open: 1, close: 0)
+ */
+const overlay = tv({
+  base: 'absolute inset-0',
+});
+
+/**
+ * Menu content style definition
+ *
+ * @note ANIMATED PROPERTIES (cannot be set via className):
+ * - `opacity` - Animated for content show/hide transitions
+ * - `transform` (scale, translateX, translateY) - Animated for content show/hide transitions
+ * - `transformOrigin` - Animated based on placement
+ */
+const content = tv({
+  base: 'absolute bg-overlay p-1.5 rounded-3xl shadow-overlay',
+});
+
+/**
+ * @note When Menu.Content uses `presentation="bottom-sheet"`, it uses `bottomSheetClassNames`
+ * from `../bottom-sheet/bottom-sheet.styles` instead of `menuClassNames.content`.
+ */
+
+const close = tv({
+  base: '',
+});
+
+const group = tv({
+  base: '',
+});
+
+const item = tv({
+  base: 'flex-row items-center gap-2 px-2.5 py-3 rounded-2xl',
+});
+
+const itemTitle = tv({
+  base: 'flex-1 text-base text-foreground font-medium',
+});
+
+const itemDescription = tv({
+  base: 'text-sm/snug text-muted',
+});
+
+const itemIndicator = tv({
+  base: 'size-5 items-center justify-center',
+});
+
+export const menuClassNames = combineStyles({
+  portal,
+  overlay,
+  content,
+  close,
+  group,
+  item,
+  itemTitle,
+  itemDescription,
+  itemIndicator,
+});
+
+export const menuStyleSheet = StyleSheet.create({
+  contentContainer: {
+    borderCurve: 'continuous',
+  },
+});

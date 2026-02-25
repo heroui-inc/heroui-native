@@ -1,9 +1,11 @@
 import type BottomSheet from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
-import type { SharedValue } from 'react-native-reanimated';
+import type { SharedValue, WithTimingConfig } from 'react-native-reanimated';
 import type {
+  Animation,
   AnimationRootDisableAll,
+  AnimationValue,
   BaseBottomSheetContentProps,
   PopupOverlayAnimation,
   PopupPopoverContentAnimation,
@@ -202,6 +204,48 @@ export interface MenuGroupProps
 // --------------------------------------------------
 
 /**
+ * Animation configuration for a Menu Item.
+ * Controls scale and background-color transitions on press.
+ *
+ * - `true` or `undefined`: Use default animations
+ * - `false` or `"disabled"`: Disable all item animations
+ * - `object`: Custom animation configuration
+ */
+export type MenuItemAnimation = Animation<{
+  /**
+   * Scale animation when pressed
+   */
+  scale?: AnimationValue<{
+    /**
+     * Scale value when pressed
+     * @default 0.99
+     */
+    value?: number;
+    /**
+     * Animation timing configuration
+     * @default { duration: 200, easing: Easing.out(Easing.ease) }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+  /**
+   * Background-color animation when pressed
+   */
+  backgroundColor?: AnimationValue<{
+    /**
+     * Background color shown while pressed.
+     * Resolved from the `default` theme token when omitted.
+     * @default useThemeColor('default')
+     */
+    value?: string;
+    /**
+     * Animation timing configuration
+     * @default { duration: 150 }
+     */
+    timingConfig?: WithTimingConfig;
+  }>;
+}>;
+
+/**
  * Render function props for MenuItem children
  */
 export interface MenuItemRenderProps {
@@ -209,6 +253,8 @@ export interface MenuItemRenderProps {
   isSelected: boolean;
   /** Whether the item is disabled */
   isDisabled: boolean;
+  /** Whether the item is currently pressed */
+  isPressed: SharedValue<boolean>;
   /** Visual variant of the item */
   variant: MenuPrimitivesTypes.ItemVariant;
 }
@@ -222,6 +268,19 @@ export interface MenuItemProps
    * Additional CSS class for the item
    */
   className?: string;
+  /**
+   * Animation configuration for press feedback (scale + background color).
+   * - `false` or `"disabled"`: Disable all item animations
+   * - `true` or `undefined`: Use default animations
+   * - `object`: Custom animation configuration
+   */
+  animation?: MenuItemAnimation;
+  /**
+   * Whether animated styles (react-native-reanimated) are active.
+   * When `false`, the animated style is removed and you can implement custom logic.
+   * @default true
+   */
+  isAnimatedStyleActive?: boolean;
   /**
    * Child elements to render inside the item, or a render function
    */

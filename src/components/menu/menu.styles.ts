@@ -41,8 +41,15 @@ const group = tv({
   base: '',
 });
 
+/**
+ * Menu item style definition
+ *
+ * @note ANIMATED PROPERTIES (cannot be set via className):
+ * - `backgroundColor` - Animated for press feedback (transparent → default on press)
+ * - `transform` (scale) - Animated for press feedback (1 → 0.98 on press)
+ */
 const item = tv({
-  base: 'flex-row items-center gap-2 px-2.5 py-3 rounded-2xl',
+  base: 'flex-row items-center gap-2 px-2.5 py-2 rounded-2xl',
 });
 
 const itemTitle = tv({
@@ -79,7 +86,7 @@ export const menuClassNames = combineStyles({
 });
 
 export const menuStyleSheet = StyleSheet.create({
-  contentContainer: {
+  borderCurve: {
     borderCurve: 'continuous',
   },
 });

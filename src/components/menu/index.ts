@@ -15,6 +15,7 @@ export type {
   MenuContentProps,
   MenuGroupProps,
   MenuGroupSelectionMode,
+  MenuItemAnimation,
   MenuItemDescriptionProps,
   MenuItemIndicatorIconProps,
   MenuItemIndicatorProps,

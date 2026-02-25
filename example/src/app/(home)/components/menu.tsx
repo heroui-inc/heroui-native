@@ -12,7 +12,7 @@ const BasicUsageContent = () => {
         </Menu.Trigger>
         <Menu.Portal>
           <Menu.Overlay />
-          <Menu.Content presentation="popover" width={200}>
+          <Menu.Content presentation="popover" width={200} className="gap-1.5">
             <Menu.Item>New file</Menu.Item>
             <Menu.Item>Copy link</Menu.Item>
             <Menu.Item>Edit file</Menu.Item>

@@ -26,7 +26,11 @@ import { childrenToString } from '../../helpers/internal/utils';
 import * as MenuPrimitives from '../../primitives/menu';
 import * as MenuPrimitivesTypes from '../../primitives/menu/menu.types';
 import { CloseButton } from '../close-button';
-import { MenuAnimationProvider, useMenuAnimation } from './menu.animation';
+import {
+  MenuAnimationProvider,
+  useMenuAnimation,
+  useMenuItemAnimation,
+} from './menu.animation';
 import {
   DEFAULT_ALIGN_OFFSET,
   DEFAULT_INSETS,
@@ -44,7 +48,6 @@ import type {
   MenuItemDescriptionProps,
   MenuItemIndicatorProps,
   MenuItemProps,
-  MenuItemRenderProps,
   MenuItemTitleProps,
   MenuOverlayProps,
   MenuPortalProps,
@@ -59,6 +62,8 @@ const AnimatedOverlay = Animated.createAnimatedComponent(
 const AnimatedContent = Animated.createAnimatedComponent(
   MenuPrimitives.Content
 );
+
+const AnimatedItem = Animated.createAnimatedComponent(MenuPrimitives.Item);
 
 const useMenu = MenuPrimitives.useRootContext;
 const useMenuItem = MenuPrimitives.useItemContext;
@@ -264,7 +269,7 @@ const MenuContentPopover = forwardRef<
             alignOffset={alignOffset}
             insets={insets}
             className={contentClassName}
-            style={[menuStyleSheet.contentContainer, style]}
+            style={[menuStyleSheet.borderCurve, style]}
             {...props}
           >
             {children}
@@ -283,7 +288,7 @@ const MenuContentPopover = forwardRef<
           alignOffset={alignOffset}
           insets={insets}
           className={cn(contentClassName, 'absolute opacity-0')}
-          style={[menuStyleSheet.contentContainer, style]}
+          style={[menuStyleSheet.borderCurve, style]}
           {...props}
         >
           {children}
@@ -328,7 +333,7 @@ const MenuContentBottomSheet = forwardRef<
         animation={animation}
         animationConfigs={animationConfigs}
         backgroundStyle={[
-          menuStyleSheet.contentContainer,
+          menuStyleSheet.borderCurve,
           restProps.backgroundStyle,
         ]}
         isOpen={isOpen}
@@ -413,21 +418,46 @@ const MenuItemComponent = forwardRef<
   MenuItemProps
 >(
   (
-    { children, className, isDisabled = false, variant = 'default', ...props },
+    {
+      children,
+      className,
+      style,
+      isDisabled = false,
+      variant = 'default',
+      animation,
+      isAnimatedStyleActive = true,
+      onPressIn,
+      onPressOut,
+      ...props
+    },
     ref
   ) => {
+    const { rItemStyle, isPressed, animationOnPressIn, animationOnPressOut } =
+      useMenuItemAnimation({ animation });
+
     const itemClassName = menuClassNames.item({ className });
 
     const isSelected = props.isSelected ?? false;
 
-    const renderProps: MenuItemRenderProps = {
-      isSelected,
-      isDisabled,
-      variant,
+    const handlePressIn = (event: GestureResponderEvent) => {
+      animationOnPressIn();
+      onPressIn?.(event);
+    };
+
+    const handlePressOut = (event: GestureResponderEvent) => {
+      animationOnPressOut();
+      onPressOut?.(event);
     };
 
     const resolvedChildren =
-      typeof children === 'function' ? children(renderProps) : children;
+      typeof children === 'function'
+        ? children({
+            isSelected,
+            isDisabled,
+            isPressed,
+            variant,
+          })
+        : children;
 
     const stringifiedChildren =
       typeof children !== 'function' ? childrenToString(children) : null;
@@ -438,16 +468,23 @@ const MenuItemComponent = forwardRef<
       resolvedChildren
     );
 
+    const itemStyle = isAnimatedStyleActive
+      ? [menuStyleSheet.borderCurve, rItemStyle, style]
+      : [menuStyleSheet.borderCurve, style];
+
     return (
-      <MenuPrimitives.Item
+      <AnimatedItem
         ref={ref}
         className={itemClassName}
+        style={itemStyle}
         isDisabled={isDisabled}
         variant={variant}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
         {...props}
       >
         {content}
-      </MenuPrimitives.Item>
+      </AnimatedItem>
     );
   }
 );

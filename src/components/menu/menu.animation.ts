@@ -17,6 +17,7 @@ import {
 import type {
   MenuAnimationContextValue,
   MenuItemAnimation,
+  MenuItemVariant,
 } from './menu.types';
 
 const [MenuAnimationProvider, useMenuAnimation] =
@@ -28,10 +29,12 @@ const [MenuAnimationProvider, useMenuAnimation] =
 
 function useMenuItemAnimation(options: {
   animation: MenuItemAnimation | undefined;
+  variant: MenuItemVariant;
 }) {
-  const { animation } = options;
+  const { animation, variant } = options;
 
   const themeColorDefault = useThemeColor('default');
+  const themeColorDanger = useThemeColor('danger-soft');
 
   const { isAllAnimationsDisabled } = useAnimationSettings();
 
@@ -69,7 +72,10 @@ function useMenuItemAnimation(options: {
   const bgColorValue = getAnimationValueProperty({
     animationValue: animationConfig?.backgroundColor,
     property: 'value',
-    defaultValue: themeColorDefault,
+    defaultValue:
+      variant === 'danger'
+        ? colorKit.setAlpha(themeColorDanger, 0.1).hex()
+        : themeColorDefault,
   });
 
   const bgTimingConfig = getAnimationValueMergedConfig({

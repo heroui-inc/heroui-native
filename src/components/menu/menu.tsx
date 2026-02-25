@@ -433,7 +433,7 @@ const MenuItemComponent = forwardRef<
     ref
   ) => {
     const { rItemStyle, isPressed, animationOnPressIn, animationOnPressOut } =
-      useMenuItemAnimation({ animation });
+      useMenuItemAnimation({ animation, variant });
 
     const itemClassName = menuClassNames.item({ className });
 

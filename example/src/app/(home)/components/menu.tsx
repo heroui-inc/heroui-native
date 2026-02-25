@@ -1,7 +1,11 @@
-import { Button, Menu } from 'heroui-native';
+import { Button, Menu, Separator } from 'heroui-native';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { LinkIcon } from '../../../components/icons/link';
+import { PencilIcon } from '../../../components/icons/pencil';
+import { PlusIcon } from '../../../components/icons/plus';
+import { TrashIcon } from '../../../components/icons/trash';
 
 const BasicUsageContent = () => {
   return (
@@ -13,10 +17,23 @@ const BasicUsageContent = () => {
         <Menu.Portal>
           <Menu.Overlay />
           <Menu.Content presentation="popover" width={200} className="gap-1.5">
-            <Menu.Item>New file</Menu.Item>
-            <Menu.Item>Copy link</Menu.Item>
-            <Menu.Item>Edit file</Menu.Item>
-            <Menu.Item variant="danger">Delete file</Menu.Item>
+            <Menu.Item>
+              <Menu.ItemTitle>New file</Menu.ItemTitle>
+              <PlusIcon size={14} colorClassName="accent-muted" />
+            </Menu.Item>
+            <Menu.Item>
+              <Menu.ItemTitle>Copy link</Menu.ItemTitle>
+              <LinkIcon size={14} colorClassName="accent-muted" />
+            </Menu.Item>
+            <Menu.Item>
+              <Menu.ItemTitle>Edit file</Menu.ItemTitle>
+              <PencilIcon size={14} colorClassName="accent-muted" />
+            </Menu.Item>
+            <Separator className="mx-2 opacity-75" />
+            <Menu.Item variant="danger">
+              <Menu.ItemTitle>Delete file</Menu.ItemTitle>
+              <TrashIcon size={14} colorClassName="accent-danger" />
+            </Menu.Item>
           </Menu.Content>
         </Menu.Portal>
       </Menu>

@@ -13,20 +13,10 @@ const BasicUsageContent = () => {
         <Menu.Portal>
           <Menu.Overlay />
           <Menu.Content presentation="popover" width={200}>
-            <Menu.Item>
-              <Menu.ItemTitle>New file</Menu.ItemTitle>
-            </Menu.Item>
-            <Menu.Item>
-              <Menu.ItemTitle>Copy link</Menu.ItemTitle>
-            </Menu.Item>
-            <Menu.Item>
-              <Menu.ItemTitle>Edit file</Menu.ItemTitle>
-            </Menu.Item>
-            <Menu.Item>
-              <Menu.ItemTitle className="text-danger">
-                Delete file
-              </Menu.ItemTitle>
-            </Menu.Item>
+            <Menu.Item>New file</Menu.Item>
+            <Menu.Item>Copy link</Menu.Item>
+            <Menu.Item>Edit file</Menu.Item>
+            <Menu.Item variant="danger">Delete file</Menu.Item>
           </Menu.Content>
         </Menu.Portal>
       </Menu>

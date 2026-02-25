@@ -46,11 +46,20 @@ const item = tv({
 });
 
 const itemTitle = tv({
-  base: 'flex-1 text-base text-foreground font-medium',
+  base: 'flex-1 text-base font-medium',
+  variants: {
+    variant: {
+      default: 'text-foreground',
+      danger: 'text-danger',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
 });
 
 const itemDescription = tv({
-  base: 'text-sm/snug text-muted',
+  base: 'text-sm/snug',
 });
 
 const itemIndicator = tv({

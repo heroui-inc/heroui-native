@@ -21,6 +21,7 @@ export type {
   MenuItemProps,
   MenuItemRenderProps,
   MenuItemTitleProps,
+  MenuItemVariant,
   MenuKey,
   MenuOverlayProps,
   MenuPlacement,

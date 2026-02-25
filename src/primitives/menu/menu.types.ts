@@ -207,6 +207,13 @@ type GroupContextValue = Required<
 // --------------------------------------------------
 
 /**
+ * Visual variant for a menu item.
+ * - `'default'` – Standard menu item styling.
+ * - `'danger'`  – Destructive-action styling (e.g. red text).
+ */
+type ItemVariant = 'default' | 'danger';
+
+/**
  * Internal context value exposed to Menu Item children
  * (ItemTitle, ItemDescription, ItemIndicator).
  */
@@ -217,6 +224,11 @@ interface IItemContext {
   isSelected: boolean;
   /** Whether the item is disabled */
   isDisabled: boolean;
+  /**
+   * Visual variant of the item.
+   * @default 'default'
+   */
+  variant: ItemVariant;
 }
 
 /**
@@ -252,6 +264,11 @@ type ItemProps = Omit<SlottablePressableProps, 'disabled'> & {
    * @param selected - The new selected state
    */
   onSelectedChange?: (selected: boolean) => void;
+  /**
+   * Visual variant of the menu item.
+   * @default 'default'
+   */
+  variant?: ItemVariant;
 };
 
 // --------------------------------------------------
@@ -343,6 +360,7 @@ export type {
   ItemRef,
   ItemTitleProps,
   ItemTitleRef,
+  ItemVariant,
   MenuKey,
   OverlayProps,
   OverlayRef,

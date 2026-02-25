@@ -524,6 +524,7 @@ const Item = forwardRef<ItemRef, ItemProps>(
       isSelected: isSelectedProp,
       onSelectedChange,
       onPress: onPressProp,
+      variant = 'default',
       ...props
     },
     ref
@@ -621,8 +622,9 @@ const Item = forwardRef<ItemRef, ItemProps>(
         id: itemId,
         isSelected,
         isDisabled: effectiveDisabled,
+        variant,
       }),
-      [itemId, isSelected, effectiveDisabled]
+      [itemId, isSelected, effectiveDisabled, variant]
     );
 
     const isCheckable = isInsideGroup

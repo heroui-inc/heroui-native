@@ -209,6 +209,8 @@ export interface MenuItemRenderProps {
   isSelected: boolean;
   /** Whether the item is disabled */
   isDisabled: boolean;
+  /** Visual variant of the item */
+  variant: MenuPrimitivesTypes.ItemVariant;
 }
 
 /**
@@ -301,5 +303,6 @@ export interface UseMenuAnimationReturn {
 
 export type {
   GroupSelectionMode as MenuGroupSelectionMode,
+  ItemVariant as MenuItemVariant,
   MenuKey,
 } from '../../primitives/menu/menu.types';

@@ -22,6 +22,7 @@ import {
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
 import type { PressableRef } from '../../helpers/internal/types';
+import { childrenToString } from '../../helpers/internal/utils';
 import * as MenuPrimitives from '../../primitives/menu';
 import * as MenuPrimitivesTypes from '../../primitives/menu/menu.types';
 import { CloseButton } from '../close-button';
@@ -410,36 +411,53 @@ const MenuGroup = forwardRef<MenuPrimitivesTypes.GroupRef, MenuGroupProps>(
 const MenuItemComponent = forwardRef<
   MenuPrimitivesTypes.ItemRef,
   MenuItemProps
->(({ children, className, isDisabled = false, ...props }, ref) => {
-  const itemClassName = menuClassNames.item({ className });
+>(
+  (
+    { children, className, isDisabled = false, variant = 'default', ...props },
+    ref
+  ) => {
+    const itemClassName = menuClassNames.item({ className });
 
-  const isSelected = props.isSelected ?? false;
+    const isSelected = props.isSelected ?? false;
 
-  const renderProps: MenuItemRenderProps = {
-    isSelected,
-    isDisabled,
-  };
+    const renderProps: MenuItemRenderProps = {
+      isSelected,
+      isDisabled,
+      variant,
+    };
 
-  const content =
-    typeof children === 'function' ? children(renderProps) : children;
+    const resolvedChildren =
+      typeof children === 'function' ? children(renderProps) : children;
 
-  return (
-    <MenuPrimitives.Item
-      ref={ref}
-      className={itemClassName}
-      isDisabled={isDisabled}
-      {...props}
-    >
-      {content}
-    </MenuPrimitives.Item>
-  );
-});
+    const stringifiedChildren =
+      typeof children !== 'function' ? childrenToString(children) : null;
+
+    const content = stringifiedChildren ? (
+      <MenuItemTitle>{stringifiedChildren}</MenuItemTitle>
+    ) : (
+      resolvedChildren
+    );
+
+    return (
+      <MenuPrimitives.Item
+        ref={ref}
+        className={itemClassName}
+        isDisabled={isDisabled}
+        variant={variant}
+        {...props}
+      >
+        {content}
+      </MenuPrimitives.Item>
+    );
+  }
+);
 
 // --------------------------------------------------
 
 const MenuItemTitle = forwardRef<RNText, MenuItemTitleProps>(
   ({ className, children, ...props }, ref) => {
-    const itemTitleClassName = menuClassNames.itemTitle({ className });
+    const { variant } = useMenuItem();
+    const itemTitleClassName = menuClassNames.itemTitle({ className, variant });
 
     return (
       <HeroText

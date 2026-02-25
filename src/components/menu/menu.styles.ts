@@ -42,7 +42,7 @@ const close = tv({
 });
 
 const label = tv({
-  base: 'text-sm font-medium text-muted',
+  base: 'text-sm font-medium text-muted ml-3',
 });
 
 const group = tv({

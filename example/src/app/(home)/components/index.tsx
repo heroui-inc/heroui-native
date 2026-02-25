@@ -73,6 +73,10 @@ const components: Component[] = [
     path: 'input',
   },
   {
+    title: 'InputField',
+    path: 'input-field',
+  },
+  {
     title: 'InputOTP',
     path: 'input-otp',
   },

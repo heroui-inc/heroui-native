@@ -19,6 +19,7 @@ export type {
   MenuItemDescriptionProps,
   MenuItemIndicatorIconProps,
   MenuItemIndicatorProps,
+  MenuItemIndicatorVariant,
   MenuItemProps,
   MenuItemRenderProps,
   MenuItemTitleProps,

@@ -535,24 +535,53 @@ const MenuItemDescription = forwardRef<RNText, MenuItemDescriptionProps>(
 const MenuItemIndicator = forwardRef<
   MenuPrimitivesTypes.ItemIndicatorRef,
   MenuItemIndicatorProps
->(({ className, children, iconProps, ...props }, ref) => {
-  const themeColorAccent = useThemeColor('accent');
+>(
+  (
+    {
+      className,
+      children,
+      variant = 'checkmark',
+      iconProps,
+      forceMount = true,
+      ...props
+    },
+    ref
+  ) => {
+    const { isSelected } = useMenuItem();
 
-  const iconSize = iconProps?.size ?? 16;
-  const iconColor = iconProps?.color ?? themeColorAccent;
+    const themeColorMuted = useThemeColor('muted');
 
-  const itemIndicatorClassName = menuClassNames.itemIndicator({ className });
+    const iconSize = iconProps?.size ?? (variant === 'dot' ? 8 : 16);
+    const iconColor = iconProps?.color ?? themeColorMuted;
 
-  return (
-    <MenuPrimitives.ItemIndicator
-      ref={ref}
-      className={itemIndicatorClassName}
-      {...props}
-    >
-      {children ?? <CheckIcon size={iconSize} color={iconColor} />}
-    </MenuPrimitives.ItemIndicator>
-  );
-});
+    const itemIndicatorClassName = menuClassNames.itemIndicator({ className });
+
+    const defaultContent =
+      variant === 'dot' ? (
+        <View
+          style={{
+            width: iconSize,
+            height: iconSize,
+            borderRadius: iconSize / 2,
+            backgroundColor: iconColor,
+          }}
+        />
+      ) : (
+        <CheckIcon size={iconSize} color={iconColor} />
+      );
+
+    return (
+      <MenuPrimitives.ItemIndicator
+        ref={ref}
+        className={itemIndicatorClassName}
+        forceMount={forceMount}
+        {...props}
+      >
+        {isSelected && (children ?? defaultContent)}
+      </MenuPrimitives.ItemIndicator>
+    );
+  }
+);
 
 // --------------------------------------------------
 

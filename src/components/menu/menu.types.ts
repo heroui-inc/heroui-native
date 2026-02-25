@@ -308,7 +308,14 @@ export interface MenuItemDescriptionProps extends TextProps {
 }
 
 /**
- * Menu Item Indicator Icon props
+ * Visual variant for the item indicator.
+ * - `'checkmark'` – Renders a check icon when selected.
+ * - `'dot'`       – Renders a small filled circle when selected.
+ */
+export type MenuItemIndicatorVariant = 'checkmark' | 'dot';
+
+/**
+ * Menu Item Indicator Icon props (applies to the `'checkmark'` variant)
  */
 export interface MenuItemIndicatorIconProps {
   /**
@@ -332,7 +339,14 @@ export interface MenuItemIndicatorProps
    */
   className?: string;
   /**
-   * Check icon props
+   * Visual variant of the indicator.
+   * - `'checkmark'` renders a check icon
+   * - `'dot'` renders a filled circle
+   * @default 'checkmark'
+   */
+  variant?: MenuItemIndicatorVariant;
+  /**
+   * Check icon props (only used when `variant` is `'checkmark'`)
    */
   iconProps?: MenuItemIndicatorIconProps;
 }

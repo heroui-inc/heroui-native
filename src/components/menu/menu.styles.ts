@@ -66,7 +66,7 @@ const itemTitle = tv({
 });
 
 const itemDescription = tv({
-  base: 'text-sm/snug',
+  base: 'text-sm/snug text-muted',
 });
 
 const itemIndicator = tv({

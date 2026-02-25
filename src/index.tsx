@@ -13,6 +13,7 @@ export * from './components/description';
 export * from './components/dialog';
 export * from './components/field-error';
 export * from './components/input';
+export * from './components/input-field';
 export * from './components/input-otp';
 export * from './components/label';
 export * from './components/list-group';

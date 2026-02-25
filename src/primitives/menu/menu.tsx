@@ -43,6 +43,8 @@ import type {
   ItemRef,
   ItemTitleProps,
   ItemTitleRef,
+  LabelProps,
+  LabelRef,
   MenuKey,
   OverlayProps,
   OverlayRef,
@@ -458,6 +460,7 @@ const Group = forwardRef<GroupRef, GroupProps>(
       onSelectionChange: onSelectionChangeProp,
       disabledKeys: disabledKeysProp,
       isDisabled = false,
+      shouldCloseOnSelect,
       ...viewProps
     },
     ref
@@ -496,8 +499,16 @@ const Group = forwardRef<GroupRef, GroupProps>(
         onSelectionChange,
         disabledKeys,
         isDisabled,
+        shouldCloseOnSelect,
       }),
-      [selectionMode, selectedKeys, onSelectionChange, disabledKeys, isDisabled]
+      [
+        selectionMode,
+        selectedKeys,
+        onSelectionChange,
+        disabledKeys,
+        isDisabled,
+        shouldCloseOnSelect,
+      ]
     );
 
     const Component = asChild ? Slot.View : View;
@@ -554,10 +565,15 @@ const Item = forwardRef<ItemRef, ItemProps>(
       : (isSelectedProp ?? false);
 
     // -- Resolve shouldCloseOnSelect --
+    // Priority: item prop > group prop > selectionMode default
+    const defaultCloseOnSelect = isInsideGroup
+      ? groupContext.selectionMode !== 'multiple'
+      : true;
+
     const effectiveCloseOnSelect = isInsideGroup
-      ? groupContext.selectionMode === 'multiple'
-        ? false
-        : (shouldCloseOnSelectProp ?? true)
+      ? (shouldCloseOnSelectProp ??
+        groupContext.shouldCloseOnSelect ??
+        defaultCloseOnSelect)
       : (shouldCloseOnSelectProp ?? true);
 
     // -- Resolve ARIA role --
@@ -707,6 +723,16 @@ const ItemIndicator = forwardRef<ItemIndicatorRef, ItemIndicatorProps>(
 );
 
 // --------------------------------------------------
+// Label
+// --------------------------------------------------
+
+const Label = forwardRef<LabelRef, LabelProps>(({ asChild, ...props }, ref) => {
+  const Component = asChild ? Slot.Text : Text;
+
+  return <Component ref={ref} accessibilityRole="header" {...props} />;
+});
+
+// --------------------------------------------------
 
 Root.displayName = 'HeroUINative.Menu.Root';
 Trigger.displayName = 'HeroUINative.Menu.Trigger';
@@ -718,6 +744,7 @@ Item.displayName = 'HeroUINative.Menu.Item';
 ItemTitle.displayName = 'HeroUINative.Menu.ItemTitle';
 ItemDescription.displayName = 'HeroUINative.Menu.ItemDescription';
 ItemIndicator.displayName = 'HeroUINative.Menu.ItemIndicator';
+Label.displayName = 'HeroUINative.Menu.Label';
 
 export {
   Close,
@@ -727,6 +754,7 @@ export {
   ItemDescription,
   ItemIndicator,
   ItemTitle,
+  Label,
   Overlay,
   Portal,
   Root,

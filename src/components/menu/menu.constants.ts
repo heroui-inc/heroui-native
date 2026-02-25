@@ -8,6 +8,7 @@ export const DISPLAY_NAME = {
   OVERLAY: 'HeroUINative.Menu.Overlay',
   CONTENT: 'HeroUINative.Menu.Content',
   CLOSE: 'HeroUINative.Menu.Close',
+  LABEL: 'HeroUINative.Menu.Label',
   GROUP: 'HeroUINative.Menu.Group',
   ITEM: 'HeroUINative.Menu.Item',
   ITEM_TITLE: 'HeroUINative.Menu.ItemTitle',

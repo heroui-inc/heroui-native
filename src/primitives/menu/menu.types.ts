@@ -185,6 +185,13 @@ type GroupProps = SlottableViewProps & {
   disabledKeys?: Iterable<MenuKey>;
   /** Whether the entire group is disabled */
   isDisabled?: boolean;
+  /**
+   * Whether selecting an item in this group should close the menu.
+   * Applied to all child items unless overridden at the item level.
+   * When `undefined`, falls back to the default behavior based on `selectionMode`
+   * (`false` for `"multiple"`, `true` otherwise).
+   */
+  shouldCloseOnSelect?: boolean;
 };
 
 /**
@@ -200,6 +207,11 @@ type GroupContextValue = Required<
   disabledKeys: Set<MenuKey>;
   /** Callback to update the selection */
   onSelectionChange: NonNullable<GroupProps['onSelectionChange']>;
+  /**
+   * Group-level close-on-select preference.
+   * `undefined` means no group-level override (use default behavior).
+   */
+  shouldCloseOnSelect: boolean | undefined;
 };
 
 // --------------------------------------------------
@@ -272,6 +284,18 @@ type ItemProps = Omit<SlottablePressableProps, 'disabled'> & {
 };
 
 // --------------------------------------------------
+// Label
+// --------------------------------------------------
+
+/**
+ * Props for the Menu Label component.
+ * Renders a non-interactive text label within the menu (e.g. section heading).
+ *
+ * @extends SlottableTextProps Inherits text props with asChild support
+ */
+type LabelProps = SlottableTextProps;
+
+// --------------------------------------------------
 // Item sub-components
 // --------------------------------------------------
 
@@ -328,6 +352,9 @@ type TriggerRef = PressableRef & {
 /** Ref type for the Menu Group component */
 type GroupRef = ViewRef;
 
+/** Ref type for the Menu Label component */
+type LabelRef = TextRef;
+
 /** Ref type for the Menu Item component */
 type ItemRef = PressableRef;
 
@@ -361,6 +388,8 @@ export type {
   ItemTitleProps,
   ItemTitleRef,
   ItemVariant,
+  LabelProps,
+  LabelRef,
   MenuKey,
   OverlayProps,
   OverlayRef,

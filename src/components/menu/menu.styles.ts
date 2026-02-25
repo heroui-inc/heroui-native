@@ -28,6 +28,10 @@ const content = tv({
   base: 'absolute bg-overlay px-1.5 py-3 rounded-3xl shadow-overlay',
 });
 
+const contentBottomSheet = tv({
+  base: 'px-3',
+});
+
 /**
  * @note When Menu.Content uses `presentation="bottom-sheet"`, it uses `bottomSheetClassNames`
  * from `../bottom-sheet/bottom-sheet.styles` instead of `menuClassNames.content`.
@@ -35,6 +39,10 @@ const content = tv({
 
 const close = tv({
   base: '',
+});
+
+const label = tv({
+  base: 'text-sm font-medium text-muted',
 });
 
 const group = tv({
@@ -82,7 +90,9 @@ export const menuClassNames = combineStyles({
   portal,
   overlay,
   content,
+  contentBottomSheet,
   close,
+  label,
   group,
   item,
   itemTitle,

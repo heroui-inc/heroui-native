@@ -49,6 +49,7 @@ import type {
   MenuItemIndicatorProps,
   MenuItemProps,
   MenuItemTitleProps,
+  MenuLabelProps,
   MenuOverlayProps,
   MenuPortalProps,
   MenuRootProps,
@@ -322,13 +323,17 @@ const MenuContentBottomSheet = forwardRef<
 
     const { progress, isDragging } = useMenuAnimation();
 
+    const contentContainerClassName = menuClassNames.contentBottomSheet({
+      className: contentContainerClassNameProp,
+    });
+
     return (
       <BottomSheetContent
         ref={ref}
         index={initialIndex}
         backgroundClassName={backgroundClassName}
         handleIndicatorClassName={handleIndicatorClassName}
-        contentContainerClassName={contentContainerClassNameProp}
+        contentContainerClassName={contentContainerClassName}
         contentContainerProps={contentContainerProps}
         animation={animation}
         animationConfigs={animationConfigs}
@@ -396,6 +401,20 @@ const MenuClose = forwardRef<PressableRef, MenuCloseProps>((props, ref) => {
 
   return <CloseButton ref={ref} onPress={onPress} {...restProps} />;
 });
+
+// --------------------------------------------------
+
+const MenuLabel = forwardRef<RNText, MenuLabelProps>(
+  ({ className, children, ...props }, ref) => {
+    const labelClassName = menuClassNames.label({ className });
+
+    return (
+      <MenuPrimitives.Label ref={ref} className={labelClassName} {...props}>
+        {children}
+      </MenuPrimitives.Label>
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -592,6 +611,7 @@ MenuOverlay.displayName = DISPLAY_NAME.OVERLAY;
 MenuContent.displayName = DISPLAY_NAME.CONTENT;
 MenuClose.displayName = DISPLAY_NAME.CLOSE;
 MenuGroup.displayName = DISPLAY_NAME.GROUP;
+MenuLabel.displayName = DISPLAY_NAME.LABEL;
 MenuItemComponent.displayName = DISPLAY_NAME.ITEM;
 MenuItemTitle.displayName = DISPLAY_NAME.ITEM_TITLE;
 MenuItemDescription.displayName = DISPLAY_NAME.ITEM_DESCRIPTION;
@@ -616,6 +636,8 @@ MenuItemIndicator.displayName = DISPLAY_NAME.ITEM_INDICATOR;
  *
  * @component Menu.Group - Groups menu items with optional selection state (none, single, multiple).
  *
+ * @component Menu.Label - Non-interactive section heading text within the menu.
+ *
  * @component Menu.Item - Pressable menu item. Standalone or within a Group for selection.
  *
  * @component Menu.ItemTitle - Primary label text for a menu item.
@@ -631,6 +653,7 @@ const Menu = Object.assign(MenuRoot, {
   Content: MenuContent,
   Close: MenuClose,
   Group: MenuGroup,
+  Label: MenuLabel,
   Item: MenuItemComponent,
   ItemTitle: MenuItemTitle,
   ItemDescription: MenuItemDescription,

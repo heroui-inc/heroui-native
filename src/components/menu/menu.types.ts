@@ -200,6 +200,20 @@ export interface MenuGroupProps
 }
 
 // --------------------------------------------------
+// Label
+// --------------------------------------------------
+
+/**
+ * Menu Label component props
+ */
+export interface MenuLabelProps extends TextProps {
+  /**
+   * Additional CSS class for the label
+   */
+  className?: string;
+}
+
+// --------------------------------------------------
 // Item
 // --------------------------------------------------
 

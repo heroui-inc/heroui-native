@@ -6,10 +6,7 @@ import { Image, Platform, StyleSheet, View } from 'react-native';
 import { useReducedMotion } from 'react-native-reanimated';
 import LogoDark from '../../../assets/logo-dark.png';
 import LogoLight from '../../../assets/logo-light.png';
-import {
-  UpdateBottomSheet,
-  type UpdateBottomSheetMode,
-} from '../../components/bottom-sheet/update-bottom-sheet';
+import { type UpdateBottomSheetMode } from '../../components/bottom-sheet/update-bottom-sheet';
 import { ThemeToggle } from '../../components/theme-toggle';
 import { useAppTheme } from '../../contexts/app-theme-context';
 import { COMPONENTS } from '../../helpers/data/components';
@@ -29,8 +26,8 @@ export default function Layout() {
   // -- Update management state --
   const [isVersionChecked, setIsVersionChecked] = useState(false);
   const [isNewVersionAvailable, setIsNewVersionAvailable] = useState(false);
-  const [updateSheetOpen, setUpdateSheetOpen] = useState(false);
-  const [updateSheetMode, setUpdateSheetMode] =
+  const [_updateSheetOpen, setUpdateSheetOpen] = useState(false);
+  const [_updateSheetMode, setUpdateSheetMode] =
     useState<UpdateBottomSheetMode>('new-version');
 
   const handleVersionChecked = useCallback((isNew: boolean) => {
@@ -162,11 +159,11 @@ export default function Layout() {
           }}
         />
       </Stack>
-      <UpdateBottomSheet
+      {/* <UpdateBottomSheet
         isOpen={updateSheetOpen}
         onOpenChange={setUpdateSheetOpen}
         mode={updateSheetMode}
-      />
+      /> */}
     </View>
   );
 }

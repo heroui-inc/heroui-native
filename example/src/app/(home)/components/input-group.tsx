@@ -312,12 +312,11 @@ const DisabledContent = () => {
             />
           </InputGroup>
 
-          <InputGroup>
+          <InputGroup isDisabled>
             <InputGroup.Prefix isDecorative>
               <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
             </InputGroup.Prefix>
             <InputGroup.Input
-              isDisabled
               value="heroui.com"
               placeholder="Disabled field"
               className="pl-10"

@@ -4,7 +4,10 @@ import {
   type TextInput as TextInputType,
   View,
 } from 'react-native';
-import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import {
+  AnimationSettingsProvider,
+  useFormField,
+} from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
 import { Input } from '../input';
@@ -28,7 +31,7 @@ const [InputGroupProvider, useInputGroup] =
 // --------------------------------------------------
 
 const InputGroupRoot = forwardRef<ViewRef, InputGroupProps>((props, ref) => {
-  const { children, animation, ...restProps } = props;
+  const { children, animation, isDisabled = false, ...restProps } = props;
 
   const [prefixWidth, setPrefixWidth] = useState(0);
   const [suffixWidth, setSuffixWidth] = useState(0);
@@ -41,8 +44,14 @@ const InputGroupRoot = forwardRef<ViewRef, InputGroupProps>((props, ref) => {
   );
 
   const inputGroupContextValue = useMemo<InputGroupContextType>(
-    () => ({ prefixWidth, suffixWidth, setPrefixWidth, setSuffixWidth }),
-    [prefixWidth, suffixWidth]
+    () => ({
+      isDisabled,
+      prefixWidth,
+      suffixWidth,
+      setPrefixWidth,
+      setSuffixWidth,
+    }),
+    [isDisabled, prefixWidth, suffixWidth]
   );
 
   return (
@@ -69,6 +78,8 @@ const InputGroupPrefix = forwardRef<ViewRef, InputGroupPrefixProps>(
     } = props;
 
     const context = useInputGroup();
+    const formField = useFormField();
+    const isDisabled = context?.isDisabled ?? formField?.isDisabled ?? false;
 
     const onLayout = useCallback(
       (event: LayoutChangeEvent) => {
@@ -78,14 +89,17 @@ const InputGroupPrefix = forwardRef<ViewRef, InputGroupPrefixProps>(
       [context, onLayoutProp]
     );
 
-    const prefixClassName = inputGroupClassNames.prefix({ className });
+    const prefixClassName = inputGroupClassNames.prefix({
+      className,
+      isDisabled,
+    });
 
     return (
       <View
         ref={ref}
         className={prefixClassName}
         onLayout={onLayout}
-        pointerEvents={isDecorative ? 'none' : undefined}
+        pointerEvents={isDecorative || isDisabled ? 'none' : undefined}
         accessibilityElementsHidden={isDecorative || undefined}
         importantForAccessibility={
           isDecorative ? 'no-hide-descendants' : undefined
@@ -111,6 +125,13 @@ const InputGroupSuffix = forwardRef<ViewRef, InputGroupSuffixProps>(
     } = props;
 
     const context = useInputGroup();
+    const formField = useFormField();
+    const isDisabled = context?.isDisabled ?? formField?.isDisabled ?? false;
+
+    const suffixClassName = inputGroupClassNames.suffix({
+      className,
+      isDisabled,
+    });
 
     const onLayout = useCallback(
       (event: LayoutChangeEvent) => {
@@ -120,14 +141,12 @@ const InputGroupSuffix = forwardRef<ViewRef, InputGroupSuffixProps>(
       [context, onLayoutProp]
     );
 
-    const suffixClassName = inputGroupClassNames.suffix({ className });
-
     return (
       <View
         ref={ref}
         className={suffixClassName}
         onLayout={onLayout}
-        pointerEvents={isDecorative ? 'none' : undefined}
+        pointerEvents={isDecorative || isDisabled ? 'none' : undefined}
         accessibilityElementsHidden={isDecorative || undefined}
         importantForAccessibility={
           isDecorative ? 'no-hide-descendants' : undefined
@@ -144,9 +163,10 @@ const InputGroupSuffix = forwardRef<ViewRef, InputGroupSuffixProps>(
 
 const InputGroupInput = forwardRef<TextInputType, InputGroupInputProps>(
   (props, ref) => {
-    const { style, ...restProps } = props;
+    const { style, isDisabled: localIsDisabled, ...restProps } = props;
 
     const context = useInputGroup();
+    const isDisabled = localIsDisabled ?? context?.isDisabled ?? undefined;
 
     const autoPaddingStyle = useMemo(() => {
       const paddingLeft =
@@ -165,7 +185,14 @@ const InputGroupInput = forwardRef<TextInputType, InputGroupInputProps>(
       return { paddingLeft, paddingRight };
     }, [context?.prefixWidth, context?.suffixWidth]);
 
-    return <Input ref={ref} style={[autoPaddingStyle, style]} {...restProps} />;
+    return (
+      <Input
+        ref={ref}
+        style={[autoPaddingStyle, style]}
+        isDisabled={isDisabled}
+        {...restProps}
+      />
+    );
   }
 );
 

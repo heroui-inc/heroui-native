@@ -8,6 +8,8 @@ import type { InputProps } from '../input';
  * automatically apply matching paddingLeft / paddingRight.
  */
 export interface InputGroupContextType {
+  /** Whether the entire input group is disabled */
+  isDisabled: boolean;
   /** Measured width of the Prefix element (0 when absent) */
   prefixWidth: number;
   /** Measured width of the Suffix element (0 when absent) */
@@ -32,6 +34,15 @@ export interface InputGroupProps extends ViewProps {
    * Additional CSS classes
    */
   className?: string;
+
+  /**
+   * Whether the entire input group and its children are disabled.
+   * Cascades to Prefix, Suffix (opacity + pointer-events), and
+   * Input (editable=false) via context.
+   *
+   * @default false
+   */
+  isDisabled?: boolean;
 
   /**
    * Animation configuration for input group

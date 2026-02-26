@@ -3,7 +3,7 @@
     "name": "HeroUI Native",
     "slug": "heroui-native",
     "scheme": "herouinative",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

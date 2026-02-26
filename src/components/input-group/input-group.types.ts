@@ -3,63 +3,14 @@ import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 import type { InputProps } from '../input';
 
 /**
- * Context value provided by InputGroup root to child components.
- * Carries the controlled value, onChange callback, focus state, and
- * form-field state so that Prefix, Suffix, Input, and Group can consume them.
- */
-export interface InputGroupContextType {
-  /** Current input text (undefined when uncontrolled) */
-  value: string | undefined;
-  /** Callback invoked when the input text changes */
-  onChange: ((value: string) => void) | undefined;
-  /** Whether the inner TextInput is currently focused */
-  isFocused: boolean;
-  /** Callback to update the focus state */
-  setIsFocused: (focused: boolean) => void;
-  /** Whether the input group is disabled */
-  isDisabled: boolean;
-  /** Whether the input group is in an invalid state */
-  isInvalid: boolean;
-  /** Whether the input group is required */
-  isRequired: boolean;
-}
-
-/**
- * Props for the InputGroup root component
+ * Props for the InputGroup root component.
+ * Acts as a layout container for Prefix, Input, and Suffix.
  */
 export interface InputGroupProps extends ViewProps {
   /**
    * Children elements to be rendered inside the input group
    */
   children?: React.ReactNode;
-
-  /**
-   * Controlled input text value
-   */
-  value?: string;
-
-  /**
-   * Callback fired when the input text changes
-   */
-  onChange?: (value: string) => void;
-
-  /**
-   * Whether the input group is disabled
-   * @default false
-   */
-  isDisabled?: boolean;
-
-  /**
-   * Whether the input group is in an invalid state
-   * @default false
-   */
-  isInvalid?: boolean;
-
-  /**
-   * Whether the input group is required
-   * @default false
-   */
-  isRequired?: boolean;
 
   /**
    * Additional CSS classes
@@ -75,11 +26,11 @@ export interface InputGroupProps extends ViewProps {
 }
 
 /**
- * Props for the InputGroup.Prefix component
+ * Shared props for InputGroup.Prefix and InputGroup.Suffix.
  */
-export interface InputGroupPrefixProps extends ViewProps {
+interface InputGroupDecoratorBaseProps extends ViewProps {
   /**
-   * Content to render inside the prefix
+   * Content to render inside the decorator
    */
   children?: React.ReactNode;
 
@@ -87,27 +38,34 @@ export interface InputGroupPrefixProps extends ViewProps {
    * Additional CSS classes
    */
   className?: string;
+
+  /**
+   * When `true` the decorator is non-interactive and hidden from
+   * accessibility: touches pass through to the Input underneath
+   * (focusing it) and the content is excluded from screen readers.
+   *
+   * Applies `pointerEvents="none"`, `accessibilityElementsHidden`,
+   * and `importantForAccessibility="no-hide-descendants"`.
+   *
+   * @default false
+   */
+  isDecorative?: boolean;
 }
 
 /**
- * Props for the InputGroup.Suffix component
+ * Props for the InputGroup.Prefix component.
+ * Absolutely positioned on the left side of the Input.
  */
-export interface InputGroupSuffixProps extends ViewProps {
-  /**
-   * Content to render inside the suffix
-   */
-  children?: React.ReactNode;
+export interface InputGroupPrefixProps extends InputGroupDecoratorBaseProps {}
 
-  /**
-   * Additional CSS classes
-   */
-  className?: string;
-}
+/**
+ * Props for the InputGroup.Suffix component.
+ * Absolutely positioned on the right side of the Input.
+ */
+export interface InputGroupSuffixProps extends InputGroupDecoratorBaseProps {}
 
 /**
  * Props for the InputGroup.Input component.
- * Omits `value` and `onChangeText` because they are provided by
- * InputGroup root through InputGroupContext.
+ * Passes all props directly through to the underlying Input component.
  */
-export interface InputGroupInputProps
-  extends Omit<InputProps, 'value' | 'onChangeText'> {}
+export interface InputGroupInputProps extends InputProps {}

@@ -75,8 +75,12 @@ const BasicInputGroupContent = () => {
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
-        <InputGroup value={value} onChange={setValue}>
-          <InputGroup.Input placeholder="Enter text" />
+        <InputGroup>
+          <InputGroup.Input
+            value={value}
+            onChangeText={setValue}
+            placeholder="Enter text"
+          />
         </InputGroup>
       </KeyboardAvoidingContainer>
     </View>
@@ -94,7 +98,7 @@ const PhoneInputContent = () => {
       <KeyboardAvoidingContainer>
         <TextField isRequired>
           <Label>Phone number</Label>
-          <InputGroup value={phone} onChange={setPhone}>
+          <InputGroup>
             <InputGroup.Prefix>
               <Select
                 value={dialCode}
@@ -141,9 +145,11 @@ const PhoneInputContent = () => {
                   </Select.Content>
                 </Select.Portal>
               </Select>
+              <Separator orientation="vertical" className="h-5" />
             </InputGroup.Prefix>
-            <Separator orientation="vertical" className="h-5 mx-1" />
             <InputGroup.Input
+              value={phone}
+              onChangeText={setPhone}
               placeholder="(555) 000-0000"
               keyboardType="phone-pad"
             />
@@ -165,15 +171,13 @@ const WithLeadingPrefixContent = () => {
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
-        <InputGroup value={value} onChange={setValue}>
-          <InputGroup.Prefix
-            pointerEvents="none"
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-          >
+        <InputGroup>
+          <InputGroup.Prefix isDecorative>
             <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
           </InputGroup.Prefix>
           <InputGroup.Input
+            value={value}
+            onChangeText={setValue}
             placeholder="Enter website URL"
             keyboardType="url"
             autoCapitalize="none"
@@ -192,20 +196,17 @@ const WithPrefixAndSuffixContent = () => {
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
-        <InputGroup value={value} onChange={setValue}>
-          <InputGroup.Prefix
-            pointerEvents="none"
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-          >
+        <InputGroup>
+          <InputGroup.Prefix isDecorative>
             <Text className="text-sm text-field-placeholder">$</Text>
           </InputGroup.Prefix>
-          <InputGroup.Input placeholder="0.00" keyboardType="decimal-pad" />
-          <InputGroup.Suffix
-            pointerEvents="none"
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-          >
+          <InputGroup.Input
+            value={value}
+            onChangeText={setValue}
+            placeholder="0.00"
+            keyboardType="decimal-pad"
+          />
+          <InputGroup.Suffix isDecorative>
             <Text className="text-sm text-field-placeholder">USD</Text>
           </InputGroup.Suffix>
         </InputGroup>
@@ -223,15 +224,13 @@ const WithPasswordToggleContent = () => {
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
-        <InputGroup value={value} onChange={setValue}>
-          <InputGroup.Prefix
-            pointerEvents="none"
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-          >
+        <InputGroup>
+          <InputGroup.Prefix isDecorative>
             <LockIcon size={16} colorClassName="accent-field-placeholder" />
           </InputGroup.Prefix>
           <InputGroup.Input
+            value={value}
+            onChangeText={setValue}
             placeholder="Enter your password"
             secureTextEntry={!isPasswordVisible}
           />
@@ -270,15 +269,17 @@ const WithTextFieldContent = () => {
         <KeyboardAvoidingContainer>
           <TextField isRequired isInvalid={isInvalid}>
             <Label>Amount</Label>
-            <InputGroup value={value} onChange={setValue}>
-              <InputGroup.Prefix
-                pointerEvents="none"
-                accessibilityElementsHidden
-                importantForAccessibility="no-hide-descendants"
-              >
+            <InputGroup>
+              <InputGroup.Prefix isDecorative>
                 <Text className="text-sm text-field-placeholder">$</Text>
               </InputGroup.Prefix>
-              <InputGroup.Input placeholder="0.00" keyboardType="decimal-pad" />
+              <InputGroup.Input
+                value={value}
+                onChangeText={setValue}
+                placeholder="0.00"
+                keyboardType="decimal-pad"
+                className="pl-8"
+              />
             </InputGroup>
             <Description hideOnInvalid>
               Enter the transaction amount
@@ -300,26 +301,28 @@ const DisabledContent = () => {
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <View className="gap-8">
-          <InputGroup value={activeValue} onChange={setActiveValue}>
-            <InputGroup.Prefix
-              pointerEvents="none"
-              accessibilityElementsHidden
-              importantForAccessibility="no-hide-descendants"
-            >
+          <InputGroup>
+            <InputGroup.Prefix isDecorative>
               <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
             </InputGroup.Prefix>
-            <InputGroup.Input placeholder="Active field" />
+            <InputGroup.Input
+              value={activeValue}
+              onChangeText={setActiveValue}
+              placeholder="Active field"
+              className="pl-10"
+            />
           </InputGroup>
 
-          <InputGroup isDisabled value="heroui.com">
-            <InputGroup.Prefix
-              pointerEvents="none"
-              accessibilityElementsHidden
-              importantForAccessibility="no-hide-descendants"
-            >
+          <InputGroup>
+            <InputGroup.Prefix isDecorative>
               <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
             </InputGroup.Prefix>
-            <InputGroup.Input placeholder="Disabled field" />
+            <InputGroup.Input
+              isDisabled
+              value="heroui.com"
+              placeholder="Disabled field"
+              className="pl-10"
+            />
           </InputGroup>
         </View>
       </KeyboardAvoidingContainer>

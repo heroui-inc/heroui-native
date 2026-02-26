@@ -1,81 +1,24 @@
-import { forwardRef, useCallback, useMemo, useState } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { type TextInput as TextInputType, View } from 'react-native';
-import { useIsOnSurface } from '../../helpers/external/hooks';
-import {
-  AnimationSettingsProvider,
-  FormFieldProvider,
-} from '../../helpers/internal/contexts';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
-import { createContext } from '../../helpers/internal/utils';
 import { Input } from '../input';
 import { useInputGroupRootAnimation } from './input-group.animation';
 import { DISPLAY_NAME } from './input-group.constants';
-import {
-  inputGroupClassNames,
-  inputGroupStyleSheet,
-} from './input-group.styles';
+import { inputGroupClassNames } from './input-group.styles';
 import type {
-  InputGroupContextType,
   InputGroupInputProps,
   InputGroupPrefixProps,
   InputGroupProps,
   InputGroupSuffixProps,
 } from './input-group.types';
 
-const [InputGroupProvider, useInputGroup] =
-  createContext<InputGroupContextType>({
-    name: 'InputGroupContext',
-    strict: false,
-  });
-
 // --------------------------------------------------
 
 const InputGroupRoot = forwardRef<ViewRef, InputGroupProps>((props, ref) => {
-  const {
-    children,
-    className,
-    value,
-    onChange,
-    isDisabled = false,
-    isInvalid = false,
-    isRequired = false,
-    animation,
-    style,
-    ...restProps
-  } = props;
-
-  const [isFocused, setIsFocused] = useState(false);
-
-  const isOnSurface = useIsOnSurface();
-  const variant = isOnSurface ? 'secondary' : 'primary';
+  const { children, animation, ...restProps } = props;
 
   const { isAllAnimationsDisabled } = useInputGroupRootAnimation({ animation });
-
-  const rootClassName = inputGroupClassNames.root({
-    variant,
-    isFocused,
-    isInvalid,
-    isDisabled,
-    className,
-  });
-
-  const inputGroupContextValue = useMemo<InputGroupContextType>(
-    () => ({
-      value,
-      onChange,
-      isFocused,
-      setIsFocused,
-      isDisabled,
-      isInvalid,
-      isRequired,
-    }),
-    [value, onChange, isFocused, isDisabled, isInvalid, isRequired]
-  );
-
-  const formFieldContextValue = useMemo(
-    () => ({ isDisabled, isInvalid, isRequired, hasFieldPadding: true }),
-    [isDisabled, isInvalid, isRequired]
-  );
 
   const animationSettingsContextValue = useMemo(
     () => ({ isAllAnimationsDisabled }),
@@ -83,20 +26,11 @@ const InputGroupRoot = forwardRef<ViewRef, InputGroupProps>((props, ref) => {
   );
 
   return (
-    <InputGroupProvider value={inputGroupContextValue}>
-      <AnimationSettingsProvider value={animationSettingsContextValue}>
-        <FormFieldProvider value={formFieldContextValue}>
-          <View
-            ref={ref}
-            className={rootClassName}
-            style={[inputGroupStyleSheet.borderCurve, style]}
-            {...restProps}
-          >
-            {children}
-          </View>
-        </FormFieldProvider>
-      </AnimationSettingsProvider>
-    </InputGroupProvider>
+    <AnimationSettingsProvider value={animationSettingsContextValue}>
+      <View ref={ref} {...restProps}>
+        {children}
+      </View>
+    </AnimationSettingsProvider>
   );
 });
 
@@ -104,12 +38,21 @@ const InputGroupRoot = forwardRef<ViewRef, InputGroupProps>((props, ref) => {
 
 const InputGroupPrefix = forwardRef<ViewRef, InputGroupPrefixProps>(
   (props, ref) => {
-    const { children, className, ...restProps } = props;
+    const { children, className, isDecorative = false, ...restProps } = props;
 
     const prefixClassName = inputGroupClassNames.prefix({ className });
 
     return (
-      <View ref={ref} className={prefixClassName} {...restProps}>
+      <View
+        ref={ref}
+        className={prefixClassName}
+        pointerEvents={isDecorative ? 'none' : undefined}
+        accessibilityElementsHidden={isDecorative || undefined}
+        importantForAccessibility={
+          isDecorative ? 'no-hide-descendants' : undefined
+        }
+        {...restProps}
+      >
         {children}
       </View>
     );
@@ -120,12 +63,21 @@ const InputGroupPrefix = forwardRef<ViewRef, InputGroupPrefixProps>(
 
 const InputGroupSuffix = forwardRef<ViewRef, InputGroupSuffixProps>(
   (props, ref) => {
-    const { children, className, ...restProps } = props;
+    const { children, className, isDecorative = false, ...restProps } = props;
 
     const suffixClassName = inputGroupClassNames.suffix({ className });
 
     return (
-      <View ref={ref} className={suffixClassName} {...restProps}>
+      <View
+        ref={ref}
+        className={suffixClassName}
+        pointerEvents={isDecorative ? 'none' : undefined}
+        accessibilityElementsHidden={isDecorative || undefined}
+        importantForAccessibility={
+          isDecorative ? 'no-hide-descendants' : undefined
+        }
+        {...restProps}
+      >
         {children}
       </View>
     );
@@ -136,49 +88,7 @@ const InputGroupSuffix = forwardRef<ViewRef, InputGroupSuffixProps>(
 
 const InputGroupInput = forwardRef<TextInputType, InputGroupInputProps>(
   (props, ref) => {
-    const {
-      isDisabled: localIsDisabled,
-      className,
-      onFocus: onFocusProp,
-      onBlur: onBlurProp,
-      ...restProps
-    } = props;
-
-    const inputGroup = useInputGroup();
-
-    const isDisabled = localIsDisabled ?? inputGroup?.isDisabled ?? false;
-
-    const onFocus = useCallback(
-      (e: Parameters<NonNullable<InputGroupInputProps['onFocus']>>[0]) => {
-        inputGroup?.setIsFocused(true);
-        onFocusProp?.(e);
-      },
-      [inputGroup, onFocusProp]
-    );
-
-    const onBlur = useCallback(
-      (e: Parameters<NonNullable<InputGroupInputProps['onBlur']>>[0]) => {
-        inputGroup?.setIsFocused(false);
-        onBlurProp?.(e);
-      },
-      [inputGroup, onBlurProp]
-    );
-
-    const inputClassName = inputGroupClassNames.input({ className });
-
-    return (
-      <Input
-        ref={ref}
-        {...restProps}
-        className={inputClassName}
-        value={inputGroup?.value}
-        onChangeText={inputGroup?.onChange}
-        isDisabled={false}
-        editable={!isDisabled}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      />
-    );
+    return <Input ref={ref} {...props} />;
   }
 );
 
@@ -192,35 +102,32 @@ InputGroupInput.displayName = DISPLAY_NAME.INPUT_GROUP_INPUT;
 /**
  * Compound InputGroup component with sub-components.
  *
- * @component InputGroup - Root container that accepts `value`, `onChange`,
- * `isDisabled`, `isInvalid`, and `isRequired`, providing them to children via
- * context. Owns the visual shell (border, background, rounded corners) and
- * tracks focus state for the focus border. Also provides FormFieldProvider
- * and animation settings.
+ * @component InputGroup - Layout container (`flex-row items-center`) that
+ * wraps Prefix, Input, and Suffix. Provides animation settings to children.
+ * Does not own any visual shell — the Input retains its own styles.
  *
- * @component InputGroup.Prefix - Plain flex View for leading content (icons,
- * labels, buttons). Naturally sized as a flex sibling — no absolute
- * positioning required.
+ * @component InputGroup.Prefix - Absolutely positioned View anchored to
+ * the left side of the Input. Use for leading content such as icons,
+ * labels, or interactive controls. Set `isDecorative` to make touches
+ * pass through to the Input and hide from accessibility.
  *
- * @component InputGroup.Suffix - Plain flex View for trailing content (icons,
- * labels, buttons). Naturally sized as a flex sibling — no absolute
- * positioning required.
+ * @component InputGroup.Suffix - Absolutely positioned View anchored to
+ * the right side of the Input. Use for trailing content such as icons,
+ * labels, or interactive controls. Set `isDecorative` to make touches
+ * pass through to the Input and hide from accessibility.
  *
- * @component InputGroup.Input - Wraps the Input component with shell-stripping
- * overrides so the root owns the visual shell. Reads `value` and `onChangeText`
- * from InputGroupContext automatically. Reports focus/blur state back to the
- * root to drive the focus border.
+ * @component InputGroup.Input - Pass-through to the Input component.
+ * Accepts all Input props directly (value, onChangeText, isDisabled, etc.).
  *
  * @see Full documentation: https://v3.heroui.com/docs/native/components/input-group
  */
 const CompoundInputGroup = Object.assign(InputGroupRoot, {
-  /** Plain flex View for leading prefix content */
+  /** Absolutely positioned View for leading prefix content */
   Prefix: InputGroupPrefix,
-  /** Plain flex View for trailing suffix content */
+  /** Absolutely positioned View for trailing suffix content */
   Suffix: InputGroupSuffix,
-  /** Text input that reads value/onChange from context */
+  /** Pass-through to Input — accepts all Input props directly */
   Input: InputGroupInput,
 });
 
-export { useInputGroup };
 export default CompoundInputGroup;

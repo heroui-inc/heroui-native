@@ -1,6 +1,5 @@
 import {
   Description,
-  FieldError,
   InputGroup,
   Label,
   Select,
@@ -8,7 +7,7 @@ import {
   TextField,
 } from 'heroui-native';
 import React, { useState } from 'react';
-import { Pressable, Text, useWindowDimensions, View } from 'react-native';
+import { Pressable, useWindowDimensions, View } from 'react-native';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
 import Animated, {
   useAnimatedStyle,
@@ -17,11 +16,13 @@ import Animated, {
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { CreditCardIcon } from '../../../components/icons/credit-card';
 import { EyeIcon } from '../../../components/icons/eye';
 import { EyeSlashIcon } from '../../../components/icons/eye-slash';
 import { GlobeIcon } from '../../../components/icons/globe';
 import { LockIcon } from '../../../components/icons/lock';
-import { WithStateToggle } from '../../../components/with-state-toggle';
+import { MagnifierIcon } from '../../../components/icons/magnifier';
+import { PersonIcon } from '../../../components/icons/person';
 
 type DialCodeOption = {
   value: string;
@@ -71,16 +72,36 @@ const KeyboardAvoidingContainer = ({
 
 const BasicInputGroupContent = () => {
   const [value, setValue] = useState('');
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <InputGroup>
+          <InputGroup.Prefix isDecorative>
+            <LockIcon size={16} colorClassName="accent-field-placeholder" />
+          </InputGroup.Prefix>
           <InputGroup.Input
             value={value}
             onChangeText={setValue}
-            placeholder="Enter text"
+            placeholder="Enter your password"
+            secureTextEntry={!isPasswordVisible}
           />
+          <InputGroup.Suffix>
+            <Pressable
+              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+              hitSlop={20}
+            >
+              {isPasswordVisible ? (
+                <EyeSlashIcon
+                  size={16}
+                  colorClassName="accent-field-placeholder"
+                />
+              ) : (
+                <EyeIcon size={16} colorClassName="accent-field-placeholder" />
+              )}
+            </Pressable>
+          </InputGroup.Suffix>
         </InputGroup>
       </KeyboardAvoidingContainer>
     </View>
@@ -89,7 +110,82 @@ const BasicInputGroupContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const PhoneInputContent = () => {
+const WithPrefixOnlyContent = () => {
+  const [value, setValue] = useState('');
+
+  return (
+    <View className="flex-1 justify-center px-5">
+      <KeyboardAvoidingContainer>
+        <View className="gap-4">
+          <InputGroup>
+            <InputGroup.Prefix isDecorative>
+              <PersonIcon size={16} colorClassName="accent-field-placeholder" />
+            </InputGroup.Prefix>
+            <InputGroup.Input
+              value={value}
+              onChangeText={setValue}
+              placeholder="Username"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </InputGroup>
+
+          <InputGroup>
+            <InputGroup.Prefix isDecorative>
+              <CreditCardIcon
+                size={16}
+                colorClassName="accent-field-placeholder"
+              />
+            </InputGroup.Prefix>
+            <InputGroup.Input
+              placeholder="4242 4242 4242 4242"
+              keyboardType="number-pad"
+            />
+          </InputGroup>
+        </View>
+      </KeyboardAvoidingContainer>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const WithSuffixOnlyContent = () => {
+  const [search, setSearch] = useState('');
+
+  return (
+    <View className="flex-1 justify-center px-5">
+      <KeyboardAvoidingContainer>
+        <View className="gap-4">
+          <InputGroup>
+            <InputGroup.Input
+              value={search}
+              onChangeText={setSearch}
+              placeholder="Search products..."
+            />
+            <InputGroup.Suffix isDecorative>
+              <MagnifierIcon
+                size={16}
+                colorClassName="accent-field-placeholder"
+              />
+            </InputGroup.Suffix>
+          </InputGroup>
+
+          <InputGroup>
+            <InputGroup.Input placeholder="heroui.com" autoCapitalize="none" />
+            <InputGroup.Suffix isDecorative>
+              <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
+            </InputGroup.Suffix>
+          </InputGroup>
+        </View>
+      </KeyboardAvoidingContainer>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const WithSelectPrefixContent = () => {
   const [phone, setPhone] = useState('');
   const [dialCode, setDialCode] = useState<DialCodeOption>(DIAL_CODES[0]!);
 
@@ -161,210 +257,26 @@ const PhoneInputContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const WithLeadingPrefixContent = () => {
-  const [value, setValue] = useState('');
-
-  return (
-    <View className="flex-1 justify-center px-5">
-      <KeyboardAvoidingContainer>
-        <InputGroup>
-          <InputGroup.Prefix isDecorative>
-            <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
-          </InputGroup.Prefix>
-          <InputGroup.Input
-            value={value}
-            onChangeText={setValue}
-            placeholder="Enter website URL"
-            keyboardType="url"
-            autoCapitalize="none"
-          />
-        </InputGroup>
-      </KeyboardAvoidingContainer>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const WithPrefixAndSuffixContent = () => {
-  const [value, setValue] = useState('');
-
-  return (
-    <View className="flex-1 justify-center px-5">
-      <KeyboardAvoidingContainer>
-        <InputGroup>
-          <InputGroup.Prefix isDecorative>
-            <Text className="text-sm text-field-placeholder">$</Text>
-          </InputGroup.Prefix>
-          <InputGroup.Input
-            value={value}
-            onChangeText={setValue}
-            placeholder="0.00"
-            keyboardType="decimal-pad"
-          />
-          <InputGroup.Suffix isDecorative>
-            <Text className="text-sm text-field-placeholder">USD</Text>
-          </InputGroup.Suffix>
-        </InputGroup>
-      </KeyboardAvoidingContainer>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const WithPasswordToggleContent = () => {
-  const [value, setValue] = useState('');
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
-  return (
-    <View className="flex-1 justify-center px-5">
-      <KeyboardAvoidingContainer>
-        <InputGroup>
-          <InputGroup.Prefix isDecorative>
-            <LockIcon size={16} colorClassName="accent-field-placeholder" />
-          </InputGroup.Prefix>
-          <InputGroup.Input
-            value={value}
-            onChangeText={setValue}
-            placeholder="Enter your password"
-            secureTextEntry={!isPasswordVisible}
-          />
-          <InputGroup.Suffix>
-            <Pressable
-              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-              hitSlop={20}
-            >
-              {isPasswordVisible ? (
-                <EyeSlashIcon
-                  size={16}
-                  colorClassName="accent-field-placeholder"
-                />
-              ) : (
-                <EyeIcon size={16} colorClassName="accent-field-placeholder" />
-              )}
-            </Pressable>
-          </InputGroup.Suffix>
-        </InputGroup>
-      </KeyboardAvoidingContainer>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const WithTextFieldContent = () => {
-  const [isInvalid, setIsInvalid] = useState(false);
-  const [value, setValue] = useState('');
-
-  return (
-    <WithStateToggle
-      isSelected={isInvalid}
-      onSelectedChange={setIsInvalid}
-      label="Simulate Error"
-      description="Toggle validation error state"
-    >
-      <View className="flex-1 pt-[55%]">
-        <KeyboardAvoidingContainer>
-          <TextField isRequired isInvalid={isInvalid}>
-            <Label>Amount</Label>
-            <InputGroup>
-              <InputGroup.Prefix isDecorative>
-                <Text className="text-sm text-field-placeholder">$</Text>
-              </InputGroup.Prefix>
-              <InputGroup.Input
-                value={value}
-                onChangeText={setValue}
-                placeholder="0.00"
-                keyboardType="decimal-pad"
-                className="pl-8"
-              />
-            </InputGroup>
-            <Description hideOnInvalid>
-              Enter the transaction amount
-            </Description>
-            <FieldError>Please enter a valid amount</FieldError>
-          </TextField>
-        </KeyboardAvoidingContainer>
-      </View>
-    </WithStateToggle>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const DisabledContent = () => {
-  const [activeValue, setActiveValue] = useState('');
-
-  return (
-    <View className="flex-1 justify-center px-5">
-      <KeyboardAvoidingContainer>
-        <View className="gap-8">
-          <InputGroup>
-            <InputGroup.Prefix isDecorative>
-              <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
-            </InputGroup.Prefix>
-            <InputGroup.Input
-              value={activeValue}
-              onChangeText={setActiveValue}
-              placeholder="Active field"
-              className="pl-10"
-            />
-          </InputGroup>
-
-          <InputGroup isDisabled>
-            <InputGroup.Prefix isDecorative>
-              <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
-            </InputGroup.Prefix>
-            <InputGroup.Input
-              value="heroui.com"
-              placeholder="Disabled field"
-              className="pl-10"
-            />
-          </InputGroup>
-        </View>
-      </KeyboardAvoidingContainer>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
 const INPUT_GROUP_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-input-group',
-    label: 'Basic InputGroup',
+    label: 'Basic',
     content: <BasicInputGroupContent />,
   },
   {
-    value: 'phone-input',
-    label: 'Phone number input',
-    content: <PhoneInputContent />,
+    value: 'with-prefix-only',
+    label: 'With prefix only',
+    content: <WithPrefixOnlyContent />,
   },
   {
-    value: 'with-prefix',
-    label: 'With prefix',
-    content: <WithLeadingPrefixContent />,
+    value: 'with-suffix-only',
+    label: 'With suffix only',
+    content: <WithSuffixOnlyContent />,
   },
   {
-    value: 'with-prefix-and-suffix',
-    label: 'With prefix & suffix',
-    content: <WithPrefixAndSuffixContent />,
-  },
-  {
-    value: 'with-password-toggle',
-    label: 'With password toggle',
-    content: <WithPasswordToggleContent />,
-  },
-  {
-    value: 'within-text-field',
-    label: 'Within TextField',
-    content: <WithTextFieldContent />,
-  },
-  {
-    value: 'disabled',
-    label: 'Disabled',
-    content: <DisabledContent />,
+    value: 'with-select-prefix',
+    label: 'With select prefix',
+    content: <WithSelectPrefixContent />,
   },
 ];
 

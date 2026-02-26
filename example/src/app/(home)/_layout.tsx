@@ -138,6 +138,7 @@ export default function Layout() {
           name="components/list-group"
           options={{ title: 'ListGroup' }}
         />
+        <Stack.Screen name="components/menu" options={{ title: 'Menu' }} />
         <Stack.Screen
           name="components/popover"
           options={{ title: 'Popover' }}

@@ -85,6 +85,10 @@ const components: Component[] = [
     path: 'list-group',
   },
   {
+    title: 'Menu',
+    path: 'menu',
+  },
+  {
     title: 'Popover',
     path: 'popover',
   },

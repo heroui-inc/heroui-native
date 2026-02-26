@@ -42,7 +42,7 @@ const cards: HomeCardProps[] = [
     title: 'Components',
     imageLight: HomeComponentsLight,
     imageDark: HomeComponentsDark,
-    count: 34,
+    count: 35,
     footer: 'Explore all components',
     path: 'components',
   },

@@ -16,6 +16,7 @@ export * from './components/input';
 export * from './components/input-otp';
 export * from './components/label';
 export * from './components/list-group';
+export * from './components/menu';
 export * from './components/popover';
 export * from './components/pressable-feedback';
 export * from './components/radio';

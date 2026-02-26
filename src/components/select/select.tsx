@@ -262,7 +262,9 @@ const SelectPortal = ({
           <FullWindowOverlay
             disableFullWindowOverlay={disableFullWindowOverlay}
           >
-            <View className={portalClassName}>{children}</View>
+            <View className={portalClassName} pointerEvents="box-none">
+              {children}
+            </View>
           </FullWindowOverlay>
         </SelectAnimationProvider>
       </AnimationSettingsProvider>

@@ -10,11 +10,6 @@ import type {
 } from '../../helpers/internal/types';
 
 /**
- * Popover internal state
- */
-type PopoverState = 'idle' | 'open' | 'close';
-
-/**
  * Content sizing strategy
  * - 'content-fit': Auto-size to content width (default)
  * - 'trigger': Match trigger width exactly
@@ -198,7 +193,6 @@ export type {
   IRootContext,
   OverlayProps,
   OverlayRef,
-  PopoverState,
   PortalProps,
   RootProps,
   RootRef,

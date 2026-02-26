@@ -95,7 +95,7 @@ const PhoneInputContent = () => {
         <TextField isRequired>
           <Label>Phone number</Label>
           <InputGroup value={phone} onChange={setPhone}>
-            <InputGroup.Addon>
+            <InputGroup.Prefix>
               <Select
                 value={dialCode}
                 onValueChange={(value) => {
@@ -141,7 +141,7 @@ const PhoneInputContent = () => {
                   </Select.Content>
                 </Select.Portal>
               </Select>
-            </InputGroup.Addon>
+            </InputGroup.Prefix>
             <Separator orientation="vertical" className="h-5 mx-1" />
             <InputGroup.Input
               placeholder="(555) 000-0000"
@@ -159,20 +159,20 @@ const PhoneInputContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const WithLeadingAddonContent = () => {
+const WithLeadingPrefixContent = () => {
   const [value, setValue] = useState('');
 
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <InputGroup value={value} onChange={setValue}>
-          <InputGroup.Addon
+          <InputGroup.Prefix
             pointerEvents="none"
             accessibilityElementsHidden
             importantForAccessibility="no-hide-descendants"
           >
             <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
-          </InputGroup.Addon>
+          </InputGroup.Prefix>
           <InputGroup.Input
             placeholder="Enter website URL"
             keyboardType="url"
@@ -186,28 +186,28 @@ const WithLeadingAddonContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const WithLeadingAndTrailingAddonsContent = () => {
+const WithPrefixAndSuffixContent = () => {
   const [value, setValue] = useState('');
 
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <InputGroup value={value} onChange={setValue}>
-          <InputGroup.Addon
+          <InputGroup.Prefix
             pointerEvents="none"
             accessibilityElementsHidden
             importantForAccessibility="no-hide-descendants"
           >
             <Text className="text-sm text-field-placeholder">$</Text>
-          </InputGroup.Addon>
+          </InputGroup.Prefix>
           <InputGroup.Input placeholder="0.00" keyboardType="decimal-pad" />
-          <InputGroup.Addon
+          <InputGroup.Suffix
             pointerEvents="none"
             accessibilityElementsHidden
             importantForAccessibility="no-hide-descendants"
           >
             <Text className="text-sm text-field-placeholder">USD</Text>
-          </InputGroup.Addon>
+          </InputGroup.Suffix>
         </InputGroup>
       </KeyboardAvoidingContainer>
     </View>
@@ -224,18 +224,18 @@ const WithPasswordToggleContent = () => {
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <InputGroup value={value} onChange={setValue}>
-          <InputGroup.Addon
+          <InputGroup.Prefix
             pointerEvents="none"
             accessibilityElementsHidden
             importantForAccessibility="no-hide-descendants"
           >
             <LockIcon size={16} colorClassName="accent-field-placeholder" />
-          </InputGroup.Addon>
+          </InputGroup.Prefix>
           <InputGroup.Input
             placeholder="Enter your password"
             secureTextEntry={!isPasswordVisible}
           />
-          <InputGroup.Addon>
+          <InputGroup.Suffix>
             <Pressable onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
               {isPasswordVisible ? (
                 <EyeSlashIcon
@@ -246,7 +246,7 @@ const WithPasswordToggleContent = () => {
                 <EyeIcon size={16} colorClassName="accent-field-placeholder" />
               )}
             </Pressable>
-          </InputGroup.Addon>
+          </InputGroup.Suffix>
         </InputGroup>
       </KeyboardAvoidingContainer>
     </View>
@@ -271,13 +271,13 @@ const WithTextFieldContent = () => {
           <TextField isRequired isInvalid={isInvalid}>
             <Label>Amount</Label>
             <InputGroup value={value} onChange={setValue}>
-              <InputGroup.Addon
+              <InputGroup.Prefix
                 pointerEvents="none"
                 accessibilityElementsHidden
                 importantForAccessibility="no-hide-descendants"
               >
                 <Text className="text-sm text-field-placeholder">$</Text>
-              </InputGroup.Addon>
+              </InputGroup.Prefix>
               <InputGroup.Input placeholder="0.00" keyboardType="decimal-pad" />
             </InputGroup>
             <Description hideOnInvalid>
@@ -301,24 +301,24 @@ const DisabledContent = () => {
       <KeyboardAvoidingContainer>
         <View className="gap-8">
           <InputGroup value={activeValue} onChange={setActiveValue}>
-            <InputGroup.Addon
+            <InputGroup.Prefix
               pointerEvents="none"
               accessibilityElementsHidden
               importantForAccessibility="no-hide-descendants"
             >
               <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
-            </InputGroup.Addon>
+            </InputGroup.Prefix>
             <InputGroup.Input placeholder="Active field" />
           </InputGroup>
 
           <InputGroup isDisabled value="heroui.com">
-            <InputGroup.Addon
+            <InputGroup.Prefix
               pointerEvents="none"
               accessibilityElementsHidden
               importantForAccessibility="no-hide-descendants"
             >
               <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
-            </InputGroup.Addon>
+            </InputGroup.Prefix>
             <InputGroup.Input placeholder="Disabled field" />
           </InputGroup>
         </View>
@@ -341,14 +341,14 @@ const INPUT_GROUP_VARIANTS: UsageVariant[] = [
     content: <PhoneInputContent />,
   },
   {
-    value: 'with-leading-addon',
-    label: 'With leading addon',
-    content: <WithLeadingAddonContent />,
+    value: 'with-prefix',
+    label: 'With prefix',
+    content: <WithLeadingPrefixContent />,
   },
   {
-    value: 'with-leading-and-trailing-addons',
-    label: 'With leading & trailing addons',
-    content: <WithLeadingAndTrailingAddonsContent />,
+    value: 'with-prefix-and-suffix',
+    label: 'With prefix & suffix',
+    content: <WithPrefixAndSuffixContent />,
   },
   {
     value: 'with-password-toggle',

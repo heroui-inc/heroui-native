@@ -5,7 +5,7 @@ import type { InputProps } from '../input';
 /**
  * Context value provided by InputGroup root to child components.
  * Carries the controlled value, onChange callback, focus state, and
- * form-field state so that Addon, Input, and Group can consume them.
+ * form-field state so that Prefix, Suffix, Input, and Group can consume them.
  */
 export interface InputGroupContextType {
   /** Current input text (undefined when uncontrolled) */
@@ -75,11 +75,26 @@ export interface InputGroupProps extends ViewProps {
 }
 
 /**
- * Props for the InputGroup.Addon component
+ * Props for the InputGroup.Prefix component
  */
-export interface InputGroupAddonProps extends ViewProps {
+export interface InputGroupPrefixProps extends ViewProps {
   /**
-   * Content to render inside the addon
+   * Content to render inside the prefix
+   */
+  children?: React.ReactNode;
+
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
+}
+
+/**
+ * Props for the InputGroup.Suffix component
+ */
+export interface InputGroupSuffixProps extends ViewProps {
+  /**
+   * Content to render inside the suffix
    */
   children?: React.ReactNode;
 
@@ -91,8 +106,8 @@ export interface InputGroupAddonProps extends ViewProps {
 
 /**
  * Props for the InputGroup.Input component.
- * Omits `value` and `onChangeText` because they are provided by InputGroup
- * root through InputGroupContext.
+ * Omits `value` and `onChangeText` because they are provided by
+ * InputGroup root through InputGroupContext.
  */
 export interface InputGroupInputProps
   extends Omit<InputProps, 'value' | 'onChangeText'> {}

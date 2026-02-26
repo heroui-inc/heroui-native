@@ -30,7 +30,11 @@ const root = tv({
   },
 });
 
-const addon = tv({
+const prefix = tv({
+  base: 'items-center justify-center',
+});
+
+const suffix = tv({
   base: 'items-center justify-center',
 });
 
@@ -45,7 +49,8 @@ const input = tv({
 
 export const inputGroupClassNames = combineStyles({
   root,
-  addon,
+  prefix,
+  suffix,
   input,
 });
 

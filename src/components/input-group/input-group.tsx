@@ -15,10 +15,11 @@ import {
   inputGroupStyleSheet,
 } from './input-group.styles';
 import type {
-  InputGroupAddonProps,
   InputGroupContextType,
   InputGroupInputProps,
+  InputGroupPrefixProps,
   InputGroupProps,
+  InputGroupSuffixProps,
 } from './input-group.types';
 
 const [InputGroupProvider, useInputGroup] =
@@ -101,14 +102,30 @@ const InputGroupRoot = forwardRef<ViewRef, InputGroupProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const InputGroupAddon = forwardRef<ViewRef, InputGroupAddonProps>(
+const InputGroupPrefix = forwardRef<ViewRef, InputGroupPrefixProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
-    const addonClassName = inputGroupClassNames.addon({ className });
+    const prefixClassName = inputGroupClassNames.prefix({ className });
 
     return (
-      <View ref={ref} className={addonClassName} {...restProps}>
+      <View ref={ref} className={prefixClassName} {...restProps}>
+        {children}
+      </View>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const InputGroupSuffix = forwardRef<ViewRef, InputGroupSuffixProps>(
+  (props, ref) => {
+    const { children, className, ...restProps } = props;
+
+    const suffixClassName = inputGroupClassNames.suffix({ className });
+
+    return (
+      <View ref={ref} className={suffixClassName} {...restProps}>
         {children}
       </View>
     );
@@ -168,7 +185,8 @@ const InputGroupInput = forwardRef<TextInputType, InputGroupInputProps>(
 // --------------------------------------------------
 
 InputGroupRoot.displayName = DISPLAY_NAME.INPUT_GROUP;
-InputGroupAddon.displayName = DISPLAY_NAME.INPUT_GROUP_ADDON;
+InputGroupPrefix.displayName = DISPLAY_NAME.INPUT_GROUP_PREFIX;
+InputGroupSuffix.displayName = DISPLAY_NAME.INPUT_GROUP_SUFFIX;
 InputGroupInput.displayName = DISPLAY_NAME.INPUT_GROUP_INPUT;
 
 /**
@@ -180,9 +198,13 @@ InputGroupInput.displayName = DISPLAY_NAME.INPUT_GROUP_INPUT;
  * tracks focus state for the focus border. Also provides FormFieldProvider
  * and animation settings.
  *
- * @component InputGroup.Addon - Plain flex View for leading or trailing
- * content (icons, labels, buttons). Naturally sized as a flex sibling — no
- * absolute positioning required.
+ * @component InputGroup.Prefix - Plain flex View for leading content (icons,
+ * labels, buttons). Naturally sized as a flex sibling — no absolute
+ * positioning required.
+ *
+ * @component InputGroup.Suffix - Plain flex View for trailing content (icons,
+ * labels, buttons). Naturally sized as a flex sibling — no absolute
+ * positioning required.
  *
  * @component InputGroup.Input - Wraps the Input component with shell-stripping
  * overrides so the root owns the visual shell. Reads `value` and `onChangeText`
@@ -192,8 +214,10 @@ InputGroupInput.displayName = DISPLAY_NAME.INPUT_GROUP_INPUT;
  * @see Full documentation: https://v3.heroui.com/docs/native/components/input-group
  */
 const CompoundInputGroup = Object.assign(InputGroupRoot, {
-  /** Plain flex View for leading or trailing addon content */
-  Addon: InputGroupAddon,
+  /** Plain flex View for leading prefix content */
+  Prefix: InputGroupPrefix,
+  /** Plain flex View for trailing suffix content */
+  Suffix: InputGroupSuffix,
   /** Text input that reads value/onChange from context */
   Input: InputGroupInput,
 });

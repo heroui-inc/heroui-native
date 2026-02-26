@@ -1,22 +1,37 @@
-import { forwardRef, useMemo } from 'react';
-import { type TextInput as TextInputType, View } from 'react-native';
+import { forwardRef, useCallback, useMemo, useState } from 'react';
+import {
+  type LayoutChangeEvent,
+  type TextInput as TextInputType,
+  View,
+} from 'react-native';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
+import { createContext } from '../../helpers/internal/utils';
 import { Input } from '../input';
 import { useInputGroupRootAnimation } from './input-group.animation';
 import { DISPLAY_NAME } from './input-group.constants';
 import { inputGroupClassNames } from './input-group.styles';
 import type {
+  InputGroupContextType,
   InputGroupInputProps,
   InputGroupPrefixProps,
   InputGroupProps,
   InputGroupSuffixProps,
 } from './input-group.types';
 
+const [InputGroupProvider, useInputGroup] =
+  createContext<InputGroupContextType>({
+    name: 'InputGroupContext',
+    strict: false,
+  });
+
 // --------------------------------------------------
 
 const InputGroupRoot = forwardRef<ViewRef, InputGroupProps>((props, ref) => {
   const { children, animation, ...restProps } = props;
+
+  const [prefixWidth, setPrefixWidth] = useState(0);
+  const [suffixWidth, setSuffixWidth] = useState(0);
 
   const { isAllAnimationsDisabled } = useInputGroupRootAnimation({ animation });
 
@@ -25,12 +40,19 @@ const InputGroupRoot = forwardRef<ViewRef, InputGroupProps>((props, ref) => {
     [isAllAnimationsDisabled]
   );
 
+  const inputGroupContextValue = useMemo<InputGroupContextType>(
+    () => ({ prefixWidth, suffixWidth, setPrefixWidth, setSuffixWidth }),
+    [prefixWidth, suffixWidth]
+  );
+
   return (
-    <AnimationSettingsProvider value={animationSettingsContextValue}>
-      <View ref={ref} {...restProps}>
-        {children}
-      </View>
-    </AnimationSettingsProvider>
+    <InputGroupProvider value={inputGroupContextValue}>
+      <AnimationSettingsProvider value={animationSettingsContextValue}>
+        <View ref={ref} {...restProps}>
+          {children}
+        </View>
+      </AnimationSettingsProvider>
+    </InputGroupProvider>
   );
 });
 
@@ -38,7 +60,23 @@ const InputGroupRoot = forwardRef<ViewRef, InputGroupProps>((props, ref) => {
 
 const InputGroupPrefix = forwardRef<ViewRef, InputGroupPrefixProps>(
   (props, ref) => {
-    const { children, className, isDecorative = false, ...restProps } = props;
+    const {
+      children,
+      className,
+      isDecorative = false,
+      onLayout: onLayoutProp,
+      ...restProps
+    } = props;
+
+    const context = useInputGroup();
+
+    const onLayout = useCallback(
+      (event: LayoutChangeEvent) => {
+        context?.setPrefixWidth(event.nativeEvent.layout.width);
+        onLayoutProp?.(event);
+      },
+      [context, onLayoutProp]
+    );
 
     const prefixClassName = inputGroupClassNames.prefix({ className });
 
@@ -46,6 +84,7 @@ const InputGroupPrefix = forwardRef<ViewRef, InputGroupPrefixProps>(
       <View
         ref={ref}
         className={prefixClassName}
+        onLayout={onLayout}
         pointerEvents={isDecorative ? 'none' : undefined}
         accessibilityElementsHidden={isDecorative || undefined}
         importantForAccessibility={
@@ -63,7 +102,23 @@ const InputGroupPrefix = forwardRef<ViewRef, InputGroupPrefixProps>(
 
 const InputGroupSuffix = forwardRef<ViewRef, InputGroupSuffixProps>(
   (props, ref) => {
-    const { children, className, isDecorative = false, ...restProps } = props;
+    const {
+      children,
+      className,
+      isDecorative = false,
+      onLayout: onLayoutProp,
+      ...restProps
+    } = props;
+
+    const context = useInputGroup();
+
+    const onLayout = useCallback(
+      (event: LayoutChangeEvent) => {
+        context?.setSuffixWidth(event.nativeEvent.layout.width);
+        onLayoutProp?.(event);
+      },
+      [context, onLayoutProp]
+    );
 
     const suffixClassName = inputGroupClassNames.suffix({ className });
 
@@ -71,6 +126,7 @@ const InputGroupSuffix = forwardRef<ViewRef, InputGroupSuffixProps>(
       <View
         ref={ref}
         className={suffixClassName}
+        onLayout={onLayout}
         pointerEvents={isDecorative ? 'none' : undefined}
         accessibilityElementsHidden={isDecorative || undefined}
         importantForAccessibility={
@@ -88,7 +144,28 @@ const InputGroupSuffix = forwardRef<ViewRef, InputGroupSuffixProps>(
 
 const InputGroupInput = forwardRef<TextInputType, InputGroupInputProps>(
   (props, ref) => {
-    return <Input ref={ref} {...props} />;
+    const { style, ...restProps } = props;
+
+    const context = useInputGroup();
+
+    const autoPaddingStyle = useMemo(() => {
+      const paddingLeft =
+        context?.prefixWidth && context.prefixWidth > 0
+          ? context.prefixWidth
+          : undefined;
+      const paddingRight =
+        context?.suffixWidth && context.suffixWidth > 0
+          ? context.suffixWidth
+          : undefined;
+
+      if (paddingLeft === undefined && paddingRight === undefined) {
+        return undefined;
+      }
+
+      return { paddingLeft, paddingRight };
+    }, [context?.prefixWidth, context?.suffixWidth]);
+
+    return <Input ref={ref} style={[autoPaddingStyle, style]} {...restProps} />;
   }
 );
 
@@ -103,21 +180,23 @@ InputGroupInput.displayName = DISPLAY_NAME.INPUT_GROUP_INPUT;
  * Compound InputGroup component with sub-components.
  *
  * @component InputGroup - Layout container (`flex-row items-center`) that
- * wraps Prefix, Input, and Suffix. Provides animation settings to children.
- * Does not own any visual shell — the Input retains its own styles.
+ * wraps Prefix, Input, and Suffix. Provides animation settings and a
+ * measurement context so Prefix/Suffix widths are automatically applied
+ * as padding on the Input.
  *
  * @component InputGroup.Prefix - Absolutely positioned View anchored to
- * the left side of the Input. Use for leading content such as icons,
- * labels, or interactive controls. Set `isDecorative` to make touches
- * pass through to the Input and hide from accessibility.
+ * the left side of the Input. Its measured width is applied as
+ * `paddingLeft` on InputGroup.Input automatically. Set `isDecorative`
+ * to make touches pass through to the Input and hide from accessibility.
  *
  * @component InputGroup.Suffix - Absolutely positioned View anchored to
- * the right side of the Input. Use for trailing content such as icons,
- * labels, or interactive controls. Set `isDecorative` to make touches
- * pass through to the Input and hide from accessibility.
+ * the right side of the Input. Its measured width is applied as
+ * `paddingRight` on InputGroup.Input automatically. Set `isDecorative`
+ * to make touches pass through to the Input and hide from accessibility.
  *
  * @component InputGroup.Input - Pass-through to the Input component.
  * Accepts all Input props directly (value, onChangeText, isDisabled, etc.).
+ * Automatically receives paddingLeft/paddingRight from measured Prefix/Suffix.
  *
  * @see Full documentation: https://v3.heroui.com/docs/native/components/input-group
  */

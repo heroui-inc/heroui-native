@@ -99,8 +99,9 @@ const PhoneInputContent = () => {
         <TextField isRequired>
           <Label>Phone number</Label>
           <InputGroup>
-            <InputGroup.Prefix>
+            <InputGroup.Prefix className="flex-row">
               <Select
+                presentation="bottom-sheet"
                 value={dialCode}
                 onValueChange={(value) => {
                   const found = DIAL_CODES.find(
@@ -114,18 +115,13 @@ const PhoneInputContent = () => {
                   className="flex-row items-center gap-1"
                 >
                   <AppText className="text-base">{dialCode.flag}</AppText>
-                  <AppText className="text-sm font-semibold text-foreground">
+                  <AppText className="text-sm font-medium text-foreground">
                     {dialCode.code}
                   </AppText>
                 </Select.Trigger>
                 <Select.Portal>
                   <Select.Overlay />
-                  <Select.Content
-                    presentation="popover"
-                    width={260}
-                    placement="bottom"
-                    align="start"
-                  >
+                  <Select.Content presentation="bottom-sheet">
                     <Select.ListLabel>Select country</Select.ListLabel>
                     {DIAL_CODES.map((option, index) => (
                       <React.Fragment key={option.value}>
@@ -235,7 +231,10 @@ const WithPasswordToggleContent = () => {
             secureTextEntry={!isPasswordVisible}
           />
           <InputGroup.Suffix>
-            <Pressable onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
+            <Pressable
+              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+              hitSlop={20}
+            >
               {isPasswordVisible ? (
                 <EyeSlashIcon
                   size={16}

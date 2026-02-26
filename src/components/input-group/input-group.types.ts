@@ -3,6 +3,22 @@ import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 import type { InputProps } from '../input';
 
 /**
+ * Context value provided by InputGroup root to child components.
+ * Carries measured Prefix/Suffix widths so InputGroup.Input can
+ * automatically apply matching paddingLeft / paddingRight.
+ */
+export interface InputGroupContextType {
+  /** Measured width of the Prefix element (0 when absent) */
+  prefixWidth: number;
+  /** Measured width of the Suffix element (0 when absent) */
+  suffixWidth: number;
+  /** Called by Prefix after layout to report its width */
+  setPrefixWidth: (width: number) => void;
+  /** Called by Suffix after layout to report its width */
+  setSuffixWidth: (width: number) => void;
+}
+
+/**
  * Props for the InputGroup root component.
  * Acts as a layout container for Prefix, Input, and Suffix.
  */

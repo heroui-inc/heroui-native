@@ -206,8 +206,8 @@ InputGroupInput.displayName = DISPLAY_NAME.INPUT_GROUP_INPUT;
 /**
  * Compound InputGroup component with sub-components.
  *
- * @component InputGroup - Layout container (`flex-row items-center`) that
- * wraps Prefix, Input, and Suffix. Provides animation settings and a
+ * @component InputGroup - Layout container (plain View) that wraps
+ * Prefix, Input, and Suffix. Provides animation settings and a
  * measurement context so Prefix/Suffix widths are automatically applied
  * as padding on the Input.
  *

@@ -34,7 +34,6 @@ export default function App() {
             <PressableFeedback
               animation={false}
               onPress={() => {
-                console.log('onPress', item.path);
                 if (Platform.OS === 'ios') {
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                 }

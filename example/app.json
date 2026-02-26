@@ -6,6 +6,7 @@
     "version": "1.0.1",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "ios": {
       "icon": {
         "light": "./assets/ios-icon-light.png",
@@ -22,6 +23,7 @@
         "foregroundImage": "./assets/android-adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "edgeToEdgeEnabled": true,
       "package": "com.herouinative.android"
     },
     "web": {
@@ -41,8 +43,7 @@
           },
           "imageWidth": 200
         }
-      ],
-      "expo-image"
+      ]
     ],
     "extra": {
       "router": {

@@ -8,28 +8,28 @@ import {
 import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
 import { Input } from '../input';
-import { useInputFieldRootAnimation } from './input-field.animation';
-import { DISPLAY_NAME } from './input-field.constants';
+import { useInputGroupRootAnimation } from './input-group.animation';
+import { DISPLAY_NAME } from './input-group.constants';
 import {
-  inputFieldClassNames,
-  inputFieldStyleSheet,
-} from './input-field.styles';
+  inputGroupClassNames,
+  inputGroupStyleSheet,
+} from './input-group.styles';
 import type {
-  InputFieldAddonProps,
-  InputFieldContextType,
-  InputFieldInputProps,
-  InputFieldProps,
-} from './input-field.types';
+  InputGroupAddonProps,
+  InputGroupContextType,
+  InputGroupInputProps,
+  InputGroupProps,
+} from './input-group.types';
 
-const [InputFieldProvider, useInputField] =
-  createContext<InputFieldContextType>({
-    name: 'InputFieldContext',
+const [InputGroupProvider, useInputGroup] =
+  createContext<InputGroupContextType>({
+    name: 'InputGroupContext',
     strict: false,
   });
 
 // --------------------------------------------------
 
-const InputFieldRoot = forwardRef<ViewRef, InputFieldProps>((props, ref) => {
+const InputGroupRoot = forwardRef<ViewRef, InputGroupProps>((props, ref) => {
   const {
     children,
     className,
@@ -48,9 +48,9 @@ const InputFieldRoot = forwardRef<ViewRef, InputFieldProps>((props, ref) => {
   const isOnSurface = useIsOnSurface();
   const variant = isOnSurface ? 'secondary' : 'primary';
 
-  const { isAllAnimationsDisabled } = useInputFieldRootAnimation({ animation });
+  const { isAllAnimationsDisabled } = useInputGroupRootAnimation({ animation });
 
-  const rootClassName = inputFieldClassNames.root({
+  const rootClassName = inputGroupClassNames.root({
     variant,
     isFocused,
     isInvalid,
@@ -58,7 +58,7 @@ const InputFieldRoot = forwardRef<ViewRef, InputFieldProps>((props, ref) => {
     className,
   });
 
-  const inputFieldContextValue = useMemo<InputFieldContextType>(
+  const inputGroupContextValue = useMemo<InputGroupContextType>(
     () => ({
       value,
       onChange,
@@ -82,30 +82,30 @@ const InputFieldRoot = forwardRef<ViewRef, InputFieldProps>((props, ref) => {
   );
 
   return (
-    <InputFieldProvider value={inputFieldContextValue}>
+    <InputGroupProvider value={inputGroupContextValue}>
       <AnimationSettingsProvider value={animationSettingsContextValue}>
         <FormFieldProvider value={formFieldContextValue}>
           <View
             ref={ref}
             className={rootClassName}
-            style={[inputFieldStyleSheet.borderCurve, style]}
+            style={[inputGroupStyleSheet.borderCurve, style]}
             {...restProps}
           >
             {children}
           </View>
         </FormFieldProvider>
       </AnimationSettingsProvider>
-    </InputFieldProvider>
+    </InputGroupProvider>
   );
 });
 
 // --------------------------------------------------
 
-const InputFieldAddon = forwardRef<ViewRef, InputFieldAddonProps>(
+const InputGroupAddon = forwardRef<ViewRef, InputGroupAddonProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
-    const addonClassName = inputFieldClassNames.addon({ className });
+    const addonClassName = inputGroupClassNames.addon({ className });
 
     return (
       <View ref={ref} className={addonClassName} {...restProps}>
@@ -117,7 +117,7 @@ const InputFieldAddon = forwardRef<ViewRef, InputFieldAddonProps>(
 
 // --------------------------------------------------
 
-const InputFieldInput = forwardRef<TextInputType, InputFieldInputProps>(
+const InputGroupInput = forwardRef<TextInputType, InputGroupInputProps>(
   (props, ref) => {
     const {
       isDisabled: localIsDisabled,
@@ -127,35 +127,35 @@ const InputFieldInput = forwardRef<TextInputType, InputFieldInputProps>(
       ...restProps
     } = props;
 
-    const inputField = useInputField();
+    const inputGroup = useInputGroup();
 
-    const isDisabled = localIsDisabled ?? inputField?.isDisabled ?? false;
+    const isDisabled = localIsDisabled ?? inputGroup?.isDisabled ?? false;
 
     const onFocus = useCallback(
-      (e: Parameters<NonNullable<InputFieldInputProps['onFocus']>>[0]) => {
-        inputField?.setIsFocused(true);
+      (e: Parameters<NonNullable<InputGroupInputProps['onFocus']>>[0]) => {
+        inputGroup?.setIsFocused(true);
         onFocusProp?.(e);
       },
-      [inputField, onFocusProp]
+      [inputGroup, onFocusProp]
     );
 
     const onBlur = useCallback(
-      (e: Parameters<NonNullable<InputFieldInputProps['onBlur']>>[0]) => {
-        inputField?.setIsFocused(false);
+      (e: Parameters<NonNullable<InputGroupInputProps['onBlur']>>[0]) => {
+        inputGroup?.setIsFocused(false);
         onBlurProp?.(e);
       },
-      [inputField, onBlurProp]
+      [inputGroup, onBlurProp]
     );
 
-    const inputClassName = inputFieldClassNames.input({ className });
+    const inputClassName = inputGroupClassNames.input({ className });
 
     return (
       <Input
         ref={ref}
         {...restProps}
         className={inputClassName}
-        value={inputField?.value}
-        onChangeText={inputField?.onChange}
+        value={inputGroup?.value}
+        onChangeText={inputGroup?.onChange}
         isDisabled={false}
         editable={!isDisabled}
         onFocus={onFocus}
@@ -167,36 +167,36 @@ const InputFieldInput = forwardRef<TextInputType, InputFieldInputProps>(
 
 // --------------------------------------------------
 
-InputFieldRoot.displayName = DISPLAY_NAME.INPUT_FIELD;
-InputFieldAddon.displayName = DISPLAY_NAME.INPUT_FIELD_ADDON;
-InputFieldInput.displayName = DISPLAY_NAME.INPUT_FIELD_INPUT;
+InputGroupRoot.displayName = DISPLAY_NAME.INPUT_GROUP;
+InputGroupAddon.displayName = DISPLAY_NAME.INPUT_GROUP_ADDON;
+InputGroupInput.displayName = DISPLAY_NAME.INPUT_GROUP_INPUT;
 
 /**
- * Compound InputField component with sub-components.
+ * Compound InputGroup component with sub-components.
  *
- * @component InputField - Root container that accepts `value`, `onChange`,
+ * @component InputGroup - Root container that accepts `value`, `onChange`,
  * `isDisabled`, `isInvalid`, and `isRequired`, providing them to children via
  * context. Owns the visual shell (border, background, rounded corners) and
  * tracks focus state for the focus border. Also provides FormFieldProvider
  * and animation settings.
  *
- * @component InputField.Addon - Plain flex View for leading or trailing
+ * @component InputGroup.Addon - Plain flex View for leading or trailing
  * content (icons, labels, buttons). Naturally sized as a flex sibling — no
  * absolute positioning required.
  *
- * @component InputField.Input - Wraps the Input component with shell-stripping
+ * @component InputGroup.Input - Wraps the Input component with shell-stripping
  * overrides so the root owns the visual shell. Reads `value` and `onChangeText`
- * from InputFieldContext automatically. Reports focus/blur state back to the
+ * from InputGroupContext automatically. Reports focus/blur state back to the
  * root to drive the focus border.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/input-field
+ * @see Full documentation: https://v3.heroui.com/docs/native/components/input-group
  */
-const CompoundInputField = Object.assign(InputFieldRoot, {
+const CompoundInputGroup = Object.assign(InputGroupRoot, {
   /** Plain flex View for leading or trailing addon content */
-  Addon: InputFieldAddon,
+  Addon: InputGroupAddon,
   /** Text input that reads value/onChange from context */
-  Input: InputFieldInput,
+  Input: InputGroupInput,
 });
 
-export { useInputField };
-export default CompoundInputField;
+export { useInputGroup };
+export default CompoundInputGroup;

@@ -127,8 +127,11 @@ export default function Layout() {
           name="components/field-error"
           options={{ title: 'FieldError' }}
         />
-
         <Stack.Screen name="components/input" options={{ title: 'Input' }} />
+        <Stack.Screen
+          name="components/input-group"
+          options={{ title: 'InputGroup' }}
+        />
         <Stack.Screen
           name="components/input-otp"
           options={{ title: 'InputOTP' }}

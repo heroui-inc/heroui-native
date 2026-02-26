@@ -36,20 +36,20 @@ const addon = tv({
 
 /**
  * @note Strips the Input component's own visual shell (border, bg, shadow,
- * rounded corners, horizontal padding) so that InputField root owns them.
+ * rounded corners, horizontal padding) so that InputGroup root owns them.
  * @see {@link ../input/input.styles.ts} for the base Input styles being overridden.
  */
 const input = tv({
   base: 'flex-1 px-0 border-0 bg-transparent rounded-none ios:shadow-none android:shadow-none',
 });
 
-export const inputFieldClassNames = combineStyles({
+export const inputGroupClassNames = combineStyles({
   root,
   addon,
   input,
 });
 
-export const inputFieldStyleSheet = StyleSheet.create({
+export const inputGroupStyleSheet = StyleSheet.create({
   borderCurve: {
     borderCurve: 'continuous',
   },

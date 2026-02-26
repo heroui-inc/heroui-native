@@ -1,7 +1,7 @@
 import {
   Description,
   FieldError,
-  InputField,
+  InputGroup,
   Label,
   Select,
   Separator,
@@ -69,15 +69,15 @@ const KeyboardAvoidingContainer = ({
 
 // ------------------------------------------------------------------------------
 
-const BasicInputFieldContent = () => {
+const BasicInputGroupContent = () => {
   const [value, setValue] = useState('');
 
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
-        <InputField value={value} onChange={setValue}>
-          <InputField.Input placeholder="Enter text" />
-        </InputField>
+        <InputGroup value={value} onChange={setValue}>
+          <InputGroup.Input placeholder="Enter text" />
+        </InputGroup>
       </KeyboardAvoidingContainer>
     </View>
   );
@@ -94,8 +94,8 @@ const PhoneInputContent = () => {
       <KeyboardAvoidingContainer>
         <TextField isRequired>
           <Label>Phone number</Label>
-          <InputField value={phone} onChange={setPhone}>
-            <InputField.Addon>
+          <InputGroup value={phone} onChange={setPhone}>
+            <InputGroup.Addon>
               <Select
                 value={dialCode}
                 onValueChange={(value) => {
@@ -141,13 +141,13 @@ const PhoneInputContent = () => {
                   </Select.Content>
                 </Select.Portal>
               </Select>
-            </InputField.Addon>
+            </InputGroup.Addon>
             <Separator orientation="vertical" className="h-5 mx-1" />
-            <InputField.Input
+            <InputGroup.Input
               placeholder="(555) 000-0000"
               keyboardType="phone-pad"
             />
-          </InputField>
+          </InputGroup>
           <Description>
             We'll send a verification code to this number
           </Description>
@@ -165,20 +165,20 @@ const WithLeadingAddonContent = () => {
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
-        <InputField value={value} onChange={setValue}>
-          <InputField.Addon
+        <InputGroup value={value} onChange={setValue}>
+          <InputGroup.Addon
             pointerEvents="none"
             accessibilityElementsHidden
             importantForAccessibility="no-hide-descendants"
           >
             <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
-          </InputField.Addon>
-          <InputField.Input
+          </InputGroup.Addon>
+          <InputGroup.Input
             placeholder="Enter website URL"
             keyboardType="url"
             autoCapitalize="none"
           />
-        </InputField>
+        </InputGroup>
       </KeyboardAvoidingContainer>
     </View>
   );
@@ -192,23 +192,23 @@ const WithLeadingAndTrailingAddonsContent = () => {
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
-        <InputField value={value} onChange={setValue}>
-          <InputField.Addon
+        <InputGroup value={value} onChange={setValue}>
+          <InputGroup.Addon
             pointerEvents="none"
             accessibilityElementsHidden
             importantForAccessibility="no-hide-descendants"
           >
             <Text className="text-sm text-field-placeholder">$</Text>
-          </InputField.Addon>
-          <InputField.Input placeholder="0.00" keyboardType="decimal-pad" />
-          <InputField.Addon
+          </InputGroup.Addon>
+          <InputGroup.Input placeholder="0.00" keyboardType="decimal-pad" />
+          <InputGroup.Addon
             pointerEvents="none"
             accessibilityElementsHidden
             importantForAccessibility="no-hide-descendants"
           >
             <Text className="text-sm text-field-placeholder">USD</Text>
-          </InputField.Addon>
-        </InputField>
+          </InputGroup.Addon>
+        </InputGroup>
       </KeyboardAvoidingContainer>
     </View>
   );
@@ -223,19 +223,19 @@ const WithPasswordToggleContent = () => {
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
-        <InputField value={value} onChange={setValue}>
-          <InputField.Addon
+        <InputGroup value={value} onChange={setValue}>
+          <InputGroup.Addon
             pointerEvents="none"
             accessibilityElementsHidden
             importantForAccessibility="no-hide-descendants"
           >
             <LockIcon size={16} colorClassName="accent-field-placeholder" />
-          </InputField.Addon>
-          <InputField.Input
+          </InputGroup.Addon>
+          <InputGroup.Input
             placeholder="Enter your password"
             secureTextEntry={!isPasswordVisible}
           />
-          <InputField.Addon>
+          <InputGroup.Addon>
             <Pressable onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
               {isPasswordVisible ? (
                 <EyeSlashIcon
@@ -246,8 +246,8 @@ const WithPasswordToggleContent = () => {
                 <EyeIcon size={16} colorClassName="accent-field-placeholder" />
               )}
             </Pressable>
-          </InputField.Addon>
-        </InputField>
+          </InputGroup.Addon>
+        </InputGroup>
       </KeyboardAvoidingContainer>
     </View>
   );
@@ -270,16 +270,16 @@ const WithTextFieldContent = () => {
         <KeyboardAvoidingContainer>
           <TextField isRequired isInvalid={isInvalid}>
             <Label>Amount</Label>
-            <InputField value={value} onChange={setValue}>
-              <InputField.Addon
+            <InputGroup value={value} onChange={setValue}>
+              <InputGroup.Addon
                 pointerEvents="none"
                 accessibilityElementsHidden
                 importantForAccessibility="no-hide-descendants"
               >
                 <Text className="text-sm text-field-placeholder">$</Text>
-              </InputField.Addon>
-              <InputField.Input placeholder="0.00" keyboardType="decimal-pad" />
-            </InputField>
+              </InputGroup.Addon>
+              <InputGroup.Input placeholder="0.00" keyboardType="decimal-pad" />
+            </InputGroup>
             <Description hideOnInvalid>
               Enter the transaction amount
             </Description>
@@ -300,27 +300,27 @@ const DisabledContent = () => {
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <View className="gap-8">
-          <InputField value={activeValue} onChange={setActiveValue}>
-            <InputField.Addon
+          <InputGroup value={activeValue} onChange={setActiveValue}>
+            <InputGroup.Addon
               pointerEvents="none"
               accessibilityElementsHidden
               importantForAccessibility="no-hide-descendants"
             >
               <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
-            </InputField.Addon>
-            <InputField.Input placeholder="Active field" />
-          </InputField>
+            </InputGroup.Addon>
+            <InputGroup.Input placeholder="Active field" />
+          </InputGroup>
 
-          <InputField isDisabled value="heroui.com">
-            <InputField.Addon
+          <InputGroup isDisabled value="heroui.com">
+            <InputGroup.Addon
               pointerEvents="none"
               accessibilityElementsHidden
               importantForAccessibility="no-hide-descendants"
             >
               <GlobeIcon size={16} colorClassName="accent-field-placeholder" />
-            </InputField.Addon>
-            <InputField.Input placeholder="Disabled field" />
-          </InputField>
+            </InputGroup.Addon>
+            <InputGroup.Input placeholder="Disabled field" />
+          </InputGroup>
         </View>
       </KeyboardAvoidingContainer>
     </View>
@@ -329,11 +329,11 @@ const DisabledContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const INPUT_FIELD_VARIANTS: UsageVariant[] = [
+const INPUT_GROUP_VARIANTS: UsageVariant[] = [
   {
-    value: 'basic-input-field',
-    label: 'Basic InputField',
-    content: <BasicInputFieldContent />,
+    value: 'basic-input-group',
+    label: 'Basic InputGroup',
+    content: <BasicInputGroupContent />,
   },
   {
     value: 'phone-input',
@@ -367,6 +367,6 @@ const INPUT_FIELD_VARIANTS: UsageVariant[] = [
   },
 ];
 
-export default function InputFieldScreen() {
-  return <UsageVariantFlatList data={INPUT_FIELD_VARIANTS} />;
+export default function InputGroupScreen() {
+  return <UsageVariantFlatList data={INPUT_GROUP_VARIANTS} />;
 }

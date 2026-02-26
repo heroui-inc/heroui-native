@@ -3,11 +3,11 @@ import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 import type { InputProps } from '../input';
 
 /**
- * Context value provided by InputField root to child components.
+ * Context value provided by InputGroup root to child components.
  * Carries the controlled value, onChange callback, focus state, and
  * form-field state so that Addon, Input, and Group can consume them.
  */
-export interface InputFieldContextType {
+export interface InputGroupContextType {
   /** Current input text (undefined when uncontrolled) */
   value: string | undefined;
   /** Callback invoked when the input text changes */
@@ -16,20 +16,20 @@ export interface InputFieldContextType {
   isFocused: boolean;
   /** Callback to update the focus state */
   setIsFocused: (focused: boolean) => void;
-  /** Whether the input field is disabled */
+  /** Whether the input group is disabled */
   isDisabled: boolean;
-  /** Whether the input field is in an invalid state */
+  /** Whether the input group is in an invalid state */
   isInvalid: boolean;
-  /** Whether the input field is required */
+  /** Whether the input group is required */
   isRequired: boolean;
 }
 
 /**
- * Props for the InputField root component
+ * Props for the InputGroup root component
  */
-export interface InputFieldProps extends ViewProps {
+export interface InputGroupProps extends ViewProps {
   /**
-   * Children elements to be rendered inside the input field
+   * Children elements to be rendered inside the input group
    */
   children?: React.ReactNode;
 
@@ -44,19 +44,19 @@ export interface InputFieldProps extends ViewProps {
   onChange?: (value: string) => void;
 
   /**
-   * Whether the input field is disabled
+   * Whether the input group is disabled
    * @default false
    */
   isDisabled?: boolean;
 
   /**
-   * Whether the input field is in an invalid state
+   * Whether the input group is in an invalid state
    * @default false
    */
   isInvalid?: boolean;
 
   /**
-   * Whether the input field is required
+   * Whether the input group is required
    * @default false
    */
   isRequired?: boolean;
@@ -67,7 +67,7 @@ export interface InputFieldProps extends ViewProps {
   className?: string;
 
   /**
-   * Animation configuration for input field
+   * Animation configuration for input group
    * - `"disable-all"`: Disable all animations including children (cascades down)
    * - `undefined`: Use default animations
    */
@@ -75,9 +75,9 @@ export interface InputFieldProps extends ViewProps {
 }
 
 /**
- * Props for the InputField.Addon component
+ * Props for the InputGroup.Addon component
  */
-export interface InputFieldAddonProps extends ViewProps {
+export interface InputGroupAddonProps extends ViewProps {
   /**
    * Content to render inside the addon
    */
@@ -90,9 +90,9 @@ export interface InputFieldAddonProps extends ViewProps {
 }
 
 /**
- * Props for the InputField.Input component.
- * Omits `value` and `onChangeText` because they are provided by InputField
- * root through InputFieldContext.
+ * Props for the InputGroup.Input component.
+ * Omits `value` and `onChangeText` because they are provided by InputGroup
+ * root through InputGroupContext.
  */
-export interface InputFieldInputProps
+export interface InputGroupInputProps
   extends Omit<InputProps, 'value' | 'onChangeText'> {}

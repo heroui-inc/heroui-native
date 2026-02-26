@@ -1,4 +1,4 @@
-import { StyleSheet, type PressableStateCallbackType } from 'react-native';
+import { type PressableStateCallbackType } from 'react-native';
 import type { AnyProps, Style } from './types';
 
 // --------------------------------------------------
@@ -65,26 +65,32 @@ export function mergeProps(slotProps: AnyProps, childProps: AnyProps) {
 
 // --------------------------------------------------
 
+/**
+ * Combines slot and child styles into a style array.
+ *
+ * Returns a style array instead of flattening via StyleSheet.flatten,
+ * because flatten deep-copies style objects into plain objects, which
+ * destroys Reanimated animated style bindings (useAnimatedStyle / SharedValues).
+ * React Native natively handles nested style arrays, so an array is safe here.
+ */
 function combineStyles(slotStyle?: Style, childValue?: Style) {
   if (typeof slotStyle === 'function' && typeof childValue === 'function') {
     return (state: PressableStateCallbackType) => {
-      return StyleSheet.flatten([slotStyle(state), childValue(state)]);
+      return [slotStyle(state), childValue(state)];
     };
   }
   if (typeof slotStyle === 'function') {
     return (state: PressableStateCallbackType) => {
-      return childValue
-        ? StyleSheet.flatten([slotStyle(state), childValue])
-        : slotStyle(state);
+      return childValue ? [slotStyle(state), childValue] : slotStyle(state);
     };
   }
   if (typeof childValue === 'function') {
     return (state: PressableStateCallbackType) => {
-      return slotStyle
-        ? StyleSheet.flatten([slotStyle, childValue(state)])
-        : childValue(state);
+      return slotStyle ? [slotStyle, childValue(state)] : childValue(state);
     };
   }
 
-  return StyleSheet.flatten([slotStyle, childValue].filter(Boolean));
+  if (!slotStyle) return childValue;
+  if (!childValue) return slotStyle;
+  return [slotStyle, childValue];
 }

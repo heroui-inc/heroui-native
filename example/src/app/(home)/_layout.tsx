@@ -8,6 +8,7 @@ import LogoDark from '../../../assets/logo-dark.png';
 import LogoLight from '../../../assets/logo-light.png';
 import { ThemeToggle } from '../../components/theme-toggle';
 import { useAppTheme } from '../../contexts/app-theme-context';
+import { COMPONENTS } from '../../helpers/data/components';
 
 export default function Layout() {
   const { isDark } = useAppTheme();
@@ -82,16 +83,13 @@ export default function Layout() {
           name="components/index"
           options={{ headerTitle: 'Components' }}
         />
-        <Stack.Screen
-          name="components/accordion"
-          options={{ title: 'Accordion' }}
-        />
-        <Stack.Screen name="components/alert" options={{ title: 'Alert' }} />
-        <Stack.Screen name="components/avatar" options={{ title: 'Avatar' }} />
-        <Stack.Screen
-          name="components/bottom-sheet"
-          options={{ title: 'BottomSheet' }}
-        />
+        {COMPONENTS.map((component) => (
+          <Stack.Screen
+            key={component.path}
+            name={`components/${component.path}`}
+            options={{ title: component.title }}
+          />
+        ))}
         <Stack.Screen
           name="components/bottom-sheet-native-modal"
           options={{
@@ -99,107 +97,25 @@ export default function Layout() {
             presentation: 'formSheet',
           }}
         />
-        <Stack.Screen name="components/button" options={{ title: 'Button' }} />
-        <Stack.Screen name="components/card" options={{ title: 'Card' }} />
-        <Stack.Screen
-          name="components/checkbox"
-          options={{ title: 'Checkbox' }}
-        />
-        <Stack.Screen name="components/chip" options={{ title: 'Chip' }} />
-        <Stack.Screen
-          name="components/close-button"
-          options={{ title: 'CloseButton' }}
-        />
-        <Stack.Screen
-          name="components/control-field"
-          options={{ title: 'ControlField' }}
-        />
-        <Stack.Screen name="components/dialog" options={{ title: 'Dialog' }} />
         <Stack.Screen
           name="components/dialog-native-modal"
           options={{ title: 'Dialog Native Modal', presentation: 'formSheet' }}
-        />
-        <Stack.Screen
-          name="components/description"
-          options={{ title: 'Description' }}
-        />
-        <Stack.Screen
-          name="components/field-error"
-          options={{ title: 'FieldError' }}
-        />
-
-        <Stack.Screen name="components/input" options={{ title: 'Input' }} />
-        <Stack.Screen
-          name="components/input-otp"
-          options={{ title: 'InputOTP' }}
-        />
-        <Stack.Screen name="components/label" options={{ title: 'Label' }} />
-        <Stack.Screen
-          name="components/list-group"
-          options={{ title: 'ListGroup' }}
-        />
-        <Stack.Screen name="components/menu" options={{ title: 'Menu' }} />
-        <Stack.Screen
-          name="components/popover"
-          options={{ title: 'Popover' }}
-        />
-        <Stack.Screen
-          name="components/pressable-feedback"
-          options={{ title: 'PressableFeedback' }}
         />
         <Stack.Screen
           name="components/popover-native-modal"
           options={{ title: 'Popover Native Modal', presentation: 'formSheet' }}
         />
         <Stack.Screen
-          name="components/radio-group"
-          options={{ title: 'RadioGroup' }}
-        />
-        <Stack.Screen
-          name="components/scroll-shadow"
-          options={{ title: 'ScrollShadow' }}
-        />
-        <Stack.Screen
-          name="components/search-field"
-          options={{ title: 'SearchField' }}
-        />
-        <Stack.Screen
           name="components/select-native-modal"
           options={{ title: 'Select Native Modal', presentation: 'formSheet' }}
         />
-        <Stack.Screen name="components/select" options={{ title: 'Select' }} />
         <Stack.Screen
-          name="components/separator"
-          options={{ title: 'Separator' }}
+          name="components/toast-native-modal"
+          options={{
+            title: 'Toast From Native Modal',
+            presentation: 'formSheet',
+          }}
         />
-        <Stack.Screen
-          name="components/skeleton"
-          options={{ title: 'Skeleton' }}
-        />
-        <Stack.Screen name="components/slider" options={{ title: 'Slider' }} />
-        <Stack.Screen
-          name="components/spinner"
-          options={{ title: 'Spinner' }}
-        />
-        <Stack.Screen
-          name="components/surface"
-          options={{ title: 'Surface' }}
-        />
-        <Stack.Screen name="components/switch" options={{ title: 'Switch' }} />
-        <Stack.Screen name="components/tabs" options={{ title: 'Tabs' }} />
-        <Stack.Screen
-          name="components/tag-group"
-          options={{ title: 'TagGroup' }}
-        />
-        <Stack.Screen
-          name="components/text-area"
-          options={{ title: 'TextArea' }}
-        />
-        <Stack.Screen
-          name="components/text-field"
-          options={{ title: 'TextField' }}
-        />
-        <Stack.Screen name="components/toast" options={{ title: 'Toast' }} />
         <Stack.Screen name="themes/index" options={{ headerTitle: 'Themes' }} />
         <Stack.Screen
           name="showcases"
@@ -207,13 +123,6 @@ export default function Layout() {
             headerShown: false,
             animation: 'slide_from_bottom',
             animationDuration: 300,
-          }}
-        />
-        <Stack.Screen
-          name="components/toast-native-modal"
-          options={{
-            title: 'Toast From Native Modal',
-            presentation: 'formSheet',
           }}
         />
       </Stack>

@@ -64,7 +64,6 @@ export interface MenuRootProps extends MenuPrimitivesTypes.RootProps {
   /**
    * Animation configuration for menu root
    * - `"disable-all"`: Disable all animations including children
-   * - `false` or `"disabled"`: Disable only root animations
    * - `true` or `undefined`: Use default animations
    */
   animation?: AnimationRootDisableAll;

@@ -12,11 +12,6 @@ import type * as PopoverPrimitivesTypes from '../../primitives/popover/popover.t
 import type { CloseButtonProps } from '../close-button/close-button.types';
 
 /**
- * Popover internal state for animation coordination
- */
-export type PopoverState = 'idle' | 'open' | 'close';
-
-/**
  * Context value for popover animation state
  */
 export interface PopoverAnimationContextValue {

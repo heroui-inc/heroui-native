@@ -180,7 +180,7 @@ const PresentationContent = () => {
               )}
             </Button>
           </Select.Trigger>
-          <Select.Portal>
+          <Select.Portal disableFullWindowOverlay>
             <Select.Overlay className="bg-black/10" />
             <Select.Content
               presentation="bottom-sheet"

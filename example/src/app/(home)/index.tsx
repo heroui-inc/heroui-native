@@ -21,6 +21,7 @@ import HomeThemesLight from '../../../assets/images/home-themes-light.png';
 import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
 import { useAppTheme } from '../../contexts/app-theme-context';
+import { COMPONENTS } from '../../helpers/data/components';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const AnimatedImage = Animated.createAnimatedComponent(Image);
@@ -42,7 +43,7 @@ const cards: HomeCardProps[] = [
     title: 'Components',
     imageLight: HomeComponentsLight,
     imageDark: HomeComponentsDark,
-    count: 33,
+    count: COMPONENTS.length,
     footer: 'Explore all components',
     path: 'components',
   },
@@ -157,7 +158,7 @@ export default function App() {
   return (
     <ScreenScrollView>
       <View className="items-center justify-center my-4">
-        <AppText className="text-muted text-base">v1.0.0-rc.2</AppText>
+        <AppText className="text-muted text-base">v1.0.0-rc.3</AppText>
       </View>
       <View className="gap-6">
         {cards.map((card, index) => (

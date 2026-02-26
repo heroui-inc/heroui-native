@@ -25,13 +25,21 @@ jobs:
               (label) => label.name
             );
 
+            console.log("Labels on issue:", JSON.stringify(issueLabels));
+            console.log("Labels to remove:", JSON.stringify(labelsToRemove));
+
             for (const label of labelsToRemove) {
-              if (issueLabels.includes(label)) {
+              const match = issueLabels.find(
+                (issueLabel) => issueLabel.toLowerCase() === label.toLowerCase()
+              );
+
+              if (match) {
+                console.log(`Removing label: "${match}"`);
                 await github.rest.issues.removeLabel({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: context.issue.number,
-                  name: label,
+                  name: match,
                 });
               }
             }

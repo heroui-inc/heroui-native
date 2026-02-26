@@ -12,8 +12,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { SlideInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { withUniwind } from 'uniwind';
-import { SelectBlurBackdrop } from '../../select/select-blur-backdrop';
 import type { UsageVariant } from '../types';
+import { BlurBackdrop } from './blur-backdrop';
 import { CloseButton } from './close-button';
 import { SelectContentContainer } from './select-content-container';
 import { SelectItem } from './select-item';
@@ -52,7 +52,7 @@ export const UsageVariantsSelect = ({
             index: data.indexOf(variantValue!),
             animated: false,
           });
-        }, 200);
+        }, 0);
       }}
       defaultValue={data[0]}
     >
@@ -72,7 +72,7 @@ export const UsageVariantsSelect = ({
         {Platform.OS === 'android' ? (
           <Select.Overlay className="bg-background" />
         ) : (
-          <SelectBlurBackdrop />
+          <BlurBackdrop />
         )}
 
         <SelectContentContainer>

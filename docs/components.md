@@ -16,9 +16,11 @@
 | Dialog            | [dialog.md](../src/components/dialog/dialog.md)                                     |
 | FieldError        | [field-error.md](../src/components/field-error/field-error.md)                      |
 | Input             | [input.md](../src/components/input/input.md)                                        |
+| InputGroup        | [input-group.md](../src/components/input-group/input-group.md)                      |
 | InputOTP          | [input-otp.md](../src/components/input-otp/input-otp.md)                            |
 | Label             | [label.md](../src/components/label/label.md)                                        |
 | ListGroup         | [list-group.md](../src/components/list-group/list-group.md)                         |
+| Menu              | [menu.md](../src/components/menu/menu.md)                                           |
 | Popover           | [popover.md](../src/components/popover/popover.md)                                  |
 | PressableFeedback | [pressable-feedback.md](../src/components/pressable-feedback/pressable-feedback.md) |
 | Radio             | [radio.md](../src/components/radio/radio.md)                                        |
@@ -34,6 +36,7 @@
 | Surface           | [surface.md](../src/components/surface/surface.md)                                  |
 | Switch            | [switch.md](../src/components/switch/switch.md)                                     |
 | Tabs              | [tabs.md](../src/components/tabs/tabs.md)                                           |
+| TagGroup          | [tag-group.md](../src/components/tag-group/tag-group.md)                            |
 | TextArea          | [text-area.md](../src/components/text-area/text-area.md)                            |
 | TextField         | [text-field.md](../src/components/text-field/text-field.md)                         |
 | Toast             | [toast.md](../src/components/toast/toast.md)                                        |

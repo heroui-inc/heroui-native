@@ -1,4 +1,5 @@
 import { forwardRef, useCallback, useMemo } from 'react';
+
 import {
   Pressable,
   View,
@@ -216,7 +217,8 @@ const PressableFeedbackRipple = forwardRef<
   } = props;
 
   const {
-    rContainerStyle,
+    rLayer0Style,
+    rLayer1Style,
     backgroundColor,
     animationOnTouchEnd,
     animationOnTouchStart,
@@ -229,9 +231,20 @@ const PressableFeedbackRipple = forwardRef<
   });
   const rippleClassName = ripple({ className: classNames?.ripple });
 
-  const rippleStyle = isAnimatedStyleActive
-    ? [rContainerStyle, styles?.ripple]
+  const layer0Style = isAnimatedStyleActive
+    ? [rLayer0Style, styles?.ripple]
     : styles?.ripple;
+
+  const layer1Style = isAnimatedStyleActive
+    ? [rLayer1Style, styles?.ripple]
+    : styles?.ripple;
+
+  const gradientStyle = useMemo(
+    () => ({
+      experimental_backgroundImage: `radial-gradient(circle at center, ${backgroundColor} 30%, transparent 70%)`,
+    }),
+    [backgroundColor]
+  );
 
   const handleTouchStart = useCallback(
     (event: GestureResponderEvent) => {
@@ -269,12 +282,12 @@ const PressableFeedbackRipple = forwardRef<
       <Animated.View
         pointerEvents="none"
         className={rippleClassName}
-        style={[
-          rippleStyle,
-          {
-            experimental_backgroundImage: `radial-gradient(circle at center, ${backgroundColor} 30%, transparent 70%)`,
-          },
-        ]}
+        style={[layer0Style, gradientStyle]}
+      />
+      <Animated.View
+        pointerEvents="none"
+        className={rippleClassName}
+        style={[layer1Style, gradientStyle]}
       />
     </View>
   );

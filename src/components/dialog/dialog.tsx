@@ -55,6 +55,7 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
+      dismissDirection,
       isAllAnimationsDisabled,
     } = usePopupRootAnimation({
       animation,
@@ -65,8 +66,9 @@ const DialogRoot = forwardRef<DialogPrimitivesTypes.RootRef, DialogRootProps>(
         progress,
         isDragging,
         isGestureReleaseAnimationRunning,
+        dismissDirection,
       }),
-      [progress, isDragging, isGestureReleaseAnimationRunning]
+      [progress, isDragging, isGestureReleaseAnimationRunning, dismissDirection]
     );
 
     const animationSettingsContextValue = useMemo(
@@ -150,8 +152,12 @@ const DialogOverlay = forwardRef<
   ) => {
     const { isOpen } = useDialog();
 
-    const { progress, isDragging, isGestureReleaseAnimationRunning } =
-      useDialogAnimation();
+    const {
+      progress,
+      isDragging,
+      isGestureReleaseAnimationRunning,
+      dismissDirection,
+    } = useDialogAnimation();
 
     const overlayClassName = dialogClassNames.overlay({ className });
 
@@ -159,6 +165,7 @@ const DialogOverlay = forwardRef<
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
+      dismissDirection,
       animation,
     });
 
@@ -199,8 +206,12 @@ const DialogContent = forwardRef<
   ) => {
     const { isOpen, onOpenChange } = useDialog();
 
-    const { progress, isDragging, isGestureReleaseAnimationRunning } =
-      useDialogAnimation();
+    const {
+      progress,
+      isDragging,
+      isGestureReleaseAnimationRunning,
+      dismissDirection,
+    } = useDialogAnimation();
 
     const contentClassName = dialogClassNames.content({ className });
 
@@ -217,6 +228,7 @@ const DialogContent = forwardRef<
       progress,
       isDragging,
       isGestureReleaseAnimationRunning,
+      dismissDirection,
       isOpen,
       onOpenChange,
       animation,

@@ -16,11 +16,13 @@ export function usePopupRootAnimation(options: {
   const progress = useSharedValue(0);
   const isDragging = useSharedValue(false);
   const isGestureReleaseAnimationRunning = useSharedValue(false);
+  const dismissDirection = useSharedValue(0);
 
   return {
     isAllAnimationsDisabled,
     progress,
     isDragging,
     isGestureReleaseAnimationRunning,
+    dismissDirection,
   };
 }

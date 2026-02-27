@@ -24,11 +24,17 @@ export function usePopupOverlayAnimation(options: {
   isDragging?: SharedValue<boolean>;
   /** Gesture release animation running state shared value (optional, for components with swipe gestures) */
   isGestureReleaseAnimationRunning?: SharedValue<boolean>;
+  /** Dismiss direction shared value (0=none, 1=down, -1=up) */
+  dismissDirection?: SharedValue<number>;
   /** Animation configuration for overlay */
   animation?: PopupOverlayAnimation;
 }) {
-  const { progress, isDragging, isGestureReleaseAnimationRunning, animation } =
-    options;
+  const {
+    progress,
+    isGestureReleaseAnimationRunning,
+    dismissDirection,
+    animation,
+  } = options;
 
   const { isAllAnimationsDisabled } = useAnimationSettings();
 
@@ -58,8 +64,9 @@ export function usePopupOverlayAnimation(options: {
     }
 
     if (
-      (isDragging?.get() || isGestureReleaseAnimationRunning?.get()) &&
-      progress.get() <= 1
+      isGestureReleaseAnimationRunning?.get() &&
+      progress.get() <= 1 &&
+      dismissDirection?.get() !== -1
     ) {
       return {
         opacity: 1,

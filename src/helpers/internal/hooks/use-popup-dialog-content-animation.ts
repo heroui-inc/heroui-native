@@ -39,6 +39,10 @@ export interface UsePopupDialogContentAnimationProps {
    */
   isGestureReleaseAnimationRunning: SharedValue<boolean>;
   /**
+   * Dismiss direction shared value (0 = none, 1 = down, -1 = up)
+   */
+  dismissDirection?: SharedValue<number>;
+  /**
    * Callback when dialog open state changes
    */
   onOpenChange: (open: boolean) => void;
@@ -90,6 +94,7 @@ export const usePopupDialogContentAnimation = ({
   progress,
   isDragging,
   isGestureReleaseAnimationRunning,
+  dismissDirection,
   onOpenChange,
   animation,
   isSwipeable = true,
@@ -116,7 +121,6 @@ export const usePopupDialogContentAnimation = ({
   const progressAnchor = useSharedValue(1);
   const contentTranslateYAnchor = useSharedValue(0);
   const contentScaleAnchor = useSharedValue(1);
-  const gestureTranslationY = useSharedValue(0);
 
   useEffect(() => {
     if (isOpen) {
@@ -129,29 +133,35 @@ export const usePopupDialogContentAnimation = ({
   };
 
   const contentTranslateY = useDerivedValue(() => {
-    const maxDragDistance = screenHeight - contentY.get();
-
     if (progress.get() >= 1) {
+      const maxDownDistance = screenHeight - contentY.get();
       return interpolate(
         progress.get(),
         [1, 2],
-        [0, maxDragDistance],
+        [0, maxDownDistance],
         Extrapolation.CLAMP
       );
     }
 
-    const absoluteGestureTranslationY = Math.abs(gestureTranslationY.get());
-
+    const maxUpDistance = contentY.get() + contentHeight.get();
     return interpolate(
-      absoluteGestureTranslationY,
-      [0, screenHeight],
-      [0, -50],
+      progress.get(),
+      [0, 1],
+      [-maxUpDistance, 0],
       Extrapolation.CLAMP
     );
   });
 
   const contentScale = useDerivedValue(() => {
-    return interpolate(progress.get(), [1, 2], [1, 0.95], Extrapolation.CLAMP);
+    if (progress.get() >= 1) {
+      return interpolate(
+        progress.get(),
+        [1, 2],
+        [1, 0.95],
+        Extrapolation.CLAMP
+      );
+    }
+    return interpolate(progress.get(), [0, 1], [0.95, 1], Extrapolation.CLAMP);
   });
 
   const panGesture = useMemo(
@@ -164,14 +174,13 @@ export const usePopupDialogContentAnimation = ({
 
           const maxDragDistance = screenHeight - contentY.get();
 
-          gestureTranslationY.set(event.translationY);
-
           if (event.translationY > 0) {
             const progressValue = 1 + event.translationY / maxDragDistance;
             progress.set(Math.max(1, Math.min(progressValue, 2)));
           } else if (event.translationY < 0) {
+            const maxUpDragDistance = contentY.get() + contentHeight.get();
             const progressValue =
-              1 - Math.abs(event.translationY) / contentY.get();
+              1 - Math.abs(event.translationY) / maxUpDragDistance;
             progress.set(Math.max(0, Math.min(progressValue, 1)));
           }
         })
@@ -181,6 +190,7 @@ export const usePopupDialogContentAnimation = ({
           contentScaleAnchor.set(contentScale.get());
 
           if (progress.get() > 1.1) {
+            dismissDirection?.set(1);
             isGestureReleaseAnimationRunning.set(true);
             scheduleOnRN(dismissKeyboard);
             progress.set(
@@ -204,8 +214,37 @@ export const usePopupDialogContentAnimation = ({
             }, 300);
             setTimeout(() => {
               progress.set(0);
+              dismissDirection?.set(0);
+            }, 350);
+          } else if (progress.get() < 0.9) {
+            dismissDirection?.set(-1);
+            isGestureReleaseAnimationRunning.set(true);
+            scheduleOnRN(dismissKeyboard);
+            progress.set(
+              withSpring(
+                0,
+                {
+                  mass: 4,
+                  damping: 120,
+                  stiffness: 900,
+                  overshootClamping: false,
+                },
+                () => {
+                  isGestureReleaseAnimationRunning.set(false);
+                }
+              )
+            );
+            isDragging.set(false);
+            setTimeout(() => {
+              progress.set(0);
+              scheduleOnRN(onOpenChange, false);
+            }, 300);
+            setTimeout(() => {
+              progress.set(0);
+              dismissDirection?.set(0);
             }, 350);
           } else {
+            dismissDirection?.set(0);
             isGestureReleaseAnimationRunning.set(true);
             progress.set(
               withSpring(1, {}, () => {
@@ -224,49 +263,68 @@ export const usePopupDialogContentAnimation = ({
       isOpen,
       isDragging,
       isGestureReleaseAnimationRunning,
+      contentHeight,
+      dismissDirection,
       isSwipeable,
       onOpenChange,
       progress,
       progressAnchor,
       screenHeight,
       isAnimationDisabledValue,
-      gestureTranslationY,
     ]
   );
 
   const rDragContainerStyle = useAnimatedStyle(() => {
     if (isGestureReleaseAnimationRunning.get()) {
+      const anchor = progressAnchor.get();
+      const tyAnchor = contentTranslateYAnchor.get();
+      const sAnchor = contentScaleAnchor.get();
+
+      if (anchor < 1) {
+        return {
+          opacity: interpolate(
+            progress.get(),
+            [0.25, 0.5, anchor, 1],
+            [0, 1, 1, 1]
+          ),
+          transform: [
+            {
+              translateY: interpolate(
+                progress.get(),
+                [0, anchor - 0.1, anchor, 1, anchor],
+                [tyAnchor + 150, tyAnchor - 50, tyAnchor, 0, tyAnchor]
+              ),
+            },
+            {
+              scale: interpolate(
+                progress.get(),
+                [0, anchor, 1, anchor],
+                [0.75, sAnchor, 1, sAnchor]
+              ),
+            },
+          ],
+        };
+      }
+
       return {
         opacity: interpolate(
           progress.get(),
-          [1, progressAnchor.get(), 1.5, 1.75],
+          [1, anchor, 1.5, 1.75],
           [1, 1, 1, 0]
         ),
         transform: [
           {
             translateY: interpolate(
               progress.get(),
-              [
-                progressAnchor.get(),
-                1,
-                progressAnchor.get(),
-                progressAnchor.get() + 0.1,
-                2,
-              ],
-              [
-                contentTranslateYAnchor.get(),
-                0,
-                contentTranslateYAnchor.get(),
-                contentTranslateYAnchor.get() + 50,
-                contentTranslateYAnchor.get() - 150,
-              ]
+              [anchor, 1, anchor, anchor + 0.1, 2],
+              [tyAnchor, 0, tyAnchor, tyAnchor + 50, tyAnchor - 150]
             ),
           },
           {
             scale: interpolate(
               progress.get(),
-              [progressAnchor.get(), 1, progressAnchor.get(), 2],
-              [contentScaleAnchor.get(), 1, contentScaleAnchor.get(), 0.75]
+              [anchor, 1, anchor, 2],
+              [sAnchor, 1, sAnchor, 0.75]
             ),
           },
         ],

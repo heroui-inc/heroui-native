@@ -6,15 +6,16 @@ import { AnimatedBlurView } from './animated-blur-view';
 
 export const DialogBlurBackdrop = () => {
   const { isDark } = useAppTheme();
-  const { progress, isDragging, isGestureReleaseAnimationRunning } =
+  const { progress, isGestureReleaseAnimationRunning, dismissDirection } =
     useDialogAnimation();
 
   const blurIntensity = useDerivedValue(() => {
     const maxIntensity = isDark ? 75 : 50;
 
     if (
-      (isDragging.get() || isGestureReleaseAnimationRunning.get()) &&
-      progress.get() <= 1
+      isGestureReleaseAnimationRunning.get() &&
+      progress.get() <= 1 &&
+      dismissDirection.get() !== -1
     ) {
       return maxIntensity;
     }

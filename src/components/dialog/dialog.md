@@ -271,15 +271,20 @@ const { isOpen, onOpenChange } = useDialog();
 Hook to access dialog animation context for advanced customization.
 
 ```tsx
-const { progress, isDragging, isGestureReleaseAnimationRunning } =
-  useDialogAnimation();
+const {
+  progress,
+  isDragging,
+  isGestureReleaseAnimationRunning,
+  dismissDirection,
+} = useDialogAnimation();
 ```
 
-| property                           | type                   | description                                  |
-| ---------------------------------- | ---------------------- | -------------------------------------------- |
-| `progress`                         | `SharedValue<number>`  | Animation progress (0=idle, 1=open, 2=close) |
-| `isDragging`                       | `SharedValue<boolean>` | Whether dialog is being dragged              |
-| `isGestureReleaseAnimationRunning` | `SharedValue<boolean>` | Whether gesture release animation is running |
+| property                           | type                   | description                                            |
+| ---------------------------------- | ---------------------- | ------------------------------------------------------ |
+| `progress`                         | `SharedValue<number>`  | Animation progress (0=idle, 1=open, 2=close)           |
+| `isDragging`                       | `SharedValue<boolean>` | Whether dialog is being dragged                        |
+| `isGestureReleaseAnimationRunning` | `SharedValue<boolean>` | Whether gesture release animation is running           |
+| `dismissDirection`                 | `SharedValue<number>`  | Dismiss direction shared value (0=none, 1=down, -1=up) |
 
 ## Special Notes
 

@@ -20,8 +20,6 @@ import {
 export function usePopupOverlayAnimation(options: {
   /** Animation progress shared value (0=idle, 1=open, 2=close) */
   progress?: SharedValue<number>;
-  /** Dragging state shared value */
-  isDragging?: SharedValue<boolean>;
   /** Gesture release animation running state shared value (optional, for components with swipe gestures) */
   isGestureReleaseAnimationRunning?: SharedValue<boolean>;
   /** Dismiss direction shared value (0=none, 1=down, -1=up) */

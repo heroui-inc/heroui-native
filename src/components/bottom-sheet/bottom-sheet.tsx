@@ -5,7 +5,7 @@ import {
   type GestureResponderEvent,
   type Text as RNText,
 } from 'react-native';
-import Animated, { useSharedValue } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import {
   FullWindowOverlay,
   HeroText,
@@ -148,13 +148,11 @@ const BottomSheetOverlay = forwardRef<
   ) => {
     const { isOpen } = useBottomSheet();
     const { progress } = useBottomSheetAnimation();
-    const isDragging = useSharedValue(false);
 
     const overlayClassName = bottomSheetClassNames.overlay({ className });
 
     const { rContainerStyle } = usePopupOverlayAnimation({
       progress,
-      isDragging,
       animation,
     });
 

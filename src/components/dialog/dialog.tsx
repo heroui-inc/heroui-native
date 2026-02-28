@@ -152,18 +152,13 @@ const DialogOverlay = forwardRef<
   ) => {
     const { isOpen } = useDialog();
 
-    const {
-      progress,
-      isDragging,
-      isGestureReleaseAnimationRunning,
-      dismissDirection,
-    } = useDialogAnimation();
+    const { progress, isGestureReleaseAnimationRunning, dismissDirection } =
+      useDialogAnimation();
 
     const overlayClassName = dialogClassNames.overlay({ className });
 
     const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
       progress,
-      isDragging,
       isGestureReleaseAnimationRunning,
       dismissDirection,
       animation,

@@ -177,13 +177,12 @@ const PopoverOverlay = forwardRef<
     ref
   ) => {
     const { isOpen, presentation } = usePopover();
-    const { progress, isDragging } = usePopoverAnimation();
+    const { progress } = usePopoverAnimation();
 
     const overlayClassName = popoverClassNames.overlay({ className });
 
     const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
       progress: presentation === 'bottom-sheet' ? progress : undefined,
-      isDragging: presentation === 'bottom-sheet' ? isDragging : undefined,
       animation,
     });
 

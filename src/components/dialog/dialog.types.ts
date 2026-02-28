@@ -25,7 +25,7 @@ export interface DialogAnimationContextValue {
   /** Gesture release animation running state shared value */
   isGestureReleaseAnimationRunning: SharedValue<boolean>;
   /** Dismiss direction shared value (0=none, 1=down, -1=up) */
-  dismissDirection: SharedValue<number>;
+  dismissDirection?: SharedValue<number>;
 }
 
 /**

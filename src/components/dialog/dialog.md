@@ -279,12 +279,12 @@ const {
 } = useDialogAnimation();
 ```
 
-| property                           | type                   | description                                            |
-| ---------------------------------- | ---------------------- | ------------------------------------------------------ |
-| `progress`                         | `SharedValue<number>`  | Animation progress (0=idle, 1=open, 2=close)           |
-| `isDragging`                       | `SharedValue<boolean>` | Whether dialog is being dragged                        |
-| `isGestureReleaseAnimationRunning` | `SharedValue<boolean>` | Whether gesture release animation is running           |
-| `dismissDirection`                 | `SharedValue<number>`  | Dismiss direction shared value (0=none, 1=down, -1=up) |
+| property                           | type                   | description                                                     |
+| ---------------------------------- | ---------------------- | --------------------------------------------------------------- |
+| `progress`                         | `SharedValue<number>`  | Animation progress (0=upward dismiss, 1=open, 2=downward dismiss) |
+| `isDragging`                       | `SharedValue<boolean>` | Whether dialog is being dragged                                 |
+| `isGestureReleaseAnimationRunning` | `SharedValue<boolean>` | Whether gesture release animation is running                    |
+| `dismissDirection`                 | `SharedValue<number>`  | Dismiss direction shared value (0=none, 1=down, -1=up)          |
 
 ## Special Notes
 

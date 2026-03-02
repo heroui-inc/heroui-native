@@ -64,6 +64,9 @@ function AppContent() {
     <AppThemeProvider>
       <HeroUINativeProvider
         config={{
+          textProps: {
+            maxFontSizeMultiplier: 2,
+          },
           toast: {
             contentWrapper,
           },

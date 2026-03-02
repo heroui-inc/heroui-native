@@ -14,7 +14,7 @@ const root = tv({
     size: {
       sm: 'px-2 py-0.5 rounded-xl',
       md: 'px-3 py-[3px] rounded-2xl',
-      lg: 'px-4 py-1 rounded-2xl',
+      lg: 'px-4 py-1 rounded-3xl',
     },
     color: {
       accent: '',

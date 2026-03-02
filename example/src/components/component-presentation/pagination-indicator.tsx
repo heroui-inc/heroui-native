@@ -82,6 +82,7 @@ export function PaginationIndicator({
       >
         <AppText
           className="text-foreground text-lg font-normal"
+          maxFontSizeMultiplier={1.2}
           numberOfLines={1}
         >
           {label}

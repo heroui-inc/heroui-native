@@ -85,7 +85,9 @@ export const ScrollableWithSnapPointsContent = () => {
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
           <BottomSheet.Trigger asChild>
             <Button variant="secondary" isDisabled={isOpen}>
-              Scrollable with snap points
+              <Button.Label maxFontSizeMultiplier={1.2}>
+                Scrollable with snap points
+              </Button.Label>
             </Button>
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
@@ -98,8 +100,12 @@ export const ScrollableWithSnapPointsContent = () => {
               contentContainerClassName="h-full px-0"
               handleComponent={() => null}
             >
-              <View className="flex-row items-center justify-between pl-7 pr-5 pb-3">
-                <BottomSheet.Title className="text-xl font-bold">
+              <View className="flex-row items-center justify-between pl-7 pr-5 pb-3 gap-4">
+                <BottomSheet.Title
+                  className="flex-1 text-xl font-bold"
+                  maxFontSizeMultiplier={1.2}
+                  numberOfLines={1}
+                >
                   Select a way to travel
                 </BottomSheet.Title>
                 <BottomSheet.Close />

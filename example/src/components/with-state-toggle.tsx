@@ -66,8 +66,14 @@ export const WithStateToggle: FC<WithStateToggleProps> = ({
           className="pr-2"
         >
           <View className="flex-1">
-            <Label>{label}</Label>
-            {description && <Description>{description}</Description>}
+            <Label>
+              <Label.Text maxFontSizeMultiplier={1.2}>{label}</Label.Text>
+            </Label>
+            {description && (
+              <Description maxFontSizeMultiplier={1.2}>
+                {description}
+              </Description>
+            )}
           </View>
           <ControlField.Indicator />
         </ControlField>

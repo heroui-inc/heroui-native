@@ -68,18 +68,35 @@ const TextAreaVariantsContent = () => {
       <KeyboardAvoidingContainer>
         <View className="gap-8">
           <TextField>
-            <Label>Primary Variant</Label>
-            <TextArea placeholder="Primary style text area" variant="primary" />
-            <Description>Default variant with primary styling</Description>
+            <Label>
+              <Label.Text maxFontSizeMultiplier={1.4}>
+                Primary Variant
+              </Label.Text>
+            </Label>
+            <TextArea
+              placeholder="Primary style text area"
+              variant="primary"
+              maxFontSizeMultiplier={1.4}
+            />
+            <Description maxFontSizeMultiplier={1.4}>
+              Default variant with primary styling
+            </Description>
           </TextField>
 
           <TextField>
-            <Label>Secondary Variant</Label>
+            <Label>
+              <Label.Text maxFontSizeMultiplier={1.4}>
+                Secondary Variant
+              </Label.Text>
+            </Label>
             <TextArea
               placeholder="Secondary style text area"
               variant="secondary"
+              maxFontSizeMultiplier={1.4}
             />
-            <Description>Secondary variant for surfaces</Description>
+            <Description maxFontSizeMultiplier={1.4}>
+              Secondary variant for surfaces
+            </Description>
           </TextField>
         </View>
       </KeyboardAvoidingContainer>
@@ -93,17 +110,32 @@ const TextAreaStatesContent = () => {
       <KeyboardAvoidingContainer>
         <View className="gap-8">
           <TextField isDisabled>
-            <Label>Disabled State</Label>
-            <TextArea placeholder="Cannot edit" value="Read only value" />
-            <Description>
+            <Label>
+              <Label.Text maxFontSizeMultiplier={1.4}>
+                Disabled State
+              </Label.Text>
+            </Label>
+            <TextArea
+              placeholder="Cannot edit"
+              value="Read only value"
+              maxFontSizeMultiplier={1.4}
+            />
+            <Description maxFontSizeMultiplier={1.4}>
               Text area is disabled and cannot be edited
             </Description>
           </TextField>
 
           <TextField isInvalid>
-            <Label>Invalid State</Label>
-            <TextArea placeholder="Enter your message" />
-            <FieldError>Please enter a valid message</FieldError>
+            <Label>
+              <Label.Text maxFontSizeMultiplier={1.4}>Invalid State</Label.Text>
+            </Label>
+            <TextArea
+              placeholder="Enter your message"
+              maxFontSizeMultiplier={1.4}
+            />
+            <FieldError textProps={{ maxFontSizeMultiplier: 1.4 }}>
+              Please enter a valid message
+            </FieldError>
           </TextField>
         </View>
       </KeyboardAvoidingContainer>

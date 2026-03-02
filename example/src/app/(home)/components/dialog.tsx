@@ -92,7 +92,11 @@ const BlurBackdropDialogContent = () => {
           onOpenChange={setBlurBackdropDialogOpen}
         >
           <Dialog.Trigger asChild>
-            <Button variant="secondary">Dialog with blur backdrop</Button>
+            <Button variant="secondary">
+              <Button.Label maxFontSizeMultiplier={1.2}>
+                Dialog with blur backdrop
+              </Button.Label>
+            </Button>
           </Dialog.Trigger>
           <Dialog.Portal>
             <DialogBlurBackdrop />
@@ -269,12 +273,14 @@ const UpdateProfileDialogForm = ({ onClose }: { onClose: () => void }) => {
         </StyleScrollView>
       </View>
 
-      <View className="flex-row justify-end gap-3 pt-3">
+      <View className="flex-row items-center justify-end gap-3 pt-3">
         <Button variant="ghost" size="sm" onPress={handleCancel}>
-          Cancel
+          <Button.Label maxFontSizeMultiplier={1.4}>Cancel</Button.Label>
         </Button>
         <Button size="sm" onPress={handleSubmit}>
-          Update Profile
+          <Button.Label maxFontSizeMultiplier={1.4}>
+            Update Profile
+          </Button.Label>
         </Button>
       </View>
     </Dialog.Content>
@@ -294,7 +300,11 @@ const TextInputDialogContent = () => {
           }}
         >
           <Dialog.Trigger asChild>
-            <Button variant="secondary">Dialog with text input</Button>
+            <Button variant="secondary">
+              <Button.Label maxFontSizeMultiplier={1.6}>
+                Dialog with text input
+              </Button.Label>
+            </Button>
           </Dialog.Trigger>
           <Dialog.Portal className="justify-start">
             <DialogBlurBackdrop />
@@ -321,7 +331,11 @@ const LongContentDialogContent = () => {
       <View className="flex-1 items-center justify-center">
         <Dialog isOpen={scrollDialogOpen} onOpenChange={setScrollDialogOpen}>
           <Dialog.Trigger asChild>
-            <Button variant="secondary">Dialog with long content</Button>
+            <Button variant="secondary">
+              <Button.Label maxFontSizeMultiplier={1.6}>
+                Dialog with long content
+              </Button.Label>
+            </Button>
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay
@@ -411,7 +425,9 @@ const NativeModalDialogContent = () => {
           variant="secondary"
           onPress={() => router.push('components/dialog-native-modal')}
         >
-          Dialog from native modal
+          <Button.Label maxFontSizeMultiplier={1.6}>
+            Dialog from native modal
+          </Button.Label>
         </Button>
       </View>
     </View>

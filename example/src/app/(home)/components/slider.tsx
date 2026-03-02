@@ -78,7 +78,9 @@ const RangeContent = () => {
           formatOptions={{ style: 'percent' }}
         >
           <View className="flex-row items-center justify-between mb-1">
-            <Label>Discount</Label>
+            <Label>
+              <Label.Text maxFontSizeMultiplier={1.4}>Discount</Label.Text>
+            </Label>
             <Slider.Output />
           </View>
           <Slider.Track>
@@ -102,7 +104,9 @@ const RangeContent = () => {
           formatOptions={{ style: 'currency', currency: 'USD' }}
         >
           <View className="flex-row items-center justify-between mb-1">
-            <Label>Price range</Label>
+            <Label>
+              <Label.Text maxFontSizeMultiplier={1.4}>Price range</Label.Text>
+            </Label>
             <Slider.Output />
           </View>
           <Slider.Track>
@@ -130,7 +134,9 @@ const RangeContent = () => {
           }}
         >
           <View className="flex-row items-center justify-between mb-1">
-            <Label>Comfort zone</Label>
+            <Label>
+              <Label.Text maxFontSizeMultiplier={1.4}>Comfort zone</Label.Text>
+            </Label>
             <Slider.Output />
           </View>
           <Slider.Track>
@@ -148,7 +154,9 @@ const RangeContent = () => {
         {/* Age range */}
         <Slider defaultValue={[25, 45]} minValue={18} maxValue={65} step={1}>
           <View className="flex-row items-center justify-between mb-1">
-            <Label>Age range</Label>
+            <Label>
+              <Label.Text maxFontSizeMultiplier={1.4}>Age range</Label.Text>
+            </Label>
             <Slider.Output />
           </View>
           <Slider.Track>

@@ -1,4 +1,4 @@
-import type { PressableProps, ViewProps } from 'react-native';
+import type { PressableProps, TextProps, ViewProps } from 'react-native';
 import type { SurfaceVariant } from '../surface/surface.types';
 
 /**
@@ -85,7 +85,7 @@ export interface ListGroupItemContentProps extends ViewProps {
  * Props for the ListGroup.ItemTitle component.
  * Renders the primary text label for an item.
  */
-export interface ListGroupItemTitleProps extends ViewProps {
+export interface ListGroupItemTitleProps extends TextProps {
   /**
    * Title text or custom content
    */
@@ -100,7 +100,7 @@ export interface ListGroupItemTitleProps extends ViewProps {
  * Props for the ListGroup.ItemDescription component.
  * Renders secondary descriptive text below the title.
  */
-export interface ListGroupItemDescriptionProps extends ViewProps {
+export interface ListGroupItemDescriptionProps extends TextProps {
   /**
    * Description text or custom content
    */

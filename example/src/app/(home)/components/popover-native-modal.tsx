@@ -42,7 +42,10 @@ export default function PopoverNativeModalScreen() {
                 <Popover.Title>Fun Fact!</Popover.Title>
               </View>
             </View>
-            <Popover.Description className="text-sm">
+            <Popover.Description
+              maxFontSizeMultiplier={1.6}
+              className="text-sm"
+            >
               The first computer bug was an actual moth found trapped in a
               Harvard Mark II computer in 1947. Grace Hopper taped it to the log
               book with the note "First actual case of bug being found."

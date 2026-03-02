@@ -18,6 +18,30 @@ import { PlusIcon } from '../../../components/icons/plus';
 import { ReceiptIcon } from '../../../components/icons/receipt';
 import { ShoppingBagIcon } from '../../../components/icons/shopping-bag';
 
+const TriggerTitle = ({ title }: { title: string }) => {
+  return (
+    <AppText
+      className="text-foreground text-base flex-1"
+      maxFontSizeMultiplier={1}
+    >
+      {title}
+    </AppText>
+  );
+};
+
+const ContentText = ({ text }: { text: string }) => {
+  return (
+    <AppText
+      className="text-muted text-base/relaxed px-[28px]"
+      maxFontSizeMultiplier={1}
+    >
+      {text}
+    </AppText>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const ICON_SIZE = 16;
 
 const CUSTOM_INDICATOR_ENTERING = ZoomIn.duration(200).easing(
@@ -90,8 +114,6 @@ const accordionData = [
 
 const classNames = {
   triggerContentContainer: 'flex-row items-center flex-1 gap-3',
-  triggerTitle: 'text-foreground text-base flex-1',
-  contentText: 'text-muted text-base/relaxed px-[28px]',
 };
 
 // ------------------------------------------------------------------------------
@@ -108,9 +130,7 @@ const DefaultVariantContent = () => {
                   className={classNames.triggerContentContainer}
                 >
                   {item.icon}
-                  <AppText className="text-foreground text-base flex-1">
-                    {item.title}
-                  </AppText>
+                  <TriggerTitle title={item.title} />
                 </PressableFeedback.Scale>
                 <Accordion.Indicator />
                 <PressableFeedback.Highlight
@@ -119,9 +139,7 @@ const DefaultVariantContent = () => {
               </PressableFeedback>
             </Accordion.Trigger>
             <Accordion.Content>
-              <AppText className={classNames.contentText}>
-                {item.content}
-              </AppText>
+              <ContentText text={item.content} />
             </Accordion.Content>
           </Accordion.Item>
         ))}
@@ -141,16 +159,12 @@ const SurfaceVariantContent = () => {
             <Accordion.Trigger>
               <View className={classNames.triggerContentContainer}>
                 {item.icon}
-                <AppText className={classNames.triggerTitle}>
-                  {item.title}
-                </AppText>
+                <TriggerTitle title={item.title} />
               </View>
               <Accordion.Indicator />
             </Accordion.Trigger>
             <Accordion.Content>
-              <AppText className={classNames.contentText}>
-                {item.content}
-              </AppText>
+              <ContentText text={item.content} />
             </Accordion.Content>
           </Accordion.Item>
         ))}
@@ -175,16 +189,12 @@ const MultipleSelectionContent = () => {
             <Accordion.Trigger>
               <View className={classNames.triggerContentContainer}>
                 {item.icon}
-                <AppText className={classNames.triggerTitle}>
-                  {item.title}
-                </AppText>
+                <TriggerTitle title={item.title} />
               </View>
               <Accordion.Indicator />
             </Accordion.Trigger>
             <Accordion.Content>
-              <AppText className={classNames.contentText}>
-                {item.content}
-              </AppText>
+              <ContentText text={item.content} />
             </Accordion.Content>
           </Accordion.Item>
         ))}
@@ -204,16 +214,12 @@ const WithoutSeparatorsContent = () => {
             <Accordion.Trigger className="rounded-lg">
               <View className={classNames.triggerContentContainer}>
                 {item.icon}
-                <AppText className={classNames.triggerTitle}>
-                  {item.title}
-                </AppText>
+                <TriggerTitle title={item.title} />
               </View>
               <Accordion.Indicator />
             </Accordion.Trigger>
             <Accordion.Content>
-              <AppText className={classNames.contentText}>
-                {item.content}
-              </AppText>
+              <ContentText text={item.content} />
             </Accordion.Content>
           </Accordion.Item>
         ))}
@@ -233,18 +239,14 @@ const CustomIndicatorContent = () => {
             <Accordion.Trigger>
               <View className={classNames.triggerContentContainer}>
                 {item.icon}
-                <AppText className={classNames.triggerTitle}>
-                  {item.title}
-                </AppText>
+                <TriggerTitle title={item.title} />
               </View>
               <Accordion.Indicator>
                 <CustomIndicator />
               </Accordion.Indicator>
             </Accordion.Trigger>
             <Accordion.Content>
-              <AppText className={classNames.contentText}>
-                {item.content}
-              </AppText>
+              <ContentText text={item.content} />
             </Accordion.Content>
           </Accordion.Item>
         ))}
@@ -264,9 +266,7 @@ const CustomEnteringAnimationContent = () => {
             <Accordion.Trigger>
               <View className={classNames.triggerContentContainer}>
                 {item.icon}
-                <AppText className={classNames.triggerTitle}>
-                  {item.title}
-                </AppText>
+                <TriggerTitle title={item.title} />
               </View>
               <Accordion.Indicator
                 animation={{
@@ -293,9 +293,7 @@ const CustomEnteringAnimationContent = () => {
                 },
               }}
             >
-              <AppText className={classNames.contentText}>
-                {item.content}
-              </AppText>
+              <ContentText text={item.content} />
             </Accordion.Content>
           </Accordion.Item>
         ))}

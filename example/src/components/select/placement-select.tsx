@@ -81,7 +81,10 @@ const PlacementContentList: FC<PlacementContentListProps> = memo(
               style={{
                 height: ITEM_HEIGHT,
               }}
-            />
+            >
+              <Select.ItemLabel maxFontSizeMultiplier={1} />
+              <Select.ItemIndicator />
+            </Select.Item>
           )}
         />
       </ScrollShadow>
@@ -115,6 +118,7 @@ export const PlacementSelect: FC<Props> = ({ placeholder, placement }) => {
             placeholder={placeholder}
             numberOfLines={1}
             className="text-accent"
+            maxFontSizeMultiplier={1}
           />
         </Button>
       </Select.Trigger>

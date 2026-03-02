@@ -254,6 +254,7 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
             <HeroText
               className={fallbackTextClassName}
               style={styles?.text}
+              maxFontSizeMultiplier={1.4}
               {...textProps}
             >
               {stringifiedChildren}

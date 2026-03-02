@@ -80,6 +80,7 @@ export const LoadingToast = (props: ToastComponentProps) => {
             'text-sm',
             isLoading ? 'text-muted/75' : 'text-success'
           )}
+          maxFontSizeMultiplier={1}
         >
           {isLoading ? 'Loading...' : 'Loaded successfully'}
         </Toast.Title>

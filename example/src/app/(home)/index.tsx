@@ -3,13 +3,7 @@ import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Card, Chip, cn } from 'heroui-native';
 import type { FC } from 'react';
-import {
-  Image,
-  PixelRatio,
-  Pressable,
-  View,
-  type ImageSourcePropType,
-} from 'react-native';
+import { Image, Pressable, View, type ImageSourcePropType } from 'react-native';
 import Animated, {
   Easing,
   FadeIn,
@@ -137,7 +131,10 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
           <Card.Body className="h-16" />
           <Card.Footer className="px-3 pb-3 flex-row items-end gap-4">
             <View className="flex-1">
-              <Card.Title className="text-2xl text-foreground/85">
+              <Card.Title
+                className="text-2xl text-foreground/85"
+                maxFontSizeMultiplier={1.75}
+              >
                 {title}
               </Card.Title>
               <Card.Description className="text-foreground/65 pl-0.5">
@@ -160,37 +157,27 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
 
 export default function App() {
   const { isDark } = useAppTheme();
-  const fontScale = PixelRatio.getFontScale();
 
   return (
-    <View className="flex-1">
-      <ScreenScrollView>
-        <View className="items-center justify-center my-4">
-          <AppText className="text-muted text-base">v1.0.0-rc.3</AppText>
-        </View>
-        <View className="gap-6">
-          {cards.map((card, index) => (
-            <HomeCard
-              key={card.title}
-              title={card.title}
-              imageLight={card.imageLight}
-              imageDark={card.imageDark}
-              count={card.count}
-              footer={card.footer}
-              path={card.path}
-              index={index}
-            />
-          ))}
-        </View>
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-      </ScreenScrollView>
-      <View className="absolute bottom-4 left-0 right-0 items-center pointer-events-none">
-        <View className="bg-background/80 px-3 py-1.5 rounded-full border border-divider">
-          <AppText className="text-xs text-muted">
-            {`Font Scale: ${fontScale.toFixed(2)}`}
-          </AppText>
-        </View>
+    <ScreenScrollView>
+      <View className="items-center justify-center my-4">
+        <AppText className="text-muted text-base">v1.0.0-rc.3</AppText>
       </View>
-    </View>
+      <View className="gap-6">
+        {cards.map((card, index) => (
+          <HomeCard
+            key={card.title}
+            title={card.title}
+            imageLight={card.imageLight}
+            imageDark={card.imageDark}
+            count={card.count}
+            footer={card.footer}
+            path={card.path}
+            index={index}
+          />
+        ))}
+      </View>
+      <StatusBar style={isDark ? 'light' : 'dark'} />
+    </ScreenScrollView>
   );
 }

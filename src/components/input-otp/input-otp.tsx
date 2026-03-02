@@ -278,6 +278,7 @@ const InputOTPSlotValue = forwardRef<
         entering={textEntering}
         exiting={textExiting}
         className={slotValueClassName}
+        maxFontSizeMultiplier={1.6}
         {...restProps}
       >
         {displayChar}

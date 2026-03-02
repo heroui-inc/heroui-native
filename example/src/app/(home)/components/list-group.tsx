@@ -31,8 +31,10 @@ const BasicContent = () => {
             <PersonIcon size={20} colorClassName="accent-foreground" />
           </ListGroup.ItemPrefix>
           <ListGroup.ItemContent>
-            <ListGroup.ItemTitle>Personal Info</ListGroup.ItemTitle>
-            <ListGroup.ItemDescription>
+            <ListGroup.ItemTitle maxFontSizeMultiplier={1.4}>
+              Personal Info
+            </ListGroup.ItemTitle>
+            <ListGroup.ItemDescription maxFontSizeMultiplier={1.4}>
               Name, email, phone number
             </ListGroup.ItemDescription>
           </ListGroup.ItemContent>
@@ -44,8 +46,10 @@ const BasicContent = () => {
             <CreditCardIcon size={20} colorClassName="accent-foreground" />
           </ListGroup.ItemPrefix>
           <ListGroup.ItemContent>
-            <ListGroup.ItemTitle>Payment Methods</ListGroup.ItemTitle>
-            <ListGroup.ItemDescription>
+            <ListGroup.ItemTitle maxFontSizeMultiplier={1.4}>
+              Payment Methods
+            </ListGroup.ItemTitle>
+            <ListGroup.ItemDescription maxFontSizeMultiplier={1.4}>
               Visa ending in 4829
             </ListGroup.ItemDescription>
           </ListGroup.ItemContent>
@@ -59,8 +63,10 @@ const BasicContent = () => {
             <PaletteIcon size={20} colorClassName="accent-foreground" />
           </ListGroup.ItemPrefix>
           <ListGroup.ItemContent>
-            <ListGroup.ItemTitle>Appearance</ListGroup.ItemTitle>
-            <ListGroup.ItemDescription>
+            <ListGroup.ItemTitle maxFontSizeMultiplier={1.4}>
+              Appearance
+            </ListGroup.ItemTitle>
+            <ListGroup.ItemDescription maxFontSizeMultiplier={1.4}>
               Theme, font size, display
             </ListGroup.ItemDescription>
           </ListGroup.ItemContent>
@@ -72,8 +78,10 @@ const BasicContent = () => {
             <BellIcon size={20} colorClassName="accent-foreground" />
           </ListGroup.ItemPrefix>
           <ListGroup.ItemContent>
-            <ListGroup.ItemTitle>Notifications</ListGroup.ItemTitle>
-            <ListGroup.ItemDescription>
+            <ListGroup.ItemTitle maxFontSizeMultiplier={1.4}>
+              Notifications
+            </ListGroup.ItemTitle>
+            <ListGroup.ItemDescription maxFontSizeMultiplier={1.4}>
               Alerts, sounds, badges
             </ListGroup.ItemDescription>
           </ListGroup.ItemContent>

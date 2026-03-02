@@ -59,14 +59,24 @@ const CardWithImageContent = () => {
               />
             </Card.Header>
             <Card.Body className="flex-1">
-              <Card.Title>Indie Hackers</Card.Title>
-              <Card.Description className="text-sm">
+              <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
+                Indie Hackers
+              </Card.Title>
+              <Card.Description
+                className="text-sm"
+                maxFontSizeMultiplier={1.2}
+                numberOfLines={1}
+              >
                 148 members
               </Card.Description>
             </Card.Body>
             <Card.Footer className="flex-row items-center gap-2">
               <View className="size-3 rounded-full bg-rose-400" />
-              <AppText className="text-sm font-medium text-foreground">
+              <AppText
+                className="text-sm font-medium text-foreground"
+                maxFontSizeMultiplier={1.2}
+                numberOfLines={1}
+              >
                 @indiehackers
               </AppText>
             </Card.Footer>
@@ -83,14 +93,24 @@ const CardWithImageContent = () => {
               />
             </Card.Header>
             <Card.Body className="flex-1">
-              <Card.Title>AI Builders</Card.Title>
-              <Card.Description className="text-sm">
+              <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
+                AI Builders
+              </Card.Title>
+              <Card.Description
+                className="text-sm"
+                maxFontSizeMultiplier={1.2}
+                numberOfLines={1}
+              >
                 362 members
               </Card.Description>
             </Card.Body>
             <Card.Footer className="flex-row items-center gap-2">
               <View className="size-3 rounded-full bg-emerald-400" />
-              <AppText className="text-sm font-medium text-foreground">
+              <AppText
+                className="text-sm font-medium text-foreground"
+                maxFontSizeMultiplier={1.2}
+                numberOfLines={1}
+              >
                 @aibuilders
               </AppText>
             </Card.Footer>
@@ -117,14 +137,24 @@ const HorizontalCardWithImageContent = () => {
           />
           <View className="flex-1 gap-4">
             <Card.Body className="flex-1">
-              <Card.Title>Avocado Hackathon</Card.Title>
-              <Card.Description numberOfLines={2} className="text-sm">
+              <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
+                Avocado Hackathon
+              </Card.Title>
+              <Card.Description
+                numberOfLines={2}
+                className="text-sm"
+                maxFontSizeMultiplier={1.2}
+              >
                 Today, 6:30 PM
               </Card.Description>
             </Card.Body>
             <Card.Footer>
               <Pressable className="flex-row items-center gap-1">
-                <AppText className="text-sm font-medium text-accent">
+                <AppText
+                  className="text-sm font-medium text-accent"
+                  maxFontSizeMultiplier={1.2}
+                  numberOfLines={1}
+                >
                   View Details
                 </AppText>
                 <StyledIonicons
@@ -146,14 +176,24 @@ const HorizontalCardWithImageContent = () => {
           />
           <View className="flex-1 gap-4">
             <Card.Body className="flex-1">
-              <Card.Title>Sound Electro</Card.Title>
-              <Card.Description numberOfLines={2} className="text-sm">
+              <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
+                Sound Electro
+              </Card.Title>
+              <Card.Description
+                numberOfLines={2}
+                className="text-sm"
+                maxFontSizeMultiplier={1.2}
+              >
                 Wed, 4:30 PM
               </Card.Description>
             </Card.Body>
             <Card.Footer>
               <Pressable className="flex-row items-center gap-1">
-                <AppText className="text-sm font-medium text-accent">
+                <AppText
+                  className="text-sm font-medium text-accent"
+                  maxFontSizeMultiplier={1.2}
+                  numberOfLines={1}
+                >
                   View Details
                 </AppText>
                 <StyledIonicons
@@ -189,25 +229,42 @@ const BackgroundImageCardContent = () => {
         />
         <View className="flex-1 gap-4">
           <Card.Body className="flex-1">
-            <Card.Title className="text-base text-zinc-50 uppercase mb-0.5">
+            <Card.Title
+              className="text-base text-zinc-50 uppercase mb-0.5"
+              maxFontSizeMultiplier={1.2}
+            >
               Neo
             </Card.Title>
-            <Card.Description className="text-zinc-50 font-medium text-base">
+            <Card.Description
+              className="text-zinc-50 font-medium text-base"
+              maxFontSizeMultiplier={1.2}
+            >
               Home robot
             </Card.Description>
           </Card.Body>
           <Card.Footer className="gap-3">
             <View className="flex-row items-center justify-between">
               <View>
-                <AppText className="text-base text-white">
+                <AppText
+                  className="text-base text-white"
+                  maxFontSizeMultiplier={1.2}
+                >
                   Available soon
                 </AppText>
-                <AppText className="text-base text-zinc-300">
+                <AppText
+                  className="text-base text-zinc-300"
+                  maxFontSizeMultiplier={1.2}
+                >
                   Get notified
                 </AppText>
               </View>
               <Button size="sm" className="bg-white" feedbackVariant="scale">
-                <Button.Label className="text-black">Notify me</Button.Label>
+                <Button.Label
+                  className="text-black"
+                  maxFontSizeMultiplier={1.2}
+                >
+                  Notify me
+                </Button.Label>
               </Button>
             </View>
           </Card.Footer>
@@ -234,8 +291,15 @@ const CardItem = ({
 }: CardItemProps) => {
   return (
     <Card variant={variant} className={cn('gap-2', className)}>
-      <AppText className="text-foreground font-medium">{title}</AppText>
-      <AppText className="text-muted">{description}</AppText>
+      <AppText
+        className="text-foreground font-medium"
+        maxFontSizeMultiplier={1.3}
+      >
+        {title}
+      </AppText>
+      <AppText className="text-muted" maxFontSizeMultiplier={1.3}>
+        {description}
+      </AppText>
     </Card>
   );
 };

@@ -52,8 +52,12 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
         <Checkbox className="mt-0.5" />
       </ControlField.Indicator>
       <View className="flex-1">
-        <Label className="text-lg">{title}</Label>
-        <Description className="text-base">{description}</Description>
+        <Label className="text-lg">
+          <Label.Text maxFontSizeMultiplier={1.2}>{title}</Label.Text>
+        </Label>
+        <Description className="text-base" maxFontSizeMultiplier={1.2}>
+          {description}
+        </Description>
       </View>
     </ControlField>
   );

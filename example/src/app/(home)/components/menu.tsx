@@ -48,8 +48,10 @@ const BasicUsageContent = () => {
                       <SquarePlusIcon size={16} colorClassName="accent-muted" />
                     </View>
                     <View className="flex-1">
-                      <Menu.ItemTitle>New file</Menu.ItemTitle>
-                      <Menu.ItemDescription>
+                      <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                        New file
+                      </Menu.ItemTitle>
+                      <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
                         Create a new file
                       </Menu.ItemDescription>
                     </View>
@@ -59,8 +61,10 @@ const BasicUsageContent = () => {
                       <CopyIcon size={16} colorClassName="accent-muted" />
                     </View>
                     <View className="flex-1">
-                      <Menu.ItemTitle>Copy link</Menu.ItemTitle>
-                      <Menu.ItemDescription>
+                      <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                        Copy link
+                      </Menu.ItemTitle>
+                      <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
                         Copy the file link
                       </Menu.ItemDescription>
                     </View>
@@ -70,8 +74,10 @@ const BasicUsageContent = () => {
                       <PencilIcon size={16} colorClassName="accent-muted" />
                     </View>
                     <View className="flex-1">
-                      <Menu.ItemTitle>Edit file</Menu.ItemTitle>
-                      <Menu.ItemDescription>
+                      <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                        Edit file
+                      </Menu.ItemTitle>
+                      <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
                         Make changes to the file
                       </Menu.ItemDescription>
                     </View>
@@ -84,8 +90,12 @@ const BasicUsageContent = () => {
                     <TrashIcon size={16} colorClassName="accent-danger" />
                   </View>
                   <View className="flex-1">
-                    <Menu.ItemTitle>Delete file</Menu.ItemTitle>
-                    <Menu.ItemDescription>Move to trash</Menu.ItemDescription>
+                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                      Delete file
+                    </Menu.ItemTitle>
+                    <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
+                      Move to trash
+                    </Menu.ItemDescription>
                   </View>
                 </Menu.Item>
               </Menu.Content>
@@ -120,12 +130,16 @@ const SectionsContent = () => {
         <View className="h-1/2 items-center justify-center">
           <Menu>
             <Menu.Trigger asChild>
-              <Button variant="secondary">Styles</Button>
+              <Button variant="secondary">
+                <Button.Label maxFontSizeMultiplier={1.4}>Styles</Button.Label>
+              </Button>
             </Menu.Trigger>
             <Menu.Portal>
               <Menu.Overlay />
               <Menu.Content presentation="popover" width={250}>
-                <Menu.Label className="mb-1">Text Style</Menu.Label>
+                <Menu.Label className="mb-1" maxFontSizeMultiplier={1.4}>
+                  Text Style
+                </Menu.Label>
                 <Menu.Group
                   selectionMode="multiple"
                   selectedKeys={textStyles}
@@ -134,22 +148,45 @@ const SectionsContent = () => {
                 >
                   <Menu.Item id="bold">
                     <Menu.ItemIndicator />
-                    <Menu.ItemTitle>Bold</Menu.ItemTitle>
-                    <AppText className="text-sm text-muted">⌘ B</AppText>
+                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                      Bold
+                    </Menu.ItemTitle>
+                    <AppText
+                      className="text-sm text-muted"
+                      maxFontSizeMultiplier={1.4}
+                    >
+                      ⌘ B
+                    </AppText>
                   </Menu.Item>
                   <Menu.Item id="italic">
                     <Menu.ItemIndicator />
-                    <Menu.ItemTitle>Italic</Menu.ItemTitle>
-                    <AppText className="text-sm text-muted">⌘ I</AppText>
+                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                      Italic
+                    </Menu.ItemTitle>
+                    <AppText
+                      className="text-sm text-muted"
+                      maxFontSizeMultiplier={1.4}
+                    >
+                      ⌘ I
+                    </AppText>
                   </Menu.Item>
                   <Menu.Item id="underline">
                     <Menu.ItemIndicator />
-                    <Menu.ItemTitle>Underline</Menu.ItemTitle>
-                    <AppText className="text-sm text-muted">⌘ U</AppText>
+                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                      Underline
+                    </Menu.ItemTitle>
+                    <AppText
+                      className="text-sm text-muted"
+                      maxFontSizeMultiplier={1.2}
+                    >
+                      ⌘ U
+                    </AppText>
                   </Menu.Item>
                 </Menu.Group>
                 <Separator className="mx-2 my-2 opacity-75" />
-                <Menu.Label className="mb-1">Text Alignment</Menu.Label>
+                <Menu.Label className="mb-1" maxFontSizeMultiplier={1.4}>
+                  Text Alignment
+                </Menu.Label>
                 <Menu.Group
                   selectionMode="single"
                   selectedKeys={alignment}
@@ -158,18 +195,39 @@ const SectionsContent = () => {
                 >
                   <Menu.Item id="left">
                     <Menu.ItemIndicator variant="dot" />
-                    <Menu.ItemTitle>Left</Menu.ItemTitle>
-                    <AppText className="text-sm text-muted">⌥ A</AppText>
+                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                      Left
+                    </Menu.ItemTitle>
+                    <AppText
+                      className="text-sm text-muted"
+                      maxFontSizeMultiplier={1.2}
+                    >
+                      ⌥ A
+                    </AppText>
                   </Menu.Item>
                   <Menu.Item id="center">
                     <Menu.ItemIndicator variant="dot" />
-                    <Menu.ItemTitle>Center</Menu.ItemTitle>
-                    <AppText className="text-sm text-muted">⌥ H</AppText>
+                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                      Center
+                    </Menu.ItemTitle>
+                    <AppText
+                      className="text-sm text-muted"
+                      maxFontSizeMultiplier={1.2}
+                    >
+                      ⌥ H
+                    </AppText>
                   </Menu.Item>
                   <Menu.Item id="right">
                     <Menu.ItemIndicator variant="dot" />
-                    <Menu.ItemTitle>Right</Menu.ItemTitle>
-                    <AppText className="text-sm text-muted">⌥ D</AppText>
+                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                      Right
+                    </Menu.ItemTitle>
+                    <AppText
+                      className="text-sm text-muted"
+                      maxFontSizeMultiplier={1.2}
+                    >
+                      ⌥ D
+                    </AppText>
                   </Menu.Item>
                 </Menu.Group>
               </Menu.Content>
@@ -210,11 +268,14 @@ const PlacementsContent = () => {
                   />
                   <Avatar.Fallback>EC</Avatar.Fallback>
                 </Avatar>
-                <View>
-                  <AppText className="text-sm font-semibold text-foreground">
+                <View className="flex-1">
+                  <AppText
+                    className="text-sm font-semibold text-foreground"
+                    numberOfLines={1}
+                  >
                     Emily Chen
                   </AppText>
-                  <AppText className="text-xs text-muted">
+                  <AppText className="text-xs text-muted" numberOfLines={1}>
                     emily@acme.co
                   </AppText>
                 </View>
@@ -252,7 +313,9 @@ const PlacementsContent = () => {
                 placement="right"
                 width={180}
               >
-                <Menu.Label className="mb-1">Appearance</Menu.Label>
+                <Menu.Label className="mb-1" maxFontSizeMultiplier={1.6}>
+                  Appearance
+                </Menu.Label>
                 <Menu.Group
                   selectionMode="single"
                   selectedKeys={theme}
@@ -299,8 +362,10 @@ const PlacementsContent = () => {
                 <Menu.Item>
                   <AppText className="text-xl">🎵</AppText>
                   <View className="flex-1">
-                    <Menu.ItemTitle>Music</Menu.ItemTitle>
-                    <Menu.ItemDescription>
+                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                      Music
+                    </Menu.ItemTitle>
+                    <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
                       Songs, albums & playlists
                     </Menu.ItemDescription>
                   </View>
@@ -309,8 +374,10 @@ const PlacementsContent = () => {
                 <Menu.Item>
                   <AppText className="text-xl">🎬</AppText>
                   <View className="flex-1">
-                    <Menu.ItemTitle>Movies</Menu.ItemTitle>
-                    <Menu.ItemDescription>
+                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                      Movies
+                    </Menu.ItemTitle>
+                    <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
                       Trending & new releases
                     </Menu.ItemDescription>
                   </View>
@@ -319,8 +386,10 @@ const PlacementsContent = () => {
                 <Menu.Item>
                   <AppText className="text-xl">📚</AppText>
                   <View className="flex-1">
-                    <Menu.ItemTitle>Books</Menu.ItemTitle>
-                    <Menu.ItemDescription>
+                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                      Books
+                    </Menu.ItemTitle>
+                    <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
                       Bestsellers & more
                     </Menu.ItemDescription>
                   </View>
@@ -329,8 +398,10 @@ const PlacementsContent = () => {
                 <Menu.Item>
                   <AppText className="text-xl">🎮</AppText>
                   <View className="flex-1">
-                    <Menu.ItemTitle>Games</Menu.ItemTitle>
-                    <Menu.ItemDescription>
+                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
+                      Games
+                    </Menu.ItemTitle>
+                    <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
                       Popular & top rated
                     </Menu.ItemDescription>
                   </View>

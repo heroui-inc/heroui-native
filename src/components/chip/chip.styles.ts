@@ -12,9 +12,9 @@ const root = tv({
       soft: '',
     },
     size: {
-      sm: 'px-2 h-5 rounded-xl',
-      md: 'px-3 h-6 rounded-xl',
-      lg: 'px-4 h-7 rounded-2xl',
+      sm: 'px-2 py-0.5 rounded-xl',
+      md: 'px-3 py-[3px] rounded-2xl',
+      lg: 'px-4 py-1 rounded-3xl',
     },
     color: {
       accent: '',

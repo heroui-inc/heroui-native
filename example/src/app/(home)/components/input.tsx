@@ -96,27 +96,41 @@ const InputStatesContent = () => {
       <KeyboardAvoidingContainer>
         <View className="gap-8">
           <TextField>
-            <Label>Default State</Label>
+            <Label>
+              <Label.Text maxFontSizeMultiplier={1.4}>Default State</Label.Text>
+            </Label>
             <Input
               placeholder="Enter your email"
               keyboardType="email-address"
             />
-            <Description>Normal input state</Description>
+            <Description maxFontSizeMultiplier={1.4}>
+              Normal input state
+            </Description>
           </TextField>
 
           <TextField isDisabled>
-            <Label>Disabled State</Label>
+            <Label>
+              <Label.Text maxFontSizeMultiplier={1.4}>
+                Disabled State
+              </Label.Text>
+            </Label>
             <Input placeholder="Cannot edit" value="Read only value" />
-            <Description>Input is disabled and cannot be edited</Description>
+            <Description maxFontSizeMultiplier={1.4}>
+              Input is disabled and cannot be edited
+            </Description>
           </TextField>
 
           <TextField isInvalid>
-            <Label>Invalid State</Label>
+            <Label>
+              <Label.Text maxFontSizeMultiplier={1.4}>Invalid State</Label.Text>
+            </Label>
             <Input
               placeholder="Enter your email"
               keyboardType="email-address"
             />
-            <FieldError>Please enter a valid email address</FieldError>
+            <FieldError textProps={{ maxFontSizeMultiplier: 1.4 }}>
+              Please enter a valid email address
+            </FieldError>
           </TextField>
         </View>
       </KeyboardAvoidingContainer>

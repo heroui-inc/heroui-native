@@ -84,7 +84,7 @@ const SearchableSelectContent = () => {
         }}
       >
         <View className="flex-row items-center justify-between mb-2">
-          <Select.ListLabel>Country</Select.ListLabel>
+          <Select.ListLabel maxFontSizeMultiplier={1}>Country</Select.ListLabel>
           <Select.Close variant="ghost" />
         </View>
         <View className="w-full mb-2">
@@ -95,6 +95,7 @@ const SearchableSelectContent = () => {
             placeholderTextColor={themeColorMuted}
             className="p-3 rounded-xl bg-surface-secondary/80 text-foreground"
             autoFocus
+            maxFontSizeMultiplier={1}
           />
         </View>
         <ScrollShadow
@@ -114,11 +115,19 @@ const SearchableSelectContent = () => {
                 }}
               >
                 <View className="flex-row items-center gap-3 flex-1">
-                  <AppText className="text-2xl">{country.flag}</AppText>
-                  <AppText className="text-sm text-muted w-10">
+                  <AppText className="text-2xl" maxFontSizeMultiplier={1}>
+                    {country.flag}
+                  </AppText>
+                  <AppText
+                    className="text-sm text-muted w-10"
+                    maxFontSizeMultiplier={1}
+                  >
                     {country.code}
                   </AppText>
-                  <AppText className="text-base text-foreground flex-1">
+                  <AppText
+                    className="text-base text-foreground flex-1"
+                    maxFontSizeMultiplier={1}
+                  >
                     {country.label}
                   </AppText>
                 </View>
@@ -126,7 +135,10 @@ const SearchableSelectContent = () => {
               </Select.Item>
             ))}
             {filteredCountries.length === 0 && (
-              <AppText className="text-muted text-center mt-8">
+              <AppText
+                className="text-muted text-center mt-8"
+                maxFontSizeMultiplier={1}
+              >
                 No countries found
               </AppText>
             )}
@@ -154,13 +166,20 @@ export function SearchableDialogSelect() {
         <Button variant="tertiary">
           {value ? (
             <View className="flex-row items-center gap-2">
-              <AppText className="text-base">{value.flag}</AppText>
-              <AppText className="text-sm text-accent font-medium">
+              <AppText className="text-base" maxFontSizeMultiplier={1}>
+                {value.flag}
+              </AppText>
+              <AppText
+                className="text-sm text-accent font-medium"
+                maxFontSizeMultiplier={1}
+              >
                 {value.code}
               </AppText>
             </View>
           ) : (
-            <AppText className="text-accent">Dialog</AppText>
+            <AppText className="text-accent" maxFontSizeMultiplier={1}>
+              Dialog
+            </AppText>
           )}
         </Button>
       </Select.Trigger>

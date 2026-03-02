@@ -92,7 +92,7 @@ const SliderOutput = forwardRef<ViewRef, SliderOutputProps>((props, ref) => {
 
   return (
     <SliderPrimitives.Output ref={ref} style={style} {...restProps}>
-      <HeroText className={outputClassName}>
+      <HeroText className={outputClassName} maxFontSizeMultiplier={1.2}>
         {resolvedChildren ?? defaultContent}
       </HeroText>
     </SliderPrimitives.Output>

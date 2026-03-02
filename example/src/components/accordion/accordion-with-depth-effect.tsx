@@ -227,14 +227,21 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
         <Accordion.Trigger className="px-5">
           <View className={classNames.triggerContentContainer}>
             {item.icon}
-            <AppText className={classNames.triggerTitle}>{item.title}</AppText>
+            <AppText
+              className={classNames.triggerTitle}
+              maxFontSizeMultiplier={1}
+            >
+              {item.title}
+            </AppText>
           </View>
           <Accordion.Indicator>
             <CustomIndicator />
           </Accordion.Indicator>
         </Accordion.Trigger>
         <Accordion.Content className="px-5">
-          <AppText className={classNames.contentText}>{item.content}</AppText>
+          <AppText className={classNames.contentText} maxFontSizeMultiplier={1}>
+            {item.content}
+          </AppText>
         </Accordion.Content>
       </StyledAnimatedView>
       {showDivider && (

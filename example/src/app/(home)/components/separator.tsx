@@ -8,19 +8,37 @@ const SeparatorInActionContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-5">
       <Surface variant="secondary" className="px-6 py-7">
-        <AppText className="text-base font-medium text-foreground">
+        <AppText
+          className="text-base font-medium text-foreground"
+          maxFontSizeMultiplier={1.4}
+        >
           HeroUI Native
         </AppText>
-        <AppText className="text-sm text-muted">
+        <AppText className="text-sm text-muted" maxFontSizeMultiplier={1.4}>
           A modern React Native component library.
         </AppText>
         <Separator className="my-4" />
         <View className="flex-row items-center h-5">
-          <AppText className="text-sm text-foreground">Components</AppText>
+          <AppText
+            className="text-sm text-foreground"
+            maxFontSizeMultiplier={1.2}
+          >
+            Components
+          </AppText>
           <Separator orientation="vertical" className="mx-3" />
-          <AppText className="text-sm text-foreground">Themes</AppText>
+          <AppText
+            className="text-sm text-foreground"
+            maxFontSizeMultiplier={1.2}
+          >
+            Themes
+          </AppText>
           <Separator orientation="vertical" className="mx-3" />
-          <AppText className="text-sm text-foreground">Examples</AppText>
+          <AppText
+            className="text-sm text-foreground"
+            maxFontSizeMultiplier={1.2}
+          >
+            Examples
+          </AppText>
         </View>
       </Surface>
     </View>

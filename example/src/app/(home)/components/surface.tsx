@@ -19,8 +19,15 @@ const SurfaceItem = ({
 }: SurfaceItemProps) => {
   return (
     <Surface variant={variant} className={cn('gap-2', className)}>
-      <AppText className="text-foreground font-medium">{title}</AppText>
-      <AppText className="text-muted">{description}</AppText>
+      <AppText
+        className="text-foreground font-medium"
+        maxFontSizeMultiplier={1.2}
+      >
+        {title}
+      </AppText>
+      <AppText className="text-muted" maxFontSizeMultiplier={1.2}>
+        {description}
+      </AppText>
     </Surface>
   );
 };

@@ -57,7 +57,10 @@ const MultipleErrorsContent = () => {
           </TextField>
 
           <View className="gap-2 ml-1">
-            <FieldError isInvalid={showMultipleErrors}>
+            <FieldError
+              isInvalid={showMultipleErrors}
+              textProps={{ maxFontSizeMultiplier: 1 }}
+            >
               • At least 8 characters long
             </FieldError>
             <FieldError
@@ -67,6 +70,7 @@ const MultipleErrorsContent = () => {
                   value: FadeInDown.delay(100),
                 },
               }}
+              textProps={{ maxFontSizeMultiplier: 1 }}
             >
               • At least one uppercase letter
             </FieldError>
@@ -77,6 +81,7 @@ const MultipleErrorsContent = () => {
                   value: FadeInDown.delay(200),
                 },
               }}
+              textProps={{ maxFontSizeMultiplier: 1 }}
             >
               • At least one number
             </FieldError>
@@ -87,6 +92,7 @@ const MultipleErrorsContent = () => {
                   value: FadeInDown.delay(300),
                 },
               }}
+              textProps={{ maxFontSizeMultiplier: 1 }}
             >
               • At least one special character (!@#$%^&*)
             </FieldError>

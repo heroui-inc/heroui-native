@@ -222,7 +222,7 @@ const WithStartContentContent = () => {
 const WithEndContentContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <View className="flex-row gap-4 justify-center">
+      <View className="flex-row flex-wrap gap-4 justify-center">
         <Chip size="sm" variant="secondary">
           <Chip.Label className="text-muted">Close</Chip.Label>
           <XMarkIcon size={12} colorClassName="accent-muted" />

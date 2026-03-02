@@ -1,10 +1,9 @@
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import type { GestureResponderEvent } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import {
   Easing,
   interpolate,
-  useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
@@ -282,8 +281,51 @@ export function usePressableFeedbackHighlightAnimation(options: {
 // --------------------------------------------------
 
 /**
- * Animation hook for PressableFeedback ripple effect
- * Handles ripple circle animation with radial gradient
+ * Worklet that computes the animated style for a single ripple layer.
+ * Shared by both layers to avoid duplicating the interpolation logic.
+ */
+function computeRippleLayerStyle(
+  containerW: number,
+  containerH: number,
+  centerX: number,
+  centerY: number,
+  progress: number,
+  opacityValues: readonly [number, number, number],
+  scaleValues: readonly [number, number, number]
+) {
+  'worklet';
+  const circleRadius = Math.sqrt(containerW ** 2 + containerH ** 2) * 1.25;
+
+  const translateX = centerX - circleRadius;
+  const translateY = centerY - circleRadius;
+
+  return {
+    width: circleRadius * 2,
+    height: circleRadius * 2,
+    borderRadius: circleRadius,
+    opacity: interpolate(
+      progress,
+      [0, 1, 2],
+      [opacityValues[0], opacityValues[1], opacityValues[2]]
+    ),
+    transform: [
+      { translateX },
+      { translateY },
+      {
+        scale: interpolate(
+          progress,
+          [0, 1, 2],
+          [scaleValues[0], scaleValues[1], scaleValues[2]]
+        ),
+      },
+    ],
+  };
+}
+
+/**
+ * Animation hook for PressableFeedback ripple effect.
+ * Uses a two-layer alternating buffer so a new press can start on a fresh layer
+ * while the previous ripple continues its fade-out, preventing visual blinks on rapid presses.
  */
 export function usePressableFeedbackRippleAnimation(options: {
   animation?: PressableFeedbackRippleAnimation;
@@ -297,10 +339,15 @@ export function usePressableFeedbackRippleAnimation(options: {
   const { containerWidth, containerHeight } =
     usePressableFeedbackRootAnimationContext();
 
-  const pressedCenterX = useSharedValue(0);
-  const pressedCenterY = useSharedValue(0);
-  const rippleProgress = useSharedValue(0);
-  const isPressed = useSharedValue(false);
+  const layer0CenterX = useSharedValue(0);
+  const layer0CenterY = useSharedValue(0);
+  const layer0Progress = useSharedValue(0);
+
+  const layer1CenterX = useSharedValue(0);
+  const layer1CenterY = useSharedValue(0);
+  const layer1Progress = useSharedValue(0);
+
+  const activeLayerRef = useRef(0);
 
   const { animationConfig, isAnimationDisabled } = getAnimationState(animation);
 
@@ -327,7 +374,6 @@ export function usePressableFeedbackRippleAnimation(options: {
     defaultValue: BASE_RIPPLE_PROGRESS_DURATION_MIN,
   });
 
-  // Calculate duration coefficient based on diagonal to maintain consistent ripple speed
   const durationCoefficient = useDerivedValue(() => {
     if (ignoreDurationCoefficient) return 1;
 
@@ -338,50 +384,61 @@ export function usePressableFeedbackRippleAnimation(options: {
     return currentDiagonal > 0 ? currentDiagonal / baseDiagonal : 1;
   });
 
-  // Touch handlers for ripple
-  const animationOnTouchStart = useCallback(
-    (event: GestureResponderEvent) => {
-      isPressed.set(true);
-      pressedCenterX.set(event.nativeEvent.locationX);
-      pressedCenterY.set(event.nativeEvent.locationY);
-      rippleProgress.set(0);
-    },
-    [isPressed, pressedCenterX, pressedCenterY, rippleProgress]
-  );
-
-  useAnimatedReaction(
-    () => isPressed.get(),
-    (isPressedValue) => {
-      if (isPressedValue && rippleProgress.get() === 0) {
-        const adjustedDuration = Math.min(
-          Math.max(
-            rippleProgressBaseDuration * durationCoefficient.get(),
-            rippleProgressMinBaseDuration
-          ),
-          rippleProgressBaseDuration * 2
-        );
-        rippleProgress.set(withTiming(1, { duration: adjustedDuration }));
-      }
-    }
-  );
-
-  const animationOnTouchEnd = useCallback(() => {
-    isPressed.set(false);
-    const adjustedDuration = Math.min(
+  /** Returns the container-diagonal-adjusted ripple duration */
+  const getAdjustedDuration = useCallback(() => {
+    return Math.min(
       Math.max(
         rippleProgressBaseDuration * durationCoefficient.get(),
         rippleProgressMinBaseDuration
       ),
       rippleProgressBaseDuration * 2
     );
-    rippleProgress.set(withTiming(2, { duration: adjustedDuration }));
   }, [
-    isPressed,
-    rippleProgress,
     durationCoefficient,
     rippleProgressBaseDuration,
     rippleProgressMinBaseDuration,
   ]);
+
+  const animationOnTouchStart = useCallback(
+    (event: GestureResponderEvent) => {
+      const prevLayer = activeLayerRef.current;
+      const nextLayer = prevLayer === 0 ? 1 : 0;
+      activeLayerRef.current = nextLayer;
+
+      const adjustedDuration = getAdjustedDuration();
+
+      const prevProgress = prevLayer === 0 ? layer0Progress : layer1Progress;
+      const prevProgressVal = prevProgress.get();
+      if (prevProgressVal > 0 && prevProgressVal < 2) {
+        prevProgress.set(withTiming(2, { duration: adjustedDuration }));
+      }
+
+      const nextCenterX = nextLayer === 0 ? layer0CenterX : layer1CenterX;
+      const nextCenterY = nextLayer === 0 ? layer0CenterY : layer1CenterY;
+      const nextProgress = nextLayer === 0 ? layer0Progress : layer1Progress;
+
+      nextCenterX.set(event.nativeEvent.locationX);
+      nextCenterY.set(event.nativeEvent.locationY);
+      nextProgress.set(0);
+      nextProgress.set(withTiming(1, { duration: adjustedDuration }));
+    },
+    [
+      getAdjustedDuration,
+      layer0CenterX,
+      layer0CenterY,
+      layer0Progress,
+      layer1CenterX,
+      layer1CenterY,
+      layer1Progress,
+    ]
+  );
+
+  const animationOnTouchEnd = useCallback(() => {
+    const adjustedDuration = getAdjustedDuration();
+    const activeProgress =
+      activeLayerRef.current === 0 ? layer0Progress : layer1Progress;
+    activeProgress.set(withTiming(2, { duration: adjustedDuration }));
+  }, [getAdjustedDuration, layer0Progress, layer1Progress]);
 
   // Background color
   const defaultColor = theme === 'dark' ? '#d4d4d8' : '#3f3f46';
@@ -406,42 +463,41 @@ export function usePressableFeedbackRippleAnimation(options: {
     defaultValue: [0, 1, 1] as [number, number, number],
   });
 
-  const rContainerStyle = useAnimatedStyle(() => {
+  const rLayer0Style = useAnimatedStyle(() => {
     if (isAnimationDisabledValue) {
       return {};
     }
 
-    const circleRadius =
-      Math.sqrt(containerWidth.get() ** 2 + containerHeight.get() ** 2) * 1.25;
+    return computeRippleLayerStyle(
+      containerWidth.get(),
+      containerHeight.get(),
+      layer0CenterX.get(),
+      layer0CenterY.get(),
+      layer0Progress.get(),
+      opacityValue,
+      scaleValue
+    );
+  });
 
-    const translateX = pressedCenterX.get() - circleRadius;
-    const translateY = pressedCenterY.get() - circleRadius;
+  const rLayer1Style = useAnimatedStyle(() => {
+    if (isAnimationDisabledValue) {
+      return {};
+    }
 
-    return {
-      width: circleRadius * 2,
-      height: circleRadius * 2,
-      borderRadius: circleRadius,
-      opacity: interpolate(
-        rippleProgress.get(),
-        [0, 1, 2],
-        [opacityValue[0], opacityValue[1], opacityValue[2]]
-      ),
-      transform: [
-        { translateX },
-        { translateY },
-        {
-          scale: interpolate(
-            rippleProgress.get(),
-            [0, 1, 2],
-            [scaleValue[0], scaleValue[1], scaleValue[2]]
-          ),
-        },
-      ],
-    };
+    return computeRippleLayerStyle(
+      containerWidth.get(),
+      containerHeight.get(),
+      layer1CenterX.get(),
+      layer1CenterY.get(),
+      layer1Progress.get(),
+      opacityValue,
+      scaleValue
+    );
   });
 
   return {
-    rContainerStyle,
+    rLayer0Style,
+    rLayer1Style,
     backgroundColor,
     animationOnTouchStart,
     animationOnTouchEnd,

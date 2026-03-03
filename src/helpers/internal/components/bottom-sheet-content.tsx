@@ -146,6 +146,7 @@ export const BottomSheetContent = forwardRef<
             contentContainerClassName={contentContainerClassName}
             contentContainerProps={contentContainerProps}
             onOpenChange={onOpenChange}
+            enablePanDownToClose={restProps.enablePanDownToClose ?? true}
           >
             {children}
           </BottomSheetContentContainer>

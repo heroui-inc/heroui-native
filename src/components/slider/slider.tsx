@@ -71,11 +71,22 @@ const SliderRoot = forwardRef<ViewRef, SliderProps>((props, ref) => {
 // --------------------------------------------------
 
 const SliderOutput = forwardRef<ViewRef, SliderOutputProps>((props, ref) => {
-  const { children, className, style, ...restProps } = props;
+  const { children, className, classNames, textProps, style, ...restProps } =
+    props;
+
+  const { className: textClassNameProps, ...restTextProps } = textProps ?? {};
 
   const { values, orientation, isDisabled, getThumbValueLabel } = useSlider();
 
-  const outputClassName = sliderClassNames.output({ className });
+  const { container: containerSlot, text: textSlot } =
+    sliderClassNames.output();
+
+  const containerClassName = containerSlot({
+    className: [className, classNames?.container],
+  });
+  const textClassName = textSlot({
+    className: [textClassNameProps, classNames?.text],
+  });
 
   const defaultContent = values
     .map((_, i) => getThumbValueLabel(i))
@@ -91,10 +102,17 @@ const SliderOutput = forwardRef<ViewRef, SliderOutputProps>((props, ref) => {
       : children;
 
   return (
-    <SliderPrimitives.Output ref={ref} style={style} {...restProps}>
-      <HeroText className={outputClassName} maxFontSizeMultiplier={1.2}>
-        {resolvedChildren ?? defaultContent}
-      </HeroText>
+    <SliderPrimitives.Output
+      ref={ref}
+      className={containerClassName}
+      style={style}
+      {...restProps}
+    >
+      {resolvedChildren ?? (
+        <HeroText className={textClassName} {...restTextProps}>
+          {defaultContent}
+        </HeroText>
+      )}
     </SliderPrimitives.Output>
   );
 });

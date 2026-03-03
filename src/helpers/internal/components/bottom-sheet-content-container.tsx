@@ -24,6 +24,7 @@ export function BottomSheetContentContainer({
   contentContainerClassName,
   contentContainerProps,
   onOpenChange,
+  enablePanDownToClose,
 }: BottomSheetContentContainerProps) {
   const { close, snapToIndex } = useBottomSheet();
   const prevIsOpenRef = useRef(isOpen);
@@ -51,7 +52,7 @@ export function BottomSheetContentContainer({
    * instances (Popover, Select, other BottomSheets) don't consume the event.
    */
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !enablePanDownToClose) return;
 
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -66,7 +67,7 @@ export function BottomSheetContentContainer({
       backHandler.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+  }, [isOpen, enablePanDownToClose]);
 
   useEffect(() => {
     const wasOpen = prevIsOpenRef.current;

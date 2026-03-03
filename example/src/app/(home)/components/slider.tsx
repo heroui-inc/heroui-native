@@ -81,7 +81,7 @@ const RangeContent = () => {
             <Label>
               <Label.Text maxFontSizeMultiplier={1.4}>Discount</Label.Text>
             </Label>
-            <Slider.Output />
+            <Slider.Output textProps={{ maxFontSizeMultiplier: 1.2 }} />
           </View>
           <Slider.Track>
             {({ state }) => (
@@ -107,7 +107,7 @@ const RangeContent = () => {
             <Label>
               <Label.Text maxFontSizeMultiplier={1.4}>Price range</Label.Text>
             </Label>
-            <Slider.Output />
+            <Slider.Output textProps={{ maxFontSizeMultiplier: 1.2 }} />
           </View>
           <Slider.Track>
             {({ state }) => (
@@ -137,7 +137,7 @@ const RangeContent = () => {
             <Label>
               <Label.Text maxFontSizeMultiplier={1.4}>Comfort zone</Label.Text>
             </Label>
-            <Slider.Output />
+            <Slider.Output textProps={{ maxFontSizeMultiplier: 1.2 }} />
           </View>
           <Slider.Track>
             {({ state }) => (
@@ -157,7 +157,7 @@ const RangeContent = () => {
             <Label>
               <Label.Text maxFontSizeMultiplier={1.4}>Age range</Label.Text>
             </Label>
-            <Slider.Output />
+            <Slider.Output textProps={{ maxFontSizeMultiplier: 1.2 }} />
           </View>
           <Slider.Track>
             {({ state }) => (

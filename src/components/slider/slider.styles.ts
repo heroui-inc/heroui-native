@@ -20,7 +20,10 @@ const root = tv({
 });
 
 const output = tv({
-  base: 'text-sm text-muted font-medium',
+  slots: {
+    container: '',
+    text: 'text-sm text-muted font-medium',
+  },
 });
 
 const track = tv({
@@ -79,6 +82,7 @@ export const styleSheet = StyleSheet.create({
   },
 });
 
+export type OutputSlots = keyof ReturnType<typeof output>;
 export type ThumbSlots = keyof ReturnType<typeof thumb>;
 
 export { sliderClassNames };

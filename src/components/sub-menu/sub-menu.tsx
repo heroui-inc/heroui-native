@@ -68,6 +68,16 @@ const SubMenuRoot = forwardRef<
     },
     ref
   ) => {
+    const { presentation } = useMenu();
+
+    if (__DEV__) {
+      if (presentation === 'bottom-sheet') {
+        throw new Error(
+          'SubMenu cannot be used inside a Menu with presentation="bottom-sheet". Use presentation="popover" instead.'
+        );
+      }
+    }
+
     const animationSettingsContext = useAnimationSettings();
     const {
       isAllAnimationsDisabled,

@@ -25,7 +25,13 @@ const overlay = tv({
  * - `transformOrigin` - Animated based on placement
  */
 const content = tv({
-  base: 'absolute bg-overlay px-1.5 py-3 rounded-3xl shadow-overlay',
+  base: 'absolute bg-overlay px-1.5 py-3 rounded-3xl',
+  variants: {
+    isSubMenuOpen: {
+      true: 'shadow-none',
+      false: 'shadow-overlay',
+    },
+  },
 });
 
 const contentBottomSheet = tv({
@@ -61,6 +67,9 @@ const item = tv({
   variants: {
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',
+    },
+    isOutsideSubMenuOnOpen: {
+      true: 'opacity-40 pointer-events-none',
     },
   },
 });

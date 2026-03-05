@@ -12,7 +12,6 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { useMenu } from '../../components/menu';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { ChevronRightIcon } from '../../helpers/internal/components';
 import {
@@ -20,6 +19,7 @@ import {
   useAnimationSettings,
 } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
+import { useRootContext as useMenu } from '../../primitives/menu';
 import * as SubMenuPrimitives from '../../primitives/sub-menu';
 import type * as SubMenuPrimitivesTypes from '../../primitives/sub-menu/sub-menu.types';
 import {

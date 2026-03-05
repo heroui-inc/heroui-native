@@ -15,7 +15,7 @@ import {
   getIsAnimationDisabledValue,
   getRootAnimationState,
 } from '../../helpers/internal/utils';
-import { useSubMenu } from './sub-menu';
+import { useSubMenuContext as useSubMenu } from '../../primitives/sub-menu';
 import {
   DEFAULT_ROOT_CONTENT_MARGIN,
   DEFAULT_ROOT_CONTENT_PADDING_HORIZONTAL,

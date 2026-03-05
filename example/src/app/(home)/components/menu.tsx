@@ -1,5 +1,5 @@
 import type { MenuKey } from 'heroui-native';
-import { Avatar, Button, cn, Menu, Separator } from 'heroui-native';
+import { Avatar, Button, cn, Menu, Separator, SubMenu } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { AppText } from '../../../components/app-text';
@@ -48,10 +48,8 @@ const BasicUsageContent = () => {
                       <SquarePlusIcon size={16} colorClassName="accent-muted" />
                     </View>
                     <View className="flex-1">
-                      <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                        New file
-                      </Menu.ItemTitle>
-                      <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
+                      <Menu.ItemTitle>New file</Menu.ItemTitle>
+                      <Menu.ItemDescription>
                         Create a new file
                       </Menu.ItemDescription>
                     </View>
@@ -61,10 +59,8 @@ const BasicUsageContent = () => {
                       <CopyIcon size={16} colorClassName="accent-muted" />
                     </View>
                     <View className="flex-1">
-                      <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                        Copy link
-                      </Menu.ItemTitle>
-                      <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
+                      <Menu.ItemTitle>Copy link</Menu.ItemTitle>
+                      <Menu.ItemDescription>
                         Copy the file link
                       </Menu.ItemDescription>
                     </View>
@@ -74,10 +70,8 @@ const BasicUsageContent = () => {
                       <PencilIcon size={16} colorClassName="accent-muted" />
                     </View>
                     <View className="flex-1">
-                      <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                        Edit file
-                      </Menu.ItemTitle>
-                      <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
+                      <Menu.ItemTitle>Edit file</Menu.ItemTitle>
+                      <Menu.ItemDescription>
                         Make changes to the file
                       </Menu.ItemDescription>
                     </View>
@@ -90,12 +84,8 @@ const BasicUsageContent = () => {
                     <TrashIcon size={16} colorClassName="accent-danger" />
                   </View>
                   <View className="flex-1">
-                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                      Delete file
-                    </Menu.ItemTitle>
-                    <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
-                      Move to trash
-                    </Menu.ItemDescription>
+                    <Menu.ItemTitle>Delete file</Menu.ItemTitle>
+                    <Menu.ItemDescription>Move to trash</Menu.ItemDescription>
                   </View>
                 </Menu.Item>
               </Menu.Content>
@@ -130,16 +120,12 @@ const SectionsContent = () => {
         <View className="h-1/2 items-center justify-center">
           <Menu>
             <Menu.Trigger asChild>
-              <Button variant="secondary">
-                <Button.Label maxFontSizeMultiplier={1.4}>Styles</Button.Label>
-              </Button>
+              <Button variant="secondary">Styles</Button>
             </Menu.Trigger>
             <Menu.Portal>
               <Menu.Overlay />
               <Menu.Content presentation="popover" width={250}>
-                <Menu.Label className="mb-1" maxFontSizeMultiplier={1.4}>
-                  Text Style
-                </Menu.Label>
+                <Menu.Label className="mb-1">Text Style</Menu.Label>
                 <Menu.Group
                   selectionMode="multiple"
                   selectedKeys={textStyles}
@@ -148,86 +134,43 @@ const SectionsContent = () => {
                 >
                   <Menu.Item id="bold">
                     <Menu.ItemIndicator />
-                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                      Bold
-                    </Menu.ItemTitle>
-                    <AppText
-                      className="text-sm text-muted"
-                      maxFontSizeMultiplier={1.4}
-                    >
-                      ⌘ B
-                    </AppText>
+                    <Menu.ItemTitle>Bold</Menu.ItemTitle>
+                    <AppText className="text-sm text-muted">⌘ B</AppText>
                   </Menu.Item>
                   <Menu.Item id="italic">
                     <Menu.ItemIndicator />
-                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                      Italic
-                    </Menu.ItemTitle>
-                    <AppText
-                      className="text-sm text-muted"
-                      maxFontSizeMultiplier={1.4}
-                    >
-                      ⌘ I
-                    </AppText>
+                    <Menu.ItemTitle>Italic</Menu.ItemTitle>
+                    <AppText className="text-sm text-muted">⌘ I</AppText>
                   </Menu.Item>
                   <Menu.Item id="underline">
                     <Menu.ItemIndicator />
-                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                      Underline
-                    </Menu.ItemTitle>
-                    <AppText
-                      className="text-sm text-muted"
-                      maxFontSizeMultiplier={1.2}
-                    >
-                      ⌘ U
-                    </AppText>
+                    <Menu.ItemTitle>Underline</Menu.ItemTitle>
+                    <AppText className="text-sm text-muted">⌘ U</AppText>
                   </Menu.Item>
                 </Menu.Group>
                 <Separator className="mx-2 my-2 opacity-75" />
-                <Menu.Label className="mb-1" maxFontSizeMultiplier={1.4}>
-                  Text Alignment
-                </Menu.Label>
+                <Menu.Label className="mb-1">Text Alignment</Menu.Label>
                 <Menu.Group
                   selectionMode="single"
                   selectedKeys={alignment}
                   onSelectionChange={setAlignment}
                   shouldCloseOnSelect={shouldCloseOnSelect}
+                  disallowEmptySelection
                 >
                   <Menu.Item id="left">
                     <Menu.ItemIndicator variant="dot" />
-                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                      Left
-                    </Menu.ItemTitle>
-                    <AppText
-                      className="text-sm text-muted"
-                      maxFontSizeMultiplier={1.2}
-                    >
-                      ⌥ A
-                    </AppText>
+                    <Menu.ItemTitle>Left</Menu.ItemTitle>
+                    <AppText className="text-sm text-muted">⌥ A</AppText>
                   </Menu.Item>
                   <Menu.Item id="center">
                     <Menu.ItemIndicator variant="dot" />
-                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                      Center
-                    </Menu.ItemTitle>
-                    <AppText
-                      className="text-sm text-muted"
-                      maxFontSizeMultiplier={1.2}
-                    >
-                      ⌥ H
-                    </AppText>
+                    <Menu.ItemTitle>Center</Menu.ItemTitle>
+                    <AppText className="text-sm text-muted">⌥ H</AppText>
                   </Menu.Item>
                   <Menu.Item id="right">
                     <Menu.ItemIndicator variant="dot" />
-                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                      Right
-                    </Menu.ItemTitle>
-                    <AppText
-                      className="text-sm text-muted"
-                      maxFontSizeMultiplier={1.2}
-                    >
-                      ⌥ D
-                    </AppText>
+                    <Menu.ItemTitle>Right</Menu.ItemTitle>
+                    <AppText className="text-sm text-muted">⌥ D</AppText>
                   </Menu.Item>
                 </Menu.Group>
               </Menu.Content>
@@ -268,14 +211,11 @@ const PlacementsContent = () => {
                   />
                   <Avatar.Fallback>EC</Avatar.Fallback>
                 </Avatar>
-                <View className="flex-1">
-                  <AppText
-                    className="text-sm font-semibold text-foreground"
-                    numberOfLines={1}
-                  >
+                <View>
+                  <AppText className="text-sm font-semibold text-foreground">
                     Emily Chen
                   </AppText>
-                  <AppText className="text-xs text-muted" numberOfLines={1}>
+                  <AppText className="text-xs text-muted">
                     emily@acme.co
                   </AppText>
                 </View>
@@ -313,13 +253,12 @@ const PlacementsContent = () => {
                 placement="right"
                 width={180}
               >
-                <Menu.Label className="mb-1" maxFontSizeMultiplier={1.6}>
-                  Appearance
-                </Menu.Label>
+                <Menu.Label className="mb-1">Appearance</Menu.Label>
                 <Menu.Group
                   selectionMode="single"
                   selectedKeys={theme}
                   onSelectionChange={setTheme}
+                  disallowEmptySelection
                 >
                   <Menu.Item id="light">
                     <Menu.ItemIndicator>
@@ -362,10 +301,8 @@ const PlacementsContent = () => {
                 <Menu.Item>
                   <AppText className="text-xl">🎵</AppText>
                   <View className="flex-1">
-                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                      Music
-                    </Menu.ItemTitle>
-                    <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
+                    <Menu.ItemTitle>Music</Menu.ItemTitle>
+                    <Menu.ItemDescription>
                       Songs, albums & playlists
                     </Menu.ItemDescription>
                   </View>
@@ -374,10 +311,8 @@ const PlacementsContent = () => {
                 <Menu.Item>
                   <AppText className="text-xl">🎬</AppText>
                   <View className="flex-1">
-                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                      Movies
-                    </Menu.ItemTitle>
-                    <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
+                    <Menu.ItemTitle>Movies</Menu.ItemTitle>
+                    <Menu.ItemDescription>
                       Trending & new releases
                     </Menu.ItemDescription>
                   </View>
@@ -386,10 +321,8 @@ const PlacementsContent = () => {
                 <Menu.Item>
                   <AppText className="text-xl">📚</AppText>
                   <View className="flex-1">
-                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                      Books
-                    </Menu.ItemTitle>
-                    <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
+                    <Menu.ItemTitle>Books</Menu.ItemTitle>
+                    <Menu.ItemDescription>
                       Bestsellers & more
                     </Menu.ItemDescription>
                   </View>
@@ -398,10 +331,8 @@ const PlacementsContent = () => {
                 <Menu.Item>
                   <AppText className="text-xl">🎮</AppText>
                   <View className="flex-1">
-                    <Menu.ItemTitle maxFontSizeMultiplier={1.4}>
-                      Games
-                    </Menu.ItemTitle>
-                    <Menu.ItemDescription maxFontSizeMultiplier={1.4}>
+                    <Menu.ItemTitle>Games</Menu.ItemTitle>
+                    <Menu.ItemDescription>
                       Popular & top rated
                     </Menu.ItemDescription>
                   </View>
@@ -476,6 +407,187 @@ const PlacementsContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const SubMenuExampleContent = () => {
+  return (
+    <View className="flex-1 px-5">
+      <View className="h-1/2 items-center justify-center ">
+        <Menu>
+          <Menu.Trigger asChild>
+            <Button variant="secondary">Editor Menu</Button>
+          </Menu.Trigger>
+          <Menu.Portal>
+            <Menu.Overlay />
+            <Menu.Content presentation="popover" width={240}>
+              <Menu.Item>
+                <SquarePlusIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>New Space</Menu.ItemTitle>
+              </Menu.Item>
+              <Separator
+                variant="thick"
+                className="-mx-[6px] mt-1 opacity-25"
+              />
+              <SubMenu>
+                <SubMenu.Trigger textValue="Focus">
+                  <SubMenu.TriggerIndicator />
+                  <AppText className="flex-1 text-base font-medium text-foreground">
+                    Focus
+                  </AppText>
+                </SubMenu.Trigger>
+                <SubMenu.Content>
+                  <Menu.Item>
+                    <BellIcon size={16} colorClassName="accent-muted" />
+                    <Menu.ItemTitle>Zen Mode</Menu.ItemTitle>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <PersonIcon size={16} colorClassName="accent-muted" />
+                    <Menu.ItemTitle>Reader Mode</Menu.ItemTitle>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <LockIcon size={16} colorClassName="accent-muted" />
+                    <Menu.ItemTitle>Lock Tab</Menu.ItemTitle>
+                  </Menu.Item>
+                </SubMenu.Content>
+              </SubMenu>
+              <Separator
+                variant="thick"
+                className="-mx-[6px] mb-1 opacity-25"
+              />
+              <Menu.Item>
+                <PencilIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Heading 1</Menu.ItemTitle>
+              </Menu.Item>
+              <Menu.Item>
+                <CopyIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>List</Menu.ItemTitle>
+              </Menu.Item>
+              <Menu.Item>
+                <PersonIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Task List</Menu.ItemTitle>
+              </Menu.Item>
+              <Separator className="mx-2 my-1 opacity-75" />
+              <Menu.Item>
+                <GlobeIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Add Wikilink</Menu.ItemTitle>
+              </Menu.Item>
+              <Menu.Item>
+                <PaletteIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Configure Menu</Menu.ItemTitle>
+              </Menu.Item>
+            </Menu.Content>
+          </Menu.Portal>
+        </Menu>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const SubMenuGroupsContent = () => {
+  const [notifyChannels, setNotifyChannels] = useState<Set<MenuKey>>(
+    () => new Set(['email', 'push'])
+  );
+  const [privacy, setPrivacy] = useState<Set<MenuKey>>(
+    () => new Set(['friends'])
+  );
+
+  return (
+    <View className="flex-1 px-5">
+      <View className="h-1/2 items-center justify-center">
+        <Menu>
+          <Menu.Trigger asChild>
+            <Button variant="secondary">Settings</Button>
+          </Menu.Trigger>
+          <Menu.Portal>
+            <Menu.Overlay />
+            <Menu.Content presentation="popover" width={260}>
+              <Menu.Item>
+                <PersonIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Account</Menu.ItemTitle>
+              </Menu.Item>
+              <Menu.Item>
+                <PaletteIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Appearance</Menu.ItemTitle>
+              </Menu.Item>
+              <Separator
+                variant="thick"
+                className="-mx-[6px] mt-1 opacity-25"
+              />
+              <SubMenu>
+                <SubMenu.Trigger textValue="Notifications">
+                  <BellIcon size={16} colorClassName="accent-muted" />
+                  <AppText className="flex-1 text-base font-medium text-foreground">
+                    Notifications
+                  </AppText>
+                  <SubMenu.TriggerIndicator />
+                </SubMenu.Trigger>
+                <SubMenu.Content>
+                  <Menu.Label className="mb-1">Channels</Menu.Label>
+                  <Menu.Group
+                    selectionMode="multiple"
+                    selectedKeys={notifyChannels}
+                    onSelectionChange={setNotifyChannels}
+                    shouldCloseOnSelect={false}
+                  >
+                    <Menu.Item id="email">
+                      <Menu.ItemIndicator />
+                      <Menu.ItemTitle>Email</Menu.ItemTitle>
+                    </Menu.Item>
+                    <Menu.Item id="push">
+                      <Menu.ItemIndicator />
+                      <Menu.ItemTitle>Push</Menu.ItemTitle>
+                    </Menu.Item>
+                    <Menu.Item id="sms">
+                      <Menu.ItemIndicator />
+                      <Menu.ItemTitle>SMS</Menu.ItemTitle>
+                    </Menu.Item>
+                  </Menu.Group>
+                  <Separator className="mx-2 my-2 opacity-75" />
+                  <Menu.Label className="mb-1">Visible to</Menu.Label>
+                  <Menu.Group
+                    selectionMode="single"
+                    selectedKeys={privacy}
+                    onSelectionChange={setPrivacy}
+                    shouldCloseOnSelect={false}
+                    disallowEmptySelection
+                  >
+                    <Menu.Item id="everyone">
+                      <Menu.ItemIndicator variant="dot" />
+                      <Menu.ItemTitle>Everyone</Menu.ItemTitle>
+                    </Menu.Item>
+                    <Menu.Item id="friends">
+                      <Menu.ItemIndicator variant="dot" />
+                      <Menu.ItemTitle>Friends Only</Menu.ItemTitle>
+                    </Menu.Item>
+                    <Menu.Item id="nobody">
+                      <Menu.ItemIndicator variant="dot" />
+                      <Menu.ItemTitle>Nobody</Menu.ItemTitle>
+                    </Menu.Item>
+                  </Menu.Group>
+                </SubMenu.Content>
+              </SubMenu>
+              <Separator
+                variant="thick"
+                className="-mx-[6px] mb-1 opacity-25"
+              />
+              <Menu.Item>
+                <LockIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Privacy</Menu.ItemTitle>
+              </Menu.Item>
+              <Menu.Item>
+                <GlobeIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Language</Menu.ItemTitle>
+              </Menu.Item>
+            </Menu.Content>
+          </Menu.Portal>
+        </Menu>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const MENU_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-usage',
@@ -486,6 +598,16 @@ const MENU_VARIANTS: UsageVariant[] = [
     value: 'sections',
     label: 'Sections',
     content: <SectionsContent />,
+  },
+  {
+    value: 'sub-menu',
+    label: 'Sub Menu',
+    content: <SubMenuExampleContent />,
+  },
+  {
+    value: 'sub-menu-groups',
+    label: 'Sub Menu Groups',
+    content: <SubMenuGroupsContent />,
   },
   {
     value: 'placements',

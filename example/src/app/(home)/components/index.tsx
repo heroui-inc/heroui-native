@@ -30,7 +30,9 @@ export default function App() {
       <ListGroup>
         {COMPONENTS.map((item, index) => (
           <Fragment key={item.title}>
-            {index > 0 && <Separator className="mx-4" />}
+            {index > 0 && (
+              <Separator className="mx-4 android:h-px android:opacity-40" />
+            )}
             <PressableFeedback
               animation={false}
               onPress={() => {

@@ -2,7 +2,6 @@ import { forwardRef } from 'react';
 import { TextInput, type TextInput as TextInputType } from 'react-native';
 import { useIsOnSurface } from '../../helpers/external/hooks';
 import { useFormField } from '../../helpers/internal/contexts';
-import { useBottomSheetAwareHandlers } from '../../helpers/internal/hooks';
 import { DISPLAY_NAME } from './input.constants';
 import { inputClassNames, inputStyleSheet } from './input.styles';
 import type { InputProps } from './input.types';
@@ -13,14 +12,11 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
   const {
     isInvalid: localIsInvalid,
     isDisabled: localIsDisabled,
-    isBottomSheetAware,
     variant,
     className,
     style,
     selectionColorClassName: selectionColorClassNameProp,
     placeholderColorClassName: placeholderColorClassNameProp,
-    onFocus: onFocusProp,
-    onBlur: onBlurProp,
     ...restProps
   } = props;
   const formField = useFormField();
@@ -42,13 +38,6 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
       : isOnSurfaceAutoDetected
         ? 'secondary'
         : 'primary';
-
-  /** Merge user-provided onFocus/onBlur with bottom sheet keyboard handlers */
-  const { onFocus, onBlur } = useBottomSheetAwareHandlers({
-    onFocus: onFocusProp,
-    onBlur: onBlurProp,
-    isBottomSheetAware,
-  });
 
   const inputClassName = inputClassNames.input({
     variant: finalVariant,
@@ -74,8 +63,6 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
       placeholderTextColorClassName={placeholderColorClassName}
       selectionColorClassName={selectionColorClassName}
       editable={!isDisabled}
-      onFocus={onFocus}
-      onBlur={onBlur}
       {...restProps}
     />
   );

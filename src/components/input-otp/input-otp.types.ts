@@ -33,14 +33,6 @@ export interface InputOTPGroupRenderProps {
  */
 export interface InputOTPRootProps extends InputOTPPrimitivesTypes.RootProps {
   /**
-   * Whether the InputOTP automatically handles keyboard state when rendered
-   * inside a BottomSheet. When `true` (default), onFocus/onBlur handlers
-   * are automatically wired to the bottom sheet's keyboard avoidance system.
-   * Set to `false` to disable this automatic behavior.
-   * @default true
-   */
-  isBottomSheetAware?: boolean;
-  /**
    * Additional CSS classes
    */
   className?: string;

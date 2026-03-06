@@ -8,43 +8,40 @@ import {
 } from 'react-native';
 
 /**
- * Parameters for the bottom-sheet-aware handlers hook
+ * Return type for the bottom-sheet-aware handlers hook
  */
-interface UseBottomSheetAwareHandlersParams {
-  /** User-provided onFocus handler to preserve */
-  onFocus?: ((e: FocusEvent) => void) | undefined;
-  /** User-provided onBlur handler to preserve */
-  onBlur?: ((e: BlurEvent) => void) | undefined;
-  /** Whether automatic bottom sheet keyboard handling is enabled */
-  isBottomSheetAware?: boolean;
+interface UseBottomSheetAwareHandlersReturn {
+  /** Focus handler that notifies the bottom sheet about the keyboard target */
+  onFocus: (e: FocusEvent) => void;
+  /** Blur handler that conditionally clears the keyboard target in the bottom sheet */
+  onBlur: (e: BlurEvent) => void;
 }
 
 /**
- * Internal hook that automatically manages bottom sheet keyboard state
- * when the component is rendered inside a BottomSheet context.
+ * Hook that provides onFocus/onBlur handlers for managing bottom sheet
+ * keyboard state when an input is rendered inside a BottomSheet context.
  *
  * Uses `useBottomSheetInternal(true)` (unsafe mode) so it returns `null`
  * instead of throwing when called outside a BottomSheet. When inside a
- * BottomSheet and `isBottomSheetAware` is true, it wraps the provided
- * `onFocus`/`onBlur` handlers with the keyboard state management logic
- * required by `@gorhom/bottom-sheet`.
+ * BottomSheet it returns handlers that wire into the keyboard state
+ * management logic required by `@gorhom/bottom-sheet`.
  *
- * @param params - The handler parameters
- * @returns Merged onFocus and onBlur handlers
+ * Pass the returned handlers to your `<Input>` or `<InputOTP>` component:
+ *
+ * ```tsx
+ * const { onFocus, onBlur } = useBottomSheetAwareHandlers();
+ * <Input onFocus={onFocus} onBlur={onBlur} />
+ * ```
+ *
+ * @returns onFocus and onBlur handlers for bottom sheet keyboard management
  */
-export function useBottomSheetAwareHandlers({
-  onFocus: onFocusProp,
-  onBlur: onBlurProp,
-  isBottomSheetAware = true,
-}: UseBottomSheetAwareHandlersParams) {
+export function useBottomSheetAwareHandlers(): UseBottomSheetAwareHandlersReturn {
   const bottomSheetContext = useBottomSheetInternal(true);
 
-  /** Whether the bottom sheet keyboard handling should be active */
-  const isActive = isBottomSheetAware && bottomSheetContext !== null;
+  const isActive = bottomSheetContext !== null;
 
   /**
-   * Handles focus event: notifies the bottom sheet about the keyboard target,
-   * then delegates to the user-provided onFocus handler.
+   * Handles focus event: notifies the bottom sheet about the keyboard target.
    */
   const onFocus = useCallback(
     (e: FocusEvent) => {
@@ -54,15 +51,13 @@ export function useBottomSheetAwareHandlers({
           target: e.nativeEvent.target,
         }));
       }
-
-      onFocusProp?.(e);
     },
-    [isActive, bottomSheetContext, onFocusProp]
+    [isActive, bottomSheetContext]
   );
 
   /**
    * Handles blur event: conditionally clears the keyboard target in the
-   * bottom sheet state, then delegates to the user-provided onBlur handler.
+   * bottom sheet state.
    */
   const onBlur = useCallback(
     (e: BlurEvent) => {
@@ -84,10 +79,8 @@ export function useBottomSheetAwareHandlers({
           }));
         }
       }
-
-      onBlurProp?.(e);
     },
-    [isActive, bottomSheetContext, onBlurProp]
+    [isActive, bottomSheetContext]
   );
 
   return { onFocus, onBlur };

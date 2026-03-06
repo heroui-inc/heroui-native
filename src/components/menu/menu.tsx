@@ -2,7 +2,7 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import { createContext, forwardRef, useMemo } from 'react';
 import type { GestureResponderEvent, Text as RNText } from 'react-native';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, { FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
@@ -26,9 +26,11 @@ import { childrenToString } from '../../helpers/internal/utils';
 import * as MenuPrimitives from '../../primitives/menu';
 import * as MenuPrimitivesTypes from '../../primitives/menu/menu.types';
 import { CloseButton } from '../close-button';
+import { useSubMenu } from '../sub-menu';
 import {
   MenuAnimationProvider,
   useMenuAnimation,
+  useMenuContentPopoverAnimation,
   useMenuItemAnimation,
 } from './menu.animation';
 import {
@@ -232,7 +234,7 @@ const MenuContentPopover = forwardRef<
     },
     ref
   ) => {
-    const { contentLayout } = useMenu();
+    const { contentLayout, isSubMenuOpen } = useMenu();
 
     const safeAreaInsets = useSafeAreaInsets();
     const { height: screenHeight } = useWindowDimensions();
@@ -247,6 +249,7 @@ const MenuContentPopover = forwardRef<
     };
 
     const contentClassName = menuClassNames.content({
+      isSubMenuOpen,
       className,
     });
 
@@ -256,13 +259,18 @@ const MenuContentPopover = forwardRef<
       animation,
     });
 
+    const rContainerStyle = useMenuContentPopoverAnimation({
+      isSubMenuOpen,
+      animation,
+    });
+
     return (
       <MenuContentContext value={{ placement }}>
         {isReady && (
           <AnimatedContent
             ref={ref}
             entering={entering}
-            exiting={exiting}
+            exiting={isSubMenuOpen ? FadeOut.duration(150) : exiting}
             placement={placement}
             align={align}
             avoidCollisions={avoidCollisions}
@@ -270,7 +278,7 @@ const MenuContentPopover = forwardRef<
             alignOffset={alignOffset}
             insets={insets}
             className={contentClassName}
-            style={[menuStyleSheet.borderCurve, style]}
+            style={[menuStyleSheet.borderCurve, rContainerStyle, style]}
             {...props}
           >
             {children}
@@ -451,10 +459,20 @@ const MenuItemComponent = forwardRef<
     },
     ref
   ) => {
-    const { rItemStyle, isPressed, animationOnPressIn, animationOnPressOut } =
-      useMenuItemAnimation({ animation, variant });
+    const { isSubMenuOpen } = useMenu();
+    const subMenuContext = useSubMenu();
+    const isInsideSubMenu = subMenuContext !== undefined;
 
-    const itemClassName = menuClassNames.item({ className, isDisabled });
+    const isOutsideSubMenuOnOpen = isSubMenuOpen && !isInsideSubMenu;
+
+    const { rItemStyle, isPressed, animationOnPressIn, animationOnPressOut } =
+      useMenuItemAnimation({ animation, variant, isInsideSubMenu });
+
+    const itemClassName = menuClassNames.item({
+      isDisabled,
+      isOutsideSubMenuOnOpen,
+      className,
+    });
 
     const isSelected = props.isSelected ?? false;
 

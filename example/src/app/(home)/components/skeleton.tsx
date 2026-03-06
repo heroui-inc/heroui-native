@@ -36,15 +36,21 @@ const SkeletonControls = ({
       >
         <RadioGroup.Item value="shimmer">
           <Radio />
-          <Label>Shimmer</Label>
+          <Label>
+            <Label.Text maxFontSizeMultiplier={1}>Shimmer</Label.Text>
+          </Label>
         </RadioGroup.Item>
         <RadioGroup.Item value="pulse">
           <Radio />
-          <Label>Pulse</Label>
+          <Label>
+            <Label.Text maxFontSizeMultiplier={1}>Pulse</Label.Text>
+          </Label>
         </RadioGroup.Item>
         <RadioGroup.Item value="none">
           <Radio />
-          <Label>None</Label>
+          <Label>
+            <Label.Text maxFontSizeMultiplier={1}>None</Label.Text>
+          </Label>
         </RadioGroup.Item>
       </RadioGroup>
       <Separator className="my-6" />
@@ -93,10 +99,18 @@ const CardSkeletonContent = () => {
                     )}
                     {!isLoading && (
                       <View>
-                        <Text className="font-semibold text-foreground">
+                        <AppText
+                          className="font-semibold text-foreground"
+                          maxFontSizeMultiplier={1}
+                        >
                           Sarah Mitchell
-                        </Text>
-                        <Text className="text-sm text-muted">@mitchell</Text>
+                        </AppText>
+                        <AppText
+                          className="text-sm text-muted"
+                          maxFontSizeMultiplier={1}
+                        >
+                          @mitchell
+                        </AppText>
                       </View>
                     )}
                   </View>
@@ -110,9 +124,12 @@ const CardSkeletonContent = () => {
                     </View>
                   )}
                   {!isLoading && (
-                    <Text className="text-base text-foreground">
+                    <AppText
+                      className="text-base text-foreground"
+                      maxFontSizeMultiplier={1}
+                    >
                       Bridging the Future
-                    </Text>
+                    </AppText>
                   )}
                 </View>
               </Card.Header>

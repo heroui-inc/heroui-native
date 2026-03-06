@@ -1,5 +1,5 @@
 import type { MenuKey } from 'heroui-native';
-import { Avatar, Button, cn, Menu, Separator } from 'heroui-native';
+import { Avatar, Button, cn, Menu, Separator, SubMenu } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { AppText } from '../../../components/app-text';
@@ -155,6 +155,7 @@ const SectionsContent = () => {
                   selectedKeys={alignment}
                   onSelectionChange={setAlignment}
                   shouldCloseOnSelect={shouldCloseOnSelect}
+                  disallowEmptySelection
                 >
                   <Menu.Item id="left">
                     <Menu.ItemIndicator variant="dot" />
@@ -257,6 +258,7 @@ const PlacementsContent = () => {
                   selectionMode="single"
                   selectedKeys={theme}
                   onSelectionChange={setTheme}
+                  disallowEmptySelection
                 >
                   <Menu.Item id="light">
                     <Menu.ItemIndicator>
@@ -405,6 +407,187 @@ const PlacementsContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const SubMenuExampleContent = () => {
+  return (
+    <View className="flex-1 px-5">
+      <View className="h-1/2 items-center justify-center ">
+        <Menu>
+          <Menu.Trigger asChild>
+            <Button variant="secondary">Editor Menu</Button>
+          </Menu.Trigger>
+          <Menu.Portal>
+            <Menu.Overlay />
+            <Menu.Content presentation="popover" width={240}>
+              <Menu.Item>
+                <SquarePlusIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>New Space</Menu.ItemTitle>
+              </Menu.Item>
+              <Separator
+                variant="thick"
+                className="-mx-[6px] mt-1 opacity-25"
+              />
+              <SubMenu>
+                <SubMenu.Trigger textValue="Focus">
+                  <SubMenu.TriggerIndicator />
+                  <AppText className="flex-1 text-base font-medium text-foreground">
+                    Focus
+                  </AppText>
+                </SubMenu.Trigger>
+                <SubMenu.Content>
+                  <Menu.Item>
+                    <BellIcon size={16} colorClassName="accent-muted" />
+                    <Menu.ItemTitle>Zen Mode</Menu.ItemTitle>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <PersonIcon size={16} colorClassName="accent-muted" />
+                    <Menu.ItemTitle>Reader Mode</Menu.ItemTitle>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <LockIcon size={16} colorClassName="accent-muted" />
+                    <Menu.ItemTitle>Lock Tab</Menu.ItemTitle>
+                  </Menu.Item>
+                </SubMenu.Content>
+              </SubMenu>
+              <Separator
+                variant="thick"
+                className="-mx-[6px] mb-1 opacity-25"
+              />
+              <Menu.Item>
+                <PencilIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Heading 1</Menu.ItemTitle>
+              </Menu.Item>
+              <Menu.Item>
+                <CopyIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>List</Menu.ItemTitle>
+              </Menu.Item>
+              <Menu.Item>
+                <PersonIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Task List</Menu.ItemTitle>
+              </Menu.Item>
+              <Separator className="mx-2 my-1 opacity-75" />
+              <Menu.Item>
+                <GlobeIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Add Wikilink</Menu.ItemTitle>
+              </Menu.Item>
+              <Menu.Item>
+                <PaletteIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Configure Menu</Menu.ItemTitle>
+              </Menu.Item>
+            </Menu.Content>
+          </Menu.Portal>
+        </Menu>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const SubMenuGroupsContent = () => {
+  const [notifyChannels, setNotifyChannels] = useState<Set<MenuKey>>(
+    () => new Set(['email', 'push'])
+  );
+  const [privacy, setPrivacy] = useState<Set<MenuKey>>(
+    () => new Set(['friends'])
+  );
+
+  return (
+    <View className="flex-1 px-5">
+      <View className="h-1/2 items-center justify-center">
+        <Menu>
+          <Menu.Trigger asChild>
+            <Button variant="secondary">Settings</Button>
+          </Menu.Trigger>
+          <Menu.Portal>
+            <Menu.Overlay />
+            <Menu.Content presentation="popover" width={260}>
+              <Menu.Item>
+                <PersonIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Account</Menu.ItemTitle>
+              </Menu.Item>
+              <Menu.Item>
+                <PaletteIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Appearance</Menu.ItemTitle>
+              </Menu.Item>
+              <Separator
+                variant="thick"
+                className="-mx-[6px] mt-1 opacity-25"
+              />
+              <SubMenu>
+                <SubMenu.Trigger textValue="Notifications">
+                  <BellIcon size={16} colorClassName="accent-muted" />
+                  <AppText className="flex-1 text-base font-medium text-foreground">
+                    Notifications
+                  </AppText>
+                  <SubMenu.TriggerIndicator />
+                </SubMenu.Trigger>
+                <SubMenu.Content>
+                  <Menu.Label className="mb-1">Channels</Menu.Label>
+                  <Menu.Group
+                    selectionMode="multiple"
+                    selectedKeys={notifyChannels}
+                    onSelectionChange={setNotifyChannels}
+                    shouldCloseOnSelect={false}
+                  >
+                    <Menu.Item id="email">
+                      <Menu.ItemIndicator />
+                      <Menu.ItemTitle>Email</Menu.ItemTitle>
+                    </Menu.Item>
+                    <Menu.Item id="push">
+                      <Menu.ItemIndicator />
+                      <Menu.ItemTitle>Push</Menu.ItemTitle>
+                    </Menu.Item>
+                    <Menu.Item id="sms">
+                      <Menu.ItemIndicator />
+                      <Menu.ItemTitle>SMS</Menu.ItemTitle>
+                    </Menu.Item>
+                  </Menu.Group>
+                  <Separator className="mx-2 my-2 opacity-75" />
+                  <Menu.Label className="mb-1">Visible to</Menu.Label>
+                  <Menu.Group
+                    selectionMode="single"
+                    selectedKeys={privacy}
+                    onSelectionChange={setPrivacy}
+                    shouldCloseOnSelect={false}
+                    disallowEmptySelection
+                  >
+                    <Menu.Item id="everyone">
+                      <Menu.ItemIndicator variant="dot" />
+                      <Menu.ItemTitle>Everyone</Menu.ItemTitle>
+                    </Menu.Item>
+                    <Menu.Item id="friends">
+                      <Menu.ItemIndicator variant="dot" />
+                      <Menu.ItemTitle>Friends Only</Menu.ItemTitle>
+                    </Menu.Item>
+                    <Menu.Item id="nobody">
+                      <Menu.ItemIndicator variant="dot" />
+                      <Menu.ItemTitle>Nobody</Menu.ItemTitle>
+                    </Menu.Item>
+                  </Menu.Group>
+                </SubMenu.Content>
+              </SubMenu>
+              <Separator
+                variant="thick"
+                className="-mx-[6px] mb-1 opacity-25"
+              />
+              <Menu.Item>
+                <LockIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Privacy</Menu.ItemTitle>
+              </Menu.Item>
+              <Menu.Item>
+                <GlobeIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Language</Menu.ItemTitle>
+              </Menu.Item>
+            </Menu.Content>
+          </Menu.Portal>
+        </Menu>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const MENU_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-usage',
@@ -415,6 +598,16 @@ const MENU_VARIANTS: UsageVariant[] = [
     value: 'sections',
     label: 'Sections',
     content: <SectionsContent />,
+  },
+  {
+    value: 'sub-menu',
+    label: 'Sub Menu',
+    content: <SubMenuExampleContent />,
+  },
+  {
+    value: 'sub-menu-groups',
+    label: 'Sub Menu Groups',
+    content: <SubMenuGroupsContent />,
   },
   {
     value: 'placements',

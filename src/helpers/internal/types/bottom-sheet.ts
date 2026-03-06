@@ -52,6 +52,10 @@ export interface BottomSheetContentContainerProps {
    * Callback when the bottom sheet is opened
    */
   onOpenChange: (open: boolean) => void;
+  /**
+   * Whether the bottom sheet can be closed by panning down
+   */
+  enablePanDownToClose: boolean;
 }
 
 /**

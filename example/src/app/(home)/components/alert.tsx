@@ -10,8 +10,10 @@ const DefaultAndAccentContent = () => {
         <Alert>
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>New features available</Alert.Title>
-            <Alert.Description>
+            <Alert.Title maxFontSizeMultiplier={1.4}>
+              New features available
+            </Alert.Title>
+            <Alert.Description maxFontSizeMultiplier={1.4}>
               Check out our latest updates including dark mode support and
               improved accessibility features.
             </Alert.Description>
@@ -20,8 +22,10 @@ const DefaultAndAccentContent = () => {
         <Alert status="accent">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>Update available</Alert.Title>
-            <Alert.Description>
+            <Alert.Title maxFontSizeMultiplier={1.4}>
+              Update available
+            </Alert.Title>
+            <Alert.Description maxFontSizeMultiplier={1.4}>
               A new version of the application is available. Please refresh to
               get the latest features and bug fixes.
             </Alert.Description>
@@ -41,8 +45,8 @@ const SuccessWarningDangerContent = () => {
         <Alert status="success">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>Success</Alert.Title>
-            <Alert.Description>
+            <Alert.Title maxFontSizeMultiplier={1}>Success</Alert.Title>
+            <Alert.Description maxFontSizeMultiplier={1}>
               Your profile information has been updated. Review the changes in
               your account settings.
             </Alert.Description>
@@ -51,8 +55,10 @@ const SuccessWarningDangerContent = () => {
         <Alert status="warning">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>Scheduled maintenance</Alert.Title>
-            <Alert.Description>
+            <Alert.Title maxFontSizeMultiplier={1}>
+              Scheduled maintenance
+            </Alert.Title>
+            <Alert.Description maxFontSizeMultiplier={1}>
               Our services will be unavailable on Sunday, March 15th from 2:00
               AM to 6:00 AM UTC for scheduled maintenance.
             </Alert.Description>
@@ -62,8 +68,10 @@ const SuccessWarningDangerContent = () => {
         <Alert status="danger">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>Unable to connect to server</Alert.Title>
-            <Alert.Description>
+            <Alert.Title maxFontSizeMultiplier={1}>
+              Unable to connect to server
+            </Alert.Title>
+            <Alert.Description maxFontSizeMultiplier={1}>
               Unable to connect to the server. Check your internet connection
               and try again.
             </Alert.Description>
@@ -83,8 +91,10 @@ const WithButtonsContent = () => {
         <Alert status="accent">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>Update available</Alert.Title>
-            <Alert.Description>
+            <Alert.Title maxFontSizeMultiplier={1}>
+              Update available
+            </Alert.Title>
+            <Alert.Description maxFontSizeMultiplier={1}>
               A new version of the application is available. Please refresh to
               get the latest features and bug fixes.
             </Alert.Description>
@@ -97,8 +107,10 @@ const WithButtonsContent = () => {
         <Alert status="danger">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title>Unable to connect to server</Alert.Title>
-            <Alert.Description>
+            <Alert.Title maxFontSizeMultiplier={1}>
+              Unable to connect to server
+            </Alert.Title>
+            <Alert.Description maxFontSizeMultiplier={1}>
               Unable to connect to the server. Check your internet connection
               and try again.
             </Alert.Description>
@@ -111,7 +123,9 @@ const WithButtonsContent = () => {
         <Alert status="success" className="items-center">
           <Alert.Indicator className="pt-0" />
           <Alert.Content>
-            <Alert.Title>Profile updated successfully</Alert.Title>
+            <Alert.Title maxFontSizeMultiplier={1}>
+              Profile updated successfully
+            </Alert.Title>
           </Alert.Content>
           <CloseButton />
         </Alert>

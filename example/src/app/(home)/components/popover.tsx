@@ -46,7 +46,10 @@ const WithTitleDescriptionContent = () => {
                 <Popover.Title>Fun Fact!</Popover.Title>
               </View>
             </View>
-            <Popover.Description className="text-sm">
+            <Popover.Description
+              maxFontSizeMultiplier={1.6}
+              className="text-sm"
+            >
               The first computer bug was an actual moth found trapped in a
               Harvard Mark II computer in 1947. Grace Hopper taped it to the log
               book with the note "First actual case of bug being found."
@@ -209,7 +212,7 @@ const PlacementPopover = ({
     <Popover>
       <Popover.Trigger asChild>
         <Button variant="secondary" className="w-24">
-          {label}
+          <Button.Label maxFontSizeMultiplier={1}>{label}</Button.Label>
         </Button>
       </Popover.Trigger>
       <Popover.Portal>
@@ -264,7 +267,7 @@ const AlignmentPopover = ({ align }: { align: 'start' | 'center' | 'end' }) => {
     <Popover>
       <Popover.Trigger asChild>
         <Button variant="secondary" className="w-24">
-          {label}
+          <Button.Label maxFontSizeMultiplier={1}>{label}</Button.Label>
         </Button>
       </Popover.Trigger>
       <Popover.Portal>
@@ -280,7 +283,10 @@ const AlignmentPopover = ({ align }: { align: 'start' | 'center' | 'end' }) => {
             <View className="size-8 items-center justify-center rounded-full bg-warning/15">
               <CodeCompareIcon size={16} colorClassName="accent-warning" />
             </View>
-            <AppText className="text-sm font-semibold text-foreground">
+            <AppText
+              className="flex-1 text-sm font-semibold text-foreground"
+              numberOfLines={1}
+            >
               Alignment
             </AppText>
           </View>
@@ -316,7 +322,9 @@ const NativeModalTestContent = () => {
         variant="secondary"
         onPress={() => router.push('components/popover-native-modal')}
       >
-        Popover from native modal
+        <Button.Label maxFontSizeMultiplier={1.6}>
+          Popover from native modal
+        </Button.Label>
       </Button>
     </View>
   );

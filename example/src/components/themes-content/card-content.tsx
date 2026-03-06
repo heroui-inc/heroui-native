@@ -24,14 +24,24 @@ export const CardContent = () => {
               />
             </Card.Header>
             <Card.Body className="flex-1">
-              <Card.Title>Indie Hackers</Card.Title>
-              <Card.Description className="text-sm">
+              <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
+                Indie Hackers
+              </Card.Title>
+              <Card.Description
+                className="text-sm"
+                maxFontSizeMultiplier={1.2}
+                numberOfLines={1}
+              >
                 148 members
               </Card.Description>
             </Card.Body>
             <Card.Footer className="flex-row items-center gap-2">
               <View className="size-3 rounded-full bg-warning" />
-              <AppText className="text-sm font-medium text-foreground">
+              <AppText
+                className="text-sm font-medium text-foreground"
+                maxFontSizeMultiplier={1.2}
+                numberOfLines={1}
+              >
                 @indiehackers
               </AppText>
             </Card.Footer>
@@ -59,14 +69,24 @@ export const CardContent = () => {
               />
             </Card.Header>
             <Card.Body className="flex-1">
-              <Card.Title>AI Builders</Card.Title>
-              <Card.Description className="text-sm">
+              <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
+                AI Builders
+              </Card.Title>
+              <Card.Description
+                className="text-sm"
+                maxFontSizeMultiplier={1.2}
+                numberOfLines={1}
+              >
                 362 members
               </Card.Description>
             </Card.Body>
             <Card.Footer className="flex-row items-center gap-2">
               <View className="size-3 rounded-full bg-success" />
-              <AppText className="text-sm font-medium text-foreground">
+              <AppText
+                className="text-sm font-medium text-foreground"
+                maxFontSizeMultiplier={1.2}
+                numberOfLines={1}
+              >
                 @aibuilders
               </AppText>
             </Card.Footer>

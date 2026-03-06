@@ -90,6 +90,7 @@ const Root = forwardRef<RootRef, RootProps>(
     const [contentLayout, setContentLayout] = useState<LayoutRectangle | null>(
       null
     );
+    const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 
     const nativeID = useId();
 
@@ -107,6 +108,8 @@ const Root = forwardRef<RootRef, RootProps>(
           triggerPosition,
           isDefaultOpen,
           presentation,
+          isSubMenuOpen,
+          setIsSubMenuOpen,
         }}
       >
         <Component ref={ref} {...viewProps} />
@@ -461,6 +464,7 @@ const Group = forwardRef<GroupRef, GroupProps>(
       disabledKeys: disabledKeysProp,
       isDisabled = false,
       shouldCloseOnSelect,
+      disallowEmptySelection = false,
       ...viewProps
     },
     ref
@@ -500,6 +504,7 @@ const Group = forwardRef<GroupRef, GroupProps>(
         disabledKeys,
         isDisabled,
         shouldCloseOnSelect,
+        disallowEmptySelection,
       }),
       [
         selectionMode,
@@ -508,6 +513,7 @@ const Group = forwardRef<GroupRef, GroupProps>(
         disabledKeys,
         isDisabled,
         shouldCloseOnSelect,
+        disallowEmptySelection,
       ]
     );
 
@@ -596,6 +602,8 @@ const Item = forwardRef<ItemRef, ItemProps>(
             groupContext;
 
           if (selectionMode === 'single') {
+            if (isSelected && groupContext.disallowEmptySelection) return;
+
             const newKeys = isSelected
               ? new Set<MenuKey>()
               : new Set<MenuKey>([itemId]);

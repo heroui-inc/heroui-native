@@ -61,7 +61,7 @@ const BasicOTPContent = () => {
             <InputOTP.Slot index={5} />
           </InputOTP.Group>
         </InputOTP>
-        <View className="flex-row items-center mt-2.5">
+        <View className="flex-row flex-wrap items-center mt-2.5">
           <Description className="px-1">Didn't receive a code?</Description>
           <Button
             size="sm"

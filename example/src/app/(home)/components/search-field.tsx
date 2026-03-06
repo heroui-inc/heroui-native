@@ -128,9 +128,11 @@ const CustomSearchIconContent = () => {
           <Label>Search</Label>
           <SearchField.Group>
             <SearchField.SearchIcon>
-              <Text className="text-base">🔍</Text>
+              <Text className="text-base" maxFontSizeMultiplier={1.6}>
+                🔍
+              </Text>
             </SearchField.SearchIcon>
-            <SearchField.Input className="pl-10" />
+            <SearchField.Input className="pl-10" maxFontSizeMultiplier={1.6} />
             <SearchField.ClearButton />
           </SearchField.Group>
           <Description>Uses a custom search emoji icon</Description>

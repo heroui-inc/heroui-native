@@ -30,8 +30,10 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
 }) => (
   <ControlField isSelected={isSelected} onSelectedChange={onSelectedChange}>
     <View className="flex-1">
-      <Label>{title}</Label>
-      <Description>{description}</Description>
+      <Label>
+        <Label.Text maxFontSizeMultiplier={1.2}>{title}</Label.Text>
+      </Label>
+      <Description maxFontSizeMultiplier={1.2}>{description}</Description>
     </View>
     <ControlField.Indicator />
   </ControlField>
@@ -113,8 +115,10 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
         </Checkbox>
       </ControlField.Indicator>
       <View className="flex-1">
-        <Label>{title}</Label>
-        <Description>{description}</Description>
+        <Label>
+          <Label.Text maxFontSizeMultiplier={1.2}>{title}</Label.Text>
+        </Label>
+        <Description maxFontSizeMultiplier={1.2}>{description}</Description>
       </View>
     </ControlField>
   );
@@ -224,7 +228,7 @@ const InlineLayoutCompactContent = () => {
 
   return (
     <View className="flex-1 items-center justify-center px-5">
-      <View className="flex-row flex-wrap gap-4 w-full">
+      <View className="flex-row flex-wrap justify-center gap-4 w-full">
         {(Object.keys(filters) as Array<keyof typeof filters>).map((key) => (
           <InlineFilter
             key={key}
@@ -299,8 +303,12 @@ const ValidationErrorStatesContent = () => {
             isRequired
           >
             <View className="flex-1">
-              <Label>I agree to the terms and conditions</Label>
-              <Description isInvalid={false}>
+              <Label>
+                <Label.Text maxFontSizeMultiplier={1.2}>
+                  I agree to the terms and conditions
+                </Label.Text>
+              </Label>
+              <Description isInvalid={false} maxFontSizeMultiplier={1.2}>
                 By checking this box, you agree to our Terms of Service and
                 Privacy Policy
               </Description>
@@ -316,11 +324,15 @@ const ValidationErrorStatesContent = () => {
             isInvalid={!privacyAccepted}
           >
             <View className="flex-1">
-              <Label isInvalid={false}>Accept Privacy Policy</Label>
-              <Description hideOnInvalid>
+              <Label isInvalid={false}>
+                <Label.Text maxFontSizeMultiplier={1.2}>
+                  Accept Privacy Policy
+                </Label.Text>
+              </Label>
+              <Description hideOnInvalid maxFontSizeMultiplier={1.2}>
                 The privacy policy has been accepted
               </Description>
-              <FieldError>
+              <FieldError textProps={{ maxFontSizeMultiplier: 1.2 }}>
                 Please accept the privacy policy to continue
               </FieldError>
             </View>
@@ -339,15 +351,19 @@ const ValidationErrorStatesContent = () => {
           >
             <View className="flex-row items-center gap-2">
               <View className="flex-1">
-                <Label isInvalid={false}>Share usage data</Label>
-                <Description isInvalid={false}>
+                <Label isInvalid={false}>
+                  <Label.Text maxFontSizeMultiplier={1.2}>
+                    Share usage data
+                  </Label.Text>
+                </Label>
+                <Description isInvalid={false} maxFontSizeMultiplier={1.2}>
                   Help improve our product by sharing anonymous usage data and
                   improving our products.
                 </Description>
               </View>
               <ControlField.Indicator />
             </View>
-            <FieldError>
+            <FieldError textProps={{ maxFontSizeMultiplier: 1.2 }}>
               Warning: This will share your usage patterns
             </FieldError>
           </ControlField>

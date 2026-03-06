@@ -107,13 +107,20 @@ const PresentationContent = () => {
             <Button variant="secondary">
               {popoverValue ? (
                 <View className="flex-row items-center gap-2">
-                  <AppText className="text-base">{popoverValue.flag}</AppText>
-                  <AppText className="text-sm text-accent font-medium">
+                  <AppText className="text-base" maxFontSizeMultiplier={1}>
+                    {popoverValue.flag}
+                  </AppText>
+                  <AppText
+                    className="text-sm text-accent font-medium"
+                    maxFontSizeMultiplier={1.2}
+                  >
                     {popoverValue.code}
                   </AppText>
                 </View>
               ) : (
-                <AppText className="text-accent">Popover</AppText>
+                <AppText className="text-accent" maxFontSizeMultiplier={1}>
+                  Popover
+                </AppText>
               )}
             </Button>
           </Select.Trigger>
@@ -135,11 +142,19 @@ const PresentationContent = () => {
                     label={country.label}
                   >
                     <View className="flex-1 flex-row items-center gap-3">
-                      <AppText className="text-2xl">{country.flag}</AppText>
-                      <AppText className="text-sm text-muted w-10">
+                      <AppText className="text-2xl" maxFontSizeMultiplier={1}>
+                        {country.flag}
+                      </AppText>
+                      <AppText
+                        className="text-sm text-muted w-10"
+                        maxFontSizeMultiplier={1}
+                      >
                         {country.code}
                       </AppText>
-                      <AppText className="text-base text-foreground flex-1">
+                      <AppText
+                        className="text-base text-foreground flex-1"
+                        maxFontSizeMultiplier={1}
+                      >
                         {country.label}
                       </AppText>
                     </View>
@@ -168,15 +183,20 @@ const PresentationContent = () => {
             <Button variant="secondary">
               {bottomSheetValue ? (
                 <View className="flex-row items-center gap-2">
-                  <AppText className="text-base">
+                  <AppText className="text-base" maxFontSizeMultiplier={1}>
                     {bottomSheetValue.flag}
                   </AppText>
-                  <AppText className="text-sm text-accent font-medium">
+                  <AppText
+                    className="text-sm text-accent font-medium"
+                    maxFontSizeMultiplier={1}
+                  >
                     {bottomSheetValue.code}
                   </AppText>
                 </View>
               ) : (
-                <AppText className="text-accent">Sheet</AppText>
+                <AppText className="text-accent" maxFontSizeMultiplier={1}>
+                  Sheet
+                </AppText>
               )}
             </Button>
           </Select.Trigger>
@@ -214,11 +234,22 @@ const PresentationContent = () => {
                         className="py-5 px-3"
                       >
                         <View className="flex-row items-center gap-3 flex-1">
-                          <AppText className="text-2xl">{country.flag}</AppText>
-                          <AppText className="text-sm text-muted font-medium w-10">
+                          <AppText
+                            className="text-2xl"
+                            maxFontSizeMultiplier={1}
+                          >
+                            {country.flag}
+                          </AppText>
+                          <AppText
+                            className="text-sm text-muted font-medium w-10"
+                            maxFontSizeMultiplier={1}
+                          >
                             {country.code}
                           </AppText>
-                          <AppText className="text-base text-foreground flex-1">
+                          <AppText
+                            className="text-base text-foreground flex-1"
+                            maxFontSizeMultiplier={1}
+                          >
                             {country.label}
                           </AppText>
                         </View>
@@ -270,6 +301,7 @@ const AlignmentOptionsContent = () => {
                 placeholder="Start"
                 numberOfLines={1}
                 className="text-accent"
+                maxFontSizeMultiplier={1}
               />
             </Button>
           </Select.Trigger>
@@ -299,6 +331,7 @@ const AlignmentOptionsContent = () => {
                 placeholder="Center"
                 numberOfLines={1}
                 className="text-accent"
+                maxFontSizeMultiplier={1}
               />
             </Button>
           </Select.Trigger>
@@ -328,6 +361,7 @@ const AlignmentOptionsContent = () => {
                 placeholder="End"
                 numberOfLines={1}
                 className="text-accent"
+                maxFontSizeMultiplier={1}
               />
             </Button>
           </Select.Trigger>
@@ -365,7 +399,9 @@ const NativeModalTestContent = () => {
         variant="secondary"
         onPress={() => router.push('components/select-native-modal')}
       >
-        Select from Native Modal
+        <Button.Label maxFontSizeMultiplier={1.4}>
+          Select from Native Modal
+        </Button.Label>
       </Button>
     </View>
   );

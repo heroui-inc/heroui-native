@@ -1,5 +1,6 @@
 import type { ViewStyle } from 'react-native';
 import type { WithSpringConfig } from 'react-native-reanimated';
+import type { HeroTextProps } from '../../helpers/internal/components/hero-text';
 import type {
   Animation,
   AnimationRootDisableAll,
@@ -13,7 +14,7 @@ import type {
   ThumbProps as PrimitiveThumbProps,
   TrackProps as PrimitiveTrackProps,
 } from '../../primitives/slider/slider.types';
-import type { ThumbSlots } from './slider.styles';
+import type { OutputSlots, ThumbSlots } from './slider.styles';
 
 /**
  * Props for the Slider root component.
@@ -40,8 +41,14 @@ interface SliderProps extends PrimitiveRootProps {
  * Displays the current slider value as formatted text.
  */
 interface SliderOutputProps extends PrimitiveOutputProps {
-  /** Additional CSS classes */
+  /** Additional CSS classes for the output container */
   className?: string;
+
+  /** Additional CSS classes for output slots (container, text) */
+  classNames?: ElementSlots<OutputSlots>;
+
+  /** Props forwarded to the inner Text component when using the default text content */
+  textProps?: Omit<HeroTextProps, 'children'>;
 }
 
 /**

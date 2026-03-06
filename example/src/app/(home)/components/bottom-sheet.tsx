@@ -29,7 +29,9 @@ const DetachedBottomSheetContent = () => {
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
           <BottomSheet.Trigger asChild>
             <Button variant="secondary" isDisabled={isOpen}>
-              Detached bottom sheet
+              <Button.Label maxFontSizeMultiplier={1.6}>
+                Detached bottom sheet
+              </Button.Label>
             </Button>
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
@@ -72,11 +74,17 @@ const DetachedBottomSheetContent = () => {
                 {['Apple Pay', 'Mastercard', 'Visa', 'Amex'].map(
                   (label, index, array) => (
                     <View key={label} className="flex-row items-center">
-                      <AppText className="text-xs font-normal text-muted">
+                      <AppText
+                        className="text-xs font-normal text-muted"
+                        maxFontSizeMultiplier={1.2}
+                      >
                         {label}
                       </AppText>
                       {index < array.length - 1 && (
-                        <AppText className="text-xs font-normal text-muted mx-1.5">
+                        <AppText
+                          className="text-xs font-normal text-muted mx-1.5"
+                          maxFontSizeMultiplier={1.2}
+                        >
                           •
                         </AppText>
                       )}
@@ -103,26 +111,31 @@ const WithBlurOverlayContent = () => {
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
           <BottomSheet.Trigger asChild>
             <Button variant="secondary" isDisabled={isOpen}>
-              Bottom sheet with blur overlay
+              <Button.Label maxFontSizeMultiplier={1.2}>
+                Bottom sheet with blur overlay
+              </Button.Label>
             </Button>
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
             <BottomSheetBlurOverlay />
             <BottomSheet.Content>
               <View className="mb-10 gap-3 px-2">
-                <BottomSheet.Title className="text-2xl font-semibold">
+                <BottomSheet.Title
+                  className="text-2xl font-semibold"
+                  maxFontSizeMultiplier={1.2}
+                >
                   Delete account?
                 </BottomSheet.Title>
-                <BottomSheet.Description>
+                <BottomSheet.Description maxFontSizeMultiplier={1.2}>
                   If you delete your account, you won't be able to restore it or
                   receive support.
                 </BottomSheet.Description>
-                <BottomSheet.Description>
+                <BottomSheet.Description maxFontSizeMultiplier={1.2}>
                   Our app will no longer be able to provide support for any of
                   your trips, such as providing a refund or locking for lost
                   items.
                 </BottomSheet.Description>
-                <BottomSheet.Description>
+                <BottomSheet.Description maxFontSizeMultiplier={1.2}>
                   For other deletion options, see our Privacy Policy.
                 </BottomSheet.Description>
               </View>
@@ -158,7 +171,9 @@ const NativeModalBottomSheetContent = () => {
           variant="secondary"
           onPress={() => router.push('components/bottom-sheet-native-modal')}
         >
-          Bottom sheet from native modal
+          <Button.Label maxFontSizeMultiplier={1.2}>
+            Bottom sheet from native modal
+          </Button.Label>
         </Button>
       </View>
     </View>

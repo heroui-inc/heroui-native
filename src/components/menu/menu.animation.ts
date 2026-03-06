@@ -1,12 +1,14 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import {
   useAnimatedStyle,
   useSharedValue,
+  withSpring,
   withTiming,
 } from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { colorKit } from '../../helpers/external/utils';
 import { useAnimationSettings } from '../../helpers/internal/contexts';
+import type { PopupPopoverContentAnimation } from '../../helpers/internal/types';
 import {
   createContext,
   getAnimationState,
@@ -30,8 +32,9 @@ const [MenuAnimationProvider, useMenuAnimation] =
 function useMenuItemAnimation(options: {
   animation: MenuItemAnimation | undefined;
   variant: MenuItemVariant;
+  isInsideSubMenu: boolean;
 }) {
-  const { animation, variant } = options;
+  const { animation, variant, isInsideSubMenu } = options;
 
   const themeColorDefault = useThemeColor('default');
   const themeColorDanger = useThemeColor('danger-soft');
@@ -87,14 +90,23 @@ function useMenuItemAnimation(options: {
   const bgColorTransparent = colorKit.setAlpha(themeColorDefault, 0).hex();
 
   const rItemStyle = useAnimatedStyle(() => {
+    const pressed = isPressed.get();
+
     if (isAnimationDisabledValue) {
       return {
+        backgroundColor: pressed ? bgColorValue : bgColorTransparent,
         transform: [{ scale: 1 }],
       };
     }
 
-    const pressed = isPressed.get();
-
+    if (isInsideSubMenu) {
+      return {
+        backgroundColor: withTiming(
+          pressed ? bgColorValue : bgColorTransparent,
+          bgTimingConfig
+        ),
+      };
+    }
     return {
       backgroundColor: withTiming(
         pressed ? bgColorValue : bgColorTransparent,
@@ -118,4 +130,57 @@ function useMenuItemAnimation(options: {
 
 // --------------------------------------------------
 
-export { MenuAnimationProvider, useMenuAnimation, useMenuItemAnimation };
+/**
+ * Hook providing animated styles for the menu content popover when a sub-menu opens.
+ * Delays scale animation until after mount to avoid conflicting with enter animation.
+ *
+ * @param options.isSubMenuOpen - Whether a sub-menu is currently open
+ * @param options.animation - Animation configuration for content popover
+ * @returns Animated style object for the content container (scale: 0.98 when sub-menu open, 1 otherwise)
+ */
+function useMenuContentPopoverAnimation(options: {
+  isSubMenuOpen: boolean;
+  animation?: PopupPopoverContentAnimation;
+}) {
+  const { isSubMenuOpen, animation } = options;
+
+  const { isAllAnimationsDisabled } = useAnimationSettings();
+  const { isAnimationDisabled } = getAnimationState(animation);
+  const isAnimationDisabledValue = getIsAnimationDisabledValue({
+    isAnimationDisabled,
+    isAllAnimationsDisabled,
+  });
+
+  const hasMounted = useSharedValue(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      hasMounted.value = true;
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [hasMounted]);
+
+  const rContainerStyle = useAnimatedStyle(() => {
+    if (!hasMounted.value) {
+      return {};
+    }
+    const scale = isSubMenuOpen ? 0.98 : 1;
+    if (isAnimationDisabledValue) {
+      return { transform: [{ scale }] };
+    }
+    return {
+      transform: [{ scale: withSpring(scale) }],
+    };
+  });
+
+  return rContainerStyle;
+}
+
+// --------------------------------------------------
+
+export {
+  MenuAnimationProvider,
+  useMenuAnimation,
+  useMenuContentPopoverAnimation,
+  useMenuItemAnimation,
+};

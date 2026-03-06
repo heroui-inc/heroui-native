@@ -222,11 +222,22 @@ const WithSelectPrefixContent = () => {
                     {DIAL_CODES.map((option, index) => (
                       <React.Fragment key={option.value}>
                         <Select.Item value={option.value} label={option.label}>
-                          <AppText className="text-xl">{option.flag}</AppText>
-                          <AppText className="text-sm text-muted w-10">
+                          <AppText
+                            className="text-xl"
+                            maxFontSizeMultiplier={1.2}
+                          >
+                            {option.flag}
+                          </AppText>
+                          <AppText
+                            className="text-sm text-muted w-10"
+                            maxFontSizeMultiplier={1.2}
+                          >
                             {option.code}
                           </AppText>
-                          <AppText className="flex-1 text-base text-foreground">
+                          <AppText
+                            className="flex-1 text-base text-foreground"
+                            maxFontSizeMultiplier={1.2}
+                          >
                             {option.label}
                           </AppText>
                           <Select.ItemIndicator />

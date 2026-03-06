@@ -1,8 +1,12 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { Pressable, View } from 'react-native';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { ChevronRightIcon, HeroText } from '../../helpers/internal/components';
-import type { PressableRef, ViewRef } from '../../helpers/internal/types';
+import type {
+  PressableRef,
+  TextRef,
+  ViewRef,
+} from '../../helpers/internal/types';
 import Surface from '../surface/surface';
 import { DEFAULT_ICON_SIZE, DISPLAY_NAME } from './list-group.constants';
 import listGroupClassNames, { styleSheet } from './list-group.styles';
@@ -91,25 +95,24 @@ const ListGroupItemContent = forwardRef<ViewRef, ListGroupItemContentProps>(
 
 // --------------------------------------------------
 
-const ListGroupItemTitle = forwardRef<
-  React.ComponentRef<typeof HeroText>,
-  ListGroupItemTitleProps
->((props, ref) => {
-  const { children, className, ...restProps } = props;
+const ListGroupItemTitle = forwardRef<TextRef, ListGroupItemTitleProps>(
+  (props, ref) => {
+    const { children, className, ...restProps } = props;
 
-  const titleClassName = listGroupClassNames.itemTitle({ className });
+    const titleClassName = listGroupClassNames.itemTitle({ className });
 
-  return (
-    <HeroText ref={ref} className={titleClassName} {...restProps}>
-      {children}
-    </HeroText>
-  );
-});
+    return (
+      <HeroText ref={ref} className={titleClassName} {...restProps}>
+        {children}
+      </HeroText>
+    );
+  }
+);
 
 // --------------------------------------------------
 
 const ListGroupItemDescription = forwardRef<
-  React.ComponentRef<typeof HeroText>,
+  TextRef,
   ListGroupItemDescriptionProps
 >((props, ref) => {
   const { children, className, ...restProps } = props;

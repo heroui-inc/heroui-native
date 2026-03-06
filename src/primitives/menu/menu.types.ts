@@ -67,6 +67,16 @@ interface IRootContext {
    * @default 'popover'
    */
   presentation: 'popover' | 'bottom-sheet';
+  /**
+   * Whether a child SubMenu is currently open.
+   * Used for coordinating animations and interactions between
+   * Menu and SubMenu components.
+   */
+  isSubMenuOpen: boolean;
+  /**
+   * Setter to update the SubMenu open state on the parent Menu.
+   */
+  setIsSubMenuOpen: (open: boolean) => void;
 }
 
 /**
@@ -192,6 +202,13 @@ type GroupProps = SlottableViewProps & {
    * (`false` for `"multiple"`, `true` otherwise).
    */
   shouldCloseOnSelect?: boolean;
+  /**
+   * Whether to prevent deselecting the last selected item in `"single"` selection mode.
+   * When `true`, pressing an already-selected item is a no-op (radio-group behavior).
+   * Has no effect when `selectionMode` is `"multiple"` or `"none"`.
+   * @default false
+   */
+  disallowEmptySelection?: boolean;
 };
 
 /**
@@ -212,6 +229,10 @@ type GroupContextValue = Required<
    * `undefined` means no group-level override (use default behavior).
    */
   shouldCloseOnSelect: boolean | undefined;
+  /**
+   * Whether deselecting the last item is prevented in single-selection mode.
+   */
+  disallowEmptySelection: boolean;
 };
 
 // --------------------------------------------------

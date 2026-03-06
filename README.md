@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  v1.0.0-rc.3
+  v1.0.0-rc.4
 </p>
 
 ## Getting Started

@@ -1,4 +1,5 @@
-import BottomSheet from '@gorhom/bottom-sheet';
+import type BottomSheet from '@gorhom/bottom-sheet';
+import type { BottomSheetProps } from '@gorhom/bottom-sheet';
 import { forwardRef, useMemo } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
@@ -6,20 +7,21 @@ import { ReduceMotion } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
 import { useBottomSheetContentAnimation } from '../../../components/bottom-sheet/bottom-sheet.animation';
 import { bottomSheetClassNames } from '../../../components/bottom-sheet/bottom-sheet.styles';
+import GorhomBottomSheetPackage from '../../../optional/gorhom-bottom-sheet';
 import { BottomSheetIsDraggingProvider } from '../contexts';
 import { useBottomSheetGestureHandlers } from '../hooks';
 import { usePopupBottomSheetContentAnimation } from '../hooks/use-popup-bottom-sheet-content-animation';
 import type { BaseBottomSheetContentProps } from '../types/bottom-sheet';
 import { BottomSheetContentContainer } from './bottom-sheet-content-container';
 
-const StyledBottomSheet = withUniwind(BottomSheet);
+const StyledBottomSheet = withUniwind(GorhomBottomSheetPackage?.default);
 
 /**
  * Props for the reusable BottomSheetContent component
  */
 export interface BottomSheetContentProps
   extends BaseBottomSheetContentProps,
-    Partial<React.ComponentProps<typeof BottomSheet>> {
+    Partial<BottomSheetProps> {
   /**
    * Whether the bottom sheet is open
    */

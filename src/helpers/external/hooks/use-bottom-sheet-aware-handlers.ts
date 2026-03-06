@@ -1,4 +1,3 @@
-import { useBottomSheetInternal } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import {
   findNodeHandle,
@@ -6,6 +5,7 @@ import {
   type BlurEvent,
   type FocusEvent,
 } from 'react-native';
+import GorhomBottomSheetPackage from '../../../optional/gorhom-bottom-sheet';
 
 /**
  * Return type for the bottom-sheet-aware handlers hook
@@ -36,7 +36,9 @@ interface UseBottomSheetAwareHandlersReturn {
  * @returns onFocus and onBlur handlers for bottom sheet keyboard management
  */
 export function useBottomSheetAwareHandlers(): UseBottomSheetAwareHandlersReturn {
-  const bottomSheetContext = useBottomSheetInternal(true);
+  const useBottomSheetInternal =
+    GorhomBottomSheetPackage?.useBottomSheetInternal;
+  const bottomSheetContext = useBottomSheetInternal?.(true) ?? null;
 
   const isActive = bottomSheetContext !== null;
 
@@ -46,10 +48,12 @@ export function useBottomSheetAwareHandlers(): UseBottomSheetAwareHandlersReturn
   const onFocus = useCallback(
     (e: FocusEvent) => {
       if (isActive && bottomSheetContext) {
-        bottomSheetContext.animatedKeyboardState.set((state) => ({
-          ...state,
-          target: e.nativeEvent.target,
-        }));
+        bottomSheetContext.animatedKeyboardState.set(
+          (state: Record<string, unknown>) => ({
+            ...state,
+            target: e.nativeEvent.target,
+          })
+        );
       }
     },
     [isActive, bottomSheetContext]
@@ -73,10 +77,12 @@ export function useBottomSheetAwareHandlers(): UseBottomSheetAwareHandlersReturn
           bottomSheetContext.textInputNodesRef.current.has(currentFocusedInput);
 
         if (shouldRemoveCurrentTarget && !shouldIgnoreBlurEvent) {
-          bottomSheetContext.animatedKeyboardState.set((state) => ({
-            ...state,
-            target: undefined,
-          }));
+          bottomSheetContext.animatedKeyboardState.set(
+            (state: Record<string, unknown>) => ({
+              ...state,
+              target: undefined,
+            })
+          );
         }
       }
     },

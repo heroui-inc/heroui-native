@@ -1,4 +1,4 @@
-import BottomSheet from '@gorhom/bottom-sheet';
+import type BottomSheet from '@gorhom/bottom-sheet';
 import { createContext, forwardRef, use, useMemo } from 'react';
 import type {
   GestureResponderEvent,

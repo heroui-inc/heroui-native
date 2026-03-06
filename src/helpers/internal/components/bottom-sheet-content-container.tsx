@@ -1,9 +1,12 @@
-import { BottomSheetView, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useEffect, useRef } from 'react';
 import { BackHandler } from 'react-native';
 import { useAnimatedReaction } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
+import GorhomBottomSheetPackage from '../../../optional/gorhom-bottom-sheet';
 import type { BottomSheetContentContainerProps } from '../types/bottom-sheet';
+
+const BottomSheetView = GorhomBottomSheetPackage?.BottomSheetView;
+const useBottomSheet = GorhomBottomSheetPackage?.useBottomSheet;
 
 /**
  * Reusable BottomSheetContentContainer component

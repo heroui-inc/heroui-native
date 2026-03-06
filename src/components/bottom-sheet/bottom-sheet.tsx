@@ -1,4 +1,4 @@
-import GorhomBottomSheet from '@gorhom/bottom-sheet';
+import type GorhomBottomSheet from '@gorhom/bottom-sheet';
 import { forwardRef, useMemo } from 'react';
 import {
   StyleSheet,

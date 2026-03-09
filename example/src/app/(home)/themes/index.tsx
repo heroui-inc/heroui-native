@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-import { useHeaderHeight } from '@react-navigation/elements';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useThemeColor } from 'heroui-native';
@@ -13,6 +12,7 @@ import { RadioGroupContent } from '../../../components/themes-content/radio-grou
 import { SwitchContent } from '../../../components/themes-content/switch-content';
 import { TextInputContent } from '../../../components/themes-content/text-input-content';
 import { useAppTheme } from '../../../contexts/app-theme-context';
+import useHeaderHeight from '../../../helpers/hooks/use-header-height';
 
 type ThemeOption = {
   id: string;

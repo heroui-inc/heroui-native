@@ -1,4 +1,3 @@
-import { useHeaderHeight } from '@react-navigation/elements';
 import {
   Button,
   cn,
@@ -22,6 +21,7 @@ import Animated, {
 import { withUniwind } from 'uniwind';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import useHeaderHeight from '../../../helpers/hooks/use-header-height';
 
 const StyleAnimatedView = withUniwind(Animated.View);
 

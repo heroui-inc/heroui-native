@@ -78,6 +78,10 @@ export const COMPONENTS: ComponentItem[] = [
     path: 'label',
   },
   {
+    title: 'LinkButton',
+    path: 'link-button',
+  },
+  {
     title: 'ListGroup',
     path: 'list-group',
   },

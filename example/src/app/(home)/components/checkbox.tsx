@@ -177,7 +177,9 @@ const AnimatedCustomIndicator = ({
       {isSelected ? (
         <Animated.View
           key="selected"
-          entering={ZoomIn.withInitialValues({ scale: 0.5 })}
+          entering={ZoomIn.withInitialValues({
+            transform: [{ scale: 0.5 }],
+          })}
         >
           <StyledFontAwesome
             name="check"
@@ -188,7 +190,9 @@ const AnimatedCustomIndicator = ({
       ) : (
         <Animated.View
           key="unselected"
-          entering={ZoomIn.withInitialValues({ scale: 0.5 })}
+          entering={ZoomIn.withInitialValues({
+            transform: [{ scale: 0.5 }],
+          })}
         >
           <StyledFontAwesome
             name="times"

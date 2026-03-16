@@ -21,6 +21,9 @@ const trigger = tv({
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',
     },
+    isOtherSubMenuOpen: {
+      true: 'opacity-40 pointer-events-none',
+    },
   },
 });
 

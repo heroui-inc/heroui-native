@@ -68,15 +68,28 @@ interface IRootContext {
    */
   presentation: 'popover' | 'bottom-sheet';
   /**
-   * Whether a child SubMenu is currently open.
+   * Whether a child SubMenu is currently open (derived from `openSubMenuId`).
    * Used for coordinating animations and interactions between
    * Menu and SubMenu components.
    */
   isSubMenuOpen: boolean;
   /**
-   * Setter to update the SubMenu open state on the parent Menu.
+   * The `nativeID` of the currently open SubMenu, or `null` when none is open.
+   * Enables single-open enforcement across sibling SubMenus.
    */
-  setIsSubMenuOpen: (open: boolean) => void;
+  openSubMenuId: string | null;
+  /**
+   * Registers the given SubMenu as the active (open) one.
+   * Calling this with a new id implicitly deactivates any previously open SubMenu.
+   * @param id - The `nativeID` of the SubMenu that is opening
+   */
+  openSubMenu: (id: string) => void;
+  /**
+   * Clears the active SubMenu **only** if it matches the given id.
+   * Prevents a closing SubMenu from accidentally clearing another SubMenu's registration.
+   * @param id - The `nativeID` of the SubMenu that is closing
+   */
+  closeSubMenu: (id: string) => void;
 }
 
 /**

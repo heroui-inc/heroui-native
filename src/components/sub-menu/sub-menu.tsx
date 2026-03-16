@@ -129,8 +129,8 @@ const RootContentContainer: FC<
   }>
 > = ({ children, animation, className }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const { isOpen } = useSubMenu();
-  const { setIsSubMenuOpen } = useMenu();
+  const { isOpen, onOpenChange, nativeID } = useSubMenu();
+  const { openSubMenuId, openSubMenu, closeSubMenu } = useMenu();
   const { rOuterContainerStyle, rInnerContentStyle } =
     useRootContentContainerAnimation({ animation });
 
@@ -143,12 +143,33 @@ const RootContentContainer: FC<
     return () => clearTimeout(timer);
   }, []);
 
+  /** Register / unregister this sub-menu with the parent Menu context. */
   useEffect(() => {
-    setIsSubMenuOpen(isOpen);
-  }, [isOpen, setIsSubMenuOpen]);
+    if (isOpen) {
+      openSubMenu(nativeID);
+    } else {
+      closeSubMenu(nativeID);
+    }
+    return () => {
+      closeSubMenu(nativeID);
+    };
+  }, [isOpen, nativeID, openSubMenu, closeSubMenu]);
+
+  /** Close this sub-menu when it's no longer the active one (e.g. backdrop press). */
+  useEffect(() => {
+    if (openSubMenuId !== nativeID && isOpen) {
+      onOpenChange(false);
+    }
+    // Only react to openSubMenuId changes (not isOpen) to avoid
+    // a race condition where isOpen=true fires before registration sets the ID.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openSubMenuId]);
 
   return (
-    <Animated.View className="z-50" style={rOuterContainerStyle}>
+    <Animated.View
+      className={isOpen ? 'z-50' : 'z-40'}
+      style={rOuterContainerStyle}
+    >
       {isMounted ? (
         <Animated.View className={rootClassName} style={rInnerContentStyle}>
           {children}
@@ -178,10 +199,16 @@ const SubMenuTrigger = forwardRef<
     ref
   ) => {
     const { triggerHeight } = useSubMenuAnimation();
+    const { openSubMenuId } = useMenu();
+    const subMenuContext = useSubMenu();
+
+    const isOtherSubMenuOpen =
+      openSubMenuId !== null && openSubMenuId !== subMenuContext.nativeID;
 
     const triggerClassName = subMenuClassNames.trigger({
       className,
       isDisabled,
+      isOtherSubMenuOpen,
     });
 
     const handleLayout = useCallback(
@@ -201,7 +228,7 @@ const SubMenuTrigger = forwardRef<
             ? (state) => [subMenuStyleSheet.borderCurve, style(state)]
             : [subMenuStyleSheet.borderCurve, style]
         }
-        isDisabled={isDisabled}
+        isDisabled={isDisabled || isOtherSubMenuOpen}
         onLayout={handleLayout}
         {...props}
       >

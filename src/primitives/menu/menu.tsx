@@ -90,7 +90,16 @@ const Root = forwardRef<RootRef, RootProps>(
     const [contentLayout, setContentLayout] = useState<LayoutRectangle | null>(
       null
     );
-    const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+    const [openSubMenuId, setOpenSubMenuId] = useState<string | null>(null);
+    const isSubMenuOpen = openSubMenuId !== null;
+
+    const openSubMenu = useCallback((id: string) => {
+      setOpenSubMenuId(id);
+    }, []);
+
+    const closeSubMenu = useCallback((id: string) => {
+      setOpenSubMenuId((prev) => (prev === id ? null : prev));
+    }, []);
 
     const nativeID = useId();
 
@@ -109,7 +118,9 @@ const Root = forwardRef<RootRef, RootProps>(
           isDefaultOpen,
           presentation,
           isSubMenuOpen,
-          setIsSubMenuOpen,
+          openSubMenuId,
+          openSubMenu,
+          closeSubMenu,
         }}
       >
         <Component ref={ref} {...viewProps} />

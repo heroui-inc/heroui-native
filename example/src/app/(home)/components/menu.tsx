@@ -692,6 +692,11 @@ const MENU_VARIANTS: UsageVariant[] = [
     content: <SubMenuExampleContent />,
   },
   {
+    value: 'two-sub-menus',
+    label: 'Two Sub Menus',
+    content: <TwoSubMenusContent />,
+  },
+  {
     value: 'sub-menu-groups',
     label: 'Sub Menu Groups',
     content: <SubMenuGroupsContent />,
@@ -700,11 +705,6 @@ const MENU_VARIANTS: UsageVariant[] = [
     value: 'placements',
     label: 'Placements',
     content: <PlacementsContent />,
-  },
-  {
-    value: 'two-sub-menus',
-    label: 'Two Sub Menus',
-    content: <TwoSubMenusContent />,
   },
 ];
 

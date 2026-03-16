@@ -129,8 +129,8 @@ const RootContentContainer: FC<
   }>
 > = ({ children, animation, className }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const { isOpen, nativeID } = useSubMenu();
-  const { openSubMenu, closeSubMenu } = useMenu();
+  const { isOpen, onOpenChange, nativeID } = useSubMenu();
+  const { openSubMenuId, openSubMenu, closeSubMenu } = useMenu();
   const { rOuterContainerStyle, rInnerContentStyle } =
     useRootContentContainerAnimation({ animation });
 
@@ -154,6 +154,16 @@ const RootContentContainer: FC<
       closeSubMenu(nativeID);
     };
   }, [isOpen, nativeID, openSubMenu, closeSubMenu]);
+
+  /** Close this sub-menu when it's no longer the active one (e.g. backdrop press). */
+  useEffect(() => {
+    if (openSubMenuId !== nativeID && isOpen) {
+      onOpenChange(false);
+    }
+    // Only react to openSubMenuId changes (not isOpen) to avoid
+    // a race condition where isOpen=true fires before registration sets the ID.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openSubMenuId]);
 
   return (
     <Animated.View

@@ -150,6 +150,9 @@ const RootContentContainer: FC<
     } else {
       closeSubMenu(nativeID);
     }
+    return () => {
+      closeSubMenu(nativeID);
+    };
   }, [isOpen, nativeID, openSubMenu, closeSubMenu]);
 
   return (

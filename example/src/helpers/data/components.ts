@@ -157,4 +157,8 @@ export const COMPONENTS: ComponentItem[] = [
     title: 'Toast',
     path: 'toast',
   },
+  {
+    title: 'Tooltip',
+    path: 'tooltip',
+  },
 ];

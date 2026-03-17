@@ -39,6 +39,7 @@ export * from './components/tag-group';
 export * from './components/text-area';
 export * from './components/text-field';
 export * from './components/toast';
+export * from './components/tooltip';
 
 // Portal
 export * from './primitives/portal';

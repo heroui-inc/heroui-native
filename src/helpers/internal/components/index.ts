@@ -1,4 +1,5 @@
 export * from './animated-check-icon';
+export * from './arrow-svg';
 export * from './bottom-sheet-content';
 export * from './bottom-sheet-content-container';
 export * from './check-icon';

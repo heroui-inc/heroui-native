@@ -12,6 +12,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
 import {
+  ArrowSvg,
   BottomSheetContent,
   FullWindowOverlay,
   HeroText,
@@ -29,7 +30,6 @@ import type { PressableRef } from '../../helpers/internal/types';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import { CloseButton } from '../close-button';
-import { ArrowSvg } from './arrow-svg';
 import {
   PopoverAnimationProvider,
   usePopoverAnimation,

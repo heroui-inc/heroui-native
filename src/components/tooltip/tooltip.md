@@ -351,7 +351,6 @@ Animation configuration for tooltip content. Can be:
 | `placement`           | `TooltipPlacement`       | -       | Explicit placement override. When omitted, inherits placement from `Tooltip.Content`                                                                   |
 | `className`           | `string`                 | -       | Additional CSS classes for the arrow container                                                                                                         |
 | `style`               | `StyleProp<ViewStyle>`   | -       | Additional styles for the arrow container                                                                                                              |
-| `svgProps`            | `ComponentProps<Svg>`    | -       | Props passed directly to the underlying `<Svg>` element for SVG-level customization                                                                    |
 
 ### Tooltip.Text
 

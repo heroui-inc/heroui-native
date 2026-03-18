@@ -122,6 +122,9 @@
   "peerDependenciesMeta": {
     "@gorhom/bottom-sheet": {
       "optional": true
+    },
+    "react-native-screens": {
+      "optional": true
     }
   },
   "workspaces": [

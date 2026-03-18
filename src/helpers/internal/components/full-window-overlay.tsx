@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import { Platform } from 'react-native';
-import { FullWindowOverlay as NativeFullWindowOverlay } from 'react-native-screens';
+import ReactNativeScreensPackage from '../../../optional/react-native-screens';
+
+const NativeFullWindowOverlay = ReactNativeScreensPackage?.FullWindowOverlay;
 
 /**
  * Props for the FullWindowOverlay component
@@ -40,7 +42,11 @@ export function FullWindowOverlay({
   disableFullWindowOverlay,
   children,
 }: FullWindowOverlayProps) {
-  if (Platform.OS !== 'ios' || disableFullWindowOverlay) {
+  if (
+    Platform.OS !== 'ios' ||
+    disableFullWindowOverlay ||
+    !NativeFullWindowOverlay
+  ) {
     return <>{children}</>;
   }
 

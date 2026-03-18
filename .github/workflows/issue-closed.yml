@@ -30,7 +30,7 @@ jobs:
 
             for (const label of labelsToRemove) {
               const match = issueLabels.find(
-                (issueLabel) => issueLabel.toLowerCase() === label.toLowerCase()
+                (issueLabel) => issueLabel.toLowerCase().includes(label.toLowerCase())
               );
 
               if (match) {

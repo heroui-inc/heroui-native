@@ -588,6 +588,93 @@ const SubMenuGroupsContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const TwoSubMenusContent = () => {
+  return (
+    <View className="flex-1 px-5">
+      <View className="h-1/2 items-center justify-center">
+        <Menu>
+          <Menu.Trigger asChild>
+            <Button variant="secondary">Project</Button>
+          </Menu.Trigger>
+          <Menu.Portal>
+            <Menu.Overlay />
+            <Menu.Content presentation="popover" width={250}>
+              <Menu.Item>
+                <SquarePlusIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>New Project</Menu.ItemTitle>
+              </Menu.Item>
+              <Menu.Item>
+                <PencilIcon size={16} colorClassName="accent-muted" />
+                <Menu.ItemTitle>Rename</Menu.ItemTitle>
+              </Menu.Item>
+              <Separator
+                variant="thick"
+                className="-mx-[6px] mt-1 opacity-25"
+              />
+              <SubMenu>
+                <SubMenu.Trigger textValue="Share">
+                  <PersonIcon size={16} colorClassName="accent-muted" />
+                  <AppText className="flex-1 text-base font-medium text-foreground">
+                    Share
+                  </AppText>
+                  <SubMenu.TriggerIndicator />
+                </SubMenu.Trigger>
+                <SubMenu.Content>
+                  <Menu.Item>
+                    <CopyIcon size={16} colorClassName="accent-muted" />
+                    <Menu.ItemTitle>Copy Link</Menu.ItemTitle>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <BellIcon size={16} colorClassName="accent-muted" />
+                    <Menu.ItemTitle>Email</Menu.ItemTitle>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <GlobeIcon size={16} colorClassName="accent-muted" />
+                    <Menu.ItemTitle>Social</Menu.ItemTitle>
+                  </Menu.Item>
+                </SubMenu.Content>
+              </SubMenu>
+              <SubMenu>
+                <SubMenu.Trigger textValue="Export">
+                  <GlobeIcon size={16} colorClassName="accent-muted" />
+                  <AppText className="flex-1 text-base font-medium text-foreground">
+                    Export
+                  </AppText>
+                  <SubMenu.TriggerIndicator />
+                </SubMenu.Trigger>
+                <SubMenu.Content>
+                  <Menu.Item>
+                    <LockIcon size={16} colorClassName="accent-muted" />
+                    <Menu.ItemTitle>PDF</Menu.ItemTitle>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <PaletteIcon size={16} colorClassName="accent-muted" />
+                    <Menu.ItemTitle>Image</Menu.ItemTitle>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <PencilIcon size={16} colorClassName="accent-muted" />
+                    <Menu.ItemTitle>Markdown</Menu.ItemTitle>
+                  </Menu.Item>
+                </SubMenu.Content>
+              </SubMenu>
+              <Separator
+                variant="thick"
+                className="-mx-[6px] mb-1 opacity-25"
+              />
+              <Menu.Item variant="danger">
+                <TrashIcon size={16} colorClassName="accent-danger" />
+                <Menu.ItemTitle>Delete Project</Menu.ItemTitle>
+              </Menu.Item>
+            </Menu.Content>
+          </Menu.Portal>
+        </Menu>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const MENU_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-usage',
@@ -603,6 +690,11 @@ const MENU_VARIANTS: UsageVariant[] = [
     value: 'sub-menu',
     label: 'Sub Menu',
     content: <SubMenuExampleContent />,
+  },
+  {
+    value: 'two-sub-menus',
+    label: 'Two Sub Menus',
+    content: <TwoSubMenusContent />,
   },
   {
     value: 'sub-menu-groups',

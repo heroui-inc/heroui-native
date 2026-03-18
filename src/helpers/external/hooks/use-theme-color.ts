@@ -1,6 +1,37 @@
 import { useCSSVariable } from 'uniwind';
 
 /**
+ * Unique brand symbol used to prevent accidental array destructuring of a
+ * single theme color value returned from `useThemeColor`.
+ */
+declare const _colorValueBrand: unique symbol;
+
+/**
+ * A resolved theme color string.
+ *
+ * This type intentionally removes `[Symbol.iterator]` so that TypeScript
+ * surfaces a `never`-typed element when the value is array-destructured,
+ * making the misuse visible in the IDE immediately.
+ *
+ * @example
+ * // ✅ Correct – single value
+ * const color = useThemeColor('muted');
+ *
+ * @example
+ * // ✅ Correct – multiple values
+ * const [primary, bg] = useThemeColor(['accent', 'background']);
+ *
+ * @example
+ * // ❌ Wrong – destructuring a single-color result yields `never`
+ * const [color] = useThemeColor('muted');
+ */
+export type ThemeColorValue = string & {
+  readonly [_colorValueBrand]: void;
+  /** Removed to prevent accidental array destructuring. */
+  readonly [Symbol.iterator]: never;
+};
+
+/**
  * Theme colors as const array for efficient mapping
  * Ordered to match the order in src/styles/theme.css
  */
@@ -95,24 +126,24 @@ type CreateStringTuple<
  * Supports both single color and multiple colors for efficient batch retrieval.
  *
  * @param themeColor - Single theme color name or array of theme color names
- * @returns Single color string or array of color strings
+ * @returns `ThemeColorValue` for a single name, or a string tuple/array for multiple names.
  *
  * @example
- * // Single color
+ * // Single color – returns `ThemeColorValue` (not destructurable)
  * const primaryColor = useThemeColor('accent');
  *
  * @example
- * // Multiple colors (more efficient)
+ * // Multiple colors – returns a typed string tuple (destructurable)
  * const [primaryColor, backgroundColor] = useThemeColor(['accent', 'background']);
  */
-export function useThemeColor(themeColor: ThemeColor): string;
+export function useThemeColor(themeColor: ThemeColor): ThemeColorValue;
 export function useThemeColor<T extends readonly [ThemeColor, ...ThemeColor[]]>(
   themeColor: T
 ): CreateStringTuple<T['length']>;
 export function useThemeColor(themeColor: ThemeColor[]): string[];
 export function useThemeColor(
   themeColor: ThemeColor | ThemeColor[]
-): string | string[] {
+): ThemeColorValue | string[] {
   const isArray = Array.isArray(themeColor);
   const cssVariables = isArray
     ? themeColor.map((color) => `--color-${color}`)
@@ -133,5 +164,7 @@ export function useThemeColor(
   if (isArray) {
     return processedColors;
   }
-  return processedColors[0]!;
+
+  /** `cssVariables` always contains one entry when `isArray` is false, so index 0 is always defined. */
+  return (processedColors[0] ?? 'invalid') as ThemeColorValue;
 }

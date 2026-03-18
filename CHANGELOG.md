@@ -1,3 +1,24 @@
+## 1.0.0-rc.4 (2026-03-06)
+
+* chore: sync versions ([3196e61](https://github.com/heroui-inc/heroui-native/commit/3196e61))
+* chore: sync versions ([497942c](https://github.com/heroui-inc/heroui-native/commit/497942c))
+* docs: fix useThemeColor example ([8dc5322](https://github.com/heroui-inc/heroui-native/commit/8dc5322))
+* docs(menu): add sub menu reference ([cb698aa](https://github.com/heroui-inc/heroui-native/commit/cb698aa))
+* feat(menu): upd primitive components ([d55e286](https://github.com/heroui-inc/heroui-native/commit/d55e286))
+* feat(sub-menu): add examples ([4b36824](https://github.com/heroui-inc/heroui-native/commit/4b36824))
+* feat(sub-menu): add primitive components ([ef7b7f4](https://github.com/heroui-inc/heroui-native/commit/ef7b7f4))
+* feat(sub-menu): add src components ([b012ec8](https://github.com/heroui-inc/heroui-native/commit/b012ec8))
+* feat(sub-menu): handle bottom-sheet error msg ([5f946d9](https://github.com/heroui-inc/heroui-native/commit/5f946d9))
+* fix(bottom-sheet): android back handler on enablePanDownToClose false ([4310dcb](https://github.com/heroui-inc/heroui-native/commit/4310dcb))
+* fix(chip): remove fixed height from styles ([3852ca5](https://github.com/heroui-inc/heroui-native/commit/3852ca5))
+* fix(example-app): font scaling issues ([34050b1](https://github.com/heroui-inc/heroui-native/commit/34050b1))
+* fix(example-app): theme content font scaling ([415fc76](https://github.com/heroui-inc/heroui-native/commit/415fc76))
+* fix(pressable-feedback): reset ripple animation ([2d249d6](https://github.com/heroui-inc/heroui-native/commit/2d249d6))
+* fix(slider): output composition ([da545f2](https://github.com/heroui-inc/heroui-native/commit/da545f2))
+* fix(sub-menu): cycle issue ([0fc1fc4](https://github.com/heroui-inc/heroui-native/commit/0fc1fc4))
+
+
+
 ## 1.0.0-rc.3 (2026-02-26)
 
 * build: add react-native-gesture-handler to peerDependencies ([c078009](https://github.com/heroui-inc/heroui-native/commit/c078009))

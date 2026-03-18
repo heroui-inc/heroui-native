@@ -1,9 +1,8 @@
 import { forwardRef, useMemo } from 'react';
-import { View } from 'react-native';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { colorKit } from '../../helpers/external/utils';
 import { HeroText } from '../../helpers/internal/components';
-import type { PressableRef } from '../../helpers/internal/types';
+import type { PressableRef, TextRef } from '../../helpers/internal/types';
 import { childrenToString, createContext } from '../../helpers/internal/utils';
 import {
   PressableFeedback,
@@ -236,7 +235,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const ButtonLabel = forwardRef<View, ButtonLabelProps>((props, ref) => {
+const ButtonLabel = forwardRef<TextRef, ButtonLabelProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
   const { size, variant } = useButton();

@@ -1,4 +1,4 @@
-import type BottomSheet from '@gorhom/bottom-sheet';
+import type { BottomSheetProps } from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type { SharedValue, WithTimingConfig } from 'react-native-reanimated';
@@ -156,7 +156,7 @@ export interface MenuContentPopoverProps
  * Menu Content props for 'bottom-sheet' presentation
  */
 export interface MenuContentBottomSheetProps
-  extends Partial<React.ComponentProps<typeof BottomSheet>>,
+  extends Partial<BottomSheetProps>,
     BaseBottomSheetContentProps {
   /**
    * Presentation mode for the menu

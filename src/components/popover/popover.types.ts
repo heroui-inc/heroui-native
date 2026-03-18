@@ -1,4 +1,4 @@
-import type BottomSheet from '@gorhom/bottom-sheet';
+import type { BottomSheetProps } from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
 import type { StyleProp, TextProps, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
@@ -175,7 +175,7 @@ export interface PopoverContentPopoverProps
  * Popover Content props for 'bottom-sheet' presentation
  */
 export interface PopoverContentBottomSheetProps
-  extends Partial<React.ComponentProps<typeof BottomSheet>>,
+  extends Partial<BottomSheetProps>,
     BaseBottomSheetContentProps {
   /**
    * Presentation mode for the popover

@@ -1,4 +1,4 @@
-import BottomSheet from '@gorhom/bottom-sheet';
+import type BottomSheet from '@gorhom/bottom-sheet';
 import { createContext, forwardRef, useMemo } from 'react';
 import type { GestureResponderEvent, Text as RNText } from 'react-native';
 import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';

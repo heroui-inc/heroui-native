@@ -8,6 +8,7 @@ import {
   Input,
   ScrollShadow,
   TextField,
+  useBottomSheetAwareHandlers,
   useThemeColor,
 } from 'heroui-native';
 import { useMemo, useState } from 'react';
@@ -70,8 +71,8 @@ const UserSearchItem = ({ user }: { user: User }) => {
 /**
  * BottomSheetTextInput component with keyboard handling
  *
- * Input automatically handles keyboard interactions inside a bottom sheet
- * via the isBottomSheetAware prop (enabled by default).
+ * Uses the useBottomSheetAwareHandlers hook to wire onFocus/onBlur handlers
+ * for keyboard avoidance inside a bottom sheet.
  */
 const BottomSheetTextInput = ({
   searchQuery,
@@ -80,6 +81,8 @@ const BottomSheetTextInput = ({
   searchQuery: string;
   setSearchQuery: (text: string) => void;
 }) => {
+  const { onFocus, onBlur } = useBottomSheetAwareHandlers();
+
   return (
     <TextField className="absolute top-0 left-0 right-0 px-5 pt-2">
       <View className="w-full flex-row items-center">
@@ -91,6 +94,8 @@ const BottomSheetTextInput = ({
           className="flex-1 px-10"
           autoCapitalize="none"
           autoCorrect={false}
+          onFocus={onFocus}
+          onBlur={onBlur}
         />
         <View className="absolute left-3.5" pointerEvents="none">
           <MagnifierIcon colorClassName="accent-field-placeholder" />

@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Optional peer dependency loaded at runtime
 let GorhomBottomSheetPackage: any;
 
 try {

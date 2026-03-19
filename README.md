@@ -4,7 +4,7 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://github.com/heroui-inc/heroui-native/blob/rc/LICENSE">
+  <a href="https://github.com/heroui-inc/heroui-native/blob/main/LICENSE">
     <img src="https://img.shields.io/npm/l/@heroui/react?style=flat" alt="License">
   </a>
   <a href="https://www.npmjs.com/package/heroui-native">

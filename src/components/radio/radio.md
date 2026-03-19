@@ -247,7 +247,7 @@ export default function RadioExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/radio-group.tsx>).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/main/example/src/app/(home)/components/radio-group.tsx>).
 
 ## API Reference
 

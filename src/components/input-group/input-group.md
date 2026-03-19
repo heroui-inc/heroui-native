@@ -105,7 +105,10 @@ Combine with TextField, Label, and Description for full form field support.
     <InputGroup.Prefix isDecorative>
       <MailIcon size={16} />
     </InputGroup.Prefix>
-    <InputGroup.Input placeholder="you@example.com" keyboardType="email-address" />
+    <InputGroup.Input
+      placeholder="you@example.com"
+      keyboardType="email-address"
+    />
   </InputGroup>
   <Description>We'll never share your email</Description>
 </TextField>
@@ -153,19 +156,19 @@ export default function InputGroupExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/input-group.tsx>).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/main/example/src/app/(home)/components/input-group.tsx>).
 
 ## API Reference
 
 ### InputGroup
 
-| prop           | type                     | default | description                                                                  |
-| -------------- | ------------------------ | ------- | ---------------------------------------------------------------------------- |
-| `children`     | `React.ReactNode`        | -       | Children elements to be rendered inside the input group                      |
-| `className`    | `string`                 | -       | Additional CSS classes                                                       |
-| `isDisabled`   | `boolean`                | `false` | Whether the entire input group and its children are disabled                 |
-| `animation`    | `AnimationRootDisableAll`| -       | Animation configuration for input group                                      |
-| `...ViewProps` | `ViewProps`              | -       | All standard React Native View props are supported                           |
+| prop           | type                      | default | description                                                  |
+| -------------- | ------------------------- | ------- | ------------------------------------------------------------ |
+| `children`     | `React.ReactNode`         | -       | Children elements to be rendered inside the input group      |
+| `className`    | `string`                  | -       | Additional CSS classes                                       |
+| `isDisabled`   | `boolean`                 | `false` | Whether the entire input group and its children are disabled |
+| `animation`    | `AnimationRootDisableAll` | -       | Animation configuration for input group                      |
+| `...ViewProps` | `ViewProps`               | -       | All standard React Native View props are supported           |
 
 #### AnimationRootDisableAll
 
@@ -176,21 +179,21 @@ Animation configuration for the InputGroup root component. Can be:
 
 ### InputGroup.Prefix
 
-| prop             | type              | default | description                                                                                  |
-| ---------------- | ----------------- | ------- | -------------------------------------------------------------------------------------------- |
-| `children`       | `React.ReactNode` | -       | Content to render inside the prefix                                                          |
-| `className`      | `string`          | -       | Additional CSS classes                                                                       |
-| `isDecorative`   | `boolean`         | `false` | When true, touches pass through to the Input and content is hidden from screen readers        |
-| `...ViewProps`   | `ViewProps`       | -       | All standard React Native View props are supported                                           |
+| prop           | type              | default | description                                                                            |
+| -------------- | ----------------- | ------- | -------------------------------------------------------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Content to render inside the prefix                                                    |
+| `className`    | `string`          | -       | Additional CSS classes                                                                 |
+| `isDecorative` | `boolean`         | `false` | When true, touches pass through to the Input and content is hidden from screen readers |
+| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported                                     |
 
 ### InputGroup.Suffix
 
-| prop             | type              | default | description                                                                                  |
-| ---------------- | ----------------- | ------- | -------------------------------------------------------------------------------------------- |
-| `children`       | `React.ReactNode` | -       | Content to render inside the suffix                                                          |
-| `className`      | `string`          | -       | Additional CSS classes                                                                       |
-| `isDecorative`   | `boolean`         | `false` | When true, touches pass through to the Input and content is hidden from screen readers        |
-| `...ViewProps`   | `ViewProps`       | -       | All standard React Native View props are supported                                           |
+| prop           | type              | default | description                                                                            |
+| -------------- | ----------------- | ------- | -------------------------------------------------------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Content to render inside the suffix                                                    |
+| `className`    | `string`          | -       | Additional CSS classes                                                                 |
+| `isDecorative` | `boolean`         | `false` | When true, touches pass through to the Input and content is hidden from screen readers |
+| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported                                     |
 
 ### InputGroup.Input
 

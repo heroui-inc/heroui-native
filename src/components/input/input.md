@@ -120,11 +120,7 @@ const BottomSheetTextInput = () => {
 
   return (
     <TextField>
-      <Input
-        placeholder="Type here..."
-        onFocus={onFocus}
-        onBlur={onBlur}
-      />
+      <Input placeholder="Type here..." onFocus={onFocus} onBlur={onBlur} />
     </TextField>
   );
 };
@@ -196,7 +192,7 @@ export const TextInputContent = () => {
 };
 ```
 
-You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/input.tsx>).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/main/example/src/app/(home)/components/input.tsx>).
 
 ## API Reference
 

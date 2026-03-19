@@ -99,17 +99,25 @@ The `feedbackVariant` prop controls which press feedback effects are rendered:
 - `'none'`: No feedback animations at all
 
 ```tsx
-{/* Scale + Highlight (default) */}
-<Button feedbackVariant="scale-highlight">Highlight Effect</Button>
+{
+  /* Scale + Highlight (default) */
+}
+<Button feedbackVariant="scale-highlight">Highlight Effect</Button>;
 
-{/* Scale + Ripple */}
-<Button feedbackVariant="scale-ripple">Ripple Effect</Button>
+{
+  /* Scale + Ripple */
+}
+<Button feedbackVariant="scale-ripple">Ripple Effect</Button>;
 
-{/* Scale only */}
-<Button feedbackVariant="scale">Scale Only</Button>
+{
+  /* Scale only */
+}
+<Button feedbackVariant="scale">Scale Only</Button>;
 
-{/* No feedback */}
-<Button feedbackVariant="none">No Feedback</Button>
+{
+  /* No feedback */
+}
+<Button feedbackVariant="none">No Feedback</Button>;
 ```
 
 ### Custom Animation
@@ -117,7 +125,9 @@ The `feedbackVariant` prop controls which press feedback effects are rendered:
 The `animation` prop controls individual sub-animations. Its shape depends on the `feedbackVariant`.
 
 ```tsx
-{/* Customize scale and highlight (default feedbackVariant) */}
+{
+  /* Customize scale and highlight (default feedbackVariant) */
+}
 <Button
   animation={{
     scale: { value: 0.97 },
@@ -128,9 +138,11 @@ The `animation` prop controls individual sub-animations. Its shape depends on th
   }}
 >
   Custom Highlight
-</Button>
+</Button>;
 
-{/* Customize scale and ripple */}
+{
+  /* Customize scale and ripple */
+}
 <Button
   feedbackVariant="scale-ripple"
   animation={{
@@ -142,7 +154,7 @@ The `animation` prop controls individual sub-animations. Its shape depends on th
   }}
 >
   Custom Ripple
-</Button>
+</Button>;
 ```
 
 ### Disable Individual Animations
@@ -150,14 +162,20 @@ The `animation` prop controls individual sub-animations. Its shape depends on th
 Disable specific sub-animations by setting them to `false`:
 
 ```tsx
-{/* Disable scale, keep highlight */}
-<Button animation={{ scale: false }}>No Scale</Button>
+{
+  /* Disable scale, keep highlight */
+}
+<Button animation={{ scale: false }}>No Scale</Button>;
 
-{/* Disable highlight, keep scale */}
-<Button animation={{ highlight: false }}>No Highlight</Button>
+{
+  /* Disable highlight, keep scale */
+}
+<Button animation={{ highlight: false }}>No Highlight</Button>;
 
-{/* Disable both */}
-<Button animation={{ scale: false, highlight: false }}>No Animations</Button>
+{
+  /* Disable both */
+}
+<Button animation={{ scale: false, highlight: false }}>No Animations</Button>;
 ```
 
 ### Disable All Animations
@@ -205,7 +223,9 @@ import { Button, PressableFeedback } from 'heroui-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet } from 'react-native';
 
-{/* Gradient with no feedback overlay */}
+{
+  /* Gradient with no feedback overlay */
+}
 <Button feedbackVariant="none">
   <LinearGradient
     colors={['#9333ea', '#ec4899']}
@@ -214,9 +234,11 @@ import { StyleSheet } from 'react-native';
     style={StyleSheet.absoluteFill}
   />
   <Button.Label className="text-white font-bold">Gradient</Button.Label>
-</Button>
+</Button>;
 
-{/* Gradient with custom ripple effect */}
+{
+  /* Gradient with custom ripple effect */
+}
 <Button
   feedbackVariant="scale-ripple"
   animation={{
@@ -235,7 +257,7 @@ import { StyleSheet } from 'react-native';
   <Button.Label className="text-white font-bold" pointerEvents="none">
     Gradient with Ripple
   </Button.Label>
-</Button>
+</Button>;
 ```
 
 ## Example
@@ -294,7 +316,7 @@ export default function ButtonExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/button.tsx>).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/main/example/src/app/(home)/components/button.tsx>).
 
 ## API Reference
 
@@ -323,25 +345,25 @@ The `animation` prop is a discriminated union based on `feedbackVariant`. It fol
 
 **When `feedbackVariant="scale-highlight"` (default):**
 
-| prop        | type                                     | default | description                                                  |
-| ----------- | ---------------------------------------- | ------- | ------------------------------------------------------------ |
-| `scale`     | `PressableFeedbackScaleAnimation`        | -       | Scale animation config (`false` to disable)                  |
-| `highlight` | `PressableFeedbackHighlightAnimation`    | -       | Highlight overlay config (`false` to disable)                |
+| prop        | type                                     | default | description                                                   |
+| ----------- | ---------------------------------------- | ------- | ------------------------------------------------------------- |
+| `scale`     | `PressableFeedbackScaleAnimation`        | -       | Scale animation config (`false` to disable)                   |
+| `highlight` | `PressableFeedbackHighlightAnimation`    | -       | Highlight overlay config (`false` to disable)                 |
 | `state`     | `'disabled' \| 'disable-all' \| boolean` | -       | Control animation state while keeping config (runtime toggle) |
 
 **When `feedbackVariant="scale-ripple"`:**
 
-| prop     | type                                     | default | description                                                  |
-| -------- | ---------------------------------------- | ------- | ------------------------------------------------------------ |
-| `scale`  | `PressableFeedbackScaleAnimation`        | -       | Scale animation config (`false` to disable)                  |
-| `ripple` | `PressableFeedbackRippleAnimation`       | -       | Ripple overlay config (`false` to disable)                   |
+| prop     | type                                     | default | description                                                   |
+| -------- | ---------------------------------------- | ------- | ------------------------------------------------------------- |
+| `scale`  | `PressableFeedbackScaleAnimation`        | -       | Scale animation config (`false` to disable)                   |
+| `ripple` | `PressableFeedbackRippleAnimation`       | -       | Ripple overlay config (`false` to disable)                    |
 | `state`  | `'disabled' \| 'disable-all' \| boolean` | -       | Control animation state while keeping config (runtime toggle) |
 
 **When `feedbackVariant="scale"`:**
 
-| prop    | type                                     | default | description                                                  |
-| ------- | ---------------------------------------- | ------- | ------------------------------------------------------------ |
-| `scale` | `PressableFeedbackScaleAnimation`        | -       | Scale animation config (`false` to disable)                  |
+| prop    | type                                     | default | description                                                   |
+| ------- | ---------------------------------------- | ------- | ------------------------------------------------------------- |
+| `scale` | `PressableFeedbackScaleAnimation`        | -       | Scale animation config (`false` to disable)                   |
 | `state` | `'disabled' \| 'disable-all' \| boolean` | -       | Control animation state while keeping config (runtime toggle) |
 
 **When `feedbackVariant="none"`:**

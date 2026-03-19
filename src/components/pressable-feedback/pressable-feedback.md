@@ -199,7 +199,7 @@ export default function PressableFeedbackExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/pressable-feedback.tsx>).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/main/example/src/app/(home)/components/pressable-feedback.tsx>).
 
 ## API Reference
 

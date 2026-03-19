@@ -52,9 +52,7 @@ The ListGroup component uses compound parts to create grouped list items with ti
   <ListGroup.Item>
     <ListGroup.ItemContent>
       <ListGroup.ItemTitle>Payment Methods</ListGroup.ItemTitle>
-      <ListGroup.ItemDescription>
-        Visa ending in 4829
-      </ListGroup.ItemDescription>
+      <ListGroup.ItemDescription>Visa ending in 4829</ListGroup.ItemDescription>
     </ListGroup.ItemContent>
     <ListGroup.ItemSuffix />
   </ListGroup.Item>
@@ -73,9 +71,7 @@ Add leading icons using the `ListGroup.ItemPrefix` slot.
     </ListGroup.ItemPrefix>
     <ListGroup.ItemContent>
       <ListGroup.ItemTitle>Profile</ListGroup.ItemTitle>
-      <ListGroup.ItemDescription>
-        Name, photo, bio
-      </ListGroup.ItemDescription>
+      <ListGroup.ItemDescription>Name, photo, bio</ListGroup.ItemDescription>
     </ListGroup.ItemContent>
     <ListGroup.ItemSuffix />
   </ListGroup.Item>
@@ -86,9 +82,7 @@ Add leading icons using the `ListGroup.ItemPrefix` slot.
     </ListGroup.ItemPrefix>
     <ListGroup.ItemContent>
       <ListGroup.ItemTitle>Security</ListGroup.ItemTitle>
-      <ListGroup.ItemDescription>
-        Password, 2FA
-      </ListGroup.ItemDescription>
+      <ListGroup.ItemDescription>Password, 2FA</ListGroup.ItemDescription>
     </ListGroup.ItemContent>
     <ListGroup.ItemSuffix />
   </ListGroup.Item>
@@ -222,7 +216,7 @@ import { ListGroup, PressableFeedback, Separator } from 'heroui-native';
     </PressableFeedback.Scale>
     <PressableFeedback.Ripple />
   </PressableFeedback>
-</ListGroup>
+</ListGroup>;
 ```
 
 ## Example
@@ -317,18 +311,18 @@ export default function ListGroupExample() {
 }
 ```
 
-You can find more examples in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/rc/example/src/app/(home)/components/list-group.tsx).
+You can find more examples in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/main/example/src/app/(home)/components/list-group.tsx>).
 
 ## API Reference
 
 ### ListGroup
 
-| prop           | type                                                       | default     | description                                        |
-| -------------- | ---------------------------------------------------------- | ----------- | -------------------------------------------------- |
-| `children`     | `React.ReactNode`                                          | -           | Children elements to be rendered inside the group  |
+| prop           | type                                                      | default     | description                                        |
+| -------------- | --------------------------------------------------------- | ----------- | -------------------------------------------------- |
+| `children`     | `React.ReactNode`                                         | -           | Children elements to be rendered inside the group  |
 | `variant`      | `'default' \| 'secondary' \| 'tertiary' \| 'transparent'` | `'default'` | Visual variant of the underlying Surface container |
-| `className`    | `string`                                                   | -           | Additional CSS classes for the root container      |
-| `...ViewProps` | `ViewProps`                                                | -           | All standard React Native View props are supported |
+| `className`    | `string`                                                  | -           | Additional CSS classes for the root container      |
+| `...ViewProps` | `ViewProps`                                               | -           | All standard React Native View props are supported |
 
 ### ListGroup.Item
 
@@ -340,19 +334,19 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 
 ### ListGroup.ItemPrefix
 
-| prop           | type              | default | description                                            |
-| -------------- | ----------------- | ------- | ------------------------------------------------------ |
-| `children`     | `React.ReactNode` | -       | Leading content such as icons or avatars               |
-| `className`    | `string`          | -       | Additional CSS classes for the prefix                  |
-| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported     |
+| prop           | type              | default | description                                        |
+| -------------- | ----------------- | ------- | -------------------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Leading content such as icons or avatars           |
+| `className`    | `string`          | -       | Additional CSS classes for the prefix              |
+| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported |
 
 ### ListGroup.ItemContent
 
-| prop           | type              | default | description                                            |
-| -------------- | ----------------- | ------- | ------------------------------------------------------ |
-| `children`     | `React.ReactNode` | -       | Content area, typically title and description          |
-| `className`    | `string`          | -       | Additional CSS classes for the content area            |
-| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported     |
+| prop           | type              | default | description                                        |
+| -------------- | ----------------- | ------- | -------------------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Content area, typically title and description      |
+| `className`    | `string`          | -       | Additional CSS classes for the content area        |
+| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported |
 
 ### ListGroup.ItemTitle
 
@@ -372,12 +366,12 @@ You can find more examples in the [GitHub repository](https://github.com/heroui-
 
 ### ListGroup.ItemSuffix
 
-| prop           | type                 | default | description                                                                        |
-| -------------- | -------------------- | ------- | ---------------------------------------------------------------------------------- |
-| `children`     | `React.ReactNode`    | -       | Custom trailing content; overrides the default chevron-right icon when provided    |
-| `className`    | `string`             | -       | Additional CSS classes for the suffix                                              |
-| `iconProps`    | `ListGroupIconProps` | -       | Props to customise the default chevron-right icon. Only applies when no children   |
-| `...ViewProps` | `ViewProps`          | -       | All standard React Native View props are supported                                 |
+| prop           | type                 | default | description                                                                      |
+| -------------- | -------------------- | ------- | -------------------------------------------------------------------------------- |
+| `children`     | `React.ReactNode`    | -       | Custom trailing content; overrides the default chevron-right icon when provided  |
+| `className`    | `string`             | -       | Additional CSS classes for the suffix                                            |
+| `iconProps`    | `ListGroupIconProps` | -       | Props to customise the default chevron-right icon. Only applies when no children |
+| `...ViewProps` | `ViewProps`          | -       | All standard React Native View props are supported                               |
 
 #### ListGroupIconProps
 

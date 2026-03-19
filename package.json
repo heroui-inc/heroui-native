@@ -37,7 +37,7 @@
     "example": "yarn workspace heroui-native-example",
     "test": "jest",
     "typecheck": "bash ./scripts/typecheck.sh",
-    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"example/src/**/*.{ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",

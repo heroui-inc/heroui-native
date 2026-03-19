@@ -19,6 +19,7 @@
 | InputGroup        | [input-group.md](../src/components/input-group/input-group.md)                      |
 | InputOTP          | [input-otp.md](../src/components/input-otp/input-otp.md)                            |
 | Label             | [label.md](../src/components/label/label.md)                                        |
+| LinkButton        | [link-button.md](../src/components/link-button/link-button.md)                      |
 | ListGroup         | [list-group.md](../src/components/list-group/list-group.md)                         |
 | Menu              | [menu.md](../src/components/menu/menu.md)                                           |
 | Popover           | [popover.md](../src/components/popover/popover.md)                                  |

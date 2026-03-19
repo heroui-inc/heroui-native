@@ -9089,6 +9089,11 @@ __metadata:
     react-native-worklets: ">=0.5.1"
     tailwind-merge: ^3.4.0
     tailwind-variants: ^3.2.2
+  peerDependenciesMeta:
+    "@gorhom/bottom-sheet":
+      optional: true
+    react-native-screens:
+      optional: true
   languageName: unknown
   linkType: soft
 

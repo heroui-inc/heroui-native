@@ -1,4 +1,4 @@
-import type GorhomBottomSheet from '@gorhom/bottom-sheet';
+import type { BottomSheetProps } from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
@@ -108,7 +108,7 @@ export interface BottomSheetOverlayProps
  * BottomSheet Content component props
  */
 export interface BottomSheetContentProps
-  extends Partial<React.ComponentProps<typeof GorhomBottomSheet>>,
+  extends Partial<BottomSheetProps>,
     BaseBottomSheetContentProps {}
 
 /**

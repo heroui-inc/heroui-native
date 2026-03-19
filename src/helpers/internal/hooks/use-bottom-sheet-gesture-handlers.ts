@@ -1,15 +1,16 @@
-import {
-  useGestureEventsHandlersDefault,
-  type GestureEventHandlerCallbackType,
-  type GestureEventsHandlersHookType,
+import type {
+  GestureEventHandlerCallbackType,
+  GestureEventsHandlersHookType,
 } from '@gorhom/bottom-sheet';
+import GorhomBottomSheetPackage from '../../../optional/gorhom-bottom-sheet';
 import { useBottomSheetIsDragging } from '../contexts/bottom-sheet-is-dragging-context';
 
 export const useBottomSheetGestureHandlers: GestureEventsHandlersHookType =
   () => {
     const { isDragging } = useBottomSheetIsDragging();
 
-    const defaultHandlers = useGestureEventsHandlersDefault();
+    const defaultHandlers =
+      GorhomBottomSheetPackage.useGestureEventsHandlersDefault();
 
     const handleOnStart: GestureEventHandlerCallbackType = (
       source,

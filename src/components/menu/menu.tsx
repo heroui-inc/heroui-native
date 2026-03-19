@@ -1,7 +1,7 @@
-import BottomSheet from '@gorhom/bottom-sheet';
+import type BottomSheet from '@gorhom/bottom-sheet';
 import { createContext, forwardRef, useMemo } from 'react';
 import type { GestureResponderEvent, Text as RNText } from 'react-native';
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import Animated, { FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useThemeColor } from '../../helpers/external/hooks';
@@ -234,7 +234,8 @@ const MenuContentPopover = forwardRef<
     },
     ref
   ) => {
-    const { contentLayout, isSubMenuOpen } = useMenu();
+    const { contentLayout, isSubMenuOpen, openSubMenuId, closeSubMenu } =
+      useMenu();
 
     const safeAreaInsets = useSafeAreaInsets();
     const { height: screenHeight } = useWindowDimensions();
@@ -282,6 +283,16 @@ const MenuContentPopover = forwardRef<
             {...props}
           >
             {children}
+            {isSubMenuOpen && (
+              <Pressable
+                className="absolute inset-0 z-40"
+                onPress={() => {
+                  if (openSubMenuId !== null) {
+                    closeSubMenu(openSubMenuId);
+                  }
+                }}
+              />
+            )}
           </AnimatedContent>
         )}
         <AnimatedContent

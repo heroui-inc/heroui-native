@@ -1,3 +1,26 @@
+## 1.0.0 (2026-03-21)
+
+* fix: useThemeColor iterable types ([a0ebb78](https://github.com/heroui-inc/heroui-native/commit/a0ebb78))
+* fix(checkbox): custom indicator example animation ([c489604](https://github.com/heroui-inc/heroui-native/commit/c489604))
+* fix(example-app): index screen text issue ([2160421](https://github.com/heroui-inc/heroui-native/commit/2160421))
+* fix(example-app): useHeaderHeight hook issue ([ffaa04d](https://github.com/heroui-inc/heroui-native/commit/ffaa04d))
+* fix(lint): scope eslint to source directories only ([54e120d](https://github.com/heroui-inc/heroui-native/commit/54e120d))
+* fix(sub-menu): overlay close issue ([715641f](https://github.com/heroui-inc/heroui-native/commit/715641f))
+* build: add optional gorhom-bottom-sheet module ([7639736](https://github.com/heroui-inc/heroui-native/commit/7639736))
+* build: set react-native-screens as optional ([849b872](https://github.com/heroui-inc/heroui-native/commit/849b872))
+* build: update issue-closed workflow ([954b207](https://github.com/heroui-inc/heroui-native/commit/954b207))
+* build: update yarn.lock ([4d0ff79](https://github.com/heroui-inc/heroui-native/commit/4d0ff79))
+* chore: remove lint msg ([66496bf](https://github.com/heroui-inc/heroui-native/commit/66496bf))
+* chore: sync versions ([1f94288](https://github.com/heroui-inc/heroui-native/commit/1f94288))
+* docs: upd repo ref links across the project ([d509343](https://github.com/heroui-inc/heroui-native/commit/d509343))
+* docs(popover): update outdated button api example ([0e5a1c1](https://github.com/heroui-inc/heroui-native/commit/0e5a1c1))
+* feat: add link-button component ([6bb17b1](https://github.com/heroui-inc/heroui-native/commit/6bb17b1))
+* feat(sub-menu): menu area close overlay ([4ab108f](https://github.com/heroui-inc/heroui-native/commit/4ab108f))
+* refactor(input): remove isBottomSheetAware prop ([3c5112e](https://github.com/heroui-inc/heroui-native/commit/3c5112e))
+* refactor(sub-menu): open close logic ([4bfc343](https://github.com/heroui-inc/heroui-native/commit/4bfc343))
+
+
+
 ## 1.0.0-rc.4 (2026-03-06)
 
 * chore: sync versions ([3196e61](https://github.com/heroui-inc/heroui-native/commit/3196e61))

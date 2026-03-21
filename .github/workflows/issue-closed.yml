@@ -1,0 +1,45 @@
+name: Remove Status Labels on Issue Close
+on:
+  issues:
+    types:
+      - closed
+
+jobs:
+  remove-status-labels:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Remove status labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labelsToRemove = [
+              "In Review",
+              "To Review",
+              "Investigation",
+              "Waiting for Next Release",
+            ];
+
+            const issueLabels = context.payload.issue.labels.map(
+              (label) => label.name
+            );
+
+            console.log("Labels on issue:", JSON.stringify(issueLabels));
+            console.log("Labels to remove:", JSON.stringify(labelsToRemove));
+
+            for (const label of labelsToRemove) {
+              const match = issueLabels.find(
+                (issueLabel) => issueLabel.toLowerCase().includes(label.toLowerCase())
+              );
+
+              if (match) {
+                console.log(`Removing label: "${match}"`);
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  name: match,
+                });
+              }
+            }

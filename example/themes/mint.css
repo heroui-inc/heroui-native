@@ -1,0 +1,143 @@
+@layer theme {
+  :root {
+    @variant mint-light {
+      --font-normal: 'Saira-Regular';
+      --font-medium: 'Saira-Medium';
+      --font-semibold: 'Saira-SemiBold';
+      --font-bold: 'Saira-Bold';
+
+      --radius: 0.25rem;
+      
+      /* Base Colors - Fresh, energizing mint */
+      --background: oklch(97.02% 0.0121 155.00);
+      --foreground: oklch(21.03% 0.0059 155.00);
+
+      /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
+      --surface: oklch(100.00% 0.0065 155.00);
+      --surface-foreground: oklch(21.03% 0.0130 155.00);
+
+      --surface-secondary: oklch(95.24% 0.0104 155.00);
+      --surface-secondary-foreground: oklch(21.03% 0.0130 155.00);
+
+      --surface-tertiary: oklch(93.73% 0.0104 155.00);
+      --surface-tertiary-foreground: oklch(21.03% 0.0130 155.00);
+
+      /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
+      --overlay: oklch(100.00% 0.0036 155.00);
+      --overlay-foreground: oklch(21.03% 0.0059 155.00);
+
+      --muted: oklch(55.17% 0.0242 155.00);
+
+      --default: oklch(94.00% 0.0121 155.00);
+      --default-foreground: oklch(21.03% 0.0059 155.00);
+
+      /* Accent: Vibrant teal-mint with modern energy */
+      --accent: oklch(82.00% 0.1200 155.00);
+      --accent-foreground: oklch(15% 0.0240 155.00);
+
+      /* Form Field Defaults - Colors */
+      --field-background: oklch(100.00% 0.0060 155.00);
+      --field-foreground: oklch(21.03% 0.0059 155.00);
+      --field-placeholder: var(--muted);
+      --field-border: transparent;
+
+      /* Status Colors - Natural, organic palette */
+      --success: oklch(73.29% 0.1982 138.95);
+      --success-foreground: oklch(21.03% 0.0059 138.95);
+
+      --warning: oklch(78.19% 0.1623 60.47);
+      --warning-foreground: oklch(21.03% 0.0059 60.47);
+
+      --danger: oklch(65.32% 0.2384 13.88);
+      --danger-foreground: oklch(99.11% 0 0);
+
+      /* Component Colors */
+      --segment: oklch(100.00% 0.0121 155.00);
+      --segment-foreground: oklch(21.03% 0.0059 155.00);
+
+      /* Misc Colors */
+      --border: oklch(90.00% 0.0121 155.00);
+      --separator: oklch(82.00% 0.0121 155.00);
+      --focus: oklch(82.00% 0.1200 155.00);
+      --link: oklch(0.62 0.15 175);
+
+      /* Shadows */
+      --surface-shadow:
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
+      --overlay-shadow:
+        0 2px 8px 0 rgba(0, 0, 0, 0.02), 0 -6px 12px 0 rgba(0, 0, 0, 0.01),
+        0 14px 28px 0 rgba(0, 0, 0, 0.03);
+      --field-shadow:
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
+    }
+
+    @variant mint-dark {
+      --font-normal: 'Saira-Regular';
+      --font-medium: 'Saira-Medium';
+      --font-semibold: 'Saira-SemiBold';
+      --font-bold: 'Saira-Bold';
+
+      --radius: 0.25rem;
+
+      /* Base Colors - Deep forest mint */
+      --background: oklch(12.00% 0.0121 155.00);
+      --foreground: oklch(99.11% 0.0000 0.00);
+
+      /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
+      --surface: oklch(21.03% 0.0260 155.00);
+      --surface-foreground: oklch(99.11% 0.0130 155.00);
+
+      --surface-secondary: oklch(25.70% 0.0195 155.00);
+      --surface-secondary-foreground: oklch(99.11% 0.0130 155.00);
+      
+      --surface-tertiary: oklch(27.21% 0.0195 155.00);
+      --surface-tertiary-foreground: oklch(99.11% 0.0130 155.00);
+
+      /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
+      --overlay: oklch(21.03% 0.0242 155.00);
+      --overlay-foreground: oklch(99.11% 0.0000 0.00);
+
+      --muted: oklch(70.50% 0.0242 155.00);
+
+      --default: oklch(27.40% 0.0121 155.00);
+      --default-foreground: oklch(99.11% 0 0);
+
+      /* Accent: Glowing emerald-teal */
+      --accent: oklch(82.00% 0.1200 155.00);
+      --accent-foreground: oklch(15% 0.0240 155.00);
+
+      /* Form Field Defaults - Colors */
+      --field-background: oklch(21.03% 0.0242 155.00);
+      --field-foreground: oklch(99.11% 0.0000 0.00);
+      --field-placeholder: var(--muted);
+      --field-border: transparent;
+
+      /* Status Colors - Luminous dark mode palette */
+      --success: oklch(73.29% 0.1982 138.95);
+      --success-foreground: oklch(21.03% 0.0059 138.95);
+
+      --warning: oklch(82.03% 0.1422 64.48);
+      --warning-foreground: oklch(21.03% 0.0059 64.48);
+
+      --danger: oklch(59.40% 0.2015 12.77);
+      --danger-foreground: oklch(99.11% 0 0);
+
+      /* Component Colors */
+      --segment: oklch(39.64% 0.0121 155.00);
+      --segment-foreground: oklch(99.11% 0.0000 0.00);
+
+      /* Misc Colors */
+      --border: oklch(28.00% 0.0121 155.00);
+      --separator: oklch(45.00% 0.0121 155.00);
+      --focus: oklch(82.00% 0.1200 155.00);
+      --link: oklch(0.72 0.16 175);
+
+      /* Shadows */
+      --surface-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
+      --overlay-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+      --field-shadow: 0 0 0 0 transparent inset; /* Transparent shadow to allow ring utilities to work */
+    }
+  }
+}

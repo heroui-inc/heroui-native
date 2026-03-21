@@ -1,9 +1,8 @@
 const path = require('path');
 const exampleNodeModules = path.join(__dirname, 'node_modules'); // Example's node_modules
 const escape = require('escape-string-regexp');
-const exclusionList = require('metro-config/src/defaults/exclusionList');
 const rootPkg = require('../package.json');
-const { withNativeWind } = require('nativewind/metro');
+const { withUniwindConfig } = require('uniwind/metro');
 const { getDefaultConfig } = require('@expo/metro-config');
 const {
   wrapWithReanimatedMetroConfig,
@@ -34,10 +33,8 @@ const configObj = {
     disableHierarchicalLookup: true,
     nodeModulesPaths: [exampleNodeModules, path.resolve(root, 'node_modules')],
 
-    blacklistRE: exclusionList(
-      peerDependencies.map(
-        (m) => new RegExp(`^${escape(path.join(root, 'node_modules', m))}/.*$`) // Exclude root's node_modules
-      )
+    blockList: peerDependencies.map(
+      (m) => new RegExp(`^${escape(path.join(root, 'node_modules', m))}/.*$`) // Exclude root's node_modules
     ),
     extraNodeModules: {
       ...peerDependencies.reduce((acc, name) => {
@@ -54,6 +51,15 @@ const config = {
   ...configObj,
 };
 
-module.exports = withNativeWind(wrapWithReanimatedMetroConfig(config), {
-  input: './global.css',
+module.exports = withUniwindConfig(wrapWithReanimatedMetroConfig(config), {
+  cssEntryFile: './global.css',
+  dtsFile: './src/uniwind.d.ts',
+  extraThemes: [
+    'lavender-light',
+    'lavender-dark',
+    'mint-light',
+    'mint-dark',
+    'sky-light',
+    'sky-dark',
+  ],
 });

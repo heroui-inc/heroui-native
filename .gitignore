@@ -84,3 +84,13 @@ android/generated
 
 # React Native Nitro Modules
 nitrogen/
+
+# Claude
+.claude
+.cursor
+.workflows
+
+# Example dist
+example/dist
+
+

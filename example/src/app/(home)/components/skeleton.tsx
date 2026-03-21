@@ -1,0 +1,486 @@
+/* eslint-disable react-native/no-inline-styles */
+import {
+  Avatar,
+  Card,
+  Label,
+  Radio,
+  RadioGroup,
+  Separator,
+  Skeleton,
+  SkeletonGroup,
+  type SkeletonAnimation,
+} from 'heroui-native';
+import { useState } from 'react';
+import { Image, Text, View } from 'react-native';
+import Animated, { FadeInLeft, FadeOutRight } from 'react-native-reanimated';
+import { AppText } from '../../../components/app-text';
+import type { UsageVariant } from '../../../components/component-presentation/types';
+import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { WithStateToggle } from '../../../components/with-state-toggle';
+
+const SkeletonControls = ({
+  variant,
+  setVariant,
+}: {
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
+  variant: SkeletonAnimation;
+  setVariant: (value: SkeletonAnimation) => void;
+}) => {
+  return (
+    <View>
+      <RadioGroup
+        value={variant}
+        onValueChange={(value) => setVariant(value as SkeletonAnimation)}
+        className="flex-row gap-6"
+      >
+        <RadioGroup.Item value="shimmer">
+          <Radio />
+          <Label>
+            <Label.Text maxFontSizeMultiplier={1}>Shimmer</Label.Text>
+          </Label>
+        </RadioGroup.Item>
+        <RadioGroup.Item value="pulse">
+          <Radio />
+          <Label>
+            <Label.Text maxFontSizeMultiplier={1}>Pulse</Label.Text>
+          </Label>
+        </RadioGroup.Item>
+        <RadioGroup.Item value="none">
+          <Radio />
+          <Label>
+            <Label.Text maxFontSizeMultiplier={1}>None</Label.Text>
+          </Label>
+        </RadioGroup.Item>
+      </RadioGroup>
+      <Separator className="my-6" />
+    </View>
+  );
+};
+
+const CardSkeletonContent = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
+
+  return (
+    <WithStateToggle
+      isSelected={isLoading}
+      onSelectedChange={setIsLoading}
+      label="Loading"
+      description="Toggle skeleton loading state"
+    >
+      <View className="flex-1">
+        <View className="flex-1 justify-center">
+          <SkeletonGroup
+            isLoading={isLoading}
+            variant={variant}
+            className="h-[360px]"
+          >
+            <Card className="p-4">
+              <Card.Header>
+                <View className="flex-row items-center gap-3 mb-4">
+                  <SkeletonGroup.Item className="size-10 rounded-full">
+                    <Avatar size="sm" alt="Avatar">
+                      <Avatar.Image
+                        source={{
+                          uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=4',
+                        }}
+                      />
+                      <Avatar.Fallback />
+                    </Avatar>
+                  </SkeletonGroup.Item>
+
+                  <View className="flex-1 gap-1.5">
+                    {isLoading && (
+                      <>
+                        <SkeletonGroup.Item className="h-2.5 w-32 rounded-md" />
+                        <SkeletonGroup.Item className="h-2.5 w-24 rounded-md" />
+                      </>
+                    )}
+                    {!isLoading && (
+                      <View>
+                        <AppText
+                          className="font-semibold text-foreground"
+                          maxFontSizeMultiplier={1}
+                        >
+                          Sarah Mitchell
+                        </AppText>
+                        <AppText
+                          className="text-sm text-muted"
+                          maxFontSizeMultiplier={1}
+                        >
+                          @mitchell
+                        </AppText>
+                      </View>
+                    )}
+                  </View>
+                </View>
+
+                <View className="mb-4">
+                  {isLoading && (
+                    <View className="gap-2">
+                      <SkeletonGroup.Item className="h-3 w-full rounded-md" />
+                      <SkeletonGroup.Item className="h-3 w-2/3 rounded-md" />
+                    </View>
+                  )}
+                  {!isLoading && (
+                    <AppText
+                      className="text-base text-foreground"
+                      maxFontSizeMultiplier={1}
+                    >
+                      Bridging the Future
+                    </AppText>
+                  )}
+                </View>
+              </Card.Header>
+
+              <SkeletonGroup.Item className="h-48 w-full rounded-2xl">
+                <View className="h-48 bg-surface-secondary rounded-2xl overflow-hidden">
+                  <Image
+                    source={{
+                      uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/docs/robot1.jpeg',
+                    }}
+                    className="h-full w-full"
+                  />
+                </View>
+              </SkeletonGroup.Item>
+            </Card>
+          </SkeletonGroup>
+        </View>
+        <SkeletonControls
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          variant={variant}
+          setVariant={setVariant}
+        />
+      </View>
+    </WithStateToggle>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const ListSkeletonContent = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
+
+  return (
+    <WithStateToggle
+      isSelected={isLoading}
+      onSelectedChange={setIsLoading}
+      label="Loading"
+      description="Toggle skeleton loading state"
+    >
+      <View className="flex-1">
+        <View className="flex-1 justify-center">
+          <View className="h-[175px] gap-3">
+            {[1, 2, 3].map((item) => (
+              <SkeletonGroup
+                key={item}
+                isLoading={isLoading}
+                isSkeletonOnly
+                variant={variant}
+                className="flex-row items-center gap-3"
+              >
+                <SkeletonGroup.Item className="size-12 rounded-xl" />
+                <View className="flex-1 gap-1.5">
+                  <SkeletonGroup.Item className="h-4 w-full rounded-md" />
+                  <SkeletonGroup.Item className="h-3 w-2/3 rounded-md" />
+                </View>
+              </SkeletonGroup>
+            ))}
+            {!isLoading && (
+              <View className="flex-1 items-center justify-center">
+                <Text className="text-lg text-muted">No Data</Text>
+              </View>
+            )}
+          </View>
+        </View>
+        <SkeletonControls
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          variant={variant}
+          setVariant={setVariant}
+        />
+      </View>
+    </WithStateToggle>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const TextSkeletonsContent = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
+
+  return (
+    <WithStateToggle
+      isSelected={isLoading}
+      onSelectedChange={setIsLoading}
+      label="Loading"
+      description="Toggle skeleton loading state"
+    >
+      <View className="flex-1">
+        <View className="flex-1 justify-center">
+          <View className="gap-6 h-[100px]">
+            {isLoading ? (
+              <SkeletonGroup
+                entering={FadeInLeft.duration(200)}
+                exiting={FadeOutRight.duration(200)}
+                isLoading={isLoading}
+                variant={variant}
+                isSkeletonOnly
+                className="gap-2"
+              >
+                <SkeletonGroup.Item className="h-4 w-full rounded-md" />
+                <SkeletonGroup.Item className="h-4 w-3/4 rounded-md" />
+                <SkeletonGroup.Item className="h-4 w-1/2 rounded-md" />
+              </SkeletonGroup>
+            ) : (
+              <Animated.View
+                key="text"
+                entering={FadeInLeft.duration(200)}
+                exiting={FadeOutRight.duration(200)}
+              >
+                <AppText className="text-base text-foreground">
+                  The new productivity dashboard makes it easy to track daily
+                  tasks and goals. You can customize widgets and set smart
+                  reminders.
+                </AppText>
+              </Animated.View>
+            )}
+          </View>
+        </View>
+        <SkeletonControls
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          variant={variant}
+          setVariant={setVariant}
+        />
+      </View>
+    </WithStateToggle>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const CircularSkeletonsContent = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
+
+  return (
+    <WithStateToggle
+      isSelected={isLoading}
+      onSelectedChange={setIsLoading}
+      label="Loading"
+      description="Toggle skeleton loading state"
+    >
+      <View className="flex-1">
+        <View className="flex-1 justify-center">
+          <View className="gap-6">
+            <SkeletonGroup
+              isLoading={isLoading}
+              variant={variant}
+              className="flex-row gap-4 items-end justify-center"
+            >
+              <SkeletonGroup.Item className="size-10 rounded-full">
+                <Avatar size="sm" alt="Avatar">
+                  <Avatar.Image
+                    source={{
+                      uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
+                    }}
+                  />
+                  <Avatar.Fallback />
+                </Avatar>
+              </SkeletonGroup.Item>
+
+              <SkeletonGroup.Item className="size-12 rounded-full">
+                <Avatar size="md" alt="Avatar">
+                  <Avatar.Image
+                    source={{
+                      uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
+                    }}
+                  />
+                  <Avatar.Fallback />
+                </Avatar>
+              </SkeletonGroup.Item>
+
+              <SkeletonGroup.Item className="size-16 rounded-full">
+                <Avatar size="lg" alt="Avatar">
+                  <Avatar.Image
+                    source={{
+                      uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',
+                    }}
+                  />
+                  <Avatar.Fallback />
+                </Avatar>
+              </SkeletonGroup.Item>
+            </SkeletonGroup>
+          </View>
+        </View>
+        <SkeletonControls
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          variant={variant}
+          setVariant={setVariant}
+        />
+      </View>
+    </WithStateToggle>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const CustomShimmerConfigContent = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  return (
+    <WithStateToggle
+      isSelected={isLoading}
+      onSelectedChange={setIsLoading}
+      label="Loading"
+      description="Toggle skeleton loading state"
+    >
+      <View className="flex-1 justify-center">
+        <View className="gap-3">
+          <Skeleton
+            className="h-16 w-full rounded-2xl"
+            isLoading={isLoading}
+            variant="shimmer"
+            animation={{
+              shimmer: {
+                duration: 2000,
+                highlightColor: 'rgba(59, 130, 246, 0.3)',
+              },
+            }}
+          >
+            <View
+              className="h-16 bg-blue-500 rounded-2xl items-center justify-center"
+              style={{ borderCurve: 'continuous' }}
+            >
+              <Text className="text-white">Blue Shimmer</Text>
+            </View>
+          </Skeleton>
+
+          <Skeleton
+            className="h-16 w-full rounded-2xl"
+            isLoading={isLoading}
+            variant="shimmer"
+            animation={{
+              shimmer: {
+                duration: 1000,
+                speed: 2,
+                highlightColor: 'rgba(34, 197, 94, 0.3)',
+              },
+            }}
+          >
+            <View
+              className="h-16 bg-green-500 rounded-2xl items-center justify-center"
+              style={{ borderCurve: 'continuous' }}
+            >
+              <Text className="text-white">Fast Green Shimmer</Text>
+            </View>
+          </Skeleton>
+        </View>
+      </View>
+    </WithStateToggle>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const CustomPulseConfigContent = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  return (
+    <WithStateToggle
+      isSelected={isLoading}
+      onSelectedChange={setIsLoading}
+      label="Loading"
+      description="Toggle skeleton loading state"
+    >
+      <View className="flex-1 justify-center">
+        <View className="gap-3">
+          <Skeleton
+            className="h-16 w-full rounded-2xl bg-purple-500"
+            isLoading={isLoading}
+            variant="pulse"
+            animation={{
+              pulse: {
+                duration: 500,
+                minOpacity: 0.2,
+                maxOpacity: 0.8,
+              },
+            }}
+          >
+            <View
+              className="h-16 bg-purple-500 rounded-2xl items-center justify-center"
+              style={{ borderCurve: 'continuous' }}
+            >
+              <Text className="text-white">Fast Pulse</Text>
+            </View>
+          </Skeleton>
+
+          <Skeleton
+            className="h-16 w-full rounded-2xl bg-orange-500"
+            isLoading={isLoading}
+            variant="pulse"
+            animation={{
+              pulse: {
+                duration: 1000,
+                minOpacity: 0.5,
+                maxOpacity: 1,
+              },
+            }}
+          >
+            <View
+              className="h-16 bg-orange-500 rounded-2xl items-center justify-center"
+              style={{ borderCurve: 'continuous' }}
+            >
+              <Text className="text-white">Slow Subtle Pulse</Text>
+            </View>
+          </Skeleton>
+        </View>
+      </View>
+    </WithStateToggle>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const SKELETON_VARIANTS: UsageVariant[] = [
+  {
+    value: 'card-skeleton',
+    label: 'Card skeleton',
+    content: <CardSkeletonContent />,
+  },
+  {
+    value: 'list-skeleton',
+    label: 'List skeleton',
+    content: <ListSkeletonContent />,
+  },
+  {
+    value: 'text-skeletons',
+    label: 'Text skeletons',
+    content: <TextSkeletonsContent />,
+  },
+  {
+    value: 'circular-skeletons',
+    label: 'Circular skeletons',
+    content: <CircularSkeletonsContent />,
+  },
+  {
+    value: 'custom-shimmer-config',
+    label: 'Custom shimmer configuration',
+    content: <CustomShimmerConfigContent />,
+  },
+  {
+    value: 'custom-pulse-config',
+    label: 'Custom pulse configuration',
+    content: <CustomPulseConfigContent />,
+  },
+];
+
+export default function SkeletonScreen() {
+  return <UsageVariantFlatList data={SKELETON_VARIANTS} />;
+}

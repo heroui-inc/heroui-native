@@ -1,0 +1,318 @@
+import { Ionicons } from '@expo/vector-icons';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import {
+  ControlField,
+  Description,
+  Label,
+  Separator,
+  Surface,
+  Switch,
+} from 'heroui-native';
+import React from 'react';
+import { View } from 'react-native';
+import Animated, {
+  FadeInLeft,
+  FadeInRight,
+  ZoomIn,
+} from 'react-native-reanimated';
+import { withUniwind } from 'uniwind';
+import { AppText } from '../../../components/app-text';
+import type { UsageVariant } from '../../../components/component-presentation/types';
+import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+
+const StyledIonicons = withUniwind(Ionicons);
+const StyledFontAwesome6 = withUniwind(FontAwesome6);
+
+interface SwitchFieldProps {
+  isSelected: boolean;
+  onSelectedChange: (value: boolean) => void;
+  title: string;
+  description: string;
+}
+
+const SwitchField: React.FC<SwitchFieldProps> = ({
+  isSelected,
+  onSelectedChange,
+  title,
+  description,
+}) => (
+  <ControlField isSelected={isSelected} onSelectedChange={onSelectedChange}>
+    <View className="flex-1">
+      <Label>
+        <Label.Text maxFontSizeMultiplier={1.4}>{title}</Label.Text>
+      </Label>
+      <Description maxFontSizeMultiplier={1.4}>{description}</Description>
+    </View>
+    <ControlField.Indicator />
+  </ControlField>
+);
+
+export const DefaultContent = () => {
+  const [fields, setFields] = React.useState({
+    notifications: false,
+    darkMode: false,
+    autoUpdate: true,
+  });
+
+  const fieldConfigs: Record<
+    keyof typeof fields,
+    { title: string; description: string }
+  > = {
+    notifications: {
+      title: 'Enable notifications',
+      description: 'Receive push notifications about your account activity',
+    },
+    darkMode: {
+      title: 'Dark mode',
+      description: 'Switch between light and dark theme',
+    },
+    autoUpdate: {
+      title: 'Auto-update',
+      description: 'Automatically download and install updates',
+    },
+  };
+
+  const handleFieldChange = (key: keyof typeof fields) => (value: boolean) => {
+    setFields((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const fieldKeys = Object.keys(fields) as Array<keyof typeof fields>;
+
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Surface className="py-5 w-full">
+        {fieldKeys.map((key, index) => (
+          <React.Fragment key={key}>
+            {index > 0 && <Separator className="my-4" />}
+            <SwitchField
+              isSelected={fields[key]}
+              onSelectedChange={handleFieldChange(key)}
+              title={fieldConfigs[key].title}
+              description={fieldConfigs[key].description}
+            />
+          </React.Fragment>
+        ))}
+      </Surface>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const StatesContent = () => {
+  const [fields, setFields] = React.useState({
+    emailNotifications: true,
+    pushNotifications: false,
+  });
+
+  const fieldConfigs: Record<
+    keyof typeof fields,
+    { title: string; description: string; disabled?: boolean }
+  > = {
+    emailNotifications: {
+      title: 'Email notifications',
+      description: 'Receive notifications via email',
+    },
+    pushNotifications: {
+      title: 'Push notifications',
+      description: 'This feature is currently unavailable',
+      disabled: true,
+    },
+  };
+
+  const handleFieldChange = (key: keyof typeof fields) => (value: boolean) => {
+    setFields((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const fieldKeys = Object.keys(fields) as Array<keyof typeof fields>;
+
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Surface className="py-5 w-full">
+        {fieldKeys.map((key, index) => (
+          <React.Fragment key={key}>
+            {index > 0 && <Separator className="my-4" />}
+            <ControlField
+              isSelected={fields[key]}
+              onSelectedChange={handleFieldChange(key)}
+              isDisabled={fieldConfigs[key].disabled}
+            >
+              <View className="flex-1">
+                <Label>
+                  <Label.Text maxFontSizeMultiplier={1.4}>
+                    {fieldConfigs[key].title}
+                  </Label.Text>
+                </Label>
+                <Description maxFontSizeMultiplier={1.4}>
+                  {fieldConfigs[key].description}
+                </Description>
+              </View>
+              <ControlField.Indicator />
+            </ControlField>
+          </React.Fragment>
+        ))}
+      </Surface>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const CustomStylesContent = () => {
+  const [icon, setIcon] = React.useState(true);
+  const [contentIcon, setContentIcon] = React.useState(true);
+  const [contentText, setContentText] = React.useState(true);
+
+  return (
+    <View className="flex-1 px-5 items-center justify-center">
+      <View className="gap-16 items-center">
+        <Switch isSelected={icon} onSelectedChange={setIcon}>
+          <Switch.Thumb>
+            {icon ? (
+              <Animated.View key="check" entering={ZoomIn}>
+                <StyledFontAwesome6
+                  name="check"
+                  size={12}
+                  className="text-accent"
+                />
+              </Animated.View>
+            ) : (
+              <Animated.View key="x" entering={ZoomIn}>
+                <StyledIonicons name="close" size={14} className="text-muted" />
+              </Animated.View>
+            )}
+          </Switch.Thumb>
+        </Switch>
+
+        <Switch
+          isSelected={contentIcon}
+          onSelectedChange={setContentIcon}
+          className="w-[56px] h-[32px]"
+          animation={{
+            backgroundColor: {
+              value: ['#172554', '#eab308'],
+            },
+          }}
+        >
+          <Switch.Thumb
+            className="size-[22px]"
+            animation={{
+              left: {
+                value: 4,
+                springConfig: {
+                  damping: 30,
+                  stiffness: 300,
+                  mass: 1,
+                },
+              },
+            }}
+          />
+          <Switch.StartContent className="left-2">
+            {contentIcon && (
+              <Animated.View key="sun" entering={ZoomIn.springify()}>
+                <StyledIonicons
+                  name="sunny"
+                  size={16}
+                  className="text-[#854d0e]"
+                />
+              </Animated.View>
+            )}
+          </Switch.StartContent>
+          <Switch.EndContent className="right-2">
+            {!contentIcon && (
+              <Animated.View key="moon" entering={ZoomIn.springify()}>
+                <StyledIonicons
+                  name="moon"
+                  size={16}
+                  className="text-[#dbeafe]"
+                />
+              </Animated.View>
+            )}
+          </Switch.EndContent>
+        </Switch>
+
+        <Switch
+          isSelected={contentText}
+          onSelectedChange={setContentText}
+          className="w-[60px] h-[32px]"
+          animation={{
+            backgroundColor: {
+              value: ['#71717a', '#16a34a'],
+            },
+          }}
+        >
+          <Switch.Thumb
+            className="size-[22px]"
+            animation={{
+              left: {
+                value: 4,
+                springConfig: {
+                  damping: 36,
+                  stiffness: 400,
+                  mass: 1,
+                },
+              },
+              backgroundColor: {
+                value: ['#fff', '#fff'],
+              },
+            }}
+          />
+          <Switch.StartContent className="left-3">
+            {contentText && (
+              <Animated.View
+                key="sun"
+                entering={FadeInRight.springify().duration(100)}
+              >
+                <AppText
+                  className="text-xs font-bold text-white"
+                  maxFontSizeMultiplier={1}
+                >
+                  ON
+                </AppText>
+              </Animated.View>
+            )}
+          </Switch.StartContent>
+          <Switch.EndContent className="right-2">
+            {!contentText && (
+              <Animated.View
+                key="moon"
+                entering={FadeInLeft.springify().duration(100)}
+              >
+                <AppText
+                  className="text-xs font-bold text-white"
+                  maxFontSizeMultiplier={1}
+                >
+                  OFF
+                </AppText>
+              </Animated.View>
+            )}
+          </Switch.EndContent>
+        </Switch>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const SWITCH_VARIANTS: UsageVariant[] = [
+  {
+    value: 'default',
+    label: 'Default',
+    content: <DefaultContent />,
+  },
+  {
+    value: 'states',
+    label: 'States',
+    content: <StatesContent />,
+  },
+  {
+    value: 'custom-styles',
+    label: 'Custom styles',
+    content: <CustomStylesContent />,
+  },
+];
+
+export default function SwitchScreen() {
+  return <UsageVariantFlatList data={SWITCH_VARIANTS} />;
+}

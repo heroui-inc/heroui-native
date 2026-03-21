@@ -34,6 +34,6 @@ export default defineConfig([
     },
   },
   {
-    ignores: ['node_modules/', 'lib/'],
+    ignores: ['node_modules/', 'lib/', '.yarn/', 'example/src/uniwind.d.ts'],
   },
 ]);

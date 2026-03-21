@@ -1,0 +1,8 @@
+@layer utilities {
+  .h-hairline {
+    height: hairlineWidth();
+  }
+  .w-hairline {
+    width: hairlineWidth();
+  }
+}

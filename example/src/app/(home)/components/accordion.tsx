@@ -1,0 +1,351 @@
+import { Accordion, PressableFeedback, useAccordionItem } from 'heroui-native';
+import { View } from 'react-native';
+import Animated, {
+  Easing,
+  FadeInLeft,
+  FadeInRight,
+  ZoomIn,
+  ZoomOut,
+} from 'react-native-reanimated';
+import { AccordionWithDepthEffect } from '../../../components/accordion/accordion-with-depth-effect';
+import { AppText } from '../../../components/app-text';
+import type { UsageVariant } from '../../../components/component-presentation/types';
+import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { BoxIcon } from '../../../components/icons/box';
+import { MinusIcon } from '../../../components/icons/minus';
+import { PlanetEarthIcon } from '../../../components/icons/planet-earth';
+import { PlusIcon } from '../../../components/icons/plus';
+import { ReceiptIcon } from '../../../components/icons/receipt';
+import { ShoppingBagIcon } from '../../../components/icons/shopping-bag';
+
+const TriggerTitle = ({ title }: { title: string }) => {
+  return (
+    <AppText
+      className="text-foreground text-base flex-1"
+      maxFontSizeMultiplier={1}
+    >
+      {title}
+    </AppText>
+  );
+};
+
+const ContentText = ({ text }: { text: string }) => {
+  return (
+    <AppText
+      className="text-muted text-base/relaxed px-[28px]"
+      maxFontSizeMultiplier={1}
+    >
+      {text}
+    </AppText>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const ICON_SIZE = 16;
+
+const CUSTOM_INDICATOR_ENTERING = ZoomIn.duration(200).easing(
+  Easing.inOut(Easing.ease)
+);
+const CUSTOM_INDICATOR_EXITING = ZoomOut.duration(200).easing(
+  Easing.inOut(Easing.ease)
+);
+
+const CustomIndicator = () => {
+  const { isExpanded } = useAccordionItem();
+
+  return (
+    <View className="size-5 items-center justify-center">
+      {isExpanded ? (
+        <Animated.View
+          key="minus"
+          entering={CUSTOM_INDICATOR_ENTERING}
+          exiting={CUSTOM_INDICATOR_EXITING}
+        >
+          <MinusIcon size={14} colorClassName="accent-muted" />
+        </Animated.View>
+      ) : (
+        <Animated.View
+          key="plus"
+          entering={CUSTOM_INDICATOR_ENTERING}
+          exiting={CUSTOM_INDICATOR_EXITING}
+        >
+          <PlusIcon size={14} colorClassName="accent-muted" />
+        </Animated.View>
+      )}
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const accordionData = [
+  {
+    id: '1',
+    title: 'How do I place an order?',
+    icon: <ShoppingBagIcon size={ICON_SIZE} colorClassName="accent-muted" />,
+    content:
+      'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
+  },
+  {
+    id: '2',
+    title: 'Can I modify or cancel my order?',
+    icon: <ReceiptIcon size={ICON_SIZE} colorClassName="accent-muted" />,
+    content:
+      'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
+  },
+  {
+    id: '3',
+    title: 'How much does shipping cost?',
+    icon: <BoxIcon size={ICON_SIZE} colorClassName="accent-muted" />,
+    content:
+      'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat.',
+  },
+  {
+    id: '4',
+    title: 'Do you ship internationally?',
+    icon: <PlanetEarthIcon size={ICON_SIZE} colorClassName="accent-muted" />,
+    content:
+      'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
+  },
+];
+
+// ------------------------------------------------------------------------------
+
+const classNames = {
+  triggerContentContainer: 'flex-row items-center flex-1 gap-3',
+};
+
+// ------------------------------------------------------------------------------
+
+const DefaultVariantContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Accordion defaultValue="2" className="w-full">
+        {accordionData.map((item) => (
+          <Accordion.Item key={item.id} value={item.id}>
+            <Accordion.Trigger asChild>
+              <PressableFeedback animation={{ scale: false }}>
+                <PressableFeedback.Scale
+                  className={classNames.triggerContentContainer}
+                >
+                  {item.icon}
+                  <TriggerTitle title={item.title} />
+                </PressableFeedback.Scale>
+                <Accordion.Indicator />
+                <PressableFeedback.Highlight
+                  animation={{ opacity: { value: [0, 0.05] } }}
+                />
+              </PressableFeedback>
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <ContentText text={item.content} />
+            </Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const SurfaceVariantContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Accordion variant="surface" className="w-full">
+        {accordionData.map((item) => (
+          <Accordion.Item key={item.id} value={item.id}>
+            <Accordion.Trigger>
+              <View className={classNames.triggerContentContainer}>
+                {item.icon}
+                <TriggerTitle title={item.title} />
+              </View>
+              <Accordion.Indicator />
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <ContentText text={item.content} />
+            </Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const MultipleSelectionContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Accordion
+        selectionMode="multiple"
+        variant="surface"
+        defaultValue={['1', '3']}
+        className="w-full"
+      >
+        {accordionData.slice(0, 3).map((item) => (
+          <Accordion.Item key={item.id} value={item.id}>
+            <Accordion.Trigger>
+              <View className={classNames.triggerContentContainer}>
+                {item.icon}
+                <TriggerTitle title={item.title} />
+              </View>
+              <Accordion.Indicator />
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <ContentText text={item.content} />
+            </Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const WithoutSeparatorsContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Accordion hideSeparator className="w-full">
+        {accordionData.slice(0, 3).map((item) => (
+          <Accordion.Item key={item.id} value={item.id}>
+            <Accordion.Trigger className="rounded-lg">
+              <View className={classNames.triggerContentContainer}>
+                {item.icon}
+                <TriggerTitle title={item.title} />
+              </View>
+              <Accordion.Indicator />
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <ContentText text={item.content} />
+            </Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const CustomIndicatorContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Accordion variant="surface" className="w-full">
+        {accordionData.slice(0, 2).map((item) => (
+          <Accordion.Item key={item.id} value={item.id}>
+            <Accordion.Trigger>
+              <View className={classNames.triggerContentContainer}>
+                {item.icon}
+                <TriggerTitle title={item.title} />
+              </View>
+              <Accordion.Indicator>
+                <CustomIndicator />
+              </Accordion.Indicator>
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <ContentText text={item.content} />
+            </Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const CustomEnteringAnimationContent = () => {
+  return (
+    <View className="flex-1 items-center justify-center px-5">
+      <Accordion variant="surface" className="w-full">
+        {accordionData.slice(0, 3).map((item, index) => (
+          <Accordion.Item key={item.id} value={item.id}>
+            <Accordion.Trigger>
+              <View className={classNames.triggerContentContainer}>
+                {item.icon}
+                <TriggerTitle title={item.title} />
+              </View>
+              <Accordion.Indicator
+                animation={{
+                  rotation: {
+                    springConfig:
+                      index === 0
+                        ? { damping: 60, stiffness: 900, mass: 3 }
+                        : index === 1
+                          ? { damping: 50, stiffness: 900, mass: 3 }
+                          : { damping: 40, stiffness: 900, mass: 3 },
+                  },
+                }}
+              />
+            </Accordion.Trigger>
+            <Accordion.Content
+              animation={{
+                entering: {
+                  value:
+                    index === 0
+                      ? FadeInRight.delay(50).easing(Easing.inOut(Easing.ease))
+                      : index === 1
+                        ? FadeInLeft.delay(50).easing(Easing.inOut(Easing.ease))
+                        : ZoomIn.delay(50).easing(Easing.out(Easing.exp)),
+                },
+              }}
+            >
+              <ContentText text={item.content} />
+            </Accordion.Content>
+          </Accordion.Item>
+        ))}
+      </Accordion>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
+const WithDepthEffectContent = () => {
+  return <AccordionWithDepthEffect />;
+};
+
+const ACCORDION_VARIANTS: UsageVariant[] = [
+  {
+    value: 'default-variant',
+    label: 'Default variant',
+    content: <DefaultVariantContent />,
+  },
+  {
+    value: 'surface-variant',
+    label: 'Surface variant',
+    content: <SurfaceVariantContent />,
+  },
+  {
+    value: 'multiple-selection',
+    label: 'Multiple selection',
+    content: <MultipleSelectionContent />,
+  },
+  {
+    value: 'without-separators',
+    label: 'Without separators',
+    content: <WithoutSeparatorsContent />,
+  },
+  {
+    value: 'custom-indicator',
+    label: 'Custom indicator',
+    content: <CustomIndicatorContent />,
+  },
+  {
+    value: 'custom-entering-animation',
+    label: 'Custom entering animation',
+    content: <CustomEnteringAnimationContent />,
+  },
+  {
+    value: 'with-depth-effect',
+    label: 'With depth effect',
+    content: <WithDepthEffectContent />,
+  },
+];
+
+export default function AccordionScreen() {
+  return <UsageVariantFlatList data={ACCORDION_VARIANTS} />;
+}

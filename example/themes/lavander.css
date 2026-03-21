@@ -1,0 +1,138 @@
+@layer theme {
+  :root {
+    @variant lavender-light {
+      --font-normal: 'SNPro-Regular';
+      --font-medium: 'SNPro-Medium';
+      --font-semibold: 'SNPro-SemiBold';
+      --font-bold: 'SNPro-Bold';
+
+      --radius: 0.65rem;
+      
+      /* Base Colors - Soft, dreamy lavender with warmth */
+      --background: oklch(97.02% 0.0151 305.00);
+      --foreground: oklch(21.03% 0.0059 305.00);
+
+      /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
+      --surface: oklch(100.00% 0.0100 305.00);
+      --surface-foreground: oklch(21.03% 0.0100 305.00);
+
+      --surface-secondary: oklch(95.24% 0.0160 305.00);
+      --surface-secondary-foreground: oklch(21.03% 0.0200 305.00);
+
+      --surface-tertiary: oklch(93.73% 0.0160 305.00);
+      --surface-tertiary-foreground: oklch(21.03% 0.0200 305.00);
+
+      /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
+      --overlay: oklch(100.00% 0.0045 305.00);
+      --overlay-foreground: oklch(21.03% 0.0059 305.00);
+
+      --muted: oklch(55.17% 0.0302 305.00);
+
+      --default: oklch(94.00% 0.0151 305.00);
+      --default-foreground: oklch(21.03% 0.0059 305.00);
+
+      /* Accent: Modern vibrant purple with pink undertones */
+      --accent: oklch(77.00% 0.1300 305.00);
+      --accent-foreground: oklch(15% 0.0260 305.00);
+
+      /* Form Field Defaults - Colors */
+      --field-background: oklch(100.00% 0.0076 305.00);
+      --field-foreground: oklch(21.03% 0.0059 305.00);
+      --field-placeholder: var(--muted);
+      --field-border: transparent;
+
+      /* Status Colors - Harmonious pastels */
+      --success: oklch(73.29% 0.1993 156.95);
+      --success-foreground: oklch(21.03% 0.0059 156.95);
+
+      --warning: oklch(78.19% 0.1633 78.47);
+      --warning-foreground: oklch(21.03% 0.0059 78.47);
+
+      --danger: oklch(65.32% 0.2398 31.88);
+      --danger-foreground: oklch(99.11% 0 0);
+
+      /* Component Colors */
+      --segment: oklch(100.00% 0.0151 305.00);
+      --segment-foreground: oklch(21.03% 0.0059 305.00);
+
+      /* Misc Colors */
+      --border: oklch(90.00% 0.0151 305.00);
+      --separator: oklch(82.00% 0.0151 305.00);
+      --focus: oklch(77.00% 0.1300 305.00);
+      --link: oklch(0.62 0.17 310);
+
+      /* Shadows */
+      --surface-shadow: transparent;
+      /* Overlay shadow */
+      --overlay-shadow: transparent;
+      --field-shadow: transparent;
+    }
+
+    @variant lavender-dark {
+      --font-normal: 'SNPro-Regular';
+      --font-medium: 'SNPro-Medium';
+      --font-semibold: 'SNPro-SemiBold';
+      --font-bold: 'SNPro-Bold';
+
+      --radius: 0.65rem;
+
+      /* Base Colors - Deep cosmic lavender */
+      --background: oklch(12.00% 0.0151 305.00);
+      --foreground: oklch(99.11% 0.0000 0.00);
+
+      /* Surface: Used for non-overlay components (cards, accordions, disclosure groups) */
+      --surface: oklch(21.03% 0.0400 305.00);
+      --surface-foreground: oklch(99.11% 0.0200 305.00);
+
+      --surface-secondary: oklch(25.70% 0.0300 305.00);
+      --surface-secondary-foreground: oklch(99.11% 0.0200 305.00);
+  
+      --surface-tertiary: oklch(27.21% 0.0300 305.00);
+      --surface-tertiary-foreground: oklch(99.11% 0.0200 305.00);
+
+      /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
+      --overlay: oklch(21.03% 0.0302 305.00);
+      --overlay-foreground: oklch(99.11% 0.0000 0.00);
+
+      --muted: oklch(70.50% 0.0302 305.00);
+
+      --default: oklch(27.40% 0.0151 305.00);
+      --default-foreground: oklch(99.11% 0 0);
+
+      /* Accent: Vibrant electric purple-pink */
+      --accent: oklch(77.00% 0.1300 305.00);
+      --accent-foreground: oklch(15% 0.0260 305.00);
+
+      /* Form Field Defaults - Colors */
+      --field-background: oklch(21.03% 0.0302 305.00);
+      --field-foreground: oklch(99.11% 0.0000 0.00);
+      --field-placeholder: var(--muted);
+      --field-border: transparent;
+
+      /* Status Colors - Vivid dark mode palette */
+      --success: oklch(73.29% 0.1993 156.95);
+      --success-foreground: oklch(21.03% 0.0059 156.95);
+
+      --warning: oklch(82.03% 0.1430 82.48);
+      --warning-foreground: oklch(21.03% 0.0059 82.48);
+
+      --danger: oklch(59.40% 0.2026 30.77);
+      --danger-foreground: oklch(99.11% 0 0);
+
+      /* Component Colors */
+      --segment: oklch(39.64% 0.0151 305.00);
+      --segment-foreground: oklch(99.11% 0.0000 0.00);
+
+      /* Misc Colors */
+      --border: oklch(28.00% 0.0151 305.00);
+      --separator: oklch(45.00% 0.0151 305.00);
+      --focus: oklch(77.00% 0.1300 305.00);
+      --link: oklch(0.75 0.18 320);
+
+      /* Shadows */
+      --surface-shadow: 0 0 0 0 transparent inset; /* No shadow on dark mode */
+      --overlay-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+      --field-shadow: 0 0 0 0 transparent inset; /* Transparent shadow to allow ring utilities to work */
+    }
+  }
+}

@@ -1,3 +1,35 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import 'uniwind';
+
+/* Development only: In your app, use @import 'heroui-native/styles' instead */
+@import '../src/styles/index.css';
+
+@import './themes/lavander.css';
+@import './themes/mint.css';
+@import './themes/sky.css';
+
+/* Development only: In your app, use @source './node_modules/heroui-native/lib' */
+@source '../src';
+
+@layer theme {
+  :root {
+    @variant light {
+      --font-normal: 'Inter-Regular';
+      --font-medium: 'Inter-Medium';
+      --font-semibold: 'Inter-SemiBold';
+      --font-bold: 'Inter-Bold';
+      
+      --radius: 0.5rem;
+    }
+
+    @variant dark {
+      --font-normal: 'Inter-Regular';
+      --font-medium: 'Inter-Medium';
+      --font-semibold: 'Inter-SemiBold';
+      --font-bold: 'Inter-Bold';
+
+      --radius: 0.5rem;
+    }
+  }
+}
+

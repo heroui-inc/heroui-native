@@ -57,9 +57,8 @@ import type {
   BottomSheetOverlayProps,
   BottomSheetPortalProps,
   BottomSheetRootProps,
-  BottomSheetStackProps,
-  BottomSheetStackSheetOverlayProps,
-  BottomSheetStackSheetProps,
+  BottomSheetSheetOverlayProps,
+  BottomSheetSheetProps,
   BottomSheetTitleProps,
   BottomSheetTriggerProps,
 } from './bottom-sheet.types';
@@ -147,22 +146,30 @@ const BottomSheetPortal = ({
   const animationSettingsContext = useAnimationSettings();
   const animationContext = useBottomSheetAnimation();
 
+  const content = (
+    <AnimationSettingsProvider value={animationSettingsContext}>
+      <BottomSheetAnimationProvider value={animationContext}>
+        <FullWindowOverlay disableFullWindowOverlay={disableFullWindowOverlay}>
+          <Animated.View
+            style={StyleSheet.absoluteFill}
+            pointerEvents="box-none"
+          >
+            {children}
+          </Animated.View>
+        </FullWindowOverlay>
+      </BottomSheetAnimationProvider>
+    </AnimationSettingsProvider>
+  );
+
   return (
     <BottomSheetPrimitives.Portal {...props}>
-      <AnimationSettingsProvider value={animationSettingsContext}>
-        <BottomSheetAnimationProvider value={animationContext}>
-          <FullWindowOverlay
-            disableFullWindowOverlay={disableFullWindowOverlay}
-          >
-            <Animated.View
-              style={StyleSheet.absoluteFill}
-              pointerEvents="box-none"
-            >
-              {children}
-            </Animated.View>
-          </FullWindowOverlay>
-        </BottomSheetAnimationProvider>
-      </AnimationSettingsProvider>
+      {GorhomBottomSheetModalProvider ? (
+        <GorhomBottomSheetModalProvider>
+          {content}
+        </GorhomBottomSheetModalProvider>
+      ) : (
+        content
+      )}
     </BottomSheetPrimitives.Portal>
   );
 };
@@ -325,29 +332,15 @@ const BottomSheetDescription = forwardRef<RNText, BottomSheetDescriptionProps>(
 
 // --------------------------------------------------
 
-/** Drop-in replacement for BottomSheet.Content with stacked sheet support. */
-const BottomSheetStack = forwardRef<GorhomBottomSheet, BottomSheetStackProps>(
-  (props, ref) => {
-    if (!GorhomBottomSheetModalProvider) return null;
-    return (
-      <GorhomBottomSheetModalProvider>
-        <BottomSheetContent ref={ref} {...props} />
-      </GorhomBottomSheetModalProvider>
-    );
-  }
-);
-
-// --------------------------------------------------
-
 // Keep containerComponent type stable so the modal subtree does not remount.
 // This also lets us pass `isDragging` into portal-rendered content.
-type StackSheetContainerProps = { children: ReactNode };
-function makeStackSheetContainerComponent(
+type SheetContainerProps = { children: ReactNode };
+function makeSheetContainerComponent(
   isDragging: ReturnType<typeof usePopupRootAnimation>['isDragging']
-): ComponentType<StackSheetContainerProps> {
-  return function BottomSheetStackSheetContainer({
+): ComponentType<SheetContainerProps> {
+  return function BottomSheetSheetContainer({
     children: modalChildren,
-  }: StackSheetContainerProps) {
+  }: SheetContainerProps) {
     return (
       <BottomSheetIsDraggingProvider value={{ isDragging }}>
         {modalChildren}
@@ -358,8 +351,8 @@ function makeStackSheetContainerComponent(
 
 // --------------------------------------------------
 
-/** Sheet rendered on top of BottomSheet.Stack using BottomSheetModal. */
-const BottomSheetStackSheet = ({
+/** Sheet rendered on top of BottomSheet.Content using BottomSheetModal. */
+const BottomSheetSheet = ({
   children,
   isOpen,
   onOpenChange,
@@ -372,9 +365,10 @@ const BottomSheetStackSheet = ({
   animation,
   animationConfigs,
   backgroundStyle: backgroundStyleProp,
+  backdropComponent = BottomSheetSheetOverlay,
   enablePanDownToClose,
   ...restProps
-}: BottomSheetStackSheetProps) => {
+}: BottomSheetSheetProps) => {
   const modalRef = useRef<{
     dismiss: () => void;
     present: () => void;
@@ -429,7 +423,7 @@ const BottomSheetStackSheet = ({
     }
   }, [dismissModal, isOpen]);
 
-  // When the root bottom sheet closes (e.g. overlay tap), also close this stacked
+  // When the root bottom sheet closes (e.g., overlay tap), also close this nested
   // sheet. Gorhom does not automatically fire onDismiss on BottomSheetModal when its
   // parent BottomSheet collapses, so the consumer's state would otherwise remain open.
   const { isOpen: isRootOpen } = useBottomSheet();
@@ -452,9 +446,8 @@ const BottomSheetStackSheet = ({
   }, [dismissModal, isOpen]);
 
   const containerComponentRef =
-    useRef<ComponentType<StackSheetContainerProps> | null>(null);
-  containerComponentRef.current ??=
-    makeStackSheetContainerComponent(isDragging);
+    useRef<ComponentType<SheetContainerProps> | null>(null);
+  containerComponentRef.current ??= makeSheetContainerComponent(isDragging);
   const ContainerComponent = containerComponentRef.current;
 
   const contentBackgroundClassName = bottomSheetClassNames.contentBackground({
@@ -496,6 +489,7 @@ const BottomSheetStackSheet = ({
       handleIndicatorClassName={contentHandleIndicatorClassName}
       gestureEventsHandlersHook={useBottomSheetGestureHandlers}
       animationConfigs={mergedAnimationConfigs}
+      backdropComponent={backdropComponent}
       onDismiss={() => {
         prevIsOpenRef.current = false;
 
@@ -535,13 +529,13 @@ const BottomSheetStackSheet = ({
 // --------------------------------------------------
 
 /**
- * Backdrop for BottomSheet.Stack.Sheet.
- * Use as `backdropComponent={BottomSheet.Stack.Sheet.Overlay}`.
+ * Backdrop for BottomSheet.Sheet.
+ * Used by default, or pass as `backdropComponent={BottomSheet.Sheet.Overlay}`.
  */
-const BottomSheetStackSheetOverlay = ({
+const BottomSheetSheetOverlay = ({
   className,
   ...props
-}: BottomSheetStackSheetOverlayProps) => {
+}: BottomSheetSheetOverlayProps) => {
   if (!StyledGorhomBottomSheetBackdrop) return null;
 
   return (
@@ -565,9 +559,8 @@ BottomSheetContent.displayName = DISPLAY_NAME.CONTENT;
 BottomSheetClose.displayName = DISPLAY_NAME.CLOSE;
 BottomSheetTitle.displayName = DISPLAY_NAME.TITLE;
 BottomSheetDescription.displayName = DISPLAY_NAME.DESCRIPTION;
-BottomSheetStack.displayName = DISPLAY_NAME.STACK;
-BottomSheetStackSheet.displayName = DISPLAY_NAME.STACK_SHEET;
-BottomSheetStackSheetOverlay.displayName = DISPLAY_NAME.STACK_SHEET_OVERLAY;
+BottomSheetSheet.displayName = DISPLAY_NAME.SHEET;
+BottomSheetSheetOverlay.displayName = DISPLAY_NAME.SHEET_OVERLAY;
 
 /**
  * Compound BottomSheet component with sub-components
@@ -587,14 +580,11 @@ BottomSheetStackSheetOverlay.displayName = DISPLAY_NAME.STACK_SHEET_OVERLAY;
  * @component BottomSheet.Content - The bottom sheet content container.
  * Uses @gorhom/bottom-sheet for rendering. Contains the main bottom sheet UI elements.
  *
- * @component BottomSheet.Stack - Drop-in replacement for BottomSheet.Content that
- * enables stacking. Use BottomSheet.Stack.Sheet inside its content to push sheets.
+ * @component BottomSheet.Sheet - A sheet that stacks on top via BottomSheetModal.
+ * Use inside BottomSheet.Content when you need a nested sheet.
  *
- * @component BottomSheet.Stack.Sheet - A sheet that stacks on top via BottomSheetModal.
- * Must be rendered inside a BottomSheet.Stack.
- *
- * @component BottomSheet.Stack.Sheet.Overlay - Backdrop for a stacked sheet.
- * Pass as the `backdropComponent` prop on BottomSheet.Stack.Sheet.
+ * @component BottomSheet.Sheet.Overlay - Backdrop for a nested sheet.
+ * Applied by default and can also be passed to `backdropComponent`.
  *
  * @component BottomSheet.Close - Close button for the bottom sheet.
  * Can accept custom children or uses default close icon.
@@ -614,16 +604,10 @@ const BottomSheet = Object.assign(BottomSheetRoot, {
   Overlay: BottomSheetOverlay,
   /** @optional Main bottom sheet content container */
   Content: BottomSheetContent,
-  /** @optional Drop-in for Content that enables BottomSheet.Stack.Sheet */
-  Stack: Object.assign(BottomSheetStack, {
-    /** @optional Stacked sheet. Must be inside BottomSheet.Stack. */
-    Sheet: Object.assign(BottomSheetStackSheet, {
-      /**
-       * @optional Overlay for this stacked sheet.
-       * Pass as `backdropComponent={BottomSheet.Stack.Sheet.Overlay}`.
-       */
-      Overlay: BottomSheetStackSheetOverlay,
-    }),
+  /** @optional Nested sheet presented on top via BottomSheetModal. */
+  Sheet: Object.assign(BottomSheetSheet, {
+    /** @optional Overlay for this nested sheet. */
+    Overlay: BottomSheetSheetOverlay,
   }),
   /** @optional Close button for the bottom sheet */
   Close: BottomSheetClose,

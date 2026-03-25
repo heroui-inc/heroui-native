@@ -144,17 +144,10 @@ export interface BottomSheetDescriptionProps extends TextProps {
 }
 
 /**
- * BottomSheet.Stack component props.
- * Drop-in replacement for BottomSheet.Content that enables stacking.
- * Accepts all the same props as BottomSheet.Content.
+ * BottomSheet.Sheet component props.
+ * Declarative wrapper around BottomSheetModal for nested sheets.
  */
-export type BottomSheetStackProps = BottomSheetContentProps;
-
-/**
- * BottomSheet.Stack.Sheet component props.
- * Declarative wrapper around BottomSheetModal for stacked sheets.
- */
-export interface BottomSheetStackSheetProps
+export interface BottomSheetSheetProps
   extends Omit<
       Partial<BottomSheetModalProps>,
       | 'animatedIndex'
@@ -166,7 +159,7 @@ export interface BottomSheetStackSheetProps
     >,
     BaseBottomSheetContentProps {
   /**
-   * Whether this stacked sheet is open.
+   * Whether this nested sheet is open.
    */
   isOpen: boolean;
   /**
@@ -180,15 +173,11 @@ export interface BottomSheetStackSheetProps
 }
 
 /**
- * BottomSheet.Stack.Sheet.Overlay component props.
- * Passed as `backdropComponent` on BottomSheet.Stack.Sheet.
- * Accepts an optional `className` to override the overlay colour.
+ * BottomSheet.Sheet.Overlay component props.
  */
-export interface BottomSheetStackSheetOverlayProps
-  extends BottomSheetBackdropProps {
+export interface BottomSheetSheetOverlayProps extends BottomSheetBackdropProps {
   /**
-   * Additional CSS class for the overlay.
-   * Defaults to the same `bg-black/10` used by BottomSheet.Overlay.
+   * Additional CSS class for the title
    */
   className?: string;
 }

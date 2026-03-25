@@ -63,7 +63,7 @@ export const StackedBottomSheetContent = () => {
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
             <BottomSheet.Overlay />
-            <BottomSheet.Stack contentContainerClassName="gap-6">
+            <BottomSheet.Content contentContainerClassName="gap-6">
               <View className="gap-4">
                 <View className="items-center gap-3">
                   <View className="size-16 items-center justify-center rounded-full bg-blue-500/10">
@@ -109,10 +109,9 @@ export const StackedBottomSheetContent = () => {
                 </Button>
               </View>
 
-              <BottomSheet.Stack.Sheet
+              <BottomSheet.Sheet
                 isOpen={isDeliveryWindowSheetOpen}
                 onOpenChange={setDeliveryWindowSheetOpen}
-                backdropComponent={BottomSheet.Stack.Sheet.Overlay}
                 contentContainerClassName="gap-4"
               >
                 <View className="gap-2">
@@ -151,8 +150,8 @@ export const StackedBottomSheetContent = () => {
                     );
                   })}
                 </View>
-              </BottomSheet.Stack.Sheet>
-            </BottomSheet.Stack>
+              </BottomSheet.Sheet>
+            </BottomSheet.Content>
           </BottomSheet.Portal>
         </BottomSheet>
       </View>

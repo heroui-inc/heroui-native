@@ -11,9 +11,8 @@ export type {
   BottomSheetOverlayProps,
   BottomSheetPortalProps,
   BottomSheetRootProps,
-  BottomSheetStackProps,
-  BottomSheetStackSheetOverlayProps,
-  BottomSheetStackSheetProps,
+  BottomSheetSheetOverlayProps,
+  BottomSheetSheetProps,
   BottomSheetTitleProps,
   BottomSheetTriggerProps,
 } from './bottom-sheet.types';

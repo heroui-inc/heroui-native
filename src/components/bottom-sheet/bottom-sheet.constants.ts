@@ -10,4 +10,7 @@ export const DISPLAY_NAME = {
   CLOSE: 'HeroUINative.BottomSheet.Close',
   TITLE: 'HeroUINative.BottomSheet.Title',
   DESCRIPTION: 'HeroUINative.BottomSheet.Description',
+  STACK: 'HeroUINative.BottomSheet.Stack',
+  STACK_SHEET: 'HeroUINative.BottomSheet.Stack.Sheet',
+  STACK_SHEET_OVERLAY: 'HeroUINative.BottomSheet.Stack.Sheet.Overlay',
 };

@@ -1,4 +1,8 @@
-import type { BottomSheetProps } from '@gorhom/bottom-sheet';
+import type {
+  BottomSheetBackdropProps,
+  BottomSheetModalProps,
+  BottomSheetProps,
+} from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
@@ -8,7 +12,7 @@ import type {
   PopupOverlayAnimation,
 } from '../../helpers/internal/types';
 import type * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
-import type { CloseButtonProps } from '../close-button/close-button.types';
+import type { CloseButtonProps } from '../close-button';
 
 /**
  * Context value for bottom sheet animation state
@@ -140,11 +144,51 @@ export interface BottomSheetDescriptionProps extends TextProps {
 }
 
 /**
- * Return type for the useBottomSheetAnimation hook
+ * BottomSheet.Stack component props.
+ * Drop-in replacement for BottomSheet.Content that enables stacking.
+ * Accepts all the same props as BottomSheet.Content.
  */
-export interface UseBottomSheetAnimationReturn {
+export type BottomSheetStackProps = BottomSheetContentProps;
+
+/**
+ * BottomSheet.Stack.Sheet component props.
+ * Declarative wrapper around BottomSheetModal for stacked sheets.
+ */
+export interface BottomSheetStackSheetProps
+  extends Omit<
+      Partial<BottomSheetModalProps>,
+      | 'animatedIndex'
+      | 'children'
+      | 'containerComponent'
+      | 'enableDismissOnClose'
+      | 'gestureEventsHandlersHook'
+      | 'onDismiss'
+    >,
+    BaseBottomSheetContentProps {
   /**
-   * Animation progress shared value (0=idle, 1=open, 2=close)
+   * Whether this stacked sheet is open.
    */
-  progress: SharedValue<number>;
+  isOpen: boolean;
+  /**
+   * Called when the open state changes.
+   */
+  onOpenChange: (open: boolean) => void;
+  /**
+   * Called after the dismiss animation finishes.
+   */
+  onDismiss?: () => void;
+}
+
+/**
+ * BottomSheet.Stack.Sheet.Overlay component props.
+ * Passed as `backdropComponent` on BottomSheet.Stack.Sheet.
+ * Accepts an optional `className` to override the overlay colour.
+ */
+export interface BottomSheetStackSheetOverlayProps
+  extends BottomSheetBackdropProps {
+  /**
+   * Additional CSS class for the overlay.
+   * Defaults to the same `bg-black/10` used by BottomSheet.Overlay.
+   */
+  className?: string;
 }

@@ -33,6 +33,33 @@ import { BottomSheet } from 'heroui-native';
 - **BottomSheet.Title**: Bottom sheet title text with semantic heading role and accessibility linking.
 - **BottomSheet.Description**: Bottom sheet description text that provides additional context with accessibility linking.
 
+### Stacked Bottom Sheet Anatomy
+
+Use `BottomSheet.Stack` instead of `BottomSheet.Content` when you need to present a second sheet on top of the first one.
+
+```tsx
+<BottomSheet>
+  <BottomSheet.Trigger>...</BottomSheet.Trigger>
+  <BottomSheet.Portal>
+    <BottomSheet.Overlay />
+    <BottomSheet.Stack>
+      {/* base sheet content */}
+      <BottomSheet.Stack.Sheet
+        isOpen={isSheetOpen}
+        onOpenChange={setIsSheetOpen}
+        backdropComponent={BottomSheet.Stack.Sheet.Overlay}
+      >
+        {/* stacked sheet content */}
+      </BottomSheet.Stack.Sheet>
+    </BottomSheet.Stack>
+  </BottomSheet.Portal>
+</BottomSheet>
+```
+
+- **BottomSheet.Stack**: Drop-in replacement for `BottomSheet.Content` that adds support for stacked sheets.
+- **BottomSheet.Stack.Sheet**: Controlled sheet rendered on top of the base sheet using `BottomSheetModal`.
+- **BottomSheet.Stack.Sheet.Overlay**: Backdrop component for stacked sheets. Pass it to the `backdropComponent` prop on `BottomSheet.Stack.Sheet`.
+
 ## Usage
 
 ### Basic Bottom Sheet
@@ -90,6 +117,47 @@ Bottom sheet with multiple snap points and scrollable content.
     </BottomSheet.Content>
   </BottomSheet.Portal>
 </BottomSheet>
+```
+
+### Stacked Bottom Sheets
+
+Present a second sheet on top of the main sheet without dismissing the original content underneath.
+
+```tsx
+const [isOpen, setIsOpen] = useState(false);
+const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+
+<BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
+  <BottomSheet.Trigger asChild>
+    <Button>Open Bottom Sheet</Button>
+  </BottomSheet.Trigger>
+  <BottomSheet.Portal>
+    <BottomSheet.Overlay />
+    <BottomSheet.Stack>
+      <BottomSheet.Title>Order summary</BottomSheet.Title>
+      <BottomSheet.Description>
+        Review the order, then open a second sheet to adjust one part of the
+        flow.
+      </BottomSheet.Description>
+
+      <Button variant="secondary" onPress={() => setIsDetailsOpen(true)}>
+        Choose delivery window
+      </Button>
+
+      <BottomSheet.Stack.Sheet
+        isOpen={isDetailsOpen}
+        onOpenChange={setIsDetailsOpen}
+        backdropComponent={BottomSheet.Stack.Sheet.Overlay}
+      >
+        <BottomSheet.Title>Select a delivery window</BottomSheet.Title>
+        <BottomSheet.Description>
+          This sheet stays connected to the main sheet and closes when the main
+          sheet closes.
+        </BottomSheet.Description>
+      </BottomSheet.Stack.Sheet>
+    </BottomSheet.Stack>
+  </BottomSheet.Portal>
+</BottomSheet>;
 ```
 
 ### Custom Overlay
@@ -272,6 +340,40 @@ Animation configuration for bottom sheet overlay component. Can be:
 | `...GorhomBottomSheetProps` | `Partial<GorhomBottomSheetProps>`        | -       | All [@gorhom/bottom-sheet props](https://gorhom.dev/react-native-bottom-sheet/props) are supported |
 
 **Note**: You can use all components from [@gorhom/bottom-sheet](https://gorhom.dev/react-native-bottom-sheet/components/bottomsheetview) inside the content, such as `BottomSheetView`, `BottomSheetScrollView`, `BottomSheetFlatList`, etc.
+
+### BottomSheet.Stack
+
+`BottomSheet.Stack` accepts the same props as `BottomSheet.Content` and should be used when you want to render `BottomSheet.Stack.Sheet` inside the base sheet.
+
+### BottomSheet.Stack.Sheet
+
+| prop                        | type                                    | default  | description                                                                                             |
+| --------------------------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------- |
+| `children`                  | `React.ReactNode`                       | -        | Stacked bottom sheet content                                                                            |
+| `isOpen`                    | `boolean`                               | -        | Controlled open state for the stacked sheet                                                             |
+| `onOpenChange`              | `(open: boolean) => void`               | -        | Callback when the stacked sheet open state changes                                                      |
+| `onDismiss`                 | `() => void`                            | -        | Callback fired after the stacked sheet dismiss animation finishes                                       |
+| `stackBehavior`             | `'push' \| 'switch' \| 'replace'`       | `'push'` | Stacking behavior used by `BottomSheetModal`                                                            |
+| `contentContainerClassName` | `string`                                | -        | Additional CSS classes for the content container                                                        |
+| `contentContainerProps`     | `Omit<BottomSheetViewProps, 'children'>`| -        | Props for the content container                                                                         |
+| `backgroundClassName`       | `string`                                | -        | Additional CSS classes for the background                                                               |
+| `handleIndicatorClassName`  | `string`                                | -        | Additional CSS classes for the handle indicator                                                         |
+| `animation`                 | `AnimationDisabled`                     | -        | Animation configuration                                                                                 |
+| `...BottomSheetModalProps`  | `Partial<BottomSheetModalProps>`        | -        | Most [@gorhom/bottom-sheet modal props](https://gorhom.dev/react-native-bottom-sheet/modal/props) are supported |
+
+**Note**: `BottomSheet.Stack.Sheet` is controlled. Keep its `isOpen` state in your component and update it through `onOpenChange`.
+
+### BottomSheet.Stack.Sheet.Overlay
+
+| prop                    | type                     | default | description                                                                 |
+| ----------------------- | ------------------------ | ------- | --------------------------------------------------------------------------- |
+| `className`             | `string`                 | -       | Additional CSS classes for the overlay                                      |
+| `appearsOnIndex`        | `number`                 | `0`     | Snap point index where the overlay becomes visible                          |
+| `disappearsOnIndex`     | `number`                 | `-1`    | Snap point index where the overlay disappears                               |
+| `opacity`               | `number`                 | `1`     | Overlay opacity passed to `BottomSheetBackdrop`                             |
+| `pressBehavior`         | `BackdropPressBehavior`  | -       | Behavior to apply when the overlay is pressed                               |
+| `enableTouchThrough`    | `boolean`                | -       | Whether touches should pass through the overlay                             |
+| `...BottomSheetBackdropProps` | `BottomSheetBackdropProps` | -   | All standard `BottomSheetBackdrop` props are supported                      |
 
 ### BottomSheet.Close
 

@@ -135,7 +135,7 @@ CardDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  *
  * All sub-components support asChild pattern for custom element composition.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/card
+ * @see Full documentation: https://heroui.com/docs/native/components/card
  */
 const CompoundCard = Object.assign(CardRoot, {
   /** @optional Top-aligned header section */

@@ -37,7 +37,7 @@ TextAreaRoot.displayName = DISPLAY_NAME.TEXT_AREA;
  * Extends Input component with multiline support, defaulting to 8 lines and top-aligned text.
  * Supports primary and secondary variants, and integrates with form item state context.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/text-area
+ * @see Full documentation: https://heroui.com/docs/native/components/text-area
  */
 const TextArea = TextAreaRoot;
 

@@ -225,7 +225,7 @@ InputGroupInput.displayName = DISPLAY_NAME.INPUT_GROUP_INPUT;
  * Accepts all Input props directly (value, onChangeText, isDisabled, etc.).
  * Automatically receives paddingLeft/paddingRight from measured Prefix/Suffix.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/input-group
+ * @see Full documentation: https://heroui.com/docs/native/components/input-group
  */
 const CompoundInputGroup = Object.assign(InputGroupRoot, {
   /** Absolutely positioned View for leading prefix content */

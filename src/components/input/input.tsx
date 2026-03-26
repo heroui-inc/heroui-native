@@ -76,7 +76,7 @@ InputRoot.displayName = DISPLAY_NAME.INPUT;
  * Input component - A text input component with styled border and background for collecting user input.
  * Supports primary and secondary variants, and integrates with form item state context.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/input
+ * @see Full documentation: https://heroui.com/docs/native/components/input
  */
 const Input = InputRoot;
 

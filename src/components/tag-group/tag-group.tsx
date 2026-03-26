@@ -308,7 +308,7 @@ TagGroupItemRemoveButton.displayName =
  *
  * Props flow from TagGroup to sub-components via context (size, variant).
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/tag-group
+ * @see Full documentation: https://heroui.com/docs/native/components/tag-group
  */
 const TagGroup = Object.assign(TagGroupRoot, {
   /** Container for the list of tags */

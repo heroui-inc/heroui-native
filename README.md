@@ -22,11 +22,11 @@
 
 ## Getting Started
 
-Visit <a aria-label="heroui learn" href="https://v3.heroui.com/docs/native/getting-started/quick-start">https://v3.heroui.com/docs/native/getting-started/quick-start</a> to get started with HeroUI Native.
+Visit <a aria-label="heroui learn" href="https://heroui.com/docs/native/getting-started/quick-start">https://heroui.com/docs/native/getting-started/quick-start</a> to get started with HeroUI Native.
 
 ## Documentation
 
-Visit [https://v3.heroui.com/docs/native/getting-started](https://v3.heroui.com/docs/native/getting-started) to view the full documentation.
+Visit [https://heroui.com/docs/native/getting-started](https://heroui.com/docs/native/getting-started) to view the full documentation.
 
 ## Preview App
 

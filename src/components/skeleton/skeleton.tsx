@@ -178,6 +178,6 @@ Skeleton.displayName = DISPLAY_NAME.SKELETON;
  * Supports customizable animations through the animation prop with shimmer and pulse configurations.
  * Shape and size are controlled via className for maximum flexibility.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/skeleton
+ * @see Full documentation: https://heroui.com/docs/native/components/skeleton
  */
 export default Skeleton;

@@ -323,7 +323,7 @@ Content.displayName = DISPLAY_NAME.CONTENT;
  * Animation state flows via AccordionAnimationProvider.
  * Item expansion state is managed by the primitive accordion context.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/accordion
+ * @see Full documentation: https://heroui.com/docs/native/components/accordion
  */
 const CompoundAccordion = Object.assign(Root, {
   /** @required Container for individual accordion items */

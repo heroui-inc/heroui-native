@@ -371,7 +371,7 @@ InputOTPSeparator.displayName = DISPLAY_NAME.SEPARATOR;
  * isInvalid, slots). The component handles focus management, text input,
  * and validation automatically.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/input-otp
+ * @see Full documentation: https://heroui.com/docs/native/components/input-otp
  */
 const InputOTP = Object.assign(InputOTPRoot, {
   /** @optional Container for grouping multiple slots together */

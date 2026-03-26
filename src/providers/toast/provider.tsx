@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useReducer,
   useRef,
@@ -140,6 +141,16 @@ export function ToastProvider({
 
   const total = useSharedValue<number>(0);
 
+  /**
+   * Derive total from toasts.length so the animated opacity/scale/translateY
+   * interpolations always use the real count.  Manual increment/decrement
+   * was prone to drift when hide + show ran in the same tick or when
+   * auto-dismiss raced with a manual hide (stale-closure mismatch).
+   */
+  useEffect(() => {
+    total.set(toasts.length);
+  }, [toasts.length, total]);
+
   const idCounter = useRef(0);
   const timeoutRefs = useRef<Map<string, NodeJS.Timeout>>(new Map());
   const hideRef = useRef<((ids?: string | string[] | 'all') => void) | null>(
@@ -183,8 +194,6 @@ export function ToastProvider({
             delete result[lastToast.id];
             return result;
           });
-
-          total.set((value) => value - 1);
         }
       } else if (ids === 'all') {
         // Clear all timeouts
@@ -201,7 +210,6 @@ export function ToastProvider({
         });
         dispatch({ type: 'HIDE_ALL' });
         heights.set({});
-        total.set(0);
       } else {
         // Hide specific toast(s) - call onHide for each toast before hiding
         const idsArray = Array.isArray(ids) ? ids : [ids];
@@ -240,12 +248,10 @@ export function ToastProvider({
             }
             return result;
           });
-
-          total.set((value) => value - removedCount);
         }
       }
     },
-    [total, heights, toasts]
+    [heights, toasts]
   );
 
   // Keep hide ref up to date
@@ -319,8 +325,6 @@ export function ToastProvider({
         },
       });
 
-      total.set((value) => value + 1);
-
       if (normalizedOptions.onShow) {
         normalizedOptions.onShow();
       }
@@ -351,7 +355,7 @@ export function ToastProvider({
 
       return id;
     },
-    [total, toasts, globalConfig]
+    [toasts, globalConfig]
   );
 
   const contextValue = useMemo<ToasterContextValue>(

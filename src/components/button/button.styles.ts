@@ -42,7 +42,7 @@ const root = tv({
       true: 'p-0 aspect-square',
     },
     isDisabled: {
-      true: 'opacity-disabled pointer-events-none',
+      true: 'disabled:opacity-disabled disabled:pointer-events-none',
     },
   },
   defaultVariants: {

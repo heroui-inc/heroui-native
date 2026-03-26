@@ -27,7 +27,7 @@ const root = tv({
   base: 'w-[48px] h-[24px] rounded-full justify-center overflow-hidden',
   variants: {
     isDisabled: {
-      true: 'opacity-disabled pointer-events-none',
+      true: 'disabled:opacity-disabled disabled:pointer-events-none',
       false: '',
     },
   },

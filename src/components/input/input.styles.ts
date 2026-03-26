@@ -14,7 +14,7 @@ const input = tv({
       false: '',
     },
     isDisabled: {
-      true: 'opacity-disabled',
+      true: 'disabled:opacity-disabled',
       false: '',
     },
   },

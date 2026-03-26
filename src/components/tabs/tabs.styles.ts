@@ -50,7 +50,7 @@ const trigger = tv({
   base: 'flex-row items-center justify-center px-3 py-1.5 gap-1.5',
   variants: {
     isDisabled: {
-      true: 'opacity-disabled pointer-events-none',
+      true: 'disabled:opacity-disabled disabled:pointer-events-none',
       false: '',
     },
   },

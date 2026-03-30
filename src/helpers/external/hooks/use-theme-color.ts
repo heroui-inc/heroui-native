@@ -43,6 +43,7 @@ const THEME_COLORS = [
   'surface-hover',
   'overlay',
   'overlay-foreground',
+  'overlay-backdrop',
   'muted',
   'accent',
   'accent-foreground',

@@ -47,6 +47,7 @@ These colors define the main background layers and their foreground text colors:
 --surface-foreground: var(--foreground);
 --overlay: var(--white);
 --overlay-foreground: var(--foreground);
+--overlay-backdrop: oklch(0% 0 0 / 10%);
 
 /* Dark theme */
 --background: oklch(12% 0.005 285.823);
@@ -55,6 +56,7 @@ These colors define the main background layers and their foreground text colors:
 --surface-foreground: var(--foreground);
 --overlay: oklch(0.2103 0.0059 285.89);
 --overlay-foreground: var(--foreground);
+--overlay-backdrop: oklch(0% 0 0 / 10%);
 ```
 
 ### Primary Colors

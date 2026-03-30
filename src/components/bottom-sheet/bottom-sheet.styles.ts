@@ -22,7 +22,7 @@ import { combineStyles } from '../../helpers/internal/utils';
  * set `isAnimatedStyleActive={false}` on `BottomSheet.Overlay`.
  */
 const overlay = tv({
-  base: 'absolute inset-0 bg-black/10',
+  base: 'absolute inset-0 bg-overlay-backdrop',
 });
 
 const contentContainer = tv({

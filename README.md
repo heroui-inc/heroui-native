@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://heroui.com">
-      <img width="100%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-repo-2.png" alt="heroui" />
+      <img width="100%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/heroui-native-og.jpg" alt="heroui" />
   </a>
 </p>
 <p align="center">

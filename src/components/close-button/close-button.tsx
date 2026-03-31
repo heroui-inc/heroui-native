@@ -50,7 +50,7 @@ CloseButtonRoot.displayName = DISPLAY_NAME.CLOSE_BUTTON_ROOT;
  * It is a Button with default variant='tertiary', size='sm', and isIconOnly=true.
  * The close icon can be customized via the iconProps prop, or you can provide custom children.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/close-button
+ * @see Full documentation: https://heroui.com/docs/native/components/close-button
  */
 const CloseButton = CloseButtonRoot;
 

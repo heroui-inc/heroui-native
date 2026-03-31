@@ -53,7 +53,7 @@ LinkButtonLabel.displayName = DISPLAY_NAME.LINK_BUTTON_LABEL;
  * @component LinkButton.Label - Text content of the link button. Inherits size and variant
  * styling from the parent LinkButton context (delegates to Button.Label).
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/link-button
+ * @see Full documentation: https://heroui.com/docs/native/components/link-button
  */
 const LinkButton = Object.assign(LinkButtonRoot, {
   /** Link button label - renders text or custom content */

@@ -295,7 +295,7 @@ AvatarFallback.displayName = AVATAR_DISPLAY_NAME.FALLBACK;
  * Props flow from Avatar to sub-components via context (size, color).
  * Fallback can override color with its own prop.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/avatar
+ * @see Full documentation: https://heroui.com/docs/native/components/avatar
  */
 const Avatar = Object.assign(AvatarRoot, {
   /** @optional Displays the avatar image with loading state management */

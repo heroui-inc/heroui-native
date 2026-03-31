@@ -204,7 +204,7 @@ RadioIndicatorThumb.displayName = DISPLAY_NAME.RADIO_INDICATOR_THUMB;
  * @component Radio.IndicatorThumb - Optional inner circle that appears when selected. Animates
  * scale based on selection. Can be replaced with custom content.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/radio
+ * @see Full documentation: https://heroui.com/docs/native/components/radio
  */
 const CompoundRadio = Object.assign(RadioRoot, {
   /** @optional Custom radio indicator container */

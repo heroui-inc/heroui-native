@@ -240,7 +240,7 @@ CheckboxIndicator.displayName = DISPLAY_NAME.CHECKBOX_INDICATOR;
  * Props flow from Checkbox to sub-components via context (isSelected).
  * The checkbox supports controlled and uncontrolled modes through isSelected/onSelectedChange.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/checkbox
+ * @see Full documentation: https://heroui.com/docs/native/components/checkbox
  */
 const CompoundCheckbox = Object.assign(CheckboxRoot, {
   /** @optional Custom indicator with scale animations */

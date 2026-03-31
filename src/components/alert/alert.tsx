@@ -164,7 +164,7 @@ AlertDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  * Props flow from Alert to sub-components via context (status, nativeID).
  * Title and Description are connected to root via aria-labelledby / aria-describedby.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/alert
+ * @see Full documentation: https://heroui.com/docs/native/components/alert
  */
 const CompoundAlert = Object.assign(AlertRoot, {
   /** @optional Status icon rendered as the leading visual element */

@@ -272,7 +272,7 @@ ButtonLabel.displayName = DISPLAY_NAME.BUTTON_LABEL;
  *
  * Props flow from Button to sub-components via context (size, variant, isDisabled).
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/button
+ * @see Full documentation: https://heroui.com/docs/native/components/button
  */
 const CompoundButton = Object.assign(ButtonRoot, {
   /** Button label - renders text or custom content */

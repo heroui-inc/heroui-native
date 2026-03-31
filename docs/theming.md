@@ -96,6 +96,7 @@ Create multiple themes using Uniwind's variant system. For complete custom theme
       /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
       --overlay: oklch(0.998 0.003 230);
       --overlay-foreground: oklch(0.3 0.045 230);
+      --overlay-backdrop: oklch(0% 0 0 / 10%);
 
       --muted: oklch(0.55 0.035 230);
 
@@ -162,6 +163,7 @@ Create multiple themes using Uniwind's variant system. For complete custom theme
       /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
       --overlay: oklch(0.23 0.045 230);
       --overlay-foreground: oklch(0.9 0.015 230);
+      --overlay-backdrop: oklch(0% 0 0 / 10%);
 
       --muted: oklch(0.5 0.04 230);
 
@@ -355,6 +357,7 @@ We use Tailwind's `@theme` directive to automatically create calculated variable
 
   --color-overlay: var(--overlay);
   --color-overlay-foreground: var(--overlay-foreground);
+  --color-overlay-backdrop: var(--overlay-backdrop);
 
   --color-muted: var(--muted);
 

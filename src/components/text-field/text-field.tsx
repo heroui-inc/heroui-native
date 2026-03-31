@@ -74,7 +74,7 @@ TextFieldRoot.displayName = DISPLAY_NAME.ROOT;
  * TextField component - Main container that provides gap-1 spacing between children.
  * Handles disabled state and validation state for the entire field.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/text-field
+ * @see Full documentation: https://heroui.com/docs/native/components/text-field
  */
 const TextField = TextFieldRoot;
 

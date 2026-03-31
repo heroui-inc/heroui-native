@@ -59,7 +59,7 @@ Surface.displayName = DISPLAY_NAME.ROOT;
  * Used as a base for other components like Card. Supports different visual variants
  * for various elevation levels and styling needs.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/surface
+ * @see Full documentation: https://heroui.com/docs/native/components/surface
  */
 export default Surface;
 

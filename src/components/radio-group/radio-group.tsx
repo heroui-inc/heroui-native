@@ -209,7 +209,7 @@ RadioGroupItem.displayName = DISPLAY_NAME.RADIO_GROUP_ITEM;
  * Props flow from RadioGroup to RadioGroupItem to Radio via context (variant, value, isSelected).
  * RadioGroup manages the overall selection state and orientation.
  *
- * @see Full documentation: https://v3.heroui.com/docs/native/components/radio-group
+ * @see Full documentation: https://heroui.com/docs/native/components/radio-group
  */
 const CompoundRadioGroup = Object.assign(RadioGroupRoot, {
   /** Individual radio option within a RadioGroup */

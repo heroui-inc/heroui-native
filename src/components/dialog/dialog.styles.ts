@@ -26,7 +26,7 @@ const portal = tv({
  * set `isAnimatedStyleActive={false}` on `Dialog.Overlay`.
  */
 const overlay = tv({
-  base: 'absolute inset-0 bg-overlay-backdrop',
+  base: 'absolute inset-0 bg-backdrop',
 });
 
 /**

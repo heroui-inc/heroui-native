@@ -66,7 +66,7 @@ const item = tv({
   base: 'flex-row items-center gap-2.5 px-2.5 py-2 rounded-2xl',
   variants: {
     isDisabled: {
-      true: 'opacity-disabled pointer-events-none',
+      true: 'disabled:opacity-disabled disabled:pointer-events-none',
     },
     isOutsideSubMenuOnOpen: {
       true: 'opacity-40 pointer-events-none',

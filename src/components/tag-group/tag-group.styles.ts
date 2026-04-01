@@ -26,7 +26,7 @@ const tag = tv({
       true: 'bg-accent-soft',
     },
     isDisabled: {
-      true: 'opacity-disabled pointer-events-none',
+      true: 'disabled:opacity-disabled disabled:pointer-events-none',
     },
   },
   defaultVariants: {

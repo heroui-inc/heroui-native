@@ -14,6 +14,7 @@
 
   --color-overlay: var(--overlay);
   --color-overlay-foreground: var(--overlay-foreground);
+  --color-backdrop: var(--backdrop);
 
   --color-muted: var(--muted);
 
@@ -68,7 +69,7 @@
   --color-warning-hover: color-mix(in oklab, var(--warning) 90%, var(--warning-foreground) 10%);
   --color-danger-hover: color-mix(in oklab, var(--danger) 90%, var(--danger-foreground) 10%);
 
-  /* Form Field Colors */ 
+  /* Form Field Colors */
   --color-field-hover: color-mix(in oklab, var(--field-background, var(--default)) 90%, var(--field-foreground, var(--foreground)) 2%);
   --color-field-focus: var(--field-background, var(--default));
   --color-field-border-hover: color-mix(in oklab, var(--field-border, var(--border)) 88%, var(--field-foreground, var(--foreground)) 10%);

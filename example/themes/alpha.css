@@ -25,6 +25,7 @@
       /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
       --overlay: var(--white);
       --overlay-foreground: var(--foreground);
+      --backdrop: oklch(0% 0 0 / 20%);
 
       --muted: var(--color-neutral-500);
 
@@ -97,6 +98,7 @@
       /* Overlay: Used for floating/overlay components (dialogs, popovers, modals, menus) */
       --overlay: var(--color-neutral-800);
       --overlay-foreground: var(--foreground);
+      --backdrop: oklch(0% 0 0 / 20%);
 
       --muted: var(--color-neutral-400);
 

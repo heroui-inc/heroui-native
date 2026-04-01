@@ -33,7 +33,7 @@ const root = tv({
       false: '',
     },
     isDisabled: {
-      true: 'opacity-disabled pointer-events-none',
+      true: 'disabled:opacity-disabled disabled:pointer-events-none',
       false: '',
     },
     isInvalid: {

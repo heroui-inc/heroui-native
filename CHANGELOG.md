@@ -1,3 +1,17 @@
+## <small>1.0.1 (2026-04-01)</small>
+
+* chore: remove v3 from docs link ([208a642](https://github.com/heroui-inc/heroui-native/commit/208a642))
+* chore: sync versions ([20df291](https://github.com/heroui-inc/heroui-native/commit/20df291))
+* chore: upd readme image link ([9ae28a6](https://github.com/heroui-inc/heroui-native/commit/9ae28a6))
+* feat: add backdrop style variable ([f225331](https://github.com/heroui-inc/heroui-native/commit/f225331))
+* feat: export use-combined-animation-disabled-state hook from public API ([9ca1d66](https://github.com/heroui-inc/heroui-native/commit/9ca1d66))
+* feat: export useGlobalAnimationSettings hook from public API ([da8fbfa](https://github.com/heroui-inc/heroui-native/commit/da8fbfa))
+* fix(styles): respect disabled modifier ([3d75ed3](https://github.com/heroui-inc/heroui-native/commit/3d75ed3))
+* fix(theme): tokenize dialog and bottom-sheet overlay backdrops ([a17aaa8](https://github.com/heroui-inc/heroui-native/commit/a17aaa8))
+* fix(toast): derive total SharedValue from toasts.length to prevent opacity drift ([74da038](https://github.com/heroui-inc/heroui-native/commit/74da038))
+
+
+
 ## 1.0.0 (2026-03-21)
 
 * fix: useThemeColor iterable types ([a0ebb78](https://github.com/heroui-inc/heroui-native/commit/a0ebb78))

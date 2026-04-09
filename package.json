@@ -57,7 +57,7 @@
     "url": "git+https://github.com/heroui-inc/heroui-native.git"
   },
   "author": "HeroUI <support@heroui.com> (https://github.com/heroui-inc)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/heroui-inc/heroui-native/issues"
   },

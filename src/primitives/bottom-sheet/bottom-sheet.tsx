@@ -1,4 +1,4 @@
-import { createContext, forwardRef, useContext, useId } from 'react';
+import { createContext, forwardRef, useContext, useId, useMemo } from 'react';
 import {
   type GestureResponderEvent,
   Pressable,
@@ -52,14 +52,13 @@ const Root = forwardRef<RootRef, RootProps>(
 
     const Component = asChild ? Slot.View : View;
 
+    const value = useMemo(
+      () => ({ isOpen, onOpenChange, nativeID }),
+      [isOpen, nativeID, onOpenChange]
+    );
+
     return (
-      <BottomSheetContext.Provider
-        value={{
-          isOpen,
-          onOpenChange,
-          nativeID,
-        }}
-      >
+      <BottomSheetContext.Provider value={value}>
         <Component ref={ref} {...viewProps} />
       </BottomSheetContext.Provider>
     );
@@ -112,7 +111,7 @@ Trigger.displayName = 'HeroUINative.Primitive.BottomSheet.Trigger';
 /**
  * @warning when using a custom `<PortalHost />`, you might have to adjust the Content's offset to account for nav elements like headers.
  */
-function Portal({ hostName, children }: PortalProps) {
+function Portal({ hostName, children }: Readonly<PortalProps>) {
   const value = useRootContext();
 
   return (

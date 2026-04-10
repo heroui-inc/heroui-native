@@ -1,4 +1,8 @@
-import type { BottomSheetProps } from '@gorhom/bottom-sheet';
+import type {
+  BottomSheetBackdropProps,
+  BottomSheetModalProps,
+  BottomSheetProps,
+} from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
@@ -8,7 +12,7 @@ import type {
   PopupOverlayAnimation,
 } from '../../helpers/internal/types';
 import type * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
-import type { CloseButtonProps } from '../close-button/close-button.types';
+import type { CloseButtonProps } from '../close-button';
 
 /**
  * Context value for bottom sheet animation state
@@ -140,11 +144,40 @@ export interface BottomSheetDescriptionProps extends TextProps {
 }
 
 /**
- * Return type for the useBottomSheetAnimation hook
+ * BottomSheet.Sheet component props.
+ * Declarative wrapper around BottomSheetModal for nested sheets.
  */
-export interface UseBottomSheetAnimationReturn {
+export interface BottomSheetSheetProps
+  extends Omit<
+      Partial<BottomSheetModalProps>,
+      | 'animatedIndex'
+      | 'children'
+      | 'containerComponent'
+      | 'enableDismissOnClose'
+      | 'gestureEventsHandlersHook'
+      | 'onDismiss'
+    >,
+    BaseBottomSheetContentProps {
   /**
-   * Animation progress shared value (0=idle, 1=open, 2=close)
+   * Whether this nested sheet is open.
    */
-  progress: SharedValue<number>;
+  isOpen: boolean;
+  /**
+   * Called when the open state changes.
+   */
+  onOpenChange: (open: boolean) => void;
+  /**
+   * Called after the dismiss animation finishes.
+   */
+  onDismiss?: () => void;
+}
+
+/**
+ * BottomSheet.Sheet.Overlay component props.
+ */
+export interface BottomSheetSheetOverlayProps extends BottomSheetBackdropProps {
+  /**
+   * Additional CSS class for the title
+   */
+  className?: string;
 }

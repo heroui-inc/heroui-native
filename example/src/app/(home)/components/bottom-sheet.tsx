@@ -9,6 +9,7 @@ import { AppText } from '../../../components/app-text';
 import { BottomSheetBlurOverlay } from '../../../components/bottom-sheet-blur-overlay';
 import { BasicBottomSheetContent } from '../../../components/bottom-sheet/basic';
 import { ScrollableWithSnapPointsContent } from '../../../components/bottom-sheet/scrollable-with-snap-points';
+import { StackedBottomSheetContent } from '../../../components/bottom-sheet/stacked';
 import { WithOTPInputContent } from '../../../components/bottom-sheet/with-otp-input';
 import { WithTextInputContent } from '../../../components/bottom-sheet/with-text-input';
 import type { UsageVariant } from '../../../components/component-presentation/types';
@@ -204,6 +205,11 @@ const BOTTOM_SHEET_VARIANTS_IOS: UsageVariant[] = [
     content: <ScrollableWithSnapPointsContent />,
   },
   {
+    value: 'stacked-bottom-sheet',
+    label: 'Stacked bottom sheet',
+    content: <StackedBottomSheetContent />,
+  },
+  {
     value: 'native-modal-bottom-sheet',
     label: 'Bottom sheet from native modal',
     content: <NativeModalBottomSheetContent />,
@@ -235,6 +241,11 @@ const BOTTOM_SHEET_VARIANTS_ANDROID: UsageVariant[] = [
     value: 'scrollable-with-snap-points',
     label: 'Scrollable with snap points',
     content: <ScrollableWithSnapPointsContent />,
+  },
+  {
+    value: 'stacked-bottom-sheet',
+    label: 'Stacked bottom sheet',
+    content: <StackedBottomSheetContent />,
   },
   {
     value: 'with-text-input',

@@ -244,6 +244,12 @@ export interface PressableFeedbackProps
    * @default true
    */
   isAnimatedStyleActive?: boolean;
+  /**
+   * When `true`, merges press behavior and animated scale onto the single child (Slot pattern).
+   * The child must be one React element. Uses `Animated.createAnimatedComponent(Slot.Pressable)` internally.
+   * @default false
+   */
+  asChild?: boolean;
 }
 
 /**

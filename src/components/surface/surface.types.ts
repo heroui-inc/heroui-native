@@ -33,6 +33,12 @@ export interface SurfaceRootProps extends ViewProps {
    * - `undefined`: Use default animations
    */
   animation?: AnimationRootDisableAll;
+  /**
+   * When `true`, merges surface styling onto the single child element (Slot pattern).
+   * The child must be one React element. Uses `Slot.View` internally.
+   * @default false
+   */
+  asChild?: boolean;
 }
 
 /**

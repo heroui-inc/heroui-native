@@ -25,13 +25,13 @@ const root = tv({
   base: 'flex-row items-center justify-center',
   variants: {
     variant: {
-      primary: 'bg-accent',
-      secondary: 'bg-default',
-      tertiary: 'bg-default',
+      primary: 'bg-accent border-0',
+      secondary: 'bg-default border-0',
+      tertiary: 'bg-default border-0',
       outline: 'bg-transparent border border-border',
-      ghost: 'bg-transparent',
-      danger: 'bg-danger',
-      ['danger-soft']: 'bg-danger-soft',
+      ghost: 'bg-transparent border-0',
+      danger: 'bg-danger border-0',
+      ['danger-soft']: 'bg-danger-soft border-0',
     },
     size: {
       sm: 'h-[36px] px-3.5 gap-1.5 rounded-3xl',

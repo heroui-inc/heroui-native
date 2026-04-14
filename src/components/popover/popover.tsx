@@ -142,6 +142,7 @@ const PopoverPortal = ({
   className,
   children,
   disableFullWindowOverlay = false,
+  unstable_accessibilityContainerViewIsModal,
   ...props
 }: PopoverPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
@@ -155,6 +156,9 @@ const PopoverPortal = ({
         <PopoverAnimationProvider value={animationContext}>
           <FullWindowOverlay
             disableFullWindowOverlay={disableFullWindowOverlay}
+            unstable_accessibilityContainerViewIsModal={
+              unstable_accessibilityContainerViewIsModal
+            }
           >
             <View className={portalClassName} pointerEvents="box-none">
               {children}

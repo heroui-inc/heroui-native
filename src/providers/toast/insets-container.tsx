@@ -13,6 +13,16 @@ interface InsetsContainerProps {
    */
   disableFullWindowOverlay: boolean;
   /**
+   * Controls whether VoiceOver treats the overlay window as a modal container.
+   * When `false`, VoiceOver can still access elements behind the overlay.
+   * When `true`, VoiceOver is restricted to elements inside the overlay.
+   * @default false
+   * @platform ios
+   * @unstable This prop maps directly to the native `accessibilityViewIsModal`
+   * on the container view and may change in a future react-native-screens release.
+   */
+  unstable_accessibilityContainerViewIsModal?: boolean;
+  /**
    * Optional inset values for all edges
    * If not provided, defaults to platform-specific values:
    * - iOS: safe area insets + 0px (top), + 6px (bottom), + 12px (left/right)
@@ -47,6 +57,7 @@ export function InsetsContainer({
   contentWrapper,
   children,
   disableFullWindowOverlay,
+  unstable_accessibilityContainerViewIsModal,
 }: InsetsContainerProps) {
   const safeAreaInsets = useSafeAreaInsets();
 
@@ -80,7 +91,12 @@ export function InsetsContainer({
   }
 
   return (
-    <FullWindowOverlay disableFullWindowOverlay={disableFullWindowOverlay}>
+    <FullWindowOverlay
+      disableFullWindowOverlay={disableFullWindowOverlay}
+      unstable_accessibilityContainerViewIsModal={
+        unstable_accessibilityContainerViewIsModal
+      }
+    >
       {content}
     </FullWindowOverlay>
   );

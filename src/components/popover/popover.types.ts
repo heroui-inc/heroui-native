@@ -94,6 +94,16 @@ export interface PopoverPortalProps extends PopoverPrimitivesTypes.PortalProps {
    */
   disableFullWindowOverlay?: boolean;
   /**
+   * Controls whether VoiceOver treats the overlay window as a modal container.
+   * When `false`, VoiceOver can still access elements behind the overlay.
+   * When `true`, VoiceOver is restricted to elements inside the overlay.
+   * @default false
+   * @platform ios
+   * @unstable This prop maps directly to the native `accessibilityViewIsModal`
+   * on the container view and may change in a future react-native-screens release.
+   */
+  unstable_accessibilityContainerViewIsModal?: boolean;
+  /**
    * Additional CSS class for the portal container
    */
   className?: string;

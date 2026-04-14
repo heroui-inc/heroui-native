@@ -144,6 +144,7 @@ const MenuPortal = ({
   className,
   children,
   disableFullWindowOverlay = false,
+  unstable_accessibilityContainerViewIsModal,
   ...props
 }: MenuPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
@@ -157,6 +158,9 @@ const MenuPortal = ({
         <MenuAnimationProvider value={animationContext}>
           <FullWindowOverlay
             disableFullWindowOverlay={disableFullWindowOverlay}
+            unstable_accessibilityContainerViewIsModal={
+              unstable_accessibilityContainerViewIsModal
+            }
           >
             <View className={portalClassName} pointerEvents="box-none">
               {children}

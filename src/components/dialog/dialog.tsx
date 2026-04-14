@@ -110,6 +110,7 @@ const DialogPortal = ({
   children,
   style,
   disableFullWindowOverlay = false,
+  unstable_accessibilityContainerViewIsModal,
   ...props
 }: DialogPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
@@ -123,6 +124,9 @@ const DialogPortal = ({
         <DialogAnimationProvider value={animationContext}>
           <FullWindowOverlay
             disableFullWindowOverlay={disableFullWindowOverlay}
+            unstable_accessibilityContainerViewIsModal={
+              unstable_accessibilityContainerViewIsModal
+            }
           >
             <Animated.View
               className={portalClassName}

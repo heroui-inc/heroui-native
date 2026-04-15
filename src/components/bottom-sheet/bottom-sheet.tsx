@@ -111,6 +111,7 @@ const BottomSheetTrigger = forwardRef<
 const BottomSheetPortal = ({
   children,
   disableFullWindowOverlay = false,
+  unstable_accessibilityContainerViewIsModal,
   ...props
 }: BottomSheetPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
@@ -122,6 +123,9 @@ const BottomSheetPortal = ({
         <BottomSheetAnimationProvider value={animationContext}>
           <FullWindowOverlay
             disableFullWindowOverlay={disableFullWindowOverlay}
+            unstable_accessibilityContainerViewIsModal={
+              unstable_accessibilityContainerViewIsModal
+            }
           >
             <Animated.View
               style={StyleSheet.absoluteFill}

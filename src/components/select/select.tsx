@@ -248,6 +248,7 @@ const SelectPortal = ({
   className,
   children,
   disableFullWindowOverlay = false,
+  unstable_accessibilityContainerViewIsModal,
   ...props
 }: SelectPortalProps) => {
   const animationSettingsContext = useAnimationSettings();
@@ -261,6 +262,9 @@ const SelectPortal = ({
         <SelectAnimationProvider value={animationContext}>
           <FullWindowOverlay
             disableFullWindowOverlay={disableFullWindowOverlay}
+            unstable_accessibilityContainerViewIsModal={
+              unstable_accessibilityContainerViewIsModal
+            }
           >
             <View className={portalClassName} pointerEvents="box-none">
               {children}

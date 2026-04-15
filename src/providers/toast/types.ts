@@ -48,6 +48,16 @@ export interface ToastProviderProps {
    */
   disableFullWindowOverlay?: boolean;
   /**
+   * Controls whether VoiceOver treats the toast overlay window as a modal container.
+   * When `false`, VoiceOver can still access elements behind the overlay.
+   * When `true`, VoiceOver is restricted to elements inside the overlay.
+   * @default false
+   * @platform ios
+   * @unstable This prop maps directly to the native `accessibilityViewIsModal`
+   * on the container view and may change in a future react-native-screens release.
+   */
+  unstable_accessibilityContainerViewIsModal?: boolean;
+  /**
    * Global toast configuration
    * These values are used as defaults for all toasts unless overridden locally
    * Local configs have precedence over global config

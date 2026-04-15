@@ -133,4 +133,5 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 | `children`     | `React.ReactNode`                                         | -           | Content to be rendered inside the surface                                                 |
 | `className`    | `string`                                                  | -           | Additional CSS classes to apply                                                           |
 | `animation`    | `"disable-all" \| undefined`                              | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
+| `asChild`      | `boolean`                                                 | `false`     | Whether to render as a child element                                                      |
 | `...ViewProps` | `ViewProps`                                               | -           | All standard React Native View props are supported                                        |

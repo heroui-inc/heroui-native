@@ -101,7 +101,7 @@ function generateExportFromSource(sourcePath) {
 }
 
 /**
- * Parse index.tsx to extract portal, hooks, and utils exports
+ * Parse index.tsx to extract portal, contexts, hooks, and utils exports
  */
 function parseIndexExports() {
   try {
@@ -127,6 +127,14 @@ function parseIndexExports() {
     );
     if (hooksMatch) {
       exports.hooks = './src/helpers/external/hooks/index.ts';
+    }
+
+    // Parse Contexts export: export * from './helpers/external/contexts';
+    const contextsMatch = indexContent.match(
+      /export\s+\*\s+from\s+['"]\.\/helpers\/external\/contexts['"]/
+    );
+    if (contextsMatch) {
+      exports.contexts = './src/helpers/external/contexts/index.ts';
     }
 
     // Parse Utils export: export * from './helpers/external/utils';
@@ -184,10 +192,15 @@ function updateExports() {
       default: './lib/module/providers/hero-ui-native-raw/index.js',
     };
 
-    // Parse and add portal, hooks, utils exports from index.tsx
+    // Parse and add portal, contexts, hooks, utils exports from index.tsx
     const indexExports = parseIndexExports();
     if (indexExports.portal) {
       newExports['./portal'] = generateExportFromSource(indexExports.portal);
+    }
+    if (indexExports.contexts) {
+      newExports['./contexts'] = generateExportFromSource(
+        indexExports.contexts
+      );
     }
     if (indexExports.hooks) {
       newExports['./hooks'] = generateExportFromSource(indexExports.hooks);

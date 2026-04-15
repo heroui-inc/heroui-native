@@ -25,6 +25,16 @@ export interface FullWindowOverlayProps {
    */
   disableFullWindowOverlay: boolean;
   /**
+   * Controls whether VoiceOver treats the overlay window as a modal container.
+   * When `false`, VoiceOver can still access elements behind the overlay.
+   * When `true`, VoiceOver is restricted to elements inside the overlay.
+   * @default false
+   * @platform ios
+   * @unstable This prop maps directly to the native `accessibilityViewIsModal`
+   * on the container view and may change in a future react-native-screens release.
+   */
+  unstable_accessibilityContainerViewIsModal?: boolean;
+  /**
    * Content to render inside the overlay
    */
   children: ReactNode;
@@ -40,6 +50,7 @@ export interface FullWindowOverlayProps {
  */
 export function FullWindowOverlay({
   disableFullWindowOverlay,
+  unstable_accessibilityContainerViewIsModal = false,
   children,
 }: FullWindowOverlayProps) {
   if (
@@ -50,5 +61,13 @@ export function FullWindowOverlay({
     return <>{children}</>;
   }
 
-  return <NativeFullWindowOverlay>{children}</NativeFullWindowOverlay>;
+  return (
+    <NativeFullWindowOverlay
+      unstable_accessibilityContainerViewIsModal={
+        unstable_accessibilityContainerViewIsModal
+      }
+    >
+      {children}
+    </NativeFullWindowOverlay>
+  );
 }

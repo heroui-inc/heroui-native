@@ -124,6 +124,7 @@ export function ToastProvider({
   contentWrapper,
   children,
   disableFullWindowOverlay = false,
+  unstable_accessibilityContainerViewIsModal,
 }: ToastProviderProps) {
   const [toasts, dispatch] = useReducer(toastReducer, []);
 
@@ -378,6 +379,9 @@ export function ToastProvider({
             insets={insets}
             contentWrapper={contentWrapper}
             disableFullWindowOverlay={disableFullWindowOverlay}
+            unstable_accessibilityContainerViewIsModal={
+              unstable_accessibilityContainerViewIsModal
+            }
           >
             <View className="flex-1">
               {toasts.map((toastItem, index) => (

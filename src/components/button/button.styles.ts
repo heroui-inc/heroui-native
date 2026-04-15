@@ -22,7 +22,7 @@ import { combineStyles } from '../../helpers/internal/utils';
  * To disable the scale animation, set `animation={{ scale: false }}` or `animation={false}`.
  */
 const root = tv({
-  base: 'flex-row items-center justify-center',
+  base: 'flex-row items-center justify-center border-0',
   variants: {
     variant: {
       primary: 'bg-accent',
@@ -31,7 +31,7 @@ const root = tv({
       outline: 'bg-transparent border border-border',
       ghost: 'bg-transparent',
       danger: 'bg-danger',
-      ['danger-soft']: 'bg-danger-soft',
+      ['danger-soft']: 'bg-danger-soft border-0',
     },
     size: {
       sm: 'h-[36px] px-3.5 gap-1.5 rounded-3xl',

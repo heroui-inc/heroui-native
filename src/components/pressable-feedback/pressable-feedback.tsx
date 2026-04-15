@@ -10,6 +10,7 @@ import {
 import Animated from 'react-native-reanimated';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { PressableRef, ViewRef } from '../../helpers/internal/types';
+import * as Slot from '../../primitives/slot';
 import {
   PressableFeedbackRootAnimationProvider,
   usePressableFeedbackHighlightAnimation,
@@ -30,6 +31,7 @@ import type {
 } from './pressable-feedback.types';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+const AnimatedSlotPressable = Animated.createAnimatedComponent(Slot.Pressable);
 
 // --------------------------------------------------
 
@@ -45,8 +47,11 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       onLayout,
       onPressIn,
       onPressOut,
+      asChild = false,
       ...restProps
     } = props;
+
+    const RootComponent = asChild ? AnimatedSlotPressable : AnimatedPressable;
 
     const {
       isPressed,
@@ -116,7 +121,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
     return (
       <AnimationSettingsProvider value={animationSettingsContextValue}>
         <PressableFeedbackRootAnimationProvider value={animationContextValue}>
-          <AnimatedPressable
+          <RootComponent
             ref={ref}
             disabled={isDisabled}
             className={rootClassName}
@@ -127,7 +132,7 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
             {...restProps}
           >
             {children}
-          </AnimatedPressable>
+          </RootComponent>
         </PressableFeedbackRootAnimationProvider>
       </AnimationSettingsProvider>
     );
@@ -314,7 +319,7 @@ PressableFeedbackRipple.displayName = DISPLAY_NAME.RIPPLE;
  * - Built-in scale animation enabled by default
  * - Composable compound parts: Scale, Highlight, Ripple
  * - Full gesture handling with press, long press, and disabled states
- * - Polymorphic via `asChild` prop (Slot pattern)
+ * - Polymorphic via `asChild` prop (AnimatedSlotPressable = Animated + Slot.Pressable)
  * - Used as foundation for interactive components like Button, Card, and Accordion
  *
  * @component PressableFeedback.Scale

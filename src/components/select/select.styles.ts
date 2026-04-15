@@ -7,7 +7,7 @@ const trigger = tv({
   variants: {
     variant: {
       default:
-        'flex-row items-center justify-between gap-3 py-3.5 px-4 rounded-2xl bg-surface shadow-surface',
+        'flex-row items-center justify-between gap-3 py-3 px-4 rounded-2xl bg-surface shadow-surface',
       unstyled: '',
     },
     isDisabled: {

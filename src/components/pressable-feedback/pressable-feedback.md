@@ -212,6 +212,7 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 | `className`             | `string`                         | -       | Additional CSS classes                                                                                      |
 | `animation`             | `PressableFeedbackRootAnimation` | -       | Customize scale via `{ scale: ... }`, `false` to disable root scale, `'disable-all'` to cascade-disable all |
 | `isAnimatedStyleActive` | `boolean`                        | `true`  | Whether the root's built-in animated styles are active                                                      |
+| `asChild`               | `boolean`                        | `false` | Whether to render as a child element                                                                        |
 | `...rest`               | `AnimatedProps<PressableProps>`  | -       | All Reanimated Animated Pressable props are supported                                                       |
 
 #### PressableFeedbackRootAnimation

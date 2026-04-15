@@ -1,3 +1,21 @@
+## <small>1.0.2 (2026-04-15)</small>
+
+* chore: upd readme version ([cbec221](https://github.com/heroui-inc/heroui-native/commit/cbec221))
+* chore: update license ([c2f87ff](https://github.com/heroui-inc/heroui-native/commit/c2f87ff))
+* chore: update LICENSE ([1f0b5c0](https://github.com/heroui-inc/heroui-native/commit/1f0b5c0))
+* chore(button): adjust root style ([971842b](https://github.com/heroui-inc/heroui-native/commit/971842b))
+* chore(input): adjust border width style ([9e6c2bd](https://github.com/heroui-inc/heroui-native/commit/9e6c2bd))
+* chore(select): adjust trigger py style ([5ff1e36](https://github.com/heroui-inc/heroui-native/commit/5ff1e36))
+* docs(radio-group): update doc file with radio api ref ([fbd58b5](https://github.com/heroui-inc/heroui-native/commit/fbd58b5))
+* docs(surface): add asChild to root api ref ([79a82d5](https://github.com/heroui-inc/heroui-native/commit/79a82d5))
+* feat: add unstable_accessibilityContainerViewIsModal prop to FullWindowOverlay ([be6bff8](https://github.com/heroui-inc/heroui-native/commit/be6bff8))
+* feat(pressable-feedback): add asChild support ([57da0a2](https://github.com/heroui-inc/heroui-native/commit/57da0a2))
+* feat(surface): add asChild support ([49102b1](https://github.com/heroui-inc/heroui-native/commit/49102b1))
+* build: add context exports ([67612b8](https://github.com/heroui-inc/heroui-native/commit/67612b8))
+* style: added border-0 to all button variants for consistent styling ([84975ea](https://github.com/heroui-inc/heroui-native/commit/84975ea))
+
+
+
 ## <small>1.0.1 (2026-04-01)</small>
 
 * chore: remove v3 from docs link ([208a642](https://github.com/heroui-inc/heroui-native/commit/208a642))

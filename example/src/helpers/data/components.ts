@@ -146,6 +146,10 @@ export const COMPONENTS: ComponentItem[] = [
     path: 'tag-group',
   },
   {
+    title: 'Text',
+    path: 'text',
+  },
+  {
     title: 'TextArea',
     path: 'text-area',
   },

@@ -36,12 +36,9 @@ const Description = forwardRef<TextRef, DescriptionProps>((props, ref) => {
       ? localIsDisabled
       : (formField?.isDisabled ?? false);
 
-  const isInsideField = formField?.hasFieldPadding ?? false;
-
   const rootClassName = descriptionClassNames.root({
     isInvalid,
     isDisabled,
-    isInsideField,
     className,
   });
 

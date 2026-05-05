@@ -4,9 +4,6 @@ import { combineStyles } from '../../helpers/internal/utils';
 const root = tv({
   base: 'text-sm text-muted',
   variants: {
-    isInsideField: {
-      true: 'px-1.5',
-    },
     isInvalid: {
       true: 'text-danger',
     },

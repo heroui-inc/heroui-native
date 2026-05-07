@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  v1.0.2
+  v1.0.3
 </p>
 
 ## Getting Started

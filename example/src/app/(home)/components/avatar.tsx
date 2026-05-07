@@ -11,7 +11,7 @@ const SizesContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-4">
-        <Avatar size="sm" alt="Small Avatar">
+        <Avatar size="sm">
           <Avatar.Image
             source={{
               uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/blue.jpg',
@@ -19,7 +19,7 @@ const SizesContent = () => {
           />
           <Avatar.Fallback />
         </Avatar>
-        <Avatar size="md" alt="Medium Avatar">
+        <Avatar size="md">
           <Avatar.Image
             source={{
               uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/purple.jpg',
@@ -27,7 +27,7 @@ const SizesContent = () => {
           />
           <Avatar.Fallback>MD</Avatar.Fallback>
         </Avatar>
-        <Avatar size="lg" alt="Large Avatar">
+        <Avatar size="lg">
           <Avatar.Image
             source={{
               uri: 'https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/red.jpg',
@@ -46,23 +46,23 @@ const DefaultTextFallbackContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-3">
-        <Avatar color="accent" alt="Accent">
+        <Avatar color="accent">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback>AC</Avatar.Fallback>
         </Avatar>
-        <Avatar color="default" alt="Default">
+        <Avatar color="default">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback>DF</Avatar.Fallback>
         </Avatar>
-        <Avatar color="success" alt="Success">
+        <Avatar color="success">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback>SC</Avatar.Fallback>
         </Avatar>
-        <Avatar color="warning" alt="Warning">
+        <Avatar color="warning">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback>WR</Avatar.Fallback>
         </Avatar>
-        <Avatar color="danger" alt="Danger">
+        <Avatar color="danger">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback>DG</Avatar.Fallback>
         </Avatar>
@@ -77,23 +77,23 @@ const SoftTextFallbackContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-3">
-        <Avatar variant="soft" color="accent" alt="Accent">
+        <Avatar variant="soft" color="accent">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback>AC</Avatar.Fallback>
         </Avatar>
-        <Avatar variant="soft" color="default" alt="Default">
+        <Avatar variant="soft" color="default">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback>DF</Avatar.Fallback>
         </Avatar>
-        <Avatar variant="soft" color="success" alt="Success">
+        <Avatar variant="soft" color="success">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback>SC</Avatar.Fallback>
         </Avatar>
-        <Avatar variant="soft" color="warning" alt="Warning">
+        <Avatar variant="soft" color="warning">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback>WR</Avatar.Fallback>
         </Avatar>
-        <Avatar variant="soft" color="danger" alt="Danger">
+        <Avatar variant="soft" color="danger">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback>DG</Avatar.Fallback>
         </Avatar>
@@ -108,23 +108,23 @@ const DefaultIconFallbackContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-3">
-        <Avatar color="accent" alt="Accent">
+        <Avatar color="accent">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback />
         </Avatar>
-        <Avatar color="default" alt="Default">
+        <Avatar color="default">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback />
         </Avatar>
-        <Avatar color="success" alt="Success">
+        <Avatar color="success">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback />
         </Avatar>
-        <Avatar color="warning" alt="Warning">
+        <Avatar color="warning">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback />
         </Avatar>
-        <Avatar color="danger" alt="Danger">
+        <Avatar color="danger">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback />
         </Avatar>
@@ -139,23 +139,23 @@ const SoftIconFallbackContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-3">
-        <Avatar variant="soft" color="accent" alt="Accent">
+        <Avatar variant="soft" color="accent">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback />
         </Avatar>
-        <Avatar variant="soft" color="default" alt="Default">
+        <Avatar variant="soft" color="default">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback />
         </Avatar>
-        <Avatar variant="soft" color="success" alt="Success">
+        <Avatar variant="soft" color="success">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback />
         </Avatar>
-        <Avatar variant="soft" color="warning" alt="Warning">
+        <Avatar variant="soft" color="warning">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback />
         </Avatar>
-        <Avatar variant="soft" color="danger" alt="Danger">
+        <Avatar variant="soft" color="danger">
           <Avatar.Image source={undefined} />
           <Avatar.Fallback />
         </Avatar>
@@ -173,7 +173,7 @@ const CustomFallbackContent = () => {
         <Avatar alt="John Doe">
           <Avatar.Fallback>🎉</Avatar.Fallback>
         </Avatar>
-        <Avatar alt="Custom">
+        <Avatar>
           <Avatar.Fallback>
             <LinearGradient
               colors={['#ec4899', '#a855f7']}
@@ -191,7 +191,7 @@ const CustomFallbackContent = () => {
             </LinearGradient>
           </Avatar.Fallback>
         </Avatar>
-        <Avatar alt="User">
+        <Avatar>
           <Avatar.Fallback>
             <PersonFillIcon colorClassName="accent-muted" />
           </Avatar.Fallback>
@@ -276,7 +276,7 @@ const AvatarGroupContent = () => {
             </Avatar.Fallback>
           </Avatar>
         ))}
-        <Avatar className="border-background border-2 -ml-4" alt="More">
+        <Avatar className="border-background border-2 -ml-4">
           <Avatar.Fallback>+2</Avatar.Fallback>
         </Avatar>
       </View>
@@ -290,7 +290,7 @@ const CustomStylesContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-4">
-        <Avatar className="h-16 w-16" alt="Extra Large">
+        <Avatar className="h-16 w-16">
           <Avatar.Image
             source={{
               uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
@@ -298,7 +298,7 @@ const CustomStylesContent = () => {
           />
           <Avatar.Fallback>XL</Avatar.Fallback>
         </Avatar>
-        <Avatar className="rounded-lg" alt="Square Avatar">
+        <Avatar className="rounded-lg">
           <Avatar.Image
             source={{
               uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
@@ -306,7 +306,7 @@ const CustomStylesContent = () => {
           />
           <Avatar.Fallback className="rounded-lg">SQ</Avatar.Fallback>
         </Avatar>
-        <Avatar className="p-[2.5px]" size="lg" alt="Gradient Border">
+        <Avatar className="p-[2.5px]" size="lg">
           <LinearGradient
             colors={['#ec4899', '#f59e0b']}
             start={{ x: 0, y: 0 }}
@@ -322,7 +322,7 @@ const CustomStylesContent = () => {
           <Avatar.Fallback className="border-none">GB</Avatar.Fallback>
         </Avatar>
         <View className="relative">
-          <Avatar size="lg" alt="Online User">
+          <Avatar size="lg">
             <Avatar.Image
               source={{
                 uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=23',

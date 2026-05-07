@@ -6,7 +6,8 @@ const input = tv({
   base: 'py-3.5 px-3 rounded-2xl text-foreground font-normal border-[1.5px] focus:border-accent',
   variants: {
     variant: {
-      primary: 'bg-field border-field ios:shadow-field android:shadow-sm',
+      primary:
+        'bg-field border-field-border ios:shadow-field android:shadow-sm',
       secondary: 'bg-default border-default',
     },
     isInvalid: {

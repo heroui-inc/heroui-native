@@ -126,6 +126,15 @@ export function useTabsIndicatorAnimation(options: {
     });
 
     if (!hasMeasured.value) {
+      if (isRTL && listWidth === 0) {
+        return {
+          width: 0,
+          height: 0,
+          transform: [{ translateX: 0 }],
+          opacity: 0,
+        };
+      }
+
       hasMeasured.value = true;
       return {
         width: activeMeasurements.width,
@@ -190,6 +199,7 @@ function getIndicatorTranslateX({
   tabWidth: number;
   tabX: number;
 }) {
+  'worklet';
   if (!(isRTL && listWidth > 0)) {
     return tabX;
   }

@@ -17,14 +17,12 @@ import { Text } from 'heroui-native';
 <Text.Heading>...</Text.Heading>
 <Text.Paragraph>...</Text.Paragraph>
 <Text.Code>...</Text.Code>
-<Text.Prose>...</Text.Prose>
 ```
 
 - **Text**: Root text element. The `type` prop selects a semantic typography preset (heading, body, or code).
 - **Text.Heading**: Convenience wrapper restricted to heading types (`h1`–`h6`). Adds `accessibilityRole="header"` automatically.
 - **Text.Paragraph**: Convenience wrapper restricted to body types (`body`, `body-sm`, `body-xs`).
 - **Text.Code**: Renders monospaced text using a platform-appropriate monospace font family.
-- **Text.Prose**: Minimal wrapper for longer body text passages. Currently equivalent to `body` type.
 
 ## Usage
 
@@ -82,17 +80,6 @@ Use `Text.Code` for inline code snippets with monospaced font.
 
 ```tsx
 <Text.Code>console.log('hello')</Text.Code>
-```
-
-### Prose
-
-Use `Text.Prose` for longer passages of body text.
-
-```tsx
-<Text.Prose>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-  tempor incididunt ut labore et dolore magna aliqua.
-</Text.Prose>
 ```
 
 ### Custom Styling
@@ -161,14 +148,6 @@ Text extends all standard React Native `TextProps` with additional typography pr
 | `...TextProps` | `TextProps`                                | -        | All standard React Native Text props are supported |
 
 ### Text.Code
-
-| prop           | type              | default | description                                        |
-| -------------- | ----------------- | ------- | -------------------------------------------------- |
-| `children`     | `React.ReactNode` | -       | Content to render                                  |
-| `className`    | `string`          | -       | Additional CSS classes                             |
-| `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported |
-
-### Text.Prose
 
 | prop           | type              | default | description                                        |
 | -------------- | ----------------- | ------- | -------------------------------------------------- |

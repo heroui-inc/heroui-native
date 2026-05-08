@@ -8,7 +8,6 @@ import type {
   TextCodeProps,
   TextHeadingProps,
   TextParagraphProps,
-  TextProseProps,
   TextRootProps,
 } from './text.types';
 
@@ -63,17 +62,10 @@ const TextCode = forwardRef<TextRef, TextCodeProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const TextProse = forwardRef<TextRef, TextProseProps>((props, ref) => {
-  return <TextRoot ref={ref} type="body" {...props} />;
-});
-
-// --------------------------------------------------
-
 TextRoot.displayName = DISPLAY_NAME.TEXT_ROOT;
 TextHeading.displayName = DISPLAY_NAME.TEXT_HEADING;
 TextParagraph.displayName = DISPLAY_NAME.TEXT_PARAGRAPH;
 TextCode.displayName = DISPLAY_NAME.TEXT_CODE;
-TextProse.displayName = DISPLAY_NAME.TEXT_PROSE;
 
 /**
  * Compound Text component with semantic sub-components.
@@ -91,9 +83,6 @@ TextProse.displayName = DISPLAY_NAME.TEXT_PROSE;
  * @component Text.Code - Renders monospaced text using the `code` type and
  * applies a platform monospace font family.
  *
- * @component Text.Prose - Minimal body-text wrapper intended for longer
- * prose passages. Currently equivalent to `body` type.
- *
  * @see Full documentation: https://heroui.com/docs/native/components/text
  */
 const CompoundText = Object.assign(TextRoot, {
@@ -103,8 +92,6 @@ const CompoundText = Object.assign(TextRoot, {
   Paragraph: TextParagraph,
   /** Code text – monospaced font with code styling */
   Code: TextCode,
-  /** Prose text – long-form body content */
-  Prose: TextProse,
 });
 
 export default CompoundText;

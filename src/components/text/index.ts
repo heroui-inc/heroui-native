@@ -4,7 +4,6 @@ export type {
   TextCodeProps,
   TextHeadingProps,
   TextParagraphProps,
-  TextProseProps,
   TextRootProps,
   TextType,
 } from './text.types';

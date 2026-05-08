@@ -69,21 +69,6 @@ const CodeContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const ProseContent = () => {
-  return (
-    <View className="flex-1 justify-center px-5 gap-4">
-      <Text.Prose>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat.
-      </Text.Prose>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
 const CustomStylingContent = () => {
   return (
     <View className="flex-1 justify-center px-5 gap-4">
@@ -122,11 +107,6 @@ const TEXT_VARIANTS: UsageVariant[] = [
     value: 'code',
     label: 'Code',
     content: <CodeContent />,
-  },
-  {
-    value: 'prose',
-    label: 'Prose',
-    content: <ProseContent />,
   },
   {
     value: 'custom',

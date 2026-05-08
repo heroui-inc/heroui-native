@@ -64,8 +64,3 @@ export interface TextParagraphProps extends Omit<TextRootProps, 'type'> {
  * Props for Text.Code sub-component
  */
 export interface TextCodeProps extends Omit<TextRootProps, 'type'> {}
-
-/**
- * Props for Text.Prose sub-component (multi-line body text wrapper)
- */
-export interface TextProseProps extends Omit<TextRootProps, 'type'> {}

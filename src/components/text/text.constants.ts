@@ -6,7 +6,6 @@ export const DISPLAY_NAME = {
   TEXT_HEADING: 'HeroUINative.Text.Heading',
   TEXT_PARAGRAPH: 'HeroUINative.Text.Paragraph',
   TEXT_CODE: 'HeroUINative.Text.Code',
-  TEXT_PROSE: 'HeroUINative.Text.Prose',
 } as const;
 
 /**

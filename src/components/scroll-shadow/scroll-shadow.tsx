@@ -85,6 +85,13 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
   const orientation =
     orientationProp || (childHorizontal ? 'horizontal' : 'vertical');
 
+  const inverted =
+    children?.props &&
+    typeof children?.props === 'object' &&
+    'inverted' in children.props
+      ? children.props.inverted
+      : false;
+
   // Get all animation logic from root hook
   const {
     contentSize,
@@ -99,6 +106,11 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
     visibility,
     isEnabled,
   });
+
+  // When inverted, swap which animated style drives each visual edge so that
+  // shadows appear at the correct edge from the user's perspective.
+  const topEdgeShadowStyle = inverted ? bottomShadowStyle : topShadowStyle;
+  const bottomEdgeShadowStyle = inverted ? topShadowStyle : bottomShadowStyle;
 
   const onContentSizeChange = (w: number, h: number) => {
     const contentDimension = orientation === 'vertical' ? h : w;
@@ -180,7 +192,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
           style={[
             scrollShadowStyleSheet.topShadow,
             { height: size },
-            topShadowStyle,
+            topEdgeShadowStyle,
           ]}
         >
           <LinearGradientComponent
@@ -194,7 +206,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
           style={[
             scrollShadowStyleSheet.leftShadow,
             { width: size },
-            topShadowStyle,
+            topEdgeShadowStyle,
           ]}
         >
           <LinearGradientComponent
@@ -213,7 +225,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
           style={[
             scrollShadowStyleSheet.bottomShadow,
             { height: size },
-            bottomShadowStyle,
+            bottomEdgeShadowStyle,
           ]}
         >
           <LinearGradientComponent
@@ -227,7 +239,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
           style={[
             scrollShadowStyleSheet.rightShadow,
             { width: size },
-            bottomShadowStyle,
+            bottomEdgeShadowStyle,
           ]}
         >
           <LinearGradientComponent

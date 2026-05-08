@@ -335,6 +335,8 @@ export type ItemMeasurements = {
 export type MeasurementsContextValue = {
   measurements: Record<string, ItemMeasurements>;
   setMeasurements: (key: string, measurements: ItemMeasurements) => void;
+  listWidth: number;
+  setListWidth: (width: number) => void;
   variant: 'primary' | 'secondary';
   isScrollView: boolean;
   setIsScrollView: (isScrollView: boolean) => void;

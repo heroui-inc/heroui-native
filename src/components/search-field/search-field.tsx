@@ -60,7 +60,7 @@ const SearchFieldRoot = forwardRef<ViewRef, SearchFieldProps>((props, ref) => {
   );
 
   const formFieldContextValue = useMemo(
-    () => ({ isDisabled, isInvalid, isRequired, hasFieldPadding: true }),
+    () => ({ isDisabled, isInvalid, isRequired, hasFieldPadding: false }),
     [isDisabled, isInvalid, isRequired]
   );
 

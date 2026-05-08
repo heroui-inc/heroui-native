@@ -36,6 +36,7 @@ export * from './components/surface';
 export * from './components/switch';
 export * from './components/tabs';
 export * from './components/tag-group';
+export * from './components/text';
 export * from './components/text-area';
 export * from './components/text-field';
 export * from './components/toast';

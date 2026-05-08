@@ -49,7 +49,7 @@ const ParagraphsContent = () => {
         secondary descriptions.
       </Text.Paragraph>
       <Text.Paragraph type="body-xs">
-        Extra-small text for disclaimers or fine print.
+        Extra-small text for disclaimers or fine print. lore
       </Text.Paragraph>
     </View>
   );
@@ -63,24 +63,6 @@ const CodeContent = () => {
       <Text.Code>npm install heroui-native</Text.Code>
       <Text.Code>{'const greeting = "Hello, world!";'}</Text.Code>
       <Text.Code>{'export default function App() { }'}</Text.Code>
-    </View>
-  );
-};
-
-// ------------------------------------------------------------------------------
-
-const CustomStylingContent = () => {
-  return (
-    <View className="flex-1 justify-center px-5 gap-4">
-      <Text type="h1" className="text-accent">
-        Accent Heading
-      </Text>
-      <Text type="body" className="text-muted">
-        Muted body text
-      </Text>
-      <Text type="body-sm" className="text-danger">
-        Danger small text
-      </Text>
     </View>
   );
 };
@@ -107,11 +89,6 @@ const TEXT_VARIANTS: UsageVariant[] = [
     value: 'code',
     label: 'Code',
     content: <CodeContent />,
-  },
-  {
-    value: 'custom',
-    label: 'Custom Styling',
-    content: <CustomStylingContent />,
   },
 ];
 

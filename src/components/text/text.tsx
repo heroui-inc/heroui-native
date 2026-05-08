@@ -1,9 +1,8 @@
-import { forwardRef, useMemo } from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { forwardRef } from 'react';
 import { HeroText } from '../../helpers/internal/components';
 import type { TextRef } from '../../helpers/internal/types';
-import { CODE_FONT_FAMILY, DISPLAY_NAME } from './text.constants';
-import { textClassNames } from './text.styles';
+import { DISPLAY_NAME } from './text.constants';
+import { styleSheet, textClassNames } from './text.styles';
 import type {
   TextCodeProps,
   TextHeadingProps,
@@ -14,12 +13,38 @@ import type {
 // --------------------------------------------------
 
 const TextRoot = forwardRef<TextRef, TextRootProps>((props, ref) => {
-  const { children, type = 'body', className, ...restProps } = props;
+  const {
+    children,
+    type = 'body',
+    align = 'start',
+    color = 'default',
+    weight,
+    truncate = false,
+    numberOfLines,
+    style,
+    className,
+    ...restProps
+  } = props;
 
-  const rootClassName = textClassNames.root({ type, className });
+  const rootClassName = textClassNames.root({
+    type,
+    align,
+    color,
+    weight,
+    className,
+  });
+
+  const resolvedNumberOfLines = numberOfLines ?? (truncate ? 1 : undefined);
+  const resolvedStyle = type === 'code' ? [styleSheet.code, style] : style;
 
   return (
-    <HeroText ref={ref} className={rootClassName} {...restProps}>
+    <HeroText
+      ref={ref}
+      className={rootClassName}
+      numberOfLines={resolvedNumberOfLines}
+      style={resolvedStyle}
+      {...restProps}
+    >
       {children}
     </HeroText>
   );
@@ -49,15 +74,7 @@ const TextParagraph = forwardRef<TextRef, TextParagraphProps>((props, ref) => {
 // --------------------------------------------------
 
 const TextCode = forwardRef<TextRef, TextCodeProps>((props, ref) => {
-  const { style, ...restProps } = props;
-
-  const mergedStyle = useMemo(
-    () =>
-      Array.isArray(style) ? [styles.code, ...style] : [styles.code, style],
-    [style]
-  );
-
-  return <TextRoot ref={ref} type="code" style={mergedStyle} {...restProps} />;
+  return <TextRoot ref={ref} type="code" {...props} />;
 });
 
 // --------------------------------------------------
@@ -70,9 +87,13 @@ TextCode.displayName = DISPLAY_NAME.TEXT_CODE;
 /**
  * Compound Text component with semantic sub-components.
  *
- * @component Text - Generic text element with a `type` prop for semantic
- * typography variants (headings, body, code). Maps each type to native
- * typography tokens via Tailwind utility classes.
+ * @component Text - Root text element. Selects a typography preset via
+ * `type` and exposes orthogonal `align`, `color`, `weight`, and `truncate`
+ * props. `truncate` is implemented via React Native's `numberOfLines={1}`;
+ * an explicit `numberOfLines` prop, if provided, takes precedence. When
+ * `type="code"`, the platform-appropriate monospace `fontFamily` from
+ * `styleSheet.code` is merged into `style` (since the project's NativeWind
+ * theme has no `font-mono` token).
  *
  * @component Text.Heading - Convenience wrapper restricted to heading types
  * (`h1`–`h6`). Sets `accessibilityRole="header"` automatically.
@@ -80,8 +101,9 @@ TextCode.displayName = DISPLAY_NAME.TEXT_CODE;
  * @component Text.Paragraph - Convenience wrapper restricted to body types
  * (`body`, `body-sm`, `body-xs`).
  *
- * @component Text.Code - Renders monospaced text using the `code` type and
- * applies a platform monospace font family.
+ * @component Text.Code - Chip-styled inline monospaced text. Thin wrapper
+ * that forces `type="code"`; the monospace `fontFamily` is applied at the
+ * root.
  *
  * @see Full documentation: https://heroui.com/docs/native/components/text
  */
@@ -90,20 +112,8 @@ const CompoundText = Object.assign(TextRoot, {
   Heading: TextHeading,
   /** Paragraph text – renders body / body-sm / body-xs */
   Paragraph: TextParagraph,
-  /** Code text – monospaced font with code styling */
+  /** Code text – chip-styled inline monospaced text */
   Code: TextCode,
 });
 
 export default CompoundText;
-
-// --------------------------------------------------
-
-const styles = StyleSheet.create({
-  code: {
-    fontFamily: Platform.select({
-      ios: 'Menlo',
-      android: CODE_FONT_FAMILY,
-      default: CODE_FONT_FAMILY,
-    }),
-  },
-});

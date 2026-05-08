@@ -3,9 +3,9 @@ import type { TextProps as RNTextProps } from 'react-native';
 /**
  * Semantic type variants for the Text component.
  *
- * Heading types (`h1`–`h6`) map to decreasing font sizes with bold/semibold weight.
- * Body types (`body`, `body-sm`, `body-xs`) map to regular-weight running text.
- * `code` maps to a monospaced style.
+ * Heading types (`h1`–`h6`) map to decreasing font sizes with semibold weight.
+ * Body types (`body`, `body-sm`, `body-xs`) map to running text with explicit
+ * line-heights. `code` maps to a chip-like monospaced style.
  */
 export type TextType =
   | 'h1'
@@ -20,6 +20,25 @@ export type TextType =
   | 'code';
 
 /**
+ * Horizontal text alignment.
+ *
+ * `start` and `end` are RTL-aware (flip to right/left under RTL).
+ *
+ * @note `justify` is iOS-only on React Native; Android falls back to left.
+ */
+export type TextAlign = 'start' | 'center' | 'end' | 'justify';
+
+/**
+ * Semantic foreground color preset.
+ */
+export type TextColor = 'default' | 'muted';
+
+/**
+ * Font weight override, applied independently of the `type` variant.
+ */
+export type TextWeight = 'normal' | 'medium' | 'semibold' | 'bold';
+
+/**
  * Props for the Text component root
  */
 export interface TextRootProps extends RNTextProps {
@@ -28,6 +47,26 @@ export interface TextRootProps extends RNTextProps {
    * @default 'body'
    */
   type?: TextType;
+  /**
+   * Horizontal alignment. RTL-aware for `start` and `end`.
+   * @default 'start'
+   */
+  align?: TextAlign;
+  /**
+   * Semantic foreground color preset.
+   * @default 'default'
+   */
+  color?: TextColor;
+  /**
+   * Font weight override. When set, overrides the weight implied by `type`.
+   */
+  weight?: TextWeight;
+  /**
+   * Truncates the text to a single line with an ellipsis.
+   *
+   * @default false
+   */
+  truncate?: boolean;
   /**
    * Additional CSS classes
    */

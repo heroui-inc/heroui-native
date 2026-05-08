@@ -9,8 +9,9 @@ export const DISPLAY_NAME = {
 } as const;
 
 /**
- * Monospaced font family fallback for the Code sub-component.
- * Platform-specific monospace defaults are handled by RN when this value
- * is used as `fontFamily`.
+ * Monospaced font family used by `Text.Code` on Android and web.
+ *
+ * iOS uses `'Menlo'` directly; the platform branch lives in
+ * `styleSheet.code` in `text.styles.ts`.
  */
 export const CODE_FONT_FAMILY = 'monospace';

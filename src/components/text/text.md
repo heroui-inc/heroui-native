@@ -19,10 +19,10 @@ import { Text } from 'heroui-native';
 <Text.Code>...</Text.Code>
 ```
 
-- **Text**: Root text element. The `type` prop selects a semantic typography preset (heading, body, or code).
+- **Text**: Root text element. Selects a typography preset via `type` and exposes orthogonal `align`, `color`, `weight`, and `truncate` props.
 - **Text.Heading**: Convenience wrapper restricted to heading types (`h1`–`h6`). Adds `accessibilityRole="header"` automatically.
 - **Text.Paragraph**: Convenience wrapper restricted to body types (`body`, `body-sm`, `body-xs`).
-- **Text.Code**: Renders monospaced text using a platform-appropriate monospace font family.
+- **Text.Code**: Chip-styled inline monospaced text. Uses a platform-appropriate monospace font family.
 
 ## Usage
 
@@ -76,19 +76,64 @@ Use `Text.Paragraph` for body text.
 
 ### Code
 
-Use `Text.Code` for inline code snippets with monospaced font.
+Use `Text.Code` (or equivalently `<Text type="code">`) for inline code snippets. Both render a chip-styled, monospaced inline element with a subtle background, rounded corners, and a `self-start` layout so it does not stretch in flex containers. The platform monospace `fontFamily` is applied at the `Text` root, so the two forms are interchangeable.
 
 ```tsx
 <Text.Code>console.log('hello')</Text.Code>
+<Text type="code">console.log('hello')</Text>
 ```
 
-### Custom Styling
+### Alignment
 
-Override or extend styles with the `className` prop.
+Use the `align` prop to control horizontal alignment. `start` and `end` are RTL-aware (they flip under right-to-left layouts).
 
 ```tsx
-<Text type="h1" className="text-accent">Colored Heading</Text>
-<Text type="body" className="text-muted">Muted body text</Text>
+<Text align="start">Start-aligned</Text>
+<Text align="center">Center-aligned</Text>
+<Text align="end">End-aligned</Text>
+<Text align="justify">Justified text spreads across the line.</Text>
+```
+
+> **Note:** `text-justify` is iOS-only on React Native; Android falls back to left alignment.
+
+### Color
+
+Use the `color` prop to apply a semantic foreground color preset.
+
+```tsx
+<Text color="default">Default foreground</Text>
+<Text color="muted">Muted secondary text</Text>
+```
+
+For other theme colors, pass the corresponding utility through `className` (e.g. `className="text-accent"`, `className="text-danger"`).
+
+### Weight
+
+Use the `weight` prop to override the font weight implied by `type`. The override merges via `tailwind-merge`, so it always wins over the type variant's default weight.
+
+```tsx
+<Text type="h1" weight="bold">Bold H1</Text>
+<Text weight="medium">Medium body</Text>
+<Text weight="semibold">Semibold body</Text>
+```
+
+### Truncation
+
+Use the `truncate` boolean prop to limit the text to a single line with an ellipsis. It is mapped to React Native's `numberOfLines={1}`. An explicit `numberOfLines` prop, if provided, takes precedence.
+
+```tsx
+<Text truncate>
+  A long line of text that will be cut off with an ellipsis when it overflows
+  the container.
+</Text>;
+
+{
+  /* Multi-line truncation via the underlying RN prop */
+}
+<Text numberOfLines={2}>
+  Two-line truncation works through React Native's standard `numberOfLines`
+  prop.
+</Text>;
 ```
 
 ## Example
@@ -105,7 +150,7 @@ export default function TextExample() {
       <Text.Paragraph>
         This is a body paragraph rendered with the Text component.
       </Text.Paragraph>
-      <Text.Paragraph type="body-sm">
+      <Text.Paragraph color="muted" type="body-sm">
         Smaller supporting text for captions or footnotes.
       </Text.Paragraph>
       <Text.Code>npm install heroui-native</Text.Code>
@@ -120,37 +165,47 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 
 ### Text
 
-Text extends all standard React Native `TextProps` with additional typography props.
+`Text` extends all standard React Native `TextProps` with additional typography props.
 
-| prop           | type                                                                                            | default  | description                                         |
-| -------------- | ----------------------------------------------------------------------------------------------- | -------- | --------------------------------------------------- |
-| `type`         | `'h1' \| 'h2' \| 'h3' \| 'h4' \| 'h5' \| 'h6' \| 'body' \| 'body-sm' \| 'body-xs' \| 'code'` | `'body'` | Semantic typography variant                         |
-| `children`     | `React.ReactNode`                                                                               | -        | Content to render                                   |
-| `className`    | `string`                                                                                        | -        | Additional CSS classes                              |
-| `...TextProps` | `TextProps`                                                                                     | -        | All standard React Native Text props are supported  |
+| prop           | type                                                                                         | default     | description                                                                                                                    |
+| -------------- | -------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `type`         | `'h1' \| 'h2' \| 'h3' \| 'h4' \| 'h5' \| 'h6' \| 'body' \| 'body-sm' \| 'body-xs' \| 'code'` | `'body'`    | Semantic typography variant (size, default weight, line-height)                                                                |
+| `align`        | `'start' \| 'center' \| 'end' \| 'justify'`                                                  | `'start'`   | Horizontal alignment. `start` and `end` are RTL-aware. `justify` is iOS-only.                                                  |
+| `color`        | `'default' \| 'muted'`                                                                       | `'default'` | Semantic foreground color preset                                                                                               |
+| `weight`       | `'normal' \| 'medium' \| 'semibold' \| 'bold'`                                               | -           | Font weight override. When set, overrides the weight implied by `type`.                                                        |
+| `truncate`     | `boolean`                                                                                    | `false`     | Truncates the text to a single line with an ellipsis (sets `numberOfLines={1}`). An explicit `numberOfLines` takes precedence. |
+| `children`     | `React.ReactNode`                                                                            | -           | Content to render                                                                                                              |
+| `className`    | `string`                                                                                     | -           | Additional CSS classes                                                                                                         |
+| `...TextProps` | `TextProps`                                                                                  | -           | All standard React Native `Text` props are supported                                                                           |
 
 ### Text.Heading
 
-| prop           | type                                                  | default | description                                        |
-| -------------- | ----------------------------------------------------- | ------- | -------------------------------------------------- |
-| `type`         | `'h1' \| 'h2' \| 'h3' \| 'h4' \| 'h5' \| 'h6'`      | `'h1'`  | Heading level                                      |
-| `children`     | `React.ReactNode`                                     | -       | Content to render                                  |
-| `className`    | `string`                                              | -       | Additional CSS classes                             |
-| `...TextProps` | `TextProps`                                            | -       | All standard React Native Text props are supported |
+Inherits all `Text` root props (`align`, `color`, `weight`, `truncate`, `className`, and React Native `TextProps`). Sets `accessibilityRole="header"` automatically and narrows `type` to heading variants.
+
+| prop           | type                                           | default | description                                          |
+| -------------- | ---------------------------------------------- | ------- | ---------------------------------------------------- |
+| `type`         | `'h1' \| 'h2' \| 'h3' \| 'h4' \| 'h5' \| 'h6'` | `'h1'`  | Heading level                                        |
+| `children`     | `React.ReactNode`                              | -       | Content to render                                    |
+| `className`    | `string`                                       | -       | Additional CSS classes                               |
+| `...TextProps` | `TextProps`                                    | -       | All standard React Native `Text` props are supported |
 
 ### Text.Paragraph
 
-| prop           | type                                       | default  | description                                        |
-| -------------- | ------------------------------------------ | -------- | -------------------------------------------------- |
-| `type`         | `'body' \| 'body-sm' \| 'body-xs'`         | `'body'` | Paragraph text size                                |
-| `children`     | `React.ReactNode`                          | -        | Content to render                                  |
-| `className`    | `string`                                   | -        | Additional CSS classes                             |
-| `...TextProps` | `TextProps`                                | -        | All standard React Native Text props are supported |
+Inherits all `Text` root props (`align`, `color`, `weight`, `truncate`, `className`, and React Native `TextProps`). Narrows `type` to body variants.
+
+| prop           | type                               | default  | description                                          |
+| -------------- | ---------------------------------- | -------- | ---------------------------------------------------- |
+| `type`         | `'body' \| 'body-sm' \| 'body-xs'` | `'body'` | Paragraph text size                                  |
+| `children`     | `React.ReactNode`                  | -        | Content to render                                    |
+| `className`    | `string`                           | -        | Additional CSS classes                               |
+| `...TextProps` | `TextProps`                        | -        | All standard React Native `Text` props are supported |
 
 ### Text.Code
 
-| prop           | type              | default | description                                        |
-| -------------- | ----------------- | ------- | -------------------------------------------------- |
-| `children`     | `React.ReactNode` | -       | Content to render                                  |
-| `className`    | `string`          | -       | Additional CSS classes                             |
-| `...TextProps` | `TextProps`       | -       | All standard React Native Text props are supported |
+Inherits all `Text` root props (`align`, `color`, `weight`, `truncate`, `className`, `style`, and React Native `TextProps`). Thin wrapper that forces `type="code"`; the platform monospace `fontFamily` is merged in at the `Text` root, so `<Text type="code">` and `<Text.Code>` render identically.
+
+| prop           | type              | default | description                                          |
+| -------------- | ----------------- | ------- | ---------------------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Content to render                                    |
+| `className`    | `string`          | -       | Additional CSS classes                               |
+| `...TextProps` | `TextProps`       | -       | All standard React Native `Text` props are supported |

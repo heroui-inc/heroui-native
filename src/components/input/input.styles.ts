@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const input = tv({
-  base: 'py-3.5 px-3 rounded-2xl text-foreground font-normal border-[1.5px] focus:border-accent',
+  base: 'min-h-12 px-3 rounded-2xl text-foreground font-normal border-[1.5px] focus:border-accent',
   variants: {
     variant: {
       primary:

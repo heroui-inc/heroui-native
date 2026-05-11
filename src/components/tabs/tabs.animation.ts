@@ -1,3 +1,4 @@
+import { I18nManager } from 'react-native';
 import {
   useAnimatedStyle,
   useSharedValue,
@@ -22,6 +23,8 @@ import type {
   TabsIndicatorAnimation,
   TabsSeparatorAnimation,
 } from './tabs.types';
+
+const isRTL = I18nManager.isRTL;
 
 // --------------------------------------------------
 
@@ -54,7 +57,7 @@ export function useTabsIndicatorAnimation(options: {
 
   // Get active measurements from tabs context
   const { value } = TabsPrimitives.useRootContext();
-  const { measurements } = useTabsMeasurements();
+  const { listWidth, measurements } = useTabsMeasurements();
   const activeMeasurements = measurements[value];
 
   // Read from global animation context (always available in compound parts)
@@ -116,12 +119,27 @@ export function useTabsIndicatorAnimation(options: {
       };
     }
 
+    const translateX = getIndicatorTranslateX({
+      listWidth,
+      tabWidth: activeMeasurements.width,
+      tabX: activeMeasurements.x,
+    });
+
     if (!hasMeasured.value) {
+      if (isRTL && listWidth === 0) {
+        return {
+          width: 0,
+          height: 0,
+          transform: [{ translateX: 0 }],
+          opacity: 0,
+        };
+      }
+
       hasMeasured.value = true;
       return {
         width: activeMeasurements.width,
         height: activeMeasurements.height,
-        transform: [{ translateX: activeMeasurements.x }],
+        transform: [{ translateX }],
         opacity: 1,
       };
     }
@@ -131,7 +149,7 @@ export function useTabsIndicatorAnimation(options: {
       return {
         width: activeMeasurements.width,
         height: activeMeasurements.height,
-        transform: [{ translateX: activeMeasurements.x }],
+        transform: [{ translateX }],
         opacity: 1,
       };
     }
@@ -149,8 +167,8 @@ export function useTabsIndicatorAnimation(options: {
 
     const translateXAnimation =
       translateXConfig.type === 'timing'
-        ? withTiming(activeMeasurements.x, translateXConfig.timingConfig)
-        : withSpring(activeMeasurements.x, translateXConfig.springConfig);
+        ? withTiming(translateX, translateXConfig.timingConfig)
+        : withSpring(translateX, translateXConfig.springConfig);
 
     return {
       width: widthAnimation,
@@ -161,6 +179,7 @@ export function useTabsIndicatorAnimation(options: {
   }, [
     activeMeasurements,
     isAnimationDisabledValue,
+    listWidth,
     widthConfig,
     heightConfig,
     translateXConfig,
@@ -169,6 +188,23 @@ export function useTabsIndicatorAnimation(options: {
   return {
     rContainerStyle,
   };
+}
+
+function getIndicatorTranslateX({
+  listWidth,
+  tabWidth,
+  tabX,
+}: {
+  listWidth: number;
+  tabWidth: number;
+  tabX: number;
+}) {
+  'worklet';
+  if (!(isRTL && listWidth > 0)) {
+    return tabX;
+  }
+
+  return tabX - (listWidth - tabWidth);
 }
 
 // --------------------------------------------------

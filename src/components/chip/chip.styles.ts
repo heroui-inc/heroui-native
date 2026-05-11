@@ -13,8 +13,8 @@ const root = tv({
     },
     size: {
       sm: 'px-2 py-0.5 rounded-xl',
-      md: 'px-3 py-[3px] rounded-2xl',
-      lg: 'px-4 py-1 rounded-3xl',
+      md: 'px-3 py-1 rounded-2xl',
+      lg: 'px-4 py-1.5 rounded-3xl',
     },
     color: {
       accent: '',
@@ -55,7 +55,7 @@ const root = tv({
     {
       variant: 'soft',
       color: 'accent',
-      className: 'bg-accent/15',
+      className: 'bg-accent-soft',
     },
     {
       variant: 'soft',
@@ -65,17 +65,17 @@ const root = tv({
     {
       variant: 'soft',
       color: 'success',
-      className: 'bg-success/15',
+      className: 'bg-success-soft',
     },
     {
       variant: 'soft',
       color: 'warning',
-      className: 'bg-warning/15',
+      className: 'bg-warning-soft',
     },
     {
       variant: 'soft',
       color: 'danger',
-      className: 'bg-danger/15',
+      className: 'bg-danger-soft',
     },
   ],
   defaultVariants: {

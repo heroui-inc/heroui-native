@@ -18,8 +18,11 @@ type AvatarStatus = 'loading' | 'loaded' | 'error';
  * Extends SlottableViewProps to support the asChild pattern.
  */
 type RootProps = SlottableViewProps & {
-  /** Alternative text description for the avatar, used for accessibility */
-  alt: string;
+  /**
+   * Alternative text description for the avatar, used for accessibility.
+   * @default 'Avatar'
+   */
+  alt?: string;
 };
 
 /**

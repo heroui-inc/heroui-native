@@ -63,6 +63,7 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
     const [measurements, setMeasurementsState] = useState<
       Record<string, ItemMeasurements>
     >({});
+    const [listWidth, setListWidth] = useState(0);
     const [isScrollView, setIsScrollView] = useState(false);
 
     const setMeasurements = useCallback(
@@ -92,6 +93,8 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
           value={{
             measurements,
             setMeasurements,
+            listWidth,
+            setListWidth,
             variant,
             isScrollView,
             setIsScrollView,
@@ -116,19 +119,28 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
 
 const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
   (props, ref) => {
-    const { children, className, style, ...restProps } = props;
+    const { children, className, style, onLayout, ...restProps } = props;
 
-    const { variant, setIsScrollView } = useTabsMeasurements();
+    const { variant, setIsScrollView, setListWidth } = useTabsMeasurements();
 
-    const handleLayout = useCallback(() => {
-      const childrenArray = Children.toArray(children);
-      const hasScrollView =
-        childrenArray.length === 1 &&
-        isValidElement(childrenArray[0]) &&
-        (childrenArray[0].type as any)?.displayName ===
-          DISPLAY_NAME.SCROLL_VIEW;
-      setIsScrollView(hasScrollView);
-    }, [children, setIsScrollView]);
+    const handleLayout = useCallback(
+      (event: LayoutChangeEvent) => {
+        onLayout?.(event);
+
+        const childrenArray = Children.toArray(children);
+        const hasScrollView =
+          childrenArray.length === 1 &&
+          isValidElement(childrenArray[0]) &&
+          (childrenArray[0].type as any)?.displayName ===
+            DISPLAY_NAME.SCROLL_VIEW;
+        setIsScrollView(hasScrollView);
+
+        if (!hasScrollView) {
+          setListWidth(event.nativeEvent.layout.width);
+        }
+      },
+      [children, onLayout, setIsScrollView, setListWidth]
+    );
 
     const listClassName = tabsClassNames.list({ variant, className });
 
@@ -154,13 +166,14 @@ const TabsScrollView = forwardRef<ScrollView, TabsScrollViewProps>(
       children,
       className,
       contentContainerClassName,
+      onContentSizeChange,
       showsHorizontalScrollIndicator = false,
       scrollAlign = 'center',
       ...restProps
     } = props;
 
     const { value } = useTabs();
-    const { measurements, variant } = useTabsMeasurements();
+    const { measurements, setListWidth, variant } = useTabsMeasurements();
     const { width: screenWidth } = useWindowDimensions();
 
     const scrollViewClassName = tabsClassNames.scrollView({
@@ -174,6 +187,14 @@ const TabsScrollView = forwardRef<ScrollView, TabsScrollViewProps>(
       });
 
     const scrollRef = useRef<ScrollView>(null);
+
+    const handleContentSizeChange = useCallback(
+      (width: number, height: number) => {
+        setListWidth(width);
+        onContentSizeChange?.(width, height);
+      },
+      [onContentSizeChange, setListWidth]
+    );
 
     useEffect(() => {
       if (scrollAlign === 'none' || !measurements[value]) return;
@@ -210,6 +231,7 @@ const TabsScrollView = forwardRef<ScrollView, TabsScrollViewProps>(
         showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
         className={scrollViewClassName}
         contentContainerClassName={contentContainerClassNameValue}
+        onContentSizeChange={handleContentSizeChange}
         {...restProps}
       >
         {children}

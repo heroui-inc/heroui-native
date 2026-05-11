@@ -42,7 +42,7 @@ const TextFieldRoot = forwardRef<ViewRef, TextFieldRootProps>((props, ref) => {
   );
 
   const formFieldContextValue = useMemo(
-    () => ({ isDisabled, isInvalid, isRequired, hasFieldPadding: true }),
+    () => ({ isDisabled, isInvalid, isRequired, hasFieldPadding: false }),
     [isDisabled, isInvalid, isRequired]
   );
 

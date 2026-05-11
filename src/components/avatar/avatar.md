@@ -261,7 +261,7 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 | `color`        | `'default' \| 'accent' \| 'success' \| 'warning' \| 'danger'` | `'accent'`  | Color variant of the avatar                                                               |
 | `className`    | `string`                                                      | -           | Additional CSS classes to apply                                                           |
 | `animation`    | `"disable-all"` \| `undefined`                                | `undefined` | Animation configuration. Use `"disable-all"` to disable all animations including children |
-| `alt`          | `string`                                                      | -           | Alternative text description for accessibility                                            |
+| `alt`          | `string`                                                      | `'Avatar'`  | Alternative text description for accessibility                                            |
 | `...ViewProps` | `ViewProps`                                                   | -           | All standard React Native View props are supported                                        |
 
 ### Avatar.Image

@@ -213,19 +213,6 @@ const SelectTriggerIndicator = forwardRef<ViewRef, SelectTriggerIndicatorProps>(
       ? [rContainerStyle, style]
       : style;
 
-    if (children) {
-      return (
-        <AnimatedTriggerIndicator
-          ref={ref}
-          className={triggerIndicatorClassName}
-          style={style}
-          {...restProps}
-        >
-          {children}
-        </AnimatedTriggerIndicator>
-      );
-    }
-
     return (
       <AnimatedTriggerIndicator
         ref={ref}
@@ -233,10 +220,12 @@ const SelectTriggerIndicator = forwardRef<ViewRef, SelectTriggerIndicatorProps>(
         style={triggerIndicatorStyle}
         {...restProps}
       >
-        <ChevronDownIcon
-          size={iconProps?.size ?? DEFAULT_ICON_SIZE}
-          color={iconProps?.color ?? themeColorForeground}
-        />
+        {children ?? (
+          <ChevronDownIcon
+            size={iconProps?.size ?? DEFAULT_ICON_SIZE}
+            color={iconProps?.color ?? themeColorForeground}
+          />
+        )}
       </AnimatedTriggerIndicator>
     );
   }

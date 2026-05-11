@@ -34,9 +34,9 @@ const root = tv({
       ['danger-soft']: 'bg-danger-soft border-0',
     },
     size: {
-      sm: 'h-[36px] px-3.5 gap-1.5 rounded-3xl',
-      md: 'h-[48px] px-4 gap-2 rounded-3xl',
-      lg: 'h-[56px] px-5 gap-2.5 rounded-4xl',
+      sm: 'h-10 px-3.5 gap-1.5 rounded-3xl',
+      md: 'h-12 px-4 gap-2 rounded-3xl',
+      lg: 'h-14 px-5 gap-2.5 rounded-4xl',
     },
     isIconOnly: {
       true: 'p-0 aspect-square',

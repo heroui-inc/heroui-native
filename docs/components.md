@@ -38,6 +38,7 @@
 | Switch            | [switch.md](../src/components/switch/switch.md)                                     |
 | Tabs              | [tabs.md](../src/components/tabs/tabs.md)                                           |
 | TagGroup          | [tag-group.md](../src/components/tag-group/tag-group.md)                            |
+| Text              | [text.md](../src/components/text/text.md)                                           |
 | TextArea          | [text-area.md](../src/components/text-area/text-area.md)                            |
 | TextField         | [text-field.md](../src/components/text-field/text-field.md)                         |
 | Toast             | [toast.md](../src/components/toast/toast.md)                                        |

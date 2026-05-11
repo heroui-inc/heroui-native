@@ -39,7 +39,7 @@ export function useRootContext() {
 // --------------------------------------------------
 
 const Root = forwardRef<RootRef, RootProps>(
-  ({ asChild, alt, ...viewProps }, ref) => {
+  ({ asChild, alt = 'Avatar', ...viewProps }, ref) => {
     const [status, setStatus] = useState<AvatarStatus>('error');
 
     const Component = asChild ? Slot.View : View;

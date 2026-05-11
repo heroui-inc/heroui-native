@@ -80,7 +80,7 @@ const CardSkeletonContent = () => {
               <Card.Header>
                 <View className="flex-row items-center gap-3 mb-4">
                   <SkeletonGroup.Item className="size-10 rounded-full">
-                    <Avatar size="sm" alt="Avatar">
+                    <Avatar size="sm">
                       <Avatar.Image
                         source={{
                           uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=4',
@@ -284,7 +284,7 @@ const CircularSkeletonsContent = () => {
               className="flex-row gap-4 items-end justify-center"
             >
               <SkeletonGroup.Item className="size-10 rounded-full">
-                <Avatar size="sm" alt="Avatar">
+                <Avatar size="sm">
                   <Avatar.Image
                     source={{
                       uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
@@ -295,7 +295,7 @@ const CircularSkeletonsContent = () => {
               </SkeletonGroup.Item>
 
               <SkeletonGroup.Item className="size-12 rounded-full">
-                <Avatar size="md" alt="Avatar">
+                <Avatar size="md">
                   <Avatar.Image
                     source={{
                       uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=5',
@@ -306,7 +306,7 @@ const CircularSkeletonsContent = () => {
               </SkeletonGroup.Item>
 
               <SkeletonGroup.Item className="size-16 rounded-full">
-                <Avatar size="lg" alt="Avatar">
+                <Avatar size="lg">
                   <Avatar.Image
                     source={{
                       uri: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=20',

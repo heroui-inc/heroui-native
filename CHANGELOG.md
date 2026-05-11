@@ -1,3 +1,24 @@
+## <small>1.0.3 (2026-05-11)</small>
+
+* docs: extend bottom sheet examples ([fb34a3c](https://github.com/heroui-inc/heroui-native/commit/fb34a3c))
+* fix: use todo-style tests to match repo Jest config ([b5669c0](https://github.com/heroui-inc/heroui-native/commit/b5669c0))
+* fix(field): remove side padding ([241b15b](https://github.com/heroui-inc/heroui-native/commit/241b15b))
+* fix(input): primary border color ([01fe17a](https://github.com/heroui-inc/heroui-native/commit/01fe17a))
+* fix(scroll-shadow): respect child's `inverted` prop ([007019f](https://github.com/heroui-inc/heroui-native/commit/007019f)), closes [#393](https://github.com/heroui-inc/heroui-native/issues/393)
+* fix(select): trigger children container issue ([c348107](https://github.com/heroui-inc/heroui-native/commit/c348107))
+* fix(tabs): align indicator in RTL ([07ede48](https://github.com/heroui-inc/heroui-native/commit/07ede48))
+* fix(tabs): rtl indicator animation issue ([0c40ec2](https://github.com/heroui-inc/heroui-native/commit/0c40ec2))
+* feat: add Text component with semantic type prop and sub-components ([88484e0](https://github.com/heroui-inc/heroui-native/commit/88484e0))
+* feat(text): add color, weight, align, trancate props ([8364929](https://github.com/heroui-inc/heroui-native/commit/8364929))
+* refactor(avatar): make alt prop optional ([dace0ab](https://github.com/heroui-inc/heroui-native/commit/dace0ab))
+* refactor(text): remove prose sub component ([9857faf](https://github.com/heroui-inc/heroui-native/commit/9857faf))
+* chore(button): refine button height styles ([4658da1](https://github.com/heroui-inc/heroui-native/commit/4658da1))
+* chore(chip): refine py styles ([8561f06](https://github.com/heroui-inc/heroui-native/commit/8561f06))
+* chore(chip): refine soft bg styles ([f3f1a24](https://github.com/heroui-inc/heroui-native/commit/f3f1a24))
+* chore(input): apply min-h instead of py ([257dee5](https://github.com/heroui-inc/heroui-native/commit/257dee5))
+
+
+
 ## <small>1.0.2 (2026-04-15)</small>
 
 * chore: upd readme version ([cbec221](https://github.com/heroui-inc/heroui-native/commit/cbec221))

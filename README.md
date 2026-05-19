@@ -30,31 +30,12 @@ Visit [https://heroui.com/docs/native/getting-started](https://heroui.com/docs/n
 
 ## Preview App
 
-Experience HeroUI Native components in action with our preview app! You can explore all components and their variants directly on your device.
+Experience HeroUI Native components in action with our official preview app! You can explore all components and their variants directly on your device.
 
-### Prerequisites
+### Download
 
-Make sure you have the latest version of [Expo Go](https://expo.dev/go) installed on your mobile device
-
-### How to Access
-
-Choose one of the following methods to access the preview app:
-
-#### Option 1: Scan the QR Code
-
-Use your device's camera or Expo Go app to scan:
-
-<p align="center">
-  <img width="25%" src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/images/qr-code-native.png" alt="Expo Go QR Code" />
-</p>
-
-> **Note for Android users:** If scanning the QR code with your device's camera or other scanner apps redirects to a browser and shows a 404 error, open Expo Go first and use its built-in QR scanner instead.
-
-#### Option 2: Click the Link
-
-**[📱 Open Demo App in Expo Go](https://link.heroui.com/native-demo)**
-
-This will automatically open the app in Expo Go if it's installed on your device.
+- **iOS:** [Download on the App Store](https://apps.apple.com/app/id6757860059)
+- **Android:** Coming soon to Google Play
 
 ## Quick Start with Example App
 

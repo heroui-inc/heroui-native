@@ -138,79 +138,79 @@ const label = tv({
     {
       variant: 'secondary',
       color: 'accent',
-      className: 'text-accent',
+      className: 'text-accent-soft-foreground',
     },
     {
       variant: 'secondary',
       color: 'default',
-      className: 'text-default-foreground',
+      className: 'text-default-soft-foreground',
     },
     {
       variant: 'secondary',
       color: 'success',
-      className: 'text-success',
+      className: 'text-success-soft-foreground',
     },
     {
       variant: 'secondary',
       color: 'warning',
-      className: 'text-warning',
+      className: 'text-warning-soft-foreground',
     },
     {
       variant: 'secondary',
       color: 'danger',
-      className: 'text-danger',
+      className: 'text-danger-soft-foreground',
     },
     // Tertiary variant text colors
     {
       variant: 'tertiary',
       color: 'accent',
-      className: 'text-foreground',
+      className: 'text-accent-soft-foreground',
     },
     {
       variant: 'tertiary',
       color: 'default',
-      className: 'text-default-foreground',
+      className: 'text-default-soft-foreground',
     },
     {
       variant: 'tertiary',
       color: 'success',
-      className: 'text-success',
+      className: 'text-success-soft-foreground',
     },
     {
       variant: 'tertiary',
       color: 'warning',
-      className: 'text-warning',
+      className: 'text-warning-soft-foreground',
     },
     {
       variant: 'tertiary',
       color: 'danger',
-      className: 'text-danger',
+      className: 'text-danger-soft-foreground',
     },
     // Soft variant text colors
     {
       variant: 'soft',
       color: 'accent',
-      className: 'text-accent',
+      className: 'text-accent-soft-foreground',
     },
     {
       variant: 'soft',
       color: 'default',
-      className: 'text-default-foreground',
+      className: 'text-default-soft-foreground',
     },
     {
       variant: 'soft',
       color: 'success',
-      className: 'text-success',
+      className: 'text-success-soft-foreground',
     },
     {
       variant: 'soft',
       color: 'warning',
-      className: 'text-warning',
+      className: 'text-warning-soft-foreground',
     },
     {
       variant: 'soft',
       color: 'danger',
-      className: 'text-danger',
+      className: 'text-danger-soft-foreground',
     },
   ],
   defaultVariants: {

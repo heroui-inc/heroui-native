@@ -85,9 +85,9 @@ TextParagraph.displayName = DISPLAY_NAME.TEXT_PARAGRAPH;
 TextCode.displayName = DISPLAY_NAME.TEXT_CODE;
 
 /**
- * Compound Text component with semantic sub-components.
+ * Compound Typography component with semantic sub-components.
  *
- * @component Text - Root text element. Selects a typography preset via
+ * @component Typography - Root text element. Selects a typography preset via
  * `type` and exposes orthogonal `align`, `color`, `weight`, and `truncate`
  * props. `truncate` is implemented via React Native's `numberOfLines={1}`;
  * an explicit `numberOfLines` prop, if provided, takes precedence. When
@@ -95,19 +95,19 @@ TextCode.displayName = DISPLAY_NAME.TEXT_CODE;
  * `styleSheet.code` is merged into `style` (since the project's NativeWind
  * theme has no `font-mono` token).
  *
- * @component Text.Heading - Convenience wrapper restricted to heading types
- * (`h1`–`h6`). Sets `accessibilityRole="header"` automatically.
+ * @component Typography.Heading - Convenience wrapper restricted to heading
+ * types (`h1`–`h6`). Sets `accessibilityRole="header"` automatically.
  *
- * @component Text.Paragraph - Convenience wrapper restricted to body types
- * (`body`, `body-sm`, `body-xs`).
+ * @component Typography.Paragraph - Convenience wrapper restricted to body
+ * types (`body`, `body-sm`, `body-xs`).
  *
- * @component Text.Code - Chip-styled inline monospaced text. Thin wrapper
- * that forces `type="code"`; the monospace `fontFamily` is applied at the
- * root.
+ * @component Typography.Code - Chip-styled inline monospaced text. Thin
+ * wrapper that forces `type="code"`; the monospace `fontFamily` is applied
+ * at the root.
  *
- * @see Full documentation: https://heroui.com/docs/native/components/text
+ * @see Full documentation: https://heroui.com/docs/native/components/typography
  */
-const CompoundText = Object.assign(TextRoot, {
+const CompoundTypography = Object.assign(TextRoot, {
   /** Heading text – renders h1-h6 with header accessibility role */
   Heading: TextHeading,
   /** Paragraph text – renders body / body-sm / body-xs */
@@ -116,4 +116,4 @@ const CompoundText = Object.assign(TextRoot, {
   Code: TextCode,
 });
 
-export default CompoundText;
+export default CompoundTypography;

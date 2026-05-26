@@ -45,6 +45,10 @@ These colors define the main background layers and their foreground text colors:
 --foreground: var(--eclipse);
 --surface: var(--white);
 --surface-foreground: var(--foreground);
+--surface-secondary: oklch(0.9524 0.0013 286.37);
+--surface-secondary-foreground: var(--foreground);
+--surface-tertiary: oklch(0.9373 0.0013 286.37);
+--surface-tertiary-foreground: var(--foreground);
 --overlay: var(--white);
 --overlay-foreground: var(--foreground);
 --backdrop: oklch(0% 0 0 / 20%);
@@ -54,6 +58,10 @@ These colors define the main background layers and their foreground text colors:
 --foreground: var(--snow);
 --surface: oklch(0.2103 0.0059 285.89);
 --surface-foreground: var(--foreground);
+--surface-secondary: oklch(0.257 0.0037 286.14);
+--surface-secondary-foreground: var(--foreground);
+--surface-tertiary: oklch(0.2721 0.0024 247.91);
+--surface-tertiary-foreground: var(--foreground);
 --overlay: oklch(0.2103 0.0059 285.89);
 --overlay-foreground: var(--foreground);
 --backdrop: oklch(0% 0 0 / 20%);
@@ -107,6 +115,20 @@ For consistent form field styling across input components:
 --field-foreground: var(--foreground);
 --field-placeholder: var(--muted);
 --field-border: transparent;
+```
+
+### Component Colors
+
+For component-specific styling:
+
+```css
+/* Light theme */
+--segment: var(--white);
+--segment-foreground: var(--eclipse);
+
+/* Dark theme */
+--segment: oklch(0.3964 0.01 285.93);
+--segment-foreground: var(--foreground);
 ```
 
 ### Other Colors

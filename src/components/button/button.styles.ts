@@ -63,7 +63,7 @@ const label = tv({
       outline: 'text-default-foreground',
       ghost: 'text-default-foreground',
       danger: 'text-danger-foreground',
-      ['danger-soft']: 'text-danger',
+      ['danger-soft']: 'text-danger-soft-foreground',
     },
     size: {
       sm: 'text-sm',

@@ -176,11 +176,11 @@ const DefaultFallbackIcon: React.FC<{
     themeColorWarning,
     themeColorDanger,
   ] = useThemeColor([
-    'default-foreground',
-    'accent',
-    'success',
-    'warning',
-    'danger',
+    'default-soft-foreground',
+    'accent-soft-foreground',
+    'success-soft-foreground',
+    'warning-soft-foreground',
+    'danger-soft-foreground',
   ]);
 
   const iconSize = iconProps?.size ?? AVATAR_DEFAULT_ICON_SIZE[sizeVariant];

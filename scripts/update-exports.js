@@ -11,7 +11,7 @@ const INDEX_TSX_PATH = path.join(__dirname, '..', 'src', 'index.tsx');
 /**
  * Base exports that should always be preserved at the top
  */
-const BASE_EXPORTS = ['.', './styles', './package.json'];
+const BASE_EXPORTS = ['.', './styles', './styles/vibrant', './package.json'];
 
 /**
  * Backup package.json to package.json.backup

@@ -1,54 +1,54 @@
 const path = require('path');
-const exampleNodeModules = path.join(__dirname, 'node_modules'); // Example's node_modules
 const escape = require('escape-string-regexp');
-const rootPkg = require('../package.json');
-const { withUniwindConfig } = require('uniwind/metro');
 const { getDefaultConfig } = require('@expo/metro-config');
 const {
   wrapWithReanimatedMetroConfig,
 } = require('react-native-reanimated/metro-config');
+const { withUniwindConfig } = require('uniwind/metro');
 
-const root = path.resolve(__dirname, '..');
-const peerDependencies = Object.keys({
-  ...rootPkg.peerDependencies,
-});
+const projectRoot = __dirname;
+const workspaceRoot = path.resolve(projectRoot, '..');
+const exampleNodeModules = path.join(projectRoot, 'node_modules');
+const workspaceRootNodeModules = path.join(workspaceRoot, 'node_modules');
 
-const defaultConfig = getDefaultConfig(__dirname);
+// Library peer deps must resolve to a single copy (the example's).
+const rootPkg = require('../package.json');
+const peerDependencies = Object.keys(rootPkg.peerDependencies ?? {});
 
-/**
- * Metro configuration
- * https://facebook.github.io/metro/docs/configurations
- *
- * @type {import('metro-config').MetroConfig}
- */
+const config = getDefaultConfig(projectRoot);
 
-const configObj = {
-  ...defaultConfig,
+// Watch the workspace root so library source changes trigger reloads.
+config.watchFolders = Array.from(
+  new Set([...(config.watchFolders ?? []), workspaceRoot])
+);
 
-  projectRoot: __dirname, // Ensure the example project is the main entry point
-  watchFolders: [root], // Watch the root folder so changes in the library are detected
+// The library source is consumed from outside the example via a babel alias,
+// and the workspace root has its own `node_modules` with overlapping deps.
+// Pinning resolution here prevents duplicate copies of `react`, reanimated,
+// etc., which would otherwise crash Hermes with
+// "Maximum call stack size exceeded (native stack depth)" at startup.
+// Requires `uniwind >= 1.6.3` (see https://github.com/uni-stack/uniwind/issues/505).
+config.resolver.nodeModulesPaths = [
+  exampleNodeModules,
+  workspaceRootNodeModules,
+];
+config.resolver.disableHierarchicalLookup = true;
 
-  resolver: {
-    ...defaultConfig.resolver,
-    disableHierarchicalLookup: true,
-    nodeModulesPaths: [exampleNodeModules, path.resolve(root, 'node_modules')],
+// Explicit hardening on top of `disableHierarchicalLookup`.
+config.resolver.blockList = [
+  ...(toArray(config.resolver.blockList) ?? []),
+  ...peerDependencies.map(
+    (name) =>
+      new RegExp(`^${escape(path.join(workspaceRootNodeModules, name))}\\/.*$`)
+  ),
+];
 
-    blockList: peerDependencies.map(
-      (m) => new RegExp(`^${escape(path.join(root, 'node_modules', m))}/.*$`) // Exclude root's node_modules
-    ),
-    extraNodeModules: {
-      ...peerDependencies.reduce((acc, name) => {
-        acc[name] = path.join(exampleNodeModules, name); // Force Metro to use example's node_modules
-        return acc;
-      }, {}),
-    },
-  },
-};
-
-// Create the base config without react-native-builder-bob
-const config = {
-  ...defaultConfig,
-  ...configObj,
+config.resolver.extraNodeModules = {
+  ...(config.resolver.extraNodeModules ?? {}),
+  ...peerDependencies.reduce((acc, name) => {
+    acc[name] = path.join(exampleNodeModules, name);
+    return acc;
+  }, {}),
 };
 
 module.exports = withUniwindConfig(wrapWithReanimatedMetroConfig(config), {
@@ -63,3 +63,15 @@ module.exports = withUniwindConfig(wrapWithReanimatedMetroConfig(config), {
     'sky-dark',
   ],
 });
+
+/**
+ * Normalizes Metro's `blockList` (RegExp | RegExp[] | undefined) to an array.
+ *
+ * @param {RegExp | readonly RegExp[] | null | undefined} value
+ * @returns {RegExp[] | undefined}
+ */
+function toArray(value) {
+  if (value == null) return undefined;
+  if (Array.isArray(value)) return value;
+  return [value];
+}

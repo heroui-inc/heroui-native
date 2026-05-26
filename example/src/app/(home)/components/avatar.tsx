@@ -6,6 +6,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 import { PersonFillIcon } from '../../../components/icons/person-fill';
+import { StarFillIcon } from '../../../components/icons/star-fill';
 
 const SizesContent = () => {
   return (
@@ -171,7 +172,9 @@ const CustomFallbackContent = () => {
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-4">
         <Avatar alt="John Doe">
-          <Avatar.Fallback>🎉</Avatar.Fallback>
+          <Avatar.Fallback>
+            <StarFillIcon colorClassName="accent-warning" />
+          </Avatar.Fallback>
         </Avatar>
         <Avatar>
           <Avatar.Fallback>

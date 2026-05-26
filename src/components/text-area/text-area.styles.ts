@@ -2,7 +2,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'h-32',
+  base: 'h-32 py-2',
 });
 
 export const textAreaClassNames = combineStyles({

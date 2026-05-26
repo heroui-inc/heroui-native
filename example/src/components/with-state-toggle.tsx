@@ -1,6 +1,6 @@
 import { ControlField, Description, Label, Separator } from 'heroui-native';
 import { type FC, type ReactNode } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useHeaderHeight from '../helpers/hooks/use-header-height';
 
@@ -55,7 +55,8 @@ export const WithStateToggle: FC<WithStateToggleProps> = ({
       className="flex-1 justify-between px-5"
       style={{
         paddingTop: headerHeight + 20,
-        paddingBottom: insets.bottom + 110,
+        paddingBottom:
+          insets.bottom + (Platform.select({ ios: 110, android: 150 }) ?? 0),
       }}
     >
       {children}

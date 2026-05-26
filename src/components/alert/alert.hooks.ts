@@ -7,10 +7,10 @@ import type { AlertStatus } from '../../primitives/alert/alert.types';
 export function useStatusColor(status: AlertStatus): string {
   const [foreground, accent, success, warning, danger] = useThemeColor([
     'foreground',
-    'accent',
-    'success',
-    'warning',
-    'danger',
+    'accent-soft-foreground',
+    'success-soft-foreground',
+    'warning-soft-foreground',
+    'danger-soft-foreground',
   ]);
 
   switch (status) {

@@ -105,19 +105,19 @@ const fallback = tv({
     },
     color: {
       default: {
-        text: 'text-default-foreground',
+        text: 'text-default-soft-foreground',
       },
       accent: {
-        text: 'text-accent',
+        text: 'text-accent-soft-foreground',
       },
       success: {
-        text: 'text-success',
+        text: 'text-success-soft-foreground',
       },
       warning: {
-        text: 'text-warning',
+        text: 'text-warning-soft-foreground',
       },
       danger: {
-        text: 'text-danger',
+        text: 'text-danger-soft-foreground',
       },
     },
   },

@@ -68,7 +68,10 @@ const DefaultVariantsContent = () => {
             description: 'Get a paid plan for more credits',
             icon: (
               <View className="mt-0.5">
-                <CircleInfoFillIcon size={18} colorClassName="accent-accent" />
+                <CircleInfoFillIcon
+                  size={18}
+                  colorClassName="accent-accent-soft-foreground"
+                />
               </View>
             ),
             actionLabel: 'Close',
@@ -87,7 +90,10 @@ const DefaultVariantsContent = () => {
             description: 'You can continue using HeroUI Chat and more',
             icon: (
               <View className="mt-0.5">
-                <ShieldCheckIcon size={20} colorClassName="accent-success" />
+                <ShieldCheckIcon
+                  size={20}
+                  colorClassName="accent-success-soft-foreground"
+                />
               </View>
             ),
             actionLabel: 'Close',
@@ -108,7 +114,7 @@ const DefaultVariantsContent = () => {
               <View className="mt-0.5">
                 <ShieldExclamationIcon
                   size={20}
-                  colorClassName="accent-warning"
+                  colorClassName="accent-warning-soft-foreground"
                 />
               </View>
             ),
@@ -131,7 +137,7 @@ const DefaultVariantsContent = () => {
               <StyledFeather
                 name="hard-drive"
                 size={16}
-                className="text-danger mt-[3px]"
+                className="text-danger-soft-foreground mt-[3px]"
               />
             ),
             actionLabel: 'Close',
@@ -164,7 +170,10 @@ const PlacementVariantsContent = () => {
       description: 'You can continue using HeroUI Chat and more',
       icon: (
         <View className="mt-0.5">
-          <ShieldCheckIcon size={20} colorClassName="accent-success" />
+          <ShieldCheckIcon
+            size={20}
+            colorClassName="accent-success-soft-foreground"
+          />
         </View>
       ),
       actionLabel: 'Close',
@@ -179,7 +188,10 @@ const PlacementVariantsContent = () => {
       description: 'Upgrade to a paid plan to continue using HeroUI Chat',
       icon: (
         <View className="mt-0.5">
-          <ShieldExclamationIcon size={20} colorClassName="accent-warning" />
+          <ShieldExclamationIcon
+            size={20}
+            colorClassName="accent-warning-soft-foreground"
+          />
         </View>
       ),
       actionLabel: 'Close',

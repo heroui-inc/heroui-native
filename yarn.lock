@@ -9356,7 +9356,7 @@ __metadata:
     typescript: ^5.8.3
     uniwind: ^1.6.3
   peerDependencies:
-    "@gorhom/bottom-sheet": ^5.2.14
+    "@gorhom/bottom-sheet": ^5.2.9
     react: ">=19.0.0"
     react-native: ">=0.81.0"
     react-native-gesture-handler: ^2.28.0

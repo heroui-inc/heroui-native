@@ -1,0 +1,7 @@
+@theme inline static {
+  /* Vibrant Soft Foregrounds - keeps brand color saturation high with a small foreground tint */
+  --color-accent-soft-foreground: color-mix(in oklab, var(--accent) 92%, var(--foreground) 8%);
+  --color-danger-soft-foreground: color-mix(in oklab, var(--danger) 92%, var(--foreground) 8%);
+  --color-warning-soft-foreground: color-mix(in oklab, var(--warning) 92%, var(--foreground) 8%);
+  --color-success-soft-foreground: color-mix(in oklab, var(--success) 92%, var(--foreground) 8%);
+}

@@ -12,6 +12,7 @@
       "default": "./lib/module/index.js"
     },
     "./styles": "./lib/module/styles/index.css",
+    "./styles/vibrant": "./lib/module/styles/theme-vibrant.css",
     "./package.json": "./package.json"
   },
   "files": [

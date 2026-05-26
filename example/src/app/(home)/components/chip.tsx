@@ -1,9 +1,9 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { Chip } from 'heroui-native';
 import { StyleSheet, View } from 'react-native';
-import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { BellFillIcon } from '../../../components/icons/bell-fill';
 import { PlusIcon } from '../../../components/icons/plus';
 import { StarFillIcon } from '../../../components/icons/star-fill';
 import { XMarkIcon } from '../../../components/icons/x-mark';
@@ -181,15 +181,24 @@ const WithStartContentContent = () => {
       <View className="gap-8">
         <View className="flex-row flex-wrap gap-4 justify-center">
           <Chip variant="tertiary">
-            <AppText className="text-xs">📌</AppText>
+            <BellFillIcon
+              size={11}
+              colorClassName="accent-accent-soft-foreground"
+            />
             <Chip.Label>Featured</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="success">
-            <PlusIcon size={12} colorClassName="accent-success" />
+            <PlusIcon
+              size={12}
+              colorClassName="accent-success-soft-foreground"
+            />
             <Chip.Label>New</Chip.Label>
           </Chip>
           <Chip size="lg" variant="tertiary" color="warning">
-            <StarFillIcon size={11} colorClassName="accent-warning" />
+            <StarFillIcon
+              size={11}
+              colorClassName="accent-warning-soft-foreground"
+            />
             <Chip.Label>Premium</Chip.Label>
           </Chip>
         </View>
@@ -200,15 +209,15 @@ const WithStartContentContent = () => {
             <Chip.Label>Information</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="success">
-            <View className="size-1.5 mr-1.5 rounded-full bg-success" />
+            <View className="size-1.5 mr-1.5 rounded-full bg-success-soft-foreground" />
             <Chip.Label>Completed</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="warning">
-            <View className="size-1.5 mr-1.5 rounded-full bg-warning" />
+            <View className="size-1.5 mr-1.5 rounded-full bg-warning-soft-foreground" />
             <Chip.Label>Pending</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="danger">
-            <View className="size-1.5 mr-1.5 rounded-full bg-danger" />
+            <View className="size-1.5 mr-1.5 rounded-full bg-danger-soft-foreground" />
             <Chip.Label>Failed</Chip.Label>
           </Chip>
         </View>

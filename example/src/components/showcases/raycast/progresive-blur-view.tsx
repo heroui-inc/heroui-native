@@ -55,7 +55,7 @@ export const ProgressiveBlurView: FC<Props> = ({
         </MaskedView>
       ) : (
         <LinearGradient
-          style={StyleSheet.absoluteFillObject}
+          style={StyleSheet.absoluteFill}
           colors={
             position === 'top'
               ? [

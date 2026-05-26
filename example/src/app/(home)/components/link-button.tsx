@@ -26,13 +26,13 @@ const TermsAndPrivacyContent = () => {
           <View className="flex-row flex-wrap flex-1">
             <AppText className="text-sm text-muted">I agree to the </AppText>
             <LinkButton size="sm" onPress={handleTermsPress}>
-              <LinkButton.Label className="text-accent">
+              <LinkButton.Label className="text-accent-soft-foreground">
                 Terms of Service
               </LinkButton.Label>
             </LinkButton>
             <AppText className="text-sm text-muted"> and </AppText>
             <LinkButton size="sm" onPress={handlePrivacyPress}>
-              <LinkButton.Label className="text-accent">
+              <LinkButton.Label className="text-accent-soft-foreground">
                 Privacy Policy
               </LinkButton.Label>
             </LinkButton>

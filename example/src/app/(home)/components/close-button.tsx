@@ -56,7 +56,9 @@ const CustomChildrenContent = () => {
             color={themeColorForeground}
           />
         </CloseButton>
-        <CloseButton>❌</CloseButton>
+        <CloseButton>
+          <StyledIonicons name="close" size={24} color={themeColorForeground} />
+        </CloseButton>
       </View>
     </View>
   );

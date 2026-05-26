@@ -31,10 +31,10 @@ const title = tv({
   variants: {
     status: {
       default: 'text-foreground',
-      accent: 'text-accent',
-      success: 'text-success',
-      warning: 'text-warning',
-      danger: 'text-danger',
+      accent: 'text-accent-soft-foreground',
+      success: 'text-success-soft-foreground',
+      warning: 'text-warning-soft-foreground',
+      danger: 'text-danger-soft-foreground',
     },
   },
   defaultVariants: {

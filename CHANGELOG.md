@@ -1,3 +1,24 @@
+## <small>1.0.4 (2026-05-26)</small>
+
+* build: modify metro.config.js ([a0b68b4](https://github.com/heroui-inc/heroui-native/commit/a0b68b4))
+* build: pin @gorhom/bottom-sheet to ^5.2.9 ([019b171](https://github.com/heroui-inc/heroui-native/commit/019b171))
+* build: upd jest preset path ([ffbcf0d](https://github.com/heroui-inc/heroui-native/commit/ffbcf0d))
+* build: upd release.yml ([170edc8](https://github.com/heroui-inc/heroui-native/commit/170edc8))
+* build: upd yarn lock ([334ee07](https://github.com/heroui-inc/heroui-native/commit/334ee07))
+* build: upgrade @gorhom/bottom-sheet ([bdb5117](https://github.com/heroui-inc/heroui-native/commit/bdb5117))
+* build: upgrade to expo 56 ([2960d3a](https://github.com/heroui-inc/heroui-native/commit/2960d3a))
+* chore: add theme-vibrant.css file ([8394988](https://github.com/heroui-inc/heroui-native/commit/8394988))
+* chore: refine chip styles ([810ce2c](https://github.com/heroui-inc/heroui-native/commit/810ce2c))
+* chore: refine vibrant colors ([46cb08e](https://github.com/heroui-inc/heroui-native/commit/46cb08e))
+* chore: remove safe-area-view from example-app ([bd9ce1a](https://github.com/heroui-inc/heroui-native/commit/bd9ce1a))
+* chore: upd readme preview app section ([b4889f1](https://github.com/heroui-inc/heroui-native/commit/b4889f1))
+* chore: update theme.css soft values ([595fdc7](https://github.com/heroui-inc/heroui-native/commit/595fdc7))
+* docs: add popover offset special note ([0ff888b](https://github.com/heroui-inc/heroui-native/commit/0ff888b))
+* docs: update colors.md ([c307b28](https://github.com/heroui-inc/heroui-native/commit/c307b28))
+* refactor(text): rename text to typography ([1df7772](https://github.com/heroui-inc/heroui-native/commit/1df7772))
+
+
+
 ## <small>1.0.3 (2026-05-11)</small>
 
 * docs: extend bottom sheet examples ([fb34a3c](https://github.com/heroui-inc/heroui-native/commit/fb34a3c))

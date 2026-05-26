@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "HeroUI Native",
-    "slug": "heroui-native",
-    "scheme": "herouinative",
+    "name": "HeroUI Native OSS",
+    "slug": "heroui-native-oss",
+    "scheme": "herouinativeoss",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
@@ -12,7 +12,7 @@
         "dark": "./assets/ios-icon-dark.png"
       },
       "supportsTablet": false,
-      "bundleIdentifier": "com.herouinative.app",
+      "bundleIdentifier": "com.herouinativeoss.app",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/android-adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.herouinative.android"
+      "package": "com.herouinativeoss.android"
     },
     "web": {
       "bundler": "metro"

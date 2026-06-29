@@ -110,6 +110,7 @@
   },
   "peerDependencies": {
     "@gorhom/bottom-sheet": "^5.2.9",
+    "expo-blur": ">=14.0.0",
     "react": ">=19.0.0",
     "react-native": ">=0.81.0",
     "react-native-gesture-handler": "^2.28.0",
@@ -123,6 +124,9 @@
   },
   "peerDependenciesMeta": {
     "@gorhom/bottom-sheet": {
+      "optional": true
+    },
+    "expo-blur": {
       "optional": true
     },
     "react-native-screens": {

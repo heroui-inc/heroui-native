@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const portal = tv({
-  base: 'absolute inset-0',
+  base: 'popover__portal',
 });
 
 /**
@@ -26,7 +26,7 @@ const portal = tv({
  * set `isAnimatedStyleActive={false}` on `Popover.Overlay`.
  */
 const overlay = tv({
-  base: 'absolute inset-0',
+  base: 'popover__overlay',
 });
 
 /**
@@ -56,7 +56,7 @@ const overlay = tv({
  * set `isAnimatedStyleActive={false}` on `Popover.Content`.
  */
 const content = tv({
-  base: 'absolute bg-overlay p-3 px-4 rounded-3xl shadow-overlay',
+  base: 'popover__content',
 });
 
 /**
@@ -70,15 +70,15 @@ const close = tv({
 });
 
 const label = tv({
-  base: 'text-lg font-medium text-foreground',
+  base: 'popover__label',
 });
 
 const description = tv({
-  base: 'text-base/snug text-muted',
+  base: 'popover__description',
 });
 
 const arrow = tv({
-  base: 'absolute z-50',
+  base: 'popover__arrow',
 });
 
 export const popoverClassNames = combineStyles({

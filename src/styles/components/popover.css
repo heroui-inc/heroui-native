@@ -1,0 +1,50 @@
+/*
+ * Popover BEM classes (consumed by popover.styles.ts via tv()).
+ * Uses bridged Tailwind tokens so themes can override structure via
+ * same-named classes imported after heroui-native/styles.
+ */
+
+.popover__portal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.popover__overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.popover__content {
+  position: absolute;
+  background-color: var(--color-overlay);
+  padding-top: calc(var(--spacing) * 3);
+  padding-bottom: calc(var(--spacing) * 3);
+  padding-left: calc(var(--spacing) * 4);
+  padding-right: calc(var(--spacing) * 4);
+  border-radius: var(--radius-3xl);
+  box-shadow: var(--shadow-overlay);
+}
+
+.popover__label {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg--line-height);
+  font-family: var(--font-medium);
+  color: var(--color-foreground);
+}
+
+.popover__description {
+  font-size: var(--text-base);
+  line-height: 1.375;
+  color: var(--color-muted);
+}
+
+.popover__arrow {
+  position: absolute;
+  z-index: 50;
+}

@@ -9,6 +9,7 @@ import type {
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useCSSVariable } from 'uniwind';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
 import {
@@ -30,6 +31,7 @@ import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import { CloseButton } from '../close-button';
 import { ArrowSvg } from './arrow-svg';
+import { GlassBackdrop } from './glass-backdrop';
 import {
   PopoverAnimationProvider,
   usePopoverAnimation,
@@ -256,6 +258,8 @@ const PopoverContentPopover = forwardRef<
       className,
     });
 
+    const isGlassTheme = Boolean(useCSSVariable('--is-glass-theme'));
+
     const { entering, exiting } = usePopupPopoverContentAnimation({
       placement,
       offset,
@@ -279,6 +283,9 @@ const PopoverContentPopover = forwardRef<
             style={[popoverStyleSheet.contentContainer, style]}
             {...props}
           >
+            {isGlassTheme ? (
+              <GlassBackdrop className="overflow-hidden rounded-3xl" />
+            ) : null}
             {children}
           </AnimatedContent>
         )}

@@ -20,6 +20,9 @@
       --font-bold: 'Inter-Bold';
       
       --radius: 0.5rem;
+
+      --field-border-width: 0px;
+      --field-border: #3b82f6;
     }
 
     @variant dark {
@@ -29,6 +32,9 @@
       --font-bold: 'Inter-Bold';
 
       --radius: 0.5rem;
+
+      --field-border-width: 0px;
+      --field-border: #3b82f6;
     }
   }
 }

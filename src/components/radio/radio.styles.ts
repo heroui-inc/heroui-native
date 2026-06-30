@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { tv } from 'tailwind-variants';
+import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 /** Root item layout style */

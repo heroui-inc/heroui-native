@@ -11,17 +11,17 @@ const group = tv({
 });
 
 const slot = tv({
-  base: 'h-12 w-11 items-center justify-center rounded-xl border-[1.5px] overflow-hidden',
+  base: 'h-12 w-11 items-center justify-center rounded-field border-field-width border-field-border overflow-hidden',
   variants: {
     variant: {
-      primary: 'bg-field border-field-border shadow-field',
-      secondary: 'bg-default border-default',
+      primary: 'bg-field shadow-field',
+      secondary: 'bg-default',
     },
     isActive: {
-      true: 'border-accent',
+      true: 'outline-2 outline-accent',
     },
     isInvalid: {
-      true: 'border-danger',
+      true: 'outline-2 outline-danger',
     },
     isDisabled: {
       true: 'opacity-disabled pointer-events-none',

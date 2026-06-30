@@ -47,7 +47,7 @@
   --color-field-placeholder: var(--field-placeholder, var(--muted));
   --color-field-border: var(--field-border, var(--border));
   --radius-field: var(--field-radius, var(--radius-xl));
-  --border-width-field: var(--field-border-width, var(--border-width));
+  --border-width-field-width: var(--field-border-width, var(--border-width));
 
   --shadow-surface: var(--surface-shadow);
   --shadow-overlay: var(--overlay-shadow);

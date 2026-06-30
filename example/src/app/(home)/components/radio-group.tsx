@@ -34,6 +34,7 @@ const BasicRadioGroupContent = () => {
         <RadioGroup
           value={withDescSelection}
           onValueChange={setWithDescSelection}
+          isInvalid
         >
           <RadioGroup.Item value="desc1">
             <View className="flex-1">

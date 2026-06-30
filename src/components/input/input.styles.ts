@@ -10,7 +10,7 @@ const input = tv({
       secondary: 'bg-default',
     },
     isInvalid: {
-      true: 'focus:outline-danger',
+      true: 'outline-danger focus:outline-danger',
       false: '',
     },
     isDisabled: {

@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
-import { TextInput, type TextInput as TextInputType } from 'react-native';
+import { type TextInput as TextInputType } from 'react-native';
 import { useIsOnSurface } from '../../helpers/external/hooks';
+import { HeroTextInput } from '../../helpers/internal/components';
 import { useFormField } from '../../helpers/internal/contexts';
 import { DISPLAY_NAME } from './input.constants';
 import { inputClassNames, inputStyleSheet } from './input.styles';
@@ -56,7 +57,7 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
   });
 
   return (
-    <TextInput
+    <HeroTextInput
       ref={ref}
       className={inputClassName}
       style={[inputStyleSheet.borderCurve, style]}

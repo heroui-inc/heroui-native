@@ -7,3 +7,4 @@ export * from './chevron-right-icon';
 export * from './close-icon';
 export * from './full-window-overlay';
 export * from './hero-text';
+export * from './hero-text-input';

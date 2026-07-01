@@ -699,7 +699,7 @@ When using a render function for `children`, the following props are provided:
 | prop    | type     | default          | description       |
 | ------- | -------- | ---------------- | ----------------- |
 | `size`  | `number` | `16`             | Size of the icon  |
-| `color` | `string` | `--colors-muted` | Color of the icon |
+| `color` | `string` | theme accent-soft-foreground color | Color of the icon |
 
 ## Hooks
 

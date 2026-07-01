@@ -703,10 +703,12 @@ const SelectItemIndicator = forwardRef<
   SelectPrimitivesTypes.ItemIndicatorRef,
   SelectItemIndicatorProps
 >(({ className, children, iconProps, ...props }, ref) => {
-  const themeColorAccent = useThemeColor('accent');
+  const themeColorAccentSoftForeground = useThemeColor(
+    'accent-soft-foreground'
+  );
 
   const iconSize = iconProps?.size ?? 16;
-  const iconColor = iconProps?.color ?? themeColorAccent;
+  const iconColor = iconProps?.color ?? themeColorAccentSoftForeground;
 
   const itemIndicatorClassName = selectClassNames.itemIndicator({ className });
 

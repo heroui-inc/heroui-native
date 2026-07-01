@@ -358,12 +358,41 @@ const SelectContentPopover = forwardRef<
       className,
     });
 
-    const { entering, exiting } = usePopupPopoverContentAnimation({
-      placement,
-      offset,
-      animation,
-    });
+    const { isDrivenEntering, rEnteringStyle, entering, exiting } =
+      usePopupPopoverContentAnimation({
+        placement,
+        offset,
+        animation,
+        isReady,
+      });
 
+    // Single-mount path: the content subtree is rendered once and animated in
+    // via a shared value once it has been measured and positioned (`isReady`).
+    if (isDrivenEntering) {
+      return (
+        <AnimatedPopoverContent
+          ref={ref}
+          exiting={exiting}
+          placement={placement}
+          align={align}
+          avoidCollisions={avoidCollisions}
+          offset={offset}
+          alignOffset={alignOffset}
+          insets={insets}
+          collapsable={false}
+          pointerEvents={isReady ? undefined : 'none'}
+          className={contentClassName}
+          style={[selectStyleSheet.contentContainer, style, rEnteringStyle]}
+          {...props}
+        >
+          {children}
+        </AnimatedPopoverContent>
+      );
+    }
+
+    // Fallback path: a custom entering Keyframe was provided, which must fire
+    // on mount, so a hidden probe measures the content before the visible node
+    // mounts and plays the Keyframe.
     return (
       <>
         {isReady && (

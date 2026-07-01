@@ -1,6 +1,6 @@
 # HeroUINativeProvider
 
-Configure HeroUI Native provider with text, animation, and toast settings
+Configure HeroUI Native provider with text, text input, animation, and toast settings
 
 ## Overview
 
@@ -8,6 +8,7 @@ The provider serves as the main entry point for HeroUI Native, wrapping your app
 
 - **Safe Area Insets**: Automatically handles safe area insets updates via `SafeAreaListener` and syncs them with Uniwind for use in Tailwind classes (e.g., `pb-safe-offset-3`)
 - **Text Configuration**: Global text component settings for consistency across all HeroUI components
+- **Text Input Configuration**: Global text input settings for consistency across all HeroUI input components
 - **Animation Configuration**: Global animation control to disable all animations across the application
 - **Toast Configuration**: Global toast system configuration including insets, default props, and wrapper components
 - **Portal Management**: Handles overlays, modals, and other components that render on top of the app hierarchy
@@ -65,6 +66,37 @@ export default function App() {
   );
 }
 ```
+
+### Text Input Component Configuration
+
+Global settings for all TextInput-based components within HeroUI Native (e.g. Input, TextArea, SearchField, InputGroup, InputOTP). These props are carefully selected to include only those that make sense to configure globally across all inputs in the application:
+
+```tsx
+import { HeroUINativeProvider } from 'heroui-native';
+import type { HeroUINativeConfig } from 'heroui-native';
+
+const config: HeroUINativeConfig = {
+  textInputProps: {
+    // Respect Text Size accessibility settings
+    allowFontScaling: false,
+
+    // Maximum font size multiplier when allowFontScaling is enabled
+    maxFontSizeMultiplier: 1.5,
+  },
+};
+
+export default function App() {
+  return (
+    <HeroUINativeProvider config={config}>
+      {/* Your app content */}
+    </HeroUINativeProvider>
+  );
+}
+```
+
+<Callout type="info">
+  **Note**: These props are applied as defaults. Any prop passed directly to an individual input component overrides the corresponding global value.
+</Callout>
 
 ### Animation Configuration
 
@@ -171,6 +203,11 @@ const config: HeroUINativeConfig = {
     allowFontScaling: true,
     adjustsFontSizeToFit: false,
   },
+  // Global text input configuration
+  textInputProps: {
+    allowFontScaling: true,
+    maxFontSizeMultiplier: 1.5,
+  },
   // Global animation configuration
   animation: 'disable-all', // Optional: disable all animations
   // Developer information messages configuration
@@ -246,13 +283,14 @@ HeroUINativeProvider
 ├── SafeAreaListener (handles safe area insets updates)
 │   └── GlobalAnimationSettingsProvider (animation configuration)
 │       └── TextComponentProvider (text configuration)
-│           └── ToastProvider (toast configuration, conditionally rendered)
-│               └── Your App
-│               └── PortalHost (for overlays)
+│           └── TextInputComponentProvider (text input configuration)
+│               └── ToastProvider (toast configuration, conditionally rendered)
+│                   └── Your App
+│                   └── PortalHost (for overlays)
 ```
 
 <Callout type="info">
-  **Note**: The `ToastProvider` is conditionally rendered based on the `toast` configuration. If `toast` is set to `false` or `'disabled'`, the `ToastProvider` will not be rendered, and the app content and `PortalHost` will be rendered directly under `TextComponentProvider`.
+  **Note**: The `ToastProvider` is conditionally rendered based on the `toast` configuration. If `toast` is set to `false` or `'disabled'`, the `ToastProvider` will not be rendered, and the app content and `PortalHost` will be rendered directly under `TextInputComponentProvider`.
 </Callout>
 
 ### Safe Area Insets Handling
@@ -327,7 +365,8 @@ HeroUINativeProviderRaw
 ├── SafeAreaListener (handles safe area insets updates)
 │   └── GlobalAnimationSettingsProvider (animation configuration)
 │       └── TextComponentProvider (text configuration)
-│           └── Your App
+│           └── TextInputComponentProvider (text input configuration)
+│               └── Your App
 ```
 
 ## Best Practices
@@ -413,6 +452,10 @@ import { HeroUINativeProvider, type HeroUINativeConfig } from 'heroui-native';
 const config: HeroUINativeConfig = {
   // Full type safety and autocomplete
   textProps: {
+    allowFontScaling: true,
+    maxFontSizeMultiplier: 1.5,
+  },
+  textInputProps: {
     allowFontScaling: true,
     maxFontSizeMultiplier: 1.5,
   },

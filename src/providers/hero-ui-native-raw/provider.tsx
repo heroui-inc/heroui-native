@@ -4,6 +4,7 @@ import { Uniwind } from 'uniwind';
 import { useDevInfo } from '../../helpers/internal/hooks';
 import { GlobalAnimationSettingsProvider } from '../animation-settings';
 import { TextComponentProvider } from '../text-component/provider';
+import { TextInputComponentProvider } from '../text-input-component/provider';
 import type { HeroUINativeProviderRawProps } from './types';
 
 /**
@@ -18,6 +19,7 @@ import type { HeroUINativeProviderRawProps } from './types';
  * Currently provides:
  * - Global animation settings
  * - Global text component configuration
+ * - Global text input component configuration
  *
  * @param {HeroUINativeProviderRawProps} props - Provider configuration props
  * @param {ReactNode} props.children - Child components to wrap
@@ -28,7 +30,7 @@ const HeroUINativeProviderRaw: React.FC<HeroUINativeProviderRawProps> = ({
   children,
   config = {},
 }) => {
-  const { textProps, animation, devInfo } = config;
+  const { textProps, textInputProps, animation, devInfo } = config;
 
   useDevInfo(devInfo);
 
@@ -40,7 +42,9 @@ const HeroUINativeProviderRaw: React.FC<HeroUINativeProviderRawProps> = ({
     >
       <GlobalAnimationSettingsProvider animation={animation}>
         <TextComponentProvider value={{ textProps }}>
-          {children}
+          <TextInputComponentProvider value={{ textInputProps }}>
+            {children}
+          </TextInputComponentProvider>
         </TextComponentProvider>
       </GlobalAnimationSettingsProvider>
     </SafeAreaListener>

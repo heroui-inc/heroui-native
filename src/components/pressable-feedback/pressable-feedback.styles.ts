@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { StyleSheet } from 'react-native';
-import { tv } from 'tailwind-variants';
+import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({

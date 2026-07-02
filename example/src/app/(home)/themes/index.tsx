@@ -6,6 +6,7 @@ import React from 'react';
 import { Platform, Pressable, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CardContent } from '../../../components/themes-content/card-content';
 import { CheckboxContent } from '../../../components/themes-content/checkbox-content';
 import { RadioGroupContent } from '../../../components/themes-content/radio-group-content';
@@ -118,7 +119,7 @@ const ThemeCircle: React.FC<{
 export default function Themes() {
   const { currentTheme, setTheme, isLight } = useAppTheme();
   const headerHeight = useHeaderHeight();
-
+  const insetBottom = useSafeAreaInsets().bottom;
   const getCurrentThemeId = () => {
     if (currentTheme === 'light' || currentTheme === 'dark') return 'default';
     if (currentTheme.startsWith('lavender')) return 'lavender';
@@ -141,7 +142,7 @@ export default function Themes() {
       contentContainerClassName="gap-12 px-5"
       contentContainerStyle={{
         paddingTop: headerHeight,
-        paddingBottom: 12,
+        paddingBottom: insetBottom + 12,
       }}
       bottomOffset={60}
     >

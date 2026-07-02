@@ -47,7 +47,7 @@
   --color-field-placeholder: var(--field-placeholder, var(--muted));
   --color-field-border: var(--field-border, var(--border));
   --radius-field: var(--field-radius, var(--radius-xl));
-  --border-width-field: var(--field-border-width, var(--border-width));
+  --border-width-field-width: var(--field-border-width, var(--border-width));
 
   --shadow-surface: var(--surface-shadow);
   --shadow-overlay: var(--overlay-shadow);
@@ -81,19 +81,19 @@
   --color-default-soft-hover: color-mix(in oklab, var(--default) 60%, transparent);
 
   --color-accent-soft: color-mix(in oklab, var(--accent) 15%, transparent);
-  --color-accent-soft-foreground: color-mix(in oklab, var(--accent) 80%, var(--black) 20%);
+  --color-accent-soft-foreground: color-mix(in oklab, var(--accent) 80%, var(--foreground) 20%);
   --color-accent-soft-hover: color-mix(in oklab, var(--accent) 20%, transparent);
 
   --color-danger-soft: color-mix(in oklab, var(--danger) 15%, transparent);
-  --color-danger-soft-foreground: color-mix(in oklab, var(--danger) 80%, var(--black) 20%);
+  --color-danger-soft-foreground: color-mix(in oklab, var(--danger) 80%, var(--foreground) 20%);
   --color-danger-soft-hover: color-mix(in oklab, var(--danger) 20%, transparent);
 
   --color-warning-soft: color-mix(in oklab, var(--warning) 15%, transparent);
-  --color-warning-soft-foreground: color-mix(in oklab, var(--warning) 65%, var(--black) 35%);
+  --color-warning-soft-foreground: color-mix(in oklab, var(--warning) 65%, var(--foreground) 35%);
   --color-warning-soft-hover: color-mix(in oklab, var(--warning) 20%, transparent);
 
   --color-success-soft: color-mix(in oklab, var(--success) 15%, transparent);
-  --color-success-soft-foreground: color-mix(in oklab, var(--success) 70%, var(--black) 30%);
+  --color-success-soft-foreground: color-mix(in oklab, var(--success) 70%, var(--foreground) 30%);
   --color-success-soft-hover: color-mix(in oklab, var(--success) 20%, transparent);
 
   /* Separator Colors - Levels */

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 import type { TextComponentContextValue } from '../text-component/types';
+import type { TextInputComponentContextValue } from '../text-input-component/types';
 import type { ToastProviderProps } from '../toast/types';
 
 /**
@@ -30,12 +31,15 @@ export interface DevInfoConfig {
  *
  * @interface HeroUINativeConfig
  * @extends TextComponentContextValue
+ * @extends TextInputComponentContextValue
  *
  * @description
  * Contains configuration options for the HeroUI Native provider.
  * Additional configuration options can be added in future versions.
  */
-export interface HeroUINativeConfig extends TextComponentContextValue {
+export interface HeroUINativeConfig
+  extends TextComponentContextValue,
+    TextInputComponentContextValue {
   /**
    * Global animation configuration
    *

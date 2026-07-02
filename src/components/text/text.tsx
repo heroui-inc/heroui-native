@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { HeroText } from '../../helpers/internal/components';
 import type { TextRef } from '../../helpers/internal/types';
-import { DISPLAY_NAME } from './text.constants';
+import { DISPLAY_NAME, DYNAMIC_TYPE_RAMP } from './text.constants';
 import { styleSheet, textClassNames } from './text.styles';
 import type {
   TextCodeProps,
@@ -53,12 +53,18 @@ const TextRoot = forwardRef<TextRef, TextRootProps>((props, ref) => {
 // --------------------------------------------------
 
 const TextHeading = forwardRef<TextRef, TextHeadingProps>((props, ref) => {
-  const { type = 'h1', accessibilityRole = 'header', ...restProps } = props;
+  const {
+    type = 'h1',
+    accessibilityRole = 'header',
+    dynamicTypeRamp = DYNAMIC_TYPE_RAMP[type],
+    ...restProps
+  } = props;
   return (
     <TextRoot
       ref={ref}
       type={type}
       accessibilityRole={accessibilityRole}
+      dynamicTypeRamp={dynamicTypeRamp}
       {...restProps}
     />
   );
@@ -67,8 +73,19 @@ const TextHeading = forwardRef<TextRef, TextHeadingProps>((props, ref) => {
 // --------------------------------------------------
 
 const TextParagraph = forwardRef<TextRef, TextParagraphProps>((props, ref) => {
-  const { type = 'body', ...restProps } = props;
-  return <TextRoot ref={ref} type={type} {...restProps} />;
+  const {
+    type = 'body',
+    dynamicTypeRamp = DYNAMIC_TYPE_RAMP[type],
+    ...restProps
+  } = props;
+  return (
+    <TextRoot
+      ref={ref}
+      type={type}
+      dynamicTypeRamp={dynamicTypeRamp}
+      {...restProps}
+    />
+  );
 });
 
 // --------------------------------------------------

@@ -258,46 +258,109 @@ const MenuContentPopover = forwardRef<
       className,
     });
 
-    const { entering, exiting } = usePopupPopoverContentAnimation({
-      placement,
-      offset,
-      animation,
-    });
+    const { isDrivenEntering, rEnteringStyle, entering, exiting } =
+      usePopupPopoverContentAnimation({
+        placement,
+        offset,
+        animation,
+        isReady,
+      });
 
     const rContainerStyle = useMenuContentPopoverAnimation({
       isSubMenuOpen,
       animation,
     });
 
+    // Single-mount path: the content subtree is rendered once and animated in
+    // via a shared value once it has been measured and positioned (`isReady`).
+    // `rEnteringStyle` precedes `rContainerStyle` so the sub-menu scale still
+    // wins once the enter transition has settled, while opacity comes from the
+    // entering style.
+    if (isDrivenEntering) {
+      return (
+        <MenuContentContext value={{ placement }}>
+          <Animated.View
+            exiting={isSubMenuOpen ? FadeOut.duration(150) : exiting}
+            collapsable={false}
+            pointerEvents="box-none"
+          >
+            <AnimatedContent
+              ref={ref}
+              placement={placement}
+              align={align}
+              avoidCollisions={avoidCollisions}
+              offset={offset}
+              alignOffset={alignOffset}
+              insets={insets}
+              collapsable={false}
+              pointerEvents={isReady ? undefined : 'none'}
+              className={contentClassName}
+              style={[
+                menuStyleSheet.borderCurve,
+                rEnteringStyle,
+                rContainerStyle,
+                style,
+              ]}
+              {...props}
+            >
+              {children}
+              {isSubMenuOpen && (
+                <Pressable
+                  className="absolute inset-0 z-40"
+                  onPress={() => {
+                    if (openSubMenuId !== null) {
+                      closeSubMenu(openSubMenuId);
+                    }
+                  }}
+                />
+              )}
+            </AnimatedContent>
+          </Animated.View>
+        </MenuContentContext>
+      );
+    }
+
+    // Fallback path: a custom entering Keyframe was provided, which must fire
+    // on mount, so a hidden probe measures the content before the visible node
+    // mounts and plays the Keyframe.
     return (
       <MenuContentContext value={{ placement }}>
         {isReady && (
-          <AnimatedContent
-            ref={ref}
+          // The `entering`/`exiting` layout animations live on a wrapper so they
+          // never share transform with the `rContainerStyle` animated style on
+          // the content node (avoids the Reanimated layout-animation override
+          // warning).
+          <Animated.View
             entering={entering}
             exiting={isSubMenuOpen ? FadeOut.duration(150) : exiting}
-            placement={placement}
-            align={align}
-            avoidCollisions={avoidCollisions}
-            offset={offset}
-            alignOffset={alignOffset}
-            insets={insets}
-            className={contentClassName}
-            style={[menuStyleSheet.borderCurve, rContainerStyle, style]}
-            {...props}
+            collapsable={false}
+            pointerEvents="box-none"
           >
-            {children}
-            {isSubMenuOpen && (
-              <Pressable
-                className="absolute inset-0 z-40"
-                onPress={() => {
-                  if (openSubMenuId !== null) {
-                    closeSubMenu(openSubMenuId);
-                  }
-                }}
-              />
-            )}
-          </AnimatedContent>
+            <AnimatedContent
+              ref={ref}
+              placement={placement}
+              align={align}
+              avoidCollisions={avoidCollisions}
+              offset={offset}
+              alignOffset={alignOffset}
+              insets={insets}
+              className={contentClassName}
+              style={[menuStyleSheet.borderCurve, rContainerStyle, style]}
+              {...props}
+            >
+              {children}
+              {isSubMenuOpen && (
+                <Pressable
+                  className="absolute inset-0 z-40"
+                  onPress={() => {
+                    if (openSubMenuId !== null) {
+                      closeSubMenu(openSubMenuId);
+                    }
+                  }}
+                />
+              )}
+            </AnimatedContent>
+          </Animated.View>
         )}
         <AnimatedContent
           placement={placement}

@@ -21,6 +21,7 @@ import {
   type BlurEvent,
   type FocusEvent,
 } from 'react-native';
+import { HeroTextInput } from '../../helpers/internal/components';
 import { useControllableState } from '../../helpers/internal/hooks';
 import * as SlotPrimitive from '../slot';
 import type {
@@ -281,7 +282,7 @@ const Root = forwardRef<RootRef, RootProps>(
           className={className}
         >
           {children}
-          <TextInput
+          <HeroTextInput
             ref={inputRef}
             style={[
               StyleSheet.absoluteFill,

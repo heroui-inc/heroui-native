@@ -428,6 +428,7 @@ export interface SelectItemIndicatorIconProps {
   size?: number;
   /**
    * Color of the check icon
+   * @default theme accent-soft-foreground color
    */
   color?: string;
 }

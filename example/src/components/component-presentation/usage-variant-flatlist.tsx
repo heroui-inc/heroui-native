@@ -128,8 +128,10 @@ export const UsageVariantFlatList = ({
     },
   });
 
+  const dataLength = data.length;
+
   const animatedProps = useAnimatedProps(() => {
-    if (data.length === 1) {
+    if (dataLength === 1) {
       return {
         intensity: 0,
       };
@@ -138,11 +140,11 @@ export const UsageVariantFlatList = ({
     const inputRange: number[] = [];
     const outputRange: number[] = [];
 
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < dataLength; i++) {
       inputRange.push(i);
       outputRange.push(0);
 
-      if (i < data.length - 1) {
+      if (i < dataLength - 1) {
         inputRange.push(i + 0.5);
         outputRange.push(30);
       }

@@ -1,3 +1,21 @@
+## <small>1.0.5 (2026-07-02)</small>
+
+* fix(input): show focus ring on android via border ([a87b501](https://github.com/heroui-inc/heroui-native/commit/a87b501))
+* fix(input): show invalid outline at rest ([584a946](https://github.com/heroui-inc/heroui-native/commit/584a946))
+* fix(popover): wrap content to fix exit anim & layout warning ([40ccfad](https://github.com/heroui-inc/heroui-native/commit/40ccfad))
+* fix(select): use accent-soft-foreground for check icon ([974ca17](https://github.com/heroui-inc/heroui-native/commit/974ca17))
+* fix(theme): rename field border width utility ([4cc1a54](https://github.com/heroui-inc/heroui-native/commit/4cc1a54))
+* build: upgrade deps as per expo 57 ([19cfd25](https://github.com/heroui-inc/heroui-native/commit/19cfd25))
+* perf(popover): mount content once via driven enter ([39ace70](https://github.com/heroui-inc/heroui-native/commit/39ace70))
+* docs(provider): document global text input props ([7b39e91](https://github.com/heroui-inc/heroui-native/commit/7b39e91))
+* feat(provider): add global text input props config ([bc6253e](https://github.com/heroui-inc/heroui-native/commit/bc6253e))
+* feat(text): add default dynamicTypeRamp to Typography components ([2a3ff28](https://github.com/heroui-inc/heroui-native/commit/2a3ff28))
+* refactor(styles): apply field border and outline states ([5e0a70f](https://github.com/heroui-inc/heroui-native/commit/5e0a70f))
+* refactor(styles): use configured tv with global twMerge config ([05d9331](https://github.com/heroui-inc/heroui-native/commit/05d9331))
+* Mix soft colors with foreground instead of black ([90e596d](https://github.com/heroui-inc/heroui-native/commit/90e596d))
+
+
+
 ## <small>1.0.4 (2026-05-26)</small>
 
 * build: modify metro.config.js ([a0b68b4](https://github.com/heroui-inc/heroui-native/commit/a0b68b4))

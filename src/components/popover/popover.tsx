@@ -269,23 +269,32 @@ const PopoverContentPopover = forwardRef<
     if (isDrivenEntering) {
       return (
         <PopoverContentContext value={{ placement }}>
-          <AnimatedContent
-            ref={ref}
+          <Animated.View
             exiting={exiting}
-            placement={placement}
-            align={align}
-            avoidCollisions={avoidCollisions}
-            offset={offset}
-            alignOffset={alignOffset}
-            insets={insets}
             collapsable={false}
-            pointerEvents={isReady ? undefined : 'none'}
-            className={contentClassName}
-            style={[popoverStyleSheet.contentContainer, style, rEnteringStyle]}
-            {...props}
+            pointerEvents="box-none"
           >
-            {children}
-          </AnimatedContent>
+            <AnimatedContent
+              ref={ref}
+              placement={placement}
+              align={align}
+              avoidCollisions={avoidCollisions}
+              offset={offset}
+              alignOffset={alignOffset}
+              insets={insets}
+              collapsable={false}
+              pointerEvents={isReady ? undefined : 'none'}
+              className={contentClassName}
+              style={[
+                popoverStyleSheet.contentContainer,
+                style,
+                rEnteringStyle,
+              ]}
+              {...props}
+            >
+              {children}
+            </AnimatedContent>
+          </Animated.View>
         </PopoverContentContext>
       );
     }

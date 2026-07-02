@@ -370,23 +370,28 @@ const SelectContentPopover = forwardRef<
     // via a shared value once it has been measured and positioned (`isReady`).
     if (isDrivenEntering) {
       return (
-        <AnimatedPopoverContent
-          ref={ref}
+        <Animated.View
           exiting={exiting}
-          placement={placement}
-          align={align}
-          avoidCollisions={avoidCollisions}
-          offset={offset}
-          alignOffset={alignOffset}
-          insets={insets}
           collapsable={false}
-          pointerEvents={isReady ? undefined : 'none'}
-          className={contentClassName}
-          style={[selectStyleSheet.contentContainer, style, rEnteringStyle]}
-          {...props}
+          pointerEvents="box-none"
         >
-          {children}
-        </AnimatedPopoverContent>
+          <AnimatedPopoverContent
+            ref={ref}
+            placement={placement}
+            align={align}
+            avoidCollisions={avoidCollisions}
+            offset={offset}
+            alignOffset={alignOffset}
+            insets={insets}
+            collapsable={false}
+            pointerEvents={isReady ? undefined : 'none'}
+            className={contentClassName}
+            style={[selectStyleSheet.contentContainer, style, rEnteringStyle]}
+            {...props}
+          >
+            {children}
+          </AnimatedPopoverContent>
+        </Animated.View>
       );
     }
 

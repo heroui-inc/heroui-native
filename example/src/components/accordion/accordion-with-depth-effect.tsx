@@ -6,13 +6,15 @@ import {
   useAccordion,
   useAccordionItem,
 } from 'heroui-native';
-import { createContext, use, useState, type FC } from 'react';
+import { createContext, use, useEffect, useState, type FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   Easing,
   FadeIn,
-  Keyframe,
   LinearTransition,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
   ZoomIn,
   ZoomOut,
 } from 'react-native-reanimated';
@@ -101,20 +103,62 @@ const CUSTOM_INDICATOR_ENTERING = ZoomIn.duration(200).easing(
   Easing.inOut(Easing.ease)
 );
 
-const CLOSE_INDICATOR_ENTERING = new Keyframe({
-  0: {
-    opacity: 0.5,
-    transform: [{ rotate: '-210deg' }],
-  },
-  100: {
-    opacity: 1,
-    transform: [{ rotate: '0deg' }],
-  },
-});
-
 const CUSTOM_INDICATOR_EXITING = ZoomOut.duration(200).easing(
   Easing.inOut(Easing.ease)
 );
+
+/**
+ * Duration of the close (X) indicator spin-in animation, in milliseconds.
+ */
+const CLOSE_INDICATOR_DURATION = 250;
+
+/**
+ * Starting rotation of the close (X) indicator spin-in animation, in degrees.
+ * Kept below the icon's initial resting angle so the icon visibly rotates into
+ * place as it becomes the cross.
+ */
+const CLOSE_INDICATOR_START_ROTATION = -210;
+
+/**
+ * Close (X) indicator that spins into place as the item expands.
+ *
+ * The rotation is driven by a shared value instead of a `Keyframe` entering
+ * animation. Reanimated 4.4+ interpolates transform keyframes via matrix
+ * decomposition (shortest-path rotation), which clamps large angles such as
+ * -210deg and prevents the full spin. Animating a scalar shared value and
+ * mapping it to a `rotate` string interpolates through every intermediate
+ * degree, restoring the intended plus-to-cross spin.
+ */
+const CloseIndicator: FC = () => {
+  const rotation = useSharedValue(CLOSE_INDICATOR_START_ROTATION);
+  const opacity = useSharedValue(0.5);
+
+  useEffect(() => {
+    rotation.value = withTiming(0, {
+      duration: CLOSE_INDICATOR_DURATION,
+      easing: Easing.inOut(Easing.ease),
+    });
+    opacity.value = withTiming(1, {
+      duration: CLOSE_INDICATOR_DURATION,
+      easing: Easing.inOut(Easing.ease),
+    });
+  }, [opacity, rotation]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [{ rotate: `${rotation.value}deg` }],
+  }));
+
+  // Outer view owns the exit layout animation; inner view owns the rotation
+  // transform, so the two never conflict.
+  return (
+    <Animated.View exiting={CUSTOM_INDICATOR_EXITING}>
+      <Animated.View style={animatedStyle}>
+        <XMarkIcon size={14} colorClassName="accent-muted" />
+      </Animated.View>
+    </Animated.View>
+  );
+};
 
 const CustomIndicator = () => {
   const { isExpanded } = useAccordionItem();
@@ -122,13 +166,7 @@ const CustomIndicator = () => {
   return (
     <View className="size-5 items-center justify-center">
       {isExpanded ? (
-        <Animated.View
-          key="close"
-          entering={CLOSE_INDICATOR_ENTERING.duration(250)}
-          exiting={CUSTOM_INDICATOR_EXITING}
-        >
-          <XMarkIcon size={14} colorClassName="accent-muted" />
-        </Animated.View>
+        <CloseIndicator key="close" />
       ) : (
         <Animated.View
           key="expand"

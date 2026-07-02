@@ -1,4 +1,5 @@
 import { forwardRef, useMemo } from 'react';
+import type { PressableStateCallbackType } from 'react-native';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { colorKit } from '../../helpers/external/utils';
 import { HeroText } from '../../helpers/internal/components';
@@ -211,7 +212,10 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         className={rootClassName}
         style={
           typeof style === 'function'
-            ? (state) => [buttonStyleSheet.buttonRoot, style(state)]
+            ? (state: PressableStateCallbackType) => [
+                buttonStyleSheet.buttonRoot,
+                style(state),
+              ]
             : [buttonStyleSheet.buttonRoot, style]
         }
         accessibilityRole={accessibilityRole}

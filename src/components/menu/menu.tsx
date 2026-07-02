@@ -279,38 +279,43 @@ const MenuContentPopover = forwardRef<
     if (isDrivenEntering) {
       return (
         <MenuContentContext value={{ placement }}>
-          <AnimatedContent
-            ref={ref}
+          <Animated.View
             exiting={isSubMenuOpen ? FadeOut.duration(150) : exiting}
-            placement={placement}
-            align={align}
-            avoidCollisions={avoidCollisions}
-            offset={offset}
-            alignOffset={alignOffset}
-            insets={insets}
             collapsable={false}
-            pointerEvents={isReady ? undefined : 'none'}
-            className={contentClassName}
-            style={[
-              menuStyleSheet.borderCurve,
-              rEnteringStyle,
-              rContainerStyle,
-              style,
-            ]}
-            {...props}
+            pointerEvents="box-none"
           >
-            {children}
-            {isSubMenuOpen && (
-              <Pressable
-                className="absolute inset-0 z-40"
-                onPress={() => {
-                  if (openSubMenuId !== null) {
-                    closeSubMenu(openSubMenuId);
-                  }
-                }}
-              />
-            )}
-          </AnimatedContent>
+            <AnimatedContent
+              ref={ref}
+              placement={placement}
+              align={align}
+              avoidCollisions={avoidCollisions}
+              offset={offset}
+              alignOffset={alignOffset}
+              insets={insets}
+              collapsable={false}
+              pointerEvents={isReady ? undefined : 'none'}
+              className={contentClassName}
+              style={[
+                menuStyleSheet.borderCurve,
+                rEnteringStyle,
+                rContainerStyle,
+                style,
+              ]}
+              {...props}
+            >
+              {children}
+              {isSubMenuOpen && (
+                <Pressable
+                  className="absolute inset-0 z-40"
+                  onPress={() => {
+                    if (openSubMenuId !== null) {
+                      closeSubMenu(openSubMenuId);
+                    }
+                  }}
+                />
+              )}
+            </AnimatedContent>
+          </Animated.View>
         </MenuContentContext>
       );
     }
@@ -321,32 +326,41 @@ const MenuContentPopover = forwardRef<
     return (
       <MenuContentContext value={{ placement }}>
         {isReady && (
-          <AnimatedContent
-            ref={ref}
+          // The `entering`/`exiting` layout animations live on a wrapper so they
+          // never share transform with the `rContainerStyle` animated style on
+          // the content node (avoids the Reanimated layout-animation override
+          // warning).
+          <Animated.View
             entering={entering}
             exiting={isSubMenuOpen ? FadeOut.duration(150) : exiting}
-            placement={placement}
-            align={align}
-            avoidCollisions={avoidCollisions}
-            offset={offset}
-            alignOffset={alignOffset}
-            insets={insets}
-            className={contentClassName}
-            style={[menuStyleSheet.borderCurve, rContainerStyle, style]}
-            {...props}
+            collapsable={false}
+            pointerEvents="box-none"
           >
-            {children}
-            {isSubMenuOpen && (
-              <Pressable
-                className="absolute inset-0 z-40"
-                onPress={() => {
-                  if (openSubMenuId !== null) {
-                    closeSubMenu(openSubMenuId);
-                  }
-                }}
-              />
-            )}
-          </AnimatedContent>
+            <AnimatedContent
+              ref={ref}
+              placement={placement}
+              align={align}
+              avoidCollisions={avoidCollisions}
+              offset={offset}
+              alignOffset={alignOffset}
+              insets={insets}
+              className={contentClassName}
+              style={[menuStyleSheet.borderCurve, rContainerStyle, style]}
+              {...props}
+            >
+              {children}
+              {isSubMenuOpen && (
+                <Pressable
+                  className="absolute inset-0 z-40"
+                  onPress={() => {
+                    if (openSubMenuId !== null) {
+                      closeSubMenu(openSubMenuId);
+                    }
+                  }}
+                />
+              )}
+            </AnimatedContent>
+          </Animated.View>
         )}
         <AnimatedContent
           placement={placement}

@@ -72,11 +72,11 @@ function getDefaultExitingAnimation(
       // Content exits downward (translateY: 0 -> translateDistance)
       return new Keyframe({
         0: {
-          transform: [{ translateY: 0 }, { scale: 1 }],
+          transform: [{ translateY: 0 }],
           opacity: 1,
         },
         100: {
-          transform: [{ translateY: translateDistance }, { scale: 0.97 }],
+          transform: [{ translateY: translateDistance }],
           opacity: 0,
           easing: Easing.out(Easing.ease),
         },
@@ -85,11 +85,11 @@ function getDefaultExitingAnimation(
       // Content exits upward (translateY: 0 -> -translateDistance)
       return new Keyframe({
         0: {
-          transform: [{ translateY: 0 }, { scale: 1 }],
+          transform: [{ translateY: 0 }],
           opacity: 1,
         },
         100: {
-          transform: [{ translateY: -translateDistance }, { scale: 0.97 }],
+          transform: [{ translateY: -translateDistance }],
           opacity: 0,
           easing: Easing.out(Easing.ease),
         },
@@ -98,11 +98,11 @@ function getDefaultExitingAnimation(
       // Content exits rightward (translateX: 0 -> translateDistance)
       return new Keyframe({
         0: {
-          transform: [{ translateX: 0 }, { scale: 1 }],
+          transform: [{ translateX: 0 }],
           opacity: 1,
         },
         100: {
-          transform: [{ translateX: translateDistance }, { scale: 0.97 }],
+          transform: [{ translateX: translateDistance }],
           opacity: 0,
           easing: Easing.out(Easing.ease),
         },
@@ -111,11 +111,11 @@ function getDefaultExitingAnimation(
       // Content exits leftward (translateX: 0 -> -translateDistance)
       return new Keyframe({
         0: {
-          transform: [{ translateX: 0 }, { scale: 1 }],
+          transform: [{ translateX: 0 }],
           opacity: 1,
         },
         100: {
-          transform: [{ translateX: -translateDistance }, { scale: 0.97 }],
+          transform: [{ translateX: -translateDistance }],
           opacity: 0,
           easing: Easing.out(Easing.ease),
         },

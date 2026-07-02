@@ -7,7 +7,12 @@ import {
   type FC,
   type PropsWithChildren,
 } from 'react';
-import type { LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
+import type {
+  LayoutChangeEvent,
+  PressableStateCallbackType,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   withTiming,
@@ -334,7 +339,10 @@ const SubMenuContent = forwardRef<
       className={contentClassName}
       style={
         typeof style === 'function'
-          ? (state) => [rContainerStyle, style(state)]
+          ? (state: PressableStateCallbackType) => [
+              rContainerStyle,
+              style(state),
+            ]
           : [rContainerStyle, style]
       }
       pointerEvents={isOpen ? 'auto' : 'none'}

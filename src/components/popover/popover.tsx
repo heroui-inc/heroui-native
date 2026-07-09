@@ -9,7 +9,6 @@ import type {
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useCSSVariable } from 'uniwind';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
 import {
@@ -31,7 +30,6 @@ import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import { CloseButton } from '../close-button';
 import { ArrowSvg } from './arrow-svg';
-import { GlassBackdrop } from './glass-backdrop';
 import {
   PopoverAnimationProvider,
   usePopoverAnimation,
@@ -258,14 +256,52 @@ const PopoverContentPopover = forwardRef<
       className,
     });
 
-    const isGlassTheme = Boolean(useCSSVariable('--is-glass-theme'));
+    const { isDrivenEntering, rEnteringStyle, entering, exiting } =
+      usePopupPopoverContentAnimation({
+        placement,
+        offset,
+        animation,
+        isReady,
+      });
 
-    const { entering, exiting } = usePopupPopoverContentAnimation({
-      placement,
-      offset,
-      animation,
-    });
+    // Single-mount path: the content subtree is rendered once and animated in
+    // via a shared value once it has been measured and positioned (`isReady`).
+    if (isDrivenEntering) {
+      return (
+        <PopoverContentContext value={{ placement }}>
+          <Animated.View
+            exiting={exiting}
+            collapsable={false}
+            pointerEvents="box-none"
+          >
+            <AnimatedContent
+              ref={ref}
+              placement={placement}
+              align={align}
+              avoidCollisions={avoidCollisions}
+              offset={offset}
+              alignOffset={alignOffset}
+              insets={insets}
+              collapsable={false}
+              pointerEvents={isReady ? undefined : 'none'}
+              className={contentClassName}
+              style={[
+                popoverStyleSheet.contentContainer,
+                style,
+                rEnteringStyle,
+              ]}
+              {...props}
+            >
+              {children}
+            </AnimatedContent>
+          </Animated.View>
+        </PopoverContentContext>
+      );
+    }
 
+    // Fallback path: a custom entering Keyframe was provided, which must fire
+    // on mount, so a hidden probe measures the content before the visible node
+    // mounts and plays the Keyframe.
     return (
       <PopoverContentContext value={{ placement }}>
         {isReady && (
@@ -283,9 +319,6 @@ const PopoverContentPopover = forwardRef<
             style={[popoverStyleSheet.contentContainer, style]}
             {...props}
           >
-            {isGlassTheme ? (
-              <GlassBackdrop className="overflow-hidden rounded-3xl" />
-            ) : null}
             {children}
           </AnimatedContent>
         )}

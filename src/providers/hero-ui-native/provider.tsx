@@ -5,6 +5,7 @@ import { useDevInfo } from '../../helpers/internal/hooks';
 import { PortalHost } from '../../primitives/portal';
 import { GlobalAnimationSettingsProvider } from '../animation-settings';
 import { TextComponentProvider } from '../text-component/provider';
+import { TextInputComponentProvider } from '../text-input-component/provider';
 import { ToastProvider } from '../toast/provider';
 import type { HeroUINativeProviderProps } from './types';
 
@@ -19,6 +20,7 @@ import type { HeroUINativeProviderProps } from './types';
  * Currently provides:
  * - Global animation settings
  * - Global text component configuration
+ * - Global text input component configuration
  * - Toast notification system
  * - Portal management for overlays
  *
@@ -31,7 +33,7 @@ const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   children,
   config = {},
 }) => {
-  const { textProps, toast, animation, devInfo } = config;
+  const { textProps, textInputProps, toast, animation, devInfo } = config;
 
   useDevInfo(devInfo);
 
@@ -47,17 +49,19 @@ const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
     >
       <GlobalAnimationSettingsProvider animation={animation}>
         <TextComponentProvider value={{ textProps }}>
-          {isToastEnabled ? (
-            <ToastProvider {...toastProps}>
-              {children}
-              <PortalHost />
-            </ToastProvider>
-          ) : (
-            <>
-              {children}
-              <PortalHost />
-            </>
-          )}
+          <TextInputComponentProvider value={{ textInputProps }}>
+            {isToastEnabled ? (
+              <ToastProvider {...toastProps}>
+                {children}
+                <PortalHost />
+              </ToastProvider>
+            ) : (
+              <>
+                {children}
+                <PortalHost />
+              </>
+            )}
+          </TextInputComponentProvider>
         </TextComponentProvider>
       </GlobalAnimationSettingsProvider>
     </SafeAreaListener>

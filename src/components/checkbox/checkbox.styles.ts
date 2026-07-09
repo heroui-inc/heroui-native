@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { tv } from 'tailwind-variants';
+import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 /**
@@ -22,7 +22,7 @@ import { combineStyles } from '../../helpers/internal/utils';
  * set `isAnimatedStyleActive={false}` on `Checkbox`.
  */
 const root = tv({
-  base: 'size-6 rounded-lg overflow-hidden',
+  base: 'size-6 rounded-lg border-field-width border-field-border overflow-hidden',
   variants: {
     variant: {
       primary: 'bg-field shadow-field',
@@ -38,7 +38,7 @@ const root = tv({
     },
     isInvalid: {
       true: 'border border-danger',
-      false: 'border-0',
+      false: '',
     },
   },
   compoundVariants: [

@@ -11,7 +11,7 @@
 
   /* Base radius */
   --radius: 0.5rem;
-  --field-radius: calc(var(--radius) * 1.5);
+  --field-radius: calc(var(--radius) * 1.75);
 
   /* Opacity */
   --opacity-disabled: 0.5;

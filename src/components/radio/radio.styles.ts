@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { tv } from 'tailwind-variants';
+import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 /** Root item layout style */
@@ -9,7 +9,7 @@ const root = tv({
 
 /** Indicator container style (the radio circle) */
 const indicator = tv({
-  base: 'size-6 rounded-full border border-field-border items-center justify-center overflow-hidden',
+  base: 'size-6 rounded-full border-field-width border-field-border items-center justify-center overflow-hidden',
   variants: {
     variant: {
       primary: 'bg-field shadow-field',
@@ -28,7 +28,7 @@ const indicator = tv({
     {
       isInvalid: true,
       isSelected: true,
-      className: 'bg-danger border-danger',
+      className: 'bg-danger',
     },
   ],
   defaultVariants: {

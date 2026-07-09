@@ -10,7 +10,7 @@ import type { HeroUINativeConfig } from '../hero-ui-native/types';
  */
 export type HeroUINativeConfigRaw = Pick<
   HeroUINativeConfig,
-  'textProps' | 'animation' | 'devInfo'
+  'textProps' | 'textInputProps' | 'animation' | 'devInfo'
 >;
 
 /**

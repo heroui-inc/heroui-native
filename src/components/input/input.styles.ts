@@ -1,17 +1,16 @@
 import { StyleSheet } from 'react-native';
-import { tv } from 'tailwind-variants';
+import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const input = tv({
-  base: 'min-h-12 px-3 rounded-2xl text-foreground font-normal border-[1.5px] focus:border-accent',
+  base: 'min-h-12 px-3 text-foreground font-normal rounded-field border-field-width border-field-border ios:outline-2 ios:outline-transparent ios:focus:outline-accent android:border-[1.5px] android:border-transparent android:focus:border-accent',
   variants: {
     variant: {
-      primary:
-        'bg-field border-field-border ios:shadow-field android:shadow-sm',
-      secondary: 'bg-default border-default',
+      primary: 'bg-field ios:shadow-field android:shadow-sm',
+      secondary: 'bg-default',
     },
     isInvalid: {
-      true: 'border-danger focus:border-danger',
+      true: 'ios:outline-danger ios:focus:outline-danger android:border-danger android:focus:border-danger',
       false: '',
     },
     isDisabled: {

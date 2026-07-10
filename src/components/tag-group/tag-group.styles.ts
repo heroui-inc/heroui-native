@@ -26,7 +26,7 @@ const tag = tv({
       true: 'tag-group__tag--is-selected',
     },
     isDisabled: {
-      true: 'disabled:opacity-disabled disabled:pointer-events-none',
+      true: 'disabled:element-disabled',
     },
   },
   defaultVariants: {

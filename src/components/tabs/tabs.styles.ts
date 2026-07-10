@@ -50,7 +50,7 @@ const trigger = tv({
   base: 'tabs__trigger',
   variants: {
     isDisabled: {
-      true: 'disabled:opacity-disabled disabled:pointer-events-none',
+      true: 'disabled:element-disabled',
       false: '',
     },
   },

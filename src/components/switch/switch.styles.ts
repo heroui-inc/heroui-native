@@ -27,7 +27,7 @@ const root = tv({
   base: 'switch__root',
   variants: {
     isDisabled: {
-      true: 'disabled:opacity-disabled disabled:pointer-events-none',
+      true: 'disabled:element-disabled',
       false: '',
     },
   },

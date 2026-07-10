@@ -6,3 +6,8 @@
     width: hairlineWidth();
   }
 }
+
+@utility element-disabled {
+  opacity: var(--opacity-disabled);
+  pointer-events: none;
+}

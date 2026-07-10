@@ -42,7 +42,7 @@ const root = tv({
       true: 'button__root--is-icon-only',
     },
     isDisabled: {
-      true: 'disabled:opacity-disabled disabled:pointer-events-none',
+      true: 'disabled:element-disabled',
     },
   },
   defaultVariants: {

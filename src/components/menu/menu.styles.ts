@@ -66,7 +66,7 @@ const item = tv({
   base: 'menu__item',
   variants: {
     isDisabled: {
-      true: 'disabled:opacity-disabled disabled:pointer-events-none',
+      true: 'disabled:element-disabled',
     },
     isOutsideSubMenuOnOpen: {
       true: 'menu__item--is-outside-sub-menu-on-open',

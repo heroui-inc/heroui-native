@@ -1,0 +1,93 @@
+.tabs__root {
+  flex-direction: column;
+  gap: calc(var(--spacing) * 2);
+}
+
+.tabs__list {
+  align-self: flex-start;
+  flex-direction: row;
+  align-items: center;
+  gap: calc(var(--spacing) * 1);
+}
+
+.tabs__list--variant-primary {
+  padding: 3px;
+  border-radius: var(--radius-3xl);
+  background-color: var(--color-default);
+}
+
+.tabs__list--variant-secondary {
+  padding: 0;
+  border-bottom-width: 1px;
+  border-color: var(--color-border);
+}
+
+.tabs__scroll-view--variant-primary {
+  margin-top: -3px;
+  margin-bottom: -3px;
+  border-radius: var(--radius-3xl);
+}
+
+.tabs__scroll-view-content-container--variant-primary {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+.tabs__trigger {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-left: calc(var(--spacing) * 3);
+  padding-right: calc(var(--spacing) * 3);
+  padding-top: calc(var(--spacing) * 1.5);
+  padding-bottom: calc(var(--spacing) * 1.5);
+  gap: calc(var(--spacing) * 1.5);
+}
+
+.tabs__label {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-family: var(--font-medium);
+}
+
+.tabs__label--is-selected {
+  color: var(--color-segment-foreground);
+}
+
+.tabs__label--is-selected-false {
+  color: var(--color-muted);
+}
+
+/*
+ * The primary variant's `shadow-sm shadow-surface/25` utilities stay in
+ * tabs.styles.ts because the shadow-size + shadow-color-opacity combination
+ * has no direct single-declaration CSS equivalent.
+ */
+.tabs__indicator {
+  position: absolute;
+  left: 0;
+}
+
+.tabs__indicator--variant-primary {
+  border-radius: var(--radius-3xl);
+  background-color: var(--color-segment);
+}
+
+.tabs__indicator--variant-secondary {
+  bottom: 0;
+  border-bottom-width: 2px;
+  border-color: var(--color-accent);
+}
+
+.tabs__indicator--variant-primary--is-scroll-view {
+  top: 3px;
+}
+
+.tabs__separator {
+  width: 1px;
+  height: 60%;
+  background-color: color-mix(in oklab, var(--color-separator) 30%, transparent);
+  align-self: center;
+}

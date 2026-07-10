@@ -1,0 +1,12 @@
+.card__label {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg--line-height);
+  color: var(--color-foreground);
+  font-family: var(--font-medium);
+}
+
+.card__description {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  color: var(--color-muted);
+}

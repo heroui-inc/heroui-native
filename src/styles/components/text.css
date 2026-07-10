@@ -1,0 +1,125 @@
+.text__root {
+  font-family: var(--font-normal);
+}
+
+/* Root - type */
+
+.text__root--type-h1 {
+  font-size: var(--text-4xl);
+  line-height: var(--text-4xl--line-height);
+  font-family: var(--font-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.text__root--type-h2 {
+  font-size: var(--text-3xl);
+  line-height: var(--text-3xl--line-height);
+  font-family: var(--font-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.text__root--type-h3 {
+  font-size: var(--text-2xl);
+  line-height: var(--text-2xl--line-height);
+  font-family: var(--font-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.text__root--type-h4 {
+  font-size: var(--text-xl);
+  line-height: var(--text-xl--line-height);
+  font-family: var(--font-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.text__root--type-h5 {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg--line-height);
+  font-family: var(--font-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.text__root--type-h6 {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-family: var(--font-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.text__root--type-body {
+  font-size: var(--text-base);
+  line-height: calc(var(--spacing) * 7);
+}
+
+.text__root--type-body-sm {
+  font-size: var(--text-sm);
+  line-height: calc(var(--spacing) * 6);
+}
+
+.text__root--type-body-xs {
+  font-size: var(--text-xs);
+  line-height: calc(var(--spacing) * 5);
+}
+
+.text__root--type-code {
+  align-self: flex-start;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  border-radius: var(--radius-md);
+  background-color: var(--color-default);
+  padding-left: calc(var(--spacing) * 1.5);
+  padding-right: calc(var(--spacing) * 1.5);
+  padding-top: calc(var(--spacing) * 0.5);
+  padding-bottom: calc(var(--spacing) * 0.5);
+}
+
+/*
+ * Root - align
+ * The `rtl:` flipped alignment for start/end stays as Tailwind utilities in
+ * text.styles.ts because the uniwind CSS parser has no rtl variant for
+ * custom CSS classes.
+ */
+
+.text__root--align-start {
+  text-align: left;
+}
+
+.text__root--align-center {
+  text-align: center;
+}
+
+.text__root--align-end {
+  text-align: right;
+}
+
+.text__root--align-justify {
+  text-align: justify;
+}
+
+/* Root - color */
+
+.text__root--color-default {
+  color: var(--color-foreground);
+}
+
+.text__root--color-muted {
+  color: var(--color-muted);
+}
+
+/* Root - weight (declared after type so an explicit weight wins the cascade) */
+
+.text__root--weight-normal {
+  font-family: var(--font-normal);
+}
+
+.text__root--weight-medium {
+  font-family: var(--font-medium);
+}
+
+.text__root--weight-semibold {
+  font-family: var(--font-semibold);
+}
+
+.text__root--weight-bold {
+  font-family: var(--font-bold);
+}

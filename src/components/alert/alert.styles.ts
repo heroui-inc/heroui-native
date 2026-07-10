@@ -6,35 +6,35 @@ import { combineStyles } from '../../helpers/internal/utils';
  * Root style definition for the Alert container
  */
 const root = tv({
-  base: 'p-3 flex-row gap-3 rounded-3xl bg-surface shadow-surface',
+  base: 'alert__root',
 });
 
 /**
  * Indicator style definition for the status icon container
  */
 const indicator = tv({
-  base: 'pt-[3.5px]',
+  base: 'alert__indicator',
 });
 
 /**
  * Content style definition for the title/description wrapper
  */
 const content = tv({
-  base: 'flex-1',
+  base: 'alert__content',
 });
 
 /**
  * Title style definition with status-based color variants
  */
 const title = tv({
-  base: 'text-base font-medium',
+  base: 'alert__title',
   variants: {
     status: {
-      default: 'text-foreground',
-      accent: 'text-accent-soft-foreground',
-      success: 'text-success-soft-foreground',
-      warning: 'text-warning-soft-foreground',
-      danger: 'text-danger-soft-foreground',
+      default: 'alert__title--status-default',
+      accent: 'alert__title--status-accent',
+      success: 'alert__title--status-success',
+      warning: 'alert__title--status-warning',
+      danger: 'alert__title--status-danger',
     },
   },
   defaultVariants: {
@@ -46,7 +46,7 @@ const title = tv({
  * Description style definition
  */
 const description = tv({
-  base: 'text-sm text-muted',
+  base: 'alert__description',
 });
 
 export const alertClassNames = combineStyles({

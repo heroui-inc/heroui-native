@@ -1,0 +1,78 @@
+.input-otp__root {
+  flex-direction: row;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+}
+
+.input-otp__group {
+  flex-direction: row;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+}
+
+.input-otp__slot {
+  height: calc(var(--spacing) * 12);
+  width: calc(var(--spacing) * 11);
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-field);
+  border-width: var(--border-width-field-width);
+  border-color: var(--color-field-border);
+  overflow: hidden;
+}
+
+/* Slot - variant */
+
+.input-otp__slot--variant-primary {
+  background-color: var(--color-field);
+  box-shadow: var(--shadow-field);
+}
+
+.input-otp__slot--variant-secondary {
+  background-color: var(--color-default);
+}
+
+/* Slot - booleans (invalid declared after active so it wins the cascade) */
+
+.input-otp__slot--is-active {
+  outline-width: 2px;
+  outline-color: var(--color-accent);
+}
+
+.input-otp__slot--is-invalid {
+  outline-width: 2px;
+  outline-color: var(--color-danger);
+}
+
+.input-otp__slot--is-disabled {
+  opacity: var(--opacity-disabled);
+  pointer-events: none;
+}
+
+.input-otp__slot-placeholder {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg--line-height);
+  font-family: var(--font-semibold);
+  color: color-mix(in oklab, var(--color-field-placeholder) 50%, transparent);
+}
+
+.input-otp__slot-value {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg--line-height);
+  font-family: var(--font-semibold);
+  color: var(--color-foreground);
+}
+
+.input-otp__slot-caret {
+  position: absolute;
+  width: calc(var(--spacing) * 0.5);
+  border-radius: 9999px;
+  background-color: var(--color-field-placeholder);
+}
+
+.input-otp__separator {
+  height: calc(var(--spacing) * 0.5);
+  width: calc(var(--spacing) * 2);
+  border-radius: 9999px;
+  background-color: color-mix(in oklab, var(--color-separator) 50%, transparent);
+}

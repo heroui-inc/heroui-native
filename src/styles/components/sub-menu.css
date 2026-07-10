@@ -1,0 +1,50 @@
+.sub-menu__root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--color-overlay);
+  border-radius: var(--radius-3xl);
+  overflow: hidden;
+}
+
+.sub-menu__root--is-open {
+  outline-style: solid;
+  outline-width: 1px;
+  outline-color: color-mix(in oklab, var(--color-border) 20%, transparent);
+  box-shadow: var(--shadow-overlay);
+}
+
+.sub-menu__trigger {
+  flex-direction: row;
+  align-items: center;
+  gap: calc(var(--spacing) * 2.5);
+  padding-left: calc(var(--spacing) * 2.5);
+  padding-right: calc(var(--spacing) * 2.5);
+  padding-top: calc(var(--spacing) * 2);
+  padding-bottom: calc(var(--spacing) * 2);
+}
+
+.sub-menu__trigger--is-disabled {
+  opacity: var(--opacity-disabled);
+  pointer-events: none;
+}
+
+.sub-menu__trigger--is-other-sub-menu-open {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.sub-menu__trigger-indicator {
+  align-items: center;
+  justify-content: center;
+}
+
+.sub-menu__content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding-left: calc(var(--spacing) * 1.5);
+  padding-right: calc(var(--spacing) * 1.5);
+  padding-bottom: calc(var(--spacing) * 3);
+}

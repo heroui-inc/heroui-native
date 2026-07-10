@@ -1,9 +1,3 @@
-/*
- * Popover BEM classes (consumed by popover.styles.ts via tv()).
- * Uses bridged Tailwind tokens so themes can override structure via
- * same-named classes imported after heroui-native/styles.
- */
-
 .popover__portal {
   position: absolute;
   top: 0;

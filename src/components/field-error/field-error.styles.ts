@@ -4,12 +4,12 @@ import { combineStyles } from '../../helpers/internal/utils';
 const root = tv({
   slots: {
     container: '',
-    text: 'text-sm text-danger',
+    text: 'field-error__text',
   },
   variants: {
     isInsideField: {
       true: {
-        container: 'px-1.5',
+        container: 'field-error__container--is-inside-field',
         text: '',
       },
     },

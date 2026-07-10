@@ -2,12 +2,12 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'items-center justify-center',
+  base: 'spinner__root',
   variants: {
     size: {
-      sm: 'size-4',
-      md: 'size-6',
-      lg: 'size-8',
+      sm: 'spinner__root--size-sm',
+      md: 'spinner__root--size-md',
+      lg: 'spinner__root--size-lg',
     },
   },
   defaultVariants: {
@@ -35,7 +35,7 @@ const root = tv({
  * set `isAnimatedStyleActive={false}` on `Spinner.Indicator`.
  */
 const indicator = tv({
-  base: 'size-full items-center justify-center',
+  base: 'spinner__indicator',
 });
 
 export const spinnerClassNames = combineStyles({

@@ -1,0 +1,189 @@
+.chip__root {
+  align-self: flex-start;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 1);
+  overflow: hidden;
+}
+
+/* Root - variant */
+
+.chip__root--variant-secondary {
+  background-color: var(--color-default);
+}
+
+.chip__root--variant-tertiary {
+  background-color: transparent;
+}
+
+/* Root - size */
+
+.chip__root--size-sm {
+  padding-left: calc(var(--spacing) * 2);
+  padding-right: calc(var(--spacing) * 2);
+  padding-top: calc(var(--spacing) * 0.5);
+  padding-bottom: calc(var(--spacing) * 0.5);
+  border-radius: var(--radius-xl);
+}
+
+.chip__root--size-md {
+  padding-left: calc(var(--spacing) * 3);
+  padding-right: calc(var(--spacing) * 3);
+  padding-top: calc(var(--spacing) * 1);
+  padding-bottom: calc(var(--spacing) * 1);
+  border-radius: var(--radius-2xl);
+}
+
+.chip__root--size-lg {
+  padding-left: calc(var(--spacing) * 4);
+  padding-right: calc(var(--spacing) * 4);
+  padding-top: calc(var(--spacing) * 1.5);
+  padding-bottom: calc(var(--spacing) * 1.5);
+  border-radius: var(--radius-3xl);
+}
+
+/* Root - variant x color compounds */
+
+.chip__root--variant-primary--color-accent {
+  background-color: var(--color-accent);
+}
+
+.chip__root--variant-primary--color-default {
+  background-color: var(--color-default);
+}
+
+.chip__root--variant-primary--color-success {
+  background-color: var(--color-success);
+}
+
+.chip__root--variant-primary--color-warning {
+  background-color: var(--color-warning);
+}
+
+.chip__root--variant-primary--color-danger {
+  background-color: var(--color-danger);
+}
+
+.chip__root--variant-soft--color-accent {
+  background-color: var(--color-accent-soft);
+}
+
+.chip__root--variant-soft--color-default {
+  background-color: var(--color-default);
+}
+
+.chip__root--variant-soft--color-success {
+  background-color: var(--color-success-soft);
+}
+
+.chip__root--variant-soft--color-warning {
+  background-color: var(--color-warning-soft);
+}
+
+.chip__root--variant-soft--color-danger {
+  background-color: var(--color-danger-soft);
+}
+
+.chip__label {
+  font-family: var(--font-medium);
+}
+
+/* Label - size */
+
+.chip__label--size-sm {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+}
+
+.chip__label--size-md {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+}
+
+.chip__label--size-lg {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+}
+
+/* Label - variant x color compounds */
+
+.chip__label--variant-primary--color-accent {
+  color: var(--color-accent-foreground);
+}
+
+.chip__label--variant-primary--color-default {
+  color: var(--color-default-foreground);
+}
+
+.chip__label--variant-primary--color-success {
+  color: var(--color-success-foreground);
+}
+
+.chip__label--variant-primary--color-warning {
+  color: var(--color-warning-foreground);
+}
+
+.chip__label--variant-primary--color-danger {
+  color: var(--color-danger-foreground);
+}
+
+.chip__label--variant-secondary--color-accent {
+  color: var(--color-accent-soft-foreground);
+}
+
+.chip__label--variant-secondary--color-default {
+  color: var(--color-default-soft-foreground);
+}
+
+.chip__label--variant-secondary--color-success {
+  color: var(--color-success-soft-foreground);
+}
+
+.chip__label--variant-secondary--color-warning {
+  color: var(--color-warning-soft-foreground);
+}
+
+.chip__label--variant-secondary--color-danger {
+  color: var(--color-danger-soft-foreground);
+}
+
+.chip__label--variant-tertiary--color-accent {
+  color: var(--color-accent-soft-foreground);
+}
+
+.chip__label--variant-tertiary--color-default {
+  color: var(--color-default-soft-foreground);
+}
+
+.chip__label--variant-tertiary--color-success {
+  color: var(--color-success-soft-foreground);
+}
+
+.chip__label--variant-tertiary--color-warning {
+  color: var(--color-warning-soft-foreground);
+}
+
+.chip__label--variant-tertiary--color-danger {
+  color: var(--color-danger-soft-foreground);
+}
+
+.chip__label--variant-soft--color-accent {
+  color: var(--color-accent-soft-foreground);
+}
+
+.chip__label--variant-soft--color-default {
+  color: var(--color-default-soft-foreground);
+}
+
+.chip__label--variant-soft--color-success {
+  color: var(--color-success-soft-foreground);
+}
+
+.chip__label--variant-soft--color-warning {
+  color: var(--color-warning-soft-foreground);
+}
+
+.chip__label--variant-soft--color-danger {
+  color: var(--color-danger-soft-foreground);
+}

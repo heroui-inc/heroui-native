@@ -1,0 +1,32 @@
+.search-field__root {
+  gap: calc(var(--spacing) * 1.5);
+}
+
+.search-field__group {
+  flex-direction: row;
+  align-items: center;
+}
+
+.search-field__search-icon {
+  position: absolute;
+  left: calc(var(--spacing) * 3);
+  z-index: 10;
+}
+
+/*
+ * Only SearchField-specific overrides. Base input styling comes from the
+ * Input component (.input__input). Declared after input.css in the index so
+ * these paddings win the cascade.
+ */
+.search-field__input {
+  flex: 1;
+  padding-left: calc(var(--spacing) * 9);
+  padding-right: calc(var(--spacing) * 12);
+}
+
+.search-field__clear-button {
+  position: absolute;
+  right: calc(var(--spacing) * 3);
+  width: calc(var(--spacing) * 6);
+  height: calc(var(--spacing) * 6);
+}

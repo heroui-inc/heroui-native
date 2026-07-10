@@ -4,8 +4,8 @@ import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
   slots: {
-    container: 'flex-col overflow-hidden',
-    separator: 'h-hairline bg-separator',
+    container: 'accordion__root-container',
+    separator: 'accordion__root-separator',
   },
   variants: {
     variant: {
@@ -14,9 +14,8 @@ const root = tv({
         separator: '',
       },
       surface: {
-        container:
-          'bg-surface rounded-3xl border border-surface shadow-surface',
-        separator: 'mx-3',
+        container: 'accordion__root-container--variant-surface',
+        separator: 'accordion__root-separator--variant-surface',
       },
     },
   },
@@ -26,15 +25,15 @@ const root = tv({
 });
 
 const item = tv({
-  base: 'flex-col overflow-hidden',
+  base: 'accordion__item',
 });
 
 const trigger = tv({
-  base: 'flex-row items-center justify-between py-4 px-3 gap-4 bg-transparent z-10',
+  base: 'accordion__trigger',
   variants: {
     variant: {
       default: '',
-      surface: 'px-5',
+      surface: 'accordion__trigger--variant-surface',
     },
   },
   defaultVariants: {
@@ -62,15 +61,15 @@ const trigger = tv({
  * set `isAnimatedStyleActive={false}` on `Accordion.Indicator`.
  */
 const indicator = tv({
-  base: 'items-center justify-center',
+  base: 'accordion__indicator',
 });
 
 const content = tv({
-  base: 'px-3 pb-4 bg-transparent',
+  base: 'accordion__content',
   variants: {
     variant: {
       default: '',
-      surface: 'px-5',
+      surface: 'accordion__content--variant-surface',
     },
   },
   defaultVariants: {

@@ -1,0 +1,10 @@
+.field-error__container--is-inside-field {
+  padding-left: calc(var(--spacing) * 1.5);
+  padding-right: calc(var(--spacing) * 1.5);
+}
+
+.field-error__text {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  color: var(--color-danger);
+}

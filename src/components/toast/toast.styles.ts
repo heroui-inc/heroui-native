@@ -36,18 +36,18 @@ import { combineStyles } from '../../helpers/internal/utils';
  * set `isAnimatedStyleActive={false}` on `Toast.Root`.
  */
 const root = tv({
-  base: 'bg-surface rounded-3xl p-4 shadow-overlay overflow-hidden',
+  base: 'toast__root',
 });
 
 const label = tv({
-  base: 'text-base font-medium',
+  base: 'toast__label',
   variants: {
     variant: {
-      default: 'text-foreground',
-      accent: 'text-accent-soft-foreground',
-      success: 'text-success-soft-foreground',
-      warning: 'text-warning-soft-foreground',
-      danger: 'text-danger-soft-foreground',
+      default: 'toast__label--variant-default',
+      accent: 'toast__label--variant-accent',
+      success: 'toast__label--variant-success',
+      warning: 'toast__label--variant-warning',
+      danger: 'toast__label--variant-danger',
     },
   },
   defaultVariants: {
@@ -56,7 +56,7 @@ const label = tv({
 });
 
 const description = tv({
-  base: 'text-sm text-muted',
+  base: 'toast__description',
 });
 
 const action = tv({
@@ -65,8 +65,8 @@ const action = tv({
     variant: {
       default: '',
       accent: '',
-      success: 'bg-success',
-      warning: 'bg-warning',
+      success: 'toast__action--variant-success',
+      warning: 'toast__action--variant-warning',
       danger: '',
     },
   },

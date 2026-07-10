@@ -3,28 +3,28 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'flex-row items-center gap-2',
+  base: 'input-otp__root',
 });
 
 const group = tv({
-  base: 'flex-row items-center gap-2',
+  base: 'input-otp__group',
 });
 
 const slot = tv({
-  base: 'h-12 w-11 items-center justify-center rounded-field border-field-width border-field-border overflow-hidden',
+  base: 'input-otp__slot',
   variants: {
     variant: {
-      primary: 'bg-field shadow-field',
-      secondary: 'bg-default',
+      primary: 'input-otp__slot--variant-primary',
+      secondary: 'input-otp__slot--variant-secondary',
     },
     isActive: {
-      true: 'outline-2 outline-accent',
+      true: 'input-otp__slot--is-active',
     },
     isInvalid: {
-      true: 'outline-2 outline-danger',
+      true: 'input-otp__slot--is-invalid',
     },
     isDisabled: {
-      true: 'opacity-disabled pointer-events-none',
+      true: 'input-otp__slot--is-disabled',
     },
   },
   defaultVariants: {
@@ -36,19 +36,19 @@ const slot = tv({
 });
 
 const slotPlaceholder = tv({
-  base: 'text-lg font-semibold text-field-placeholder/50',
+  base: 'input-otp__slot-placeholder',
 });
 
 const slotValue = tv({
-  base: 'text-lg font-semibold text-foreground',
+  base: 'input-otp__slot-value',
 });
 
 const slotCaret = tv({
-  base: 'absolute w-0.5 rounded-full bg-field-placeholder',
+  base: 'input-otp__slot-caret',
 });
 
 const separator = tv({
-  base: 'h-0.5 w-2 rounded-full bg-separator/50',
+  base: 'input-otp__separator',
 });
 
 export const inputOTPClassNames = combineStyles({

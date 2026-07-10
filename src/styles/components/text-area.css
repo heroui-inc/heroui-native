@@ -1,0 +1,5 @@
+.text-area__root {
+  height: calc(var(--spacing) * 32);
+  padding-top: calc(var(--spacing) * 2);
+  padding-bottom: calc(var(--spacing) * 2);
+}

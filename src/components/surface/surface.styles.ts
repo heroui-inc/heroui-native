@@ -3,13 +3,13 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'p-4 rounded-3xl shadow-surface overflow-hidden',
+  base: 'surface__root',
   variants: {
     variant: {
-      default: 'bg-surface',
-      secondary: 'bg-surface-secondary',
-      tertiary: 'bg-surface-tertiary',
-      transparent: 'bg-transparent shadow-none',
+      default: 'surface__root--variant-default',
+      secondary: 'surface__root--variant-secondary',
+      tertiary: 'surface__root--variant-tertiary',
+      transparent: 'surface__root--variant-transparent',
     },
   },
   defaultVariants: {

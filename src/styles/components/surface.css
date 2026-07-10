@@ -1,0 +1,25 @@
+.surface__root {
+  padding: calc(var(--spacing) * 4);
+  border-radius: var(--radius-3xl);
+  box-shadow: var(--shadow-surface);
+  overflow: hidden;
+}
+
+/* Root - variant */
+
+.surface__root--variant-default {
+  background-color: var(--color-surface);
+}
+
+.surface__root--variant-secondary {
+  background-color: var(--color-surface-secondary);
+}
+
+.surface__root--variant-tertiary {
+  background-color: var(--color-surface-tertiary);
+}
+
+.surface__root--variant-transparent {
+  background-color: transparent;
+  box-shadow: 0 0 #0000;
+}

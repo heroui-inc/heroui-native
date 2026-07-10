@@ -4,23 +4,23 @@ import { combineStyles } from '../../helpers/internal/utils';
 
 /** Root item layout style */
 const root = tv({
-  base: 'flex-row items-center justify-between gap-3',
+  base: 'radio__root',
 });
 
 /** Indicator container style (the radio circle) */
 const indicator = tv({
-  base: 'size-6 rounded-full border-field-width border-field-border items-center justify-center overflow-hidden',
+  base: 'radio__indicator',
   variants: {
     variant: {
-      primary: 'bg-field shadow-field',
-      secondary: 'bg-default',
+      primary: 'radio__indicator--variant-primary',
+      secondary: 'radio__indicator--variant-secondary',
     },
     isSelected: {
-      true: 'bg-accent',
+      true: 'radio__indicator--is-selected',
       false: '',
     },
     isInvalid: {
-      true: 'bg-transparent border-danger',
+      true: 'radio__indicator--is-invalid',
       false: '',
     },
   },
@@ -28,7 +28,7 @@ const indicator = tv({
     {
       isInvalid: true,
       isSelected: true,
-      className: 'bg-danger',
+      className: 'radio__indicator--is-invalid--is-selected',
     },
   ],
   defaultVariants: {
@@ -58,11 +58,11 @@ const indicator = tv({
  * set `isAnimatedStyleActive={false}` on `Radio.IndicatorThumb`.
  */
 const indicatorThumb = tv({
-  base: 'size-2.5 rounded-full bg-accent-foreground shadow-field',
+  base: 'radio__indicator-thumb',
   variants: {
     isSelected: {
-      true: 'opacity-100',
-      false: 'opacity-0',
+      true: 'radio__indicator-thumb--is-selected',
+      false: 'radio__indicator-thumb--is-selected-false',
     },
   },
 });

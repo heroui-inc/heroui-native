@@ -3,36 +3,40 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 import { CODE_FONT_FAMILY } from './text.constants';
 
+/**
+ * @note The `rtl:` flipped alignment utilities for `align` stay here because
+ * the uniwind CSS parser has no rtl variant for custom CSS classes.
+ */
 const root = tv({
-  base: 'font-normal',
+  base: 'text__root',
   variants: {
     type: {
-      'h1': 'text-4xl font-semibold tracking-tight',
-      'h2': 'text-3xl font-semibold tracking-tight',
-      'h3': 'text-2xl font-semibold tracking-tight',
-      'h4': 'text-xl font-semibold tracking-tight',
-      'h5': 'text-lg font-semibold tracking-tight',
-      'h6': 'text-base font-semibold tracking-tight',
-      'body': 'text-base leading-7',
-      'body-sm': 'text-sm leading-6',
-      'body-xs': 'text-xs leading-5',
-      'code': 'self-start text-sm rounded-md bg-default px-1.5 py-0.5',
+      'h1': 'text__root--type-h1',
+      'h2': 'text__root--type-h2',
+      'h3': 'text__root--type-h3',
+      'h4': 'text__root--type-h4',
+      'h5': 'text__root--type-h5',
+      'h6': 'text__root--type-h6',
+      'body': 'text__root--type-body',
+      'body-sm': 'text__root--type-body-sm',
+      'body-xs': 'text__root--type-body-xs',
+      'code': 'text__root--type-code',
     },
     align: {
-      start: 'text-left rtl:text-right',
-      center: 'text-center',
-      end: 'text-right rtl:text-left',
-      justify: 'text-justify',
+      start: 'text__root--align-start rtl:text-right',
+      center: 'text__root--align-center',
+      end: 'text__root--align-end rtl:text-left',
+      justify: 'text__root--align-justify',
     },
     color: {
-      default: 'text-foreground',
-      muted: 'text-muted',
+      default: 'text__root--color-default',
+      muted: 'text__root--color-muted',
     },
     weight: {
-      normal: 'font-normal',
-      medium: 'font-medium',
-      semibold: 'font-semibold',
-      bold: 'font-bold',
+      normal: 'text__root--weight-normal',
+      medium: 'text__root--weight-medium',
+      semibold: 'text__root--weight-semibold',
+      bold: 'text__root--weight-bold',
     },
   },
   defaultVariants: {

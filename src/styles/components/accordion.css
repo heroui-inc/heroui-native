@@ -17,8 +17,7 @@
 }
 
 .accordion__root-separator--variant-surface {
-  margin-left: calc(var(--spacing) * 3);
-  margin-right: calc(var(--spacing) * 3);
+  margin-inline: calc(var(--spacing) * 3);
 }
 
 .accordion__item {
@@ -30,18 +29,15 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding-top: calc(var(--spacing) * 4);
-  padding-bottom: calc(var(--spacing) * 4);
-  padding-left: calc(var(--spacing) * 3);
-  padding-right: calc(var(--spacing) * 3);
+  padding-block: calc(var(--spacing) * 4);
+  padding-inline: calc(var(--spacing) * 3);
   gap: calc(var(--spacing) * 4);
   background-color: transparent;
   z-index: 10;
 }
 
 .accordion__trigger--variant-surface {
-  padding-left: calc(var(--spacing) * 5);
-  padding-right: calc(var(--spacing) * 5);
+  padding-inline: calc(var(--spacing) * 5);
 }
 
 .accordion__indicator {
@@ -50,13 +46,11 @@
 }
 
 .accordion__content {
-  padding-left: calc(var(--spacing) * 3);
-  padding-right: calc(var(--spacing) * 3);
+  padding-inline: calc(var(--spacing) * 3);
   padding-bottom: calc(var(--spacing) * 4);
   background-color: transparent;
 }
 
 .accordion__content--variant-surface {
-  padding-left: calc(var(--spacing) * 5);
-  padding-right: calc(var(--spacing) * 5);
+  padding-inline: calc(var(--spacing) * 5);
 }

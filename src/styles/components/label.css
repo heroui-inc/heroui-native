@@ -4,8 +4,7 @@
 }
 
 .label__root--is-inside-field {
-  padding-left: calc(var(--spacing) * 1.5);
-  padding-right: calc(var(--spacing) * 1.5);
+  padding-inline: calc(var(--spacing) * 1.5);
 }
 
 .label__root--is-inside-control-field {

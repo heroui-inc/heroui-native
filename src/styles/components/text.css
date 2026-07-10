@@ -67,10 +67,8 @@
   line-height: var(--text-sm--line-height);
   border-radius: var(--radius-md);
   background-color: var(--color-default);
-  padding-left: calc(var(--spacing) * 1.5);
-  padding-right: calc(var(--spacing) * 1.5);
-  padding-top: calc(var(--spacing) * 0.5);
-  padding-bottom: calc(var(--spacing) * 0.5);
+  padding-inline: calc(var(--spacing) * 1.5);
+  padding-block: calc(var(--spacing) * 0.5);
 }
 
 /*

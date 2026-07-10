@@ -19,10 +19,8 @@
   flex-direction: row;
   align-items: center;
   gap: calc(var(--spacing) * 2.5);
-  padding-left: calc(var(--spacing) * 2.5);
-  padding-right: calc(var(--spacing) * 2.5);
-  padding-top: calc(var(--spacing) * 2);
-  padding-bottom: calc(var(--spacing) * 2);
+  padding-inline: calc(var(--spacing) * 2.5);
+  padding-block: calc(var(--spacing) * 2);
 }
 
 .sub-menu__trigger--is-disabled {
@@ -44,7 +42,6 @@
   position: absolute;
   left: 0;
   right: 0;
-  padding-left: calc(var(--spacing) * 1.5);
-  padding-right: calc(var(--spacing) * 1.5);
+  padding-inline: calc(var(--spacing) * 1.5);
   padding-bottom: calc(var(--spacing) * 3);
 }

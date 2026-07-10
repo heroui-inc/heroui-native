@@ -23,26 +23,21 @@
 }
 
 .tabs__scroll-view--variant-primary {
-  margin-top: -3px;
-  margin-bottom: -3px;
+  margin-block: -3px;
   border-radius: var(--radius-3xl);
 }
 
 .tabs__scroll-view-content-container--variant-primary {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-left: 1px;
-  padding-right: 1px;
+  padding-block: 3px;
+  padding-inline: 1px;
 }
 
 .tabs__trigger {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding-left: calc(var(--spacing) * 3);
-  padding-right: calc(var(--spacing) * 3);
-  padding-top: calc(var(--spacing) * 1.5);
-  padding-bottom: calc(var(--spacing) * 1.5);
+  padding-inline: calc(var(--spacing) * 3);
+  padding-block: calc(var(--spacing) * 1.5);
   gap: calc(var(--spacing) * 1.5);
 }
 

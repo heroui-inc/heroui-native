@@ -6,8 +6,7 @@
   align-items: center;
   justify-content: center;
   z-index: 10;
-  padding-left: calc(var(--spacing) * 3);
-  padding-right: calc(var(--spacing) * 3);
+  padding-inline: calc(var(--spacing) * 3);
   gap: calc(var(--spacing) * 3);
 }
 
@@ -23,8 +22,7 @@
   align-items: center;
   justify-content: center;
   z-index: 10;
-  padding-left: calc(var(--spacing) * 3);
-  padding-right: calc(var(--spacing) * 3);
+  padding-inline: calc(var(--spacing) * 3);
   gap: calc(var(--spacing) * 3);
 }
 

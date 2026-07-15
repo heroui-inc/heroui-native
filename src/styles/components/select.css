@@ -19,6 +19,7 @@
   flex: 1;
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
+  font-family: var(--font-normal);
 }
 
 .select__value--is-selected {

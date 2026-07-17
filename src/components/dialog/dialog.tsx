@@ -1,19 +1,22 @@
 import { forwardRef, useLayoutEffect, useMemo, useRef } from 'react';
 import {
   StyleSheet,
-  View,
   type GestureResponderEvent,
   type Text as RNText,
+  type View,
 } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-import { FullWindowOverlay, HeroText } from '../../helpers/internal/components';
+import {
+  FullWindowOverlay,
+  HeroText,
+  ThemeBackground,
+} from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
 } from '../../helpers/internal/contexts';
 import {
-  useLibraryTheme,
   usePopupDialogContentAnimation,
   usePopupOverlayAnimation,
   usePopupRootAnimation,
@@ -22,7 +25,6 @@ import type { PressableRef } from '../../helpers/internal/types';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import { CloseButton } from '../close-button';
-import { GlassView } from '../glass-view';
 import {
   DialogAnimationProvider,
   useDialogAnimation,
@@ -204,19 +206,17 @@ const DialogOverlay = forwardRef<
  * with the container's positioning and clipping applied.
  */
 const DialogContentBackground = forwardRef<View, DialogContentBackgroundProps>(
-  ({ children, className, ...props }, ref) => {
-    const theme = useLibraryTheme();
-
+  ({ className, ...props }, ref) => {
     const contentBackgroundClassName = dialogClassNames.contentBackground({
       className,
     });
 
-    const themeContent = theme === 'glass' ? <GlassView /> : null;
-
     return (
-      <View ref={ref} className={contentBackgroundClassName} {...props}>
-        {children ?? themeContent}
-      </View>
+      <ThemeBackground
+        ref={ref}
+        className={contentBackgroundClassName}
+        {...props}
+      />
     );
   }
 );

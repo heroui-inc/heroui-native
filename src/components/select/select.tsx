@@ -13,13 +13,13 @@ import {
   ChevronDownIcon,
   FullWindowOverlay,
   HeroText,
+  ThemeBackground,
 } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
 } from '../../helpers/internal/contexts';
 import {
-  useLibraryTheme,
   usePopupDialogContentAnimation,
   usePopupOverlayAnimation,
   usePopupPopoverContentAnimation,
@@ -29,7 +29,6 @@ import type { PressableRef, ViewRef } from '../../helpers/internal/types';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import { CloseButton } from '../close-button';
-import { GlassView } from '../glass-view';
 import {
   SelectAnimationProvider,
   useSelectAnimation,
@@ -333,19 +332,17 @@ const SelectOverlay = forwardRef<
 const SelectContentBackground = forwardRef<
   ViewRef,
   SelectContentBackgroundProps
->(({ children, className, ...props }, ref) => {
-  const theme = useLibraryTheme();
-
+>(({ className, ...props }, ref) => {
   const contentBackgroundClassName = selectClassNames.contentBackground({
     className,
   });
 
-  const themeContent = theme === 'glass' ? <GlassView /> : null;
-
   return (
-    <View ref={ref} className={contentBackgroundClassName} {...props}>
-      {children ?? themeContent}
-    </View>
+    <ThemeBackground
+      ref={ref}
+      className={contentBackgroundClassName}
+      {...props}
+    />
   );
 });
 

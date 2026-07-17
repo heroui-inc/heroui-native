@@ -15,13 +15,13 @@ import {
   BottomSheetContent,
   FullWindowOverlay,
   HeroText,
+  ThemeBackground,
 } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
 } from '../../helpers/internal/contexts';
 import {
-  useLibraryTheme,
   usePopupOverlayAnimation,
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
@@ -30,7 +30,6 @@ import type { PressableRef } from '../../helpers/internal/types';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import { CloseButton } from '../close-button';
-import { GlassView } from '../glass-view';
 import { ArrowSvg } from './arrow-svg';
 import {
   PopoverAnimationProvider,
@@ -230,19 +229,17 @@ const PopoverOverlay = forwardRef<
 const PopoverContentBackground = forwardRef<
   View,
   PopoverContentBackgroundProps
->(({ children, className, ...props }, ref) => {
-  const theme = useLibraryTheme();
-
+>(({ className, ...props }, ref) => {
   const contentBackgroundClassName = popoverClassNames.contentBackground({
     className,
   });
 
-  const themeContent = theme === 'glass' ? <GlassView /> : null;
-
   return (
-    <View ref={ref} className={contentBackgroundClassName} {...props}>
-      {children ?? themeContent}
-    </View>
+    <ThemeBackground
+      ref={ref}
+      className={contentBackgroundClassName}
+      {...props}
+    />
   );
 });
 

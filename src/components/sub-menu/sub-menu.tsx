@@ -14,23 +14,23 @@ import type {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import { View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
-import { ChevronRightIcon } from '../../helpers/internal/components';
+import {
+  ChevronRightIcon,
+  ThemeBackground,
+} from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
 } from '../../helpers/internal/contexts';
-import { useLibraryTheme } from '../../helpers/internal/hooks';
 import type { ViewRef } from '../../helpers/internal/types';
 import { useRootContext as useMenu } from '../../primitives/menu';
 import * as SubMenuPrimitives from '../../primitives/sub-menu';
 import type * as SubMenuPrimitivesTypes from '../../primitives/sub-menu/sub-menu.types';
-import { GlassView } from '../glass-view';
 import {
   SubMenuAnimationProvider,
   useRootContentContainerAnimation,
@@ -141,17 +141,11 @@ const SubMenuRoot = forwardRef<
  * (gradients, images) with the container's positioning and clipping applied.
  */
 const SubMenuBackground = forwardRef<ViewRef, SubMenuBackgroundProps>(
-  ({ children, className, ...props }, ref) => {
-    const theme = useLibraryTheme();
-
+  ({ className, ...props }, ref) => {
     const backgroundClassName = subMenuClassNames.background({ className });
 
-    const themeContent = theme === 'glass' ? <GlassView /> : null;
-
     return (
-      <View ref={ref} className={backgroundClassName} {...props}>
-        {children ?? themeContent}
-      </View>
+      <ThemeBackground ref={ref} className={backgroundClassName} {...props} />
     );
   }
 );

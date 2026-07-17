@@ -2,15 +2,13 @@ import { forwardRef, useMemo, useRef } from 'react';
 import { View, type GestureResponderEvent } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useSharedValue } from 'react-native-reanimated';
-import { HeroText } from '../../helpers/internal/components';
+import { HeroText, ThemeBackground } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
-import { useLibraryTheme } from '../../helpers/internal/hooks';
 import type { ViewRef } from '../../helpers/internal/types';
 import * as SliderPrimitives from '../../primitives/slider';
 import { useSlider } from '../../primitives/slider';
 import type { SliderRenderProps } from '../../primitives/slider/slider.types';
 import { clamp } from '../../primitives/slider/slider.utils';
-import { GlassView } from '../glass-view';
 import {
   useSliderRootAnimation,
   useSliderThumbAnimation,
@@ -132,19 +130,17 @@ const SliderOutput = forwardRef<ViewRef, SliderOutputProps>((props, ref) => {
  * positioning and clipping applied.
  */
 const SliderTrackBackground = forwardRef<ViewRef, SliderTrackBackgroundProps>(
-  ({ children, className, ...props }, ref) => {
-    const theme = useLibraryTheme();
-
+  ({ className, ...props }, ref) => {
     const trackBackgroundClassName = sliderClassNames.trackBackground({
       className,
     });
 
-    const themeContent = theme === 'glass' ? <GlassView /> : null;
-
     return (
-      <View ref={ref} className={trackBackgroundClassName} {...props}>
-        {children ?? themeContent}
-      </View>
+      <ThemeBackground
+        ref={ref}
+        className={trackBackgroundClassName}
+        {...props}
+      />
     );
   }
 );

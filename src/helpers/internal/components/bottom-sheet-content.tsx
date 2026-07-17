@@ -13,13 +13,13 @@ import { useBottomSheetContentAnimation } from '../../../components/bottom-sheet
 import { DISPLAY_NAME as BOTTOM_SHEET_DISPLAY_NAME } from '../../../components/bottom-sheet/bottom-sheet.constants';
 import { bottomSheetClassNames } from '../../../components/bottom-sheet/bottom-sheet.styles';
 import type { BottomSheetBackgroundProps } from '../../../components/bottom-sheet/bottom-sheet.types';
-import { GlassView } from '../../../components/glass-view';
 import GorhomBottomSheetPackage from '../../../optional/gorhom-bottom-sheet';
 import { BottomSheetIsDraggingProvider } from '../contexts';
-import { useBottomSheetGestureHandlers, useLibraryTheme } from '../hooks';
+import { useBottomSheetGestureHandlers } from '../hooks';
 import { usePopupBottomSheetContentAnimation } from '../hooks/use-popup-bottom-sheet-content-animation';
 import type { BaseBottomSheetContentProps } from '../types/bottom-sheet';
 import { BottomSheetContentContainer } from './bottom-sheet-content-container';
+import { ThemeBackground } from './theme-background';
 
 const StyledBottomSheet = withUniwind(GorhomBottomSheetPackage?.default);
 
@@ -36,17 +36,11 @@ const StyledBottomSheet = withUniwind(GorhomBottomSheetPackage?.default);
 export const BottomSheetBackground = forwardRef<
   View,
   BottomSheetBackgroundProps
->(({ children, className, ...props }, ref) => {
-  const theme = useLibraryTheme();
-
+>(({ className, ...props }, ref) => {
   const backgroundClassName = bottomSheetClassNames.background({ className });
 
-  const themeContent = theme === 'glass' ? <GlassView /> : null;
-
   return (
-    <View ref={ref} className={backgroundClassName} {...props}>
-      {children ?? themeContent}
-    </View>
+    <ThemeBackground ref={ref} className={backgroundClassName} {...props} />
   );
 });
 

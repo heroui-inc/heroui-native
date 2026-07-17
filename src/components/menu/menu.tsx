@@ -11,13 +11,13 @@ import {
   CheckIcon,
   FullWindowOverlay,
   HeroText,
+  ThemeBackground,
 } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
 } from '../../helpers/internal/contexts';
 import {
-  useLibraryTheme,
   usePopupOverlayAnimation,
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
@@ -27,7 +27,6 @@ import { childrenToString } from '../../helpers/internal/utils';
 import * as MenuPrimitives from '../../primitives/menu';
 import * as MenuPrimitivesTypes from '../../primitives/menu/menu.types';
 import { CloseButton } from '../close-button';
-import { GlassView } from '../glass-view';
 import { useSubMenu } from '../sub-menu';
 import {
   MenuAnimationProvider,
@@ -230,19 +229,17 @@ const MenuOverlay = forwardRef<
  * with the container's positioning and clipping applied.
  */
 const MenuContentBackground = forwardRef<View, MenuContentBackgroundProps>(
-  ({ children, className, ...props }, ref) => {
-    const theme = useLibraryTheme();
-
+  ({ className, ...props }, ref) => {
     const contentBackgroundClassName = menuClassNames.contentBackground({
       className,
     });
 
-    const themeContent = theme === 'glass' ? <GlassView /> : null;
-
     return (
-      <View ref={ref} className={contentBackgroundClassName} {...props}>
-        {children ?? themeContent}
-      </View>
+      <ThemeBackground
+        ref={ref}
+        className={contentBackgroundClassName}
+        {...props}
+      />
     );
   }
 );

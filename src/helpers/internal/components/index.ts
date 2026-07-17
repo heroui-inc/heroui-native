@@ -8,3 +8,4 @@ export * from './close-icon';
 export * from './full-window-overlay';
 export * from './hero-text';
 export * from './hero-text-input';
+export * from './theme-background';

@@ -4,16 +4,18 @@ import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
-import { CloseIcon, HeroText } from '../../helpers/internal/components';
+import {
+  CloseIcon,
+  HeroText,
+  ThemeBackground,
+} from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
-import { useLibraryTheme } from '../../helpers/internal/hooks';
 import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
 import * as ToastPrimitive from '../../primitives/toast';
 import type { ToastComponentProps } from '../../providers/toast';
 import { useToastConfig } from '../../providers/toast/toast-config.context';
 import { Button } from '../button';
-import { GlassView } from '../glass-view';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
 import { useVerticalPlaceholderStyles } from './toast.hooks';
@@ -45,17 +47,11 @@ const [ToastProvider, useToast] = createContext<ToastContextValue>({
  * with the container's positioning and clipping applied.
  */
 const ToastBackground = forwardRef<ViewRef, ToastBackgroundProps>(
-  ({ children, className, ...props }, ref) => {
-    const theme = useLibraryTheme();
-
+  ({ className, ...props }, ref) => {
     const backgroundClassName = toastClassNames.background({ className });
 
-    const themeContent = theme === 'glass' ? <GlassView /> : null;
-
     return (
-      <View ref={ref} className={backgroundClassName} {...props}>
-        {children ?? themeContent}
-      </View>
+      <ThemeBackground ref={ref} className={backgroundClassName} {...props} />
     );
   }
 );

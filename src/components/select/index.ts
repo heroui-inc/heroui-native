@@ -8,6 +8,7 @@ export { selectClassNames } from './select.styles';
 export type {
   SelectAlign,
   SelectCloseProps,
+  SelectContentBackgroundProps,
   SelectContentProps,
   SelectItemDescriptionProps,
   SelectItemIndicatorIconProps,

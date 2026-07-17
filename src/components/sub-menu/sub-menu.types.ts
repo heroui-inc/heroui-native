@@ -9,6 +9,17 @@ import type {
 import type * as SubMenuPrimitivesTypes from '../../primitives/sub-menu/sub-menu.types';
 
 /**
+ * Props for the SubMenu.Background sub-component.
+ * Generic absolute-fill container behind the open sub-menu surface. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type SubMenuBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
+
+/**
  * Animation configuration for SubMenu root content container.
  * Controls expand/collapse margins, padding, and spring.
  */
@@ -51,6 +62,15 @@ export interface SubMenuRootProps extends SubMenuPrimitivesTypes.RootProps {
   children?: ReactNode;
   /** Additional CSS class for the root container */
   className?: string;
+  /**
+   * Background layer rendered behind the open sub-menu surface.
+   * - `undefined` (default): renders `SubMenu.Background` while the sub-menu
+   *   is open, whose content is decided by the active library theme
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `SubMenu.Background` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: ReactNode;
   /**
    * Animation configuration for the SubMenu.
    * - `false` or `"disabled"`: Disable only root animations

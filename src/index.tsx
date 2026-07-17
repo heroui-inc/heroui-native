@@ -12,6 +12,7 @@ export * from './components/control-field';
 export * from './components/description';
 export * from './components/dialog';
 export * from './components/field-error';
+export * from './components/glass-view';
 export * from './components/input';
 export * from './components/input-group';
 export * from './components/input-otp';

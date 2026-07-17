@@ -21,6 +21,7 @@ import {
   useAnimationSettings,
 } from '../../helpers/internal/contexts';
 import {
+  useLibraryTheme,
   usePopupOverlayAnimation,
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
@@ -29,6 +30,7 @@ import type { PressableRef } from '../../helpers/internal/types';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import { CloseButton } from '../close-button';
+import { GlassView } from '../glass-view';
 import { ArrowSvg } from './arrow-svg';
 import {
   PopoverAnimationProvider,
@@ -44,6 +46,7 @@ import { popoverClassNames, popoverStyleSheet } from './popover.styles';
 import type {
   PopoverArrowProps,
   PopoverCloseProps,
+  PopoverContentBackgroundProps,
   PopoverContentBottomSheetProps,
   PopoverContentContextValue,
   PopoverContentPopoverProps,
@@ -217,6 +220,34 @@ const PopoverOverlay = forwardRef<
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the popover
+ * content. With no `children`, the active library theme decides the default
+ * content: `glass` renders a `GlassView` blur layer; other themes render
+ * nothing. Pass `children` to host arbitrary content (gradients, images)
+ * with the container's positioning and clipping applied.
+ */
+const PopoverContentBackground = forwardRef<
+  View,
+  PopoverContentBackgroundProps
+>(({ children, className, ...props }, ref) => {
+  const theme = useLibraryTheme();
+
+  const contentBackgroundClassName = popoverClassNames.contentBackground({
+    className,
+  });
+
+  const themeContent = theme === 'glass' ? <GlassView /> : null;
+
+  return (
+    <View ref={ref} className={contentBackgroundClassName} {...props}>
+      {children ?? themeContent}
+    </View>
+  );
+});
+
+// --------------------------------------------------
+
 const PopoverContentPopover = forwardRef<
   PopoverPrimitivesTypes.ContentRef,
   PopoverContentPopoverProps
@@ -230,6 +261,7 @@ const PopoverContentPopover = forwardRef<
       alignOffset = DEFAULT_ALIGN_OFFSET,
       className,
       children,
+      background,
       style,
       animation,
       ...props
@@ -264,6 +296,20 @@ const PopoverContentPopover = forwardRef<
         isReady,
       });
 
+    /**
+     * Background layer rendered behind the popover content. `undefined`
+     * falls back to the theme-aware default; `null` removes the layer.
+     */
+    const backgroundElement =
+      background === undefined ? <PopoverContentBackground /> : background;
+
+    const contentChildren = (
+      <>
+        {backgroundElement}
+        {children}
+      </>
+    );
+
     // Single-mount path: the content subtree is rendered once and animated in
     // via a shared value once it has been measured and positioned (`isReady`).
     if (isDrivenEntering) {
@@ -292,7 +338,7 @@ const PopoverContentPopover = forwardRef<
               ]}
               {...props}
             >
-              {children}
+              {contentChildren}
             </AnimatedContent>
           </Animated.View>
         </PopoverContentContext>
@@ -319,7 +365,7 @@ const PopoverContentPopover = forwardRef<
             style={[popoverStyleSheet.contentContainer, style]}
             {...props}
           >
-            {children}
+            {contentChildren}
           </AnimatedContent>
         )}
         <AnimatedContent
@@ -614,6 +660,7 @@ PopoverTrigger.displayName = DISPLAY_NAME.TRIGGER;
 PopoverPortal.displayName = DISPLAY_NAME.PORTAL;
 PopoverOverlay.displayName = DISPLAY_NAME.OVERLAY;
 PopoverContent.displayName = DISPLAY_NAME.CONTENT;
+PopoverContentBackground.displayName = DISPLAY_NAME.CONTENT_BACKGROUND;
 PopoverClose.displayName = DISPLAY_NAME.CLOSE;
 PopoverTitle.displayName = DISPLAY_NAME.TITLE;
 PopoverDescription.displayName = DISPLAY_NAME.DESCRIPTION;
@@ -638,6 +685,12 @@ PopoverArrow.displayName = DISPLAY_NAME.ARROW;
  * default floating popover with positioning and collision detection, or bottom sheet modal.
  * Supports arrow indicators and custom animations.
  *
+ * @component Popover.ContentBackground - Absolute-fill background container behind
+ * the popover content. With no children, the active library theme decides the content
+ * (glass theme renders a blur layer). Accepts children to host custom content such
+ * as gradients with the container's positioning and clipping applied. Replaceable
+ * via the `background` prop on Popover.Content.
+ *
  * @component Popover.Arrow - Optional arrow indicator pointing to the trigger element.
  * Automatically positions itself based on popover placement.
  *
@@ -658,6 +711,7 @@ const Popover = Object.assign(PopoverRoot, {
   Portal: PopoverPortal,
   Overlay: PopoverOverlay,
   Content: PopoverContent,
+  ContentBackground: PopoverContentBackground,
   Arrow: PopoverArrow,
   Close: PopoverClose,
   Title: PopoverTitle,

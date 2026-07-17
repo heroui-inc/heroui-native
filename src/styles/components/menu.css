@@ -30,6 +30,16 @@
   box-shadow: var(--shadow-overlay);
 }
 
+.menu__content-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--radius-3xl);
+  overflow: hidden;
+}
+
 .menu__content-bottom-sheet {
   padding-inline: calc(var(--spacing) * 3);
 }

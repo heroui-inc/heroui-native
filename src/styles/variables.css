@@ -15,6 +15,9 @@
 
   /* Opacity */
   --opacity-disabled: 0.5;
+
+  /* Active library theme: 'default' | 'glass' (overridden by Pro theme CSS) */
+  --theme: default;
 }
 
 @layer theme {

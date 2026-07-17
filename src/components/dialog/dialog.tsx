@@ -1,9 +1,9 @@
 import { forwardRef, useLayoutEffect, useMemo, useRef } from 'react';
 import {
   StyleSheet,
+  View,
   type GestureResponderEvent,
   type Text as RNText,
-  type View,
 } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
@@ -13,6 +13,7 @@ import {
   useAnimationSettings,
 } from '../../helpers/internal/contexts';
 import {
+  useLibraryTheme,
   usePopupDialogContentAnimation,
   usePopupOverlayAnimation,
   usePopupRootAnimation,
@@ -21,6 +22,7 @@ import type { PressableRef } from '../../helpers/internal/types';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import { CloseButton } from '../close-button';
+import { GlassView } from '../glass-view';
 import {
   DialogAnimationProvider,
   useDialogAnimation,
@@ -29,6 +31,7 @@ import { DISPLAY_NAME } from './dialog.constants';
 import { dialogClassNames, dialogStyleSheet } from './dialog.styles';
 import type {
   DialogCloseProps,
+  DialogContentBackgroundProps,
   DialogContentProps,
   DialogDescriptionProps,
   DialogOverlayProps,
@@ -193,12 +196,47 @@ const DialogOverlay = forwardRef<
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the dialog
+ * content. With no `children`, the active library theme decides the default
+ * content: `glass` renders a `GlassView` blur layer; other themes render
+ * nothing. Pass `children` to host arbitrary content (gradients, images)
+ * with the container's positioning and clipping applied.
+ */
+const DialogContentBackground = forwardRef<View, DialogContentBackgroundProps>(
+  ({ children, className, ...props }, ref) => {
+    const theme = useLibraryTheme();
+
+    const contentBackgroundClassName = dialogClassNames.contentBackground({
+      className,
+    });
+
+    const themeContent = theme === 'glass' ? <GlassView /> : null;
+
+    return (
+      <View ref={ref} className={contentBackgroundClassName} {...props}>
+        {children ?? themeContent}
+      </View>
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const DialogContent = forwardRef<
   DialogPrimitivesTypes.ContentRef,
   DialogContentProps
 >(
   (
-    { className, style, children, animation, isSwipeable = true, ...props },
+    {
+      className,
+      style,
+      children,
+      background,
+      animation,
+      isSwipeable = true,
+      ...props
+    },
     ref
   ) => {
     const { isOpen, onOpenChange } = useDialog();
@@ -237,6 +275,13 @@ const DialogContent = forwardRef<
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    /**
+     * Background layer rendered behind the dialog content. `undefined`
+     * falls back to the theme-aware default; `null` removes the layer.
+     */
+    const backgroundElement =
+      background === undefined ? <DialogContentBackground /> : background;
+
     return (
       <GestureDetector gesture={panGesture}>
         <Animated.View
@@ -251,6 +296,7 @@ const DialogContent = forwardRef<
               style={[dialogStyleSheet.contentContainer, style]}
               {...props}
             >
+              {backgroundElement}
               {children}
             </DialogPrimitives.Content>
           </Animated.View>
@@ -329,6 +375,7 @@ DialogTrigger.displayName = DISPLAY_NAME.TRIGGER;
 DialogPortal.displayName = DISPLAY_NAME.PORTAL;
 DialogOverlay.displayName = DISPLAY_NAME.OVERLAY;
 DialogContent.displayName = DISPLAY_NAME.CONTENT;
+DialogContentBackground.displayName = DISPLAY_NAME.CONTENT_BACKGROUND;
 DialogClose.displayName = DISPLAY_NAME.CLOSE;
 DialogTitle.displayName = DISPLAY_NAME.TITLE;
 DialogDescription.displayName = DISPLAY_NAME.DESCRIPTION;
@@ -351,6 +398,12 @@ DialogDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  * @component Dialog.Content - The dialog content container.
  * Contains the main dialog UI elements.
  *
+ * @component Dialog.ContentBackground - Absolute-fill background container behind
+ * the dialog content. With no children, the active library theme decides the content
+ * (glass theme renders a blur layer). Accepts children to host custom content such
+ * as gradients with the container's positioning and clipping applied. Replaceable
+ * via the `background` prop on Dialog.Content.
+ *
  * @component Dialog.Close - Close button for the dialog.
  * Can accept custom children or uses default close icon.
  *
@@ -371,6 +424,8 @@ const Dialog = Object.assign(DialogRoot, {
   Overlay: DialogOverlay,
   /** @optional Main dialog content container */
   Content: DialogContent,
+  /** @optional Theme-aware background container behind the dialog content */
+  ContentBackground: DialogContentBackground,
   /** @optional Close button for the dialog */
   Close: DialogClose,
   /** @optional Dialog title text */

@@ -6,12 +6,14 @@ import { useThemeColor } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
 import { CloseIcon, HeroText } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import { useLibraryTheme } from '../../helpers/internal/hooks';
 import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
 import * as ToastPrimitive from '../../primitives/toast';
 import type { ToastComponentProps } from '../../providers/toast';
 import { useToastConfig } from '../../providers/toast/toast-config.context';
 import { Button } from '../button';
+import { GlassView } from '../glass-view';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
 import { useVerticalPlaceholderStyles } from './toast.hooks';
@@ -19,6 +21,7 @@ import { toastClassNames, toastStyleSheet } from './toast.styles';
 import type {
   DefaultToastProps,
   ToastActionProps,
+  ToastBackgroundProps,
   ToastCloseProps,
   ToastContextValue,
   ToastDescriptionProps,
@@ -34,6 +37,31 @@ const [ToastProvider, useToast] = createContext<ToastContextValue>({
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the toast
+ * surface. With no `children`, the active library theme decides the default
+ * content: `glass` renders a `GlassView` blur layer; other themes render
+ * nothing. Pass `children` to host arbitrary content (gradients, images)
+ * with the container's positioning and clipping applied.
+ */
+const ToastBackground = forwardRef<ViewRef, ToastBackgroundProps>(
+  ({ children, className, ...props }, ref) => {
+    const theme = useLibraryTheme();
+
+    const backgroundClassName = toastClassNames.background({ className });
+
+    const themeContent = theme === 'glass' ? <GlassView /> : null;
+
+    return (
+      <View ref={ref} className={backgroundClassName} {...props}>
+        {children ?? themeContent}
+      </View>
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   const globalConfig = useToastConfig();
 
@@ -45,6 +73,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     total,
     heights,
     maxVisibleToasts,
+    background,
     className,
     style,
     animation: localAnimation,
@@ -114,6 +143,15 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     [variant, hide, id]
   );
 
+  /**
+   * Background layer rendered behind the toast surface. `undefined` falls
+   * back to the theme-aware default; `null` removes the layer. Only the
+   * visible instance gets the layer — the hidden measurement instance stays
+   * background-free.
+   */
+  const backgroundElement =
+    background === undefined ? <ToastBackground /> : background;
+
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
       <ToastProvider value={contextValue}>
@@ -133,6 +171,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
               style={rootStyle}
               {...restProps}
             >
+              {backgroundElement}
               {children}
               {/* 
                 When visible toasts have different heights, the toast adapts to the last visible toast height.
@@ -435,6 +474,7 @@ export function DefaultToast(props: DefaultToastProps) {
 // --------------------------------------------------
 
 ToastRoot.displayName = DISPLAY_NAME.TOAST_ROOT;
+ToastBackground.displayName = DISPLAY_NAME.TOAST_BACKGROUND;
 ToastTitle.displayName = DISPLAY_NAME.TOAST_TITLE;
 ToastDescription.displayName = DISPLAY_NAME.TOAST_DESCRIPTION;
 ToastAction.displayName = DISPLAY_NAME.TOAST_ACTION;
@@ -444,6 +484,12 @@ ToastClose.displayName = DISPLAY_NAME.TOAST_CLOSE;
  * Compound Toast component with sub-components
  *
  * @component Toast - Main toast container that displays notification messages with various variants.
+ *
+ * @component Toast.Background - Absolute-fill background container behind the
+ * toast surface. With no children, the active library theme decides the content
+ * (glass theme renders a blur layer). Accepts children to host custom content
+ * such as gradients with the container's positioning and clipping applied.
+ * Replaceable via the `background` prop on Toast.
  *
  * @component Toast.Title - Title/heading text of the toast notification.
  *
@@ -459,6 +505,8 @@ ToastClose.displayName = DISPLAY_NAME.TOAST_CLOSE;
  * @see Full documentation: https://heroui.com/docs/native/components/toast
  */
 const CompoundToast = Object.assign(ToastRoot, {
+  /** Theme-aware background container behind the toast surface */
+  Background: ToastBackground,
   /** Toast title - renders text content */
   Title: ToastTitle,
   /** Toast description - renders descriptive text */

@@ -54,6 +54,15 @@ const content = tv({
   base: 'dialog__content',
 });
 
+/**
+ * Content background style definition — absolute-fill container behind the
+ * dialog content, hosting theme-specific layers (e.g. glass blur) or
+ * custom content (gradients, images).
+ */
+const contentBackground = tv({
+  base: 'dialog__content-background',
+});
+
 const label = tv({
   base: 'dialog__label',
 });
@@ -66,6 +75,7 @@ export const dialogClassNames = combineStyles({
   portal,
   overlay,
   content,
+  contentBackground,
   label,
   description,
 });

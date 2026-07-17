@@ -84,6 +84,16 @@ const content = tv({
 });
 
 /**
+ * Content background style definition — absolute-fill container behind the
+ * select content (shared by popover and dialog presentations), hosting
+ * theme-specific layers (e.g. glass blur) or custom content (gradients,
+ * images).
+ */
+const contentBackground = tv({
+  base: 'select__content-background',
+});
+
+/**
  * Dialog content style definition
  */
 const dialogContent = tv({
@@ -128,6 +138,7 @@ export const selectClassNames = combineStyles({
   portal,
   overlay,
   content,
+  contentBackground,
   dialogContent,
   close,
   value,

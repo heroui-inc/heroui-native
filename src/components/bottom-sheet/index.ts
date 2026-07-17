@@ -5,6 +5,7 @@ export {
 } from './bottom-sheet';
 export { bottomSheetClassNames } from './bottom-sheet.styles';
 export type {
+  BottomSheetBackgroundProps,
   BottomSheetCloseProps,
   BottomSheetContentProps,
   BottomSheetDescriptionProps,

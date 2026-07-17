@@ -20,6 +20,17 @@
   box-shadow: var(--shadow-overlay);
 }
 
+.bottom-sheet__background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-top-left-radius: var(--radius-4xl);
+  border-top-right-radius: var(--radius-4xl);
+  overflow: hidden;
+}
+
 .bottom-sheet__content-handle-indicator {
   background-color: var(--color-separator);
 }

@@ -15,6 +15,16 @@
   box-shadow: var(--shadow-overlay);
 }
 
+.sub-menu__background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--radius-3xl);
+  overflow: hidden;
+}
+
 .sub-menu__trigger {
   flex-direction: row;
   align-items: center;

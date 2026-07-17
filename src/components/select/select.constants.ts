@@ -8,6 +8,7 @@ export const DISPLAY_NAME = {
   PORTAL: 'HeroUINative.Select.Portal',
   OVERLAY: 'HeroUINative.Select.Overlay',
   CONTENT: 'HeroUINative.Select.Content',
+  CONTENT_BACKGROUND: 'HeroUINative.Select.ContentBackground',
   ITEM: 'HeroUINative.Select.Item',
   ITEM_LABEL: 'HeroUINative.Select.ItemLabel',
   ITEM_DESCRIPTION: 'HeroUINative.Select.ItemDescription',

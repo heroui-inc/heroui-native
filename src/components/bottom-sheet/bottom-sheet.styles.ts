@@ -33,8 +33,22 @@ const contentContainer = tv({
   base: 'bottom-sheet__content-container pb-safe-offset-3',
 });
 
+/**
+ * Sheet background surface style definition — applied to gorhom's background
+ * node via `backgroundClassName` (surface color, top radius, shadow).
+ */
 const contentBackground = tv({
   base: 'bottom-sheet__content-background',
+});
+
+/**
+ * Background style definition — absolute-fill container inside the sheet
+ * background surface, clipped to the sheet's top radius, hosting
+ * theme-specific layers (e.g. glass blur) or custom content (gradients,
+ * images).
+ */
+const background = tv({
+  base: 'bottom-sheet__background',
 });
 
 const contentHandleIndicator = tv({
@@ -57,6 +71,7 @@ export const bottomSheetClassNames = combineStyles({
   overlay,
   contentContainer,
   contentBackground,
+  background,
   contentHandleIndicator,
   close,
   label,

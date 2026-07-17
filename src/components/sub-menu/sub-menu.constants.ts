@@ -3,6 +3,7 @@
  */
 export const DISPLAY_NAME = {
   ROOT: 'HeroUINative.SubMenu.Root',
+  BACKGROUND: 'HeroUINative.SubMenu.Background',
   TRIGGER: 'HeroUINative.SubMenu.Trigger',
   TRIGGER_INDICATOR: 'HeroUINative.SubMenu.TriggerIndicator',
   CONTENT: 'HeroUINative.SubMenu.Content',

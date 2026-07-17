@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { StyleProp, TextProps, ViewStyle } from 'react-native';
+import type { StyleProp, TextProps, ViewProps, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
   AnimationRootDisableAll,
@@ -8,6 +8,17 @@ import type {
 } from '../../helpers/internal/types';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
+
+/**
+ * Props for the Dialog.ContentBackground sub-component.
+ * Generic absolute-fill container behind the dialog content. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type DialogContentBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Dialog internal state for animation coordination
@@ -166,6 +177,15 @@ export interface DialogContentProps
    * The dialog content
    */
   children?: ReactNode;
+  /**
+   * Background layer rendered behind the dialog content.
+   * - `undefined` (default): renders `Dialog.ContentBackground`, whose
+   *   content is decided by the active library theme
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Dialog.ContentBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: ReactNode;
   /**
    * Animation configuration for content
    * - `false` or `"disabled"`: Disable all animations

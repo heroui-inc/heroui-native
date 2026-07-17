@@ -1,6 +1,6 @@
 import type { BottomSheetProps } from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
-import type { TextProps } from 'react-native';
+import type { TextProps, ViewProps } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
   AnimationRootDisableAll,
@@ -9,6 +9,20 @@ import type {
 } from '../../helpers/internal/types';
 import type * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
+
+/**
+ * Props for the BottomSheet.Background sub-component.
+ * Generic absolute-fill container inside the sheet background surface,
+ * clipped to the sheet's top radius. When no `children` are given, the
+ * active library theme decides the default content (e.g. a frosted-glass
+ * blur layer when the theme is `glass`). Rendered automatically by the
+ * default gorhom `backgroundComponent`; use it inside a custom
+ * `backgroundComponent` to customize or replace the layer.
+ */
+export type BottomSheetBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Context value for bottom sheet animation state

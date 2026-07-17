@@ -19,6 +19,7 @@ import {
   useAnimationSettings,
 } from '../../helpers/internal/contexts';
 import {
+  useLibraryTheme,
   usePopupDialogContentAnimation,
   usePopupOverlayAnimation,
   usePopupPopoverContentAnimation,
@@ -28,6 +29,7 @@ import type { PressableRef, ViewRef } from '../../helpers/internal/types';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import { CloseButton } from '../close-button';
+import { GlassView } from '../glass-view';
 import {
   SelectAnimationProvider,
   useSelectAnimation,
@@ -43,6 +45,7 @@ import {
 import { selectClassNames, selectStyleSheet } from './select.styles';
 import type {
   SelectCloseProps,
+  SelectContentBackgroundProps,
   SelectContentBottomSheetProps,
   SelectContentDialogProps,
   SelectContentPopoverProps,
@@ -319,6 +322,35 @@ const SelectOverlay = forwardRef<
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the select
+ * content (shared by popover and dialog presentations). With no `children`,
+ * the active library theme decides the default content: `glass` renders a
+ * `GlassView` blur layer; other themes render nothing. Pass `children` to
+ * host arbitrary content (gradients, images) with the container's
+ * positioning and clipping applied.
+ */
+const SelectContentBackground = forwardRef<
+  ViewRef,
+  SelectContentBackgroundProps
+>(({ children, className, ...props }, ref) => {
+  const theme = useLibraryTheme();
+
+  const contentBackgroundClassName = selectClassNames.contentBackground({
+    className,
+  });
+
+  const themeContent = theme === 'glass' ? <GlassView /> : null;
+
+  return (
+    <View ref={ref} className={contentBackgroundClassName} {...props}>
+      {children ?? themeContent}
+    </View>
+  );
+});
+
+// --------------------------------------------------
+
 const SelectContentPopover = forwardRef<
   SelectPrimitivesTypes.ContentRef,
   SelectContentProps & { presentation?: 'popover' }
@@ -332,6 +364,7 @@ const SelectContentPopover = forwardRef<
       alignOffset = DEFAULT_ALIGN_OFFSET,
       className,
       children,
+      background,
       style,
       animation,
       ...props
@@ -366,6 +399,20 @@ const SelectContentPopover = forwardRef<
         isReady,
       });
 
+    /**
+     * Background layer rendered behind the select content. `undefined`
+     * falls back to the theme-aware default; `null` removes the layer.
+     */
+    const backgroundElement =
+      background === undefined ? <SelectContentBackground /> : background;
+
+    const contentChildren = (
+      <>
+        {backgroundElement}
+        {children}
+      </>
+    );
+
     // Single-mount path: the content subtree is rendered once and animated in
     // via a shared value once it has been measured and positioned (`isReady`).
     if (isDrivenEntering) {
@@ -389,7 +436,7 @@ const SelectContentPopover = forwardRef<
             style={[selectStyleSheet.contentContainer, style, rEnteringStyle]}
             {...props}
           >
-            {children}
+            {contentChildren}
           </AnimatedPopoverContent>
         </Animated.View>
       );
@@ -415,7 +462,7 @@ const SelectContentPopover = forwardRef<
             style={[selectStyleSheet.contentContainer, style]}
             {...props}
           >
-            {children}
+            {contentChildren}
           </AnimatedPopoverContent>
         )}
         <AnimatedPopoverContent
@@ -503,6 +550,7 @@ const SelectContentDialog = forwardRef<
       styles,
       style,
       children,
+      background,
       animation,
       isSwipeable = true,
       ...props
@@ -548,6 +596,13 @@ const SelectContentDialog = forwardRef<
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    /**
+     * Background layer rendered behind the select content. `undefined`
+     * falls back to the theme-aware default; `null` removes the layer.
+     */
+    const backgroundElement =
+      background === undefined ? <SelectContentBackground /> : background;
+
     return (
       <View className={wrapperClassName} style={styles?.wrapper}>
         <GestureDetector gesture={panGesture}>
@@ -567,6 +622,7 @@ const SelectContentDialog = forwardRef<
                 ]}
                 {...props}
               >
+                {backgroundElement}
                 {children}
               </SelectPrimitives.DialogContent>
             </Animated.View>
@@ -786,6 +842,7 @@ SelectValue.displayName = DISPLAY_NAME.VALUE;
 SelectPortal.displayName = DISPLAY_NAME.PORTAL;
 SelectOverlay.displayName = DISPLAY_NAME.OVERLAY;
 SelectContent.displayName = DISPLAY_NAME.CONTENT;
+SelectContentBackground.displayName = DISPLAY_NAME.CONTENT_BACKGROUND;
 SelectClose.displayName = DISPLAY_NAME.CLOSE;
 SelectItemDescription.displayName = DISPLAY_NAME.ITEM_DESCRIPTION;
 SelectItem.displayName = DISPLAY_NAME.ITEM;
@@ -819,6 +876,13 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
  * popover (default floating with positioning and collision detection), bottom sheet modal, or dialog modal.
  * Supports custom animations.
  *
+ * @component Select.ContentBackground - Absolute-fill background container behind
+ * the select content (popover and dialog presentations). With no children, the
+ * active library theme decides the content (glass theme renders a blur layer).
+ * Accepts children to host custom content such as gradients with the container's
+ * positioning and clipping applied. Replaceable via the `background` prop on
+ * Select.Content.
+ *
  * @component Select.Item - Selectable option item. Handles selection state and press events.
  *
  * @component Select.ItemLabel - Displays the label text for an item.
@@ -845,6 +909,8 @@ const Select = Object.assign(SelectRoot, {
   Portal: SelectPortal,
   Overlay: SelectOverlay,
   Content: SelectContent,
+  /** @optional Theme-aware background container behind the select content */
+  ContentBackground: SelectContentBackground,
   Item: SelectItem,
   ItemLabel: SelectItemLabel,
   ItemDescription: SelectItemDescription,

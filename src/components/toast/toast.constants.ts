@@ -3,6 +3,7 @@
  */
 export const DISPLAY_NAME = {
   TOAST_ROOT: 'HeroUINative.Toast.Root',
+  TOAST_BACKGROUND: 'HeroUINative.Toast.Background',
   TOAST_TITLE: 'HeroUINative.Toast.Title',
   TOAST_DESCRIPTION: 'HeroUINative.Toast.Description',
   TOAST_ACTION: 'HeroUINative.Toast.Action',

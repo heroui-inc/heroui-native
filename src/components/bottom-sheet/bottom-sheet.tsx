@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import {
+  BottomSheetBackground,
   FullWindowOverlay,
   HeroText,
   BottomSheetContent as InternalBottomSheetContent,
@@ -325,6 +326,14 @@ BottomSheetDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  * @component BottomSheet.Content - The bottom sheet content container.
  * Uses @gorhom/bottom-sheet for rendering. Contains the main bottom sheet UI elements.
  *
+ * @component BottomSheet.Background - Absolute-fill background container inside
+ * the sheet background surface, clipped to the sheet's top radius. With no
+ * children, the active library theme decides the content (glass theme renders a
+ * blur layer). Accepts children to host custom content such as gradients with
+ * the container's positioning and clipping applied. Rendered automatically by
+ * the default gorhom backgroundComponent; use it inside a custom
+ * backgroundComponent to customize the layer.
+ *
  * @component BottomSheet.Close - Close button for the bottom sheet.
  * Can accept custom children or uses default close icon.
  *
@@ -343,6 +352,8 @@ const BottomSheet = Object.assign(BottomSheetRoot, {
   Overlay: BottomSheetOverlay,
   /** @optional Main bottom sheet content container */
   Content: BottomSheetContent,
+  /** @optional Theme-aware background container inside the sheet background surface */
+  Background: BottomSheetBackground,
   /** @optional Close button for the bottom sheet */
   Close: BottomSheetClose,
   /** @optional Bottom sheet title text */

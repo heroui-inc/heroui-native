@@ -1,3 +1,4 @@
+import type { ViewProps } from 'react-native';
 import type {
   EntryOrExitLayoutType,
   WithTimingConfig,
@@ -14,6 +15,17 @@ import type {
 } from '../../providers/toast';
 import type { ButtonRootProps } from '../button';
 import type { ButtonRootPropsScaleHighlight } from '../button/button.types';
+
+/**
+ * Props for the Toast.Background sub-component.
+ * Generic absolute-fill container behind the toast surface. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type ToastBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Toast variant types
@@ -159,6 +171,15 @@ export interface ToastRootProps
    * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
    */
   className?: string;
+  /**
+   * Background layer rendered behind the toast surface.
+   * - `undefined` (default): renders `Toast.Background`, whose content is
+   *   decided by the active library theme
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Toast.Background` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
   /**
    * Animation configuration for toast
    * - `false` or `"disabled"`: Disable only root animations

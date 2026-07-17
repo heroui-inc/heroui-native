@@ -7,6 +7,7 @@ export const DISPLAY_NAME = {
   PORTAL: 'HeroUINative.Popover.Portal',
   OVERLAY: 'HeroUINative.Popover.Overlay',
   CONTENT: 'HeroUINative.Popover.Content',
+  CONTENT_BACKGROUND: 'HeroUINative.Popover.ContentBackground',
   CLOSE: 'HeroUINative.Popover.Close',
   TITLE: 'HeroUINative.Popover.Title',
   DESCRIPTION: 'HeroUINative.Popover.Description',

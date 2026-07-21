@@ -1,3 +1,18 @@
+## <small>1.0.6 (2026-07-21)</small>
+
+* chore: add popover styles ([1674748](https://github.com/heroui-inc/heroui-native/commit/1674748))
+* chore: rm is-theme-glass var ([8b74a38](https://github.com/heroui-inc/heroui-native/commit/8b74a38))
+* chore: rm optional expo-blur dependency ([a487caa](https://github.com/heroui-inc/heroui-native/commit/a487caa))
+* chore: sync versions ([c7e0386](https://github.com/heroui-inc/heroui-native/commit/c7e0386))
+* chore: update versions copy ([356362f](https://github.com/heroui-inc/heroui-native/commit/356362f))
+* fix(portal): key portal subtrees by name in PortalHost ([5dd54aa](https://github.com/heroui-inc/heroui-native/commit/5dd54aa))
+* fix(select): apply normal font family to value text ([e3cc255](https://github.com/heroui-inc/heroui-native/commit/e3cc255))
+* fix(styles): use logical padding/margin so px/py overrides work ([72a8f5d](https://github.com/heroui-inc/heroui-native/commit/72a8f5d))
+* refactor: migrate component styles to bem css files ([a36d59c](https://github.com/heroui-inc/heroui-native/commit/a36d59c))
+* refactor(styles): add element-disabled utility for disabled states ([310ebf6](https://github.com/heroui-inc/heroui-native/commit/310ebf6))
+
+
+
 ## <small>1.0.5 (2026-07-02)</small>
 
 * fix(input): show focus ring on android via border ([a87b501](https://github.com/heroui-inc/heroui-native/commit/a87b501))

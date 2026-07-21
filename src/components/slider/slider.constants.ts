@@ -5,7 +5,6 @@ export const DISPLAY_NAME = {
   ROOT: 'HeroUI.Slider.Root',
   OUTPUT: 'HeroUI.Slider.Output',
   TRACK: 'HeroUI.Slider.Track',
-  TRACK_BACKGROUND: 'HeroUI.Slider.TrackBackground',
   FILL: 'HeroUI.Slider.Fill',
   THUMB: 'HeroUI.Slider.Thumb',
 };

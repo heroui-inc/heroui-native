@@ -14,7 +14,15 @@ const searchIcon = tv({
 });
 
 /**
- * @note This only applies SearchField-specific overrides (flex-1, pl-9).
+ * Input container override — the Input's outer container must stretch in
+ * the row group, so `flex: 1` lives here rather than on the text input.
+ */
+const inputContainer = tv({
+  base: 'search-field__input-container',
+});
+
+/**
+ * @note This only applies SearchField-specific overrides (icon paddings).
  * Base input styling (bg, border, focus, variants, etc.) comes from the Input component.
  * @see {@link ../input/input.styles.ts} for the base Input styles.
  */
@@ -30,6 +38,7 @@ export const searchFieldClassNames = combineStyles({
   root,
   group,
   searchIcon,
+  inputContainer,
   input,
   clearButton,
 });

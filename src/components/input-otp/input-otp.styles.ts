@@ -35,6 +35,15 @@ const slot = tv({
   },
 });
 
+/**
+ * Slot background style definition — absolute-fill container behind the
+ * slot content, hosting theme-specific layers (e.g. glass blur) or custom
+ * content (gradients, images).
+ */
+const slotBackground = tv({
+  base: 'input-otp__slot-background',
+});
+
 const slotPlaceholder = tv({
   base: 'input-otp__slot-placeholder',
 });
@@ -55,6 +64,7 @@ export const inputOTPClassNames = combineStyles({
   root,
   group,
   slot,
+  slotBackground,
   slotPlaceholder,
   slotValue,
   slotCaret,

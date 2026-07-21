@@ -74,6 +74,17 @@ export interface InputOTPGroupProps
 export type InputOTPGroupRef = InputOTPPrimitivesTypes.GroupRef;
 
 /**
+ * Props for the InputOTP.SlotBackground sub-component.
+ * Generic absolute-fill container behind the slot content. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type InputOTPSlotBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
+
+/**
  * Props for the InputOTP.Slot component
  * Extends the primitive SlotProps
  */
@@ -87,6 +98,16 @@ export interface InputOTPSlotProps extends InputOTPPrimitivesTypes.SlotProps {
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Background layer rendered behind the slot content.
+   * - `undefined` (default): renders `InputOTP.SlotBackground` for the
+   *   primary (field) variant, whose content is decided by the active
+   *   library theme; the secondary variant renders no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `InputOTP.SlotBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 }
 
 /**

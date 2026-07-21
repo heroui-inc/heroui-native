@@ -1,4 +1,16 @@
-import type { TextInputProps } from 'react-native';
+import type { ReactNode } from 'react';
+import type { TextInputProps, ViewProps } from 'react-native';
+
+/**
+ * Props for the Input.Background sub-component.
+ * Generic absolute-fill container behind the text input. When no `children`
+ * are given, the active library theme decides the default content (e.g. a
+ * frosted-glass blur layer when the theme is `glass`).
+ */
+export type InputBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Props for the Input component
@@ -20,9 +32,24 @@ export interface InputProps extends TextInputProps {
    */
   variant?: 'primary' | 'secondary';
   /**
-   * Additional CSS classes
+   * Additional CSS classes for the text input element
    */
   className?: string;
+  /**
+   * Additional CSS classes for the outer container that wraps the
+   * background layer and the text input (e.g. `flex-1` in row layouts)
+   */
+  containerClassName?: string;
+  /**
+   * Background layer rendered behind the text input.
+   * - `undefined` (default): renders `Input.Background` for the primary
+   *   (field) variant, whose content is decided by the active library
+   *   theme; the secondary variant renders no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Input.Background` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: ReactNode;
   /**
    * Custom className for the selection color
    * @default "accent-accent"

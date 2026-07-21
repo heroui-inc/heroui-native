@@ -110,7 +110,6 @@
   },
   "peerDependencies": {
     "@gorhom/bottom-sheet": "^5.2.9",
-    "@react-native-community/blur": ">=4.4.0",
     "expo-blur": ">=14.0.0",
     "react": ">=19.0.0",
     "react-native": ">=0.81.0",
@@ -125,9 +124,6 @@
   },
   "peerDependenciesMeta": {
     "@gorhom/bottom-sheet": {
-      "optional": true
-    },
-    "@react-native-community/blur": {
       "optional": true
     },
     "expo-blur": {

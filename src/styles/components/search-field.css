@@ -16,10 +16,14 @@
 /*
  * Only SearchField-specific overrides. Base input styling comes from the
  * Input component (.input__input). Declared after input.css in the index so
- * these paddings win the cascade.
+ * these paddings win the cascade. The flex stretch lives on the Input's
+ * outer container (.search-field__input-container), not the text input.
  */
-.search-field__input {
+.search-field__input-container {
   flex: 1;
+}
+
+.search-field__input {
   padding-left: calc(var(--spacing) * 9);
   padding-right: calc(var(--spacing) * 12);
 }

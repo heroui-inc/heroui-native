@@ -19,6 +19,5 @@ export type {
   SliderOutputProps,
   SliderProps,
   SliderThumbProps,
-  SliderTrackBackgroundProps,
   SliderTrackProps,
 } from './slider.types';

@@ -1,6 +1,6 @@
 # GlassView
 
-Absolute-fill frosted-glass layer built on an optional blur package — `expo-blur` (preferred) or `@react-native-community/blur`.
+Absolute-fill frosted-glass layer. Real blur on iOS via the optional `expo-blur` package; a plain transparent layer on Android.
 
 ## Import
 
@@ -14,7 +14,7 @@ import { GlassView } from 'heroui-native';
 <GlassView />
 ```
 
-- **GlassView**: Absolute-fill blur layer. Renders the blur unconditionally — theme gating is the responsibility of the part that mounts it. Overlay components (Popover, Dialog, Menu, BottomSheet, Select, Toast) expose theme-gated `X.Glass` compound parts that render `null` unless the `--theme` CSS variable resolves to `glass`.
+- **GlassView**: Absolute-fill layer. Renders unconditionally — theme gating is the responsibility of the part that mounts it. Overlay components (Popover, Dialog, Menu, BottomSheet, Select, Toast) expose theme-gated `X.Glass` compound parts that render `null` unless the `--theme` CSS variable resolves to `glass`.
 
 ## Setup
 
@@ -26,19 +26,16 @@ The `X.Glass` parts activate when a glass theme sets the `--theme` variable:
 }
 ```
 
-The `heroui-native-pro/themes/glass` theme does this for you. Install one of the optional blur dependencies for native blur:
+The `heroui-native-pro/themes/glass` theme does this for you. Install the optional blur dependency for native blur on iOS:
 
 ```bash
-# Expo projects (preferred)
 npx expo install expo-blur
-
-# or, bare React Native projects
-npm install @react-native-community/blur
 ```
 
-The `blurPackage` prop selects which package renders the layer (`'expo-blur'` by default, `'community-blur'` for @react-native-community/blur); when the preferred package is not installed, GlassView falls back to the other installed one. With `community-blur`, the `tint`/`intensity` props are mapped to its `blurType`/`blurAmount`, and `experimentalBlurMethod` is ignored (it blurs natively on Android).
+## Platform behavior
 
-Without either package, GlassView renders a plain transparent layer — the glass theme's translucent surface colors still apply, just without native blur.
+- **iOS** (with expo-blur installed): a native `BlurView` blurs the content behind the layer; `intensity` and `tint` are forwarded.
+- **Android**, or any platform without expo-blur: React Native has no reliable backdrop blur on Android, so the layer renders a plain transparent `View` — the glass theme's translucent surface colors still apply, just without native blur. Style it via `className` if a different fallback surface is needed.
 
 ## Usage
 
@@ -74,14 +71,12 @@ Components with an injectable background render it automatically; replace it via
 
 ### GlassView
 
-| prop                     | type                            | default                                    | description                                                                                     |
-| ------------------------ | ------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `blurPackage`            | `'expo-blur' \| 'community-blur'` | `'expo-blur'`                            | Which blur package renders the layer; falls back to the other installed one.                    |
-| `intensity`              | `number`                        | `50`                                       | Blur intensity (0-100). Maps to expo-blur `intensity` / community `blurAmount`.                 |
-| `tint`                   | `ExpoBlurTint`                  | derived from the active light/dark scheme  | Blur tint. Maps to expo-blur `tint` / community `blurType`.                                     |
-| `experimentalBlurMethod` | `'none' \| 'dimezisBlurView'`   | `'dimezisBlurView'` on Android             | expo-blur only: Android blur implementation. Ignored with @react-native-community/blur.         |
-| `className`              | `string`                        | -                                          | Additional classes for the blur layer (e.g. radius clipping).                                   |
-| `...ViewProps`           | `ViewProps`                     | -                                          | All standard React Native View props.                                                           |
+| prop           | type           | default                                   | description                                               |
+| -------------- | -------------- | ----------------------------------------- | --------------------------------------------------------- |
+| `intensity`    | `number`       | `30`                                      | Blur intensity (0-100). iOS only, forwarded to expo-blur. |
+| `tint`         | `ExpoBlurTint` | derived from the active light/dark scheme | Blur tint. iOS only, forwarded to expo-blur.              |
+| `className`    | `string`       | -                                         | Additional classes for the layer (e.g. radius clipping).  |
+| `...ViewProps` | `ViewProps`    | -                                         | All standard React Native View props.                     |
 
 ### useIsGlassTheme
 
@@ -89,4 +84,4 @@ Hook returning `true` when the active `--theme` is `glass`.
 
 ## Performance
 
-Blur layers are comparatively expensive, especially on Android. Avoid stacking many simultaneous GlassViews (e.g. large toast stacks); overlay components already avoid double-blur where surfaces overlap.
+Blur layers are comparatively expensive. Avoid stacking many simultaneous GlassViews (e.g. large toast stacks); overlay components already avoid double-blur where surfaces overlap. The Android fallback is a plain view and has no blur cost.

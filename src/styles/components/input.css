@@ -1,3 +1,17 @@
+.input__container {
+  position: relative;
+}
+
+.input__background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--radius-field);
+  overflow: hidden;
+}
+
 .input__input {
   min-height: calc(var(--spacing) * 12);
   padding-inline: calc(var(--spacing) * 3);

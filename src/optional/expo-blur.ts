@@ -28,16 +28,9 @@ export type ExpoBlurTint =
   | 'systemThickMaterialDark'
   | 'systemChromeMaterialDark';
 
-/**
- * Mirrors expo-blur's `ExperimentalBlurMethod` union. Android renders no blur
- * unless `dimezisBlurView` is set.
- */
-export type ExpoBlurMethod = 'none' | 'dimezisBlurView';
-
 export type ExpoBlurBlurViewProps = ViewProps & {
   intensity?: number;
   tint?: ExpoBlurTint;
-  experimentalBlurMethod?: ExpoBlurMethod;
   className?: string;
 };
 

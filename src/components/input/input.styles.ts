@@ -3,6 +3,24 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 /**
+ * Container style definition — wraps the background layer and the text
+ * input. The text input cannot host children, so the background renders as
+ * a sibling behind it inside this container.
+ */
+const container = tv({
+  base: 'input__container',
+});
+
+/**
+ * Background style definition — absolute-fill container behind the text
+ * input, hosting theme-specific layers (e.g. glass blur) or custom content
+ * (gradients, images).
+ */
+const background = tv({
+  base: 'input__background',
+});
+
+/**
  * @note Platform/state-prefixed Tailwind utilities (`ios:`, `android:`, `focus:`,
  * `disabled:`) stay here because the uniwind CSS parser does not support them
  * inside custom CSS classes. All plain styles live in `styles/components/input.css`.
@@ -45,6 +63,8 @@ const inputSelectionColor = tv({
 });
 
 export const inputClassNames = combineStyles({
+  container,
+  background,
   input,
   inputSelectionColor,
   placeholderTextColor,

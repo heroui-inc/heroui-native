@@ -11,17 +11,6 @@ export const DISPLAY_NAME = {
 export const GLASS_THEME_VALUE = 'glass';
 
 /**
- * Default blur intensity forwarded to the blur package
+ * Default blur intensity forwarded to expo-blur (iOS only)
  */
-export const DEFAULT_INTENSITY = 20;
-
-/**
- * Default blur package preference
- */
-export const DEFAULT_BLUR_PACKAGE = 'expo-blur';
-
-/**
- * Default Android blur implementation. Android renders no blur unless
- * `dimezisBlurView` is used.
- */
-export const DEFAULT_ANDROID_BLUR_METHOD = 'dimezisBlurView';
+export const DEFAULT_INTENSITY = 30;

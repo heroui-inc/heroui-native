@@ -1,0 +1,3 @@
+.text-field__root {
+  gap: calc(var(--spacing) * 1.5);
+}

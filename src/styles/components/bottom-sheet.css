@@ -1,0 +1,38 @@
+.bottom-sheet__overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--color-backdrop);
+}
+
+.bottom-sheet__content-container {
+  flex: 1;
+  padding: calc(var(--spacing) * 5);
+  background-color: transparent;
+}
+
+.bottom-sheet__content-background {
+  background-color: var(--color-overlay);
+  border-top-left-radius: var(--radius-4xl);
+  border-top-right-radius: var(--radius-4xl);
+  box-shadow: var(--shadow-overlay);
+}
+
+.bottom-sheet__content-handle-indicator {
+  background-color: var(--color-separator);
+}
+
+.bottom-sheet__label {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg--line-height);
+  font-family: var(--font-medium);
+  color: var(--color-foreground);
+}
+
+.bottom-sheet__description {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  color: var(--color-muted);
+}

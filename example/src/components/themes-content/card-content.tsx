@@ -10,7 +10,7 @@ export const CardContent = () => {
   return (
     <View className="flex-row gap-4">
       <PressableFeedback
-        className="flex-1 aspect-[1/1.3] overflow-auto"
+        className="flex-1 aspect-[1/1.3] overflow-auto rounded-3xl"
         animation={{ scale: { value: 0.995 } }}
       >
         <Card className="flex-1">
@@ -55,7 +55,7 @@ export const CardContent = () => {
         </Card>
       </PressableFeedback>
       <PressableFeedback
-        className="flex-1 aspect-[1/1.3] overflow-auto"
+        className="flex-1 aspect-[1/1.3] overflow-auto rounded-3xl"
         animation={{ scale: { value: 0.995 } }}
       >
         <Card className="flex-1">

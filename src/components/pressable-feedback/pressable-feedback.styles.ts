@@ -4,7 +4,7 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'overflow-hidden',
+  base: 'pressable-feedback__root',
 });
 
 /**
@@ -29,7 +29,7 @@ const root = tv({
  * set `isAnimatedStyleActive={false}` on `PressableFeedback.Highlight`.
  */
 const highlight = tv({
-  base: 'absolute inset-0',
+  base: 'pressable-feedback__highlight',
 });
 
 /**
@@ -65,8 +65,8 @@ const highlight = tv({
  */
 const ripple = tv({
   slots: {
-    container: 'absolute inset-0',
-    ripple: 'absolute top-0 left-0 rounded-full',
+    container: 'pressable-feedback__ripple-container',
+    ripple: 'pressable-feedback__ripple',
   },
 });
 

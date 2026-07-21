@@ -18,11 +18,11 @@ const footer = tv({
 });
 
 const label = tv({
-  base: 'text-lg text-foreground font-medium',
+  base: 'card__label',
 });
 
 const description = tv({
-  base: 'text-base text-muted',
+  base: 'card__description',
 });
 
 export const cardClassNames = combineStyles({

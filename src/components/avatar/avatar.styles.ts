@@ -6,16 +6,16 @@ import { combineStyles } from '../../helpers/internal/utils';
  * Avatar root styles
  */
 const root = tv({
-  base: 'items-center justify-center overflow-hidden rounded-full',
+  base: 'avatar__root',
   variants: {
     variant: {
-      default: 'bg-default',
+      default: 'avatar__root--variant-default',
       soft: '',
     },
     size: {
-      sm: 'size-10',
-      md: 'size-12',
-      lg: 'size-16',
+      sm: 'avatar__root--size-sm',
+      md: 'avatar__root--size-md',
+      lg: 'avatar__root--size-lg',
     },
     color: {
       accent: '',
@@ -30,27 +30,27 @@ const root = tv({
     {
       variant: 'soft',
       color: 'accent',
-      className: 'bg-accent/15',
+      className: 'avatar__root--variant-soft--color-accent',
     },
     {
       variant: 'soft',
       color: 'default',
-      className: 'bg-default',
+      className: 'avatar__root--variant-soft--color-default',
     },
     {
       variant: 'soft',
       color: 'success',
-      className: 'bg-success/15',
+      className: 'avatar__root--variant-soft--color-success',
     },
     {
       variant: 'soft',
       color: 'warning',
-      className: 'bg-warning/15',
+      className: 'avatar__root--variant-soft--color-warning',
     },
     {
       variant: 'soft',
       color: 'danger',
-      className: 'bg-danger/15',
+      className: 'avatar__root--variant-soft--color-danger',
     },
   ],
   defaultVariants: {
@@ -80,7 +80,7 @@ const root = tv({
  * set `isAnimatedStyleActive={false}` on `Avatar.Image`.
  */
 const image = tv({
-  base: 'h-full w-full',
+  base: 'avatar__image',
 });
 
 /**
@@ -88,36 +88,36 @@ const image = tv({
  */
 const fallback = tv({
   slots: {
-    container: 'h-full w-full items-center justify-center rounded-full',
-    text: 'font-medium',
+    container: 'avatar__fallback-container',
+    text: 'avatar__fallback-text',
   },
   variants: {
     size: {
       sm: {
-        text: 'text-xs',
+        text: 'avatar__fallback-text--size-sm',
       },
       md: {
-        text: 'text-sm',
+        text: 'avatar__fallback-text--size-md',
       },
       lg: {
-        text: 'text-base',
+        text: 'avatar__fallback-text--size-lg',
       },
     },
     color: {
       default: {
-        text: 'text-default-soft-foreground',
+        text: 'avatar__fallback-text--color-default',
       },
       accent: {
-        text: 'text-accent-soft-foreground',
+        text: 'avatar__fallback-text--color-accent',
       },
       success: {
-        text: 'text-success-soft-foreground',
+        text: 'avatar__fallback-text--color-success',
       },
       warning: {
-        text: 'text-warning-soft-foreground',
+        text: 'avatar__fallback-text--color-warning',
       },
       danger: {
-        text: 'text-danger-soft-foreground',
+        text: 'avatar__fallback-text--color-danger',
       },
     },
   },

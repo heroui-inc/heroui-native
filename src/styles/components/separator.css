@@ -1,0 +1,27 @@
+.separator__root {
+  background-color: var(--color-separator);
+}
+
+/* Root - orientation */
+
+.separator__root--orientation-vertical {
+  height: 100%;
+}
+
+/* Root - variant x orientation compounds */
+
+.separator__root--variant-thin--orientation-horizontal {
+  height: hairlineWidth();
+}
+
+.separator__root--variant-thin--orientation-vertical {
+  width: hairlineWidth();
+}
+
+.separator__root--variant-thick--orientation-horizontal {
+  height: 6px;
+}
+
+.separator__root--variant-thick--orientation-vertical {
+  width: 6px;
+}

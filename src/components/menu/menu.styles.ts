@@ -3,7 +3,7 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const portal = tv({
-  base: 'absolute inset-0',
+  base: 'menu__portal',
 });
 
 /**
@@ -13,7 +13,7 @@ const portal = tv({
  * - `opacity` - Animated for overlay show/hide transitions (idle: 0, open: 1, close: 0)
  */
 const overlay = tv({
-  base: 'absolute inset-0',
+  base: 'menu__overlay',
 });
 
 /**
@@ -25,17 +25,17 @@ const overlay = tv({
  * - `transformOrigin` - Animated based on placement
  */
 const content = tv({
-  base: 'absolute bg-overlay px-1.5 py-3 rounded-3xl',
+  base: 'menu__content',
   variants: {
     isSubMenuOpen: {
-      true: 'shadow-none',
-      false: 'shadow-overlay',
+      true: 'menu__content--is-sub-menu-open',
+      false: 'menu__content--is-sub-menu-open-false',
     },
   },
 });
 
 const contentBottomSheet = tv({
-  base: 'px-3',
+  base: 'menu__content-bottom-sheet',
 });
 
 /**
@@ -48,7 +48,7 @@ const close = tv({
 });
 
 const label = tv({
-  base: 'text-sm font-medium text-muted ml-3',
+  base: 'menu__label',
 });
 
 const group = tv({
@@ -63,23 +63,23 @@ const group = tv({
  * - `transform` (scale) - Animated for press feedback (1 → 0.98 on press)
  */
 const item = tv({
-  base: 'flex-row items-center gap-2.5 px-2.5 py-2 rounded-2xl',
+  base: 'menu__item',
   variants: {
     isDisabled: {
-      true: 'disabled:opacity-disabled disabled:pointer-events-none',
+      true: 'disabled:element-disabled',
     },
     isOutsideSubMenuOnOpen: {
-      true: 'opacity-40 pointer-events-none',
+      true: 'menu__item--is-outside-sub-menu-on-open',
     },
   },
 });
 
 const itemTitle = tv({
-  base: 'flex-1 text-base font-medium',
+  base: 'menu__item-title',
   variants: {
     variant: {
-      default: 'text-foreground',
-      danger: 'text-danger',
+      default: 'menu__item-title--variant-default',
+      danger: 'menu__item-title--variant-danger',
     },
   },
   defaultVariants: {
@@ -88,11 +88,11 @@ const itemTitle = tv({
 });
 
 const itemDescription = tv({
-  base: 'text-sm/snug text-muted',
+  base: 'menu__item-description',
 });
 
 const itemIndicator = tv({
-  base: 'size-5 items-center justify-center',
+  base: 'menu__item-indicator',
 });
 
 export const menuClassNames = combineStyles({

@@ -5,32 +5,32 @@ const root = tv({
   base: '',
   variants: {
     isDisabled: {
-      true: 'pointer-events-none opacity-disabled',
+      true: 'label__root--is-disabled',
     },
     isInsideField: {
-      true: 'px-1.5',
+      true: 'label__root--is-inside-field',
     },
     isInsideControlField: {
-      true: 'pointer-events-none',
+      true: 'label__root--is-inside-control-field',
     },
   },
 });
 
 const label = tv({
   slots: {
-    text: 'text-base text-foreground font-medium',
-    asterisk: 'text-lg/6 text-danger',
+    text: 'label__text',
+    asterisk: 'label__asterisk',
   },
   variants: {
     isDisabled: {
       true: {
         text: '',
-        asterisk: 'text-muted',
+        asterisk: 'label__asterisk--is-disabled',
       },
     },
     isInvalid: {
       true: {
-        text: 'text-danger',
+        text: 'label__text--is-invalid',
       },
     },
   },

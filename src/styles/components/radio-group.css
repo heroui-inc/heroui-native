@@ -1,0 +1,10 @@
+.radio-group__root {
+  gap: calc(var(--spacing) * 3);
+}
+
+.radio-group__item {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--spacing) * 3);
+}

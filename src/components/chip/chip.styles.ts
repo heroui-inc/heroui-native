@@ -3,18 +3,18 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'self-start flex-row items-center justify-center gap-1 overflow-hidden',
+  base: 'chip__root',
   variants: {
     variant: {
       primary: '',
-      secondary: 'bg-default',
-      tertiary: 'bg-transparent',
+      secondary: 'chip__root--variant-secondary',
+      tertiary: 'chip__root--variant-tertiary',
       soft: '',
     },
     size: {
-      sm: 'px-2 py-0.5 rounded-xl',
-      md: 'px-3 py-1 rounded-2xl',
-      lg: 'px-4 py-1.5 rounded-3xl',
+      sm: 'chip__root--size-sm',
+      md: 'chip__root--size-md',
+      lg: 'chip__root--size-lg',
     },
     color: {
       accent: '',
@@ -29,53 +29,53 @@ const root = tv({
     {
       variant: 'primary',
       color: 'accent',
-      className: 'bg-accent',
+      className: 'chip__root--variant-primary--color-accent',
     },
     {
       variant: 'primary',
       color: 'default',
-      className: 'bg-default',
+      className: 'chip__root--variant-primary--color-default',
     },
     {
       variant: 'primary',
       color: 'success',
-      className: 'bg-success',
+      className: 'chip__root--variant-primary--color-success',
     },
     {
       variant: 'primary',
       color: 'warning',
-      className: 'bg-warning',
+      className: 'chip__root--variant-primary--color-warning',
     },
     {
       variant: 'primary',
       color: 'danger',
-      className: 'bg-danger',
+      className: 'chip__root--variant-primary--color-danger',
     },
     // Soft variant colors
     {
       variant: 'soft',
       color: 'accent',
-      className: 'bg-accent-soft',
+      className: 'chip__root--variant-soft--color-accent',
     },
     {
       variant: 'soft',
       color: 'default',
-      className: 'bg-default',
+      className: 'chip__root--variant-soft--color-default',
     },
     {
       variant: 'soft',
       color: 'success',
-      className: 'bg-success-soft',
+      className: 'chip__root--variant-soft--color-success',
     },
     {
       variant: 'soft',
       color: 'warning',
-      className: 'bg-warning-soft',
+      className: 'chip__root--variant-soft--color-warning',
     },
     {
       variant: 'soft',
       color: 'danger',
-      className: 'bg-danger-soft',
+      className: 'chip__root--variant-soft--color-danger',
     },
   ],
   defaultVariants: {
@@ -86,7 +86,7 @@ const root = tv({
 });
 
 const label = tv({
-  base: 'font-medium',
+  base: 'chip__label',
   variants: {
     variant: {
       primary: '',
@@ -95,9 +95,9 @@ const label = tv({
       soft: '',
     },
     size: {
-      sm: 'text-xs',
-      md: 'text-sm',
-      lg: 'text-base',
+      sm: 'chip__label--size-sm',
+      md: 'chip__label--size-md',
+      lg: 'chip__label--size-lg',
     },
     color: {
       accent: '',
@@ -112,105 +112,105 @@ const label = tv({
     {
       variant: 'primary',
       color: 'accent',
-      className: 'text-accent-foreground',
+      className: 'chip__label--variant-primary--color-accent',
     },
     {
       variant: 'primary',
       color: 'default',
-      className: 'text-default-foreground',
+      className: 'chip__label--variant-primary--color-default',
     },
     {
       variant: 'primary',
       color: 'success',
-      className: 'text-success-foreground',
+      className: 'chip__label--variant-primary--color-success',
     },
     {
       variant: 'primary',
       color: 'warning',
-      className: 'text-warning-foreground',
+      className: 'chip__label--variant-primary--color-warning',
     },
     {
       variant: 'primary',
       color: 'danger',
-      className: 'text-danger-foreground',
+      className: 'chip__label--variant-primary--color-danger',
     },
     // Secondary variant text colors
     {
       variant: 'secondary',
       color: 'accent',
-      className: 'text-accent-soft-foreground',
+      className: 'chip__label--variant-secondary--color-accent',
     },
     {
       variant: 'secondary',
       color: 'default',
-      className: 'text-default-soft-foreground',
+      className: 'chip__label--variant-secondary--color-default',
     },
     {
       variant: 'secondary',
       color: 'success',
-      className: 'text-success-soft-foreground',
+      className: 'chip__label--variant-secondary--color-success',
     },
     {
       variant: 'secondary',
       color: 'warning',
-      className: 'text-warning-soft-foreground',
+      className: 'chip__label--variant-secondary--color-warning',
     },
     {
       variant: 'secondary',
       color: 'danger',
-      className: 'text-danger-soft-foreground',
+      className: 'chip__label--variant-secondary--color-danger',
     },
     // Tertiary variant text colors
     {
       variant: 'tertiary',
       color: 'accent',
-      className: 'text-accent-soft-foreground',
+      className: 'chip__label--variant-tertiary--color-accent',
     },
     {
       variant: 'tertiary',
       color: 'default',
-      className: 'text-default-soft-foreground',
+      className: 'chip__label--variant-tertiary--color-default',
     },
     {
       variant: 'tertiary',
       color: 'success',
-      className: 'text-success-soft-foreground',
+      className: 'chip__label--variant-tertiary--color-success',
     },
     {
       variant: 'tertiary',
       color: 'warning',
-      className: 'text-warning-soft-foreground',
+      className: 'chip__label--variant-tertiary--color-warning',
     },
     {
       variant: 'tertiary',
       color: 'danger',
-      className: 'text-danger-soft-foreground',
+      className: 'chip__label--variant-tertiary--color-danger',
     },
     // Soft variant text colors
     {
       variant: 'soft',
       color: 'accent',
-      className: 'text-accent-soft-foreground',
+      className: 'chip__label--variant-soft--color-accent',
     },
     {
       variant: 'soft',
       color: 'default',
-      className: 'text-default-soft-foreground',
+      className: 'chip__label--variant-soft--color-default',
     },
     {
       variant: 'soft',
       color: 'success',
-      className: 'text-success-soft-foreground',
+      className: 'chip__label--variant-soft--color-success',
     },
     {
       variant: 'soft',
       color: 'warning',
-      className: 'text-warning-soft-foreground',
+      className: 'chip__label--variant-soft--color-warning',
     },
     {
       variant: 'soft',
       color: 'danger',
-      className: 'text-danger-soft-foreground',
+      className: 'chip__label--variant-soft--color-danger',
     },
   ],
   defaultVariants: {

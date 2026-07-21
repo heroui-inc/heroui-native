@@ -22,27 +22,27 @@ import { combineStyles } from '../../helpers/internal/utils';
  * To disable the scale animation, set `animation={{ scale: false }}` or `animation={false}`.
  */
 const root = tv({
-  base: 'flex-row items-center justify-center border-0',
+  base: 'button__root',
   variants: {
     variant: {
-      primary: 'bg-accent',
-      secondary: 'bg-default',
-      tertiary: 'bg-default',
-      outline: 'bg-transparent border border-border',
-      ghost: 'bg-transparent',
-      danger: 'bg-danger',
-      ['danger-soft']: 'bg-danger-soft border-0',
+      primary: 'button__root--variant-primary',
+      secondary: 'button__root--variant-secondary',
+      tertiary: 'button__root--variant-tertiary',
+      outline: 'button__root--variant-outline',
+      ghost: 'button__root--variant-ghost',
+      danger: 'button__root--variant-danger',
+      ['danger-soft']: 'button__root--variant-danger-soft',
     },
     size: {
-      sm: 'h-10 px-3.5 gap-1.5 rounded-3xl',
-      md: 'h-12 px-4 gap-2 rounded-3xl',
-      lg: 'h-14 px-5 gap-2.5 rounded-4xl',
+      sm: 'button__root--size-sm',
+      md: 'button__root--size-md',
+      lg: 'button__root--size-lg',
     },
     isIconOnly: {
-      true: 'p-0 aspect-square',
+      true: 'button__root--is-icon-only',
     },
     isDisabled: {
-      true: 'disabled:opacity-disabled disabled:pointer-events-none',
+      true: 'disabled:element-disabled',
     },
   },
   defaultVariants: {
@@ -54,21 +54,21 @@ const root = tv({
 });
 
 const label = tv({
-  base: 'font-medium',
+  base: 'button__label',
   variants: {
     variant: {
-      primary: 'text-accent-foreground',
-      secondary: 'text-accent-soft-foreground',
-      tertiary: 'text-default-foreground',
-      outline: 'text-default-foreground',
-      ghost: 'text-default-foreground',
-      danger: 'text-danger-foreground',
-      ['danger-soft']: 'text-danger-soft-foreground',
+      primary: 'button__label--variant-primary',
+      secondary: 'button__label--variant-secondary',
+      tertiary: 'button__label--variant-tertiary',
+      outline: 'button__label--variant-outline',
+      ghost: 'button__label--variant-ghost',
+      danger: 'button__label--variant-danger',
+      ['danger-soft']: 'button__label--variant-danger-soft',
     },
     size: {
-      sm: 'text-sm',
-      md: 'text-base',
-      lg: 'text-lg',
+      sm: 'button__label--size-sm',
+      md: 'button__label--size-md',
+      lg: 'button__label--size-lg',
     },
   },
   defaultVariants: {

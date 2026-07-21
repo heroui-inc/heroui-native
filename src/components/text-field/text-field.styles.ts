@@ -2,7 +2,7 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'gap-1.5',
+  base: 'text-field__root',
 });
 
 export const textFieldClassNames = combineStyles({

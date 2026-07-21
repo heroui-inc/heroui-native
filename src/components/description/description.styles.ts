@@ -2,16 +2,16 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'text-sm text-muted',
+  base: 'description__root',
   variants: {
     isInsideField: {
-      true: 'px-1.5',
+      true: 'description__root--is-inside-field',
     },
     isInvalid: {
-      true: 'text-danger',
+      true: 'description__root--is-invalid',
     },
     isDisabled: {
-      true: 'opacity-disabled',
+      true: 'description__root--is-disabled',
       false: '',
     },
   },

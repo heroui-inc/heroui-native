@@ -6,23 +6,22 @@ const trigger = tv({
   base: '',
   variants: {
     variant: {
-      default:
-        'flex-row items-center justify-between gap-3 py-3 px-4 rounded-2xl bg-surface shadow-surface',
+      default: 'select__trigger--variant-default',
       unstyled: '',
     },
     isDisabled: {
-      true: 'opacity-disabled pointer-events-none',
+      true: 'select__trigger--is-disabled',
       false: '',
     },
   },
 });
 
 const value = tv({
-  base: 'flex-1 text-base',
+  base: 'select__value',
   variants: {
     isSelected: {
-      true: 'text-foreground',
-      false: 'text-field-placeholder',
+      true: 'select__value--is-selected',
+      false: 'select__value--is-selected-false',
     },
   },
 });
@@ -47,11 +46,11 @@ const value = tv({
  * set `isAnimatedStyleActive={false}` on `Select.TriggerIndicator`.
  */
 const triggerIndicator = tv({
-  base: 'items-center justify-center',
+  base: 'select__trigger-indicator',
 });
 
 const portal = tv({
-  base: 'absolute inset-0',
+  base: 'select__portal',
 });
 
 /**
@@ -74,14 +73,14 @@ const portal = tv({
  * set `isAnimatedStyleActive={false}` on `Select.Overlay`.
  */
 const overlay = tv({
-  base: 'absolute inset-0',
+  base: 'select__overlay',
 });
 
 /**
  * Popover content style definition
  */
 const content = tv({
-  base: 'bg-overlay p-3 rounded-3xl shadow-overlay',
+  base: 'select__content',
 });
 
 /**
@@ -89,8 +88,8 @@ const content = tv({
  */
 const dialogContent = tv({
   slots: {
-    wrapper: 'absolute inset-0 justify-center p-5',
-    content: 'bg-overlay p-5 rounded-3xl shadow-overlay',
+    wrapper: 'select__dialog-content-wrapper',
+    content: 'select__dialog-content',
   },
 });
 
@@ -105,23 +104,23 @@ const close = tv({
 });
 
 const listLabel = tv({
-  base: 'text-sm text-muted font-medium px-2 py-1.5',
+  base: 'select__list-label',
 });
 
 const item = tv({
-  base: 'flex-row items-center gap-2 px-2 py-3',
+  base: 'select__item',
 });
 
 const itemLabel = tv({
-  base: 'flex-1 text-base text-foreground font-medium',
+  base: 'select__item-label',
 });
 
 const itemDescription = tv({
-  base: 'text-sm/snug text-muted',
+  base: 'select__item-description',
 });
 
 const itemIndicator = tv({
-  base: 'size-5 items-center justify-center',
+  base: 'select__item-indicator',
 });
 
 export const selectClassNames = combineStyles({

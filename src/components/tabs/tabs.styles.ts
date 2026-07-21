@@ -3,15 +3,15 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'flex-col gap-2',
+  base: 'tabs__root',
 });
 
 const list = tv({
-  base: 'self-start flex-row items-center gap-1',
+  base: 'tabs__list',
   variants: {
     variant: {
-      primary: 'p-[3px] rounded-3xl bg-default',
-      secondary: 'p-0 border-b border-border',
+      primary: 'tabs__list--variant-primary',
+      secondary: 'tabs__list--variant-secondary',
     },
   },
   defaultVariants: {
@@ -24,7 +24,7 @@ const scrollView = tv({
   base: '',
   variants: {
     variant: {
-      primary: '-my-[3px] rounded-3xl',
+      primary: 'tabs__scroll-view--variant-primary',
       secondary: '',
     },
   },
@@ -37,7 +37,7 @@ const scrollViewContentContainer = tv({
   base: '',
   variants: {
     variant: {
-      primary: 'py-[3px] px-px',
+      primary: 'tabs__scroll-view-content-container--variant-primary',
       secondary: '',
     },
   },
@@ -47,10 +47,10 @@ const scrollViewContentContainer = tv({
 });
 
 const trigger = tv({
-  base: 'flex-row items-center justify-center px-3 py-1.5 gap-1.5',
+  base: 'tabs__trigger',
   variants: {
     isDisabled: {
-      true: 'disabled:opacity-disabled disabled:pointer-events-none',
+      true: 'disabled:element-disabled',
       false: '',
     },
   },
@@ -60,11 +60,11 @@ const trigger = tv({
 });
 
 const label = tv({
-  base: 'text-base font-medium',
+  base: 'tabs__label',
   variants: {
     isSelected: {
-      true: 'text-segment-foreground',
-      false: 'text-muted',
+      true: 'tabs__label--is-selected',
+      false: 'tabs__label--is-selected-false',
     },
   },
 });
@@ -93,12 +93,17 @@ const label = tv({
  * To completely disable animated styles and apply your own via className or style prop,
  * set `isAnimatedStyleActive={false}` on `Tabs.Indicator`.
  */
+/**
+ * @note `shadow-sm shadow-surface/25` stays as Tailwind utilities because the
+ * shadow-size + shadow-color-opacity combination has no direct CSS-class
+ * equivalent in the uniwind CSS parser.
+ */
 const indicator = tv({
-  base: 'absolute left-0',
+  base: 'tabs__indicator',
   variants: {
     variant: {
-      primary: 'rounded-3xl shadow-sm shadow-surface/25 bg-segment',
-      secondary: 'bottom-0 border-b-2 border-accent',
+      primary: 'tabs__indicator--variant-primary shadow-sm shadow-surface/25',
+      secondary: 'tabs__indicator--variant-secondary',
     },
     isScrollView: {
       true: '',
@@ -109,7 +114,7 @@ const indicator = tv({
     {
       variant: 'primary',
       isScrollView: true,
-      className: 'top-[3px]',
+      className: 'tabs__indicator--variant-primary--is-scroll-view',
     },
   ],
   defaultVariants: {
@@ -139,7 +144,7 @@ const indicator = tv({
  * set `isAnimatedStyleActive={false}` on `Tabs.Separator`.
  */
 const separator = tv({
-  base: 'w-px h-3/5 bg-separator/30 self-center',
+  base: 'tabs__separator',
 });
 
 const content = tv({

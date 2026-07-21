@@ -22,22 +22,22 @@ import { combineStyles } from '../../helpers/internal/utils';
  * set `isAnimatedStyleActive={false}` on `Checkbox`.
  */
 const root = tv({
-  base: 'size-6 rounded-lg border-field-width border-field-border overflow-hidden',
+  base: 'checkbox__root',
   variants: {
     variant: {
-      primary: 'bg-field shadow-field',
-      secondary: 'bg-default',
+      primary: 'checkbox__root--variant-primary',
+      secondary: 'checkbox__root--variant-secondary',
     },
     isSelected: {
       true: '',
       false: '',
     },
     isDisabled: {
-      true: 'disabled:opacity-disabled disabled:pointer-events-none',
+      true: 'disabled:element-disabled',
       false: '',
     },
     isInvalid: {
-      true: 'border border-danger',
+      true: 'checkbox__root--is-invalid',
       false: '',
     },
   },
@@ -45,7 +45,7 @@ const root = tv({
     {
       isSelected: false,
       isInvalid: true,
-      className: 'bg-transparent',
+      className: 'checkbox__root--is-selected-false--is-invalid',
     },
   ],
   defaultVariants: {
@@ -81,11 +81,11 @@ const root = tv({
  * set `isAnimatedStyleActive={false}` on `Checkbox.Indicator`.
  */
 const indicator = tv({
-  base: 'absolute inset-0 items-center justify-center',
+  base: 'checkbox__indicator',
   variants: {
     isInvalid: {
-      true: 'bg-danger',
-      false: 'bg-accent',
+      true: 'checkbox__indicator--is-invalid',
+      false: 'checkbox__indicator--is-invalid-false',
     },
   },
   defaultVariants: {

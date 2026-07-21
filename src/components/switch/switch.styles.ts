@@ -24,10 +24,10 @@ import { combineStyles } from '../../helpers/internal/utils';
  * set `isAnimatedStyleActive={false}` on `Switch`.
  */
 const root = tv({
-  base: 'w-[48px] h-[24px] rounded-full justify-center overflow-hidden',
+  base: 'switch__root',
   variants: {
     isDisabled: {
-      true: 'disabled:opacity-disabled disabled:pointer-events-none',
+      true: 'disabled:element-disabled',
       false: '',
     },
   },
@@ -58,15 +58,15 @@ const root = tv({
  * set `isAnimatedStyleActive={false}` on `Switch.Thumb`.
  */
 const thumb = tv({
-  base: 'absolute left-[2px] items-center justify-center w-[28px] h-[20px] rounded-full shadow-field overflow-hidden',
+  base: 'switch__thumb',
 });
 
 const startContent = tv({
-  base: 'absolute left-[2px]',
+  base: 'switch__start-content',
 });
 
 const endContent = tv({
-  base: 'absolute right-[2px]',
+  base: 'switch__end-content',
 });
 
 export const switchClassNames = combineStyles({

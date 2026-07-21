@@ -1,0 +1,29 @@
+.switch__root {
+  width: 48px;
+  height: 24px;
+  border-radius: 9999px;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.switch__thumb {
+  position: absolute;
+  left: 2px;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 20px;
+  border-radius: 9999px;
+  box-shadow: var(--shadow-field);
+  overflow: hidden;
+}
+
+.switch__start-content {
+  position: absolute;
+  left: 2px;
+}
+
+.switch__end-content {
+  position: absolute;
+  right: 2px;
+}

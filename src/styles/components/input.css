@@ -1,0 +1,19 @@
+.input__input {
+  min-height: calc(var(--spacing) * 12);
+  padding-inline: calc(var(--spacing) * 3);
+  color: var(--color-foreground);
+  font-family: var(--font-normal);
+  border-radius: var(--radius-field);
+  border-width: var(--border-width-field-width);
+  border-color: var(--color-field-border);
+}
+
+/* Input - variant */
+
+.input__input--variant-primary {
+  background-color: var(--color-field);
+}
+
+.input__input--variant-secondary {
+  background-color: var(--color-default);
+}

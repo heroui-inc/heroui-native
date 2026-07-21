@@ -3,23 +3,23 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'p-0',
+  base: 'list-group__root',
 });
 
 const item = tv({
-  base: 'flex-row items-center p-4 gap-3',
+  base: 'list-group__item',
 });
 
 const itemContent = tv({
-  base: 'flex-1',
+  base: 'list-group__item-content',
 });
 
 const itemTitle = tv({
-  base: 'text-base text-foreground font-medium',
+  base: 'list-group__item-title',
 });
 
 const itemDescription = tv({
-  base: 'text-sm text-muted',
+  base: 'list-group__item-description',
 });
 
 const listGroupClassNames = combineStyles({

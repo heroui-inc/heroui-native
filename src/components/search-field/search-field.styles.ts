@@ -2,15 +2,15 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'gap-1.5',
+  base: 'search-field__root',
 });
 
 const group = tv({
-  base: 'flex-row items-center',
+  base: 'search-field__group',
 });
 
 const searchIcon = tv({
-  base: 'absolute left-3 z-10',
+  base: 'search-field__search-icon',
 });
 
 /**
@@ -19,11 +19,11 @@ const searchIcon = tv({
  * @see {@link ../input/input.styles.ts} for the base Input styles.
  */
 const input = tv({
-  base: 'flex-1 pl-9 pr-12',
+  base: 'search-field__input',
 });
 
 const clearButton = tv({
-  base: 'absolute right-3 size-6',
+  base: 'search-field__clear-button',
 });
 
 export const searchFieldClassNames = combineStyles({

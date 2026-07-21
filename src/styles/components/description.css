@@ -1,0 +1,19 @@
+.description__root {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  color: var(--color-muted);
+}
+
+/* Root - booleans */
+
+.description__root--is-inside-field {
+  padding-inline: calc(var(--spacing) * 1.5);
+}
+
+.description__root--is-invalid {
+  color: var(--color-danger);
+}
+
+.description__root--is-disabled {
+  opacity: var(--opacity-disabled);
+}

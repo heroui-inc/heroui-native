@@ -1,0 +1,107 @@
+.avatar__root {
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-4xl);
+}
+
+/* Root - variant */
+
+.avatar__root--variant-default {
+  background-color: var(--color-default);
+}
+
+/* Root - size */
+
+.avatar__root--size-sm {
+  width: calc(var(--spacing) * 10);
+  height: calc(var(--spacing) * 10);
+}
+
+.avatar__root--size-md {
+  width: calc(var(--spacing) * 12);
+  height: calc(var(--spacing) * 12);
+}
+
+.avatar__root--size-lg {
+  width: calc(var(--spacing) * 16);
+  height: calc(var(--spacing) * 16);
+}
+
+/* Root - variant x color compounds */
+
+.avatar__root--variant-soft--color-accent {
+  background-color: color-mix(in oklab, var(--color-accent) 15%, transparent);
+}
+
+.avatar__root--variant-soft--color-default {
+  background-color: var(--color-default);
+}
+
+.avatar__root--variant-soft--color-success {
+  background-color: color-mix(in oklab, var(--color-success) 15%, transparent);
+}
+
+.avatar__root--variant-soft--color-warning {
+  background-color: color-mix(in oklab, var(--color-warning) 15%, transparent);
+}
+
+.avatar__root--variant-soft--color-danger {
+  background-color: color-mix(in oklab, var(--color-danger) 15%, transparent);
+}
+
+.avatar__image {
+  height: 100%;
+  width: 100%;
+}
+
+.avatar__fallback-container {
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+}
+
+.avatar__fallback-text {
+  font-family: var(--font-medium);
+}
+
+/* Fallback text - size */
+
+.avatar__fallback-text--size-sm {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+}
+
+.avatar__fallback-text--size-md {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+}
+
+.avatar__fallback-text--size-lg {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+}
+
+/* Fallback text - color */
+
+.avatar__fallback-text--color-default {
+  color: var(--color-default-soft-foreground);
+}
+
+.avatar__fallback-text--color-accent {
+  color: var(--color-accent-soft-foreground);
+}
+
+.avatar__fallback-text--color-success {
+  color: var(--color-success-soft-foreground);
+}
+
+.avatar__fallback-text--color-warning {
+  color: var(--color-warning-soft-foreground);
+}
+
+.avatar__fallback-text--color-danger {
+  color: var(--color-danger-soft-foreground);
+}

@@ -2,7 +2,7 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'flex-row items-center gap-3',
+  base: 'control-field__root',
 });
 
 const indicator = tv({

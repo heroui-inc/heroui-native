@@ -1,0 +1,3 @@
+.close-button__root {
+  height: calc(var(--spacing) * 8);
+}

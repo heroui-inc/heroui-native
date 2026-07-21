@@ -2,7 +2,7 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'h-auto p-0',
+  base: 'link-button__root',
 });
 
 const linkButtonClassNames = combineStyles({

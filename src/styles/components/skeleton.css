@@ -1,0 +1,4 @@
+.skeleton__root {
+  background-color: color-mix(in oklab, var(--color-muted) 30%, transparent);
+  overflow: hidden;
+}

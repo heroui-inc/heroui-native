@@ -35,7 +35,7 @@ import { combineStyles } from '../../helpers/internal/utils';
  * set `isAnimatedStyleActive={false}` on `Skeleton`.
  */
 const root = tv({
-  base: 'bg-muted/30 overflow-hidden',
+  base: 'skeleton__root',
 });
 
 export const skeletonClassNames = combineStyles({

@@ -1,0 +1,27 @@
+.list-group__root {
+  padding: 0;
+}
+
+.list-group__item {
+  flex-direction: row;
+  align-items: center;
+  padding: calc(var(--spacing) * 4);
+  gap: calc(var(--spacing) * 3);
+}
+
+.list-group__item-content {
+  flex: 1;
+}
+
+.list-group__item-title {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  color: var(--color-foreground);
+  font-family: var(--font-medium);
+}
+
+.list-group__item-description {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  color: var(--color-muted);
+}

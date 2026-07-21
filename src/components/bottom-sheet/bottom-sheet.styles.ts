@@ -22,19 +22,23 @@ import { combineStyles } from '../../helpers/internal/utils';
  * set `isAnimatedStyleActive={false}` on `BottomSheet.Overlay`.
  */
 const overlay = tv({
-  base: 'absolute inset-0 bg-backdrop',
+  base: 'bottom-sheet__overlay',
 });
 
+/**
+ * @note `pb-safe-offset-3` stays as a Tailwind utility because the uniwind
+ * CSS parser has no safe-area equivalent for custom CSS classes.
+ */
 const contentContainer = tv({
-  base: 'flex-1 p-5 pb-safe-offset-3 bg-transparent',
+  base: 'bottom-sheet__content-container pb-safe-offset-3',
 });
 
 const contentBackground = tv({
-  base: 'bg-overlay rounded-t-4xl shadow-overlay',
+  base: 'bottom-sheet__content-background',
 });
 
 const contentHandleIndicator = tv({
-  base: 'bg-separator',
+  base: 'bottom-sheet__content-handle-indicator',
 });
 
 const close = tv({
@@ -42,11 +46,11 @@ const close = tv({
 });
 
 const label = tv({
-  base: 'text-lg font-medium text-foreground',
+  base: 'bottom-sheet__label',
 });
 
 const description = tv({
-  base: 'text-base text-muted',
+  base: 'bottom-sheet__description',
 });
 
 export const bottomSheetClassNames = combineStyles({

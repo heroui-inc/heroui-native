@@ -2,11 +2,11 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'gap-3',
+  base: 'radio-group__root',
 });
 
 const item = tv({
-  base: 'flex-row items-center justify-between gap-3',
+  base: 'radio-group__item',
 });
 
 export const radioGroupClassNames = combineStyles({

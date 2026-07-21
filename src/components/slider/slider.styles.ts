@@ -3,14 +3,14 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'gap-2',
+  base: 'slider__root',
   variants: {
     orientation: {
-      horizontal: 'w-full',
-      vertical: 'h-full items-center',
+      horizontal: 'slider__root--orientation-horizontal',
+      vertical: 'slider__root--orientation-vertical',
     },
     isDisabled: {
-      true: 'opacity-disabled',
+      true: 'slider__root--is-disabled',
     },
   },
   defaultVariants: {
@@ -22,16 +22,16 @@ const root = tv({
 const output = tv({
   slots: {
     container: '',
-    text: 'text-sm text-muted font-medium',
+    text: 'slider__output-text',
   },
 });
 
 const track = tv({
-  base: 'rounded-xl bg-default',
+  base: 'slider__track',
   variants: {
     orientation: {
-      horizontal: 'w-full h-5 justify-center',
-      vertical: 'h-full w-5 items-center',
+      horizontal: 'slider__track--orientation-horizontal',
+      vertical: 'slider__track--orientation-vertical',
     },
   },
   defaultVariants: {
@@ -40,11 +40,11 @@ const track = tv({
 });
 
 const fill = tv({
-  base: 'absolute rounded-xl bg-accent',
+  base: 'slider__fill',
   variants: {
     orientation: {
-      horizontal: 'inset-y-0',
-      vertical: 'inset-x-0',
+      horizontal: 'slider__fill--orientation-horizontal',
+      vertical: 'slider__fill--orientation-vertical',
     },
   },
   defaultVariants: {
@@ -54,13 +54,17 @@ const fill = tv({
 
 const thumb = tv({
   slots: {
-    thumbContainer: 'absolute p-[2px] bg-accent rounded-xl',
-    thumbKnob: 'flex-1 bg-accent-foreground rounded-xl shadow-field',
+    thumbContainer: 'slider__thumb-container',
+    thumbKnob: 'slider__thumb-knob',
   },
   variants: {
     orientation: {
-      horizontal: { thumbContainer: 'w-7 h-5' },
-      vertical: { thumbContainer: 'w-5 h-7' },
+      horizontal: {
+        thumbContainer: 'slider__thumb-container--orientation-horizontal',
+      },
+      vertical: {
+        thumbContainer: 'slider__thumb-container--orientation-vertical',
+      },
     },
   },
   defaultVariants: {

@@ -1,0 +1,61 @@
+.radio__root {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--spacing) * 3);
+}
+
+.radio__indicator {
+  width: calc(var(--spacing) * 6);
+  height: calc(var(--spacing) * 6);
+  border-radius: 9999px;
+  border-width: var(--border-width-field-width);
+  border-color: var(--color-field-border);
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Indicator - variant */
+
+.radio__indicator--variant-primary {
+  background-color: var(--color-field);
+  box-shadow: var(--shadow-field);
+}
+
+.radio__indicator--variant-secondary {
+  background-color: var(--color-default);
+}
+
+/* Indicator - booleans */
+
+.radio__indicator--is-selected {
+  background-color: var(--color-accent);
+}
+
+.radio__indicator--is-invalid {
+  background-color: transparent;
+  border-color: var(--color-danger);
+}
+
+/* Indicator - compounds */
+
+.radio__indicator--is-invalid--is-selected {
+  background-color: var(--color-danger);
+}
+
+.radio__indicator-thumb {
+  width: calc(var(--spacing) * 2.5);
+  height: calc(var(--spacing) * 2.5);
+  border-radius: 9999px;
+  background-color: var(--color-accent-foreground);
+  box-shadow: var(--shadow-field);
+}
+
+.radio__indicator-thumb--is-selected {
+  opacity: 1;
+}
+
+.radio__indicator-thumb--is-selected-false {
+  opacity: 0;
+}

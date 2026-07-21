@@ -3,7 +3,7 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const portal = tv({
-  base: 'absolute inset-0 justify-center p-5',
+  base: 'dialog__portal',
 });
 
 /**
@@ -26,7 +26,7 @@ const portal = tv({
  * set `isAnimatedStyleActive={false}` on `Dialog.Overlay`.
  */
 const overlay = tv({
-  base: 'absolute inset-0 bg-backdrop',
+  base: 'dialog__overlay',
 });
 
 /**
@@ -51,15 +51,15 @@ const overlay = tv({
  * set `isAnimatedStyleActive={false}` on `Dialog.Content`.
  */
 const content = tv({
-  base: 'bg-overlay p-5 rounded-3xl shadow-overlay',
+  base: 'dialog__content',
 });
 
 const label = tv({
-  base: 'text-lg font-medium text-foreground',
+  base: 'dialog__label',
 });
 
 const description = tv({
-  base: 'text-base text-muted',
+  base: 'dialog__description',
 });
 
 export const dialogClassNames = combineStyles({

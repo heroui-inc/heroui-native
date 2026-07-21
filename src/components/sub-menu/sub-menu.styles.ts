@@ -3,10 +3,10 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 const root = tv({
-  base: 'absolute top-0 left-0 right-0 bg-overlay rounded-3xl overflow-hidden',
+  base: 'sub-menu__root',
   variants: {
     isOpen: {
-      true: 'outline outline-border/20 shadow-overlay',
+      true: 'sub-menu__root--is-open',
     },
   },
   defaultVariants: {
@@ -16,13 +16,13 @@ const root = tv({
 
 /** Trigger styled as a menu item row. */
 const trigger = tv({
-  base: 'flex-row items-center gap-2.5 px-2.5 py-2',
+  base: 'sub-menu__trigger',
   variants: {
     isDisabled: {
-      true: 'opacity-disabled pointer-events-none',
+      true: 'sub-menu__trigger--is-disabled',
     },
     isOtherSubMenuOpen: {
-      true: 'opacity-40 pointer-events-none',
+      true: 'sub-menu__trigger--is-other-sub-menu-open',
     },
   },
 });
@@ -34,12 +34,12 @@ const trigger = tv({
  * - `transform` (specifically `rotate`) - Animated for open/close rotation transitions
  */
 const triggerIndicator = tv({
-  base: 'items-center justify-center',
+  base: 'sub-menu__trigger-indicator',
 });
 
 /** SubMenu content positioned absolutely below the trigger. */
 const content = tv({
-  base: 'absolute left-0 right-0 px-1.5 pb-3',
+  base: 'sub-menu__content',
 });
 
 export const subMenuClassNames = combineStyles({

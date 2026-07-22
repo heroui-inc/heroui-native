@@ -19,6 +19,17 @@ const THEME_BACKGROUND_CONTENT: Partial<Record<HeroUINativeTheme, FC>> = {
 };
 
 /**
+ * Returns `true` when the active library theme registers default background
+ * content in `THEME_BACKGROUND_CONTENT` (e.g. a `GlassView` blur for
+ * `glass`). Components use this to decide whether to mount a background
+ * container at all — themes without an entry skip the wrapper entirely.
+ */
+export const useHasDefaultThemeBackground = (): boolean => {
+  const theme = useLibraryTheme();
+  return Boolean(THEME_BACKGROUND_CONTENT[theme]);
+};
+
+/**
  * ThemeBackground — shared primitive behind all component background
  * containers (`Popover.ContentBackground`, `Input.Background`,
  * `Toast.Background`, etc.).

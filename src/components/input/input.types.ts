@@ -37,17 +37,20 @@ export interface InputProps extends TextInputProps {
   className?: string;
   /**
    * Additional CSS classes for the outer container that wraps the
-   * background layer and the text input (e.g. `flex-1` in row layouts)
+   * background layer and the text input (e.g. `flex-1` in row layouts).
+   * Only applied when a background layer is present (theme default or
+   * custom `background`); otherwise the root remains the text input.
    */
   containerClassName?: string;
   /**
    * Background layer rendered behind the text input.
    * - `undefined` (default): renders `Input.Background` for the primary
-   *   (field) variant, whose content is decided by the active library
-   *   theme; the secondary variant renders no layer
-   * - custom node: replaces the default layer entirely (wrap content in
-   *   `Input.Background` to keep the absolute-fill and clipping)
-   * - `null`: removes the background layer
+   *   (field) variant when the active library theme registers default
+   *   background content (e.g. `glass`); otherwise no layer and no wrapper
+   * - custom node: replaces the default layer entirely and wraps the text
+   *   input (wrap content in `Input.Background` to keep absolute-fill and
+   *   clipping)
+   * - `null`: removes the background layer (bare text input root)
    */
   background?: ReactNode;
   /**

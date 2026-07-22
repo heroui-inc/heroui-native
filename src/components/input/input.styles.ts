@@ -8,7 +8,7 @@ import { combineStyles } from '../../helpers/internal/utils';
  * a sibling behind it inside this container.
  */
 const container = tv({
-  base: 'input__container',
+  base: '',
 });
 
 /**

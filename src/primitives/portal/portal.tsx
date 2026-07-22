@@ -65,7 +65,19 @@ export function PortalHost({ name = DEFAULT_PORTAL_HOST }: { name?: string }) {
   const map = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
   const portalMap = map.get(name) ?? new Map<string, React.ReactNode>();
   if (portalMap.size === 0) return null;
-  return <>{Array.from(portalMap.values())}</>;
+  // Key each portal subtree by its unique portal name. Rendering the values
+  // as an unkeyed array makes React reconcile portals by array index, so when
+  // a portal unregisters (e.g. a screen with an open bottom sheet unmounts)
+  // sibling portals shift index and inherit each other's component state,
+  // including gorhom bottom-sheet open positions. This causes unrelated
+  // sheets to appear open ("ghost sheets") or open sheets to stay invisible.
+  return (
+    <>
+      {Array.from(portalMap.entries()).map(([portalName, portalChildren]) => (
+        <React.Fragment key={portalName}>{portalChildren}</React.Fragment>
+      ))}
+    </>
+  );
 }
 
 // --------------------------------------------------

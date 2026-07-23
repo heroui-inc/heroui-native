@@ -6,7 +6,10 @@ import {
 } from '../../helpers/internal/hooks';
 import { GlassView } from '../glass-view';
 import { DISPLAY_NAME } from './theme-background.constants';
-import type { ThemeBackgroundProps } from './theme-background.types';
+import type {
+  ThemeBackgroundContentProps,
+  ThemeBackgroundProps,
+} from './theme-background.types';
 
 /**
  * Default background content per library theme. Single source of truth for
@@ -14,7 +17,9 @@ import type { ThemeBackgroundProps } from './theme-background.types';
  * to give a new theme its own default layer across all components. Themes
  * without an entry render nothing.
  */
-const THEME_BACKGROUND_CONTENT: Partial<Record<HeroUINativeTheme, FC>> = {
+const THEME_BACKGROUND_CONTENT: Partial<
+  Record<HeroUINativeTheme, FC<ThemeBackgroundContentProps>>
+> = {
   glass: GlassView,
 };
 
@@ -40,16 +45,23 @@ export const useHasDefaultThemeBackground = (): boolean => {
  * `THEME_BACKGROUND_CONTENT` (e.g. a `GlassView` blur layer for the `glass`
  * theme). Pass `children` to host arbitrary content (gradients, images)
  * with the container's positioning and clipping applied.
+ *
+ * `fallbackColor` is forwarded to the theme content so platforms without
+ * native blur (Android / web) can paint an opaque approximation of the
+ * frosted tint.
  */
 const ThemeBackground = forwardRef<View, ThemeBackgroundProps>(
-  ({ children, className, ...props }, ref) => {
+  ({ children, className, fallbackColor, ...props }, ref) => {
     const theme = useLibraryTheme();
 
     const ThemeContent = THEME_BACKGROUND_CONTENT[theme];
 
     return (
       <View ref={ref} className={className} {...props}>
-        {children ?? (ThemeContent ? <ThemeContent /> : null)}
+        {children ??
+          (ThemeContent ? (
+            <ThemeContent fallbackColor={fallbackColor} />
+          ) : null)}
       </View>
     );
   }

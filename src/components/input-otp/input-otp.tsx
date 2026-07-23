@@ -132,6 +132,7 @@ const InputOTPSlotBackground = forwardRef<ViewRef, InputOTPSlotBackgroundProps>(
       <ThemeBackground
         ref={ref}
         className={slotBackgroundClassName}
+        fallbackColor="field"
         {...props}
       />
     );

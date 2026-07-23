@@ -1,4 +1,5 @@
 import type { ViewProps } from 'react-native';
+import type { ThemeColor } from '../../helpers/external/hooks';
 import type { ExpoBlurTint } from '../../optional/expo-blur';
 
 /**
@@ -17,6 +18,14 @@ export type GlassViewProps = ViewProps & {
    * @default derived from the active color scheme ('light' | 'dark')
    */
   tint?: ExpoBlurTint;
+  /**
+   * Theme color token flattened over `--background` and painted as an opaque
+   * `backgroundColor` on platforms without native backdrop blur (Android /
+   * web). iOS ignores this — the blur layer frosts through the translucent
+   * tint instead.
+   * @default 'overlay'
+   */
+  fallbackColor?: ThemeColor;
   /**
    * Additional class names applied to the blur layer
    */

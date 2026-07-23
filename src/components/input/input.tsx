@@ -25,7 +25,12 @@ const InputBackground = forwardRef<View, InputBackgroundProps>(
     const backgroundClassName = inputClassNames.background({ className });
 
     return (
-      <ThemeBackground ref={ref} className={backgroundClassName} {...props} />
+      <ThemeBackground
+        ref={ref}
+        className={backgroundClassName}
+        fallbackColor="field"
+        {...props}
+      />
     );
   }
 );

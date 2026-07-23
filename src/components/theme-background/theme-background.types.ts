@@ -1,4 +1,5 @@
 import type { ViewProps } from 'react-native';
+import type { ThemeColor } from '../../helpers/external/hooks';
 
 /**
  * Props for the ThemeBackground component.
@@ -8,4 +9,18 @@ import type { ViewProps } from 'react-native';
 export type ThemeBackgroundProps = ViewProps & {
   /** Additional CSS classes */
   className?: string;
+  /**
+   * Theme color token forwarded to the default theme content (e.g. `GlassView`)
+   * as its opaque Android / web fallback. Ignored when `children` are supplied.
+   * @default 'overlay' (GlassView default)
+   */
+  fallbackColor?: ThemeColor;
+};
+
+/**
+ * Props accepted by theme-registered default background content components
+ * (currently `GlassView` for the `glass` theme).
+ */
+export type ThemeBackgroundContentProps = {
+  fallbackColor?: ThemeColor;
 };

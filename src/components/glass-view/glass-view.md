@@ -1,6 +1,6 @@
 # GlassView
 
-Absolute-fill frosted-glass layer. Real blur on iOS via the optional `expo-blur` package; a plain transparent layer on Android.
+Absolute-fill frosted-glass layer. Real blur on iOS via the optional `expo-blur` package; an opaque flattened theme color on Android / web.
 
 ## Import
 
@@ -14,11 +14,11 @@ import { GlassView } from 'heroui-native';
 <GlassView />
 ```
 
-- **GlassView**: Absolute-fill layer. Renders unconditionally — theme gating is the responsibility of the part that mounts it. Overlay components (Popover, Dialog, Menu, BottomSheet, Select, Toast) expose theme-gated `X.Glass` compound parts that render `null` unless the `--theme` CSS variable resolves to `glass`.
+- **GlassView**: Absolute-fill layer. Renders unconditionally — theme gating is the responsibility of the part that mounts it. Overlay components (Popover, Dialog, Menu, BottomSheet, Select, Toast) expose theme-gated background compound parts that mount `GlassView` when the `--theme` CSS variable resolves to `glass`.
 
 ## Setup
 
-The `X.Glass` parts activate when a glass theme sets the `--theme` variable:
+The background parts activate when a glass theme sets the `--theme` variable:
 
 ```css
 @theme inline static {
@@ -34,8 +34,8 @@ npx expo install expo-blur
 
 ## Platform behavior
 
-- **iOS** (with expo-blur installed): a native `BlurView` blurs the content behind the layer; `intensity` and `tint` are forwarded.
-- **Android**, or any platform without expo-blur: React Native has no reliable backdrop blur on Android, so the layer renders a plain transparent `View` — the glass theme's translucent surface colors still apply, just without native blur. Style it via `className` if a different fallback surface is needed.
+- **iOS** (with expo-blur installed): a native `BlurView` blurs the content behind the layer; `intensity` and `tint` are forwarded. Translucent theme tokens frost through the blur.
+- **Android / web**, or any platform without expo-blur: the layer paints an opaque color — the `fallbackColor` theme token (default `"overlay"`) alpha-composited over `--background` — approximating the frosted look without translucency. Field surfaces pass `fallbackColor="field"`.
 
 ## Usage
 
@@ -56,7 +56,7 @@ Components with an injectable background render it automatically; replace it via
 <Popover.Content
   background={
     <Popover.ContentBackground>
-      <GlassView intensity={80} tint="light" />
+      <GlassView intensity={80} tint="light" fallbackColor="overlay" />
     </Popover.ContentBackground>
   }
 >
@@ -71,12 +71,13 @@ Components with an injectable background render it automatically; replace it via
 
 ### GlassView
 
-| prop           | type           | default                                   | description                                               |
-| -------------- | -------------- | ----------------------------------------- | --------------------------------------------------------- |
-| `intensity`    | `number`       | `30`                                      | Blur intensity (0-100). iOS only, forwarded to expo-blur. |
-| `tint`         | `ExpoBlurTint` | derived from the active light/dark scheme | Blur tint. iOS only, forwarded to expo-blur.              |
-| `className`    | `string`       | -                                         | Additional classes for the layer (e.g. radius clipping).  |
-| `...ViewProps` | `ViewProps`    | -                                         | All standard React Native View props.                     |
+| prop            | type           | default                                   | description                                                                                          |
+| --------------- | -------------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `intensity`     | `number`       | `30`                                      | Blur intensity (0-100). iOS only, forwarded to expo-blur.                                            |
+| `tint`          | `ExpoBlurTint` | derived from the active light/dark scheme | Blur tint. iOS only, forwarded to expo-blur.                                                         |
+| `fallbackColor` | `ThemeColor`   | `'overlay'`                               | Theme token flattened over `--background` and painted opaque on Android / web (ignored on iOS blur). |
+| `className`     | `string`       | -                                         | Additional classes for the layer (e.g. radius clipping).                                             |
+| `...ViewProps`  | `ViewProps`    | -                                         | All standard React Native View props.                                                                |
 
 ### useIsGlassTheme
 
@@ -84,4 +85,4 @@ Hook returning `true` when the active `--theme` is `glass`.
 
 ## Performance
 
-Blur layers are comparatively expensive. Avoid stacking many simultaneous GlassViews (e.g. large toast stacks); overlay components already avoid double-blur where surfaces overlap. The Android fallback is a plain view and has no blur cost.
+Blur layers are comparatively expensive. Avoid stacking many simultaneous GlassViews (e.g. large toast stacks); overlay components already avoid double-blur where surfaces overlap. The Android / web fallback is a plain opaque view and has no blur cost.

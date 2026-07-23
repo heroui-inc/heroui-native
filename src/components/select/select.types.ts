@@ -97,6 +97,18 @@ export type SelectRootProps<
 };
 
 /**
+ * Props for the Select.TriggerBackground sub-component.
+ * Generic absolute-fill container behind the default variant's trigger
+ * surface. When no `children` are given, the active library theme decides
+ * the default content (e.g. a frosted-glass blur layer when the theme is
+ * `glass`).
+ */
+export type SelectTriggerBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
+
+/**
  * Select Trigger component props
  */
 export interface SelectTriggerProps extends SelectPrimitivesTypes.TriggerProps {
@@ -113,6 +125,16 @@ export interface SelectTriggerProps extends SelectPrimitivesTypes.TriggerProps {
    * Additional CSS class for the trigger
    */
   className?: string;
+  /**
+   * Background layer rendered behind the trigger surface.
+   * - `undefined` (default): renders `Select.TriggerBackground` for the
+   *   default variant when the active library theme registers default
+   *   background content (e.g. `glass`); otherwise no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Select.TriggerBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: ReactNode;
 }
 
 /**

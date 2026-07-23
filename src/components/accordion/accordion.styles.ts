@@ -24,6 +24,15 @@ const root = tv({
   },
 });
 
+/**
+ * Background style definition — absolute-fill container behind the surface
+ * variant's root container, hosting theme-specific layers (e.g. glass blur)
+ * or custom content (gradients, images).
+ */
+const background = tv({
+  base: 'accordion__root-background',
+});
+
 const item = tv({
   base: 'accordion__item',
 });
@@ -79,6 +88,7 @@ const content = tv({
 
 export const accordionClassNames = combineStyles({
   root,
+  background,
   item,
   trigger,
   indicator,

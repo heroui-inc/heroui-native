@@ -48,7 +48,10 @@ export const useHasDefaultThemeBackground = (): boolean => {
  *
  * `fallbackColor` is forwarded to the theme content so platforms without
  * native blur (Android / web) can paint an opaque approximation of the
- * frosted tint.
+ * frosted tint. Surface-backed parts (Surface, Alert, Widget, etc.) pass
+ * their matching surface token (`'surface'` / `'surface-secondary'` /
+ * `'surface-tertiary'`); field parts pass `'field'`; overlay parts keep the
+ * `'overlay'` default.
  */
 const ThemeBackground = forwardRef<View, ThemeBackgroundProps>(
   ({ children, className, fallbackColor, ...props }, ref) => {

@@ -3,6 +3,7 @@
  */
 export const DISPLAY_NAME = {
   ROOT: 'HeroUINative.Alert',
+  BACKGROUND: 'HeroUINative.Alert.Background',
   INDICATOR: 'HeroUINative.Alert.Indicator',
   CONTENT: 'HeroUINative.Alert.Content',
   TITLE: 'HeroUINative.Alert.Title',

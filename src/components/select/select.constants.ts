@@ -4,6 +4,7 @@
 export const DISPLAY_NAME = {
   ROOT: 'HeroUINative.Select.Root',
   TRIGGER: 'HeroUINative.Select.Trigger',
+  TRIGGER_BACKGROUND: 'HeroUINative.Select.TriggerBackground',
   VALUE: 'HeroUINative.Select.Value',
   PORTAL: 'HeroUINative.Select.Portal',
   OVERLAY: 'HeroUINative.Select.Overlay',

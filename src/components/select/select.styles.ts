@@ -16,6 +16,15 @@ const trigger = tv({
   },
 });
 
+/**
+ * Trigger background style definition — absolute-fill container behind the
+ * default variant's trigger surface, hosting theme-specific layers (e.g.
+ * glass blur) or custom content (gradients, images).
+ */
+const triggerBackground = tv({
+  base: 'select__trigger-background',
+});
+
 const value = tv({
   base: 'select__value',
   variants: {
@@ -135,6 +144,7 @@ const itemIndicator = tv({
 
 export const selectClassNames = combineStyles({
   trigger,
+  triggerBackground,
   portal,
   overlay,
   content,

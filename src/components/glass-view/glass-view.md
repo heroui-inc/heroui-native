@@ -14,7 +14,7 @@ import { GlassView } from 'heroui-native';
 <GlassView />
 ```
 
-- **GlassView**: Absolute-fill layer. Renders unconditionally — theme gating is the responsibility of the part that mounts it. Overlay components (Popover, Dialog, Menu, BottomSheet, Select, Toast) expose theme-gated background compound parts that mount `GlassView` when the `--theme` CSS variable resolves to `glass`.
+- **GlassView**: Absolute-fill layer. Renders unconditionally — theme gating is the responsibility of the part that mounts it. Overlay components (Popover, Dialog, Menu, BottomSheet, Select, Toast) and surface-backed components (Surface, Card, Alert, Accordion, Select trigger, TagGroup) expose theme-gated background compound parts that mount `GlassView` when the `--theme` CSS variable resolves to `glass`.
 
 ## Setup
 
@@ -35,7 +35,7 @@ npx expo install expo-blur
 ## Platform behavior
 
 - **iOS** (with expo-blur installed): a native `BlurView` blurs the content behind the layer; `intensity` and `tint` are forwarded. Translucent theme tokens frost through the blur.
-- **Android / web**, or any platform without expo-blur: the layer paints an opaque color — the `fallbackColor` theme token (default `"overlay"`) alpha-composited over `--background` — approximating the frosted look without translucency. Field surfaces pass `fallbackColor="field"`.
+- **Android / web**, or any platform without expo-blur: the layer paints an opaque color — the `fallbackColor` theme token (default `"overlay"`) alpha-composited over `--background` — approximating the frosted look without translucency. Field surfaces pass `fallbackColor="field"`; surface-backed parts pass their matching token (`"surface"`, `"surface-secondary"`, or `"surface-tertiary"`).
 
 ## Usage
 

@@ -3,6 +3,7 @@ export { default as TagGroup, useTagGroup, useTagGroupItem } from './tag-group';
 export { tagGroupClassNames } from './tag-group.styles';
 export type {
   TagGroupContextValue,
+  TagGroupItemBackgroundProps,
   TagGroupItemLabelProps,
   TagGroupItemProps,
   TagGroupItemRemoveButtonProps,

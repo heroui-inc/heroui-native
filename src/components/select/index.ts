@@ -20,6 +20,7 @@ export type {
   SelectPlacement,
   SelectPortalProps,
   SelectRootProps,
+  SelectTriggerBackgroundProps,
   SelectTriggerIndicatorAnimation,
   SelectTriggerIndicatorIconProps,
   SelectTriggerIndicatorProps,

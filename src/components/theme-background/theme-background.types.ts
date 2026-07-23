@@ -12,6 +12,9 @@ export type ThemeBackgroundProps = ViewProps & {
   /**
    * Theme color token forwarded to the default theme content (e.g. `GlassView`)
    * as its opaque Android / web fallback. Ignored when `children` are supplied.
+   * Overlay-flavored parts keep the default; field parts pass `'field'`;
+   * surface-backed parts pass `'surface'` / `'surface-secondary'` /
+   * `'surface-tertiary'` so the fallback matches their surface tint.
    * @default 'overlay' (GlassView default)
    */
   fallbackColor?: ThemeColor;

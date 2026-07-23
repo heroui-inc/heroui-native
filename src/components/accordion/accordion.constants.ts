@@ -10,6 +10,7 @@ import {
  */
 export const DISPLAY_NAME = {
   ROOT: 'HeroUINative.Accordion.Root',
+  BACKGROUND: 'HeroUINative.Accordion.Background',
   ITEM: 'HeroUINative.Accordion.Item',
   TRIGGER: 'HeroUINative.Accordion.Trigger',
   INDICATOR: 'HeroUINative.Accordion.Indicator',

@@ -51,7 +51,12 @@ const ToastBackground = forwardRef<ViewRef, ToastBackgroundProps>(
     const backgroundClassName = toastClassNames.background({ className });
 
     return (
-      <ThemeBackground ref={ref} className={backgroundClassName} {...props} />
+      <ThemeBackground
+        ref={ref}
+        className={backgroundClassName}
+        fallbackColor="surface"
+        {...props}
+      />
     );
   }
 );

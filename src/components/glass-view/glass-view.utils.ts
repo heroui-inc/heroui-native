@@ -77,8 +77,81 @@ function parseRgbColor(color: string): RgbaChannels | null {
 }
 
 /**
+ * Parses a percentage-or-number token (`80%` → 0.8 with `percentScale` 0.01,
+ * `0.8` → 0.8). Returns `null` for invalid numbers.
+ */
+function parseScaledNumber(token: string, percentScale: number): number | null {
+  const isPercent = token.endsWith('%');
+  const numeric = Number.parseFloat(isPercent ? token.slice(0, -1) : token);
+  if (Number.isNaN(numeric)) {
+    return null;
+  }
+  return isPercent ? numeric * percentScale : numeric;
+}
+
+/**
+ * Parses an `oklch(L C H / A)` color string into RGBA channels, converting
+ * through OKLab → LMS → linear sRGB per the OKLab reference implementation.
+ * Returns `null` when the string is not a valid oklch color.
+ *
+ * Needed on web, where uniwind resolves theme variables via
+ * `getComputedStyle` and custom properties keep their authored `oklch(...)`
+ * form instead of being converted to rgb.
+ */
+function parseOklchColor(color: string): RgbaChannels | null {
+  const match = color.match(
+    /^oklch\(\s*([0-9.]+%?)\s+([0-9.]+%?)\s+(-?[0-9.]+)(?:deg)?\s*(?:\/\s*([0-9.]+%?)\s*)?\)$/i
+  );
+  if (!match) {
+    return null;
+  }
+
+  /** Lightness: `100%` → 1; chroma percentage maps `100%` → 0.4 per spec. */
+  const lightness = parseScaledNumber(match[1] ?? '', 0.01);
+  const chroma = parseScaledNumber(match[2] ?? '', 0.004);
+  const hueDegrees = Number.parseFloat(match[3] ?? '');
+  const alpha = match[4] === undefined ? 1 : parseScaledNumber(match[4], 0.01);
+
+  if (
+    lightness === null ||
+    chroma === null ||
+    Number.isNaN(hueDegrees) ||
+    alpha === null
+  ) {
+    return null;
+  }
+
+  const hueRadians = (hueDegrees * Math.PI) / 180;
+  const labA = chroma * Math.cos(hueRadians);
+  const labB = chroma * Math.sin(hueRadians);
+
+  const lPrime = lightness + 0.3963377774 * labA + 0.2158037573 * labB;
+  const mPrime = lightness - 0.1055613458 * labA - 0.0638541728 * labB;
+  const sPrime = lightness - 0.0894841775 * labA - 1.291485548 * labB;
+
+  const l = lPrime ** 3;
+  const m = mPrime ** 3;
+  const s = sPrime ** 3;
+
+  const linearR = 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s;
+  const linearG = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s;
+  const linearBChannel = -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s;
+
+  const toGammaByte = (channel: number): number =>
+    Math.min(255, Math.max(0, linearChannelToSrgb(channel)));
+
+  return {
+    r: toGammaByte(linearR),
+    g: toGammaByte(linearG),
+    b: toGammaByte(linearBChannel),
+    a: Math.min(1, Math.max(0, alpha)),
+  };
+}
+
+/**
  * Parses a CSS color string returned by `useThemeColor` into RGBA channels.
- * Supports `#rgb`, `#rrggbb`, `#rrggbbaa`, `rgb()`, and `rgba()`.
+ * Supports `#rgb`, `#rrggbb`, `#rrggbbaa`, `rgb()`, `rgba()`, and
+ * `oklch()` (the form web custom properties resolve to).
  * Returns `null` when the format is unsupported or invalid.
  */
 function parseColor(color: string): RgbaChannels | null {
@@ -91,6 +164,9 @@ function parseColor(color: string): RgbaChannels | null {
   }
   if (trimmed.toLowerCase().startsWith('rgb')) {
     return parseRgbColor(trimmed);
+  }
+  if (trimmed.toLowerCase().startsWith('oklch')) {
+    return parseOklchColor(trimmed);
   }
   return null;
 }

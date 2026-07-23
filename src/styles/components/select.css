@@ -10,6 +10,16 @@
   box-shadow: var(--shadow-surface);
 }
 
+.select__trigger-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+}
+
 .select__trigger--is-disabled {
   opacity: var(--opacity-disabled);
   pointer-events: none;

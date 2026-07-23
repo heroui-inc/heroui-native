@@ -123,15 +123,19 @@ CardDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  * with configurable surface variants and handles overall layout.
  *
  * @component Card.Header - Header section for top-aligned content like icons or badges.
+ * Aligns children to the leading edge (`flex-start`) so badges and icons sit correctly in RTL.
  *
  * @component Card.Body - Main content area with flex-1 that expands to fill all available space
  * between Card.Header and Card.Footer.
  *
  * @component Card.Title - Title text with foreground color and medium font weight.
+ * Text aligns to the leading edge in both LTR and RTL.
  *
  * @component Card.Description - Description text with muted color and smaller font size.
+ * Text aligns to the leading edge in both LTR and RTL.
  *
  * @component Card.Footer - Footer section for bottom-aligned actions like buttons.
+ * Add `flex-row` for a horizontal action row — Yoga mirrors start/end order in RTL.
  *
  * All sub-components support asChild pattern for custom element composition.
  *

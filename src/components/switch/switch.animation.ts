@@ -137,7 +137,9 @@ export function useSwitchRootAnimation(options: {
 
 /**
  * Animation hook for Switch thumb component
- * Handles thumb position (left) and background color animations
+ * Handles thumb position and background color animations.
+ * Animates the Yoga-logical `start` property so the thumb travels in the
+ * correct direction in both LTR and RTL layouts.
  */
 export function useSwitchThumbAnimation(options: {
   animation: SwitchThumbAnimation | undefined;
@@ -149,14 +151,20 @@ export function useSwitchThumbAnimation(options: {
 
   const themeColorAccentForeground = useThemeColor('accent-foreground');
 
-  const [width, left] = useResolvedStyleProperty({
+  const [width, start, left] = useResolvedStyleProperty({
     className,
     style,
-    propertyNames: ['width', 'left'] as const,
+    propertyNames: ['width', 'start', 'left'] as const,
   });
 
   const computedWidth = typeof width === 'number' ? width : DEFAULT_THUMB_WIDTH;
-  const computedLeft = typeof left === 'number' ? left : DEFAULT_THUMB_LEFT;
+  // Prefer the logical `start` offset; keep `left` as a fallback for user overrides
+  const computedStart =
+    typeof start === 'number'
+      ? start
+      : typeof left === 'number'
+        ? left
+        : DEFAULT_THUMB_LEFT;
 
   // Read from global animation context (always available in compound parts)
   const { isAllAnimationsDisabled } = useAnimationSettings();
@@ -170,14 +178,14 @@ export function useSwitchThumbAnimation(options: {
     isAllAnimationsDisabled,
   });
 
-  // Left position animation
-  const leftValue = getAnimationValueProperty({
+  // Position animation (offset from the leading/trailing edges)
+  const offsetValue = getAnimationValueProperty({
     animationValue: animationConfig?.left,
     property: 'value',
-    defaultValue: computedLeft,
+    defaultValue: computedStart,
   });
 
-  const leftSpringConfig = getAnimationValueMergedConfig({
+  const offsetSpringConfig = getAnimationValueMergedConfig({
     animationValue: animationConfig?.left,
     property: 'springConfig',
     defaultValue: DEFAULT_SPRING_CONFIG,
@@ -199,29 +207,29 @@ export function useSwitchThumbAnimation(options: {
   const rContainerStyle = useAnimatedStyle(() => {
     const isMounted = contentContainerWidth.get() > 0;
 
-    // This is done to prevent the thumb from moving from the default position to the right
-    // when the component is mounted with `isSelected` set to `true`,
-    // and the user hasn't touched the switch yet.
+    // This is done to prevent the thumb from moving from the default position
+    // to the trailing edge when the component is mounted with `isSelected` set
+    // to `true`, and the user hasn't touched the switch yet.
     if (!isMounted) {
       if (isSelected) {
         return {
-          right: leftValue,
+          end: offsetValue,
           backgroundColor: backgroundColorValue[1],
         };
       }
       return {
-        left: leftValue,
+        start: offsetValue,
         backgroundColor: backgroundColorValue[0],
       };
     }
 
-    const targetLeft = isSelected
-      ? contentContainerWidth.get() - computedWidth - leftValue
-      : leftValue;
+    const targetStart = isSelected
+      ? contentContainerWidth.get() - computedWidth - offsetValue
+      : offsetValue;
 
     if (isAnimationDisabledValue) {
       return {
-        left: targetLeft,
+        start: targetStart,
         backgroundColor: isSelected
           ? backgroundColorValue[1]
           : backgroundColorValue[0],
@@ -229,7 +237,7 @@ export function useSwitchThumbAnimation(options: {
     }
 
     return {
-      left: withSpring(targetLeft, leftSpringConfig),
+      start: withSpring(targetStart, offsetSpringConfig),
       backgroundColor: withTiming(
         isSelected ? backgroundColorValue[1] : backgroundColorValue[0],
         backgroundColorTimingConfig

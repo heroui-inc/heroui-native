@@ -27,13 +27,18 @@ import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { HeroUINativeProvider } from 'heroui-native';
 import { useCallback } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
   KeyboardAvoidingView,
   KeyboardProvider,
 } from 'react-native-keyboard-controller';
+import { LayoutDirection } from 'uniwind';
 import '../../global.css';
+import {
+  AppDirectionProvider,
+  useAppDirection,
+} from '../contexts/app-direction-context';
 import { AppThemeProvider } from '../contexts/app-theme-context';
 
 SplashScreen.setOptions({
@@ -46,6 +51,8 @@ SplashScreen.setOptions({
  * Contains the contentWrapper and HeroUINativeProvider configuration
  */
 function AppContent() {
+  const { isRTL } = useAppDirection();
+
   const contentWrapper = useCallback(
     (children: React.ReactNode) => (
       <KeyboardAvoidingView
@@ -62,21 +69,35 @@ function AppContent() {
 
   return (
     <AppThemeProvider>
-      <HeroUINativeProvider
-        config={{
-          textProps: {
-            maxFontSizeMultiplier: 2,
-          },
-          toast: {
-            contentWrapper,
-          },
-          devInfo: {
-            stylingPrinciples: false,
-          },
-        }}
-      >
-        <Slot />
-      </HeroUINativeProvider>
+      {/*
+       * LayoutDirection provides the scoped direction context for uniwind
+       * `rtl:` variants. Its own `display: contents` wrapper is skipped by
+       * Yoga on RN 0.86, so the `direction` style that actually flips the
+       * layout must live on a real View below it.
+       */}
+      <LayoutDirection rtl={isRTL}>
+        <View
+          className="flex-1"
+          style={isRTL ? styles.directionRTL : styles.directionLTR}
+        >
+          <HeroUINativeProvider
+            config={{
+              textProps: {
+                maxFontSizeMultiplier: 2,
+              },
+              toast: {
+                contentWrapper,
+              },
+              devInfo: {
+                stylingPrinciples: false,
+              },
+              isRTL,
+            }}
+          >
+            <Slot />
+          </HeroUINativeProvider>
+        </View>
+      </LayoutDirection>
     </AppThemeProvider>
   );
 }
@@ -108,7 +129,9 @@ export default function Layout() {
   return (
     <GestureHandlerRootView style={styles.root}>
       <KeyboardProvider>
-        <AppContent />
+        <AppDirectionProvider>
+          <AppContent />
+        </AppDirectionProvider>
       </KeyboardProvider>
     </GestureHandlerRootView>
   );
@@ -117,5 +140,11 @@ export default function Layout() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+  },
+  directionLTR: {
+    direction: 'ltr',
+  },
+  directionRTL: {
+    direction: 'rtl',
   },
 });

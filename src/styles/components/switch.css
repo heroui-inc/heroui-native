@@ -8,7 +8,7 @@
 
 .switch__thumb {
   position: absolute;
-  left: 2px;
+  inset-inline-start: 2px;
   align-items: center;
   justify-content: center;
   width: 28px;
@@ -20,10 +20,10 @@
 
 .switch__start-content {
   position: absolute;
-  left: 2px;
+  inset-inline-start: 2px;
 }
 
 .switch__end-content {
   position: absolute;
-  right: 2px;
+  inset-inline-end: 2px;
 }

@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Card, Chip, cn } from 'heroui-native';
+import { Card, Chip, cn, Switch } from 'heroui-native';
 import type { FC } from 'react';
 import { Image, Pressable, View, type ImageSourcePropType } from 'react-native';
 import Animated, {
@@ -20,6 +20,7 @@ import HomeThemesDark from '../../../assets/images/home-themes-dark.png';
 import HomeThemesLight from '../../../assets/images/home-themes-light.png';
 import { AppText } from '../../components/app-text';
 import { ScreenScrollView } from '../../components/screen-scroll-view';
+import { useAppDirection } from '../../contexts/app-direction-context';
 import { useAppTheme } from '../../contexts/app-theme-context';
 import { COMPONENTS } from '../../helpers/data/components';
 
@@ -75,7 +76,6 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
   index,
 }) => {
   const router = useRouter();
-
   const { isDark } = useAppTheme();
 
   const rLightImageStyle = useAnimatedStyle(() => {
@@ -137,7 +137,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
               >
                 {title}
               </Card.Title>
-              <Card.Description className="text-foreground/65 pl-0.5">
+              <Card.Description className="text-foreground/65 ps-0.5">
                 {footer}
               </Card.Description>
             </View>
@@ -145,13 +145,40 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
               <StyledFeather
                 name="arrow-up-right"
                 size={20}
-                className="text-foreground"
+                className="text-foreground rtl:-scale-x-100"
               />
             </View>
           </Card.Footer>
         </View>
       </Card>
     </AnimatedPressable>
+  );
+};
+
+const DirectionToggle: FC = () => {
+  const { isRTL, setIsRTL } = useAppDirection();
+
+  return (
+    <AnimatedView
+      entering={FadeInDown.duration(300)
+        .delay(cards.length * 100)
+        .easing(Easing.out(Easing.ease))}
+      className="flex-row items-center justify-between mt-6 px-1"
+    >
+      <View className="flex-1">
+        <AppText className="text-foreground text-base font-medium text-left">
+          RTL layout
+        </AppText>
+        <AppText className="text-muted text-sm text-left">
+          Preview components right-to-left
+        </AppText>
+      </View>
+      <Switch
+        isSelected={isRTL}
+        onSelectedChange={setIsRTL}
+        accessibilityLabel="Toggle right-to-left layout"
+      />
+    </AnimatedView>
   );
 };
 
@@ -177,6 +204,7 @@ export default function App() {
           />
         ))}
       </View>
+      <DirectionToggle />
       <StatusBar style={isDark ? 'light' : 'dark'} />
     </ScreenScrollView>
   );

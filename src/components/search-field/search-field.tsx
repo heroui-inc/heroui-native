@@ -232,10 +232,10 @@ SearchFieldClearButton.displayName = DISPLAY_NAME.SEARCH_FIELD_CLEAR_BUTTON;
  * and clear button.
  *
  * @component SearchField.SearchIcon - Magnifying glass icon positioned
- * absolutely on the left.
+ * absolutely on the leading edge (left in LTR, right in RTL).
  *
  * @component SearchField.Input - Wraps the Input component with search-specific
- * defaults: "Search..." placeholder, left padding for the search icon, and
+ * defaults: "Search..." placeholder, leading padding for the search icon, and
  * search a11y role. Reads `value` / `onChangeText` from SearchFieldContext.
  *
  * @component SearchField.ClearButton - Small button that clears the search

@@ -4,6 +4,7 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import { HeroText } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import { useIsRTL } from '../../helpers/internal/hooks';
 import type { ViewRef } from '../../helpers/internal/types';
 import * as SliderPrimitives from '../../primitives/slider';
 import { useSlider } from '../../primitives/slider';
@@ -138,6 +139,8 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
     className,
   });
 
+  const isRTL = useIsRTL();
+
   const handleTapRef = useRef(handleTapAtValue);
   handleTapRef.current = handleTapAtValue;
 
@@ -151,16 +154,28 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
         if (effectiveTrackSize <= 0) return;
 
         const pos = orientation === 'horizontal' ? event.x : event.y;
+        // Tap coordinates are physical; measure from the leading edge, which
+        // is the right side in RTL layouts
         const adjustedPos =
           orientation === 'horizontal'
-            ? pos - thumbSize / 2
+            ? isRTL
+              ? trackSize - pos - thumbSize / 2
+              : pos - thumbSize / 2
             : trackSize - pos - thumbSize / 2;
 
         const pct = clamp(adjustedPos / effectiveTrackSize, 0, 1);
         const rawValue = minValue + pct * (maxValue - minValue);
         handleTapRef.current(rawValue);
       });
-  }, [trackSize, thumbSize, isDisabled, orientation, minValue, maxValue]);
+  }, [
+    trackSize,
+    thumbSize,
+    isDisabled,
+    orientation,
+    minValue,
+    maxValue,
+    isRTL,
+  ]);
 
   return (
     <GestureDetector gesture={tapGesture}>
@@ -199,12 +214,14 @@ const SliderFill = forwardRef<ViewRef, SliderFillProps>((props, ref) => {
 
   const fillStyle = useMemo(() => {
     if (orientation === 'horizontal') {
-      const left = startPercent * effectiveTrackSize;
+      // Anchor to the Yoga-logical leading edge so the fill grows in the
+      // correct direction in both LTR and RTL layouts
+      const start = startPercent * effectiveTrackSize;
       const width =
         (endPercent - startPercent) * effectiveTrackSize + thumbSize;
 
       return {
-        left,
+        start,
         width: Math.max(width, thumbSize),
       };
     }
@@ -262,6 +279,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
 
   const disabled = thumbDisabled ?? sliderDisabled;
   const isDragging = isThumbDragging(index);
+  const isRTL = useIsRTL();
 
   const { rKnobStyle } = useSliderThumbAnimation({
     animation,
@@ -301,9 +319,13 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
         setThumbDraggingRef.current(index, true);
       })
       .onUpdate((event) => {
+        // Gesture translation is physical; in RTL, dragging towards the
+        // physical left (negative translationX) increases the value
         const delta =
           orientation === 'horizontal'
-            ? event.translationX
+            ? isRTL
+              ? -event.translationX
+              : event.translationX
             : -event.translationY;
         const valueDelta =
           effectiveTrackSize > 0
@@ -334,6 +356,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     trackSize,
     thumbSize,
     startValue,
+    isRTL,
   ]);
 
   const positionStyle = useMemo(() => {
@@ -341,7 +364,8 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
     const offset = percent * effectiveTrackSize;
 
     if (orientation === 'horizontal') {
-      return { left: offset };
+      // Yoga-logical `start` resolves to the correct physical side per direction
+      return { start: offset };
     }
     return { bottom: offset };
   }, [percent, trackSize, thumbSize, orientation]);

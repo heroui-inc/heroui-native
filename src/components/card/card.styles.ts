@@ -6,7 +6,7 @@ const root = tv({
 });
 
 const header = tv({
-  base: '',
+  base: 'card__header',
 });
 
 const body = tv({

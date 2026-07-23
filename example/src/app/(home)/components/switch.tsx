@@ -19,6 +19,7 @@ import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { useAppDirection } from '../../../contexts/app-direction-context';
 
 const StyledIonicons = withUniwind(Ionicons);
 const StyledFontAwesome6 = withUniwind(FontAwesome6);
@@ -163,6 +164,12 @@ const CustomStylesContent = () => {
   const [contentIcon, setContentIcon] = React.useState(true);
   const [contentText, setContentText] = React.useState(true);
 
+  // Slide-in animations are physical; mirror them in RTL so the labels
+  // still enter from the thumb's side
+  const { isRTL } = useAppDirection();
+  const enterFromThumbOn = isRTL ? FadeInLeft : FadeInRight;
+  const enterFromThumbOff = isRTL ? FadeInRight : FadeInLeft;
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="gap-16 items-center">
@@ -207,7 +214,7 @@ const CustomStylesContent = () => {
               },
             }}
           />
-          <Switch.StartContent className="left-2">
+          <Switch.StartContent className="inset-s-2">
             {contentIcon && (
               <Animated.View key="sun" entering={ZoomIn.springify()}>
                 <StyledIonicons
@@ -218,7 +225,7 @@ const CustomStylesContent = () => {
               </Animated.View>
             )}
           </Switch.StartContent>
-          <Switch.EndContent className="right-2">
+          <Switch.EndContent className="inset-e-2">
             {!contentIcon && (
               <Animated.View key="moon" entering={ZoomIn.springify()}>
                 <StyledIonicons
@@ -257,11 +264,11 @@ const CustomStylesContent = () => {
               },
             }}
           />
-          <Switch.StartContent className="left-3">
+          <Switch.StartContent className="inset-s-3">
             {contentText && (
               <Animated.View
                 key="sun"
-                entering={FadeInRight.springify().duration(100)}
+                entering={enterFromThumbOn.springify().duration(100)}
               >
                 <AppText
                   className="text-xs font-bold text-white"
@@ -272,11 +279,11 @@ const CustomStylesContent = () => {
               </Animated.View>
             )}
           </Switch.StartContent>
-          <Switch.EndContent className="right-2">
+          <Switch.EndContent className="inset-e-2">
             {!contentText && (
               <Animated.View
                 key="moon"
-                entering={FadeInLeft.springify().duration(100)}
+                entering={enterFromThumbOff.springify().duration(100)}
               >
                 <AppText
                   className="text-xs font-bold text-white"

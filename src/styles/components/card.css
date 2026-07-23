@@ -1,12 +1,24 @@
+.card__header {
+  /*
+   * Keep badges, icons, and other header children on the leading edge.
+   * `flex-start` follows the layout direction (right in RTL, left in LTR).
+   */
+  align-items: flex-start;
+}
+
 .card__label {
   font-size: var(--text-lg);
   line-height: var(--text-lg--line-height);
   color: var(--color-foreground);
   font-family: var(--font-medium);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 .card__description {
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
   color: var(--color-muted);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }

@@ -3,6 +3,7 @@ export * from './use-bottom-sheet-gesture-handlers';
 export * from './use-combined-animation-disabled-state';
 export * from './use-controllable-state';
 export * from './use-dev-info';
+export * from './use-is-rtl';
 export * from './use-keyboard-status';
 export * from './use-library-theme';
 export * from './use-popup-bottom-sheet-content-animation';

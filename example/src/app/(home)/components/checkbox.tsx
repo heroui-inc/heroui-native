@@ -163,8 +163,8 @@ const AnimatedCustomIndicator = ({
   const animatedStyle = useAnimatedStyle(() => {
     return {
       top: withTiming(isPressed.get() ? 0 : 3, { duration: 100 }),
-      left: withTiming(isPressed.get() ? 0 : 3, { duration: 100 }),
-      right: withTiming(isPressed.get() ? 0 : -3, { duration: 100 }),
+      start: withTiming(isPressed.get() ? 0 : 3, { duration: 100 }),
+      end: withTiming(isPressed.get() ? 0 : -3, { duration: 100 }),
       bottom: withTiming(isPressed.get() ? 0 : -3, { duration: 100 }),
     };
   });

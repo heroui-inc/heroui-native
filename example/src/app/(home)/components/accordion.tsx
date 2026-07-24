@@ -21,7 +21,7 @@ import { ShoppingBagIcon } from '../../../components/icons/shopping-bag';
 const TriggerTitle = ({ title }: { title: string }) => {
   return (
     <AppText
-      className="text-foreground text-base flex-1"
+      className="text-foreground text-base flex-1 text-left"
       maxFontSizeMultiplier={1}
     >
       {title}
@@ -32,7 +32,7 @@ const TriggerTitle = ({ title }: { title: string }) => {
 const ContentText = ({ text }: { text: string }) => {
   return (
     <AppText
-      className="text-muted text-base/relaxed px-[28px]"
+      className="text-muted text-base/relaxed px-7 text-left"
       maxFontSizeMultiplier={1}
     >
       {text}

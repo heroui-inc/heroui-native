@@ -81,8 +81,8 @@ const accordionData = [
 
 const classNames = {
   triggerContentContainer: 'flex-row items-center flex-1 gap-3',
-  triggerTitle: 'text-foreground text-base flex-1',
-  contentText: 'text-muted text-base/relaxed',
+  triggerTitle: 'text-foreground text-base flex-1 text-left',
+  contentText: 'text-muted text-base/relaxed text-left',
 };
 
 // ------------------------------------------------------------------------------

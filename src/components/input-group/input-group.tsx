@@ -169,20 +169,23 @@ const InputGroupInput = forwardRef<TextInputType, InputGroupInputProps>(
     const isDisabled = localIsDisabled ?? context?.isDisabled ?? undefined;
 
     const autoPaddingStyle = useMemo(() => {
-      const paddingLeft =
+      // Use logical padding (start/end) so the measured Prefix width always
+      // pads the leading edge and the Suffix width the trailing edge, keeping
+      // the input content clear of the affixes in both LTR and RTL layouts.
+      const paddingStart =
         context?.prefixWidth && context.prefixWidth > 0
           ? context.prefixWidth
           : undefined;
-      const paddingRight =
+      const paddingEnd =
         context?.suffixWidth && context.suffixWidth > 0
           ? context.suffixWidth
           : undefined;
 
-      if (paddingLeft === undefined && paddingRight === undefined) {
+      if (paddingStart === undefined && paddingEnd === undefined) {
         return undefined;
       }
 
-      return { paddingLeft, paddingRight };
+      return { paddingStart, paddingEnd };
     }, [context?.prefixWidth, context?.suffixWidth]);
 
     return (
@@ -212,18 +215,18 @@ InputGroupInput.displayName = DISPLAY_NAME.INPUT_GROUP_INPUT;
  * as padding on the Input.
  *
  * @component InputGroup.Prefix - Absolutely positioned View anchored to
- * the left side of the Input. Its measured width is applied as
- * `paddingLeft` on InputGroup.Input automatically. Set `isDecorative`
+ * the leading (inline-start) side of the Input. Its measured width is applied
+ * as `paddingStart` on InputGroup.Input automatically. Set `isDecorative`
  * to make touches pass through to the Input and hide from accessibility.
  *
  * @component InputGroup.Suffix - Absolutely positioned View anchored to
- * the right side of the Input. Its measured width is applied as
- * `paddingRight` on InputGroup.Input automatically. Set `isDecorative`
+ * the trailing (inline-end) side of the Input. Its measured width is applied
+ * as `paddingEnd` on InputGroup.Input automatically. Set `isDecorative`
  * to make touches pass through to the Input and hide from accessibility.
  *
  * @component InputGroup.Input - Pass-through to the Input component.
  * Accepts all Input props directly (value, onChangeText, isDisabled, etc.).
- * Automatically receives paddingLeft/paddingRight from measured Prefix/Suffix.
+ * Automatically receives paddingStart/paddingEnd from measured Prefix/Suffix.
  *
  * @see Full documentation: https://heroui.com/docs/native/components/input-group
  */

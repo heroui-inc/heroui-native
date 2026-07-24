@@ -1,9 +1,6 @@
 .bottom-sheet__overlay {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   background-color: var(--color-backdrop);
 }
 
@@ -22,10 +19,7 @@
 
 .bottom-sheet__background {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   border-top-left-radius: var(--radius-4xl);
   border-top-right-radius: var(--radius-4xl);
   overflow: hidden;
@@ -40,10 +34,14 @@
   line-height: var(--text-lg--line-height);
   font-family: var(--font-medium);
   color: var(--color-foreground);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 .bottom-sheet__description {
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
   color: var(--color-muted);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }

@@ -240,7 +240,7 @@ const AvatarGroupContent = () => {
         {avatarGroupData.map((user, index) => (
           <Avatar
             key={user.id}
-            className={cn('border-background border-2', index !== 0 && '-ml-4')}
+            className={cn('border-background border-2', index !== 0 && '-ms-4')}
             alt={user.name}
           >
             <Avatar.Image source={{ uri: user.image }} />
@@ -262,7 +262,7 @@ const AvatarGroupContent = () => {
         {avatarGroupData.slice(0, 3).map((user, index) => (
           <Avatar
             key={user.id}
-            className={cn('border-background border-2', index !== 0 && '-ml-4')}
+            className={cn('border-background border-2', index !== 0 && '-ms-4')}
             alt={user.name}
           >
             <Avatar.Image source={{ uri: user.image }} />
@@ -279,7 +279,7 @@ const AvatarGroupContent = () => {
             </Avatar.Fallback>
           </Avatar>
         ))}
-        <Avatar className="border-background border-2 -ml-4">
+        <Avatar className="border-background border-2 -ms-4">
           <Avatar.Fallback>+2</Avatar.Fallback>
         </Avatar>
       </View>
@@ -339,7 +339,7 @@ const CustomStylesContent = () => {
             </Avatar.Image>
             <Avatar.Fallback>ON</Avatar.Fallback>
           </Avatar>
-          <View className="absolute bottom-0.5 right-0.5 size-3.5 rounded-full bg-green-500 border border-background" />
+          <View className="absolute bottom-0.5 inset-e-0.5 size-3.5 rounded-full bg-green-500 border border-background" />
         </View>
       </View>
     </View>

@@ -5,17 +5,15 @@ import {
   Avatar,
   BottomSheet,
   Button,
-  Input,
   ScrollShadow,
-  TextField,
+  SearchField,
   useBottomSheetAwareHandlers,
   useThemeColor,
 } from 'heroui-native';
 import { useMemo, useState } from 'react';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 import { withUniwind } from 'uniwind';
 import { AppText } from '../app-text';
-import { MagnifierIcon } from '../icons/magnifier';
 
 const StyledIonicons = withUniwind(Ionicons);
 
@@ -55,14 +53,14 @@ const UserSearchItem = ({ user }: { user: User }) => {
 
   return (
     <View className="flex-row items-center mb-2 py-2.5">
-      <Avatar size="md" className="mr-3" alt={user.name}>
+      <Avatar size="md" className="me-3" alt={user.name}>
         <Avatar.Fallback>{initials}</Avatar.Fallback>
       </Avatar>
       <View className="flex-1">
-        <AppText className="text-base font-semibold text-foreground">
+        <AppText className="text-base font-semibold text-foreground text-left">
           {user.name}
         </AppText>
-        <AppText className="text-sm text-muted">{user.email}</AppText>
+        <AppText className="text-sm text-muted text-left">{user.email}</AppText>
       </View>
     </View>
   );
@@ -84,37 +82,24 @@ const BottomSheetTextInput = ({
   const { onFocus, onBlur } = useBottomSheetAwareHandlers();
 
   return (
-    <TextField className="absolute top-0 left-0 right-0 px-5 pt-2">
-      <View className="w-full flex-row items-center">
-        <Input
+    <SearchField
+      className="absolute top-0 inset-x-0 px-5 pt-2"
+      value={searchQuery}
+      onChange={setSearchQuery}
+    >
+      <SearchField.Group>
+        <SearchField.SearchIcon />
+        <SearchField.Input
           variant="secondary"
           placeholder="Search by name or email..."
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          className="flex-1 px-10"
           autoCapitalize="none"
           autoCorrect={false}
           onFocus={onFocus}
           onBlur={onBlur}
         />
-        <View className="absolute left-3.5" pointerEvents="none">
-          <MagnifierIcon colorClassName="accent-field-placeholder" />
-        </View>
-        {searchQuery.length > 0 && (
-          <Pressable
-            className="absolute right-3 p-1"
-            onPress={() => setSearchQuery('')}
-            hitSlop={12}
-          >
-            <StyledIonicons
-              name="close-circle"
-              size={20}
-              className="text-muted"
-            />
-          </Pressable>
-        )}
-      </View>
-    </TextField>
+        <SearchField.ClearButton />
+      </SearchField.Group>
+    </SearchField>
   );
 };
 
@@ -177,7 +162,7 @@ const UserSearchBottomSheetContent = () => {
               <StyledIonicons
                 name="search-outline"
                 size={48}
-                className="text-muted mb-3"
+                className="text-muted mb-3 rtl:-scale-x-100"
               />
               <AppText className="text-base text-muted">No users found</AppText>
               <AppText className="text-sm text-muted mt-1">

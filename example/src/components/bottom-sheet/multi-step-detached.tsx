@@ -168,7 +168,7 @@ export const MultiStepDetachedContent = () => {
                         <StyledFeather
                           name="chevron-left"
                           size={20}
-                          className="text-foreground"
+                          className="text-foreground rtl:-scale-x-100"
                         />
                       </Button>
                     </Animated.View>

@@ -100,7 +100,7 @@ export const ScrollableWithSnapPointsContent = () => {
               contentContainerClassName="h-full px-0"
               handleComponent={() => null}
             >
-              <View className="flex-row items-center justify-between pl-7 pr-5 pb-3 gap-4">
+              <View className="flex-row items-center justify-between ps-7 pe-5 pb-3 gap-4">
                 <BottomSheet.Title
                   className="flex-1 text-xl font-bold"
                   maxFontSizeMultiplier={1.2}
@@ -130,7 +130,7 @@ export const ScrollableWithSnapPointsContent = () => {
                     >
                       <View
                         className={cn(
-                          'size-12 items-center justify-center rounded-full mr-3',
+                          'size-12 items-center justify-center rounded-full me-3',
                           option.highlight
                             ? 'bg-black'
                             : option.icon === 'leaf-outline'
@@ -165,7 +165,7 @@ export const ScrollableWithSnapPointsContent = () => {
                           <StyledIonicons
                             name="chevron-forward"
                             size={20}
-                            className="text-muted ml-2"
+                            className="text-muted ms-2 rtl:-scale-x-100"
                           />
                         )}
                       </View>
@@ -179,7 +179,7 @@ export const ScrollableWithSnapPointsContent = () => {
                       isDark ? 'bg-amber-900/40' : 'bg-amber-50'
                     )}
                   >
-                    <View className="size-8 mr-3 items-center justify-center rounded-full bg-yellow-400">
+                    <View className="size-8 me-3 items-center justify-center rounded-full bg-yellow-400">
                       <AppText className="text-xs font-bold text-black">
                         P
                       </AppText>
@@ -195,7 +195,7 @@ export const ScrollableWithSnapPointsContent = () => {
                     <StyledIonicons
                       name="chevron-forward"
                       size={20}
-                      className="text-muted"
+                      className="text-muted rtl:-scale-x-100"
                     />
                   </Card>
                   <Card
@@ -204,7 +204,7 @@ export const ScrollableWithSnapPointsContent = () => {
                       isDark ? 'bg-gray-900/40' : 'bg-gray-100'
                     )}
                   >
-                    <View className="size-10 mr-3 items-center justify-center rounded-lg bg-red-500">
+                    <View className="size-10 me-3 items-center justify-center rounded-lg bg-red-500">
                       <StyledIonicons
                         name="person"
                         size={20}
@@ -222,7 +222,7 @@ export const ScrollableWithSnapPointsContent = () => {
                     <StyledIonicons
                       name="chevron-forward"
                       size={20}
-                      className="text-muted"
+                      className="text-muted rtl:-scale-x-100"
                     />
                   </Card>
                   <View className="px-4 mb-6">

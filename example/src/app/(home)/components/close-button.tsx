@@ -47,6 +47,7 @@ const CustomChildrenContent = () => {
             name="arrow-back"
             size={20}
             color={themeColorForeground}
+            className="rtl:-scale-x-100"
           />
         </CloseButton>
         <CloseButton>

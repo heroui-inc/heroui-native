@@ -56,7 +56,7 @@ const MultipleErrorsContent = () => {
             />
           </TextField>
 
-          <View className="gap-2 ml-1">
+          <View className="gap-2 ms-1">
             <FieldError
               isInvalid={showMultipleErrors}
               textProps={{ maxFontSizeMultiplier: 1 }}
@@ -170,7 +170,7 @@ const CustomStylingContent = () => {
 
         <FieldError
           isInvalid={true}
-          className="border-l-4 border-danger pl-2"
+          className="border-s-4 border-danger ps-2"
           classNames={{
             text: 'text-danger text-sm',
           }}

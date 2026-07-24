@@ -205,19 +205,19 @@ const WithStartContentContent = () => {
 
         <View className="flex-row flex-wrap gap-4 justify-center">
           <Chip size="md" variant="secondary">
-            <View className="size-1.5 mr-1.5 rounded-full bg-accent" />
+            <View className="size-1.5 me-1.5 rounded-full bg-accent" />
             <Chip.Label>Information</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="success">
-            <View className="size-1.5 mr-1.5 rounded-full bg-success-soft-foreground" />
+            <View className="size-1.5 me-1.5 rounded-full bg-success-soft-foreground" />
             <Chip.Label>Completed</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="warning">
-            <View className="size-1.5 mr-1.5 rounded-full bg-warning-soft-foreground" />
+            <View className="size-1.5 me-1.5 rounded-full bg-warning-soft-foreground" />
             <Chip.Label>Pending</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="danger">
-            <View className="size-1.5 mr-1.5 rounded-full bg-danger-soft-foreground" />
+            <View className="size-1.5 me-1.5 rounded-full bg-danger-soft-foreground" />
             <Chip.Label>Failed</Chip.Label>
           </Chip>
         </View>
@@ -236,7 +236,7 @@ const WithEndContentContent = () => {
           <Chip.Label className="text-muted">Close</Chip.Label>
           <XMarkIcon size={12} colorClassName="accent-muted" />
         </Chip>
-        <Chip size="md" variant="primary" color="danger" className="pr-1.5">
+        <Chip size="md" variant="primary" color="danger" className="pe-1.5">
           <Chip.Label>Remove</Chip.Label>
           <XMarkIcon size={14} colorClassName="accent-danger-foreground" />
         </Chip>
@@ -244,7 +244,7 @@ const WithEndContentContent = () => {
           size="lg"
           variant="secondary"
           color="default"
-          className="pr-1.5 p-0.5 pl-2 gap-2"
+          className="pe-1.5 p-0.5 ps-2 gap-2"
         >
           <Chip.Label className="text-muted">Clear</Chip.Label>
           <View className="rounded-full p-1 bg-muted/20">

@@ -46,7 +46,7 @@ const BasicDialogContent = () => {
             <Dialog.Content>
               <Dialog.Close
                 variant="ghost"
-                className="absolute top-3 right-2.5 z-50"
+                className="absolute top-3 inset-e-2.5 z-50"
               />
               <View className="size-9 items-center justify-center rounded-full bg-overlay-foreground/5 mb-4">
                 <FloppyDiscIcon size={16} colorClassName="accent-warning" />
@@ -342,7 +342,7 @@ const LongContentDialogContent = () => {
               className={cn('bg-stone-100', isDark && 'bg-stone-950')}
             />
             <Dialog.Content className="rounded-2xl px-0">
-              <Dialog.Close variant="ghost" className="self-end mr-4" />
+              <Dialog.Close variant="ghost" className="self-end me-4" />
               <Dialog.Title className="text-center mb-5">
                 Upload Audio
               </Dialog.Title>

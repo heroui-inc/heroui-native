@@ -93,7 +93,7 @@ const SearchableSelectContent = () => {
             onChangeText={setSearchQuery}
             placeholder="Search country..."
             placeholderTextColor={themeColorMuted}
-            className="p-3 rounded-xl bg-surface-secondary/80 text-foreground"
+            className="p-3 rounded-xl bg-surface-secondary/80 text-foreground rtl:text-right"
             autoFocus
             maxFontSizeMultiplier={1}
           />

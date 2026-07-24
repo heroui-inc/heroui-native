@@ -8,7 +8,7 @@ export default function SelectNativeModalScreen() {
 
   return (
     <View className="pt-24 px-5">
-      <Label className="ml-1.5 mb-1" isRequired>
+      <Label className="ms-1.5 mb-1" isRequired>
         State
       </Label>
       <SelectButtonTrigger contentOffset={insets.top + 10} />

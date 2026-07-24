@@ -463,7 +463,7 @@ const WithAvatarAndRemoveButtonContent = () => {
             <AnimatedTagGroupItem
               key={user.id}
               id={user.id}
-              className="pl-1.5 pr-2"
+              className="ps-1.5 pe-2"
               layout={LinearTransition.springify()}
             >
               <Avatar size="sm" alt={user.name} className="size-4">
@@ -496,7 +496,7 @@ const WithAvatarAndRemoveButtonContent = () => {
                   key={`${user.id}-selected`}
                   variant="secondary"
                   color="success"
-                  className="pl-1.5 pr-2"
+                  className="ps-1.5 pe-2"
                   layout={LinearTransition.springify()}
                 >
                   <Avatar size="sm" alt={user.name} className="size-4">

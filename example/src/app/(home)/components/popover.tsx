@@ -12,6 +12,7 @@ import { CodeCompareIcon } from '../../../components/icons/code-compare';
 import { CopyIcon } from '../../../components/icons/copy';
 import { MapPinIcon } from '../../../components/icons/map-pin';
 import { NodesRightIcon } from '../../../components/icons/nodes-right';
+import { useAppDirection } from '../../../contexts/app-direction-context';
 
 const StyledIonicons = withUniwind(Ionicons);
 
@@ -32,7 +33,7 @@ const WithTitleDescriptionContent = () => {
           >
             <Popover.Close
               variant="ghost"
-              className="absolute top-3 right-2 z-50"
+              className="absolute top-3 inset-e-2 z-50"
             />
             <View className="flex-row items-center gap-3 mb-1">
               <View className="size-12 items-center justify-center rounded-full bg-warning/15">
@@ -100,7 +101,7 @@ const PresentationVariantsContent = () => {
                 </View>
                 <View className="flex-1">
                   <Popover.Title>Payment Successful</Popover.Title>
-                  <AppText className="text-xs text-muted">
+                  <AppText className="text-xs text-muted text-left">
                     2 minutes ago
                   </AppText>
                 </View>
@@ -242,15 +243,24 @@ const PlacementPopover = ({
 };
 
 const PlacementOptionsContent = () => {
+  const { isRTL } = useAppDirection();
+
+  // The grid intentionally pairs the "left"-placement trigger with the trailing
+  // edge (and "right" with the leading edge) so each popover has room to open on
+  // its physical side. Because the rows are `flex-row`, RTL mirrors that column
+  // order, so we swap the left/right triggers to keep them collision-free.
+  const leadingSidePlacement = isRTL ? 'left' : 'right';
+  const trailingSidePlacement = isRTL ? 'right' : 'left';
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="w-full gap-4">
         <View className="flex-row justify-between gap-4">
           <PlacementPopover placement="top" />
-          <PlacementPopover placement="left" />
+          <PlacementPopover placement={trailingSidePlacement} />
         </View>
         <View className="flex-row justify-between gap-4">
-          <PlacementPopover placement="right" />
+          <PlacementPopover placement={leadingSidePlacement} />
           <PlacementPopover placement="bottom" />
         </View>
       </View>

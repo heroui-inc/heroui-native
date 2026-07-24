@@ -132,7 +132,7 @@ const CustomSearchIconContent = () => {
                 🔍
               </Text>
             </SearchField.SearchIcon>
-            <SearchField.Input className="pl-10" maxFontSizeMultiplier={1.6} />
+            <SearchField.Input className="ps-10" maxFontSizeMultiplier={1.6} />
             <SearchField.ClearButton />
           </SearchField.Group>
           <Description>Uses a custom search emoji icon</Description>

@@ -138,19 +138,19 @@ export const AchievementToast = (props: ToastComponentProps) => {
       <View className="flex-row items-center gap-4">
         {/* Confetti decorative elements */}
         <StyleAnimatedView
-          className="absolute right-8 top-2 size-2 rounded-full bg-orange-600/60"
+          className="absolute inset-e-8 top-2 size-2 rounded-full bg-orange-600/60"
           style={confetti1Style}
         />
         <StyleAnimatedView
-          className="absolute right-12 top-4 size-1.5 rounded-full bg-orange-700/50"
+          className="absolute inset-e-12 top-4 size-1.5 rounded-full bg-orange-700/50"
           style={confetti2Style}
         />
         <StyleAnimatedView
-          className="absolute right-6 bottom-3 size-2 rounded-full bg-orange-500/40"
+          className="absolute inset-e-6 bottom-3 size-2 rounded-full bg-orange-500/40"
           style={confetti3Style}
         />
         <StyleAnimatedView
-          className="absolute right-10 bottom-2 size-1 rounded-full bg-orange-600/50"
+          className="absolute inset-e-10 bottom-2 size-1 rounded-full bg-orange-600/50"
           style={confetti4Style}
         />
 
@@ -183,7 +183,7 @@ export const AchievementToast = (props: ToastComponentProps) => {
 
         {/* Close button */}
         <Toast.Close
-          className="absolute right-0 top-0"
+          className="absolute inset-e-0 top-0"
           iconProps={{ color: themeColorWarning }}
         />
       </View>

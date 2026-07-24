@@ -55,13 +55,13 @@ const BackgroundImageCardContent = () => {
                 <View pointerEvents="none">
                   <AppText
                     maxFontSizeMultiplier={1.4}
-                    className="text-base text-white"
+                    className="text-base text-white text-left"
                   >
                     Available soon
                   </AppText>
                   <AppText
                     maxFontSizeMultiplier={1.4}
-                    className="text-base text-zinc-300"
+                    className="text-base text-zinc-300 text-left"
                   >
                     Get notified
                   </AppText>

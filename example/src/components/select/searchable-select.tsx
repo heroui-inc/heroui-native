@@ -75,7 +75,7 @@ export function SearchableSelect() {
             isFocused ? (value?.label ?? 'Search state...') : 'Search state...'
           }
           placeholderTextColor={themeColorMuted}
-          className="w-[256px] h-[48px] px-3 rounded-2xl flex-row items-center bg-surface text-foreground text-base/5 shadow-md shadow-black/5"
+          className="w-[256px] h-12 px-3 rounded-2xl flex-row items-center bg-surface text-foreground text-base/5 shadow-md shadow-black/5 rtl:text-right"
           onFocus={() => {
             setIsFocused(true);
             triggerRef.current?.open();

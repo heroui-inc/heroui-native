@@ -28,7 +28,7 @@ export default function PopoverNativeModalScreen() {
           >
             <Popover.Close
               variant="ghost"
-              className="absolute top-3 right-2 z-50"
+              className="absolute top-3 inset-e-2 z-50"
             />
             <View className="flex-row items-center gap-3 mb-1">
               <View className="size-12 items-center justify-center rounded-full bg-warning/15">

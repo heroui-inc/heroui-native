@@ -2,6 +2,7 @@ import type { MenuKey } from 'heroui-native';
 import { Avatar, Button, cn, Menu, Separator, SubMenu } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
+import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -18,6 +19,12 @@ import { SquarePlusIcon } from '../../../components/icons/square-plus';
 import { StarFillIcon } from '../../../components/icons/star-fill';
 import { TrashIcon } from '../../../components/icons/trash';
 import { WithStateToggle } from '../../../components/with-state-toggle';
+
+/**
+ * Wraps ChevronRightIcon so `className` resolves to the SVG's forwarded `style`,
+ * enabling `rtl:-scale-x-100` to mirror the trailing chevron in RTL layouts.
+ */
+const StyledChevronRightIcon = withUniwind(ChevronRightIcon);
 
 const BasicUsageContent = () => {
   const [isBottomSheet, setIsBottomSheet] = useState(false);
@@ -306,7 +313,11 @@ const PlacementsContent = () => {
                       Songs, albums & playlists
                     </Menu.ItemDescription>
                   </View>
-                  <ChevronRightIcon size={16} colorClassName="accent-muted" />
+                  <StyledChevronRightIcon
+                    size={16}
+                    colorClassName="accent-muted"
+                    className="rtl:-scale-x-100"
+                  />
                 </Menu.Item>
                 <Menu.Item>
                   <AppText className="text-xl">🎬</AppText>
@@ -316,7 +327,11 @@ const PlacementsContent = () => {
                       Trending & new releases
                     </Menu.ItemDescription>
                   </View>
-                  <ChevronRightIcon size={16} colorClassName="accent-muted" />
+                  <StyledChevronRightIcon
+                    size={16}
+                    colorClassName="accent-muted"
+                    className="rtl:-scale-x-100"
+                  />
                 </Menu.Item>
                 <Menu.Item>
                   <AppText className="text-xl">📚</AppText>
@@ -326,7 +341,11 @@ const PlacementsContent = () => {
                       Bestsellers & more
                     </Menu.ItemDescription>
                   </View>
-                  <ChevronRightIcon size={16} colorClassName="accent-muted" />
+                  <StyledChevronRightIcon
+                    size={16}
+                    colorClassName="accent-muted"
+                    className="rtl:-scale-x-100"
+                  />
                 </Menu.Item>
                 <Menu.Item>
                   <AppText className="text-xl">🎮</AppText>
@@ -336,7 +355,11 @@ const PlacementsContent = () => {
                       Popular & top rated
                     </Menu.ItemDescription>
                   </View>
-                  <ChevronRightIcon size={16} colorClassName="accent-muted" />
+                  <StyledChevronRightIcon
+                    size={16}
+                    colorClassName="accent-muted"
+                    className="rtl:-scale-x-100"
+                  />
                 </Menu.Item>
               </Menu.Content>
             </Menu.Portal>
@@ -429,7 +452,7 @@ const SubMenuExampleContent = () => {
               <SubMenu>
                 <SubMenu.Trigger textValue="Focus">
                   <SubMenu.TriggerIndicator />
-                  <AppText className="flex-1 text-base font-medium text-foreground">
+                  <AppText className="flex-1 text-base font-medium text-foreground text-left">
                     Focus
                   </AppText>
                 </SubMenu.Trigger>
@@ -516,7 +539,7 @@ const SubMenuGroupsContent = () => {
               <SubMenu>
                 <SubMenu.Trigger textValue="Notifications">
                   <BellIcon size={16} colorClassName="accent-muted" />
-                  <AppText className="flex-1 text-base font-medium text-foreground">
+                  <AppText className="flex-1 text-base font-medium text-foreground text-left">
                     Notifications
                   </AppText>
                   <SubMenu.TriggerIndicator />
@@ -614,7 +637,7 @@ const TwoSubMenusContent = () => {
               <SubMenu>
                 <SubMenu.Trigger textValue="Share">
                   <PersonIcon size={16} colorClassName="accent-muted" />
-                  <AppText className="flex-1 text-base font-medium text-foreground">
+                  <AppText className="flex-1 text-base font-medium text-foreground text-left">
                     Share
                   </AppText>
                   <SubMenu.TriggerIndicator />
@@ -637,7 +660,7 @@ const TwoSubMenusContent = () => {
               <SubMenu>
                 <SubMenu.Trigger textValue="Export">
                   <GlobeIcon size={16} colorClassName="accent-muted" />
-                  <AppText className="flex-1 text-base font-medium text-foreground">
+                  <AppText className="flex-1 text-base font-medium text-foreground text-left">
                     Export
                   </AppText>
                   <SubMenu.TriggerIndicator />

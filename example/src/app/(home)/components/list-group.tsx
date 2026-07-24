@@ -24,7 +24,7 @@ const BasicContent = () => {
 
   return (
     <View className="flex-1 justify-center px-5">
-      <AppText className="text-sm text-muted mb-2 ml-2">Account</AppText>
+      <AppText className="text-sm text-muted mb-2 ms-2">Account</AppText>
       <ListGroup className="mb-6">
         <ListGroup.Item>
           <ListGroup.ItemPrefix>
@@ -56,7 +56,7 @@ const BasicContent = () => {
           <ListGroup.ItemSuffix />
         </ListGroup.Item>
       </ListGroup>
-      <AppText className="text-sm text-muted mb-2 ml-2">Preferences</AppText>
+      <AppText className="text-sm text-muted mb-2 ms-2">Preferences</AppText>
       <ListGroup>
         <ListGroup.Item>
           <ListGroup.ItemPrefix>

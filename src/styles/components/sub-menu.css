@@ -1,8 +1,7 @@
 .sub-menu__root {
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
+  inset-inline: 0;
   background-color: var(--color-overlay);
   border-radius: var(--radius-3xl);
   overflow: hidden;
@@ -17,10 +16,7 @@
 
 .sub-menu__background {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   border-radius: var(--radius-3xl);
   overflow: hidden;
 }
@@ -50,8 +46,7 @@
 
 .sub-menu__content {
   position: absolute;
-  left: 0;
-  right: 0;
+  inset-inline: 0;
   padding-inline: calc(var(--spacing) * 1.5);
   padding-bottom: calc(var(--spacing) * 3);
 }

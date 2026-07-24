@@ -73,11 +73,11 @@ export const TextInputContent = () => {
               if (passwordError) setPasswordError(false);
             }}
           />
-          <View className="absolute left-3.5" pointerEvents="none">
+          <View className="absolute inset-s-3.5" pointerEvents="none">
             <LockIcon size={16} colorClassName="accent-field-placeholder" />
           </View>
           <Pressable
-            className="absolute right-4"
+            className="absolute inset-e-4"
             onPress={() => setIsPasswordVisible(!isPasswordVisible)}
           >
             {isPasswordVisible ? (

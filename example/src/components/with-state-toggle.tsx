@@ -64,7 +64,7 @@ export const WithStateToggle: FC<WithStateToggleProps> = ({
         <ControlField
           isSelected={isSelected}
           onSelectedChange={onSelectedChange}
-          className="pr-2"
+          className="pe-2"
         >
           <View className="flex-1">
             <Label>

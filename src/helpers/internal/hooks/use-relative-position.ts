@@ -5,10 +5,11 @@ import {
   type ScaledSize,
 } from 'react-native';
 import type { Insets } from '../types';
+import { useIsRTL } from './use-is-rtl';
 
 type UseRelativePositionArgs = Omit<
   GetContentStyleArgs,
-  'triggerPosition' | 'contentLayout' | 'dimensions'
+  'triggerPosition' | 'contentLayout' | 'dimensions' | 'isRTL'
 > & {
   triggerPosition: LayoutPosition | null;
   contentLayout: LayoutRectangle | null;
@@ -27,6 +28,7 @@ export function useRelativePosition({
   disablePositioningStyle,
 }: UseRelativePositionArgs) {
   const dimensions = Dimensions.get('screen');
+  const isRTL = useIsRTL();
 
   return React.useMemo(() => {
     if (disablePositioningStyle) {
@@ -49,6 +51,7 @@ export function useRelativePosition({
       insets,
       offset,
       dimensions,
+      isRTL,
     });
   }, [
     align,
@@ -61,6 +64,7 @@ export function useRelativePosition({
     dimensions,
     disablePositioningStyle,
     offset,
+    isRTL,
   ]);
 }
 
@@ -162,6 +166,7 @@ interface GetAlignPositionArgs extends GetPositionArgs {
   align: 'start' | 'center' | 'end';
   alignOffset: number;
   placement: 'top' | 'bottom' | 'left' | 'right';
+  isRTL: boolean;
 }
 
 function getAlignPosition({
@@ -173,6 +178,7 @@ function getAlignPosition({
   insets,
   dimensions,
   placement,
+  isRTL,
 }: GetAlignPositionArgs) {
   const insetLeft = insets?.left ?? 0;
   const insetRight = insets?.right ?? 0;
@@ -184,8 +190,17 @@ function getAlignPosition({
     const maxContentWidth = dimensions.width - insetLeft - insetRight;
     const contentWidth = Math.min(contentLayout.width, maxContentWidth);
 
+    // In RTL the logical "start" edge is on the right, so swap the physical
+    // horizontal alignment. "center" is direction-agnostic.
+    const physicalAlign: 'start' | 'center' | 'end' =
+      isRTL && align === 'start'
+        ? 'end'
+        : isRTL && align === 'end'
+          ? 'start'
+          : align;
+
     let left = getHorizontalAlignPosition(
-      align,
+      physicalAlign,
       triggerPosition.pageX,
       triggerPosition.width,
       contentWidth,
@@ -327,6 +342,7 @@ function getContentStyle({
   insets,
   offset,
   dimensions,
+  isRTL,
 }: GetContentStyleArgs) {
   return Object.assign(
     { position: 'absolute' } as const,
@@ -348,6 +364,7 @@ function getContentStyle({
       insets,
       dimensions,
       placement,
+      isRTL,
     })
   );
 }

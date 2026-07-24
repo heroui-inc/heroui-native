@@ -17,6 +17,7 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 import { PlacementSelect } from '../../../components/select/placement-select';
 import { SearchableDialogSelect } from '../../../components/select/searchable-dialog-select';
 import { SelectButtonTrigger } from '../../../components/select/select-button-trigger';
+import { useAppDirection } from '../../../contexts/app-direction-context';
 
 type SelectOption = {
   value: string;
@@ -60,7 +61,7 @@ const COUNTRIES: CountryOption[] = [
 const BasicUsageSingleSelectContent = () => {
   return (
     <View className="flex-1 px-5 justify-center">
-      <Label className="ml-1.5 mb-1" isRequired>
+      <Label className="ms-1.5 mb-1" isRequired>
         State
       </Label>
       <SelectButtonTrigger />
@@ -73,7 +74,7 @@ const BasicUsageSingleSelectContent = () => {
 const BasicUsageMultipleSelectContent = () => {
   return (
     <View className="flex-1 px-5 justify-center">
-      <Label className="ml-1.5 mb-1" isRequired>
+      <Label className="ms-1.5 mb-1" isRequired>
         States
       </Label>
       <SelectButtonTrigger selectionMode="multiple" />
@@ -271,16 +272,31 @@ const PresentationContent = () => {
 // ------------------------------------------------------------------------------
 
 const PlacementOptionsContent = () => {
+  const { isRTL } = useAppDirection();
+
+  // The grid intentionally pairs the "left"-placement trigger with the trailing
+  // edge (and "right" with the leading edge) so each select has room to open on
+  // its physical side. Because the rows are `flex-row`, RTL mirrors that column
+  // order, so we swap the left/right triggers to keep them collision-free.
+  const leadingSidePlacement = isRTL ? 'left' : 'right';
+  const trailingSidePlacement = isRTL ? 'right' : 'left';
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="w-full gap-4">
         <View className="flex-row justify-between gap-4">
           <PlacementSelect placeholder="Top" placement="top" />
-          <PlacementSelect placeholder="Left" placement="left" />
+          <PlacementSelect
+            placeholder={trailingSidePlacement === 'left' ? 'Left' : 'Right'}
+            placement={trailingSidePlacement}
+          />
         </View>
 
         <View className="flex-row justify-between gap-4">
-          <PlacementSelect placeholder="Right" placement="right" />
+          <PlacementSelect
+            placeholder={leadingSidePlacement === 'right' ? 'Right' : 'Left'}
+            placement={leadingSidePlacement}
+          />
           <PlacementSelect placeholder="Bottom" placement="bottom" />
         </View>
       </View>

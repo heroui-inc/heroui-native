@@ -39,6 +39,15 @@ const track = tv({
   },
 });
 
+/**
+ * Track background style definition — generic absolute-fill container behind
+ * the track surface, hosting theme-specific layers (e.g. a glass blur
+ * layer).
+ */
+const trackBackground = tv({
+  base: 'slider__track-background',
+});
+
 const fill = tv({
   base: 'slider__fill',
   variants: {
@@ -76,6 +85,7 @@ const sliderClassNames = combineStyles({
   root,
   output,
   track,
+  trackBackground,
   fill,
   thumb,
 });

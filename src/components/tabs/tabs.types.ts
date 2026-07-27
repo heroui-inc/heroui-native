@@ -48,7 +48,28 @@ export interface TabsListProps extends TabsPrimitivesTypes.ListProps {
    * React children elements
    */
   children?: React.ReactNode;
+  /**
+   * Background layer rendered behind the list surface.
+   * - `undefined` (default): renders `Tabs.ListBackground` for the primary
+   *   variant when the active library theme registers default background
+   *   content (e.g. `glass`); otherwise no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Tabs.ListBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 }
+
+/**
+ * Props for the Tabs.ListBackground sub-component.
+ * Generic absolute-fill container behind the primary variant's list surface.
+ * When no `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type TabsListBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Props for the TabsScrollView component

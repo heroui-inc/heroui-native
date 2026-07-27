@@ -144,15 +144,16 @@ const TagGroupList = forwardRef<ViewRef, TagGroupListProps>((props, ref) => {
 // --------------------------------------------------
 
 /**
- * Generic absolute-fill background container rendered behind the surface
- * variant's tag. With no `children`, the active library theme decides the
- * default content: `glass` renders a `GlassView` blur layer; other themes
- * render nothing. Pass `children` to host arbitrary content (gradients,
- * images) with the container's positioning and clipping applied.
+ * Generic absolute-fill background container rendered behind the tag. With
+ * no `children`, the active library theme decides the default content:
+ * `glass` renders a `GlassView` blur layer; other themes render nothing.
+ * Pass `children` to host arbitrary content (gradients, images) with the
+ * container's positioning and clipping applied. The fallback color follows
+ * the active variant (`surface` → surface token, `default` → default token).
  */
 const TagGroupItemBackground = forwardRef<ViewRef, TagGroupItemBackgroundProps>(
   ({ className, ...props }, ref) => {
-    const { size } = useInnerTagGroupContext();
+    const { size, variant } = useInnerTagGroupContext();
 
     const tagBackgroundClassName = tagGroupClassNames.tagBackground({
       size,
@@ -163,7 +164,7 @@ const TagGroupItemBackground = forwardRef<ViewRef, TagGroupItemBackgroundProps>(
       <ThemeBackground
         ref={ref}
         className={tagBackgroundClassName}
-        fallbackColor="surface"
+        fallbackColor={variant === 'surface' ? 'surface' : 'default'}
         {...props}
       />
     );
@@ -207,16 +208,16 @@ const TagGroupItem = forwardRef<PressableRef, TagGroupItemProps>(
 
     /**
      * Background layer rendered behind the tag surface.
-     * - `undefined`: theme-aware default for the surface variant (while
-     *   unselected — selection paints its own accent tint) when the active
-     *   theme registers default background content
+     * - `undefined`: theme-aware default while unselected (selection paints
+     *   its own accent tint) when the active theme registers default
+     *   background content
      * - custom node: replaces the default layer
      * - `null`: removes the layer
      */
     const backgroundElement =
       background !== undefined ? (
         background
-      ) : hasDefaultThemeBackground && variant === 'surface' && !isSelected ? (
+      ) : hasDefaultThemeBackground && !isSelected ? (
         <TagGroupItemBackground />
       ) : null;
 

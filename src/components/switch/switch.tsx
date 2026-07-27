@@ -2,7 +2,12 @@ import { forwardRef, useCallback, useMemo } from 'react';
 import type { GestureResponderEvent } from 'react-native';
 import { View, type ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
+import {
+  ThemeBackground,
+  useHasDefaultThemeBackground,
+} from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
 import * as SwitchPrimitives from '../../primitives/switch';
 import * as SwitchPrimitivesTypes from '../../primitives/switch/switch.types';
@@ -14,6 +19,7 @@ import {
 import { DISPLAY_NAME } from './switch.constants';
 import { switchClassNames, switchStyleSheet } from './switch.styles';
 import type {
+  SwitchBackgroundProps,
   SwitchContentProps,
   SwitchContextValue,
   SwitchProps,
@@ -35,6 +41,31 @@ const [SwitchProvider, useSwitch] = createContext<SwitchContextValue>({
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the switch
+ * content (clipped by the root's `overflow: hidden`). With no `children`,
+ * the active library theme decides the default content: `glass` renders a
+ * `GlassView` blur layer; other themes render nothing. Pass `children` to
+ * host arbitrary content (gradients, images) with the container's
+ * positioning and clipping applied.
+ */
+const SwitchBackground = forwardRef<ViewRef, SwitchBackgroundProps>(
+  ({ className, ...props }, ref) => {
+    const backgroundClassName = switchClassNames.background({ className });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={backgroundClassName}
+        fallbackColor="default"
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
   (props, ref) => {
     const {
@@ -48,8 +79,11 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
       isAnimatedStyleActive = true,
       onPressIn,
       onPressOut,
+      background,
       ...restProps
     } = props;
+
+    const hasDefaultThemeBackground = useHasDefaultThemeBackground();
 
     const rootClassName = switchClassNames.root({
       isDisabled,
@@ -119,6 +153,21 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
         ? children(renderProps)
         : (children ?? <SwitchThumb />);
 
+    /**
+     * Background layer rendered behind the switch content.
+     * - `undefined`: theme-aware default while unselected (selection paints
+     *   its own accent color) when the active theme registers default
+     *   background content
+     * - custom node: replaces the default layer
+     * - `null`: removes the layer
+     */
+    const backgroundElement =
+      background !== undefined ? (
+        background
+      ) : hasDefaultThemeBackground && !isSelected ? (
+        <SwitchBackground />
+      ) : null;
+
     return (
       <SwitchProvider value={contextValue}>
         <AnimationSettingsProvider value={animationSettingsContextValue}>
@@ -137,6 +186,7 @@ const Switch = forwardRef<SwitchPrimitivesTypes.RootRef, SwitchProps>(
               }}
               {...restProps}
             >
+              {backgroundElement}
               {content}
             </AnimatedSwitchRoot>
           </SwitchAnimationProvider>
@@ -236,6 +286,7 @@ const SwitchEndContent = forwardRef<View, SwitchContentProps>((props, ref) => {
 
 Switch.displayName = DISPLAY_NAME.SWITCH_ROOT;
 SwitchThumb.displayName = DISPLAY_NAME.SWITCH_THUMB;
+SwitchBackground.displayName = DISPLAY_NAME.SWITCH_BACKGROUND;
 SwitchStartContent.displayName = DISPLAY_NAME.SWITCH_START_CONTENT;
 SwitchEndContent.displayName = DISPLAY_NAME.SWITCH_END_CONTENT;
 
@@ -259,6 +310,10 @@ SwitchEndContent.displayName = DISPLAY_NAME.SWITCH_END_CONTENT;
  * Typically used for icons or text that appear when switch is on. Positioned absolutely
  * within the switch container.
  *
+ * @component Switch.Background - Absolute-fill background container behind the
+ * switch content. With no children, the active library theme decides the
+ * default content (e.g. a glass blur layer)
+ *
  * Props flow from Switch to sub-components via context (isSelected, isDisabled).
  * The switch supports controlled and uncontrolled modes through isSelected/onSelectedChange.
  * Animations can be customized or disabled at both root and component levels.
@@ -274,6 +329,8 @@ const CompoundSwitch = Object.assign(Switch, {
   StartContent: SwitchStartContent,
   /** @optional Content shown when switch is on (right side) */
   EndContent: SwitchEndContent,
+  /** Switch background - absolute-fill container behind the switch content */
+  Background: SwitchBackground,
 });
 
 export { useSwitch };

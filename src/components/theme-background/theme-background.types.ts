@@ -18,6 +18,14 @@ export type ThemeBackgroundProps = ViewProps & {
    * @default 'overlay' (GlassView default)
    */
   fallbackColor?: ThemeColor;
+  /**
+   * Forwarded to the default theme content (e.g. `GlassView`) to paint the
+   * opaque `fallbackColor` on every platform, including iOS where a blur
+   * layer would otherwise be rendered. Ignored when `children` are supplied.
+   * Used by parts where translucency is undesirable (e.g. stacked toasts).
+   * @default false
+   */
+  forceFallbackColor?: boolean;
 };
 
 /**
@@ -26,4 +34,5 @@ export type ThemeBackgroundProps = ViewProps & {
  */
 export type ThemeBackgroundContentProps = {
   fallbackColor?: ThemeColor;
+  forceFallbackColor?: boolean;
 };

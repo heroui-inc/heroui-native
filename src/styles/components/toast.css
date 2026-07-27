@@ -1,5 +1,5 @@
 .toast__root {
-  background-color: var(--color-surface);
+  background-color: var(--color-overlay);
   border-radius: var(--radius-3xl);
   padding: calc(var(--spacing) * 4);
   box-shadow: var(--shadow-overlay);
@@ -25,7 +25,7 @@
 /* Label - variant */
 
 .toast__label--variant-default {
-  color: var(--color-foreground);
+  color: var(--color-overlay-foreground);
 }
 
 .toast__label--variant-accent {

@@ -3,7 +3,12 @@ import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { useIsOnSurface } from '../../helpers/external/hooks';
+import {
+  ThemeBackground,
+  useHasDefaultThemeBackground,
+} from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { ViewRef } from '../../helpers/internal/types';
 import * as RadioPrimitives from '../../primitives/radio';
 import { useRadioGroupItem } from '../radio-group/radio-group.context';
 import {
@@ -13,6 +18,7 @@ import {
 import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './radio.constants';
 import { radioClassNames, radioStyleSheet } from './radio.styles';
 import type {
+  RadioIndicatorBackgroundProps,
   RadioIndicatorProps,
   RadioIndicatorThumbProps,
   RadioProps,
@@ -117,11 +123,40 @@ const RadioRoot = forwardRef<RadioPrimitives.RootRef, RadioProps>(
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the indicator
+ * content (clipped by the indicator's `overflow: hidden`). With no
+ * `children`, the active library theme decides the default content: `glass`
+ * renders a `GlassView` blur layer; other themes render nothing. Pass
+ * `children` to host arbitrary content (gradients, images) with the
+ * container's positioning and clipping applied.
+ */
+const RadioIndicatorBackground = forwardRef<
+  ViewRef,
+  RadioIndicatorBackgroundProps
+>(({ className, ...props }, ref) => {
+  const indicatorBackgroundClassName = radioClassNames.indicatorBackground({
+    className,
+  });
+
+  return (
+    <ThemeBackground
+      ref={ref}
+      className={indicatorBackgroundClassName}
+      fallbackColor="default"
+      {...props}
+    />
+  );
+});
+
+// --------------------------------------------------
+
 const RadioIndicator = forwardRef<Animated.View, RadioIndicatorProps>(
   (props, ref) => {
-    const { children, className, style, ...restProps } = props;
+    const { children, className, style, background, ...restProps } = props;
 
     const { isSelected, isInvalid, variant } = useRadio();
+    const hasDefaultThemeBackground = useHasDefaultThemeBackground();
 
     const indicatorClassName = radioClassNames.indicator({
       variant,
@@ -130,6 +165,24 @@ const RadioIndicator = forwardRef<Animated.View, RadioIndicatorProps>(
       className,
     });
 
+    /**
+     * Background layer rendered behind the indicator content.
+     * - `undefined`: theme-aware default for the secondary variant (while
+     *   unselected and valid — selection / invalid states paint their own
+     *   colors) when the active theme registers default background content
+     * - custom node: replaces the default layer
+     * - `null`: removes the layer
+     */
+    const backgroundElement =
+      background !== undefined ? (
+        background
+      ) : hasDefaultThemeBackground &&
+        variant === 'secondary' &&
+        !isSelected &&
+        !isInvalid ? (
+        <RadioIndicatorBackground />
+      ) : null;
+
     return (
       <AnimatedRadioIndicator
         ref={ref}
@@ -137,6 +190,7 @@ const RadioIndicator = forwardRef<Animated.View, RadioIndicatorProps>(
         style={[radioStyleSheet.borderCurve, style]}
         {...restProps}
       >
+        {backgroundElement}
         {children ?? <RadioIndicatorThumb />}
       </AnimatedRadioIndicator>
     );
@@ -185,6 +239,7 @@ const RadioIndicatorThumb = forwardRef<View, RadioIndicatorThumbProps>(
 RadioRoot.displayName = DISPLAY_NAME.RADIO_ROOT;
 RadioIndicator.displayName = DISPLAY_NAME.RADIO_INDICATOR;
 RadioIndicatorThumb.displayName = DISPLAY_NAME.RADIO_INDICATOR_THUMB;
+RadioIndicatorBackground.displayName = DISPLAY_NAME.RADIO_INDICATOR_BACKGROUND;
 
 /**
  * Compound Radio component with sub-components.
@@ -204,6 +259,10 @@ RadioIndicatorThumb.displayName = DISPLAY_NAME.RADIO_INDICATOR_THUMB;
  * @component Radio.IndicatorThumb - Optional inner circle that appears when selected. Animates
  * scale based on selection. Can be replaced with custom content.
  *
+ * @component Radio.IndicatorBackground - Absolute-fill background container behind the
+ * indicator content. With no children, the active library theme decides the
+ * default content (e.g. a glass blur layer)
+ *
  * @see Full documentation: https://heroui.com/docs/native/components/radio
  */
 const CompoundRadio = Object.assign(RadioRoot, {
@@ -211,6 +270,8 @@ const CompoundRadio = Object.assign(RadioRoot, {
   Indicator: RadioIndicator,
   /** @optional Custom indicator thumb that appears when selected */
   IndicatorThumb: RadioIndicatorThumb,
+  /** Indicator background - absolute-fill container behind the indicator content */
+  IndicatorBackground: RadioIndicatorBackground,
 });
 
 export { useRadio };

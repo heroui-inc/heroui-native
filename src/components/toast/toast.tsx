@@ -1,13 +1,14 @@
 import { forwardRef, useMemo } from 'react';
-import { View } from 'react-native';
+import { View, type ViewStyle } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
-import { cn } from '../../helpers/external/utils';
+import { cn, colorKit } from '../../helpers/external/utils';
 import {
   CloseIcon,
   HeroText,
   ThemeBackground,
+  useHasDefaultThemeBackground,
 } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
@@ -16,6 +17,7 @@ import * as ToastPrimitive from '../../primitives/toast';
 import type { ToastComponentProps } from '../../providers/toast';
 import { useToastConfig } from '../../providers/toast/toast-config.context';
 import { Button } from '../button';
+import { flattenColorOverBackground } from '../glass-view/glass-view.utils';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
 import { useVerticalPlaceholderStyles } from './toast.hooks';
@@ -42,9 +44,11 @@ const [ToastProvider, useToast] = createContext<ToastContextValue>({
 /**
  * Generic absolute-fill background container rendered behind the toast
  * surface. With no `children`, the active library theme decides the default
- * content: `glass` renders a `GlassView` blur layer; other themes render
- * nothing. Pass `children` to host arbitrary content (gradients, images)
- * with the container's positioning and clipping applied.
+ * content: `glass` renders the opaque `overlay` fallback color on every
+ * platform (`forceFallbackColor`) — toasts stack, so an iOS blur layer would
+ * reveal the toast underneath; other themes render nothing. Pass `children`
+ * to host arbitrary content (gradients, images) with the container's
+ * positioning and clipping applied.
  */
 const ToastBackground = forwardRef<ViewRef, ToastBackgroundProps>(
   ({ className, ...props }, ref) => {
@@ -54,7 +58,8 @@ const ToastBackground = forwardRef<ViewRef, ToastBackgroundProps>(
       <ThemeBackground
         ref={ref}
         className={backgroundClassName}
-        fallbackColor="surface"
+        fallbackColor="overlay"
+        forceFallbackColor
         {...props}
       />
     );
@@ -105,6 +110,33 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     rootClassName,
     style,
   });
+
+  const hasDefaultThemeBackground = useHasDefaultThemeBackground();
+
+  const [themeColorOverlay, themeColorBackground] = useThemeColor([
+    'overlay',
+    'background',
+  ]);
+
+  /**
+   * On themes with default background content (e.g. glass) the root's
+   * `--color-overlay` is translucent, so the placeholder Views would let the
+   * stacked content behind the toast show through. Paint them with the same
+   * opaque color the toast background layer uses: the `overlay` token
+   * flattened over `--background`.
+   */
+  const placeholderFallbackStyle = useMemo<ViewStyle | undefined>(
+    () =>
+      hasDefaultThemeBackground
+        ? {
+            backgroundColor: flattenColorOverBackground(
+              themeColorOverlay,
+              themeColorBackground
+            ),
+          }
+        : undefined,
+    [hasDefaultThemeBackground, themeColorOverlay, themeColorBackground]
+  );
 
   const {
     rContainerStyle,
@@ -182,11 +214,11 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
               */}
               <View
                 className="absolute left-0 right-0 top-0"
-                style={topStyle}
+                style={[topStyle, placeholderFallbackStyle]}
               />
               <View
                 className="absolute left-0 right-0 bottom-0"
-                style={bottomStyle}
+                style={[bottomStyle, placeholderFallbackStyle]}
               />
             </AnimatedToastRoot>
             {/* Hidden toast instance for height measurement */}
@@ -263,6 +295,8 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
 
   const { variant: toastVariant } = useToast();
 
+  const hasDefaultThemeBackground = useHasDefaultThemeBackground();
+
   const actionClassName = toastClassNames.action({
     variant: toastVariant,
     className,
@@ -284,8 +318,12 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
 
   const highlightColorMap = useMemo(() => {
     switch (toastVariant) {
+      // Themes with default background content (e.g. glass) render a
+      // translucent surface, so the hover overlay uses a subtler alpha.
       case 'default':
-        return themeColorDefaultHover;
+        return hasDefaultThemeBackground
+          ? colorKit.setAlpha(themeColorDefaultHover, 0.1).hex()
+          : themeColorDefaultHover;
       case 'accent':
         return themeColorAccentHover;
       case 'success':
@@ -297,6 +335,7 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
     }
   }, [
     toastVariant,
+    hasDefaultThemeBackground,
     themeColorDefaultHover,
     themeColorAccentHover,
     themeColorSuccessHover,

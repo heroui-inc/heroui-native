@@ -5,9 +5,11 @@
   gap: calc(var(--spacing) * 3);
   padding-block: calc(var(--spacing) * 3);
   padding-inline: calc(var(--spacing) * 4);
-  border-radius: var(--radius-2xl);
-  background-color: var(--color-surface);
-  box-shadow: var(--shadow-surface);
+  border-radius: var(--radius-field);
+  border-width: var(--border-width-field-width);
+  border-color: var(--color-field-border);
+  background-color: var(--color-field);
+  box-shadow: var(--shadow-field);
 }
 
 .select__trigger-background {
@@ -16,7 +18,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  border-radius: var(--radius-2xl);
+  border-radius: var(--radius-field);
   overflow: hidden;
 }
 

@@ -54,7 +54,10 @@ export const useHasDefaultThemeBackground = (): boolean => {
  * `'overlay'` default.
  */
 const ThemeBackground = forwardRef<View, ThemeBackgroundProps>(
-  ({ children, className, fallbackColor, ...props }, ref) => {
+  (
+    { children, className, fallbackColor, forceFallbackColor, ...props },
+    ref
+  ) => {
     const theme = useLibraryTheme();
 
     const ThemeContent = THEME_BACKGROUND_CONTENT[theme];
@@ -63,7 +66,10 @@ const ThemeBackground = forwardRef<View, ThemeBackgroundProps>(
       <View ref={ref} className={className} {...props}>
         {children ??
           (ThemeContent ? (
-            <ThemeContent fallbackColor={fallbackColor} />
+            <ThemeContent
+              fallbackColor={fallbackColor}
+              forceFallbackColor={forceFallbackColor}
+            />
           ) : null)}
       </View>
     );

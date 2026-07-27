@@ -39,6 +39,16 @@ const indicator = tv({
 });
 
 /**
+ * Indicator background style definition — generic absolute-fill container
+ * behind the indicator content (clipped by the indicator's
+ * `overflow: hidden`), hosting theme-specific layers (e.g. a glass blur
+ * layer).
+ */
+const indicatorBackground = tv({
+  base: 'radio__indicator-background',
+});
+
+/**
  * Indicator thumb style definition
  *
  * @note ANIMATED PROPERTIES (cannot be set via className):
@@ -70,6 +80,7 @@ const indicatorThumb = tv({
 export const radioClassNames = combineStyles({
   root,
   indicator,
+  indicatorBackground,
   indicatorThumb,
 });
 

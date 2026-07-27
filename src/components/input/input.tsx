@@ -21,14 +21,14 @@ import type { InputBackgroundProps, InputProps } from './input.types';
  * with the container's positioning and clipping applied.
  */
 const InputBackground = forwardRef<View, InputBackgroundProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, fallbackColor = 'field', ...props }, ref) => {
     const backgroundClassName = inputClassNames.background({ className });
 
     return (
       <ThemeBackground
         ref={ref}
         className={backgroundClassName}
-        fallbackColor="field"
+        fallbackColor={fallbackColor}
         {...props}
       />
     );
@@ -93,16 +93,19 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
 
   /**
    * Background layer rendered behind the text input.
-   * - `undefined`: theme-aware default for primary when the active theme
-   *   registers default background content; otherwise no layer
+   * - `undefined`: theme-aware default when the active theme registers
+   *   default background content; the fallback color follows the variant
+   *   (primary → field token, secondary → default token)
    * - custom node: replaces the default layer
    * - `null`: removes the layer (bare text input)
    */
   const backgroundElement =
     background !== undefined ? (
       background
-    ) : hasDefaultThemeBackground && finalVariant === 'primary' ? (
-      <InputBackground />
+    ) : hasDefaultThemeBackground ? (
+      <InputBackground
+        fallbackColor={finalVariant === 'secondary' ? 'default' : 'field'}
+      />
     ) : null;
 
   const textInput = (

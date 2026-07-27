@@ -5,6 +5,7 @@ export const DISPLAY_NAME = {
   SWITCH_THUMB: 'HeroUINative.Switch.Thumb',
   SWITCH_START_CONTENT: 'HeroUINative.Switch.StartContent',
   SWITCH_END_CONTENT: 'HeroUINative.Switch.EndContent',
+  SWITCH_BACKGROUND: 'HeroUINative.Switch.Background',
 } as const;
 
 export const ANIMATION_DURATION = 175;

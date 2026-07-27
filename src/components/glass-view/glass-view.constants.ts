@@ -13,7 +13,7 @@ export const GLASS_THEME_VALUE = 'glass';
 /**
  * Default blur intensity forwarded to expo-blur (iOS only)
  */
-export const DEFAULT_INTENSITY = 30;
+export const DEFAULT_INTENSITY = 25;
 
 /**
  * Default theme color token flattened over `--background` on platforms

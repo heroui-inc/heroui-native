@@ -77,9 +77,29 @@ const label = tv({
   },
 });
 
+/**
+ * Button background style definition.
+ * Absolute-fill container rendered behind the button surface, matching the
+ * root's border radius per size and clipping its content.
+ */
+const background = tv({
+  base: 'button__background',
+  variants: {
+    size: {
+      sm: 'button__background--size-sm',
+      md: 'button__background--size-md',
+      lg: 'button__background--size-lg',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
 export const buttonClassNames = combineStyles({
   root,
   label,
+  background,
 });
 
 export const buttonStyleSheet = StyleSheet.create({

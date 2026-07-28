@@ -1,4 +1,16 @@
+import type { ViewProps } from 'react-native';
 import type * as AlertPrimitiveTypes from '../../primitives/alert/alert.types';
+
+/**
+ * Props for the Alert.Background sub-component.
+ * Generic absolute-fill container behind the alert surface. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type AlertBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Props for the icon rendered inside the alert indicator.
@@ -29,6 +41,16 @@ export interface AlertRootProps extends AlertPrimitiveTypes.RootProps {
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Background layer rendered behind the alert surface.
+   * - `undefined` (default): renders `Alert.Background` when the active
+   *   library theme registers default background content (e.g. `glass`);
+   *   otherwise no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Alert.Background` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 }
 
 /**

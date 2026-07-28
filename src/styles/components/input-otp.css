@@ -21,6 +21,16 @@
   overflow: hidden;
 }
 
+.input-otp__slot-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--radius-field);
+  overflow: hidden;
+}
+
 /* Slot - variant */
 
 .input-otp__slot--variant-primary {

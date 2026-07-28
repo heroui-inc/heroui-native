@@ -10,6 +10,15 @@ const root = tv({
 });
 
 /**
+ * Background style definition — absolute-fill container behind the alert
+ * surface, hosting theme-specific layers (e.g. glass blur) or custom
+ * content (gradients, images).
+ */
+const background = tv({
+  base: 'alert__background',
+});
+
+/**
  * Indicator style definition for the status icon container
  */
 const indicator = tv({
@@ -51,6 +60,7 @@ const description = tv({
 
 export const alertClassNames = combineStyles({
   root,
+  background,
   indicator,
   content,
   title,

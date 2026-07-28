@@ -11,6 +11,7 @@ import {
   CheckIcon,
   FullWindowOverlay,
   HeroText,
+  ThemeBackground,
 } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
@@ -42,6 +43,7 @@ import {
 import { menuClassNames, menuStyleSheet } from './menu.styles';
 import type {
   MenuCloseProps,
+  MenuContentBackgroundProps,
   MenuContentBottomSheetProps,
   MenuContentContextValue,
   MenuContentPopoverProps,
@@ -219,6 +221,31 @@ const MenuOverlay = forwardRef<
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the menu
+ * content. With no `children`, the active library theme decides the default
+ * content: `glass` renders a `GlassView` blur layer; other themes render
+ * nothing. Pass `children` to host arbitrary content (gradients, images)
+ * with the container's positioning and clipping applied.
+ */
+const MenuContentBackground = forwardRef<View, MenuContentBackgroundProps>(
+  ({ className, ...props }, ref) => {
+    const contentBackgroundClassName = menuClassNames.contentBackground({
+      className,
+    });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={contentBackgroundClassName}
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const MenuContentPopover = forwardRef<
   MenuPrimitivesTypes.ContentRef,
   MenuContentPopoverProps
@@ -232,6 +259,7 @@ const MenuContentPopover = forwardRef<
       alignOffset = DEFAULT_ALIGN_OFFSET,
       className,
       children,
+      background,
       style,
       animation,
       ...props
@@ -271,6 +299,17 @@ const MenuContentPopover = forwardRef<
       animation,
     });
 
+    /**
+     * Background layer rendered behind the menu content. `undefined` falls
+     * back to the theme-aware default; `null` removes the layer. The default
+     * layer is suppressed while a sub-menu is open to avoid a stacked
+     * double-blur seam under the sub-menu's own background layer.
+     */
+    const backgroundElement =
+      background === undefined
+        ? !isSubMenuOpen && <MenuContentBackground />
+        : background;
+
     // Single-mount path: the content subtree is rendered once and animated in
     // via a shared value once it has been measured and positioned (`isReady`).
     // `rEnteringStyle` precedes `rContainerStyle` so the sub-menu scale still
@@ -303,6 +342,7 @@ const MenuContentPopover = forwardRef<
               ]}
               {...props}
             >
+              {backgroundElement}
               {children}
               {isSubMenuOpen && (
                 <Pressable
@@ -348,6 +388,7 @@ const MenuContentPopover = forwardRef<
               style={[menuStyleSheet.borderCurve, rContainerStyle, style]}
               {...props}
             >
+              {backgroundElement}
               {children}
               {isSubMenuOpen && (
                 <Pressable
@@ -705,6 +746,7 @@ MenuTrigger.displayName = DISPLAY_NAME.TRIGGER;
 MenuPortal.displayName = DISPLAY_NAME.PORTAL;
 MenuOverlay.displayName = DISPLAY_NAME.OVERLAY;
 MenuContent.displayName = DISPLAY_NAME.CONTENT;
+MenuContentBackground.displayName = DISPLAY_NAME.CONTENT_BACKGROUND;
 MenuClose.displayName = DISPLAY_NAME.CLOSE;
 MenuGroup.displayName = DISPLAY_NAME.GROUP;
 MenuLabel.displayName = DISPLAY_NAME.LABEL;
@@ -728,6 +770,12 @@ MenuItemIndicator.displayName = DISPLAY_NAME.ITEM_INDICATOR;
  * @component Menu.Content - Container for menu content with two presentation modes:
  * default floating popover with positioning and collision detection, or bottom sheet modal.
  *
+ * @component Menu.ContentBackground - Absolute-fill background container behind
+ * the menu content. With no children, the active library theme decides the content
+ * (glass theme renders a blur layer). Accepts children to host custom content such
+ * as gradients with the container's positioning and clipping applied. Replaceable
+ * via the `background` prop on Menu.Content.
+ *
  * @component Menu.Close - Close button for the menu.
  *
  * @component Menu.Group - Groups menu items with optional selection state (none, single, multiple).
@@ -747,6 +795,7 @@ const Menu = Object.assign(MenuRoot, {
   Portal: MenuPortal,
   Overlay: MenuOverlay,
   Content: MenuContent,
+  ContentBackground: MenuContentBackground,
   Close: MenuClose,
   Group: MenuGroup,
   Label: MenuLabel,

@@ -7,9 +7,11 @@ import {
 } from 'react-native';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import {
+  BottomSheetBackground,
   FullWindowOverlay,
   HeroText,
   BottomSheetContent as InternalBottomSheetContent,
+  PopupOverlayBlurView,
 } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
@@ -17,6 +19,7 @@ import {
 } from '../../helpers/internal/contexts';
 import {
   usePopupOverlayAnimation,
+  usePopupOverlayVariant,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
 import type { PressableRef } from '../../helpers/internal/types';
@@ -147,14 +150,27 @@ const BottomSheetOverlay = forwardRef<
   BottomSheetOverlayProps
 >(
   (
-    { className, style, animation, isAnimatedStyleActive = true, ...props },
+    {
+      className,
+      style,
+      animation,
+      isAnimatedStyleActive,
+      variant,
+      blurViewProps,
+      ...props
+    },
     ref
   ) => {
     const { isOpen } = useBottomSheet();
     const { progress } = useBottomSheetAnimation();
     const isDragging = useSharedValue(false);
 
-    const overlayClassName = bottomSheetClassNames.overlay({ className });
+    const { resolvedVariant, isBlurVariant } = usePopupOverlayVariant(variant);
+
+    const overlayClassName = bottomSheetClassNames.overlay({
+      variant: resolvedVariant,
+      className,
+    });
 
     const { rContainerStyle } = usePopupOverlayAnimation({
       progress,
@@ -166,18 +182,31 @@ const BottomSheetOverlay = forwardRef<
       return null;
     }
 
-    const overlayStyle = isAnimatedStyleActive
+    // The blur variant animates blur intensity instead of the overlay opacity
+    const isAnimatedStyleResolved = isAnimatedStyleActive ?? !isBlurVariant;
+
+    const overlayStyle = isAnimatedStyleResolved
       ? [rContainerStyle, style]
       : style;
 
     return (
-      <AnimatedOverlay
-        ref={ref}
-        className={overlayClassName}
-        style={overlayStyle}
-        pointerEvents={isOpen ? 'auto' : 'none'}
-        {...props}
-      />
+      <>
+        {/* Rendered behind the pressable overlay so presses still hit the overlay */}
+        {isBlurVariant ? (
+          <PopupOverlayBlurView
+            progress={progress}
+            isDragging={isDragging}
+            blurViewProps={blurViewProps}
+          />
+        ) : null}
+        <AnimatedOverlay
+          ref={ref}
+          className={overlayClassName}
+          style={overlayStyle}
+          pointerEvents={isOpen ? 'auto' : 'none'}
+          {...props}
+        />
+      </>
     );
   }
 );
@@ -325,6 +354,14 @@ BottomSheetDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  * @component BottomSheet.Content - The bottom sheet content container.
  * Uses @gorhom/bottom-sheet for rendering. Contains the main bottom sheet UI elements.
  *
+ * @component BottomSheet.Background - Absolute-fill background container inside
+ * the sheet background surface, clipped to the sheet's top radius. With no
+ * children, the active library theme decides the content (glass theme renders a
+ * blur layer). Accepts children to host custom content such as gradients with
+ * the container's positioning and clipping applied. Rendered automatically by
+ * the default gorhom backgroundComponent; use it inside a custom
+ * backgroundComponent to customize the layer.
+ *
  * @component BottomSheet.Close - Close button for the bottom sheet.
  * Can accept custom children or uses default close icon.
  *
@@ -343,6 +380,8 @@ const BottomSheet = Object.assign(BottomSheetRoot, {
   Overlay: BottomSheetOverlay,
   /** @optional Main bottom sheet content container */
   Content: BottomSheetContent,
+  /** @optional Theme-aware background container inside the sheet background surface */
+  Background: BottomSheetBackground,
   /** @optional Close button for the bottom sheet */
   Close: BottomSheetClose,
   /** @optional Bottom sheet title text */

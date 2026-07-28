@@ -65,6 +65,15 @@ const content = tv({
  * See `popover.tsx` PopoverContentBottomSheet component for usage.
  */
 
+/**
+ * Content background style definition — absolute-fill container behind the
+ * popover content, hosting theme-specific layers (e.g. glass blur) or
+ * custom content (gradients, images).
+ */
+const contentBackground = tv({
+  base: 'popover__content-background',
+});
+
 const close = tv({
   base: '',
 });
@@ -85,6 +94,7 @@ export const popoverClassNames = combineStyles({
   portal,
   overlay,
   content,
+  contentBackground,
   close,
   label,
   description,

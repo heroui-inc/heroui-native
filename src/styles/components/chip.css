@@ -37,6 +37,17 @@
   border-radius: var(--radius-3xl);
 }
 
+/* Root background — absolute-fill layer behind the chip surface (clipped by the root) */
+
+.chip__background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
 /* Root - variant x color compounds */
 
 .chip__root--variant-primary--color-accent {

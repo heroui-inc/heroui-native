@@ -7,6 +7,7 @@ export const DISPLAY_NAME = {
   PORTAL: 'HeroUINative.BottomSheet.Portal',
   OVERLAY: 'HeroUINative.BottomSheet.Overlay',
   CONTENT: 'HeroUINative.BottomSheet.Content',
+  BACKGROUND: 'HeroUINative.BottomSheet.Background',
   CLOSE: 'HeroUINative.BottomSheet.Close',
   TITLE: 'HeroUINative.BottomSheet.Title',
   DESCRIPTION: 'HeroUINative.BottomSheet.Description',

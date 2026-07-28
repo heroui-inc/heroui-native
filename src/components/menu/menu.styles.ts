@@ -34,6 +34,15 @@ const content = tv({
   },
 });
 
+/**
+ * Content background style definition — absolute-fill container behind the
+ * menu content, hosting theme-specific layers (e.g. glass blur) or custom
+ * content (gradients, images).
+ */
+const contentBackground = tv({
+  base: 'menu__content-background',
+});
+
 const contentBottomSheet = tv({
   base: 'menu__content-bottom-sheet',
 });
@@ -99,6 +108,7 @@ export const menuClassNames = combineStyles({
   portal,
   overlay,
   content,
+  contentBackground,
   contentBottomSheet,
   close,
   label,

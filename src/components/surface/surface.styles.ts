@@ -17,8 +17,18 @@ const root = tv({
   },
 });
 
+/**
+ * Background style definition — absolute-fill container behind the surface
+ * content, hosting theme-specific layers (e.g. glass blur) or custom
+ * content (gradients, images).
+ */
+const background = tv({
+  base: 'surface__background',
+});
+
 export const surfaceClassNames = combineStyles({
   root,
+  background,
 });
 
 export const surfaceStyleSheet = StyleSheet.create({

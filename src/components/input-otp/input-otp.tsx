@@ -1,8 +1,9 @@
 import { forwardRef, useMemo } from 'react';
 import Animated from 'react-native-reanimated';
 import { useIsOnSurface } from '../../helpers/external/hooks';
-import { HeroText } from '../../helpers/internal/components';
+import { HeroText, ThemeBackground } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
 import * as InputOTPPrimitives from '../../primitives/input-otp';
 import {
@@ -20,6 +21,7 @@ import type {
   InputOTPRootProps,
   InputOTPSeparatorProps,
   InputOTPSeparatorRef,
+  InputOTPSlotBackgroundProps,
   InputOTPSlotCaretProps,
   InputOTPSlotCaretRef,
   InputOTPSlotContextValue,
@@ -113,9 +115,43 @@ const InputOTPGroup = forwardRef<InputOTPGroupRef, InputOTPGroupProps>(
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the slot
+ * content. With no `children`, the active library theme decides the default
+ * content: `glass` renders a `GlassView` blur layer; other themes render
+ * nothing. Pass `children` to host arbitrary content (gradients, images)
+ * with the container's positioning and clipping applied.
+ */
+const InputOTPSlotBackground = forwardRef<ViewRef, InputOTPSlotBackgroundProps>(
+  ({ className, fallbackColor = 'field', ...props }, ref) => {
+    const slotBackgroundClassName = inputOTPClassNames.slotBackground({
+      className,
+    });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={slotBackgroundClassName}
+        fallbackColor={fallbackColor}
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
   (props, ref) => {
-    const { className, style, index, variant, children, ...restProps } = props;
+    const {
+      className,
+      style,
+      index,
+      variant,
+      background,
+      children,
+      ...restProps
+    } = props;
 
     const {
       slots,
@@ -156,6 +192,21 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
       [slot, isActive, isCaretVisible, finalVariant]
     );
 
+    /**
+     * Background layer rendered behind the slot content. `undefined` falls
+     * back to the theme-aware default — the fallback color follows the
+     * variant (primary → field token, secondary → default token); `null`
+     * removes it.
+     */
+    const backgroundElement =
+      background === undefined ? (
+        <InputOTPSlotBackground
+          fallbackColor={finalVariant === 'secondary' ? 'default' : 'field'}
+        />
+      ) : (
+        background
+      );
+
     return (
       <InputOTPSlotProvider value={slotContextValue}>
         <InputOTPPrimitives.Slot
@@ -165,6 +216,7 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
           style={[inputOTPStyleSheet.slotRoot, style]}
           {...restProps}
         >
+          {backgroundElement}
           {children !== undefined ? (
             children
           ) : (
@@ -334,6 +386,7 @@ const InputOTPSeparator = forwardRef<
 InputOTPRoot.displayName = DISPLAY_NAME.ROOT;
 InputOTPGroup.displayName = DISPLAY_NAME.GROUP;
 InputOTPSlot.displayName = DISPLAY_NAME.SLOT;
+InputOTPSlotBackground.displayName = DISPLAY_NAME.SLOT_BACKGROUND;
 InputOTPSlotPlaceholder.displayName = DISPLAY_NAME.SLOT_PLACEHOLDER;
 InputOTPSlotValue.displayName = DISPLAY_NAME.SLOT_VALUE;
 InputOTPSlotCaret.displayName = DISPLAY_NAME.SLOT_CARET;
@@ -351,6 +404,12 @@ InputOTPSeparator.displayName = DISPLAY_NAME.SEPARATOR;
  * @component InputOTP.Slot - Individual slot that displays a single character
  * or placeholder. Each slot must have a unique index matching its position
  * in the OTP sequence.
+ *
+ * @component InputOTP.SlotBackground - Absolute-fill background container
+ * behind the slot content. With no children, the active library theme decides
+ * the content (glass theme renders a blur layer). Accepts children to host
+ * custom content such as gradients with the container's positioning and
+ * clipping applied. Replaceable via the `background` prop on InputOTP.Slot.
  *
  * @component InputOTP.SlotPlaceholder - Text component that displays the
  * placeholder character for a slot when it's empty. Used by default in Slot
@@ -378,6 +437,8 @@ const InputOTP = Object.assign(InputOTPRoot, {
   Group: InputOTPGroup,
   /** @optional Individual slot that displays a single character or placeholder */
   Slot: InputOTPSlot,
+  /** @optional Theme-aware background container behind the slot content */
+  SlotBackground: InputOTPSlotBackground,
   /** @optional Text component that displays the placeholder character for a slot */
   SlotPlaceholder: InputOTPSlotPlaceholder,
   /** @optional Text component that displays the actual character value for a slot */

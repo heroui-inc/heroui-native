@@ -6,19 +6,24 @@ import {
   useState,
   type FC,
   type PropsWithChildren,
+  type ReactNode,
 } from 'react';
-import type {
-  LayoutChangeEvent,
-  PressableStateCallbackType,
-  StyleProp,
-  ViewStyle,
+import {
+  StyleSheet,
+  type LayoutChangeEvent,
+  type PressableStateCallbackType,
+  type StyleProp,
+  type ViewStyle,
 } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
-import { ChevronRightIcon } from '../../helpers/internal/components';
+import {
+  ChevronRightIcon,
+  ThemeBackground,
+} from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
@@ -40,6 +45,7 @@ import {
 } from './sub-menu.constants';
 import { subMenuClassNames, subMenuStyleSheet } from './sub-menu.styles';
 import type {
+  SubMenuBackgroundProps,
   SubMenuContentProps,
   SubMenuRootAnimation,
   SubMenuRootProps,
@@ -67,6 +73,7 @@ const SubMenuRoot = forwardRef<
       isOpen: isOpenProp,
       isDefaultOpen,
       animation,
+      background,
       className,
       style,
       ...props
@@ -112,6 +119,7 @@ const SubMenuRoot = forwardRef<
           >
             <RootContentContainer
               animation={animation}
+              background={background}
               className={className}
               style={style}
             >
@@ -126,17 +134,43 @@ const SubMenuRoot = forwardRef<
 
 // --------------------------------------------------
 
+/**
+ * Absolute-fill background container rendered behind the open sub-menu
+ * surface. It paints the sub-menu surface itself (the `--color-overlay`
+ * coat) and, with no `children`, lets the active library theme decide the
+ * layer above it: `glass` renders a `GlassView` blur; other themes render
+ * nothing. Pass `children` to host arbitrary content (gradients, images)
+ * with the container's positioning and clipping applied.
+ *
+ * The coat lives here rather than on the root so it exists only while the
+ * sub-menu is presented — under themes with a translucent `--color-overlay`
+ * a permanent coat would tint the collapsed trigger row twice and make it
+ * read differently from its sibling menu items.
+ */
+const SubMenuBackground = forwardRef<ViewRef, SubMenuBackgroundProps>(
+  ({ className, ...props }, ref) => {
+    const backgroundClassName = subMenuClassNames.background({ className });
+
+    return (
+      <ThemeBackground ref={ref} className={backgroundClassName} {...props} />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const RootContentContainer: FC<
   PropsWithChildren<{
     animation?: SubMenuRootAnimation;
+    background?: ReactNode;
     className?: string;
     style?: StyleProp<ViewStyle>;
   }>
-> = ({ children, animation, className }) => {
+> = ({ children, animation, background, className }) => {
   const [isMounted, setIsMounted] = useState(false);
   const { isOpen, onOpenChange, nativeID } = useSubMenu();
   const { openSubMenuId, openSubMenu, closeSubMenu } = useMenu();
-  const { rOuterContainerStyle, rInnerContentStyle } =
+  const { rOuterContainerStyle, rInnerContentStyle, backgroundExiting } =
     useRootContentContainerAnimation({ animation });
 
   const rootClassName = subMenuClassNames.root({ isOpen, className });
@@ -170,6 +204,25 @@ const RootContentContainer: FC<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openSubMenuId]);
 
+  /**
+   * Background layer rendered behind the open sub-menu surface. `undefined`
+   * falls back to the theme-aware default: mounted without a transition when
+   * the sub-menu opens, then faded out so the collapsing root dissolves into
+   * the menu surface instead of exposing the items behind it in one frame.
+   * `null` removes the layer; a custom node is rendered as provided.
+   */
+  const backgroundElement =
+    background === undefined
+      ? isOpen && (
+          <Animated.View
+            exiting={backgroundExiting}
+            style={StyleSheet.absoluteFill}
+          >
+            <SubMenuBackground />
+          </Animated.View>
+        )
+      : background;
+
   return (
     <Animated.View
       className={isOpen ? 'z-50' : 'z-40'}
@@ -177,6 +230,7 @@ const RootContentContainer: FC<
     >
       {isMounted ? (
         <Animated.View className={rootClassName} style={rInnerContentStyle}>
+          {backgroundElement}
           {children}
         </Animated.View>
       ) : (
@@ -358,6 +412,7 @@ const SubMenuContent = forwardRef<
 // --------------------------------------------------
 
 SubMenuRoot.displayName = DISPLAY_NAME.ROOT;
+SubMenuBackground.displayName = DISPLAY_NAME.BACKGROUND;
 SubMenuTrigger.displayName = DISPLAY_NAME.TRIGGER;
 SubMenuTriggerIndicator.displayName = DISPLAY_NAME.TRIGGER_INDICATOR;
 SubMenuContent.displayName = DISPLAY_NAME.CONTENT;
@@ -370,6 +425,13 @@ SubMenuContent.displayName = DISPLAY_NAME.CONTENT;
  * @component SubMenu - Root container that manages open/close state and
  * provides animation settings context to children.
  *
+ * @component SubMenu.Background - Absolute-fill background container behind
+ * the open sub-menu surface, painting the surface coat and, with no children,
+ * the layer chosen by the active library theme (glass theme renders a blur
+ * layer). Accepts children to host custom content such as gradients with the
+ * container's positioning and clipping applied. Replaceable via the
+ * `background` prop on SubMenu.
+ *
  * @component SubMenu.Trigger - Pressable item that toggles the submenu,
  * styled like a menu item.
  *
@@ -380,6 +442,7 @@ SubMenuContent.displayName = DISPLAY_NAME.CONTENT;
  * its height when the submenu opens/closes.
  */
 const SubMenu = Object.assign(SubMenuRoot, {
+  Background: SubMenuBackground,
   Trigger: SubMenuTrigger,
   TriggerIndicator: SubMenuTriggerIndicator,
   Content: SubMenuContent,

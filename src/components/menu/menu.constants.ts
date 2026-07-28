@@ -7,6 +7,7 @@ export const DISPLAY_NAME = {
   PORTAL: 'HeroUINative.Menu.Portal',
   OVERLAY: 'HeroUINative.Menu.Overlay',
   CONTENT: 'HeroUINative.Menu.Content',
+  CONTENT_BACKGROUND: 'HeroUINative.Menu.ContentBackground',
   CLOSE: 'HeroUINative.Menu.Close',
   LABEL: 'HeroUINative.Menu.Label',
   GROUP: 'HeroUINative.Menu.Group',

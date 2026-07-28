@@ -39,6 +39,15 @@ const root = tv({
   base: 'toast__root',
 });
 
+/**
+ * Background style definition — absolute-fill container behind the toast
+ * surface, hosting theme-specific layers (e.g. glass blur) or custom
+ * content (gradients, images).
+ */
+const background = tv({
+  base: 'toast__background',
+});
+
 const label = tv({
   base: 'toast__label',
   variants: {
@@ -77,6 +86,7 @@ const action = tv({
 
 export const toastClassNames = combineStyles({
   root,
+  background,
   label,
   description,
   action,

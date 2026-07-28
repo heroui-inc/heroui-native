@@ -2,7 +2,11 @@ import { Children, forwardRef, useMemo } from 'react';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
-import { ChevronDownIcon } from '../../helpers/internal/components';
+import {
+  ChevronDownIcon,
+  ThemeBackground,
+  useHasDefaultThemeBackground,
+} from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
@@ -17,6 +21,7 @@ import {
 import { DEFAULT_ICON_SIZE, DISPLAY_NAME } from './accordion.constants';
 import { accordionClassNames, accordionStyleSheet } from './accordion.styles';
 import type {
+  AccordionBackgroundProps,
   AccordionContentProps,
   AccordionContextValue,
   AccordionIndicatorProps,
@@ -50,6 +55,30 @@ const useAccordionItem = AccordionPrimitive.useItemContext;
 
 // ------------------------------------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the surface
+ * variant's root container. With no `children`, the active library theme
+ * decides the default content: `glass` renders a `GlassView` blur layer;
+ * other themes render nothing. Pass `children` to host arbitrary content
+ * (gradients, images) with the container's positioning and clipping applied.
+ */
+const Background = forwardRef<View, AccordionBackgroundProps>(
+  ({ className, ...props }, ref) => {
+    const backgroundClassName = accordionClassNames.background({ className });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={backgroundClassName}
+        fallbackColor="surface"
+        {...props}
+      />
+    );
+  }
+);
+
+// ------------------------------------------------------------------------------
+
 const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
   const {
     children,
@@ -60,8 +89,11 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     styles,
     style,
     animation,
+    background,
     ...restProps
   } = props;
+
+  const hasDefaultThemeBackground = useHasDefaultThemeBackground();
 
   const { container, separator } = accordionClassNames.root({ variant });
 
@@ -97,6 +129,20 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
     [layoutTransition]
   );
 
+  /**
+   * Background layer rendered behind the surface variant's container.
+   * - `undefined`: theme-aware default for the surface variant when the
+   *   active theme registers default background content
+   * - custom node: replaces the default layer
+   * - `null`: removes the layer
+   */
+  const backgroundElement =
+    background !== undefined ? (
+      background
+    ) : hasDefaultThemeBackground && variant === 'surface' ? (
+      <Background />
+    ) : null;
+
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
       <AccordionAnimationProvider value={animationContextValue}>
@@ -108,6 +154,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
             layout={layoutTransition}
             {...restProps}
           >
+            {backgroundElement}
             {Children.map(children, (child, index) => (
               <>
                 {child}
@@ -292,6 +339,7 @@ const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
 // ------------------------------------------------------------------------------
 
 Root.displayName = DISPLAY_NAME.ROOT;
+Background.displayName = DISPLAY_NAME.BACKGROUND;
 Item.displayName = DISPLAY_NAME.ITEM;
 Trigger.displayName = DISPLAY_NAME.TRIGGER;
 Indicator.displayName = DISPLAY_NAME.INDICATOR;
@@ -303,6 +351,13 @@ Content.displayName = DISPLAY_NAME.CONTENT;
  * @component Accordion - Main container that manages the accordion state and behavior.
  * Controls expansion/collapse of items, supports single or multiple selection modes,
  * and provides variant styling (default or surface).
+ *
+ * @component Accordion.Background - Absolute-fill background container behind
+ * the surface variant's root container. With no children, the active library
+ * theme decides the content (glass theme renders a blur layer with a
+ * surface-matched fallback). Accepts children to host custom content such as
+ * gradients with the container's positioning and clipping applied. Replaceable
+ * via the `background` prop on Accordion.
  *
  * @component Accordion.Item - Container for individual accordion items.
  * Wraps the trigger and content, managing the expanded state for each item.
@@ -326,6 +381,8 @@ Content.displayName = DISPLAY_NAME.CONTENT;
  * @see Full documentation: https://heroui.com/docs/native/components/accordion
  */
 const CompoundAccordion = Object.assign(Root, {
+  /** @optional Theme-aware background container behind the surface variant */
+  Background,
   /** @required Container for individual accordion items */
   Item,
   /** @required Interactive trigger element */

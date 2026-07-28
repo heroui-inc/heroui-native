@@ -3,4 +3,5 @@
  */
 export const DISPLAY_NAME = {
   ROOT: 'HeroUINative.Surface.Root',
+  BACKGROUND: 'HeroUINative.Surface.Background',
 };

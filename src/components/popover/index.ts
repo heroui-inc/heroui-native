@@ -4,6 +4,7 @@ export type {
   PopoverAlign,
   PopoverArrowProps,
   PopoverCloseProps,
+  PopoverContentBackgroundProps,
   PopoverContentProps,
   PopoverDescriptionProps,
   PopoverOverlayProps,

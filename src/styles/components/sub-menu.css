@@ -3,7 +3,6 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: var(--color-overlay);
   border-radius: var(--radius-3xl);
   overflow: hidden;
 }
@@ -13,6 +12,28 @@
   outline-width: 1px;
   outline-color: color-mix(in oklab, var(--color-border) 20%, transparent);
   box-shadow: var(--shadow-overlay);
+}
+
+/* The surface coat lives here instead of on the root: this layer is mounted
+   only while the sub-menu is presented, so a translucent --color-overlay
+   (glass theme) never stacks a second coat over the menu surface behind the
+   collapsed trigger row.
+
+   The shadow is repeated from the root because a full-bleed child paints over
+   the root's inset shadow: this copy restores the inner rim that themes with
+   an inset --shadow-overlay (dark mode) draw around the surface. The outset
+   variant of the token falls outside this layer's box and is clipped away by
+   the root, leaving the root's own copy to cast it. */
+.sub-menu__background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--color-overlay);
+  border-radius: var(--radius-3xl);
+  box-shadow: var(--shadow-overlay);
+  overflow: hidden;
 }
 
 .sub-menu__trigger {

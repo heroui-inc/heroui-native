@@ -15,7 +15,12 @@ import {
   type ViewStyle,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
+import {
+  ThemeBackground,
+  useHasDefaultThemeBackground,
+} from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { ViewRef } from '../../helpers/internal/types';
 import * as TabsPrimitives from '../../primitives/tabs';
 import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
 import {
@@ -31,6 +36,7 @@ import type {
   TabsContentProps,
   TabsIndicatorProps,
   TabsLabelProps,
+  TabsListBackgroundProps,
   TabsListProps,
   TabsProps,
   TabsScrollViewProps,
@@ -117,11 +123,39 @@ const TabsRoot = forwardRef<TabsPrimitivesTypes.RootRef, TabsProps>(
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the primary
+ * variant's list surface. With no `children`, the active library theme
+ * decides the default content: `glass` renders a `GlassView` blur layer;
+ * other themes render nothing. Pass `children` to host arbitrary content
+ * (gradients, images) with the container's positioning and clipping applied.
+ */
+const TabsListBackground = forwardRef<ViewRef, TabsListBackgroundProps>(
+  ({ className, ...props }, ref) => {
+    const listBackgroundClassName = tabsClassNames.listBackground({
+      className,
+    });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={listBackgroundClassName}
+        fallbackColor="default"
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
   (props, ref) => {
-    const { children, className, style, onLayout, ...restProps } = props;
+    const { children, className, style, onLayout, background, ...restProps } =
+      props;
 
     const { variant, setIsScrollView, setListWidth } = useTabsMeasurements();
+    const hasDefaultThemeBackground = useHasDefaultThemeBackground();
 
     const handleLayout = useCallback(
       (event: LayoutChangeEvent) => {
@@ -144,6 +178,20 @@ const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
 
     const listClassName = tabsClassNames.list({ variant, className });
 
+    /**
+     * Background layer rendered behind the list surface.
+     * - `undefined`: theme-aware default for the primary variant when the
+     *   active theme registers default background content
+     * - custom node: replaces the default layer
+     * - `null`: removes the layer
+     */
+    const backgroundElement =
+      background !== undefined ? (
+        background
+      ) : hasDefaultThemeBackground && variant === 'primary' ? (
+        <TabsListBackground />
+      ) : null;
+
     return (
       <TabsPrimitives.List
         ref={ref}
@@ -152,6 +200,7 @@ const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
         onLayout={handleLayout}
         {...restProps}
       >
+        {backgroundElement}
         {children}
       </TabsPrimitives.List>
     );
@@ -416,6 +465,7 @@ const TabsContent = forwardRef<
 
 TabsRoot.displayName = DISPLAY_NAME.ROOT;
 TabsList.displayName = DISPLAY_NAME.LIST;
+TabsListBackground.displayName = DISPLAY_NAME.LIST_BACKGROUND;
 TabsScrollView.displayName = DISPLAY_NAME.SCROLL_VIEW;
 TabsTrigger.displayName = DISPLAY_NAME.TRIGGER;
 TabsLabel.displayName = DISPLAY_NAME.LABEL;
@@ -429,6 +479,10 @@ TabsContent.displayName = DISPLAY_NAME.CONTENT;
  * @component Tabs - Main container for the tabs system
  *
  * @component Tabs.List - Container for tab triggers
+ *
+ * @component Tabs.ListBackground - Absolute-fill background container behind the
+ * primary variant's list surface. With no children, the active library theme
+ * decides the default content (e.g. a glass blur layer)
  *
  * @component Tabs.ScrollView - Scrollable wrapper for tab triggers
  *
@@ -449,6 +503,8 @@ TabsContent.displayName = DISPLAY_NAME.CONTENT;
 const Tabs = Object.assign(TabsRoot, {
   /** Container for tab triggers */
   List: TabsList,
+  /** List background - absolute-fill container behind the list surface */
+  ListBackground: TabsListBackground,
   /** Scrollable wrapper for tab triggers */
   ScrollView: TabsScrollView,
   /** Individual tab button */

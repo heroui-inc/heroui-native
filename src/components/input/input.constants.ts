@@ -3,4 +3,5 @@
  */
 export const DISPLAY_NAME = {
   INPUT: 'HeroUINative.Input',
+  BACKGROUND: 'HeroUINative.Input.Background',
 } as const;

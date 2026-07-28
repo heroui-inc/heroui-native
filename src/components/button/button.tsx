@@ -2,8 +2,16 @@ import { forwardRef, useMemo } from 'react';
 import type { PressableStateCallbackType } from 'react-native';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { colorKit } from '../../helpers/external/utils';
-import { HeroText } from '../../helpers/internal/components';
-import type { PressableRef, TextRef } from '../../helpers/internal/types';
+import {
+  HeroText,
+  ThemeBackground,
+  useHasDefaultThemeBackground,
+} from '../../helpers/internal/components';
+import type {
+  PressableRef,
+  TextRef,
+  ViewRef,
+} from '../../helpers/internal/types';
 import { childrenToString, createContext } from '../../helpers/internal/utils';
 import {
   PressableFeedback,
@@ -14,6 +22,7 @@ import {
 import { DISPLAY_NAME } from './button.constants';
 import { buttonClassNames, buttonStyleSheet } from './button.styles';
 import type {
+  ButtonBackgroundProps,
   ButtonContextValue,
   ButtonLabelProps,
   ButtonRootProps,
@@ -23,6 +32,36 @@ import { isAnimationDisabled, resolveAnimationObject } from './button.utils';
 const [ButtonProvider, useButton] = createContext<ButtonContextValue>({
   name: 'ButtonContext',
 });
+
+// --------------------------------------------------
+
+/**
+ * Generic absolute-fill background container rendered behind the secondary /
+ * tertiary variant's button surface. With no `children`, the active library
+ * theme decides the default content: `glass` renders a `GlassView` blur
+ * layer; other themes render nothing. Pass `children` to host arbitrary
+ * content (gradients, images) with the container's positioning and clipping
+ * applied.
+ */
+const ButtonBackground = forwardRef<ViewRef, ButtonBackgroundProps>(
+  ({ className, ...props }, ref) => {
+    const { size } = useButton();
+
+    const backgroundClassName = buttonClassNames.background({
+      size,
+      className,
+    });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={backgroundClassName}
+        fallbackColor="default"
+        {...props}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -37,9 +76,12 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     isDisabled = false,
     className,
     style,
+    background,
     accessibilityRole = 'button',
     ...restProps
   } = props;
+
+  const hasDefaultThemeBackground = useHasDefaultThemeBackground();
 
   const [
     themeColorAccentHover,
@@ -70,14 +112,31 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     switch (variant) {
       case 'primary':
         return themeColorAccentHover;
+      // Themes with default background content (e.g. glass) render a
+      // translucent surface, so the hover overlay uses a subtler alpha to
+      // avoid washing out the blur layer underneath.
       case 'secondary':
-        return themeColorDefaultHover;
+        return hasDefaultThemeBackground
+          ? colorKit.setAlpha(themeColorDefaultHover, 0.2).hex()
+          : themeColorDefaultHover;
       case 'tertiary':
-        return themeColorDefaultHover;
+        return hasDefaultThemeBackground
+          ? colorKit.setAlpha(themeColorDefaultHover, 0.2).hex()
+          : themeColorDefaultHover;
       case 'outline':
-        return colorKit.setAlpha(themeColorDefaultHover, 0.3).hex();
+        return colorKit
+          .setAlpha(
+            themeColorDefaultHover,
+            hasDefaultThemeBackground ? 0.05 : 0.3
+          )
+          .hex();
       case 'ghost':
-        return colorKit.setAlpha(themeColorDefaultHover, 0.3).hex();
+        return colorKit
+          .setAlpha(
+            themeColorDefaultHover,
+            hasDefaultThemeBackground ? 0.05 : 0.3
+          )
+          .hex();
       case 'danger':
         return themeColorDangerHover;
       case 'danger-soft':
@@ -85,6 +144,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     }
   }, [
     variant,
+    hasDefaultThemeBackground,
     themeColorAccentHover,
     themeColorDefaultHover,
     themeColorDangerHover,
@@ -204,6 +264,21 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
     children
   );
 
+  /**
+   * Background layer rendered behind the button surface.
+   * - `undefined`: theme-aware default for the secondary / tertiary variants
+   *   when the active theme registers default background content
+   * - custom node: replaces the default layer
+   * - `null`: removes the layer
+   */
+  const backgroundElement =
+    background !== undefined ? (
+      background
+    ) : hasDefaultThemeBackground &&
+      (variant === 'secondary' || variant === 'tertiary') ? (
+      <ButtonBackground />
+    ) : null;
+
   return (
     <ButtonProvider value={contextValue}>
       <PressableFeedback
@@ -223,6 +298,7 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
         animation={rootAnimation}
         {...restProps}
       >
+        {backgroundElement}
         {feedbackVariant === 'scale-highlight' &&
           highlightAnimationConfig !== undefined && (
             <PressableFeedback.Highlight animation={highlightAnimationConfig} />
@@ -261,6 +337,7 @@ const ButtonLabel = forwardRef<TextRef, ButtonLabelProps>((props, ref) => {
 
 ButtonRoot.displayName = DISPLAY_NAME.BUTTON_ROOT;
 ButtonLabel.displayName = DISPLAY_NAME.BUTTON_LABEL;
+ButtonBackground.displayName = DISPLAY_NAME.BUTTON_BACKGROUND;
 
 /**
  * Compound Button component with sub-components.
@@ -274,6 +351,11 @@ ButtonLabel.displayName = DISPLAY_NAME.BUTTON_LABEL;
  * @component Button.Label - Text content of the button. Inherits size and variant styling
  * from the parent Button context.
  *
+ * @component Button.Background - Absolute-fill background container behind the
+ * secondary / tertiary variant's button surface. With no children, the active
+ * library theme decides the default content (e.g. a glass blur layer);
+ * pass children to host custom content with the same positioning and clipping.
+ *
  * Props flow from Button to sub-components via context (size, variant, isDisabled).
  *
  * @see Full documentation: https://heroui.com/docs/native/components/button
@@ -281,6 +363,8 @@ ButtonLabel.displayName = DISPLAY_NAME.BUTTON_LABEL;
 const CompoundButton = Object.assign(ButtonRoot, {
   /** Button label - renders text or custom content */
   Label: ButtonLabel,
+  /** Button background - absolute-fill container behind the button surface */
+  Background: ButtonBackground,
 });
 
 export { useButton };

@@ -5,8 +5,11 @@ import { useIsOnSurface, useThemeColor } from '../../helpers/external/hooks';
 import {
   AnimatedCheckIcon,
   CheckIcon,
+  ThemeBackground,
+  useHasDefaultThemeBackground,
 } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { ViewRef } from '../../helpers/internal/types';
 import * as CheckboxPrimitives from '../../primitives/checkbox';
 import * as CheckboxPrimitivesTypes from '../../primitives/checkbox/checkbox.types';
 import {
@@ -17,6 +20,7 @@ import {
 import { DEFAULT_HIT_SLOP, DISPLAY_NAME } from './checkbox.constants';
 import { checkboxClassNames, checkboxStyleSheet } from './checkbox.styles';
 import type {
+  CheckboxBackgroundProps,
   CheckboxIndicatorProps,
   CheckboxProps,
   CheckboxRenderProps,
@@ -31,6 +35,31 @@ const AnimatedIndicatorView = Animated.createAnimatedComponent(
 );
 
 const useCheckbox = CheckboxPrimitives.useCheckboxContext;
+
+// --------------------------------------------------
+
+/**
+ * Generic absolute-fill background container rendered behind the checkbox
+ * content (clipped by the root's `overflow: hidden`). With no `children`,
+ * the active library theme decides the default content: `glass` renders a
+ * `GlassView` blur layer; other themes render nothing. Pass `children` to
+ * host arbitrary content (gradients, images) with the container's
+ * positioning and clipping applied.
+ */
+const CheckboxBackground = forwardRef<ViewRef, CheckboxBackgroundProps>(
+  ({ className, ...props }, ref) => {
+    const backgroundClassName = checkboxClassNames.background({ className });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={backgroundClassName}
+        fallbackColor="default"
+        {...props}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -50,9 +79,11 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
       onPressOut,
       animation,
       isAnimatedStyleActive = true,
+      background,
       ...restProps
     } = props;
 
+    const hasDefaultThemeBackground = useHasDefaultThemeBackground();
     const isOnSurfaceAutoDetected = useIsOnSurface();
     const finalVariant =
       variant !== undefined
@@ -119,6 +150,24 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
         ? children(renderProps)
         : (children ?? <CheckboxIndicator />);
 
+    /**
+     * Background layer rendered behind the checkbox content.
+     * - `undefined`: theme-aware default for the secondary variant (while
+     *   valid — the invalid unselected state paints a transparent
+     *   background) when the active theme registers default background
+     *   content
+     * - custom node: replaces the default layer
+     * - `null`: removes the layer
+     */
+    const backgroundElement =
+      background !== undefined ? (
+        background
+      ) : hasDefaultThemeBackground &&
+        finalVariant === 'secondary' &&
+        !isInvalid ? (
+        <CheckboxBackground />
+      ) : null;
+
     return (
       <AnimationSettingsProvider value={animationSettingsContextValue}>
         <CheckboxAnimationProvider value={animationContextValue}>
@@ -135,6 +184,7 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
             style={rootStyle}
             {...restProps}
           >
+            {backgroundElement}
             {content}
           </AnimatedRootView>
         </CheckboxAnimationProvider>
@@ -225,6 +275,7 @@ const CheckboxIndicator = forwardRef<
 
 CheckboxRoot.displayName = DISPLAY_NAME.CHECKBOX_ROOT;
 CheckboxIndicator.displayName = DISPLAY_NAME.CHECKBOX_INDICATOR;
+CheckboxBackground.displayName = DISPLAY_NAME.CHECKBOX_BACKGROUND;
 
 /**
  * Compound Checkbox component with sub-components
@@ -237,6 +288,10 @@ CheckboxIndicator.displayName = DISPLAY_NAME.CHECKBOX_INDICATOR;
  * Renders default check icon if no children provided. Handles enter/exit animations
  * and can be replaced with custom indicators.
  *
+ * @component Checkbox.Background - Absolute-fill background container behind the
+ * checkbox content. With no children, the active library theme decides the
+ * default content (e.g. a glass blur layer)
+ *
  * Props flow from Checkbox to sub-components via context (isSelected).
  * The checkbox supports controlled and uncontrolled modes through isSelected/onSelectedChange.
  *
@@ -245,6 +300,8 @@ CheckboxIndicator.displayName = DISPLAY_NAME.CHECKBOX_INDICATOR;
 const CompoundCheckbox = Object.assign(CheckboxRoot, {
   /** @optional Custom indicator with scale animations */
   Indicator: CheckboxIndicator,
+  /** Checkbox background - absolute-fill container behind the checkbox content */
+  Background: CheckboxBackground,
 });
 
 export { useCheckbox };

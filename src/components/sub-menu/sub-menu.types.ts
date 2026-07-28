@@ -1,6 +1,10 @@
 import type { ReactNode } from 'react';
 import type { ViewProps } from 'react-native';
-import type { SharedValue, WithSpringConfig } from 'react-native-reanimated';
+import type {
+  EntryOrExitLayoutType,
+  SharedValue,
+  WithSpringConfig,
+} from 'react-native-reanimated';
 import type {
   Animation,
   AnimationRoot,
@@ -9,10 +13,32 @@ import type {
 import type * as SubMenuPrimitivesTypes from '../../primitives/sub-menu/sub-menu.types';
 
 /**
+ * Props for the SubMenu.Background sub-component.
+ * Absolute-fill container behind the open sub-menu surface. It paints the
+ * sub-menu surface coat (`--color-overlay`) and, when no `children` are
+ * given, the active library theme decides the layer above it (e.g. a
+ * frosted-glass blur layer when the theme is `glass`).
+ */
+export type SubMenuBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
+
+/**
  * Animation configuration for SubMenu root content container.
- * Controls expand/collapse margins, padding, and spring.
+ * Controls expand/collapse margins, padding, spring, and the exit transition
+ * of the background layer.
  */
 export type SubMenuRootAnimation = AnimationRoot<{
+  background?: AnimationValue<{
+    /**
+     * Exit animation for the default background layer, played while the
+     * sub-menu collapses. The layer enters without a transition so the items
+     * behind it are never revealed while the root expands.
+     * @default FadeOut with duration 200ms
+     */
+    exiting?: EntryOrExitLayoutType;
+  }>;
   rootContent?: AnimationValue<{
     /**
      * Margin horizontal when submenu is open (target value)
@@ -51,6 +77,19 @@ export interface SubMenuRootProps extends SubMenuPrimitivesTypes.RootProps {
   children?: ReactNode;
   /** Additional CSS class for the root container */
   className?: string;
+  /**
+   * Background layer rendered behind the open sub-menu surface. It carries
+   * the sub-menu surface itself, so the collapsed trigger row keeps the menu
+   * surface it sits on.
+   * - `undefined` (default): renders `SubMenu.Background` while the sub-menu
+   *   is open (faded out on close), whose content above the surface coat is
+   *   decided by the active library theme
+   * - custom node: replaces the default layer entirely, mount and exit
+   *   transition included (wrap content in `SubMenu.Background` to keep the
+   *   absolute-fill, surface coat, and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: ReactNode;
   /**
    * Animation configuration for the SubMenu.
    * - `false` or `"disabled"`: Disable only root animations

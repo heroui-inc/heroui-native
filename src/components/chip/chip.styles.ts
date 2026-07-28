@@ -85,6 +85,15 @@ const root = tv({
   },
 });
 
+/**
+ * Chip background style definition — generic absolute-fill container behind
+ * the chip surface (clipped by the root's `overflow: hidden`), hosting
+ * theme-specific layers (e.g. a glass blur layer).
+ */
+const background = tv({
+  base: 'chip__background',
+});
+
 const label = tv({
   base: 'chip__label',
   variants: {
@@ -222,6 +231,7 @@ const label = tv({
 
 export const chipClassNames = combineStyles({
   root,
+  background,
   label,
 });
 

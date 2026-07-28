@@ -61,6 +61,15 @@ const thumb = tv({
   base: 'switch__thumb',
 });
 
+/**
+ * Switch background style definition — generic absolute-fill container
+ * behind the switch content (clipped by the root's `overflow: hidden`),
+ * hosting theme-specific layers (e.g. a glass blur layer).
+ */
+const background = tv({
+  base: 'switch__background',
+});
+
 const startContent = tv({
   base: 'switch__start-content',
 });
@@ -71,6 +80,7 @@ const endContent = tv({
 
 export const switchClassNames = combineStyles({
   root,
+  background,
   thumb,
   startContent,
   endContent,

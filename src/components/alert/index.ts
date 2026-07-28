@@ -6,6 +6,7 @@ export { alertClassNames } from './alert.styles';
 
 // Type exports (named exports for better tree-shaking)
 export type {
+  AlertBackgroundProps,
   AlertContentProps,
   AlertDescriptionProps,
   AlertIconProps,

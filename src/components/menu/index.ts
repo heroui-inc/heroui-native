@@ -9,6 +9,7 @@ export type {
   MenuAlign,
   MenuAnimationContextValue,
   MenuCloseProps,
+  MenuContentBackgroundProps,
   MenuContentBottomSheetProps,
   MenuContentContextValue,
   MenuContentPopoverProps,

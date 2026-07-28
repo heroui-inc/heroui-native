@@ -1,5 +1,6 @@
 import type { TextProps, ViewProps } from 'react-native';
 import type { EntryOrExitLayoutType } from 'react-native-reanimated';
+import type { ThemeColor } from '../../helpers/external/hooks';
 import type {
   Animation,
   AnimationRootDisableAll,
@@ -74,6 +75,23 @@ export interface InputOTPGroupProps
 export type InputOTPGroupRef = InputOTPPrimitivesTypes.GroupRef;
 
 /**
+ * Props for the InputOTP.SlotBackground sub-component.
+ * Generic absolute-fill container behind the slot content. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type InputOTPSlotBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+  /**
+   * Theme color token forwarded to the theme content as the opaque fallback
+   * on platforms without native blur (Android / web)
+   * @default 'field'
+   */
+  fallbackColor?: ThemeColor;
+};
+
+/**
  * Props for the InputOTP.Slot component
  * Extends the primitive SlotProps
  */
@@ -87,6 +105,16 @@ export interface InputOTPSlotProps extends InputOTPPrimitivesTypes.SlotProps {
    * Additional CSS classes
    */
   className?: string;
+  /**
+   * Background layer rendered behind the slot content.
+   * - `undefined` (default): renders `InputOTP.SlotBackground`, whose
+   *   content is decided by the active library theme; the fallback color
+   *   follows the variant (primary → field token, secondary → default token)
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `InputOTP.SlotBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 }
 
 /**

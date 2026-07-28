@@ -1,3 +1,4 @@
+import type { ViewProps } from 'react-native';
 import type {
   AnimatedProps,
   SharedValue,
@@ -97,7 +98,29 @@ export interface SwitchProps
    * @default true
    */
   isAnimatedStyleActive?: boolean;
+
+  /**
+   * Background layer rendered behind the switch content.
+   * - `undefined` (default): renders `Switch.Background` while unselected
+   *   (selection paints its own accent color) when the active library theme
+   *   registers default background content (e.g. `glass`); otherwise no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Switch.Background` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 }
+
+/**
+ * Props for the Switch.Background sub-component.
+ * Generic absolute-fill container behind the switch content. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type SwitchBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Animation configuration for switch thumb component

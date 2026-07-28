@@ -7,7 +7,12 @@ import {
 } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-import { FullWindowOverlay, HeroText } from '../../helpers/internal/components';
+import {
+  FullWindowOverlay,
+  HeroText,
+  PopupOverlayBlurView,
+  ThemeBackground,
+} from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
@@ -15,6 +20,7 @@ import {
 import {
   usePopupDialogContentAnimation,
   usePopupOverlayAnimation,
+  usePopupOverlayVariant,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
 import type { PressableRef } from '../../helpers/internal/types';
@@ -29,6 +35,7 @@ import { DISPLAY_NAME } from './dialog.constants';
 import { dialogClassNames, dialogStyleSheet } from './dialog.styles';
 import type {
   DialogCloseProps,
+  DialogContentBackgroundProps,
   DialogContentProps,
   DialogDescriptionProps,
   DialogOverlayProps,
@@ -149,7 +156,15 @@ const DialogOverlay = forwardRef<
   DialogOverlayProps
 >(
   (
-    { className, style, animation, isAnimatedStyleActive = true, ...props },
+    {
+      className,
+      style,
+      animation,
+      isAnimatedStyleActive,
+      variant,
+      blurViewProps,
+      ...props
+    },
     ref
   ) => {
     const { isOpen } = useDialog();
@@ -157,7 +172,12 @@ const DialogOverlay = forwardRef<
     const { progress, isDragging, isGestureReleaseAnimationRunning } =
       useDialogAnimation();
 
-    const overlayClassName = dialogClassNames.overlay({ className });
+    const { resolvedVariant, isBlurVariant } = usePopupOverlayVariant(variant);
+
+    const overlayClassName = dialogClassNames.overlay({
+      variant: resolvedVariant,
+      className,
+    });
 
     const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
       progress,
@@ -170,7 +190,10 @@ const DialogOverlay = forwardRef<
       return null;
     }
 
-    const overlayStyle = isAnimatedStyleActive
+    // The blur variant animates blur intensity instead of the overlay opacity
+    const isAnimatedStyleResolved = isAnimatedStyleActive ?? !isBlurVariant;
+
+    const overlayStyle = isAnimatedStyleResolved
       ? [rContainerStyle, style]
       : style;
 
@@ -180,6 +203,15 @@ const DialogOverlay = forwardRef<
         exiting={exiting}
         style={StyleSheet.absoluteFill}
       >
+        {/* Rendered behind the pressable overlay so presses still hit the overlay */}
+        {isBlurVariant ? (
+          <PopupOverlayBlurView
+            progress={progress}
+            isDragging={isDragging}
+            isGestureReleaseAnimationRunning={isGestureReleaseAnimationRunning}
+            blurViewProps={blurViewProps}
+          />
+        ) : null}
         <AnimatedOverlay
           ref={ref}
           className={overlayClassName}
@@ -193,12 +225,45 @@ const DialogOverlay = forwardRef<
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the dialog
+ * content. With no `children`, the active library theme decides the default
+ * content: `glass` renders a `GlassView` blur layer; other themes render
+ * nothing. Pass `children` to host arbitrary content (gradients, images)
+ * with the container's positioning and clipping applied.
+ */
+const DialogContentBackground = forwardRef<View, DialogContentBackgroundProps>(
+  ({ className, ...props }, ref) => {
+    const contentBackgroundClassName = dialogClassNames.contentBackground({
+      className,
+    });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={contentBackgroundClassName}
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const DialogContent = forwardRef<
   DialogPrimitivesTypes.ContentRef,
   DialogContentProps
 >(
   (
-    { className, style, children, animation, isSwipeable = true, ...props },
+    {
+      className,
+      style,
+      children,
+      background,
+      animation,
+      isSwipeable = true,
+      ...props
+    },
     ref
   ) => {
     const { isOpen, onOpenChange } = useDialog();
@@ -237,6 +302,13 @@ const DialogContent = forwardRef<
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    /**
+     * Background layer rendered behind the dialog content. `undefined`
+     * falls back to the theme-aware default; `null` removes the layer.
+     */
+    const backgroundElement =
+      background === undefined ? <DialogContentBackground /> : background;
+
     return (
       <GestureDetector gesture={panGesture}>
         <Animated.View
@@ -251,6 +323,7 @@ const DialogContent = forwardRef<
               style={[dialogStyleSheet.contentContainer, style]}
               {...props}
             >
+              {backgroundElement}
               {children}
             </DialogPrimitives.Content>
           </Animated.View>
@@ -329,6 +402,7 @@ DialogTrigger.displayName = DISPLAY_NAME.TRIGGER;
 DialogPortal.displayName = DISPLAY_NAME.PORTAL;
 DialogOverlay.displayName = DISPLAY_NAME.OVERLAY;
 DialogContent.displayName = DISPLAY_NAME.CONTENT;
+DialogContentBackground.displayName = DISPLAY_NAME.CONTENT_BACKGROUND;
 DialogClose.displayName = DISPLAY_NAME.CLOSE;
 DialogTitle.displayName = DISPLAY_NAME.TITLE;
 DialogDescription.displayName = DISPLAY_NAME.DESCRIPTION;
@@ -351,6 +425,12 @@ DialogDescription.displayName = DISPLAY_NAME.DESCRIPTION;
  * @component Dialog.Content - The dialog content container.
  * Contains the main dialog UI elements.
  *
+ * @component Dialog.ContentBackground - Absolute-fill background container behind
+ * the dialog content. With no children, the active library theme decides the content
+ * (glass theme renders a blur layer). Accepts children to host custom content such
+ * as gradients with the container's positioning and clipping applied. Replaceable
+ * via the `background` prop on Dialog.Content.
+ *
  * @component Dialog.Close - Close button for the dialog.
  * Can accept custom children or uses default close icon.
  *
@@ -371,6 +451,8 @@ const Dialog = Object.assign(DialogRoot, {
   Overlay: DialogOverlay,
   /** @optional Main dialog content container */
   Content: DialogContent,
+  /** @optional Theme-aware background container behind the dialog content */
+  ContentBackground: DialogContentBackground,
   /** @optional Close button for the dialog */
   Close: DialogClose,
   /** @optional Dialog title text */

@@ -12,6 +12,7 @@ export * from './components/control-field';
 export * from './components/description';
 export * from './components/dialog';
 export * from './components/field-error';
+export * from './components/glass-view';
 export * from './components/input';
 export * from './components/input-group';
 export * from './components/input-otp';
@@ -39,6 +40,7 @@ export * from './components/tag-group';
 export * from './components/text';
 export * from './components/text-area';
 export * from './components/text-field';
+export * from './components/theme-background';
 export * from './components/toast';
 
 // Portal

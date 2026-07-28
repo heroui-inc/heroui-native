@@ -7,6 +7,7 @@ export { ACCORDION_LAYOUT_TRANSITION as AccordionLayoutTransition } from './acco
 export { accordionClassNames } from './accordion.styles';
 
 export type {
+  AccordionBackgroundProps,
   AccordionContentProps,
   AccordionContextValue,
   AccordionIndicatorProps,

@@ -14,6 +14,15 @@ const root = tv({
   },
 });
 
+/**
+ * Background style definition — absolute-fill container behind the open
+ * sub-menu surface, hosting theme-specific layers (e.g. glass blur) or
+ * custom content (gradients, images).
+ */
+const background = tv({
+  base: 'sub-menu__background',
+});
+
 /** Trigger styled as a menu item row. */
 const trigger = tv({
   base: 'sub-menu__trigger',
@@ -44,6 +53,7 @@ const content = tv({
 
 export const subMenuClassNames = combineStyles({
   root,
+  background,
   trigger,
   triggerIndicator,
   content,

@@ -68,6 +68,29 @@
   aspect-ratio: 1;
 }
 
+.button__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+/* Background - size (matches the root's border radius) */
+
+.button__background--size-sm {
+  border-radius: var(--radius-3xl);
+}
+
+.button__background--size-md {
+  border-radius: var(--radius-3xl);
+}
+
+.button__background--size-lg {
+  border-radius: var(--radius-4xl);
+}
+
 .button__label {
   font-family: var(--font-medium);
 }

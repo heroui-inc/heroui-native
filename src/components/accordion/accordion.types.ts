@@ -1,4 +1,4 @@
-import type { ViewStyle } from 'react-native';
+import type { ViewProps, ViewStyle } from 'react-native';
 import type {
   AnimatedProps,
   EntryOrExitLayoutType,
@@ -24,6 +24,18 @@ import type { RootSlots } from './accordion.styles';
  * Variant types for the Accordion component
  */
 export type AccordionVariant = 'default' | 'surface';
+
+/**
+ * Props for the Accordion.Background sub-component.
+ * Generic absolute-fill container behind the surface variant's root
+ * container. When no `children` are given, the active library theme decides
+ * the default content (e.g. a frosted-glass blur layer when the theme is
+ * `glass`).
+ */
+export type AccordionBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Icon props for the Accordion.Indicator component
@@ -95,6 +107,16 @@ export type AccordionRootProps = Omit<
    * - `object`: Custom animation configuration
    */
   animation?: AccordionRootAnimation;
+  /**
+   * Background layer rendered behind the surface variant's root container.
+   * - `undefined` (default): renders `Accordion.Background` for the surface
+   *   variant when the active library theme registers default background
+   *   content (e.g. `glass`); otherwise no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Accordion.Background` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 };
 
 /**

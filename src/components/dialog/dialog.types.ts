@@ -1,13 +1,26 @@
 import type { ReactNode } from 'react';
-import type { StyleProp, TextProps, ViewStyle } from 'react-native';
+import type { StyleProp, TextProps, ViewProps, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
   AnimationRootDisableAll,
   PopupDialogContentAnimation,
   PopupOverlayAnimation,
+  PopupOverlayBlurViewProps,
+  PopupOverlayVariant,
 } from '../../helpers/internal/types';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
+
+/**
+ * Props for the Dialog.ContentBackground sub-component.
+ * Generic absolute-fill container behind the dialog content. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type DialogContentBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Dialog internal state for animation coordination
@@ -93,6 +106,16 @@ export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
 export type DialogOverlayAnimation = PopupOverlayAnimation;
 
 /**
+ * Visual variant of the Dialog Overlay component
+ */
+export type DialogOverlayVariant = PopupOverlayVariant;
+
+/**
+ * Props forwarded to the BlurView rendered by the `blur` overlay variant
+ */
+export type DialogOverlayBlurViewProps = PopupOverlayBlurViewProps;
+
+/**
  * Dialog Overlay component props
  */
 export interface DialogOverlayProps
@@ -126,9 +149,21 @@ export interface DialogOverlayProps
    * Whether animated styles (react-native-reanimated) are active
    * When `false`, the animated style is removed and you can implement custom logic
    * This prop should only be used when you want to write custom styling logic instead of the default animated styles
-   * @default true
+   * @default true for the `default` variant, false for the `blur` variant (the animated blur intensity replaces the opacity animation)
    */
   isAnimatedStyleActive?: boolean;
+  /**
+   * Visual variant of the overlay
+   * - `default`: solid backdrop colored by the `--color-backdrop` token
+   * - `blur`: blur backdrop (iOS only, requires expo-blur; falls back to `default` otherwise)
+   * @default 'blur' when the library theme is `glass`, otherwise 'default'
+   */
+  variant?: DialogOverlayVariant;
+  /**
+   * Props forwarded to the BlurView rendered by the `blur` variant.
+   * `intensity` is treated as the maximum (animated) blur intensity.
+   */
+  blurViewProps?: DialogOverlayBlurViewProps;
 }
 
 /**
@@ -166,6 +201,15 @@ export interface DialogContentProps
    * The dialog content
    */
   children?: ReactNode;
+  /**
+   * Background layer rendered behind the dialog content.
+   * - `undefined` (default): renders `Dialog.ContentBackground`, whose
+   *   content is decided by the active library theme
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Dialog.ContentBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: ReactNode;
   /**
    * Animation configuration for content
    * - `false` or `"disabled"`: Disable all animations

@@ -61,6 +61,15 @@ const root = tv({
 });
 
 /**
+ * Avatar background style definition — generic absolute-fill container
+ * behind the avatar content (clipped by the root's `overflow: hidden`),
+ * hosting theme-specific layers (e.g. a glass blur layer).
+ */
+const background = tv({
+  base: 'avatar__background',
+});
+
+/**
  * Avatar image styles
  *
  * @note ANIMATED PROPERTIES (cannot be set via className):
@@ -129,6 +138,7 @@ const fallback = tv({
 
 export const avatarClassNames = combineStyles({
   root,
+  background,
   image,
   fallback,
 });

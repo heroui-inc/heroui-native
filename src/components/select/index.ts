@@ -8,6 +8,7 @@ export { selectClassNames } from './select.styles';
 export type {
   SelectAlign,
   SelectCloseProps,
+  SelectContentBackgroundProps,
   SelectContentProps,
   SelectItemDescriptionProps,
   SelectItemIndicatorIconProps,
@@ -19,6 +20,7 @@ export type {
   SelectPlacement,
   SelectPortalProps,
   SelectRootProps,
+  SelectTriggerBackgroundProps,
   SelectTriggerIndicatorAnimation,
   SelectTriggerIndicatorIconProps,
   SelectTriggerIndicatorProps,

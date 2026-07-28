@@ -17,6 +17,7 @@ import { Button } from 'heroui-native';
 ```
 
 - **Button**: Main container that handles press interactions, animations, and variants. Renders string children as label or accepts compound components for custom layouts.
+- **Button.Background**: Optional theme-aware background container rendered behind the button surface. Mounted automatically for the `secondary` and `tertiary` variants when the active theme registers default background content (e.g. `glass`). Replace or remove it via the `background` prop.
 - **Button.Label**: Text content of the button. Inherits size and variant styling from parent Button context.
 
 ## Usage
@@ -331,6 +332,7 @@ Button extends all props from [PressableFeedback](../pressable-feedback/pressabl
 | `isIconOnly`      | `boolean`                                                                                     | `false`             | Whether the button displays an icon only (square aspect ratio) |
 | `feedbackVariant` | `'scale-highlight' \| 'scale-ripple' \| 'scale' \| 'none'`                                    | `'scale-highlight'` | Determines which feedback effects are rendered                 |
 | `animation`       | `ButtonAnimation`                                                                             | -                   | Animation configuration (shape depends on `feedbackVariant`)   |
+| `background` | `React.ReactNode` | - | Background layer behind the button surface. `undefined` renders the theme-aware default for the `secondary` and `tertiary` variants; custom node replaces it; `null` removes it |
 
 For inherited props including `isDisabled`, `className`, `children`, and all Pressable props, see [PressableFeedback API Reference](../pressable-feedback/pressable-feedback.md#api-reference).
 
@@ -371,6 +373,16 @@ The `animation` prop is a discriminated union based on `feedbackVariant`. It fol
 Only `'disable-all'` is accepted as a string value. All feedback effects are disabled.
 
 For detailed animation sub-types (`PressableFeedbackScaleAnimation`, `PressableFeedbackHighlightAnimation`, `PressableFeedbackRippleAnimation`), see [PressableFeedback API Reference](../pressable-feedback/pressable-feedback.md#api-reference).
+
+### Button.Background
+
+Absolute-fill container rendered behind the button surface. With no children, the active library theme decides the default content (e.g. a glass blur layer); pass children to host custom content with the same positioning and clipping.
+
+| prop           | type              | default | description                                    |
+| -------------- | ----------------- | ------- | ---------------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Custom content inside the background container |
+| `className`    | `string`          | -       | Additional CSS classes                         |
+| `...ViewProps` | `ViewProps`       | -       | All standard View props are supported          |
 
 ### Button.Label
 

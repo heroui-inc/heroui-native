@@ -1,6 +1,6 @@
 import type { BottomSheetProps } from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
-import type { StyleProp, TextProps, ViewStyle } from 'react-native';
+import type { StyleProp, TextProps, ViewProps, ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import type {
   AnimationRootDisableAll,
@@ -156,6 +156,17 @@ export interface PopoverOverlayProps
 }
 
 /**
+ * Props for the Popover.ContentBackground sub-component.
+ * Generic absolute-fill container behind the popover content. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type PopoverContentBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
+
+/**
  * Popover Content props for 'popover' presentation
  */
 export interface PopoverContentPopoverProps
@@ -172,6 +183,15 @@ export interface PopoverContentPopoverProps
    * The popover content
    */
   children?: ReactNode;
+  /**
+   * Background layer rendered behind the popover content.
+   * - `undefined` (default): renders `Popover.ContentBackground`, whose
+   *   content is decided by the active library theme
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Popover.ContentBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: ReactNode;
   /**
    * Animation configuration for content
    * - `false` or `"disabled"`: Disable all animations

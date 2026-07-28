@@ -1,7 +1,11 @@
 import { Children, forwardRef, useMemo } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
 import { useThemeColor } from '../../helpers/external/hooks';
-import { HeroText } from '../../helpers/internal/components';
+import {
+  HeroText,
+  ThemeBackground,
+  useHasDefaultThemeBackground,
+} from '../../helpers/internal/components';
 import { CloseIcon } from '../../helpers/internal/components/close-icon';
 import {
   AnimationSettingsProvider,
@@ -23,6 +27,7 @@ import { DISPLAY_NAME } from './tag-group.constants';
 import { tagGroupClassNames, tagGroupStyleSheet } from './tag-group.styles';
 import type {
   TagGroupContextValue,
+  TagGroupItemBackgroundProps,
   TagGroupItemLabelProps,
   TagGroupItemProps,
   TagGroupItemRemoveButtonProps,
@@ -138,6 +143,36 @@ const TagGroupList = forwardRef<ViewRef, TagGroupListProps>((props, ref) => {
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the tag. With
+ * no `children`, the active library theme decides the default content:
+ * `glass` renders a `GlassView` blur layer; other themes render nothing.
+ * Pass `children` to host arbitrary content (gradients, images) with the
+ * container's positioning and clipping applied. The fallback color follows
+ * the active variant (`surface` → surface token, `default` → default token).
+ */
+const TagGroupItemBackground = forwardRef<ViewRef, TagGroupItemBackgroundProps>(
+  ({ className, ...props }, ref) => {
+    const { size, variant } = useInnerTagGroupContext();
+
+    const tagBackgroundClassName = tagGroupClassNames.tagBackground({
+      size,
+      className,
+    });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={tagBackgroundClassName}
+        fallbackColor={variant === 'surface' ? 'surface' : 'default'}
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const TagGroupItem = forwardRef<PressableRef, TagGroupItemProps>(
   (props, ref) => {
     const {
@@ -146,10 +181,12 @@ const TagGroupItem = forwardRef<PressableRef, TagGroupItemProps>(
       style,
       id,
       isDisabled: isDisabledProp,
+      background,
       ...restProps
     } = props;
 
     const { variant, size } = useInnerTagGroupContext();
+    const hasDefaultThemeBackground = useHasDefaultThemeBackground();
 
     const {
       selectedKeys,
@@ -169,6 +206,21 @@ const TagGroupItem = forwardRef<PressableRef, TagGroupItemProps>(
       className,
     });
 
+    /**
+     * Background layer rendered behind the tag surface.
+     * - `undefined`: theme-aware default while unselected (selection paints
+     *   its own accent tint) when the active theme registers default
+     *   background content
+     * - custom node: replaces the default layer
+     * - `null`: removes the layer
+     */
+    const backgroundElement =
+      background !== undefined ? (
+        background
+      ) : hasDefaultThemeBackground && !isSelected ? (
+        <TagGroupItemBackground />
+      ) : null;
+
     if (typeof children === 'function') {
       const renderProps: TagRenderProps = {
         isSelected,
@@ -184,6 +236,7 @@ const TagGroupItem = forwardRef<PressableRef, TagGroupItemProps>(
           style={[tagGroupStyleSheet.tag, style] as StyleProp<ViewStyle>}
           {...restProps}
         >
+          {backgroundElement}
           {children(renderProps)}
         </TagGroupPrimitives.Item>
       );
@@ -200,6 +253,7 @@ const TagGroupItem = forwardRef<PressableRef, TagGroupItemProps>(
         style={[tagGroupStyleSheet.tag, style] as StyleProp<ViewStyle>}
         {...restProps}
       >
+        {backgroundElement}
         {stringifiedChildren ? (
           <TagGroupItemLabel>{stringifiedChildren}</TagGroupItemLabel>
         ) : (
@@ -280,6 +334,7 @@ const TagGroupItemRemoveButton = forwardRef<
 TagGroupRoot.displayName = DISPLAY_NAME.TAG_GROUP_ROOT;
 TagGroupList.displayName = DISPLAY_NAME.TAG_GROUP_LIST;
 TagGroupItem.displayName = DISPLAY_NAME.TAG_GROUP_ITEM;
+TagGroupItemBackground.displayName = DISPLAY_NAME.TAG_GROUP_ITEM_BACKGROUND;
 TagGroupItemLabel.displayName = DISPLAY_NAME.TAG_GROUP_ITEM_LABEL;
 TagGroupItemRemoveButton.displayName =
   DISPLAY_NAME.TAG_GROUP_ITEM_REMOVE_BUTTON;
@@ -300,6 +355,13 @@ TagGroupItemRemoveButton.displayName =
  * children (auto-wrapped in TagGroup.ItemLabel), render function children,
  * or custom layouts.
  *
+ * @component TagGroup.ItemBackground - Absolute-fill background container
+ * behind the surface variant's tag. With no children, the active library
+ * theme decides the content (glass theme renders a blur layer with a
+ * surface-matched fallback). Accepts children to host custom content such as
+ * gradients with the container's positioning and clipping applied. Replaceable
+ * via the `background` prop on TagGroup.Item.
+ *
  * @component TagGroup.ItemLabel - Text label for the tag. Automatically
  * rendered when string children are provided, or can be used explicitly.
  *
@@ -315,6 +377,8 @@ const TagGroup = Object.assign(TagGroupRoot, {
   List: TagGroupList,
   /** Individual tag item within the group */
   Item: TagGroupItem,
+  /** @optional Theme-aware background container behind the tag surface */
+  ItemBackground: TagGroupItemBackground,
   /** Text label for the tag item */
   ItemLabel: TagGroupItemLabel,
   /** Remove button for the tag item */

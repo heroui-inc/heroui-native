@@ -1,3 +1,4 @@
+import type { ViewProps } from 'react-native';
 import type {
   AnimatedProps,
   SharedValue,
@@ -105,7 +106,29 @@ export interface CheckboxProps
    * @default true
    */
   isAnimatedStyleActive?: boolean;
+
+  /**
+   * Background layer rendered behind the checkbox content.
+   * - `undefined` (default): renders `Checkbox.Background` for the secondary
+   *   variant when the active library theme registers default background
+   *   content (e.g. `glass`); otherwise no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Checkbox.Background` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 }
+
+/**
+ * Props for the Checkbox.Background sub-component.
+ * Generic absolute-fill container behind the checkbox content. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type CheckboxBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Animation configuration for checkbox indicator component

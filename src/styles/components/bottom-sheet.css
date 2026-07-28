@@ -7,6 +7,10 @@
   background-color: var(--color-backdrop);
 }
 
+.bottom-sheet__overlay--variant-blur {
+  background-color: transparent;
+}
+
 .bottom-sheet__content-container {
   flex: 1;
   padding: calc(var(--spacing) * 5);
@@ -18,6 +22,17 @@
   border-top-left-radius: var(--radius-4xl);
   border-top-right-radius: var(--radius-4xl);
   box-shadow: var(--shadow-overlay);
+}
+
+.bottom-sheet__background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-top-left-radius: var(--radius-4xl);
+  border-top-right-radius: var(--radius-4xl);
+  overflow: hidden;
 }
 
 .bottom-sheet__content-handle-indicator {

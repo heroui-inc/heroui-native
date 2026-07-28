@@ -1,6 +1,6 @@
 import type { BottomSheetProps } from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
-import type { TextProps, ViewStyle } from 'react-native';
+import type { TextProps, ViewProps, ViewStyle } from 'react-native';
 import type {
   AnimatedProps,
   SharedValue,
@@ -19,6 +19,18 @@ import type {
 import type * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
 import type { DialogContentFallbackSlots } from './select.styles';
+
+/**
+ * Props for the Select.ContentBackground sub-component.
+ * Generic absolute-fill container behind the select content (shared by
+ * popover and dialog presentations). When no `children` are given, the
+ * active library theme decides the default content (e.g. a frosted-glass
+ * blur layer when the theme is `glass`).
+ */
+export type SelectContentBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Select internal state for animation coordination
@@ -85,6 +97,18 @@ export type SelectRootProps<
 };
 
 /**
+ * Props for the Select.TriggerBackground sub-component.
+ * Generic absolute-fill container behind the default variant's trigger
+ * surface. When no `children` are given, the active library theme decides
+ * the default content (e.g. a frosted-glass blur layer when the theme is
+ * `glass`).
+ */
+export type SelectTriggerBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
+
+/**
  * Select Trigger component props
  */
 export interface SelectTriggerProps extends SelectPrimitivesTypes.TriggerProps {
@@ -101,6 +125,16 @@ export interface SelectTriggerProps extends SelectPrimitivesTypes.TriggerProps {
    * Additional CSS class for the trigger
    */
   className?: string;
+  /**
+   * Background layer rendered behind the trigger surface.
+   * - `undefined` (default): renders `Select.TriggerBackground` for the
+   *   default variant when the active library theme registers default
+   *   background content (e.g. `glass`); otherwise no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Select.TriggerBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: ReactNode;
 }
 
 /**
@@ -269,6 +303,15 @@ export interface SelectContentPopoverProps
    */
   children?: ReactNode;
   /**
+   * Background layer rendered behind the select content.
+   * - `undefined` (default): renders `Select.ContentBackground`, whose
+   *   content is decided by the active library theme
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Select.ContentBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: ReactNode;
+  /**
    * Presentation mode for the select
    */
   presentation: 'popover';
@@ -316,6 +359,15 @@ export interface SelectContentDialogProps
    * The select content
    */
   children?: ReactNode;
+  /**
+   * Background layer rendered behind the select content.
+   * - `undefined` (default): renders `Select.ContentBackground`, whose
+   *   content is decided by the active library theme
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Select.ContentBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: ReactNode;
   /**
    * Presentation mode for the select
    */

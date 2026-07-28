@@ -2,8 +2,13 @@ import { forwardRef, useMemo } from 'react';
 import type { ImageSourcePropType } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
-import { HeroText } from '../../helpers/internal/components';
+import {
+  HeroText,
+  ThemeBackground,
+  useHasDefaultThemeBackground,
+} from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { ViewRef } from '../../helpers/internal/types';
 import { childrenToString } from '../../helpers/internal/utils';
 import * as AvatarPrimitives from '../../primitives/avatar';
 import type { ImageProps } from '../../primitives/avatar/avatar.types';
@@ -19,6 +24,7 @@ import {
 import { AvatarProvider, useInnerAvatarContext } from './avatar.context';
 import { avatarClassNames, avatarStyleSheet } from './avatar.styles';
 import type {
+  AvatarBackgroundProps,
   AvatarColor,
   AvatarFallbackProps,
   AvatarFallbackRef,
@@ -43,6 +49,31 @@ const useAvatar = AvatarPrimitives.useRootContext;
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the avatar
+ * content (clipped by the root's `overflow: hidden`). With no `children`,
+ * the active library theme decides the default content: `glass` renders a
+ * `GlassView` blur layer; other themes render nothing. Pass `children` to
+ * host arbitrary content (gradients, images) with the container's
+ * positioning and clipping applied.
+ */
+const AvatarBackground = forwardRef<ViewRef, AvatarBackgroundProps>(
+  ({ className, ...props }, ref) => {
+    const backgroundClassName = avatarClassNames.background({ className });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={backgroundClassName}
+        fallbackColor="default"
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
   const {
     children,
@@ -52,8 +83,11 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
     className,
     style,
     animation,
+    background,
     ...restProps
   } = props;
+
+  const hasDefaultThemeBackground = useHasDefaultThemeBackground();
 
   const rootClassName = avatarClassNames.root({
     variant,
@@ -81,6 +115,22 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
     [isAllAnimationsDisabled]
   );
 
+  /**
+   * Background layer rendered behind the avatar content.
+   * - `undefined`: theme-aware default for default-colored surfaces (default
+   *   variant, or soft variant with the default color) when the active theme
+   *   registers default background content
+   * - custom node: replaces the default layer
+   * - `null`: removes the layer
+   */
+  const backgroundElement =
+    background !== undefined ? (
+      background
+    ) : hasDefaultThemeBackground &&
+      (variant === 'default' || (variant === 'soft' && color === 'default')) ? (
+      <AvatarBackground />
+    ) : null;
+
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
       <AvatarProvider value={contextValue}>
@@ -90,6 +140,7 @@ const AvatarRoot = forwardRef<AvatarRootRef, AvatarRootProps>((props, ref) => {
           style={[avatarStyleSheet.borderCurve, style]}
           {...restProps}
         >
+          {backgroundElement}
           {children}
         </AvatarPrimitives.Root>
       </AvatarProvider>
@@ -279,6 +330,7 @@ const AvatarFallback = forwardRef<AvatarFallbackRef, AvatarFallbackProps>(
 AvatarRoot.displayName = AVATAR_DISPLAY_NAME.ROOT;
 AvatarImage.displayName = AVATAR_DISPLAY_NAME.IMAGE;
 AvatarFallback.displayName = AVATAR_DISPLAY_NAME.FALLBACK;
+AvatarBackground.displayName = AVATAR_DISPLAY_NAME.BACKGROUND;
 
 /**
  * Compound Avatar component with sub-components
@@ -292,6 +344,10 @@ AvatarFallback.displayName = AVATAR_DISPLAY_NAME.FALLBACK;
  * @component Avatar.Fallback - Optional fallback component shown when image fails to load.
  * Supports text initials or custom content with optional delay.
  *
+ * @component Avatar.Background - Absolute-fill background container behind the
+ * avatar content. With no children, the active library theme decides the
+ * default content (e.g. a glass blur layer)
+ *
  * Props flow from Avatar to sub-components via context (size, color).
  * Fallback can override color with its own prop.
  *
@@ -302,6 +358,8 @@ const Avatar = Object.assign(AvatarRoot, {
   Image: AvatarImage,
   /** @optional Shows fallback content when image is unavailable */
   Fallback: AvatarFallback,
+  /** Avatar background - absolute-fill container behind the avatar content */
+  Background: AvatarBackground,
 });
 
 export default Avatar;

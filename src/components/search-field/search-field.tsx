@@ -131,6 +131,7 @@ const SearchFieldInput = forwardRef<TextInputType, SearchFieldInputProps>(
   (props, ref) => {
     const {
       className,
+      containerClassName: containerClassNameProp,
       placeholder = 'Search...',
       returnKeyType = 'search',
       accessibilityRole = 'search',
@@ -142,10 +143,15 @@ const SearchFieldInput = forwardRef<TextInputType, SearchFieldInputProps>(
 
     const inputClassName = searchFieldClassNames.input({ className });
 
+    const inputContainerClassName = searchFieldClassNames.inputContainer({
+      className: containerClassNameProp,
+    });
+
     return (
       <Input
         ref={ref}
         className={inputClassName}
+        containerClassName={inputContainerClassName}
         value={searchField?.value}
         onChangeText={searchField?.onChange}
         placeholder={placeholder}

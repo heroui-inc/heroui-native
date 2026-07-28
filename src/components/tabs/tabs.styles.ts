@@ -20,6 +20,15 @@ const list = tv({
   },
 });
 
+/**
+ * List background style definition — generic absolute-fill container behind
+ * the primary variant's list surface, hosting theme-specific layers (e.g. a
+ * glass blur layer).
+ */
+const listBackground = tv({
+  base: 'tabs__list-background',
+});
+
 const scrollView = tv({
   base: '',
   variants: {
@@ -154,6 +163,7 @@ const content = tv({
 export const tabsClassNames = combineStyles({
   root,
   list,
+  listBackground,
   scrollView,
   scrollViewContentContainer,
   trigger,

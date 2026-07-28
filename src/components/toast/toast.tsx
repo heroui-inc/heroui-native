@@ -1,10 +1,15 @@
 import { forwardRef, useMemo } from 'react';
-import { View } from 'react-native';
+import { View, type ViewStyle } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
-import { cn } from '../../helpers/external/utils';
-import { CloseIcon, HeroText } from '../../helpers/internal/components';
+import { cn, colorKit } from '../../helpers/external/utils';
+import {
+  CloseIcon,
+  HeroText,
+  ThemeBackground,
+  useHasDefaultThemeBackground,
+} from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
@@ -12,6 +17,7 @@ import * as ToastPrimitive from '../../primitives/toast';
 import type { ToastComponentProps } from '../../providers/toast';
 import { useToastConfig } from '../../providers/toast/toast-config.context';
 import { Button } from '../button';
+import { flattenColorOverBackground } from '../glass-view/glass-view.utils';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
 import { useVerticalPlaceholderStyles } from './toast.hooks';
@@ -19,6 +25,7 @@ import { toastClassNames, toastStyleSheet } from './toast.styles';
 import type {
   DefaultToastProps,
   ToastActionProps,
+  ToastBackgroundProps,
   ToastCloseProps,
   ToastContextValue,
   ToastDescriptionProps,
@@ -34,6 +41,33 @@ const [ToastProvider, useToast] = createContext<ToastContextValue>({
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the toast
+ * surface. With no `children`, the active library theme decides the default
+ * content: `glass` renders the opaque `overlay` fallback color on every
+ * platform (`forceFallbackColor`) — toasts stack, so an iOS blur layer would
+ * reveal the toast underneath; other themes render nothing. Pass `children`
+ * to host arbitrary content (gradients, images) with the container's
+ * positioning and clipping applied.
+ */
+const ToastBackground = forwardRef<ViewRef, ToastBackgroundProps>(
+  ({ className, ...props }, ref) => {
+    const backgroundClassName = toastClassNames.background({ className });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={backgroundClassName}
+        fallbackColor="overlay"
+        forceFallbackColor
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   const globalConfig = useToastConfig();
 
@@ -45,6 +79,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     total,
     heights,
     maxVisibleToasts,
+    background,
     className,
     style,
     animation: localAnimation,
@@ -75,6 +110,33 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     rootClassName,
     style,
   });
+
+  const hasDefaultThemeBackground = useHasDefaultThemeBackground();
+
+  const [themeColorOverlay, themeColorBackground] = useThemeColor([
+    'overlay',
+    'background',
+  ]);
+
+  /**
+   * On themes with default background content (e.g. glass) the root's
+   * `--color-overlay` is translucent, so the placeholder Views would let the
+   * stacked content behind the toast show through. Paint them with the same
+   * opaque color the toast background layer uses: the `overlay` token
+   * flattened over `--background`.
+   */
+  const placeholderFallbackStyle = useMemo<ViewStyle | undefined>(
+    () =>
+      hasDefaultThemeBackground
+        ? {
+            backgroundColor: flattenColorOverBackground(
+              themeColorOverlay,
+              themeColorBackground
+            ),
+          }
+        : undefined,
+    [hasDefaultThemeBackground, themeColorOverlay, themeColorBackground]
+  );
 
   const {
     rContainerStyle,
@@ -114,6 +176,15 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     [variant, hide, id]
   );
 
+  /**
+   * Background layer rendered behind the toast surface. `undefined` falls
+   * back to the theme-aware default; `null` removes the layer. Only the
+   * visible instance gets the layer — the hidden measurement instance stays
+   * background-free.
+   */
+  const backgroundElement =
+    background === undefined ? <ToastBackground /> : background;
+
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
       <ToastProvider value={contextValue}>
@@ -133,6 +204,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
               style={rootStyle}
               {...restProps}
             >
+              {backgroundElement}
               {children}
               {/* 
                 When visible toasts have different heights, the toast adapts to the last visible toast height.
@@ -142,11 +214,11 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
               */}
               <View
                 className="absolute left-0 right-0 top-0"
-                style={topStyle}
+                style={[topStyle, placeholderFallbackStyle]}
               />
               <View
                 className="absolute left-0 right-0 bottom-0"
-                style={bottomStyle}
+                style={[bottomStyle, placeholderFallbackStyle]}
               />
             </AnimatedToastRoot>
             {/* Hidden toast instance for height measurement */}
@@ -223,6 +295,8 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
 
   const { variant: toastVariant } = useToast();
 
+  const hasDefaultThemeBackground = useHasDefaultThemeBackground();
+
   const actionClassName = toastClassNames.action({
     variant: toastVariant,
     className,
@@ -244,8 +318,12 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
 
   const highlightColorMap = useMemo(() => {
     switch (toastVariant) {
+      // Themes with default background content (e.g. glass) render a
+      // translucent surface, so the hover overlay uses a subtler alpha.
       case 'default':
-        return themeColorDefaultHover;
+        return hasDefaultThemeBackground
+          ? colorKit.setAlpha(themeColorDefaultHover, 0.1).hex()
+          : themeColorDefaultHover;
       case 'accent':
         return themeColorAccentHover;
       case 'success':
@@ -257,6 +335,7 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
     }
   }, [
     toastVariant,
+    hasDefaultThemeBackground,
     themeColorDefaultHover,
     themeColorAccentHover,
     themeColorSuccessHover,
@@ -435,6 +514,7 @@ export function DefaultToast(props: DefaultToastProps) {
 // --------------------------------------------------
 
 ToastRoot.displayName = DISPLAY_NAME.TOAST_ROOT;
+ToastBackground.displayName = DISPLAY_NAME.TOAST_BACKGROUND;
 ToastTitle.displayName = DISPLAY_NAME.TOAST_TITLE;
 ToastDescription.displayName = DISPLAY_NAME.TOAST_DESCRIPTION;
 ToastAction.displayName = DISPLAY_NAME.TOAST_ACTION;
@@ -444,6 +524,12 @@ ToastClose.displayName = DISPLAY_NAME.TOAST_CLOSE;
  * Compound Toast component with sub-components
  *
  * @component Toast - Main toast container that displays notification messages with various variants.
+ *
+ * @component Toast.Background - Absolute-fill background container behind the
+ * toast surface. With no children, the active library theme decides the content
+ * (glass theme renders a blur layer). Accepts children to host custom content
+ * such as gradients with the container's positioning and clipping applied.
+ * Replaceable via the `background` prop on Toast.
  *
  * @component Toast.Title - Title/heading text of the toast notification.
  *
@@ -459,6 +545,8 @@ ToastClose.displayName = DISPLAY_NAME.TOAST_CLOSE;
  * @see Full documentation: https://heroui.com/docs/native/components/toast
  */
 const CompoundToast = Object.assign(ToastRoot, {
+  /** Theme-aware background container behind the toast surface */
+  Background: ToastBackground,
   /** Toast title - renders text content */
   Title: ToastTitle,
   /** Toast description - renders descriptive text */

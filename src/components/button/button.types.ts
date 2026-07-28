@@ -1,4 +1,4 @@
-import type { TextProps } from 'react-native';
+import type { TextProps, ViewProps } from 'react-native';
 import type {
   AnimationRoot,
   AnimationRootDisableAll,
@@ -55,6 +55,15 @@ type ButtonRootPropsBase = Omit<PressableFeedbackProps, 'animation'> & {
    * @default false
    */
   isIconOnly?: boolean;
+  /**
+   * Background layer rendered behind the button surface.
+   * - `undefined` (default): renders `Button.Background` for the `secondary`
+   *   and `tertiary` variants when the active library theme registers
+   *   default background content (e.g. `glass`); otherwise no layer
+   * - custom node: replaces the default layer entirely
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 };
 
 /**
@@ -141,6 +150,25 @@ export type ButtonRootProps =
   | ButtonRootPropsScaleRipple
   | ButtonRootPropsScale
   | ButtonRootPropsNone;
+
+/**
+ * Props for the Button.Background component.
+ * Generic absolute-fill container rendered behind the button surface. When
+ * no `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type ButtonBackgroundProps = ViewProps & {
+  /**
+   * Custom content to render inside the background container.
+   * When omitted, the active library theme's default background content is
+   * rendered.
+   */
+  children?: React.ReactNode;
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
+};
 
 /**
  * Props for the Button.Label component

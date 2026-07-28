@@ -23,3 +23,13 @@
   background-color: transparent;
   box-shadow: 0 0 #0000;
 }
+
+.surface__background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--radius-3xl);
+  overflow: hidden;
+}

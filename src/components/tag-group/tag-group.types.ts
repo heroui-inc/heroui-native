@@ -61,6 +61,17 @@ export interface TagGroupListProps extends ViewProps {
 }
 
 /**
+ * Props for the TagGroup.ItemBackground sub-component.
+ * Generic absolute-fill container behind the tag. When no `children` are
+ * given, the active library theme decides the default content (e.g. a
+ * frosted-glass blur layer when the theme is `glass`).
+ */
+export type TagGroupItemBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
+
+/**
  * Props for the TagGroup.Item component.
  * Represents an individual tag within a TagGroup.
  */
@@ -73,6 +84,17 @@ export interface TagGroupItemProps
 
   /** Additional CSS classes for the tag */
   className?: string;
+
+  /**
+   * Background layer rendered behind the tag surface.
+   * - `undefined` (default): renders `TagGroup.ItemBackground` while
+   *   unselected when the active library theme registers default background
+   *   content (e.g. `glass`); otherwise no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `TagGroup.ItemBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 }
 
 /**

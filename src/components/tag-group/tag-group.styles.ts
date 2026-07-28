@@ -37,6 +37,25 @@ const tag = tv({
   },
 });
 
+/**
+ * Tag background style definition — absolute-fill container behind the
+ * surface variant's tag, hosting theme-specific layers (e.g. glass blur)
+ * or custom content (gradients, images). Radius follows the tag size.
+ */
+const tagBackground = tv({
+  base: 'tag-group__tag-background',
+  variants: {
+    size: {
+      sm: 'tag-group__tag-background--size-sm',
+      md: 'tag-group__tag-background--size-md',
+      lg: 'tag-group__tag-background--size-lg',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
 const tagLabel = tv({
   base: 'tag-group__tag-label',
   variants: {
@@ -63,6 +82,7 @@ export const tagGroupClassNames = combineStyles({
   root,
   list,
   tag,
+  tagBackground,
   tagLabel,
   removeButton,
 });

@@ -1,6 +1,6 @@
 import type { BottomSheetProps } from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
-import type { TextProps } from 'react-native';
+import type { TextProps, ViewProps } from 'react-native';
 import type { SharedValue, WithTimingConfig } from 'react-native-reanimated';
 import type {
   Animation,
@@ -12,6 +12,17 @@ import type {
 } from '../../helpers/internal/types';
 import type * as MenuPrimitivesTypes from '../../primitives/menu/menu.types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
+
+/**
+ * Props for the Menu.ContentBackground sub-component.
+ * Generic absolute-fill container behind the menu content. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type MenuContentBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Context value for menu animation state
@@ -153,6 +164,16 @@ export interface MenuContentPopoverProps
    * The menu content
    */
   children?: ReactNode;
+  /**
+   * Background layer rendered behind the menu content.
+   * - `undefined` (default): renders `Menu.ContentBackground`, whose content
+   *   is decided by the active library theme (suppressed while a sub-menu
+   *   is open)
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Menu.ContentBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: ReactNode;
   /**
    * Animation configuration for content
    * - `false` or `"disabled"`: Disable all animations

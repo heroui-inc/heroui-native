@@ -24,6 +24,29 @@
   background-color: var(--color-surface);
 }
 
+/* Tag background — absolute-fill layer behind the surface variant's tag */
+
+.tag-group__tag-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.tag-group__tag-background--size-sm {
+  border-radius: var(--radius-xl);
+}
+
+.tag-group__tag-background--size-md {
+  border-radius: var(--radius-2xl);
+}
+
+.tag-group__tag-background--size-lg {
+  border-radius: var(--radius-3xl);
+}
+
 /* Tag - size */
 
 .tag-group__tag--size-sm {

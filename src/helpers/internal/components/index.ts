@@ -8,3 +8,5 @@ export * from './close-icon';
 export * from './full-window-overlay';
 export * from './hero-text';
 export * from './hero-text-input';
+export * from './popup-overlay-blur-view';
+export * from './theme-background';

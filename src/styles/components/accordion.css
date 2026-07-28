@@ -11,6 +11,16 @@
   box-shadow: var(--shadow-surface);
 }
 
+.accordion__root-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--radius-3xl);
+  overflow: hidden;
+}
+
 .accordion__root-separator {
   height: hairlineWidth();
   background-color: var(--color-separator);

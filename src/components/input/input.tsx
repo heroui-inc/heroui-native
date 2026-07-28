@@ -1,11 +1,40 @@
 import { forwardRef } from 'react';
-import { type TextInput as TextInputType } from 'react-native';
+import { View, type TextInput as TextInputType } from 'react-native';
 import { useIsOnSurface } from '../../helpers/external/hooks';
-import { HeroTextInput } from '../../helpers/internal/components';
+import { cn } from '../../helpers/external/utils';
+import {
+  HeroTextInput,
+  ThemeBackground,
+  useHasDefaultThemeBackground,
+} from '../../helpers/internal/components';
 import { useFormField } from '../../helpers/internal/contexts';
 import { DISPLAY_NAME } from './input.constants';
 import { inputClassNames, inputStyleSheet } from './input.styles';
-import type { InputProps } from './input.types';
+import type { InputBackgroundProps, InputProps } from './input.types';
+
+// --------------------------------------------------
+
+/**
+ * Generic absolute-fill background container rendered behind the text
+ * input. With no `children`, the active library theme decides the default
+ * content: `glass` renders a `GlassView` blur layer; other themes render
+ * nothing. Pass `children` to host arbitrary content (gradients, images)
+ * with the container's positioning and clipping applied.
+ */
+const InputBackground = forwardRef<View, InputBackgroundProps>(
+  ({ className, fallbackColor = 'field', ...props }, ref) => {
+    const backgroundClassName = inputClassNames.background({ className });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={backgroundClassName}
+        fallbackColor={fallbackColor}
+        {...props}
+      />
+    );
+  }
+);
 
 // --------------------------------------------------
 
@@ -15,12 +44,15 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
     isDisabled: localIsDisabled,
     variant,
     className,
+    containerClassName: containerClassNameProp,
+    background,
     style,
     selectionColorClassName: selectionColorClassNameProp,
     placeholderColorClassName: placeholderColorClassNameProp,
     ...restProps
   } = props;
   const formField = useFormField();
+  const hasDefaultThemeBackground = useHasDefaultThemeBackground();
 
   const isInvalid =
     localIsInvalid !== undefined
@@ -40,11 +72,42 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
         ? 'secondary'
         : 'primary';
 
+  /**
+   * Background layer rendered behind the text input.
+   * - `undefined`: theme-aware default when the active theme registers
+   *   default background content; the fallback color follows the variant
+   *   (primary → field token, secondary → default token)
+   * - custom node: replaces the default layer
+   * - `null`: removes the layer (bare text input)
+   */
+  const backgroundElement =
+    background !== undefined ? (
+      background
+    ) : hasDefaultThemeBackground ? (
+      <InputBackground
+        fallbackColor={finalVariant === 'secondary' ? 'default' : 'field'}
+      />
+    ) : null;
+
+  const hasBackgroundLayer = backgroundElement != null;
+
+  const containerClassName = inputClassNames.container({
+    className: containerClassNameProp,
+  });
+
   const inputClassName = inputClassNames.input({
     variant: finalVariant,
     isInvalid,
     isDisabled,
-    className,
+    /**
+     * Without a background layer the text input is the root element, so
+     * container-level classes have to land on it — otherwise layout classes
+     * (e.g. SearchField's `flex-1`) would be dropped on themes that render
+     * no background.
+     */
+    className: hasBackgroundLayer
+      ? className
+      : cn(containerClassName, className),
   });
 
   const placeholderColorClassName = inputClassNames.placeholderTextColor({
@@ -56,7 +119,7 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
     className: selectionColorClassNameProp,
   });
 
-  return (
+  const textInput = (
     <HeroTextInput
       ref={ref}
       className={inputClassName}
@@ -67,18 +130,49 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
       {...restProps}
     />
   );
+
+  /**
+   * Only wrap when a background layer is present. Default-theme consumers
+   * keep a bare `HeroTextInput` root (pre-background API shape).
+   */
+  if (!hasBackgroundLayer) {
+    return textInput;
+  }
+
+  return (
+    <View className={containerClassName}>
+      {backgroundElement}
+      {textInput}
+    </View>
+  );
 });
 
 // --------------------------------------------------
 
 InputRoot.displayName = DISPLAY_NAME.INPUT;
+InputBackground.displayName = DISPLAY_NAME.BACKGROUND;
 
 /**
  * Input component - A text input component with styled border and background for collecting user input.
  * Supports primary and secondary variants, and integrates with form item state context.
  *
+ * On themes without a default background layer (and with no custom
+ * `background`), the root remains a bare text input. When a background
+ * layer is needed (e.g. frosted glass on the `glass` theme, or a custom
+ * `background` node), the text input is wrapped in a container that hosts
+ * that layer. Style the wrapper via `containerClassName`; replace or remove
+ * the layer via the `background` prop.
+ *
+ * @component Input.Background - Absolute-fill background container behind the
+ * text input. With no children, the active library theme decides the content
+ * (glass theme renders a blur layer). Accepts children to host custom content
+ * such as gradients with the container's positioning and clipping applied.
+ *
  * @see Full documentation: https://heroui.com/docs/native/components/input
  */
-const Input = InputRoot;
+const Input = Object.assign(InputRoot, {
+  /** @optional Theme-aware background container behind the text input */
+  Background: InputBackground,
+});
 
 export default Input;

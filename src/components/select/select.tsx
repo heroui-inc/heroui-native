@@ -13,6 +13,8 @@ import {
   ChevronDownIcon,
   FullWindowOverlay,
   HeroText,
+  ThemeBackground,
+  useHasDefaultThemeBackground,
 } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
@@ -43,6 +45,7 @@ import {
 import { selectClassNames, selectStyleSheet } from './select.styles';
 import type {
   SelectCloseProps,
+  SelectContentBackgroundProps,
   SelectContentBottomSheetProps,
   SelectContentDialogProps,
   SelectContentPopoverProps,
@@ -56,6 +59,7 @@ import type {
   SelectOverlayProps,
   SelectPortalProps,
   SelectRootProps,
+  SelectTriggerBackgroundProps,
   SelectTriggerIndicatorProps,
   SelectTriggerProps,
   SelectValueProps,
@@ -134,15 +138,50 @@ function SelectRoot<M extends SelectPrimitivesTypes.SelectionMode = 'single'>({
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the default
+ * variant's trigger surface. With no `children`, the active library theme
+ * decides the default content: `glass` renders a `GlassView` blur layer;
+ * other themes render nothing. Pass `children` to host arbitrary content
+ * (gradients, images) with the container's positioning and clipping applied.
+ */
+const SelectTriggerBackground = forwardRef<
+  ViewRef,
+  SelectTriggerBackgroundProps
+>(({ className, ...props }, ref) => {
+  const triggerBackgroundClassName = selectClassNames.triggerBackground({
+    className,
+  });
+
+  return (
+    <ThemeBackground
+      ref={ref}
+      className={triggerBackgroundClassName}
+      fallbackColor="surface"
+      {...props}
+    />
+  );
+});
+
+// --------------------------------------------------
+
 const SelectTrigger = forwardRef<
   SelectPrimitivesTypes.TriggerRef,
   SelectTriggerProps
 >(
   (
-    { variant = 'default', isDisabled: isDisabledProp, className, ...props },
+    {
+      variant = 'default',
+      isDisabled: isDisabledProp,
+      className,
+      children,
+      background,
+      ...props
+    },
     ref
   ) => {
     const { isDisabled } = useSelect();
+    const hasDefaultThemeBackground = useHasDefaultThemeBackground();
 
     const triggerClassName = selectClassNames.trigger({
       variant,
@@ -150,12 +189,37 @@ const SelectTrigger = forwardRef<
       className,
     });
 
+    /**
+     * Background layer rendered behind the trigger surface.
+     * - `undefined`: theme-aware default for the default variant when the
+     *   active theme registers default background content
+     * - custom node: replaces the default layer
+     * - `null`: removes the layer
+     * Skipped entirely when `asChild` is set — the Slot pattern requires a
+     * single child element.
+     */
+    const backgroundElement = props.asChild ? null : background !==
+      undefined ? (
+      background
+    ) : hasDefaultThemeBackground && variant === 'default' ? (
+      <SelectTriggerBackground />
+    ) : null;
+
     return (
       <SelectPrimitives.Trigger
         ref={ref}
         className={triggerClassName}
         {...props}
-      />
+      >
+        {backgroundElement == null ? (
+          children
+        ) : (
+          <>
+            {backgroundElement}
+            {children}
+          </>
+        )}
+      </SelectPrimitives.Trigger>
     );
   }
 );
@@ -319,6 +383,33 @@ const SelectOverlay = forwardRef<
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the select
+ * content (shared by popover and dialog presentations). With no `children`,
+ * the active library theme decides the default content: `glass` renders a
+ * `GlassView` blur layer; other themes render nothing. Pass `children` to
+ * host arbitrary content (gradients, images) with the container's
+ * positioning and clipping applied.
+ */
+const SelectContentBackground = forwardRef<
+  ViewRef,
+  SelectContentBackgroundProps
+>(({ className, ...props }, ref) => {
+  const contentBackgroundClassName = selectClassNames.contentBackground({
+    className,
+  });
+
+  return (
+    <ThemeBackground
+      ref={ref}
+      className={contentBackgroundClassName}
+      {...props}
+    />
+  );
+});
+
+// --------------------------------------------------
+
 const SelectContentPopover = forwardRef<
   SelectPrimitivesTypes.ContentRef,
   SelectContentProps & { presentation?: 'popover' }
@@ -332,6 +423,7 @@ const SelectContentPopover = forwardRef<
       alignOffset = DEFAULT_ALIGN_OFFSET,
       className,
       children,
+      background,
       style,
       animation,
       ...props
@@ -366,6 +458,20 @@ const SelectContentPopover = forwardRef<
         isReady,
       });
 
+    /**
+     * Background layer rendered behind the select content. `undefined`
+     * falls back to the theme-aware default; `null` removes the layer.
+     */
+    const backgroundElement =
+      background === undefined ? <SelectContentBackground /> : background;
+
+    const contentChildren = (
+      <>
+        {backgroundElement}
+        {children}
+      </>
+    );
+
     // Single-mount path: the content subtree is rendered once and animated in
     // via a shared value once it has been measured and positioned (`isReady`).
     if (isDrivenEntering) {
@@ -389,7 +495,7 @@ const SelectContentPopover = forwardRef<
             style={[selectStyleSheet.contentContainer, style, rEnteringStyle]}
             {...props}
           >
-            {children}
+            {contentChildren}
           </AnimatedPopoverContent>
         </Animated.View>
       );
@@ -415,7 +521,7 @@ const SelectContentPopover = forwardRef<
             style={[selectStyleSheet.contentContainer, style]}
             {...props}
           >
-            {children}
+            {contentChildren}
           </AnimatedPopoverContent>
         )}
         <AnimatedPopoverContent
@@ -503,6 +609,7 @@ const SelectContentDialog = forwardRef<
       styles,
       style,
       children,
+      background,
       animation,
       isSwipeable = true,
       ...props
@@ -548,6 +655,13 @@ const SelectContentDialog = forwardRef<
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    /**
+     * Background layer rendered behind the select content. `undefined`
+     * falls back to the theme-aware default; `null` removes the layer.
+     */
+    const backgroundElement =
+      background === undefined ? <SelectContentBackground /> : background;
+
     return (
       <View className={wrapperClassName} style={styles?.wrapper}>
         <GestureDetector gesture={panGesture}>
@@ -567,6 +681,7 @@ const SelectContentDialog = forwardRef<
                 ]}
                 {...props}
               >
+                {backgroundElement}
                 {children}
               </SelectPrimitives.DialogContent>
             </Animated.View>
@@ -781,11 +896,13 @@ const SelectListLabel = forwardRef<
 
 SelectRoot.displayName = DISPLAY_NAME.ROOT;
 SelectTrigger.displayName = DISPLAY_NAME.TRIGGER;
+SelectTriggerBackground.displayName = DISPLAY_NAME.TRIGGER_BACKGROUND;
 SelectTriggerIndicator.displayName = DISPLAY_NAME.TRIGGER_INDICATOR;
 SelectValue.displayName = DISPLAY_NAME.VALUE;
 SelectPortal.displayName = DISPLAY_NAME.PORTAL;
 SelectOverlay.displayName = DISPLAY_NAME.OVERLAY;
 SelectContent.displayName = DISPLAY_NAME.CONTENT;
+SelectContentBackground.displayName = DISPLAY_NAME.CONTENT_BACKGROUND;
 SelectClose.displayName = DISPLAY_NAME.CLOSE;
 SelectItemDescription.displayName = DISPLAY_NAME.ITEM_DESCRIPTION;
 SelectItem.displayName = DISPLAY_NAME.ITEM;
@@ -801,6 +918,13 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
  *
  * @component Select.Trigger - Clickable element that toggles the select visibility.
  * Wraps any child element with press handlers.
+ *
+ * @component Select.TriggerBackground - Absolute-fill background container
+ * behind the default variant's trigger surface. With no children, the active
+ * library theme decides the content (glass theme renders a blur layer with a
+ * surface-matched fallback). Accepts children to host custom content such as
+ * gradients with the container's positioning and clipping applied. Replaceable
+ * via the `background` prop on Select.Trigger.
  *
  * @component Select.TriggerIndicator - Optional visual indicator showing open/close state.
  * Defaults to an animated chevron icon that rotates based on select state.
@@ -818,6 +942,13 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
  * @component Select.Content - Container for select content with three presentation modes:
  * popover (default floating with positioning and collision detection), bottom sheet modal, or dialog modal.
  * Supports custom animations.
+ *
+ * @component Select.ContentBackground - Absolute-fill background container behind
+ * the select content (popover and dialog presentations). With no children, the
+ * active library theme decides the content (glass theme renders a blur layer).
+ * Accepts children to host custom content such as gradients with the container's
+ * positioning and clipping applied. Replaceable via the `background` prop on
+ * Select.Content.
  *
  * @component Select.Item - Selectable option item. Handles selection state and press events.
  *
@@ -839,12 +970,16 @@ SelectListLabel.displayName = DISPLAY_NAME.LIST_LABEL;
  */
 const Select = Object.assign(SelectRoot, {
   Trigger: SelectTrigger,
+  /** @optional Theme-aware background container behind the trigger surface */
+  TriggerBackground: SelectTriggerBackground,
   /** @optional Visual indicator showing open/close state (defaults to chevron) */
   TriggerIndicator: SelectTriggerIndicator,
   Value: SelectValue,
   Portal: SelectPortal,
   Overlay: SelectOverlay,
   Content: SelectContent,
+  /** @optional Theme-aware background container behind the select content */
+  ContentBackground: SelectContentBackground,
   Item: SelectItem,
   ItemLabel: SelectItemLabel,
   ItemDescription: SelectItemDescription,

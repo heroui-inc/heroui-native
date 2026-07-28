@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import {
+  FadeOut,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
@@ -17,6 +18,7 @@ import {
 } from '../../helpers/internal/utils';
 import { useSubMenuContext as useSubMenu } from '../../primitives/sub-menu';
 import {
+  BACKGROUND_EXITING_DURATION,
   DEFAULT_ROOT_CONTENT_MARGIN,
   DEFAULT_ROOT_CONTENT_PADDING_HORIZONTAL,
   DEFAULT_ROOT_CONTENT_PADDING_TOP,
@@ -66,7 +68,8 @@ export function useSubMenuRootAnimation(options: {
  * Uses getRootAnimationState to handle values and disabled state.
  *
  * @param options.animation - Root animation configuration
- * @returns Object with rOuterContainerStyle and rInnerContentStyle for the root content container
+ * @returns Object with rOuterContainerStyle and rInnerContentStyle for the
+ * root content container, plus the exit animation for the background layer
  */
 export function useRootContentContainerAnimation(options: {
   animation: SubMenuRootAnimation | undefined;
@@ -87,6 +90,12 @@ export function useRootContentContainerAnimation(options: {
   });
 
   const rootContentConfig = animationConfig?.rootContent;
+
+  const backgroundExitingValue = getAnimationValueProperty({
+    animationValue: animationConfig?.background,
+    property: 'exiting',
+    defaultValue: FadeOut.duration(BACKGROUND_EXITING_DURATION),
+  });
 
   const marginHorizontalValue = getAnimationValueProperty({
     animationValue: rootContentConfig,
@@ -165,6 +174,10 @@ export function useRootContentContainerAnimation(options: {
   return {
     rOuterContainerStyle,
     rInnerContentStyle,
+    /** Exit animation for the background layer (undefined when disabled) */
+    backgroundExiting: isAnimationDisabledValue
+      ? undefined
+      : backgroundExitingValue,
   };
 }
 

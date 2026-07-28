@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { View, type TextInput as TextInputType } from 'react-native';
 import { useIsOnSurface } from '../../helpers/external/hooks';
+import { cn } from '../../helpers/external/utils';
 import {
   HeroTextInput,
   ThemeBackground,
@@ -71,26 +72,6 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
         ? 'secondary'
         : 'primary';
 
-  const containerClassName = inputClassNames.container({
-    className: containerClassNameProp,
-  });
-
-  const inputClassName = inputClassNames.input({
-    variant: finalVariant,
-    isInvalid,
-    isDisabled,
-    className,
-  });
-
-  const placeholderColorClassName = inputClassNames.placeholderTextColor({
-    className: placeholderColorClassNameProp,
-  });
-
-  const selectionColorClassName = inputClassNames.inputSelectionColor({
-    isInvalid,
-    className: selectionColorClassNameProp,
-  });
-
   /**
    * Background layer rendered behind the text input.
    * - `undefined`: theme-aware default when the active theme registers
@@ -108,6 +89,36 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
       />
     ) : null;
 
+  const hasBackgroundLayer = backgroundElement != null;
+
+  const containerClassName = inputClassNames.container({
+    className: containerClassNameProp,
+  });
+
+  const inputClassName = inputClassNames.input({
+    variant: finalVariant,
+    isInvalid,
+    isDisabled,
+    /**
+     * Without a background layer the text input is the root element, so
+     * container-level classes have to land on it — otherwise layout classes
+     * (e.g. SearchField's `flex-1`) would be dropped on themes that render
+     * no background.
+     */
+    className: hasBackgroundLayer
+      ? className
+      : cn(containerClassName, className),
+  });
+
+  const placeholderColorClassName = inputClassNames.placeholderTextColor({
+    className: placeholderColorClassNameProp,
+  });
+
+  const selectionColorClassName = inputClassNames.inputSelectionColor({
+    isInvalid,
+    className: selectionColorClassNameProp,
+  });
+
   const textInput = (
     <HeroTextInput
       ref={ref}
@@ -124,7 +135,7 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
    * Only wrap when a background layer is present. Default-theme consumers
    * keep a bare `HeroTextInput` root (pre-background API shape).
    */
-  if (backgroundElement == null) {
+  if (!hasBackgroundLayer) {
     return textInput;
   }
 

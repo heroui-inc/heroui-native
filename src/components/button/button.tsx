@@ -117,11 +117,11 @@ const ButtonRoot = forwardRef<PressableRef, ButtonRootProps>((props, ref) => {
       // avoid washing out the blur layer underneath.
       case 'secondary':
         return hasDefaultThemeBackground
-          ? colorKit.setAlpha(themeColorDefaultHover, 0.1).hex()
+          ? colorKit.setAlpha(themeColorDefaultHover, 0.2).hex()
           : themeColorDefaultHover;
       case 'tertiary':
         return hasDefaultThemeBackground
-          ? colorKit.setAlpha(themeColorDefaultHover, 0.1).hex()
+          ? colorKit.setAlpha(themeColorDefaultHover, 0.2).hex()
           : themeColorDefaultHover;
       case 'outline':
         return colorKit

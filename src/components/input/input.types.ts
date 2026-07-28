@@ -45,8 +45,9 @@ export interface InputProps extends TextInputProps {
   /**
    * Additional CSS classes for the outer container that wraps the
    * background layer and the text input (e.g. `flex-1` in row layouts).
-   * Only applied when a background layer is present (theme default or
-   * custom `background`); otherwise the root remains the text input.
+   * When no background layer is present the text input is the root element,
+   * so these classes are merged onto it instead — root-level layout stays
+   * consistent across themes either way.
    */
   containerClassName?: string;
   /**

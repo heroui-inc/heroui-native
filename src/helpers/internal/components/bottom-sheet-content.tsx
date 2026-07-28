@@ -51,12 +51,22 @@ BottomSheetBackground.displayName = BOTTOM_SHEET_DISPLAY_NAME.BACKGROUND;
  * (styles arrive via gorhom's merged `style` prop, including the
  * `backgroundClassName`-derived styles) with the theme-aware background
  * layer inside.
+ *
+ * The accessibility props mirror gorhom's own `BottomSheetBackground` so
+ * replacing it does not strip the sheet's screen reader identity.
  */
 const BottomSheetDefaultBackground: FC<GorhomBottomSheetBackgroundProps> = ({
   style,
+  pointerEvents,
 }) => {
   return (
-    <View style={style} pointerEvents="none">
+    <View
+      style={style}
+      pointerEvents={pointerEvents}
+      accessible={true}
+      accessibilityRole="adjustable"
+      accessibilityLabel="Bottom Sheet"
+    >
       <BottomSheetBackground />
     </View>
   );
@@ -144,9 +154,13 @@ export const BottomSheetContent = forwardRef<
     /**
      * Theme-aware background layer support: render the default background
      * component unless the caller provides their own `backgroundComponent`.
+     * An explicit `null` is preserved — gorhom treats it as "render no
+     * background surface at all", so it must not fall back to the default.
      */
     const backgroundComponent =
-      restProps.backgroundComponent ?? BottomSheetDefaultBackground;
+      restProps.backgroundComponent === undefined
+        ? BottomSheetDefaultBackground
+        : restProps.backgroundComponent;
 
     const { animatedIndex, isClosingOnSwipe, isPanActivated } =
       usePopupBottomSheetContentAnimation({

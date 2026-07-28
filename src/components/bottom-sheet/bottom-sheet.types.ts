@@ -6,6 +6,8 @@ import type {
   AnimationRootDisableAll,
   BaseBottomSheetContentProps,
   PopupOverlayAnimation,
+  PopupOverlayBlurViewProps,
+  PopupOverlayVariant,
 } from '../../helpers/internal/types';
 import type * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
@@ -90,6 +92,16 @@ export interface BottomSheetPortalProps
 }
 
 /**
+ * Visual variant of the BottomSheet Overlay component
+ */
+export type BottomSheetOverlayVariant = PopupOverlayVariant;
+
+/**
+ * Props forwarded to the BlurView rendered by the `blur` overlay variant
+ */
+export type BottomSheetOverlayBlurViewProps = PopupOverlayBlurViewProps;
+
+/**
  * BottomSheet Overlay component props
  */
 export interface BottomSheetOverlayProps
@@ -123,9 +135,21 @@ export interface BottomSheetOverlayProps
    * Whether animated styles (react-native-reanimated) are active
    * When `false`, the animated style is removed and you can implement custom logic
    * This prop should only be used when you want to write custom styling logic instead of the default animated styles
-   * @default true
+   * @default true for the `default` variant, false for the `blur` variant (the animated blur intensity replaces the opacity animation)
    */
   isAnimatedStyleActive?: boolean;
+  /**
+   * Visual variant of the overlay
+   * - `default`: solid backdrop colored by the `--color-backdrop` token
+   * - `blur`: blur backdrop (iOS only, requires expo-blur; falls back to `default` otherwise)
+   * @default 'blur' when the library theme is `glass`, otherwise 'default'
+   */
+  variant?: BottomSheetOverlayVariant;
+  /**
+   * Props forwarded to the BlurView rendered by the `blur` variant.
+   * `intensity` is treated as the maximum (animated) blur intensity.
+   */
+  blurViewProps?: BottomSheetOverlayBlurViewProps;
 }
 
 /**

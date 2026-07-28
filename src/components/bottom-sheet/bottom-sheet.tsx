@@ -11,6 +11,7 @@ import {
   FullWindowOverlay,
   HeroText,
   BottomSheetContent as InternalBottomSheetContent,
+  PopupOverlayBlurView,
 } from '../../helpers/internal/components';
 import {
   AnimationSettingsProvider,
@@ -18,6 +19,7 @@ import {
 } from '../../helpers/internal/contexts';
 import {
   usePopupOverlayAnimation,
+  usePopupOverlayVariant,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
 import type { PressableRef } from '../../helpers/internal/types';
@@ -148,14 +150,27 @@ const BottomSheetOverlay = forwardRef<
   BottomSheetOverlayProps
 >(
   (
-    { className, style, animation, isAnimatedStyleActive = true, ...props },
+    {
+      className,
+      style,
+      animation,
+      isAnimatedStyleActive,
+      variant,
+      blurViewProps,
+      ...props
+    },
     ref
   ) => {
     const { isOpen } = useBottomSheet();
     const { progress } = useBottomSheetAnimation();
     const isDragging = useSharedValue(false);
 
-    const overlayClassName = bottomSheetClassNames.overlay({ className });
+    const { resolvedVariant, isBlurVariant } = usePopupOverlayVariant(variant);
+
+    const overlayClassName = bottomSheetClassNames.overlay({
+      variant: resolvedVariant,
+      className,
+    });
 
     const { rContainerStyle } = usePopupOverlayAnimation({
       progress,
@@ -167,18 +182,31 @@ const BottomSheetOverlay = forwardRef<
       return null;
     }
 
-    const overlayStyle = isAnimatedStyleActive
+    // The blur variant animates blur intensity instead of the overlay opacity
+    const isAnimatedStyleResolved = isAnimatedStyleActive ?? !isBlurVariant;
+
+    const overlayStyle = isAnimatedStyleResolved
       ? [rContainerStyle, style]
       : style;
 
     return (
-      <AnimatedOverlay
-        ref={ref}
-        className={overlayClassName}
-        style={overlayStyle}
-        pointerEvents={isOpen ? 'auto' : 'none'}
-        {...props}
-      />
+      <>
+        {/* Rendered behind the pressable overlay so presses still hit the overlay */}
+        {isBlurVariant ? (
+          <PopupOverlayBlurView
+            progress={progress}
+            isDragging={isDragging}
+            blurViewProps={blurViewProps}
+          />
+        ) : null}
+        <AnimatedOverlay
+          ref={ref}
+          className={overlayClassName}
+          style={overlayStyle}
+          pointerEvents={isOpen ? 'auto' : 'none'}
+          {...props}
+        />
+      </>
     );
   }
 );

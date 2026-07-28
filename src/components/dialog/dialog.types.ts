@@ -5,6 +5,8 @@ import type {
   AnimationRootDisableAll,
   PopupDialogContentAnimation,
   PopupOverlayAnimation,
+  PopupOverlayBlurViewProps,
+  PopupOverlayVariant,
 } from '../../helpers/internal/types';
 import type * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
@@ -104,6 +106,16 @@ export interface DialogPortalProps extends DialogPrimitivesTypes.PortalProps {
 export type DialogOverlayAnimation = PopupOverlayAnimation;
 
 /**
+ * Visual variant of the Dialog Overlay component
+ */
+export type DialogOverlayVariant = PopupOverlayVariant;
+
+/**
+ * Props forwarded to the BlurView rendered by the `blur` overlay variant
+ */
+export type DialogOverlayBlurViewProps = PopupOverlayBlurViewProps;
+
+/**
  * Dialog Overlay component props
  */
 export interface DialogOverlayProps
@@ -137,9 +149,21 @@ export interface DialogOverlayProps
    * Whether animated styles (react-native-reanimated) are active
    * When `false`, the animated style is removed and you can implement custom logic
    * This prop should only be used when you want to write custom styling logic instead of the default animated styles
-   * @default true
+   * @default true for the `default` variant, false for the `blur` variant (the animated blur intensity replaces the opacity animation)
    */
   isAnimatedStyleActive?: boolean;
+  /**
+   * Visual variant of the overlay
+   * - `default`: solid backdrop colored by the `--color-backdrop` token
+   * - `blur`: blur backdrop (iOS only, requires expo-blur; falls back to `default` otherwise)
+   * @default 'blur' when the library theme is `glass`, otherwise 'default'
+   */
+  variant?: DialogOverlayVariant;
+  /**
+   * Props forwarded to the BlurView rendered by the `blur` variant.
+   * `intensity` is treated as the maximum (animated) blur intensity.
+   */
+  blurViewProps?: DialogOverlayBlurViewProps;
 }
 
 /**

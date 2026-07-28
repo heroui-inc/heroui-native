@@ -7,6 +7,10 @@
   background-color: var(--color-backdrop);
 }
 
+.bottom-sheet__overlay--variant-blur {
+  background-color: transparent;
+}
+
 .bottom-sheet__content-container {
   flex: 1;
   padding: calc(var(--spacing) * 5);

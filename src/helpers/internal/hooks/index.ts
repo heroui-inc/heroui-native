@@ -8,6 +8,7 @@ export * from './use-library-theme';
 export * from './use-popup-bottom-sheet-content-animation';
 export * from './use-popup-dialog-content-animation';
 export * from './use-popup-overlay-animation';
+export * from './use-popup-overlay-variant';
 export * from './use-popup-popover-content-animation';
 export * from './use-popup-root-animation';
 export * from './use-relative-position';

@@ -10,6 +10,7 @@ import Animated from 'react-native-reanimated';
 import {
   FullWindowOverlay,
   HeroText,
+  PopupOverlayBlurView,
   ThemeBackground,
 } from '../../helpers/internal/components';
 import {
@@ -19,6 +20,7 @@ import {
 import {
   usePopupDialogContentAnimation,
   usePopupOverlayAnimation,
+  usePopupOverlayVariant,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
 import type { PressableRef } from '../../helpers/internal/types';
@@ -154,7 +156,15 @@ const DialogOverlay = forwardRef<
   DialogOverlayProps
 >(
   (
-    { className, style, animation, isAnimatedStyleActive = true, ...props },
+    {
+      className,
+      style,
+      animation,
+      isAnimatedStyleActive,
+      variant,
+      blurViewProps,
+      ...props
+    },
     ref
   ) => {
     const { isOpen } = useDialog();
@@ -162,7 +172,12 @@ const DialogOverlay = forwardRef<
     const { progress, isDragging, isGestureReleaseAnimationRunning } =
       useDialogAnimation();
 
-    const overlayClassName = dialogClassNames.overlay({ className });
+    const { resolvedVariant, isBlurVariant } = usePopupOverlayVariant(variant);
+
+    const overlayClassName = dialogClassNames.overlay({
+      variant: resolvedVariant,
+      className,
+    });
 
     const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
       progress,
@@ -175,7 +190,10 @@ const DialogOverlay = forwardRef<
       return null;
     }
 
-    const overlayStyle = isAnimatedStyleActive
+    // The blur variant animates blur intensity instead of the overlay opacity
+    const isAnimatedStyleResolved = isAnimatedStyleActive ?? !isBlurVariant;
+
+    const overlayStyle = isAnimatedStyleResolved
       ? [rContainerStyle, style]
       : style;
 
@@ -185,6 +203,15 @@ const DialogOverlay = forwardRef<
         exiting={exiting}
         style={StyleSheet.absoluteFill}
       >
+        {/* Rendered behind the pressable overlay so presses still hit the overlay */}
+        {isBlurVariant ? (
+          <PopupOverlayBlurView
+            progress={progress}
+            isDragging={isDragging}
+            isGestureReleaseAnimationRunning={isGestureReleaseAnimationRunning}
+            blurViewProps={blurViewProps}
+          />
+        ) : null}
         <AnimatedOverlay
           ref={ref}
           className={overlayClassName}

@@ -1,3 +1,20 @@
+## <small>1.0.7 (2026-07-28)</small>
+
+* build: upd yarn lock ([1da21b1](https://github.com/heroui-inc/heroui-native/commit/1da21b1))
+* chore: sync versions ([3e7956e](https://github.com/heroui-inc/heroui-native/commit/3e7956e))
+* fix: keep background layers backward compatible ([87768f9](https://github.com/heroui-inc/heroui-native/commit/87768f9))
+* fix(input): wrap only when background needed ([028c41a](https://github.com/heroui-inc/heroui-native/commit/028c41a))
+* fix(sub-menu): paint surface only when open ([3be94c4](https://github.com/heroui-inc/heroui-native/commit/3be94c4))
+* feat: add blur overlay variant ([271cdcc](https://github.com/heroui-inc/heroui-native/commit/271cdcc))
+* feat: add theme-aware content background to popup components ([7786012](https://github.com/heroui-inc/heroui-native/commit/7786012))
+* feat: back surface components with theme background ([d01c047](https://github.com/heroui-inc/heroui-native/commit/d01c047))
+* feat: handle default bg components ([aa58e54](https://github.com/heroui-inc/heroui-native/commit/aa58e54))
+* docs(themes): upd glass android fallback ([1cfb994](https://github.com/heroui-inc/heroui-native/commit/1cfb994))
+* refactor: drop community-blur and make glass blur ios-only ([2e736f9](https://github.com/heroui-inc/heroui-native/commit/2e736f9))
+* refactor: extract shared theme-background primitive ([3061037](https://github.com/heroui-inc/heroui-native/commit/3061037))
+
+
+
 ## <small>1.0.6 (2026-07-21)</small>
 
 * chore: add popover styles ([1674748](https://github.com/heroui-inc/heroui-native/commit/1674748))

@@ -84,9 +84,16 @@ jobs:
         target:
           - repo: heroui-inc/heroui-native-example
             description: Expo example app
+          - repo: heroui-inc/create-heroui-native-app
+            description: Scaffolding CLI templates
           # - repo: heroui-inc/<next-consumer>
           #   description: <what it is>
           #   token_secret: CUSTOM_TOKEN  # optional, defaults to DOWNSTREAM_SYNC_TOKEN
+          #
+          # The default DOWNSTREAM_SYNC_TOKEN must grant Contents: read/write on
+          # every repository listed above, since that is what the dispatches
+          # endpoint requires. Scope a separate PAT via token_secret when a
+          # consumer lives outside this org.
     steps:
       - name: 'Notify ${{ matrix.target.repo }} (${{ matrix.target.description }})'
         continue-on-error: true

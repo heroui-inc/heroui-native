@@ -1,4 +1,4 @@
-import type { ViewStyle } from 'react-native';
+import type { ViewProps, ViewStyle } from 'react-native';
 import type { WithSpringConfig } from 'react-native-reanimated';
 import type { HeroTextProps } from '../../helpers/internal/components/hero-text';
 import type {
@@ -58,7 +58,29 @@ interface SliderOutputProps extends PrimitiveOutputProps {
 interface SliderTrackProps extends PrimitiveTrackProps {
   /** Additional CSS classes */
   className?: string;
+
+  /**
+   * Background layer rendered behind the track surface.
+   * - `undefined` (default): renders `Slider.TrackBackground` when the
+   *   active library theme registers default background content (e.g.
+   *   `glass`); otherwise no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Slider.TrackBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 }
+
+/**
+ * Props for the Slider.TrackBackground sub-component.
+ * Generic absolute-fill container behind the track surface. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+type SliderTrackBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Props for the Slider.Fill sub-component.
@@ -123,5 +145,6 @@ export type {
   SliderProps,
   SliderThumbAnimation,
   SliderThumbProps,
+  SliderTrackBackgroundProps,
   SliderTrackProps,
 };

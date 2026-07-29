@@ -8,11 +8,12 @@ import {
   type PropsWithChildren,
   type ReactNode,
 } from 'react';
-import type {
-  LayoutChangeEvent,
-  PressableStateCallbackType,
-  StyleProp,
-  ViewStyle,
+import {
+  StyleSheet,
+  type LayoutChangeEvent,
+  type PressableStateCallbackType,
+  type StyleProp,
+  type ViewStyle,
 } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -134,11 +135,17 @@ const SubMenuRoot = forwardRef<
 // --------------------------------------------------
 
 /**
- * Generic absolute-fill background container rendered behind the open
- * sub-menu surface. With no `children`, the active library theme decides
- * the default content: `glass` renders a `GlassView` blur layer; other
- * themes render nothing. Pass `children` to host arbitrary content
- * (gradients, images) with the container's positioning and clipping applied.
+ * Absolute-fill background container rendered behind the open sub-menu
+ * surface. It paints the sub-menu surface itself (the `--color-overlay`
+ * coat) and, with no `children`, lets the active library theme decide the
+ * layer above it: `glass` renders a `GlassView` blur; other themes render
+ * nothing. Pass `children` to host arbitrary content (gradients, images)
+ * with the container's positioning and clipping applied.
+ *
+ * The coat lives here rather than on the root so it exists only while the
+ * sub-menu is presented — under themes with a translucent `--color-overlay`
+ * a permanent coat would tint the collapsed trigger row twice and make it
+ * read differently from its sibling menu items.
  */
 const SubMenuBackground = forwardRef<ViewRef, SubMenuBackgroundProps>(
   ({ className, ...props }, ref) => {
@@ -163,7 +170,7 @@ const RootContentContainer: FC<
   const [isMounted, setIsMounted] = useState(false);
   const { isOpen, onOpenChange, nativeID } = useSubMenu();
   const { openSubMenuId, openSubMenu, closeSubMenu } = useMenu();
-  const { rOuterContainerStyle, rInnerContentStyle } =
+  const { rOuterContainerStyle, rInnerContentStyle, backgroundExiting } =
     useRootContentContainerAnimation({ animation });
 
   const rootClassName = subMenuClassNames.root({ isOpen, className });
@@ -199,11 +206,22 @@ const RootContentContainer: FC<
 
   /**
    * Background layer rendered behind the open sub-menu surface. `undefined`
-   * falls back to the theme-aware default (rendered only while open);
-   * `null` removes the layer.
+   * falls back to the theme-aware default: mounted without a transition when
+   * the sub-menu opens, then faded out so the collapsing root dissolves into
+   * the menu surface instead of exposing the items behind it in one frame.
+   * `null` removes the layer; a custom node is rendered as provided.
    */
   const backgroundElement =
-    background === undefined ? isOpen && <SubMenuBackground /> : background;
+    background === undefined
+      ? isOpen && (
+          <Animated.View
+            exiting={backgroundExiting}
+            style={StyleSheet.absoluteFill}
+          >
+            <SubMenuBackground />
+          </Animated.View>
+        )
+      : background;
 
   return (
     <Animated.View
@@ -408,10 +426,11 @@ SubMenuContent.displayName = DISPLAY_NAME.CONTENT;
  * provides animation settings context to children.
  *
  * @component SubMenu.Background - Absolute-fill background container behind
- * the open sub-menu surface. With no children, the active library theme decides
- * the content (glass theme renders a blur layer). Accepts children to host
- * custom content such as gradients with the container's positioning and
- * clipping applied. Replaceable via the `background` prop on SubMenu.
+ * the open sub-menu surface, painting the surface coat and, with no children,
+ * the layer chosen by the active library theme (glass theme renders a blur
+ * layer). Accepts children to host custom content such as gradients with the
+ * container's positioning and clipping applied. Replaceable via the
+ * `background` prop on SubMenu.
  *
  * @component SubMenu.Trigger - Pressable item that toggles the submenu,
  * styled like a menu item.

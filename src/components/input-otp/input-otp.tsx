@@ -123,7 +123,7 @@ const InputOTPGroup = forwardRef<InputOTPGroupRef, InputOTPGroupProps>(
  * with the container's positioning and clipping applied.
  */
 const InputOTPSlotBackground = forwardRef<ViewRef, InputOTPSlotBackgroundProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, fallbackColor = 'field', ...props }, ref) => {
     const slotBackgroundClassName = inputOTPClassNames.slotBackground({
       className,
     });
@@ -132,7 +132,7 @@ const InputOTPSlotBackground = forwardRef<ViewRef, InputOTPSlotBackgroundProps>(
       <ThemeBackground
         ref={ref}
         className={slotBackgroundClassName}
-        fallbackColor="field"
+        fallbackColor={fallbackColor}
         {...props}
       />
     );
@@ -194,14 +194,18 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
 
     /**
      * Background layer rendered behind the slot content. `undefined` falls
-     * back to the theme-aware default (primary/field variant only — the
-     * secondary variant sits on a surface and renders no layer); `null`
+     * back to the theme-aware default — the fallback color follows the
+     * variant (primary → field token, secondary → default token); `null`
      * removes it.
      */
     const backgroundElement =
-      background === undefined
-        ? finalVariant === 'primary' && <InputOTPSlotBackground />
-        : background;
+      background === undefined ? (
+        <InputOTPSlotBackground
+          fallbackColor={finalVariant === 'secondary' ? 'default' : 'field'}
+        />
+      ) : (
+        background
+      );
 
     return (
       <InputOTPSlotProvider value={slotContextValue}>

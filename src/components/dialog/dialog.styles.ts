@@ -27,6 +27,15 @@ const portal = tv({
  */
 const overlay = tv({
   base: 'dialog__overlay',
+  variants: {
+    variant: {
+      default: '',
+      blur: 'dialog__overlay--variant-blur',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
 });
 
 /**

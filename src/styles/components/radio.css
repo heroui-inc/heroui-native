@@ -27,6 +27,17 @@
   background-color: var(--color-default);
 }
 
+/* Indicator background — absolute-fill layer behind the indicator content (clipped by the indicator) */
+
+.radio__indicator-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
 /* Indicator - booleans */
 
 .radio__indicator--is-selected {

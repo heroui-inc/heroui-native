@@ -47,7 +47,29 @@ export interface RadioIndicatorProps extends AnimatedProps<ViewProps> {
   children?: React.ReactNode;
   /** Custom class name */
   className?: string;
+  /**
+   * Background layer rendered behind the indicator content.
+   * - `undefined` (default): renders `Radio.IndicatorBackground` for the
+   *   secondary variant (while unselected and valid — selection / invalid
+   *   states paint their own colors) when the active library theme registers
+   *   default background content (e.g. `glass`); otherwise no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Radio.IndicatorBackground` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 }
+
+/**
+ * Props for the Radio.IndicatorBackground sub-component.
+ * Generic absolute-fill container behind the indicator content. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type RadioIndicatorBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Animation configuration for RadioIndicatorThumb component

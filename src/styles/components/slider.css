@@ -39,6 +39,18 @@
   align-items: center;
 }
 
+/* Track background — absolute-fill layer behind the track surface */
+
+.slider__track-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
 .slider__fill {
   position: absolute;
   border-radius: var(--radius-xl);

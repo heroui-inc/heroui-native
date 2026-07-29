@@ -22,6 +22,14 @@ export const INDICATOR_SPRING_CONFIG = {
 /** Default padding above submenu content when expanded */
 export const DEFAULT_ROOT_CONTENT_PADDING_TOP = 12;
 
+/**
+ * Duration (ms) of the background layer fade-out on close. Roughly matches
+ * the settle time of `ROOT_CONTENT_SPRING_CONFIG` so the surface dissolves
+ * while the root collapses instead of unmounting instantly and exposing the
+ * menu items behind it.
+ */
+export const BACKGROUND_EXITING_DURATION = 200;
+
 /** Spring config for root content container expand/collapse animation */
 export const ROOT_CONTENT_SPRING_CONFIG = {
   damping: 100,

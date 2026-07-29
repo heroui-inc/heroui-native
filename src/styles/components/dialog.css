@@ -11,6 +11,10 @@
   background-color: var(--color-backdrop);
 }
 
+.dialog__overlay--variant-blur {
+  background-color: transparent;
+}
+
 .dialog__content {
   background-color: var(--color-overlay);
   padding: calc(var(--spacing) * 5);

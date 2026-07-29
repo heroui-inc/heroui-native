@@ -6,6 +6,17 @@
   overflow: hidden;
 }
 
+/* Root background — absolute-fill layer behind the switch content (clipped by the root) */
+
+.switch__background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
 .switch__thumb {
   position: absolute;
   inset-inline-start: 2px;

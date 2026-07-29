@@ -36,6 +36,7 @@ npx expo install expo-blur
 
 - **iOS** (with expo-blur installed): a native `BlurView` blurs the content behind the layer; `intensity` and `tint` are forwarded. Translucent theme tokens frost through the blur.
 - **Android / web**, or any platform without expo-blur: the layer paints an opaque color — the `fallbackColor` theme token (default `"overlay"`) alpha-composited over `--background` — approximating the frosted look without translucency. Field surfaces pass `fallbackColor="field"`; surface-backed parts pass their matching token (`"surface"`, `"surface-secondary"`, or `"surface-tertiary"`).
+- **`forceFallbackColor`**: opts into the opaque fallback rendering on every platform, including iOS. Used where translucency is undesirable — e.g. `Toast.Background`, since stacked toasts would show through a blur layer.
 
 ## Usage
 
@@ -76,6 +77,7 @@ Components with an injectable background render it automatically; replace it via
 | `intensity`     | `number`       | `30`                                      | Blur intensity (0-100). iOS only, forwarded to expo-blur.                                            |
 | `tint`          | `ExpoBlurTint` | derived from the active light/dark scheme | Blur tint. iOS only, forwarded to expo-blur.                                                         |
 | `fallbackColor` | `ThemeColor`   | `'overlay'`                               | Theme token flattened over `--background` and painted opaque on Android / web (ignored on iOS blur). |
+| `forceFallbackColor` | `boolean` | `false`                                   | Skips the iOS blur and paints the opaque `fallbackColor` on every platform.                          |
 | `className`     | `string`       | -                                         | Additional classes for the layer (e.g. radius clipping).                                             |
 | `...ViewProps`  | `ViewProps`    | -                                         | All standard React Native View props.                                                                |
 

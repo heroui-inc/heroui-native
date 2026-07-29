@@ -20,6 +20,7 @@ import { Radio } from 'heroui-native';
 
 - **Radio**: Main container that handles selection state and user interaction. Operates in two modes: standalone with `isSelected`/`onSelectedChange`, or inside a `RadioGroup.Item` where it automatically derives state from the group context. Renders a default indicator if no children are provided. Supports render function children to access state (`isSelected`, `isDisabled`, `isInvalid`).
 - **Radio.Indicator**: Optional container for the radio circle. Renders default thumb if no children are provided. Manages the visual selection state with variant and invalid styling.
+- **Radio.IndicatorBackground**: Optional theme-aware background container rendered behind the indicator content. Mounted automatically for the `secondary` variant while unselected and not invalid, when the active theme registers default background content (e.g. `glass`). Replace or remove it via the `background` prop on `Radio.Indicator`.
 - **Radio.IndicatorThumb**: Optional inner circle that appears when selected. Animates scale based on selection state. Can be replaced with custom content.
 
 ## Usage
@@ -286,7 +287,18 @@ Animation configuration for radio root component. Can be:
 | ---------------------- | -------------------------- | ----------- | ------------------------------------------------ |
 | `children`             | `React.ReactNode`          | `undefined` | Content for the radio indicator                  |
 | `className`            | `string`                   | `undefined` | Additional CSS classes for the indicator         |
+| `background` | `React.ReactNode` | - | Background layer behind the indicator content. `undefined` renders the theme-aware default for the `secondary` variant while unselected and not invalid; custom node replaces it; `null` removes it |
 | `...AnimatedViewProps` | `AnimatedProps<ViewProps>` | -           | All Reanimated Animated.View props are supported |
+
+### Radio.IndicatorBackground
+
+Absolute-fill container rendered behind the indicator content. With no children, the active library theme decides the default content (e.g. a glass blur layer); pass children to host custom content with the same positioning and clipping.
+
+| prop           | type              | default | description                                    |
+| -------------- | ----------------- | ------- | ---------------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Custom content inside the background container |
+| `className`    | `string`          | -       | Additional CSS classes                         |
+| `...ViewProps` | `ViewProps`       | -       | All standard View props are supported          |
 
 ### Radio.IndicatorThumb
 

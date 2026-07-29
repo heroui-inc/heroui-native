@@ -1,4 +1,10 @@
-import type { ImageProps, TextProps, TextStyle, ViewStyle } from 'react-native';
+import type {
+  ImageProps,
+  TextProps,
+  TextStyle,
+  ViewProps,
+  ViewStyle,
+} from 'react-native';
 import type {
   AnimatedProps,
   EntryOrExitLayoutType,
@@ -73,7 +79,31 @@ export interface AvatarRootProps extends PrimitiveRootProps {
    * - `undefined`: Use default animations
    */
   animation?: AnimationRootDisableAll;
+
+  /**
+   * Background layer rendered behind the avatar content.
+   * - `undefined` (default): renders `Avatar.Background` for the
+   *   combinations whose background uses the default color (default
+   *   variant, or soft variant with `color="default"`) when the active
+   *   library theme registers default background content (e.g. `glass`);
+   *   otherwise no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Avatar.Background` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 }
+
+/**
+ * Props for the Avatar.Background sub-component.
+ * Generic absolute-fill container behind the avatar content. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type AvatarBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Animation configuration for avatar image component

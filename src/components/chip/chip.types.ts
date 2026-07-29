@@ -1,4 +1,4 @@
-import type { PressableProps, TextProps } from 'react-native';
+import type { PressableProps, TextProps, ViewProps } from 'react-native';
 import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 
 /**
@@ -41,7 +41,31 @@ export interface ChipProps extends PressableProps {
    * - `undefined`: Use default animations
    */
   animation?: AnimationRootDisableAll;
+
+  /**
+   * Background layer rendered behind the chip surface.
+   * - `undefined` (default): renders `Chip.Background` for the combinations
+   *   whose background uses the default color (secondary variant, or
+   *   primary / soft variants with `color="default"`) when the active
+   *   library theme registers default background content (e.g. `glass`);
+   *   otherwise no layer
+   * - custom node: replaces the default layer entirely (wrap content in
+   *   `Chip.Background` to keep the absolute-fill and clipping)
+   * - `null`: removes the background layer
+   */
+  background?: React.ReactNode;
 }
+
+/**
+ * Props for the Chip.Background sub-component.
+ * Generic absolute-fill container behind the chip surface. When no
+ * `children` are given, the active library theme decides the default
+ * content (e.g. a frosted-glass blur layer when the theme is `glass`).
+ */
+export type ChipBackgroundProps = ViewProps & {
+  /** Additional CSS classes */
+  className?: string;
+};
 
 /**
  * Props for the ChipLabel component

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { TextInputProps, ViewProps } from 'react-native';
+import type { ThemeColor } from '../../helpers/external/hooks';
 
 /**
  * Props for the Input.Background sub-component.
@@ -10,6 +11,12 @@ import type { TextInputProps, ViewProps } from 'react-native';
 export type InputBackgroundProps = ViewProps & {
   /** Additional CSS classes */
   className?: string;
+  /**
+   * Theme color token forwarded to the theme content as the opaque fallback
+   * on platforms without native blur (Android / web)
+   * @default 'field'
+   */
+  fallbackColor?: ThemeColor;
 };
 
 /**
@@ -38,15 +45,17 @@ export interface InputProps extends TextInputProps {
   /**
    * Additional CSS classes for the outer container that wraps the
    * background layer and the text input (e.g. `flex-1` in row layouts).
-   * Only applied when a background layer is present (theme default or
-   * custom `background`); otherwise the root remains the text input.
+   * When no background layer is present the text input is the root element,
+   * so these classes are merged onto it instead — root-level layout stays
+   * consistent across themes either way.
    */
   containerClassName?: string;
   /**
    * Background layer rendered behind the text input.
-   * - `undefined` (default): renders `Input.Background` for the primary
-   *   (field) variant when the active library theme registers default
-   *   background content (e.g. `glass`); otherwise no layer and no wrapper
+   * - `undefined` (default): renders `Input.Background` when the active
+   *   library theme registers default background content (e.g. `glass`);
+   *   the fallback color follows the variant (primary → field token,
+   *   secondary → default token); otherwise no layer and no wrapper
    * - custom node: replaces the default layer entirely and wraps the text
    *   input (wrap content in `Input.Background` to keep absolute-fill and
    *   clipping)

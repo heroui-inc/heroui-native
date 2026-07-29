@@ -57,6 +57,15 @@ const root = tv({
 });
 
 /**
+ * Checkbox background style definition — generic absolute-fill container
+ * behind the checkbox content (clipped by the root's `overflow: hidden`),
+ * hosting theme-specific layers (e.g. a glass blur layer).
+ */
+const background = tv({
+  base: 'checkbox__background',
+});
+
+/**
  * Indicator style definition
  *
  * @note ANIMATED PROPERTIES (cannot be set via className):
@@ -95,6 +104,7 @@ const indicator = tv({
 
 export const checkboxClassNames = combineStyles({
   root,
+  background,
   indicator,
 });
 

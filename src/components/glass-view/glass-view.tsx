@@ -35,7 +35,8 @@ export const useIsGlassTheme = (): boolean => {
  * exists — and whenever expo-blur is not installed, it falls back to a plain
  * `View` painted with an opaque color: the `fallbackColor` theme token
  * flattened over `--background` via alpha compositing. That approximates the
- * iOS frosted look without translucency.
+ * iOS frosted look without translucency. Set `forceFallbackColor` to render
+ * the opaque fallback on every platform (including iOS), skipping the blur.
  *
  * @see Doc & examples: glass-view.md
  */
@@ -44,6 +45,7 @@ const GlassView = forwardRef<View, GlassViewProps>((props, ref) => {
     intensity = DEFAULT_INTENSITY,
     tint,
     fallbackColor = DEFAULT_FALLBACK_COLOR,
+    forceFallbackColor = false,
     className,
     children,
     style,
@@ -58,7 +60,7 @@ const GlassView = forwardRef<View, GlassViewProps>((props, ref) => {
 
   const rootClassName = glassViewClassNames.root({ className });
 
-  if (Platform.OS === 'ios' && StyledExpoBlurView) {
+  if (Platform.OS === 'ios' && StyledExpoBlurView && !forceFallbackColor) {
     const resolvedTint = tint ?? (theme.endsWith('dark') ? 'dark' : 'light');
 
     return (

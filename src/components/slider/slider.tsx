@@ -2,7 +2,11 @@ import { forwardRef, useMemo, useRef } from 'react';
 import { View, type GestureResponderEvent } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useSharedValue } from 'react-native-reanimated';
-import { HeroText } from '../../helpers/internal/components';
+import {
+  HeroText,
+  ThemeBackground,
+  useHasDefaultThemeBackground,
+} from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import { useIsRTL } from '../../helpers/internal/hooks';
 import type { ViewRef } from '../../helpers/internal/types';
@@ -21,6 +25,7 @@ import type {
   SliderOutputProps,
   SliderProps,
   SliderThumbProps,
+  SliderTrackBackgroundProps,
   SliderTrackProps,
 } from './slider.types';
 
@@ -121,8 +126,43 @@ const SliderOutput = forwardRef<ViewRef, SliderOutputProps>((props, ref) => {
 
 // --------------------------------------------------
 
+/**
+ * Generic absolute-fill background container rendered behind the track
+ * surface. With no `children`, the active library theme decides the default
+ * content: `glass` renders a `GlassView` blur layer; other themes render
+ * nothing. Pass `children` to host arbitrary content (gradients, images)
+ * with the container's positioning and clipping applied.
+ */
+const SliderTrackBackground = forwardRef<ViewRef, SliderTrackBackgroundProps>(
+  ({ className, ...props }, ref) => {
+    const trackBackgroundClassName = sliderClassNames.trackBackground({
+      className,
+    });
+
+    return (
+      <ThemeBackground
+        ref={ref}
+        className={trackBackgroundClassName}
+        fallbackColor="default"
+        {...props}
+      />
+    );
+  }
+);
+
+// --------------------------------------------------
+
 const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
-  const { children, className, style, hitSlop = 8, ...restProps } = props;
+  const {
+    children,
+    className,
+    style,
+    hitSlop = 8,
+    background,
+    ...restProps
+  } = props;
+
+  const hasDefaultThemeBackground = useHasDefaultThemeBackground();
 
   const {
     minValue,
@@ -177,6 +217,20 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
     isRTL,
   ]);
 
+  /**
+   * Background layer rendered behind the track surface.
+   * - `undefined`: theme-aware default when the active theme registers
+   *   default background content
+   * - custom node: replaces the default layer
+   * - `null`: removes the layer
+   */
+  const backgroundElement =
+    background !== undefined ? (
+      background
+    ) : hasDefaultThemeBackground ? (
+      <SliderTrackBackground />
+    ) : null;
+
   return (
     <GestureDetector gesture={tapGesture}>
       <SliderPrimitives.Track
@@ -186,9 +240,19 @@ const SliderTrack = forwardRef<ViewRef, SliderTrackProps>((props, ref) => {
         hitSlop={hitSlop}
         {...restProps}
       >
-        {typeof children === 'function'
-          ? (renderProps: SliderRenderProps) => children(renderProps)
-          : children}
+        {typeof children === 'function' ? (
+          (renderProps: SliderRenderProps) => (
+            <>
+              {backgroundElement}
+              {children(renderProps)}
+            </>
+          )
+        ) : (
+          <>
+            {backgroundElement}
+            {children}
+          </>
+        )}
       </SliderPrimitives.Track>
     </GestureDetector>
   );
@@ -407,6 +471,7 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
 SliderRoot.displayName = DISPLAY_NAME.ROOT;
 SliderOutput.displayName = DISPLAY_NAME.OUTPUT;
 SliderTrack.displayName = DISPLAY_NAME.TRACK;
+SliderTrackBackground.displayName = DISPLAY_NAME.TRACK_BACKGROUND;
 SliderFill.displayName = DISPLAY_NAME.FILL;
 SliderThumb.displayName = DISPLAY_NAME.THUMB;
 
@@ -425,6 +490,10 @@ SliderThumb.displayName = DISPLAY_NAME.THUMB;
  * cross-axis dimension (h-5 horizontal, w-5 vertical) and centers Thumb via Yoga
  * alignment. Reports its layout size for position calculations. Supports tap-to-position
  * and render functions for dynamic content (e.g. multiple thumbs for range sliders).
+ *
+ * @component Slider.TrackBackground - Absolute-fill background container behind the
+ * track surface. With no children, the active library theme decides the default
+ * content (e.g. a glass blur layer)
  *
  * @component Slider.Fill - Responsive fill bar that stretches full cross-axis of Track
  * (via inset-y-0 / inset-x-0). Only main-axis position (left + width) is computed.
@@ -448,6 +517,8 @@ const CompoundSlider = Object.assign(SliderRoot, {
   Output: SliderOutput,
   /** @optional Sizing container for fill and thumbs, supports tap-to-position */
   Track: SliderTrack,
+  /** Track background - absolute-fill container behind the track surface */
+  TrackBackground: SliderTrackBackground,
   /** @optional Responsive fill bar stretching full cross-axis */
   Fill: SliderFill,
   /** @optional Draggable thumb with gesture support, centered by Track alignment */

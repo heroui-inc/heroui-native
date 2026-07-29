@@ -27,6 +27,14 @@ export type GlassViewProps = ViewProps & {
    */
   fallbackColor?: ThemeColor;
   /**
+   * When `true`, skips the iOS blur layer and paints the opaque
+   * `fallbackColor` (flattened over `--background`) on every platform.
+   * Useful for surfaces where translucency is undesirable, e.g. stacked
+   * toasts where the blur would reveal the content underneath.
+   * @default false
+   */
+  forceFallbackColor?: boolean;
+  /**
    * Additional class names applied to the blur layer
    */
   className?: string;

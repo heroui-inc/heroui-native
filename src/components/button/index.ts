@@ -1,6 +1,7 @@
 export { default as Button, useButton } from './button';
 export { buttonClassNames } from './button.styles';
 export type {
+  ButtonBackgroundProps,
   ButtonContextValue,
   ButtonLabelProps,
   ButtonRootProps,

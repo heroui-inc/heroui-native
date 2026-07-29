@@ -23,6 +23,15 @@ import { combineStyles } from '../../helpers/internal/utils';
  */
 const overlay = tv({
   base: 'bottom-sheet__overlay',
+  variants: {
+    variant: {
+      default: '',
+      blur: 'bottom-sheet__overlay--variant-blur',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
 });
 
 /**

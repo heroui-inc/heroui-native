@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { View, type TextInput as TextInputType } from 'react-native';
 import { useIsOnSurface } from '../../helpers/external/hooks';
+import { cn } from '../../helpers/external/utils';
 import {
   HeroTextInput,
   ThemeBackground,
@@ -21,14 +22,14 @@ import type { InputBackgroundProps, InputProps } from './input.types';
  * with the container's positioning and clipping applied.
  */
 const InputBackground = forwardRef<View, InputBackgroundProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, fallbackColor = 'field', ...props }, ref) => {
     const backgroundClassName = inputClassNames.background({ className });
 
     return (
       <ThemeBackground
         ref={ref}
         className={backgroundClassName}
-        fallbackColor="field"
+        fallbackColor={fallbackColor}
         {...props}
       />
     );
@@ -71,6 +72,25 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
         ? 'secondary'
         : 'primary';
 
+  /**
+   * Background layer rendered behind the text input.
+   * - `undefined`: theme-aware default when the active theme registers
+   *   default background content; the fallback color follows the variant
+   *   (primary → field token, secondary → default token)
+   * - custom node: replaces the default layer
+   * - `null`: removes the layer (bare text input)
+   */
+  const backgroundElement =
+    background !== undefined ? (
+      background
+    ) : hasDefaultThemeBackground ? (
+      <InputBackground
+        fallbackColor={finalVariant === 'secondary' ? 'default' : 'field'}
+      />
+    ) : null;
+
+  const hasBackgroundLayer = backgroundElement != null;
+
   const containerClassName = inputClassNames.container({
     className: containerClassNameProp,
   });
@@ -79,7 +99,15 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
     variant: finalVariant,
     isInvalid,
     isDisabled,
-    className,
+    /**
+     * Without a background layer the text input is the root element, so
+     * container-level classes have to land on it — otherwise layout classes
+     * (e.g. SearchField's `flex-1`) would be dropped on themes that render
+     * no background.
+     */
+    className: hasBackgroundLayer
+      ? className
+      : cn(containerClassName, className),
   });
 
   const placeholderColorClassName = inputClassNames.placeholderTextColor({
@@ -90,20 +118,6 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
     isInvalid,
     className: selectionColorClassNameProp,
   });
-
-  /**
-   * Background layer rendered behind the text input.
-   * - `undefined`: theme-aware default for primary when the active theme
-   *   registers default background content; otherwise no layer
-   * - custom node: replaces the default layer
-   * - `null`: removes the layer (bare text input)
-   */
-  const backgroundElement =
-    background !== undefined ? (
-      background
-    ) : hasDefaultThemeBackground && finalVariant === 'primary' ? (
-      <InputBackground />
-    ) : null;
 
   const textInput = (
     <HeroTextInput
@@ -121,7 +135,7 @@ const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
    * Only wrap when a background layer is present. Default-theme consumers
    * keep a bare `HeroTextInput` root (pre-background API shape).
    */
-  if (backgroundElement == null) {
+  if (!hasBackgroundLayer) {
     return textInput;
   }
 

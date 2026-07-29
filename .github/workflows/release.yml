@@ -52,3 +52,83 @@ jobs:
         run: npx changelogithub
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Notifies every repository that tracks this library's releases. Each target is
+  # its own check named after the repository, so it is obvious which consumers were
+  # notified and which one failed. Adding a consumer means appending to the matrix.
+  #
+  # Every target receives the same event, so a new consumer only has to handle:
+  #   event_type:                     heroui-native-released
+  #   client_payload.version          published npm version, e.g. 1.0.8
+  #   client_payload.tag              git tag, e.g. v1.0.8
+  #   client_payload.source_repo      heroui-inc/heroui-native
+  #   client_payload.run_url          link back to this release run
+  dispatch-downstream:
+    name: 'Dispatch to ${{ matrix.target.repo }}'
+    needs: release
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    # Nothing here may fail the release: by this point the package is published and
+    # the GitHub Release exists. The step below is therefore written so that it
+    # cannot exit non-zero, reporting problems as warnings instead. `continue-on-error`
+    # is kept only as a second layer, because on its own it is not sufficient: a
+    # failing job still surfaces a red X and can mark the run itself as failed.
+    continue-on-error: true
+    # Bounded so an unresponsive API cannot leave the release run pending for hours.
+    timeout-minutes: 5
+    # No GITHUB_TOKEN access is needed; the dispatch uses a PAT.
+    permissions: {}
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - repo: heroui-inc/heroui-native-example
+            description: Expo example app
+          # - repo: heroui-inc/<next-consumer>
+          #   description: <what it is>
+          #   token_secret: CUSTOM_TOKEN  # optional, defaults to DOWNSTREAM_SYNC_TOKEN
+    steps:
+      - name: 'Notify ${{ matrix.target.repo }} (${{ matrix.target.description }})'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets[matrix.target.token_secret || 'DOWNSTREAM_SYNC_TOKEN'] }}
+          TARGET_REPO: ${{ matrix.target.repo }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          # The runner invokes `run` steps with errexit enabled, so it is turned off
+          # explicitly here: every failure path below ends in `exit 0` so that a missing
+          # token, a rate limit or an unreachable consumer can never turn an
+          # already-published release into a failed workflow run. A dispatch that did
+          # not land is reported as a warning with the manual command to run instead.
+          set +e
+
+          warn_manual_fallback() {
+            echo "::warning::${1} Trigger the sync by hand: gh workflow run sync-heroui-native.yml --repo ${TARGET_REPO} -f version=${TAG#v}"
+          }
+
+          if [ -z "${GH_TOKEN:-}" ]; then
+            warn_manual_fallback "No dispatch token available for ${TARGET_REPO}. Add a fine-grained PAT with Contents: read/write on that repository as the DOWNSTREAM_SYNC_TOKEN secret."
+            exit 0
+          fi
+
+          echo "Dispatching heroui-native-released (${TAG}) to ${TARGET_REPO}"
+
+          for attempt in 1 2 3; do
+            if gh api "repos/${TARGET_REPO}/dispatches" \
+              -f event_type=heroui-native-released \
+              -f "client_payload[version]=${TAG#v}" \
+              -f "client_payload[tag]=${TAG}" \
+              -f "client_payload[source_repo]=${GITHUB_REPOSITORY}" \
+              -f "client_payload[run_url]=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"; then
+              echo "Notified ${TARGET_REPO} on attempt ${attempt}."
+              exit 0
+            fi
+
+            echo "Attempt ${attempt} of 3 failed."
+            if [ "${attempt}" -lt 3 ]; then
+              sleep $((attempt * 5))
+            fi
+          done
+
+          warn_manual_fallback "Could not notify ${TARGET_REPO} after 3 attempts."
+          exit 0

@@ -188,7 +188,7 @@ Use render props in Group to create custom slot layouts.
 </InputOTP>
 ```
 
-### Inside a Bottom Sheet
+### Inside a BottomSheet
 
 When rendering an InputOTP inside a `BottomSheet`, use the `useBottomSheetAwareHandlers` hook to wire keyboard avoidance handlers. Pass the returned `onFocus` and `onBlur` to InputOTP.
 
@@ -311,14 +311,14 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 
 ### InputOTP.Slot
 
-| prop           | type              | default | description                                                                                 |
-| -------------- | ----------------- | ------- | ------------------------------------------------------------------------------------------- |
-| `index`        | `number`          | -       | Zero-based index of the slot (required). Must be between 0 and maxLength - 1                |
-| `children`     | `React.ReactNode` | -       | Custom slot content. If not provided, defaults to SlotPlaceholder, SlotValue, and SlotCaret |
-| `className`    | `string`          | -       | Additional CSS classes to apply                                                             |
-| `style`        | `ViewStyle`       | -       | Additional styles to apply                                                                  |
-| `background` | `React.ReactNode` | - | Background layer behind the slot content. `undefined` renders the theme-aware default (fallback color follows the variant: primary → field token, secondary → default token); custom node replaces it; `null` removes it |
-| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported                                          |
+| prop           | type              | default | description                                                                                                                                                                                                              |
+| -------------- | ----------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `index`        | `number`          | -       | Zero-based index of the slot (required). Must be between 0 and maxLength - 1                                                                                                                                             |
+| `children`     | `React.ReactNode` | -       | Custom slot content. If not provided, defaults to SlotPlaceholder, SlotValue, and SlotCaret                                                                                                                              |
+| `className`    | `string`          | -       | Additional CSS classes to apply                                                                                                                                                                                          |
+| `style`        | `ViewStyle`       | -       | Additional styles to apply                                                                                                                                                                                               |
+| `background`   | `React.ReactNode` | -       | Background layer behind the slot content. `undefined` renders the theme-aware default (fallback color follows the variant: primary → field token, secondary → default token); custom node replaces it; `null` removes it |
+| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported                                                                                                                                                                       |
 
 ### InputOTP.SlotBackground
 

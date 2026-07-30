@@ -1,4 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   Button,
   cn,
@@ -18,13 +20,14 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 
 const useOnComplete = ({ ref }: { ref: RefObject<InputOTPRef | null> }) => {
+  const { t } = useLingui();
   const { toast } = useToast();
 
   const onComplete = (code: string) => {
     toast.show({
       variant: 'success',
-      label: 'Completed',
-      description: `Code: ${code}`,
+      label: t`Completed`,
+      description: t`Code: ${code}`,
     });
     setTimeout(() => {
       ref.current?.clear();
@@ -37,6 +40,7 @@ const useOnComplete = ({ ref }: { ref: RefObject<InputOTPRef | null> }) => {
 // ------------------------------------------------------------------------------
 
 const BasicOTPContent = () => {
+  const { t } = useLingui();
   const ref = useRef<InputOTPRef>(null);
 
   const onComplete = useOnComplete({ ref });
@@ -44,9 +48,9 @@ const BasicOTPContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View>
-        <Label className="px-1">Verify account</Label>
+        <Label className="px-1">{t`Verify account`}</Label>
         <Description className="px-1 mb-2.5">
-          We've sent a code to a****@gmail.com
+          {t`We've sent a code to a****@gmail.com`}
         </Description>
         <InputOTP ref={ref} maxLength={6} onComplete={onComplete}>
           <InputOTP.Group>
@@ -62,14 +66,16 @@ const BasicOTPContent = () => {
           </InputOTP.Group>
         </InputOTP>
         <View className="flex-row flex-wrap items-center mt-2.5">
-          <Description className="px-1">Didn't receive a code?</Description>
+          <Description className="px-1">
+            {t`Didn't receive a code?`}
+          </Description>
           <Button
             size="sm"
             variant="ghost"
             className="px-2"
             onPress={simulatePress}
           >
-            Resend code
+            {t`Resend code`}
           </Button>
         </View>
       </View>
@@ -80,6 +86,7 @@ const BasicOTPContent = () => {
 // ------------------------------------------------------------------------------
 
 const FourDigitsOTPContent = () => {
+  const { t } = useLingui();
   const ref = useRef<InputOTPRef>(null);
 
   const onComplete = useOnComplete({ ref });
@@ -87,7 +94,7 @@ const FourDigitsOTPContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="gap-2">
-        <Label className="px-1">Enter your PIN</Label>
+        <Label className="px-1">{t`Enter your PIN`}</Label>
         <InputOTP ref={ref} maxLength={4} onComplete={onComplete}>
           <InputOTP.Slot index={0} />
           <InputOTP.Slot index={1} />
@@ -102,6 +109,7 @@ const FourDigitsOTPContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithPlaceholderOTPContent = () => {
+  const { t } = useLingui();
   const ref = useRef<InputOTPRef>(null);
 
   const onComplete = useOnComplete({ ref });
@@ -109,7 +117,7 @@ const WithPlaceholderOTPContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="gap-2">
-        <Label className="px-1">Enter verification code</Label>
+        <Label className="px-1">{t`Enter verification code`}</Label>
         <InputOTP
           ref={ref}
           variant="secondary"
@@ -135,11 +143,13 @@ const WithPlaceholderOTPContent = () => {
 // ------------------------------------------------------------------------------
 
 const DisabledStateOTPContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="gap-2">
         <Label className="px-1" isDisabled>
-          Enter verification code
+          {t`Enter verification code`}
         </Label>
         <InputOTP maxLength={6} isDisabled>
           <InputOTP.Group>
@@ -162,6 +172,7 @@ const DisabledStateOTPContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithValidationOTPContent = () => {
+  const { t } = useLingui();
   const [value, setValue] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
 
@@ -172,9 +183,8 @@ const WithValidationOTPContent = () => {
       if (value === '123456') {
         toast.show({
           variant: 'success',
-          label: 'Verification Successful',
-          description:
-            'Your code has been verified successfully. You can proceed.',
+          label: t`Verification Successful`,
+          description: t`Your code has been verified successfully. You can proceed.`,
         });
         setValue('');
         if (isInvalid) {
@@ -186,9 +196,8 @@ const WithValidationOTPContent = () => {
     } else {
       toast.show({
         variant: 'warning',
-        label: 'Incomplete Code',
-        description:
-          'Please enter all 6 digits to complete your verification code.',
+        label: t`Incomplete Code`,
+        description: t`Please enter all 6 digits to complete your verification code.`,
       });
     }
   };
@@ -198,10 +207,10 @@ const WithValidationOTPContent = () => {
       <View className="gap-5">
         <View>
           <Label className="px-1" isInvalid={isInvalid}>
-            Verify account
+            {t`Verify account`}
           </Label>
           <Description className="px-1 mb-2.5">
-            Hint: The code is 123456
+            {t`Hint: The code is 123456`}
           </Description>
           <InputOTP
             value={value}
@@ -222,14 +231,14 @@ const WithValidationOTPContent = () => {
             </InputOTP.Group>
           </InputOTP>
           <FieldError className="mt-2.5" isInvalid={isInvalid}>
-            The code you entered is incorrect.
+            {t`The code you entered is incorrect.`}
           </FieldError>
           <Button
             variant="secondary"
             className="self-start mt-5"
             onPress={onSubmit}
           >
-            Submit
+            {t`Submit`}
           </Button>
         </View>
       </View>
@@ -240,6 +249,7 @@ const WithValidationOTPContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithPatternOTPContent = () => {
+  const { t } = useLingui();
   const ref = useRef<InputOTPRef>(null);
 
   const onComplete = useOnComplete({ ref });
@@ -247,9 +257,9 @@ const WithPatternOTPContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View>
-        <Label className="mb-1">Enter code (letters only)</Label>
+        <Label className="mb-1">{t`Enter code (letters only)`}</Label>
         <Description className="mb-3">
-          Only alphabetic characters are allowed
+          {t`Only alphabetic characters are allowed`}
         </Description>
         <InputOTP
           ref={ref}
@@ -278,6 +288,7 @@ const WithPatternOTPContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomStylesOTPContent = () => {
+  const { t } = useLingui();
   const ref = useRef<InputOTPRef>(null);
 
   const { toast } = useToast();
@@ -286,8 +297,8 @@ const CustomStylesOTPContent = () => {
     setTimeout(() => {
       toast.show({
         variant: 'success',
-        label: 'Completed',
-        description: `Code: ${code}`,
+        label: t`Completed`,
+        description: t`Code: ${code}`,
       });
     }, 0);
     setTimeout(() => {
@@ -357,42 +368,42 @@ const CustomStylesOTPContent = () => {
 const INPUT_OTP_VARIANTS: UsageVariant[] = [
   {
     value: 'basic',
-    label: 'Basic',
+    label: msg`Basic`,
     content: <BasicOTPContent />,
   },
   {
     value: 'four-digits',
-    label: 'Four Digits',
+    label: msg`Four Digits`,
     content: <FourDigitsOTPContent />,
   },
   {
     value: 'with-placeholder',
-    label: 'With Placeholder',
+    label: msg`With Placeholder`,
     content: <WithPlaceholderOTPContent />,
   },
   {
     value: 'disabled',
-    label: 'Disabled',
+    label: msg`Disabled`,
     content: <DisabledStateOTPContent />,
   },
   {
     value: 'with-validation',
-    label: 'With Validation',
+    label: msg`With Validation`,
     content: <WithValidationOTPContent />,
   },
   {
     value: 'with-pattern',
-    label: 'With Pattern',
+    label: msg`With Pattern`,
     content: <WithPatternOTPContent />,
   },
   {
     value: 'custom-styles',
-    label: 'Custom Styles',
+    label: msg`Custom Styles`,
     content: <CustomStylesOTPContent />,
   },
   {
     value: 'with-bottom-sheet',
-    label: 'With bottom sheet',
+    label: msg`With bottom sheet`,
     content: <WithOTPInputContent />,
   },
 ];

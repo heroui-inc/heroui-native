@@ -23,6 +23,10 @@ import {
   SpaceGrotesk_600SemiBold,
   SpaceGrotesk_700Bold,
 } from '@expo-google-fonts/space-grotesk';
+// Must be imported before any other i18n module so `Intl` is patched in time.
+import '../i18n/polyfills';
+
+import { I18nProvider } from '@lingui/react';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { HeroUINativeProvider } from 'heroui-native';
@@ -36,10 +40,12 @@ import {
 import { LayoutDirection } from 'uniwind';
 import '../../global.css';
 import {
-  AppDirectionProvider,
-  useAppDirection,
-} from '../contexts/app-direction-context';
+  AppLocaleProvider,
+  useAppLocale,
+} from '../contexts/app-locale-context';
 import { AppThemeProvider } from '../contexts/app-theme-context';
+import { i18n } from '../i18n/i18n';
+import { TransText } from '../i18n/trans-text';
 
 SplashScreen.setOptions({
   duration: 300,
@@ -51,7 +57,7 @@ SplashScreen.setOptions({
  * Contains the contentWrapper and HeroUINativeProvider configuration
  */
 function AppContent() {
-  const { isRTL } = useAppDirection();
+  const { isRTL } = useAppLocale();
 
   const contentWrapper = useCallback(
     (children: React.ReactNode) => (
@@ -69,35 +75,37 @@ function AppContent() {
 
   return (
     <AppThemeProvider>
-      {/*
-       * LayoutDirection provides the scoped direction context for uniwind
-       * `rtl:` variants. Its own `display: contents` wrapper is skipped by
-       * Yoga on RN 0.86, so the `direction` style that actually flips the
-       * layout must live on a real View below it.
-       */}
-      <LayoutDirection rtl={isRTL}>
-        <View
-          className="flex-1"
-          style={isRTL ? styles.directionRTL : styles.directionLTR}
-        >
-          <HeroUINativeProvider
-            config={{
-              textProps: {
-                maxFontSizeMultiplier: 2,
-              },
-              toast: {
-                contentWrapper,
-              },
-              devInfo: {
-                stylingPrinciples: false,
-              },
-              isRTL,
-            }}
+      <I18nProvider i18n={i18n} defaultComponent={TransText}>
+        {/*
+         * LayoutDirection provides the scoped direction context for uniwind
+         * `rtl:` variants. Its own `display: contents` wrapper is skipped by
+         * Yoga on RN 0.86, so the `direction` style that actually flips the
+         * layout must live on a real View below it.
+         */}
+        <LayoutDirection rtl={isRTL}>
+          <View
+            className="flex-1"
+            style={isRTL ? styles.directionRTL : styles.directionLTR}
           >
-            <Slot />
-          </HeroUINativeProvider>
-        </View>
-      </LayoutDirection>
+            <HeroUINativeProvider
+              config={{
+                textProps: {
+                  maxFontSizeMultiplier: 2,
+                },
+                toast: {
+                  contentWrapper,
+                },
+                devInfo: {
+                  stylingPrinciples: false,
+                },
+                isRTL,
+              }}
+            >
+              <Slot />
+            </HeroUINativeProvider>
+          </View>
+        </LayoutDirection>
+      </I18nProvider>
     </AppThemeProvider>
   );
 }
@@ -129,9 +137,9 @@ export default function Layout() {
   return (
     <GestureHandlerRootView style={styles.root}>
       <KeyboardProvider>
-        <AppDirectionProvider>
+        <AppLocaleProvider>
           <AppContent />
-        </AppDirectionProvider>
+        </AppLocaleProvider>
       </KeyboardProvider>
     </GestureHandlerRootView>
   );

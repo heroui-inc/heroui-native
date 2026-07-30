@@ -1,0 +1,3614 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-07-30 15:23+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: he\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/app/(home)/components/link-button.tsx
+msgid " and "
+msgstr " ו"
+
+#: src/app/(home)/index.tsx
+msgid "{count} total"
+msgstr "{count} בסך הכול"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "* Size guide available in product details"
+msgstr "* מדריך מידות זמין בפרטי המוצר"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "• All prices include taxes and fees"
+msgstr "• כל המחירים כוללים מיסים ועמלות"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "• At least 8 characters long"
+msgstr "• באורך 8 תווים לפחות"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "• At least one number"
+msgstr "• ספרה אחת לפחות"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "• At least one special character (!@#$%^&*)"
+msgstr "• תו מיוחד אחד לפחות (!@#$%^&*)"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "• At least one uppercase letter"
+msgstr "• אות גדולה אחת לפחות"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "• Cancellation fees may apply if cancelled after 2 minutes"
+msgstr "• ייתכנו דמי ביטול אם הנסיעה תבוטל אחרי 2 דקות"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "• For support, contact us through the app or call +1-800-TAXI-HELP"
+msgstr "• לתמיכה, פנו אלינו דרך האפליקציה או התקשרו ל+1-800-TAXI-HELP"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "• Payment will be processed after trip completion"
+msgstr "• התשלום ייגבה בתום הנסיעה"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "10% off all trips with PLUS"
+msgstr "10% הנחה על כל הנסיעות עם PLUS"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+#: src/components/themes-content/card-content.tsx
+msgid "148 members"
+msgstr "148 חברים"
+
+#: src/app/(home)/components/popover.tsx
+msgid "2 minutes ago"
+msgstr "לפני 2 דקות"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "2-3 business days"
+msgstr "2-3 ימי עסקים"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "3-20 characters, letters, numbers only"
+msgstr "3-20 תווים, אותיות וספרות בלבד"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+#: src/components/themes-content/card-content.tsx
+msgid "362 members"
+msgstr "362 חברים"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "5-7 business days"
+msgstr "5-7 ימי עסקים"
+
+#: src/app/(home)/components/separator.tsx
+msgid "A modern React Native component library."
+msgstr "ספריית קומפוננטות מודרנית ל-React Native."
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "A new verification code has been sent to your phone."
+msgstr "קוד אימות חדש נשלח לטלפון שלך."
+
+#: src/app/(home)/components/alert.tsx
+#: src/app/(home)/components/alert.tsx
+msgid "A new version of the application is available. Please refresh to get the latest features and bug fixes."
+msgstr "גרסה חדשה של האפליקציה זמינה. רעננו כדי לקבל את התכונות ותיקוני התקלות האחרונים."
+
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "A newer version is available on the App Store. Update to get the latest features and improvements."
+msgstr "גרסה חדשה יותר זמינה ב-App Store. עדכנו כדי לקבל את התכונות והשיפורים האחרונים."
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+msgid "Accent"
+msgstr "הדגשה"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Accent toast"
+msgstr "טוסט הדגשה"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Accept Privacy Policy"
+msgstr "אישור מדיניות הפרטיות"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Accept terms and conditions"
+msgstr "אישור התנאים וההגבלות"
+
+#: src/app/(home)/components/button.tsx
+msgid "Access Denied"
+msgstr "הגישה נדחתה"
+
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Account"
+msgstr "חשבון"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Account activity"
+msgstr "פעילות בחשבון"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Account ID"
+msgstr "מזהה חשבון"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Account verification pending"
+msgstr "אימות החשבון בהמתנה"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Achievement toast"
+msgstr "טוסט הישג"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Actions"
+msgstr "פעולות"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Active search"
+msgstr "חיפוש פעיל"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Add an extra layer of security to your account"
+msgstr "הוספת שכבת אבטחה נוספת לחשבון שלך"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Add Cash"
+msgstr "הוספת כסף"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Add items to your cart, then open checkout to pay by card or wallet. We'll email your confirmation within a few minutes."
+msgstr "הוסיפו פריטים לעגלה ואז עברו לתשלום בכרטיס או בארנק דיגיטלי. האישור יישלח לאימייל שלכם בתוך דקות."
+
+#: src/app/(home)/components/button.tsx
+msgid "Add Member"
+msgstr "הוספת חבר"
+
+#: src/app/(home)/components/card.tsx
+msgid "Add to cart"
+msgstr "הוספה לעגלה"
+
+#: src/app/(home)/components/button.tsx
+msgid "Add to Cart"
+msgstr "הוספה לעגלה"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Add Wikilink"
+msgstr "הוספת ויקי-קישור"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Adjust the text size throughout the app"
+msgstr "התאמת גודל הטקסט בכל האפליקציה"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Age range"
+msgstr "טווח גילים"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Agree to our Terms of Service and Privacy Policy"
+msgstr "הסכמה לתנאי השימוש ולמדיניות הפרטיות שלנו"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Agree to Terms"
+msgstr "הסכמה לתנאים"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+#: src/components/themes-content/card-content.tsx
+msgid "AI Builders"
+msgstr "בוני AI"
+
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/list-group.tsx
+msgid "Alerts, sounds, badges"
+msgstr "התראות, צלילים, תגים"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Aligned to the {align} of the trigger"
+msgstr "מיושר ל{align} של הטריגר"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Alignment"
+msgstr "יישור"
+
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Alignment options"
+msgstr "אפשרויות יישור"
+
+#: src/app/(home)/_layout.tsx
+msgid "All animations will be disabled"
+msgstr "כל האנימציות יושבתו"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "All our drivers are verified and background-checked. Your safety is our top priority."
+msgstr "כל הנהגים שלנו מאומתים ועברו בדיקת רקע. הבטיחות שלכם היא בראש סדר העדיפויות."
+
+#: src/app/(home)/components/toast.tsx
+msgid "All your files have been backed up to the cloud. You can now access them from any device. The backup includes 1,234 files totaling 2.5 GB. Your data is safe and secure. The next backup will run automatically in 24 hours."
+msgstr "כל הקבצים שלך גובו לענן. מעכשיו אפשר לגשת אליהם מכל מכשיר. הגיבוי כולל 1,234 קבצים בנפח 2.5 GB. הנתונים שלך שמורים ומאובטחים. הגיבוי הבא יתבצע אוטומטית בעוד 24 שעות."
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Amenities"
+msgstr "מתקנים"
+
+#: src/app/(home)/components/spinner.tsx
+msgid "Animation speed"
+msgstr "מהירות אנימציה"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Another title"
+msgstr "כותרת אחרת"
+
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Appearance"
+msgstr "מראה"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Are you sure you want to delete this product? This action cannot be undone."
+msgstr "בטוחים שברצונכם למחוק את המוצר הזה? לא ניתן לבטל את הפעולה."
+
+#: src/components/themes-content/dialog-content.tsx
+msgid "Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed."
+msgstr "בטוחים שברצונכם למחוק את החשבון? לא ניתן לבטל את הפעולה וכל הנתונים יימחקו לצמיתות."
+
+#: src/app/(home)/components/dialog-native-modal.tsx
+msgid "Are you sure you want to proceed with this action? This cannot be undone."
+msgstr "בטוחים שברצונכם להמשיך בפעולה? לא ניתן לבטל אותה."
+
+#: src/app/(home)/components/slider.tsx
+msgid "Audio settings"
+msgstr "הגדרות שמע"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Auto"
+msgstr "אוטומטי"
+
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Auto-update"
+msgstr "עדכון אוטומטי"
+
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Automatically download and install updates"
+msgstr "הורדה והתקנה אוטומטיות של עדכונים"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Available soon"
+msgstr "זמין בקרוב"
+
+#: src/app/(home)/components/avatar.tsx
+msgid "Avatar group"
+msgstr "קבוצת אווטארים"
+
+#: src/app/(home)/components/card.tsx
+msgid "Avocado Hackathon"
+msgstr "האקתון אבוקדו"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Background image card"
+msgstr "כרטיס עם תמונת רקע"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Backup completed"
+msgstr "הגיבוי הושלם"
+
+#: src/app/(home)/components/description.tsx
+#: src/app/(home)/components/input-group.tsx
+#: src/app/(home)/components/input-otp.tsx
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/slider.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Basic"
+msgstr "בסיסי"
+
+#: src/app/(home)/components/label.tsx
+msgid "Basic & Required"
+msgstr "בסיסי וחובה"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/basic.tsx
+msgid "Basic bottom sheet"
+msgstr "גיליון תחתון בסיסי"
+
+#: src/app/(home)/components/card.tsx
+msgid "Basic card"
+msgstr "כרטיס בסיסי"
+
+#: src/app/(home)/components/dialog-native-modal.tsx
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Basic dialog"
+msgstr "דיאלוג בסיסי"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Basic FieldError"
+msgstr "FieldError בסיסי"
+
+#: src/app/(home)/components/input.tsx
+msgid "Basic Input"
+msgstr "Input בסיסי"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Basic Plan"
+msgstr "מסלול בסיסי"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Basic RadioGroup"
+msgstr "RadioGroup בסיסי"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Basic search field"
+msgstr "שדה חיפוש בסיסי"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Basic TextArea"
+msgstr "TextArea בסיסי"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Basic TextField"
+msgstr "TextField בסיסי"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/close-button.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Basic usage"
+msgstr "שימוש בסיסי"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Bass"
+msgstr "באסים"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Battery"
+msgstr "סוללה"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "Because it transcends mere functionality - it's about creating experiences that feel intuitive: accessible, robust and maintainable."
+msgstr "כי זה חורג מעבר לפונקציונליות בלבד - מדובר ביצירת חוויות שמרגישות אינטואיטיביות: נגישות, חסינות וברות תחזוקה."
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Best Seller"
+msgstr "הנמכר ביותר"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Bestsellers & more"
+msgstr "הנמכרים ביותר ועוד"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Biometric authentication"
+msgstr "אימות ביומטרי"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Blue Shimmer"
+msgstr "נצנוץ כחול"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Body text"
+msgstr "טקסט גוף"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Bold"
+msgstr "מודגש"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Books"
+msgstr "ספרים"
+
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Bottom"
+msgstr "למטה"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Bottom sheet from native modal"
+msgstr "גיליון תחתון ממודאל נייטיב"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Bottom sheet with blur overlay"
+msgstr "גיליון תחתון עם שכבת טשטוש"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Bottom sheet with OTP input"
+msgstr "גיליון תחתון עם קלט OTP"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/with-text-input.tsx
+msgid "Bottom sheet with text input"
+msgstr "גיליון תחתון עם קלט טקסט"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Bottom toast"
+msgstr "טוסט תחתון"
+
+#: src/app/(home)/components/menu.tsx
+msgid "BottomSheet"
+msgstr "BottomSheet"
+
+#: src/app/(home)/_layout.tsx
+msgid "BottomSheet Native Modal"
+msgstr "BottomSheet במודאל נייטיב"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Breakfast"
+msgstr "ארוחת בוקר"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Bridging the Future"
+msgstr "מגשרים אל העתיד"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Browse"
+msgstr "עיון"
+
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Button highlight"
+msgstr "הדגשת כפתור"
+
+#: src/app/(home)/components/card.tsx
+msgid "Buy now"
+msgstr "קנו עכשיו"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "By checking this box, you agree to our Terms of Service and Privacy Policy"
+msgstr "בסימון התיבה הזו אתם מסכימים לתנאי השימוש ולמדיניות הפרטיות שלנו"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "By continuing, you agree to receive SMS messages for verification. Message and data rates may apply."
+msgstr "בהמשך אתם מסכימים לקבל הודעות SMS לצורך אימות. ייתכנו עלויות הודעות ונתונים."
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Can I modify or cancel my order?"
+msgstr "אפשר לשנות או לבטל הזמנה?"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/dialog-native-modal.tsx
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/popover.tsx
+#: src/components/bottom-sheet/multi-step-detached.tsx
+#: src/components/themes-content/dialog-content.tsx
+msgid "Cancel"
+msgstr "ביטול"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Cannot edit"
+msgstr "לא ניתן לערוך"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Card skeleton"
+msgstr "סקלטון כרטיס"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Card with image"
+msgstr "כרטיס עם תמונה"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Categories"
+msgstr "קטגוריות"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Center"
+msgstr "מרכז"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Channels"
+msgstr "ערוצים"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Check out our latest updates including dark mode support and improved accessibility features."
+msgstr "הציצו בעדכונים האחרונים שלנו, כולל תמיכה במצב כהה ושיפורי נגישות."
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Checkbox ControlField set"
+msgstr "מקבץ ControlField עם תיבות סימון"
+
+#: src/components/select/select-button-trigger.tsx
+msgid "Choose a state"
+msgstr "בחרו מדינה"
+
+#: src/app/(home)/components/label.tsx
+msgid "Choose a username"
+msgstr "בחרו שם משתמש"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Choose how you'd like to receive updates"
+msgstr "בחרו איך תרצו לקבל עדכונים"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Choose how you'd like to share this content"
+msgstr "בחרו איך תרצו לשתף את התוכן הזה"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Choose Your Plan"
+msgstr "בחרו את המסלול שלכם"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Circular skeletons"
+msgstr "סקלטונים עגולים"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Classic Cotton T-Shirt"
+msgstr "חולצת כותנה קלאסית"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Clear"
+msgstr "ניקוי"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Clear all"
+msgstr "ניקוי הכול"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Clearance"
+msgstr "מבצע חיסול"
+
+#: src/app/(home)/_layout.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/toast-native-modal.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Close"
+msgstr "סגירה"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Code"
+msgstr "קוד"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Code sent"
+msgstr "הקוד נשלח"
+
+#: src/app/(home)/components/input-otp.tsx
+#: src/app/(home)/components/input-otp.tsx
+msgid "Code: {code}"
+msgstr "קוד: {code}"
+
+#: src/app/(home)/components/spinner.tsx
+msgid "Colors"
+msgstr "צבעים"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Comfort zone"
+msgstr "אזור הנוחות"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Coming soon - Advanced features"
+msgstr "בקרוב - תכונות מתקדמות"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/input-otp.tsx
+#: src/app/(home)/components/input-otp.tsx
+msgid "Completed"
+msgstr "הושלם"
+
+#: src/app/(home)/_layout.tsx
+#: src/app/(home)/components/separator.tsx
+#: src/app/(home)/index.tsx
+msgid "Components"
+msgstr "קומפוננטות"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Configure Menu"
+msgstr "הגדרת התפריט"
+
+#: src/app/(home)/components/dialog-native-modal.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Confirm"
+msgstr "אישור"
+
+#: src/app/(home)/components/dialog-native-modal.tsx
+msgid "Confirm Action"
+msgstr "אישור הפעולה"
+
+#: src/app/(home)/components/label.tsx
+msgid "Confirm password"
+msgstr "אישור סיסמה"
+
+#: src/app/(home)/components/label.tsx
+msgid "Confirm your password"
+msgstr "אשרו את הסיסמה שלכם"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Contact support to change your role"
+msgstr "פנו לתמיכה כדי לשנות את התפקיד שלכם"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Content One"
+msgstr "תוכן ראשון"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Content Two"
+msgstr "תוכן שני"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Continue"
+msgstr "המשך"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Copy link"
+msgstr "העתקת קישור"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/popover.tsx
+msgid "Copy Link"
+msgstr "העתקת קישור"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Copy the file link"
+msgstr "העתקת הקישור לקובץ"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Copy to clipboard"
+msgstr "העתקה ללוח"
+
+#: src/components/select/searchable-dialog-select.tsx
+msgid "Country"
+msgstr "ארץ"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Create a new file"
+msgstr "יצירת קובץ חדש"
+
+#: src/app/(home)/components/description.tsx
+#: src/app/(home)/components/label.tsx
+msgid "Create a password"
+msgstr "יצירת סיסמה"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Create Password"
+msgstr "יצירת סיסמה"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "Creative coders and technical designers - individuals prepared to move beyond copy-paste solutions and evolve into builders who *can create anything*."
+msgstr "מתכנתים יצירתיים ומעצבים טכניים - אנשים שמוכנים לצאת מפתרונות של העתק-הדבק ולהתפתח לבונים ש*יכולים ליצור הכול*."
+
+#: src/app/(home)/components/chip.tsx
+msgid "Custom"
+msgstr "מותאם"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Custom Background Color"
+msgstr "צבע רקע מותאם"
+
+#: src/app/(home)/components/close-button.tsx
+msgid "Custom children"
+msgstr "תוכן מותאם"
+
+#: src/app/(home)/components/separator.tsx
+#: src/app/(home)/components/spinner.tsx
+msgid "Custom colors"
+msgstr "צבעים מותאמים"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Custom entering animation"
+msgstr "אנימציית כניסה מותאמת"
+
+#: src/app/(home)/components/avatar.tsx
+msgid "Custom fallback"
+msgstr "תחליף מותאם"
+
+#: src/app/(home)/components/close-button.tsx
+msgid "Custom icon color"
+msgstr "צבע אייקון מותאם"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Custom indicator"
+msgstr "אינדיקטור מותאם"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Custom Indicator Background"
+msgstr "רקע אינדיקטור מותאם"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Custom Indicator Thumb"
+msgstr "ידית אינדיקטור מותאמת"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Custom pulse configuration"
+msgstr "הגדרת פעימה מותאמת"
+
+#: src/app/(home)/components/button.tsx
+msgid "Custom Purple"
+msgstr "סגול מותאם"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Custom Remove Button"
+msgstr "כפתור הסרה מותאם"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Custom remove button styles"
+msgstr "סגנונות מותאמים לכפתור ההסרה"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Custom search icon"
+msgstr "אייקון חיפוש מותאם"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Custom shimmer configuration"
+msgstr "הגדרת נצנוץ מותאמת"
+
+#: src/app/(home)/components/avatar.tsx
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/slider.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Custom styles"
+msgstr "סגנונות מותאמים"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Custom Styles"
+msgstr "סגנונות מותאמים"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/field-error.tsx
+msgid "Custom styling"
+msgstr "עיצוב מותאם"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Custom suffix"
+msgstr "סיומת מותאמת"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Custom text with icons"
+msgstr "טקסט מותאם עם אייקונים"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Custom thickness"
+msgstr "עובי מותאם"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Custom toasts"
+msgstr "טוסטים מותאמים"
+
+#: src/components/themes-content/radio-group-content.tsx
+msgid "Daily"
+msgstr "יומי"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+msgid "Danger"
+msgstr "סכנה"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Danger Color"
+msgstr "צבע סכנה"
+
+#: src/app/(home)/components/button.tsx
+msgid "Danger Soft"
+msgstr "סכנה רך"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Danger toast"
+msgstr "טוסט סכנה"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Danger zone"
+msgstr "אזור מסוכן"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Dark"
+msgstr "כהה"
+
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Dark mode"
+msgstr "מצב כהה"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/switch.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/themes/index.tsx
+msgid "Default"
+msgstr "ברירת מחדל"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Default (hairline width)"
+msgstr "ברירת מחדל (עובי שערה)"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Default & Accent"
+msgstr "ברירת מחדל והדגשה"
+
+#: src/app/(home)/components/avatar.tsx
+msgid "Default icon fallback"
+msgstr "תחליף אייקון ברירת מחדל"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Default Remove Button"
+msgstr "כפתור הסרה ברירת מחדל"
+
+#: src/app/(home)/components/input.tsx
+msgid "Default State"
+msgstr "מצב ברירת מחדל"
+
+#: src/app/(home)/components/avatar.tsx
+msgid "Default text fallback"
+msgstr "תחליף טקסט ברירת מחדל"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Default toast"
+msgstr "טוסט ברירת מחדל"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Default variant"
+msgstr "וריאנט ברירת מחדל"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Default variant with primary styling"
+msgstr "וריאנט ברירת מחדל עם עיצוב ראשי"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Default variants"
+msgstr "וריאנטים של ברירת מחדל"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Delete"
+msgstr "מחיקה"
+
+#: src/components/themes-content/dialog-content.tsx
+#: src/components/themes-content/dialog-content.tsx
+#: src/components/themes-content/dialog-content.tsx
+msgid "Delete Account"
+msgstr "מחיקת החשבון"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Delete account?"
+msgstr "למחוק את החשבון?"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Delete file"
+msgstr "מחיקת קובץ"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Delete forever"
+msgstr "מחיקה לצמיתות"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Delete product"
+msgstr "מחיקת מוצר"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Delete Project"
+msgstr "מחיקת פרויקט"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Delivered in 2-3 business days"
+msgstr "מגיע בתוך 2-3 ימי עסקים"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Delivered in 5-7 business days"
+msgstr "מגיע בתוך 5-7 ימי עסקים"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Delivered next business day"
+msgstr "מגיע ביום העסקים הבא"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "Depth"
+msgstr "עומק"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Detached bottom sheet"
+msgstr "גיליון תחתון מנותק"
+
+#: src/components/select/searchable-dialog-select.tsx
+msgid "Dialog"
+msgstr "דיאלוג"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Dialog from native modal"
+msgstr "דיאלוג ממודאל נייטיב"
+
+#: src/app/(home)/_layout.tsx
+msgid "Dialog Native Modal"
+msgstr "דיאלוג במודאל נייטיב"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Dialog with blur backdrop"
+msgstr "דיאלוג עם רקע מטושטש"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Dialog with long content"
+msgstr "דיאלוג עם תוכן ארוך"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Dialog with text input"
+msgstr "דיאלוג עם קלט טקסט"
+
+#: src/app/(home)/components/popover-native-modal.tsx
+#: src/app/(home)/components/popover.tsx
+msgid "Did you know?"
+msgstr "הידעתם?"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Didn't receive a code?"
+msgstr "לא קיבלתם קוד?"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Didn't receive the code?"
+msgstr "לא קיבלתם את הקוד?"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Different content sizes"
+msgstr "גדלי תוכן שונים"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Different title"
+msgstr "כותרת שונה"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Direct messages"
+msgstr "הודעות ישירות"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/input-otp.tsx
+#: src/app/(home)/components/link-button.tsx
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Disabled"
+msgstr "מושבת"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Disabled keys"
+msgstr "מפתחות מושבתים"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Disabled search"
+msgstr "חיפוש מושבת"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/close-button.tsx
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/link-button.tsx
+msgid "Disabled state"
+msgstr "מצב מושבת"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Disabled State"
+msgstr "מצב מושבת"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Disabled TextField"
+msgstr "TextField מושבת"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Discount"
+msgstr "הנחה"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Dismiss"
+msgstr "סגור"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Display the sidebar navigation panel"
+msgstr "הצגת פאנל הניווט הצדי"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Display the status bar at the bottom"
+msgstr "הצגת שורת המצב בתחתית"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Distance: 4.2 km"
+msgstr "מרחק: 4.2 ק\"מ"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Do you ship internationally?"
+msgstr "האם אתם שולחים לחו\"ל?"
+
+#: src/app/(home)/components/button.tsx
+msgid "Download"
+msgstr "הורדה"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Download for later"
+msgstr "הורדה לצפייה מאוחרת"
+
+#: src/app/(home)/components/button.tsx
+msgid "Download now"
+msgstr "הורידו עכשיו"
+
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "Download Now"
+msgstr "הורידו עכשיו"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Edit file"
+msgstr "עריכת קובץ"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Editor Menu"
+msgstr "תפריט העורך"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/text-field.tsx
+#: src/components/themes-content/text-input-content.tsx
+msgid "Email"
+msgstr "אימייל"
+
+#: src/app/(home)/components/description.tsx
+msgid "Email address"
+msgstr "כתובת אימייל"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/field-error.tsx
+msgid "Email Address"
+msgstr "כתובת אימייל"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Email is required"
+msgstr "חובה להזין אימייל"
+
+#: src/app/(home)/components/switch.tsx
+msgid "Email notifications"
+msgstr "התראות באימייל"
+
+#: src/app/(home)/components/radio-group.tsx
+#: src/components/themes-content/switch-content.tsx
+msgid "Email Notifications"
+msgstr "התראות באימייל"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "Enable depth effect for the accordion"
+msgstr "הפעלת אפקט עומק לאקורדיון"
+
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Enable notifications"
+msgstr "הפעלת התראות"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Enabled"
+msgstr "מופעל"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "End"
+msgstr "סוף"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "English"
+msgstr "אנגלית"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Enter 16-digit gift card number"
+msgstr "הזינו מספר כרטיס מתנה בן 16 ספרות"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Enter a valid code to receive discount"
+msgstr "הזינו קוד תקין לקבלת הנחה"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Enter account ID"
+msgstr "הזינו מזהה חשבון"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Enter at least 3 characters to search"
+msgstr "הזינו 3 תווים לפחות לחיפוש"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Enter code (letters only)"
+msgstr "הזינו קוד (אותיות בלבד)"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Enter promo code"
+msgstr "הזינו קוד קופון"
+
+#: src/app/(home)/components/field-error.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Enter username"
+msgstr "הזינו שם משתמש"
+
+#: src/app/(home)/components/input-otp.tsx
+#: src/app/(home)/components/input-otp.tsx
+msgid "Enter verification code"
+msgstr "הזינו קוד אימות"
+
+#: src/app/(home)/components/description.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-field.tsx
+#: src/components/themes-content/text-input-content.tsx
+msgid "Enter your email"
+msgstr "הזינו את האימייל שלכם"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Enter your full name"
+msgstr "הזינו את שמכם המלא"
+
+#: src/app/(home)/components/text-area.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Enter your message"
+msgstr "הזינו את ההודעה שלכם"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Enter your message here..."
+msgstr "הזינו את ההודעה שלכם כאן..."
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Enter your name"
+msgstr "הזינו את שמכם"
+
+#: src/app/(home)/components/field-error.tsx
+#: src/app/(home)/components/input-group.tsx
+#: src/app/(home)/components/text-field.tsx
+#: src/components/themes-content/text-input-content.tsx
+msgid "Enter your password"
+msgstr "הזינו את הסיסמה שלכם"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Enter your PIN"
+msgstr "הזינו את קוד ה-PIN שלכם"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Enterprise Plan"
+msgstr "מסלול ארגוני"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Enterprise plan is not available in your region!"
+msgstr "המסלול הארגוני לא זמין באזור שלכם!"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Estimated arrival time: 10 minutes"
+msgstr "זמן הגעה משוער: 10 דקות"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Everyone"
+msgstr "כולם"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Examples"
+msgstr "דוגמאות"
+
+#: src/app/(home)/index.tsx
+msgid "Explore all components"
+msgstr "עיינו בכל הקומפוננטות"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Export"
+msgstr "ייצוא"
+
+#: src/app/(home)/components/radio-group.tsx
+#: src/app/(home)/components/radio-group.tsx
+msgid "Express Shipping"
+msgstr "משלוח מהיר"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Extra-small body text"
+msgstr "טקסט גוף קטן במיוחד"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Extra-small text for disclaimers or fine print. lore"
+msgstr "טקסט קטן במיוחד להסתייגויות או לאותיות הקטנות. lore"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Failed"
+msgstr "נכשל"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Fast Green Shimmer"
+msgstr "נצנוץ ירוק מהיר"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Fast Pulse"
+msgstr "פעימה מהירה"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Featured"
+msgstr "מומלץ"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Find products"
+msgstr "חיפוש מוצרים"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Finish"
+msgstr "סיום"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Fitness center"
+msgstr "חדר כושר"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Focus"
+msgstr "פוקוס"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Font Size"
+msgstr "גודל גופן"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "For other deletion options, see our Privacy Policy."
+msgstr "לאפשרויות מחיקה אחרות, עיינו במדיניות הפרטיות שלנו."
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Four Digits"
+msgstr "ארבע ספרות"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Free"
+msgstr "חינם"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Free Shipping"
+msgstr "משלוח חינם"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Friends Only"
+msgstr "חברים בלבד"
+
+#: src/app/(home)/components/toast.tsx
+msgid "From native modal"
+msgstr "ממודאל נייטיב"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Full Name"
+msgstr "שם מלא"
+
+#: src/app/(home)/components/button.tsx
+msgid "Full Width Button"
+msgstr "כפתור ברוחב מלא"
+
+#: src/app/(home)/components/popover-native-modal.tsx
+#: src/app/(home)/components/popover.tsx
+msgid "Fun Fact!"
+msgstr "עובדה מעניינת!"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Games"
+msgstr "משחקים"
+
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Gaming"
+msgstr "גיימינג"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "General"
+msgstr "כללי"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Get a paid plan for more credits"
+msgstr "עברו למסלול בתשלום לקבלת קרדיטים נוספים"
+
+#: src/components/themes-content/switch-content.tsx
+msgid "Get instant alerts on your device"
+msgstr "קבלת התראות מיידיות למכשיר שלכם"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Get instant push alerts"
+msgstr "קבלת התראות דחיפה מיידיות"
+
+#: src/components/themes-content/radio-group-content.tsx
+msgid "Get notifications immediately"
+msgstr "קבלת התראות באופן מיידי"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Get notified"
+msgstr "עדכנו אותי"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Get updates via email"
+msgstr "קבלת עדכונים באימייל"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Get weekly updates about new features and tips"
+msgstr "קבלת עדכונים שבועיים על תכונות חדשות וטיפים"
+
+#: src/app/(home)/components/button.tsx
+msgid "Ghost"
+msgstr "גוסט"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Gift Card Number"
+msgstr "מספר כרטיס מתנה"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/chip.tsx
+msgid "Gradient"
+msgstr "גרדיאנט"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Green Taxi"
+msgstr "מונית ירוקה"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Group Title"
+msgstr "כותרת קבוצה"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/typography.tsx
+msgid "Heading 1"
+msgstr "כותרת 1"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Heading 2"
+msgstr "כותרת 2"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Heading 3"
+msgstr "כותרת 3"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Heading 4"
+msgstr "כותרת 4"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Heading 5"
+msgstr "כותרת 5"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Heading 6"
+msgstr "כותרת 6"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Headings"
+msgstr "כותרות"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Help improve our product by sharing anonymous usage data and improving our products."
+msgstr "עזרו לנו לשפר את המוצר באמצעות שיתוף נתוני שימוש אנונימיים."
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Hide all toasts"
+msgstr "הסתרת כל הטוסטים"
+
+#: src/app/(home)/components/toast-native-modal.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Hide toast"
+msgstr "הסתרת הטוסט"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "High end cars, top drivers"
+msgstr "רכבים יוקרתיים, נהגים מובילים"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "High Priority"
+msgstr "עדיפות גבוהה"
+
+#: src/app/(home)/components/card.tsx
+msgid "Higher prominence (surface-tertiary). Use for important content."
+msgstr "בולטות גבוהה יותר (surface-tertiary). מתאים לתוכן חשוב."
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Hint: The code is 123456"
+msgstr "רמז: הקוד הוא 123456"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Home robot"
+msgstr "רובוט ביתי"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Homepage"
+msgstr "דף הבית"
+
+#: src/app/(home)/components/scroll-shadow.tsx
+msgid "Horizontal"
+msgstr "אופקי"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Horizontal (default)"
+msgstr "אופקי (ברירת מחדל)"
+
+#: src/app/(home)/components/card.tsx
+msgid "Horizontal card with image"
+msgstr "כרטיס אופקי עם תמונה"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Hot"
+msgstr "חם"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "How do I place an order?"
+msgstr "איך מבצעים הזמנה?"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "How much does shipping cost?"
+msgstr "כמה עולה המשלוח?"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "I agree to the "
+msgstr "אני מסכים ל"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "I agree to the terms and conditions"
+msgstr "אני מסכים לתנאים ולהגבלות"
+
+#: src/app/(home)/components/button.tsx
+msgid "Icon only"
+msgstr "אייקון בלבד"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "If you delete your account, you won't be able to restore it or receive support."
+msgstr "אם תמחקו את החשבון, לא תוכלו לשחזר אותו או לקבל תמיכה."
+
+#: src/app/(home)/components/menu.tsx
+msgid "Image"
+msgstr "תמונה"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Important - complete within this week"
+msgstr "חשוב - להשלמה במהלך השבוע"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Important Information"
+msgstr "מידע חשוב"
+
+#. placeholder {0}: option.time
+#. placeholder {1}: option.capacity
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "in {0} • {1}"
+msgstr "בעוד {0} • {1}"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "In Stock"
+msgstr "במלאי"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Incomplete code"
+msgstr "קוד חסר"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Incomplete Code"
+msgstr "קוד חסר"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+#: src/components/themes-content/card-content.tsx
+msgid "Indie Hackers"
+msgstr "האקרים עצמאיים"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Individual disabled"
+msgstr "השבתה של פריט בודד"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Information"
+msgstr "מידע"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Inline compact layout"
+msgstr "פריסה קומפקטית בשורה"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Inline error messages"
+msgstr "הודעות שגיאה בשורה"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Inline Radio Options"
+msgstr "אפשרויות רדיו בשורה"
+
+#: src/app/(home)/components/input.tsx
+msgid "Input is disabled and cannot be edited"
+msgstr "שדה הקלט מושבת ולא ניתן לעריכה"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Inside bottom sheet"
+msgstr "בתוך גיליון תחתון"
+
+#: src/components/themes-content/radio-group-content.tsx
+msgid "Instant"
+msgstr "מיידי"
+
+#: src/app/(home)/components/checkbox.tsx
+msgid "Invalid"
+msgstr "לא תקין"
+
+#: src/app/(home)/components/label.tsx
+msgid "Invalid & Disabled"
+msgstr "לא תקין ומושבת"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Invalid credentials provided"
+msgstr "פרטי ההתחברות שהוזנו שגויים"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Invalid email"
+msgstr "אימייל לא תקין"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Invalid State"
+msgstr "מצב לא תקין"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Italic"
+msgstr "נטוי"
+
+#: src/app/(home)/components/toast-native-modal.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Join a team"
+msgstr "הצטרפות לצוות"
+
+#: src/app/(home)/components/toast-native-modal.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Junior Garcia sent you an invitation to join HeroUI team!"
+msgstr "ג'וניור גרסיה שלח לך הזמנה להצטרף לצוות HeroUI!"
+
+#: src/components/bottom-sheet/basic.tsx
+msgid "Keep yourself safe"
+msgstr "שמרו על עצמכם"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Keyboard avoiding"
+msgstr "התחמקות ממקלדת"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Label Heading"
+msgstr "כותרת תווית"
+
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/components/settings/settings-bottom-sheet.tsx
+msgid "Language"
+msgstr "שפה"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Large"
+msgstr "גדול"
+
+#: src/app/(home)/components/button.tsx
+msgid "Large Button"
+msgstr "כפתור גדול"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Large toast"
+msgstr "טוסט גדול"
+
+#: src/components/bottom-sheet/basic.tsx
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "Later"
+msgstr "מאוחר יותר"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Laundry"
+msgstr "כיבוס"
+
+#: src/app/(home)/themes/index.tsx
+msgid "Lavender"
+msgstr "לבנדר"
+
+#: src/app/(home)/components/button.tsx
+msgid "Layout transitions demo"
+msgstr "הדגמת מעברי פריסה"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Left"
+msgstr "שמאל"
+
+#: src/components/settings/settings-bottom-sheet.tsx
+msgid "Left-to-right layout"
+msgstr "פריסה משמאל לימין"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Light"
+msgstr "בהיר"
+
+#: src/app/(home)/components/menu.tsx
+msgid "List"
+msgstr "רשימה"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "List skeleton"
+msgstr "סקלטון רשימה"
+
+#: src/app/(home)/components/card.tsx
+msgid "Living room Sofa"
+msgstr "ספה לסלון"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Load data"
+msgstr "טעינת נתונים"
+
+#: src/components/toast/loading-toast.tsx
+msgid "Loaded successfully"
+msgstr "הטעינה הושלמה"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+msgid "Loading"
+msgstr "טוען"
+
+#: src/components/toast/loading-toast.tsx
+msgid "Loading..."
+msgstr "טוען..."
+
+#: src/app/(home)/components/menu.tsx
+msgid "Lock Tab"
+msgstr "נעילת טאב"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Low Disk Space"
+msgstr "מעט שטח פנוי בדיסק"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Low Priority"
+msgstr "עדיפות נמוכה"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Make changes to the file"
+msgstr "ביצוע שינויים בקובץ"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Mark all as read"
+msgstr "סימון הכול כנקרא"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Markdown"
+msgstr "Markdown"
+
+#: src/components/themes-content/checkbox-content.tsx
+msgid "Marketing & Promotions"
+msgstr "שיווק ומבצעים"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Marketing communications"
+msgstr "תקשורת שיווקית"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Marketing email"
+msgstr "אימייל שיווקי"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Medium"
+msgstr "בינוני"
+
+#: src/app/(home)/components/button.tsx
+msgid "Medium Button"
+msgstr "כפתור בינוני"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Medium Priority"
+msgstr "עדיפות בינונית"
+
+#: src/app/(home)/components/card.tsx
+msgid "Medium prominence (surface-tertiary). Use to draw moderate attention."
+msgstr "בולטות בינונית (surface-tertiary). מתאים למשיכת תשומת לב מדודה."
+
+#: src/app/(home)/components/toast.tsx
+msgid "Medium toast"
+msgstr "טוסט בינוני"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Mentions"
+msgstr "אזכורים"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Message"
+msgstr "הודעה"
+
+#: src/app/(home)/components/card.tsx
+msgid "Minimal prominence with transparent background. Use for less important content or nested cards."
+msgstr "בולטות מינימלית עם רקע שקוף. מתאים לתוכן פחות חשוב או לכרטיסים מקוננים."
+
+#: src/app/(home)/themes/index.tsx
+msgid "Mint"
+msgstr "מנטה"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Mood"
+msgstr "מצב רוח"
+
+#: src/app/(home)/components/popover.tsx
+msgid "More Options"
+msgstr "אפשרויות נוספות"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Move to trash"
+msgstr "העברה לאשפה"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Movies"
+msgstr "סרטים"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Multi-step detached"
+msgstr "מנותק מרובה שלבים"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Multiple errors"
+msgstr "שגיאות מרובות"
+
+#: src/app/(home)/components/select.tsx
+msgid "Multiple select"
+msgstr "בחירה מרובה"
+
+#: src/app/(home)/components/accordion.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Multiple selection"
+msgstr "בחירה מרובה"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Music"
+msgstr "מוזיקה"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Name"
+msgstr "שם"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Name is required"
+msgstr "חובה להזין שם"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Name must be at least 2 characters"
+msgstr "השם חייב להכיל 2 תווים לפחות"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Name, email, phone number"
+msgstr "שם, אימייל, מספר טלפון"
+
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Native modal test"
+msgstr "בדיקת מודאל נייטיב"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Navigate to Privacy Policy"
+msgstr "מעבר למדיניות הפרטיות"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Navigate to Terms"
+msgstr "מעבר לתנאים"
+
+#: src/app/(home)/components/chip.tsx
+msgid "New"
+msgstr "חדש"
+
+#: src/components/toast/achievement-toast.tsx
+msgid "New achievement!"
+msgstr "הישג חדש!"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "New Arrivals"
+msgstr "חדש במלאי"
+
+#: src/components/themes-content/checkbox-content.tsx
+msgid "New features and improvements"
+msgstr "תכונות חדשות ושיפורים"
+
+#: src/app/(home)/components/alert.tsx
+msgid "New features available"
+msgstr "תכונות חדשות זמינות"
+
+#: src/app/(home)/components/menu.tsx
+msgid "New file"
+msgstr "קובץ חדש"
+
+#: src/app/(home)/components/toast.tsx
+msgid "New message"
+msgstr "הודעה חדשה"
+
+#: src/components/themes-content/text-input-content.tsx
+msgid "New password"
+msgstr "סיסמה חדשה"
+
+#: src/app/(home)/components/menu.tsx
+msgid "New Project"
+msgstr "פרויקט חדש"
+
+#: src/app/(home)/components/menu.tsx
+msgid "New Space"
+msgstr "מרחב חדש"
+
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "New updates are ready. The app needs a quick refresh to apply them (no download required)."
+msgstr "עדכונים חדשים מוכנים. האפליקציה זקוקה לרענון קצר כדי להחיל אותם (אין צורך בהורדה)."
+
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "New Version Available"
+msgstr "גרסה חדשה זמינה"
+
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "News"
+msgstr "חדשות"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Next business day"
+msgstr "יום העסקים הבא"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "No categories found"
+msgstr "לא נמצאו קטגוריות"
+
+#: src/components/select/searchable-dialog-select.tsx
+msgid "No countries found"
+msgstr "לא נמצאו ארצות"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "No credits left"
+msgstr "לא נותרו קרדיטים"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "No Data"
+msgstr "אין נתונים"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "No frameworks found"
+msgstr "לא נמצאו פריימוורקים"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "No Notifications"
+msgstr "בלי התראות"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "No results found. Please try a different search term."
+msgstr "לא נמצאו תוצאות. נסו מונח חיפוש אחר."
+
+#: src/components/select/searchable-select.tsx
+msgid "No states found"
+msgstr "לא נמצאו מדינות"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "No team members"
+msgstr "אין חברי צוות"
+
+#: src/components/bottom-sheet/with-text-input.tsx
+msgid "No users found"
+msgstr "לא נמצאו משתמשים"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Nobody"
+msgstr "אף אחד"
+
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "None"
+msgstr "ללא"
+
+#: src/app/(home)/components/input.tsx
+msgid "Normal input state"
+msgstr "מצב קלט רגיל"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Not available in your region"
+msgstr "לא זמין באזור שלכם"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Notification Preferences"
+msgstr "העדפות התראות"
+
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Notifications"
+msgstr "התראות"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Notifications about your account activity"
+msgstr "התראות על פעילות בחשבון שלכם"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Notifications for new direct messages"
+msgstr "התראות על הודעות ישירות חדשות"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Notify me"
+msgstr "עדכנו אותי"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Notify via"
+msgstr "עדכון באמצעות"
+
+#: src/app/(home)/components/switch.tsx
+msgid "OFF"
+msgstr "כבוי"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Oh! Your wallet is empty"
+msgstr "אוי! הארנק שלך ריק"
+
+#: src/app/(home)/components/switch.tsx
+msgid "ON"
+msgstr "דלוק"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "On Sale"
+msgstr "במבצע"
+
+#: src/components/themes-content/radio-group-content.tsx
+msgid "Once per day summary of all updates"
+msgstr "סיכום יומי אחד של כל העדכונים"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Only alphabetic characters are allowed"
+msgstr "מותרות אותיות בלבד"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Only check updates manually"
+msgstr "בדיקת עדכונים באופן ידני בלבד"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Open modal"
+msgstr "פתיחת מודאל"
+
+#: src/app/(home)/_layout.tsx
+msgid "Open settings"
+msgstr "פתיחת ההגדרות"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Open slider settings"
+msgstr "פתיחת הגדרות המחוון"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Order Premium now"
+msgstr "הזמינו פרימיום עכשיו"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Orientation"
+msgstr "כיוון"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Our app will no longer be able to provide support for any of your trips, such as providing a refund or locking for lost items."
+msgstr "האפליקציה שלנו לא תוכל עוד לספק תמיכה לנסיעות שלכם, כמו מתן החזר כספי או חיפוש חפצים שאבדו."
+
+#: src/app/(home)/components/alert.tsx
+msgid "Our services will be unavailable on Sunday, March 15th from 2:00 AM to 6:00 AM UTC for scheduled maintenance."
+msgstr "השירותים שלנו לא יהיו זמינים ביום ראשון, 15 במרץ, בין 2:00 ל-6:00 לפי UTC לצורך תחזוקה מתוכננת."
+
+#: src/app/(home)/components/button.tsx
+msgid "Outline"
+msgstr "מסגרת"
+
+#: src/app/(home)/components/radio-group.tsx
+#: src/app/(home)/components/radio-group.tsx
+msgid "Overnight Shipping"
+msgstr "משלוח ליום המחרת"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Page Title"
+msgstr "כותרת עמוד"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Paragraphs"
+msgstr "פסקאות"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Parking"
+msgstr "חניה"
+
+#: src/app/(home)/components/description.tsx
+#: src/app/(home)/components/label.tsx
+#: src/app/(home)/components/text-field.tsx
+msgid "Password"
+msgstr "סיסמה"
+
+#: src/components/themes-content/text-input-content.tsx
+msgid "Password must be at least 6 characters"
+msgstr "הסיסמה חייבת להכיל 6 תווים לפחות"
+
+#: src/components/themes-content/text-input-content.tsx
+msgid "Password must be at least 6 characters long"
+msgstr "הסיסמה חייבת להיות באורך 6 תווים לפחות"
+
+#: src/app/(home)/components/label.tsx
+msgid "Passwords do not match"
+msgstr "הסיסמאות אינן תואמות"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Payment method declined"
+msgstr "אמצעי התשלום נדחה"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Payment Methods"
+msgstr "אמצעי תשלום"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Payment successful"
+msgstr "התשלום בוצע"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Payment Successful"
+msgstr "התשלום בוצע"
+
+#: src/app/(home)/components/menu.tsx
+msgid "PDF"
+msgstr "PDF"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Pending"
+msgstr "בהמתנה"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Perfect for individuals - $9/month"
+msgstr "מושלם ליחידים - $9 לחודש"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Personal"
+msgstr "אישי"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Personal Info"
+msgstr "מידע אישי"
+
+#: src/app/(home)/components/input-group.tsx
+msgid "Phone number"
+msgstr "מספר טלפון"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Phone Number"
+msgstr "מספר טלפון"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Phone Number Verification"
+msgstr "אימות מספר טלפון"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Phone verified"
+msgstr "הטלפון אומת"
+
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Placement options"
+msgstr "אפשרויות מיקום"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Placement variants"
+msgstr "וריאנטים של מיקום"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Placements"
+msgstr "מיקומים"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Plan upgraded"
+msgstr "המסלול שודרג"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Please accept the privacy policy to continue"
+msgstr "אשרו את מדיניות הפרטיות כדי להמשיך"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/input.tsx
+#: src/components/themes-content/text-input-content.tsx
+msgid "Please enter a valid email address"
+msgstr "הזינו כתובת אימייל תקינה"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Please enter a valid message"
+msgstr "הזינו הודעה תקינה"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Please enter all 6 digits to complete your verification code."
+msgstr "הזינו את כל 6 הספרות כדי להשלים את קוד האימות."
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Please enter all 6 digits to continue."
+msgstr "הזינו את כל 6 הספרות כדי להמשיך."
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Please provide as much detail as possible."
+msgstr "ספקו כמה שיותר פרטים."
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Please select at least one category"
+msgstr "בחרו קטגוריה אחת לפחות"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Please wait while we sync your data. This may take a few moments."
+msgstr "אנא המתינו בזמן שאנחנו מסנכרנים את הנתונים שלכם. זה עשוי לקחת רגע."
+
+#: src/app/(home)/components/select.tsx
+msgid "Popover"
+msgstr "פופאובר"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Popover from native modal"
+msgstr "פופאובר ממודאל נייטיב"
+
+#: src/app/(home)/_layout.tsx
+msgid "Popover Native Modal"
+msgstr "פופאובר במודאל נייטיב"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Popular & top rated"
+msgstr "פופולריים ומדורגים גבוה"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Preferences"
+msgstr "העדפות"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/label.tsx
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Premium"
+msgstr "פרימיום"
+
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Presentation variants"
+msgstr "וריאנטים של תצוגה"
+
+#: src/components/settings/settings-bottom-sheet.tsx
+msgid "Preview the component library in a different layout direction and language."
+msgstr "צפו בספריית הקומפוננטות בכיוון פריסה ובשפה אחרים."
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Previous query"
+msgstr "שאילתה קודמת"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Price range"
+msgstr "טווח מחירים"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Primary"
+msgstr "ראשי"
+
+#: src/app/(home)/components/input.tsx
+msgid "Primary style input"
+msgstr "קלט בסגנון ראשי"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Primary style text area"
+msgstr "אזור טקסט בסגנון ראשי"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Primary variant"
+msgstr "וריאנט ראשי"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Primary Variant"
+msgstr "וריאנט ראשי"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Primary variant colors"
+msgstr "צבעי הוריאנט הראשי"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Priority Level"
+msgstr "רמת עדיפות"
+
+#: src/app/(home)/components/link-button.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Privacy"
+msgstr "פרטיות"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Privacy & Security"
+msgstr "פרטיות ואבטחה"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Privacy Policy"
+msgstr "מדיניות הפרטיות"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Pro Plan"
+msgstr "מסלול Pro"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Processing your request"
+msgstr "מעבדים את הבקשה שלכם"
+
+#: src/components/themes-content/checkbox-content.tsx
+msgid "Product Updates"
+msgstr "עדכוני מוצר"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Profile"
+msgstr "פרופיל"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Profile completion required"
+msgstr "יש להשלים את הפרופיל"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Profile updated successfully"
+msgstr "הפרופיל עודכן בהצלחה"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Project"
+msgstr "פרויקט"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Promo Code"
+msgstr "קוד קופון"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Pulse"
+msgstr "פעימה"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Purple"
+msgstr "סגול"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Push"
+msgstr "דחיפה"
+
+#: src/app/(home)/components/switch.tsx
+msgid "Push notifications"
+msgstr "התראות דחיפה"
+
+#: src/app/(home)/components/radio-group.tsx
+#: src/components/themes-content/switch-content.tsx
+msgid "Push Notifications"
+msgstr "התראות דחיפה"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Quick Notification"
+msgstr "התראה מהירה"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Quick Tip"
+msgstr "טיפ מהיר"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "RadioGroup States"
+msgstr "מצבי RadioGroup"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Range"
+msgstr "טווח"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Read only value"
+msgstr "ערך לקריאה בלבד"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Reader Mode"
+msgstr "מצב קריאה"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Receive emails about new features and updates"
+msgstr "קבלת אימיילים על תכונות חדשות ועדכונים"
+
+#: src/app/(home)/components/switch.tsx
+msgid "Receive notifications via email"
+msgstr "קבלת התראות באימייל"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Receive promotional emails and special offers"
+msgstr "קבלת אימיילים שיווקיים והצעות מיוחדות"
+
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Receive push notifications about your account activity"
+msgstr "קבלת התראות דחיפה על פעילות בחשבון שלכם"
+
+#: src/components/themes-content/switch-content.tsx
+msgid "Receive updates and newsletters via email"
+msgstr "קבלת עדכונים וניוזלטרים באימייל"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Redeem your gift card at checkout"
+msgstr "מימוש כרטיס המתנה בעת התשלום"
+
+#: src/app/(home)/_layout.tsx
+msgid "Reduce motion enabled"
+msgstr "צמצום התנועה מופעל"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Refresh"
+msgstr "רענון"
+
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "Refresh Now"
+msgstr "רעננו עכשיו"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Remove"
+msgstr "הסרה"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Remove files to release space. I'm adding more text as usual but it's okay I guess I just want to see how it looks with a lot of information"
+msgstr "מחקו קבצים כדי לפנות שטח. אני מוסיף עוד טקסט כרגיל אבל זה בסדר, אני פשוט רוצה לראות איך זה נראה עם הרבה מידע"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Rename"
+msgstr "שינוי שם"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Required"
+msgstr "חובה"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Requires device with fingerprint or face recognition support"
+msgstr "נדרש מכשיר עם תמיכה בטביעת אצבע או בזיהוי פנים"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Resend"
+msgstr "שליחה חוזרת"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Resend code"
+msgstr "שליחת הקוד מחדש"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Resend in {resendTimer}s"
+msgstr "שליחה חוזרת בעוד {resendTimer} שנ'"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Retry"
+msgstr "נסו שוב"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Right"
+msgstr "ימין"
+
+#: src/components/settings/settings-bottom-sheet.tsx
+msgid "Right-to-left layout"
+msgstr "פריסה מימין לשמאל"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Role assignment"
+msgstr "הקצאת תפקיד"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Safety & Security"
+msgstr "בטיחות ואבטחה"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Sarah sent you a message"
+msgstr "שרה שלחה לך הודעה"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Save Offline"
+msgstr "שמירה לצפייה לא מקוונת"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Scheduled maintenance"
+msgstr "תחזוקה מתוכננת"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Scrollable with snap points"
+msgstr "ניתן לגלילה עם נקודות עצירה"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Search"
+msgstr "חיפוש"
+
+#: src/components/bottom-sheet/with-text-input.tsx
+msgid "Search by name or email..."
+msgstr "חיפוש לפי שם או אימייל..."
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Search by name, category, or SKU"
+msgstr "חיפוש לפי שם, קטגוריה או מק\"ט"
+
+#: src/components/select/searchable-dialog-select.tsx
+msgid "Search country..."
+msgstr "חיפוש ארץ..."
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Search is temporarily unavailable"
+msgstr "החיפוש לא זמין באופן זמני"
+
+#: src/app/(home)/components/input-group.tsx
+msgid "Search products..."
+msgstr "חיפוש מוצרים..."
+
+#: src/components/select/searchable-select.tsx
+#: src/components/select/searchable-select.tsx
+msgid "Search state..."
+msgstr "חיפוש מדינה..."
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Search users"
+msgstr "חיפוש משתמשים"
+
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/search-field.tsx
+msgid "Search..."
+msgstr "חיפוש..."
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Secondary"
+msgstr "משני"
+
+#: src/app/(home)/components/input.tsx
+msgid "Secondary style input"
+msgstr "קלט בסגנון משני"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Secondary style text area"
+msgstr "אזור טקסט בסגנון משני"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Secondary variant"
+msgstr "וריאנט משני"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Secondary Variant"
+msgstr "וריאנט משני"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Secondary variant colors"
+msgstr "צבעי הוריאנט המשני"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Secondary variant for surfaces"
+msgstr "וריאנט משני למשטחים"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Section Title"
+msgstr "כותרת מקטע"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Sections"
+msgstr "מקטעים"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Select"
+msgstr "בחירה"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Select a subscription plan to continue"
+msgstr "בחרו מסלול מנוי כדי להמשיך"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Select a way to travel"
+msgstr "בחרו דרך נסיעה"
+
+#: src/app/(home)/components/input-group.tsx
+msgid "Select country"
+msgstr "בחרו ארץ"
+
+#: src/app/(home)/components/select.tsx
+msgid "Select from Native Modal"
+msgstr "בחירה ממודאל נייטיב"
+
+#: src/app/(home)/_layout.tsx
+msgid "Select Native Modal"
+msgstr "Select במודאל נייטיב"
+
+#: src/components/select/select-button-trigger.tsx
+msgid "Select one"
+msgstr "בחרו אחת"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Select Size"
+msgstr "בחרו מידה"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Select team members for your project"
+msgstr "בחרו חברי צוות לפרויקט שלכם"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Select your preferred color theme"
+msgstr "בחרו את ערכת הצבעים המועדפת עליכם"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Selected:"
+msgstr "נבחר:"
+
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Selected: {selectedLabel}"
+msgstr "נבחר: {selectedLabel}"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Send via messaging app"
+msgstr "שליחה דרך אפליקציית הודעות"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Separator in action"
+msgstr "מפריד בפעולה"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Server connection failed. Please try again."
+msgstr "החיבור לשרת נכשל. נסו שוב."
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Session will expire in 5 minutes"
+msgstr "ההפעלה תסתיים בעוד 5 דקות"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Set the priority for this task"
+msgstr "הגדירו את העדיפות למשימה הזו"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/components/settings/settings-bottom-sheet.tsx
+msgid "Settings"
+msgstr "הגדרות"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Share"
+msgstr "שיתוף"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Share Link"
+msgstr "שיתוף קישור"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Share Options"
+msgstr "אפשרויות שיתוף"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Share usage data"
+msgstr "שיתוף נתוני שימוש"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Share your trip details with friends and family for added security."
+msgstr "שתפו את פרטי הנסיעה עם חברים ומשפחה לביטחון נוסף."
+
+#: src/app/(home)/components/select.tsx
+msgid "Sheet"
+msgstr "גיליון"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Shimmer"
+msgstr "נצנוץ"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Should Close On Select"
+msgstr "סגירה בעת בחירה"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Show Error"
+msgstr "הצגת שגיאה"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Show password validation errors"
+msgstr "הצגת שגיאות אימות סיסמה"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Show sidebar"
+msgstr "הצגת סרגל צד"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Show status bar"
+msgstr "הצגת שורת מצב"
+
+#: src/app/(home)/components/toast-native-modal.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Show toast"
+msgstr "הצגת טוסט"
+
+#: src/app/(home)/index.tsx
+msgid "Showcases"
+msgstr "תצוגות"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Sign Out"
+msgstr "התנתקות"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Sign up"
+msgstr "הרשמה"
+
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/text-field.tsx
+msgid "Simulate Error"
+msgstr "הדמיית שגיאה"
+
+#: src/app/(home)/components/select.tsx
+msgid "Single select"
+msgstr "בחירה בודדת"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Single selection"
+msgstr "בחירה בודדת"
+
+#: src/app/(home)/components/avatar.tsx
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/spinner.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Sizes"
+msgstr "גדלים"
+
+#: src/app/(home)/themes/index.tsx
+msgid "Sky"
+msgstr "תכלת"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Slow Subtle Pulse"
+msgstr "פעימה איטית ועדינה"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Small"
+msgstr "קטן"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Small body text"
+msgstr "טקסט גוף קטן"
+
+#: src/app/(home)/components/button.tsx
+msgid "Small Button"
+msgstr "כפתור קטן"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Small Heading"
+msgstr "כותרת קטנה"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Small toast"
+msgstr "טוסט קטן"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "SMS"
+msgstr "SMS"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Social"
+msgstr "חברתי"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Soft"
+msgstr "רך"
+
+#: src/app/(home)/components/avatar.tsx
+msgid "Soft icon fallback"
+msgstr "תחליף אייקון רך"
+
+#: src/app/(home)/components/avatar.tsx
+msgid "Soft text fallback"
+msgstr "תחליף טקסט רך"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Soft variant colors"
+msgstr "צבעי הוריאנט הרך"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Songs, albums & playlists"
+msgstr "שירים, אלבומים ופלייליסטים"
+
+#: src/app/(home)/components/card.tsx
+msgid "Sound Electro"
+msgstr "סאונד אלקטרו"
+
+#: src/components/themes-content/checkbox-content.tsx
+msgid "Special offers and exclusive deals"
+msgstr "הצעות מיוחדות ודילים בלעדיים"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Standard - complete when possible"
+msgstr "רגיל - להשלמה כשמתאפשר"
+
+#: src/app/(home)/components/card.tsx
+msgid "Standard card appearance (surface-secondary). The default card variant for most use cases"
+msgstr "מראה כרטיס רגיל (surface-secondary). וריאנט הכרטיס המוגדר כברירת מחדל לרוב המקרים"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Standard delivery is free on orders over $50. Below that it's a flat $4.99."
+msgstr "משלוח רגיל חינם בהזמנות מעל $50. מתחת לסכום הזה העלות היא $4.99 קבוע."
+
+#: src/app/(home)/components/radio-group.tsx
+#: src/app/(home)/components/radio-group.tsx
+msgid "Standard Shipping"
+msgstr "משלוח רגיל"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Start"
+msgstr "התחלה"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Start indicator alignment"
+msgstr "יישור האינדיקטור בהתחלה"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Start upload"
+msgstr "התחלת העלאה"
+
+#: src/app/(home)/components/select-native-modal.tsx
+#: src/app/(home)/components/select.tsx
+msgid "State"
+msgstr "מדינה"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/select.tsx
+#: src/app/(home)/components/switch.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "States"
+msgstr "מצבים"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Storage is full"
+msgstr "האחסון מלא"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Styles"
+msgstr "סגנונות"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Sub Menu"
+msgstr "תפריט משנה"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Sub Menu Groups"
+msgstr "קבוצות בתפריט משנה"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Submit"
+msgstr "שליחה"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Subscribe for €6.99/month"
+msgstr "הירשמו ב-€6.99 לחודש"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Subscribe to newsletter"
+msgstr "הרשמה לניוזלטר"
+
+#: src/app/(home)/components/label.tsx
+msgid "Subscription plan"
+msgstr "מסלול מנוי"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Subsection"
+msgstr "תת-מקטע"
+
+#: src/app/(home)/components/alert.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+msgid "Success"
+msgstr "הצלחה"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Success Color"
+msgstr "צבע הצלחה"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Success toast"
+msgstr "טוסט הצלחה"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Success, Warning, Danger"
+msgstr "הצלחה, אזהרה, סכנה"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Surface"
+msgstr "משטח"
+
+#: src/app/(home)/components/surface.tsx
+#: src/app/(home)/components/surface.tsx
+#: src/app/(home)/components/surface.tsx
+#: src/app/(home)/components/surface.tsx
+msgid "Surface Content"
+msgstr "תוכן המשטח"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Surface variant"
+msgstr "וריאנט משטח"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Swimming pool"
+msgstr "בריכת שחייה"
+
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Switch between light and dark theme"
+msgstr "מעבר בין ערכת נושא בהירה לכהה"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Switch ControlField set"
+msgstr "מקבץ ControlField עם מתגים"
+
+#: src/app/(home)/components/menu.tsx
+msgid "System"
+msgstr "מערכת"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Tap the X to remove tags"
+msgstr "הקישו על ה-X כדי להסיר תגיות"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Task List"
+msgstr "רשימת משימות"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Taxi Comfort"
+msgstr "מונית קומפורט"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Taxi Priority"
+msgstr "מונית פריוריטי"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Taxi XL"
+msgstr "מונית XL"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Team Members"
+msgstr "חברי צוות"
+
+#: src/app/(home)/components/popover-native-modal.tsx
+#: src/app/(home)/components/popover.tsx
+msgid "Tech History"
+msgstr "היסטוריית טכנולוגיה"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Terms"
+msgstr "התנאים"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Terms & Privacy"
+msgstr "תנאים ופרטיות"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Terms of Service"
+msgstr "תנאי השימוש"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Tertiary"
+msgstr "שלישוני"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Tertiary variant colors"
+msgstr "צבעי הוריאנט השלישוני"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Text Alignment"
+msgstr "יישור טקסט"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Text area is disabled and cannot be edited"
+msgstr "אזור הטקסט מושבת ולא ניתן לעריכה"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Text skeletons"
+msgstr "סקלטוני טקסט"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Text Style"
+msgstr "סגנון טקסט"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "TextField with custom styles"
+msgstr "TextField עם סגנונות מותאמים"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "TextField with icons"
+msgstr "TextField עם אייקונים"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "TextField with validation"
+msgstr "TextField עם אימות"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "The art of building things with excellence - achieving platform mastery so you're never constrained by frameworks or tooling"
+msgstr "האמנות של בנייה במצוינות - הגעה לשליטה מלאה בפלטפורמה כדי שלא תהיו מוגבלים לעולם על ידי פריימוורקים או כלים"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "The code you entered is incorrect."
+msgstr "הקוד שהזנתם שגוי."
+
+#: src/app/(home)/components/popover-native-modal.tsx
+#: src/app/(home)/components/popover.tsx
+msgid "The first computer bug was an actual moth found trapped in a Harvard Mark II computer in 1947. Grace Hopper taped it to the log book with the note \"First actual case of bug being found.\""
+msgstr "הבאג הראשון במחשב היה עש אמיתי שנמצא לכוד במחשב Harvard Mark II ב-1947. גרייס הופר הדביקה אותו ליומן עם ההערה \"המקרה הראשון שבו נמצא באג ממשי\"."
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "The intersection of creative vision and technical implementation - empowering you to identify interface challenges and craft solutions from scratch."
+msgstr "המפגש בין חזון יצירתי למימוש טכני - מעצים אותך לזהות אתגרי ממשק ולבנות פתרונות מאפס."
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "The new productivity dashboard makes it easy to track daily tasks and goals. You can customize widgets and set smart reminders."
+msgstr "לוח הבקרה החדש לפרודוקטיביות מקל על מעקב אחר משימות ומטרות יומיות. אפשר להתאים ווידג'טים ולהגדיר תזכורות חכמות."
+
+#: src/app/(home)/components/control-field.tsx
+msgid "The privacy policy has been accepted"
+msgstr "מדיניות הפרטיות אושרה"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Theme"
+msgstr "ערכת נושא"
+
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/list-group.tsx
+msgid "Theme, font size, display"
+msgstr "ערכת נושא, גודל גופן, תצוגה"
+
+#: src/app/(home)/_layout.tsx
+#: src/app/(home)/components/separator.tsx
+#: src/app/(home)/index.tsx
+msgid "Themes"
+msgstr "ערכות נושא"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Thick"
+msgstr "עבה"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Thin (default)"
+msgstr "דק (ברירת מחדל)"
+
+#: src/app/(home)/components/switch.tsx
+msgid "This feature is currently unavailable"
+msgstr "התכונה הזו אינה זמינה כרגע"
+
+#: src/app/(home)/components/typography.tsx
+msgid "This is a default body paragraph. It uses the base font size and normal weight for comfortable reading."
+msgstr "זו פסקת גוף ברירת מחדל. היא משתמשת בגודל הגופן הבסיסי ובמשקל רגיל לקריאה נוחה."
+
+#: src/app/(home)/components/surface.tsx
+msgid "This is a default surface variant. It uses bg-surface styling."
+msgstr "זהו וריאנט משטח ברירת מחדל. הוא משתמש בעיצוב bg-surface."
+
+#: src/app/(home)/components/surface.tsx
+msgid "This is a secondary surface variant. It uses bg-surface-secondary styling."
+msgstr "זהו וריאנט משטח משני. הוא משתמש בעיצוב bg-surface-secondary."
+
+#: src/app/(home)/components/typography.tsx
+msgid "This is a smaller paragraph, useful for captions, footnotes, or secondary descriptions."
+msgstr "זו פסקה קטנה יותר, שימושית לכתוביות, הערות שוליים או תיאורים משניים."
+
+#: src/app/(home)/components/surface.tsx
+msgid "This is a tertiary surface variant. It uses bg-surface-tertiary styling."
+msgstr "זהו וריאנט משטח שלישוני. הוא משתמש בעיצוב bg-surface-tertiary."
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "This is a test title"
+msgstr "זו כותרת לבדיקה"
+
+#: src/app/(home)/components/surface.tsx
+msgid "This is a transparent surface variant. It uses bg-transparent styling."
+msgstr "זהו וריאנט משטח שקוף. הוא משתמש בעיצוב bg-transparent."
+
+#: src/app/(home)/components/popover.tsx
+msgid "This popover appears on the {placement} side of the trigger button"
+msgstr "הפופאובר הזה מופיע בצד {placement} של כפתור הטריגר"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "This promo code is invalid or has expired"
+msgstr "קוד הקופון אינו תקין או שתוקפו פג"
+
+#: src/app/(home)/components/card.tsx
+msgid "This sofa is perfect for modern tropical spaces, baroque inspired spaces."
+msgstr "הספה הזו מושלמת לחללים טרופיים מודרניים ולחללים בהשראת הבארוק."
+
+#: src/app/(home)/_layout.tsx
+msgid "Toast From Native Modal"
+msgstr "טוסט ממודאל נייטיב"
+
+#: src/app/(home)/components/card.tsx
+msgid "Today, 6:30 PM"
+msgstr "היום, 18:30"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Toggle bottom sheet presentation"
+msgstr "החלפת תצוגת הגיליון התחתון"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Toggle error state for the username field"
+msgstr "החלפת מצב השגיאה בשדה שם המשתמש"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Toggle keyboard"
+msgstr "החלפת מצב המקלדת"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Toggle should close on select"
+msgstr "החלפת האפשרות 'סגירה בעת בחירה'"
+
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+msgid "Toggle skeleton loading state"
+msgstr "החלפת מצב טעינת הסקלטון"
+
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/text-field.tsx
+msgid "Toggle validation error state"
+msgstr "החלפת מצב שגיאת האימות"
+
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Top"
+msgstr "למעלה"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Top Rated"
+msgstr "בדירוג הגבוה"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Top toast"
+msgstr "טוסט עליון"
+
+#: src/app/(home)/components/card.tsx
+msgid "Transparent"
+msgstr "שקוף"
+
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Travel"
+msgstr "נסיעות"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Treble"
+msgstr "צלילים גבוהים"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Trending & new releases"
+msgstr "מובילים ויציאות חדשות"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Trip Details"
+msgstr "פרטי הנסיעה"
+
+#: src/components/bottom-sheet/with-text-input.tsx
+msgid "Try a different search term"
+msgstr "נסו מונח חיפוש אחר"
+
+#: src/app/(home)/index.tsx
+msgid "Try different themes"
+msgstr "התנסו בערכות נושא שונות"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Two Sub Menus"
+msgstr "שני תפריטי משנה"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Two-factor auth, app lock"
+msgstr "אימות דו-שלבי, נעילת אפליקציה"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Two-factor authentication"
+msgstr "אימות דו-שלבי"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Type to search"
+msgstr "הקלידו כדי לחפש"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Types"
+msgstr "סוגים"
+
+#: src/app/(home)/components/alert.tsx
+#: src/app/(home)/components/alert.tsx
+msgid "Unable to connect to server"
+msgstr "לא ניתן להתחבר לשרת"
+
+#: src/app/(home)/components/alert.tsx
+#: src/app/(home)/components/alert.tsx
+msgid "Unable to connect to the server. Check your internet connection and try again."
+msgstr "לא ניתן להתחבר לשרת. בדקו את חיבור האינטרנט ונסו שוב."
+
+#: src/app/(home)/components/menu.tsx
+msgid "Underline"
+msgstr "קו תחתון"
+
+#: src/components/themes-content/text-input-content.tsx
+msgid "Update"
+msgstr "עדכון"
+
+#: src/app/(home)/components/alert.tsx
+#: src/app/(home)/components/alert.tsx
+msgid "Update available"
+msgstr "עדכון זמין"
+
+#: src/components/bottom-sheet/basic.tsx
+msgid "Update Now"
+msgstr "עדכנו עכשיו"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Update profile"
+msgstr "עדכון הפרופיל"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Update Profile"
+msgstr "עדכון הפרופיל"
+
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "Update Ready"
+msgstr "העדכון מוכן"
+
+#: src/components/bottom-sheet/basic.tsx
+msgid "Update your software to the latest version for better security and performance."
+msgstr "עדכנו את התוכנה לגרסה האחרונה לאבטחה ולביצועים טובים יותר."
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Upgrade to a paid plan to continue using HeroUI Chat"
+msgstr "שדרגו למסלול בתשלום כדי להמשיך להשתמש ב-HeroUI Chat"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Upload Audio"
+msgstr "העלאת אודיו"
+
+#: src/components/toast/progress-toast.tsx
+msgid "Upload complete!"
+msgstr "ההעלאה הושלמה!"
+
+#. placeholder {0}: Math.round(progress)
+#: src/components/toast/progress-toast.tsx
+msgid "Uploading... {0}%"
+msgstr "מעלה... {0}%"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Urgent - requires immediate attention"
+msgstr "דחוף - דורש טיפול מיידי"
+
+#: src/app/(home)/components/description.tsx
+msgid "Use at least 8 characters with a mix of letters, numbers, and symbols."
+msgstr "השתמשו ב-8 תווים לפחות בשילוב של אותיות, ספרות וסמלים."
+
+#: src/app/(home)/components/text-field.tsx
+msgid "User Role"
+msgstr "תפקיד המשתמש"
+
+#: src/app/(home)/components/field-error.tsx
+#: src/app/(home)/components/input-group.tsx
+#: src/app/(home)/components/label.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Username"
+msgstr "שם משתמש"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Username is already taken"
+msgstr "שם המשתמש כבר תפוס"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Username is required"
+msgstr "חובה להזין שם משתמש"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Username must be 3-20 characters (letters, numbers, underscore only)"
+msgstr "שם המשתמש חייב להיות באורך 3-20 תווים (אותיות, ספרות וקו תחתון בלבד)"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Uses a custom search emoji icon"
+msgstr "משתמש באייקון אימוג'י מותאם לחיפוש"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Validate Password"
+msgstr "אימות הסיסמה"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Validation & error states"
+msgstr "אימות ומצבי שגיאה"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/separator.tsx
+#: src/app/(home)/components/surface.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Variants"
+msgstr "וריאנטים"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Verification icon"
+msgstr "אייקון אימות"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Verification Successful"
+msgstr "האימות בוצע בהצלחה"
+
+#: src/app/(home)/components/input-otp.tsx
+#: src/app/(home)/components/input-otp.tsx
+msgid "Verify account"
+msgstr "אימות החשבון"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Verify Code"
+msgstr "אימות הקוד"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Verify your phone number"
+msgstr "אמתו את מספר הטלפון שלכם"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Verifying..."
+msgstr "מאמת..."
+
+#: src/app/(home)/components/scroll-shadow.tsx
+#: src/app/(home)/components/separator.tsx
+#: src/app/(home)/components/slider.tsx
+msgid "Vertical"
+msgstr "אנכי"
+
+#: src/app/(home)/index.tsx
+msgid "View components in action"
+msgstr "צפו בקומפוננטות בפעולה"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/card.tsx
+msgid "View Details"
+msgstr "צפייה בפרטים"
+
+#: src/app/(home)/components/menu.tsx
+msgid "View Profile"
+msgstr "צפייה בפרופיל"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Visa ending in 4829"
+msgstr "ויזה בסיומת 4829"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Visible to"
+msgstr "גלוי ל"
+
+#: src/app/(home)/components/slider.tsx
+#: src/app/(home)/components/slider.tsx
+#: src/app/(home)/components/slider.tsx
+msgid "Volume"
+msgstr "עוצמת שמע"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+msgid "Warning"
+msgstr "אזהרה"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Warning Color"
+msgstr "צבע אזהרה"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Warning toast"
+msgstr "טוסט אזהרה"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Warning: This will share your usage patterns"
+msgstr "אזהרה: הפעולה תשתף את דפוסי השימוש שלכם"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "We deliver to more than 60 countries, usually within 7 to 14 business days. Any customs duties are calculated and shown at checkout before you pay."
+msgstr "אנחנו שולחים ליותר מ-60 ארצות, בדרך כלל בתוך 7 עד 14 ימי עסקים. מיסי יבוא מחושבים ומוצגים בעת התשלום לפני החיוב."
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "We sent a verification code to"
+msgstr "שלחנו קוד אימות אל"
+
+#: src/app/(home)/components/description.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-field.tsx
+#: src/components/themes-content/text-input-content.tsx
+msgid "We'll never share your email with anyone else."
+msgstr "לא נשתף את האימייל שלכם עם אף אחד."
+
+#: src/app/(home)/components/input-group.tsx
+msgid "We'll send a verification code to this number"
+msgstr "נשלח קוד אימות למספר הזה"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "We've sent a code to a****@gmail.com"
+msgstr "שלחנו קוד אל a****@gmail.com"
+
+#: src/app/(home)/components/card.tsx
+msgid "Wed, 4:30 PM"
+msgstr "רביעי, 16:30"
+
+#: src/components/themes-content/radio-group-content.tsx
+msgid "Weekly"
+msgstr "שבועי"
+
+#: src/components/themes-content/radio-group-content.tsx
+msgid "Weekly digest every Monday morning"
+msgstr "תקציר שבועי בכל יום שני בבוקר"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "What defines UI craftsmanship?"
+msgstr "מה מגדיר אומנות בממשקי משתמש?"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "What is design engineering?"
+msgstr "מהי הנדסת עיצוב?"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "When someone mentions you in a comment"
+msgstr "כשמישהו מזכיר אותך בתגובה"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "Who should embrace this?"
+msgstr "למי זה מיועד?"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "Why is craftsmanship important?"
+msgstr "למה אומנות חשובה?"
+
+#: src/app/(home)/components/button.tsx
+msgid "Width/alignment control"
+msgstr "בקרת רוחב ויישור"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "With avatar and remove button"
+msgstr "עם אווטאר וכפתור הסרה"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "With blur overlay"
+msgstr "עם שכבת טשטוש"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "With bottom sheet"
+msgstr "עם גיליון תחתון"
+
+#: src/app/(home)/components/alert.tsx
+msgid "With buttons"
+msgstr "עם כפתורים"
+
+#: src/app/(home)/components/spinner.tsx
+msgid "With custom content"
+msgstr "עם תוכן מותאם"
+
+#: src/app/(home)/components/alert.tsx
+msgid "With custom indicator"
+msgstr "עם אינדיקטור מותאם"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "With depth effect"
+msgstr "עם אפקט עומק"
+
+#: src/app/(home)/components/chip.tsx
+msgid "With end content"
+msgstr "עם תוכן בסוף"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "With error message"
+msgstr "עם הודעת שגיאה"
+
+#: src/app/(home)/components/button.tsx
+msgid "With icons"
+msgstr "עם אייקונים"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "With label & description"
+msgstr "עם תווית ותיאור"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "With Label & Description"
+msgstr "עם תווית ותיאור"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "With Pattern"
+msgstr "עם תבנית"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "With Placeholder"
+msgstr "עם טקסט מציין מקום"
+
+#: src/app/(home)/components/input-group.tsx
+msgid "With prefix only"
+msgstr "עם קידומת בלבד"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "With pressable feedback"
+msgstr "עם משוב לחיצה"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "With remove button"
+msgstr "עם כפתור הסרה"
+
+#: src/app/(home)/components/input-group.tsx
+msgid "With select prefix"
+msgstr "עם קידומת בחירה"
+
+#: src/app/(home)/components/chip.tsx
+msgid "With start content"
+msgstr "עם תוכן בהתחלה"
+
+#: src/app/(home)/components/input-group.tsx
+msgid "With suffix only"
+msgstr "עם סיומת בלבד"
+
+#: src/app/(home)/components/popover.tsx
+msgid "With title & description"
+msgstr "עם כותרת ותיאור"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "With validation"
+msgstr "עם אימות"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "With Validation"
+msgstr "עם אימות"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Without separators"
+msgstr "בלי מפרידים"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "You are running low on disk space. Delete unnecessary files to free up space."
+msgstr "נותר לכם מעט שטח פנוי בדיסק. מחקו קבצים מיותרים כדי לפנות מקום."
+
+#: src/app/(home)/components/accordion.tsx
+msgid "You can change or cancel an order free of charge within two hours of placing it. After that your parcel may already be packed, so contact support and we'll help where we can."
+msgstr "אפשר לשנות או לבטל הזמנה ללא עלות בתוך שעתיים ממועד ביצועה. לאחר מכן ייתכן שהחבילה כבר נארזה, לכן פנו לתמיכה ונעזור בכל מה שאפשר."
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "You can continue using HeroUI Chat and more"
+msgstr "תוכלו להמשיך להשתמש ב-HeroUI Chat ועוד"
+
+#: src/app/(home)/components/toast.tsx
+msgid "You have 2 credits left"
+msgstr "נותרו לכם 2 קרדיטים"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "You'll need to top up to buy"
+msgstr "תצטרכו להטעין כדי לקנות"
+
+#: src/components/toast/achievement-toast.tsx
+msgid "You're on a 1-day study streak"
+msgstr "אתם ברצף לימוד של יום 1"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Your code has been verified successfully. You can proceed."
+msgstr "הקוד שלכם אומת בהצלחה. אפשר להמשיך."
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Your driver will arrive at the pickup location shortly. Please be ready when they arrive."
+msgstr "הנהג יגיע לנקודת האיסוף בקרוב. אנא היו מוכנים בהגעתו."
+
+#: src/app/(home)/components/popover.tsx
+msgid "Your payment of $49.99 has been processed successfully. Receipt sent to your email."
+msgstr "התשלום שלכם בסך $49.99 עובד בהצלחה. הקבלה נשלחה לאימייל שלכם."
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Your phone number has been successfully verified."
+msgstr "מספר הטלפון שלכם אומת בהצלחה."
+
+#: src/app/(home)/components/alert.tsx
+msgid "Your profile information has been updated. Review the changes in your account settings."
+msgstr "פרטי הפרופיל שלכם עודכנו. בדקו את השינויים בהגדרות החשבון."
+
+#: src/app/(home)/components/toast.tsx
+msgid "Your subscription has been renewed. You will be charged $9.99/month. Thank you for your continued support."
+msgstr "המנוי שלכם חודש. תחויבו ב-$9.99 לחודש. תודה על התמיכה המתמשכת."
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Your unique account identifier"
+msgstr "המזהה הייחודי של החשבון שלכם"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Zen Mode"
+msgstr "מצב זן"

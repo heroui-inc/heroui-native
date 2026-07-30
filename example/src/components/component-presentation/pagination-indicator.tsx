@@ -6,7 +6,7 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
-import { useAppDirection } from '../../contexts/app-direction-context';
+import { useAppLocale } from '../../contexts/app-locale-context';
 import { AppText } from '../app-text';
 
 const StyleAnimatedView = withUniwind(Animated.View);
@@ -24,7 +24,7 @@ export function PaginationIndicator({
   itemSize,
   label,
 }: PaginationIndicatorProps) {
-  const { isRTL } = useAppDirection();
+  const { isRTL } = useAppLocale();
 
   /**
    * The bar and label grow/animate from the leading edge, which is the right

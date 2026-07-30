@@ -1,4 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useLingui } from '@lingui/react/macro';
 import { BottomSheet, Button } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -7,6 +8,7 @@ import { withUniwind } from 'uniwind';
 const StyledIonicons = withUniwind(Ionicons);
 
 export const BasicBottomSheetContent = () => {
+  const { t } = useLingui();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -15,7 +17,7 @@ export const BasicBottomSheetContent = () => {
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
           <BottomSheet.Trigger asChild>
             <Button variant="secondary" isDisabled={isOpen}>
-              Basic bottom sheet
+              {t`Basic bottom sheet`}
             </Button>
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
@@ -32,17 +34,18 @@ export const BasicBottomSheetContent = () => {
               </View>
               <View className="mb-8 gap-2 items-center">
                 <BottomSheet.Title className="text-center">
-                  Keep yourself safe
+                  {t`Keep yourself safe`}
                 </BottomSheet.Title>
                 <BottomSheet.Description className="text-center">
-                  Update your software to the latest version for better security
-                  and performance.
+                  {t`Update your software to the latest version for better security and performance.`}
                 </BottomSheet.Description>
               </View>
               <View className="gap-3">
-                <Button onPress={() => setIsOpen(false)}>Update Now</Button>
+                <Button
+                  onPress={() => setIsOpen(false)}
+                >{t`Update Now`}</Button>
                 <Button variant="tertiary" onPress={() => setIsOpen(false)}>
-                  Later
+                  {t`Later`}
                 </Button>
               </View>
             </BottomSheet.Content>

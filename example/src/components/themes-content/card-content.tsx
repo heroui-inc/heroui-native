@@ -1,3 +1,7 @@
+/* eslint-disable lingui/no-unlocalized-strings -- What is left in English is two
+   social handles: identifiers that stay verbatim in every locale. All copy uses
+   the `t` macro. */
+import { useLingui } from '@lingui/react/macro';
 import { Image } from 'expo-image';
 import { Card, PressableFeedback } from 'heroui-native';
 import { View } from 'react-native';
@@ -7,6 +11,8 @@ import { AppText } from '../app-text';
 const StyledImage = withUniwind(Image);
 
 export const CardContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-row gap-4">
       <PressableFeedback
@@ -25,14 +31,14 @@ export const CardContent = () => {
             </Card.Header>
             <Card.Body className="flex-1">
               <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
-                Indie Hackers
+                {t`Indie Hackers`}
               </Card.Title>
               <Card.Description
                 className="text-sm"
                 maxFontSizeMultiplier={1.2}
                 numberOfLines={1}
               >
-                148 members
+                {t`148 members`}
               </Card.Description>
             </Card.Body>
             <Card.Footer className="flex-row items-center gap-2">
@@ -70,14 +76,14 @@ export const CardContent = () => {
             </Card.Header>
             <Card.Body className="flex-1">
               <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
-                AI Builders
+                {t`AI Builders`}
               </Card.Title>
               <Card.Description
                 className="text-sm"
                 maxFontSizeMultiplier={1.2}
                 numberOfLines={1}
               >
-                362 members
+                {t`362 members`}
               </Card.Description>
             </Card.Body>
             <Card.Footer className="flex-row items-center gap-2">

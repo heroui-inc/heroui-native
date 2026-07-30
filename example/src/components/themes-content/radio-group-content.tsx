@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import {
   Description,
   Label,
@@ -10,6 +11,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 export const RadioGroupContent = () => {
+  const { t } = useLingui();
   const [frequency, setFrequency] = React.useState('daily');
 
   return (
@@ -22,24 +24,24 @@ export const RadioGroupContent = () => {
         <RadioGroup.Item value="instant">
           <Radio />
           <View className="flex-1">
-            <Label>Instant</Label>
-            <Description>Get notifications immediately</Description>
+            <Label>{t`Instant`}</Label>
+            <Description>{t`Get notifications immediately`}</Description>
           </View>
         </RadioGroup.Item>
         <Separator className="my-4" />
         <RadioGroup.Item value="daily">
           <Radio />
           <View className="flex-1">
-            <Label>Daily</Label>
-            <Description>Once per day summary of all updates</Description>
+            <Label>{t`Daily`}</Label>
+            <Description>{t`Once per day summary of all updates`}</Description>
           </View>
         </RadioGroup.Item>
         <Separator className="my-4" />
         <RadioGroup.Item value="weekly">
           <Radio />
           <View className="flex-1">
-            <Label>Weekly</Label>
-            <Description>Weekly digest every Monday morning</Description>
+            <Label>{t`Weekly`}</Label>
+            <Description>{t`Weekly digest every Monday morning`}</Description>
           </View>
         </RadioGroup.Item>
       </RadioGroup>

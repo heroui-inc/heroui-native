@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { Description, FieldError, Label, SearchField } from 'heroui-native';
 import { useState } from 'react';
 import { Text, useWindowDimensions, View } from 'react-native';
@@ -37,6 +39,7 @@ const KeyboardAvoidingContainer = ({
 // ------------------------------------------------------------------------------
 
 const BasicSearchFieldContent = () => {
+  const { t } = useLingui();
   const [searchValue, setSearchValue] = useState('');
 
   return (
@@ -45,7 +48,7 @@ const BasicSearchFieldContent = () => {
         <SearchField value={searchValue} onChange={setSearchValue}>
           <SearchField.Group>
             <SearchField.SearchIcon />
-            <SearchField.Input />
+            <SearchField.Input placeholder={t`Search...`} />
             <SearchField.ClearButton />
           </SearchField.Group>
         </SearchField>
@@ -57,19 +60,20 @@ const BasicSearchFieldContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithDescriptionContent = () => {
+  const { t } = useLingui();
   const [searchValue, setSearchValue] = useState('');
 
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <SearchField value={searchValue} onChange={setSearchValue}>
-          <Label>Find products</Label>
+          <Label>{t`Find products`}</Label>
           <SearchField.Group>
             <SearchField.SearchIcon />
-            <SearchField.Input />
+            <SearchField.Input placeholder={t`Search...`} />
             <SearchField.ClearButton />
           </SearchField.Group>
-          <Description>Search by name, category, or SKU</Description>
+          <Description>{t`Search by name, category, or SKU`}</Description>
         </SearchField>
       </KeyboardAvoidingContainer>
     </View>
@@ -79,6 +83,7 @@ const WithDescriptionContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithValidationContent = () => {
+  const { t } = useLingui();
   const [isInvalid, setIsInvalid] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
@@ -86,8 +91,8 @@ const WithValidationContent = () => {
     <WithStateToggle
       isSelected={isInvalid}
       onSelectedChange={setIsInvalid}
-      label="Simulate Error"
-      description="Toggle validation error state"
+      label={t`Simulate Error`}
+      description={t`Toggle validation error state`}
     >
       <View className="flex-1 pt-[55%]">
         <KeyboardAvoidingContainer>
@@ -97,17 +102,17 @@ const WithValidationContent = () => {
             isRequired
             isInvalid={isInvalid}
           >
-            <Label>Search users</Label>
+            <Label>{t`Search users`}</Label>
             <SearchField.Group>
               <SearchField.SearchIcon />
-              <SearchField.Input />
+              <SearchField.Input placeholder={t`Search...`} />
               <SearchField.ClearButton />
             </SearchField.Group>
             <Description hideOnInvalid>
-              Enter at least 3 characters to search
+              {t`Enter at least 3 characters to search`}
             </Description>
             <FieldError>
-              No results found. Please try a different search term.
+              {t`No results found. Please try a different search term.`}
             </FieldError>
           </SearchField>
         </KeyboardAvoidingContainer>
@@ -119,23 +124,28 @@ const WithValidationContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomSearchIconContent = () => {
+  const { t } = useLingui();
   const [searchValue, setSearchValue] = useState('');
 
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <SearchField value={searchValue} onChange={setSearchValue}>
-          <Label>Search</Label>
+          <Label>{t`Search`}</Label>
           <SearchField.Group>
             <SearchField.SearchIcon>
               <Text className="text-base" maxFontSizeMultiplier={1.6}>
                 🔍
               </Text>
             </SearchField.SearchIcon>
-            <SearchField.Input className="ps-10" maxFontSizeMultiplier={1.6} />
+            <SearchField.Input
+              className="ps-10"
+              maxFontSizeMultiplier={1.6}
+              placeholder={t`Search...`}
+            />
             <SearchField.ClearButton />
           </SearchField.Group>
-          <Description>Uses a custom search emoji icon</Description>
+          <Description>{t`Uses a custom search emoji icon`}</Description>
         </SearchField>
       </KeyboardAvoidingContainer>
     </View>
@@ -145,6 +155,7 @@ const CustomSearchIconContent = () => {
 // ------------------------------------------------------------------------------
 
 const DisabledContent = () => {
+  const { t } = useLingui();
   const [activeValue, setActiveValue] = useState('');
 
   return (
@@ -152,22 +163,22 @@ const DisabledContent = () => {
       <KeyboardAvoidingContainer>
         <View className="gap-8">
           <SearchField value={activeValue} onChange={setActiveValue}>
-            <Label>Active search</Label>
+            <Label>{t`Active search`}</Label>
             <SearchField.Group>
               <SearchField.SearchIcon />
-              <SearchField.Input />
+              <SearchField.Input placeholder={t`Search...`} />
               <SearchField.ClearButton />
             </SearchField.Group>
-            <Description>Type to search</Description>
+            <Description>{t`Type to search`}</Description>
           </SearchField>
 
-          <SearchField value="Previous query" isDisabled>
-            <Label>Disabled search</Label>
+          <SearchField value={t`Previous query`} isDisabled>
+            <Label>{t`Disabled search`}</Label>
             <SearchField.Group>
               <SearchField.SearchIcon />
-              <SearchField.Input />
+              <SearchField.Input placeholder={t`Search...`} />
             </SearchField.Group>
-            <Description>Search is temporarily unavailable</Description>
+            <Description>{t`Search is temporarily unavailable`}</Description>
           </SearchField>
         </View>
       </KeyboardAvoidingContainer>
@@ -180,27 +191,27 @@ const DisabledContent = () => {
 const SEARCH_FIELD_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-search-field',
-    label: 'Basic search field',
+    label: msg`Basic search field`,
     content: <BasicSearchFieldContent />,
   },
   {
     value: 'with-label-and-description',
-    label: 'With label & description',
+    label: msg`With label & description`,
     content: <WithDescriptionContent />,
   },
   {
     value: 'with-validation',
-    label: 'With validation',
+    label: msg`With validation`,
     content: <WithValidationContent />,
   },
   {
     value: 'custom-search-icon',
-    label: 'Custom search icon',
+    label: msg`Custom search icon`,
     content: <CustomSearchIconContent />,
   },
   {
     value: 'disabled',
-    label: 'Disabled',
+    label: msg`Disabled`,
     content: <DisabledContent />,
   },
 ];

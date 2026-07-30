@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
@@ -21,13 +23,15 @@ import { TrashIcon } from '../../../components/icons/trash';
 import { useAppTheme } from '../../../contexts/app-theme-context';
 
 const SizesContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
         <View className="gap-8 w-full px-8">
-          <Button size="sm">Small Button</Button>
-          <Button size="md">Medium Button</Button>
-          <Button size="lg">Large Button</Button>
+          <Button size="sm">{t`Small Button`}</Button>
+          <Button size="md">{t`Medium Button`}</Button>
+          <Button size="lg">{t`Large Button`}</Button>
         </View>
       </View>
     </View>
@@ -37,17 +41,19 @@ const SizesContent = () => {
 // ------------------------------------------------------------------------------
 
 const VariantsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
         <View className="gap-6 w-full px-8">
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="tertiary">Tertiary</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="danger">Danger</Button>
-          <Button variant="danger-soft">Danger Soft</Button>
+          <Button variant="primary">{t`Primary`}</Button>
+          <Button variant="secondary">{t`Secondary`}</Button>
+          <Button variant="tertiary">{t`Tertiary`}</Button>
+          <Button variant="outline">{t`Outline`}</Button>
+          <Button variant="ghost">{t`Ghost`}</Button>
+          <Button variant="danger">{t`Danger`}</Button>
+          <Button variant="danger-soft">{t`Danger Soft`}</Button>
         </View>
       </View>
     </View>
@@ -57,6 +63,7 @@ const VariantsContent = () => {
 // ------------------------------------------------------------------------------
 
 const DisabledStateContent = () => {
+  const { t } = useLingui();
   const [themeColorAccent, themeColorAccentForeground] = useThemeColor([
     'accent',
     'accent-foreground',
@@ -68,15 +75,15 @@ const DisabledStateContent = () => {
         <View className="gap-8 w-full px-8">
           <Button isDisabled>
             <Spinner color={themeColorAccentForeground} size="sm" />
-            <Button.Label>Loading</Button.Label>
+            <Button.Label>{t`Loading`}</Button.Label>
           </Button>
           <Button variant="secondary" isDisabled>
             <Spinner size="sm" color={themeColorAccent} />
-            <Button.Label>Loading</Button.Label>
+            <Button.Label>{t`Loading`}</Button.Label>
           </Button>
           <Button variant="tertiary" isDisabled>
             <CircleInfoFillIcon size={16} colorClassName="accent-muted" />
-            <Button.Label>Access Denied</Button.Label>
+            <Button.Label>{t`Access Denied`}</Button.Label>
           </Button>
         </View>
       </View>
@@ -87,20 +94,22 @@ const DisabledStateContent = () => {
 // ------------------------------------------------------------------------------
 
 const WidthAlignmentContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
         <View className="gap-8 w-full px-8">
-          <Button>Full Width Button</Button>
+          <Button>{t`Full Width Button`}</Button>
           <View>
             <Button variant="secondary" size="sm" className="self-start">
-              Start
+              {t`Start`}
             </Button>
             <Button variant="secondary" size="sm" className="self-center">
-              Center
+              {t`Center`}
             </Button>
             <Button variant="secondary" size="sm" className="self-end">
-              End
+              {t`End`}
             </Button>
           </View>
         </View>
@@ -112,23 +121,25 @@ const WidthAlignmentContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithIconsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
         <View className="gap-8 w-full px-8">
           <Button variant="primary">
             <PlusIcon size={16} colorClassName="accent-accent-foreground" />
-            <Button.Label>Add Member</Button.Label>
+            <Button.Label>{t`Add Member`}</Button.Label>
           </Button>
 
           <Button variant="secondary">
-            <Button.Label>Download</Button.Label>
+            <Button.Label>{t`Download`}</Button.Label>
             <ArrowDownToSquareIcon size={16} colorClassName="accent-accent" />
           </Button>
 
           <Button variant="danger">
             <TrashIcon size={15} colorClassName="accent-danger-foreground" />
-            <Button.Label>Delete</Button.Label>
+            <Button.Label>{t`Delete`}</Button.Label>
           </Button>
         </View>
       </View>
@@ -164,6 +175,7 @@ const IconOnlyContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomStylingContent = () => {
+  const { t } = useLingui();
   const { isDark } = useAppTheme();
 
   return (
@@ -184,7 +196,7 @@ const CustomStylingContent = () => {
             }}
           >
             <Button.Label className="text-white font-semibold">
-              Custom Purple
+              {t`Custom Purple`}
             </Button.Label>
           </Button>
 
@@ -202,7 +214,7 @@ const CustomStylingContent = () => {
               }}
             />
             <Button.Label className="text-white font-bold" pointerEvents="none">
-              Gradient
+              {t`Gradient`}
             </Button.Label>
           </Button>
           <Button
@@ -222,7 +234,7 @@ const CustomStylingContent = () => {
             <Button.Label
               className={cn('text-neutral-50', isDark && 'text-neutral-950')}
             >
-              Add to Cart
+              {t`Add to Cart`}
             </Button.Label>
           </Button>
         </View>
@@ -234,6 +246,7 @@ const CustomStylingContent = () => {
 // ------------------------------------------------------------------------------
 
 const LayoutTransitionsContent = () => {
+  const { t } = useLingui();
   const [isDownloading, setIsDownloading] = React.useState(false);
 
   return (
@@ -253,7 +266,7 @@ const LayoutTransitionsContent = () => {
           {isDownloading ? (
             <Spinner entering={FadeIn.delay(50)} color="white" />
           ) : (
-            'Download now'
+            t`Download now`
           )}
         </Button>
       </View>
@@ -266,42 +279,42 @@ const LayoutTransitionsContent = () => {
 const BUTTON_VARIANTS: UsageVariant[] = [
   {
     value: 'sizes',
-    label: 'Sizes',
+    label: msg`Sizes`,
     content: <SizesContent />,
   },
   {
     value: 'variants',
-    label: 'Variants',
+    label: msg`Variants`,
     content: <VariantsContent />,
   },
   {
     value: 'disabled-state',
-    label: 'Disabled state',
+    label: msg`Disabled state`,
     content: <DisabledStateContent />,
   },
   {
     value: 'width-alignment',
-    label: 'Width/alignment control',
+    label: msg`Width/alignment control`,
     content: <WidthAlignmentContent />,
   },
   {
     value: 'with-icons',
-    label: 'With icons',
+    label: msg`With icons`,
     content: <WithIconsContent />,
   },
   {
     value: 'icon-only',
-    label: 'Icon only',
+    label: msg`Icon only`,
     content: <IconOnlyContent />,
   },
   {
     value: 'custom-styling',
-    label: 'Custom styling',
+    label: msg`Custom styling`,
     content: <CustomStylingContent />,
   },
   {
     value: 'layout-transitions',
-    label: 'Layout transitions demo',
+    label: msg`Layout transitions demo`,
     content: <LayoutTransitionsContent />,
   },
 ];

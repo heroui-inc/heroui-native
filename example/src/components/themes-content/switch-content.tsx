@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import {
   ControlField,
   Description,
@@ -31,6 +32,7 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
 );
 
 export const SwitchContent = () => {
+  const { t } = useLingui();
   const [emailNotifications, setEmailNotifications] = React.useState(true);
   const [pushNotifications, setPushNotifications] = React.useState(false);
 
@@ -39,15 +41,15 @@ export const SwitchContent = () => {
       <SwitchField
         isSelected={emailNotifications}
         onSelectedChange={setEmailNotifications}
-        title="Email Notifications"
-        description="Receive updates and newsletters via email"
+        title={t`Email Notifications`}
+        description={t`Receive updates and newsletters via email`}
       />
       <Separator className="my-4" />
       <SwitchField
         isSelected={pushNotifications}
         onSelectedChange={setPushNotifications}
-        title="Push Notifications"
-        description="Get instant alerts on your device"
+        title={t`Push Notifications`}
+        description={t`Get instant alerts on your device`}
       />
     </Surface>
   );

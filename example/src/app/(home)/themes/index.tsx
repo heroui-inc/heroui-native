@@ -1,4 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
+import type { MessageDescriptor } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useThemeColor } from 'heroui-native';
@@ -17,7 +20,7 @@ import useHeaderHeight from '../../../helpers/hooks/use-header-height';
 
 type ThemeOption = {
   id: string;
-  name: string;
+  name: MessageDescriptor;
   lightVariant: string;
   darkVariant: string;
 };
@@ -25,25 +28,25 @@ type ThemeOption = {
 const availableThemes: ThemeOption[] = [
   {
     id: 'default',
-    name: 'Default',
+    name: msg`Default`,
     lightVariant: 'light',
     darkVariant: 'dark',
   },
   {
     id: 'lavender',
-    name: 'Lavender',
+    name: msg`Lavender`,
     lightVariant: 'lavender-light',
     darkVariant: 'lavender-dark',
   },
   {
     id: 'mint',
-    name: 'Mint',
+    name: msg`Mint`,
     lightVariant: 'mint-light',
     darkVariant: 'mint-dark',
   },
   {
     id: 'sky',
-    name: 'Sky',
+    name: msg`Sky`,
     lightVariant: 'sky-light',
     darkVariant: 'sky-dark',
   },
@@ -64,6 +67,7 @@ const ThemeCircle: React.FC<{
   isActive: boolean;
   onPress: () => void;
 }> = ({ theme, isActive, onPress }) => {
+  const { t } = useLingui();
   const themeColorAccent = useThemeColor('accent');
   const gradientColors =
     themeGradients[theme.id as keyof typeof themeGradients] ??
@@ -110,7 +114,7 @@ const ThemeCircle: React.FC<{
         </View>
       </View>
       <Text className="text-xs mt-2 text-foreground font-medium">
-        {theme.name}
+        {t(theme.name)}
       </Text>
     </Pressable>
   );

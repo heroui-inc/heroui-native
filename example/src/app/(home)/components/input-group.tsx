@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   Description,
   InputGroup,
@@ -31,6 +33,8 @@ type DialCodeOption = {
   code: string;
 };
 
+/* eslint-disable lingui/no-unlocalized-strings -- Country names are proper
+   nouns kept in their endonym form. */
 const DIAL_CODES: DialCodeOption[] = [
   { value: 'US', label: 'United States', flag: '🇺🇸', code: '+1' },
   { value: 'GB', label: 'United Kingdom', flag: '🇬🇧', code: '+44' },
@@ -43,6 +47,7 @@ const DIAL_CODES: DialCodeOption[] = [
   { value: 'BR', label: 'Brazil', flag: '🇧🇷', code: '+55' },
   { value: 'MX', label: 'Mexico', flag: '🇲🇽', code: '+52' },
 ];
+/* eslint-enable lingui/no-unlocalized-strings */
 
 const KeyboardAvoidingContainer = ({
   children,
@@ -71,6 +76,7 @@ const KeyboardAvoidingContainer = ({
 // ------------------------------------------------------------------------------
 
 const BasicInputGroupContent = () => {
+  const { t } = useLingui();
   const [value, setValue] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -84,7 +90,7 @@ const BasicInputGroupContent = () => {
           <InputGroup.Input
             value={value}
             onChangeText={setValue}
-            placeholder="Enter your password"
+            placeholder={t`Enter your password`}
             secureTextEntry={!isPasswordVisible}
           />
           <InputGroup.Suffix>
@@ -111,6 +117,7 @@ const BasicInputGroupContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithPrefixOnlyContent = () => {
+  const { t } = useLingui();
   const [value, setValue] = useState('');
 
   return (
@@ -124,7 +131,7 @@ const WithPrefixOnlyContent = () => {
             <InputGroup.Input
               value={value}
               onChangeText={setValue}
-              placeholder="Username"
+              placeholder={t`Username`}
               autoCapitalize="none"
               autoCorrect={false}
             />
@@ -151,6 +158,7 @@ const WithPrefixOnlyContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithSuffixOnlyContent = () => {
+  const { t } = useLingui();
   const [search, setSearch] = useState('');
 
   return (
@@ -161,7 +169,7 @@ const WithSuffixOnlyContent = () => {
             <InputGroup.Input
               value={search}
               onChangeText={setSearch}
-              placeholder="Search products..."
+              placeholder={t`Search products...`}
             />
             <InputGroup.Suffix isDecorative>
               <MagnifierIcon
@@ -186,6 +194,7 @@ const WithSuffixOnlyContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithSelectPrefixContent = () => {
+  const { t } = useLingui();
   const [phone, setPhone] = useState('');
   const [dialCode, setDialCode] = useState<DialCodeOption>(DIAL_CODES[0]!);
 
@@ -193,7 +202,7 @@ const WithSelectPrefixContent = () => {
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <TextField isRequired>
-          <Label>Phone number</Label>
+          <Label>{t`Phone number`}</Label>
           <InputGroup>
             <InputGroup.Prefix className="flex-row">
               <Select
@@ -218,7 +227,7 @@ const WithSelectPrefixContent = () => {
                 <Select.Portal>
                   <Select.Overlay />
                   <Select.Content presentation="bottom-sheet">
-                    <Select.ListLabel>Select country</Select.ListLabel>
+                    <Select.ListLabel>{t`Select country`}</Select.ListLabel>
                     {DIAL_CODES.map((option, index) => (
                       <React.Fragment key={option.value}>
                         <Select.Item value={option.value} label={option.label}>
@@ -258,7 +267,7 @@ const WithSelectPrefixContent = () => {
             />
           </InputGroup>
           <Description>
-            We'll send a verification code to this number
+            {t`We'll send a verification code to this number`}
           </Description>
         </TextField>
       </KeyboardAvoidingContainer>
@@ -271,22 +280,22 @@ const WithSelectPrefixContent = () => {
 const INPUT_GROUP_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-input-group',
-    label: 'Basic',
+    label: msg`Basic`,
     content: <BasicInputGroupContent />,
   },
   {
     value: 'with-prefix-only',
-    label: 'With prefix only',
+    label: msg`With prefix only`,
     content: <WithPrefixOnlyContent />,
   },
   {
     value: 'with-suffix-only',
-    label: 'With suffix only',
+    label: msg`With suffix only`,
     content: <WithSuffixOnlyContent />,
   },
   {
     value: 'with-select-prefix',
-    label: 'With select prefix',
+    label: msg`With select prefix`,
     content: <WithSelectPrefixContent />,
   },
 ];

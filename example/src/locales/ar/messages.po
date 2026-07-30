@@ -1,0 +1,3614 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-07-29 18:06+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ar\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/app/(home)/components/link-button.tsx
+msgid " and "
+msgstr " و "
+
+#: src/app/(home)/index.tsx
+msgid "{count} total"
+msgstr "{count} إجمالاً"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "* Size guide available in product details"
+msgstr "* دليل المقاسات متاح في تفاصيل المنتج"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "• All prices include taxes and fees"
+msgstr "• جميع الأسعار تشمل الضرائب والرسوم"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "• At least 8 characters long"
+msgstr "• 8 أحرف على الأقل"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "• At least one number"
+msgstr "• رقم واحد على الأقل"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "• At least one special character (!@#$%^&*)"
+msgstr "• حرف خاص واحد على الأقل (!@#$%^&*)"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "• At least one uppercase letter"
+msgstr "• حرف كبير واحد على الأقل"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "• Cancellation fees may apply if cancelled after 2 minutes"
+msgstr "• قد تُطبَّق رسوم إلغاء إذا تم الإلغاء بعد دقيقتين"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "• For support, contact us through the app or call +1-800-TAXI-HELP"
+msgstr "• للحصول على الدعم، تواصل معنا عبر التطبيق أو اتصل بالرقم +1-800-TAXI-HELP"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "• Payment will be processed after trip completion"
+msgstr "• ستتم معالجة الدفع بعد انتهاء الرحلة"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "10% off all trips with PLUS"
+msgstr "خصم 10% على جميع الرحلات مع PLUS"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+#: src/components/themes-content/card-content.tsx
+msgid "148 members"
+msgstr "148 عضوًا"
+
+#: src/app/(home)/components/popover.tsx
+msgid "2 minutes ago"
+msgstr "قبل دقيقتين"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "2-3 business days"
+msgstr "2-3 أيام عمل"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "3-20 characters, letters, numbers only"
+msgstr "3-20 حرفًا، أحرف وأرقام فقط"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+#: src/components/themes-content/card-content.tsx
+msgid "362 members"
+msgstr "362 عضوًا"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "5-7 business days"
+msgstr "5-7 أيام عمل"
+
+#: src/app/(home)/components/separator.tsx
+msgid "A modern React Native component library."
+msgstr "مكتبة مكوّنات حديثة لـ React Native."
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "A new verification code has been sent to your phone."
+msgstr "تم إرسال رمز تحقق جديد إلى هاتفك."
+
+#: src/app/(home)/components/alert.tsx
+#: src/app/(home)/components/alert.tsx
+msgid "A new version of the application is available. Please refresh to get the latest features and bug fixes."
+msgstr "يتوفر إصدار جديد من التطبيق. يُرجى التحديث للحصول على أحدث الميزات وإصلاحات الأخطاء."
+
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "A newer version is available on the App Store. Update to get the latest features and improvements."
+msgstr "يتوفر إصدار أحدث على App Store. حدِّث التطبيق للحصول على أحدث الميزات والتحسينات."
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+msgid "Accent"
+msgstr "مميّز"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Accent toast"
+msgstr "إشعار مميّز"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Accept Privacy Policy"
+msgstr "الموافقة على سياسة الخصوصية"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Accept terms and conditions"
+msgstr "الموافقة على الشروط والأحكام"
+
+#: src/app/(home)/components/button.tsx
+msgid "Access Denied"
+msgstr "تم رفض الوصول"
+
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Account"
+msgstr "الحساب"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Account activity"
+msgstr "نشاط الحساب"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Account ID"
+msgstr "معرّف الحساب"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Account verification pending"
+msgstr "التحقق من الحساب قيد الانتظار"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Achievement toast"
+msgstr "إشعار إنجاز"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Actions"
+msgstr "الإجراءات"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Active search"
+msgstr "بحث نشط"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Add an extra layer of security to your account"
+msgstr "أضف طبقة حماية إضافية إلى حسابك"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Add Cash"
+msgstr "إضافة رصيد"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Add items to your cart, then open checkout to pay by card or wallet. We'll email your confirmation within a few minutes."
+msgstr "أضف العناصر إلى سلتك، ثم انتقل إلى صفحة الدفع لتسدّد بالبطاقة أو المحفظة. سنرسل تأكيد طلبك إلى بريدك الإلكتروني في غضون دقائق."
+
+#: src/app/(home)/components/button.tsx
+msgid "Add Member"
+msgstr "إضافة عضو"
+
+#: src/app/(home)/components/card.tsx
+msgid "Add to cart"
+msgstr "إضافة إلى السلة"
+
+#: src/app/(home)/components/button.tsx
+msgid "Add to Cart"
+msgstr "إضافة إلى السلة"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Add Wikilink"
+msgstr "إضافة Wikilink"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Adjust the text size throughout the app"
+msgstr "اضبط حجم النص في التطبيق بالكامل"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Age range"
+msgstr "الفئة العمرية"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Agree to our Terms of Service and Privacy Policy"
+msgstr "الموافقة على شروط الخدمة وسياسة الخصوصية"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Agree to Terms"
+msgstr "الموافقة على الشروط"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+#: src/components/themes-content/card-content.tsx
+msgid "AI Builders"
+msgstr "مطوّرو AI"
+
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/list-group.tsx
+msgid "Alerts, sounds, badges"
+msgstr "التنبيهات والأصوات والشارات"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Aligned to the {align} of the trigger"
+msgstr "مُحاذى إلى {align} عنصر التشغيل"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Alignment"
+msgstr "المحاذاة"
+
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Alignment options"
+msgstr "خيارات المحاذاة"
+
+#: src/app/(home)/_layout.tsx
+msgid "All animations will be disabled"
+msgstr "سيتم تعطيل جميع الحركات"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "All our drivers are verified and background-checked. Your safety is our top priority."
+msgstr "جميع سائقينا موثّقون وتم التحقق من سجلاتهم. سلامتك هي أولويتنا القصوى."
+
+#: src/app/(home)/components/toast.tsx
+msgid "All your files have been backed up to the cloud. You can now access them from any device. The backup includes 1,234 files totaling 2.5 GB. Your data is safe and secure. The next backup will run automatically in 24 hours."
+msgstr "تم نسخ جميع ملفاتك احتياطيًا إلى السحابة. يمكنك الآن الوصول إليها من أي جهاز. تتضمن النسخة الاحتياطية 1,234 ملفًا بحجم إجمالي 2.5 غيغابايت. بياناتك آمنة ومحمية. ستُجرى النسخة الاحتياطية التالية تلقائيًا بعد 24 ساعة."
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Amenities"
+msgstr "المرافق"
+
+#: src/app/(home)/components/spinner.tsx
+msgid "Animation speed"
+msgstr "سرعة الحركة"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Another title"
+msgstr "عنوان آخر"
+
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Appearance"
+msgstr "المظهر"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Are you sure you want to delete this product? This action cannot be undone."
+msgstr "هل تريد بالتأكيد حذف هذا المنتج؟ لا يمكن التراجع عن هذا الإجراء."
+
+#: src/components/themes-content/dialog-content.tsx
+msgid "Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed."
+msgstr "هل تريد بالتأكيد حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء وسيتم حذف جميع بياناتك نهائيًا."
+
+#: src/app/(home)/components/dialog-native-modal.tsx
+msgid "Are you sure you want to proceed with this action? This cannot be undone."
+msgstr "هل تريد بالتأكيد متابعة هذا الإجراء؟ لا يمكن التراجع عنه."
+
+#: src/app/(home)/components/slider.tsx
+msgid "Audio settings"
+msgstr "إعدادات الصوت"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Auto"
+msgstr "تلقائي"
+
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Auto-update"
+msgstr "التحديث التلقائي"
+
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Automatically download and install updates"
+msgstr "تنزيل التحديثات وتثبيتها تلقائيًا"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Available soon"
+msgstr "متاح قريبًا"
+
+#: src/app/(home)/components/avatar.tsx
+msgid "Avatar group"
+msgstr "مجموعة الصور الرمزية"
+
+#: src/app/(home)/components/card.tsx
+msgid "Avocado Hackathon"
+msgstr "هاكاثون الأفوكادو"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Background image card"
+msgstr "بطاقة بصورة خلفية"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Backup completed"
+msgstr "تم إكمال النسخ الاحتياطي"
+
+#: src/app/(home)/components/description.tsx
+#: src/app/(home)/components/input-group.tsx
+#: src/app/(home)/components/input-otp.tsx
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/slider.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Basic"
+msgstr "أساسي"
+
+#: src/app/(home)/components/label.tsx
+msgid "Basic & Required"
+msgstr "أساسي ومطلوب"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/basic.tsx
+msgid "Basic bottom sheet"
+msgstr "BottomSheet أساسي"
+
+#: src/app/(home)/components/card.tsx
+msgid "Basic card"
+msgstr "بطاقة أساسية"
+
+#: src/app/(home)/components/dialog-native-modal.tsx
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Basic dialog"
+msgstr "مربع حوار أساسي"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Basic FieldError"
+msgstr "FieldError أساسي"
+
+#: src/app/(home)/components/input.tsx
+msgid "Basic Input"
+msgstr "Input أساسي"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Basic Plan"
+msgstr "الخطة الأساسية"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Basic RadioGroup"
+msgstr "RadioGroup أساسي"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Basic search field"
+msgstr "حقل بحث أساسي"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Basic TextArea"
+msgstr "TextArea أساسي"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Basic TextField"
+msgstr "TextField أساسي"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/close-button.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Basic usage"
+msgstr "استخدام أساسي"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Bass"
+msgstr "الجهير"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Battery"
+msgstr "البطارية"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "Because it transcends mere functionality - it's about creating experiences that feel intuitive: accessible, robust and maintainable."
+msgstr "لأنه يتجاوز مجرد الوظيفة - فالأمر يتعلق بخلق تجارب تبدو بديهية: سهلة الوصول ومتينة وقابلة للصيانة."
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Best Seller"
+msgstr "الأكثر مبيعًا"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Bestsellers & more"
+msgstr "الأكثر مبيعًا والمزيد"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Biometric authentication"
+msgstr "المصادقة الحيوية"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Blue Shimmer"
+msgstr "لمعة زرقاء"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Body text"
+msgstr "نص المتن"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Bold"
+msgstr "عريض"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Books"
+msgstr "الكتب"
+
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Bottom"
+msgstr "أسفل"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Bottom sheet from native modal"
+msgstr "BottomSheet من نافذة أصلية"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Bottom sheet with blur overlay"
+msgstr "BottomSheet مع تعتيم ضبابي"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Bottom sheet with OTP input"
+msgstr "BottomSheet مع إدخال رمز OTP"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/with-text-input.tsx
+msgid "Bottom sheet with text input"
+msgstr "BottomSheet مع إدخال نص"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Bottom toast"
+msgstr "إشعار في الأسفل"
+
+#: src/app/(home)/components/menu.tsx
+msgid "BottomSheet"
+msgstr "BottomSheet"
+
+#: src/app/(home)/_layout.tsx
+msgid "BottomSheet Native Modal"
+msgstr "BottomSheet Native Modal"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Breakfast"
+msgstr "الإفطار"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Bridging the Future"
+msgstr "جسر إلى المستقبل"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Browse"
+msgstr "استعراض"
+
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Button highlight"
+msgstr "إبراز الزر"
+
+#: src/app/(home)/components/card.tsx
+msgid "Buy now"
+msgstr "اشترِ الآن"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "By checking this box, you agree to our Terms of Service and Privacy Policy"
+msgstr "بتحديد هذا المربع، فإنك توافق على شروط الخدمة وسياسة الخصوصية"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "By continuing, you agree to receive SMS messages for verification. Message and data rates may apply."
+msgstr "بالمتابعة، فإنك توافق على تلقّي رسائل نصية للتحقق. قد تُطبَّق رسوم الرسائل والبيانات."
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Can I modify or cancel my order?"
+msgstr "هل يمكنني تعديل طلبي أو إلغاؤه؟"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/dialog-native-modal.tsx
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/popover.tsx
+#: src/components/bottom-sheet/multi-step-detached.tsx
+#: src/components/themes-content/dialog-content.tsx
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Cannot edit"
+msgstr "لا يمكن التعديل"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Card skeleton"
+msgstr "هيكل بطاقة"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Card with image"
+msgstr "بطاقة مع صورة"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Categories"
+msgstr "الفئات"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Center"
+msgstr "الوسط"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Channels"
+msgstr "القنوات"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Check out our latest updates including dark mode support and improved accessibility features."
+msgstr "تعرّف على أحدث تحديثاتنا التي تشمل دعم الوضع الداكن وتحسين ميزات إمكانية الوصول."
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Checkbox ControlField set"
+msgstr "مجموعة Checkbox ControlField"
+
+#: src/components/select/select-button-trigger.tsx
+msgid "Choose a state"
+msgstr "اختر ولاية"
+
+#: src/app/(home)/components/label.tsx
+msgid "Choose a username"
+msgstr "اختر اسم مستخدم"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Choose how you'd like to receive updates"
+msgstr "اختر طريقة تلقّي التحديثات"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Choose how you'd like to share this content"
+msgstr "اختر طريقة مشاركة هذا المحتوى"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Choose Your Plan"
+msgstr "اختر خطتك"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Circular skeletons"
+msgstr "هياكل دائرية"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Classic Cotton T-Shirt"
+msgstr "تي شيرت قطني كلاسيكي"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Clear"
+msgstr "مسح"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Clear all"
+msgstr "مسح الكل"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Clearance"
+msgstr "تصفية"
+
+#: src/app/(home)/_layout.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/toast-native-modal.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Close"
+msgstr "إغلاق"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Code"
+msgstr "الرمز"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Code sent"
+msgstr "تم إرسال الرمز"
+
+#: src/app/(home)/components/input-otp.tsx
+#: src/app/(home)/components/input-otp.tsx
+msgid "Code: {code}"
+msgstr "الرمز: {code}"
+
+#: src/app/(home)/components/spinner.tsx
+msgid "Colors"
+msgstr "الألوان"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Comfort zone"
+msgstr "منطقة الراحة"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Coming soon - Advanced features"
+msgstr "قريبًا - ميزات متقدمة"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/input-otp.tsx
+#: src/app/(home)/components/input-otp.tsx
+msgid "Completed"
+msgstr "مكتمل"
+
+#: src/app/(home)/_layout.tsx
+#: src/app/(home)/components/separator.tsx
+#: src/app/(home)/index.tsx
+msgid "Components"
+msgstr "المكوّنات"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Configure Menu"
+msgstr "تكوين القائمة"
+
+#: src/app/(home)/components/dialog-native-modal.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Confirm"
+msgstr "تأكيد"
+
+#: src/app/(home)/components/dialog-native-modal.tsx
+msgid "Confirm Action"
+msgstr "تأكيد الإجراء"
+
+#: src/app/(home)/components/label.tsx
+msgid "Confirm password"
+msgstr "تأكيد كلمة المرور"
+
+#: src/app/(home)/components/label.tsx
+msgid "Confirm your password"
+msgstr "أكّد كلمة المرور"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Contact support to change your role"
+msgstr "تواصل مع الدعم لتغيير دورك"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Content One"
+msgstr "المحتوى الأول"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Content Two"
+msgstr "المحتوى الثاني"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Continue"
+msgstr "متابعة"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Copy link"
+msgstr "نسخ الرابط"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/popover.tsx
+msgid "Copy Link"
+msgstr "نسخ الرابط"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Copy the file link"
+msgstr "نسخ رابط الملف"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Copy to clipboard"
+msgstr "نسخ إلى الحافظة"
+
+#: src/components/select/searchable-dialog-select.tsx
+msgid "Country"
+msgstr "الدولة"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Create a new file"
+msgstr "إنشاء ملف جديد"
+
+#: src/app/(home)/components/description.tsx
+#: src/app/(home)/components/label.tsx
+msgid "Create a password"
+msgstr "إنشاء كلمة مرور"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Create Password"
+msgstr "إنشاء كلمة المرور"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "Creative coders and technical designers - individuals prepared to move beyond copy-paste solutions and evolve into builders who *can create anything*."
+msgstr "مبرمجون مبدعون ومصممون تقنيون - أشخاص مستعدون لتجاوز حلول النسخ واللصق والتحوّل إلى صنّاع *قادرين على ابتكار أي شيء*."
+
+#: src/app/(home)/components/chip.tsx
+msgid "Custom"
+msgstr "مخصص"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Custom Background Color"
+msgstr "لون خلفية مخصص"
+
+#: src/app/(home)/components/close-button.tsx
+msgid "Custom children"
+msgstr "عناصر فرعية مخصصة"
+
+#: src/app/(home)/components/separator.tsx
+#: src/app/(home)/components/spinner.tsx
+msgid "Custom colors"
+msgstr "ألوان مخصصة"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Custom entering animation"
+msgstr "حركة دخول مخصصة"
+
+#: src/app/(home)/components/avatar.tsx
+msgid "Custom fallback"
+msgstr "بديل مخصص"
+
+#: src/app/(home)/components/close-button.tsx
+msgid "Custom icon color"
+msgstr "لون أيقونة مخصص"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Custom indicator"
+msgstr "مؤشر مخصص"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Custom Indicator Background"
+msgstr "خلفية مؤشر مخصصة"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Custom Indicator Thumb"
+msgstr "مقبض مؤشر مخصص"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Custom pulse configuration"
+msgstr "إعدادات نبض مخصصة"
+
+#: src/app/(home)/components/button.tsx
+msgid "Custom Purple"
+msgstr "بنفسجي مخصص"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Custom Remove Button"
+msgstr "زر إزالة مخصص"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Custom remove button styles"
+msgstr "أنماط مخصصة لزر الإزالة"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Custom search icon"
+msgstr "أيقونة بحث مخصصة"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Custom shimmer configuration"
+msgstr "إعدادات وميض مخصصة"
+
+#: src/app/(home)/components/avatar.tsx
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/slider.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Custom styles"
+msgstr "أنماط مخصصة"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Custom Styles"
+msgstr "أنماط مخصصة"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/field-error.tsx
+msgid "Custom styling"
+msgstr "تنسيق مخصص"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Custom suffix"
+msgstr "لاحقة مخصصة"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Custom text with icons"
+msgstr "نص مخصص مع أيقونات"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Custom thickness"
+msgstr "سُمك مخصص"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Custom toasts"
+msgstr "إشعارات منبثقة مخصصة"
+
+#: src/components/themes-content/radio-group-content.tsx
+msgid "Daily"
+msgstr "يوميًا"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+msgid "Danger"
+msgstr "خطر"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Danger Color"
+msgstr "لون الخطر"
+
+#: src/app/(home)/components/button.tsx
+msgid "Danger Soft"
+msgstr "خطر ناعم"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Danger toast"
+msgstr "إشعار خطر"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Danger zone"
+msgstr "منطقة الخطر"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Dark"
+msgstr "داكن"
+
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Dark mode"
+msgstr "الوضع الداكن"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/switch.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/themes/index.tsx
+msgid "Default"
+msgstr "افتراضي"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Default (hairline width)"
+msgstr "افتراضي (بسمك شعري)"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Default & Accent"
+msgstr "افتراضي ومميّز"
+
+#: src/app/(home)/components/avatar.tsx
+msgid "Default icon fallback"
+msgstr "أيقونة بديلة افتراضية"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Default Remove Button"
+msgstr "زر الإزالة الافتراضي"
+
+#: src/app/(home)/components/input.tsx
+msgid "Default State"
+msgstr "الحالة الافتراضية"
+
+#: src/app/(home)/components/avatar.tsx
+msgid "Default text fallback"
+msgstr "نص بديل افتراضي"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Default toast"
+msgstr "إشعار افتراضي"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Default variant"
+msgstr "النمط الافتراضي"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Default variant with primary styling"
+msgstr "النمط الافتراضي بتنسيق أساسي"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Default variants"
+msgstr "الأنماط الافتراضية"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Delete"
+msgstr "حذف"
+
+#: src/components/themes-content/dialog-content.tsx
+#: src/components/themes-content/dialog-content.tsx
+#: src/components/themes-content/dialog-content.tsx
+msgid "Delete Account"
+msgstr "حذف الحساب"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Delete account?"
+msgstr "حذف الحساب؟"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Delete file"
+msgstr "حذف الملف"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Delete forever"
+msgstr "حذف نهائيًا"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Delete product"
+msgstr "حذف المنتج"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Delete Project"
+msgstr "حذف المشروع"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Delivered in 2-3 business days"
+msgstr "يصل خلال 2-3 أيام عمل"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Delivered in 5-7 business days"
+msgstr "يصل خلال 5-7 أيام عمل"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Delivered next business day"
+msgstr "يصل في يوم العمل التالي"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "Depth"
+msgstr "العمق"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Detached bottom sheet"
+msgstr "ورقة سفلية منفصلة"
+
+#: src/components/select/searchable-dialog-select.tsx
+msgid "Dialog"
+msgstr "Dialog"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Dialog from native modal"
+msgstr "Dialog من نافذة أصلية"
+
+#: src/app/(home)/_layout.tsx
+msgid "Dialog Native Modal"
+msgstr "Dialog Native Modal"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Dialog with blur backdrop"
+msgstr "Dialog بخلفية ضبابية"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Dialog with long content"
+msgstr "Dialog بمحتوى طويل"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Dialog with text input"
+msgstr "Dialog مع حقل إدخال نصي"
+
+#: src/app/(home)/components/popover-native-modal.tsx
+#: src/app/(home)/components/popover.tsx
+msgid "Did you know?"
+msgstr "هل تعلم؟"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Didn't receive a code?"
+msgstr "لم تستلم رمزًا؟"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Didn't receive the code?"
+msgstr "لم يصلك الرمز؟"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Different content sizes"
+msgstr "أحجام محتوى مختلفة"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Different title"
+msgstr "عنوان مختلف"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Direct messages"
+msgstr "الرسائل المباشرة"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/input-otp.tsx
+#: src/app/(home)/components/link-button.tsx
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Disabled"
+msgstr "معطّل"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Disabled keys"
+msgstr "مفاتيح معطّلة"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Disabled search"
+msgstr "بحث معطّل"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/close-button.tsx
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/link-button.tsx
+msgid "Disabled state"
+msgstr "الحالة المعطّلة"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Disabled State"
+msgstr "الحالة المعطّلة"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Disabled TextField"
+msgstr "TextField معطّل"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Discount"
+msgstr "الخصم"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Dismiss"
+msgstr "إغلاق"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Display the sidebar navigation panel"
+msgstr "إظهار لوحة التنقل الجانبية"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Display the status bar at the bottom"
+msgstr "إظهار شريط الحالة في الأسفل"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Distance: 4.2 km"
+msgstr "المسافة: 4.2 كم"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Do you ship internationally?"
+msgstr "هل تشحنون دوليًا؟"
+
+#: src/app/(home)/components/button.tsx
+msgid "Download"
+msgstr "تنزيل"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Download for later"
+msgstr "تنزيل لوقت لاحق"
+
+#: src/app/(home)/components/button.tsx
+msgid "Download now"
+msgstr "تنزيل الآن"
+
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "Download Now"
+msgstr "تنزيل الآن"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Edit file"
+msgstr "تعديل الملف"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Editor Menu"
+msgstr "قائمة المحرر"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/text-field.tsx
+#: src/components/themes-content/text-input-content.tsx
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: src/app/(home)/components/description.tsx
+msgid "Email address"
+msgstr "عنوان البريد الإلكتروني"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/field-error.tsx
+msgid "Email Address"
+msgstr "عنوان البريد الإلكتروني"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Email is required"
+msgstr "البريد الإلكتروني مطلوب"
+
+#: src/app/(home)/components/switch.tsx
+msgid "Email notifications"
+msgstr "إشعارات البريد الإلكتروني"
+
+#: src/app/(home)/components/radio-group.tsx
+#: src/components/themes-content/switch-content.tsx
+msgid "Email Notifications"
+msgstr "إشعارات البريد الإلكتروني"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "Enable depth effect for the accordion"
+msgstr "تفعيل تأثير العمق في Accordion"
+
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Enable notifications"
+msgstr "تفعيل الإشعارات"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Enabled"
+msgstr "مُفعّل"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "End"
+msgstr "النهاية"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "English"
+msgstr "الإنجليزية"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Enter 16-digit gift card number"
+msgstr "أدخل رقم بطاقة الهدية المكوّن من 16 رقمًا"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Enter a valid code to receive discount"
+msgstr "أدخل رمزًا صالحًا للحصول على الخصم"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Enter account ID"
+msgstr "أدخل معرّف الحساب"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Enter at least 3 characters to search"
+msgstr "أدخل 3 أحرف على الأقل للبحث"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Enter code (letters only)"
+msgstr "أدخل الرمز (أحرف فقط)"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Enter promo code"
+msgstr "أدخل الرمز الترويجي"
+
+#: src/app/(home)/components/field-error.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Enter username"
+msgstr "أدخل اسم المستخدم"
+
+#: src/app/(home)/components/input-otp.tsx
+#: src/app/(home)/components/input-otp.tsx
+msgid "Enter verification code"
+msgstr "أدخل رمز التحقق"
+
+#: src/app/(home)/components/description.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-field.tsx
+#: src/components/themes-content/text-input-content.tsx
+msgid "Enter your email"
+msgstr "أدخل بريدك الإلكتروني"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Enter your full name"
+msgstr "أدخل اسمك الكامل"
+
+#: src/app/(home)/components/text-area.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Enter your message"
+msgstr "أدخل رسالتك"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Enter your message here..."
+msgstr "أدخل رسالتك هنا..."
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Enter your name"
+msgstr "أدخل اسمك"
+
+#: src/app/(home)/components/field-error.tsx
+#: src/app/(home)/components/input-group.tsx
+#: src/app/(home)/components/text-field.tsx
+#: src/components/themes-content/text-input-content.tsx
+msgid "Enter your password"
+msgstr "أدخل كلمة المرور"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Enter your PIN"
+msgstr "أدخل رمز PIN"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Enterprise Plan"
+msgstr "خطة المؤسسات"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Enterprise plan is not available in your region!"
+msgstr "خطة المؤسسات غير متوفرة في منطقتك!"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Estimated arrival time: 10 minutes"
+msgstr "وقت الوصول المتوقع: 10 دقائق"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Everyone"
+msgstr "الجميع"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Examples"
+msgstr "أمثلة"
+
+#: src/app/(home)/index.tsx
+msgid "Explore all components"
+msgstr "استكشف جميع المكوّنات"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Export"
+msgstr "تصدير"
+
+#: src/app/(home)/components/radio-group.tsx
+#: src/app/(home)/components/radio-group.tsx
+msgid "Express Shipping"
+msgstr "شحن سريع"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Extra-small body text"
+msgstr "نص أساسي صغير جدًا"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Extra-small text for disclaimers or fine print. lore"
+msgstr "نص صغير جدًا لإخلاء المسؤولية أو الملاحظات الدقيقة. lore"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Failed"
+msgstr "فشل"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Fast Green Shimmer"
+msgstr "لمعان أخضر سريع"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Fast Pulse"
+msgstr "نبض سريع"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Featured"
+msgstr "مميّز"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Find products"
+msgstr "ابحث عن المنتجات"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Finish"
+msgstr "إنهاء"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Fitness center"
+msgstr "مركز لياقة بدنية"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Focus"
+msgstr "تركيز"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Font Size"
+msgstr "حجم الخط"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "For other deletion options, see our Privacy Policy."
+msgstr "لمعرفة خيارات الحذف الأخرى، راجع سياسة الخصوصية."
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Four Digits"
+msgstr "أربعة أرقام"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Free"
+msgstr "مجاني"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Free Shipping"
+msgstr "توصيل مجاني"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Friends Only"
+msgstr "الأصدقاء فقط"
+
+#: src/app/(home)/components/toast.tsx
+msgid "From native modal"
+msgstr "من النافذة الأصلية"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Full Name"
+msgstr "الاسم الكامل"
+
+#: src/app/(home)/components/button.tsx
+msgid "Full Width Button"
+msgstr "زر بعرض كامل"
+
+#: src/app/(home)/components/popover-native-modal.tsx
+#: src/app/(home)/components/popover.tsx
+msgid "Fun Fact!"
+msgstr "معلومة طريفة!"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Games"
+msgstr "الألعاب"
+
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Gaming"
+msgstr "الألعاب الإلكترونية"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "General"
+msgstr "عام"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Get a paid plan for more credits"
+msgstr "احصل على خطة مدفوعة لمزيد من الأرصدة"
+
+#: src/components/themes-content/switch-content.tsx
+msgid "Get instant alerts on your device"
+msgstr "احصل على تنبيهات فورية على جهازك"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Get instant push alerts"
+msgstr "استلم تنبيهات فورية عبر الإشعارات"
+
+#: src/components/themes-content/radio-group-content.tsx
+msgid "Get notifications immediately"
+msgstr "استلم الإشعارات فورًا"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Get notified"
+msgstr "تلقَّ الإشعارات"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Get updates via email"
+msgstr "استلم التحديثات عبر البريد الإلكتروني"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Get weekly updates about new features and tips"
+msgstr "استلم تحديثات أسبوعية عن الميزات الجديدة والنصائح"
+
+#: src/app/(home)/components/button.tsx
+msgid "Ghost"
+msgstr "شفاف"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Gift Card Number"
+msgstr "رقم بطاقة الهدايا"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/chip.tsx
+msgid "Gradient"
+msgstr "تدرّج لوني"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Green Taxi"
+msgstr "تاكسي أخضر"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Group Title"
+msgstr "عنوان المجموعة"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/typography.tsx
+msgid "Heading 1"
+msgstr "عنوان 1"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Heading 2"
+msgstr "عنوان 2"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Heading 3"
+msgstr "عنوان 3"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Heading 4"
+msgstr "عنوان 4"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Heading 5"
+msgstr "عنوان 5"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Heading 6"
+msgstr "عنوان 6"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Headings"
+msgstr "العناوين"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Help improve our product by sharing anonymous usage data and improving our products."
+msgstr "ساعدنا في تحسين منتجنا بمشاركة بيانات استخدام مجهولة الهوية وتطوير منتجاتنا."
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Hide all toasts"
+msgstr "إخفاء جميع الإشعارات"
+
+#: src/app/(home)/components/toast-native-modal.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Hide toast"
+msgstr "إخفاء الإشعار"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "High end cars, top drivers"
+msgstr "سيارات فاخرة وأفضل السائقين"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "High Priority"
+msgstr "أولوية عالية"
+
+#: src/app/(home)/components/card.tsx
+msgid "Higher prominence (surface-tertiary). Use for important content."
+msgstr "بروز أعلى (surface-tertiary). استخدمه للمحتوى المهم."
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Hint: The code is 123456"
+msgstr "تلميح: الرمز هو 123456"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Home robot"
+msgstr "روبوت منزلي"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Homepage"
+msgstr "الصفحة الرئيسية"
+
+#: src/app/(home)/components/scroll-shadow.tsx
+msgid "Horizontal"
+msgstr "أفقي"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Horizontal (default)"
+msgstr "أفقي (افتراضي)"
+
+#: src/app/(home)/components/card.tsx
+msgid "Horizontal card with image"
+msgstr "بطاقة أفقية مع صورة"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Hot"
+msgstr "الأكثر رواجًا"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "How do I place an order?"
+msgstr "كيف أضع طلبًا؟"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "How much does shipping cost?"
+msgstr "كم تبلغ تكلفة التوصيل؟"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "I agree to the "
+msgstr "أوافق على "
+
+#: src/app/(home)/components/control-field.tsx
+msgid "I agree to the terms and conditions"
+msgstr "أوافق على الشروط والأحكام"
+
+#: src/app/(home)/components/button.tsx
+msgid "Icon only"
+msgstr "أيقونة فقط"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "If you delete your account, you won't be able to restore it or receive support."
+msgstr "إذا حذفت حسابك، فلن تتمكن من استعادته أو الحصول على الدعم."
+
+#: src/app/(home)/components/menu.tsx
+msgid "Image"
+msgstr "صورة"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Important - complete within this week"
+msgstr "مهم - أكمله خلال هذا الأسبوع"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Important Information"
+msgstr "معلومات مهمة"
+
+#. placeholder {0}: option.time
+#. placeholder {1}: option.capacity
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "in {0} • {1}"
+msgstr "في {0} • {1}"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "In Stock"
+msgstr "متوفر"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Incomplete code"
+msgstr "رمز غير مكتمل"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Incomplete Code"
+msgstr "رمز غير مكتمل"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+#: src/components/themes-content/card-content.tsx
+msgid "Indie Hackers"
+msgstr "مطوّرون مستقلّون"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Individual disabled"
+msgstr "معطّل بشكل فردي"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Information"
+msgstr "معلومات"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Inline compact layout"
+msgstr "تخطيط مضمّن مُدمج"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Inline error messages"
+msgstr "رسائل خطأ مضمّنة"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Inline Radio Options"
+msgstr "خيارات اختيار مضمّنة"
+
+#: src/app/(home)/components/input.tsx
+msgid "Input is disabled and cannot be edited"
+msgstr "الحقل معطّل ولا يمكن تعديله"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Inside bottom sheet"
+msgstr "داخل اللوحة السفلية"
+
+#: src/components/themes-content/radio-group-content.tsx
+msgid "Instant"
+msgstr "فوري"
+
+#: src/app/(home)/components/checkbox.tsx
+msgid "Invalid"
+msgstr "غير صالح"
+
+#: src/app/(home)/components/label.tsx
+msgid "Invalid & Disabled"
+msgstr "غير صالح ومعطّل"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Invalid credentials provided"
+msgstr "بيانات الدخول المُدخلة غير صحيحة"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Invalid email"
+msgstr "بريد إلكتروني غير صالح"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Invalid State"
+msgstr "حالة غير صالحة"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Italic"
+msgstr "مائل"
+
+#: src/app/(home)/components/toast-native-modal.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Join a team"
+msgstr "الانضمام إلى فريق"
+
+#: src/app/(home)/components/toast-native-modal.tsx
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Junior Garcia sent you an invitation to join HeroUI team!"
+msgstr "أرسل لك Junior Garcia دعوة للانضمام إلى فريق HeroUI!"
+
+#: src/components/bottom-sheet/basic.tsx
+msgid "Keep yourself safe"
+msgstr "حافظ على سلامتك"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Keyboard avoiding"
+msgstr "تجنّب لوحة المفاتيح"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Label Heading"
+msgstr "عنوان التسمية"
+
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/components/settings/settings-bottom-sheet.tsx
+msgid "Language"
+msgstr "اللغة"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Large"
+msgstr "كبير"
+
+#: src/app/(home)/components/button.tsx
+msgid "Large Button"
+msgstr "زر كبير"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Large toast"
+msgstr "إشعار كبير"
+
+#: src/components/bottom-sheet/basic.tsx
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "Later"
+msgstr "لاحقًا"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Laundry"
+msgstr "مغسلة"
+
+#: src/app/(home)/themes/index.tsx
+msgid "Lavender"
+msgstr "لافندر"
+
+#: src/app/(home)/components/button.tsx
+msgid "Layout transitions demo"
+msgstr "عرض توضيحي لانتقالات التخطيط"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Left"
+msgstr "يسار"
+
+#: src/components/settings/settings-bottom-sheet.tsx
+msgid "Left-to-right layout"
+msgstr "تخطيط من اليسار إلى اليمين"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Light"
+msgstr "فاتح"
+
+#: src/app/(home)/components/menu.tsx
+msgid "List"
+msgstr "قائمة"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "List skeleton"
+msgstr "هيكل قائمة"
+
+#: src/app/(home)/components/card.tsx
+msgid "Living room Sofa"
+msgstr "أريكة غرفة المعيشة"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Load data"
+msgstr "تحميل البيانات"
+
+#: src/components/toast/loading-toast.tsx
+msgid "Loaded successfully"
+msgstr "تم التحميل بنجاح"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+msgid "Loading"
+msgstr "جارٍ التحميل"
+
+#: src/components/toast/loading-toast.tsx
+msgid "Loading..."
+msgstr "جارٍ التحميل..."
+
+#: src/app/(home)/components/menu.tsx
+msgid "Lock Tab"
+msgstr "تبويب مقفل"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Low Disk Space"
+msgstr "مساحة القرص منخفضة"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Low Priority"
+msgstr "أولوية منخفضة"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Make changes to the file"
+msgstr "إجراء تغييرات على الملف"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Mark all as read"
+msgstr "تحديد الكل كمقروء"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Markdown"
+msgstr "Markdown"
+
+#: src/components/themes-content/checkbox-content.tsx
+msgid "Marketing & Promotions"
+msgstr "التسويق والعروض الترويجية"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Marketing communications"
+msgstr "الرسائل التسويقية"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Marketing email"
+msgstr "بريد تسويقي"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Medium"
+msgstr "متوسط"
+
+#: src/app/(home)/components/button.tsx
+msgid "Medium Button"
+msgstr "زر متوسط"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Medium Priority"
+msgstr "أولوية متوسطة"
+
+#: src/app/(home)/components/card.tsx
+msgid "Medium prominence (surface-tertiary). Use to draw moderate attention."
+msgstr "بروز متوسط (surface-tertiary). استخدمه لجذب انتباه معتدل."
+
+#: src/app/(home)/components/toast.tsx
+msgid "Medium toast"
+msgstr "إشعار متوسط"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Mentions"
+msgstr "الإشارات"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Message"
+msgstr "رسالة"
+
+#: src/app/(home)/components/card.tsx
+msgid "Minimal prominence with transparent background. Use for less important content or nested cards."
+msgstr "بروز بسيط مع خلفية شفافة. استخدمه للمحتوى الأقل أهمية أو البطاقات المتداخلة."
+
+#: src/app/(home)/themes/index.tsx
+msgid "Mint"
+msgstr "نعناعي"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Mood"
+msgstr "المزاج"
+
+#: src/app/(home)/components/popover.tsx
+msgid "More Options"
+msgstr "خيارات أكثر"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Move to trash"
+msgstr "نقل إلى سلة المحذوفات"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Movies"
+msgstr "الأفلام"
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "Multi-step detached"
+msgstr "متعدد الخطوات منفصل"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Multiple errors"
+msgstr "أخطاء متعددة"
+
+#: src/app/(home)/components/select.tsx
+msgid "Multiple select"
+msgstr "تحديد متعدد"
+
+#: src/app/(home)/components/accordion.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Multiple selection"
+msgstr "اختيار متعدد"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Music"
+msgstr "الموسيقى"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Name"
+msgstr "الاسم"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Name is required"
+msgstr "الاسم مطلوب"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Name must be at least 2 characters"
+msgstr "يجب أن يكون الاسم مكوّنًا من حرفين على الأقل"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Name, email, phone number"
+msgstr "الاسم، البريد الإلكتروني، رقم الهاتف"
+
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Native modal test"
+msgstr "اختبار النافذة الأصلية"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Navigate to Privacy Policy"
+msgstr "الانتقال إلى سياسة الخصوصية"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Navigate to Terms"
+msgstr "الانتقال إلى الشروط"
+
+#: src/app/(home)/components/chip.tsx
+msgid "New"
+msgstr "جديد"
+
+#: src/components/toast/achievement-toast.tsx
+msgid "New achievement!"
+msgstr "إنجاز جديد!"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "New Arrivals"
+msgstr "وصل حديثًا"
+
+#: src/components/themes-content/checkbox-content.tsx
+msgid "New features and improvements"
+msgstr "ميزات جديدة وتحسينات"
+
+#: src/app/(home)/components/alert.tsx
+msgid "New features available"
+msgstr "تتوفر ميزات جديدة"
+
+#: src/app/(home)/components/menu.tsx
+msgid "New file"
+msgstr "ملف جديد"
+
+#: src/app/(home)/components/toast.tsx
+msgid "New message"
+msgstr "رسالة جديدة"
+
+#: src/components/themes-content/text-input-content.tsx
+msgid "New password"
+msgstr "كلمة المرور الجديدة"
+
+#: src/app/(home)/components/menu.tsx
+msgid "New Project"
+msgstr "مشروع جديد"
+
+#: src/app/(home)/components/menu.tsx
+msgid "New Space"
+msgstr "مساحة جديدة"
+
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "New updates are ready. The app needs a quick refresh to apply them (no download required)."
+msgstr "التحديثات الجديدة جاهزة. يحتاج التطبيق إلى تحديث سريع لتطبيقها (لا يلزم أي تنزيل)."
+
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "New Version Available"
+msgstr "يتوفر إصدار جديد"
+
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "News"
+msgstr "الأخبار"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Next business day"
+msgstr "يوم العمل التالي"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "No categories found"
+msgstr "لم يتم العثور على فئات"
+
+#: src/components/select/searchable-dialog-select.tsx
+msgid "No countries found"
+msgstr "لم يتم العثور على دول"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "No credits left"
+msgstr "لم يتبقَّ أي رصيد"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "No Data"
+msgstr "لا توجد بيانات"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "No frameworks found"
+msgstr "لم يتم العثور على أطر عمل"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "No Notifications"
+msgstr "لا توجد إشعارات"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "No results found. Please try a different search term."
+msgstr "لم يتم العثور على نتائج. يرجى تجربة مصطلح بحث آخر."
+
+#: src/components/select/searchable-select.tsx
+msgid "No states found"
+msgstr "لم يتم العثور على ولايات"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "No team members"
+msgstr "لا يوجد أعضاء في الفريق"
+
+#: src/components/bottom-sheet/with-text-input.tsx
+msgid "No users found"
+msgstr "لم يتم العثور على مستخدمين"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Nobody"
+msgstr "لا أحد"
+
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "None"
+msgstr "بلا"
+
+#: src/app/(home)/components/input.tsx
+msgid "Normal input state"
+msgstr "حالة إدخال عادية"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Not available in your region"
+msgstr "غير متاح في منطقتك"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Notification Preferences"
+msgstr "تفضيلات الإشعارات"
+
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Notifications"
+msgstr "الإشعارات"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Notifications about your account activity"
+msgstr "إشعارات حول نشاط حسابك"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Notifications for new direct messages"
+msgstr "إشعارات الرسائل المباشرة الجديدة"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Notify me"
+msgstr "أبلغني"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Notify via"
+msgstr "التنبيه عبر"
+
+#: src/app/(home)/components/switch.tsx
+msgid "OFF"
+msgstr "إيقاف"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Oh! Your wallet is empty"
+msgstr "عذرًا! محفظتك فارغة"
+
+#: src/app/(home)/components/switch.tsx
+msgid "ON"
+msgstr "تشغيل"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "On Sale"
+msgstr "تخفيضات"
+
+#: src/components/themes-content/radio-group-content.tsx
+msgid "Once per day summary of all updates"
+msgstr "ملخّص يومي واحد لجميع التحديثات"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Only alphabetic characters are allowed"
+msgstr "يُسمح بالأحرف الأبجدية فقط"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Only check updates manually"
+msgstr "التحقق من التحديثات يدويًا فقط"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Open modal"
+msgstr "فتح النافذة المنبثقة"
+
+#: src/app/(home)/_layout.tsx
+msgid "Open settings"
+msgstr "فتح الإعدادات"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Open slider settings"
+msgstr "فتح إعدادات شريط التمرير"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Order Premium now"
+msgstr "اطلب بريميوم الآن"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Orientation"
+msgstr "الاتجاه"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Our app will no longer be able to provide support for any of your trips, such as providing a refund or locking for lost items."
+msgstr "لن يتمكن تطبيقنا بعد الآن من تقديم الدعم لأي من رحلاتك، مثل إصدار المبالغ المستردة أو البحث عن الأغراض المفقودة."
+
+#: src/app/(home)/components/alert.tsx
+msgid "Our services will be unavailable on Sunday, March 15th from 2:00 AM to 6:00 AM UTC for scheduled maintenance."
+msgstr "ستكون خدماتنا غير متاحة يوم الأحد 15 مارس من الساعة 2:00 صباحًا حتى 6:00 صباحًا بتوقيت UTC لإجراء صيانة مجدولة."
+
+#: src/app/(home)/components/button.tsx
+msgid "Outline"
+msgstr "بإطار"
+
+#: src/app/(home)/components/radio-group.tsx
+#: src/app/(home)/components/radio-group.tsx
+msgid "Overnight Shipping"
+msgstr "الشحن خلال ليلة واحدة"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Page Title"
+msgstr "عنوان الصفحة"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Paragraphs"
+msgstr "الفقرات"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Parking"
+msgstr "موقف سيارات"
+
+#: src/app/(home)/components/description.tsx
+#: src/app/(home)/components/label.tsx
+#: src/app/(home)/components/text-field.tsx
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: src/components/themes-content/text-input-content.tsx
+msgid "Password must be at least 6 characters"
+msgstr "يجب ألا تقل كلمة المرور عن 6 أحرف"
+
+#: src/components/themes-content/text-input-content.tsx
+msgid "Password must be at least 6 characters long"
+msgstr "يجب أن يبلغ طول كلمة المرور 6 أحرف على الأقل"
+
+#: src/app/(home)/components/label.tsx
+msgid "Passwords do not match"
+msgstr "كلمتا المرور غير متطابقتين"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Payment method declined"
+msgstr "تم رفض طريقة الدفع"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Payment Methods"
+msgstr "طرق الدفع"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Payment successful"
+msgstr "تم الدفع بنجاح"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Payment Successful"
+msgstr "تم الدفع بنجاح"
+
+#: src/app/(home)/components/menu.tsx
+msgid "PDF"
+msgstr "PDF"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Pending"
+msgstr "قيد الانتظار"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Perfect for individuals - $9/month"
+msgstr "مثالية للأفراد - 9 دولارات شهريًا"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Personal"
+msgstr "شخصي"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Personal Info"
+msgstr "المعلومات الشخصية"
+
+#: src/app/(home)/components/input-group.tsx
+msgid "Phone number"
+msgstr "رقم الهاتف"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Phone Number"
+msgstr "رقم الهاتف"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Phone Number Verification"
+msgstr "التحقق من رقم الهاتف"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Phone verified"
+msgstr "تم التحقق من الهاتف"
+
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Placement options"
+msgstr "خيارات الموضع"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Placement variants"
+msgstr "أنماط الموضع"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Placements"
+msgstr "المواضع"
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Plan upgraded"
+msgstr "تمت ترقية الخطة"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Please accept the privacy policy to continue"
+msgstr "يرجى الموافقة على سياسة الخصوصية للمتابعة"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/input.tsx
+#: src/components/themes-content/text-input-content.tsx
+msgid "Please enter a valid email address"
+msgstr "يرجى إدخال بريد إلكتروني صالح"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Please enter a valid message"
+msgstr "يرجى إدخال رسالة صالحة"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Please enter all 6 digits to complete your verification code."
+msgstr "يرجى إدخال الأرقام الستة كاملة لإكمال رمز التحقق."
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Please enter all 6 digits to continue."
+msgstr "يرجى إدخال الأرقام الستة كاملة للمتابعة."
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Please provide as much detail as possible."
+msgstr "يرجى تقديم أكبر قدر ممكن من التفاصيل."
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Please select at least one category"
+msgstr "يرجى اختيار فئة واحدة على الأقل"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Please wait while we sync your data. This may take a few moments."
+msgstr "يرجى الانتظار ريثما نزامن بياناتك. قد يستغرق ذلك بضع لحظات."
+
+#: src/app/(home)/components/select.tsx
+msgid "Popover"
+msgstr "Popover"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Popover from native modal"
+msgstr "Popover من نافذة أصلية"
+
+#: src/app/(home)/_layout.tsx
+msgid "Popover Native Modal"
+msgstr "Popover Native Modal"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Popular & top rated"
+msgstr "الأكثر شيوعًا والأعلى تقييمًا"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Preferences"
+msgstr "التفضيلات"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/label.tsx
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Premium"
+msgstr "بريميوم"
+
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Presentation variants"
+msgstr "أنماط العرض"
+
+#: src/components/settings/settings-bottom-sheet.tsx
+msgid "Preview the component library in a different layout direction and language."
+msgstr "معاينة مكتبة المكوّنات باتجاه تخطيط ولغة مختلفين."
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Previous query"
+msgstr "الاستعلام السابق"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Price range"
+msgstr "نطاق السعر"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Primary"
+msgstr "أساسي"
+
+#: src/app/(home)/components/input.tsx
+msgid "Primary style input"
+msgstr "حقل إدخال بالنمط الأساسي"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Primary style text area"
+msgstr "منطقة نص بالنمط الأساسي"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Primary variant"
+msgstr "النمط الأساسي"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Primary Variant"
+msgstr "النمط الأساسي"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Primary variant colors"
+msgstr "ألوان النمط الأساسي"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Priority Level"
+msgstr "مستوى الأولوية"
+
+#: src/app/(home)/components/link-button.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Privacy"
+msgstr "الخصوصية"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Privacy & Security"
+msgstr "الخصوصية والأمان"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Privacy Policy"
+msgstr "سياسة الخصوصية"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Pro Plan"
+msgstr "خطة Pro"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Processing your request"
+msgstr "جارٍ معالجة طلبك"
+
+#: src/components/themes-content/checkbox-content.tsx
+msgid "Product Updates"
+msgstr "تحديثات المنتج"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Profile completion required"
+msgstr "يلزم استكمال الملف الشخصي"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Profile updated successfully"
+msgstr "تم تحديث الملف الشخصي بنجاح"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Project"
+msgstr "المشروع"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Promo Code"
+msgstr "الرمز الترويجي"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Pulse"
+msgstr "نبض"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Purple"
+msgstr "بنفسجي"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Push"
+msgstr "إشعار فوري"
+
+#: src/app/(home)/components/switch.tsx
+msgid "Push notifications"
+msgstr "الإشعارات الفورية"
+
+#: src/app/(home)/components/radio-group.tsx
+#: src/components/themes-content/switch-content.tsx
+msgid "Push Notifications"
+msgstr "الإشعارات الفورية"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Quick Notification"
+msgstr "إشعار سريع"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Quick Tip"
+msgstr "نصيحة سريعة"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "RadioGroup States"
+msgstr "حالات RadioGroup"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Range"
+msgstr "النطاق"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Read only value"
+msgstr "قيمة للقراءة فقط"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Reader Mode"
+msgstr "وضع القراءة"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Receive emails about new features and updates"
+msgstr "تلقّي رسائل بريدية حول الميزات والتحديثات الجديدة"
+
+#: src/app/(home)/components/switch.tsx
+msgid "Receive notifications via email"
+msgstr "تلقّي الإشعارات عبر البريد الإلكتروني"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Receive promotional emails and special offers"
+msgstr "تلقّي رسائل ترويجية وعروض خاصة"
+
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Receive push notifications about your account activity"
+msgstr "تلقّي إشعارات فورية حول نشاط حسابك"
+
+#: src/components/themes-content/switch-content.tsx
+msgid "Receive updates and newsletters via email"
+msgstr "تلقّي التحديثات والنشرات الإخبارية عبر البريد الإلكتروني"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Redeem your gift card at checkout"
+msgstr "استخدم بطاقة الهدايا عند إتمام الشراء"
+
+#: src/app/(home)/_layout.tsx
+msgid "Reduce motion enabled"
+msgstr "تم تفعيل تقليل الحركة"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Refresh"
+msgstr "تحديث"
+
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "Refresh Now"
+msgstr "تحديث الآن"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Remove"
+msgstr "إزالة"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Remove files to release space. I'm adding more text as usual but it's okay I guess I just want to see how it looks with a lot of information"
+msgstr "احذف بعض الملفات لتحرير مساحة. أضيف مزيدًا من النص كالعادة، لكن لا بأس، أظن أنني أريد فقط أن أرى كيف يبدو الأمر مع كمّ كبير من المعلومات"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Rename"
+msgstr "إعادة تسمية"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Required"
+msgstr "مطلوب"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Requires device with fingerprint or face recognition support"
+msgstr "يتطلب جهازًا يدعم بصمة الإصبع أو التعرف على الوجه"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Resend"
+msgstr "إعادة الإرسال"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Resend code"
+msgstr "إعادة إرسال الرمز"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Resend in {resendTimer}s"
+msgstr "إعادة الإرسال بعد {resendTimer} ث"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Retry"
+msgstr "إعادة المحاولة"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Right"
+msgstr "يمين"
+
+#: src/components/settings/settings-bottom-sheet.tsx
+msgid "Right-to-left layout"
+msgstr "تخطيط من اليمين إلى اليسار"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Role assignment"
+msgstr "تعيين الدور"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Safety & Security"
+msgstr "السلامة والأمان"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Sarah sent you a message"
+msgstr "أرسلت لك Sarah رسالة"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Save Offline"
+msgstr "الحفظ دون اتصال"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Scheduled maintenance"
+msgstr "صيانة مجدولة"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Scrollable with snap points"
+msgstr "قابل للتمرير مع نقاط توقف"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Search"
+msgstr "بحث"
+
+#: src/components/bottom-sheet/with-text-input.tsx
+msgid "Search by name or email..."
+msgstr "ابحث بالاسم أو البريد الإلكتروني..."
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Search by name, category, or SKU"
+msgstr "ابحث بالاسم أو الفئة أو رمز SKU"
+
+#: src/components/select/searchable-dialog-select.tsx
+msgid "Search country..."
+msgstr "ابحث عن بلد..."
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Search is temporarily unavailable"
+msgstr "البحث غير متوفر مؤقتًا"
+
+#: src/app/(home)/components/input-group.tsx
+msgid "Search products..."
+msgstr "ابحث عن منتجات..."
+
+#: src/components/select/searchable-select.tsx
+#: src/components/select/searchable-select.tsx
+msgid "Search state..."
+msgstr "ابحث عن ولاية..."
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Search users"
+msgstr "البحث عن مستخدمين"
+
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/search-field.tsx
+msgid "Search..."
+msgstr "ابحث..."
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Secondary"
+msgstr "ثانوي"
+
+#: src/app/(home)/components/input.tsx
+msgid "Secondary style input"
+msgstr "حقل إدخال بنمط ثانوي"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Secondary style text area"
+msgstr "منطقة نص بنمط ثانوي"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Secondary variant"
+msgstr "المتغير الثانوي"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Secondary Variant"
+msgstr "المتغير الثانوي"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Secondary variant colors"
+msgstr "ألوان المتغير الثانوي"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Secondary variant for surfaces"
+msgstr "المتغير الثانوي للأسطح"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Section Title"
+msgstr "عنوان القسم"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Sections"
+msgstr "الأقسام"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Select"
+msgstr "Select"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Select a subscription plan to continue"
+msgstr "اختر خطة اشتراك للمتابعة"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Select a way to travel"
+msgstr "اختر وسيلة للتنقل"
+
+#: src/app/(home)/components/input-group.tsx
+msgid "Select country"
+msgstr "اختر البلد"
+
+#: src/app/(home)/components/select.tsx
+msgid "Select from Native Modal"
+msgstr "الاختيار من Native Modal"
+
+#: src/app/(home)/_layout.tsx
+msgid "Select Native Modal"
+msgstr "Select Native Modal"
+
+#: src/components/select/select-button-trigger.tsx
+msgid "Select one"
+msgstr "اختر واحدًا"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Select Size"
+msgstr "اختر المقاس"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Select team members for your project"
+msgstr "اختر أعضاء الفريق لمشروعك"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Select your preferred color theme"
+msgstr "اختر سمة الألوان المفضلة لديك"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Selected:"
+msgstr "المحدد:"
+
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Selected: {selectedLabel}"
+msgstr "المحدد: {selectedLabel}"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Send via messaging app"
+msgstr "الإرسال عبر تطبيق المراسلة"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Separator in action"
+msgstr "Separator قيد الاستخدام"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Server connection failed. Please try again."
+msgstr "فشل الاتصال بالخادم. يُرجى المحاولة مرة أخرى."
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Session will expire in 5 minutes"
+msgstr "ستنتهي الجلسة بعد 5 دقائق"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Set the priority for this task"
+msgstr "حدّد أولوية هذه المهمة"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+#: src/components/settings/settings-bottom-sheet.tsx
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "Share"
+msgstr "مشاركة"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Share Link"
+msgstr "مشاركة الرابط"
+
+#: src/app/(home)/components/popover.tsx
+msgid "Share Options"
+msgstr "خيارات المشاركة"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Share usage data"
+msgstr "مشاركة بيانات الاستخدام"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Share your trip details with friends and family for added security."
+msgstr "شارك تفاصيل رحلتك مع الأصدقاء والعائلة لمزيد من الأمان."
+
+#: src/app/(home)/components/select.tsx
+msgid "Sheet"
+msgstr "Sheet"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Shimmer"
+msgstr "لمعان"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Should Close On Select"
+msgstr "Should Close On Select"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Show Error"
+msgstr "إظهار الخطأ"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Show password validation errors"
+msgstr "إظهار أخطاء التحقق من كلمة المرور"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Show sidebar"
+msgstr "إظهار الشريط الجانبي"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Show status bar"
+msgstr "إظهار شريط الحالة"
+
+#: src/app/(home)/components/toast-native-modal.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Show toast"
+msgstr "إظهار الإشعار"
+
+#: src/app/(home)/index.tsx
+msgid "Showcases"
+msgstr "العروض التوضيحية"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Sign Out"
+msgstr "تسجيل الخروج"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Sign up"
+msgstr "إنشاء حساب"
+
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/text-field.tsx
+msgid "Simulate Error"
+msgstr "محاكاة الخطأ"
+
+#: src/app/(home)/components/select.tsx
+msgid "Single select"
+msgstr "تحديد فردي"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Single selection"
+msgstr "اختيار فردي"
+
+#: src/app/(home)/components/avatar.tsx
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/spinner.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Sizes"
+msgstr "الأحجام"
+
+#: src/app/(home)/themes/index.tsx
+msgid "Sky"
+msgstr "سماوي"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Slow Subtle Pulse"
+msgstr "نبض بطيء خفيف"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Small"
+msgstr "صغير"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Small body text"
+msgstr "نص أساسي صغير"
+
+#: src/app/(home)/components/button.tsx
+msgid "Small Button"
+msgstr "زر صغير"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Small Heading"
+msgstr "عنوان صغير"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Small toast"
+msgstr "إشعار صغير"
+
+#: src/app/(home)/components/menu.tsx
+#: src/app/(home)/components/menu.tsx
+msgid "SMS"
+msgstr "رسالة نصية"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Social"
+msgstr "التواصل الاجتماعي"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Soft"
+msgstr "ناعم"
+
+#: src/app/(home)/components/avatar.tsx
+msgid "Soft icon fallback"
+msgstr "أيقونة بديلة بنمط ناعم"
+
+#: src/app/(home)/components/avatar.tsx
+msgid "Soft text fallback"
+msgstr "نص بديل بنمط ناعم"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Soft variant colors"
+msgstr "ألوان المتغير الناعم"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Songs, albums & playlists"
+msgstr "الأغاني والألبومات وقوائم التشغيل"
+
+#: src/app/(home)/components/card.tsx
+msgid "Sound Electro"
+msgstr "ساوند إلكترو"
+
+#: src/components/themes-content/checkbox-content.tsx
+msgid "Special offers and exclusive deals"
+msgstr "عروض خاصة وصفقات حصرية"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Standard - complete when possible"
+msgstr "عادي - يُنجَز عند الإمكان"
+
+#: src/app/(home)/components/card.tsx
+msgid "Standard card appearance (surface-secondary). The default card variant for most use cases"
+msgstr "مظهر البطاقة القياسي (surface-secondary). المتغير الافتراضي للبطاقة في معظم حالات الاستخدام"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Standard delivery is free on orders over $50. Below that it's a flat $4.99."
+msgstr "التوصيل العادي مجاني للطلبات التي تتجاوز 50 دولارًا. وما دون ذلك برسوم ثابتة 4.99 دولارًا."
+
+#: src/app/(home)/components/radio-group.tsx
+#: src/app/(home)/components/radio-group.tsx
+msgid "Standard Shipping"
+msgstr "الشحن العادي"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Start"
+msgstr "البداية"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Start indicator alignment"
+msgstr "محاذاة مؤشر البداية"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Start upload"
+msgstr "بدء التحميل"
+
+#: src/app/(home)/components/select-native-modal.tsx
+#: src/app/(home)/components/select.tsx
+msgid "State"
+msgstr "الولاية"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/select.tsx
+#: src/app/(home)/components/switch.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "States"
+msgstr "الحالات"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Storage is full"
+msgstr "مساحة التخزين ممتلئة"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Styles"
+msgstr "الأنماط"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Sub Menu"
+msgstr "Sub Menu"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Sub Menu Groups"
+msgstr "مجموعات Sub Menu"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Submit"
+msgstr "إرسال"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Subscribe for €6.99/month"
+msgstr "اشترك مقابل €6.99/شهر"
+
+#: src/app/(home)/components/checkbox.tsx
+#: src/app/(home)/components/control-field.tsx
+msgid "Subscribe to newsletter"
+msgstr "الاشتراك في النشرة الإخبارية"
+
+#: src/app/(home)/components/label.tsx
+msgid "Subscription plan"
+msgstr "خطة الاشتراك"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Subsection"
+msgstr "قسم فرعي"
+
+#: src/app/(home)/components/alert.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+msgid "Success"
+msgstr "نجاح"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Success Color"
+msgstr "لون النجاح"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Success toast"
+msgstr "إشعار نجاح"
+
+#: src/app/(home)/components/alert.tsx
+msgid "Success, Warning, Danger"
+msgstr "نجاح، تحذير، خطر"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Surface"
+msgstr "Surface"
+
+#: src/app/(home)/components/surface.tsx
+#: src/app/(home)/components/surface.tsx
+#: src/app/(home)/components/surface.tsx
+#: src/app/(home)/components/surface.tsx
+msgid "Surface Content"
+msgstr "محتوى Surface"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Surface variant"
+msgstr "متغير Surface"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Swimming pool"
+msgstr "مسبح"
+
+#: src/app/(home)/components/control-field.tsx
+#: src/app/(home)/components/switch.tsx
+msgid "Switch between light and dark theme"
+msgstr "التبديل بين السمة الفاتحة والداكنة"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Switch ControlField set"
+msgstr "مجموعة Switch ControlField"
+
+#: src/app/(home)/components/menu.tsx
+msgid "System"
+msgstr "النظام"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Tap the X to remove tags"
+msgstr "اضغط على X لإزالة العلامات"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Task List"
+msgstr "قائمة المهام"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Taxi Comfort"
+msgstr "تاكسي كومفورت"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Taxi Priority"
+msgstr "تاكسي الأولوية"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Taxi XL"
+msgstr "تاكسي XL"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "Team Members"
+msgstr "أعضاء الفريق"
+
+#: src/app/(home)/components/popover-native-modal.tsx
+#: src/app/(home)/components/popover.tsx
+msgid "Tech History"
+msgstr "تاريخ التقنية"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Terms"
+msgstr "الشروط"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Terms & Privacy"
+msgstr "الشروط والخصوصية"
+
+#: src/app/(home)/components/link-button.tsx
+msgid "Terms of Service"
+msgstr "شروط الخدمة"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/pressable-feedback.tsx
+msgid "Tertiary"
+msgstr "ثالثي"
+
+#: src/app/(home)/components/chip.tsx
+msgid "Tertiary variant colors"
+msgstr "ألوان المتغير الثالثي"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Text Alignment"
+msgstr "محاذاة النص"
+
+#: src/app/(home)/components/text-area.tsx
+msgid "Text area is disabled and cannot be edited"
+msgstr "منطقة النص معطلة ولا يمكن تعديلها"
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "Text skeletons"
+msgstr "هياكل النص"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Text Style"
+msgstr "نمط النص"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "TextField with custom styles"
+msgstr "TextField مع أنماط مخصصة"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "TextField with icons"
+msgstr "TextField مع أيقونات"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "TextField with validation"
+msgstr "TextField مع التحقق"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "The art of building things with excellence - achieving platform mastery so you're never constrained by frameworks or tooling"
+msgstr "فن بناء الأشياء بإتقان - إتقان المنصة حتى لا تكون مقيدًا أبدًا بأطر العمل أو الأدوات"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "The code you entered is incorrect."
+msgstr "الرمز الذي أدخلته غير صحيح."
+
+#: src/app/(home)/components/popover-native-modal.tsx
+#: src/app/(home)/components/popover.tsx
+msgid "The first computer bug was an actual moth found trapped in a Harvard Mark II computer in 1947. Grace Hopper taped it to the log book with the note \"First actual case of bug being found.\""
+msgstr "كان أول خلل حاسوبي عثةً حقيقية عُثر عليها محتجزة داخل حاسوب Harvard Mark II عام 1947. وقد ألصقتها Grace Hopper في سجل الأعمال مع ملاحظة \"أول حالة فعلية لاكتشاف خلل\"."
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "The intersection of creative vision and technical implementation - empowering you to identify interface challenges and craft solutions from scratch."
+msgstr "تقاطع الرؤية الإبداعية والتنفيذ التقني - يمنحك القدرة على تحديد تحديات الواجهة وصياغة الحلول من الصفر."
+
+#: src/app/(home)/components/skeleton.tsx
+msgid "The new productivity dashboard makes it easy to track daily tasks and goals. You can customize widgets and set smart reminders."
+msgstr "تسهّل لوحة الإنتاجية الجديدة تتبع المهام والأهداف اليومية. يمكنك تخصيص الأدوات المصغّرة وضبط تذكيرات ذكية."
+
+#: src/app/(home)/components/control-field.tsx
+msgid "The privacy policy has been accepted"
+msgstr "تم قبول سياسة الخصوصية"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Theme"
+msgstr "المظهر"
+
+#: src/app/(home)/components/list-group.tsx
+#: src/app/(home)/components/list-group.tsx
+msgid "Theme, font size, display"
+msgstr "المظهر وحجم الخط والعرض"
+
+#: src/app/(home)/_layout.tsx
+#: src/app/(home)/components/separator.tsx
+#: src/app/(home)/index.tsx
+msgid "Themes"
+msgstr "المظاهر"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Thick"
+msgstr "سميك"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Thin (default)"
+msgstr "رقيق (الافتراضي)"
+
+#: src/app/(home)/components/switch.tsx
+msgid "This feature is currently unavailable"
+msgstr "هذه الميزة غير متوفرة حاليًا"
+
+#: src/app/(home)/components/typography.tsx
+msgid "This is a default body paragraph. It uses the base font size and normal weight for comfortable reading."
+msgstr "هذه فقرة نص افتراضية. تستخدم حجم الخط الأساسي والوزن العادي لقراءة مريحة."
+
+#: src/app/(home)/components/surface.tsx
+msgid "This is a default surface variant. It uses bg-surface styling."
+msgstr "هذا شكل سطح افتراضي. يستخدم تنسيق bg-surface."
+
+#: src/app/(home)/components/surface.tsx
+msgid "This is a secondary surface variant. It uses bg-surface-secondary styling."
+msgstr "هذا شكل سطح ثانوي. يستخدم تنسيق bg-surface-secondary."
+
+#: src/app/(home)/components/typography.tsx
+msgid "This is a smaller paragraph, useful for captions, footnotes, or secondary descriptions."
+msgstr "هذه فقرة أصغر، مفيدة للتسميات التوضيحية أو الحواشي أو الأوصاف الثانوية."
+
+#: src/app/(home)/components/surface.tsx
+msgid "This is a tertiary surface variant. It uses bg-surface-tertiary styling."
+msgstr "هذا شكل سطح ثالثي. يستخدم تنسيق bg-surface-tertiary."
+
+#: src/components/bottom-sheet/multi-step-detached.tsx
+msgid "This is a test title"
+msgstr "هذا عنوان تجريبي"
+
+#: src/app/(home)/components/surface.tsx
+msgid "This is a transparent surface variant. It uses bg-transparent styling."
+msgstr "هذا شكل سطح شفاف. يستخدم تنسيق bg-transparent."
+
+#: src/app/(home)/components/popover.tsx
+msgid "This popover appears on the {placement} side of the trigger button"
+msgstr "تظهر هذه النافذة المنبثقة على الجهة {placement} من زر التفعيل"
+
+#: src/app/(home)/components/text-field.tsx
+msgid "This promo code is invalid or has expired"
+msgstr "رمز العرض الترويجي غير صالح أو انتهت صلاحيته"
+
+#: src/app/(home)/components/card.tsx
+msgid "This sofa is perfect for modern tropical spaces, baroque inspired spaces."
+msgstr "هذه الأريكة مثالية للمساحات الاستوائية العصرية والمساحات المستوحاة من طراز الباروك."
+
+#: src/app/(home)/_layout.tsx
+msgid "Toast From Native Modal"
+msgstr "Toast من نافذة أصلية"
+
+#: src/app/(home)/components/card.tsx
+msgid "Today, 6:30 PM"
+msgstr "اليوم، 6:30 م"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Toggle bottom sheet presentation"
+msgstr "تبديل طريقة عرض الورقة السفلية"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Toggle error state for the username field"
+msgstr "تبديل حالة الخطأ لحقل اسم المستخدم"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Toggle keyboard"
+msgstr "تبديل لوحة المفاتيح"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Toggle should close on select"
+msgstr "تبديل الإغلاق عند الاختيار"
+
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+#: src/app/(home)/components/skeleton.tsx
+msgid "Toggle skeleton loading state"
+msgstr "تبديل حالة التحميل الهيكلية"
+
+#: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/text-field.tsx
+msgid "Toggle validation error state"
+msgstr "تبديل حالة خطأ التحقق"
+
+#: src/app/(home)/components/popover.tsx
+#: src/app/(home)/components/select.tsx
+msgid "Top"
+msgstr "أعلى"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Top Rated"
+msgstr "الأعلى تقييمًا"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Top toast"
+msgstr "Toast في الأعلى"
+
+#: src/app/(home)/components/card.tsx
+msgid "Transparent"
+msgstr "شفاف"
+
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/tag-group.tsx
+msgid "Travel"
+msgstr "السفر"
+
+#: src/app/(home)/components/slider.tsx
+msgid "Treble"
+msgstr "الطبقات العالية"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Trending & new releases"
+msgstr "الأكثر رواجًا والإصدارات الجديدة"
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Trip Details"
+msgstr "تفاصيل الرحلة"
+
+#: src/components/bottom-sheet/with-text-input.tsx
+msgid "Try a different search term"
+msgstr "جرّب كلمة بحث مختلفة"
+
+#: src/app/(home)/index.tsx
+msgid "Try different themes"
+msgstr "جرّب مظاهر مختلفة"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Two Sub Menus"
+msgstr "قائمتان فرعيتان"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Two-factor auth, app lock"
+msgstr "المصادقة الثنائية وقفل التطبيق"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Two-factor authentication"
+msgstr "المصادقة الثنائية"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Type to search"
+msgstr "اكتب للبحث"
+
+#: src/app/(home)/components/typography.tsx
+msgid "Types"
+msgstr "الأنواع"
+
+#: src/app/(home)/components/alert.tsx
+#: src/app/(home)/components/alert.tsx
+msgid "Unable to connect to server"
+msgstr "تعذّر الاتصال بالخادم"
+
+#: src/app/(home)/components/alert.tsx
+#: src/app/(home)/components/alert.tsx
+msgid "Unable to connect to the server. Check your internet connection and try again."
+msgstr "تعذّر الاتصال بالخادم. تحقق من اتصالك بالإنترنت وحاول مرة أخرى."
+
+#: src/app/(home)/components/menu.tsx
+msgid "Underline"
+msgstr "تسطير"
+
+#: src/components/themes-content/text-input-content.tsx
+msgid "Update"
+msgstr "تحديث"
+
+#: src/app/(home)/components/alert.tsx
+#: src/app/(home)/components/alert.tsx
+msgid "Update available"
+msgstr "يتوفر تحديث"
+
+#: src/components/bottom-sheet/basic.tsx
+msgid "Update Now"
+msgstr "التحديث الآن"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Update profile"
+msgstr "تحديث الملف الشخصي"
+
+#: src/app/(home)/components/dialog.tsx
+#: src/app/(home)/components/dialog.tsx
+msgid "Update Profile"
+msgstr "تحديث الملف الشخصي"
+
+#: src/components/bottom-sheet/update-bottom-sheet.tsx
+msgid "Update Ready"
+msgstr "التحديث جاهز"
+
+#: src/components/bottom-sheet/basic.tsx
+msgid "Update your software to the latest version for better security and performance."
+msgstr "حدّث برنامجك إلى أحدث إصدار للحصول على أمان وأداء أفضل."
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "Upgrade to a paid plan to continue using HeroUI Chat"
+msgstr "قم بالترقية إلى خطة مدفوعة لمتابعة استخدام HeroUI Chat"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "Upload Audio"
+msgstr "رفع ملف صوتي"
+
+#: src/components/toast/progress-toast.tsx
+msgid "Upload complete!"
+msgstr "تم الرفع بنجاح!"
+
+#. placeholder {0}: Math.round(progress)
+#: src/components/toast/progress-toast.tsx
+msgid "Uploading... {0}%"
+msgstr "جارٍ الرفع... {0}%"
+
+#: src/app/(home)/components/radio-group.tsx
+msgid "Urgent - requires immediate attention"
+msgstr "عاجل - يتطلب انتباهًا فوريًا"
+
+#: src/app/(home)/components/description.tsx
+msgid "Use at least 8 characters with a mix of letters, numbers, and symbols."
+msgstr "استخدم 8 أحرف على الأقل مع مزيج من الحروف والأرقام والرموز."
+
+#: src/app/(home)/components/text-field.tsx
+msgid "User Role"
+msgstr "دور المستخدم"
+
+#: src/app/(home)/components/field-error.tsx
+#: src/app/(home)/components/input-group.tsx
+#: src/app/(home)/components/label.tsx
+#: src/app/(home)/components/tabs.tsx
+msgid "Username"
+msgstr "اسم المستخدم"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Username is already taken"
+msgstr "اسم المستخدم مستخدم بالفعل"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Username is required"
+msgstr "اسم المستخدم مطلوب"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "Username must be 3-20 characters (letters, numbers, underscore only)"
+msgstr "يجب أن يكون اسم المستخدم من 3 إلى 20 حرفًا (حروف وأرقام وشرطة سفلية فقط)"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "Uses a custom search emoji icon"
+msgstr "يستخدم أيقونة إيموجي بحث مخصصة"
+
+#: src/app/(home)/components/field-error.tsx
+msgid "Validate Password"
+msgstr "التحقق من كلمة المرور"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Validation & error states"
+msgstr "حالات التحقق والخطأ"
+
+#: src/app/(home)/components/button.tsx
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/separator.tsx
+#: src/app/(home)/components/surface.tsx
+#: src/app/(home)/components/tag-group.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "Variants"
+msgstr "المتغيرات"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Verification icon"
+msgstr "أيقونة التحقق"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Verification Successful"
+msgstr "تم التحقق بنجاح"
+
+#: src/app/(home)/components/input-otp.tsx
+#: src/app/(home)/components/input-otp.tsx
+msgid "Verify account"
+msgstr "التحقق من الحساب"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Verify Code"
+msgstr "التحقق من الرمز"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Verify your phone number"
+msgstr "تحقق من رقم هاتفك"
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Verifying..."
+msgstr "جارٍ التحقق..."
+
+#: src/app/(home)/components/scroll-shadow.tsx
+#: src/app/(home)/components/separator.tsx
+#: src/app/(home)/components/slider.tsx
+msgid "Vertical"
+msgstr "عمودي"
+
+#: src/app/(home)/index.tsx
+msgid "View components in action"
+msgstr "شاهد المكونات أثناء العمل"
+
+#: src/app/(home)/components/card.tsx
+#: src/app/(home)/components/card.tsx
+msgid "View Details"
+msgstr "عرض التفاصيل"
+
+#: src/app/(home)/components/menu.tsx
+msgid "View Profile"
+msgstr "عرض الملف الشخصي"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "Visa ending in 4829"
+msgstr "بطاقة Visa المنتهية بـ 4829"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Visible to"
+msgstr "مرئي لـ"
+
+#: src/app/(home)/components/slider.tsx
+#: src/app/(home)/components/slider.tsx
+#: src/app/(home)/components/slider.tsx
+msgid "Volume"
+msgstr "مستوى الصوت"
+
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/chip.tsx
+msgid "Warning"
+msgstr "تحذير"
+
+#: src/app/(home)/components/separator.tsx
+msgid "Warning Color"
+msgstr "لون التحذير"
+
+#: src/app/(home)/components/toast.tsx
+msgid "Warning toast"
+msgstr "Toast تحذيري"
+
+#: src/app/(home)/components/control-field.tsx
+msgid "Warning: This will share your usage patterns"
+msgstr "تحذير: سيؤدي ذلك إلى مشاركة أنماط استخدامك"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "We deliver to more than 60 countries, usually within 7 to 14 business days. Any customs duties are calculated and shown at checkout before you pay."
+msgstr "نوصّل إلى أكثر من 60 دولة، عادةً خلال 7 إلى 14 يوم عمل. وتُحسب أي رسوم جمركية وتظهر في صفحة الدفع قبل أن تسدّد."
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "We sent a verification code to"
+msgstr "أرسلنا رمز تحقق إلى"
+
+#: src/app/(home)/components/description.tsx
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-field.tsx
+#: src/components/themes-content/text-input-content.tsx
+msgid "We'll never share your email with anyone else."
+msgstr "لن نشارك بريدك الإلكتروني مع أي شخص آخر."
+
+#: src/app/(home)/components/input-group.tsx
+msgid "We'll send a verification code to this number"
+msgstr "سنرسل رمز تحقق إلى هذا الرقم"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "We've sent a code to a****@gmail.com"
+msgstr "أرسلنا رمزًا إلى a****@gmail.com"
+
+#: src/app/(home)/components/card.tsx
+msgid "Wed, 4:30 PM"
+msgstr "الأربعاء، 4:30 م"
+
+#: src/components/themes-content/radio-group-content.tsx
+msgid "Weekly"
+msgstr "أسبوعيًا"
+
+#: src/components/themes-content/radio-group-content.tsx
+msgid "Weekly digest every Monday morning"
+msgstr "ملخص أسبوعي كل صباح يوم الاثنين"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "What defines UI craftsmanship?"
+msgstr "ما الذي يحدد إتقان واجهة المستخدم؟"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "What is design engineering?"
+msgstr "ما هي هندسة التصميم؟"
+
+#: src/app/(home)/components/tabs.tsx
+msgid "When someone mentions you in a comment"
+msgstr "عندما يشير إليك شخص ما في تعليق"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "Who should embrace this?"
+msgstr "من الذي ينبغي أن يتبنى هذا؟"
+
+#: src/components/accordion/accordion-with-depth-effect.tsx
+msgid "Why is craftsmanship important?"
+msgstr "لماذا الإتقان مهم؟"
+
+#: src/app/(home)/components/button.tsx
+msgid "Width/alignment control"
+msgstr "التحكم في العرض والمحاذاة"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "With avatar and remove button"
+msgstr "مع صورة رمزية وزر إزالة"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "With blur overlay"
+msgstr "مع طبقة ضبابية"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "With bottom sheet"
+msgstr "مع ورقة سفلية"
+
+#: src/app/(home)/components/alert.tsx
+msgid "With buttons"
+msgstr "مع أزرار"
+
+#: src/app/(home)/components/spinner.tsx
+msgid "With custom content"
+msgstr "مع محتوى مخصص"
+
+#: src/app/(home)/components/alert.tsx
+msgid "With custom indicator"
+msgstr "مع مؤشر مخصص"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "With depth effect"
+msgstr "مع تأثير العمق"
+
+#: src/app/(home)/components/chip.tsx
+msgid "With end content"
+msgstr "مع محتوى في النهاية"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "With error message"
+msgstr "مع رسالة خطأ"
+
+#: src/app/(home)/components/button.tsx
+msgid "With icons"
+msgstr "مع أيقونات"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "With label & description"
+msgstr "مع تسمية ووصف"
+
+#: src/app/(home)/components/input.tsx
+#: src/app/(home)/components/text-area.tsx
+msgid "With Label & Description"
+msgstr "مع تسمية ووصف"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "With Pattern"
+msgstr "مع نمط"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "With Placeholder"
+msgstr "مع نص بديل"
+
+#: src/app/(home)/components/input-group.tsx
+msgid "With prefix only"
+msgstr "مع بادئة فقط"
+
+#: src/app/(home)/components/list-group.tsx
+msgid "With pressable feedback"
+msgstr "مع تأثير الضغط"
+
+#: src/app/(home)/components/tag-group.tsx
+msgid "With remove button"
+msgstr "مع زر إزالة"
+
+#: src/app/(home)/components/input-group.tsx
+msgid "With select prefix"
+msgstr "مع بادئة قائمة اختيار"
+
+#: src/app/(home)/components/chip.tsx
+msgid "With start content"
+msgstr "مع محتوى في البداية"
+
+#: src/app/(home)/components/input-group.tsx
+msgid "With suffix only"
+msgstr "مع لاحقة فقط"
+
+#: src/app/(home)/components/popover.tsx
+msgid "With title & description"
+msgstr "مع عنوان ووصف"
+
+#: src/app/(home)/components/search-field.tsx
+msgid "With validation"
+msgstr "مع التحقق"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "With Validation"
+msgstr "مع التحقق"
+
+#: src/app/(home)/components/accordion.tsx
+msgid "Without separators"
+msgstr "بدون فواصل"
+
+#: src/app/(home)/components/dialog.tsx
+msgid "You are running low on disk space. Delete unnecessary files to free up space."
+msgstr "مساحة التخزين لديك على وشك الانتهاء. احذف الملفات غير الضرورية لتحرير مساحة."
+
+#: src/app/(home)/components/accordion.tsx
+msgid "You can change or cancel an order free of charge within two hours of placing it. After that your parcel may already be packed, so contact support and we'll help where we can."
+msgstr "يمكنك تعديل طلبك أو إلغاؤه دون أي رسوم خلال ساعتين من إتمامه. بعد ذلك قد يكون طلبك مُجهَّزًا للشحن، لذا تواصل مع الدعم وسنساعدك بما أمكن."
+
+#: src/app/(home)/components/toast.tsx
+#: src/app/(home)/components/toast.tsx
+msgid "You can continue using HeroUI Chat and more"
+msgstr "يمكنك متابعة استخدام HeroUI Chat والمزيد"
+
+#: src/app/(home)/components/toast.tsx
+msgid "You have 2 credits left"
+msgstr "لديك رصيدان متبقيان"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "You'll need to top up to buy"
+msgstr "ستحتاج إلى إضافة رصيد لإتمام الشراء"
+
+#: src/components/toast/achievement-toast.tsx
+msgid "You're on a 1-day study streak"
+msgstr "لديك سلسلة دراسة متواصلة لمدة يوم واحد"
+
+#: src/app/(home)/components/input-otp.tsx
+msgid "Your code has been verified successfully. You can proceed."
+msgstr "تم التحقق من رمزك بنجاح. يمكنك المتابعة."
+
+#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+msgid "Your driver will arrive at the pickup location shortly. Please be ready when they arrive."
+msgstr "سيصل السائق إلى موقع الاستلام قريبًا. يُرجى الاستعداد عند وصوله."
+
+#: src/app/(home)/components/popover.tsx
+msgid "Your payment of $49.99 has been processed successfully. Receipt sent to your email."
+msgstr "تمت معالجة دفعتك بقيمة 49.99 دولارًا بنجاح. تم إرسال الإيصال إلى بريدك الإلكتروني."
+
+#: src/components/bottom-sheet/with-otp-input.tsx
+msgid "Your phone number has been successfully verified."
+msgstr "تم التحقق من رقم هاتفك بنجاح."
+
+#: src/app/(home)/components/alert.tsx
+msgid "Your profile information has been updated. Review the changes in your account settings."
+msgstr "تم تحديث معلومات ملفك الشخصي. راجع التغييرات في إعدادات حسابك."
+
+#: src/app/(home)/components/toast.tsx
+msgid "Your subscription has been renewed. You will be charged $9.99/month. Thank you for your continued support."
+msgstr "تم تجديد اشتراكك. سيتم خصم 9.99 دولارًا شهريًا. شكرًا لدعمك المتواصل."
+
+#: src/app/(home)/components/text-field.tsx
+msgid "Your unique account identifier"
+msgstr "معرّف حسابك الفريد"
+
+#: src/app/(home)/components/menu.tsx
+msgid "Zen Mode"
+msgstr "وضع الهدوء"

@@ -1,3 +1,7 @@
+/* eslint-disable lingui/no-unlocalized-strings -- The long-form body copy on
+   this screen is lorem ipsum filler that exists purely to overflow the scroll
+   container; translating placeholder Latin is meaningless. */
+import { msg } from '@lingui/core/macro';
 import { FlashList } from '@shopify/flash-list';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ScrollShadow, Surface } from 'heroui-native';
@@ -200,12 +204,12 @@ const HorizontalContent = () => {
 const SCROLL_SHADOW_VARIANTS: UsageVariant[] = [
   {
     value: 'vertical',
-    label: 'Vertical',
+    label: msg`Vertical`,
     content: <VerticalContent />,
   },
   {
     value: 'horizontal',
-    label: 'Horizontal',
+    label: msg`Horizontal`,
     content: <HorizontalContent />,
   },
 ];

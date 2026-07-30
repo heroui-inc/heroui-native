@@ -1,4 +1,6 @@
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { useRouter } from 'expo-router';
 import { BottomSheet, Button } from 'heroui-native';
 import { useState } from 'react';
@@ -19,6 +21,7 @@ const StyledFontAwesome5 = withUniwind(FontAwesome5);
 // ------------------------------------------------------------------------------
 
 const DetachedBottomSheetContent = () => {
+  const { t } = useLingui();
   const [isOpen, setIsOpen] = useState(false);
 
   const insets = useSafeAreaInsets();
@@ -30,7 +33,7 @@ const DetachedBottomSheetContent = () => {
           <BottomSheet.Trigger asChild>
             <Button variant="secondary" isDisabled={isOpen}>
               <Button.Label maxFontSizeMultiplier={1.6}>
-                Detached bottom sheet
+                {t`Detached bottom sheet`}
               </Button.Label>
             </Button>
           </BottomSheet.Trigger>
@@ -54,10 +57,10 @@ const DetachedBottomSheetContent = () => {
               </View>
               <View className="mb-6 items-center">
                 <BottomSheet.Title className="text-center text-xl font-bold">
-                  Oh! Your wallet is empty
+                  {t`Oh! Your wallet is empty`}
                 </BottomSheet.Title>
                 <BottomSheet.Description className="text-center">
-                  You'll need to top up to buy
+                  {t`You'll need to top up to buy`}
                 </BottomSheet.Description>
               </View>
               <Button
@@ -67,10 +70,11 @@ const DetachedBottomSheetContent = () => {
                 feedbackVariant="scale"
               >
                 <Button.Label className="text-white font-semibold">
-                  Add Cash
+                  {t`Add Cash`}
                 </Button.Label>
               </Button>
               <View className="flex-row items-center justify-center">
+                {/* eslint-disable-next-line lingui/no-unlocalized-strings -- Payment network brand names. */}
                 {['Apple Pay', 'Mastercard', 'Visa', 'Amex'].map(
                   (label, index, array) => (
                     <View key={label} className="flex-row items-center">
@@ -103,6 +107,7 @@ const DetachedBottomSheetContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithBlurOverlayContent = () => {
+  const { t } = useLingui();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -112,7 +117,7 @@ const WithBlurOverlayContent = () => {
           <BottomSheet.Trigger asChild>
             <Button variant="secondary" isDisabled={isOpen}>
               <Button.Label maxFontSizeMultiplier={1.2}>
-                Bottom sheet with blur overlay
+                {t`Bottom sheet with blur overlay`}
               </Button.Label>
             </Button>
           </BottomSheet.Trigger>
@@ -124,27 +129,24 @@ const WithBlurOverlayContent = () => {
                   className="text-2xl font-semibold"
                   maxFontSizeMultiplier={1.2}
                 >
-                  Delete account?
+                  {t`Delete account?`}
                 </BottomSheet.Title>
                 <BottomSheet.Description maxFontSizeMultiplier={1.2}>
-                  If you delete your account, you won't be able to restore it or
-                  receive support.
+                  {t`If you delete your account, you won't be able to restore it or receive support.`}
                 </BottomSheet.Description>
                 <BottomSheet.Description maxFontSizeMultiplier={1.2}>
-                  Our app will no longer be able to provide support for any of
-                  your trips, such as providing a refund or locking for lost
-                  items.
+                  {t`Our app will no longer be able to provide support for any of your trips, such as providing a refund or locking for lost items.`}
                 </BottomSheet.Description>
                 <BottomSheet.Description maxFontSizeMultiplier={1.2}>
-                  For other deletion options, see our Privacy Policy.
+                  {t`For other deletion options, see our Privacy Policy.`}
                 </BottomSheet.Description>
               </View>
               <View className="gap-3">
                 <Button variant="danger" onPress={() => setIsOpen(false)}>
-                  Delete forever
+                  {t`Delete forever`}
                 </Button>
                 <Button variant="tertiary" onPress={() => setIsOpen(false)}>
-                  Cancel
+                  {t`Cancel`}
                 </Button>
               </View>
             </BottomSheet.Content>
@@ -158,6 +160,7 @@ const WithBlurOverlayContent = () => {
 // ------------------------------------------------------------------------------
 
 const NativeModalBottomSheetContent = () => {
+  const { t } = useLingui();
   const router = useRouter();
 
   if (Platform.OS !== 'ios') {
@@ -172,7 +175,7 @@ const NativeModalBottomSheetContent = () => {
           onPress={() => router.push('components/bottom-sheet-native-modal')}
         >
           <Button.Label maxFontSizeMultiplier={1.2}>
-            Bottom sheet from native modal
+            {t`Bottom sheet from native modal`}
           </Button.Label>
         </Button>
       </View>
@@ -185,37 +188,37 @@ const NativeModalBottomSheetContent = () => {
 const BOTTOM_SHEET_VARIANTS_IOS: UsageVariant[] = [
   {
     value: 'basic-bottom-sheet',
-    label: 'Basic bottom sheet',
+    label: msg`Basic bottom sheet`,
     content: <BasicBottomSheetContent />,
   },
   {
     value: 'detached-bottom-sheet',
-    label: 'Detached bottom sheet',
+    label: msg`Detached bottom sheet`,
     content: <DetachedBottomSheetContent />,
   },
   {
     value: 'with-blur-overlay',
-    label: 'With blur overlay',
+    label: msg`With blur overlay`,
     content: <WithBlurOverlayContent />,
   },
   {
     value: 'scrollable-with-snap-points',
-    label: 'Scrollable with snap points',
+    label: msg`Scrollable with snap points`,
     content: <ScrollableWithSnapPointsContent />,
   },
   {
     value: 'native-modal-bottom-sheet',
-    label: 'Bottom sheet from native modal',
+    label: msg`Bottom sheet from native modal`,
     content: <NativeModalBottomSheetContent />,
   },
   {
     value: 'with-text-input',
-    label: 'Bottom sheet with text input',
+    label: msg`Bottom sheet with text input`,
     content: <WithTextInputContent />,
   },
   {
     value: 'with-otp-input',
-    label: 'Bottom sheet with OTP input',
+    label: msg`Bottom sheet with OTP input`,
     content: <WithOTPInputContent />,
   },
 ];
@@ -223,27 +226,27 @@ const BOTTOM_SHEET_VARIANTS_IOS: UsageVariant[] = [
 const BOTTOM_SHEET_VARIANTS_ANDROID: UsageVariant[] = [
   {
     value: 'basic-bottom-sheet',
-    label: 'Basic bottom sheet',
+    label: msg`Basic bottom sheet`,
     content: <BasicBottomSheetContent />,
   },
   {
     value: 'detached-bottom-sheet',
-    label: 'Detached bottom sheet',
+    label: msg`Detached bottom sheet`,
     content: <DetachedBottomSheetContent />,
   },
   {
     value: 'scrollable-with-snap-points',
-    label: 'Scrollable with snap points',
+    label: msg`Scrollable with snap points`,
     content: <ScrollableWithSnapPointsContent />,
   },
   {
     value: 'with-text-input',
-    label: 'Bottom sheet with text input',
+    label: msg`Bottom sheet with text input`,
     content: <WithTextInputContent />,
   },
   {
     value: 'with-otp-input',
-    label: 'Bottom sheet with OTP input',
+    label: msg`Bottom sheet with OTP input`,
     content: <WithOTPInputContent />,
   },
 ];

@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useLingui } from '@lingui/react/macro';
 import { Toast, useThemeColor, type ToastComponentProps } from 'heroui-native';
 import { useEffect } from 'react';
 import { View } from 'react-native';
@@ -20,6 +21,8 @@ const StyledIonicons = withUniwind(Ionicons);
  */
 export const AchievementToast = (props: ToastComponentProps) => {
   const { id, hide } = props;
+
+  const { t } = useLingui();
 
   const themeColorWarning = useThemeColor('warning');
 
@@ -171,13 +174,11 @@ export const AchievementToast = (props: ToastComponentProps) => {
         {/* Text content */}
         <View className="flex-1 flex-col gap-1">
           <Toast.Title className="text-xs font-medium text-[#2D3748]">
-            New achievement!
+            {t`New achievement!`}
           </Toast.Title>
+          {/* Kept as one message so translators control where the line breaks. */}
           <Toast.Title className="text-base font-bold text-[#2D3748]">
-            You're on a 1-day
-          </Toast.Title>
-          <Toast.Title className="text-base font-bold text-[#2D3748]">
-            study streak
+            {t`You're on a 1-day study streak`}
           </Toast.Title>
         </View>
 

@@ -16,6 +16,7 @@ import Animated, { FadeIn } from 'react-native-reanimated';
 import { withUniwind } from 'uniwind';
 import { useAppTheme } from '../../../../contexts/app-theme-context';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
+import { SHOWCASE_PORTAL_HOST } from '../../../showcase-ltr-scope';
 import { DialogHeader } from '../dialog-header';
 
 const StyledFeather = withUniwind(Feather);
@@ -151,7 +152,7 @@ export const Priority: FC = () => {
           </Chip.Label>
         </Chip>
       </Dialog.Trigger>
-      <Dialog.Portal>
+      <Dialog.Portal hostName={SHOWCASE_PORTAL_HOST}>
         <DialogBlurBackdrop />
         <Dialog.Content>
           <DialogHeader>Priority</DialogHeader>

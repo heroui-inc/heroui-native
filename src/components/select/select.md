@@ -160,7 +160,7 @@ Control the width of the select content using the `width` prop. This only works 
 </Select>;
 ```
 
-### Bottom Sheet Presentation
+### BottomSheet Presentation
 
 Use bottom sheet for mobile-optimized selection experience.
 
@@ -523,15 +523,15 @@ Animation configuration for Select.TriggerIndicator component. Can be:
 
 ### Select.Portal
 
-| prop                       | type        | default | description                                                                                                                   |
-| -------------------------- | ----------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `children`                 | `ReactNode` | -       | The portal content (required)                                                                                                 |
-| `disableFullWindowOverlay` | `boolean`   | `false` | When true on iOS, uses View instead of FullWindowOverlay. Enables element inspector; overlay won't appear above native modals |
-| `unstable_accessibilityContainerViewIsModal` | `boolean` | `false` | Controls whether VoiceOver treats the overlay window as a modal container. When `true`, VoiceOver is restricted to elements inside the overlay. iOS only. Unstable: may change with react-native-screens updates |
-| `className`                | `string`    | -       | Additional CSS classes for the portal container                                                                               |
-| `hostName`                 | `string`    | -       | Optional name of the host element for the portal                                                                              |
-| `forceMount`               | `boolean`   | -       | Whether to force mount the component in the DOM                                                                               |
-| `...ViewProps`             | `ViewProps` | -       | All standard React Native View props are supported                                                                            |
+| prop                                         | type        | default | description                                                                                                                                                                                                      |
+| -------------------------------------------- | ----------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`                                   | `ReactNode` | -       | The portal content (required)                                                                                                                                                                                    |
+| `disableFullWindowOverlay`                   | `boolean`   | `false` | When true on iOS, uses View instead of FullWindowOverlay. Enables element inspector; overlay won't appear above native modals                                                                                    |
+| `unstable_accessibilityContainerViewIsModal` | `boolean`   | `false` | Controls whether VoiceOver treats the overlay window as a modal container. When `true`, VoiceOver is restricted to elements inside the overlay. iOS only. Unstable: may change with react-native-screens updates |
+| `className`                                  | `string`    | -       | Additional CSS classes for the portal container                                                                                                                                                                  |
+| `hostName`                                   | `string`    | -       | Optional name of the host element for the portal                                                                                                                                                                 |
+| `forceMount`                                 | `boolean`   | -       | Whether to force mount the component in the DOM                                                                                                                                                                  |
+| `...ViewProps`                               | `ViewProps` | -       | All standard React Native View props are supported                                                                                                                                                               |
 
 ### Select.Overlay
 
@@ -593,7 +593,7 @@ Animation configuration for Select.Content component (popover presentation). Can
 | `entering` | `EntryOrExitLayoutType` | -       | Custom Keyframe animation for entering transition (default: Keyframe with translateY/translateX, scale, opacity based on placement, 200ms) |
 | `exiting`  | `EntryOrExitLayoutType` | -       | Custom Keyframe animation for exiting transition (default: Keyframe mirroring entering animation, 150ms)                                   |
 
-### Select.Content (Bottom Sheet Presentation)
+### Select.Content (BottomSheet Presentation)
 
 | prop                        | type               | default | description                                      |
 | --------------------------- | ------------------ | ------- | ------------------------------------------------ |
@@ -696,9 +696,9 @@ When using a render function for `children`, the following props are provided:
 
 #### SelectItemIndicatorIconProps
 
-| prop    | type     | default          | description       |
-| ------- | -------- | ---------------- | ----------------- |
-| `size`  | `number` | `16`             | Size of the icon  |
+| prop    | type     | default                            | description       |
+| ------- | -------- | ---------------------------------- | ----------------- |
+| `size`  | `number` | `16`                               | Size of the icon  |
 | `color` | `string` | theme accent-soft-foreground color | Color of the icon |
 
 ## Hooks

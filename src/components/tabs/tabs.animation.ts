@@ -24,8 +24,6 @@ import type {
   TabsSeparatorAnimation,
 } from './tabs.types';
 
-const isRTL = I18nManager.isRTL;
-
 // --------------------------------------------------
 
 /**
@@ -59,6 +57,16 @@ export function useTabsIndicatorAnimation(options: {
   const { value } = TabsPrimitives.useRootContext();
   const { listWidth, measurements } = useTabsMeasurements();
   const activeMeasurements = measurements[value];
+
+  // The indicator is absolutely positioned with a physical `left: 0`, which
+  // React Native re-anchors to the right edge only under app-wide RTL
+  // (`I18nManager.forceRTL`). A soft direction — `HeroUINativeProvider`
+  // `config.isRTL` or a `direction` style — leaves the anchor on the left while
+  // still laying the triggers out right-to-left, and `onLayout` reports `x`
+  // from the left edge in both cases. So the re-basing below must key off the
+  // anchor swap, not off the direction the tabs are rendered in.
+  const isAnchorMirrored =
+    I18nManager.isRTL && I18nManager.doLeftAndRightSwapInRTL;
 
   // Read from global animation context (always available in compound parts)
   const { isAllAnimationsDisabled } = useAnimationSettings();
@@ -120,13 +128,14 @@ export function useTabsIndicatorAnimation(options: {
     }
 
     const translateX = getIndicatorTranslateX({
+      isAnchorMirrored,
       listWidth,
       tabWidth: activeMeasurements.width,
       tabX: activeMeasurements.x,
     });
 
     if (!hasMeasured.value) {
-      if (isRTL && listWidth === 0) {
+      if (isAnchorMirrored && listWidth === 0) {
         return {
           width: 0,
           height: 0,
@@ -179,6 +188,7 @@ export function useTabsIndicatorAnimation(options: {
   }, [
     activeMeasurements,
     isAnimationDisabledValue,
+    isAnchorMirrored,
     listWidth,
     widthConfig,
     heightConfig,
@@ -190,20 +200,36 @@ export function useTabsIndicatorAnimation(options: {
   };
 }
 
+/**
+ * Converts a trigger's measured left-origin `x` into the indicator's
+ * `translateX`.
+ *
+ * @param {object} options - Measurement inputs
+ * @param {boolean} options.isAnchorMirrored - Whether the indicator's `left: 0`
+ *   has been re-anchored to the right edge by app-wide RTL
+ * @param {number} options.listWidth - Measured width of the tab strip
+ * @param {number} options.tabWidth - Measured width of the active trigger
+ * @param {number} options.tabX - Measured left-origin offset of the active
+ *   trigger within the tab strip
+ * @returns {number} Offset to apply to the indicator
+ */
 function getIndicatorTranslateX({
+  isAnchorMirrored,
   listWidth,
   tabWidth,
   tabX,
 }: {
+  isAnchorMirrored: boolean;
   listWidth: number;
   tabWidth: number;
   tabX: number;
 }) {
   'worklet';
-  if (!(isRTL && listWidth > 0)) {
+  if (!(isAnchorMirrored && listWidth > 0)) {
     return tabX;
   }
 
+  // Re-base the left-origin offset against the right-anchored starting point.
   return tabX - (listWidth - tabWidth);
 }
 

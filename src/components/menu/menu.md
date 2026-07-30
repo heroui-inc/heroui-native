@@ -266,7 +266,7 @@ Control where the menu appears relative to the trigger.
 </Menu>
 ```
 
-### Bottom Sheet Presentation
+### BottomSheet Presentation
 
 Use `presentation="bottom-sheet"` to display menu content as a bottom sheet modal.
 
@@ -429,14 +429,14 @@ Animation configuration for menu root component. Can be:
 
 ### Menu.Portal
 
-| prop                       | type              | default | description                                            |
-| -------------------------- | ----------------- | ------- | ------------------------------------------------------ |
-| `children`                 | `React.ReactNode` | -       | The portal content                                     |
-| `className`                | `string`          | -       | Additional CSS class for the portal container          |
-| `disableFullWindowOverlay` | `boolean`         | `false` | Use a regular View instead of FullWindowOverlay on iOS |
-| `unstable_accessibilityContainerViewIsModal` | `boolean` | `false` | Controls whether VoiceOver treats the overlay window as a modal container. When `true`, VoiceOver is restricted to elements inside the overlay. iOS only. Unstable: may change with react-native-screens updates |
-| `hostName`                 | `string`          | -       | Optional name of the host element for the portal       |
-| `forceMount`               | `boolean`         | -       | Force mount the portal regardless of open state        |
+| prop                                         | type              | default | description                                                                                                                                                                                                      |
+| -------------------------------------------- | ----------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`                                   | `React.ReactNode` | -       | The portal content                                                                                                                                                                                               |
+| `className`                                  | `string`          | -       | Additional CSS class for the portal container                                                                                                                                                                    |
+| `disableFullWindowOverlay`                   | `boolean`         | `false` | Use a regular View instead of FullWindowOverlay on iOS                                                                                                                                                           |
+| `unstable_accessibilityContainerViewIsModal` | `boolean`         | `false` | Controls whether VoiceOver treats the overlay window as a modal container. When `true`, VoiceOver is restricted to elements inside the overlay. iOS only. Unstable: may change with react-native-screens updates |
+| `hostName`                                   | `string`          | -       | Optional name of the host element for the portal                                                                                                                                                                 |
+| `forceMount`                                 | `boolean`         | -       | Force mount the portal regardless of open state                                                                                                                                                                  |
 
 ### Menu.Overlay
 
@@ -495,7 +495,7 @@ Animation configuration for menu popover content component. Can be:
 | `entering.value` | `EntryOrExitLayoutType` | Scale + fade entering animation | Custom entering animation for content           |
 | `exiting.value`  | `EntryOrExitLayoutType` | Scale + fade exiting animation  | Custom exiting animation for content            |
 
-### Menu.Content (Bottom Sheet)
+### Menu.Content (BottomSheet)
 
 Props when `presentation="bottom-sheet"`. Extends `@gorhom/bottom-sheet` BottomSheet props.
 

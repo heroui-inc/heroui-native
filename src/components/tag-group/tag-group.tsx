@@ -133,7 +133,7 @@ const TagGroupList = forwardRef<ViewRef, TagGroupListProps>((props, ref) => {
     <TagGroupPrimitives.List
       ref={ref}
       className={listClassName}
-      style={style}
+      style={[tagGroupStyleSheet.list, style] as StyleProp<ViewStyle>}
       {...restProps}
     >
       {hasChildren ? children : renderEmptyState?.()}

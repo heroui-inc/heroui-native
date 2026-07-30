@@ -30,7 +30,7 @@ const listBackground = tv({
 });
 
 const scrollView = tv({
-  base: '',
+  base: 'tabs__scroll-view',
   variants: {
     variant: {
       primary: 'tabs__scroll-view--variant-primary',
@@ -43,7 +43,7 @@ const scrollView = tv({
 });
 
 const scrollViewContentContainer = tv({
-  base: '',
+  base: 'tabs__scroll-view-content-container',
   variants: {
     variant: {
       primary: 'tabs__scroll-view-content-container--variant-primary',

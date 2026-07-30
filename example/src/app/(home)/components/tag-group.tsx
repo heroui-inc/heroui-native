@@ -105,7 +105,9 @@ const CategoriesTagGroup: React.FC<CategoriesTagGroupProps> = ({
 const BasicContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <CategoriesTagGroup selectionMode="single" />
+      <View className="w-full">
+        <CategoriesTagGroup selectionMode="single" />
+      </View>
     </View>
   );
 };
@@ -117,20 +119,20 @@ const VariantsContent = () => {
 
   return (
     <View className="flex-1 px-5 items-center justify-center gap-6">
-      <View className="gap-2">
-        <AppText className="text-sm text-muted">{t`Default`}</AppText>
+      <View className="w-full gap-2">
+        <AppText className="text-sm text-muted text-center">{t`Default`}</AppText>
         <TagGroup selectionMode="single" variant="default">
-          <TagGroup.List>
+          <TagGroup.List className="justify-center">
             <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
             <TagGroup.Item id="travel">{t`Travel`}</TagGroup.Item>
             <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
-      <View className="gap-2">
-        <AppText className="text-sm text-muted">{t`Surface`}</AppText>
+      <View className="w-full gap-2">
+        <AppText className="text-sm text-muted text-center">{t`Surface`}</AppText>
         <TagGroup selectionMode="single" variant="surface">
-          <TagGroup.List>
+          <TagGroup.List className="justify-center">
             <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
             <TagGroup.Item id="travel">{t`Travel`}</TagGroup.Item>
             <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>
@@ -148,30 +150,30 @@ const SizesContent = () => {
 
   return (
     <View className="flex-1 px-5 items-center justify-center gap-6">
-      <View className="gap-2">
+      <View className="w-full gap-2">
         <AppText className="text-sm text-muted text-center">sm</AppText>
         <TagGroup selectionMode="single" size="sm">
-          <TagGroup.List>
+          <TagGroup.List className="justify-center">
             <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
             <TagGroup.Item id="travel">{t`Travel`}</TagGroup.Item>
             <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
-      <View className="gap-2">
+      <View className="w-full gap-2">
         <AppText className="text-sm text-muted text-center">md</AppText>
         <TagGroup selectionMode="single" size="md">
-          <TagGroup.List>
+          <TagGroup.List className="justify-center">
             <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
             <TagGroup.Item id="travel">{t`Travel`}</TagGroup.Item>
             <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
-      <View className="gap-2">
+      <View className="w-full gap-2">
         <AppText className="text-sm text-muted text-center">lg</AppText>
         <TagGroup selectionMode="single" size="lg">
-          <TagGroup.List>
+          <TagGroup.List className="justify-center">
             <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
             <TagGroup.Item id="travel">{t`Travel`}</TagGroup.Item>
             <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>
@@ -194,11 +196,13 @@ const SingleSelectionContent = () => {
 
   return (
     <View className="flex-1 px-5 items-center justify-center gap-4">
-      <CategoriesTagGroup
-        selectionMode="single"
-        selectedKeys={selected}
-        onSelectionChange={setSelected}
-      />
+      <View className="w-full">
+        <CategoriesTagGroup
+          selectionMode="single"
+          selectedKeys={selected}
+          onSelectionChange={setSelected}
+        />
+      </View>
       <AppText className="text-sm text-muted">
         {t`Selected: ${selectedLabel}`}
       </AppText>
@@ -218,11 +222,13 @@ const MultipleSelectionContent = () => {
 
   return (
     <View className="flex-1 px-5 items-center justify-center gap-4">
-      <CategoriesTagGroup
-        selectionMode="multiple"
-        selectedKeys={selected}
-        onSelectionChange={setSelected}
-      />
+      <View className="w-full">
+        <CategoriesTagGroup
+          selectionMode="multiple"
+          selectedKeys={selected}
+          onSelectionChange={setSelected}
+        />
+      </View>
       <AppText className="text-sm text-muted">
         {t`Selected: ${selectedLabel}`}
       </AppText>
@@ -237,10 +243,12 @@ const DisabledContent = () => {
 
   return (
     <View className="flex-1 px-5 items-center justify-center gap-6">
-      <View className="gap-2">
-        <AppText className="text-sm text-muted">{t`Individual disabled`}</AppText>
+      <View className="w-full gap-2">
+        <AppText className="text-sm text-muted text-center">
+          {t`Individual disabled`}
+        </AppText>
         <TagGroup selectionMode="single">
-          <TagGroup.List>
+          <TagGroup.List className="justify-center">
             <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
             <TagGroup.Item id="travel" isDisabled>
               {t`Travel`}
@@ -249,13 +257,15 @@ const DisabledContent = () => {
           </TagGroup.List>
         </TagGroup>
       </View>
-      <View className="gap-2">
-        <AppText className="text-sm text-muted">{t`Disabled keys`}</AppText>
+      <View className="w-full gap-2">
+        <AppText className="text-sm text-muted text-center">
+          {t`Disabled keys`}
+        </AppText>
         <TagGroup
           selectionMode="single"
           disabledKeys={new Set(['travel', 'gaming'])}
         >
-          <TagGroup.List>
+          <TagGroup.List className="justify-center">
             <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
             <TagGroup.Item id="travel">{t`Travel`}</TagGroup.Item>
             <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>

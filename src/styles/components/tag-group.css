@@ -5,6 +5,7 @@
 .tag-group__list {
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: calc(var(--spacing) * 2);
 }
 

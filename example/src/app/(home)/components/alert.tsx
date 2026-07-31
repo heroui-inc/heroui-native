@@ -1,9 +1,13 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { Alert, Button, CloseButton, Spinner } from 'heroui-native';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
 const DefaultAndAccentContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full gap-4">
@@ -11,11 +15,10 @@ const DefaultAndAccentContent = () => {
           <Alert.Indicator />
           <Alert.Content>
             <Alert.Title maxFontSizeMultiplier={1.4}>
-              New features available
+              {t`New features available`}
             </Alert.Title>
             <Alert.Description maxFontSizeMultiplier={1.4}>
-              Check out our latest updates including dark mode support and
-              improved accessibility features.
+              {t`Check out our latest updates including dark mode support and improved accessibility features.`}
             </Alert.Description>
           </Alert.Content>
         </Alert>
@@ -23,11 +26,10 @@ const DefaultAndAccentContent = () => {
           <Alert.Indicator />
           <Alert.Content>
             <Alert.Title maxFontSizeMultiplier={1.4}>
-              Update available
+              {t`Update available`}
             </Alert.Title>
             <Alert.Description maxFontSizeMultiplier={1.4}>
-              A new version of the application is available. Please refresh to
-              get the latest features and bug fixes.
+              {t`A new version of the application is available. Please refresh to get the latest features and bug fixes.`}
             </Alert.Description>
           </Alert.Content>
         </Alert>
@@ -39,16 +41,17 @@ const DefaultAndAccentContent = () => {
 // ------------------------------------------------------------------------------
 
 const SuccessWarningDangerContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full gap-4">
         <Alert status="success">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Title maxFontSizeMultiplier={1}>Success</Alert.Title>
+            <Alert.Title maxFontSizeMultiplier={1}>{t`Success`}</Alert.Title>
             <Alert.Description maxFontSizeMultiplier={1}>
-              Your profile information has been updated. Review the changes in
-              your account settings.
+              {t`Your profile information has been updated. Review the changes in your account settings.`}
             </Alert.Description>
           </Alert.Content>
         </Alert>
@@ -56,11 +59,10 @@ const SuccessWarningDangerContent = () => {
           <Alert.Indicator />
           <Alert.Content>
             <Alert.Title maxFontSizeMultiplier={1}>
-              Scheduled maintenance
+              {t`Scheduled maintenance`}
             </Alert.Title>
             <Alert.Description maxFontSizeMultiplier={1}>
-              Our services will be unavailable on Sunday, March 15th from 2:00
-              AM to 6:00 AM UTC for scheduled maintenance.
+              {t`Our services will be unavailable on Sunday, March 15th from 2:00 AM to 6:00 AM UTC for scheduled maintenance.`}
             </Alert.Description>
           </Alert.Content>
         </Alert>
@@ -69,11 +71,10 @@ const SuccessWarningDangerContent = () => {
           <Alert.Indicator />
           <Alert.Content>
             <Alert.Title maxFontSizeMultiplier={1}>
-              Unable to connect to server
+              {t`Unable to connect to server`}
             </Alert.Title>
             <Alert.Description maxFontSizeMultiplier={1}>
-              Unable to connect to the server. Check your internet connection
-              and try again.
+              {t`Unable to connect to the server. Check your internet connection and try again.`}
             </Alert.Description>
           </Alert.Content>
         </Alert>
@@ -85,6 +86,8 @@ const SuccessWarningDangerContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithButtonsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full gap-4">
@@ -92,15 +95,14 @@ const WithButtonsContent = () => {
           <Alert.Indicator />
           <Alert.Content>
             <Alert.Title maxFontSizeMultiplier={1}>
-              Update available
+              {t`Update available`}
             </Alert.Title>
             <Alert.Description maxFontSizeMultiplier={1}>
-              A new version of the application is available. Please refresh to
-              get the latest features and bug fixes.
+              {t`A new version of the application is available. Please refresh to get the latest features and bug fixes.`}
             </Alert.Description>
           </Alert.Content>
           <Button size="sm" variant="primary">
-            Refresh
+            {t`Refresh`}
           </Button>
         </Alert>
 
@@ -108,15 +110,14 @@ const WithButtonsContent = () => {
           <Alert.Indicator />
           <Alert.Content>
             <Alert.Title maxFontSizeMultiplier={1}>
-              Unable to connect to server
+              {t`Unable to connect to server`}
             </Alert.Title>
             <Alert.Description maxFontSizeMultiplier={1}>
-              Unable to connect to the server. Check your internet connection
-              and try again.
+              {t`Unable to connect to the server. Check your internet connection and try again.`}
             </Alert.Description>
           </Alert.Content>
           <Button size="sm" variant="danger">
-            Retry
+            {t`Retry`}
           </Button>
         </Alert>
 
@@ -124,7 +125,7 @@ const WithButtonsContent = () => {
           <Alert.Indicator className="pt-0" />
           <Alert.Content>
             <Alert.Title maxFontSizeMultiplier={1}>
-              Profile updated successfully
+              {t`Profile updated successfully`}
             </Alert.Title>
           </Alert.Content>
           <CloseButton />
@@ -137,6 +138,8 @@ const WithButtonsContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithCustomIndicatorContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full gap-4">
@@ -147,9 +150,9 @@ const WithCustomIndicatorContent = () => {
             </Spinner>
           </Alert.Indicator>
           <Alert.Content>
-            <Alert.Title>Processing your request</Alert.Title>
+            <Alert.Title>{t`Processing your request`}</Alert.Title>
             <Alert.Description>
-              Please wait while we sync your data. This may take a few moments.
+              {t`Please wait while we sync your data. This may take a few moments.`}
             </Alert.Description>
           </Alert.Content>
         </Alert>
@@ -163,22 +166,22 @@ const WithCustomIndicatorContent = () => {
 const ALERT_VARIANTS: UsageVariant[] = [
   {
     value: 'default',
-    label: 'Default & Accent',
+    label: msg`Default & Accent`,
     content: <DefaultAndAccentContent />,
   },
   {
     value: 'success-warning-danger',
-    label: 'Success, Warning, Danger',
+    label: msg`Success, Warning, Danger`,
     content: <SuccessWarningDangerContent />,
   },
   {
     value: 'title-only',
-    label: 'With buttons',
+    label: msg`With buttons`,
     content: <WithButtonsContent />,
   },
   {
     value: 'with-custom-indicator',
-    label: 'With custom indicator',
+    label: msg`With custom indicator`,
     content: <WithCustomIndicatorContent />,
   },
 ];

@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import {
   Button,
   Description,
@@ -14,6 +15,7 @@ import { LockIcon } from '../icons/lock';
 import { DialogContent } from './dialog-content';
 
 export const TextInputContent = () => {
+  const { t } = useLingui();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,9 +44,9 @@ export const TextInputContent = () => {
     <View className="gap-4">
       {/* Basic TextField */}
       <TextField isRequired isInvalid={emailError}>
-        <Label>Email</Label>
+        <Label>{t`Email`}</Label>
         <Input
-          placeholder="Enter your email"
+          placeholder={t`Enter your email`}
           keyboardType="email-address"
           autoCapitalize="none"
           value={email}
@@ -54,18 +56,18 @@ export const TextInputContent = () => {
           }}
         />
         <Description hideOnInvalid>
-          We'll never share your email with anyone else.
+          {t`We'll never share your email with anyone else.`}
         </Description>
-        <FieldError>Please enter a valid email address</FieldError>
+        <FieldError>{t`Please enter a valid email address`}</FieldError>
       </TextField>
 
       {/* TextField with Icons */}
       <TextField isRequired isInvalid={passwordError} className="mb-8">
-        <Label>New password</Label>
+        <Label>{t`New password`}</Label>
         <View className="w-full flex-row items-center">
           <Input
             className="flex-1 px-10"
-            placeholder="Enter your password"
+            placeholder={t`Enter your password`}
             secureTextEntry={!isPasswordVisible}
             value={password}
             onChangeText={(text) => {
@@ -73,11 +75,11 @@ export const TextInputContent = () => {
               if (passwordError) setPasswordError(false);
             }}
           />
-          <View className="absolute left-3.5" pointerEvents="none">
+          <View className="absolute inset-s-3.5" pointerEvents="none">
             <LockIcon size={16} colorClassName="accent-field-placeholder" />
           </View>
           <Pressable
-            className="absolute right-4"
+            className="absolute inset-e-4"
             onPress={() => setIsPasswordVisible(!isPasswordVisible)}
           >
             {isPasswordVisible ? (
@@ -91,14 +93,14 @@ export const TextInputContent = () => {
           </Pressable>
         </View>
         <Description hideOnInvalid>
-          Password must be at least 6 characters
+          {t`Password must be at least 6 characters`}
         </Description>
-        <FieldError>Password must be at least 6 characters long</FieldError>
+        <FieldError>{t`Password must be at least 6 characters long`}</FieldError>
       </TextField>
 
       {/* Submit Button */}
       <Button variant="primary" onPress={handleSubmit}>
-        Update
+        {t`Update`}
       </Button>
 
       <DialogContent />

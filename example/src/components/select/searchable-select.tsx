@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import {
   Select,
   Separator,
@@ -22,6 +23,8 @@ type SelectOption = {
   label: string;
 };
 
+/* eslint-disable lingui/no-unlocalized-strings -- Place names are proper nouns
+   kept in their endonym form. */
 const US_STATES: SelectOption[] = [
   { value: 'CA', label: 'California' },
   { value: 'NY', label: 'New York' },
@@ -29,6 +32,7 @@ const US_STATES: SelectOption[] = [
   { value: 'FL', label: 'Florida' },
   { value: 'IL', label: 'Illinois' },
 ];
+/* eslint-enable lingui/no-unlocalized-strings */
 
 const AnimatedTextInputBorder: FC = () => {
   const { progress } = useSelectAnimation();
@@ -49,6 +53,7 @@ const AnimatedTextInputBorder: FC = () => {
 };
 
 export function SearchableSelect() {
+  const { t } = useLingui();
   const [value, setValue] = useState<SelectOption | undefined>();
   const [searchQuery, setSearchQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
@@ -72,10 +77,12 @@ export function SearchableSelect() {
           value={isFocused ? searchQuery : searchQuery || value?.label}
           onChangeText={setSearchQuery}
           placeholder={
-            isFocused ? (value?.label ?? 'Search state...') : 'Search state...'
+            isFocused
+              ? (value?.label ?? t`Search state...`)
+              : t`Search state...`
           }
           placeholderTextColor={themeColorMuted}
-          className="w-[256px] h-[48px] px-3 rounded-2xl flex-row items-center bg-surface text-foreground text-base/5 shadow-md shadow-black/5"
+          className="w-[256px] h-12 px-3 rounded-2xl flex-row items-center bg-surface text-foreground text-base/5 shadow-md shadow-black/5 rtl:text-right"
           onFocus={() => {
             setIsFocused(true);
             triggerRef.current?.open();
@@ -109,7 +116,7 @@ export function SearchableSelect() {
             state.label.toLowerCase().includes(searchQuery.toLowerCase())
           ).length === 0 && (
             <View className="py-6 items-center">
-              <AppText className="text-muted">No states found</AppText>
+              <AppText className="text-muted">{t`No states found`}</AppText>
             </View>
           )}
         </Select.Content>

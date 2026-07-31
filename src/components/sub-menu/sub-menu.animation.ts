@@ -7,7 +7,10 @@ import {
   withSpring,
 } from 'react-native-reanimated';
 import { useAnimationSettings } from '../../helpers/internal/contexts';
-import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
+import {
+  useCombinedAnimationDisabledState,
+  useIsRTL,
+} from '../../helpers/internal/hooks';
 import {
   createContext,
   getAnimationState,
@@ -214,6 +217,12 @@ export function useSubMenuTriggerIndicatorAnimation(options: {
 
   const rotation = useSharedValue(0);
 
+  // Mirror the default chevron-right disclosure icon so it points toward the
+  // reading direction in RTL. The flip lives here (not in a className) because
+  // the animated `transform` array below fully controls the transform property
+  // and would otherwise override any className-based scaleX.
+  const isRTL = useIsRTL();
+
   useEffect(() => {
     if (isAnimationDisabledValue) {
       rotation.set(isOpen ? 1 : 0);
@@ -225,6 +234,7 @@ export function useSubMenuTriggerIndicatorAnimation(options: {
   const rContainerStyle = useAnimatedStyle(() => {
     return {
       transform: [
+        { scaleX: isRTL ? -1 : 1 },
         {
           rotate:
             interpolate(

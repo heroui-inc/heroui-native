@@ -24,9 +24,13 @@ const background = tv({
  * @note Platform/state-prefixed Tailwind utilities (`ios:`, `android:`, `focus:`,
  * `disabled:`) stay here because the uniwind CSS parser does not support them
  * inside custom CSS classes. All plain styles live in `styles/components/input.css`.
+ *
+ * @note `rtl:text-right` is required because React Native resolves a `TextInput`'s
+ * `textAlign` physically (unlike `Text`), so the typed text and placeholder must be
+ * explicitly aligned to the trailing side in RTL layouts.
  */
 const input = tv({
-  base: 'input__input ios:outline-2 ios:outline-transparent ios:focus:outline-accent android:border-[1.5px] android:border-transparent android:focus:border-accent',
+  base: 'input__input ios:outline-2 ios:outline-transparent ios:focus:outline-accent android:border-[1.5px] android:border-transparent android:focus:border-accent rtl:text-right',
   variants: {
     variant: {
       primary:

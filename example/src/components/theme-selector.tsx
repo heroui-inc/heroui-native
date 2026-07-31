@@ -50,6 +50,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
 
     const largeArc = endAngle - startAngle > 180 ? 1 : 0;
 
+    // eslint-disable-next-line lingui/no-unlocalized-strings -- SVG path data.
     return `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`;
   };
 

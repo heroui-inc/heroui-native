@@ -65,7 +65,7 @@ const BottomSheetDefaultBackground: FC<GorhomBottomSheetBackgroundProps> = ({
       pointerEvents={pointerEvents}
       accessible={true}
       accessibilityRole="adjustable"
-      accessibilityLabel="Bottom Sheet"
+      accessibilityLabel="BottomSheet"
     >
       <BottomSheetBackground />
     </View>

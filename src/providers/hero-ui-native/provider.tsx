@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { I18nManager } from 'react-native';
 import { SafeAreaListener } from 'react-native-safe-area-context';
 import { Uniwind } from 'uniwind';
+import { LayoutDirectionProvider } from '../../helpers/internal/contexts';
 import { useDevInfo } from '../../helpers/internal/hooks';
 import { PortalHost } from '../../primitives/portal';
 import { GlobalAnimationSettingsProvider } from '../animation-settings';
@@ -33,7 +35,8 @@ const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   children,
   config = {},
 }) => {
-  const { textProps, textInputProps, toast, animation, devInfo } = config;
+  const { textProps, textInputProps, toast, animation, devInfo, isRTL } =
+    config;
 
   useDevInfo(devInfo);
 
@@ -41,29 +44,37 @@ const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
   const isToastEnabled = toast !== false && toast !== 'disabled';
   const toastProps = typeof toast === 'object' ? toast : {};
 
+  // Resolve the effective layout direction, falling back to the global RTL state
+  const layoutDirectionValue = useMemo(
+    () => ({ isRTL: isRTL ?? I18nManager.isRTL }),
+    [isRTL]
+  );
+
   return (
     <SafeAreaListener
       onChange={({ insets }) => {
         Uniwind.updateInsets(insets);
       }}
     >
-      <GlobalAnimationSettingsProvider animation={animation}>
-        <TextComponentProvider value={{ textProps }}>
-          <TextInputComponentProvider value={{ textInputProps }}>
-            {isToastEnabled ? (
-              <ToastProvider {...toastProps}>
-                {children}
-                <PortalHost />
-              </ToastProvider>
-            ) : (
-              <>
-                {children}
-                <PortalHost />
-              </>
-            )}
-          </TextInputComponentProvider>
-        </TextComponentProvider>
-      </GlobalAnimationSettingsProvider>
+      <LayoutDirectionProvider value={layoutDirectionValue}>
+        <GlobalAnimationSettingsProvider animation={animation}>
+          <TextComponentProvider value={{ textProps }}>
+            <TextInputComponentProvider value={{ textInputProps }}>
+              {isToastEnabled ? (
+                <ToastProvider {...toastProps}>
+                  {children}
+                  <PortalHost />
+                </ToastProvider>
+              ) : (
+                <>
+                  {children}
+                  <PortalHost />
+                </>
+              )}
+            </TextInputComponentProvider>
+          </TextComponentProvider>
+        </GlobalAnimationSettingsProvider>
+      </LayoutDirectionProvider>
     </SafeAreaListener>
   );
 };

@@ -1,3 +1,6 @@
+import type { MessageDescriptor } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { Accordion, PressableFeedback, useAccordionItem } from 'heroui-native';
 import { View } from 'react-native';
 import Animated, {
@@ -18,24 +21,28 @@ import { PlusIcon } from '../../../components/icons/plus';
 import { ReceiptIcon } from '../../../components/icons/receipt';
 import { ShoppingBagIcon } from '../../../components/icons/shopping-bag';
 
-const TriggerTitle = ({ title }: { title: string }) => {
+const TriggerTitle = ({ title }: { title: MessageDescriptor }) => {
+  const { t } = useLingui();
+
   return (
     <AppText
-      className="text-foreground text-base flex-1"
+      className="text-foreground text-base flex-1 text-left"
       maxFontSizeMultiplier={1}
     >
-      {title}
+      {t(title)}
     </AppText>
   );
 };
 
-const ContentText = ({ text }: { text: string }) => {
+const ContentText = ({ text }: { text: MessageDescriptor }) => {
+  const { t } = useLingui();
+
   return (
     <AppText
-      className="text-muted text-base/relaxed px-[28px]"
+      className="text-muted text-base/relaxed px-7 text-left"
       maxFontSizeMultiplier={1}
     >
-      {text}
+      {t(text)}
     </AppText>
   );
 };
@@ -79,34 +86,36 @@ const CustomIndicator = () => {
 
 // ------------------------------------------------------------------------------
 
+/**
+ * Storefront FAQ entries driving every accordion demo on this screen.
+ *
+ * Answer lengths deliberately vary so the demos still show panels expanding to
+ * different heights, which is what the previous lorem ipsum filler existed for.
+ */
 const accordionData = [
   {
     id: '1',
-    title: 'How do I place an order?',
+    title: msg`How do I place an order?`,
     icon: <ShoppingBagIcon size={ICON_SIZE} colorClassName="accent-muted" />,
-    content:
-      'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl.',
+    content: msg`Add items to your cart, then open checkout to pay by card or wallet. We'll email your confirmation within a few minutes.`,
   },
   {
     id: '2',
-    title: 'Can I modify or cancel my order?',
+    title: msg`Can I modify or cancel my order?`,
     icon: <ReceiptIcon size={ICON_SIZE} colorClassName="accent-muted" />,
-    content:
-      'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
+    content: msg`You can change or cancel an order free of charge within two hours of placing it. After that your parcel may already be packed, so contact support and we'll help where we can.`,
   },
   {
     id: '3',
-    title: 'How much does shipping cost?',
+    title: msg`How much does shipping cost?`,
     icon: <BoxIcon size={ICON_SIZE} colorClassName="accent-muted" />,
-    content:
-      'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat.',
+    content: msg`Standard delivery is free on orders over $50. Below that it's a flat $4.99.`,
   },
   {
     id: '4',
-    title: 'Do you ship internationally?',
+    title: msg`Do you ship internationally?`,
     icon: <PlanetEarthIcon size={ICON_SIZE} colorClassName="accent-muted" />,
-    content:
-      'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat. Libero placerat dignissim consectetur nisl. Ornare imperdiet amet lorem adipiscing.',
+    content: msg`We deliver to more than 60 countries, usually within 7 to 14 business days. Any customs duties are calculated and shown at checkout before you pay.`,
   },
 ];
 
@@ -311,37 +320,37 @@ const WithDepthEffectContent = () => {
 const ACCORDION_VARIANTS: UsageVariant[] = [
   {
     value: 'default-variant',
-    label: 'Default variant',
+    label: msg`Default variant`,
     content: <DefaultVariantContent />,
   },
   {
     value: 'surface-variant',
-    label: 'Surface variant',
+    label: msg`Surface variant`,
     content: <SurfaceVariantContent />,
   },
   {
     value: 'multiple-selection',
-    label: 'Multiple selection',
+    label: msg`Multiple selection`,
     content: <MultipleSelectionContent />,
   },
   {
     value: 'without-separators',
-    label: 'Without separators',
+    label: msg`Without separators`,
     content: <WithoutSeparatorsContent />,
   },
   {
     value: 'custom-indicator',
-    label: 'Custom indicator',
+    label: msg`Custom indicator`,
     content: <CustomIndicatorContent />,
   },
   {
     value: 'custom-entering-animation',
-    label: 'Custom entering animation',
+    label: msg`Custom entering animation`,
     content: <CustomEnteringAnimationContent />,
   },
   {
     value: 'with-depth-effect',
-    label: 'With depth effect',
+    label: msg`With depth effect`,
     content: <WithDepthEffectContent />,
   },
 ];

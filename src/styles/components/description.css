@@ -2,6 +2,8 @@
   font-size: var(--text-sm);
   line-height: var(--text-sm--line-height);
   color: var(--color-muted);
+  /* RN resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 /* Root - booleans */

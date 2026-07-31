@@ -11,6 +11,7 @@ import { withUniwind } from 'uniwind';
 import { useAppTheme } from '../../../../contexts/app-theme-context';
 import { AppText } from '../../../app-text';
 import { DialogBlurBackdrop } from '../../../dialog-blur-backdrop';
+import { SHOWCASE_PORTAL_HOST } from '../../../showcase-ltr-scope';
 import { DialogHeader } from '../dialog-header';
 import { SearchBar } from '../search-bar';
 
@@ -149,7 +150,7 @@ export const Labels: FC = () => {
           </Chip.Label>
         </Chip>
       </Dialog.Trigger>
-      <Dialog.Portal>
+      <Dialog.Portal hostName={SHOWCASE_PORTAL_HOST}>
         <DialogBlurBackdrop />
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={24}>
           <Dialog.Content

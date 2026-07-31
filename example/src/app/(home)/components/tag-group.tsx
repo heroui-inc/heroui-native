@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   Avatar,
   Chip,
@@ -42,8 +44,10 @@ const CategoriesTagGroup: React.FC<CategoriesTagGroupProps> = ({
   selectionMode,
   selectedKeys,
   onSelectionChange,
-  ariaLabel = 'Categories',
+  ariaLabel,
 }) => {
+  const { t } = useLingui();
+
   const getColorClassName = (isSelected: boolean) => {
     return cn(
       isSelected ? 'accent-accent-soft-foreground' : 'accent-field-foreground'
@@ -52,7 +56,7 @@ const CategoriesTagGroup: React.FC<CategoriesTagGroupProps> = ({
 
   return (
     <TagGroup
-      aria-label={ariaLabel}
+      aria-label={ariaLabel ?? t`Categories`}
       selectionMode={selectionMode}
       selectedKeys={selectedKeys}
       onSelectionChange={onSelectionChange}
@@ -65,7 +69,7 @@ const CategoriesTagGroup: React.FC<CategoriesTagGroupProps> = ({
                 size={16}
                 colorClassName={getColorClassName(isSelected)}
               />
-              <TagGroup.ItemLabel>News</TagGroup.ItemLabel>
+              <TagGroup.ItemLabel>{t`News`}</TagGroup.ItemLabel>
             </>
           )}
         </TagGroup.Item>
@@ -76,7 +80,7 @@ const CategoriesTagGroup: React.FC<CategoriesTagGroupProps> = ({
                 size={14}
                 colorClassName={getColorClassName(isSelected)}
               />
-              <TagGroup.ItemLabel>Travel</TagGroup.ItemLabel>
+              <TagGroup.ItemLabel>{t`Travel`}</TagGroup.ItemLabel>
             </>
           )}
         </TagGroup.Item>
@@ -87,7 +91,7 @@ const CategoriesTagGroup: React.FC<CategoriesTagGroupProps> = ({
                 size={14}
                 colorClassName={getColorClassName(isSelected)}
               />
-              <TagGroup.ItemLabel>Gaming</TagGroup.ItemLabel>
+              <TagGroup.ItemLabel>{t`Gaming`}</TagGroup.ItemLabel>
             </>
           )}
         </TagGroup.Item>
@@ -101,7 +105,9 @@ const CategoriesTagGroup: React.FC<CategoriesTagGroupProps> = ({
 const BasicContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
-      <CategoriesTagGroup selectionMode="single" />
+      <View className="w-full">
+        <CategoriesTagGroup selectionMode="single" />
+      </View>
     </View>
   );
 };
@@ -109,25 +115,27 @@ const BasicContent = () => {
 // ------------------------------------------------------------------------------
 
 const VariantsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5 items-center justify-center gap-6">
-      <View className="gap-2">
-        <AppText className="text-sm text-muted">Default</AppText>
+      <View className="w-full gap-2">
+        <AppText className="text-sm text-muted text-center">{t`Default`}</AppText>
         <TagGroup selectionMode="single" variant="default">
-          <TagGroup.List>
-            <TagGroup.Item id="news">News</TagGroup.Item>
-            <TagGroup.Item id="travel">Travel</TagGroup.Item>
-            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
+          <TagGroup.List className="justify-center">
+            <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
+            <TagGroup.Item id="travel">{t`Travel`}</TagGroup.Item>
+            <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
-      <View className="gap-2">
-        <AppText className="text-sm text-muted">Surface</AppText>
+      <View className="w-full gap-2">
+        <AppText className="text-sm text-muted text-center">{t`Surface`}</AppText>
         <TagGroup selectionMode="single" variant="surface">
-          <TagGroup.List>
-            <TagGroup.Item id="news">News</TagGroup.Item>
-            <TagGroup.Item id="travel">Travel</TagGroup.Item>
-            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
+          <TagGroup.List className="justify-center">
+            <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
+            <TagGroup.Item id="travel">{t`Travel`}</TagGroup.Item>
+            <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
@@ -138,35 +146,37 @@ const VariantsContent = () => {
 // ------------------------------------------------------------------------------
 
 const SizesContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5 items-center justify-center gap-6">
-      <View className="gap-2">
+      <View className="w-full gap-2">
         <AppText className="text-sm text-muted text-center">sm</AppText>
         <TagGroup selectionMode="single" size="sm">
-          <TagGroup.List>
-            <TagGroup.Item id="news">News</TagGroup.Item>
-            <TagGroup.Item id="travel">Travel</TagGroup.Item>
-            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
+          <TagGroup.List className="justify-center">
+            <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
+            <TagGroup.Item id="travel">{t`Travel`}</TagGroup.Item>
+            <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
-      <View className="gap-2">
+      <View className="w-full gap-2">
         <AppText className="text-sm text-muted text-center">md</AppText>
         <TagGroup selectionMode="single" size="md">
-          <TagGroup.List>
-            <TagGroup.Item id="news">News</TagGroup.Item>
-            <TagGroup.Item id="travel">Travel</TagGroup.Item>
-            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
+          <TagGroup.List className="justify-center">
+            <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
+            <TagGroup.Item id="travel">{t`Travel`}</TagGroup.Item>
+            <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
-      <View className="gap-2">
+      <View className="w-full gap-2">
         <AppText className="text-sm text-muted text-center">lg</AppText>
         <TagGroup selectionMode="single" size="lg">
-          <TagGroup.List>
-            <TagGroup.Item id="news">News</TagGroup.Item>
-            <TagGroup.Item id="travel">Travel</TagGroup.Item>
-            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
+          <TagGroup.List className="justify-center">
+            <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
+            <TagGroup.Item id="travel">{t`Travel`}</TagGroup.Item>
+            <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
@@ -177,19 +187,24 @@ const SizesContent = () => {
 // ------------------------------------------------------------------------------
 
 const SingleSelectionContent = () => {
+  const { t } = useLingui();
   const [selected, setSelected] = useState<Set<string | number>>(
     new Set(['news'])
   );
 
+  const selectedLabel = Array.from(selected).join(', ') || t`None`;
+
   return (
     <View className="flex-1 px-5 items-center justify-center gap-4">
-      <CategoriesTagGroup
-        selectionMode="single"
-        selectedKeys={selected}
-        onSelectionChange={setSelected}
-      />
+      <View className="w-full">
+        <CategoriesTagGroup
+          selectionMode="single"
+          selectedKeys={selected}
+          onSelectionChange={setSelected}
+        />
+      </View>
       <AppText className="text-sm text-muted">
-        Selected: {Array.from(selected).join(', ') || 'None'}
+        {t`Selected: ${selectedLabel}`}
       </AppText>
     </View>
   );
@@ -198,19 +213,24 @@ const SingleSelectionContent = () => {
 // ------------------------------------------------------------------------------
 
 const MultipleSelectionContent = () => {
+  const { t } = useLingui();
   const [selected, setSelected] = useState<Set<string | number>>(
     new Set(['news', 'travel'])
   );
 
+  const selectedLabel = Array.from(selected).join(', ') || t`None`;
+
   return (
     <View className="flex-1 px-5 items-center justify-center gap-4">
-      <CategoriesTagGroup
-        selectionMode="multiple"
-        selectedKeys={selected}
-        onSelectionChange={setSelected}
-      />
+      <View className="w-full">
+        <CategoriesTagGroup
+          selectionMode="multiple"
+          selectedKeys={selected}
+          onSelectionChange={setSelected}
+        />
+      </View>
       <AppText className="text-sm text-muted">
-        Selected: {Array.from(selected).join(', ') || 'None'}
+        {t`Selected: ${selectedLabel}`}
       </AppText>
     </View>
   );
@@ -219,30 +239,36 @@ const MultipleSelectionContent = () => {
 // ------------------------------------------------------------------------------
 
 const DisabledContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5 items-center justify-center gap-6">
-      <View className="gap-2">
-        <AppText className="text-sm text-muted">Individual disabled</AppText>
+      <View className="w-full gap-2">
+        <AppText className="text-sm text-muted text-center">
+          {t`Individual disabled`}
+        </AppText>
         <TagGroup selectionMode="single">
-          <TagGroup.List>
-            <TagGroup.Item id="news">News</TagGroup.Item>
+          <TagGroup.List className="justify-center">
+            <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
             <TagGroup.Item id="travel" isDisabled>
-              Travel
+              {t`Travel`}
             </TagGroup.Item>
-            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
+            <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
-      <View className="gap-2">
-        <AppText className="text-sm text-muted">Disabled keys</AppText>
+      <View className="w-full gap-2">
+        <AppText className="text-sm text-muted text-center">
+          {t`Disabled keys`}
+        </AppText>
         <TagGroup
           selectionMode="single"
           disabledKeys={new Set(['travel', 'gaming'])}
         >
-          <TagGroup.List>
-            <TagGroup.Item id="news">News</TagGroup.Item>
-            <TagGroup.Item id="travel">Travel</TagGroup.Item>
-            <TagGroup.Item id="gaming">Gaming</TagGroup.Item>
+          <TagGroup.List className="justify-center">
+            <TagGroup.Item id="news">{t`News`}</TagGroup.Item>
+            <TagGroup.Item id="travel">{t`Travel`}</TagGroup.Item>
+            <TagGroup.Item id="gaming">{t`Gaming`}</TagGroup.Item>
           </TagGroup.List>
         </TagGroup>
       </View>
@@ -253,12 +279,15 @@ const DisabledContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithErrorMessageContent = () => {
+  const { t } = useLingui();
   const [selected, setSelected] = useState<Set<string | number>>(new Set());
 
   const isInvalid = useMemo(
     () => Array.from(selected).length === 0,
     [selected]
   );
+
+  const selectedLabel = Array.from(selected).join(', ');
 
   return (
     <View className="flex-1 px-5 items-center justify-center">
@@ -268,18 +297,16 @@ const WithErrorMessageContent = () => {
         onSelectionChange={setSelected}
         isInvalid={isInvalid}
       >
-        <Label isInvalid={false}>Amenities</Label>
+        <Label isInvalid={false}>{t`Amenities`}</Label>
         <TagGroup.List>
-          <TagGroup.Item id="laundry">Laundry</TagGroup.Item>
-          <TagGroup.Item id="fitness">Fitness center</TagGroup.Item>
-          <TagGroup.Item id="parking">Parking</TagGroup.Item>
-          <TagGroup.Item id="pool">Swimming pool</TagGroup.Item>
-          <TagGroup.Item id="breakfast">Breakfast</TagGroup.Item>
+          <TagGroup.Item id="laundry">{t`Laundry`}</TagGroup.Item>
+          <TagGroup.Item id="fitness">{t`Fitness center`}</TagGroup.Item>
+          <TagGroup.Item id="parking">{t`Parking`}</TagGroup.Item>
+          <TagGroup.Item id="pool">{t`Swimming pool`}</TagGroup.Item>
+          <TagGroup.Item id="breakfast">{t`Breakfast`}</TagGroup.Item>
         </TagGroup.List>
-        <Description hideOnInvalid>
-          {`Selected: ${Array.from(selected).join(', ')}`}
-        </Description>
-        <FieldError>Please select at least one category</FieldError>
+        <Description hideOnInvalid>{t`Selected: ${selectedLabel}`}</Description>
+        <FieldError>{t`Please select at least one category`}</FieldError>
       </TagGroup>
     </View>
   );
@@ -290,6 +317,7 @@ const WithErrorMessageContent = () => {
 type TagItem = { id: string; name: string };
 
 const WithRemoveButtonFullContent = () => {
+  const { t } = useLingui();
   const [tags, setTags] = useState<TagItem[]>([
     { id: 'news', name: 'News' },
     { id: 'travel', name: 'Travel' },
@@ -319,11 +347,11 @@ const WithRemoveButtonFullContent = () => {
   return (
     <View className="flex-1 px-5 justify-center gap-8">
       <TagGroup selectionMode="single" onRemove={onRemoveTags}>
-        <Label>Default Remove Button</Label>
+        <Label>{t`Default Remove Button`}</Label>
         <TagGroup.List
           renderEmptyState={() => (
             <AppText className="text-sm text-muted p-1">
-              No categories found
+              {t`No categories found`}
             </AppText>
           )}
         >
@@ -338,15 +366,15 @@ const WithRemoveButtonFullContent = () => {
             </AnimatedTagGroupItem>
           ))}
         </TagGroup.List>
-        <Description>Tap the X to remove tags</Description>
+        <Description>{t`Tap the X to remove tags`}</Description>
       </TagGroup>
 
       <TagGroup selectionMode="single" onRemove={onRemoveFrameworks}>
-        <Label>Custom Remove Button</Label>
+        <Label>{t`Custom Remove Button`}</Label>
         <TagGroup.List
           renderEmptyState={() => (
             <AppText className="text-sm text-muted p-1">
-              No frameworks found
+              {t`No frameworks found`}
             </AppText>
           )}
         >
@@ -375,7 +403,7 @@ const WithRemoveButtonFullContent = () => {
             </AnimatedTagGroupItem>
           ))}
         </TagGroup.List>
-        <Description>Custom remove button styles</Description>
+        <Description>{t`Custom remove button styles`}</Description>
       </TagGroup>
     </View>
   );
@@ -429,6 +457,7 @@ const INITIAL_USERS: User[] = [
 ];
 
 const WithAvatarAndRemoveButtonContent = () => {
+  const { t } = useLingui();
   const [users, setUsers] = useState<User[]>(INITIAL_USERS);
   const [selectedKeys, setSelectedKeys] = useState<Set<string | number>>(
     new Set(['fred', 'michael'])
@@ -451,11 +480,11 @@ const WithAvatarAndRemoveButtonContent = () => {
         onRemove={onRemove}
         onSelectionChange={setSelectedKeys}
       >
-        <Label>Team Members</Label>
+        <Label>{t`Team Members`}</Label>
         <TagGroup.List
           renderEmptyState={() => (
             <AppText className="text-sm text-muted p-1">
-              No team members
+              {t`No team members`}
             </AppText>
           )}
         >
@@ -463,7 +492,7 @@ const WithAvatarAndRemoveButtonContent = () => {
             <AnimatedTagGroupItem
               key={user.id}
               id={user.id}
-              className="pl-1.5 pr-2"
+              className="ps-1.5 pe-2"
               layout={LinearTransition.springify()}
             >
               <Avatar size="sm" alt={user.name} className="size-4">
@@ -477,13 +506,13 @@ const WithAvatarAndRemoveButtonContent = () => {
             </AnimatedTagGroupItem>
           ))}
         </TagGroup.List>
-        <Description>Select team members for your project</Description>
+        <Description>{t`Select team members for your project`}</Description>
       </TagGroup>
 
       {Array.from(selectedKeys).length > 0 && (
         <View className="gap-2">
           <AppText className="text-sm font-medium text-muted">
-            Selected:
+            {t`Selected:`}
           </AppText>
           <View className="flex-row flex-wrap gap-2">
             {Array.from(selectedKeys).map((key) => {
@@ -496,7 +525,7 @@ const WithAvatarAndRemoveButtonContent = () => {
                   key={`${user.id}-selected`}
                   variant="secondary"
                   color="success"
-                  className="pl-1.5 pr-2"
+                  className="ps-1.5 pe-2"
                   layout={LinearTransition.springify()}
                 >
                   <Avatar size="sm" alt={user.name} className="size-4">
@@ -521,47 +550,47 @@ const WithAvatarAndRemoveButtonContent = () => {
 const TAG_GROUP_VARIANTS: UsageVariant[] = [
   {
     value: 'basic',
-    label: 'Basic',
+    label: msg`Basic`,
     content: <BasicContent />,
   },
   {
     value: 'variants',
-    label: 'Variants',
+    label: msg`Variants`,
     content: <VariantsContent />,
   },
   {
     value: 'sizes',
-    label: 'Sizes',
+    label: msg`Sizes`,
     content: <SizesContent />,
   },
   {
     value: 'single-selection',
-    label: 'Single selection',
+    label: msg`Single selection`,
     content: <SingleSelectionContent />,
   },
   {
     value: 'multiple-selection',
-    label: 'Multiple selection',
+    label: msg`Multiple selection`,
     content: <MultipleSelectionContent />,
   },
   {
     value: 'disabled',
-    label: 'Disabled',
+    label: msg`Disabled`,
     content: <DisabledContent />,
   },
   {
     value: 'with-error-message',
-    label: 'With error message',
+    label: msg`With error message`,
     content: <WithErrorMessageContent />,
   },
   {
     value: 'with-remove-button-full',
-    label: 'With remove button',
+    label: msg`With remove button`,
     content: <WithRemoveButtonFullContent />,
   },
   {
     value: 'with-avatar-and-remove-button',
-    label: 'With avatar and remove button',
+    label: msg`With avatar and remove button`,
     content: <WithAvatarAndRemoveButtonContent />,
   },
 ];

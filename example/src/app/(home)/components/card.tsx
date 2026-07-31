@@ -1,4 +1,9 @@
+/* eslint-disable lingui/no-unlocalized-strings -- What is left in English is a
+   price, two social handles and the "Neo" product name: identifiers and brands
+   that stay verbatim in every locale. All copy uses the `t` macro. */
 import { Ionicons } from '@expo/vector-icons';
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Card, cn, type CardRootProps } from 'heroui-native';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
@@ -11,6 +16,8 @@ const StyledImage = withUniwind(Image);
 const StyledIonicons = withUniwind(Ionicons);
 
 const BasicCardContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <Card>
@@ -18,17 +25,16 @@ const BasicCardContent = () => {
           <Card.Body className="mb-4">
             <View className="gap-1 mb-2">
               <Card.Title className="text-pink-400">$450</Card.Title>
-              <Card.Title>Living room Sofa</Card.Title>
+              <Card.Title>{t`Living room Sofa`}</Card.Title>
             </View>
             <Card.Description>
-              This sofa is perfect for modern tropical spaces, baroque inspired
-              spaces.
+              {t`This sofa is perfect for modern tropical spaces, baroque inspired spaces.`}
             </Card.Description>
           </Card.Body>
           <Card.Footer className="gap-3">
-            <Button variant="primary">Buy now</Button>
+            <Button variant="primary">{t`Buy now`}</Button>
             <Button variant="ghost">
-              <Button.Label>Add to cart</Button.Label>
+              <Button.Label>{t`Add to cart`}</Button.Label>
               <StyledIonicons
                 name="basket-outline"
                 size={16}
@@ -45,6 +51,8 @@ const BasicCardContent = () => {
 // ------------------------------------------------------------------------------
 
 const CardWithImageContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="flex-row gap-4">
@@ -60,14 +68,14 @@ const CardWithImageContent = () => {
             </Card.Header>
             <Card.Body className="flex-1">
               <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
-                Indie Hackers
+                {t`Indie Hackers`}
               </Card.Title>
               <Card.Description
                 className="text-sm"
                 maxFontSizeMultiplier={1.2}
                 numberOfLines={1}
               >
-                148 members
+                {t`148 members`}
               </Card.Description>
             </Card.Body>
             <Card.Footer className="flex-row items-center gap-2">
@@ -94,14 +102,14 @@ const CardWithImageContent = () => {
             </Card.Header>
             <Card.Body className="flex-1">
               <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
-                AI Builders
+                {t`AI Builders`}
               </Card.Title>
               <Card.Description
                 className="text-sm"
                 maxFontSizeMultiplier={1.2}
                 numberOfLines={1}
               >
-                362 members
+                {t`362 members`}
               </Card.Description>
             </Card.Body>
             <Card.Footer className="flex-row items-center gap-2">
@@ -124,6 +132,8 @@ const CardWithImageContent = () => {
 // ------------------------------------------------------------------------------
 
 const HorizontalCardWithImageContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="w-full gap-4">
@@ -138,14 +148,14 @@ const HorizontalCardWithImageContent = () => {
           <View className="flex-1 gap-4">
             <Card.Body className="flex-1">
               <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
-                Avocado Hackathon
+                {t`Avocado Hackathon`}
               </Card.Title>
               <Card.Description
                 numberOfLines={2}
                 className="text-sm"
                 maxFontSizeMultiplier={1.2}
               >
-                Today, 6:30 PM
+                {t`Today, 6:30 PM`}
               </Card.Description>
             </Card.Body>
             <Card.Footer>
@@ -155,7 +165,7 @@ const HorizontalCardWithImageContent = () => {
                   maxFontSizeMultiplier={1.2}
                   numberOfLines={1}
                 >
-                  View Details
+                  {t`View Details`}
                 </AppText>
                 <StyledIonicons
                   name="open-outline"
@@ -177,14 +187,14 @@ const HorizontalCardWithImageContent = () => {
           <View className="flex-1 gap-4">
             <Card.Body className="flex-1">
               <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
-                Sound Electro
+                {t`Sound Electro`}
               </Card.Title>
               <Card.Description
                 numberOfLines={2}
                 className="text-sm"
                 maxFontSizeMultiplier={1.2}
               >
-                Wed, 4:30 PM
+                {t`Wed, 4:30 PM`}
               </Card.Description>
             </Card.Body>
             <Card.Footer>
@@ -194,7 +204,7 @@ const HorizontalCardWithImageContent = () => {
                   maxFontSizeMultiplier={1.2}
                   numberOfLines={1}
                 >
-                  View Details
+                  {t`View Details`}
                 </AppText>
                 <StyledIonicons
                   name="open-outline"
@@ -213,6 +223,8 @@ const HorizontalCardWithImageContent = () => {
 // ------------------------------------------------------------------------------
 
 const BackgroundImageCardContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <Card className="w-full aspect-square">
@@ -239,7 +251,7 @@ const BackgroundImageCardContent = () => {
               className="text-zinc-50 font-medium text-base"
               maxFontSizeMultiplier={1.2}
             >
-              Home robot
+              {t`Home robot`}
             </Card.Description>
           </Card.Body>
           <Card.Footer className="gap-3">
@@ -249,13 +261,13 @@ const BackgroundImageCardContent = () => {
                   className="text-base text-white"
                   maxFontSizeMultiplier={1.2}
                 >
-                  Available soon
+                  {t`Available soon`}
                 </AppText>
                 <AppText
                   className="text-base text-zinc-300"
                   maxFontSizeMultiplier={1.2}
                 >
-                  Get notified
+                  {t`Get notified`}
                 </AppText>
               </View>
               <Button size="sm" className="bg-white" feedbackVariant="scale">
@@ -263,7 +275,7 @@ const BackgroundImageCardContent = () => {
                   className="text-black"
                   maxFontSizeMultiplier={1.2}
                 >
-                  Notify me
+                  {t`Notify me`}
                 </Button.Label>
               </Button>
             </View>
@@ -305,28 +317,30 @@ const CardItem = ({
 };
 
 const VariantsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center">
       <View className="gap-2 w-full px-5">
         <CardItem
           variant="default"
-          title="Default"
-          description="Standard card appearance (surface-secondary). The default card variant for most use cases"
+          title={t`Default`}
+          description={t`Standard card appearance (surface-secondary). The default card variant for most use cases`}
         />
         <CardItem
           variant="secondary"
-          title="Secondary"
-          description="Medium prominence (surface-tertiary). Use to draw moderate attention."
+          title={t`Secondary`}
+          description={t`Medium prominence (surface-tertiary). Use to draw moderate attention.`}
         />
         <CardItem
           variant="tertiary"
-          title="Tertiary"
-          description="Higher prominence (surface-tertiary). Use for important content."
+          title={t`Tertiary`}
+          description={t`Higher prominence (surface-tertiary). Use for important content.`}
         />
         <CardItem
           variant="transparent"
-          title="Transparent"
-          description="Minimal prominence with transparent background. Use for less important content or nested cards."
+          title={t`Transparent`}
+          description={t`Minimal prominence with transparent background. Use for less important content or nested cards.`}
           className="border border-border shadow-none"
         />
       </View>
@@ -339,27 +353,27 @@ const VariantsContent = () => {
 const CARD_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-card',
-    label: 'Basic card',
+    label: msg`Basic card`,
     content: <BasicCardContent />,
   },
   {
     value: 'card-with-image',
-    label: 'Card with image',
+    label: msg`Card with image`,
     content: <CardWithImageContent />,
   },
   {
     value: 'horizontal-card-with-image',
-    label: 'Horizontal card with image',
+    label: msg`Horizontal card with image`,
     content: <HorizontalCardWithImageContent />,
   },
   {
     value: 'background-image-card',
-    label: 'Background image card',
+    label: msg`Background image card`,
     content: <BackgroundImageCardContent />,
   },
   {
     value: 'variants',
-    label: 'Variants',
+    label: msg`Variants`,
     content: <VariantsContent />,
   },
 ];

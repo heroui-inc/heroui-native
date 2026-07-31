@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   cn,
   Description,
@@ -26,6 +28,7 @@ const AnimatedView = Animated.createAnimatedComponent(View);
 const StyleAnimatedView = withUniwind(Animated.View);
 
 const BasicRadioGroupContent = () => {
+  const { t } = useLingui();
   const [withDescSelection, setWithDescSelection] = React.useState('desc1');
 
   return (
@@ -39,11 +42,11 @@ const BasicRadioGroupContent = () => {
             <View className="flex-1">
               <Label>
                 <Label.Text maxFontSizeMultiplier={1.4}>
-                  Standard Shipping
+                  {t`Standard Shipping`}
                 </Label.Text>
               </Label>
               <Description maxFontSizeMultiplier={1.4}>
-                Delivered in 5-7 business days
+                {t`Delivered in 5-7 business days`}
               </Description>
             </View>
             <Radio />
@@ -53,11 +56,11 @@ const BasicRadioGroupContent = () => {
             <View className="flex-1">
               <Label>
                 <Label.Text maxFontSizeMultiplier={1.4}>
-                  Express Shipping
+                  {t`Express Shipping`}
                 </Label.Text>
               </Label>
               <Description maxFontSizeMultiplier={1.4}>
-                Delivered in 2-3 business days
+                {t`Delivered in 2-3 business days`}
               </Description>
             </View>
             <Radio />
@@ -67,11 +70,11 @@ const BasicRadioGroupContent = () => {
             <View className="flex-1">
               <Label>
                 <Label.Text maxFontSizeMultiplier={1.4}>
-                  Overnight Shipping
+                  {t`Overnight Shipping`}
                 </Label.Text>
               </Label>
               <Description maxFontSizeMultiplier={1.4}>
-                Delivered next business day
+                {t`Delivered next business day`}
               </Description>
             </View>
             <Radio />
@@ -154,6 +157,7 @@ const ShippingOptionItem = ({
 };
 
 const StartIndicatorAlignmentContent = () => {
+  const { t } = useLingui();
   const [shippingSpeed, setShippingSpeed] = React.useState('standard');
 
   return (
@@ -166,20 +170,20 @@ const StartIndicatorAlignmentContent = () => {
       >
         <ShippingOptionItem
           value="standard"
-          label="Standard Shipping"
-          description="5-7 business days"
-          price="Free"
+          label={t`Standard Shipping`}
+          description={t`5-7 business days`}
+          price={t`Free`}
         />
         <ShippingOptionItem
           value="express"
-          label="Express Shipping"
-          description="2-3 business days"
+          label={t`Express Shipping`}
+          description={t`2-3 business days`}
           price="$9.99"
         />
         <ShippingOptionItem
           value="overnight"
-          label="Overnight Shipping"
-          description="Next business day"
+          label={t`Overnight Shipping`}
+          description={t`Next business day`}
           price="$24.99"
         />
       </RadioGroup>
@@ -190,6 +194,7 @@ const StartIndicatorAlignmentContent = () => {
 // ------------------------------------------------------------------------------
 
 const InlineRadioOptionsContent = () => {
+  const { t } = useLingui();
   const [size, setSize] = React.useState('M');
   const sizes = ['XS', 'S', 'M', 'L'];
 
@@ -198,10 +203,10 @@ const InlineRadioOptionsContent = () => {
       <Surface className="w-full gap-6">
         <View>
           <AppText className="text-foreground font-semibold text-base">
-            Select Size
+            {t`Select Size`}
           </AppText>
           <AppText className="text-muted text-sm">
-            Classic Cotton T-Shirt
+            {t`Classic Cotton T-Shirt`}
           </AppText>
         </View>
         <RadioGroup
@@ -221,7 +226,7 @@ const InlineRadioOptionsContent = () => {
           ))}
         </RadioGroup>
         <AppText className="text-muted text-xs">
-          * Size guide available in product details
+          {t`* Size guide available in product details`}
         </AppText>
       </Surface>
     </View>
@@ -231,6 +236,7 @@ const InlineRadioOptionsContent = () => {
 // ------------------------------------------------------------------------------
 
 const RadioGroupStatesContent = () => {
+  const { t } = useLingui();
   const [plan, setPlan] = React.useState('basic');
 
   return (
@@ -242,10 +248,10 @@ const RadioGroupStatesContent = () => {
               maxFontSizeMultiplier={1.4}
               className="text-foreground font-medium text-lg"
             >
-              Choose Your Plan
+              {t`Choose Your Plan`}
             </AppText>
             <AppText maxFontSizeMultiplier={1.4} className="text-muted text-sm">
-              Select a subscription plan to continue
+              {t`Select a subscription plan to continue`}
             </AppText>
           </View>
           <RadioGroup
@@ -257,11 +263,11 @@ const RadioGroupStatesContent = () => {
               <View className="flex-1">
                 <Label>
                   <Label.Text maxFontSizeMultiplier={1.4}>
-                    Basic Plan
+                    {t`Basic Plan`}
                   </Label.Text>
                 </Label>
                 <Description maxFontSizeMultiplier={1.4}>
-                  Perfect for individuals - $9/month
+                  {t`Perfect for individuals - $9/month`}
                 </Description>
               </View>
               <Radio />
@@ -272,10 +278,12 @@ const RadioGroupStatesContent = () => {
             <RadioGroup.Item value="pro" isDisabled isInvalid={false}>
               <View className="flex-1">
                 <Label>
-                  <Label.Text maxFontSizeMultiplier={1.4}>Pro Plan</Label.Text>
+                  <Label.Text maxFontSizeMultiplier={1.4}>
+                    {t`Pro Plan`}
+                  </Label.Text>
                 </Label>
                 <Description maxFontSizeMultiplier={1.4}>
-                  Coming soon - Advanced features
+                  {t`Coming soon - Advanced features`}
                 </Description>
               </View>
               <Radio />
@@ -289,14 +297,14 @@ const RadioGroupStatesContent = () => {
               <View className="flex-1">
                 <Label>
                   <Label.Text maxFontSizeMultiplier={1.4}>
-                    Enterprise Plan
+                    {t`Enterprise Plan`}
                   </Label.Text>
                 </Label>
                 <Description maxFontSizeMultiplier={1.4} hideOnInvalid>
-                  Not available in your region
+                  {t`Not available in your region`}
                 </Description>
                 <FieldError textProps={{ maxFontSizeMultiplier: 1.4 }}>
-                  Enterprise plan is not available in your region!
+                  {t`Enterprise plan is not available in your region!`}
                 </FieldError>
               </View>
               <Radio />
@@ -311,6 +319,7 @@ const RadioGroupStatesContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomIndicatorBackgroundContent = () => {
+  const { t } = useLingui();
   const [priority, setPriority] = React.useState('medium');
 
   return (
@@ -321,10 +330,10 @@ const CustomIndicatorBackgroundContent = () => {
             maxFontSizeMultiplier={1.4}
             className="text-foreground font-semibold text-base"
           >
-            Priority Level
+            {t`Priority Level`}
           </AppText>
           <AppText maxFontSizeMultiplier={1.4} className="text-muted text-sm">
-            Set the priority for this task
+            {t`Set the priority for this task`}
           </AppText>
         </View>
         <RadioGroup value={priority} onValueChange={setPriority}>
@@ -334,11 +343,11 @@ const CustomIndicatorBackgroundContent = () => {
                 <View className="flex-1">
                   <Label>
                     <Label.Text maxFontSizeMultiplier={1.4}>
-                      High Priority
+                      {t`High Priority`}
                     </Label.Text>
                   </Label>
                   <Description maxFontSizeMultiplier={1.4}>
-                    Urgent - requires immediate attention
+                    {t`Urgent - requires immediate attention`}
                   </Description>
                 </View>
                 <Radio>
@@ -363,11 +372,11 @@ const CustomIndicatorBackgroundContent = () => {
                 <View className="flex-1">
                   <Label>
                     <Label.Text maxFontSizeMultiplier={1.4}>
-                      Medium Priority
+                      {t`Medium Priority`}
                     </Label.Text>
                   </Label>
                   <Description maxFontSizeMultiplier={1.4}>
-                    Important - complete within this week
+                    {t`Important - complete within this week`}
                   </Description>
                 </View>
                 <Radio>
@@ -392,11 +401,11 @@ const CustomIndicatorBackgroundContent = () => {
                 <View className="flex-1">
                   <Label>
                     <Label.Text maxFontSizeMultiplier={1.4}>
-                      Low Priority
+                      {t`Low Priority`}
                     </Label.Text>
                   </Label>
                   <Description maxFontSizeMultiplier={1.4}>
-                    Standard - complete when possible
+                    {t`Standard - complete when possible`}
                   </Description>
                 </View>
                 <Radio>
@@ -421,6 +430,7 @@ const CustomIndicatorBackgroundContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomIndicatorThumbContent = () => {
+  const { t } = useLingui();
   const [notification, setNotification] = React.useState('email');
 
   return (
@@ -431,10 +441,10 @@ const CustomIndicatorThumbContent = () => {
             className="text-foreground font-semibold text-base"
             maxFontSizeMultiplier={1.4}
           >
-            Notification Preferences
+            {t`Notification Preferences`}
           </AppText>
           <AppText className="text-muted text-sm" maxFontSizeMultiplier={1.4}>
-            Choose how you'd like to receive updates
+            {t`Choose how you'd like to receive updates`}
           </AppText>
         </View>
         <RadioGroup value={notification} onValueChange={setNotification}>
@@ -456,11 +466,11 @@ const CustomIndicatorThumbContent = () => {
                 <View className="flex-1">
                   <Label>
                     <Label.Text maxFontSizeMultiplier={1.4}>
-                      Email Notifications
+                      {t`Email Notifications`}
                     </Label.Text>
                   </Label>
                   <Description maxFontSizeMultiplier={1.4}>
-                    Get updates via email
+                    {t`Get updates via email`}
                   </Description>
                 </View>
               </>
@@ -487,11 +497,11 @@ const CustomIndicatorThumbContent = () => {
                 <View className="flex-1">
                   <Label>
                     <Label.Text maxFontSizeMultiplier={1.4}>
-                      Push Notifications
+                      {t`Push Notifications`}
                     </Label.Text>
                   </Label>
                   <Description maxFontSizeMultiplier={1.4}>
-                    Get instant push alerts
+                    {t`Get instant push alerts`}
                   </Description>
                 </View>
               </>
@@ -517,11 +527,11 @@ const CustomIndicatorThumbContent = () => {
                 <View className="flex-1">
                   <Label>
                     <Label.Text maxFontSizeMultiplier={1.4}>
-                      No Notifications
+                      {t`No Notifications`}
                     </Label.Text>
                   </Label>
                   <Description maxFontSizeMultiplier={1.4}>
-                    Only check updates manually
+                    {t`Only check updates manually`}
                   </Description>
                 </View>
               </>
@@ -538,32 +548,32 @@ const CustomIndicatorThumbContent = () => {
 const RADIO_GROUP_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-radio-group',
-    label: 'Basic RadioGroup',
+    label: msg`Basic RadioGroup`,
     content: <BasicRadioGroupContent />,
   },
   {
     value: 'start-indicator-alignment',
-    label: 'Start indicator alignment',
+    label: msg`Start indicator alignment`,
     content: <StartIndicatorAlignmentContent />,
   },
   {
     value: 'inline-radio-options',
-    label: 'Inline Radio Options',
+    label: msg`Inline Radio Options`,
     content: <InlineRadioOptionsContent />,
   },
   {
     value: 'radio-group-states',
-    label: 'RadioGroup States',
+    label: msg`RadioGroup States`,
     content: <RadioGroupStatesContent />,
   },
   {
     value: 'custom-indicator-background',
-    label: 'Custom Indicator Background',
+    label: msg`Custom Indicator Background`,
     content: <CustomIndicatorBackgroundContent />,
   },
   {
     value: 'custom-indicator-thumb',
-    label: 'Custom Indicator Thumb',
+    label: msg`Custom Indicator Thumb`,
     content: <CustomIndicatorThumbContent />,
   },
 ];

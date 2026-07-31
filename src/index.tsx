@@ -57,3 +57,4 @@ export * from './helpers/external/utils';
 
 // Provider
 export * from './providers/hero-ui-native';
+export * from './providers/layout-direction';

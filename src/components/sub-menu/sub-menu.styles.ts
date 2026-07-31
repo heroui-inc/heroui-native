@@ -40,7 +40,11 @@ const trigger = tv({
  * Trigger indicator style definition.
  *
  * @note ANIMATED PROPERTIES (cannot be set via className):
- * - `transform` (specifically `rotate`) - Animated for open/close rotation transitions
+ * - `transform` (specifically `rotate` and, in RTL, `scaleX`) - Animated for
+ *   open/close rotation transitions and layout-direction mirroring. Because the
+ *   animated `transform` array fully controls this property, the RTL flip of the
+ *   default chevron is applied inside the animation hook rather than via a
+ *   className variant (a className transform would be overridden by the animation).
  */
 const triggerIndicator = tv({
   base: 'sub-menu__trigger-indicator',

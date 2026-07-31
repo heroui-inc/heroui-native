@@ -108,7 +108,7 @@ import { Input, Label, TextField } from 'heroui-native';
 </TextField>;
 ```
 
-### Inside a Bottom Sheet
+### Inside a BottomSheet
 
 When rendering an Input inside a `BottomSheet`, use the `useBottomSheetAwareHandlers` hook to wire keyboard avoidance handlers. Pass the returned `onFocus` and `onBlur` to the Input.
 
@@ -200,16 +200,16 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 
 ### Input
 
-| prop                      | type                       | default               | description                                                  |
-| ------------------------- | -------------------------- | --------------------- | ------------------------------------------------------------ |
-| isInvalid                 | `boolean`                  | `undefined`           | Whether the input is in an invalid state (overrides context) |
-| variant                   | `'primary' \| 'secondary'` | `'primary'`           | Variant style for the input                                  |
-| className                 | `string`                   | -                     | Custom class name for the input                              |
-| selectionColorClassName   | `string`                   | `"accent-accent"`     | Custom className for the selection color                     |
-| placeholderColorClassName | `string`                   | `"field-placeholder"` | Custom className for the placeholder text color              |
-| animation                 | `AnimationRoot`            | `undefined`           | Animation configuration for the input                        |
+| prop                      | type                       | default               | description                                                                                                                                                                                                                                                                       |
+| ------------------------- | -------------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| isInvalid                 | `boolean`                  | `undefined`           | Whether the input is in an invalid state (overrides context)                                                                                                                                                                                                                      |
+| variant                   | `'primary' \| 'secondary'` | `'primary'`           | Variant style for the input                                                                                                                                                                                                                                                       |
+| className                 | `string`                   | -                     | Custom class name for the input                                                                                                                                                                                                                                                   |
+| selectionColorClassName   | `string`                   | `"accent-accent"`     | Custom className for the selection color                                                                                                                                                                                                                                          |
+| placeholderColorClassName | `string`                   | `"field-placeholder"` | Custom className for the placeholder text color                                                                                                                                                                                                                                   |
+| animation                 | `AnimationRoot`            | `undefined`           | Animation configuration for the input                                                                                                                                                                                                                                             |
 | background                | `React.ReactNode`          | -                     | Background layer behind the text input. `undefined` renders the theme-aware default when the active theme registers default background content (fallback color follows the variant: primary → field token, secondary → default token); custom node replaces it; `null` removes it |
-| ...TextInputProps         | `TextInputProps`           | -                     | All standard React Native TextInput props are supported      |
+| ...TextInputProps         | `TextInputProps`           | -                     | All standard React Native TextInput props are supported                                                                                                                                                                                                                           |
 
 > **Note**: When used within a TextField component, Input automatically consumes form state (isDisabled, isInvalid) from TextField via the form-item-state context.
 
@@ -217,9 +217,9 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 
 Absolute-fill container rendered behind the text input. With no children, the active library theme decides the default content (e.g. a glass blur layer); pass children to host custom content with the same positioning and clipping.
 
-| prop           | type              | default   | description                                                                                    |
-| -------------- | ----------------- | --------- | ---------------------------------------------------------------------------------------------- |
-| children       | `React.ReactNode` | -         | Custom content inside the background container                                                 |
-| className      | `string`          | -         | Additional CSS classes                                                                         |
-| fallbackColor  | `ThemeColor`      | `'field'` | Theme color token used as the opaque fallback on platforms without native blur (Android / web) |
-| ...ViewProps   | `ViewProps`       | -         | All standard View props are supported                                                          |
+| prop          | type              | default   | description                                                                                    |
+| ------------- | ----------------- | --------- | ---------------------------------------------------------------------------------------------- |
+| children      | `React.ReactNode` | -         | Custom content inside the background container                                                 |
+| className     | `string`          | -         | Additional CSS classes                                                                         |
+| fallbackColor | `ThemeColor`      | `'field'` | Theme color token used as the opaque fallback on platforms without native blur (Android / web) |
+| ...ViewProps  | `ViewProps`       | -         | All standard View props are supported                                                          |

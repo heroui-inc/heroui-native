@@ -127,16 +127,18 @@ export type SwitchBackgroundProps = ViewProps & {
  */
 export type SwitchThumbAnimation = Animation<{
   /**
-   * Animates the `left` position of the thumb between left and right sides.
-   * The `value` property specifies the offset from the edges (left/right).
+   * Animates the thumb position between the leading and trailing edges.
+   * Applied to the Yoga-logical `start` property, so the travel direction
+   * automatically flips in right-to-left layouts.
    * When you provide a single value (e.g., `value: 2`), it applies the same offset
-   * to both sides: `2px` from the left when unselected, and `2px` from the right when selected.
+   * to both sides: `2px` from the leading edge when unselected, and `2px` from the
+   * trailing edge when selected.
    */
   left?: AnimationValue<{
     /**
-     * Offset value from the edges (left when unselected, right when selected)
+     * Offset value from the edges (leading when unselected, trailing when selected)
      * @default 2
-     * @example value: 4 // 4px offset from both left and right edges
+     * @example value: 4 // 4px offset from both edges
      */
     value?: number;
     /**

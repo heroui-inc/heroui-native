@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import {
@@ -32,6 +34,7 @@ const StyleScrollView = withUniwind(ScrollView);
 KeyboardController.preload();
 
 const BasicDialogContent = () => {
+  const { t } = useLingui();
   const [basicDialogOpen, setBasicDialogOpen] = useState(false);
 
   return (
@@ -39,23 +42,22 @@ const BasicDialogContent = () => {
       <View className="flex-1 items-center justify-center">
         <Dialog isOpen={basicDialogOpen} onOpenChange={setBasicDialogOpen}>
           <Dialog.Trigger asChild>
-            <Button variant="secondary">Basic dialog</Button>
+            <Button variant="secondary">{t`Basic dialog`}</Button>
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay />
             <Dialog.Content>
               <Dialog.Close
                 variant="ghost"
-                className="absolute top-3 right-2.5 z-50"
+                className="absolute top-3 inset-e-2.5 z-50"
               />
               <View className="size-9 items-center justify-center rounded-full bg-overlay-foreground/5 mb-4">
                 <FloppyDiscIcon size={16} colorClassName="accent-warning" />
               </View>
               <View className="mb-8 gap-1.5">
-                <Dialog.Title>Low Disk Space</Dialog.Title>
+                <Dialog.Title>{t`Low Disk Space`}</Dialog.Title>
                 <Dialog.Description>
-                  You are running low on disk space. Delete unnecessary files to
-                  free up space.
+                  {t`You are running low on disk space. Delete unnecessary files to free up space.`}
                 </Dialog.Description>
               </View>
               <View className="flex-row justify-end gap-3">
@@ -64,7 +66,7 @@ const BasicDialogContent = () => {
                   className="bg-overlay-foreground/5"
                   onPress={() => setBasicDialogOpen(false)}
                 >
-                  Confirm
+                  {t`Confirm`}
                 </Button>
               </View>
             </Dialog.Content>
@@ -78,6 +80,7 @@ const BasicDialogContent = () => {
 // ------------------------------------------------------------------------------
 
 const BlurBackdropDialogContent = () => {
+  const { t } = useLingui();
   const [blurBackdropDialogOpen, setBlurBackdropDialogOpen] = useState(false);
 
   if (Platform.OS !== 'ios') {
@@ -94,7 +97,7 @@ const BlurBackdropDialogContent = () => {
           <Dialog.Trigger asChild>
             <Button variant="secondary">
               <Button.Label maxFontSizeMultiplier={1.2}>
-                Dialog with blur backdrop
+                {t`Dialog with blur backdrop`}
               </Button.Label>
             </Button>
           </Dialog.Trigger>
@@ -105,22 +108,21 @@ const BlurBackdropDialogContent = () => {
                 <TrashIcon size={16} colorClassName="accent-danger" />
               </View>
               <View className="mb-8 gap-1">
-                <Dialog.Title>Delete product</Dialog.Title>
+                <Dialog.Title>{t`Delete product`}</Dialog.Title>
                 <Dialog.Description>
-                  Are you sure you want to delete this product? This action
-                  cannot be undone.
+                  {t`Are you sure you want to delete this product? This action cannot be undone.`}
                 </Dialog.Description>
               </View>
               <View className="gap-3">
                 <Button variant="danger" onPress={simulatePress}>
-                  Delete
+                  {t`Delete`}
                 </Button>
                 <Button
                   variant="tertiary"
                   className="bg-overlay-foreground/5"
                   onPress={() => setBlurBackdropDialogOpen(false)}
                 >
-                  Cancel
+                  {t`Cancel`}
                 </Button>
               </View>
             </Dialog.Content>
@@ -138,6 +140,7 @@ const BlurBackdropDialogContent = () => {
  * Manages form state, validation, and UI rendering.
  */
 const UpdateProfileDialogForm = ({ onClose }: { onClose: () => void }) => {
+  const { t } = useLingui();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [nameError, setNameError] = useState('');
@@ -171,20 +174,20 @@ const UpdateProfileDialogForm = ({ onClose }: { onClose: () => void }) => {
     let hasError = false;
 
     if (!name.trim()) {
-      setNameError('Name is required');
+      setNameError(t`Name is required`);
       hasError = true;
     } else if (name.trim().length < 2) {
-      setNameError('Name must be at least 2 characters');
+      setNameError(t`Name must be at least 2 characters`);
       hasError = true;
     } else {
       setNameError('');
     }
 
     if (!email.trim()) {
-      setEmailError('Email is required');
+      setEmailError(t`Email is required`);
       hasError = true;
     } else if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email address');
+      setEmailError(t`Please enter a valid email address`);
       hasError = true;
     } else {
       setEmailError('');
@@ -228,7 +231,7 @@ const UpdateProfileDialogForm = ({ onClose }: { onClose: () => void }) => {
       <View className="items-end">
         <Dialog.Close />
       </View>
-      <Dialog.Title className="mb-6">Update Profile</Dialog.Title>
+      <Dialog.Title className="mb-6">{t`Update Profile`}</Dialog.Title>
 
       <View className="flex-1">
         <StyleScrollView
@@ -236,10 +239,10 @@ const UpdateProfileDialogForm = ({ onClose }: { onClose: () => void }) => {
           keyboardShouldPersistTaps="always"
         >
           <TextField isRequired isInvalid={!!nameError}>
-            <Label isInvalid={false}>Full Name</Label>
+            <Label isInvalid={false}>{t`Full Name`}</Label>
             <Input
               variant="secondary"
-              placeholder="Enter your name"
+              placeholder={t`Enter your name`}
               value={name}
               onChangeText={(text) => {
                 setName(text);
@@ -255,7 +258,7 @@ const UpdateProfileDialogForm = ({ onClose }: { onClose: () => void }) => {
           </TextField>
 
           <TextField isRequired isInvalid={!!emailError}>
-            <Label isInvalid={false}>Email Address</Label>
+            <Label isInvalid={false}>{t`Email Address`}</Label>
             <Input
               variant="secondary"
               placeholder="email@example.com"
@@ -275,11 +278,11 @@ const UpdateProfileDialogForm = ({ onClose }: { onClose: () => void }) => {
 
       <View className="flex-row items-center justify-end gap-3 pt-3">
         <Button variant="ghost" size="sm" onPress={handleCancel}>
-          <Button.Label maxFontSizeMultiplier={1.4}>Cancel</Button.Label>
+          <Button.Label maxFontSizeMultiplier={1.4}>{t`Cancel`}</Button.Label>
         </Button>
         <Button size="sm" onPress={handleSubmit}>
           <Button.Label maxFontSizeMultiplier={1.4}>
-            Update Profile
+            {t`Update Profile`}
           </Button.Label>
         </Button>
       </View>
@@ -288,6 +291,7 @@ const UpdateProfileDialogForm = ({ onClose }: { onClose: () => void }) => {
 };
 
 const TextInputDialogContent = () => {
+  const { t } = useLingui();
   const [textInputDialogOpen, setTextInputDialogOpen] = useState(false);
 
   return (
@@ -302,7 +306,7 @@ const TextInputDialogContent = () => {
           <Dialog.Trigger asChild>
             <Button variant="secondary">
               <Button.Label maxFontSizeMultiplier={1.6}>
-                Dialog with text input
+                {t`Dialog with text input`}
               </Button.Label>
             </Button>
           </Dialog.Trigger>
@@ -321,6 +325,7 @@ const TextInputDialogContent = () => {
 // ------------------------------------------------------------------------------
 
 const LongContentDialogContent = () => {
+  const { t } = useLingui();
   const [scrollDialogOpen, setScrollDialogOpen] = useState(false);
   const { height } = useWindowDimensions();
   const { isDark } = useAppTheme();
@@ -333,7 +338,7 @@ const LongContentDialogContent = () => {
           <Dialog.Trigger asChild>
             <Button variant="secondary">
               <Button.Label maxFontSizeMultiplier={1.6}>
-                Dialog with long content
+                {t`Dialog with long content`}
               </Button.Label>
             </Button>
           </Dialog.Trigger>
@@ -342,9 +347,9 @@ const LongContentDialogContent = () => {
               className={cn('bg-stone-100', isDark && 'bg-stone-950')}
             />
             <Dialog.Content className="rounded-2xl px-0">
-              <Dialog.Close variant="ghost" className="self-end mr-4" />
+              <Dialog.Close variant="ghost" className="self-end me-4" />
               <Dialog.Title className="text-center mb-5">
-                Upload Audio
+                {t`Upload Audio`}
               </Dialog.Title>
               <ScrollShadow
                 LinearGradientComponent={LinearGradient}
@@ -353,6 +358,7 @@ const LongContentDialogContent = () => {
                 className="mb-4"
               >
                 <StyleScrollView contentContainerClassName="px-6">
+                  {/* eslint-disable lingui/no-unlocalized-strings -- Lorem ipsum filler sized to make the dialog body scroll. */}
                   <Text className="text-foreground/80 text-center">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                     do eiusmod tempor incididunt ut labore et dolore magna
@@ -392,6 +398,7 @@ const LongContentDialogContent = () => {
                     odit aut fugit, sed quia consequuntur magni dolores eos qui
                     ratione voluptatem sequi nesciunt.
                   </Text>
+                  {/* eslint-enable lingui/no-unlocalized-strings */}
                 </StyleScrollView>
               </ScrollShadow>
               <Button
@@ -399,7 +406,7 @@ const LongContentDialogContent = () => {
                 className="self-center"
                 onPress={() => setScrollDialogOpen(false)}
               >
-                Agree to Terms
+                {t`Agree to Terms`}
               </Button>
             </Dialog.Content>
           </Dialog.Portal>
@@ -412,6 +419,7 @@ const LongContentDialogContent = () => {
 // ------------------------------------------------------------------------------
 
 const NativeModalDialogContent = () => {
+  const { t } = useLingui();
   const router = useRouter();
 
   if (Platform.OS !== 'ios') {
@@ -426,7 +434,7 @@ const NativeModalDialogContent = () => {
           onPress={() => router.push('components/dialog-native-modal')}
         >
           <Button.Label maxFontSizeMultiplier={1.6}>
-            Dialog from native modal
+            {t`Dialog from native modal`}
           </Button.Label>
         </Button>
       </View>
@@ -439,27 +447,27 @@ const NativeModalDialogContent = () => {
 const DIALOG_VARIANTS_IOS: UsageVariant[] = [
   {
     value: 'basic-dialog',
-    label: 'Basic dialog',
+    label: msg`Basic dialog`,
     content: <BasicDialogContent />,
   },
   {
     value: 'blur-backdrop-dialog',
-    label: 'Dialog with blur backdrop',
+    label: msg`Dialog with blur backdrop`,
     content: <BlurBackdropDialogContent />,
   },
   {
     value: 'text-input-dialog',
-    label: 'Dialog with text input',
+    label: msg`Dialog with text input`,
     content: <TextInputDialogContent />,
   },
   {
     value: 'long-content-dialog',
-    label: 'Dialog with long content',
+    label: msg`Dialog with long content`,
     content: <LongContentDialogContent />,
   },
   {
     value: 'native-modal-dialog',
-    label: 'Dialog from native modal',
+    label: msg`Dialog from native modal`,
     content: <NativeModalDialogContent />,
   },
 ];
@@ -467,17 +475,17 @@ const DIALOG_VARIANTS_IOS: UsageVariant[] = [
 const DIALOG_VARIANTS_ANDROID: UsageVariant[] = [
   {
     value: 'basic-dialog',
-    label: 'Basic dialog',
+    label: msg`Basic dialog`,
     content: <BasicDialogContent />,
   },
   {
     value: 'text-input-dialog',
-    label: 'Dialog with text input',
+    label: msg`Dialog with text input`,
     content: <TextInputDialogContent />,
   },
   {
     value: 'long-content-dialog',
-    label: 'Dialog with long content',
+    label: msg`Dialog with long content`,
     content: <LongContentDialogContent />,
   },
 ];

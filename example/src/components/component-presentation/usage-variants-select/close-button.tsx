@@ -77,7 +77,7 @@ export const CloseButton = () => {
 
   return (
     <Button
-      className="absolute right-6"
+      className="absolute inset-e-6"
       style={[{ bottom: insets.bottom + 24 }, buttonAnimatedStyle]}
       size="lg"
       isIconOnly

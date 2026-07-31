@@ -1,5 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   ControlField,
   Description,
@@ -19,6 +21,7 @@ import { withUniwind } from 'uniwind';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { useAppLocale } from '../../../contexts/app-locale-context';
 
 const StyledIonicons = withUniwind(Ionicons);
 const StyledFontAwesome6 = withUniwind(FontAwesome6);
@@ -48,6 +51,7 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
 );
 
 export const DefaultContent = () => {
+  const { t } = useLingui();
   const [fields, setFields] = React.useState({
     notifications: false,
     darkMode: false,
@@ -59,16 +63,16 @@ export const DefaultContent = () => {
     { title: string; description: string }
   > = {
     notifications: {
-      title: 'Enable notifications',
-      description: 'Receive push notifications about your account activity',
+      title: t`Enable notifications`,
+      description: t`Receive push notifications about your account activity`,
     },
     darkMode: {
-      title: 'Dark mode',
-      description: 'Switch between light and dark theme',
+      title: t`Dark mode`,
+      description: t`Switch between light and dark theme`,
     },
     autoUpdate: {
-      title: 'Auto-update',
-      description: 'Automatically download and install updates',
+      title: t`Auto-update`,
+      description: t`Automatically download and install updates`,
     },
   };
 
@@ -100,6 +104,7 @@ export const DefaultContent = () => {
 // ------------------------------------------------------------------------------
 
 const StatesContent = () => {
+  const { t } = useLingui();
   const [fields, setFields] = React.useState({
     emailNotifications: true,
     pushNotifications: false,
@@ -110,12 +115,12 @@ const StatesContent = () => {
     { title: string; description: string; disabled?: boolean }
   > = {
     emailNotifications: {
-      title: 'Email notifications',
-      description: 'Receive notifications via email',
+      title: t`Email notifications`,
+      description: t`Receive notifications via email`,
     },
     pushNotifications: {
-      title: 'Push notifications',
-      description: 'This feature is currently unavailable',
+      title: t`Push notifications`,
+      description: t`This feature is currently unavailable`,
       disabled: true,
     },
   };
@@ -159,9 +164,16 @@ const StatesContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomStylesContent = () => {
+  const { t } = useLingui();
   const [icon, setIcon] = React.useState(true);
   const [contentIcon, setContentIcon] = React.useState(true);
   const [contentText, setContentText] = React.useState(true);
+
+  // Slide-in animations are physical; mirror them in RTL so the labels
+  // still enter from the thumb's side
+  const { isRTL } = useAppLocale();
+  const enterFromThumbOn = isRTL ? FadeInLeft : FadeInRight;
+  const enterFromThumbOff = isRTL ? FadeInRight : FadeInLeft;
 
   return (
     <View className="flex-1 px-5 items-center justify-center">
@@ -207,7 +219,7 @@ const CustomStylesContent = () => {
               },
             }}
           />
-          <Switch.StartContent className="left-2">
+          <Switch.StartContent className="inset-s-2">
             {contentIcon && (
               <Animated.View key="sun" entering={ZoomIn.springify()}>
                 <StyledIonicons
@@ -218,7 +230,7 @@ const CustomStylesContent = () => {
               </Animated.View>
             )}
           </Switch.StartContent>
-          <Switch.EndContent className="right-2">
+          <Switch.EndContent className="inset-e-2">
             {!contentIcon && (
               <Animated.View key="moon" entering={ZoomIn.springify()}>
                 <StyledIonicons
@@ -257,32 +269,32 @@ const CustomStylesContent = () => {
               },
             }}
           />
-          <Switch.StartContent className="left-3">
+          <Switch.StartContent className="inset-s-3">
             {contentText && (
               <Animated.View
                 key="sun"
-                entering={FadeInRight.springify().duration(100)}
+                entering={enterFromThumbOn.springify().duration(100)}
               >
                 <AppText
                   className="text-xs font-bold text-white"
                   maxFontSizeMultiplier={1}
                 >
-                  ON
+                  {t`ON`}
                 </AppText>
               </Animated.View>
             )}
           </Switch.StartContent>
-          <Switch.EndContent className="right-2">
+          <Switch.EndContent className="inset-e-2">
             {!contentText && (
               <Animated.View
                 key="moon"
-                entering={FadeInLeft.springify().duration(100)}
+                entering={enterFromThumbOff.springify().duration(100)}
               >
                 <AppText
                   className="text-xs font-bold text-white"
                   maxFontSizeMultiplier={1}
                 >
-                  OFF
+                  {t`OFF`}
                 </AppText>
               </Animated.View>
             )}
@@ -298,17 +310,17 @@ const CustomStylesContent = () => {
 const SWITCH_VARIANTS: UsageVariant[] = [
   {
     value: 'default',
-    label: 'Default',
+    label: msg`Default`,
     content: <DefaultContent />,
   },
   {
     value: 'states',
-    label: 'States',
+    label: msg`States`,
     content: <StatesContent />,
   },
   {
     value: 'custom-styles',
-    label: 'Custom styles',
+    label: msg`Custom styles`,
     content: <CustomStylesContent />,
   },
 ];

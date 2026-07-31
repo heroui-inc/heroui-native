@@ -14,10 +14,7 @@
 
 .select__trigger-background {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   border-radius: var(--radius-field);
   overflow: hidden;
 }
@@ -32,6 +29,8 @@
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
   font-family: var(--font-normal);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 .select__value--is-selected {
@@ -49,18 +48,12 @@
 
 .select__portal {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
 }
 
 .select__overlay {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
 }
 
 .select__content {
@@ -72,20 +65,14 @@
 
 .select__content-background {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   border-radius: var(--radius-3xl);
   overflow: hidden;
 }
 
 .select__dialog-content-wrapper {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   justify-content: center;
   padding: calc(var(--spacing) * 5);
 }
@@ -104,6 +91,8 @@
   font-family: var(--font-medium);
   padding-inline: calc(var(--spacing) * 2);
   padding-block: calc(var(--spacing) * 1.5);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 .select__item {
@@ -120,12 +109,16 @@
   line-height: var(--text-base--line-height);
   color: var(--color-foreground);
   font-family: var(--font-medium);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 .select__item-description {
   font-size: var(--text-sm);
   line-height: 1.375;
   color: var(--color-muted);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 .select__item-indicator {

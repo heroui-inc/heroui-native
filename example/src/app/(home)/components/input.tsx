@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   Description,
   FieldError,
@@ -39,28 +41,32 @@ const KeyboardAvoidingContainer = ({
 };
 
 const BasicInputContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
-        <Input placeholder="Enter your email" keyboardType="email-address" />
+        <Input placeholder={t`Enter your email`} keyboardType="email-address" />
       </KeyboardAvoidingContainer>
     </View>
   );
 };
 
 const InputWithLabelAndDescriptionContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <TextField>
-          <Label>Email</Label>
+          <Label>{t`Email`}</Label>
           <Input
-            placeholder="Enter your email"
+            placeholder={t`Enter your email`}
             keyboardType="email-address"
             autoCapitalize="none"
           />
           <Description>
-            We'll never share your email with anyone else.
+            {t`We'll never share your email with anyone else.`}
           </Description>
         </TextField>
       </KeyboardAvoidingContainer>
@@ -69,20 +75,22 @@ const InputWithLabelAndDescriptionContent = () => {
 };
 
 const InputVariantsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 justify-center px-5 gap-8">
       <KeyboardAvoidingContainer>
         <View className="gap-8">
           <TextField>
-            <Label>Primary Variant</Label>
-            <Input placeholder="Primary style input" variant="primary" />
-            <Description>Default variant with primary styling</Description>
+            <Label>{t`Primary Variant`}</Label>
+            <Input placeholder={t`Primary style input`} variant="primary" />
+            <Description>{t`Default variant with primary styling`}</Description>
           </TextField>
 
           <TextField>
-            <Label>Secondary Variant</Label>
-            <Input placeholder="Secondary style input" variant="secondary" />
-            <Description>Secondary variant for surfaces</Description>
+            <Label>{t`Secondary Variant`}</Label>
+            <Input placeholder={t`Secondary style input`} variant="secondary" />
+            <Description>{t`Secondary variant for surfaces`}</Description>
           </TextField>
         </View>
       </KeyboardAvoidingContainer>
@@ -91,45 +99,51 @@ const InputVariantsContent = () => {
 };
 
 const InputStatesContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 justify-center px-5 gap-8">
       <KeyboardAvoidingContainer>
         <View className="gap-8">
           <TextField>
             <Label>
-              <Label.Text maxFontSizeMultiplier={1.4}>Default State</Label.Text>
+              <Label.Text maxFontSizeMultiplier={1.4}>
+                {t`Default State`}
+              </Label.Text>
             </Label>
             <Input
-              placeholder="Enter your email"
+              placeholder={t`Enter your email`}
               keyboardType="email-address"
             />
             <Description maxFontSizeMultiplier={1.4}>
-              Normal input state
+              {t`Normal input state`}
             </Description>
           </TextField>
 
           <TextField isDisabled>
             <Label>
               <Label.Text maxFontSizeMultiplier={1.4}>
-                Disabled State
+                {t`Disabled State`}
               </Label.Text>
             </Label>
-            <Input placeholder="Cannot edit" value="Read only value" />
+            <Input placeholder={t`Cannot edit`} value={t`Read only value`} />
             <Description maxFontSizeMultiplier={1.4}>
-              Input is disabled and cannot be edited
+              {t`Input is disabled and cannot be edited`}
             </Description>
           </TextField>
 
           <TextField isInvalid>
             <Label>
-              <Label.Text maxFontSizeMultiplier={1.4}>Invalid State</Label.Text>
+              <Label.Text maxFontSizeMultiplier={1.4}>
+                {t`Invalid State`}
+              </Label.Text>
             </Label>
             <Input
-              placeholder="Enter your email"
+              placeholder={t`Enter your email`}
               keyboardType="email-address"
             />
             <FieldError textProps={{ maxFontSizeMultiplier: 1.4 }}>
-              Please enter a valid email address
+              {t`Please enter a valid email address`}
             </FieldError>
           </TextField>
         </View>
@@ -141,22 +155,22 @@ const InputStatesContent = () => {
 const INPUT_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-input',
-    label: 'Basic Input',
+    label: msg`Basic Input`,
     content: <BasicInputContent />,
   },
   {
     value: 'input-with-label-description',
-    label: 'With Label & Description',
+    label: msg`With Label & Description`,
     content: <InputWithLabelAndDescriptionContent />,
   },
   {
     value: 'input-variants',
-    label: 'Variants',
+    label: msg`Variants`,
     content: <InputVariantsContent />,
   },
   {
     value: 'input-states',
-    label: 'States',
+    label: msg`States`,
     content: <InputStatesContent />,
   },
 ];

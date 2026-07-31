@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { Button, Checkbox, ControlField, LinkButton } from 'heroui-native';
 import React from 'react';
 import { Alert, View } from 'react-native';
@@ -6,11 +8,12 @@ import type { UsageVariant } from '../../../components/component-presentation/ty
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
 const TermsAndPrivacyContent = () => {
+  const { t } = useLingui();
   const [isAgreed, setIsAgreed] = React.useState(false);
 
-  const handleTermsPress = () => Alert.alert('Terms', 'Navigate to Terms');
+  const handleTermsPress = () => Alert.alert(t`Terms`, t`Navigate to Terms`);
   const handlePrivacyPress = () =>
-    Alert.alert('Privacy', 'Navigate to Privacy Policy');
+    Alert.alert(t`Privacy`, t`Navigate to Privacy Policy`);
 
   return (
     <View className="flex-1 px-5 items-center justify-center">
@@ -24,21 +27,21 @@ const TermsAndPrivacyContent = () => {
             <Checkbox className="mt-0.5" />
           </ControlField.Indicator>
           <View className="flex-row flex-wrap flex-1">
-            <AppText className="text-sm text-muted">I agree to the </AppText>
+            <AppText className="text-sm text-muted">{t`I agree to the `}</AppText>
             <LinkButton size="sm" onPress={handleTermsPress}>
               <LinkButton.Label className="text-accent-soft-foreground">
-                Terms of Service
+                {t`Terms of Service`}
               </LinkButton.Label>
             </LinkButton>
-            <AppText className="text-sm text-muted"> and </AppText>
+            <AppText className="text-sm text-muted">{t` and `}</AppText>
             <LinkButton size="sm" onPress={handlePrivacyPress}>
               <LinkButton.Label className="text-accent-soft-foreground">
-                Privacy Policy
+                {t`Privacy Policy`}
               </LinkButton.Label>
             </LinkButton>
           </View>
         </ControlField>
-        <Button isDisabled={!isAgreed}>Sign up</Button>
+        <Button isDisabled={!isAgreed}>{t`Sign up`}</Button>
       </View>
     </View>
   );
@@ -47,11 +50,13 @@ const TermsAndPrivacyContent = () => {
 // ------------------------------------------------------------------------------
 
 const DisabledStateContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center gap-4">
-        <LinkButton>Enabled</LinkButton>
-        <LinkButton isDisabled>Disabled</LinkButton>
+        <LinkButton>{t`Enabled`}</LinkButton>
+        <LinkButton isDisabled>{t`Disabled`}</LinkButton>
       </View>
     </View>
   );
@@ -62,12 +67,12 @@ const DisabledStateContent = () => {
 const LINK_BUTTON_VARIANTS: UsageVariant[] = [
   {
     value: 'terms-and-privacy',
-    label: 'Terms & Privacy',
+    label: msg`Terms & Privacy`,
     content: <TermsAndPrivacyContent />,
   },
   {
     value: 'disabled-state',
-    label: 'Disabled state',
+    label: msg`Disabled state`,
     content: <DisabledStateContent />,
   },
 ];

@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+import { msg } from '@lingui/core/macro';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, cn } from 'heroui-native';
@@ -171,6 +172,7 @@ const CustomFallbackContent = () => {
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row items-center justify-center gap-4">
+        {/* eslint-disable-next-line lingui/no-unlocalized-strings -- Sample person name. */}
         <Avatar alt="John Doe">
           <Avatar.Fallback>
             <StarFillIcon colorClassName="accent-warning" />
@@ -240,7 +242,7 @@ const AvatarGroupContent = () => {
         {avatarGroupData.map((user, index) => (
           <Avatar
             key={user.id}
-            className={cn('border-background border-2', index !== 0 && '-ml-4')}
+            className={cn('border-background border-2', index !== 0 && '-ms-4')}
             alt={user.name}
           >
             <Avatar.Image source={{ uri: user.image }} />
@@ -262,7 +264,7 @@ const AvatarGroupContent = () => {
         {avatarGroupData.slice(0, 3).map((user, index) => (
           <Avatar
             key={user.id}
-            className={cn('border-background border-2', index !== 0 && '-ml-4')}
+            className={cn('border-background border-2', index !== 0 && '-ms-4')}
             alt={user.name}
           >
             <Avatar.Image source={{ uri: user.image }} />
@@ -279,7 +281,7 @@ const AvatarGroupContent = () => {
             </Avatar.Fallback>
           </Avatar>
         ))}
-        <Avatar className="border-background border-2 -ml-4">
+        <Avatar className="border-background border-2 -ms-4">
           <Avatar.Fallback>+2</Avatar.Fallback>
         </Avatar>
       </View>
@@ -339,7 +341,7 @@ const CustomStylesContent = () => {
             </Avatar.Image>
             <Avatar.Fallback>ON</Avatar.Fallback>
           </Avatar>
-          <View className="absolute bottom-0.5 right-0.5 size-3.5 rounded-full bg-green-500 border border-background" />
+          <View className="absolute bottom-0.5 inset-e-0.5 size-3.5 rounded-full bg-green-500 border border-background" />
         </View>
       </View>
     </View>
@@ -351,42 +353,42 @@ const CustomStylesContent = () => {
 const AVATAR_VARIANTS: UsageVariant[] = [
   {
     value: 'sizes',
-    label: 'Sizes',
+    label: msg`Sizes`,
     content: <SizesContent />,
   },
   {
     value: 'default-text-fallback',
-    label: 'Default text fallback',
+    label: msg`Default text fallback`,
     content: <DefaultTextFallbackContent />,
   },
   {
     value: 'soft-text-fallback',
-    label: 'Soft text fallback',
+    label: msg`Soft text fallback`,
     content: <SoftTextFallbackContent />,
   },
   {
     value: 'default-icon-fallback',
-    label: 'Default icon fallback',
+    label: msg`Default icon fallback`,
     content: <DefaultIconFallbackContent />,
   },
   {
     value: 'soft-icon-fallback',
-    label: 'Soft icon fallback',
+    label: msg`Soft icon fallback`,
     content: <SoftIconFallbackContent />,
   },
   {
     value: 'custom-fallback',
-    label: 'Custom fallback',
+    label: msg`Custom fallback`,
     content: <CustomFallbackContent />,
   },
   {
     value: 'avatar-group',
-    label: 'Avatar group',
+    label: msg`Avatar group`,
     content: <AvatarGroupContent />,
   },
   {
     value: 'custom-styles',
-    label: 'Custom styles',
+    label: msg`Custom styles`,
     content: <CustomStylesContent />,
   },
 ];

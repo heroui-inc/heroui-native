@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Chip } from 'heroui-native';
 import { StyleSheet, View } from 'react-native';
@@ -9,13 +11,15 @@ import { StarFillIcon } from '../../../components/icons/star-fill';
 import { XMarkIcon } from '../../../components/icons/x-mark';
 
 const SizesContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5">
       <View className="flex-1 items-center justify-center">
         <View className="flex-row items-center gap-4">
-          <Chip size="sm">Small</Chip>
-          <Chip size="md">Medium</Chip>
-          <Chip size="lg">Large</Chip>
+          <Chip size="sm">{t`Small`}</Chip>
+          <Chip size="md">{t`Medium`}</Chip>
+          <Chip size="lg">{t`Large`}</Chip>
         </View>
       </View>
     </View>
@@ -25,20 +29,22 @@ const SizesContent = () => {
 // ------------------------------------------------------------------------------
 
 const VariantsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5">
       <View className="flex-1 items-center justify-center gap-4">
         <Chip variant="primary" className="self-center">
-          Primary
+          {t`Primary`}
         </Chip>
         <Chip variant="secondary" className="self-center">
-          Secondary
+          {t`Secondary`}
         </Chip>
         <Chip variant="tertiary" className="self-center">
-          Tertiary
+          {t`Tertiary`}
         </Chip>
         <Chip variant="soft" className="self-center">
-          Soft
+          {t`Soft`}
         </Chip>
       </View>
     </View>
@@ -48,27 +54,29 @@ const VariantsContent = () => {
 // ------------------------------------------------------------------------------
 
 const PrimaryVariantColorsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5">
       <View className="flex-1 items-center justify-center">
         <View className="gap-4">
           <View className="flex-row gap-4 justify-center">
             <Chip variant="primary" color="accent">
-              Accent
+              {t`Accent`}
             </Chip>
             <Chip variant="primary" color="default">
-              Default
+              {t`Default`}
             </Chip>
             <Chip variant="primary" color="success">
-              Success
+              {t`Success`}
             </Chip>
           </View>
           <View className="flex-row gap-4 justify-center">
             <Chip variant="primary" color="warning">
-              Warning
+              {t`Warning`}
             </Chip>
             <Chip variant="primary" color="danger">
-              Danger
+              {t`Danger`}
             </Chip>
           </View>
         </View>
@@ -80,27 +88,29 @@ const PrimaryVariantColorsContent = () => {
 // ------------------------------------------------------------------------------
 
 const SecondaryVariantColorsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5">
       <View className="flex-1 items-center justify-center">
         <View className="gap-4">
           <View className="flex-row gap-4 justify-center">
             <Chip variant="secondary" color="accent">
-              Accent
+              {t`Accent`}
             </Chip>
             <Chip variant="secondary" color="default">
-              Default
+              {t`Default`}
             </Chip>
             <Chip variant="secondary" color="success">
-              Success
+              {t`Success`}
             </Chip>
           </View>
           <View className="flex-row gap-4 justify-center">
             <Chip variant="secondary" color="warning">
-              Warning
+              {t`Warning`}
             </Chip>
             <Chip variant="secondary" color="danger">
-              Danger
+              {t`Danger`}
             </Chip>
           </View>
         </View>
@@ -112,27 +122,29 @@ const SecondaryVariantColorsContent = () => {
 // ------------------------------------------------------------------------------
 
 const TertiaryVariantColorsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5">
       <View className="flex-1 items-center justify-center">
         <View className="gap-4">
           <View className="flex-row gap-4 justify-center">
             <Chip variant="tertiary" color="accent">
-              Accent
+              {t`Accent`}
             </Chip>
             <Chip variant="tertiary" color="default">
-              Default
+              {t`Default`}
             </Chip>
             <Chip variant="tertiary" color="success">
-              Success
+              {t`Success`}
             </Chip>
           </View>
           <View className="flex-row gap-4 justify-center">
             <Chip variant="tertiary" color="warning">
-              Warning
+              {t`Warning`}
             </Chip>
             <Chip variant="tertiary" color="danger">
-              Danger
+              {t`Danger`}
             </Chip>
           </View>
         </View>
@@ -144,27 +156,29 @@ const TertiaryVariantColorsContent = () => {
 // ------------------------------------------------------------------------------
 
 const SoftVariantColorsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5">
       <View className="flex-1 items-center justify-center">
         <View className="gap-4">
           <View className="flex-row gap-4 justify-center">
             <Chip variant="soft" color="accent">
-              Accent
+              {t`Accent`}
             </Chip>
             <Chip variant="soft" color="default">
-              Default
+              {t`Default`}
             </Chip>
             <Chip variant="soft" color="success">
-              Success
+              {t`Success`}
             </Chip>
           </View>
           <View className="flex-row gap-4 justify-center">
             <Chip variant="soft" color="warning">
-              Warning
+              {t`Warning`}
             </Chip>
             <Chip variant="soft" color="danger">
-              Danger
+              {t`Danger`}
             </Chip>
           </View>
         </View>
@@ -176,6 +190,8 @@ const SoftVariantColorsContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithStartContentContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="gap-8">
@@ -185,40 +201,40 @@ const WithStartContentContent = () => {
               size={11}
               colorClassName="accent-accent-soft-foreground"
             />
-            <Chip.Label>Featured</Chip.Label>
+            <Chip.Label>{t`Featured`}</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="success">
             <PlusIcon
               size={12}
               colorClassName="accent-success-soft-foreground"
             />
-            <Chip.Label>New</Chip.Label>
+            <Chip.Label>{t`New`}</Chip.Label>
           </Chip>
           <Chip size="lg" variant="tertiary" color="warning">
             <StarFillIcon
               size={11}
               colorClassName="accent-warning-soft-foreground"
             />
-            <Chip.Label>Premium</Chip.Label>
+            <Chip.Label>{t`Premium`}</Chip.Label>
           </Chip>
         </View>
 
         <View className="flex-row flex-wrap gap-4 justify-center">
           <Chip size="md" variant="secondary">
-            <View className="size-1.5 mr-1.5 rounded-full bg-accent" />
-            <Chip.Label>Information</Chip.Label>
+            <View className="size-1.5 me-1.5 rounded-full bg-accent" />
+            <Chip.Label>{t`Information`}</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="success">
-            <View className="size-1.5 mr-1.5 rounded-full bg-success-soft-foreground" />
-            <Chip.Label>Completed</Chip.Label>
+            <View className="size-1.5 me-1.5 rounded-full bg-success-soft-foreground" />
+            <Chip.Label>{t`Completed`}</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="warning">
-            <View className="size-1.5 mr-1.5 rounded-full bg-warning-soft-foreground" />
-            <Chip.Label>Pending</Chip.Label>
+            <View className="size-1.5 me-1.5 rounded-full bg-warning-soft-foreground" />
+            <Chip.Label>{t`Pending`}</Chip.Label>
           </Chip>
           <Chip size="md" variant="secondary" color="danger">
-            <View className="size-1.5 mr-1.5 rounded-full bg-danger-soft-foreground" />
-            <Chip.Label>Failed</Chip.Label>
+            <View className="size-1.5 me-1.5 rounded-full bg-danger-soft-foreground" />
+            <Chip.Label>{t`Failed`}</Chip.Label>
           </Chip>
         </View>
       </View>
@@ -229,24 +245,26 @@ const WithStartContentContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithEndContentContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row flex-wrap gap-4 justify-center">
         <Chip size="sm" variant="secondary">
-          <Chip.Label className="text-muted">Close</Chip.Label>
+          <Chip.Label className="text-muted">{t`Close`}</Chip.Label>
           <XMarkIcon size={12} colorClassName="accent-muted" />
         </Chip>
-        <Chip size="md" variant="primary" color="danger" className="pr-1.5">
-          <Chip.Label>Remove</Chip.Label>
+        <Chip size="md" variant="primary" color="danger" className="pe-1.5">
+          <Chip.Label>{t`Remove`}</Chip.Label>
           <XMarkIcon size={14} colorClassName="accent-danger-foreground" />
         </Chip>
         <Chip
           size="lg"
           variant="secondary"
           color="default"
-          className="pr-1.5 p-0.5 pl-2 gap-2"
+          className="pe-1.5 p-0.5 ps-2 gap-2"
         >
-          <Chip.Label className="text-muted">Clear</Chip.Label>
+          <Chip.Label className="text-muted">{t`Clear`}</Chip.Label>
           <View className="rounded-full p-1 bg-muted/20">
             <XMarkIcon size={12} colorClassName="accent-muted" />
           </View>
@@ -259,17 +277,21 @@ const WithEndContentContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomStylingContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row flex-wrap gap-4 justify-center">
         <Chip className="bg-purple-600 px-6">
-          <Chip.Label className="text-background text-base">Custom</Chip.Label>
+          <Chip.Label className="text-background text-base">
+            {t`Custom`}
+          </Chip.Label>
         </Chip>
         <Chip
           variant="secondary"
           className="border-purple-600 bg-purple-100 rounded-sm"
         >
-          <Chip.Label className="text-purple-800">Purple</Chip.Label>
+          <Chip.Label className="text-purple-800">{t`Purple`}</Chip.Label>
         </Chip>
 
         <Chip>
@@ -279,7 +301,9 @@ const CustomStylingContent = () => {
             end={{ x: 1, y: 0 }}
             style={StyleSheet.absoluteFill}
           />
-          <Chip.Label className="text-white font-semibold">Gradient</Chip.Label>
+          <Chip.Label className="text-white font-semibold">
+            {t`Gradient`}
+          </Chip.Label>
         </Chip>
 
         <Chip size="lg">
@@ -289,7 +313,7 @@ const CustomStylingContent = () => {
             end={{ x: 1, y: 1 }}
             style={StyleSheet.absoluteFill}
           />
-          <Chip.Label className="text-white font-bold">Premium</Chip.Label>
+          <Chip.Label className="text-white font-bold">{t`Premium`}</Chip.Label>
         </Chip>
 
         <Chip>
@@ -299,7 +323,7 @@ const CustomStylingContent = () => {
             end={{ x: 1, y: 0.5 }}
             style={StyleSheet.absoluteFill}
           />
-          <Chip.Label className="text-white font-semibold">Hot</Chip.Label>
+          <Chip.Label className="text-white font-semibold">{t`Hot`}</Chip.Label>
         </Chip>
       </View>
     </View>
@@ -311,47 +335,47 @@ const CustomStylingContent = () => {
 const CHIP_VARIANTS: UsageVariant[] = [
   {
     value: 'sizes',
-    label: 'Sizes',
+    label: msg`Sizes`,
     content: <SizesContent />,
   },
   {
     value: 'variants',
-    label: 'Variants',
+    label: msg`Variants`,
     content: <VariantsContent />,
   },
   {
     value: 'primary-variant-colors',
-    label: 'Primary variant colors',
+    label: msg`Primary variant colors`,
     content: <PrimaryVariantColorsContent />,
   },
   {
     value: 'secondary-variant-colors',
-    label: 'Secondary variant colors',
+    label: msg`Secondary variant colors`,
     content: <SecondaryVariantColorsContent />,
   },
   {
     value: 'tertiary-variant-colors',
-    label: 'Tertiary variant colors',
+    label: msg`Tertiary variant colors`,
     content: <TertiaryVariantColorsContent />,
   },
   {
     value: 'soft-variant-colors',
-    label: 'Soft variant colors',
+    label: msg`Soft variant colors`,
     content: <SoftVariantColorsContent />,
   },
   {
     value: 'with-start-content',
-    label: 'With start content',
+    label: msg`With start content`,
     content: <WithStartContentContent />,
   },
   {
     value: 'with-end-content',
-    label: 'With end content',
+    label: msg`With end content`,
     content: <WithEndContentContent />,
   },
   {
     value: 'custom-styling',
-    label: 'Custom styling',
+    label: msg`Custom styling`,
     content: <CustomStylingContent />,
   },
 ];

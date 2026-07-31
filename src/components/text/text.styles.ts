@@ -4,8 +4,9 @@ import { combineStyles } from '../../helpers/internal/utils';
 import { CODE_FONT_FAMILY } from './text.constants';
 
 /**
- * @note The `rtl:` flipped alignment utilities for `align` stay here because
- * the uniwind CSS parser has no rtl variant for custom CSS classes.
+ * @note No `rtl:` overrides are needed for `align`. React Native (new
+ * architecture) resolves `textAlign: left/right` against the node's layout
+ * direction, so `left` already means "start" and `right` means "end" in RTL.
  */
 const root = tv({
   base: 'text__root',
@@ -23,9 +24,9 @@ const root = tv({
       'code': 'text__root--type-code',
     },
     align: {
-      start: 'text__root--align-start rtl:text-right',
+      start: 'text__root--align-start',
       center: 'text__root--align-center',
-      end: 'text__root--align-end rtl:text-left',
+      end: 'text__root--align-end',
       justify: 'text__root--align-justify',
     },
     color: {

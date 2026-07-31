@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { I18nManager } from 'react-native';
 import { SafeAreaListener } from 'react-native-safe-area-context';
 import { Uniwind } from 'uniwind';
+import { LayoutDirectionProvider } from '../../helpers/internal/contexts';
 import { useDevInfo } from '../../helpers/internal/hooks';
 import { GlobalAnimationSettingsProvider } from '../animation-settings';
 import { TextComponentProvider } from '../text-component/provider';
@@ -30,9 +32,15 @@ const HeroUINativeProviderRaw: React.FC<HeroUINativeProviderRawProps> = ({
   children,
   config = {},
 }) => {
-  const { textProps, textInputProps, animation, devInfo } = config;
+  const { textProps, textInputProps, animation, devInfo, isRTL } = config;
 
   useDevInfo(devInfo);
+
+  // Resolve the effective layout direction, falling back to the global RTL state
+  const layoutDirectionValue = useMemo(
+    () => ({ isRTL: isRTL ?? I18nManager.isRTL }),
+    [isRTL]
+  );
 
   return (
     <SafeAreaListener
@@ -40,13 +48,15 @@ const HeroUINativeProviderRaw: React.FC<HeroUINativeProviderRawProps> = ({
         Uniwind.updateInsets(insets);
       }}
     >
-      <GlobalAnimationSettingsProvider animation={animation}>
-        <TextComponentProvider value={{ textProps }}>
-          <TextInputComponentProvider value={{ textInputProps }}>
-            {children}
-          </TextInputComponentProvider>
-        </TextComponentProvider>
-      </GlobalAnimationSettingsProvider>
+      <LayoutDirectionProvider value={layoutDirectionValue}>
+        <GlobalAnimationSettingsProvider animation={animation}>
+          <TextComponentProvider value={{ textProps }}>
+            <TextInputComponentProvider value={{ textInputProps }}>
+              {children}
+            </TextInputComponentProvider>
+          </TextComponentProvider>
+        </GlobalAnimationSettingsProvider>
+      </LayoutDirectionProvider>
     </SafeAreaListener>
   );
 };

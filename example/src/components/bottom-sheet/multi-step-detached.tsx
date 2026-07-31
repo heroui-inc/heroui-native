@@ -5,6 +5,7 @@
  */
 
 import Feather from '@expo/vector-icons/Feather';
+import { useLingui } from '@lingui/react/macro';
 import { BottomSheet, Button } from 'heroui-native';
 import { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -40,6 +41,9 @@ const fadeIn = FadeIn.duration(200);
 
 /** Fade-out animation for exiting content */
 const fadeOut = FadeOut.duration(150);
+
+/* eslint-disable lingui/no-unlocalized-strings -- Step bodies are lorem ipsum
+   filler sized to demonstrate how the sheet grows between snap points. */
 
 /** Step 1 body text — 6 lorem ipsum sentences */
 const STEP_1_BODY = [
@@ -77,6 +81,8 @@ const STEP_3_BODY = [
   'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.',
 ].join(' ');
 
+/* eslint-enable lingui/no-unlocalized-strings */
+
 /**
  * Multi-step detached bottom sheet component.
  * Renders a detached bottom sheet that cycles through 3 steps,
@@ -85,6 +91,7 @@ const STEP_3_BODY = [
  * for smooth morphing transitions between steps.
  */
 export const MultiStepDetachedContent = () => {
+  const { t } = useLingui();
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<Step>(1);
   const insets = useSafeAreaInsets();
@@ -136,7 +143,7 @@ export const MultiStepDetachedContent = () => {
           {/* Trigger button to open the bottom sheet */}
           <BottomSheet.Trigger asChild>
             <Button variant="secondary" isDisabled={isOpen}>
-              Multi-step detached
+              {t`Multi-step detached`}
             </Button>
           </BottomSheet.Trigger>
 
@@ -168,7 +175,7 @@ export const MultiStepDetachedContent = () => {
                         <StyledFeather
                           name="chevron-left"
                           size={20}
-                          className="text-foreground"
+                          className="text-foreground rtl:-scale-x-100"
                         />
                       </Button>
                     </Animated.View>
@@ -178,7 +185,7 @@ export const MultiStepDetachedContent = () => {
                   <Animated.View layout={layoutTransition}>
                     <View className="flex-1">
                       <BottomSheet.Title>
-                        {step === 1 ? 'Content One' : 'Content Two'}
+                        {step === 1 ? t`Content One` : t`Content Two`}
                       </BottomSheet.Title>
                     </View>
                   </Animated.View>
@@ -198,7 +205,7 @@ export const MultiStepDetachedContent = () => {
                   {step === 1 && (
                     <Animated.View entering={fadeIn} exiting={fadeOut}>
                       <BottomSheet.Title>
-                        This is a test title
+                        {t`This is a test title`}
                       </BottomSheet.Title>
                       <BottomSheet.Description>
                         {STEP_1_BODY}
@@ -209,7 +216,7 @@ export const MultiStepDetachedContent = () => {
                   {/* Step 2 content */}
                   {step === 2 && (
                     <Animated.View entering={fadeIn} exiting={fadeOut}>
-                      <BottomSheet.Title>Different title</BottomSheet.Title>
+                      <BottomSheet.Title>{t`Different title`}</BottomSheet.Title>
                       <BottomSheet.Description>
                         {STEP_2_BODY}
                       </BottomSheet.Description>
@@ -219,7 +226,7 @@ export const MultiStepDetachedContent = () => {
                   {/* Step 3 content */}
                   {step === 3 && (
                     <Animated.View entering={fadeIn} exiting={fadeOut}>
-                      <BottomSheet.Title>Another title</BottomSheet.Title>
+                      <BottomSheet.Title>{t`Another title`}</BottomSheet.Title>
                       <BottomSheet.Description>
                         {STEP_3_BODY}
                       </BottomSheet.Description>
@@ -242,7 +249,7 @@ export const MultiStepDetachedContent = () => {
                 {/* Step 1 footer: single "Continue" button */}
                 {step === 1 && (
                   <Animated.View entering={fadeIn} exiting={fadeOut}>
-                    <Button onPress={handleContinue}>Continue</Button>
+                    <Button onPress={handleContinue}>{t`Continue`}</Button>
                   </Animated.View>
                 )}
 
@@ -252,11 +259,11 @@ export const MultiStepDetachedContent = () => {
                     <View className="flex-row gap-3">
                       <View className="flex-1">
                         <Button variant="tertiary" onPress={handleClose}>
-                          Cancel
+                          {t`Cancel`}
                         </Button>
                       </View>
                       <View className="flex-1">
-                        <Button onPress={handleContinue}>Continue</Button>
+                        <Button onPress={handleContinue}>{t`Continue`}</Button>
                       </View>
                     </View>
                   </Animated.View>
@@ -265,7 +272,7 @@ export const MultiStepDetachedContent = () => {
                 {/* Step 3 footer: single "Finish" button */}
                 {step === 3 && (
                   <Animated.View entering={fadeIn} exiting={fadeOut}>
-                    <Button onPress={handleClose}>Finish</Button>
+                    <Button onPress={handleClose}>{t`Finish`}</Button>
                   </Animated.View>
                 )}
               </Animated.View>

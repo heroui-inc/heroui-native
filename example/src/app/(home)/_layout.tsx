@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
 import { useThemeColor, useToast } from 'heroui-native';
@@ -7,6 +8,8 @@ import { useReducedMotion } from 'react-native-reanimated';
 import LogoDark from '../../../assets/logo-dark.png';
 import LogoLight from '../../../assets/logo-light.png';
 import { type UpdateBottomSheetMode } from '../../components/bottom-sheet/update-bottom-sheet';
+import { SettingsBottomSheet } from '../../components/settings/settings-bottom-sheet';
+import { SettingsButton } from '../../components/settings/settings-button';
 import { ThemeToggle } from '../../components/theme-toggle';
 import { useAppTheme } from '../../contexts/app-theme-context';
 import { COMPONENTS } from '../../helpers/data/components';
@@ -14,6 +17,7 @@ import { useOtaUpdate } from '../../helpers/hooks/use-ota-update';
 import { useVersionCheck } from '../../helpers/hooks/use-version-check';
 
 export default function Layout() {
+  const { t } = useLingui();
   const { isDark } = useAppTheme();
   const [themeColorForeground, themeColorBackground] = useThemeColor([
     'foreground',
@@ -22,6 +26,8 @@ export default function Layout() {
 
   const reducedMotion = useReducedMotion();
   const { toast } = useToast();
+
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   // -- Update management state --
   const [isVersionChecked, setIsVersionChecked] = useState(false);
@@ -58,9 +64,9 @@ export default function Layout() {
       toast.show({
         duration: 'persistent',
         variant: 'warning',
-        label: 'Reduce motion enabled',
-        description: 'All animations will be disabled',
-        actionLabel: 'Close',
+        label: t`Reduce motion enabled`,
+        description: t`All animations will be disabled`,
+        actionLabel: t`Close`,
         onActionPress: ({ hide }) => hide(),
       });
     }
@@ -78,6 +84,20 @@ export default function Layout() {
   };
 
   const _renderThemeToggle = useCallback(() => <ThemeToggle />, []);
+
+  const handleOpenSettings = useCallback(() => {
+    setIsSettingsOpen(true);
+  }, []);
+
+  const _renderSettingsButton = useCallback(
+    () => (
+      <SettingsButton
+        onPress={handleOpenSettings}
+        accessibilityLabel={t`Open settings`}
+      />
+    ),
+    [handleOpenSettings, t]
+  );
 
   return (
     <View className="flex-1 bg-background">
@@ -106,15 +126,21 @@ export default function Layout() {
           },
         }}
       >
+        {/*
+         * `headerLeft` is set per-screen rather than in `screenOptions`: a
+         * global value would replace the native back button on every pushed
+         * screen.
+         */}
         <Stack.Screen
           name="index"
           options={{
             headerTitle: _renderTitle,
+            headerLeft: _renderSettingsButton,
           }}
         />
         <Stack.Screen
           name="components/index"
-          options={{ headerTitle: 'Components' }}
+          options={{ headerTitle: t`Components` }}
         />
         {COMPONENTS.map((component) => (
           <Stack.Screen
@@ -126,30 +152,42 @@ export default function Layout() {
         <Stack.Screen
           name="components/bottom-sheet-native-modal"
           options={{
-            title: 'Bottom Sheet Native Modal',
+            title: t`BottomSheet Native Modal`,
             presentation: 'formSheet',
           }}
         />
         <Stack.Screen
           name="components/dialog-native-modal"
-          options={{ title: 'Dialog Native Modal', presentation: 'formSheet' }}
+          options={{
+            title: t`Dialog Native Modal`,
+            presentation: 'formSheet',
+          }}
         />
         <Stack.Screen
           name="components/popover-native-modal"
-          options={{ title: 'Popover Native Modal', presentation: 'formSheet' }}
+          options={{
+            title: t`Popover Native Modal`,
+            presentation: 'formSheet',
+          }}
         />
         <Stack.Screen
           name="components/select-native-modal"
-          options={{ title: 'Select Native Modal', presentation: 'formSheet' }}
+          options={{
+            title: t`Select Native Modal`,
+            presentation: 'formSheet',
+          }}
         />
         <Stack.Screen
           name="components/toast-native-modal"
           options={{
-            title: 'Toast From Native Modal',
+            title: t`Toast From Native Modal`,
             presentation: 'formSheet',
           }}
         />
-        <Stack.Screen name="themes/index" options={{ headerTitle: 'Themes' }} />
+        <Stack.Screen
+          name="themes/index"
+          options={{ headerTitle: t`Themes` }}
+        />
         <Stack.Screen
           name="showcases"
           options={{
@@ -159,6 +197,10 @@ export default function Layout() {
           }}
         />
       </Stack>
+      <SettingsBottomSheet
+        isOpen={isSettingsOpen}
+        onOpenChange={setIsSettingsOpen}
+      />
       {/* <UpdateBottomSheet
         isOpen={updateSheetOpen}
         onOpenChange={setUpdateSheetOpen}

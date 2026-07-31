@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   Button,
   cn,
@@ -64,6 +66,7 @@ const TabTrigger = ({ value, label }: TabTriggerProps) => {
 };
 
 const TabsContent = ({ variant }: TabsContentProps) => {
+  const { t } = useLingui();
   const [activeTab, setActiveTab] = useState('general');
 
   const [homepage] = useState('heroui.com');
@@ -86,14 +89,13 @@ const TabsContent = ({ variant }: TabsContentProps) => {
     const newErrors: FormErrors = {};
 
     if (!name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = t`Name is required`;
     }
 
     if (!username.trim()) {
-      newErrors.username = 'Username is required';
+      newErrors.username = t`Username is required`;
     } else if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
-      newErrors.username =
-        'Username must be 3-20 characters (letters, numbers, underscore only)';
+      newErrors.username = t`Username must be 3-20 characters (letters, numbers, underscore only)`;
     }
 
     setErrors(newErrors);
@@ -118,10 +120,10 @@ const TabsContent = ({ variant }: TabsContentProps) => {
       >
         <Tabs.ScrollView contentContainerClassName="gap-1">
           <Tabs.Indicator />
-          <TabTrigger value="general" label="General" />
-          <TabTrigger value="appearance" label="Appearance" />
-          <TabTrigger value="notifications" label="Notifications" />
-          <TabTrigger value="profile" label="Profile" />
+          <TabTrigger value="general" label={t`General`} />
+          <TabTrigger value="appearance" label={t`Appearance`} />
+          <TabTrigger value="notifications" label={t`Notifications`} />
+          <TabTrigger value="profile" label={t`Profile`} />
         </Tabs.ScrollView>
       </Tabs.List>
       <StyleAnimatedView
@@ -137,7 +139,9 @@ const TabsContent = ({ variant }: TabsContentProps) => {
           <AnimatedContentContainer>
             <TextField>
               <Label>
-                <Label.Text maxFontSizeMultiplier={1.4}>Homepage</Label.Text>
+                <Label.Text maxFontSizeMultiplier={1.4}>
+                  {t`Homepage`}
+                </Label.Text>
               </Label>
               <Input value={homepage} maxFontSizeMultiplier={1.4} />
             </TextField>
@@ -150,11 +154,11 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <View className="flex-1">
                 <Label>
                   <Label.Text maxFontSizeMultiplier={1.4}>
-                    Show sidebar
+                    {t`Show sidebar`}
                   </Label.Text>
                 </Label>
                 <Description maxFontSizeMultiplier={1.4}>
-                  Display the sidebar navigation panel
+                  {t`Display the sidebar navigation panel`}
                 </Description>
               </View>
             </ControlField>
@@ -168,11 +172,11 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <View className="flex-1">
                 <Label>
                   <Label.Text maxFontSizeMultiplier={1.4}>
-                    Show status bar
+                    {t`Show status bar`}
                   </Label.Text>
                 </Label>
                 <Description maxFontSizeMultiplier={1.4}>
-                  Display the status bar at the bottom
+                  {t`Display the status bar at the bottom`}
                 </Description>
               </View>
             </ControlField>
@@ -184,29 +188,37 @@ const TabsContent = ({ variant }: TabsContentProps) => {
             <RadioGroup value={theme} onValueChange={setTheme} className="mb-6">
               <View className="mb-2">
                 <Label>
-                  <Label.Text maxFontSizeMultiplier={1.4}>Theme</Label.Text>
+                  <Label.Text
+                    maxFontSizeMultiplier={1.4}
+                  >{t`Theme`}</Label.Text>
                 </Label>
                 <Description maxFontSizeMultiplier={1.4}>
-                  Select your preferred color theme
+                  {t`Select your preferred color theme`}
                 </Description>
               </View>
               <View className="gap-3">
                 <RadioGroup.Item value="auto" className="self-start">
                   <Radio />
                   <Label>
-                    <Label.Text maxFontSizeMultiplier={1.4}>Auto</Label.Text>
+                    <Label.Text maxFontSizeMultiplier={1.4}>
+                      {t`Auto`}
+                    </Label.Text>
                   </Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="light" className="self-start">
                   <Radio />
                   <Label>
-                    <Label.Text maxFontSizeMultiplier={1.4}>Light</Label.Text>
+                    <Label.Text maxFontSizeMultiplier={1.4}>
+                      {t`Light`}
+                    </Label.Text>
                   </Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="dark" className="self-start">
                   <Radio />
                   <Label>
-                    <Label.Text maxFontSizeMultiplier={1.4}>Dark</Label.Text>
+                    <Label.Text maxFontSizeMultiplier={1.4}>
+                      {t`Dark`}
+                    </Label.Text>
                   </Label>
                 </RadioGroup.Item>
               </View>
@@ -215,29 +227,37 @@ const TabsContent = ({ variant }: TabsContentProps) => {
             <RadioGroup value={fontSize} onValueChange={setFontSize}>
               <View className="mb-2">
                 <Label>
-                  <Label.Text maxFontSizeMultiplier={1.4}>Font Size</Label.Text>
+                  <Label.Text maxFontSizeMultiplier={1.4}>
+                    {t`Font Size`}
+                  </Label.Text>
                 </Label>
                 <Description maxFontSizeMultiplier={1.4}>
-                  Adjust the text size throughout the app
+                  {t`Adjust the text size throughout the app`}
                 </Description>
               </View>
               <View className="gap-3">
                 <RadioGroup.Item value="small" className="self-start">
                   <Radio />
                   <Label>
-                    <Label.Text maxFontSizeMultiplier={1.4}>Small</Label.Text>
+                    <Label.Text maxFontSizeMultiplier={1.4}>
+                      {t`Small`}
+                    </Label.Text>
                   </Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="medium" className="self-start">
                   <Radio />
                   <Label>
-                    <Label.Text maxFontSizeMultiplier={1.4}>Medium</Label.Text>
+                    <Label.Text maxFontSizeMultiplier={1.4}>
+                      {t`Medium`}
+                    </Label.Text>
                   </Label>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="large" className="self-start">
                   <Radio />
                   <Label>
-                    <Label.Text maxFontSizeMultiplier={1.4}>Large</Label.Text>
+                    <Label.Text maxFontSizeMultiplier={1.4}>
+                      {t`Large`}
+                    </Label.Text>
                   </Label>
                 </RadioGroup.Item>
               </View>
@@ -255,11 +275,11 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <View className="flex-1">
                 <Label>
                   <Label.Text maxFontSizeMultiplier={1.4}>
-                    Account activity
+                    {t`Account activity`}
                   </Label.Text>
                 </Label>
                 <Description maxFontSizeMultiplier={1.4}>
-                  Notifications about your account activity
+                  {t`Notifications about your account activity`}
                 </Description>
               </View>
             </ControlField>
@@ -268,10 +288,12 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <ControlField.Indicator variant="checkbox" />
               <View className="flex-1">
                 <Label>
-                  <Label.Text maxFontSizeMultiplier={1.4}>Mentions</Label.Text>
+                  <Label.Text maxFontSizeMultiplier={1.4}>
+                    {t`Mentions`}
+                  </Label.Text>
                 </Label>
                 <Description maxFontSizeMultiplier={1.4}>
-                  When someone mentions you in a comment
+                  {t`When someone mentions you in a comment`}
                 </Description>
               </View>
             </ControlField>
@@ -284,11 +306,11 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <View className="flex-1">
                 <Label>
                   <Label.Text maxFontSizeMultiplier={1.4}>
-                    Direct messages
+                    {t`Direct messages`}
                   </Label.Text>
                 </Label>
                 <Description maxFontSizeMultiplier={1.4}>
-                  Notifications for new direct messages
+                  {t`Notifications for new direct messages`}
                 </Description>
               </View>
             </ControlField>
@@ -301,11 +323,11 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               <View className="flex-1">
                 <Label>
                   <Label.Text maxFontSizeMultiplier={1.4}>
-                    Marketing email
+                    {t`Marketing email`}
                   </Label.Text>
                 </Label>
                 <Description maxFontSizeMultiplier={1.4}>
-                  Receive emails about new features and updates
+                  {t`Receive emails about new features and updates`}
                 </Description>
               </View>
             </ControlField>
@@ -316,7 +338,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
           <AnimatedContentContainer>
             <TextField isRequired isInvalid={!!errors.name}>
               <Label>
-                <Label.Text maxFontSizeMultiplier={1.4}>Name</Label.Text>
+                <Label.Text maxFontSizeMultiplier={1.4}>{t`Name`}</Label.Text>
               </Label>
               <Input
                 value={name}
@@ -326,14 +348,16 @@ const TabsContent = ({ variant }: TabsContentProps) => {
                     setErrors((prev) => ({ ...prev, name: undefined }));
                   }
                 }}
-                placeholder="Enter your full name"
+                placeholder={t`Enter your full name`}
               />
               <FieldError>{errors.name}</FieldError>
             </TextField>
 
             <TextField isRequired isInvalid={!!errors.username}>
               <Label>
-                <Label.Text maxFontSizeMultiplier={1.4}>Username</Label.Text>
+                <Label.Text maxFontSizeMultiplier={1.4}>
+                  {t`Username`}
+                </Label.Text>
               </Label>
               <Input
                 value={username}
@@ -343,11 +367,11 @@ const TabsContent = ({ variant }: TabsContentProps) => {
                     setErrors((prev) => ({ ...prev, username: undefined }));
                   }
                 }}
-                placeholder="Enter username"
+                placeholder={t`Enter username`}
                 autoCapitalize="none"
               />
               <Description hideOnInvalid maxFontSizeMultiplier={1.4}>
-                3-20 characters, letters, numbers only
+                {t`3-20 characters, letters, numbers only`}
               </Description>
               <FieldError>{errors.username}</FieldError>
             </TextField>
@@ -359,7 +383,7 @@ const TabsContent = ({ variant }: TabsContentProps) => {
               onPress={handleUpdateProfile}
             >
               <Button.Label className="text-base" maxFontSizeMultiplier={1.4}>
-                Update profile
+                {t`Update profile`}
               </Button.Label>
             </Button>
           </AnimatedContentContainer>
@@ -396,12 +420,12 @@ const LineVariantContent = () => {
 const TABS_VARIANTS: UsageVariant[] = [
   {
     value: 'primary-variant',
-    label: 'Primary variant',
+    label: msg`Primary variant`,
     content: <PillVariantContent />,
   },
   {
     value: 'secondary-variant',
-    label: 'Secondary variant',
+    label: msg`Secondary variant`,
     content: <LineVariantContent />,
   },
 ];

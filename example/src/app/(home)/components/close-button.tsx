@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { msg } from '@lingui/core/macro';
 import { CloseButton, useThemeColor } from 'heroui-native';
 import { View } from 'react-native';
 import { withUniwind } from 'uniwind';
@@ -47,6 +48,7 @@ const CustomChildrenContent = () => {
             name="arrow-back"
             size={20}
             color={themeColorForeground}
+            className="rtl:-scale-x-100"
           />
         </CloseButton>
         <CloseButton>
@@ -82,22 +84,22 @@ const DisabledStateContent = () => {
 const CLOSE_BUTTON_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-usage',
-    label: 'Basic usage',
+    label: msg`Basic usage`,
     content: <BasicUsageContent />,
   },
   {
     value: 'custom-icon-color',
-    label: 'Custom icon color',
+    label: msg`Custom icon color`,
     content: <CustomIconColorContent />,
   },
   {
     value: 'custom-children',
-    label: 'Custom children',
+    label: msg`Custom children`,
     content: <CustomChildrenContent />,
   },
   {
     value: 'disabled-state',
-    label: 'Disabled state',
+    label: msg`Disabled state`,
     content: <DisabledStateContent />,
   },
 ];

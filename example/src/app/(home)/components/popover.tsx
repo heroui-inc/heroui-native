@@ -1,4 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
+import type { MessageDescriptor } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { useRouter } from 'expo-router';
 import { Button, colorKit, Popover, useThemeColor } from 'heroui-native';
 import { useState } from 'react';
@@ -12,15 +15,18 @@ import { CodeCompareIcon } from '../../../components/icons/code-compare';
 import { CopyIcon } from '../../../components/icons/copy';
 import { MapPinIcon } from '../../../components/icons/map-pin';
 import { NodesRightIcon } from '../../../components/icons/nodes-right';
+import { useAppLocale } from '../../../contexts/app-locale-context';
 
 const StyledIonicons = withUniwind(Ionicons);
 
 const WithTitleDescriptionContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <Popover>
         <Popover.Trigger asChild>
-          <Button variant="secondary">Did you know?</Button>
+          <Button variant="secondary">{t`Did you know?`}</Button>
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Overlay />
@@ -32,7 +38,7 @@ const WithTitleDescriptionContent = () => {
           >
             <Popover.Close
               variant="ghost"
-              className="absolute top-3 right-2 z-50"
+              className="absolute top-3 inset-e-2 z-50"
             />
             <View className="flex-row items-center gap-3 mb-1">
               <View className="size-12 items-center justify-center rounded-full bg-warning/15">
@@ -43,16 +49,14 @@ const WithTitleDescriptionContent = () => {
                 />
               </View>
               <View className="flex-1">
-                <Popover.Title>Fun Fact!</Popover.Title>
+                <Popover.Title>{t`Fun Fact!`}</Popover.Title>
               </View>
             </View>
             <Popover.Description
               maxFontSizeMultiplier={1.6}
               className="text-sm"
             >
-              The first computer bug was an actual moth found trapped in a
-              Harvard Mark II computer in 1947. Grace Hopper taped it to the log
-              book with the note "First actual case of bug being found."
+              {t`The first computer bug was an actual moth found trapped in a Harvard Mark II computer in 1947. Grace Hopper taped it to the log book with the note "First actual case of bug being found."`}
             </Popover.Description>
             <View className="flex-row items-center gap-2 mt-2 pt-2">
               <StyledIonicons
@@ -60,7 +64,7 @@ const WithTitleDescriptionContent = () => {
                 size={14}
                 className="text-accent"
               />
-              <AppText className="text-xs text-muted">Tech History</AppText>
+              <AppText className="text-xs text-muted">{t`Tech History`}</AppText>
             </View>
           </Popover.Content>
         </Popover.Portal>
@@ -72,6 +76,7 @@ const WithTitleDescriptionContent = () => {
 // ------------------------------------------------------------------------------
 
 const PresentationVariantsContent = () => {
+  const { t } = useLingui();
   const [isPopoverOpen, setPopoverOpen] = useState(false);
   const [isBottomSheetOpen, setBottomSheetOpen] = useState(false);
 
@@ -79,7 +84,7 @@ const PresentationVariantsContent = () => {
     <View className="flex-1 px-5 items-center justify-center gap-8">
       <Popover isOpen={isPopoverOpen} onOpenChange={setPopoverOpen}>
         <Popover.Trigger asChild>
-          <Button variant="secondary">Quick Notification</Button>
+          <Button variant="secondary">{t`Quick Notification`}</Button>
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Overlay />
@@ -99,19 +104,18 @@ const PresentationVariantsContent = () => {
                   />
                 </View>
                 <View className="flex-1">
-                  <Popover.Title>Payment Successful</Popover.Title>
-                  <AppText className="text-xs text-muted">
-                    2 minutes ago
+                  <Popover.Title>{t`Payment Successful`}</Popover.Title>
+                  <AppText className="text-xs text-muted text-left">
+                    {t`2 minutes ago`}
                   </AppText>
                 </View>
               </View>
               <Popover.Description>
-                Your payment of $49.99 has been processed successfully. Receipt
-                sent to your email.
+                {t`Your payment of $49.99 has been processed successfully. Receipt sent to your email.`}
               </Popover.Description>
             </View>
             <Button variant="secondary" onPress={() => setPopoverOpen(false)}>
-              Dismiss
+              {t`Dismiss`}
             </Button>
           </Popover.Content>
         </Popover.Portal>
@@ -122,7 +126,7 @@ const PresentationVariantsContent = () => {
         onOpenChange={setBottomSheetOpen}
       >
         <Popover.Trigger asChild>
-          <Button variant="secondary">More Options</Button>
+          <Button variant="secondary">{t`More Options`}</Button>
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Overlay className="bg-black/15" />
@@ -130,10 +134,10 @@ const PresentationVariantsContent = () => {
             <View className="gap-4">
               <View className="mb-2">
                 <Popover.Title className="text-center text-foreground">
-                  Share Options
+                  {t`Share Options`}
                 </Popover.Title>
                 <Popover.Description className="text-center text-muted">
-                  Choose how you'd like to share this content
+                  {t`Choose how you'd like to share this content`}
                 </Popover.Description>
               </View>
               <View className="gap-2">
@@ -143,10 +147,10 @@ const PresentationVariantsContent = () => {
                   </View>
                   <View className="flex-1">
                     <AppText className="text-base font-medium text-foreground">
-                      Share Link
+                      {t`Share Link`}
                     </AppText>
                     <AppText className="text-xs text-muted">
-                      Send via messaging app
+                      {t`Send via messaging app`}
                     </AppText>
                   </View>
                 </View>
@@ -156,10 +160,10 @@ const PresentationVariantsContent = () => {
                   </View>
                   <View className="flex-1">
                     <AppText className="text-base font-medium text-foreground">
-                      Copy Link
+                      {t`Copy Link`}
                     </AppText>
                     <AppText className="text-xs text-muted">
-                      Copy to clipboard
+                      {t`Copy to clipboard`}
                     </AppText>
                   </View>
                 </View>
@@ -172,10 +176,10 @@ const PresentationVariantsContent = () => {
                   </View>
                   <View className="flex-1">
                     <AppText className="text-base font-medium text-foreground">
-                      Save Offline
+                      {t`Save Offline`}
                     </AppText>
                     <AppText className="text-xs text-muted">
-                      Download for later
+                      {t`Download for later`}
                     </AppText>
                   </View>
                 </View>
@@ -186,7 +190,7 @@ const PresentationVariantsContent = () => {
                 className="self-stretch mt-2"
                 onPress={() => setBottomSheetOpen(false)}
               >
-                Cancel
+                {t`Cancel`}
               </Button>
             </View>
           </Popover.Content>
@@ -198,12 +202,26 @@ const PresentationVariantsContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const PlacementPopover = ({
-  placement,
-}: {
-  placement: 'top' | 'bottom' | 'left' | 'right';
-}) => {
-  const label = placement.charAt(0).toUpperCase() + placement.slice(1);
+/** Physical side a demo popover opens on. */
+type PopoverPlacement = 'top' | 'bottom' | 'left' | 'right';
+
+/**
+ * Trigger labels for each placement.
+ *
+ * These are looked up rather than derived by capitalising the `placement` prop,
+ * because Lingui extracts messages statically and cannot see a string built at
+ * runtime.
+ */
+const PLACEMENT_LABELS: Record<PopoverPlacement, MessageDescriptor> = {
+  top: msg`Top`,
+  bottom: msg`Bottom`,
+  left: msg`Left`,
+  right: msg`Right`,
+};
+
+const PlacementPopover = ({ placement }: { placement: PopoverPlacement }) => {
+  const { t } = useLingui();
+  const label = t(PLACEMENT_LABELS[placement]);
 
   const themeColorBorder = useThemeColor('accent');
   const arrowStroke = colorKit.setAlpha(themeColorBorder, 0.35).hex();
@@ -229,11 +247,11 @@ const PlacementPopover = ({
               <MapPinIcon size={16} colorClassName="accent-accent" />
             </View>
             <AppText className="text-sm font-semibold text-foreground">
-              Quick Tip
+              {t`Quick Tip`}
             </AppText>
           </View>
           <AppText className="text-xs text-muted leading-4">
-            This popover appears on the {placement} side of the trigger button
+            {t`This popover appears on the ${placement} side of the trigger button`}
           </AppText>
         </Popover.Content>
       </Popover.Portal>
@@ -242,15 +260,24 @@ const PlacementPopover = ({
 };
 
 const PlacementOptionsContent = () => {
+  const { isRTL } = useAppLocale();
+
+  // The grid intentionally pairs the "left"-placement trigger with the trailing
+  // edge (and "right" with the leading edge) so each popover has room to open on
+  // its physical side. Because the rows are `flex-row`, RTL mirrors that column
+  // order, so we swap the left/right triggers to keep them collision-free.
+  const leadingSidePlacement = isRTL ? 'left' : 'right';
+  const trailingSidePlacement = isRTL ? 'right' : 'left';
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="w-full gap-4">
         <View className="flex-row justify-between gap-4">
           <PlacementPopover placement="top" />
-          <PlacementPopover placement="left" />
+          <PlacementPopover placement={trailingSidePlacement} />
         </View>
         <View className="flex-row justify-between gap-4">
-          <PlacementPopover placement="right" />
+          <PlacementPopover placement={leadingSidePlacement} />
           <PlacementPopover placement="bottom" />
         </View>
       </View>
@@ -260,8 +287,24 @@ const PlacementOptionsContent = () => {
 
 // ------------------------------------------------------------------------------
 
-const AlignmentPopover = ({ align }: { align: 'start' | 'center' | 'end' }) => {
-  const label = align.charAt(0).toUpperCase() + align.slice(1);
+/** Edge a demo popover aligns to along the trigger's cross axis. */
+type PopoverAlign = 'start' | 'center' | 'end';
+
+/**
+ * Trigger labels for each alignment.
+ *
+ * Looked up for the same reason as {@link PLACEMENT_LABELS}: Lingui cannot
+ * extract a label assembled at runtime.
+ */
+const ALIGN_LABELS: Record<PopoverAlign, MessageDescriptor> = {
+  start: msg`Start`,
+  center: msg`Center`,
+  end: msg`End`,
+};
+
+const AlignmentPopover = ({ align }: { align: PopoverAlign }) => {
+  const { t } = useLingui();
+  const label = t(ALIGN_LABELS[align]);
 
   return (
     <Popover>
@@ -287,11 +330,11 @@ const AlignmentPopover = ({ align }: { align: 'start' | 'center' | 'end' }) => {
               className="flex-1 text-sm font-semibold text-foreground"
               numberOfLines={1}
             >
-              Alignment
+              {t`Alignment`}
             </AppText>
           </View>
           <AppText className="text-xs text-muted">
-            Aligned to the {align} of the trigger
+            {t`Aligned to the ${align} of the trigger`}
           </AppText>
         </Popover.Content>
       </Popover.Portal>
@@ -314,6 +357,7 @@ const AlignmentOptionsContent = () => {
 // ------------------------------------------------------------------------------
 
 const NativeModalTestContent = () => {
+  const { t } = useLingui();
   const router = useRouter();
 
   return (
@@ -323,7 +367,7 @@ const NativeModalTestContent = () => {
         onPress={() => router.push('components/popover-native-modal')}
       >
         <Button.Label maxFontSizeMultiplier={1.6}>
-          Popover from native modal
+          {t`Popover from native modal`}
         </Button.Label>
       </Button>
     </View>
@@ -335,22 +379,22 @@ const NativeModalTestContent = () => {
 const POPOVER_VARIANTS: UsageVariant[] = [
   {
     value: 'with-title-description',
-    label: 'With title & description',
+    label: msg`With title & description`,
     content: <WithTitleDescriptionContent />,
   },
   {
     value: 'presentation-variants',
-    label: 'Presentation variants',
+    label: msg`Presentation variants`,
     content: <PresentationVariantsContent />,
   },
   {
     value: 'placement-options',
-    label: 'Placement options',
+    label: msg`Placement options`,
     content: <PlacementOptionsContent />,
   },
   {
     value: 'alignment-options',
-    label: 'Alignment options',
+    label: msg`Alignment options`,
     content: <AlignmentOptionsContent />,
   },
 ];
@@ -358,7 +402,7 @@ const POPOVER_VARIANTS: UsageVariant[] = [
 if (Platform.OS === 'ios') {
   POPOVER_VARIANTS.push({
     value: 'native-modal-test',
-    label: 'Native modal test',
+    label: msg`Native modal test`,
     content: <NativeModalTestContent />,
   });
 }

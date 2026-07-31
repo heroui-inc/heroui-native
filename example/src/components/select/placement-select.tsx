@@ -13,6 +13,8 @@ type SelectOption = {
   value: string;
   label: string;
 };
+/* eslint-disable lingui/no-unlocalized-strings -- Place names are proper nouns
+   kept in their endonym form. */
 const US_STATES: SelectOption[] = [
   { value: 'CA', label: 'California' },
   { value: 'NY', label: 'New York' },
@@ -24,6 +26,7 @@ const US_STATES: SelectOption[] = [
   { value: 'GA', label: 'Georgia' },
   { value: 'NC', label: 'North Carolina' },
 ];
+/* eslint-enable lingui/no-unlocalized-strings */
 
 const ITEM_HEIGHT = 44;
 

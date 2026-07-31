@@ -17,6 +17,7 @@ import { useAppTheme } from '../../../../contexts/app-theme-context';
 import { simulatePress } from '../../../../helpers/utils/simulate-press';
 import { AppText } from '../../../app-text';
 import { SelectBlurBackdrop } from '../../../select/select-blur-backdrop';
+import { SHOWCASE_PORTAL_HOST } from '../../../showcase-ltr-scope';
 import { SelectContentContainer } from './select-content-container';
 import { SelectItem } from './select-item';
 import { type ModelOption } from './types';
@@ -68,7 +69,7 @@ export const ModelSelect = ({ data, model, setModel }: Props) => {
           </AppText>
         </Button>
       </Select.Trigger>
-      <Select.Portal>
+      <Select.Portal hostName={SHOWCASE_PORTAL_HOST}>
         {Platform.OS === 'android' ? (
           <Select.Overlay className="bg-background" />
         ) : (

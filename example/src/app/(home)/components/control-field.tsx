@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   Checkbox,
   ControlField,
@@ -40,6 +42,7 @@ const SwitchField: React.FC<SwitchFieldProps> = ({
 );
 
 const SwitchFormFieldSetContent = () => {
+  const { t } = useLingui();
   const [fields, setFields] = React.useState({
     notifications: false,
     darkMode: false,
@@ -51,16 +54,16 @@ const SwitchFormFieldSetContent = () => {
     { title: string; description: string }
   > = {
     notifications: {
-      title: 'Enable notifications',
-      description: 'Receive push notifications about your account activity',
+      title: t`Enable notifications`,
+      description: t`Receive push notifications about your account activity`,
     },
     darkMode: {
-      title: 'Dark mode',
-      description: 'Switch between light and dark theme',
+      title: t`Dark mode`,
+      description: t`Switch between light and dark theme`,
     },
     autoUpdate: {
-      title: 'Auto-update',
-      description: 'Automatically download and install updates',
+      title: t`Auto-update`,
+      description: t`Automatically download and install updates`,
     },
   };
 
@@ -125,6 +128,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
 };
 
 const CheckboxFormFieldSetContent = () => {
+  const { t } = useLingui();
   const [fields, setFields] = React.useState({
     newsletter: true,
     marketing: false,
@@ -136,16 +140,16 @@ const CheckboxFormFieldSetContent = () => {
     { title: string; description: string }
   > = {
     newsletter: {
-      title: 'Subscribe to newsletter',
-      description: 'Get weekly updates about new features and tips',
+      title: t`Subscribe to newsletter`,
+      description: t`Get weekly updates about new features and tips`,
     },
     marketing: {
-      title: 'Marketing communications',
-      description: 'Receive promotional emails and special offers',
+      title: t`Marketing communications`,
+      description: t`Receive promotional emails and special offers`,
     },
     terms: {
-      title: 'Accept terms and conditions',
-      description: 'Agree to our Terms of Service and Privacy Policy',
+      title: t`Accept terms and conditions`,
+      description: t`Agree to our Terms of Service and Privacy Policy`,
     },
   };
 
@@ -199,6 +203,7 @@ const InlineFilter: React.FC<InlineFilterProps> = ({
 );
 
 const InlineLayoutCompactContent = () => {
+  const { t } = useLingui();
   const [filters, setFilters] = React.useState({
     freeShipping: true,
     inStock: false,
@@ -211,14 +216,14 @@ const InlineLayoutCompactContent = () => {
   });
 
   const filterLabels: Record<keyof typeof filters, string> = {
-    freeShipping: 'Free Shipping',
-    inStock: 'In Stock',
-    onSale: 'On Sale',
-    newArrivals: 'New Arrivals',
-    featured: 'Featured',
-    topRated: 'Top Rated',
-    clearance: 'Clearance',
-    bestSeller: 'Best Seller',
+    freeShipping: t`Free Shipping`,
+    inStock: t`In Stock`,
+    onSale: t`On Sale`,
+    newArrivals: t`New Arrivals`,
+    featured: t`Featured`,
+    topRated: t`Top Rated`,
+    clearance: t`Clearance`,
+    bestSeller: t`Best Seller`,
   };
 
   const handleFilterChange =
@@ -245,6 +250,7 @@ const InlineLayoutCompactContent = () => {
 // ------------------------------------------------------------------------------
 
 const DisabledStateContent = () => {
+  const { t } = useLingui();
   const [activeSwitch, setActiveSwitch] = React.useState(true);
   const [disabledSwitch, setDisabledSwitch] = React.useState(true);
 
@@ -256,9 +262,9 @@ const DisabledStateContent = () => {
           onSelectedChange={setActiveSwitch}
         >
           <View className="flex-1">
-            <Label>Two-factor authentication</Label>
+            <Label>{t`Two-factor authentication`}</Label>
             <Description>
-              Add an extra layer of security to your account
+              {t`Add an extra layer of security to your account`}
             </Description>
           </View>
           <ControlField.Indicator />
@@ -270,9 +276,9 @@ const DisabledStateContent = () => {
           isDisabled
         >
           <View className="flex-1">
-            <Label>Biometric authentication</Label>
+            <Label>{t`Biometric authentication`}</Label>
             <Description>
-              Requires device with fingerprint or face recognition support
+              {t`Requires device with fingerprint or face recognition support`}
             </Description>
           </View>
           <ControlField.Indicator />
@@ -285,6 +291,7 @@ const DisabledStateContent = () => {
 // ------------------------------------------------------------------------------
 
 const ValidationErrorStatesContent = () => {
+  const { t } = useLingui();
   const [terms, setTerms] = React.useState(false);
   const [privacyAccepted, setPrivacyAccepted] = React.useState(false);
   const [dataSharing, setDataSharing] = React.useState(false);
@@ -305,12 +312,11 @@ const ValidationErrorStatesContent = () => {
             <View className="flex-1">
               <Label>
                 <Label.Text maxFontSizeMultiplier={1.2}>
-                  I agree to the terms and conditions
+                  {t`I agree to the terms and conditions`}
                 </Label.Text>
               </Label>
               <Description isInvalid={false} maxFontSizeMultiplier={1.2}>
-                By checking this box, you agree to our Terms of Service and
-                Privacy Policy
+                {t`By checking this box, you agree to our Terms of Service and Privacy Policy`}
               </Description>
             </View>
             <ControlField.Indicator variant="checkbox" />
@@ -326,14 +332,14 @@ const ValidationErrorStatesContent = () => {
             <View className="flex-1">
               <Label isInvalid={false}>
                 <Label.Text maxFontSizeMultiplier={1.2}>
-                  Accept Privacy Policy
+                  {t`Accept Privacy Policy`}
                 </Label.Text>
               </Label>
               <Description hideOnInvalid maxFontSizeMultiplier={1.2}>
-                The privacy policy has been accepted
+                {t`The privacy policy has been accepted`}
               </Description>
               <FieldError textProps={{ maxFontSizeMultiplier: 1.2 }}>
-                Please accept the privacy policy to continue
+                {t`Please accept the privacy policy to continue`}
               </FieldError>
             </View>
             <ControlField.Indicator>
@@ -353,18 +359,17 @@ const ValidationErrorStatesContent = () => {
               <View className="flex-1">
                 <Label isInvalid={false}>
                   <Label.Text maxFontSizeMultiplier={1.2}>
-                    Share usage data
+                    {t`Share usage data`}
                   </Label.Text>
                 </Label>
                 <Description isInvalid={false} maxFontSizeMultiplier={1.2}>
-                  Help improve our product by sharing anonymous usage data and
-                  improving our products.
+                  {t`Help improve our product by sharing anonymous usage data and improving our products.`}
                 </Description>
               </View>
               <ControlField.Indicator />
             </View>
             <FieldError textProps={{ maxFontSizeMultiplier: 1.2 }}>
-              Warning: This will share your usage patterns
+              {t`Warning: This will share your usage patterns`}
             </FieldError>
           </ControlField>
         </Animated.View>
@@ -378,27 +383,27 @@ const ValidationErrorStatesContent = () => {
 const CONTROL_FIELD_VARIANTS: UsageVariant[] = [
   {
     value: 'switch-control-field-set',
-    label: 'Switch ControlField set',
+    label: msg`Switch ControlField set`,
     content: <SwitchFormFieldSetContent />,
   },
   {
     value: 'checkbox-control-field-set',
-    label: 'Checkbox ControlField set',
+    label: msg`Checkbox ControlField set`,
     content: <CheckboxFormFieldSetContent />,
   },
   {
     value: 'inline-layout-compact',
-    label: 'Inline compact layout',
+    label: msg`Inline compact layout`,
     content: <InlineLayoutCompactContent />,
   },
   {
     value: 'disabled-state',
-    label: 'Disabled state',
+    label: msg`Disabled state`,
     content: <DisabledStateContent />,
   },
   {
     value: 'validation-error-states',
-    label: 'Validation & error states',
+    label: msg`Validation & error states`,
     content: <ValidationErrorStatesContent />,
   },
 ];

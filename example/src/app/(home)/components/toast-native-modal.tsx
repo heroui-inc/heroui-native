@@ -1,8 +1,10 @@
+import { useLingui } from '@lingui/react/macro';
 import { Button, useThemeColor, useToast } from 'heroui-native';
 import { View } from 'react-native';
 import { Logo } from '../../../components/logo';
 
 export default function ToastNativeModalScreen() {
+  const { t } = useLingui();
   const { toast } = useToast();
 
   const themeColorForeground = useThemeColor('foreground');
@@ -15,9 +17,8 @@ export default function ToastNativeModalScreen() {
         onPress={() => {
           toast.show({
             variant: 'default',
-            label: 'Join a team',
-            description:
-              'Junior Garcia sent you an invitation to join HeroUI team!',
+            label: t`Join a team`,
+            description: t`Junior Garcia sent you an invitation to join HeroUI team!`,
             icon: (
               <View className="mt-0.5">
                 <Logo
@@ -27,15 +28,15 @@ export default function ToastNativeModalScreen() {
                 />
               </View>
             ),
-            actionLabel: 'Close',
+            actionLabel: t`Close`,
             onActionPress: ({ hide }) => hide(),
           });
         }}
       >
-        Show toast
+        {t`Show toast`}
       </Button>
       <Button onPress={() => toast.hide('all')} variant="danger-soft">
-        Hide toast
+        {t`Hide toast`}
       </Button>
     </View>
   );

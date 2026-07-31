@@ -8,9 +8,6 @@
 @import './themes/mint.css';
 @import './themes/sky.css';
 
-/* Development only: In your app, use @source './node_modules/heroui-native/lib' */
-@source '../src';
-
 @layer theme {
   :root {
     @variant light {

@@ -1,4 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { useRouter } from 'expo-router';
 import {
   Button,
@@ -30,6 +32,7 @@ const StyledFeather = withUniwind(Feather);
 // ------------------------------------------------------------------------------
 
 const DefaultVariantsContent = () => {
+  const { t } = useLingui();
   const { toast } = useToast();
   const themeColorForeground = useThemeColor('foreground');
 
@@ -40,9 +43,8 @@ const DefaultVariantsContent = () => {
         onPress={() =>
           toast.show({
             variant: 'default',
-            label: 'Join a team',
-            description:
-              'Junior Garcia sent you an invitation to join HeroUI team!',
+            label: t`Join a team`,
+            description: t`Junior Garcia sent you an invitation to join HeroUI team!`,
             icon: (
               <View className="mt-0.5">
                 <Logo
@@ -52,20 +54,20 @@ const DefaultVariantsContent = () => {
                 />
               </View>
             ),
-            actionLabel: 'Close',
+            actionLabel: t`Close`,
             onActionPress: ({ hide }) => hide(),
           })
         }
       >
-        Default toast
+        {t`Default toast`}
       </Button>
       <Button
         variant="secondary"
         onPress={() =>
           toast.show({
             variant: 'accent',
-            label: 'You have 2 credits left',
-            description: 'Get a paid plan for more credits',
+            label: t`You have 2 credits left`,
+            description: t`Get a paid plan for more credits`,
             icon: (
               <View className="mt-0.5">
                 <CircleInfoFillIcon
@@ -74,20 +76,20 @@ const DefaultVariantsContent = () => {
                 />
               </View>
             ),
-            actionLabel: 'Close',
+            actionLabel: t`Close`,
             onActionPress: ({ hide }) => hide(),
           })
         }
       >
-        Accent toast
+        {t`Accent toast`}
       </Button>
       <Button
         variant="secondary"
         onPress={() =>
           toast.show({
             variant: 'success',
-            label: 'Plan upgraded',
-            description: 'You can continue using HeroUI Chat and more',
+            label: t`Plan upgraded`,
+            description: t`You can continue using HeroUI Chat and more`,
             icon: (
               <View className="mt-0.5">
                 <ShieldCheckIcon
@@ -96,20 +98,20 @@ const DefaultVariantsContent = () => {
                 />
               </View>
             ),
-            actionLabel: 'Close',
+            actionLabel: t`Close`,
             onActionPress: ({ hide }) => hide(),
           })
         }
       >
-        Success toast
+        {t`Success toast`}
       </Button>
       <Button
         variant="secondary"
         onPress={() =>
           toast.show({
             variant: 'warning',
-            label: 'No credits left',
-            description: 'Upgrade to a paid plan to continue using HeroUI Chat',
+            label: t`No credits left`,
+            description: t`Upgrade to a paid plan to continue using HeroUI Chat`,
             icon: (
               <View className="mt-0.5">
                 <ShieldExclamationIcon
@@ -118,21 +120,20 @@ const DefaultVariantsContent = () => {
                 />
               </View>
             ),
-            actionLabel: 'Close',
+            actionLabel: t`Close`,
             onActionPress: ({ hide }) => hide(),
           })
         }
       >
-        Warning toast
+        {t`Warning toast`}
       </Button>
       <Button
         variant="secondary"
         onPress={() =>
           toast.show({
             variant: 'danger',
-            label: 'Storage is full',
-            description:
-              "Remove files to release space. I'm adding more text as usual but it's okay I guess I just want to see how it looks with a lot of information",
+            label: t`Storage is full`,
+            description: t`Remove files to release space. I'm adding more text as usual but it's okay I guess I just want to see how it looks with a lot of information`,
             icon: (
               <StyledFeather
                 name="hard-drive"
@@ -140,15 +141,15 @@ const DefaultVariantsContent = () => {
                 className="text-danger-soft-foreground mt-[3px]"
               />
             ),
-            actionLabel: 'Close',
+            actionLabel: t`Close`,
             onActionPress: ({ hide }) => hide(),
           })
         }
       >
-        Danger toast
+        {t`Danger toast`}
       </Button>
       <Button onPress={() => toast.hide('all')} variant="danger-soft">
-        Hide all toasts
+        {t`Hide all toasts`}
       </Button>
     </View>
   );
@@ -157,6 +158,7 @@ const DefaultVariantsContent = () => {
 // ------------------------------------------------------------------------------
 
 const PlacementVariantsContent = () => {
+  const { t } = useLingui();
   const [isTopToastVisible, setIsTopToastVisible] = useState(false);
   const [isBottomToastVisible, setIsBottomToastVisible] = useState(false);
 
@@ -166,8 +168,8 @@ const PlacementVariantsContent = () => {
     toast.show({
       variant: 'success',
       placement: 'top',
-      label: 'Plan upgraded',
-      description: 'You can continue using HeroUI Chat and more',
+      label: t`Plan upgraded`,
+      description: t`You can continue using HeroUI Chat and more`,
       icon: (
         <View className="mt-0.5">
           <ShieldCheckIcon
@@ -176,7 +178,7 @@ const PlacementVariantsContent = () => {
           />
         </View>
       ),
-      actionLabel: 'Close',
+      actionLabel: t`Close`,
       onActionPress: ({ hide }) => hide(),
     });
 
@@ -184,8 +186,8 @@ const PlacementVariantsContent = () => {
     toast.show({
       variant: 'warning',
       placement: 'bottom',
-      label: 'No credits left',
-      description: 'Upgrade to a paid plan to continue using HeroUI Chat',
+      label: t`No credits left`,
+      description: t`Upgrade to a paid plan to continue using HeroUI Chat`,
       icon: (
         <View className="mt-0.5">
           <ShieldExclamationIcon
@@ -194,7 +196,7 @@ const PlacementVariantsContent = () => {
           />
         </View>
       ),
-      actionLabel: 'Close',
+      actionLabel: t`Close`,
       onActionPress: ({ hide }) => hide(),
     });
 
@@ -216,7 +218,7 @@ const PlacementVariantsContent = () => {
           }
         }}
       >
-        Top toast
+        {t`Top toast`}
       </Button>
       <Button
         variant="secondary"
@@ -234,10 +236,10 @@ const PlacementVariantsContent = () => {
           }
         }}
       >
-        Bottom toast
+        {t`Bottom toast`}
       </Button>
       <Button onPress={() => toast.hide('all')} variant="danger-soft">
-        Hide all toasts
+        {t`Hide all toasts`}
       </Button>
     </View>
   );
@@ -246,6 +248,7 @@ const PlacementVariantsContent = () => {
 // ------------------------------------------------------------------------------
 
 const DifferentContentSizesContent = () => {
+  const { t } = useLingui();
   const { toast } = useToast();
 
   return (
@@ -255,47 +258,45 @@ const DifferentContentSizesContent = () => {
         onPress={() =>
           toast.show({
             variant: 'default',
-            label: 'New message',
-            description: 'Sarah sent you a message',
-            actionLabel: 'Close',
+            label: t`New message`,
+            description: t`Sarah sent you a message`,
+            actionLabel: t`Close`,
             onActionPress: ({ hide }) => hide(),
           })
         }
       >
-        Small toast
+        {t`Small toast`}
       </Button>
       <Button
         variant="secondary"
         onPress={() =>
           toast.show({
             variant: 'success',
-            label: 'Payment successful',
-            description:
-              'Your subscription has been renewed. You will be charged $9.99/month. Thank you for your continued support.',
-            actionLabel: 'Close',
+            label: t`Payment successful`,
+            description: t`Your subscription has been renewed. You will be charged $9.99/month. Thank you for your continued support.`,
+            actionLabel: t`Close`,
             onActionPress: ({ hide }) => hide(),
           })
         }
       >
-        Medium toast
+        {t`Medium toast`}
       </Button>
       <Button
         variant="secondary"
         onPress={() =>
           toast.show({
             variant: 'success',
-            label: 'Backup completed',
-            description:
-              'All your files have been backed up to the cloud. You can now access them from any device. The backup includes 1,234 files totaling 2.5 GB. Your data is safe and secure. The next backup will run automatically in 24 hours.',
-            actionLabel: 'Close',
+            label: t`Backup completed`,
+            description: t`All your files have been backed up to the cloud. You can now access them from any device. The backup includes 1,234 files totaling 2.5 GB. Your data is safe and secure. The next backup will run automatically in 24 hours.`,
+            actionLabel: t`Close`,
             onActionPress: ({ hide }) => hide(),
           })
         }
       >
-        Large toast
+        {t`Large toast`}
       </Button>
       <Button onPress={() => toast.hide('all')} variant="danger-soft">
-        Hide all toasts
+        {t`Hide all toasts`}
       </Button>
     </View>
   );
@@ -304,6 +305,7 @@ const DifferentContentSizesContent = () => {
 // ------------------------------------------------------------------------------
 
 const KeyboardAvoidingContent = () => {
+  const { t } = useLingui();
   const [isFocused, setIsFocused] = useState(false);
 
   const { toast } = useToast();
@@ -322,9 +324,8 @@ const KeyboardAvoidingContent = () => {
             variant: 'default',
             placement: 'bottom',
             duration: 'persistent',
-            label: 'Join a team',
-            description:
-              'Junior Garcia sent you an invitation to join HeroUI team!',
+            label: t`Join a team`,
+            description: t`Junior Garcia sent you an invitation to join HeroUI team!`,
             icon: (
               <View className="mt-0.5">
                 <Logo
@@ -334,7 +335,7 @@ const KeyboardAvoidingContent = () => {
                 />
               </View>
             ),
-            actionLabel: 'Close',
+            actionLabel: t`Close`,
             onActionPress: ({ hide }) => hide(),
             onHide: () => {
               inputRef.current?.blur();
@@ -342,7 +343,7 @@ const KeyboardAvoidingContent = () => {
           });
         }}
       >
-        Show toast
+        {t`Show toast`}
       </Button>
       <Button
         onPress={() => {
@@ -354,10 +355,10 @@ const KeyboardAvoidingContent = () => {
         }}
         variant="secondary"
       >
-        Toggle keyboard
+        {t`Toggle keyboard`}
       </Button>
       <Button onPress={() => toast.hide('all')} variant="danger-soft">
-        Hide toast
+        {t`Hide toast`}
       </Button>
       <TextInput
         ref={inputRef}
@@ -372,6 +373,7 @@ const KeyboardAvoidingContent = () => {
 // ------------------------------------------------------------------------------
 
 const FromNativeModalContent = () => {
+  const { t } = useLingui();
   const router = useRouter();
 
   return (
@@ -380,7 +382,7 @@ const FromNativeModalContent = () => {
         variant="secondary"
         onPress={() => router.push('/components/toast-native-modal')}
       >
-        Open modal
+        {t`Open modal`}
       </Button>
     </View>
   );
@@ -389,6 +391,7 @@ const FromNativeModalContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomToastsContent = () => {
+  const { t } = useLingui();
   const { toast, isToastVisible } = useToast();
   const LOADING_TOAST_ID = 'loading-toast';
   const PROGRESS_TOAST_ID = 'progress-toast';
@@ -499,7 +502,7 @@ const CustomToastsContent = () => {
         }}
         isDisabled={isToastVisible}
       >
-        Achievement toast
+        {t`Achievement toast`}
       </Button>
 
       <Button
@@ -507,7 +510,7 @@ const CustomToastsContent = () => {
         onPress={handleShowLoadingToast}
         isDisabled={isToastVisible}
       >
-        Load data
+        {t`Load data`}
       </Button>
 
       <Button
@@ -515,11 +518,11 @@ const CustomToastsContent = () => {
         onPress={handleShowProgressToast}
         isDisabled={isToastVisible}
       >
-        Start upload
+        {t`Start upload`}
       </Button>
 
       <Button onPress={() => toast.hide('all')} variant="danger-soft">
-        Hide all toasts
+        {t`Hide all toasts`}
       </Button>
     </View>
   );
@@ -530,32 +533,32 @@ const CustomToastsContent = () => {
 const TOAST_VARIANTS_IOS: UsageVariant[] = [
   {
     value: 'default-variants',
-    label: 'Default variants',
+    label: msg`Default variants`,
     content: <DefaultVariantsContent />,
   },
   {
     value: 'placement-variants',
-    label: 'Placement variants',
+    label: msg`Placement variants`,
     content: <PlacementVariantsContent />,
   },
   {
     value: 'different-content-sizes',
-    label: 'Different content sizes',
+    label: msg`Different content sizes`,
     content: <DifferentContentSizesContent />,
   },
   {
     value: 'keyboard-avoiding',
-    label: 'Keyboard avoiding',
+    label: msg`Keyboard avoiding`,
     content: <KeyboardAvoidingContent />,
   },
   {
     value: 'from-native-modal',
-    label: 'From native modal',
+    label: msg`From native modal`,
     content: <FromNativeModalContent />,
   },
   {
     value: 'custom-toasts',
-    label: 'Custom toasts',
+    label: msg`Custom toasts`,
     content: <CustomToastsContent />,
   },
 ];
@@ -563,27 +566,27 @@ const TOAST_VARIANTS_IOS: UsageVariant[] = [
 const TOAST_VARIANTS_ANDROID: UsageVariant[] = [
   {
     value: 'default-variants',
-    label: 'Default variants',
+    label: msg`Default variants`,
     content: <DefaultVariantsContent />,
   },
   {
     value: 'placement-variants',
-    label: 'Placement variants',
+    label: msg`Placement variants`,
     content: <PlacementVariantsContent />,
   },
   {
     value: 'different-content-sizes',
-    label: 'Different content sizes',
+    label: msg`Different content sizes`,
     content: <DifferentContentSizesContent />,
   },
   {
     value: 'keyboard-avoiding',
-    label: 'Keyboard avoiding',
+    label: msg`Keyboard avoiding`,
     content: <KeyboardAvoidingContent />,
   },
   {
     value: 'custom-toasts',
-    label: 'Custom toasts',
+    label: msg`Custom toasts`,
     content: <CustomToastsContent />,
   },
 ];

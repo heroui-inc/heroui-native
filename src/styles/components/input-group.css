@@ -1,6 +1,6 @@
 .input-group__prefix {
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   top: 0;
   bottom: 0;
   align-items: center;
@@ -16,7 +16,7 @@
 
 .input-group__suffix {
   position: absolute;
-  right: 0;
+  inset-inline-end: 0;
   top: 0;
   bottom: 0;
   align-items: center;

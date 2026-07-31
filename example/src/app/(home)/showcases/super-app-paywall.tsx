@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { BottomSheet } from 'heroui-native';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
+import { SHOWCASE_PORTAL_HOST } from '../../../components/showcase-ltr-scope';
 import {
   PaywallFooter,
   SuperAppPaywallContent,
@@ -38,7 +39,7 @@ export default function SuperAppPaywall() {
           }
         }}
       >
-        <BottomSheet.Portal>
+        <BottomSheet.Portal hostName={SHOWCASE_PORTAL_HOST}>
           <BottomSheet.Overlay />
           <BottomSheet.Content
             snapPoints={['90%']}

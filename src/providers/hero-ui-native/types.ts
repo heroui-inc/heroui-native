@@ -64,6 +64,21 @@ export interface HeroUINativeConfig
    * Use this to disable specific informational messages during development.
    */
   devInfo?: DevInfoConfig;
+  /**
+   * Layout direction configuration
+   *
+   * @description
+   * Set to `true` to inform HeroUI Native components that they are rendered
+   * in a right-to-left layout. Components rely on Yoga logical properties
+   * (`start`/`end`) for positioning, but JS-driven logic such as gesture
+   * deltas needs this flag to resolve the effective direction.
+   *
+   * Pair this with Uniwind's `LayoutDirection` component when scoping a
+   * subtree to a direction different from the global RTL state.
+   *
+   * @default I18nManager.isRTL
+   */
+  isRTL?: boolean;
 }
 
 /**

@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { Toast, type ToastComponentProps } from 'heroui-native';
 import { useCallback, useEffect } from 'react';
 import { View } from 'react-native';
@@ -62,6 +63,7 @@ export const useProgressState = (initialProgress = 0) => {
  */
 export const ProgressToast = (props: ToastComponentProps) => {
   const { id, hide } = props;
+  const { t } = useLingui();
   const { progress } = useProgressState();
 
   /**
@@ -114,8 +116,8 @@ export const ProgressToast = (props: ToastComponentProps) => {
       <View className="flex-col gap-2 px-4 py-3">
         <Toast.Title className="text-sm mb-2">
           {progress < 100
-            ? `Uploading... ${Math.round(progress)}%`
-            : 'Upload complete!'}
+            ? t`Uploading... ${Math.round(progress)}%`
+            : t`Upload complete!`}
         </Toast.Title>
         <View className="h-1 w-full overflow-hidden rounded-full bg-muted/20">
           <StyleAnimatedView

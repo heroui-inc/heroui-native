@@ -1,17 +1,11 @@
 .menu__portal {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
 }
 
 .menu__overlay {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
 }
 
 .menu__content {
@@ -32,10 +26,7 @@
 
 .menu__content-background {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   border-radius: var(--radius-3xl);
   overflow: hidden;
 }
@@ -49,7 +40,9 @@
   line-height: var(--text-sm--line-height);
   font-family: var(--font-medium);
   color: var(--color-muted);
-  margin-left: calc(var(--spacing) * 3);
+  margin-inline-start: calc(var(--spacing) * 3);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 .menu__item {
@@ -71,6 +64,8 @@
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
   font-family: var(--font-medium);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 .menu__item-title--variant-default {
@@ -85,6 +80,8 @@
   font-size: var(--text-sm);
   line-height: 1.375;
   color: var(--color-muted);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 .menu__item-indicator {

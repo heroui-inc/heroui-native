@@ -1,3 +1,8 @@
+/* eslint-disable lingui/no-unlocalized-strings -- What is left in English is the
+   "Neo" product name and two social handles: brands and identifiers that stay
+   verbatim in every locale. All copy uses the `t` macro. */
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button, Card, PressableFeedback } from 'heroui-native';
@@ -11,6 +16,8 @@ import { simulatePress } from '../../../helpers/utils/simulate-press';
 const StyledImage = withUniwind(Image);
 
 const BackgroundImageCardContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <PressableFeedback
@@ -47,7 +54,7 @@ const BackgroundImageCardContent = () => {
                 maxFontSizeMultiplier={1.4}
                 className="text-zinc-50 font-medium text-base"
               >
-                Home robot
+                {t`Home robot`}
               </Card.Description>
             </Card.Body>
             <Card.Footer className="gap-3">
@@ -55,15 +62,15 @@ const BackgroundImageCardContent = () => {
                 <View pointerEvents="none">
                   <AppText
                     maxFontSizeMultiplier={1.4}
-                    className="text-base text-white"
+                    className="text-base text-white text-left"
                   >
-                    Available soon
+                    {t`Available soon`}
                   </AppText>
                   <AppText
                     maxFontSizeMultiplier={1.4}
-                    className="text-base text-zinc-300"
+                    className="text-base text-zinc-300 text-left"
                   >
-                    Get notified
+                    {t`Get notified`}
                   </AppText>
                 </View>
 
@@ -77,7 +84,7 @@ const BackgroundImageCardContent = () => {
                     maxFontSizeMultiplier={1.4}
                     className="text-black"
                   >
-                    Notify me
+                    {t`Notify me`}
                   </Button.Label>
                 </Button>
               </View>
@@ -92,6 +99,8 @@ const BackgroundImageCardContent = () => {
 // ------------------------------------------------------------------------------
 
 const CardWithImageContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="flex-row gap-4">
@@ -111,14 +120,14 @@ const CardWithImageContent = () => {
               </Card.Header>
               <Card.Body className="flex-1">
                 <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
-                  Indie Hackers
+                  {t`Indie Hackers`}
                 </Card.Title>
                 <Card.Description
                   className="text-sm"
                   maxFontSizeMultiplier={1.2}
                   numberOfLines={1}
                 >
-                  148 members
+                  {t`148 members`}
                 </Card.Description>
               </Card.Body>
               <Card.Footer className="flex-row items-center gap-2">
@@ -156,14 +165,14 @@ const CardWithImageContent = () => {
               </Card.Header>
               <Card.Body className="flex-1">
                 <Card.Title maxFontSizeMultiplier={1.2} numberOfLines={1}>
-                  AI Builders
+                  {t`AI Builders`}
                 </Card.Title>
                 <Card.Description
                   className="text-sm"
                   maxFontSizeMultiplier={1.2}
                   numberOfLines={1}
                 >
-                  362 members
+                  {t`362 members`}
                 </Card.Description>
               </Card.Body>
               <Card.Footer className="flex-row items-center gap-2">
@@ -192,13 +201,15 @@ const CardWithImageContent = () => {
 // ------------------------------------------------------------------------------
 
 const ButtonHighlightContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
         <View className="gap-6 w-full px-8">
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="tertiary">Tertiary</Button>
+          <Button variant="primary">{t`Primary`}</Button>
+          <Button variant="secondary">{t`Secondary`}</Button>
+          <Button variant="tertiary">{t`Tertiary`}</Button>
         </View>
       </View>
     </View>
@@ -210,17 +221,17 @@ const ButtonHighlightContent = () => {
 const PRESSABLE_FEEDBACK_VARIANTS: UsageVariant[] = [
   {
     value: 'background-image-card',
-    label: 'Background image card',
+    label: msg`Background image card`,
     content: <BackgroundImageCardContent />,
   },
   {
     value: 'card-with-image',
-    label: 'Card with image',
+    label: msg`Card with image`,
     content: <CardWithImageContent />,
   },
   {
     value: 'button-highlight',
-    label: 'Button highlight',
+    label: msg`Button highlight`,
     content: <ButtonHighlightContent />,
   },
 ];

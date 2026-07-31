@@ -1,4 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
+import type { MessageDescriptor } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   Accordion,
   cn,
@@ -37,52 +40,55 @@ const StyledAnimatedView = withUniwind(Animated.View);
 
 const TRIGGER_ICON_SIZE = 16;
 
-const accordionData = [
+type AccordionEntry = {
+  id: string;
+  title: MessageDescriptor;
+  icon: React.ReactNode;
+  content: MessageDescriptor;
+};
+
+const accordionData: AccordionEntry[] = [
   {
     id: '1',
-    title: 'What is design engineering?',
+    title: msg`What is design engineering?`,
     icon: (
       <ThreeDiagonalIcon
         size={TRIGGER_ICON_SIZE}
         colorClassName="accent-muted"
       />
     ),
-    content:
-      'The intersection of creative vision and technical implementation - empowering you to identify interface challenges and craft solutions from scratch.',
+    content: msg`The intersection of creative vision and technical implementation - empowering you to identify interface challenges and craft solutions from scratch.`,
   },
   {
     id: '2',
-    title: 'What defines UI craftsmanship?',
+    title: msg`What defines UI craftsmanship?`,
     icon: (
       <CubesThreeIcon size={TRIGGER_ICON_SIZE} colorClassName="accent-muted" />
     ),
-    content:
-      "The art of building things with excellence - achieving platform mastery so you're never constrained by frameworks or tooling",
+    content: msg`The art of building things with excellence - achieving platform mastery so you're never constrained by frameworks or tooling`,
   },
   {
     id: '3',
-    title: 'Why is craftsmanship important?',
+    title: msg`Why is craftsmanship important?`,
     icon: (
       <MagicWandIcon size={TRIGGER_ICON_SIZE} colorClassName="accent-muted" />
     ),
-    content:
-      "Because it transcends mere functionality - it's about creating experiences that feel intuitive: accessible, robust and maintainable.",
+    content: msg`Because it transcends mere functionality - it's about creating experiences that feel intuitive: accessible, robust and maintainable.`,
   },
   {
     id: '4',
-    title: 'Who should embrace this?',
+    title: msg`Who should embrace this?`,
     icon: (
       <PersonsIcon size={TRIGGER_ICON_SIZE} colorClassName="accent-muted" />
     ),
-    content:
-      'Creative coders and technical designers - individuals prepared to move beyond copy-paste solutions and evolve into builders who *can create anything*.',
+    content: msg`Creative coders and technical designers - individuals prepared to move beyond copy-paste solutions and evolve into builders who *can create anything*.`,
   },
 ];
 
 const classNames = {
   triggerContentContainer: 'flex-row items-center flex-1 gap-3',
-  triggerTitle: 'text-foreground text-base flex-1',
-  contentText: 'text-muted text-base/relaxed',
+  triggerTitle: 'text-foreground text-base flex-1 text-left',
+  contentText: 'text-muted text-base/relaxed text-left',
 };
 
 // ------------------------------------------------------------------------------
@@ -188,6 +194,7 @@ type AccordionItemProps = {
 };
 
 const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
+  const { t } = useLingui();
   const { depth } = use(SettingsContext);
 
   const { value } = useAccordion();
@@ -269,7 +276,7 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
               className={classNames.triggerTitle}
               maxFontSizeMultiplier={1}
             >
-              {item.title}
+              {t(item.title)}
             </AppText>
           </View>
           <Accordion.Indicator>
@@ -278,7 +285,7 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
         </Accordion.Trigger>
         <Accordion.Content className="px-5">
           <AppText className={classNames.contentText} maxFontSizeMultiplier={1}>
-            {item.content}
+            {t(item.content)}
           </AppText>
         </Accordion.Content>
       </StyledAnimatedView>
@@ -298,6 +305,7 @@ const AccordionItemContent: FC<AccordionItemProps> = ({ item, index }) => {
 // ------------------------------------------------------------------------------
 
 export const AccordionWithDepthEffect: FC = () => {
+  const { t } = useLingui();
   const [depth, setDepth] = useState(true);
 
   return (
@@ -305,8 +313,8 @@ export const AccordionWithDepthEffect: FC = () => {
       <WithStateToggle
         isSelected={depth}
         onSelectedChange={setDepth}
-        label="Depth"
-        description="Enable depth effect for the accordion"
+        label={t`Depth`}
+        description={t`Enable depth effect for the accordion`}
       >
         <Accordion
           animation={{

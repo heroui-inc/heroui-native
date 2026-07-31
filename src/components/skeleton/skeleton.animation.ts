@@ -15,7 +15,10 @@ import { useUniwind } from 'uniwind';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { colorKit } from '../../helpers/external/utils';
 import { useAnimationSettings } from '../../helpers/internal/contexts';
-import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
+import {
+  useCombinedAnimationDisabledState,
+  useIsRTL,
+} from '../../helpers/internal/hooks';
 import {
   createContext,
   getAnimationState,
@@ -220,6 +223,8 @@ export function useSkeletonShimmerAnimation(options: {
   const { componentWidth, offset, progress, screenWidth } =
     useSkeletonAnimation();
 
+  const isRTL = useIsRTL();
+
   const { theme } = useUniwind();
   const themeColorBackground = useThemeColor('background');
 
@@ -269,10 +274,14 @@ export function useSkeletonShimmerAnimation(options: {
       };
     }
 
+    // Sweep the highlight along the reading direction: left-to-right in LTR and
+    // right-to-left in RTL by swapping the off-screen start/end offsets.
     const translateX = interpolate(
       progress.get(),
       [0, 1],
-      [-(componentWidth + offset), screenWidth]
+      isRTL
+        ? [screenWidth, -(componentWidth + offset)]
+        : [-(componentWidth + offset), screenWidth]
     );
 
     return {

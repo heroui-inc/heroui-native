@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { ControlField, Description, Label } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
@@ -29,6 +30,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
 );
 
 export const CheckboxContent = () => {
+  const { t } = useLingui();
   const [marketingEmails, setMarketingEmails] = React.useState(true);
   const [productUpdates, setProductUpdates] = React.useState(false);
 
@@ -37,14 +39,14 @@ export const CheckboxContent = () => {
       <CheckboxField
         isSelected={marketingEmails}
         onSelectedChange={setMarketingEmails}
-        label="Marketing & Promotions"
-        description="Special offers and exclusive deals"
+        label={t`Marketing & Promotions`}
+        description={t`Special offers and exclusive deals`}
       />
       <CheckboxField
         isSelected={productUpdates}
         onSelectedChange={setProductUpdates}
-        label="Product Updates"
-        description="New features and improvements"
+        label={t`Product Updates`}
+        description={t`New features and improvements`}
       />
     </View>
   );

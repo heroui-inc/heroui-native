@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   cn,
   Description,
@@ -46,18 +48,20 @@ const KeyboardAvoidingContainer = ({
 };
 
 const BasicTextFieldContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <TextField isRequired>
-          <Label>Email</Label>
+          <Label>{t`Email`}</Label>
           <Input
-            placeholder="Enter your email"
+            placeholder={t`Enter your email`}
             keyboardType="email-address"
             autoCapitalize="none"
           />
           <Description>
-            We'll never share your email with anyone else.
+            {t`We'll never share your email with anyone else.`}
           </Description>
         </TextField>
       </KeyboardAvoidingContainer>
@@ -66,24 +70,25 @@ const BasicTextFieldContent = () => {
 };
 
 const TextFieldWithIconsContent = () => {
+  const { t } = useLingui();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <TextField isRequired>
-          <Label>Password</Label>
+          <Label>{t`Password`}</Label>
           <View className="w-full flex-row items-center">
             <Input
               className="flex-1 px-10"
-              placeholder="Enter your password"
+              placeholder={t`Enter your password`}
               secureTextEntry={!isPasswordVisible}
             />
-            <View className="absolute left-3.5" pointerEvents="none">
+            <View className="absolute inset-s-3.5" pointerEvents="none">
               <LockIcon size={16} colorClassName="accent-field-placeholder" />
             </View>
             <Pressable
-              className="absolute right-4"
+              className="absolute inset-e-4"
               onPress={() => setIsPasswordVisible(!isPasswordVisible)}
             >
               {isPasswordVisible ? (
@@ -103,20 +108,22 @@ const TextFieldWithIconsContent = () => {
 };
 
 const DisabledTextFieldContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <View className="gap-8">
           <TextField>
-            <Label>Account ID</Label>
-            <Input placeholder="Enter account ID" value="ACC-2024-12345" />
-            <Description>Your unique account identifier</Description>
+            <Label>{t`Account ID`}</Label>
+            <Input placeholder={t`Enter account ID`} value="ACC-2024-12345" />
+            <Description>{t`Your unique account identifier`}</Description>
           </TextField>
 
           <TextField isDisabled>
-            <Label>User Role</Label>
-            <Input placeholder="Role assignment" value="Administrator" />
-            <Description>Contact support to change your role</Description>
+            <Label>{t`User Role`}</Label>
+            <Input placeholder={t`Role assignment`} value="Administrator" />
+            <Description>{t`Contact support to change your role`}</Description>
           </TextField>
         </View>
       </KeyboardAvoidingContainer>
@@ -125,6 +132,7 @@ const DisabledTextFieldContent = () => {
 };
 
 const TextFieldWithValidationContent = () => {
+  const { t } = useLingui();
   const [isTestFieldInvalid, setIsTestFieldInvalid] = useState(false);
   const [testFieldValue, setTestFieldValue] = useState('');
 
@@ -132,23 +140,23 @@ const TextFieldWithValidationContent = () => {
     <WithStateToggle
       isSelected={isTestFieldInvalid}
       onSelectedChange={setIsTestFieldInvalid}
-      label="Simulate Error"
-      description="Toggle validation error state"
+      label={t`Simulate Error`}
+      description={t`Toggle validation error state`}
     >
       <View className="flex-1 pt-[55%]">
         <KeyboardAvoidingContainer>
           <TextField isRequired isInvalid={isTestFieldInvalid}>
-            <Label>Promo Code</Label>
+            <Label>{t`Promo Code`}</Label>
             <Input
-              placeholder="Enter promo code"
+              placeholder={t`Enter promo code`}
               value={testFieldValue}
               onChangeText={setTestFieldValue}
               autoCapitalize="characters"
             />
             <Description hideOnInvalid>
-              Enter a valid code to receive discount
+              {t`Enter a valid code to receive discount`}
             </Description>
-            <FieldError>This promo code is invalid or has expired</FieldError>
+            <FieldError>{t`This promo code is invalid or has expired`}</FieldError>
           </TextField>
         </KeyboardAvoidingContainer>
       </View>
@@ -157,15 +165,16 @@ const TextFieldWithValidationContent = () => {
 };
 
 const TextFieldWithCustomStylesContent = () => {
+  const { t } = useLingui();
   const { isDark } = useAppTheme();
 
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <TextField>
-          <Label>Gift Card Number</Label>
+          <Label>{t`Gift Card Number`}</Label>
           <Input
-            placeholder="Enter 16-digit gift card number"
+            placeholder={t`Enter 16-digit gift card number`}
             keyboardType="number-pad"
             maxLength={16}
             className={cn(
@@ -173,7 +182,7 @@ const TextFieldWithCustomStylesContent = () => {
               isDark && 'border-neutral-100'
             )}
           />
-          <Description>Redeem your gift card at checkout</Description>
+          <Description>{t`Redeem your gift card at checkout`}</Description>
         </TextField>
       </KeyboardAvoidingContainer>
     </View>
@@ -183,27 +192,27 @@ const TextFieldWithCustomStylesContent = () => {
 const TEXT_FIELD_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-text-field',
-    label: 'Basic TextField',
+    label: msg`Basic TextField`,
     content: <BasicTextFieldContent />,
   },
   {
     value: 'text-field-with-icons',
-    label: 'TextField with icons',
+    label: msg`TextField with icons`,
     content: <TextFieldWithIconsContent />,
   },
   {
     value: 'disabled-text-field',
-    label: 'Disabled TextField',
+    label: msg`Disabled TextField`,
     content: <DisabledTextFieldContent />,
   },
   {
     value: 'text-field-with-validation',
-    label: 'TextField with validation',
+    label: msg`TextField with validation`,
     content: <TextFieldWithValidationContent />,
   },
   {
     value: 'text-field-with-custom-styles',
-    label: 'TextField with custom styles',
+    label: msg`TextField with custom styles`,
     content: <TextFieldWithCustomStylesContent />,
   },
 ];

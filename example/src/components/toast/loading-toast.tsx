@@ -1,4 +1,5 @@
 import Feather from '@expo/vector-icons/Feather';
+import { useLingui } from '@lingui/react/macro';
 import {
   cn,
   Spinner,
@@ -39,6 +40,7 @@ export const useLoadingState = () => {
  */
 export const LoadingToast = (props: ToastComponentProps) => {
   const { id, hide } = props;
+  const { t } = useLingui();
   const { isLoading } = useLoadingState();
 
   const themeColorMuted = useThemeColor('muted');
@@ -82,7 +84,7 @@ export const LoadingToast = (props: ToastComponentProps) => {
           )}
           maxFontSizeMultiplier={1}
         >
-          {isLoading ? 'Loading...' : 'Loaded successfully'}
+          {isLoading ? t`Loading...` : t`Loaded successfully`}
         </Toast.Title>
       </View>
     </Toast>

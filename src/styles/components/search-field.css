@@ -9,28 +9,36 @@
 
 .search-field__search-icon {
   position: absolute;
-  left: calc(var(--spacing) * 3);
+  inset-inline-start: calc(var(--spacing) * 3);
   z-index: 10;
 }
 
 /*
  * Only SearchField-specific overrides. Base input styling comes from the
  * Input component (.input__input). Declared after input.css in the index so
- * these paddings win the cascade. The flex stretch lives on the Input's
- * outer container (.search-field__input-container), not the text input.
+ * these paddings win the cascade. The container only exists when the Input
+ * renders a background layer (e.g. glass theme); on default themes the text
+ * input is bare, so it needs its own flex-grow to fill the row. Inside the
+ * column container flex-grow has no free space, so it stays a no-op there.
  */
 .search-field__input-container {
   flex: 1;
 }
 
 .search-field__input {
-  padding-left: calc(var(--spacing) * 9);
-  padding-right: calc(var(--spacing) * 12);
+  flex-grow: 1;
+  padding-inline-start: calc(var(--spacing) * 9);
+  padding-inline-end: calc(var(--spacing) * 12);
+  /*
+   * TextInput textAlign is physical (unlike Text), so this is the LTR
+   * alignment; the RTL flip comes from `rtl:text-right` in the styles file.
+   */
+  text-align: left;
 }
 
 .search-field__clear-button {
   position: absolute;
-  right: calc(var(--spacing) * 3);
+  inset-inline-end: calc(var(--spacing) * 3);
   width: calc(var(--spacing) * 6);
   height: calc(var(--spacing) * 6);
 }

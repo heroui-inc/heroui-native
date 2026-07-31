@@ -1,4 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   Avatar,
   Card,
@@ -27,6 +29,8 @@ const SkeletonControls = ({
   variant: SkeletonAnimation;
   setVariant: (value: SkeletonAnimation) => void;
 }) => {
+  const { t } = useLingui();
+
   return (
     <View>
       <RadioGroup
@@ -37,19 +41,19 @@ const SkeletonControls = ({
         <RadioGroup.Item value="shimmer">
           <Radio />
           <Label>
-            <Label.Text maxFontSizeMultiplier={1}>Shimmer</Label.Text>
+            <Label.Text maxFontSizeMultiplier={1}>{t`Shimmer`}</Label.Text>
           </Label>
         </RadioGroup.Item>
         <RadioGroup.Item value="pulse">
           <Radio />
           <Label>
-            <Label.Text maxFontSizeMultiplier={1}>Pulse</Label.Text>
+            <Label.Text maxFontSizeMultiplier={1}>{t`Pulse`}</Label.Text>
           </Label>
         </RadioGroup.Item>
         <RadioGroup.Item value="none">
           <Radio />
           <Label>
-            <Label.Text maxFontSizeMultiplier={1}>None</Label.Text>
+            <Label.Text maxFontSizeMultiplier={1}>{t`None`}</Label.Text>
           </Label>
         </RadioGroup.Item>
       </RadioGroup>
@@ -59,6 +63,7 @@ const SkeletonControls = ({
 };
 
 const CardSkeletonContent = () => {
+  const { t } = useLingui();
   const [isLoading, setIsLoading] = useState(true);
   const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
 
@@ -66,8 +71,8 @@ const CardSkeletonContent = () => {
     <WithStateToggle
       isSelected={isLoading}
       onSelectedChange={setIsLoading}
-      label="Loading"
-      description="Toggle skeleton loading state"
+      label={t`Loading`}
+      description={t`Toggle skeleton loading state`}
     >
       <View className="flex-1">
         <View className="flex-1 justify-center">
@@ -98,6 +103,7 @@ const CardSkeletonContent = () => {
                       </>
                     )}
                     {!isLoading && (
+                      /* eslint-disable lingui/no-unlocalized-strings -- Sample person name and handle. */
                       <View>
                         <AppText
                           className="font-semibold text-foreground"
@@ -112,6 +118,7 @@ const CardSkeletonContent = () => {
                           @mitchell
                         </AppText>
                       </View>
+                      /* eslint-enable lingui/no-unlocalized-strings */
                     )}
                   </View>
                 </View>
@@ -128,7 +135,7 @@ const CardSkeletonContent = () => {
                       className="text-base text-foreground"
                       maxFontSizeMultiplier={1}
                     >
-                      Bridging the Future
+                      {t`Bridging the Future`}
                     </AppText>
                   )}
                 </View>
@@ -161,6 +168,7 @@ const CardSkeletonContent = () => {
 // ------------------------------------------------------------------------------
 
 const ListSkeletonContent = () => {
+  const { t } = useLingui();
   const [isLoading, setIsLoading] = useState(true);
   const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
 
@@ -168,8 +176,8 @@ const ListSkeletonContent = () => {
     <WithStateToggle
       isSelected={isLoading}
       onSelectedChange={setIsLoading}
-      label="Loading"
-      description="Toggle skeleton loading state"
+      label={t`Loading`}
+      description={t`Toggle skeleton loading state`}
     >
       <View className="flex-1">
         <View className="flex-1 justify-center">
@@ -191,7 +199,7 @@ const ListSkeletonContent = () => {
             ))}
             {!isLoading && (
               <View className="flex-1 items-center justify-center">
-                <Text className="text-lg text-muted">No Data</Text>
+                <Text className="text-lg text-muted">{t`No Data`}</Text>
               </View>
             )}
           </View>
@@ -210,6 +218,7 @@ const ListSkeletonContent = () => {
 // ------------------------------------------------------------------------------
 
 const TextSkeletonsContent = () => {
+  const { t } = useLingui();
   const [isLoading, setIsLoading] = useState(true);
   const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
 
@@ -217,8 +226,8 @@ const TextSkeletonsContent = () => {
     <WithStateToggle
       isSelected={isLoading}
       onSelectedChange={setIsLoading}
-      label="Loading"
-      description="Toggle skeleton loading state"
+      label={t`Loading`}
+      description={t`Toggle skeleton loading state`}
     >
       <View className="flex-1">
         <View className="flex-1 justify-center">
@@ -243,9 +252,7 @@ const TextSkeletonsContent = () => {
                 exiting={FadeOutRight.duration(200)}
               >
                 <AppText className="text-base text-foreground">
-                  The new productivity dashboard makes it easy to track daily
-                  tasks and goals. You can customize widgets and set smart
-                  reminders.
+                  {t`The new productivity dashboard makes it easy to track daily tasks and goals. You can customize widgets and set smart reminders.`}
                 </AppText>
               </Animated.View>
             )}
@@ -265,6 +272,7 @@ const TextSkeletonsContent = () => {
 // ------------------------------------------------------------------------------
 
 const CircularSkeletonsContent = () => {
+  const { t } = useLingui();
   const [isLoading, setIsLoading] = useState(true);
   const [variant, setVariant] = useState<SkeletonAnimation>('shimmer');
 
@@ -272,8 +280,8 @@ const CircularSkeletonsContent = () => {
     <WithStateToggle
       isSelected={isLoading}
       onSelectedChange={setIsLoading}
-      label="Loading"
-      description="Toggle skeleton loading state"
+      label={t`Loading`}
+      description={t`Toggle skeleton loading state`}
     >
       <View className="flex-1">
         <View className="flex-1 justify-center">
@@ -332,14 +340,15 @@ const CircularSkeletonsContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomShimmerConfigContent = () => {
+  const { t } = useLingui();
   const [isLoading, setIsLoading] = useState(true);
 
   return (
     <WithStateToggle
       isSelected={isLoading}
       onSelectedChange={setIsLoading}
-      label="Loading"
-      description="Toggle skeleton loading state"
+      label={t`Loading`}
+      description={t`Toggle skeleton loading state`}
     >
       <View className="flex-1 justify-center">
         <View className="gap-3">
@@ -358,7 +367,7 @@ const CustomShimmerConfigContent = () => {
               className="h-16 bg-blue-500 rounded-2xl items-center justify-center"
               style={{ borderCurve: 'continuous' }}
             >
-              <Text className="text-white">Blue Shimmer</Text>
+              <Text className="text-white">{t`Blue Shimmer`}</Text>
             </View>
           </Skeleton>
 
@@ -378,7 +387,7 @@ const CustomShimmerConfigContent = () => {
               className="h-16 bg-green-500 rounded-2xl items-center justify-center"
               style={{ borderCurve: 'continuous' }}
             >
-              <Text className="text-white">Fast Green Shimmer</Text>
+              <Text className="text-white">{t`Fast Green Shimmer`}</Text>
             </View>
           </Skeleton>
         </View>
@@ -390,14 +399,15 @@ const CustomShimmerConfigContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomPulseConfigContent = () => {
+  const { t } = useLingui();
   const [isLoading, setIsLoading] = useState(true);
 
   return (
     <WithStateToggle
       isSelected={isLoading}
       onSelectedChange={setIsLoading}
-      label="Loading"
-      description="Toggle skeleton loading state"
+      label={t`Loading`}
+      description={t`Toggle skeleton loading state`}
     >
       <View className="flex-1 justify-center">
         <View className="gap-3">
@@ -417,7 +427,7 @@ const CustomPulseConfigContent = () => {
               className="h-16 bg-purple-500 rounded-2xl items-center justify-center"
               style={{ borderCurve: 'continuous' }}
             >
-              <Text className="text-white">Fast Pulse</Text>
+              <Text className="text-white">{t`Fast Pulse`}</Text>
             </View>
           </Skeleton>
 
@@ -437,7 +447,7 @@ const CustomPulseConfigContent = () => {
               className="h-16 bg-orange-500 rounded-2xl items-center justify-center"
               style={{ borderCurve: 'continuous' }}
             >
-              <Text className="text-white">Slow Subtle Pulse</Text>
+              <Text className="text-white">{t`Slow Subtle Pulse`}</Text>
             </View>
           </Skeleton>
         </View>
@@ -451,32 +461,32 @@ const CustomPulseConfigContent = () => {
 const SKELETON_VARIANTS: UsageVariant[] = [
   {
     value: 'card-skeleton',
-    label: 'Card skeleton',
+    label: msg`Card skeleton`,
     content: <CardSkeletonContent />,
   },
   {
     value: 'list-skeleton',
-    label: 'List skeleton',
+    label: msg`List skeleton`,
     content: <ListSkeletonContent />,
   },
   {
     value: 'text-skeletons',
-    label: 'Text skeletons',
+    label: msg`Text skeletons`,
     content: <TextSkeletonsContent />,
   },
   {
     value: 'circular-skeletons',
-    label: 'Circular skeletons',
+    label: msg`Circular skeletons`,
     content: <CircularSkeletonsContent />,
   },
   {
     value: 'custom-shimmer-config',
-    label: 'Custom shimmer configuration',
+    label: msg`Custom shimmer configuration`,
     content: <CustomShimmerConfigContent />,
   },
   {
     value: 'custom-pulse-config',
-    label: 'Custom pulse configuration',
+    label: msg`Custom pulse configuration`,
     content: <CustomPulseConfigContent />,
   },
 ];

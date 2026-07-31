@@ -1,17 +1,11 @@
 .popover__portal {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
 }
 
 .popover__overlay {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
 }
 
 .popover__content {
@@ -25,10 +19,7 @@
 
 .popover__content-background {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   border-radius: var(--radius-3xl);
   overflow: hidden;
 }
@@ -38,12 +29,16 @@
   line-height: var(--text-lg--line-height);
   font-family: var(--font-medium);
   color: var(--color-foreground);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 .popover__description {
   font-size: var(--text-base);
   line-height: 1.375;
   color: var(--color-muted);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 .popover__arrow {

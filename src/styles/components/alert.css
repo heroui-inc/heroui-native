@@ -9,10 +9,7 @@
 
 .alert__background {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   border-radius: var(--radius-3xl);
   overflow: hidden;
 }
@@ -29,6 +26,8 @@
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
   font-family: var(--font-medium);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 /* Title - status */
@@ -57,4 +56,6 @@
   font-size: var(--text-sm);
   line-height: var(--text-sm--line-height);
   color: var(--color-muted);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }

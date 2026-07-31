@@ -5,6 +5,7 @@
 .tag-group__list {
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: calc(var(--spacing) * 2);
 }
 
@@ -28,10 +29,7 @@
 
 .tag-group__tag-background {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   overflow: hidden;
 }
 

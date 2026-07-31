@@ -141,13 +141,17 @@ const ListGroupItemSuffix = forwardRef<ViewRef, ListGroupItemSuffixProps>(
       color: iconProps?.color ?? themeColorMuted,
     };
 
+    const suffixIconClassName = listGroupClassNames.itemSuffixIcon();
+
     return (
       <View ref={ref} {...restProps}>
         {children ?? (
-          <ChevronRightIcon
-            size={resolvedIconProps.size}
-            color={resolvedIconProps.color}
-          />
+          <View className={suffixIconClassName}>
+            <ChevronRightIcon
+              size={resolvedIconProps.size}
+              color={resolvedIconProps.color}
+            />
+          </View>
         )}
       </View>
     );

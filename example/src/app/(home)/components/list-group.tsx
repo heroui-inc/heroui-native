@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   Chip,
   ControlField,
@@ -20,11 +22,12 @@ import { PaletteIcon } from '../../../components/icons/palette';
 import { PersonIcon } from '../../../components/icons/person';
 
 const BasicContent = () => {
+  const { t } = useLingui();
   const mutedColor = useThemeColor('muted');
 
   return (
     <View className="flex-1 justify-center px-5">
-      <AppText className="text-sm text-muted mb-2 ml-2">Account</AppText>
+      <AppText className="text-sm text-muted mb-2 ms-2">{t`Account`}</AppText>
       <ListGroup className="mb-6">
         <ListGroup.Item>
           <ListGroup.ItemPrefix>
@@ -32,10 +35,10 @@ const BasicContent = () => {
           </ListGroup.ItemPrefix>
           <ListGroup.ItemContent>
             <ListGroup.ItemTitle maxFontSizeMultiplier={1.4}>
-              Personal Info
+              {t`Personal Info`}
             </ListGroup.ItemTitle>
             <ListGroup.ItemDescription maxFontSizeMultiplier={1.4}>
-              Name, email, phone number
+              {t`Name, email, phone number`}
             </ListGroup.ItemDescription>
           </ListGroup.ItemContent>
           <ListGroup.ItemSuffix />
@@ -47,16 +50,18 @@ const BasicContent = () => {
           </ListGroup.ItemPrefix>
           <ListGroup.ItemContent>
             <ListGroup.ItemTitle maxFontSizeMultiplier={1.4}>
-              Payment Methods
+              {t`Payment Methods`}
             </ListGroup.ItemTitle>
             <ListGroup.ItemDescription maxFontSizeMultiplier={1.4}>
-              Visa ending in 4829
+              {t`Visa ending in 4829`}
             </ListGroup.ItemDescription>
           </ListGroup.ItemContent>
           <ListGroup.ItemSuffix />
         </ListGroup.Item>
       </ListGroup>
-      <AppText className="text-sm text-muted mb-2 ml-2">Preferences</AppText>
+      <AppText className="text-sm text-muted mb-2 ms-2">
+        {t`Preferences`}
+      </AppText>
       <ListGroup>
         <ListGroup.Item>
           <ListGroup.ItemPrefix>
@@ -64,10 +69,10 @@ const BasicContent = () => {
           </ListGroup.ItemPrefix>
           <ListGroup.ItemContent>
             <ListGroup.ItemTitle maxFontSizeMultiplier={1.4}>
-              Appearance
+              {t`Appearance`}
             </ListGroup.ItemTitle>
             <ListGroup.ItemDescription maxFontSizeMultiplier={1.4}>
-              Theme, font size, display
+              {t`Theme, font size, display`}
             </ListGroup.ItemDescription>
           </ListGroup.ItemContent>
           <ListGroup.ItemSuffix />
@@ -79,10 +84,10 @@ const BasicContent = () => {
           </ListGroup.ItemPrefix>
           <ListGroup.ItemContent>
             <ListGroup.ItemTitle maxFontSizeMultiplier={1.4}>
-              Notifications
+              {t`Notifications`}
             </ListGroup.ItemTitle>
             <ListGroup.ItemDescription maxFontSizeMultiplier={1.4}>
-              Alerts, sounds, badges
+              {t`Alerts, sounds, badges`}
             </ListGroup.ItemDescription>
           </ListGroup.ItemContent>
           <ListGroup.ItemSuffix iconProps={{ size: 18, color: mutedColor }} />
@@ -143,24 +148,26 @@ const PressableListGroupItem = ({
 };
 
 const WithPressableFeedbackContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 justify-center px-5">
       <ListGroup>
         <PressableListGroupItem
-          title="Appearance"
-          description="Theme, font size, display"
+          title={t`Appearance`}
+          description={t`Theme, font size, display`}
           onPress={() => console.log('Appearance')}
         />
         <Separator className="mx-4" />
         <PressableListGroupItem
-          title="Notifications"
-          description="Alerts, sounds, badges"
+          title={t`Notifications`}
+          description={t`Alerts, sounds, badges`}
           onPress={() => console.log('Notifications')}
         />
         <Separator className="mx-4" />
         <PressableListGroupItem
-          title="Privacy & Security"
-          description="Two-factor auth, app lock"
+          title={t`Privacy & Security`}
+          description={t`Two-factor auth, app lock`}
           onPress={() => console.log('Privacy & Security')}
         />
       </ListGroup>
@@ -171,6 +178,7 @@ const WithPressableFeedbackContent = () => {
 // ------------------------------------------------------------------------------
 
 const WithCustomSuffixContent = () => {
+  const { t } = useLingui();
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   return (
@@ -184,7 +192,7 @@ const WithCustomSuffixContent = () => {
           >
             <MoonIcon size={18} colorClassName="accent-foreground" />
             <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Dark mode</ListGroup.ItemTitle>
+              <ListGroup.ItemTitle>{t`Dark mode`}</ListGroup.ItemTitle>
             </ListGroup.ItemContent>
             <ControlField.Indicator />
           </ControlField>
@@ -194,11 +202,13 @@ const WithCustomSuffixContent = () => {
               <GlobeIcon size={18} colorClassName="accent-foreground" />
             </ListGroup.ItemPrefix>
             <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Language</ListGroup.ItemTitle>
-              <ListGroup.ItemDescription>English</ListGroup.ItemDescription>
+              <ListGroup.ItemTitle>{t`Language`}</ListGroup.ItemTitle>
+              <ListGroup.ItemDescription>
+                {t`English`}
+              </ListGroup.ItemDescription>
             </ListGroup.ItemContent>
             <ListGroup.ItemSuffix>
-              <AppText className="text-sm text-muted">Select</AppText>
+              <AppText className="text-sm text-muted">{t`Select`}</AppText>
             </ListGroup.ItemSuffix>
           </ListGroup.Item>
           <Separator className="mx-4" />
@@ -207,7 +217,7 @@ const WithCustomSuffixContent = () => {
               <BellIcon size={18} colorClassName="accent-foreground" />
             </ListGroup.ItemPrefix>
             <ListGroup.ItemContent>
-              <ListGroup.ItemTitle>Notifications</ListGroup.ItemTitle>
+              <ListGroup.ItemTitle>{t`Notifications`}</ListGroup.ItemTitle>
             </ListGroup.ItemContent>
             <ListGroup.ItemSuffix>
               <Chip variant="primary" color="danger">
@@ -226,17 +236,17 @@ const WithCustomSuffixContent = () => {
 const LIST_GROUP_VARIANTS: UsageVariant[] = [
   {
     value: 'basic',
-    label: 'Basic',
+    label: msg`Basic`,
     content: <BasicContent />,
   },
   {
     value: 'with-pressable-feedback',
-    label: 'With pressable feedback',
+    label: msg`With pressable feedback`,
     content: <WithPressableFeedbackContent />,
   },
   {
     value: 'custom-suffix',
-    label: 'Custom suffix',
+    label: msg`Custom suffix`,
     content: <WithCustomSuffixContent />,
   },
 ];

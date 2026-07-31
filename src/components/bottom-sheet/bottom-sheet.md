@@ -35,14 +35,14 @@ import { BottomSheet } from 'heroui-native';
 
 ## Usage
 
-### Basic Bottom Sheet
+### Basic BottomSheet
 
 Simple bottom sheet with title, description, and close button.
 
 ```tsx
 <BottomSheet>
   <BottomSheet.Trigger asChild>
-    <Button>Open Bottom Sheet</Button>
+    <Button>Open BottomSheet</Button>
   </BottomSheet.Trigger>
   <BottomSheet.Portal>
     <BottomSheet.Overlay />
@@ -55,7 +55,7 @@ Simple bottom sheet with title, description, and close button.
 </BottomSheet>
 ```
 
-### Detached Bottom Sheet
+### Detached BottomSheet
 
 Bottom sheet that appears detached from the bottom edge with custom spacing.
 
@@ -105,7 +105,7 @@ import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 </BottomSheet>;
 ```
 
-See the full example with a sticky footer (`BottomSheetFooter`) in the [GitHub repository](<https://github.com/heroui-inc/heroui-native/blob/main/example/src/components/bottom-sheet/scrollable-with-snap-points.tsx>).
+See the full example with a sticky footer (`BottomSheetFooter`) in the [GitHub repository](https://github.com/heroui-inc/heroui-native/blob/main/example/src/components/bottom-sheet/scrollable-with-snap-points.tsx).
 
 ### Blur Overlay
 
@@ -194,7 +194,7 @@ const BottomSheetTextInput = () => {
 </BottomSheet>;
 ```
 
-See full examples for [`Input`](<https://github.com/heroui-inc/heroui-native/blob/main/example/src/components/bottom-sheet/with-text-input.tsx>) and [`InputOTP`](<https://github.com/heroui-inc/heroui-native/blob/main/example/src/components/bottom-sheet/with-otp-input.tsx>) inside a bottom sheet.
+See full examples for [`Input`](https://github.com/heroui-inc/heroui-native/blob/main/example/src/components/bottom-sheet/with-text-input.tsx) and [`InputOTP`](https://github.com/heroui-inc/heroui-native/blob/main/example/src/components/bottom-sheet/with-otp-input.tsx) inside a bottom sheet.
 
 ## Example
 
@@ -213,7 +213,7 @@ export default function BottomSheetExample() {
   return (
     <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
       <BottomSheet.Trigger asChild>
-        <Button variant="secondary">Open Bottom Sheet</Button>
+        <Button variant="secondary">Open BottomSheet</Button>
       </BottomSheet.Trigger>
       <BottomSheet.Portal>
         <BottomSheet.Overlay />
@@ -281,29 +281,29 @@ Animation configuration for bottom sheet root component. Can be:
 
 ### BottomSheet.Portal
 
-| prop                       | type                   | default | description                                                                                                                   |
-| -------------------------- | ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `children`                 | `React.ReactNode`      | -       | Portal content (overlay and bottom sheet)                                                                                     |
-| `disableFullWindowOverlay` | `boolean`              | `false` | When true on iOS, uses View instead of FullWindowOverlay. Enables element inspector; overlay won't appear above native modals |
-| `unstable_accessibilityContainerViewIsModal` | `boolean` | `false` | Controls whether VoiceOver treats the overlay window as a modal container. When `true`, VoiceOver is restricted to elements inside the overlay. iOS only. Unstable: may change with react-native-screens updates |
-| `className`                | `string`               | -       | Additional CSS classes for portal container                                                                                   |
-| `style`                    | `StyleProp<ViewStyle>` | -       | Additional styles for portal container                                                                                        |
-| `hostName`                 | `string`               | -       | Optional portal host name for specific container                                                                              |
-| `forceMount`               | `boolean`              | -       | Force mount when closed for animation purposes                                                                                |
+| prop                                         | type                   | default | description                                                                                                                                                                                                      |
+| -------------------------------------------- | ---------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`                                   | `React.ReactNode`      | -       | Portal content (overlay and bottom sheet)                                                                                                                                                                        |
+| `disableFullWindowOverlay`                   | `boolean`              | `false` | When true on iOS, uses View instead of FullWindowOverlay. Enables element inspector; overlay won't appear above native modals                                                                                    |
+| `unstable_accessibilityContainerViewIsModal` | `boolean`              | `false` | Controls whether VoiceOver treats the overlay window as a modal container. When `true`, VoiceOver is restricted to elements inside the overlay. iOS only. Unstable: may change with react-native-screens updates |
+| `className`                                  | `string`               | -       | Additional CSS classes for portal container                                                                                                                                                                      |
+| `style`                                      | `StyleProp<ViewStyle>` | -       | Additional styles for portal container                                                                                                                                                                           |
+| `hostName`                                   | `string`               | -       | Optional portal host name for specific container                                                                                                                                                                 |
+| `forceMount`                                 | `boolean`              | -       | Force mount when closed for animation purposes                                                                                                                                                                   |
 
 ### BottomSheet.Overlay
 
-| prop                    | type                                                   | default | description                                                  |
-| ----------------------- | ------------------------------------------------------ | ------- | ------------------------------------------------------------ |
-| `children`              | `React.ReactNode`                                      | -       | Custom overlay content                                       |
-| `className`             | `string`                                               | -       | Additional CSS classes for overlay                           |
-| `style`                 | `ViewStyle`                                            | -       | Additional styles for overlay container                      |
-| `animation`             | `Omit<PopupOverlayAnimation, 'entering' \| 'exiting'>` | -       | Animation configuration                                      |
-| `variant`               | `'default' \| 'blur'`                                  | `'default'` (`'blur'` when the library theme is `glass`) | Overlay variant. `'blur'` renders an animated blur backdrop (iOS only, requires `expo-blur`; falls back to `'default'` otherwise) |
-| `blurViewProps`         | `BlurViewProps`                                        | -       | Props forwarded to the BlurView rendered by the `'blur'` variant. `intensity` sets the maximum animated blur intensity (default: 75 dark / 50 light) |
-| `isAnimatedStyleActive` | `boolean`                                              | `true` (`false` for the `'blur'` variant) | Whether animated styles (react-native-reanimated) are active |
-| `isCloseOnPress`        | `boolean`                                              | `true`  | Whether pressing overlay closes bottom sheet                 |
-| `...PressableProps`     | `PressableProps`                                       | -       | All standard React Native Pressable props are supported      |
+| prop                    | type                                                   | default                                                  | description                                                                                                                                          |
+| ----------------------- | ------------------------------------------------------ | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`              | `React.ReactNode`                                      | -                                                        | Custom overlay content                                                                                                                               |
+| `className`             | `string`                                               | -                                                        | Additional CSS classes for overlay                                                                                                                   |
+| `style`                 | `ViewStyle`                                            | -                                                        | Additional styles for overlay container                                                                                                              |
+| `animation`             | `Omit<PopupOverlayAnimation, 'entering' \| 'exiting'>` | -                                                        | Animation configuration                                                                                                                              |
+| `variant`               | `'default' \| 'blur'`                                  | `'default'` (`'blur'` when the library theme is `glass`) | Overlay variant. `'blur'` renders an animated blur backdrop (iOS only, requires `expo-blur`; falls back to `'default'` otherwise)                    |
+| `blurViewProps`         | `BlurViewProps`                                        | -                                                        | Props forwarded to the BlurView rendered by the `'blur'` variant. `intensity` sets the maximum animated blur intensity (default: 75 dark / 50 light) |
+| `isAnimatedStyleActive` | `boolean`                                              | `true` (`false` for the `'blur'` variant)                | Whether animated styles (react-native-reanimated) are active                                                                                         |
+| `isCloseOnPress`        | `boolean`                                              | `true`                                                   | Whether pressing overlay closes bottom sheet                                                                                                         |
+| `...PressableProps`     | `PressableProps`                                       | -                                                        | All standard React Native Pressable props are supported                                                                                              |
 
 #### Animation Configuration
 

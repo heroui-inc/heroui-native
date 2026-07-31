@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { BlurView } from 'expo-blur';
 import * as Haptics from 'expo-haptics';
 import { useToast } from 'heroui-native';
@@ -85,6 +86,7 @@ export const UsageVariantFlatList = ({
   data,
   scrollEnabled = true,
 }: UsageVariantFlatListProps) => {
+  const { t } = useLingui();
   const [currentVariant, setCurrentVariant] = useState<UsageVariant>(data[0]!);
 
   const { isDark } = useAppTheme();
@@ -204,7 +206,7 @@ export const UsageVariantFlatList = ({
         />
       )}
       <View
-        className="absolute left-6 right-22"
+        className="absolute inset-s-6 inset-e-22"
         style={{ bottom: insets.bottom + 34 }}
         pointerEvents="none"
       >
@@ -213,7 +215,7 @@ export const UsageVariantFlatList = ({
             <PaginationIndicator
               key={index}
               index={index}
-              label={item.label}
+              label={t(item.label)}
               scrollY={scrollY}
               itemSize={height}
             />

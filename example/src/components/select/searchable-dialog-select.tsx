@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button, cn, ScrollShadow, Select, useThemeColor } from 'heroui-native';
 import { useState } from 'react';
@@ -22,6 +23,8 @@ type CountryOption = {
   code: string;
 };
 
+/* eslint-disable lingui/no-unlocalized-strings -- Country names are proper
+   nouns kept in their endonym form. */
 const COUNTRIES: CountryOption[] = [
   { value: 'US', label: 'United States', flag: '🇺🇸', code: '+1' },
   { value: 'GB', label: 'United Kingdom', flag: '🇬🇧', code: '+44' },
@@ -34,12 +37,14 @@ const COUNTRIES: CountryOption[] = [
   { value: 'IN', label: 'India', flag: '🇮🇳', code: '+91' },
   { value: 'BR', label: 'Brazil', flag: '🇧🇷', code: '+55' },
 ];
+/* eslint-enable lingui/no-unlocalized-strings */
 
 /**
  * Component containing the searchable select content and state logic.
  * Manages search query state, filtering, and UI rendering.
  */
 const SearchableSelectContent = () => {
+  const { t } = useLingui();
   const [searchQuery, setSearchQuery] = useState('');
 
   const { isDark } = useAppTheme();
@@ -84,16 +89,18 @@ const SearchableSelectContent = () => {
         }}
       >
         <View className="flex-row items-center justify-between mb-2">
-          <Select.ListLabel maxFontSizeMultiplier={1}>Country</Select.ListLabel>
+          <Select.ListLabel
+            maxFontSizeMultiplier={1}
+          >{t`Country`}</Select.ListLabel>
           <Select.Close variant="ghost" />
         </View>
         <View className="w-full mb-2">
           <TextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
-            placeholder="Search country..."
+            placeholder={t`Search country...`}
             placeholderTextColor={themeColorMuted}
-            className="p-3 rounded-xl bg-surface-secondary/80 text-foreground"
+            className="p-3 rounded-xl bg-surface-secondary/80 text-foreground rtl:text-right"
             autoFocus
             maxFontSizeMultiplier={1}
           />
@@ -139,7 +146,7 @@ const SearchableSelectContent = () => {
                 className="text-muted text-center mt-8"
                 maxFontSizeMultiplier={1}
               >
-                No countries found
+                {t`No countries found`}
               </AppText>
             )}
           </ScrollView>
@@ -150,6 +157,7 @@ const SearchableSelectContent = () => {
 };
 
 export function SearchableDialogSelect() {
+  const { t } = useLingui();
   const [value, setValue] = useState<CountryOption | undefined>();
 
   return (
@@ -178,7 +186,7 @@ export function SearchableDialogSelect() {
             </View>
           ) : (
             <AppText className="text-accent" maxFontSizeMultiplier={1}>
-              Dialog
+              {t`Dialog`}
             </AppText>
           )}
         </Button>

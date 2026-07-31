@@ -1,5 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   Checkbox,
   ControlField,
@@ -64,6 +66,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
 };
 
 const BasicUsage = () => {
+  const { t } = useLingui();
   const [fields, setFields] = React.useState({
     newsletter: true,
     marketing: false,
@@ -75,16 +78,16 @@ const BasicUsage = () => {
     { title: string; description: string }
   > = {
     newsletter: {
-      title: 'Subscribe to newsletter',
-      description: 'Get weekly updates about new features and tips',
+      title: t`Subscribe to newsletter`,
+      description: t`Get weekly updates about new features and tips`,
     },
     marketing: {
-      title: 'Marketing communications',
-      description: 'Receive promotional emails and special offers',
+      title: t`Marketing communications`,
+      description: t`Receive promotional emails and special offers`,
     },
     terms: {
-      title: 'Accept terms and conditions',
-      description: 'Agree to our Terms of Service and Privacy Policy',
+      title: t`Accept terms and conditions`,
+      description: t`Agree to our Terms of Service and Privacy Policy`,
     },
   };
 
@@ -116,6 +119,7 @@ const BasicUsage = () => {
 // ------------------------------------------------------------------------------
 
 const StatesContent = () => {
+  const { t } = useLingui();
   const [defaultState, setDefaultState] = React.useState(true);
   const [invalid, setInvalid] = React.useState(true);
   const [disabled, setDisabled] = React.useState(true);
@@ -128,7 +132,7 @@ const StatesContent = () => {
             isSelected={defaultState}
             onSelectedChange={setDefaultState}
           />
-          <AppText className="text-xs text-muted">Default</AppText>
+          <AppText className="text-xs text-muted">{t`Default`}</AppText>
         </View>
         <View className="items-center gap-2">
           <Checkbox
@@ -136,7 +140,7 @@ const StatesContent = () => {
             onSelectedChange={setInvalid}
             isInvalid
           />
-          <AppText className="text-xs text-muted">Invalid</AppText>
+          <AppText className="text-xs text-muted">{t`Invalid`}</AppText>
         </View>
         <View className="items-center gap-2">
           <Checkbox
@@ -144,7 +148,7 @@ const StatesContent = () => {
             onSelectedChange={setDisabled}
             isDisabled
           />
-          <AppText className="text-xs text-muted">Disabled</AppText>
+          <AppText className="text-xs text-muted">{t`Disabled`}</AppText>
         </View>
       </View>
     </View>
@@ -163,8 +167,8 @@ const AnimatedCustomIndicator = ({
   const animatedStyle = useAnimatedStyle(() => {
     return {
       top: withTiming(isPressed.get() ? 0 : 3, { duration: 100 }),
-      left: withTiming(isPressed.get() ? 0 : 3, { duration: 100 }),
-      right: withTiming(isPressed.get() ? 0 : -3, { duration: 100 }),
+      start: withTiming(isPressed.get() ? 0 : 3, { duration: 100 }),
+      end: withTiming(isPressed.get() ? 0 : -3, { duration: 100 }),
       bottom: withTiming(isPressed.get() ? 0 : -3, { duration: 100 }),
     };
   });
@@ -305,17 +309,17 @@ const CustomStylesContent = () => {
 const CHECKBOX_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-usage',
-    label: 'Basic usage',
+    label: msg`Basic usage`,
     content: <BasicUsage />,
   },
   {
     value: 'states',
-    label: 'States',
+    label: msg`States`,
     content: <StatesContent />,
   },
   {
     value: 'custom-styles',
-    label: 'Custom styles',
+    label: msg`Custom styles`,
     content: <CustomStylesContent />,
   },
 ];

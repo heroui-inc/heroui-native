@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { Separator, Surface } from 'heroui-native';
 import { View } from 'react-native';
 import { AppText } from '../../../components/app-text';
@@ -5,17 +7,21 @@ import type { UsageVariant } from '../../../components/component-presentation/ty
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
 
 const SeparatorInActionContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <Surface variant="secondary" className="px-6 py-7">
+        {/* eslint-disable lingui/no-unlocalized-strings -- Product name. */}
         <AppText
           className="text-base font-medium text-foreground"
           maxFontSizeMultiplier={1.4}
         >
           HeroUI Native
         </AppText>
+        {/* eslint-enable lingui/no-unlocalized-strings */}
         <AppText className="text-sm text-muted" maxFontSizeMultiplier={1.4}>
-          A modern React Native component library.
+          {t`A modern React Native component library.`}
         </AppText>
         <Separator className="my-4" />
         <View className="flex-row items-center h-5">
@@ -23,21 +29,21 @@ const SeparatorInActionContent = () => {
             className="text-sm text-foreground"
             maxFontSizeMultiplier={1.2}
           >
-            Components
+            {t`Components`}
           </AppText>
           <Separator orientation="vertical" className="mx-3" />
           <AppText
             className="text-sm text-foreground"
             maxFontSizeMultiplier={1.2}
           >
-            Themes
+            {t`Themes`}
           </AppText>
           <Separator orientation="vertical" className="mx-3" />
           <AppText
             className="text-sm text-foreground"
             maxFontSizeMultiplier={1.2}
           >
-            Examples
+            {t`Examples`}
           </AppText>
         </View>
       </Surface>
@@ -48,16 +54,20 @@ const SeparatorInActionContent = () => {
 // ------------------------------------------------------------------------------
 
 const VariantsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-8 w-full">
         <View>
-          <AppText className="text-sm text-muted mb-2">Thin (default)</AppText>
+          <AppText className="text-sm text-muted mb-2">
+            {t`Thin (default)`}
+          </AppText>
           <Separator variant="thin" />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted mb-2">Thick</AppText>
+          <AppText className="text-sm text-muted mb-2">{t`Thick`}</AppText>
           <Separator variant="thick" />
         </View>
       </View>
@@ -68,18 +78,20 @@ const VariantsContent = () => {
 // ------------------------------------------------------------------------------
 
 const OrientationContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-8 w-full">
         <View>
           <AppText className="text-sm text-muted mb-2">
-            Horizontal (default)
+            {t`Horizontal (default)`}
           </AppText>
           <Separator />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted mb-2">Vertical</AppText>
+          <AppText className="text-sm text-muted mb-2">{t`Vertical`}</AppText>
           <View className="h-20 w-full flex-row justify-center">
             <Separator orientation="vertical" />
           </View>
@@ -92,12 +104,14 @@ const OrientationContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomThicknessContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-8 w-full">
         <View>
           <AppText className="text-sm text-muted mb-2">
-            Default (hairline width)
+            {t`Default (hairline width)`}
           </AppText>
           <Separator />
         </View>
@@ -129,28 +143,36 @@ const CustomThicknessContent = () => {
 // ------------------------------------------------------------------------------
 
 const CustomColorsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-8 w-full">
         <View>
           <AppText className="text-sm text-muted mb-2">
-            Custom Background Color
+            {t`Custom Background Color`}
           </AppText>
           <Separator className="bg-accent" thickness={2} />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted mb-2">Success Color</AppText>
+          <AppText className="text-sm text-muted mb-2">
+            {t`Success Color`}
+          </AppText>
           <Separator className="bg-success" thickness={2} />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted mb-2">Warning Color</AppText>
+          <AppText className="text-sm text-muted mb-2">
+            {t`Warning Color`}
+          </AppText>
           <Separator className="bg-warning" thickness={2} />
         </View>
 
         <View>
-          <AppText className="text-sm text-muted mb-2">Danger Color</AppText>
+          <AppText className="text-sm text-muted mb-2">
+            {t`Danger Color`}
+          </AppText>
           <Separator className="bg-danger" thickness={2} />
         </View>
       </View>
@@ -163,27 +185,27 @@ const CustomColorsContent = () => {
 const SEPARATOR_VARIANTS: UsageVariant[] = [
   {
     value: 'separator-in-action',
-    label: 'Separator in action',
+    label: msg`Separator in action`,
     content: <SeparatorInActionContent />,
   },
   {
     value: 'variants',
-    label: 'Variants',
+    label: msg`Variants`,
     content: <VariantsContent />,
   },
   {
     value: 'orientation',
-    label: 'Orientation',
+    label: msg`Orientation`,
     content: <OrientationContent />,
   },
   {
     value: 'custom-thickness',
-    label: 'Custom thickness',
+    label: msg`Custom thickness`,
     content: <CustomThicknessContent />,
   },
   {
     value: 'custom-colors',
-    label: 'Custom colors',
+    label: msg`Custom colors`,
     content: <CustomColorsContent />,
   },
 ];

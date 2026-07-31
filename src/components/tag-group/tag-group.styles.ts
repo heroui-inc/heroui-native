@@ -88,6 +88,16 @@ export const tagGroupClassNames = combineStyles({
 });
 
 export const tagGroupStyleSheet = StyleSheet.create({
+  /**
+   * Yoga mis-measures `flexWrap` when the list is intrinsically sized
+   * (e.g. a shrink-wrapped child of `items-center`). Forcing 100% width
+   * gives wrap math a definite main-axis size; pair with `justify-center`
+   * when the tags themselves should sit centered in that width.
+   */
+  list: {
+    width: '100%',
+    alignItems: 'flex-start',
+  },
   tag: {
     borderCurve: 'continuous',
   },

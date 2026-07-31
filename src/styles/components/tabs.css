@@ -34,9 +34,17 @@
   overflow: hidden;
 }
 
+.tabs__scroll-view {
+  flex-grow: 1;
+}
+
 .tabs__scroll-view--variant-primary {
   margin-block: -3px;
   border-radius: var(--radius-3xl);
+}
+
+.tabs__scroll-view-content-container {
+  flex-grow: 1;
 }
 
 .tabs__scroll-view-content-container--variant-primary {

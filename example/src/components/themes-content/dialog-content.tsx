@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { Button, Dialog } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -5,12 +6,13 @@ import { DialogBlurBackdrop } from '../dialog-blur-backdrop';
 import { TrashIcon } from '../icons/trash';
 
 export const DialogContent = () => {
+  const { t } = useLingui();
   const [dialogOpen, setDialogOpen] = useState(false);
 
   return (
     <Dialog isOpen={dialogOpen} onOpenChange={setDialogOpen}>
       <Dialog.Trigger asChild>
-        <Button variant="danger-soft">Delete Account</Button>
+        <Button variant="danger-soft">{t`Delete Account`}</Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <DialogBlurBackdrop />
@@ -19,10 +21,9 @@ export const DialogContent = () => {
             <TrashIcon size={18} colorClassName="accent-danger" />
           </View>
           <View className="mb-8 gap-1">
-            <Dialog.Title>Delete Account</Dialog.Title>
+            <Dialog.Title>{t`Delete Account`}</Dialog.Title>
             <Dialog.Description maxFontSizeMultiplier={1.6}>
-              Are you sure you want to delete your account? This action cannot
-              be undone and all your data will be permanently removed.
+              {t`Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed.`}
             </Dialog.Description>
           </View>
           <View className="gap-3">
@@ -33,14 +34,14 @@ export const DialogContent = () => {
                 console.log('Account deleted');
               }}
             >
-              Delete Account
+              {t`Delete Account`}
             </Button>
             <Button
               variant="tertiary"
               className="bg-overlay-foreground/5"
               onPress={() => setDialogOpen(false)}
             >
-              Cancel
+              {t`Cancel`}
             </Button>
           </View>
         </Dialog.Content>

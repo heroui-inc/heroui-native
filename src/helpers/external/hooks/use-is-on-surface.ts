@@ -1,4 +1,4 @@
-import { useSurface } from '../../../components/surface';
+import { useSurface } from '../../../components/surface/surface.context';
 
 export const useIsOnSurface = () => {
   const surfaceContext = useSurface();

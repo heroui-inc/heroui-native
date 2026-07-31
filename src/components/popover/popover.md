@@ -146,7 +146,7 @@ Control the width of the popover content using the `width` prop.
 </Popover>;
 ```
 
-### Bottom Sheet Presentation
+### BottomSheet Presentation
 
 Use bottom sheet presentation for mobile-optimized interaction patterns.
 
@@ -326,15 +326,15 @@ Animation configuration for popover root component. Can be:
 
 ### Popover.Portal
 
-| prop                       | type        | default | description                                                                                                                   |
-| -------------------------- | ----------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `children`                 | `ReactNode` | -       | The portal content (required)                                                                                                 |
-| `disableFullWindowOverlay` | `boolean`   | `false` | When true on iOS, uses View instead of FullWindowOverlay. Enables element inspector; overlay won't appear above native modals |
-| `unstable_accessibilityContainerViewIsModal` | `boolean` | `false` | Controls whether VoiceOver treats the overlay window as a modal container. When `true`, VoiceOver is restricted to elements inside the overlay. iOS only. Unstable: may change with react-native-screens updates |
-| `hostName`                 | `string`    | -       | Optional name of the host element for the portal                                                                              |
-| `forceMount`               | `boolean`   | -       | Whether to force mount the component in the DOM                                                                               |
-| `className`                | `string`    | -       | Additional CSS classes for the portal container                                                                               |
-| `...ViewProps`             | `ViewProps` | -       | All standard React Native View props are supported                                                                            |
+| prop                                         | type        | default | description                                                                                                                                                                                                      |
+| -------------------------------------------- | ----------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`                                   | `ReactNode` | -       | The portal content (required)                                                                                                                                                                                    |
+| `disableFullWindowOverlay`                   | `boolean`   | `false` | When true on iOS, uses View instead of FullWindowOverlay. Enables element inspector; overlay won't appear above native modals                                                                                    |
+| `unstable_accessibilityContainerViewIsModal` | `boolean`   | `false` | Controls whether VoiceOver treats the overlay window as a modal container. When `true`, VoiceOver is restricted to elements inside the overlay. iOS only. Unstable: may change with react-native-screens updates |
+| `hostName`                                   | `string`    | -       | Optional name of the host element for the portal                                                                                                                                                                 |
+| `forceMount`                                 | `boolean`   | -       | Whether to force mount the component in the DOM                                                                                                                                                                  |
+| `className`                                  | `string`    | -       | Additional CSS classes for the portal container                                                                                                                                                                  |
+| `...ViewProps`                               | `ViewProps` | -       | All standard React Native View props are supported                                                                                                                                                               |
 
 ### Popover.Overlay
 
@@ -384,7 +384,7 @@ Animation configuration for popover overlay component. Can be:
 | `asChild`                 | `boolean`                                        | `false`         | Whether to render as a child element                                                                    |
 | `...Animated.ViewProps`   | `Animated.ViewProps`                             | -               | All Reanimated Animated.View props are supported                                                        |
 
-### Popover.Content (Bottom Sheet Presentation)
+### Popover.Content (BottomSheet Presentation)
 
 | prop                        | type                   | default | description                                                                                    |
 | --------------------------- | ---------------------- | ------- | ---------------------------------------------------------------------------------------------- |

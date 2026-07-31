@@ -18,10 +18,14 @@
   line-height: var(--text-base--line-height);
   color: var(--color-foreground);
   font-family: var(--font-medium);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }
 
 .list-group__item-description {
   font-size: var(--text-sm);
   line-height: var(--text-sm--line-height);
   color: var(--color-muted);
+  /* RN Text resolves left/right against layout direction, so this means "start" */
+  text-align: left;
 }

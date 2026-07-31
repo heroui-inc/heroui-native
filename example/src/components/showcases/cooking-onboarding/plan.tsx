@@ -10,6 +10,7 @@ import { type FC, type RefObject } from 'react';
 import { withUniwind } from 'uniwind';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
 import { AppText } from '../../app-text';
+import { SHOWCASE_PORTAL_HOST } from '../../showcase-ltr-scope';
 import { className } from './styles';
 
 const StyledEntypo = withUniwind(Entypo);
@@ -39,7 +40,7 @@ export const Plan: FC<Props> = ({ isOnboardingDone, triggerRef }) => {
           </AppText>
         </Button>
       </Popover.Trigger>
-      <Popover.Portal>
+      <Popover.Portal hostName={SHOWCASE_PORTAL_HOST}>
         <Popover.Content
           presentation="popover"
           className={className.popoverContent}

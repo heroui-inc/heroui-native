@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { FieldError, Input, Label, TextField } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -11,24 +13,25 @@ import { XMarkFillIcon } from '../../../components/icons/x-mark-fill';
 import { WithStateToggle } from '../../../components/with-state-toggle';
 
 const BasicFieldErrorContent = () => {
+  const { t } = useLingui();
   const [slideError, setSlideError] = useState(false);
 
   return (
     <WithStateToggle
       isSelected={slideError}
       onSelectedChange={setSlideError}
-      label="Show Error"
-      description="Toggle error state for the username field"
+      label={t`Show Error`}
+      description={t`Toggle error state for the username field`}
     >
       <View className="flex-1 pt-[55%]">
         <TextField isInvalid={slideError} isRequired>
-          <Label isInvalid={false}>Username</Label>
+          <Label isInvalid={false}>{t`Username`}</Label>
           <Input
-            placeholder="Enter username"
+            placeholder={t`Enter username`}
             editable={false}
             isInvalid={false}
           />
-          <FieldError>Username is already taken</FieldError>
+          <FieldError>{t`Username is already taken`}</FieldError>
         </TextField>
       </View>
     </WithStateToggle>
@@ -36,32 +39,33 @@ const BasicFieldErrorContent = () => {
 };
 
 const MultipleErrorsContent = () => {
+  const { t } = useLingui();
   const [showMultipleErrors, setShowMultipleErrors] = useState(false);
 
   return (
     <WithStateToggle
       isSelected={showMultipleErrors}
       onSelectedChange={setShowMultipleErrors}
-      label="Validate Password"
-      description="Show password validation errors"
+      label={t`Validate Password`}
+      description={t`Show password validation errors`}
     >
       <View className="flex-1 pt-[55%]">
         <View className="gap-2">
           <TextField>
-            <Label>Create Password</Label>
+            <Label>{t`Create Password`}</Label>
             <Input
-              placeholder="Enter your password"
+              placeholder={t`Enter your password`}
               secureTextEntry
               editable={false}
             />
           </TextField>
 
-          <View className="gap-2 ml-1">
+          <View className="gap-2 ms-1">
             <FieldError
               isInvalid={showMultipleErrors}
               textProps={{ maxFontSizeMultiplier: 1 }}
             >
-              • At least 8 characters long
+              {t`• At least 8 characters long`}
             </FieldError>
             <FieldError
               isInvalid={showMultipleErrors}
@@ -72,7 +76,7 @@ const MultipleErrorsContent = () => {
               }}
               textProps={{ maxFontSizeMultiplier: 1 }}
             >
-              • At least one uppercase letter
+              {t`• At least one uppercase letter`}
             </FieldError>
             <FieldError
               isInvalid={showMultipleErrors}
@@ -83,7 +87,7 @@ const MultipleErrorsContent = () => {
               }}
               textProps={{ maxFontSizeMultiplier: 1 }}
             >
-              • At least one number
+              {t`• At least one number`}
             </FieldError>
             <FieldError
               isInvalid={showMultipleErrors}
@@ -94,7 +98,7 @@ const MultipleErrorsContent = () => {
               }}
               textProps={{ maxFontSizeMultiplier: 1 }}
             >
-              • At least one special character (!@#$%^&*)
+              {t`• At least one special character (!@#$%^&*)`}
             </FieldError>
           </View>
         </View>
@@ -104,11 +108,13 @@ const MultipleErrorsContent = () => {
 };
 
 const InlineErrorMessagesContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-4 w-full">
         <TextField>
-          <Label>Email Address</Label>
+          <Label>{t`Email Address`}</Label>
           <View className="flex-row items-center gap-2">
             <Input
               placeholder="user@example"
@@ -117,13 +123,15 @@ const InlineErrorMessagesContent = () => {
               className="flex-1"
             />
             <FieldError isInvalid={true}>
-              <AppText className="text-danger text-xs">Invalid email</AppText>
+              <AppText className="text-danger text-xs">
+                {t`Invalid email`}
+              </AppText>
             </FieldError>
           </View>
         </TextField>
 
         <TextField>
-          <Label>Phone Number</Label>
+          <Label>{t`Phone Number`}</Label>
           <View className="flex-row items-center gap-2">
             <Input
               placeholder="+1 (555) 000-0000"
@@ -134,7 +142,7 @@ const InlineErrorMessagesContent = () => {
             <FieldError isInvalid={true}>
               <View className="flex-row items-center gap-1">
                 <CircleInfoFillIcon size={14} colorClassName="accent-danger" />
-                <AppText className="text-danger text-xs">Required</AppText>
+                <AppText className="text-danger text-xs">{t`Required`}</AppText>
               </View>
             </FieldError>
           </View>
@@ -145,6 +153,8 @@ const InlineErrorMessagesContent = () => {
 };
 
 const CustomStylingContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-4">
@@ -155,7 +165,7 @@ const CustomStylingContent = () => {
             text: 'text-danger font-semibold text-sm',
           }}
         >
-          Server connection failed. Please try again.
+          {t`Server connection failed. Please try again.`}
         </FieldError>
 
         <FieldError
@@ -165,17 +175,17 @@ const CustomStylingContent = () => {
             text: 'text-amber-600 text-xs italic',
           }}
         >
-          Session will expire in 5 minutes
+          {t`Session will expire in 5 minutes`}
         </FieldError>
 
         <FieldError
           isInvalid={true}
-          className="border-l-4 border-danger pl-2"
+          className="border-s-4 border-danger ps-2"
           classNames={{
             text: 'text-danger text-sm',
           }}
         >
-          Invalid credentials provided
+          {t`Invalid credentials provided`}
         </FieldError>
       </View>
     </View>
@@ -183,6 +193,8 @@ const CustomStylingContent = () => {
 };
 
 const CustomTextWithIconsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-5">
       <View className="gap-4">
@@ -190,7 +202,7 @@ const CustomTextWithIconsContent = () => {
           <View className="flex-row items-center gap-2">
             <XMarkFillIcon size={16} colorClassName="accent-danger" />
             <AppText className="text-danger text-sm">
-              Payment method declined
+              {t`Payment method declined`}
             </AppText>
           </View>
         </FieldError>
@@ -202,7 +214,7 @@ const CustomTextWithIconsContent = () => {
               colorClassName="accent-warning"
             />
             <AppText className="text-warning text-sm">
-              Account verification pending
+              {t`Account verification pending`}
             </AppText>
           </View>
         </FieldError>
@@ -211,7 +223,7 @@ const CustomTextWithIconsContent = () => {
           <View className="flex-row items-center gap-2">
             <CircleInfoFillIcon size={16} colorClassName="accent-foreground" />
             <AppText className="text-foreground text-sm">
-              Profile completion required
+              {t`Profile completion required`}
             </AppText>
           </View>
         </FieldError>
@@ -223,27 +235,27 @@ const CustomTextWithIconsContent = () => {
 const FIELD_ERROR_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-field-error',
-    label: 'Basic FieldError',
+    label: msg`Basic FieldError`,
     content: <BasicFieldErrorContent />,
   },
   {
     value: 'multiple-errors',
-    label: 'Multiple errors',
+    label: msg`Multiple errors`,
     content: <MultipleErrorsContent />,
   },
   {
     value: 'inline-error-messages',
-    label: 'Inline error messages',
+    label: msg`Inline error messages`,
     content: <InlineErrorMessagesContent />,
   },
   {
     value: 'custom-styling',
-    label: 'Custom styling',
+    label: msg`Custom styling`,
     content: <CustomStylingContent />,
   },
   {
     value: 'custom-text-with-icons',
-    label: 'Custom text with icons',
+    label: msg`Custom text with icons`,
     content: <CustomTextWithIconsContent />,
   },
 ];

@@ -1,4 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
+import type { MessageDescriptor } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Card, Chip, cn } from 'heroui-native';
@@ -30,37 +33,43 @@ const AnimatedView = Animated.createAnimatedComponent(View);
 const StyledFeather = withUniwind(Feather);
 
 type HomeCardProps = {
-  title: string;
+  title: MessageDescriptor;
   imageLight: ImageSourcePropType;
   imageDark: ImageSourcePropType;
   count: number;
-  footer: string;
+  footer: MessageDescriptor;
   path: string;
 };
 
+/**
+ * Home cards are declared at module scope, so their copy is defined with the
+ * `msg` macro (which only records a descriptor) and resolved at render time
+ * through `useLingui`. Using the `t` macro here would freeze the translations
+ * to whichever locale was active when the module first evaluated.
+ */
 const cards: HomeCardProps[] = [
   {
-    title: 'Components',
+    title: msg`Components`,
     imageLight: HomeComponentsLight,
     imageDark: HomeComponentsDark,
     count: COMPONENTS.length,
-    footer: 'Explore all components',
+    footer: msg`Explore all components`,
     path: 'components',
   },
   {
-    title: 'Themes',
+    title: msg`Themes`,
     imageLight: HomeThemesLight,
     imageDark: HomeThemesDark,
     count: 4,
-    footer: 'Try different themes',
+    footer: msg`Try different themes`,
     path: 'themes',
   },
   {
-    title: 'Showcases',
+    title: msg`Showcases`,
     imageLight: HomeShowcasesLight,
     imageDark: HomeShowcasesDark,
     count: 6,
-    footer: 'View components in action',
+    footer: msg`View components in action`,
     path: 'showcases',
   },
 ];
@@ -75,7 +84,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
   index,
 }) => {
   const router = useRouter();
-
+  const { t } = useLingui();
   const { isDark } = useAppTheme();
 
   const rLightImageStyle = useAnimatedStyle(() => {
@@ -124,7 +133,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
           <Card.Header className="p-3">
             <Chip size="sm" className="bg-background/25">
               <Chip.Label className="text-foreground/85">
-                {`${count} total`}
+                {t`${count} total`}
               </Chip.Label>
             </Chip>
           </Card.Header>
@@ -135,17 +144,17 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
                 className="text-2xl text-foreground/85"
                 maxFontSizeMultiplier={1.75}
               >
-                {title}
+                {t(title)}
               </Card.Title>
-              <Card.Description className="text-foreground/65 pl-0.5">
-                {footer}
+              <Card.Description className="text-foreground/65 ps-0.5">
+                {t(footer)}
               </Card.Description>
             </View>
             <View className="size-9 rounded-3xl bg-background/25 items-center justify-center">
               <StyledFeather
                 name="arrow-up-right"
                 size={20}
-                className="text-foreground"
+                className="text-foreground rtl:-scale-x-100"
               />
             </View>
           </Card.Footer>
@@ -161,12 +170,12 @@ export default function App() {
   return (
     <ScreenScrollView>
       <AppText className="text-muted text-base text-center my-4">
-        v1.0.7
+        v1.0.8
       </AppText>
       <View className="gap-6">
         {cards.map((card, index) => (
           <HomeCard
-            key={card.title}
+            key={card.path}
             title={card.title}
             imageLight={card.imageLight}
             imageDark={card.imageDark}

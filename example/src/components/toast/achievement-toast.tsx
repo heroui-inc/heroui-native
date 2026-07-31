@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useLingui } from '@lingui/react/macro';
 import { Toast, useThemeColor, type ToastComponentProps } from 'heroui-native';
 import { useEffect } from 'react';
 import { View } from 'react-native';
@@ -20,6 +21,8 @@ const StyledIonicons = withUniwind(Ionicons);
  */
 export const AchievementToast = (props: ToastComponentProps) => {
   const { id, hide } = props;
+
+  const { t } = useLingui();
 
   const themeColorWarning = useThemeColor('warning');
 
@@ -138,19 +141,19 @@ export const AchievementToast = (props: ToastComponentProps) => {
       <View className="flex-row items-center gap-4">
         {/* Confetti decorative elements */}
         <StyleAnimatedView
-          className="absolute right-8 top-2 size-2 rounded-full bg-orange-600/60"
+          className="absolute inset-e-8 top-2 size-2 rounded-full bg-orange-600/60"
           style={confetti1Style}
         />
         <StyleAnimatedView
-          className="absolute right-12 top-4 size-1.5 rounded-full bg-orange-700/50"
+          className="absolute inset-e-12 top-4 size-1.5 rounded-full bg-orange-700/50"
           style={confetti2Style}
         />
         <StyleAnimatedView
-          className="absolute right-6 bottom-3 size-2 rounded-full bg-orange-500/40"
+          className="absolute inset-e-6 bottom-3 size-2 rounded-full bg-orange-500/40"
           style={confetti3Style}
         />
         <StyleAnimatedView
-          className="absolute right-10 bottom-2 size-1 rounded-full bg-orange-600/50"
+          className="absolute inset-e-10 bottom-2 size-1 rounded-full bg-orange-600/50"
           style={confetti4Style}
         />
 
@@ -171,19 +174,17 @@ export const AchievementToast = (props: ToastComponentProps) => {
         {/* Text content */}
         <View className="flex-1 flex-col gap-1">
           <Toast.Title className="text-xs font-medium text-[#2D3748]">
-            New achievement!
+            {t`New achievement!`}
           </Toast.Title>
+          {/* Kept as one message so translators control where the line breaks. */}
           <Toast.Title className="text-base font-bold text-[#2D3748]">
-            You're on a 1-day
-          </Toast.Title>
-          <Toast.Title className="text-base font-bold text-[#2D3748]">
-            study streak
+            {t`You're on a 1-day study streak`}
           </Toast.Title>
         </View>
 
         {/* Close button */}
         <Toast.Close
-          className="absolute right-0 top-0"
+          className="absolute inset-e-0 top-0"
           iconProps={{ color: themeColorWarning }}
         />
       </View>

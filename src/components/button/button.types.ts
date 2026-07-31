@@ -8,7 +8,7 @@ import type {
   PressableFeedbackProps,
   PressableFeedbackRippleAnimation,
   PressableFeedbackScaleAnimation,
-} from '../pressable-feedback';
+} from '../pressable-feedback/pressable-feedback.types';
 
 /**
  * Size variants for the Button component

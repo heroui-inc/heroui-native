@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { msg } from '@lingui/core/macro';
 import { Spinner } from 'heroui-native';
 import { Text, View } from 'react-native';
 import { withUniwind } from 'uniwind';
@@ -113,27 +114,27 @@ const AnimationSpeedContent = () => {
 const SPINNER_VARIANTS: UsageVariant[] = [
   {
     value: 'sizes',
-    label: 'Sizes',
+    label: msg`Sizes`,
     content: <SizesContent />,
   },
   {
     value: 'colors',
-    label: 'Colors',
+    label: msg`Colors`,
     content: <ColorsContent />,
   },
   {
     value: 'custom-colors',
-    label: 'Custom colors',
+    label: msg`Custom colors`,
     content: <CustomColorsContent />,
   },
   {
     value: 'custom-content',
-    label: 'With custom content',
+    label: msg`With custom content`,
     content: <CustomContentContent />,
   },
   {
     value: 'animation-speed',
-    label: 'Animation speed',
+    label: msg`Animation speed`,
     content: <AnimationSpeedContent />,
   },
 ];

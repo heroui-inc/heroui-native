@@ -7,22 +7,16 @@ import {
 } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
-import { createContext } from '../../helpers/internal/utils';
 import * as Slot from '../../primitives/slot';
 import { useSurfaceRootAnimation } from './surface.animation';
 import { DISPLAY_NAME } from './surface.constants';
+import { SurfaceProvider, useSurface } from './surface.context';
 import { surfaceClassNames, surfaceStyleSheet } from './surface.styles';
 import type {
   SurfaceBackgroundProps,
-  SurfaceContextValue,
   SurfaceRootProps,
   SurfaceVariant,
 } from './surface.types';
-
-const [SurfaceProvider, useSurface] = createContext<SurfaceContextValue>({
-  name: 'SurfaceContext',
-  strict: false,
-});
 
 /**
  * Android / web fallback token per surface variant — forwarded to the

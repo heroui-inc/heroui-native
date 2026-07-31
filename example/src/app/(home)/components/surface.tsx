@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { cn, Surface, type SurfaceRootProps } from 'heroui-native';
 import { View } from 'react-native';
 import { AppText } from '../../../components/app-text';
@@ -33,28 +35,30 @@ const SurfaceItem = ({
 };
 
 const VariantsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center">
       <View className="gap-4 w-full px-5">
         <SurfaceItem
           variant="default"
-          title="Surface Content"
-          description="This is a default surface variant. It uses bg-surface styling."
+          title={t`Surface Content`}
+          description={t`This is a default surface variant. It uses bg-surface styling.`}
         />
         <SurfaceItem
           variant="secondary"
-          title="Surface Content"
-          description="This is a secondary surface variant. It uses bg-surface-secondary styling."
+          title={t`Surface Content`}
+          description={t`This is a secondary surface variant. It uses bg-surface-secondary styling.`}
         />
         <SurfaceItem
           variant="tertiary"
-          title="Surface Content"
-          description="This is a tertiary surface variant. It uses bg-surface-tertiary styling."
+          title={t`Surface Content`}
+          description={t`This is a tertiary surface variant. It uses bg-surface-tertiary styling.`}
         />
         <SurfaceItem
           variant="transparent"
-          title="Surface Content"
-          description="This is a transparent surface variant. It uses bg-transparent styling."
+          title={t`Surface Content`}
+          description={t`This is a transparent surface variant. It uses bg-transparent styling.`}
           className="border border-border shadow-none"
         />
       </View>
@@ -67,7 +71,7 @@ const VariantsContent = () => {
 const SURFACE_VARIANTS: UsageVariant[] = [
   {
     value: 'variants',
-    label: 'Variants',
+    label: msg`Variants`,
     content: <VariantsContent />,
   },
 ];

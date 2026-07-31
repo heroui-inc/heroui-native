@@ -1,4 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { BottomSheet, Button, Label, Slider } from 'heroui-native';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -10,12 +12,14 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 // ==============================================================================
 
 const BasicContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-8">
       <View className="w-full gap-4">
         <Slider defaultValue={30}>
           <View className="flex-row items-center justify-between">
-            <Label>Volume</Label>
+            <Label>{t`Volume`}</Label>
             <Slider.Output />
           </View>
           <Slider.Track>
@@ -66,6 +70,8 @@ const VerticalContent = () => {
 // ==============================================================================
 
 const RangeContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-8">
       <View className="w-full gap-8">
@@ -79,7 +85,7 @@ const RangeContent = () => {
         >
           <View className="flex-row items-center justify-between mb-1">
             <Label>
-              <Label.Text maxFontSizeMultiplier={1.4}>Discount</Label.Text>
+              <Label.Text maxFontSizeMultiplier={1.4}>{t`Discount`}</Label.Text>
             </Label>
             <Slider.Output textProps={{ maxFontSizeMultiplier: 1.2 }} />
           </View>
@@ -105,7 +111,9 @@ const RangeContent = () => {
         >
           <View className="flex-row items-center justify-between mb-1">
             <Label>
-              <Label.Text maxFontSizeMultiplier={1.4}>Price range</Label.Text>
+              <Label.Text maxFontSizeMultiplier={1.4}>
+                {t`Price range`}
+              </Label.Text>
             </Label>
             <Slider.Output textProps={{ maxFontSizeMultiplier: 1.2 }} />
           </View>
@@ -135,7 +143,9 @@ const RangeContent = () => {
         >
           <View className="flex-row items-center justify-between mb-1">
             <Label>
-              <Label.Text maxFontSizeMultiplier={1.4}>Comfort zone</Label.Text>
+              <Label.Text maxFontSizeMultiplier={1.4}>
+                {t`Comfort zone`}
+              </Label.Text>
             </Label>
             <Slider.Output textProps={{ maxFontSizeMultiplier: 1.2 }} />
           </View>
@@ -155,7 +165,9 @@ const RangeContent = () => {
         <Slider defaultValue={[25, 45]} minValue={18} maxValue={65} step={1}>
           <View className="flex-row items-center justify-between mb-1">
             <Label>
-              <Label.Text maxFontSizeMultiplier={1.4}>Age range</Label.Text>
+              <Label.Text maxFontSizeMultiplier={1.4}>
+                {t`Age range`}
+              </Label.Text>
             </Label>
             <Slider.Output textProps={{ maxFontSizeMultiplier: 1.2 }} />
           </View>
@@ -180,13 +192,15 @@ const RangeContent = () => {
 // ==============================================================================
 
 const CustomStylesContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 items-center justify-center px-8">
       <View className="w-full gap-8">
         {/* Success / green theme */}
         <Slider defaultValue={65}>
           <View className="flex-row items-center justify-between mb-1">
-            <Label>Battery</Label>
+            <Label>{t`Battery`}</Label>
             <Slider.Output />
           </View>
           <Slider.Track className="h-3 rounded-full bg-success/10">
@@ -212,7 +226,7 @@ const CustomStylesContent = () => {
         {/* Warning / thin bar */}
         <Slider defaultValue={40}>
           <View className="flex-row items-center justify-between mb-1">
-            <Label>Volume</Label>
+            <Label>{t`Volume`}</Label>
             <Slider.Output />
           </View>
           <Slider.Track className="h-1 rounded-full bg-warning/15">
@@ -232,7 +246,7 @@ const CustomStylesContent = () => {
         {/* Gradient / wide track */}
         <Slider defaultValue={70}>
           <View className="flex-row items-center justify-between mb-1">
-            <Label>Mood</Label>
+            <Label>{t`Mood`}</Label>
             <Slider.Output />
           </View>
           <Slider.Track className="h-7 rounded-2xl bg-default/40">
@@ -260,10 +274,11 @@ const CustomStylesContent = () => {
 };
 
 // ==============================================================================
-// Inside Bottom Sheet
+// Inside BottomSheet
 // ==============================================================================
 
 const InsideBottomSheetContent = () => {
+  const { t } = useLingui();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -272,19 +287,19 @@ const InsideBottomSheetContent = () => {
         <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
           <BottomSheet.Trigger asChild>
             <Button variant="secondary" isDisabled={isOpen}>
-              Open slider settings
+              {t`Open slider settings`}
             </Button>
           </BottomSheet.Trigger>
           <BottomSheet.Portal>
             <BottomSheet.Overlay />
             <BottomSheet.Content>
               <BottomSheet.Title className="text-xl font-semibold mb-4">
-                Audio settings
+                {t`Audio settings`}
               </BottomSheet.Title>
               <View className="gap-6">
                 <Slider defaultValue={70}>
                   <View className="flex-row items-center justify-between">
-                    <Label>Volume</Label>
+                    <Label>{t`Volume`}</Label>
                     <Slider.Output />
                   </View>
                   <Slider.Track>
@@ -295,7 +310,7 @@ const InsideBottomSheetContent = () => {
 
                 <Slider defaultValue={50}>
                   <View className="flex-row items-center justify-between">
-                    <Label>Bass</Label>
+                    <Label>{t`Bass`}</Label>
                     <Slider.Output />
                   </View>
                   <Slider.Track>
@@ -306,7 +321,7 @@ const InsideBottomSheetContent = () => {
 
                 <Slider defaultValue={40}>
                   <View className="flex-row items-center justify-between">
-                    <Label>Treble</Label>
+                    <Label>{t`Treble`}</Label>
                     <Slider.Output />
                   </View>
                   <Slider.Track>
@@ -326,27 +341,27 @@ const InsideBottomSheetContent = () => {
 const SLIDER_VARIANTS: UsageVariant[] = [
   {
     value: 'basic',
-    label: 'Basic',
+    label: msg`Basic`,
     content: <BasicContent />,
   },
   {
     value: 'vertical',
-    label: 'Vertical',
+    label: msg`Vertical`,
     content: <VerticalContent />,
   },
   {
     value: 'range',
-    label: 'Range',
+    label: msg`Range`,
     content: <RangeContent />,
   },
   {
     value: 'custom-styles',
-    label: 'Custom styles',
+    label: msg`Custom styles`,
     content: <CustomStylesContent />,
   },
   {
     value: 'inside-bottom-sheet',
-    label: 'Inside bottom sheet',
+    label: msg`Inside bottom sheet`,
     content: <InsideBottomSheetContent />,
   },
 ];

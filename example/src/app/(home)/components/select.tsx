@@ -1,4 +1,6 @@
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
@@ -17,6 +19,7 @@ import { UsageVariantFlatList } from '../../../components/component-presentation
 import { PlacementSelect } from '../../../components/select/placement-select';
 import { SearchableDialogSelect } from '../../../components/select/searchable-dialog-select';
 import { SelectButtonTrigger } from '../../../components/select/select-button-trigger';
+import { useAppLocale } from '../../../contexts/app-locale-context';
 
 type SelectOption = {
   value: string;
@@ -30,6 +33,8 @@ type CountryOption = {
   code: string;
 };
 
+/* eslint-disable lingui/no-unlocalized-strings -- Place names are proper nouns
+   kept in their endonym form, matching how real pickers present them. */
 const US_STATES: SelectOption[] = [
   { value: 'CA', label: 'California' },
   { value: 'NY', label: 'New York' },
@@ -54,14 +59,17 @@ const COUNTRIES: CountryOption[] = [
   { value: 'IN', label: 'India', flag: '🇮🇳', code: '+91' },
   { value: 'BR', label: 'Brazil', flag: '🇧🇷', code: '+55' },
 ];
+/* eslint-enable lingui/no-unlocalized-strings */
 
 // ------------------------------------------------------------------------------
 
 const BasicUsageSingleSelectContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5 justify-center">
-      <Label className="ml-1.5 mb-1" isRequired>
-        State
+      <Label className="ms-1.5 mb-1" isRequired>
+        {t`State`}
       </Label>
       <SelectButtonTrigger />
     </View>
@@ -71,10 +79,12 @@ const BasicUsageSingleSelectContent = () => {
 // ------------------------------------------------------------------------------
 
 const BasicUsageMultipleSelectContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5 justify-center">
-      <Label className="ml-1.5 mb-1" isRequired>
-        States
+      <Label className="ms-1.5 mb-1" isRequired>
+        {t`States`}
       </Label>
       <SelectButtonTrigger selectionMode="multiple" />
     </View>
@@ -84,6 +94,7 @@ const BasicUsageMultipleSelectContent = () => {
 // ------------------------------------------------------------------------------
 
 const PresentationContent = () => {
+  const { t } = useLingui();
   const [popoverValue, setPopoverValue] = useState<CountryOption | undefined>();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [bottomSheetValue, setBottomSheetValue] = useState<
@@ -119,7 +130,7 @@ const PresentationContent = () => {
                 </View>
               ) : (
                 <AppText className="text-accent" maxFontSizeMultiplier={1}>
-                  Popover
+                  {t`Popover`}
                 </AppText>
               )}
             </Button>
@@ -195,7 +206,7 @@ const PresentationContent = () => {
                 </View>
               ) : (
                 <AppText className="text-accent" maxFontSizeMultiplier={1}>
-                  Sheet
+                  {t`Sheet`}
                 </AppText>
               )}
             </Button>
@@ -271,17 +282,33 @@ const PresentationContent = () => {
 // ------------------------------------------------------------------------------
 
 const PlacementOptionsContent = () => {
+  const { t } = useLingui();
+  const { isRTL } = useAppLocale();
+
+  // The grid intentionally pairs the "left"-placement trigger with the trailing
+  // edge (and "right" with the leading edge) so each select has room to open on
+  // its physical side. Because the rows are `flex-row`, RTL mirrors that column
+  // order, so we swap the left/right triggers to keep them collision-free.
+  const leadingSidePlacement = isRTL ? 'left' : 'right';
+  const trailingSidePlacement = isRTL ? 'right' : 'left';
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="w-full gap-4">
         <View className="flex-row justify-between gap-4">
-          <PlacementSelect placeholder="Top" placement="top" />
-          <PlacementSelect placeholder="Left" placement="left" />
+          <PlacementSelect placeholder={t`Top`} placement="top" />
+          <PlacementSelect
+            placeholder={trailingSidePlacement === 'left' ? t`Left` : t`Right`}
+            placement={trailingSidePlacement}
+          />
         </View>
 
         <View className="flex-row justify-between gap-4">
-          <PlacementSelect placeholder="Right" placement="right" />
-          <PlacementSelect placeholder="Bottom" placement="bottom" />
+          <PlacementSelect
+            placeholder={leadingSidePlacement === 'right' ? t`Right` : t`Left`}
+            placement={leadingSidePlacement}
+          />
+          <PlacementSelect placeholder={t`Bottom`} placement="bottom" />
         </View>
       </View>
     </View>
@@ -291,6 +318,8 @@ const PlacementOptionsContent = () => {
 // ------------------------------------------------------------------------------
 
 const AlignmentOptionsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 px-5 items-center justify-center">
       <View className="flex-row gap-4">
@@ -298,7 +327,7 @@ const AlignmentOptionsContent = () => {
           <Select.Trigger variant="unstyled" asChild>
             <Button variant="secondary">
               <Select.Value
-                placeholder="Start"
+                placeholder={t`Start`}
                 numberOfLines={1}
                 className="text-accent"
                 maxFontSizeMultiplier={1}
@@ -328,7 +357,7 @@ const AlignmentOptionsContent = () => {
           <Select.Trigger variant="unstyled" asChild>
             <Button variant="secondary">
               <Select.Value
-                placeholder="Center"
+                placeholder={t`Center`}
                 numberOfLines={1}
                 className="text-accent"
                 maxFontSizeMultiplier={1}
@@ -358,7 +387,7 @@ const AlignmentOptionsContent = () => {
           <Select.Trigger variant="unstyled" asChild>
             <Button variant="secondary">
               <Select.Value
-                placeholder="End"
+                placeholder={t`End`}
                 numberOfLines={1}
                 className="text-accent"
                 maxFontSizeMultiplier={1}
@@ -391,6 +420,7 @@ const AlignmentOptionsContent = () => {
 // ------------------------------------------------------------------------------
 
 const NativeModalTestContent = () => {
+  const { t } = useLingui();
   const router = require('expo-router').useRouter();
 
   return (
@@ -400,7 +430,7 @@ const NativeModalTestContent = () => {
         onPress={() => router.push('components/select-native-modal')}
       >
         <Button.Label maxFontSizeMultiplier={1.4}>
-          Select from Native Modal
+          {t`Select from Native Modal`}
         </Button.Label>
       </Button>
     </View>
@@ -412,27 +442,27 @@ const NativeModalTestContent = () => {
 const SELECT_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-usage-button-trigger',
-    label: 'Single select',
+    label: msg`Single select`,
     content: <BasicUsageSingleSelectContent />,
   },
   {
     value: 'basic-usage-multiple-select',
-    label: 'Multiple select',
+    label: msg`Multiple select`,
     content: <BasicUsageMultipleSelectContent />,
   },
   {
     value: 'presentation',
-    label: 'Presentation variants',
+    label: msg`Presentation variants`,
     content: <PresentationContent />,
   },
   {
     value: 'placement-options',
-    label: 'Placement options',
+    label: msg`Placement options`,
     content: <PlacementOptionsContent />,
   },
   {
     value: 'alignment-options',
-    label: 'Alignment options',
+    label: msg`Alignment options`,
     content: <AlignmentOptionsContent />,
   },
 ];
@@ -440,7 +470,7 @@ const SELECT_VARIANTS: UsageVariant[] = [
 if (Platform.OS === 'ios') {
   SELECT_VARIANTS.push({
     value: 'native-modal-test',
-    label: 'Native modal test',
+    label: msg`Native modal test`,
     content: <NativeModalTestContent />,
   });
 }

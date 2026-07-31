@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import {
   Description,
   FieldError,
@@ -39,23 +41,29 @@ const KeyboardAvoidingContainer = ({
 };
 
 const BasicTextAreaContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
-        <TextArea placeholder="Enter your message" />
+        <TextArea placeholder={t`Enter your message`} />
       </KeyboardAvoidingContainer>
     </View>
   );
 };
 
 const TextAreaWithLabelAndDescriptionContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 justify-center px-5">
       <KeyboardAvoidingContainer>
         <TextField>
-          <Label>Message</Label>
-          <TextArea placeholder="Enter your message here..." />
-          <Description>Please provide as much detail as possible.</Description>
+          <Label>{t`Message`}</Label>
+          <TextArea placeholder={t`Enter your message here...`} />
+          <Description>
+            {t`Please provide as much detail as possible.`}
+          </Description>
         </TextField>
       </KeyboardAvoidingContainer>
     </View>
@@ -63,6 +71,8 @@ const TextAreaWithLabelAndDescriptionContent = () => {
 };
 
 const TextAreaVariantsContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 justify-center px-5 gap-8">
       <KeyboardAvoidingContainer>
@@ -70,32 +80,32 @@ const TextAreaVariantsContent = () => {
           <TextField>
             <Label>
               <Label.Text maxFontSizeMultiplier={1.4}>
-                Primary Variant
+                {t`Primary Variant`}
               </Label.Text>
             </Label>
             <TextArea
-              placeholder="Primary style text area"
+              placeholder={t`Primary style text area`}
               variant="primary"
               maxFontSizeMultiplier={1.4}
             />
             <Description maxFontSizeMultiplier={1.4}>
-              Default variant with primary styling
+              {t`Default variant with primary styling`}
             </Description>
           </TextField>
 
           <TextField>
             <Label>
               <Label.Text maxFontSizeMultiplier={1.4}>
-                Secondary Variant
+                {t`Secondary Variant`}
               </Label.Text>
             </Label>
             <TextArea
-              placeholder="Secondary style text area"
+              placeholder={t`Secondary style text area`}
               variant="secondary"
               maxFontSizeMultiplier={1.4}
             />
             <Description maxFontSizeMultiplier={1.4}>
-              Secondary variant for surfaces
+              {t`Secondary variant for surfaces`}
             </Description>
           </TextField>
         </View>
@@ -105,6 +115,8 @@ const TextAreaVariantsContent = () => {
 };
 
 const TextAreaStatesContent = () => {
+  const { t } = useLingui();
+
   return (
     <View className="flex-1 justify-center px-5 gap-8">
       <KeyboardAvoidingContainer>
@@ -112,29 +124,31 @@ const TextAreaStatesContent = () => {
           <TextField isDisabled>
             <Label>
               <Label.Text maxFontSizeMultiplier={1.4}>
-                Disabled State
+                {t`Disabled State`}
               </Label.Text>
             </Label>
             <TextArea
-              placeholder="Cannot edit"
-              value="Read only value"
+              placeholder={t`Cannot edit`}
+              value={t`Read only value`}
               maxFontSizeMultiplier={1.4}
             />
             <Description maxFontSizeMultiplier={1.4}>
-              Text area is disabled and cannot be edited
+              {t`Text area is disabled and cannot be edited`}
             </Description>
           </TextField>
 
           <TextField isInvalid>
             <Label>
-              <Label.Text maxFontSizeMultiplier={1.4}>Invalid State</Label.Text>
+              <Label.Text maxFontSizeMultiplier={1.4}>
+                {t`Invalid State`}
+              </Label.Text>
             </Label>
             <TextArea
-              placeholder="Enter your message"
+              placeholder={t`Enter your message`}
               maxFontSizeMultiplier={1.4}
             />
             <FieldError textProps={{ maxFontSizeMultiplier: 1.4 }}>
-              Please enter a valid message
+              {t`Please enter a valid message`}
             </FieldError>
           </TextField>
         </View>
@@ -148,22 +162,22 @@ const TextAreaStatesContent = () => {
 const TEXT_AREA_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-text-area',
-    label: 'Basic TextArea',
+    label: msg`Basic TextArea`,
     content: <BasicTextAreaContent />,
   },
   {
     value: 'text-area-with-label-description',
-    label: 'With Label & Description',
+    label: msg`With Label & Description`,
     content: <TextAreaWithLabelAndDescriptionContent />,
   },
   {
     value: 'text-area-variants',
-    label: 'Variants',
+    label: msg`Variants`,
     content: <TextAreaVariantsContent />,
   },
   {
     value: 'text-area-states',
-    label: 'States',
+    label: msg`States`,
     content: <TextAreaStatesContent />,
   },
 ];

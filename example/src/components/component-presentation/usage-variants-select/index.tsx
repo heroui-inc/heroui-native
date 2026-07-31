@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colorKit, Select, useThemeColor } from 'heroui-native';
@@ -37,24 +38,42 @@ export const UsageVariantsSelect = ({
 }: Props) => {
   const insets = useSafeAreaInsets();
   const { height: screenHeight } = useWindowDimensions();
+  const { t } = useLingui();
 
   const themeColorSurface = useThemeColor('surface');
+
+  /**
+   * `Select` works with plain `{ value, label }` options, while a
+   * `UsageVariant` carries a Lingui descriptor plus its rendered content.
+   * Resolve the descriptor here so the picker follows the active locale.
+   */
+  const toSelectOption = (usageVariant: UsageVariant) => ({
+    value: usageVariant.value,
+    label: t(usageVariant.label),
+  });
+
+  const firstVariant = data[0];
 
   return (
     <Select
       presentation="dialog"
-      value={variant}
+      value={toSelectOption(variant)}
       onValueChange={(value) => {
         const variantValue = data.find((m) => m.value === value?.value);
-        setVariant(variantValue!);
+
+        if (!variantValue) {
+          return;
+        }
+
+        setVariant(variantValue);
         setTimeout(() => {
           listRef.current?.scrollToIndex({
-            index: data.indexOf(variantValue!),
+            index: data.indexOf(variantValue),
             animated: false,
           });
         }, 0);
       }}
-      defaultValue={data[0]}
+      defaultValue={firstVariant ? toSelectOption(firstVariant) : undefined}
     >
       <Select.Trigger
         variant="unstyled"

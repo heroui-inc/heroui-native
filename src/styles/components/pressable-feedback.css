@@ -4,20 +4,19 @@
 
 .pressable-feedback__highlight {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
 }
 
 .pressable-feedback__ripple-container {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
 }
 
+/**
+ * The ripple origin stays physical (top/left) because its position is driven
+ * by animated translateX/translateY computed from the touch point, which React
+ * Native reports in physical coordinates regardless of layout direction.
+ */
 .pressable-feedback__ripple {
   position: absolute;
   top: 0;

@@ -1,3 +1,5 @@
+@source "..";
+
 @import './variables.css';
 @import './utilities.css';
 @import './theme.css';

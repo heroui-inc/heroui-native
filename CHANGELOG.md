@@ -1,3 +1,20 @@
+## <small>1.0.8 (2026-07-31)</small>
+
+* docs(provider): document isRTL config ([e3cd545](https://github.com/heroui-inc/heroui-native/commit/e3cd545))
+* refactor: rm circular module dependencies ([61ff249](https://github.com/heroui-inc/heroui-native/commit/61ff249))
+* refactor(styles): mv @source below imports ([08106fa](https://github.com/heroui-inc/heroui-native/commit/08106fa))
+* feat: add rtl support to components ([f3b6009](https://github.com/heroui-inc/heroui-native/commit/f3b6009))
+* feat: add scoped rtl layout support ([391e774](https://github.com/heroui-inc/heroui-native/commit/391e774))
+* feat: export useIsRTL hook publicly ([7394fb3](https://github.com/heroui-inc/heroui-native/commit/7394fb3))
+* feat: extend rtl support across remaining components ([8bfe03d](https://github.com/heroui-inc/heroui-native/commit/8bfe03d))
+* feat(example-app): add en, ar and he localization ([e2ff361](https://github.com/heroui-inc/heroui-native/commit/e2ff361))
+* fix(styles): declare @source in the shipped stylesheet ([6dbfc35](https://github.com/heroui-inc/heroui-native/commit/6dbfc35))
+* fix(tag-group): fix rtl flex-wrap premature wrapping ([83909f9](https://github.com/heroui-inc/heroui-native/commit/83909f9))
+* build: add cli templates to release dispatch ([7afbe04](https://github.com/heroui-inc/heroui-native/commit/7afbe04))
+* build: add downstream release dispatch job ([3efe3b4](https://github.com/heroui-inc/heroui-native/commit/3efe3b4))
+
+
+
 ## <small>1.0.7 (2026-07-28)</small>
 
 * build: upd yarn lock ([1da21b1](https://github.com/heroui-inc/heroui-native/commit/1da21b1))

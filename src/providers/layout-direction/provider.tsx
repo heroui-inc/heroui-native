@@ -15,7 +15,7 @@ import type { LayoutDirectionScopeProps } from './types';
  *
  * Yoga layout and Uniwind's `rtl:` variants are scoped separately, by Uniwind's
  * own `LayoutDirection` component and a `direction` style. This provider covers
- * the remaining case: hooks such as the internal `useIsRTL`, which drive gesture
+ * the remaining case: hooks such as `useIsRTL`, which drive gesture
  * inversion (`Slider`), animation offsets (`Skeleton`, `SubMenu`) and popover
  * start/end alignment (`useRelativePosition`). Those read from context and would
  * otherwise keep following the app-level direction.

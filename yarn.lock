@@ -10032,12 +10032,12 @@ __metadata:
     react-native-gesture-handler: ~2.32.0
     react-native-keyboard-controller: 1.21.9
     react-native-monorepo-config: ^0.1.9
-    react-native-reanimated: 4.5.0
+    react-native-reanimated: 4.5.1
     react-native-safe-area-context: ~5.8.0
     react-native-screens: 4.25.2
     react-native-svg: 15.15.5
     react-native-web: ^0.21.2
-    react-native-worklets: 0.10.0
+    react-native-worklets: 0.10.1
     tailwind-merge: ^3.6.0
     tailwind-variants: ^3.2.2
     tailwindcss: ^4.3.2
@@ -10079,11 +10079,11 @@ __metadata:
     react-native: 0.86.0
     react-native-builder-bob: ^0.40.12
     react-native-gesture-handler: ~2.32.0
-    react-native-reanimated: 4.5.0
+    react-native-reanimated: 4.5.1
     react-native-safe-area-context: ~5.8.0
     react-native-screens: 4.25.2
     react-native-svg: 15.15.5
-    react-native-worklets: 0.10.0
+    react-native-worklets: 0.10.1
     tailwind-merge: ^3.6.0
     tailwind-variants: ^3.2.2
     tailwindcss: ^4.3.2
@@ -14229,9 +14229,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated@npm:4.5.0":
-  version: 4.5.0
-  resolution: "react-native-reanimated@npm:4.5.0"
+"react-native-reanimated@npm:4.5.1":
+  version: 4.5.1
+  resolution: "react-native-reanimated@npm:4.5.1"
   dependencies:
     react-native-is-edge-to-edge: ^1.3.1
     semver: ^7.7.3
@@ -14239,7 +14239,7 @@ __metadata:
     react: "*"
     react-native: 0.83 - 0.86
     react-native-worklets: 0.10.x
-  checksum: 03edb8bd77dcc56906fff4a3ae417c186a501d11e9cdbffbbb297cfaa897b62104a88788e7ae1d244466ed5b33fca8005359f7bcd3738c0243383db3191e09f5
+  checksum: 7ea6e48b4f9ab59f9a7acda40f0a433ff733df3216877390a5a6389fad011c5d7dc81762c4173fba29c7ddbf564dc50068d244bb7b20fdc91a79f83fa3a0e374
   languageName: node
   linkType: hard
 
@@ -14298,9 +14298,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-worklets@npm:0.10.0":
-  version: 0.10.0
-  resolution: "react-native-worklets@npm:0.10.0"
+"react-native-worklets@npm:0.10.1":
+  version: 0.10.1
+  resolution: "react-native-worklets@npm:0.10.1"
   dependencies:
     "@babel/plugin-transform-arrow-functions": ^7.27.1
     "@babel/plugin-transform-class-properties": ^7.28.6
@@ -14319,7 +14319,7 @@ __metadata:
     "@react-native/metro-config": "*"
     react: "*"
     react-native: 0.83 - 0.86
-  checksum: 99a289a9638fd2dbaab0095d65bc5735714e1a766b000f88b01ddceb14e7a348d031c4ac7f4bd033518cf09a5b12be49068b0d10caa1d78da6812f2106f66ca6
+  checksum: a0b26b9a382d34b03ae39fb2035a871684a36f0726a8c858e415f78be6a8711e60bbbcd555c0717b46809666591d9cc0040ba9e463b9c23a5738ee29f5019947
   languageName: node
   linkType: hard
 

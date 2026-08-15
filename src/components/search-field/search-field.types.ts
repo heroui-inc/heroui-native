@@ -130,7 +130,13 @@ export interface SearchFieldSearchIconProps extends ViewProps {
  * root through SearchFieldValueContext.
  */
 export interface SearchFieldInputProps
-  extends Omit<InputProps, 'value' | 'onChangeText'> {}
+  extends Omit<InputProps, 'value' | 'onChangeText'> {
+  /**
+   * Whether the input should reserve leading space for SearchField.SearchIcon
+   * @default true
+   */
+  hasSearchIcon?: boolean;
+}
 
 /**
  * Props for customizing the clear button icon

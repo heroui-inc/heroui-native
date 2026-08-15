@@ -68,7 +68,10 @@ const WithoutSearchIconContent = () => {
       <KeyboardAvoidingContainer>
         <SearchField value={searchValue} onChange={setSearchValue}>
           <SearchField.Group>
-            <SearchField.Input placeholder={t`Search...`} />
+            <SearchField.Input
+              hasSearchIcon={false}
+              placeholder={t`Search...`}
+            />
             <SearchField.ClearButton />
           </SearchField.Group>
         </SearchField>

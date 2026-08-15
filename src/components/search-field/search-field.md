@@ -58,6 +58,19 @@ Add a Label and Description outside the Group to provide context for the search 
 </SearchField>
 ```
 
+### Without Search Icon
+
+Omit `SearchField.SearchIcon` and set `hasSearchIcon={false}` on the Input to use the Input's normal leading padding.
+
+```tsx
+<SearchField value={searchValue} onChange={setSearchValue}>
+  <SearchField.Group>
+    <SearchField.Input hasSearchIcon={false} />
+    <SearchField.ClearButton />
+  </SearchField.Group>
+</SearchField>
+```
+
 ### With Validation
 
 Use `isInvalid` and `isRequired` on the root to control validation state. Pair with FieldError to display error messages.
@@ -189,6 +202,10 @@ Animation configuration for the SearchField root component. Can be:
 ### SearchField.Input
 
 Extends [Input](../input/input.md) props with search-specific defaults (`placeholder="Search..."`, `returnKeyType="search"`, `accessibilityRole="search"`). Omits `value` and `onChangeText` because they are provided by the SearchField context.
+
+| prop            | type      | default | description                                                         |
+| --------------- | --------- | ------- | ------------------------------------------------------------------- |
+| `hasSearchIcon` | `boolean` | `true`  | Whether the Input reserves leading space for SearchField.SearchIcon |
 
 ### SearchField.ClearButton
 

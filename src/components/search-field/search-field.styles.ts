@@ -39,6 +39,15 @@ const inputContainer = tv({
  */
 const input = tv({
   base: 'search-field__input rtl:text-right',
+  variants: {
+    hasSearchIcon: {
+      true: 'search-field__input--with-search-icon',
+      false: '',
+    },
+  },
+  defaultVariants: {
+    hasSearchIcon: true,
+  },
 });
 
 const clearButton = tv({

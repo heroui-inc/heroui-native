@@ -27,13 +27,16 @@
 
 .search-field__input {
   flex-grow: 1;
-  padding-inline-start: calc(var(--spacing) * 9);
   padding-inline-end: calc(var(--spacing) * 12);
   /*
    * TextInput textAlign is physical (unlike Text), so this is the LTR
    * alignment; the RTL flip comes from `rtl:text-right` in the styles file.
    */
   text-align: left;
+}
+
+.search-field__input--with-search-icon {
+  padding-inline-start: calc(var(--spacing) * 9);
 }
 
 .search-field__clear-button {

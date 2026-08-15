@@ -132,6 +132,7 @@ const SearchFieldInput = forwardRef<TextInputType, SearchFieldInputProps>(
     const {
       className,
       containerClassName: containerClassNameProp,
+      hasSearchIcon = true,
       placeholder = 'Search...',
       returnKeyType = 'search',
       accessibilityRole = 'search',
@@ -141,7 +142,10 @@ const SearchFieldInput = forwardRef<TextInputType, SearchFieldInputProps>(
 
     const searchField = useSearchField();
 
-    const inputClassName = searchFieldClassNames.input({ className });
+    const inputClassName = searchFieldClassNames.input({
+      hasSearchIcon,
+      className,
+    });
 
     const inputContainerClassName = searchFieldClassNames.inputContainer({
       className: containerClassNameProp,
@@ -235,8 +239,9 @@ SearchFieldClearButton.displayName = DISPLAY_NAME.SEARCH_FIELD_CLEAR_BUTTON;
  * absolutely on the leading edge (left in LTR, right in RTL).
  *
  * @component SearchField.Input - Wraps the Input component with search-specific
- * defaults: "Search..." placeholder, leading padding for the search icon, and
- * search a11y role. Reads `value` / `onChangeText` from SearchFieldContext.
+ * defaults: "Search..." placeholder, optional leading padding for the search
+ * icon, and search a11y role. Reads `value` / `onChangeText` from
+ * SearchFieldContext.
  *
  * @component SearchField.ClearButton - Small button that clears the search
  * input. Automatically hidden when value is empty. Calls `onChange("")` from

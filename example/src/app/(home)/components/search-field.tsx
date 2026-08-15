@@ -59,6 +59,26 @@ const BasicSearchFieldContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const WithoutSearchIconContent = () => {
+  const { t } = useLingui();
+  const [searchValue, setSearchValue] = useState('');
+
+  return (
+    <View className="flex-1 justify-center px-5">
+      <KeyboardAvoidingContainer>
+        <SearchField value={searchValue} onChange={setSearchValue}>
+          <SearchField.Group>
+            <SearchField.Input placeholder={t`Search...`} />
+            <SearchField.ClearButton />
+          </SearchField.Group>
+        </SearchField>
+      </KeyboardAvoidingContainer>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const WithDescriptionContent = () => {
   const { t } = useLingui();
   const [searchValue, setSearchValue] = useState('');
@@ -193,6 +213,11 @@ const SEARCH_FIELD_VARIANTS: UsageVariant[] = [
     value: 'basic-search-field',
     label: msg`Basic search field`,
     content: <BasicSearchFieldContent />,
+  },
+  {
+    value: 'without-search-icon',
+    label: msg`Without search icon`,
+    content: <WithoutSearchIconContent />,
   },
   {
     value: 'with-label-and-description',

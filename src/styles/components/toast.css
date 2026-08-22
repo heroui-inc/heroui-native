@@ -17,6 +17,7 @@
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
   font-family: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   /* RN Text resolves left/right against layout direction, so this means "start" */
   text-align: left;
 }

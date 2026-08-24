@@ -11,6 +11,7 @@
   line-height: var(--text-lg--line-height);
   color: var(--color-foreground);
   font-family: var(--font-medium);
+  font-weight: var(--font-weight-medium);
   /* RN Text resolves left/right against layout direction, so this means "start" */
   text-align: left;
 }

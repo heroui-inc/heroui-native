@@ -75,8 +75,7 @@
 }
 
 .avatar__fallback-text {
-  font-family: var(--font-medium);
-  font-weight: var(--font-weight-medium);
+  @apply font-medium;
 }
 
 /* Fallback text - size */

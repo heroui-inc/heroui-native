@@ -19,8 +19,7 @@
   font-size: var(--text-sm);
   line-height: var(--text-sm--line-height);
   color: var(--color-muted);
-  font-family: var(--font-medium);
-  font-weight: var(--font-weight-medium);
+  @apply font-medium;
 }
 
 .slider__track {

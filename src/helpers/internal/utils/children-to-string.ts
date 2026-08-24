@@ -105,13 +105,3 @@ export function childrenToString(
 
   return null;
 }
-
-/**
- * Checks if React children can be converted to a string.
- *
- * @param children - React children to check
- * @returns True if children can be converted to string, false otherwise
- */
-export function isStringifiableChildren(children: ReactNode): boolean {
-  return childrenToString(children) !== null;
-}

@@ -92,8 +92,7 @@
 }
 
 .button__label {
-  font-family: var(--font-medium);
-  font-weight: var(--font-weight-medium);
+  @apply font-medium;
 }
 
 /* Label - variant */

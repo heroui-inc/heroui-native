@@ -64,8 +64,7 @@
 .tabs__label {
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
-  font-family: var(--font-medium);
-  font-weight: var(--font-weight-medium);
+  @apply font-medium;
 }
 
 .tabs__label--is-selected {

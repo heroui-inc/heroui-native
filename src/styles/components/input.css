@@ -9,8 +9,7 @@
   min-height: calc(var(--spacing) * 12);
   padding-inline: calc(var(--spacing) * 3);
   color: var(--color-foreground);
-  font-family: var(--font-normal);
-  font-weight: var(--font-weight-normal);
+  @apply font-normal;
   border-radius: var(--radius-field);
   border-width: var(--border-width-field-width);
   border-color: var(--color-field-border);

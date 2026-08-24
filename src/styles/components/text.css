@@ -1,5 +1,6 @@
 .text__root {
   font-family: var(--font-normal);
+  font-weight: var(--font-weight-normal);
 }
 
 /* Root - type */
@@ -8,6 +9,7 @@
   font-size: var(--text-4xl);
   line-height: var(--text-4xl--line-height);
   font-family: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: var(--tracking-tight);
 }
 
@@ -15,6 +17,7 @@
   font-size: var(--text-3xl);
   line-height: var(--text-3xl--line-height);
   font-family: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: var(--tracking-tight);
 }
 
@@ -22,6 +25,7 @@
   font-size: var(--text-2xl);
   line-height: var(--text-2xl--line-height);
   font-family: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: var(--tracking-tight);
 }
 
@@ -29,6 +33,7 @@
   font-size: var(--text-xl);
   line-height: var(--text-xl--line-height);
   font-family: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: var(--tracking-tight);
 }
 
@@ -36,6 +41,7 @@
   font-size: var(--text-lg);
   line-height: var(--text-lg--line-height);
   font-family: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: var(--tracking-tight);
 }
 
@@ -43,6 +49,7 @@
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
   font-family: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: var(--tracking-tight);
 }
 
@@ -108,16 +115,20 @@
 
 .text__root--weight-normal {
   font-family: var(--font-normal);
+  font-weight: var(--font-weight-normal);
 }
 
 .text__root--weight-medium {
   font-family: var(--font-medium);
+  font-weight: var(--font-weight-medium);
 }
 
 .text__root--weight-semibold {
   font-family: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
 }
 
 .text__root--weight-bold {
   font-family: var(--font-bold);
+  font-weight: var(--font-weight-bold);
 }

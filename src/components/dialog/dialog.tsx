@@ -11,6 +11,7 @@ import {
   FullWindowOverlay,
   HeroText,
   PopupOverlayBlurView,
+  PortalGestureRoot,
   ThemeBackground,
 } from '../../helpers/internal/components';
 import {
@@ -310,25 +311,28 @@ const DialogContent = forwardRef<
       background === undefined ? <DialogContentBackground /> : background;
 
     return (
-      <GestureDetector gesture={panGesture}>
-        <Animated.View
-          ref={dragContainerRef}
-          entering={entering}
-          exiting={exiting}
-        >
-          <Animated.View style={rDragContainerStyle} pointerEvents="box-none">
-            <DialogPrimitives.Content
-              ref={ref}
-              className={contentClassName}
-              style={[dialogStyleSheet.contentContainer, style]}
-              {...props}
-            >
-              {backgroundElement}
-              {children}
-            </DialogPrimitives.Content>
+      <PortalGestureRoot>
+        <GestureDetector gesture={panGesture}>
+          <Animated.View
+            ref={dragContainerRef}
+            entering={entering}
+            exiting={exiting}
+            collapsable={false}
+          >
+            <Animated.View style={rDragContainerStyle} pointerEvents="box-none">
+              <DialogPrimitives.Content
+                ref={ref}
+                className={contentClassName}
+                style={[dialogStyleSheet.contentContainer, style]}
+                {...props}
+              >
+                {backgroundElement}
+                {children}
+              </DialogPrimitives.Content>
+            </Animated.View>
           </Animated.View>
-        </Animated.View>
-      </GestureDetector>
+        </GestureDetector>
+      </PortalGestureRoot>
     );
   }
 );

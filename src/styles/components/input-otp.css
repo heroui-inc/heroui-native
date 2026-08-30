@@ -60,6 +60,7 @@
   font-size: var(--text-lg);
   line-height: var(--text-lg--line-height);
   font-family: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: color-mix(in oklab, var(--color-field-placeholder) 50%, transparent);
 }
 
@@ -67,6 +68,7 @@
   font-size: var(--text-lg);
   line-height: var(--text-lg--line-height);
   font-family: var(--font-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-foreground);
 }
 

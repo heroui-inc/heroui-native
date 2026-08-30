@@ -92,6 +92,7 @@
 
 .chip__label {
   font-family: var(--font-medium);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Label - size */

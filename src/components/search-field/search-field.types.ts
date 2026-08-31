@@ -22,6 +22,22 @@ export interface SearchFieldContextType {
 }
 
 /**
+ * Internal layout context that tracks which optional SearchField slots
+ * are composed. Input reads these flags to reserve leading/trailing
+ * space only when the matching part is present.
+ */
+export interface SearchFieldSlotsContextType {
+  /** Whether `SearchField.SearchIcon` is currently composed */
+  hasSearchIcon: boolean;
+  /** Whether `SearchField.ClearButton` is currently composed */
+  hasClearButton: boolean;
+  /** Called by SearchIcon on mount/unmount */
+  setHasSearchIcon: (isPresent: boolean) => void;
+  /** Called by ClearButton on mount/unmount */
+  setHasClearButton: (isPresent: boolean) => void;
+}
+
+/**
  * Props for the SearchField root component
  */
 export interface SearchFieldProps extends ViewProps {

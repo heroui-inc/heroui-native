@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useLayoutEffect, useMemo, useState } from 'react';
 import {
   type GestureResponderEvent,
   type TextInput as TextInputType,
@@ -24,6 +24,7 @@ import type {
   SearchFieldInputProps,
   SearchFieldProps,
   SearchFieldSearchIconProps,
+  SearchFieldSlotsContextType,
 } from './search-field.types';
 import { SearchIcon } from './search-icon';
 
@@ -32,6 +33,37 @@ const [SearchFieldProvider, useSearchField] =
     name: 'SearchFieldContext',
     strict: false,
   });
+
+const [SearchFieldSlotsProvider, useSearchFieldSlots] =
+  createContext<SearchFieldSlotsContextType>({
+    name: 'SearchFieldSlotsContext',
+    strict: false,
+  });
+
+/**
+ * Registers an optional SearchField slot for the lifetime of the caller.
+ * The effect still runs when the caller later returns `null` (ClearButton
+ * with an empty value), so Input can keep trailing padding and avoid a
+ * text jump when the first character is typed.
+ *
+ * @param setPresent - Slot setter from SearchFieldSlotsContext, or
+ *   `undefined` when rendered outside SearchField
+ */
+function useRegisterSearchFieldSlot(
+  setPresent: ((isPresent: boolean) => void) | undefined
+): void {
+  useLayoutEffect(() => {
+    if (typeof setPresent !== 'function') {
+      return;
+    }
+
+    setPresent(true);
+
+    return () => {
+      setPresent(false);
+    };
+  }, [setPresent]);
+}
 
 // --------------------------------------------------
 
@@ -54,9 +86,22 @@ const SearchFieldRoot = forwardRef<ViewRef, SearchFieldProps>((props, ref) => {
     animation,
   });
 
+  const [hasSearchIcon, setHasSearchIcon] = useState(false);
+  const [hasClearButton, setHasClearButton] = useState(false);
+
   const searchFieldContextValue = useMemo<SearchFieldContextType>(
     () => ({ value, onChange, isDisabled, isInvalid, isRequired }),
     [value, onChange, isDisabled, isInvalid, isRequired]
+  );
+
+  const searchFieldSlotsContextValue = useMemo<SearchFieldSlotsContextType>(
+    () => ({
+      hasSearchIcon,
+      hasClearButton,
+      setHasSearchIcon,
+      setHasClearButton,
+    }),
+    [hasSearchIcon, hasClearButton]
   );
 
   const formFieldContextValue = useMemo(
@@ -73,13 +118,15 @@ const SearchFieldRoot = forwardRef<ViewRef, SearchFieldProps>((props, ref) => {
 
   return (
     <SearchFieldProvider value={searchFieldContextValue}>
-      <AnimationSettingsProvider value={animationSettingsContextValue}>
-        <FormFieldProvider value={formFieldContextValue}>
-          <View ref={ref} className={rootClassName} {...restProps}>
-            {children}
-          </View>
-        </FormFieldProvider>
-      </AnimationSettingsProvider>
+      <SearchFieldSlotsProvider value={searchFieldSlotsContextValue}>
+        <AnimationSettingsProvider value={animationSettingsContextValue}>
+          <FormFieldProvider value={formFieldContextValue}>
+            <View ref={ref} className={rootClassName} {...restProps}>
+              {children}
+            </View>
+          </FormFieldProvider>
+        </AnimationSettingsProvider>
+      </SearchFieldSlotsProvider>
     </SearchFieldProvider>
   );
 });
@@ -105,6 +152,9 @@ const SearchFieldGroup = forwardRef<ViewRef, SearchFieldGroupProps>(
 const SearchFieldSearchIcon = forwardRef<View, SearchFieldSearchIconProps>(
   (props, ref) => {
     const { children, className, iconProps, ...restProps } = props;
+
+    const slots = useSearchFieldSlots();
+    useRegisterSearchFieldSlot(slots?.setHasSearchIcon);
 
     const searchIconClassName = searchFieldClassNames.searchIcon({ className });
 
@@ -140,8 +190,13 @@ const SearchFieldInput = forwardRef<TextInputType, SearchFieldInputProps>(
     } = props;
 
     const searchField = useSearchField();
+    const slots = useSearchFieldSlots();
 
-    const inputClassName = searchFieldClassNames.input({ className });
+    const inputClassName = searchFieldClassNames.input({
+      hasSearchIcon: slots?.hasSearchIcon ?? false,
+      hasClearButton: slots?.hasClearButton ?? false,
+      className,
+    });
 
     const inputContainerClassName = searchFieldClassNames.inputContainer({
       className: containerClassNameProp,
@@ -171,7 +226,14 @@ const SearchFieldClearButton = forwardRef<View, SearchFieldClearButtonProps>(
     const { iconProps, className, children, onPress, ...restProps } = props;
 
     const searchField = useSearchField();
+    const slots = useSearchFieldSlots();
     const themeColorMuted = useThemeColor('muted');
+
+    /**
+     * Register before the empty-value early return so composed ClearButtons
+     * keep trailing input padding while they are visually hidden.
+     */
+    useRegisterSearchFieldSlot(slots?.setHasClearButton);
 
     if (searchField?.value !== undefined && searchField.value.length === 0) {
       return null;
@@ -232,15 +294,18 @@ SearchFieldClearButton.displayName = DISPLAY_NAME.SEARCH_FIELD_CLEAR_BUTTON;
  * and clear button.
  *
  * @component SearchField.SearchIcon - Magnifying glass icon positioned
- * absolutely on the leading edge (left in LTR, right in RTL).
+ * absolutely on the leading edge (left in LTR, right in RTL). Registers
+ * itself so Input reserves leading space only while this part is composed.
  *
  * @component SearchField.Input - Wraps the Input component with search-specific
- * defaults: "Search..." placeholder, leading padding for the search icon, and
- * search a11y role. Reads `value` / `onChangeText` from SearchFieldContext.
+ * defaults: "Search..." placeholder and search a11y role. Reserves leading
+ * space when SearchIcon is composed and trailing space when ClearButton is
+ * composed. Reads `value` / `onChangeText` from SearchFieldContext.
  *
  * @component SearchField.ClearButton - Small button that clears the search
  * input. Automatically hidden when value is empty. Calls `onChange("")` from
- * context on press.
+ * context on press. Registers itself so Input keeps trailing space while
+ * this part is composed, including when it is visually hidden.
  *
  * @see Full documentation: https://heroui.com/docs/native/components/search-field
  */

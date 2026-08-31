@@ -22,9 +22,9 @@ import { SearchField } from 'heroui-native';
 
 - **SearchField**: Root container that accepts `value` and `onChange`, providing them to children via context. Also provides form field state (isDisabled, isInvalid, isRequired) and animation settings.
 - **SearchField.Group**: Flex-row container that positions the search icon, input, and clear button horizontally.
-- **SearchField.SearchIcon**: Magnifying glass icon positioned absolutely on the left side of the input. Supports custom children to replace the default icon.
-- **SearchField.Input**: Wraps the Input component with search-specific defaults. Reads `value` and `onChangeText` from the SearchField context automatically.
-- **SearchField.ClearButton**: Small icon-only button to clear the search input. Automatically hidden when value is empty. Calls `onChange("")` from context on press.
+- **SearchField.SearchIcon**: Magnifying glass icon positioned absolutely on the left side of the input. Supports custom children to replace the default icon. Optional — omitting it drops the Input's leading icon space.
+- **SearchField.Input**: Wraps the Input component with search-specific defaults. Reads `value` and `onChangeText` from the SearchField context automatically. Reserves leading space only when `SearchField.SearchIcon` is composed, and trailing space only when `SearchField.ClearButton` is composed.
+- **SearchField.ClearButton**: Small icon-only button to clear the search input. Automatically hidden when value is empty. Calls `onChange("")` from context on press. Optional — omitting it drops the Input's trailing clear-button space. While composed but hidden (empty value), trailing padding stays so the text does not jump.
 
 ## Usage
 
@@ -41,6 +41,21 @@ The SearchField component uses compound parts to create a search input. Pass `va
   </SearchField.Group>
 </SearchField>
 ```
+
+### Without Search Icon
+
+Omit `SearchField.SearchIcon` to use the Input's normal leading padding. The Input detects composed slots automatically — no extra prop is required.
+
+```tsx
+<SearchField value={searchValue} onChange={setSearchValue}>
+  <SearchField.Group>
+    <SearchField.Input />
+    <SearchField.ClearButton />
+  </SearchField.Group>
+</SearchField>
+```
+
+The same applies to `SearchField.ClearButton`: omitting it drops the trailing space reserved for the clear control.
 
 ### With Label and Description
 

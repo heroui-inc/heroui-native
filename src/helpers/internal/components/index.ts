@@ -9,4 +9,5 @@ export * from './full-window-overlay';
 export * from './hero-text';
 export * from './hero-text-input';
 export * from './popup-overlay-blur-view';
+export * from './portal-gesture-root';
 export * from './theme-background';

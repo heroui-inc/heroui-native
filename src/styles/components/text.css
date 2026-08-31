@@ -1,6 +1,5 @@
 .text__root {
-  font-family: var(--font-normal);
-  font-weight: var(--font-weight-normal);
+  @apply font-normal;
 }
 
 /* Root - type */
@@ -8,48 +7,42 @@
 .text__root--type-h1 {
   font-size: var(--text-4xl);
   line-height: var(--text-4xl--line-height);
-  font-family: var(--font-semibold);
-  font-weight: var(--font-weight-semibold);
+  @apply font-semibold;
   letter-spacing: var(--tracking-tight);
 }
 
 .text__root--type-h2 {
   font-size: var(--text-3xl);
   line-height: var(--text-3xl--line-height);
-  font-family: var(--font-semibold);
-  font-weight: var(--font-weight-semibold);
+  @apply font-semibold;
   letter-spacing: var(--tracking-tight);
 }
 
 .text__root--type-h3 {
   font-size: var(--text-2xl);
   line-height: var(--text-2xl--line-height);
-  font-family: var(--font-semibold);
-  font-weight: var(--font-weight-semibold);
+  @apply font-semibold;
   letter-spacing: var(--tracking-tight);
 }
 
 .text__root--type-h4 {
   font-size: var(--text-xl);
   line-height: var(--text-xl--line-height);
-  font-family: var(--font-semibold);
-  font-weight: var(--font-weight-semibold);
+  @apply font-semibold;
   letter-spacing: var(--tracking-tight);
 }
 
 .text__root--type-h5 {
   font-size: var(--text-lg);
   line-height: var(--text-lg--line-height);
-  font-family: var(--font-semibold);
-  font-weight: var(--font-weight-semibold);
+  @apply font-semibold;
   letter-spacing: var(--tracking-tight);
 }
 
 .text__root--type-h6 {
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
-  font-family: var(--font-semibold);
-  font-weight: var(--font-weight-semibold);
+  @apply font-semibold;
   letter-spacing: var(--tracking-tight);
 }
 
@@ -114,21 +107,17 @@
 /* Root - weight (declared after type so an explicit weight wins the cascade) */
 
 .text__root--weight-normal {
-  font-family: var(--font-normal);
-  font-weight: var(--font-weight-normal);
+  @apply font-normal;
 }
 
 .text__root--weight-medium {
-  font-family: var(--font-medium);
-  font-weight: var(--font-weight-medium);
+  @apply font-medium;
 }
 
 .text__root--weight-semibold {
-  font-family: var(--font-semibold);
-  font-weight: var(--font-weight-semibold);
+  @apply font-semibold;
 }
 
 .text__root--weight-bold {
-  font-family: var(--font-bold);
-  font-weight: var(--font-weight-bold);
+  @apply font-bold;
 }

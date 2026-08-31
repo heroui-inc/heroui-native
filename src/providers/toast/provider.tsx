@@ -154,6 +154,22 @@ export function ToastProvider({
 
   const idCounter = useRef(0);
   const timeoutRefs = useRef<Map<string, NodeJS.Timeout>>(new Map());
+
+  /**
+   * Clear every pending auto-dismiss timer when the provider unmounts, so a
+   * timer cannot outlive the tree it dispatches into.
+   */
+  useEffect(() => {
+    const timeouts = timeoutRefs.current;
+
+    return () => {
+      timeouts.forEach((timeout) => {
+        clearTimeout(timeout);
+      });
+      timeouts.clear();
+    };
+  }, []);
+
   const hideRef = useRef<((ids?: string | string[] | 'all') => void) | null>(
     null
   );
@@ -330,28 +346,30 @@ export function ToastProvider({
         normalizedOptions.onShow();
       }
 
-      // Set up auto-dismiss timeout synchronously
+      /**
+       * Set up auto-dismiss timeout synchronously.
+       *
+       * `duration: 0` is scheduled like any other duration rather than
+       * dismissed inline: `hide` closes over the `toasts` of the current
+       * render, which does not contain this toast yet, so an inline call
+       * would find nothing to remove and leave the toast on screen forever.
+       * Deferring lets the `SHOW` dispatch commit and `hideRef` re-point to a
+       * `hide` that can see the new toast.
+       */
       if (
         duration !== 'persistent' &&
         typeof duration === 'number' &&
         !isNaN(duration) &&
-        duration > 0 &&
+        duration >= 0 &&
         duration !== Infinity
       ) {
-        // Handle immediate dismissal
-        if (duration === 0) {
+        const timeout = setTimeout(() => {
           if (hideRef.current) {
             hideRef.current(id);
           }
-        } else {
-          const timeout = setTimeout(() => {
-            if (hideRef.current) {
-              hideRef.current(id);
-            }
-            timeoutRefs.current.delete(id);
-          }, duration);
-          timeoutRefs.current.set(id, timeout);
-        }
+          timeoutRefs.current.delete(id);
+        }, duration);
+        timeoutRefs.current.set(id, timeout);
       }
 
       return id;

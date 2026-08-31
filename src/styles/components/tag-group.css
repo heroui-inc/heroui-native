@@ -75,7 +75,7 @@
 }
 
 .tag-group__tag-label {
-  font-family: var(--font-medium);
+  @apply font-medium;
   color: var(--color-field-foreground);
 }
 

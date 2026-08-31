@@ -32,14 +32,6 @@ export const ACCORDION_LAYOUT_TRANSITION = LinearTransition.springify()
 export const DEFAULT_ICON_SIZE = 16;
 
 /**
- * Rotation values for indicator animation
- */
-export const INDICATOR_ROTATION = {
-  COLLAPSED: '0deg',
-  EXPANDED: '180deg',
-};
-
-/**
  * Spring configuration for indicator animation
  */
 export const INDICATOR_SPRING_CONFIG = {

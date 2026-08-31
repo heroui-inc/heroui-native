@@ -90,6 +90,22 @@ const RadioRoot = forwardRef<RadioPrimitives.RootRef, RadioProps>(
         ? children(renderProps)
         : (children ?? <RadioIndicator />);
 
+    /**
+     * Inside a RadioGroupItem the item primitive already exposes the
+     * accessible `role="radio"` node (checked state + press handling), so the
+     * nested trigger is hidden from assistive technology — otherwise every
+     * option exposes two `role="radio"` nodes / focus stops.
+     */
+    const nestedInGroupA11yProps = radioGroupItemContext
+      ? ({
+          'role': 'none',
+          'aria-hidden': true,
+          'accessibilityElementsHidden': true,
+          'importantForAccessibility': 'no-hide-descendants',
+          'focusable': false,
+        } as const)
+      : undefined;
+
     const { isAllAnimationsDisabled } = useRadioRootAnimation({
       animation,
     });
@@ -112,6 +128,7 @@ const RadioRoot = forwardRef<RadioPrimitives.RootRef, RadioProps>(
           isDisabled={isDisabled}
           isInvalid={isInvalid}
           hitSlop={props.hitSlop ?? DEFAULT_HIT_SLOP}
+          {...nestedInGroupA11yProps}
           {...restProps}
         >
           {content}

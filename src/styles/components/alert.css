@@ -25,7 +25,7 @@
 .alert__title {
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
-  font-family: var(--font-medium);
+  @apply font-medium;
   /* RN Text resolves left/right against layout direction, so this means "start" */
   text-align: left;
 }

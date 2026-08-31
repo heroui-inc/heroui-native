@@ -13,6 +13,7 @@ import {
   ChevronDownIcon,
   FullWindowOverlay,
   HeroText,
+  PortalGestureRoot,
   ThemeBackground,
   useHasDefaultThemeBackground,
 } from '../../helpers/internal/components';
@@ -664,29 +665,35 @@ const SelectContentDialog = forwardRef<
 
     return (
       <View className={wrapperClassName} style={styles?.wrapper}>
-        <GestureDetector gesture={panGesture}>
-          <Animated.View
-            ref={dragContainerRef}
-            entering={entering}
-            exiting={exiting}
-          >
-            <Animated.View style={rDragContainerStyle} pointerEvents="box-none">
-              <SelectPrimitives.DialogContent
-                ref={ref}
-                className={contentClassName}
-                style={[
-                  selectStyleSheet.contentContainer,
-                  styles?.content,
-                  style,
-                ]}
-                {...props}
+        <PortalGestureRoot>
+          <GestureDetector gesture={panGesture}>
+            <Animated.View
+              ref={dragContainerRef}
+              entering={entering}
+              exiting={exiting}
+              collapsable={false}
+            >
+              <Animated.View
+                style={rDragContainerStyle}
+                pointerEvents="box-none"
               >
-                {backgroundElement}
-                {children}
-              </SelectPrimitives.DialogContent>
+                <SelectPrimitives.DialogContent
+                  ref={ref}
+                  className={contentClassName}
+                  style={[
+                    selectStyleSheet.contentContainer,
+                    styles?.content,
+                    style,
+                  ]}
+                  {...props}
+                >
+                  {backgroundElement}
+                  {children}
+                </SelectPrimitives.DialogContent>
+              </Animated.View>
             </Animated.View>
-          </Animated.View>
-        </GestureDetector>
+          </GestureDetector>
+        </PortalGestureRoot>
       </View>
     );
   }

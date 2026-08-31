@@ -32,6 +32,10 @@ const inputContainer = tv({
  * Base input styling (bg, border, focus, variants, etc.) comes from the Input component.
  * @see {@link ../input/input.styles.ts} for the base Input styles.
  *
+ * @note Icon and clear-button paddings are variants so they apply only when
+ * those compound parts are composed. Omitting a part falls back to the
+ * Input's own inline padding.
+ *
  * @note Unlike `Text`, `TextInput` maps `textAlign: left/right` to physical
  * edges regardless of layout direction, so the RTL alignment needs an
  * explicit `rtl:text-right` override. It lives here because the uniwind CSS
@@ -39,6 +43,18 @@ const inputContainer = tv({
  */
 const input = tv({
   base: 'search-field__input rtl:text-right',
+  variants: {
+    hasSearchIcon: {
+      true: 'search-field__input--with-search-icon',
+    },
+    hasClearButton: {
+      true: 'search-field__input--with-clear-button',
+    },
+  },
+  defaultVariants: {
+    hasSearchIcon: false,
+    hasClearButton: false,
+  },
 });
 
 const clearButton = tv({

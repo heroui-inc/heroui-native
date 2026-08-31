@@ -59,14 +59,14 @@
 .input-otp__slot-placeholder {
   font-size: var(--text-lg);
   line-height: var(--text-lg--line-height);
-  font-family: var(--font-semibold);
+  @apply font-semibold;
   color: color-mix(in oklab, var(--color-field-placeholder) 50%, transparent);
 }
 
 .input-otp__slot-value {
   font-size: var(--text-lg);
   line-height: var(--text-lg--line-height);
-  font-family: var(--font-semibold);
+  @apply font-semibold;
   color: var(--color-foreground);
 }
 

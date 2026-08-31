@@ -65,8 +65,8 @@
     "@lingui/format-po": "^5",
     "babel-plugin-module-resolver": "^5.0.2",
     "prettier-plugin-tailwindcss": "^0.5.11",
-    "react-native-builder-bob": "^0.40.12",
-    "react-native-monorepo-config": "^0.1.9"
+    "react-native-builder-bob": "^0.43.0",
+    "react-native-monorepo-config": "^0.4.0"
   },
   "private": true
 }

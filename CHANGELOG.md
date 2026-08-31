@@ -1,3 +1,21 @@
+## <small>1.0.9 (2026-08-31)</small>
+
+* build: upd expo to 57.0.18 ([129af2e](https://github.com/heroui-inc/heroui-native/commit/129af2e))
+* build: upd react-native-builder-bob to 0.43.0 ([10444f0](https://github.com/heroui-inc/heroui-native/commit/10444f0))
+* build: upd worklets and reanimated for expo go ([a0b4bc7](https://github.com/heroui-inc/heroui-native/commit/a0b4bc7))
+* fix(radio): expose a single role=radio node when nested in RadioGroup.Item ([8430d9e](https://github.com/heroui-inc/heroui-native/commit/8430d9e))
+* fix(search-field): pad input only for composed slots ([9663e48](https://github.com/heroui-inc/heroui-native/commit/9663e48))
+* fix(select): open dialog presentation on rngh 3 ([33efcbd](https://github.com/heroui-inc/heroui-native/commit/33efcbd))
+* fix(select): preserve content-fit label sizing ([39b1522](https://github.com/heroui-inc/heroui-native/commit/39b1522))
+* fix(styles): restore font-weight on component text styles ([939d553](https://github.com/heroui-inc/heroui-native/commit/939d553)), closes [#461](https://github.com/heroui-inc/heroui-native/issues/461)
+* fix(styles): use font utilities for component weights ([ce24ff4](https://github.com/heroui-inc/heroui-native/commit/ce24ff4))
+* fix(text): restore font-weight so the weight prop works without custom font variables ([394dd34](https://github.com/heroui-inc/heroui-native/commit/394dd34))
+* fix(toast): correct auto-dismiss timer lifecycle ([c5dea14](https://github.com/heroui-inc/heroui-native/commit/c5dea14))
+* feat: remove default border radius on LinkButton ([aef5d44](https://github.com/heroui-inc/heroui-native/commit/aef5d44))
+* refactor: remove unreferenced internal code ([f7b2201](https://github.com/heroui-inc/heroui-native/commit/f7b2201))
+
+
+
 ## <small>1.0.8 (2026-07-31)</small>
 
 * docs(provider): document isRTL config ([e3cd545](https://github.com/heroui-inc/heroui-native/commit/e3cd545))

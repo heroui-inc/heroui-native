@@ -33,7 +33,7 @@ const Root = forwardRef<RootRef, RootProps>(
         aria-disabled={isDisabled}
         role="switch"
         aria-checked={isSelected}
-        aria-valuetext={(ariaValueText ?? isSelected) ? 'on' : 'off'}
+        aria-valuetext={ariaValueText ?? (isSelected ? 'on' : 'off')}
         onPress={onPress}
         accessibilityState={{
           checked: isSelected,

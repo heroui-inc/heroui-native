@@ -14,6 +14,9 @@ const trigger = tv({
       false: '',
     },
   },
+  defaultVariants: {
+    variant: 'default',
+  },
 });
 
 /**

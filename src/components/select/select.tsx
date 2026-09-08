@@ -669,6 +669,7 @@ const SelectContentDialog = forwardRef<
           <GestureDetector gesture={panGesture}>
             <Animated.View
               ref={dragContainerRef}
+              pointerEvents="box-none"
               entering={entering}
               exiting={exiting}
               collapsable={false}

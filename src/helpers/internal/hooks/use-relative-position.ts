@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-  Dimensions,
+  useWindowDimensions,
   type LayoutRectangle,
   type ScaledSize,
 } from 'react-native';
@@ -27,7 +27,7 @@ export function useRelativePosition({
   placement,
   disablePositioningStyle,
 }: UseRelativePositionArgs) {
-  const dimensions = Dimensions.get('screen');
+  const dimensions = useWindowDimensions();
   const isRTL = useIsRTL();
 
   return React.useMemo(() => {

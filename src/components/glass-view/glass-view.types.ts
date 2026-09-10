@@ -9,7 +9,7 @@ export type GlassViewProps = ViewProps & {
   /**
    * Blur intensity (0-100) forwarded to expo-blur's `intensity`.
    * iOS only — the Android fallback layer ignores it.
-   * @default 30
+   * @default 25
    */
   intensity?: number;
   /**

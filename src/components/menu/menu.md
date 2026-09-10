@@ -711,7 +711,7 @@ Animated indicator icon that rotates when the submenu opens/closes. Defaults to 
 
 | prop    | type     | default | description                 |
 | ------- | -------- | ------- | --------------------------- |
-| `size`  | `number` | `14`    | Size of the indicator icon  |
+| `size`  | `number` | `16`    | Size of the indicator icon  |
 | `color` | `string` | `muted` | Color of the indicator icon |
 
 ##### SubMenuTriggerIndicatorAnimation

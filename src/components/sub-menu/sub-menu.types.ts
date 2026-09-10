@@ -118,7 +118,7 @@ export interface SubMenuTriggerProps
 export interface SubMenuTriggerIndicatorIconProps {
   /**
    * Size of the icon
-   * @default 14
+   * @default 16
    */
   size?: number;
   /**

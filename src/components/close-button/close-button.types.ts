@@ -6,12 +6,12 @@ import type { ButtonRootProps } from '../button/button.types';
 export interface CloseButtonIconProps {
   /**
    * Size of the icon
-   * @default 16
+   * @default 18
    */
   size?: number;
   /**
    * Color of the icon
-   * @default Uses theme foreground color
+   * @default Uses theme muted color
    */
   color?: string;
 }

@@ -19,7 +19,7 @@ export interface AlertIconProps {
   /**
    * Icon size in pixels
    *
-   * @default 20
+   * @default 18
    */
   size?: number;
   /**

@@ -111,6 +111,10 @@ export interface SkeletonProps extends AnimatedProps<ViewProps> {
   /**
    * Animation variant
    * @default 'shimmer'
+   *
+   * `none` is a static placeholder: no shimmer, pulse, or default
+   * FadeIn/FadeOut. Pass `animation.entering` / `animation.exiting` to
+   * opt back into enter/exit transitions.
    */
   variant?: SkeletonAnimation;
 

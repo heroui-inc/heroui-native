@@ -1,13 +1,12 @@
 import { forwardRef } from 'react';
-import { type TextInput as TextInputType } from 'react-native';
 import Input from '../input/input';
 import { DISPLAY_NAME } from './text-area.constants';
 import { textAreaClassNames } from './text-area.styles';
-import type { TextAreaProps } from './text-area.types';
+import type { TextAreaProps, TextAreaRef } from './text-area.types';
 
 // --------------------------------------------------
 
-const TextAreaRoot = forwardRef<TextInputType, TextAreaProps>((props, ref) => {
+const TextAreaRoot = forwardRef<TextAreaRef, TextAreaProps>((props, ref) => {
   const {
     multiline = true,
     textAlignVertical = 'top',

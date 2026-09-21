@@ -8,6 +8,7 @@ import {
   useHasDefaultThemeBackground,
 } from '../../helpers/internal/components';
 import { useFormField } from '../../helpers/internal/contexts';
+import type { TextInputComponent } from '../../helpers/internal/types';
 import { DISPLAY_NAME } from './input.constants';
 import { inputClassNames, inputStyleSheet } from './input.styles';
 import type { InputBackgroundProps, InputProps, InputRef } from './input.types';
@@ -38,7 +39,10 @@ const InputBackground = forwardRef<View, InputBackgroundProps>(
 
 // --------------------------------------------------
 
-const InputRoot = forwardRef<InputRef, InputProps>((props, ref) => {
+const InputRoot: TextInputComponent<InputProps> = forwardRef<
+  InputRef,
+  InputProps
+>((props, ref) => {
   const {
     isInvalid: localIsInvalid,
     isDisabled: localIsDisabled,

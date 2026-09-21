@@ -41,6 +41,11 @@ type TextRef = React.ComponentRef<typeof Text>;
  */
 type TextInputRef = React.ComponentRef<typeof TextInput>;
 
+/** Preserve the native ref alias when component declarations are generated. */
+type TextInputComponent<Props> = React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<Props> & React.RefAttributes<TextInputRef>
+>;
+
 // Slottable component props
 
 /**
@@ -153,6 +158,7 @@ export type {
   SlottablePressableProps,
   SlottableTextProps,
   SlottableViewProps,
+  TextInputComponent,
   TextInputRef,
   TextRef,
   ViewRef,

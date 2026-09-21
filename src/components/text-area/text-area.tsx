@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import type { TextInputComponent } from '../../helpers/internal/types';
 import Input from '../input/input';
 import { DISPLAY_NAME } from './text-area.constants';
 import { textAreaClassNames } from './text-area.styles';
@@ -6,7 +7,10 @@ import type { TextAreaProps, TextAreaRef } from './text-area.types';
 
 // --------------------------------------------------
 
-const TextAreaRoot = forwardRef<TextAreaRef, TextAreaProps>((props, ref) => {
+const TextAreaRoot: TextInputComponent<TextAreaProps> = forwardRef<
+  TextAreaRef,
+  TextAreaProps
+>((props, ref) => {
   const {
     multiline = true,
     textAlignVertical = 'top',

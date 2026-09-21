@@ -4,9 +4,9 @@ import {
   AnimationSettingsProvider,
   useFormField,
 } from '../../helpers/internal/contexts';
-import type { ViewRef } from '../../helpers/internal/types';
+import type { TextInputComponent, ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
-import { Input, type InputRef } from '../input';
+import { Input } from '../input';
 import { useInputGroupRootAnimation } from './input-group.animation';
 import { DISPLAY_NAME } from './input-group.constants';
 import { inputGroupClassNames } from './input-group.styles';
@@ -157,7 +157,7 @@ const InputGroupSuffix = forwardRef<ViewRef, InputGroupSuffixProps>(
 
 // --------------------------------------------------
 
-const InputGroupInput = forwardRef<InputRef, InputGroupInputProps>(
+const InputGroupInput: TextInputComponent<InputGroupInputProps> = forwardRef(
   (props, ref) => {
     const { style, isDisabled: localIsDisabled, ...restProps } = props;
 

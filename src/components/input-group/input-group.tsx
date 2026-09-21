@@ -1,16 +1,12 @@
 import { forwardRef, useCallback, useMemo, useState } from 'react';
-import {
-  type LayoutChangeEvent,
-  type TextInput as TextInputType,
-  View,
-} from 'react-native';
+import { type LayoutChangeEvent, View } from 'react-native';
 import {
   AnimationSettingsProvider,
   useFormField,
 } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
-import { Input } from '../input';
+import { Input, type InputRef } from '../input';
 import { useInputGroupRootAnimation } from './input-group.animation';
 import { DISPLAY_NAME } from './input-group.constants';
 import { inputGroupClassNames } from './input-group.styles';
@@ -161,7 +157,7 @@ const InputGroupSuffix = forwardRef<ViewRef, InputGroupSuffixProps>(
 
 // --------------------------------------------------
 
-const InputGroupInput = forwardRef<TextInputType, InputGroupInputProps>(
+const InputGroupInput = forwardRef<InputRef, InputGroupInputProps>(
   (props, ref) => {
     const { style, isDisabled: localIsDisabled, ...restProps } = props;
 

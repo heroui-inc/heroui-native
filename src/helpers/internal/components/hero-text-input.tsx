@@ -4,6 +4,7 @@ import {
   type TextInputProps as RNTextInputProps,
 } from 'react-native';
 import { useTextInputComponent } from '../../external/hooks';
+import type { TextInputRef } from '../types';
 
 /**
  * Props for HeroTextInput component
@@ -40,7 +41,7 @@ export interface HeroTextInputProps extends RNTextInputProps {}
  * </HeroUINativeProvider>
  * ```
  */
-export const HeroTextInput = React.forwardRef<RNTextInput, HeroTextInputProps>(
+export const HeroTextInput = React.forwardRef<TextInputRef, HeroTextInputProps>(
   (props, ref) => {
     const { textInputProps } = useTextInputComponent();
 

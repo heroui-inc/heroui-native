@@ -136,7 +136,7 @@ export default function Layout() {
 
   return (
     <GestureHandlerRootView style={styles.root}>
-      <KeyboardProvider>
+      <KeyboardProvider statusBarTranslucent navigationBarTranslucent>
         <AppLocaleProvider>
           <AppContent />
         </AppLocaleProvider>

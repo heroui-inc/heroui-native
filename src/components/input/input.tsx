@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { View, type TextInput as TextInputType } from 'react-native';
+import { View } from 'react-native';
 import { useIsOnSurface } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
 import {
@@ -10,7 +10,7 @@ import {
 import { useFormField } from '../../helpers/internal/contexts';
 import { DISPLAY_NAME } from './input.constants';
 import { inputClassNames, inputStyleSheet } from './input.styles';
-import type { InputBackgroundProps, InputProps } from './input.types';
+import type { InputBackgroundProps, InputProps, InputRef } from './input.types';
 
 // --------------------------------------------------
 
@@ -38,7 +38,7 @@ const InputBackground = forwardRef<View, InputBackgroundProps>(
 
 // --------------------------------------------------
 
-const InputRoot = forwardRef<TextInputType, InputProps>((props, ref) => {
+const InputRoot = forwardRef<InputRef, InputProps>((props, ref) => {
   const {
     isInvalid: localIsInvalid,
     isDisabled: localIsDisabled,

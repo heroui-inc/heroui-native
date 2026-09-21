@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import type { TextInputProps, ViewProps } from 'react-native';
 import type { ThemeColor } from '../../helpers/external/hooks';
+import type { TextInputRef } from '../../helpers/internal/types';
 
 /**
  * Props for the Input.Background sub-component.
@@ -73,3 +74,11 @@ export interface InputProps extends TextInputProps {
    */
   placeholderColorClassName?: string;
 }
+
+/**
+ * Reference type for the Input component.
+ * Resolves to the native text input instance (`TextInputInstance` under
+ * React Native's Strict TypeScript API), so refs can call `.focus()`,
+ * `.blur()`, `.clear()`, and other instance methods.
+ */
+export type InputRef = TextInputRef;

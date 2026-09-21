@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { BackHandler } from 'react-native';
 import { useAnimatedReaction } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
@@ -7,6 +7,14 @@ import type { BottomSheetContentContainerProps } from '../types/bottom-sheet';
 
 const BottomSheetView = GorhomBottomSheetPackage?.BottomSheetView;
 const useBottomSheet = GorhomBottomSheetPackage?.useBottomSheet;
+const useBottomSheetInternal = GorhomBottomSheetPackage?.useBottomSheetInternal;
+
+/**
+ * `ANIMATION_STATUS.RUNNING` read eagerly: worklets can capture the plain
+ * value, but not the enum object behind the optional package import.
+ */
+const ANIMATION_STATUS_RUNNING: number =
+  GorhomBottomSheetPackage?.ANIMATION_STATUS?.RUNNING ?? 1;
 
 /**
  * Reusable BottomSheetContentContainer component
@@ -30,6 +38,8 @@ export function BottomSheetContentContainer({
   enablePanDownToClose,
 }: BottomSheetContentContainerProps) {
   const { close, snapToIndex } = useBottomSheet();
+  const { animatedAnimationState, animatedDetentsState, animatedPosition } =
+    useBottomSheetInternal();
   const prevIsOpenRef = useRef(isOpen);
 
   const closeBottomSheet = () => {
@@ -71,6 +81,65 @@ export function BottomSheetContentContainer({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, enablePanDownToClose]);
+
+  /**
+   * Retargets a close that is still animating when the container is resized.
+   * The zero duration keeps the sheet in step with the resize instead of
+   * sliding away afterwards.
+   */
+  const realignDismissedSheet = useCallback(() => {
+    close({ duration: 0 });
+  }, [close]);
+
+  /**
+   * A dismissed sheet rests at the offset it was closed at, and that offset is
+   * only recalculated while the sheet sits at a snap point. Once the container
+   * is resized — device rotation, iPad split view — the stale offset can land
+   * inside the new container, so the sheet shows up again even though `isOpen`
+   * is still `false`, which leaves it unreachable through the overlay.
+   *
+   * The same mismatch happens on the first layout on Android. Gorhom parks a
+   * closed sheet at `Dimensions.get('window').height` ([#2747](https://github.com/gorhom/react-native-bottom-sheet/issues/2747),
+   * [#329](https://github.com/gorhom/react-native-bottom-sheet/issues/329)). On
+   * devices where `window` excludes the status bar and/or the nav bar — Samsung
+   * edge-to-edge, 3-button navigation, translucent status bars — that value is
+   * shorter than the measured container, so the handle peeks above the bottom
+   * edge until something animates the sheet. Skipping the first
+   * `closedDetentPosition` (when `previous` is still `undefined`) is exactly
+   * the frame that needs the correction.
+   *
+   * An idle sheet is moved on the spot, in the same frame the layout lands, so
+   * the stale offset is never painted. Hopping to the JS thread to close it
+   * instead costs a couple of frames, which is long enough to flash the sheet
+   * on screen. A close that is still animating owns the position, so that one
+   * is retargeted through the public method rather than overwritten.
+   */
+  useAnimatedReaction(
+    () => animatedDetentsState.get().closedDetentPosition,
+    (closedPosition, previousClosedPosition) => {
+      if (
+        isOpen ||
+        closedPosition === undefined ||
+        closedPosition === previousClosedPosition
+      ) {
+        return;
+      }
+
+      if (animatedAnimationState.get().status === ANIMATION_STATUS_RUNNING) {
+        scheduleOnRN(realignDismissedSheet);
+        return;
+      }
+
+      animatedPosition.set(closedPosition);
+    },
+    [
+      isOpen,
+      animatedAnimationState,
+      animatedDetentsState,
+      animatedPosition,
+      realignDismissedSheet,
+    ]
+  );
 
   useEffect(() => {
     const wasOpen = prevIsOpenRef.current;

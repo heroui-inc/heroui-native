@@ -51,7 +51,8 @@ export { SkeletonAnimationProvider, useSkeletonAnimation };
 
 /**
  * Animation hook for Skeleton root component
- * Handles entering/exiting animations, cascades animation disabled state, and manages progress animation
+ * Handles entering/exiting animations, cascades animation disabled state, and manages progress animation.
+ * `variant="none"` skips default FadeIn/FadeOut unless enter/exit is set explicitly.
  */
 export function useSkeletonRootAnimation(options: {
   animation: SkeletonRootAnimation | undefined;
@@ -121,6 +122,22 @@ export function useSkeletonRootAnimation(options: {
     property: 'value',
     defaultValue: FadeOut,
   });
+
+  /**
+   * `variant="none"` is a static bone. Skip the default FadeIn/FadeOut so
+   * lists do not pay layout-animation cost on every mount/recycle.
+   * Explicit `animation.entering` / `animation.exiting` still apply.
+   */
+  const hasExplicitEntering =
+    typeof animation === 'object' &&
+    animation !== null &&
+    'entering' in animation;
+  const hasExplicitExiting =
+    typeof animation === 'object' &&
+    animation !== null &&
+    'exiting' in animation;
+  const skipDefaultEntering = variant === 'none' && !hasExplicitEntering;
+  const skipDefaultExiting = variant === 'none' && !hasExplicitExiting;
 
   // Extract shimmer animation configuration for progress animation
   const shimmerDuration = getAnimationValueProperty({
@@ -204,8 +221,14 @@ export function useSkeletonRootAnimation(options: {
 
   return {
     isAllAnimationsDisabled,
-    entering: isEnteringAnimationDisabledValue ? undefined : enteringValue,
-    exiting: isExitingAnimationDisabledValue ? undefined : exitingValue,
+    entering:
+      isEnteringAnimationDisabledValue || skipDefaultEntering
+        ? undefined
+        : enteringValue,
+    exiting:
+      isExitingAnimationDisabledValue || skipDefaultExiting
+        ? undefined
+        : exitingValue,
   };
 }
 

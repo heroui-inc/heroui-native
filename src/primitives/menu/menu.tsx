@@ -5,6 +5,7 @@ import React, {
   useContext,
   useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
   useState,
 } from 'react';
@@ -13,6 +14,7 @@ import {
   Pressable,
   Text,
   View,
+  useWindowDimensions,
   type GestureResponderEvent,
   type LayoutChangeEvent,
   type LayoutRectangle,
@@ -141,7 +143,10 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       setContentLayout,
       isDefaultOpen,
       triggerPosition,
+      presentation,
     } = useRootContext();
+
+    const { width: windowWidth, height: windowHeight } = useWindowDimensions();
 
     const isDisabledValue = isDisabled ?? isDisabledRoot ?? undefined;
 
@@ -164,6 +169,21 @@ const Trigger = forwardRef<TriggerRef, TriggerProps>(
       },
       deps: [isOpen],
     });
+
+    // A centered ancestor can move without changing the trigger's local layout.
+    useLayoutEffect(() => {
+      if (!isOpen || presentation !== 'popover') return;
+      augmentedRef.current?.measure((_x, _y, width, height, pageX, pageY) => {
+        setTriggerPosition({ width, height, pageX, pageY });
+      });
+    }, [
+      isOpen,
+      presentation,
+      windowWidth,
+      windowHeight,
+      augmentedRef,
+      setTriggerPosition,
+    ]);
 
     // Open menu on mount if isDefaultOpen is true
     useEffect(() => {

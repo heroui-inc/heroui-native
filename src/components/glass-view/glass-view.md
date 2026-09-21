@@ -74,7 +74,7 @@ Components with an injectable background render it automatically; replace it via
 
 | prop            | type           | default                                   | description                                                                                          |
 | --------------- | -------------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `intensity`     | `number`       | `30`                                      | Blur intensity (0-100). iOS only, forwarded to expo-blur.                                            |
+| `intensity`     | `number`       | `25`                                      | Blur intensity (0-100). iOS only, forwarded to expo-blur.                                            |
 | `tint`          | `ExpoBlurTint` | derived from the active light/dark scheme | Blur tint. iOS only, forwarded to expo-blur.                                                         |
 | `fallbackColor` | `ThemeColor`   | `'overlay'`                               | Theme token flattened over `--background` and painted opaque on Android / web (ignored on iOS blur). |
 | `forceFallbackColor` | `boolean` | `false`                                   | Skips the iOS blur and paints the opaque `fallbackColor` on every platform.                          |

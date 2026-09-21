@@ -664,11 +664,16 @@ const SelectContentDialog = forwardRef<
       background === undefined ? <SelectContentBackground /> : background;
 
     return (
-      <View className={wrapperClassName} style={styles?.wrapper}>
+      <View
+        className={wrapperClassName}
+        style={styles?.wrapper}
+        pointerEvents="box-none"
+      >
         <PortalGestureRoot>
           <GestureDetector gesture={panGesture}>
             <Animated.View
               ref={dragContainerRef}
+              pointerEvents="box-none"
               entering={entering}
               exiting={exiting}
               collapsable={false}

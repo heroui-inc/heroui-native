@@ -1,4 +1,4 @@
-import type { Pressable, Text, View, ViewStyle } from 'react-native';
+import type { Pressable, Text, TextInput, View, ViewStyle } from 'react-native';
 
 // Base utility types
 
@@ -28,6 +28,18 @@ type PressableRef = React.ComponentRef<typeof Pressable>;
  * Used for forwarding refs to Text elements
  */
 type TextRef = React.ComponentRef<typeof Text>;
+
+/**
+ * Reference type for React Native TextInput component.
+ * Used for forwarding refs to text input elements.
+ *
+ * Resolved via `React.ComponentRef` so it matches the native input instance
+ * on both the legacy class-based types and the Strict TypeScript API
+ * (`TextInputInstance` from React Native 0.87+). Using `typeof TextInput`
+ * as a ref type is incompatible with the Strict API, where `TextInput` is
+ * the component function rather than the instance.
+ */
+type TextInputRef = React.ComponentRef<typeof TextInput>;
 
 // Slottable component props
 
@@ -141,6 +153,7 @@ export type {
   SlottablePressableProps,
   SlottableTextProps,
   SlottableViewProps,
+  TextInputRef,
   TextRef,
   ViewRef,
 };

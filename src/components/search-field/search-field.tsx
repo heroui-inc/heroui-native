@@ -1,9 +1,5 @@
 import { forwardRef, useLayoutEffect, useMemo, useState } from 'react';
-import {
-  type GestureResponderEvent,
-  type TextInput as TextInputType,
-  View,
-} from 'react-native';
+import { type GestureResponderEvent, View } from 'react-native';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { CloseIcon } from '../../helpers/internal/components';
 import {
@@ -13,7 +9,7 @@ import {
 import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
 import { Button } from '../button';
-import { Input } from '../input';
+import { Input, type InputRef } from '../input';
 import { useSearchFieldRootAnimation } from './search-field.animation';
 import { DISPLAY_NAME } from './search-field.constants';
 import { searchFieldClassNames } from './search-field.styles';
@@ -177,7 +173,7 @@ const SearchFieldSearchIcon = forwardRef<View, SearchFieldSearchIconProps>(
 
 // --------------------------------------------------
 
-const SearchFieldInput = forwardRef<TextInputType, SearchFieldInputProps>(
+const SearchFieldInput = forwardRef<InputRef, SearchFieldInputProps>(
   (props, ref) => {
     const {
       className,

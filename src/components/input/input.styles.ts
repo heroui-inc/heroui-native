@@ -30,7 +30,7 @@ const background = tv({
  * explicitly aligned to the trailing side in RTL layouts.
  */
 const input = tv({
-  base: 'input__input ios:outline-2 ios:outline-transparent ios:focus:outline-accent android:border-[1.5px] android:border-transparent android:focus:border-accent rtl:text-right',
+  base: 'input__input ios:outline ios:outline-transparent ios:focus:outline-accent android:border-[1.5px] android:border-transparent android:focus:border-accent rtl:text-right',
   variants: {
     variant: {
       primary:

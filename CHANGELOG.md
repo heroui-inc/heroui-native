@@ -1,3 +1,22 @@
+## <small>1.0.10 (2026-09-21)</small>
+
+* chore(tests): remove unused type assertions for Input and TextArea refs ([5d6a3ea](https://github.com/heroui-inc/heroui-native/commit/5d6a3ea))
+* fix(bottom-sheet): enhance handling of closed sheet visibility and animation during layout changes ([4cea688](https://github.com/heroui-inc/heroui-native/commit/4cea688))
+* fix(bottom-sheet): improve handling of dismissed state and animation during container resize ([56c3e1a](https://github.com/heroui-inc/heroui-native/commit/56c3e1a))
+* fix(input): update input styles to remove outline width for iOS ([8274a31](https://github.com/heroui-inc/heroui-native/commit/8274a31))
+* fix(select): apply the documented default trigger variant ([c459465](https://github.com/heroui-inc/heroui-native/commit/c459465))
+* fix(select): pass outside taps through dialog layout wrapper ([b34501d](https://github.com/heroui-inc/heroui-native/commit/b34501d))
+* fix(skeleton): enhance animation handling for variant="none" to skip default transitions ([d65da7a](https://github.com/heroui-inc/heroui-native/commit/d65da7a))
+* fix(switch): keep a consumer provided aria-valuetext ([0aebe5e](https://github.com/heroui-inc/heroui-native/commit/0aebe5e))
+* feat(input): add type assertions for Input and TextArea refs, and update component references ([dbffc0b](https://github.com/heroui-inc/heroui-native/commit/dbffc0b))
+* docs(alert,sub-menu): correct documented icon size defaults ([991480f](https://github.com/heroui-inc/heroui-native/commit/991480f))
+* fix(dialog,select): pass outside taps through animated wrappers ([fa68f73](https://github.com/heroui-inc/heroui-native/commit/fa68f73))
+* fix(menu,popover,select): refresh anchors when the app window changes ([235dcc1](https://github.com/heroui-inc/heroui-native/commit/235dcc1))
+* docs(close-button): correct documented icon size and color defaults ([33c099b](https://github.com/heroui-inc/heroui-native/commit/33c099b))
+* docs(glass-view): correct documented intensity default ([ce04dc3](https://github.com/heroui-inc/heroui-native/commit/ce04dc3))
+
+
+
 ## <small>1.0.9 (2026-08-31)</small>
 
 * build: upd expo to 57.0.18 ([129af2e](https://github.com/heroui-inc/heroui-native/commit/129af2e))

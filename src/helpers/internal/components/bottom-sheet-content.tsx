@@ -179,8 +179,14 @@ export const BottomSheetContent = forwardRef<
     useAnimatedReaction(
       () => progress.get(),
       (value) => {
-        // 0 and 2 are the two resting points of a closed sheet.
-        if (!isOpen && (value === 0 || value === 2)) {
+        /**
+         * 0 and 2 are the two resting points of a closed sheet. Compare with
+         * a small epsilon: on Android a closed sheet can sit slightly above
+         * index `-1` when gorhom's initial `window.height` is shorter than
+         * the container, so progress never lands on exactly `0` or `2` and
+         * the peek would stay painted.
+         */
+        if (!isOpen && (value <= 0.01 || value >= 1.99)) {
           scheduleOnRN(setIsDismissed, true);
         }
       },
@@ -188,11 +194,11 @@ export const BottomSheetContent = forwardRef<
     );
 
     /**
-     * Snapping the sheet through its ref opens it without going through
-     * `isOpen`, so the open state alone is not enough to tell whether the
-     * sheet is meant to be seen. A resize leaves a dismissed sheet where it
-     * is rather than animating it, so reacting to the animation keeps those
-     * two apart.
+     * Reveal the sheet only when our open state says it should be seen.
+     * Gorhom can fire `onAnimate` to a snap index `>= 0` on its own — dynamic
+     * sizing and the `window` vs container height mismatch both do this while
+     * `isOpen` is still `false` — and treating that as a real open would
+     * un-hide a closed sheet so its handle peeks at the bottom of the screen.
      */
     const onAnimate = restProps.onAnimate;
     const handleAnimate = useCallback(
@@ -202,13 +208,13 @@ export const BottomSheetContent = forwardRef<
         fromPosition: number,
         toPosition: number
       ) => {
-        if (toIndex >= 0) {
+        if (toIndex >= 0 && isOpen) {
           setIsDismissed(false);
         }
 
         onAnimate?.(fromIndex, toIndex, fromPosition, toPosition);
       },
-      [onAnimate]
+      [isOpen, onAnimate]
     );
 
     const containerStyle = useMemo(

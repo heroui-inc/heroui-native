@@ -98,7 +98,17 @@ export function BottomSheetContentContainer({
    * inside the new container, so the sheet shows up again even though `isOpen`
    * is still `false`, which leaves it unreachable through the overlay.
    *
-   * An idle sheet is moved on the spot, in the same frame the resize lands, so
+   * The same mismatch happens on the first layout on Android. Gorhom parks a
+   * closed sheet at `Dimensions.get('window').height` ([#2747](https://github.com/gorhom/react-native-bottom-sheet/issues/2747),
+   * [#329](https://github.com/gorhom/react-native-bottom-sheet/issues/329)). On
+   * devices where `window` excludes the status bar and/or the nav bar — Samsung
+   * edge-to-edge, 3-button navigation, translucent status bars — that value is
+   * shorter than the measured container, so the handle peeks above the bottom
+   * edge until something animates the sheet. Skipping the first
+   * `closedDetentPosition` (when `previous` is still `undefined`) is exactly
+   * the frame that needs the correction.
+   *
+   * An idle sheet is moved on the spot, in the same frame the layout lands, so
    * the stale offset is never painted. Hopping to the JS thread to close it
    * instead costs a couple of frames, which is long enough to flash the sheet
    * on screen. A close that is still animating owns the position, so that one
@@ -110,7 +120,6 @@ export function BottomSheetContentContainer({
       if (
         isOpen ||
         closedPosition === undefined ||
-        previousClosedPosition === undefined ||
         closedPosition === previousClosedPosition
       ) {
         return;

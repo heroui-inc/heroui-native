@@ -27,7 +27,15 @@ const [InputGroupProvider, useInputGroup] =
 // --------------------------------------------------
 
 const InputGroupRoot = forwardRef<ViewRef, InputGroupProps>((props, ref) => {
-  const { children, animation, isDisabled = false, ...restProps } = props;
+  const {
+    children,
+    animation,
+    isDisabled: localIsDisabled,
+    ...restProps
+  } = props;
+
+  const formField = useFormField();
+  const isDisabled = localIsDisabled ?? formField?.isDisabled ?? false;
 
   const [prefixWidth, setPrefixWidth] = useState(0);
   const [suffixWidth, setSuffixWidth] = useState(0);

@@ -220,9 +220,9 @@ export const BottomSheetContent = forwardRef<
     const containerStyle = useMemo(
       () => [
         restProps.containerStyle,
-        isDismissed && styles.dismissedContainer,
+        isDismissed && !isOpen && styles.dismissedContainer,
       ],
-      [restProps.containerStyle, isDismissed]
+      [restProps.containerStyle, isDismissed, isOpen]
     );
 
     /**

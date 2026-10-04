@@ -34,7 +34,7 @@ const input = tv({
   variants: {
     variant: {
       primary:
-        'input__input--variant-primary ios:shadow-field android:shadow-sm',
+        'input__input--variant-primary ios:shadow-field android:[elevation:1]',
       secondary: 'input__input--variant-secondary',
     },
     isInvalid: {

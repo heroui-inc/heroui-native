@@ -186,7 +186,21 @@ export const BottomSheetContent = forwardRef<
          * the container, so progress never lands on exactly `0` or `2` and
          * the peek would stay painted.
          */
-        if (!isOpen && (value <= 0.01 || value >= 1.99)) {
+        if (isOpen) {
+          /**
+           * While the sheet is open it must never stay painted as dismissed.
+           *
+           * This worklet captures `isOpen`, and the rebuild that picks up a new
+           * value lands a frame or two after the open animation has already
+           * started. In that window the old capture sees a closed resting
+           * progress and latches `isDismissed` on a sheet gorhom has already
+           * positioned correctly: present, invisible, and non-interactive, with
+           * nothing left to re-run the clearing paths. Re-asserting `false`
+           * while open makes that latch correct itself on the next frame
+           * instead of persisting until the sheet is closed and reopened.
+           */
+          scheduleOnRN(setIsDismissed, false);
+        } else if (value <= 0.01 || value >= 1.99) {
           scheduleOnRN(setIsDismissed, true);
         }
       },

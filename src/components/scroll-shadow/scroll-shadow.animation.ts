@@ -72,17 +72,17 @@ export function useScrollShadowRootAnimation(options: {
     },
   });
 
-  const topShadowOpacity = useDerivedValue(() => {
-    if (isAnimationDisabledValue) {
-      return 1;
-    }
+  const hideShadow = () => {
+    'worklet';
+    return isAnimationDisabledValue
+      ? 0
+      : withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
+  };
 
-    if (!isEnabled)
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-    if (visibility === 'none')
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-    if (visibility === 'bottom' || visibility === 'right')
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
+  const topShadowOpacity = useDerivedValue(() => {
+    if (!isEnabled) return hideShadow();
+    if (visibility === 'none') return hideShadow();
+    if (visibility === 'bottom' || visibility === 'right') return hideShadow();
 
     return interpolate(
       scrollOffset.get(),
@@ -93,16 +93,9 @@ export function useScrollShadowRootAnimation(options: {
   });
 
   const bottomShadowOpacity = useDerivedValue(() => {
-    if (isAnimationDisabledValue) {
-      return 1;
-    }
-
-    if (!isEnabled)
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-    if (visibility === 'none')
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
-    if (visibility === 'top' || visibility === 'left')
-      return withTiming(0, { duration: SHADOW_EXIT_ANIMATION_DURATION });
+    if (!isEnabled) return hideShadow();
+    if (visibility === 'none') return hideShadow();
+    if (visibility === 'top' || visibility === 'left') return hideShadow();
 
     return interpolate(
       scrollOffset.get() + containerSize.get(),

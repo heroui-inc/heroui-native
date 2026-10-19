@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { createContext, forwardRef, useEffect, useMemo, useState } from 'react';
 import {
-  type ImageErrorEventData,
+  type ImageErrorEvent,
   type ImageLoadEvent,
-  type NativeSyntheticEvent,
   Image as RNImage,
   View,
 } from 'react-native';
@@ -65,10 +64,15 @@ Root.displayName = 'HeroUINative.Primitive.Avatar.Root';
 
 // --------------------------------------------------
 
-const Image = forwardRef<ImageRef, ImageProps>(
+// Annotated so generated declarations don't inline React Native's private
+// image source types.
+const Image: React.ForwardRefExoticComponent<
+  ImageProps & React.RefAttributes<ImageRef>
+> = forwardRef<ImageRef, ImageProps>(
   (
     {
       asChild,
+      children,
       onLoad: onLoadProps,
       onError: onErrorProps,
       onLoadingStatusChange,
@@ -120,7 +124,7 @@ const Image = forwardRef<ImageRef, ImageProps>(
     );
 
     const onError = React.useCallback(
-      (e: NativeSyntheticEvent<ImageErrorEventData>) => {
+      (e: ImageErrorEvent) => {
         setStatus('error');
         onLoadingStatusChange?.('error');
         onErrorProps?.(e);
@@ -128,14 +132,26 @@ const Image = forwardRef<ImageRef, ImageProps>(
       [onErrorProps, setStatus, onLoadingStatusChange]
     );
 
-    const Component = asChild ? Slot.Image : RNImage;
-
     if (status === 'error') {
       return null;
     }
 
+    if (asChild) {
+      return (
+        <Slot.Image
+          ref={ref}
+          alt={alt}
+          onLoad={onLoad}
+          onError={onError}
+          {...props}
+        >
+          {children}
+        </Slot.Image>
+      );
+    }
+
     return (
-      <Component
+      <RNImage
         ref={ref}
         alt={alt}
         onLoad={onLoad}

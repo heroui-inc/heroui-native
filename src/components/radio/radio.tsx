@@ -1,5 +1,4 @@
 import { forwardRef, useMemo } from 'react';
-import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { useIsOnSurface } from '../../helpers/external/hooks';
@@ -216,7 +215,7 @@ const RadioIndicator = forwardRef<Animated.View, RadioIndicatorProps>(
 
 // --------------------------------------------------
 
-const RadioIndicatorThumb = forwardRef<View, RadioIndicatorThumbProps>(
+const RadioIndicatorThumb = forwardRef<ViewRef, RadioIndicatorThumbProps>(
   (props, ref) => {
     const {
       className,

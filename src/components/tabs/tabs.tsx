@@ -20,7 +20,7 @@ import {
   useHasDefaultThemeBackground,
 } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
-import type { ViewRef } from '../../helpers/internal/types';
+import type { ScrollViewRef, ViewRef } from '../../helpers/internal/types';
 import * as TabsPrimitives from '../../primitives/tabs';
 import type * as TabsPrimitivesTypes from '../../primitives/tabs/tabs.types';
 import {
@@ -209,7 +209,7 @@ const TabsList = forwardRef<TabsPrimitivesTypes.ListRef, TabsListProps>(
 
 // --------------------------------------------------
 
-const TabsScrollView = forwardRef<ScrollView, TabsScrollViewProps>(
+const TabsScrollView = forwardRef<ScrollViewRef, TabsScrollViewProps>(
   (props, ref) => {
     const {
       children,
@@ -235,7 +235,7 @@ const TabsScrollView = forwardRef<ScrollView, TabsScrollViewProps>(
         className: contentContainerClassName,
       });
 
-    const scrollRef = useRef<ScrollView>(null);
+    const scrollRef = useRef<ScrollViewRef>(null);
 
     const handleContentSizeChange = useCallback(
       (width: number, height: number) => {

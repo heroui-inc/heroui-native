@@ -2,6 +2,7 @@ import React from 'react';
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
 import { useTextComponent } from '../../external/hooks';
 import { cn } from '../../external/utils';
+import type { TextRef } from '../types';
 
 /**
  * Props for HeroText component
@@ -51,7 +52,7 @@ export interface HeroTextProps extends RNTextProps {
  * </HeroUINativeProvider>
  * ```
  */
-export const HeroText = React.forwardRef<RNText, HeroTextProps>(
+export const HeroText = React.forwardRef<TextRef, HeroTextProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
     const { textProps } = useTextComponent();

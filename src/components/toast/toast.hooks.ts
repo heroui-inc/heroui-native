@@ -52,18 +52,18 @@ export function useVerticalPlaceholderStyles({
     const backgroundColor =
       styleBackgroundColor ?? classNameBackgroundColor ?? undefined;
 
+    const backgroundStyle: ViewStyle | undefined =
+      backgroundColor !== undefined ? { backgroundColor } : undefined;
+
     const topStyle: ViewStyle = {
       height: topHeight,
+      ...backgroundStyle,
     };
 
     const bottomStyle: ViewStyle = {
       height: bottomHeight,
+      ...backgroundStyle,
     };
-
-    if (backgroundColor !== undefined) {
-      topStyle.backgroundColor = backgroundColor;
-      bottomStyle.backgroundColor = backgroundColor;
-    }
 
     return {
       topStyle,

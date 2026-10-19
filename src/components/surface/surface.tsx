@@ -41,7 +41,7 @@ const SURFACE_FALLBACK_COLOR: Record<
  * nothing. Pass `children` to host arbitrary content (gradients, images)
  * with the container's positioning and clipping applied.
  */
-const SurfaceBackground = forwardRef<View, SurfaceBackgroundProps>(
+const SurfaceBackground = forwardRef<ViewRef, SurfaceBackgroundProps>(
   ({ className, ...props }, ref) => {
     const surface = useSurface();
     const variant = surface?.variant ?? 'default';

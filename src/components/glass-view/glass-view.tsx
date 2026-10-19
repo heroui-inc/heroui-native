@@ -3,6 +3,7 @@ import { Platform, View } from 'react-native';
 import { useUniwind, withUniwind } from 'uniwind';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { useLibraryTheme } from '../../helpers/internal/hooks';
+import type { ViewRef } from '../../helpers/internal/types';
 import ExpoBlur from '../../optional/expo-blur';
 import {
   DEFAULT_FALLBACK_COLOR,
@@ -40,7 +41,7 @@ export const useIsGlassTheme = (): boolean => {
  *
  * @see Doc & examples: glass-view.md
  */
-const GlassView = forwardRef<View, GlassViewProps>((props, ref) => {
+const GlassView = forwardRef<ViewRef, GlassViewProps>((props, ref) => {
   const {
     intensity = DEFAULT_INTENSITY,
     tint,

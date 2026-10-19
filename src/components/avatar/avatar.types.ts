@@ -152,6 +152,10 @@ export type AvatarImageProps =
        */
       asChild?: false;
       /**
+       * Children are only forwarded when `asChild` is `true`
+       */
+      children?: never;
+      /**
        * Animation configuration for image
        * - `false` or `"disabled"`: Disable all animations
        * - `true` or `undefined`: Use default animations

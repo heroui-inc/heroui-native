@@ -72,7 +72,7 @@ const OnboardingScreen = () => {
           size="sm"
           className={cn('rounded-full bg-black/10', isDark && 'bg-white/20')}
           isIconOnly
-          onPress={router.back}
+          onPress={() => router.back()}
           feedbackVariant="scale"
         >
           <StyledFeather
@@ -85,7 +85,7 @@ const OnboardingScreen = () => {
           size="sm"
           className={cn('rounded-full bg-black/10', isDark && 'bg-white/20')}
           isIconOnly
-          onPress={router.back}
+          onPress={() => router.back()}
           feedbackVariant="scale"
         >
           <StyledFeather

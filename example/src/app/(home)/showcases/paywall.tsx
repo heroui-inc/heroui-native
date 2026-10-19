@@ -62,7 +62,7 @@ export default function Paywall() {
         <View>
           <Pressable
             className="absolute top0 left-0 z-50"
-            onPress={router.back}
+            onPress={() => router.back()}
             hitSlop={16}
           >
             <StyledFeather

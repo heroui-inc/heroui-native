@@ -70,7 +70,7 @@ export default function Raycast() {
       <View className="flex-row items-center">
         <Pressable
           className="w-20 items-center justify-center opacity-80"
-          onPress={router.back}
+          onPress={() => router.back()}
         >
           <StyledFeather
             name="chevron-left"

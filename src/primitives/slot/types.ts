@@ -8,7 +8,7 @@ import {
 
 type AnyProps = Record<string, any>;
 
-type ImageSlotProps = RNImageProps & {
+type ImageSlotProps = Omit<RNImageProps, 'children'> & {
   children?: React.ReactNode;
 };
 

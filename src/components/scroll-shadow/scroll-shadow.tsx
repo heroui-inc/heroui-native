@@ -9,6 +9,7 @@ import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Animated, { useComposedEventHandler } from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { colorKit } from '../../helpers/external/utils';
+import type { ViewRef } from '../../helpers/internal/types';
 import { easeGradient } from '../../helpers/internal/utils';
 import { useScrollShadowRootAnimation } from './scroll-shadow.animation';
 import {
@@ -56,204 +57,208 @@ function getAnimatedComponent(
   return cached;
 }
 
-const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
-  const {
-    children,
-    size = DEFAULT_SHADOW_SIZE,
-    orientation: orientationProp,
-    visibility = 'auto',
-    color,
-    isEnabled = true,
-    className,
-    style,
-    LinearGradientComponent,
-    animation,
-    ...restProps
-  } = props;
+const ScrollShadowRoot = forwardRef<ViewRef, ScrollShadowProps>(
+  (props, ref) => {
+    const {
+      children,
+      size = DEFAULT_SHADOW_SIZE,
+      orientation: orientationProp,
+      visibility = 'auto',
+      color,
+      isEnabled = true,
+      className,
+      style,
+      LinearGradientComponent,
+      animation,
+      ...restProps
+    } = props;
 
-  const themeColorBackground = useThemeColor('background');
-  const shadowColor = color || themeColorBackground;
+    const themeColorBackground = useThemeColor('background');
+    const shadowColor = color || themeColorBackground;
 
-  const rootClassName = scrollShadowClassNames.root({ className });
+    const rootClassName = scrollShadowClassNames.root({ className });
 
-  const childHorizontal =
-    children?.props &&
-    typeof children?.props === 'object' &&
-    'horizontal' in children.props
-      ? children.props.horizontal
-      : false;
-  const orientation =
-    orientationProp || (childHorizontal ? 'horizontal' : 'vertical');
+    const childHorizontal =
+      children?.props &&
+      typeof children?.props === 'object' &&
+      'horizontal' in children.props
+        ? children.props.horizontal
+        : false;
+    const orientation =
+      orientationProp || (childHorizontal ? 'horizontal' : 'vertical');
 
-  const inverted =
-    children?.props &&
-    typeof children?.props === 'object' &&
-    'inverted' in children.props
-      ? children.props.inverted
-      : false;
+    const inverted =
+      children?.props &&
+      typeof children?.props === 'object' &&
+      'inverted' in children.props
+        ? children.props.inverted
+        : false;
 
-  // Get all animation logic from root hook
-  const {
-    contentSize,
-    containerSize,
-    localScrollHandler,
-    topShadowStyle,
-    bottomShadowStyle,
-  } = useScrollShadowRootAnimation({
-    animation,
-    orientation,
-    size,
-    visibility,
-    isEnabled,
-  });
-
-  // When inverted, swap which animated style drives each visual edge so that
-  // shadows appear at the correct edge from the user's perspective.
-  const topEdgeShadowStyle = inverted ? bottomShadowStyle : topShadowStyle;
-  const bottomEdgeShadowStyle = inverted ? topShadowStyle : bottomShadowStyle;
-
-  const onContentSizeChange = (w: number, h: number) => {
-    const contentDimension = orientation === 'vertical' ? h : w;
-    contentSize.set(contentDimension);
-    (children as any).props?.onContentSizeChange?.(w, h);
-  };
-
-  const onLayout = (event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout;
-    const containerDimension = orientation === 'vertical' ? height : width;
-    containerSize.set(containerDimension);
-    (children as any).props?.onLayout?.(event);
-  };
-
-  const outerScrollHandler = (children as any).props?.onScroll;
-  const handlers = outerScrollHandler
-    ? [localScrollHandler, outerScrollHandler]
-    : [localScrollHandler];
-
-  const onScroll = useComposedEventHandler(handlers);
-
-  const scrollEventThrottle =
-    (children as any).props?.scrollEventThrottle ||
-    DEFAULT_SCROLL_EVENT_THROTTLE;
-
-  if (!isValidElement(children)) {
-    return null;
-  }
-
-  const isAnimatedComponent =
-    (children.type as any)?.displayName?.includes('AnimatedComponent') ||
-    (children.type as any)?.__isAnimatedComponent;
-
-  const enhancedChild = isAnimatedComponent
-    ? cloneElement(children as any, {
-        onContentSizeChange,
-        onLayout,
-        scrollEventThrottle,
-        onScroll,
-      })
-    : createElement(getAnimatedComponent(children.type as any), {
-        ...(children as any).props,
-        onContentSizeChange,
-        onLayout,
-        scrollEventThrottle,
-        onScroll,
-      });
-
-  const { colors: topLeftColors, locations: topLeftLocations } = easeGradient({
-    colorStops: {
-      0: {
-        color: colorKit.setAlpha(shadowColor, 1).hex(),
-      },
-      1: {
-        color: colorKit.setAlpha(shadowColor, 0).hex(),
-      },
-    },
-  });
-
-  const { colors: bottomRightColors, locations: bottomRightLocations } =
-    easeGradient({
-      colorStops: {
-        0: {
-          color: colorKit.setAlpha(shadowColor, 0).hex(),
-        },
-        1: {
-          color: colorKit.setAlpha(shadowColor, 1).hex(),
-        },
-      },
+    // Get all animation logic from root hook
+    const {
+      contentSize,
+      containerSize,
+      localScrollHandler,
+      topShadowStyle,
+      bottomShadowStyle,
+    } = useScrollShadowRootAnimation({
+      animation,
+      orientation,
+      size,
+      visibility,
+      isEnabled,
     });
 
-  return (
-    <View ref={ref} className={rootClassName} style={style} {...restProps}>
-      {enhancedChild}
+    // When inverted, swap which animated style drives each visual edge so that
+    // shadows appear at the correct edge from the user's perspective.
+    const topEdgeShadowStyle = inverted ? bottomShadowStyle : topShadowStyle;
+    const bottomEdgeShadowStyle = inverted ? topShadowStyle : bottomShadowStyle;
 
-      {/* Top/Left Shadow */}
-      {orientation === 'vertical' ? (
-        <Animated.View
-          style={[
-            scrollShadowStyleSheet.topShadow,
-            { height: size },
-            topEdgeShadowStyle,
-          ]}
-        >
-          <LinearGradientComponent
-            colors={topLeftColors}
-            locations={topLeftLocations}
-            style={StyleSheet.absoluteFill}
-          />
-        </Animated.View>
-      ) : (
-        <Animated.View
-          style={[
-            scrollShadowStyleSheet.leftShadow,
-            { width: size },
-            topEdgeShadowStyle,
-          ]}
-        >
-          <LinearGradientComponent
-            colors={topLeftColors}
-            locations={topLeftLocations}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={StyleSheet.absoluteFill}
-          />
-        </Animated.View>
-      )}
+    const onContentSizeChange = (w: number, h: number) => {
+      const contentDimension = orientation === 'vertical' ? h : w;
+      contentSize.set(contentDimension);
+      (children as any).props?.onContentSizeChange?.(w, h);
+    };
 
-      {/* Bottom/Right Shadow */}
-      {orientation === 'vertical' ? (
-        <Animated.View
-          style={[
-            scrollShadowStyleSheet.bottomShadow,
-            { height: size },
-            bottomEdgeShadowStyle,
-          ]}
-        >
-          <LinearGradientComponent
-            colors={bottomRightColors}
-            locations={bottomRightLocations}
-            style={StyleSheet.absoluteFill}
-          />
-        </Animated.View>
-      ) : (
-        <Animated.View
-          style={[
-            scrollShadowStyleSheet.rightShadow,
-            { width: size },
-            bottomEdgeShadowStyle,
-          ]}
-        >
-          <LinearGradientComponent
-            colors={bottomRightColors}
-            locations={bottomRightLocations}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={StyleSheet.absoluteFill}
-          />
-        </Animated.View>
-      )}
-    </View>
-  );
-});
+    const onLayout = (event: LayoutChangeEvent) => {
+      const { width, height } = event.nativeEvent.layout;
+      const containerDimension = orientation === 'vertical' ? height : width;
+      containerSize.set(containerDimension);
+      (children as any).props?.onLayout?.(event);
+    };
+
+    const outerScrollHandler = (children as any).props?.onScroll;
+    const handlers = outerScrollHandler
+      ? [localScrollHandler, outerScrollHandler]
+      : [localScrollHandler];
+
+    const onScroll = useComposedEventHandler(handlers);
+
+    const scrollEventThrottle =
+      (children as any).props?.scrollEventThrottle ||
+      DEFAULT_SCROLL_EVENT_THROTTLE;
+
+    if (!isValidElement(children)) {
+      return null;
+    }
+
+    const isAnimatedComponent =
+      (children.type as any)?.displayName?.includes('AnimatedComponent') ||
+      (children.type as any)?.__isAnimatedComponent;
+
+    const enhancedChild = isAnimatedComponent
+      ? cloneElement(children as any, {
+          onContentSizeChange,
+          onLayout,
+          scrollEventThrottle,
+          onScroll,
+        })
+      : createElement(getAnimatedComponent(children.type as any), {
+          ...(children as any).props,
+          onContentSizeChange,
+          onLayout,
+          scrollEventThrottle,
+          onScroll,
+        });
+
+    const { colors: topLeftColors, locations: topLeftLocations } = easeGradient(
+      {
+        colorStops: {
+          0: {
+            color: colorKit.setAlpha(shadowColor, 1).hex(),
+          },
+          1: {
+            color: colorKit.setAlpha(shadowColor, 0).hex(),
+          },
+        },
+      }
+    );
+
+    const { colors: bottomRightColors, locations: bottomRightLocations } =
+      easeGradient({
+        colorStops: {
+          0: {
+            color: colorKit.setAlpha(shadowColor, 0).hex(),
+          },
+          1: {
+            color: colorKit.setAlpha(shadowColor, 1).hex(),
+          },
+        },
+      });
+
+    return (
+      <View ref={ref} className={rootClassName} style={style} {...restProps}>
+        {enhancedChild}
+
+        {/* Top/Left Shadow */}
+        {orientation === 'vertical' ? (
+          <Animated.View
+            style={[
+              scrollShadowStyleSheet.topShadow,
+              { height: size },
+              topEdgeShadowStyle,
+            ]}
+          >
+            <LinearGradientComponent
+              colors={topLeftColors}
+              locations={topLeftLocations}
+              style={StyleSheet.absoluteFill}
+            />
+          </Animated.View>
+        ) : (
+          <Animated.View
+            style={[
+              scrollShadowStyleSheet.leftShadow,
+              { width: size },
+              topEdgeShadowStyle,
+            ]}
+          >
+            <LinearGradientComponent
+              colors={topLeftColors}
+              locations={topLeftLocations}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={StyleSheet.absoluteFill}
+            />
+          </Animated.View>
+        )}
+
+        {/* Bottom/Right Shadow */}
+        {orientation === 'vertical' ? (
+          <Animated.View
+            style={[
+              scrollShadowStyleSheet.bottomShadow,
+              { height: size },
+              bottomEdgeShadowStyle,
+            ]}
+          >
+            <LinearGradientComponent
+              colors={bottomRightColors}
+              locations={bottomRightLocations}
+              style={StyleSheet.absoluteFill}
+            />
+          </Animated.View>
+        ) : (
+          <Animated.View
+            style={[
+              scrollShadowStyleSheet.rightShadow,
+              { width: size },
+              bottomEdgeShadowStyle,
+            ]}
+          >
+            <LinearGradientComponent
+              colors={bottomRightColors}
+              locations={bottomRightLocations}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={StyleSheet.absoluteFill}
+            />
+          </Animated.View>
+        )}
+      </View>
+    );
+  }
+);
 
 ScrollShadowRoot.displayName = SCROLL_SHADOW_DISPLAY_NAME.ROOT;
 

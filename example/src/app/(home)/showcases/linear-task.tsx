@@ -34,7 +34,7 @@ export default function LinearTaskScreen() {
       <View className="flex-row items-center gap-5 mb-4">
         <Pressable
           className="flex-row items-center gap-1"
-          onPress={router.back}
+          onPress={() => router.back()}
         >
           <StyledMaterialCommunityIcons
             name="arrow-left"

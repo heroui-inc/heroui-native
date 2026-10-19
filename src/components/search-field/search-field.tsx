@@ -145,7 +145,7 @@ const SearchFieldGroup = forwardRef<ViewRef, SearchFieldGroupProps>(
 
 // --------------------------------------------------
 
-const SearchFieldSearchIcon = forwardRef<View, SearchFieldSearchIconProps>(
+const SearchFieldSearchIcon = forwardRef<ViewRef, SearchFieldSearchIconProps>(
   (props, ref) => {
     const { children, className, iconProps, ...restProps } = props;
 
@@ -217,7 +217,7 @@ const SearchFieldInput: TextInputComponent<SearchFieldInputProps> = forwardRef(
 
 // --------------------------------------------------
 
-const SearchFieldClearButton = forwardRef<View, SearchFieldClearButtonProps>(
+const SearchFieldClearButton = forwardRef<ViewRef, SearchFieldClearButtonProps>(
   (props, ref) => {
     const { iconProps, className, children, onPress, ...restProps } = props;
 

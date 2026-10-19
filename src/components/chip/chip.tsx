@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import { Pressable, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Pressable, type StyleProp, type ViewStyle } from 'react-native';
 import {
   HeroText,
   ThemeBackground,
@@ -139,7 +139,7 @@ const Chip = forwardRef<PressableRef, ChipProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const ChipLabel = forwardRef<View, ChipLabelProps>((props, ref) => {
+const ChipLabel = forwardRef<ViewRef, ChipLabelProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
   const { size, variant, color } = useChip();

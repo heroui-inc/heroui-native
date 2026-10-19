@@ -1,10 +1,5 @@
 import { forwardRef, useLayoutEffect, useMemo, useRef } from 'react';
-import {
-  StyleSheet,
-  type GestureResponderEvent,
-  type Text as RNText,
-  type View,
-} from 'react-native';
+import { StyleSheet, type GestureResponderEvent } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import {
@@ -24,7 +19,11 @@ import {
   usePopupOverlayVariant,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
-import type { PressableRef } from '../../helpers/internal/types';
+import type {
+  PressableRef,
+  TextRef,
+  ViewRef,
+} from '../../helpers/internal/types';
 import * as DialogPrimitives from '../../primitives/dialog';
 import * as DialogPrimitivesTypes from '../../primitives/dialog/dialog.types';
 import { CloseButton } from '../close-button';
@@ -233,21 +232,22 @@ const DialogOverlay = forwardRef<
  * nothing. Pass `children` to host arbitrary content (gradients, images)
  * with the container's positioning and clipping applied.
  */
-const DialogContentBackground = forwardRef<View, DialogContentBackgroundProps>(
-  ({ className, ...props }, ref) => {
-    const contentBackgroundClassName = dialogClassNames.contentBackground({
-      className,
-    });
+const DialogContentBackground = forwardRef<
+  ViewRef,
+  DialogContentBackgroundProps
+>(({ className, ...props }, ref) => {
+  const contentBackgroundClassName = dialogClassNames.contentBackground({
+    className,
+  });
 
-    return (
-      <ThemeBackground
-        ref={ref}
-        className={contentBackgroundClassName}
-        {...props}
-      />
-    );
-  }
-);
+  return (
+    <ThemeBackground
+      ref={ref}
+      className={contentBackgroundClassName}
+      {...props}
+    />
+  );
+});
 
 // --------------------------------------------------
 
@@ -274,7 +274,7 @@ const DialogContent = forwardRef<
 
     const contentClassName = dialogClassNames.content({ className });
 
-    const dragContainerRef = useRef<View>(null);
+    const dragContainerRef = useRef<ViewRef>(null);
 
     const {
       contentY,
@@ -356,7 +356,7 @@ const DialogClose = forwardRef<PressableRef, DialogCloseProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const DialogTitle = forwardRef<RNText, DialogTitleProps>(
+const DialogTitle = forwardRef<TextRef, DialogTitleProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useDialog();
     const titleClassName = dialogClassNames.label({ className });
@@ -378,7 +378,7 @@ const DialogTitle = forwardRef<RNText, DialogTitleProps>(
 
 // --------------------------------------------------
 
-const DialogDescription = forwardRef<RNText, DialogDescriptionProps>(
+const DialogDescription = forwardRef<TextRef, DialogDescriptionProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useDialog();
 

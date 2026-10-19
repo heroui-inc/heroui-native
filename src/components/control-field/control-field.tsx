@@ -7,7 +7,7 @@ import {
   AnimationSettingsProvider,
   FormFieldProvider,
 } from '../../helpers/internal/contexts';
-import type { PressableRef } from '../../helpers/internal/types';
+import type { PressableRef, ViewRef } from '../../helpers/internal/types';
 import { Checkbox } from '../checkbox';
 import { Radio } from '../radio';
 import { Switch } from '../switch';
@@ -144,7 +144,7 @@ const ControlField = forwardRef<PressableRef, ControlFieldProps>(
 
 // --------------------------------------------------
 
-const ControlFieldIndicator = forwardRef<View, ControlFieldIndicatorProps>(
+const ControlFieldIndicator = forwardRef<ViewRef, ControlFieldIndicatorProps>(
   (props, ref) => {
     const { children, className, variant = 'switch', ...restProps } = props;
     const { isSelected, onSelectedChange, isDisabled, isInvalid } =

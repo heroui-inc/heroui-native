@@ -4,6 +4,7 @@ import {
   useLibraryTheme,
   type HeroUINativeTheme,
 } from '../../helpers/internal/hooks';
+import type { ViewRef } from '../../helpers/internal/types';
 import { GlassView } from '../glass-view';
 import { DISPLAY_NAME } from './theme-background.constants';
 import type {
@@ -53,7 +54,7 @@ export const useHasDefaultThemeBackground = (): boolean => {
  * `'surface-tertiary'`); field parts pass `'field'`; overlay parts keep the
  * `'overlay'` default.
  */
-const ThemeBackground = forwardRef<View, ThemeBackgroundProps>(
+const ThemeBackground = forwardRef<ViewRef, ThemeBackgroundProps>(
   (
     { children, className, fallbackColor, forceFallbackColor, ...props },
     ref

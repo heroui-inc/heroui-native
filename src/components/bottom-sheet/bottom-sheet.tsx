@@ -1,10 +1,6 @@
 import type GorhomBottomSheet from '@gorhom/bottom-sheet';
 import { forwardRef, useMemo } from 'react';
-import {
-  StyleSheet,
-  type GestureResponderEvent,
-  type Text as RNText,
-} from 'react-native';
+import { StyleSheet, type GestureResponderEvent } from 'react-native';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import {
   BottomSheetBackground,
@@ -22,7 +18,7 @@ import {
   usePopupOverlayVariant,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
-import type { PressableRef } from '../../helpers/internal/types';
+import type { PressableRef, TextRef } from '../../helpers/internal/types';
 import * as BottomSheetPrimitives from '../../primitives/bottom-sheet';
 import * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
 import { CloseButton } from '../close-button';
@@ -281,7 +277,7 @@ const BottomSheetClose = forwardRef<PressableRef, BottomSheetCloseProps>(
 
 // --------------------------------------------------
 
-const BottomSheetTitle = forwardRef<RNText, BottomSheetTitleProps>(
+const BottomSheetTitle = forwardRef<TextRef, BottomSheetTitleProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useBottomSheet();
     const titleClassName = bottomSheetClassNames.label({ className });
@@ -303,7 +299,7 @@ const BottomSheetTitle = forwardRef<RNText, BottomSheetTitleProps>(
 
 // --------------------------------------------------
 
-const BottomSheetDescription = forwardRef<RNText, BottomSheetDescriptionProps>(
+const BottomSheetDescription = forwardRef<TextRef, BottomSheetDescriptionProps>(
   ({ className, children, ...props }, ref) => {
     const { nativeID } = useBottomSheet();
 

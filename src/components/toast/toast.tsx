@@ -246,7 +246,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const ToastTitle = forwardRef<View, ToastTitleProps>((props, ref) => {
+const ToastTitle = forwardRef<ViewRef, ToastTitleProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
   const { variant } = useToast();
@@ -265,7 +265,7 @@ const ToastTitle = forwardRef<View, ToastTitleProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const ToastDescription = forwardRef<View, ToastDescriptionProps>(
+const ToastDescription = forwardRef<ViewRef, ToastDescriptionProps>(
   (props, ref) => {
     const { children, className, ...restProps } = props;
 
@@ -283,7 +283,7 @@ const ToastDescription = forwardRef<View, ToastDescriptionProps>(
 
 // --------------------------------------------------
 
-const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
+const ToastAction = forwardRef<ViewRef, ToastActionProps>((props, ref) => {
   const {
     children,
     variant,
@@ -400,7 +400,7 @@ const ToastAction = forwardRef<View, ToastActionProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const ToastClose = forwardRef<View, ToastCloseProps>((props, ref) => {
+const ToastClose = forwardRef<ViewRef, ToastCloseProps>((props, ref) => {
   const {
     children,
     iconProps,

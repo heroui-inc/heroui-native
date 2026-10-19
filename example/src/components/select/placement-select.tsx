@@ -1,4 +1,3 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
   ScrollShadow,
@@ -62,10 +61,7 @@ const PlacementContentList: FC<PlacementContentListProps> = memo(
     }, []);
 
     return (
-      <ScrollShadow
-        LinearGradientComponent={LinearGradient}
-        color={themeColorOverlay}
-      >
+      <ScrollShadow color={themeColorOverlay}>
         <FlatList
           ref={listRef}
           data={US_STATES}

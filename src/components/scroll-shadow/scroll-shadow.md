@@ -11,13 +11,12 @@ import { ScrollShadow } from 'heroui-native';
 ## Anatomy
 
 ```tsx
-<ScrollShadow LinearGradientComponent={LinearGradient}>
+<ScrollShadow>
   <ScrollView>...</ScrollView>
 </ScrollShadow>
 ```
 
 - **ScrollShadow**: Main container that wraps scrollable components and adds dynamic gradient shadows at the edges based on scroll position and content overflow. Automatically detects scroll orientation (horizontal/vertical) and manages shadow visibility.
-- **LinearGradientComponent**: Required prop that accepts a LinearGradient component from compatible libraries (expo-linear-gradient, react-native-linear-gradient, etc.) to render the gradient shadows.
 
 ## Usage
 
@@ -26,7 +25,7 @@ import { ScrollShadow } from 'heroui-native';
 Wrap any scrollable component to automatically add edge shadows.
 
 ```tsx
-<ScrollShadow LinearGradientComponent={LinearGradient}>
+<ScrollShadow>
   <ScrollView>...</ScrollView>
 </ScrollShadow>
 ```
@@ -36,7 +35,7 @@ Wrap any scrollable component to automatically add edge shadows.
 The component auto-detects horizontal scrolling from the child's `horizontal` prop.
 
 ```tsx
-<ScrollShadow LinearGradientComponent={LinearGradient}>
+<ScrollShadow>
   <FlatList horizontal data={data} renderItem={...} />
 </ScrollShadow>
 ```
@@ -46,7 +45,7 @@ The component auto-detects horizontal scrolling from the child's `horizontal` pr
 Control the gradient shadow height/width with the `size` prop.
 
 ```tsx
-<ScrollShadow size={100} LinearGradientComponent={LinearGradient}>
+<ScrollShadow size={100}>
   <ScrollView>...</ScrollView>
 </ScrollShadow>
 ```
@@ -56,15 +55,15 @@ Control the gradient shadow height/width with the `size` prop.
 Specify which shadows to display using the `visibility` prop.
 
 ```tsx
-<ScrollShadow visibility="top" LinearGradientComponent={LinearGradient}>
+<ScrollShadow visibility="top">
   <ScrollView>...</ScrollView>
 </ScrollShadow>
 
-<ScrollShadow visibility="bottom" LinearGradientComponent={LinearGradient}>
+<ScrollShadow visibility="bottom">
   <ScrollView>...</ScrollView>
 </ScrollShadow>
 
-<ScrollShadow visibility="none" LinearGradientComponent={LinearGradient}>
+<ScrollShadow visibility="none">
   <ScrollView>...</ScrollView>
 </ScrollShadow>
 ```
@@ -74,7 +73,7 @@ Specify which shadows to display using the `visibility` prop.
 Override the default shadow color which uses the theme's background.
 
 ```tsx
-<ScrollShadow color="#ffffff" LinearGradientComponent={LinearGradient}>
+<ScrollShadow color="#ffffff">
   <ScrollView>...</ScrollView>
 </ScrollShadow>
 ```
@@ -84,7 +83,6 @@ Override the default shadow color which uses the theme's background.
 **Important:** ScrollShadow internally converts the child to a Reanimated animated component. If you need to use the `onScroll` prop, you must use `useAnimatedScrollHandler` from react-native-reanimated.
 
 ```tsx
-import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { useAnimatedScrollHandler } from 'react-native-reanimated';
 
 const scrollHandler = useAnimatedScrollHandler({
@@ -93,7 +91,7 @@ const scrollHandler = useAnimatedScrollHandler({
   },
 });
 
-<ScrollShadow LinearGradientComponent={LinearGradient}>
+<ScrollShadow>
   <Animated.ScrollView onScroll={scrollHandler}>...</Animated.ScrollView>
 </ScrollShadow>;
 ```
@@ -102,7 +100,6 @@ const scrollHandler = useAnimatedScrollHandler({
 
 ```tsx
 import { ScrollShadow, Surface } from 'heroui-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { FlatList, ScrollView, Text, View } from 'react-native';
 
 export default function ScrollShadowExample() {
@@ -114,7 +111,7 @@ export default function ScrollShadowExample() {
   return (
     <View className="flex-1 bg-background">
       <Text className="px-5 py-3 text-lg font-semibold">Horizontal List</Text>
-      <ScrollShadow LinearGradientComponent={LinearGradient}>
+      <ScrollShadow>
         <FlatList
           data={horizontalData}
           horizontal
@@ -129,11 +126,7 @@ export default function ScrollShadowExample() {
       </ScrollShadow>
 
       <Text className="px-5 py-3 text-lg font-semibold">Vertical Content</Text>
-      <ScrollShadow
-        size={80}
-        className="h-48"
-        LinearGradientComponent={LinearGradient}
-      >
+      <ScrollShadow size={80} className="h-48">
         <ScrollView
           contentContainerClassName="p-5"
           showsVerticalScrollIndicator={false}
@@ -162,18 +155,17 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 
 ### ScrollShadow
 
-| prop                      | type                                                                   | default      | description                                                                                                     |
-| ------------------------- | ---------------------------------------------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------- |
-| `children`                | `React.ReactElement`                                                   | -            | The scrollable component to enhance with shadows. Must be a single React element (ScrollView, FlatList, etc.)   |
-| `LinearGradientComponent` | `ComponentType<`<br/>`LinearGradientProps>`                            | **required** | LinearGradient component from any compatible library (expo-linear-gradient, react-native-linear-gradient, etc.) |
-| `size`                    | `number`                                                               | `50`         | Size (height/width) of the gradient shadow in pixels                                                            |
-| `orientation`             | `'horizontal' \| 'vertical'`                                           | auto-detect  | Orientation of the scroll shadow. If not provided, will auto-detect from child's `horizontal` prop              |
-| `visibility`              | `'auto' \| 'top' \| 'bottom' \| 'left' \| 'right' \| 'both' \| 'none'` | `'auto'`     | Visibility mode for the shadows. 'auto' shows shadows based on scroll position and content overflow             |
-| `color`                   | `string`                                                               | theme color  | Custom color for the gradient shadow. If not provided, uses the theme's background color                        |
-| `isEnabled`               | `boolean`                                                              | `true`       | Whether the shadow effect is enabled                                                                            |
-| `animation`               | `ScrollShadowRootAnimation`                                            | -            | Animation configuration                                                                                         |
-| `className`               | `string`                                                               | -            | Additional CSS classes to apply to the container                                                                |
-| `...ViewProps`            | `ViewProps`                                                            | -            | All standard React Native View props are supported                                                              |
+| prop           | type                                                                   | default     | description                                                                                                   |
+| -------------- | ---------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------- |
+| `children`     | `React.ReactElement`                                                   | -           | The scrollable component to enhance with shadows. Must be a single React element (ScrollView, FlatList, etc.) |
+| `size`         | `number`                                                               | `50`        | Size (height/width) of the gradient shadow in pixels                                                          |
+| `orientation`  | `'horizontal' \| 'vertical'`                                           | auto-detect | Orientation of the scroll shadow. If not provided, will auto-detect from child's `horizontal` prop            |
+| `visibility`   | `'auto' \| 'top' \| 'bottom' \| 'left' \| 'right' \| 'both' \| 'none'` | `'auto'`    | Visibility mode for the shadows. 'auto' shows shadows based on scroll position and content overflow           |
+| `color`        | `string`                                                               | theme color | Custom color for the gradient shadow. If not provided, uses the theme's background color                      |
+| `isEnabled`    | `boolean`                                                              | `true`      | Whether the shadow effect is enabled                                                                          |
+| `animation`    | `ScrollShadowRootAnimation`                                            | -           | Animation configuration                                                                                       |
+| `className`    | `string`                                                               | -           | Additional CSS classes to apply to the container                                                              |
+| `...ViewProps` | `ViewProps`                                                            | -           | All standard React Native View props are supported                                                            |
 
 #### ScrollShadowRootAnimation
 
@@ -189,18 +181,8 @@ Animation configuration for ScrollShadow component. Can be:
 | `state`         | `'disabled' \| 'disable-all' \| boolean` | -        | Disable animations while customizing properties                                     |
 | `opacity.value` | `[number, number]`                       | `[0, 1]` | `Opacity values [initial, active].`<br/>`For bottom/right shadow, this is reversed` |
 
-### LinearGradientProps
-
-The `LinearGradientComponent` prop expects a component that accepts these props:
-
-| prop        | type                              | description                                                        |
-| ----------- | --------------------------------- | ------------------------------------------------------------------ |
-| `colors`    | `any`                             | Array of colors for the gradient                                   |
-| `locations` | `any` (optional)                  | Array of numbers defining the location of each gradient color stop |
-| `start`     | `any` (optional)                  | Start point of the gradient (e.g., `{ x: 0, y: 0 }`)               |
-| `end`       | `any` (optional)                  | End point of the gradient (e.g., `{ x: 1, y: 0 }`)                 |
-| `style`     | `StyleProp<ViewStyle>` (optional) | Style to apply to the gradient view                                |
-
 ## Special Notes
+
+Shadows are rendered with the native `backgroundImage` style (`linear-gradient`), which requires React Native 0.87 or newer. No third-party gradient library is needed.
 
 **Important:** ScrollShadow internally converts the child to a Reanimated animated component. If you need to use the `onScroll` prop on your scrollable component, you must use `useAnimatedScrollHandler` from react-native-reanimated instead of the standard `onScroll` prop.

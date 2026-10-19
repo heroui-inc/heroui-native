@@ -1,7 +1,6 @@
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react/macro';
-import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
   Label,
@@ -229,10 +228,7 @@ const PresentationContent = () => {
                 },
               }}
             >
-              <ScrollShadow
-                LinearGradientComponent={LinearGradient}
-                color={themeColorOverlay}
-              >
+              <ScrollShadow color={themeColorOverlay}>
                 <BottomSheetScrollView
                   contentContainerClassName="p-4"
                   showsVerticalScrollIndicator={false}

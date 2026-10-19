@@ -1,6 +1,5 @@
 import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react/macro';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import {
   Button,
@@ -352,7 +351,6 @@ const LongContentDialogContent = () => {
                 {t`Upload Audio`}
               </Dialog.Title>
               <ScrollShadow
-                LinearGradientComponent={LinearGradient}
                 style={{ height: height * 0.35 }}
                 color={themeColorOverlay}
                 className="mb-4"

@@ -1,5 +1,4 @@
 import { useLingui } from '@lingui/react/macro';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Button, cn, ScrollShadow, Select, useThemeColor } from 'heroui-native';
 import { useState } from 'react';
 import { TextInput, useWindowDimensions, View } from 'react-native';
@@ -107,7 +106,6 @@ const SearchableSelectContent = () => {
         </View>
         <ScrollShadow
           className="flex-1"
-          LinearGradientComponent={LinearGradient}
           color={isDark ? themeColorSurface : themeColorOverlay}
         >
           <ScrollView keyboardShouldPersistTaps="handled">

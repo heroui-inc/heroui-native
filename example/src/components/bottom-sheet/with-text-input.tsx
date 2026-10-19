@@ -1,7 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useLingui } from '@lingui/react/macro';
-import { LinearGradient } from 'expo-linear-gradient';
 import {
   Avatar,
   BottomSheet,
@@ -145,10 +144,7 @@ const UserSearchBottomSheetContent = () => {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
-      <ScrollShadow
-        LinearGradientComponent={LinearGradient}
-        color={themeColorOverlay}
-      >
+      <ScrollShadow color={themeColorOverlay}>
         <BottomSheetScrollView
           showsVerticalScrollIndicator={false}
           contentContainerClassName="pt-3"

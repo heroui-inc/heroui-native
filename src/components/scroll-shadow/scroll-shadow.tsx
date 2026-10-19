@@ -5,7 +5,12 @@ import {
   isValidElement,
   type ComponentType,
 } from 'react';
-import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import {
+  View,
+  type LayoutChangeEvent,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
 import Animated, { useComposedEventHandler } from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { colorKit } from '../../helpers/external/utils';
@@ -66,7 +71,6 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
     isEnabled = true,
     className,
     style,
-    LinearGradientComponent,
     animation,
     ...restProps
   } = props;
@@ -159,7 +163,7 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
         onScroll,
       });
 
-  const { colors: topLeftColors, locations: topLeftLocations } = easeGradient({
+  const { colors, locations } = easeGradient({
     colorStops: {
       0: {
         color: colorKit.setAlpha(shadowColor, 1).hex(),
@@ -170,87 +174,60 @@ const ScrollShadowRoot = forwardRef<View, ScrollShadowProps>((props, ref) => {
     },
   });
 
-  const { colors: bottomRightColors, locations: bottomRightLocations } =
-    easeGradient({
-      colorStops: {
-        0: {
-          color: colorKit.setAlpha(shadowColor, 0).hex(),
-        },
-        1: {
-          color: colorKit.setAlpha(shadowColor, 1).hex(),
-        },
+  const colorStops = colors.map((stopColor, index) => ({
+    color: stopColor,
+    positions: [`${(locations[index] ?? 0) * 100}%`],
+  }));
+
+  const isVertical = orientation === 'vertical';
+
+  const topLeftGradientStyle = {
+    backgroundImage: [
+      {
+        type: 'linear-gradient',
+        direction: isVertical ? 'to bottom' : 'to right',
+        colorStops,
       },
-    });
+    ],
+  } satisfies StyleProp<ViewStyle>;
+
+  const bottomRightGradientStyle = {
+    backgroundImage: [
+      {
+        type: 'linear-gradient',
+        direction: isVertical ? 'to top' : 'to left',
+        colorStops,
+      },
+    ],
+  } satisfies StyleProp<ViewStyle>;
 
   return (
     <View ref={ref} className={rootClassName} style={style} {...restProps}>
       {enhancedChild}
 
       {/* Top/Left Shadow */}
-      {orientation === 'vertical' ? (
-        <Animated.View
-          style={[
-            scrollShadowStyleSheet.topShadow,
-            { height: size },
-            topEdgeShadowStyle,
-          ]}
-        >
-          <LinearGradientComponent
-            colors={topLeftColors}
-            locations={topLeftLocations}
-            style={StyleSheet.absoluteFill}
-          />
-        </Animated.View>
-      ) : (
-        <Animated.View
-          style={[
-            scrollShadowStyleSheet.leftShadow,
-            { width: size },
-            topEdgeShadowStyle,
-          ]}
-        >
-          <LinearGradientComponent
-            colors={topLeftColors}
-            locations={topLeftLocations}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={StyleSheet.absoluteFill}
-          />
-        </Animated.View>
-      )}
+      <Animated.View
+        style={[
+          isVertical
+            ? scrollShadowStyleSheet.topShadow
+            : scrollShadowStyleSheet.leftShadow,
+          isVertical ? { height: size } : { width: size },
+          topLeftGradientStyle,
+          topEdgeShadowStyle,
+        ]}
+      />
 
       {/* Bottom/Right Shadow */}
-      {orientation === 'vertical' ? (
-        <Animated.View
-          style={[
-            scrollShadowStyleSheet.bottomShadow,
-            { height: size },
-            bottomEdgeShadowStyle,
-          ]}
-        >
-          <LinearGradientComponent
-            colors={bottomRightColors}
-            locations={bottomRightLocations}
-            style={StyleSheet.absoluteFill}
-          />
-        </Animated.View>
-      ) : (
-        <Animated.View
-          style={[
-            scrollShadowStyleSheet.rightShadow,
-            { width: size },
-            bottomEdgeShadowStyle,
-          ]}
-        >
-          <LinearGradientComponent
-            colors={bottomRightColors}
-            locations={bottomRightLocations}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={StyleSheet.absoluteFill}
-          />
-        </Animated.View>
-      )}
+      <Animated.View
+        style={[
+          isVertical
+            ? scrollShadowStyleSheet.bottomShadow
+            : scrollShadowStyleSheet.rightShadow,
+          isVertical ? { height: size } : { width: size },
+          bottomRightGradientStyle,
+          bottomEdgeShadowStyle,
+        ]}
+      />
     </View>
   );
 });

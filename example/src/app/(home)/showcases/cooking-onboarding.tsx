@@ -149,7 +149,7 @@ export default function CookingOnboardingScreen() {
         className="flex-row items-center justify-between absolute left-5 right-5 z-50"
         style={{ top: insets.top + 8 }}
       >
-        <Pressable onPress={router.back}>
+        <Pressable onPress={() => router.back()}>
           <StyledFeather
             name="chevron-left"
             size={26}

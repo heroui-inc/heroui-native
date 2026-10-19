@@ -51,7 +51,10 @@ const PressableFeedback = forwardRef<PressableRef, PressableFeedbackProps>(
       ...restProps
     } = props;
 
-    const RootComponent = asChild ? AnimatedSlotPressable : AnimatedPressable;
+    // Annotated so JSX resolves a single call signature for the union.
+    const RootComponent: typeof AnimatedPressable = asChild
+      ? AnimatedSlotPressable
+      : AnimatedPressable;
 
     const {
       isPressed,

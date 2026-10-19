@@ -1,10 +1,10 @@
 import { forwardRef } from 'react';
-import type { View } from 'react-native';
 import {
   HeroText,
   ThemeBackground,
   useHasDefaultThemeBackground,
 } from '../../helpers/internal/components';
+import type { ViewRef } from '../../helpers/internal/types';
 import * as AlertPrimitives from '../../primitives/alert';
 import type * as AlertPrimitiveTypes from '../../primitives/alert/alert.types';
 import { DEFAULT_ICON_SIZE, DISPLAY_NAME } from './alert.constants';
@@ -32,7 +32,7 @@ const useAlert = AlertPrimitives.useRootContext;
  * nothing. Pass `children` to host arbitrary content (gradients, images)
  * with the container's positioning and clipping applied.
  */
-const AlertBackground = forwardRef<View, AlertBackgroundProps>(
+const AlertBackground = forwardRef<ViewRef, AlertBackgroundProps>(
   ({ className, ...props }, ref) => {
     const backgroundClassName = alertClassNames.background({ className });
 

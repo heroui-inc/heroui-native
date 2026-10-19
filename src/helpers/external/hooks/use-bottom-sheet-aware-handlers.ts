@@ -67,8 +67,11 @@ export function useBottomSheetAwareHandlers(): UseBottomSheetAwareHandlersReturn
     (e: BlurEvent) => {
       if (isActive && bottomSheetContext) {
         const keyboardState = bottomSheetContext.animatedKeyboardState.get();
+        // Legacy typings don't accept host instances in `findNodeHandle`.
         const currentFocusedInput = findNodeHandle(
-          TextInput.State.currentlyFocusedInput() as TextInput | null
+          TextInput.State.currentlyFocusedInput() as unknown as Parameters<
+            typeof findNodeHandle
+          >[0]
         );
         const shouldRemoveCurrentTarget =
           keyboardState.target === e.nativeEvent.target;

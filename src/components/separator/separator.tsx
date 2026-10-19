@@ -1,12 +1,13 @@
 import { forwardRef } from 'react';
 import { View } from 'react-native';
+import type { ViewRef } from '../../helpers/internal/types';
 import { DISPLAY_NAME } from './separator.constants';
 import { separatorClassNames } from './separator.styles';
 import type { SeparatorProps } from './separator.types';
 
 // --------------------------------------------------
 
-const SeparatorRoot = forwardRef<View, SeparatorProps>((props, ref) => {
+const SeparatorRoot = forwardRef<ViewRef, SeparatorProps>((props, ref) => {
   const {
     variant = 'thin',
     orientation = 'horizontal',

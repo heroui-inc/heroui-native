@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect, useSyncExternalStore } from 'react';
-import { Platform, type View, type ViewStyle } from 'react-native';
+import { Platform, type ViewStyle } from 'react-native';
+import type { ViewRef } from '../../helpers/internal/types';
 
 const DEFAULT_PORTAL_HOST = 'HEROUI_NATIVE_DEFAULT_HOST_NAME';
 
@@ -119,7 +120,7 @@ const WindowOverlay = Platform.OS === "ios" ? FullWindowOverlay : Fragment
 <WindowOverlay><PortalHost/></WindowOverlay>
  */
 export function useModalPortalRoot() {
-  const ref = React.useRef<View>(null);
+  const ref = React.useRef<ViewRef>(null);
   const [offset, setSideOffSet] = React.useState(0);
 
   const onLayout = React.useCallback(() => {

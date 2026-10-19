@@ -1,6 +1,7 @@
-import type { Image, ImageProps as RNImageProps } from 'react-native';
+import type { Image, ImageSourcePropType } from 'react-native';
 import type {
   ComponentPropsWithAsChild,
+  ImageRef,
   SlottableViewProps,
   ViewRef,
 } from '../../helpers/internal/types';
@@ -31,12 +32,12 @@ type RootProps = SlottableViewProps & {
  */
 type ImageProps = Omit<
   ComponentPropsWithAsChild<typeof Image>,
-  'alt' | 'source'
+  'alt' | 'source' | 'children'
 > & {
   /** Optional child elements to render within the image component */
   children?: React.ReactNode;
   /** Source of the image */
-  source: RNImageProps['source'];
+  source: ImageSourcePropType | undefined;
   /** Callback fired when the loading status changes */
   onLoadingStatusChange?: (status: AvatarStatus) => void;
 };
@@ -49,8 +50,6 @@ type FallbackProps = SlottableViewProps;
 
 /** Reference type for the Avatar root component */
 type RootRef = ViewRef;
-/** Reference type for the Avatar image component */
-type ImageRef = React.ComponentRef<typeof Image>;
 /** Reference type for the Avatar fallback component */
 type FallbackRef = ViewRef;
 

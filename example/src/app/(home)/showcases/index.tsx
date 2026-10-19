@@ -121,7 +121,7 @@ export default function ScaleCarousel() {
           style={{
             top: insets.top + 12,
           }}
-          onPress={router.back}
+          onPress={() => router.back()}
         >
           <GlassView style={styles.glassView} isInteractive>
             <StyledIonicons name="close" size={24} className="text-muted" />
@@ -129,7 +129,7 @@ export default function ScaleCarousel() {
         </Pressable>
       ) : (
         <Pressable
-          onPress={router.back}
+          onPress={() => router.back()}
           className="absolute right-3 p-2.5 rounded-full bg-foreground/10 z-50"
           style={{
             top: insets.top + 12,

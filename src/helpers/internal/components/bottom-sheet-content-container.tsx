@@ -131,14 +131,7 @@ export function BottomSheetContentContainer({
       }
 
       animatedPosition.set(closedPosition);
-    },
-    [
-      isOpen,
-      animatedAnimationState,
-      animatedDetentsState,
-      animatedPosition,
-      realignDismissedSheet,
-    ]
+    }
   );
 
   useEffect(() => {

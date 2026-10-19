@@ -2,7 +2,10 @@ import { cn } from 'heroui-native';
 import React from 'react';
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
 
-export const AppText = React.forwardRef<RNText, RNTextProps>((props, ref) => {
+export const AppText = React.forwardRef<
+  React.ComponentRef<typeof RNText>,
+  RNTextProps
+>((props, ref) => {
   const { className, ...restProps } = props;
 
   return (

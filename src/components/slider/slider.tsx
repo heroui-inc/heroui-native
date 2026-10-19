@@ -13,7 +13,7 @@ import type { ViewRef } from '../../helpers/internal/types';
 import * as SliderPrimitives from '../../primitives/slider';
 import { useSlider } from '../../primitives/slider';
 import type { SliderRenderProps } from '../../primitives/slider/slider.types';
-import { clamp } from '../../primitives/slider/slider.utils';
+import { clamp, snapToStep } from '../../primitives/slider/slider.utils';
 import {
   useSliderRootAnimation,
   useSliderThumbAnimation,
@@ -400,10 +400,10 @@ const SliderThumb = forwardRef<ViewRef, SliderThumbProps>((props, ref) => {
           minValue,
           maxValue
         );
-        const snapped =
-          Math.round((newValue - minValue) / step) * step + minValue;
-        const clampedSnapped = clamp(snapped, minValue, maxValue);
-        updateValueRef.current(index, clampedSnapped);
+        updateValueRef.current(
+          index,
+          snapToStep(newValue, minValue, maxValue, step)
+        );
       })
       .onFinalize(() => {
         setThumbDraggingRef.current(index, false);

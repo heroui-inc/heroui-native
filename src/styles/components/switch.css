@@ -1,40 +1,42 @@
-.switch__root {
-  width: 48px;
-  height: 24px;
-  border-radius: 9999px;
-  justify-content: center;
-  overflow: hidden;
-}
+@layer components {
+  .switch__root {
+    width: 48px;
+    height: 24px;
+    border-radius: 9999px;
+    justify-content: center;
+    overflow: hidden;
+  }
 
-/* Root background — absolute-fill layer behind the switch content (clipped by the root) */
+  /* Root background — absolute-fill layer behind the switch content (clipped by the root) */
 
-.switch__background {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-}
+  .switch__background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+  }
 
-.switch__thumb {
-  position: absolute;
-  inset-inline-start: 2px;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 20px;
-  border-radius: 9999px;
-  box-shadow: var(--shadow-field);
-  overflow: hidden;
-}
+  .switch__thumb {
+    position: absolute;
+    inset-inline-start: 2px;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 20px;
+    border-radius: 9999px;
+    box-shadow: var(--shadow-field);
+    overflow: hidden;
+  }
 
-.switch__start-content {
-  position: absolute;
-  inset-inline-start: 2px;
-}
+  .switch__start-content {
+    position: absolute;
+    inset-inline-start: 2px;
+  }
 
-.switch__end-content {
-  position: absolute;
-  inset-inline-end: 2px;
+  .switch__end-content {
+    position: absolute;
+    inset-inline-end: 2px;
+  }
 }

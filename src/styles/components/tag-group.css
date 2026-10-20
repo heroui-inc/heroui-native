@@ -1,107 +1,109 @@
-.tag-group__root {
-  gap: calc(var(--spacing) * 3);
-}
+@layer components {
+  .tag-group__root {
+    gap: calc(var(--spacing) * 3);
+  }
 
-.tag-group__list {
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: calc(var(--spacing) * 2);
-}
+  .tag-group__list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: calc(var(--spacing) * 2);
+  }
 
-.tag-group__tag {
-  gap: calc(var(--spacing) * 1);
-  flex-direction: row;
-  align-items: center;
-}
+  .tag-group__tag {
+    gap: calc(var(--spacing) * 1);
+    flex-direction: row;
+    align-items: center;
+  }
 
-/* Tag - variant */
+  /* Tag - variant */
 
-.tag-group__tag--variant-default {
-  background-color: var(--color-default);
-}
+  .tag-group__tag--variant-default {
+    background-color: var(--color-default);
+  }
 
-.tag-group__tag--variant-surface {
-  background-color: var(--color-surface);
-}
+  .tag-group__tag--variant-surface {
+    background-color: var(--color-surface);
+  }
 
-/* Tag background — absolute-fill layer behind the surface variant's tag */
+  /* Tag background — absolute-fill layer behind the surface variant's tag */
 
-.tag-group__tag-background {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
+  .tag-group__tag-background {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
 
-.tag-group__tag-background--size-sm {
-  border-radius: var(--radius-xl);
-}
+  .tag-group__tag-background--size-sm {
+    border-radius: var(--radius-xl);
+  }
 
-.tag-group__tag-background--size-md {
-  border-radius: var(--radius-2xl);
-}
+  .tag-group__tag-background--size-md {
+    border-radius: var(--radius-2xl);
+  }
 
-.tag-group__tag-background--size-lg {
-  border-radius: var(--radius-3xl);
-}
+  .tag-group__tag-background--size-lg {
+    border-radius: var(--radius-3xl);
+  }
 
-/* Tag - size */
+  /* Tag - size */
 
-.tag-group__tag--size-sm {
-  padding: calc(var(--spacing) * 0.5);
-  padding-inline: calc(var(--spacing) * 2);
-  gap: calc(var(--spacing) * 1);
-  border-radius: var(--radius-xl);
-}
+  .tag-group__tag--size-sm {
+    padding: calc(var(--spacing) * 0.5);
+    padding-inline: calc(var(--spacing) * 2);
+    gap: calc(var(--spacing) * 1);
+    border-radius: var(--radius-xl);
+  }
 
-.tag-group__tag--size-md {
-  padding: calc(var(--spacing) * 1);
-  padding-inline: calc(var(--spacing) * 2.5);
-  gap: calc(var(--spacing) * 1);
-  border-radius: var(--radius-2xl);
-}
+  .tag-group__tag--size-md {
+    padding: calc(var(--spacing) * 1);
+    padding-inline: calc(var(--spacing) * 2.5);
+    gap: calc(var(--spacing) * 1);
+    border-radius: var(--radius-2xl);
+  }
 
-.tag-group__tag--size-lg {
-  padding: calc(var(--spacing) * 1.5);
-  padding-inline: calc(var(--spacing) * 3);
-  gap: calc(var(--spacing) * 1.5);
-  border-radius: var(--radius-3xl);
-}
+  .tag-group__tag--size-lg {
+    padding: calc(var(--spacing) * 1.5);
+    padding-inline: calc(var(--spacing) * 3);
+    gap: calc(var(--spacing) * 1.5);
+    border-radius: var(--radius-3xl);
+  }
 
-/* Tag - booleans (declared after variant so selection wins the cascade) */
+  /* Tag - booleans (declared after variant so selection wins the cascade) */
 
-.tag-group__tag--is-selected {
-  background-color: var(--color-accent-soft);
-}
+  .tag-group__tag--is-selected {
+    background-color: var(--color-accent-soft);
+  }
 
-.tag-group__tag-label {
-  @apply font-medium;
-  color: var(--color-field-foreground);
-}
+  .tag-group__tag-label {
+    @apply font-medium;
+    color: var(--color-field-foreground);
+  }
 
-/* Tag label - size */
+  /* Tag label - size */
 
-.tag-group__tag-label--size-sm {
-  font-size: var(--text-xs);
-  line-height: var(--text-xs--line-height);
-}
+  .tag-group__tag-label--size-sm {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+  }
 
-.tag-group__tag-label--size-md {
-  font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
-}
+  .tag-group__tag-label--size-md {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
 
-.tag-group__tag-label--size-lg {
-  font-size: var(--text-base);
-  line-height: var(--text-base--line-height);
-}
+  .tag-group__tag-label--size-lg {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+  }
 
-.tag-group__tag-label--is-selected {
-  color: var(--color-accent-soft-foreground);
-}
+  .tag-group__tag-label--is-selected {
+    color: var(--color-accent-soft-foreground);
+  }
 
-.tag-group__remove-button {
-  border-radius: var(--radius-lg);
-  align-items: center;
-  justify-content: center;
+  .tag-group__remove-button {
+    border-radius: var(--radius-lg);
+    align-items: center;
+    justify-content: center;
+  }
 }

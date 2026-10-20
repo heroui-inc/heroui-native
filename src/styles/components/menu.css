@@ -1,92 +1,94 @@
-.menu__portal {
-  position: absolute;
-  inset: 0;
-}
+@layer components {
+  .menu__portal {
+    position: absolute;
+    inset: 0;
+  }
 
-.menu__overlay {
-  position: absolute;
-  inset: 0;
-}
+  .menu__overlay {
+    position: absolute;
+    inset: 0;
+  }
 
-.menu__content {
-  position: absolute;
-  background-color: var(--color-overlay);
-  padding-inline: calc(var(--spacing) * 1.5);
-  padding-block: calc(var(--spacing) * 3);
-  border-radius: var(--radius-3xl);
-}
+  .menu__content {
+    position: absolute;
+    background-color: var(--color-overlay);
+    padding-inline: calc(var(--spacing) * 1.5);
+    padding-block: calc(var(--spacing) * 3);
+    border-radius: var(--radius-3xl);
+  }
 
-.menu__content--is-sub-menu-open {
-  box-shadow: 0 0 #0000;
-}
+  .menu__content--is-sub-menu-open {
+    box-shadow: 0 0 #0000;
+  }
 
-.menu__content--is-sub-menu-open-false {
-  box-shadow: var(--shadow-overlay);
-}
+  .menu__content--is-sub-menu-open-false {
+    box-shadow: var(--shadow-overlay);
+  }
 
-.menu__content-background {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-3xl);
-  overflow: hidden;
-}
+  .menu__content-background {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-3xl);
+    overflow: hidden;
+  }
 
-.menu__content-bottom-sheet {
-  padding-inline: calc(var(--spacing) * 3);
-}
+  .menu__content-bottom-sheet {
+    padding-inline: calc(var(--spacing) * 3);
+  }
 
-.menu__label {
-  font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
-  @apply font-medium;
-  color: var(--color-muted);
-  margin-inline-start: calc(var(--spacing) * 3);
-  /* RN Text resolves left/right against layout direction, so this means "start" */
-  text-align: left;
-}
+  .menu__label {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    @apply font-medium;
+    color: var(--color-muted);
+    margin-inline-start: calc(var(--spacing) * 3);
+    /* RN Text resolves left/right against layout direction, so this means "start" */
+    text-align: left;
+  }
 
-.menu__item {
-  flex-direction: row;
-  align-items: center;
-  gap: calc(var(--spacing) * 2.5);
-  padding-inline: calc(var(--spacing) * 2.5);
-  padding-block: calc(var(--spacing) * 2);
-  border-radius: var(--radius-2xl);
-}
+  .menu__item {
+    flex-direction: row;
+    align-items: center;
+    gap: calc(var(--spacing) * 2.5);
+    padding-inline: calc(var(--spacing) * 2.5);
+    padding-block: calc(var(--spacing) * 2);
+    border-radius: var(--radius-2xl);
+  }
 
-.menu__item--is-outside-sub-menu-on-open {
-  opacity: 0.4;
-  pointer-events: none;
-}
+  .menu__item--is-outside-sub-menu-on-open {
+    opacity: 0.4;
+    pointer-events: none;
+  }
 
-.menu__item-title {
-  flex: 1;
-  font-size: var(--text-base);
-  line-height: var(--text-base--line-height);
-  @apply font-medium;
-  /* RN Text resolves left/right against layout direction, so this means "start" */
-  text-align: left;
-}
+  .menu__item-title {
+    flex: 1;
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    @apply font-medium;
+    /* RN Text resolves left/right against layout direction, so this means "start" */
+    text-align: left;
+  }
 
-.menu__item-title--variant-default {
-  color: var(--color-foreground);
-}
+  .menu__item-title--variant-default {
+    color: var(--color-foreground);
+  }
 
-.menu__item-title--variant-danger {
-  color: var(--color-danger);
-}
+  .menu__item-title--variant-danger {
+    color: var(--color-danger);
+  }
 
-.menu__item-description {
-  font-size: var(--text-sm);
-  line-height: 1.375;
-  color: var(--color-muted);
-  /* RN Text resolves left/right against layout direction, so this means "start" */
-  text-align: left;
-}
+  .menu__item-description {
+    font-size: var(--text-sm);
+    line-height: 1.375;
+    color: var(--color-muted);
+    /* RN Text resolves left/right against layout direction, so this means "start" */
+    text-align: left;
+  }
 
-.menu__item-indicator {
-  width: calc(var(--spacing) * 5);
-  height: calc(var(--spacing) * 5);
-  align-items: center;
-  justify-content: center;
+  .menu__item-indicator {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+    align-items: center;
+    justify-content: center;
+  }
 }

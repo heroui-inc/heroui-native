@@ -10097,7 +10097,7 @@ __metadata:
     tailwind-merge: ^3.6.0
     tailwind-variants: ^3.2.2
     tailwindcss: ^4.3.2
-    uniwind: 1.12.2
+    uniwind: 1.13.0
   languageName: unknown
   linkType: soft
 
@@ -10145,7 +10145,7 @@ __metadata:
     tailwind-variants: ^3.2.2
     tailwindcss: ^4.3.2
     typescript: ^5.8.3
-    uniwind: 1.12.2
+    uniwind: 1.13.0
   peerDependencies:
     "@gorhom/bottom-sheet": ^5.2.9
     expo-blur: ">=14.0.0"
@@ -15961,9 +15961,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uniwind@npm:1.12.2":
-  version: 1.12.2
-  resolution: "uniwind@npm:1.12.2"
+"uniwind@npm:1.13.0":
+  version: 1.13.0
+  resolution: "uniwind@npm:1.13.0"
   dependencies:
     "@tailwindcss/node": 4.3.3
     "@tailwindcss/oxide": 4.3.3
@@ -15984,34 +15984,7 @@ __metadata:
       optional: true
   bin:
     uniwind: dist/cli/index.mjs
-  checksum: 2bf34e709ae1163f10a27e46ee2d2ad67e7b2cb335bdc0d5443531496052368a03974a83f2024d08e7227306ff3c7f282faec5ebb95f755fafeb550621b0b1b3
-  languageName: node
-  linkType: hard
-
-"uniwind@patch:uniwind@npm%3A1.12.2#./.yarn/patches/uniwind-npm-1.12.2-145fff90e1.patch::locator=heroui-native%40workspace%3A.":
-  version: 1.12.2
-  resolution: "uniwind@patch:uniwind@npm%3A1.12.2#./.yarn/patches/uniwind-npm-1.12.2-145fff90e1.patch::version=1.12.2&hash=cddbbd&locator=heroui-native%40workspace%3A."
-  dependencies:
-    "@tailwindcss/node": 4.3.3
-    "@tailwindcss/oxide": 4.3.3
-    culori: 4.0.2
-    lightningcss: 1.30.1
-  peerDependencies:
-    "@expo/metro-config": "*"
-    metro: "*"
-    metro-cache: "*"
-    metro-transform-worker: "*"
-    react: ">=19.0.0"
-    react-native: ">=0.81.0"
-    tailwindcss: ">=4"
-  peerDependenciesMeta:
-    "@expo/metro-config":
-      optional: true
-    metro-transform-worker:
-      optional: true
-  bin:
-    uniwind: dist/cli/index.mjs
-  checksum: 1af2ed8ecdf4484dc13277cd9573573074f6cbb37295ea7697ad1af0ec069f6b2c73a504072d186bfc1cbc8ac705f0d39d234c7af56950f746c95d85bd1412d6
+  checksum: feade71efad3f932b0ece99de9ac250d94d086efba24a8255a4c1d87bd6937e056810f28c3648bb3f0dd45f030682259f5b834bd113dcf460b980c3c1e4ada91
   languageName: node
   linkType: hard
 

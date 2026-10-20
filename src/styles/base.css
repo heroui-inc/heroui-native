@@ -1,0 +1,9 @@
+@layer base {
+  /*
+   * Default font for internal HeroText. Lives in the base layer so component
+   * styles (e.g. `@apply font-medium`) and user utilities both override it.
+   */
+  .hero-text {
+    @apply font-normal;
+  }
+}

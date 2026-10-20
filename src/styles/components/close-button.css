@@ -1,3 +1,5 @@
-.close-button__root {
-  height: calc(var(--spacing) * 8);
+@layer components {
+  .close-button__root {
+    height: calc(var(--spacing) * 8);
+  }
 }

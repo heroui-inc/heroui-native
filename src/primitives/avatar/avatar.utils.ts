@@ -1,5 +1,17 @@
 import type { ImageSourcePropType } from 'react-native';
 
+type ImageSourceArray = Extract<ImageSourcePropType, readonly unknown[]>;
+
+/**
+ * Narrows an image source to its array form. `Array.isArray` does not narrow
+ * the readonly array used by the Strict TypeScript API (React Native 0.87+).
+ */
+function isImageSourceArray(
+  source: ImageSourcePropType
+): source is ImageSourceArray {
+  return Array.isArray(source);
+}
+
 /**
  * Validates whether an image source is valid and can be loaded.
  *
@@ -29,7 +41,7 @@ export function isValidSource(source?: ImageSourcePropType) {
     return true;
   }
 
-  if (Array.isArray(source)) {
+  if (isImageSourceArray(source)) {
     return source.some((s) => !!s.uri);
   }
 
@@ -81,7 +93,7 @@ export function isSameSource(
   }
 
   // Both are arrays
-  if (Array.isArray(source1) && Array.isArray(source2)) {
+  if (isImageSourceArray(source1) && isImageSourceArray(source2)) {
     if (source1.length !== source2.length) {
       return false;
     }
@@ -93,7 +105,7 @@ export function isSameSource(
   }
 
   // One is an array, the other is not
-  if (Array.isArray(source1) || Array.isArray(source2)) {
+  if (isImageSourceArray(source1) || isImageSourceArray(source2)) {
     return false;
   }
 

@@ -6,10 +6,10 @@ import {
   AnimationSettingsProvider,
   FormFieldProvider,
 } from '../../helpers/internal/contexts';
-import type { ViewRef } from '../../helpers/internal/types';
+import type { TextInputComponent, ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
 import { Button } from '../button';
-import { Input, type InputRef } from '../input';
+import { Input } from '../input';
 import { useSearchFieldRootAnimation } from './search-field.animation';
 import { DISPLAY_NAME } from './search-field.constants';
 import { searchFieldClassNames } from './search-field.styles';
@@ -145,7 +145,7 @@ const SearchFieldGroup = forwardRef<ViewRef, SearchFieldGroupProps>(
 
 // --------------------------------------------------
 
-const SearchFieldSearchIcon = forwardRef<View, SearchFieldSearchIconProps>(
+const SearchFieldSearchIcon = forwardRef<ViewRef, SearchFieldSearchIconProps>(
   (props, ref) => {
     const { children, className, iconProps, ...restProps } = props;
 
@@ -173,7 +173,7 @@ const SearchFieldSearchIcon = forwardRef<View, SearchFieldSearchIconProps>(
 
 // --------------------------------------------------
 
-const SearchFieldInput = forwardRef<InputRef, SearchFieldInputProps>(
+const SearchFieldInput: TextInputComponent<SearchFieldInputProps> = forwardRef(
   (props, ref) => {
     const {
       className,
@@ -217,7 +217,7 @@ const SearchFieldInput = forwardRef<InputRef, SearchFieldInputProps>(
 
 // --------------------------------------------------
 
-const SearchFieldClearButton = forwardRef<View, SearchFieldClearButtonProps>(
+const SearchFieldClearButton = forwardRef<ViewRef, SearchFieldClearButtonProps>(
   (props, ref) => {
     const { iconProps, className, children, onPress, ...restProps } = props;
 

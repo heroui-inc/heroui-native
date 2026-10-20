@@ -11,6 +11,19 @@ export function clamp(value: number, min: number, max: number): number {
 }
 
 /**
+ * Counts the decimal places of a number, including numbers that stringify
+ * in exponent notation (e.g. `1e-7`)
+ * @param value - The number to inspect
+ * @returns The number of decimal places
+ */
+function getDecimalPlaces(value: number): number {
+  'worklet';
+  const [mantissa = '', exponent = '0'] = String(value).split('e');
+  const decimals = mantissa.split('.')[1]?.length ?? 0;
+  return Math.max(0, decimals - Number(exponent));
+}
+
+/**
  * Snaps a value to the nearest step increment
  * @param value - The raw value
  * @param min - Minimum value of the range
@@ -26,7 +39,10 @@ export function snapToStep(
 ): number {
   'worklet';
   const snapped = Math.round((value - min) / step) * step + min;
-  return clamp(snapped, min, max);
+  // Round to the precision of `step` and `min` to drop floating point noise
+  // (e.g. 3 * 0.1 = 0.30000000000000004)
+  const precision = Math.max(getDecimalPlaces(step), getDecimalPlaces(min));
+  return clamp(Number(snapped.toFixed(precision)), min, max);
 }
 
 /**

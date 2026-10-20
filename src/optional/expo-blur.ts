@@ -1,4 +1,4 @@
-import type { ComponentType, RefAttributes } from 'react';
+import type { ComponentRef, ComponentType, RefAttributes } from 'react';
 import type { View, ViewProps } from 'react-native';
 
 /**
@@ -35,7 +35,9 @@ export type ExpoBlurBlurViewProps = ViewProps & {
 };
 
 export type ExpoBlurModule = {
-  BlurView: ComponentType<ExpoBlurBlurViewProps & RefAttributes<View>>;
+  BlurView: ComponentType<
+    ExpoBlurBlurViewProps & RefAttributes<ComponentRef<typeof View>>
+  >;
 };
 
 let ExpoBlurPackage: ExpoBlurModule | undefined;

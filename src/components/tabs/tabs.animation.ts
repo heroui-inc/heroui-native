@@ -185,15 +185,7 @@ export function useTabsIndicatorAnimation(options: {
       transform: [{ translateX: translateXAnimation }],
       opacity: 1,
     };
-  }, [
-    activeMeasurements,
-    isAnimationDisabledValue,
-    isAnchorMirrored,
-    listWidth,
-    widthConfig,
-    heightConfig,
-    translateXConfig,
-  ]);
+  });
 
   return {
     rContainerStyle,
@@ -293,14 +285,7 @@ export function useTabsSeparatorAnimation(options: {
     return {
       opacity: withTiming(targetOpacity, opacityTimingConfig),
     };
-  }, [
-    value,
-    betweenValues,
-    isAlwaysVisible,
-    isAnimationDisabledValue,
-    opacityValue,
-    opacityTimingConfig,
-  ]);
+  });
 
   return {
     rContainerStyle,

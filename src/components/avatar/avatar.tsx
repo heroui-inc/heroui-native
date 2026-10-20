@@ -157,6 +157,7 @@ const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
       style: styleProp,
       source,
       asChild,
+      children,
       ...restProps
     } = props;
 
@@ -193,7 +194,9 @@ const AvatarImage = forwardRef<AvatarImageRef, AvatarImageProps>(
           style={styleProp}
           asChild
           {...(restProps as Omit<ImageProps, 'source' | 'style' | 'asChild'>)}
-        />
+        >
+          {children}
+        </AvatarPrimitives.Image>
       );
     }
 

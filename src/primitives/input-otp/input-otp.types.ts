@@ -2,10 +2,13 @@ import type {
   BlurEvent,
   FocusEvent,
   PressableProps,
-  TextInput,
   TextInputProps,
 } from 'react-native';
-import type { SlottableViewProps, ViewRef } from '../../helpers/internal/types';
+import type {
+  SlottableViewProps,
+  TextInputRef,
+  ViewRef,
+} from '../../helpers/internal/types';
 
 /**
  * Slot data structure for each OTP slot
@@ -62,7 +65,7 @@ export type InputOTPContext = {
     clear: () => void;
   };
   /** Ref to the underlying TextInput */
-  inputRef: React.RefObject<TextInput | null>;
+  inputRef: React.RefObject<TextInputRef | null>;
 };
 
 /**

@@ -25,6 +25,7 @@ import GorhomBottomSheetPackage from '../../../optional/gorhom-bottom-sheet';
 import { BottomSheetIsDraggingProvider } from '../contexts';
 import { useBottomSheetGestureHandlers } from '../hooks';
 import { usePopupBottomSheetContentAnimation } from '../hooks/use-popup-bottom-sheet-content-animation';
+import type { ViewRef } from '../types';
 import type { BaseBottomSheetContentProps } from '../types/bottom-sheet';
 import { BottomSheetContentContainer } from './bottom-sheet-content-container';
 import { ThemeBackground } from './theme-background';
@@ -42,7 +43,7 @@ const StyledBottomSheet = withUniwind(GorhomBottomSheetPackage?.default);
  * default layer.
  */
 export const BottomSheetBackground = forwardRef<
-  View,
+  ViewRef,
   BottomSheetBackgroundProps
 >(({ className, ...props }, ref) => {
   const backgroundClassName = bottomSheetClassNames.background({ className });
@@ -189,8 +190,7 @@ export const BottomSheetContent = forwardRef<
         if (!isOpen && (value <= 0.01 || value >= 1.99)) {
           scheduleOnRN(setIsDismissed, true);
         }
-      },
-      [isOpen, progress]
+      }
     );
 
     /**
@@ -220,9 +220,9 @@ export const BottomSheetContent = forwardRef<
     const containerStyle = useMemo(
       () => [
         restProps.containerStyle,
-        isDismissed && styles.dismissedContainer,
+        isDismissed && !isOpen && styles.dismissedContainer,
       ],
-      [restProps.containerStyle, isDismissed]
+      [restProps.containerStyle, isDismissed, isOpen]
     );
 
     /**

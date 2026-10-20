@@ -1,8 +1,8 @@
 import { forwardRef, useMemo } from 'react';
-import type { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type { ViewRef } from '../../helpers/internal/types';
 import {
   createContext,
   getElementWithDefault,
@@ -35,7 +35,7 @@ const [SpinnerProvider, useSpinnerContext] = createContext<SpinnerContextValue>(
   }
 );
 
-const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
+const SpinnerRoot = forwardRef<ViewRef, SpinnerProps>((props, ref) => {
   const {
     children,
     size = 'md',
@@ -102,7 +102,7 @@ const SpinnerRoot = forwardRef<View, SpinnerProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const SpinnerIndicator = forwardRef<View, SpinnerIndicatorProps>(
+const SpinnerIndicator = forwardRef<ViewRef, SpinnerIndicatorProps>(
   (props, ref) => {
     const {
       children,

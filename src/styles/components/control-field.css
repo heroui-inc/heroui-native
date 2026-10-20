@@ -1,5 +1,7 @@
-.control-field__root {
-  flex-direction: row;
-  align-items: center;
-  gap: calc(var(--spacing) * 3);
+@layer components {
+  .control-field__root {
+    flex-direction: row;
+    align-items: center;
+    gap: calc(var(--spacing) * 3);
+  }
 }

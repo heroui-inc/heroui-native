@@ -1,26 +1,28 @@
-.input__background {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-field);
-  overflow: hidden;
-}
+@layer components {
+  .input__background {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-field);
+    overflow: hidden;
+  }
 
-.input__input {
-  min-height: calc(var(--spacing) * 12);
-  padding-inline: calc(var(--spacing) * 3);
-  color: var(--color-foreground);
-  @apply font-normal;
-  border-radius: var(--radius-field);
-  border-width: var(--border-width-field-width);
-  border-color: var(--color-field-border);
-}
+  .input__input {
+    min-height: calc(var(--spacing) * 12);
+    padding-inline: calc(var(--spacing) * 3);
+    color: var(--color-foreground);
+    @apply font-normal;
+    border-radius: var(--radius-field);
+    border-width: var(--border-width-field-width);
+    border-color: var(--color-field-border);
+  }
 
-/* Input - variant */
+  /* Input - variant */
 
-.input__input--variant-primary {
-  background-color: var(--color-field);
-}
+  .input__input--variant-primary {
+    background-color: var(--color-field);
+  }
 
-.input__input--variant-secondary {
-  background-color: var(--color-default);
+  .input__input--variant-secondary {
+    background-color: var(--color-default);
+  }
 }

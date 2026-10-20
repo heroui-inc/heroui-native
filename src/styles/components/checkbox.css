@@ -1,58 +1,60 @@
-.checkbox__root {
-  width: calc(var(--spacing) * 6);
-  height: calc(var(--spacing) * 6);
-  border-radius: var(--radius-lg);
-  border-width: var(--border-width-field-width);
-  border-color: var(--color-field-border);
-  overflow: hidden;
-}
+@layer components {
+  .checkbox__root {
+    width: calc(var(--spacing) * 6);
+    height: calc(var(--spacing) * 6);
+    border-radius: var(--radius-lg);
+    border-width: var(--border-width-field-width);
+    border-color: var(--color-field-border);
+    overflow: hidden;
+  }
 
-/* Root - variant */
+  /* Root - variant */
 
-.checkbox__root--variant-primary {
-  background-color: var(--color-field);
-  box-shadow: var(--shadow-field);
-}
+  .checkbox__root--variant-primary {
+    background-color: var(--color-field);
+    box-shadow: var(--shadow-field);
+  }
 
-.checkbox__root--variant-secondary {
-  background-color: var(--color-default);
-}
+  .checkbox__root--variant-secondary {
+    background-color: var(--color-default);
+  }
 
-/* Root background — absolute-fill layer behind the checkbox content (clipped by the root) */
+  /* Root background — absolute-fill layer behind the checkbox content (clipped by the root) */
 
-.checkbox__background {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-}
+  .checkbox__background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+  }
 
-/* Root - booleans */
+  /* Root - booleans */
 
-.checkbox__root--is-invalid {
-  border-width: 1px;
-  border-color: var(--color-danger);
-}
+  .checkbox__root--is-invalid {
+    border-width: 1px;
+    border-color: var(--color-danger);
+  }
 
-/* Root - compounds */
+  /* Root - compounds */
 
-.checkbox__root--is-selected-false--is-invalid {
-  background-color: transparent;
-}
+  .checkbox__root--is-selected-false--is-invalid {
+    background-color: transparent;
+  }
 
-.checkbox__indicator {
-  position: absolute;
-  inset: 0;
-  align-items: center;
-  justify-content: center;
-}
+  .checkbox__indicator {
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+  }
 
-.checkbox__indicator--is-invalid {
-  background-color: var(--color-danger);
-}
+  .checkbox__indicator--is-invalid {
+    background-color: var(--color-danger);
+  }
 
-.checkbox__indicator--is-invalid-false {
-  background-color: var(--color-accent);
+  .checkbox__indicator--is-invalid-false {
+    background-color: var(--color-accent);
+  }
 }

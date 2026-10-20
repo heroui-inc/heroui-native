@@ -192,16 +192,18 @@ The complete theme definition can be found in [variables.css](./variables.css). 
 
 ```css
 @layer theme {
-  @variant light {
-    /* Override default colors */
-    --accent: oklch(0.65 0.25 270); /* Custom indigo accent */
-    --success: oklch(0.65 0.15 155);
-  }
+  :root {
+    @variant light {
+      /* Override default colors */
+      --accent: oklch(0.65 0.25 270); /* Custom indigo accent */
+      --success: oklch(0.65 0.15 155);
+    }
 
-  @variant dark {
-    /* Override dark theme colors */
-    --accent: oklch(0.65 0.25 270);
-    --success: oklch(0.75 0.12 155);
+    @variant dark {
+      /* Override dark theme colors */
+      --accent: oklch(0.65 0.25 270);
+      --success: oklch(0.75 0.12 155);
+    }
   }
 }
 ```
@@ -212,14 +214,16 @@ The complete theme definition can be found in [variables.css](./variables.css). 
 
 ```css
 @layer theme {
-  @variant light {
-    --info: oklch(0.6 0.15 210);
-    --info-foreground: oklch(0.98 0 0);
-  }
+  :root {
+    @variant light {
+      --info: oklch(0.6 0.15 210);
+      --info-foreground: oklch(0.98 0 0);
+    }
 
-  @variant dark {
-    --info: oklch(0.7 0.12 210);
-    --info-foreground: oklch(0.15 0 0);
+    @variant dark {
+      --info: oklch(0.7 0.12 210);
+      --info-foreground: oklch(0.15 0 0);
+    }
   }
 }
 

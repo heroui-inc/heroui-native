@@ -10,13 +10,31 @@
  */
 
 import { Animated } from 'react-native';
-// @ts-expect-error
-const AnimatedInterpolation = Animated.Interpolation;
 
 type ColorInterpolateFunction = (input: number) => string;
 
+type InterpolationConfig = Parameters<Animated.Value['interpolate']>[0];
+
+/**
+ * Private `Animated.Interpolation` internals. Typed locally because they are
+ * not part of the public typings (legacy or Strict TypeScript API).
+ */
+type AnimatedInterpolationInternals = {
+  __createInterpolation?: (
+    config: InterpolationConfig
+  ) => ColorInterpolateFunction;
+  new (
+    parent: { __getValue: () => number },
+    config: InterpolationConfig
+  ): { __getValue: () => string };
+};
+
+const AnimatedInterpolation = (
+  Animated as unknown as { Interpolation: AnimatedInterpolationInternals }
+).Interpolation;
+
 function createInterpolation(
-  config: Animated.InterpolationConfigType
+  config: InterpolationConfig
 ): ColorInterpolateFunction {
   if (AnimatedInterpolation.__createInterpolation) {
     return AnimatedInterpolation.__createInterpolation(config);

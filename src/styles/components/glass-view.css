@@ -1,4 +1,6 @@
-.glass-view__root {
-  position: absolute;
-  inset: 0;
+@layer components {
+  .glass-view__root {
+    position: absolute;
+    inset: 0;
+  }
 }

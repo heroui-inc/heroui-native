@@ -48,13 +48,10 @@ export const AnimatedCheckIcon: React.FC<CheckIconProps> = ({
     }
   });
 
-  const animatedCheckProps = useAnimatedProps(
-    () => ({
-      strokeDasharray: size,
-      strokeDashoffset: size * (1 - checkProgress.value),
-    }),
-    [checkProgress]
-  );
+  const animatedCheckProps = useAnimatedProps(() => ({
+    strokeDasharray: size,
+    strokeDashoffset: size * (1 - checkProgress.value),
+  }));
 
   return (
     <Svg

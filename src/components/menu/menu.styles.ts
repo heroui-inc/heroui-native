@@ -120,6 +120,16 @@ export const menuClassNames = combineStyles({
 });
 
 export const menuStyleSheet = StyleSheet.create({
+  contentWrapper: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    // Pivot custom scale/rotate Keyframes at the top edge, where the wrapper's
+    // centre was before it filled the portal.
+    transformOrigin: 'top',
+  },
   borderCurve: {
     borderCurve: 'continuous',
   },

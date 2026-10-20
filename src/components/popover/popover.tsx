@@ -1,11 +1,6 @@
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { createContext, forwardRef, use, useMemo } from 'react';
-import type {
-  GestureResponderEvent,
-  Text as RNText,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+import type { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -26,7 +21,11 @@ import {
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
-import type { PressableRef } from '../../helpers/internal/types';
+import type {
+  PressableRef,
+  TextRef,
+  ViewRef,
+} from '../../helpers/internal/types';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
 import { CloseButton } from '../close-button';
@@ -227,7 +226,7 @@ const PopoverOverlay = forwardRef<
  * with the container's positioning and clipping applied.
  */
 const PopoverContentBackground = forwardRef<
-  View,
+  ViewRef,
   PopoverContentBackgroundProps
 >(({ className, ...props }, ref) => {
   const contentBackgroundClassName = popoverClassNames.contentBackground({
@@ -312,9 +311,13 @@ const PopoverContentPopover = forwardRef<
     if (isDrivenEntering) {
       return (
         <PopoverContentContext value={{ placement }}>
+          {/* The wrapper must fill the portal: Android only dispatches native
+              touches to children inside their parent's bounds, so a
+              zero-height wrapper breaks native scrolling in the content. */}
           <Animated.View
             exiting={exiting}
             collapsable={false}
+            style={popoverStyleSheet.contentWrapper}
             pointerEvents="box-none"
           >
             <AnimatedContent
@@ -491,7 +494,7 @@ const PopoverClose = forwardRef<PressableRef, PopoverCloseProps>(
 
 // --------------------------------------------------
 
-const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
+const PopoverTitle = forwardRef<TextRef, PopoverTitleProps>(
   ({ className, children, ...props }, ref) => {
     const titleClassName = popoverClassNames.label({ className });
 
@@ -511,7 +514,7 @@ const PopoverTitle = forwardRef<RNText, PopoverTitleProps>(
 
 // --------------------------------------------------
 
-const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
+const PopoverDescription = forwardRef<TextRef, PopoverDescriptionProps>(
   ({ className, children, ...props }, ref) => {
     const descriptionClassName = popoverClassNames.description({
       className,
@@ -532,7 +535,7 @@ const PopoverDescription = forwardRef<RNText, PopoverDescriptionProps>(
 
 // --------------------------------------------------
 
-const PopoverArrow = forwardRef<View, PopoverArrowProps>(
+const PopoverArrow = forwardRef<ViewRef, PopoverArrowProps>(
   (
     {
       children,

@@ -1,3 +1,4 @@
+import type { TextInputRef } from '../../helpers/internal/types';
 /**
  * Big thank you to https://github.com/yjose/input-otp-native for logic and inspiration
  */
@@ -16,7 +17,6 @@ import {
   Platform,
   Pressable,
   StyleSheet,
-  TextInput,
   View,
   type BlurEvent,
   type FocusEvent,
@@ -91,7 +91,7 @@ const Root = forwardRef<RootRef, RootProps>(
     });
     const [isFocused, setIsFocused] = useState(false);
 
-    const inputRef = useRef<TextInput>(null);
+    const inputRef = useRef<TextInputRef>(null);
 
     const slots = useMemo<SlotData[]>(() => {
       return Array.from({ length: maxLength }).map((_, slotIdx) => {

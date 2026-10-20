@@ -1,5 +1,4 @@
 import { Children, forwardRef, useMemo } from 'react';
-import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
 import {
@@ -62,7 +61,7 @@ const useAccordionItem = AccordionPrimitive.useItemContext;
  * other themes render nothing. Pass `children` to host arbitrary content
  * (gradients, images) with the container's positioning and clipping applied.
  */
-const Background = forwardRef<View, AccordionBackgroundProps>(
+const Background = forwardRef<ViewRef, AccordionBackgroundProps>(
   ({ className, ...props }, ref) => {
     const backgroundClassName = accordionClassNames.background({ className });
 
@@ -79,7 +78,7 @@ const Background = forwardRef<View, AccordionBackgroundProps>(
 
 // ------------------------------------------------------------------------------
 
-const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
+const Root = forwardRef<ViewRef, AccordionRootProps>((props, ref) => {
   const {
     children,
     variant = 'default',
@@ -176,7 +175,7 @@ const Root = forwardRef<View, AccordionRootProps>((props, ref) => {
 
 // ------------------------------------------------------------------------------
 
-const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
+const Item = forwardRef<ViewRef, AccordionItemProps>((props, ref) => {
   const {
     children,
     value,
@@ -224,7 +223,7 @@ const Item = forwardRef<View, AccordionItemProps>((props, ref) => {
 
 // ------------------------------------------------------------------------------
 
-const Trigger = forwardRef<View, AccordionTriggerProps>((props, ref) => {
+const Trigger = forwardRef<ViewRef, AccordionTriggerProps>((props, ref) => {
   const { children, className, ...restProps } = props;
 
   const { variant } = useAccordionInnerContext();
@@ -305,7 +304,7 @@ const Indicator = forwardRef<ViewRef, AccordionIndicatorProps>((props, ref) => {
 
 // ------------------------------------------------------------------------------
 
-const Content = forwardRef<View, AccordionContentProps>((props, ref) => {
+const Content = forwardRef<ViewRef, AccordionContentProps>((props, ref) => {
   const { children, className, animation, ...restProps } = props;
 
   const { variant } = useAccordionInnerContext();

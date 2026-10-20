@@ -1,6 +1,6 @@
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { forwardRef, useLayoutEffect, useMemo, useRef } from 'react';
-import type { GestureResponderEvent, Text as RNText } from 'react-native';
+import type { GestureResponderEvent } from 'react-native';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
@@ -27,7 +27,11 @@ import {
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
-import type { PressableRef, ViewRef } from '../../helpers/internal/types';
+import type {
+  PressableRef,
+  TextRef,
+  ViewRef,
+} from '../../helpers/internal/types';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
 import { CloseButton } from '../close-button';
@@ -477,9 +481,13 @@ const SelectContentPopover = forwardRef<
     // via a shared value once it has been measured and positioned (`isReady`).
     if (isDrivenEntering) {
       return (
+        // The wrapper must fill the portal: Android only dispatches native
+        // touches to children inside their parent's bounds, so a zero-height
+        // wrapper breaks native scrolling (e.g. a `ScrollView`) in the content.
         <Animated.View
           exiting={exiting}
           collapsable={false}
+          style={selectStyleSheet.contentWrapper}
           pointerEvents="box-none"
         >
           <AnimatedPopoverContent
@@ -627,7 +635,7 @@ const SelectContentDialog = forwardRef<
     const wrapperClassName = wrapper({ className: classNames?.wrapper });
     const contentClassName = content({ className: classNames?.content });
 
-    const dragContainerRef = useRef<View>(null);
+    const dragContainerRef = useRef<ViewRef>(null);
 
     const {
       contentY,
@@ -841,7 +849,7 @@ const SelectItemLabel = forwardRef<
 
 // --------------------------------------------------
 
-const SelectItemDescription = forwardRef<RNText, SelectItemDescriptionProps>(
+const SelectItemDescription = forwardRef<TextRef, SelectItemDescriptionProps>(
   ({ className, ...props }, ref) => {
     const itemDescriptionClassName = selectClassNames.itemDescription({
       className,

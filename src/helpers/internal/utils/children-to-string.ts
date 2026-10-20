@@ -32,7 +32,7 @@ function hasReactElements(children: ReactNode): boolean {
  * @returns A string representation of the children or null if not convertible
  */
 export function childrenToString(
-  children: ReactNode | SharedValue<ReactNode>
+  children: ReactNode | Omit<SharedValue<ReactNode>, 'set' | 'modify'>
 ): string | null {
   // Handle null/undefined
   if (children == null) {

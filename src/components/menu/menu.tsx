@@ -1,6 +1,6 @@
 import type BottomSheet from '@gorhom/bottom-sheet';
 import { createContext, forwardRef, useMemo } from 'react';
-import type { GestureResponderEvent, Text as RNText } from 'react-native';
+import type { GestureResponderEvent } from 'react-native';
 import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import Animated, { FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -22,7 +22,11 @@ import {
   usePopupPopoverContentAnimation,
   usePopupRootAnimation,
 } from '../../helpers/internal/hooks';
-import type { PressableRef } from '../../helpers/internal/types';
+import type {
+  PressableRef,
+  TextRef,
+  ViewRef,
+} from '../../helpers/internal/types';
 import { childrenToString } from '../../helpers/internal/utils';
 import * as MenuPrimitives from '../../primitives/menu';
 import * as MenuPrimitivesTypes from '../../primitives/menu/menu.types';
@@ -228,7 +232,7 @@ const MenuOverlay = forwardRef<
  * nothing. Pass `children` to host arbitrary content (gradients, images)
  * with the container's positioning and clipping applied.
  */
-const MenuContentBackground = forwardRef<View, MenuContentBackgroundProps>(
+const MenuContentBackground = forwardRef<ViewRef, MenuContentBackgroundProps>(
   ({ className, ...props }, ref) => {
     const contentBackgroundClassName = menuClassNames.contentBackground({
       className,
@@ -318,9 +322,13 @@ const MenuContentPopover = forwardRef<
     if (isDrivenEntering) {
       return (
         <MenuContentContext value={{ placement }}>
+          {/* The wrapper must fill the portal: Android only dispatches native
+              touches to children inside their parent's bounds, so a
+              zero-height wrapper breaks native scrolling in the content. */}
           <Animated.View
             exiting={isSubMenuOpen ? FadeOut.duration(150) : exiting}
             collapsable={false}
+            style={menuStyleSheet.contentWrapper}
             pointerEvents="box-none"
           >
             <AnimatedContent
@@ -374,6 +382,7 @@ const MenuContentPopover = forwardRef<
             entering={entering}
             exiting={isSubMenuOpen ? FadeOut.duration(150) : exiting}
             collapsable={false}
+            style={menuStyleSheet.contentWrapper}
             pointerEvents="box-none"
           >
             <AnimatedContent
@@ -531,7 +540,7 @@ const MenuClose = forwardRef<PressableRef, MenuCloseProps>((props, ref) => {
 
 // --------------------------------------------------
 
-const MenuLabel = forwardRef<RNText, MenuLabelProps>(
+const MenuLabel = forwardRef<TextRef, MenuLabelProps>(
   ({ className, children, ...props }, ref) => {
     const labelClassName = menuClassNames.label({ className });
 
@@ -647,7 +656,7 @@ const MenuItemComponent = forwardRef<
 
 // --------------------------------------------------
 
-const MenuItemTitle = forwardRef<RNText, MenuItemTitleProps>(
+const MenuItemTitle = forwardRef<TextRef, MenuItemTitleProps>(
   ({ className, children, ...props }, ref) => {
     const { variant } = useMenuItem();
     const itemTitleClassName = menuClassNames.itemTitle({ className, variant });
@@ -667,7 +676,7 @@ const MenuItemTitle = forwardRef<RNText, MenuItemTitleProps>(
 
 // --------------------------------------------------
 
-const MenuItemDescription = forwardRef<RNText, MenuItemDescriptionProps>(
+const MenuItemDescription = forwardRef<TextRef, MenuItemDescriptionProps>(
   ({ className, children, ...props }, ref) => {
     const itemDescriptionClassName = menuClassNames.itemDescription({
       className,

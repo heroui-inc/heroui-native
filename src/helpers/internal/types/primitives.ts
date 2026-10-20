@@ -1,4 +1,12 @@
-import type { Pressable, Text, TextInput, View, ViewStyle } from 'react-native';
+import type {
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 // Base utility types
 
@@ -15,19 +23,31 @@ type ComponentPropsWithAsChild<T extends React.ElementType<any>> =
  * Reference type for React Native View component
  * Used for forwarding refs to View elements
  */
-type ViewRef = React.ComponentRef<typeof View>;
+interface ViewRef extends React.ComponentRef<typeof View> {}
 
 /**
  * Reference type for React Native Pressable component
  * Used for forwarding refs to Pressable elements
  */
-type PressableRef = React.ComponentRef<typeof Pressable>;
+interface PressableRef extends React.ComponentRef<typeof Pressable> {}
+
+/**
+ * Reference type for React Native Image component
+ * Used for forwarding refs to Image elements
+ */
+interface ImageRef extends React.ComponentRef<typeof Image> {}
+
+/**
+ * Reference type for React Native ScrollView component
+ * Used for forwarding refs to ScrollView elements
+ */
+interface ScrollViewRef extends React.ComponentRef<typeof ScrollView> {}
 
 /**
  * Reference type for React Native Text component
  * Used for forwarding refs to Text elements
  */
-type TextRef = React.ComponentRef<typeof Text>;
+interface TextRef extends React.ComponentRef<typeof Text> {}
 
 /**
  * Reference type for React Native TextInput component.
@@ -39,7 +59,12 @@ type TextRef = React.ComponentRef<typeof Text>;
  * as a ref type is incompatible with the Strict API, where `TextInput` is
  * the component function rather than the instance.
  */
-type TextInputRef = React.ComponentRef<typeof TextInput>;
+interface TextInputRef extends React.ComponentRef<typeof TextInput> {}
+
+/** Preserve the native ref alias when component declarations are generated. */
+type TextInputComponent<Props> = React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<Props> & React.RefAttributes<TextInputRef>
+>;
 
 // Slottable component props
 
@@ -47,19 +72,20 @@ type TextInputRef = React.ComponentRef<typeof TextInput>;
  * View component props with asChild support for slot composition
  * Enables View components to be used with the Slot pattern
  */
-type SlottableViewProps = ComponentPropsWithAsChild<typeof View>;
+interface SlottableViewProps extends ComponentPropsWithAsChild<typeof View> {}
 
 /**
  * Pressable component props with asChild support for slot composition
  * Enables Pressable components to be used with the Slot pattern
  */
-type SlottablePressableProps = ComponentPropsWithAsChild<typeof Pressable>;
+interface SlottablePressableProps
+  extends ComponentPropsWithAsChild<typeof Pressable> {}
 
 /**
  * Text component props with asChild support for slot composition
  * Enables Text components to be used with the Slot pattern
  */
-type SlottableTextProps = ComponentPropsWithAsChild<typeof Text>;
+interface SlottableTextProps extends ComponentPropsWithAsChild<typeof Text> {}
 
 /**
  * Interface for components that can be force mounted even when normally hidden
@@ -147,12 +173,15 @@ interface PositionedContentProps {
 export type {
   ComponentPropsWithAsChild,
   ForceMountable,
+  ImageRef,
   Insets,
   PositionedContentProps,
   PressableRef,
+  ScrollViewRef,
   SlottablePressableProps,
   SlottableTextProps,
   SlottableViewProps,
+  TextInputComponent,
   TextInputRef,
   TextRef,
   ViewRef,

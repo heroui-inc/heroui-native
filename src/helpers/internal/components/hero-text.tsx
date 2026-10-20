@@ -2,13 +2,14 @@ import React from 'react';
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
 import { useTextComponent } from '../../external/hooks';
 import { cn } from '../../external/utils';
+import type { TextRef } from '../types';
 
 /**
  * Props for HeroText component
  */
 export interface HeroTextProps extends RNTextProps {
   /**
-   * Additional CSS classes that will be merged with the default 'font-normal' class
+   * Additional CSS classes that will be merged with the default 'hero-text' class (font-normal)
    */
   className?: string;
 }
@@ -18,7 +19,7 @@ export interface HeroTextProps extends RNTextProps {
  * from HeroUINativeProvider.
  *
  * This component is distinct from React Native's Text component and includes
- * a default 'font-normal' className that can be extended via the className prop.
+ * a default 'hero-text' className (font-normal, base layer) that can be extended via the className prop.
  *
  * Global text props that can be configured:
  * - adjustsFontSizeToFit: Auto-scale text to fit constraints
@@ -51,7 +52,7 @@ export interface HeroTextProps extends RNTextProps {
  * </HeroUINativeProvider>
  * ```
  */
-export const HeroText = React.forwardRef<RNText, HeroTextProps>(
+export const HeroText = React.forwardRef<TextRef, HeroTextProps>(
   (props, ref) => {
     const { className, ...restProps } = props;
     const { textProps } = useTextComponent();
@@ -61,7 +62,7 @@ export const HeroText = React.forwardRef<RNText, HeroTextProps>(
     return (
       <RNText
         ref={ref}
-        className={cn('font-normal', className)}
+        className={cn('hero-text', className)}
         {...mergedProps}
       />
     );

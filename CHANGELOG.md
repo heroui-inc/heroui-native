@@ -1,3 +1,20 @@
+## <small>1.0.11 (2026-10-20)</small>
+
+* fix(popover, menu, select): add contentWrapper style to ensure proper positioning in portals ([785e38b](https://github.com/heroui-inc/heroui-native/commit/785e38b))
+* fix(popover, menu, select): ensure wrapper fills portal for native touch handling on Android ([3081b1c](https://github.com/heroui-inc/heroui-native/commit/3081b1c))
+* chore: update dependencies and improve type definitions across components ([5294e08](https://github.com/heroui-inc/heroui-native/commit/5294e08))
+* chore: update uniwind to version 1.13.0 and remove deprecated patch ([ad1e82b](https://github.com/heroui-inc/heroui-native/commit/ad1e82b))
+* chore: update version to v1.0.10 in README and app component ([122f63d](https://github.com/heroui-inc/heroui-native/commit/122f63d))
+* fix(bottom-sheet): keep controlled-open content visible after reopening ([671c06e](https://github.com/heroui-inc/heroui-native/commit/671c06e))
+* fix(input-group): inherit the disabled state of a parent TextField ([e59ff4f](https://github.com/heroui-inc/heroui-native/commit/e59ff4f))
+* fix(input): preserve native ref types in published declarations ([eec6db4](https://github.com/heroui-inc/heroui-native/commit/eec6db4))
+* fix(input): restore android shadow ([68148b6](https://github.com/heroui-inc/heroui-native/commit/68148b6))
+* fix(scroll-shadow): keep shadows scroll-driven when animations are disabled ([a2089f8](https://github.com/heroui-inc/heroui-native/commit/a2089f8)), closes [#521](https://github.com/heroui-inc/heroui-native/issues/521)
+* fix(slider): drop floating point noise from decimal step values ([09e820d](https://github.com/heroui-inc/heroui-native/commit/09e820d))
+* docs: fix customizing colors example to include :root ([e41559a](https://github.com/heroui-inc/heroui-native/commit/e41559a))
+
+
+
 ## <small>1.0.10 (2026-09-21)</small>
 
 * chore(tests): remove unused type assertions for Input and TextArea refs ([5d6a3ea](https://github.com/heroui-inc/heroui-native/commit/5d6a3ea))

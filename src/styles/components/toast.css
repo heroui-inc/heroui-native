@@ -1,62 +1,64 @@
-.toast__root {
-  background-color: var(--color-overlay);
-  border-radius: var(--radius-3xl);
-  padding: calc(var(--spacing) * 4);
-  box-shadow: var(--shadow-overlay);
-  overflow: hidden;
-}
+@layer components {
+  .toast__root {
+    background-color: var(--color-overlay);
+    border-radius: var(--radius-3xl);
+    padding: calc(var(--spacing) * 4);
+    box-shadow: var(--shadow-overlay);
+    overflow: hidden;
+  }
 
-.toast__background {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-3xl);
-  overflow: hidden;
-}
+  .toast__background {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-3xl);
+    overflow: hidden;
+  }
 
-.toast__label {
-  font-size: var(--text-base);
-  line-height: var(--text-base--line-height);
-  @apply font-medium;
-  /* RN Text resolves left/right against layout direction, so this means "start" */
-  text-align: left;
-}
+  .toast__label {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    @apply font-medium;
+    /* RN Text resolves left/right against layout direction, so this means "start" */
+    text-align: left;
+  }
 
-/* Label - variant */
+  /* Label - variant */
 
-.toast__label--variant-default {
-  color: var(--color-overlay-foreground);
-}
+  .toast__label--variant-default {
+    color: var(--color-overlay-foreground);
+  }
 
-.toast__label--variant-accent {
-  color: var(--color-accent-soft-foreground);
-}
+  .toast__label--variant-accent {
+    color: var(--color-accent-soft-foreground);
+  }
 
-.toast__label--variant-success {
-  color: var(--color-success-soft-foreground);
-}
+  .toast__label--variant-success {
+    color: var(--color-success-soft-foreground);
+  }
 
-.toast__label--variant-warning {
-  color: var(--color-warning-soft-foreground);
-}
+  .toast__label--variant-warning {
+    color: var(--color-warning-soft-foreground);
+  }
 
-.toast__label--variant-danger {
-  color: var(--color-danger-soft-foreground);
-}
+  .toast__label--variant-danger {
+    color: var(--color-danger-soft-foreground);
+  }
 
-.toast__description {
-  font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
-  color: var(--color-muted);
-  /* RN Text resolves left/right against layout direction, so this means "start" */
-  text-align: left;
-}
+  .toast__description {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    color: var(--color-muted);
+    /* RN Text resolves left/right against layout direction, so this means "start" */
+    text-align: left;
+  }
 
-/* Action - variant */
+  /* Action - variant */
 
-.toast__action--variant-success {
-  background-color: var(--color-success);
-}
+  .toast__action--variant-success {
+    background-color: var(--color-success);
+  }
 
-.toast__action--variant-warning {
-  background-color: var(--color-warning);
+  .toast__action--variant-warning {
+    background-color: var(--color-warning);
+  }
 }

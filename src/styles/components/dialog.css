@@ -1,47 +1,49 @@
-.dialog__portal {
-  position: absolute;
-  inset: 0;
-  justify-content: center;
-  padding: calc(var(--spacing) * 5);
-}
+@layer components {
+  .dialog__portal {
+    position: absolute;
+    inset: 0;
+    justify-content: center;
+    padding: calc(var(--spacing) * 5);
+  }
 
-.dialog__overlay {
-  position: absolute;
-  inset: 0;
-  background-color: var(--color-backdrop);
-}
+  .dialog__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-backdrop);
+  }
 
-.dialog__overlay--variant-blur {
-  background-color: transparent;
-}
+  .dialog__overlay--variant-blur {
+    background-color: transparent;
+  }
 
-.dialog__content {
-  background-color: var(--color-overlay);
-  padding: calc(var(--spacing) * 5);
-  border-radius: var(--radius-3xl);
-  box-shadow: var(--shadow-overlay);
-}
+  .dialog__content {
+    background-color: var(--color-overlay);
+    padding: calc(var(--spacing) * 5);
+    border-radius: var(--radius-3xl);
+    box-shadow: var(--shadow-overlay);
+  }
 
-.dialog__content-background {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-3xl);
-  overflow: hidden;
-}
+  .dialog__content-background {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-3xl);
+    overflow: hidden;
+  }
 
-.dialog__label {
-  font-size: var(--text-lg);
-  line-height: var(--text-lg--line-height);
-  @apply font-medium;
-  color: var(--color-foreground);
-  /* RN Text resolves left/right against layout direction, so this means "start" */
-  text-align: left;
-}
+  .dialog__label {
+    font-size: var(--text-lg);
+    line-height: var(--text-lg--line-height);
+    @apply font-medium;
+    color: var(--color-foreground);
+    /* RN Text resolves left/right against layout direction, so this means "start" */
+    text-align: left;
+  }
 
-.dialog__description {
-  font-size: var(--text-base);
-  line-height: var(--text-base--line-height);
-  color: var(--color-muted);
-  /* RN Text resolves left/right against layout direction, so this means "start" */
-  text-align: left;
+  .dialog__description {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    color: var(--color-muted);
+    /* RN Text resolves left/right against layout direction, so this means "start" */
+    text-align: left;
+  }
 }

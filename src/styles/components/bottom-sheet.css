@@ -1,51 +1,53 @@
-.bottom-sheet__overlay {
-  position: absolute;
-  inset: 0;
-  background-color: var(--color-backdrop);
-}
+@layer components {
+  .bottom-sheet__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-backdrop);
+  }
 
-.bottom-sheet__overlay--variant-blur {
-  background-color: transparent;
-}
+  .bottom-sheet__overlay--variant-blur {
+    background-color: transparent;
+  }
 
-.bottom-sheet__content-container {
-  flex: 1;
-  padding: calc(var(--spacing) * 5);
-  background-color: transparent;
-}
+  .bottom-sheet__content-container {
+    flex: 1;
+    padding: calc(var(--spacing) * 5);
+    background-color: transparent;
+  }
 
-.bottom-sheet__content-background {
-  background-color: var(--color-overlay);
-  border-top-left-radius: var(--radius-4xl);
-  border-top-right-radius: var(--radius-4xl);
-  box-shadow: var(--shadow-overlay);
-}
+  .bottom-sheet__content-background {
+    background-color: var(--color-overlay);
+    border-top-left-radius: var(--radius-4xl);
+    border-top-right-radius: var(--radius-4xl);
+    box-shadow: var(--shadow-overlay);
+  }
 
-.bottom-sheet__background {
-  position: absolute;
-  inset: 0;
-  border-top-left-radius: var(--radius-4xl);
-  border-top-right-radius: var(--radius-4xl);
-  overflow: hidden;
-}
+  .bottom-sheet__background {
+    position: absolute;
+    inset: 0;
+    border-top-left-radius: var(--radius-4xl);
+    border-top-right-radius: var(--radius-4xl);
+    overflow: hidden;
+  }
 
-.bottom-sheet__content-handle-indicator {
-  background-color: var(--color-separator);
-}
+  .bottom-sheet__content-handle-indicator {
+    background-color: var(--color-separator);
+  }
 
-.bottom-sheet__label {
-  font-size: var(--text-lg);
-  line-height: var(--text-lg--line-height);
-  @apply font-medium;
-  color: var(--color-foreground);
-  /* RN Text resolves left/right against layout direction, so this means "start" */
-  text-align: left;
-}
+  .bottom-sheet__label {
+    font-size: var(--text-lg);
+    line-height: var(--text-lg--line-height);
+    @apply font-medium;
+    color: var(--color-foreground);
+    /* RN Text resolves left/right against layout direction, so this means "start" */
+    text-align: left;
+  }
 
-.bottom-sheet__description {
-  font-size: var(--text-base);
-  line-height: var(--text-base--line-height);
-  color: var(--color-muted);
-  /* RN Text resolves left/right against layout direction, so this means "start" */
-  text-align: left;
+  .bottom-sheet__description {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    color: var(--color-muted);
+    /* RN Text resolves left/right against layout direction, so this means "start" */
+    text-align: left;
+  }
 }

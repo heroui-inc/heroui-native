@@ -108,7 +108,7 @@
     "tailwind-variants": "^3.2.2",
     "tailwindcss": "^4.3.2",
     "typescript": "^5.8.3",
-    "uniwind": "1.12.2"
+    "uniwind": "1.13.0"
   },
   "peerDependencies": {
     "@gorhom/bottom-sheet": "^5.2.9",
@@ -191,8 +191,5 @@
     "languages": "js",
     "type": "library",
     "version": "0.63.0"
-  },
-  "resolutions": {
-    "uniwind@1.12.2": "patch:uniwind@npm%3A1.12.2#./.yarn/patches/uniwind-npm-1.12.2-145fff90e1.patch"
   }
 }

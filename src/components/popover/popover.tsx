@@ -311,9 +311,13 @@ const PopoverContentPopover = forwardRef<
     if (isDrivenEntering) {
       return (
         <PopoverContentContext value={{ placement }}>
+          {/* The wrapper must fill the portal: Android only dispatches native
+              touches to children inside their parent's bounds, so a
+              zero-height wrapper breaks native scrolling in the content. */}
           <Animated.View
             exiting={exiting}
             collapsable={false}
+            style={StyleSheet.absoluteFill}
             pointerEvents="box-none"
           >
             <AnimatedContent

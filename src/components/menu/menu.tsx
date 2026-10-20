@@ -322,9 +322,13 @@ const MenuContentPopover = forwardRef<
     if (isDrivenEntering) {
       return (
         <MenuContentContext value={{ placement }}>
+          {/* The wrapper must fill the portal: Android only dispatches native
+              touches to children inside their parent's bounds, so a
+              zero-height wrapper breaks native scrolling in the content. */}
           <Animated.View
             exiting={isSubMenuOpen ? FadeOut.duration(150) : exiting}
             collapsable={false}
+            style={StyleSheet.absoluteFill}
             pointerEvents="box-none"
           >
             <AnimatedContent
@@ -378,6 +382,7 @@ const MenuContentPopover = forwardRef<
             entering={entering}
             exiting={isSubMenuOpen ? FadeOut.duration(150) : exiting}
             collapsable={false}
+            style={StyleSheet.absoluteFill}
             pointerEvents="box-none"
           >
             <AnimatedContent

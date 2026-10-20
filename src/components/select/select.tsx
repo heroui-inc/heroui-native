@@ -481,9 +481,13 @@ const SelectContentPopover = forwardRef<
     // via a shared value once it has been measured and positioned (`isReady`).
     if (isDrivenEntering) {
       return (
+        // The wrapper must fill the portal: Android only dispatches native
+        // touches to children inside their parent's bounds, so a zero-height
+        // wrapper breaks native scrolling (e.g. a `ScrollView`) in the content.
         <Animated.View
           exiting={exiting}
           collapsable={false}
+          style={StyleSheet.absoluteFill}
           pointerEvents="box-none"
         >
           <AnimatedPopoverContent

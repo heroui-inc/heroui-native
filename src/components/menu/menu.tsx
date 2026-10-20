@@ -328,7 +328,7 @@ const MenuContentPopover = forwardRef<
           <Animated.View
             exiting={isSubMenuOpen ? FadeOut.duration(150) : exiting}
             collapsable={false}
-            style={StyleSheet.absoluteFill}
+            style={menuStyleSheet.contentWrapper}
             pointerEvents="box-none"
           >
             <AnimatedContent
@@ -382,7 +382,7 @@ const MenuContentPopover = forwardRef<
             entering={entering}
             exiting={isSubMenuOpen ? FadeOut.duration(150) : exiting}
             collapsable={false}
-            style={StyleSheet.absoluteFill}
+            style={menuStyleSheet.contentWrapper}
             pointerEvents="box-none"
           >
             <AnimatedContent

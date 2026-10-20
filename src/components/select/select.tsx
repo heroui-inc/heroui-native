@@ -487,7 +487,7 @@ const SelectContentPopover = forwardRef<
         <Animated.View
           exiting={exiting}
           collapsable={false}
-          style={StyleSheet.absoluteFill}
+          style={selectStyleSheet.contentWrapper}
           pointerEvents="box-none"
         >
           <AnimatedPopoverContent

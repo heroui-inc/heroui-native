@@ -14,7 +14,8 @@
 | ControlField      | [control-field.md](../src/components/control-field/control-field.md)                |
 | Description       | [description.md](../src/components/description/description.md)                      |
 | Dialog            | [dialog.md](../src/components/dialog/dialog.md)                                     |
-| FieldError        | [field-error.md](../src/components/field-error/field-error.md)                      |
+| FieldError        | [field-error.md](../src/components/field-error/field-error.md)
+| GlassView         | [glass-view.md](../src/components/glass-view/glass-view.md)                         ||
 | Input             | [input.md](../src/components/input/input.md)                                        |
 | InputGroup        | [input-group.md](../src/components/input-group/input-group.md)                      |
 | InputOTP          | [input-otp.md](../src/components/input-otp/input-otp.md)                            |

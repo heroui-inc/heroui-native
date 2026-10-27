@@ -194,6 +194,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
               'absolute left-0 right-0',
               placement === 'top' ? 'top-0' : 'bottom-0'
             )}
+            pointerEvents="box-none"
             entering={entering}
             exiting={exiting}
           >

@@ -1,8 +1,23 @@
 import type { ReactNode } from 'react';
 import { Platform } from 'react-native';
 import ReactNativeScreensPackage from '../../../optional/react-native-screens';
+import TrueSheetPackage from '../../../optional/true-sheet';
 
 const NativeFullWindowOverlay = ReactNativeScreensPackage?.FullWindowOverlay;
+const TrueSheetOverlay = TrueSheetPackage?.TrueSheetOverlay;
+
+/**
+ * Renders `children` in the native layer above every presented sheet.
+ * Dialogs, toasts, menus, popovers, and selects pass through here. When
+ * TrueSheet is not installed, `children` render where they already do.
+ */
+export function AboveNativeSheet({ children }: { children: ReactNode }) {
+  if (!TrueSheetOverlay) {
+    return <>{children}</>;
+  }
+
+  return <TrueSheetOverlay>{children}</TrueSheetOverlay>;
+}
 
 /**
  * Props for the FullWindowOverlay component
@@ -53,12 +68,14 @@ export function FullWindowOverlay({
   unstable_accessibilityContainerViewIsModal = false,
   children,
 }: FullWindowOverlayProps) {
+  const content = <AboveNativeSheet>{children}</AboveNativeSheet>;
+
   if (
     Platform.OS !== 'ios' ||
     disableFullWindowOverlay ||
     !NativeFullWindowOverlay
   ) {
-    return <>{children}</>;
+    return content;
   }
 
   return (
@@ -67,7 +84,7 @@ export function FullWindowOverlay({
         unstable_accessibilityContainerViewIsModal
       }
     >
-      {children}
+      {content}
     </NativeFullWindowOverlay>
   );
 }

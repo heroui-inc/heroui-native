@@ -1,0 +1,221 @@
+import { useLingui } from '@lingui/react/macro';
+import {
+  Avatar,
+  Button,
+  Description,
+  InputOTP,
+  Label,
+  NativeBottomSheet,
+  useToast,
+  type InputOTPRef,
+  type NativeBottomSheetRef,
+} from 'heroui-native';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { View } from 'react-native';
+import { AppText } from '../app-text';
+
+/**
+ * Formats a phone number for display
+ */
+const formatPhoneNumber = (phone: string): string => {
+  const cleaned = phone.replace(/\D/g, '');
+  const match = cleaned.match(/^(\d{1})(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    return `+${match[1]} ${match[2]} ${match[3]} ${match[4]}`;
+  }
+  return phone;
+};
+
+const NativeBottomSheetInputOTP = memo(
+  ({
+    otpRef,
+    value,
+    onChange,
+    onComplete,
+    phoneNumber,
+  }: {
+    otpRef: React.RefObject<InputOTPRef | null>;
+    value: string;
+    onChange: (value: string) => void;
+    onComplete: (code: string) => void;
+    phoneNumber: string;
+  }) => {
+    const { t } = useLingui();
+
+    return (
+      <View className="gap-6 items-center">
+        <Avatar
+          size="lg"
+          color="accent"
+          variant="soft"
+          alt={t`Verification icon`}
+        >
+          <Avatar.Fallback>
+            <AppText className="text-2xl text-foreground font-semibold">
+              ✓
+            </AppText>
+          </Avatar.Fallback>
+        </Avatar>
+
+        <View className="gap-1 items-center px-2">
+          <Label className="text-2xl font-semibold text-center">
+            {t`Verify your phone number`}
+          </Label>
+          <Description className="text-base text-center text-muted">
+            {t`We sent a verification code to`}
+          </Description>
+          <AppText className="text-base font-semibold text-center text-foreground mt-1">
+            {formatPhoneNumber(phoneNumber)}
+          </AppText>
+        </View>
+
+        <View className="w-full items-center">
+          <InputOTP
+            ref={otpRef}
+            variant="secondary"
+            maxLength={6}
+            value={value}
+            onChange={onChange}
+            onComplete={onComplete}
+          >
+            <InputOTP.Group>
+              <InputOTP.Slot index={0} />
+              <InputOTP.Slot index={1} />
+              <InputOTP.Slot index={2} />
+            </InputOTP.Group>
+            <InputOTP.Separator />
+            <InputOTP.Group>
+              <InputOTP.Slot index={3} />
+              <InputOTP.Slot index={4} />
+              <InputOTP.Slot index={5} />
+            </InputOTP.Group>
+          </InputOTP>
+        </View>
+      </View>
+    );
+  }
+);
+
+export const WithOTPInputNativeBottomSheetContent = () => {
+  const { t } = useLingui();
+  const sheetRef = useRef<NativeBottomSheetRef>(null);
+  const otpRef = useRef<InputOTPRef>(null);
+  const [otpValue, setOtpValue] = useState('');
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [resendTimer, setResendTimer] = useState(0);
+  const { toast } = useToast();
+
+  const phoneNumber = '+12345678900';
+
+  useEffect(() => {
+    if (resendTimer > 0) {
+      const timer = setTimeout(() => {
+        setResendTimer(resendTimer - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+    return undefined;
+  }, [resendTimer]);
+
+  const handleComplete = useCallback(
+    async (_code: string) => {
+      setIsVerifying(true);
+
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      setIsVerifying(false);
+      toast.show({
+        variant: 'success',
+        label: t`Phone verified`,
+        description: t`Your phone number has been successfully verified.`,
+      });
+
+      setTimeout(() => {
+        setOtpValue('');
+        otpRef.current?.clear();
+      }, 2000);
+    },
+    [toast, t]
+  );
+
+  const handleResend = useCallback(() => {
+    if (resendTimer > 0) return;
+
+    setResendTimer(60);
+    setOtpValue('');
+    otpRef.current?.clear();
+    toast.show({
+      variant: 'success',
+      label: t`Code sent`,
+      description: t`A new verification code has been sent to your phone.`,
+    });
+  }, [resendTimer, toast, t]);
+
+  const handleVerify = useCallback(() => {
+    if (otpValue.length === 6) {
+      handleComplete(otpValue);
+    } else {
+      toast.show({
+        variant: 'warning',
+        label: t`Incomplete code`,
+        description: t`Please enter all 6 digits to continue.`,
+      });
+    }
+  }, [otpValue, handleComplete, toast, t]);
+
+  return (
+    <View className="flex-1">
+      <View className="flex-1 items-center justify-center">
+        <Button variant="secondary" onPress={() => sheetRef.current?.present()}>
+          {t`Native bottom sheet with OTP input`}
+        </Button>
+        <NativeBottomSheet
+          ref={sheetRef}
+          onDidDismiss={() => {
+            setOtpValue('');
+            setResendTimer(0);
+          }}
+        >
+          <NativeBottomSheet.Title className="sr-only">
+            {t`Phone Number Verification`}
+          </NativeBottomSheet.Title>
+          <NativeBottomSheetInputOTP
+            otpRef={otpRef}
+            value={otpValue}
+            onChange={setOtpValue}
+            onComplete={handleComplete}
+            phoneNumber={phoneNumber}
+          />
+          <View className="mt-8 gap-3">
+            <Button
+              variant="primary"
+              onPress={handleVerify}
+              isDisabled={isVerifying || otpValue.length !== 6}
+            >
+              {isVerifying ? t`Verifying...` : t`Verify Code`}
+            </Button>
+            <View className="flex-row items-center justify-center mt-2">
+              <AppText className="text-sm text-muted text-center">
+                {t`Didn't receive the code?`}
+              </AppText>
+              <Button
+                variant="ghost"
+                size="sm"
+                onPress={handleResend}
+                isDisabled={resendTimer > 0}
+              >
+                {resendTimer > 0 ? t`Resend in ${resendTimer}s` : t`Resend`}
+              </Button>
+            </View>
+          </View>
+          <View className="mt-8 px-2">
+            <AppText className="text-xs text-muted text-center leading-5">
+              {t`By continuing, you agree to receive SMS messages for verification. Message and data rates may apply.`}
+            </AppText>
+          </View>
+        </NativeBottomSheet>
+      </View>
+    </View>
+  );
+};

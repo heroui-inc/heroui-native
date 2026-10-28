@@ -74,6 +74,7 @@
     "@eslint/js": "^9.22.0",
     "@evilmartians/lefthook": "^1.5.0",
     "@gorhom/bottom-sheet": "^5.2.14",
+    "@lodev09/react-native-true-sheet": "^4.0.0",
     "@react-native-community/cli": "latest",
     "@react-native/babel-preset": "0.88.0",
     "@react-native/eslint-config": "^0.78.0",
@@ -112,6 +113,7 @@
   },
   "peerDependencies": {
     "@gorhom/bottom-sheet": "^5.2.9",
+    "@lodev09/react-native-true-sheet": "^4.0.0",
     "expo-blur": ">=14.0.0",
     "react": ">=19.0.0",
     "react-native": ">=0.81.0",
@@ -126,6 +128,9 @@
   },
   "peerDependenciesMeta": {
     "@gorhom/bottom-sheet": {
+      "optional": true
+    },
+    "@lodev09/react-native-true-sheet": {
       "optional": true
     },
     "expo-blur": {
@@ -191,5 +196,8 @@
     "languages": "js",
     "type": "library",
     "version": "0.63.0"
+  },
+  "resolutions": {
+    "@lodev09/react-native-true-sheet@^4.0.0": "patch:@lodev09/react-native-true-sheet@npm%3A4.0.0#./.yarn/patches/@lodev09-react-native-true-sheet-npm-4.0.0-1dd25ebd5d.patch"
   }
 }

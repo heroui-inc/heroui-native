@@ -157,6 +157,13 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
+          name="components/native-bottom-sheet-native-modal"
+          options={{
+            title: t`NativeBottomSheet Native Modal`,
+            presentation: 'formSheet',
+          }}
+        />
+        <Stack.Screen
           name="components/dialog-native-modal"
           options={{
             title: t`Dialog Native Modal`,

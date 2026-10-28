@@ -20,6 +20,7 @@ export * from './components/label';
 export * from './components/link-button';
 export * from './components/list-group';
 export * from './components/menu';
+export * from './components/native-bottom-sheet';
 export * from './components/popover';
 export * from './components/pressable-feedback';
 export * from './components/radio';

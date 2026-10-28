@@ -1,4 +1,3 @@
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useLingui } from '@lingui/react/macro';
 import {
   Avatar,
@@ -7,13 +6,12 @@ import {
   Description,
   InputOTP,
   Label,
-  useBottomSheetAwareHandlers,
   useToast,
+  type BottomSheetRef,
   type InputOTPRef,
 } from 'heroui-native';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
-import { KeyboardController } from 'react-native-keyboard-controller';
 import { AppText } from '../app-text';
 
 /**
@@ -28,12 +26,6 @@ const formatPhoneNumber = (phone: string): string => {
   return phone;
 };
 
-/**
- * OTP Input component with enhanced UI
- *
- * Uses the useBottomSheetAwareHandlers hook to wire onFocus/onBlur handlers
- * for keyboard avoidance inside a bottom sheet.
- */
 const BottomSheetInputOTP = memo(
   ({
     otpRef,
@@ -49,7 +41,6 @@ const BottomSheetInputOTP = memo(
     phoneNumber: string;
   }) => {
     const { t } = useLingui();
-    const { onFocus, onBlur } = useBottomSheetAwareHandlers();
 
     return (
       <View className="gap-6 items-center">
@@ -86,8 +77,6 @@ const BottomSheetInputOTP = memo(
             value={value}
             onChange={onChange}
             onComplete={onComplete}
-            onFocus={onFocus}
-            onBlur={onBlur}
           >
             <InputOTP.Group>
               <InputOTP.Slot index={0} />
@@ -107,12 +96,9 @@ const BottomSheetInputOTP = memo(
   }
 );
 
-/**
- * Bottom sheet content component containing the OTP input
- * Manages OTP state, resend timer, and handles completion
- */
-const OTPBottomSheetContent = () => {
+export const WithOTPInputContent = () => {
   const { t } = useLingui();
+  const sheetRef = useRef<BottomSheetRef>(null);
   const otpRef = useRef<InputOTPRef>(null);
   const [otpValue, setOtpValue] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
@@ -121,9 +107,6 @@ const OTPBottomSheetContent = () => {
 
   const phoneNumber = '+12345678900';
 
-  /**
-   * Starts the resend timer countdown
-   */
   useEffect(() => {
     if (resendTimer > 0) {
       const timer = setTimeout(() => {
@@ -134,9 +117,6 @@ const OTPBottomSheetContent = () => {
     return undefined;
   }, [resendTimer]);
 
-  /**
-   * Handles OTP completion with loading state
-   */
   const handleComplete = useCallback(
     async (_code: string) => {
       setIsVerifying(true);
@@ -159,9 +139,6 @@ const OTPBottomSheetContent = () => {
     [toast, t]
   );
 
-  /**
-   * Handles resend code action
-   */
   const handleResend = useCallback(() => {
     if (resendTimer > 0) return;
 
@@ -175,9 +152,6 @@ const OTPBottomSheetContent = () => {
     });
   }, [resendTimer, toast, t]);
 
-  /**
-   * Handles manual verification button press
-   */
   const handleVerify = useCallback(() => {
     if (otpValue.length === 6) {
       handleComplete(otpValue);
@@ -191,79 +165,55 @@ const OTPBottomSheetContent = () => {
   }, [otpValue, handleComplete, toast, t]);
 
   return (
-    <BottomSheet.Content
-      onClose={() => {
-        KeyboardController.dismiss();
-        setOtpValue('');
-        setResendTimer(0);
-      }}
-    >
-      <BottomSheetScrollView
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-        contentContainerClassName="pb-safe-offset-3"
-      >
-        <BottomSheetInputOTP
-          otpRef={otpRef}
-          value={otpValue}
-          onChange={setOtpValue}
-          onComplete={handleComplete}
-          phoneNumber={phoneNumber}
-        />
-
-        <View className="mt-8 gap-3">
-          <Button
-            variant="primary"
-            onPress={handleVerify}
-            isDisabled={isVerifying || otpValue.length !== 6}
-          >
-            {isVerifying ? t`Verifying...` : t`Verify Code`}
-          </Button>
-
-          <View className="flex-row items-center justify-center mt-2">
-            <AppText className="text-sm text-muted text-center">
-              {t`Didn't receive the code?`}
-            </AppText>
-            <Button
-              variant="ghost"
-              size="sm"
-              onPress={handleResend}
-              isDisabled={resendTimer > 0}
-            >
-              {resendTimer > 0 ? t`Resend in ${resendTimer}s` : t`Resend`}
-            </Button>
-          </View>
-        </View>
-        <View className="mt-8 px-2">
-          <AppText className="text-xs text-muted text-center leading-5">
-            {t`By continuing, you agree to receive SMS messages for verification. Message and data rates may apply.`}
-          </AppText>
-        </View>
-      </BottomSheetScrollView>
-    </BottomSheet.Content>
-  );
-};
-
-export const WithOTPInputContent = () => {
-  const { t } = useLingui();
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
-        <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
-          <BottomSheet.Trigger asChild>
-            <Button variant="secondary" isDisabled={isOpen}>
-              {t`Bottom sheet with OTP input`}
+        <Button variant="secondary" onPress={() => sheetRef.current?.present()}>
+          {t`Bottom sheet with OTP input`}
+        </Button>
+        <BottomSheet
+          ref={sheetRef}
+          onDidDismiss={() => {
+            setOtpValue('');
+            setResendTimer(0);
+          }}
+        >
+          <BottomSheet.Title className="sr-only">
+            {t`Phone Number Verification`}
+          </BottomSheet.Title>
+          <BottomSheetInputOTP
+            otpRef={otpRef}
+            value={otpValue}
+            onChange={setOtpValue}
+            onComplete={handleComplete}
+            phoneNumber={phoneNumber}
+          />
+          <View className="mt-8 gap-3">
+            <Button
+              variant="primary"
+              onPress={handleVerify}
+              isDisabled={isVerifying || otpValue.length !== 6}
+            >
+              {isVerifying ? t`Verifying...` : t`Verify Code`}
             </Button>
-          </BottomSheet.Trigger>
-          <BottomSheet.Portal>
-            <BottomSheet.Overlay onPress={() => KeyboardController.dismiss()} />
-            <BottomSheet.Title className="sr-only">
-              {t`Phone Number Verification`}
-            </BottomSheet.Title>
-            <OTPBottomSheetContent />
-          </BottomSheet.Portal>
+            <View className="flex-row items-center justify-center mt-2">
+              <AppText className="text-sm text-muted text-center">
+                {t`Didn't receive the code?`}
+              </AppText>
+              <Button
+                variant="ghost"
+                size="sm"
+                onPress={handleResend}
+                isDisabled={resendTimer > 0}
+              >
+                {resendTimer > 0 ? t`Resend in ${resendTimer}s` : t`Resend`}
+              </Button>
+            </View>
+          </View>
+          <View className="mt-8 px-2">
+            <AppText className="text-xs text-muted text-center leading-5">
+              {t`By continuing, you agree to receive SMS messages for verification. Message and data rates may apply.`}
+            </AppText>
+          </View>
         </BottomSheet>
       </View>
     </View>

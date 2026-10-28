@@ -1,4 +1,3 @@
-import type BottomSheet from '@gorhom/bottom-sheet';
 import { forwardRef, useLayoutEffect, useMemo, useRef } from 'react';
 import type { GestureResponderEvent } from 'react-native';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
@@ -8,7 +7,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
 import {
-  BottomSheetContent,
   CheckIcon,
   ChevronDownIcon,
   FullWindowOverlay,
@@ -17,6 +15,7 @@ import {
   ThemeBackground,
   useHasDefaultThemeBackground,
 } from '../../helpers/internal/components';
+import { PopupSheetContent } from '../../helpers/internal/components/popup-sheet-content';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
@@ -34,6 +33,7 @@ import type {
 } from '../../helpers/internal/types';
 import * as SelectPrimitives from '../../primitives/select';
 import * as SelectPrimitivesTypes from '../../primitives/select/select.types';
+import type { BottomSheetRef } from '../bottom-sheet/bottom-sheet.types';
 import { CloseButton } from '../close-button';
 import {
   SelectAnimationProvider,
@@ -309,25 +309,38 @@ const SelectPortal = ({
   unstable_accessibilityContainerViewIsModal,
   ...props
 }: SelectPortalProps) => {
+  const { presentation } = useSelect();
   const animationSettingsContext = useAnimationSettings();
   const animationContext = useSelectAnimation();
 
   const portalClassName = selectClassNames.portal({ className });
 
+  /**
+   * The bottom sheet presents natively above everything, so it skips the
+   * full-window overlay layer that floating content needs.
+   */
+  const content = (
+    <View className={portalClassName} pointerEvents="box-none">
+      {children}
+    </View>
+  );
+
   return (
     <SelectPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <SelectAnimationProvider value={animationContext}>
-          <FullWindowOverlay
-            disableFullWindowOverlay={disableFullWindowOverlay}
-            unstable_accessibilityContainerViewIsModal={
-              unstable_accessibilityContainerViewIsModal
-            }
-          >
-            <View className={portalClassName} pointerEvents="box-none">
-              {children}
-            </View>
-          </FullWindowOverlay>
+          {presentation === 'bottom-sheet' ? (
+            content
+          ) : (
+            <FullWindowOverlay
+              disableFullWindowOverlay={disableFullWindowOverlay}
+              unstable_accessibilityContainerViewIsModal={
+                unstable_accessibilityContainerViewIsModal
+              }
+            >
+              {content}
+            </FullWindowOverlay>
+          )}
         </SelectAnimationProvider>
       </AnimationSettingsProvider>
     </SelectPrimitives.Portal>
@@ -353,7 +366,7 @@ const SelectOverlay = forwardRef<
     });
 
     const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
-      progress: presentation !== 'popover' ? progress : undefined,
+      progress: presentation === 'dialog' ? progress : undefined,
       isDragging: presentation === 'popover' ? isDragging : undefined,
       isGestureReleaseAnimationRunning:
         presentation === 'dialog'
@@ -366,6 +379,11 @@ const SelectOverlay = forwardRef<
       ? [rContainerStyle, style]
       : style;
 
+    // The bottom sheet dims the screen natively.
+    if (presentation === 'bottom-sheet') {
+      return null;
+    }
+
     return (
       <Animated.View
         entering={entering}
@@ -377,7 +395,6 @@ const SelectOverlay = forwardRef<
           ref={ref}
           className={overlayClassName}
           style={overlayStyle}
-          forceMount={presentation === 'bottom-sheet' ? true : undefined}
           pointerEvents={isOpen ? 'auto' : 'none'}
           {...props}
         />
@@ -559,52 +576,24 @@ const SelectContentPopover = forwardRef<
 // --------------------------------------------------
 
 const SelectContentBottomSheet = forwardRef<
-  BottomSheet,
-  SelectContentProps & { presentation: 'bottom-sheet' }
->(
-  (
-    {
-      children,
-      index: initialIndex,
-      backgroundClassName,
-      handleIndicatorClassName,
-      contentContainerClassName: contentContainerClassNameProp,
-      contentContainerProps,
-      animation,
-      animationConfigs,
-      ...restProps
-    },
-    ref
-  ) => {
-    const { isOpen, onOpenChange } = useSelect();
+  BottomSheetRef,
+  SelectContentBottomSheetProps
+>(({ children, presentation: _presentation, ...props }, ref) => {
+  const { isOpen, onOpenChange } = useSelect();
+  const { progress } = useSelectAnimation();
 
-    const { progress, isDragging } = useSelectAnimation();
-
-    return (
-      <BottomSheetContent
-        ref={ref}
-        index={initialIndex}
-        backgroundClassName={backgroundClassName}
-        handleIndicatorClassName={handleIndicatorClassName}
-        contentContainerClassName={contentContainerClassNameProp}
-        contentContainerProps={contentContainerProps}
-        animation={animation}
-        animationConfigs={animationConfigs}
-        backgroundStyle={[
-          selectStyleSheet.contentContainer,
-          restProps.backgroundStyle,
-        ]}
-        isOpen={isOpen}
-        progress={progress}
-        isDragging={isDragging}
-        onOpenChange={onOpenChange}
-        {...restProps}
-      >
-        {children}
-      </BottomSheetContent>
-    );
-  }
-);
+  return (
+    <PopupSheetContent
+      ref={ref}
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      progress={progress}
+      {...props}
+    >
+      {children}
+    </PopupSheetContent>
+  );
+});
 
 // --------------------------------------------------
 
@@ -715,7 +704,7 @@ const SelectContentDialog = forwardRef<
 // --------------------------------------------------
 
 const SelectContent = forwardRef<
-  SelectPrimitivesTypes.ContentRef | BottomSheet,
+  SelectPrimitivesTypes.ContentRef | BottomSheetRef,
   SelectContentProps
 >((props, ref) => {
   const presentation = props.presentation || 'popover';
@@ -732,7 +721,7 @@ const SelectContent = forwardRef<
   if (presentation === 'bottom-sheet') {
     return (
       <SelectContentBottomSheet
-        ref={ref as React.Ref<BottomSheet>}
+        ref={ref as React.Ref<BottomSheetRef>}
         {...(props as SelectContentBottomSheetProps)}
       />
     );

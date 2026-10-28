@@ -2,9 +2,9 @@ import { LegendList, type LegendListRef } from '@legendapp/list/react-native';
 import { useLingui } from '@lingui/react/macro';
 import {
   Avatar,
+  BottomSheet,
   Button,
-  NativeBottomSheet,
-  type NativeBottomSheetRef,
+  type BottomSheetRef,
 } from 'heroui-native';
 import { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -59,7 +59,7 @@ const renderPerson = ({ item }: { item: Person }) => (
  */
 export const WithLegendListContent = () => {
   const { t } = useLingui();
-  const sheetRef = useRef<NativeBottomSheetRef>(null);
+  const sheetRef = useRef<BottomSheetRef>(null);
   const listRef = useRef<LegendListRef>(null);
 
   return (
@@ -68,7 +68,7 @@ export const WithLegendListContent = () => {
         <Button variant="secondary" onPress={() => sheetRef.current?.present()}>
           <Button.Label maxFontSizeMultiplier={1.2}>{t`List`}</Button.Label>
         </Button>
-        <NativeBottomSheet
+        <BottomSheet
           ref={sheetRef}
           detents={[0.5, 1]}
           scrollableRef={listRef}
@@ -76,13 +76,13 @@ export const WithLegendListContent = () => {
           contentContainerClassName="h-full px-0"
         >
           <View className="flex-row items-center justify-between px-5 pb-3 gap-4">
-            <NativeBottomSheet.Title
+            <BottomSheet.Title
               className="flex-1 text-xl font-bold"
               numberOfLines={1}
             >
               {t`People`}
-            </NativeBottomSheet.Title>
-            <NativeBottomSheet.Close />
+            </BottomSheet.Title>
+            <BottomSheet.Close />
           </View>
           <LegendList
             ref={listRef}
@@ -93,7 +93,7 @@ export const WithLegendListContent = () => {
             estimatedItemSize={56}
             style={styles.flex}
           />
-        </NativeBottomSheet>
+        </BottomSheet>
       </View>
     </View>
   );

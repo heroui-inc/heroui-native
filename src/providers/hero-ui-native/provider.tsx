@@ -4,12 +4,28 @@ import { SafeAreaListener } from 'react-native-safe-area-context';
 import { Uniwind } from 'uniwind';
 import { LayoutDirectionProvider } from '../../helpers/internal/contexts';
 import { useDevInfo } from '../../helpers/internal/hooks';
+import TrueSheetPackage from '../../optional/true-sheet';
 import { PortalHost } from '../../primitives/portal';
 import { GlobalAnimationSettingsProvider } from '../animation-settings';
 import { TextComponentProvider } from '../text-component/provider';
 import { TextInputComponentProvider } from '../text-input-component/provider';
 import { ToastProvider } from '../toast/provider';
 import type { HeroUINativeProviderProps } from './types';
+
+const TrueSheetProvider = TrueSheetPackage?.TrueSheetProvider;
+
+/**
+ * Wraps the tree in TrueSheet's provider when the optional package is
+ * installed. It passes through on native; on web it hosts the sheet
+ * registry and portal that `BottomSheet` needs.
+ */
+function SheetProvider({ children }: { children: React.ReactNode }) {
+  if (!TrueSheetProvider) {
+    return <>{children}</>;
+  }
+
+  return <TrueSheetProvider>{children}</TrueSheetProvider>;
+}
 
 /**
  * HeroUINativeProvider Component
@@ -25,6 +41,7 @@ import type { HeroUINativeProviderProps } from './types';
  * - Global text input component configuration
  * - Toast notification system
  * - Portal management for overlays
+ * - TrueSheet provider for `BottomSheet` (when the package is installed)
  *
  * @param {HeroUINativeProviderProps} props - Provider configuration props
  * @param {ReactNode} props.children - Child components to wrap
@@ -56,25 +73,27 @@ const HeroUINativeProvider: React.FC<HeroUINativeProviderProps> = ({
         Uniwind.updateInsets(insets);
       }}
     >
-      <LayoutDirectionProvider value={layoutDirectionValue}>
-        <GlobalAnimationSettingsProvider animation={animation}>
-          <TextComponentProvider value={{ textProps }}>
-            <TextInputComponentProvider value={{ textInputProps }}>
-              {isToastEnabled ? (
-                <ToastProvider {...toastProps}>
-                  {children}
-                  <PortalHost />
-                </ToastProvider>
-              ) : (
-                <>
-                  {children}
-                  <PortalHost />
-                </>
-              )}
-            </TextInputComponentProvider>
-          </TextComponentProvider>
-        </GlobalAnimationSettingsProvider>
-      </LayoutDirectionProvider>
+      <SheetProvider>
+        <LayoutDirectionProvider value={layoutDirectionValue}>
+          <GlobalAnimationSettingsProvider animation={animation}>
+            <TextComponentProvider value={{ textProps }}>
+              <TextInputComponentProvider value={{ textInputProps }}>
+                {isToastEnabled ? (
+                  <ToastProvider {...toastProps}>
+                    {children}
+                    <PortalHost />
+                  </ToastProvider>
+                ) : (
+                  <>
+                    {children}
+                    <PortalHost />
+                  </>
+                )}
+              </TextInputComponentProvider>
+            </TextComponentProvider>
+          </GlobalAnimationSettingsProvider>
+        </LayoutDirectionProvider>
+      </SheetProvider>
     </SafeAreaListener>
   );
 };

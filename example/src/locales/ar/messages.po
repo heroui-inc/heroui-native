@@ -26,8 +26,8 @@ msgid "* Size guide available in product details"
 msgstr "* دليل المقاسات متاح في تفاصيل المنتج"
 
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
-msgid "• All prices include taxes and fees"
-msgstr "• جميع الأسعار تشمل الضرائب والرسوم"
+#~ msgid "• All prices include taxes and fees"
+#~ msgstr "• جميع الأسعار تشمل الضرائب والرسوم"
 
 #: src/app/(home)/components/field-error.tsx
 msgid "• At least 8 characters long"
@@ -46,20 +46,20 @@ msgid "• At least one uppercase letter"
 msgstr "• حرف كبير واحد على الأقل"
 
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
-msgid "• Cancellation fees may apply if cancelled after 2 minutes"
-msgstr "• قد تُطبَّق رسوم إلغاء إذا تم الإلغاء بعد دقيقتين"
+#~ msgid "• Cancellation fees may apply if cancelled after 2 minutes"
+#~ msgstr "• قد تُطبَّق رسوم إلغاء إذا تم الإلغاء بعد دقيقتين"
 
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
-msgid "• For support, contact us through the app or call +1-800-TAXI-HELP"
-msgstr "• للحصول على الدعم، تواصل معنا عبر التطبيق أو اتصل بالرقم +1-800-TAXI-HELP"
+#~ msgid "• For support, contact us through the app or call +1-800-TAXI-HELP"
+#~ msgstr "• للحصول على الدعم، تواصل معنا عبر التطبيق أو اتصل بالرقم +1-800-TAXI-HELP"
 
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
-msgid "• Payment will be processed after trip completion"
-msgstr "• ستتم معالجة الدفع بعد انتهاء الرحلة"
+#~ msgid "• Payment will be processed after trip completion"
+#~ msgstr "• ستتم معالجة الدفع بعد انتهاء الرحلة"
 
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
-msgid "10% off all trips with PLUS"
-msgstr "خصم 10% على جميع الرحلات مع PLUS"
+#~ msgid "10% off all trips with PLUS"
+#~ msgstr "خصم 10% على جميع الرحلات مع PLUS"
 
 #: src/app/(home)/components/card.tsx
 #: src/app/(home)/components/pressable-feedback.tsx
@@ -105,6 +105,11 @@ msgstr "يتوفر إصدار جديد من التطبيق. يُرجى التح�
 #: src/components/bottom-sheet/update-bottom-sheet.tsx
 msgid "A newer version is available on the App Store. Update to get the latest features and improvements."
 msgstr "يتوفر إصدار أحدث على App Store. حدِّث التطبيق للحصول على أحدث الميزات والتحسينات."
+
+#: src/components/bottom-sheet/overlay.tsx
+#: src/components/bottom-sheet/overlay.tsx
+msgid "Above the sheet"
+msgstr ""
 
 #: src/app/(home)/components/chip.tsx
 #: src/app/(home)/components/chip.tsx
@@ -165,8 +170,8 @@ msgid "Add an extra layer of security to your account"
 msgstr "أضف طبقة حماية إضافية إلى حسابك"
 
 #: src/app/(home)/components/bottom-sheet.tsx
-msgid "Add Cash"
-msgstr "إضافة رصيد"
+#~ msgid "Add Cash"
+#~ msgstr "إضافة رصيد"
 
 #: src/app/(home)/components/accordion.tsx
 msgid "Add items to your cart, then open checkout to pay by card or wallet. We'll email your confirmation within a few minutes."
@@ -234,8 +239,8 @@ msgid "All animations will be disabled"
 msgstr "سيتم تعطيل جميع الحركات"
 
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
-msgid "All our drivers are verified and background-checked. Your safety is our top priority."
-msgstr "جميع سائقينا موثّقون وتم التحقق من سجلاتهم. سلامتك هي أولويتنا القصوى."
+#~ msgid "All our drivers are verified and background-checked. Your safety is our top priority."
+#~ msgstr "جميع سائقينا موثّقون وتم التحقق من سجلاتهم. سلامتك هي أولويتنا القصوى."
 
 #: src/app/(home)/components/toast.tsx
 msgid "All your files have been backed up to the cloud. You can now access them from any device. The backup includes 1,234 files totaling 2.5 GB. Your data is safe and secure. The next backup will run automatically in 24 hours."
@@ -250,8 +255,8 @@ msgid "Animation speed"
 msgstr "سرعة الحركة"
 
 #: src/components/bottom-sheet/multi-step-detached.tsx
-msgid "Another title"
-msgstr "عنوان آخر"
+#~ msgid "Another title"
+#~ msgstr "عنوان آخر"
 
 #: src/app/(home)/components/list-group.tsx
 #: src/app/(home)/components/list-group.tsx
@@ -304,6 +309,10 @@ msgstr "مجموعة الصور الرمزية"
 msgid "Avocado Hackathon"
 msgstr "هاكاثون الأفوكادو"
 
+#: src/components/bottom-sheet/stacked.tsx
+msgid "Back"
+msgstr ""
+
 #: src/app/(home)/components/card.tsx
 #: src/app/(home)/components/pressable-feedback.tsx
 msgid "Background image card"
@@ -328,7 +337,6 @@ msgstr "أساسي ومطلوب"
 
 #: src/app/(home)/components/bottom-sheet.tsx
 #: src/app/(home)/components/bottom-sheet.tsx
-#: src/components/bottom-sheet/basic.tsx
 msgid "Basic bottom sheet"
 msgstr "BottomSheet أساسي"
 
@@ -428,10 +436,14 @@ msgid "Bottom sheet from native modal"
 msgstr "BottomSheet من نافذة أصلية"
 
 #: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Bottom sheet with autofocus input"
+msgstr ""
+
+#: src/app/(home)/components/bottom-sheet.tsx
 msgid "Bottom sheet with blur overlay"
 msgstr "BottomSheet مع تعتيم ضبابي"
 
-#: src/app/(home)/components/bottom-sheet.tsx
 #: src/app/(home)/components/bottom-sheet.tsx
 #: src/components/bottom-sheet/with-otp-input.tsx
 msgid "Bottom sheet with OTP input"
@@ -440,8 +452,8 @@ msgstr "BottomSheet مع إدخال رمز OTP"
 #: src/app/(home)/components/bottom-sheet.tsx
 #: src/app/(home)/components/bottom-sheet.tsx
 #: src/components/bottom-sheet/with-text-input.tsx
-msgid "Bottom sheet with text input"
-msgstr "BottomSheet مع إدخال نص"
+#~ msgid "Bottom sheet with text input"
+#~ msgstr "BottomSheet مع إدخال نص"
 
 #: src/app/(home)/components/toast.tsx
 msgid "Bottom toast"
@@ -492,7 +504,6 @@ msgstr "هل يمكنني تعديل طلبي أو إلغاؤه؟"
 #: src/app/(home)/components/dialog.tsx
 #: src/app/(home)/components/dialog.tsx
 #: src/app/(home)/components/popover.tsx
-#: src/components/bottom-sheet/multi-step-detached.tsx
 #: src/components/themes-content/dialog-content.tsx
 msgid "Cancel"
 msgstr "إلغاء"
@@ -575,6 +586,7 @@ msgid "Clearance"
 msgstr "تصفية"
 
 #: src/app/(home)/_layout.tsx
+#: src/app/(home)/components/bottom-sheet-native-modal.tsx
 #: src/app/(home)/components/chip.tsx
 #: src/app/(home)/components/toast-native-modal.tsx
 #: src/app/(home)/components/toast.tsx
@@ -588,8 +600,14 @@ msgstr "تصفية"
 #: src/app/(home)/components/toast.tsx
 #: src/app/(home)/components/toast.tsx
 #: src/app/(home)/components/toast.tsx
+#: src/components/bottom-sheet/controlled-by-name.tsx
+#: src/components/bottom-sheet/overlay.tsx
 msgid "Close"
 msgstr "إغلاق"
+
+#: src/components/bottom-sheet/stacked.tsx
+msgid "Close all"
+msgstr ""
 
 #: src/app/(home)/components/typography.tsx
 msgid "Code"
@@ -603,6 +621,10 @@ msgstr "تم إرسال الرمز"
 #: src/app/(home)/components/input-otp.tsx
 msgid "Code: {code}"
 msgstr "الرمز: {code}"
+
+#: src/components/bottom-sheet/controlled-by-name.tsx
+msgid "Collapse"
+msgstr ""
 
 #: src/app/(home)/components/spinner.tsx
 msgid "Colors"
@@ -654,17 +676,22 @@ msgid "Contact support to change your role"
 msgstr "تواصل مع الدعم لتغيير دورك"
 
 #: src/components/bottom-sheet/multi-step-detached.tsx
-msgid "Content One"
-msgstr "المحتوى الأول"
+#~ msgid "Content One"
+#~ msgstr "المحتوى الأول"
 
 #: src/components/bottom-sheet/multi-step-detached.tsx
-msgid "Content Two"
-msgstr "المحتوى الثاني"
+#~ msgid "Content Two"
+#~ msgstr "المحتوى الثاني"
 
 #: src/components/bottom-sheet/multi-step-detached.tsx
 #: src/components/bottom-sheet/multi-step-detached.tsx
-msgid "Continue"
-msgstr "متابعة"
+#~ msgid "Continue"
+#~ msgstr "متابعة"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/controlled-by-name.tsx
+msgid "Controlled by name"
+msgstr ""
 
 #: src/app/(home)/components/menu.tsx
 msgid "Copy link"
@@ -703,6 +730,11 @@ msgstr "إنشاء كلمة المرور"
 #: src/components/accordion/accordion-with-depth-effect.tsx
 msgid "Creative coders and technical designers - individuals prepared to move beyond copy-paste solutions and evolve into builders who *can create anything*."
 msgstr "مبرمجون مبدعون ومصممون تقنيون - أشخاص مستعدون لتجاوز حلول النسخ واللصق والتحوّل إلى صنّاع *قادرين على ابتكار أي شيء*."
+
+#. placeholder {0}: detentIndex + 1
+#: src/components/bottom-sheet/controlled-by-name.tsx
+msgid "Current detent: {0} of 2"
+msgstr ""
 
 #: src/app/(home)/components/chip.tsx
 msgid "Custom"
@@ -946,12 +978,20 @@ msgstr "العمق"
 #: src/app/(home)/components/bottom-sheet.tsx
 #: src/app/(home)/components/bottom-sheet.tsx
 #: src/app/(home)/components/bottom-sheet.tsx
-msgid "Detached bottom sheet"
-msgstr "ورقة سفلية منفصلة"
+#~ msgid "Detached bottom sheet"
+#~ msgstr "ورقة سفلية منفصلة"
 
 #: src/components/select/searchable-dialog-select.tsx
 msgid "Dialog"
 msgstr "Dialog"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Dialog and toast above the sheet"
+msgstr ""
+
+#: src/components/bottom-sheet/overlay.tsx
+msgid "Dialog and toast stay above this sheet."
+msgstr ""
 
 #: src/app/(home)/components/dialog.tsx
 #: src/app/(home)/components/dialog.tsx
@@ -998,8 +1038,8 @@ msgid "Different content sizes"
 msgstr "أحجام محتوى مختلفة"
 
 #: src/components/bottom-sheet/multi-step-detached.tsx
-msgid "Different title"
-msgstr "عنوان مختلف"
+#~ msgid "Different title"
+#~ msgstr "عنوان مختلف"
 
 #: src/app/(home)/components/tabs.tsx
 msgid "Direct messages"
@@ -1053,7 +1093,7 @@ msgstr "إظهار لوحة التنقل الجانبية"
 msgid "Display the status bar at the bottom"
 msgstr "إظهار شريط الحالة في الأسفل"
 
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "Distance: 4.2 km"
 msgstr "المسافة: 4.2 كم"
 
@@ -1219,7 +1259,7 @@ msgstr "خطة المؤسسات"
 msgid "Enterprise plan is not available in your region!"
 msgstr "خطة المؤسسات غير متوفرة في منطقتك!"
 
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "Estimated arrival time: 10 minutes"
 msgstr "وقت الوصول المتوقع: 10 دقائق"
 
@@ -1230,6 +1270,10 @@ msgstr "الجميع"
 #: src/app/(home)/components/separator.tsx
 msgid "Examples"
 msgstr "أمثلة"
+
+#: src/components/bottom-sheet/controlled-by-name.tsx
+msgid "Expand"
+msgstr ""
 
 #: src/app/(home)/index.tsx
 msgid "Explore all components"
@@ -1270,13 +1314,21 @@ msgstr "نبض سريع"
 msgid "Featured"
 msgstr "مميّز"
 
+#: src/components/bottom-sheet/stacked.tsx
+msgid "Fifth sheet"
+msgstr ""
+
 #: src/app/(home)/components/search-field.tsx
 msgid "Find products"
 msgstr "ابحث عن المنتجات"
 
 #: src/components/bottom-sheet/multi-step-detached.tsx
-msgid "Finish"
-msgstr "إنهاء"
+#~ msgid "Finish"
+#~ msgstr "إنهاء"
+
+#: src/components/bottom-sheet/stacked.tsx
+msgid "First sheet"
+msgstr ""
 
 #: src/app/(home)/components/tag-group.tsx
 msgid "Fitness center"
@@ -1298,6 +1350,10 @@ msgstr "لمعرفة خيارات الحذف الأخرى، راجع سياسة 
 #: src/app/(home)/components/input-otp.tsx
 msgid "Four Digits"
 msgstr "أربعة أرقام"
+
+#: src/components/bottom-sheet/stacked.tsx
+msgid "Fourth sheet"
+msgstr ""
 
 #: src/app/(home)/components/radio-group.tsx
 msgid "Free"
@@ -1390,7 +1446,7 @@ msgstr "رقم بطاقة الهدايا"
 msgid "Gradient"
 msgstr "تدرّج لوني"
 
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "Green Taxi"
 msgstr "تاكسي أخضر"
 
@@ -1443,7 +1499,7 @@ msgstr "إخفاء جميع الإشعارات"
 msgid "Hide toast"
 msgstr "إخفاء الإشعار"
 
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "High end cars, top drivers"
 msgstr "سيارات فاخرة وأفضل السائقين"
 
@@ -1517,12 +1573,12 @@ msgid "Important - complete within this week"
 msgstr "مهم - أكمله خلال هذا الأسبوع"
 
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
-msgid "Important Information"
-msgstr "معلومات مهمة"
+#~ msgid "Important Information"
+#~ msgstr "معلومات مهمة"
 
 #. placeholder {0}: option.time
 #. placeholder {1}: option.capacity
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "in {0} • {1}"
 msgstr "في {0} • {1}"
 
@@ -1613,7 +1669,7 @@ msgstr "الانضمام إلى فريق"
 msgid "Junior Garcia sent you an invitation to join HeroUI team!"
 msgstr "أرسل لك Junior Garcia دعوة للانضمام إلى فريق HeroUI!"
 
-#: src/components/bottom-sheet/basic.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
 msgid "Keep yourself safe"
 msgstr "حافظ على سلامتك"
 
@@ -1645,7 +1701,7 @@ msgstr "زر كبير"
 msgid "Large toast"
 msgstr "إشعار كبير"
 
-#: src/components/bottom-sheet/basic.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
 #: src/components/bottom-sheet/update-bottom-sheet.tsx
 msgid "Later"
 msgstr "لاحقًا"
@@ -1678,7 +1734,9 @@ msgstr "تخطيط من اليسار إلى اليمين"
 msgid "Light"
 msgstr "فاتح"
 
+#: src/app/(home)/components/bottom-sheet.tsx
 #: src/app/(home)/components/menu.tsx
+#: src/components/bottom-sheet/with-legend-list.tsx
 msgid "List"
 msgstr "قائمة"
 
@@ -1804,8 +1862,8 @@ msgid "Movies"
 msgstr "الأفلام"
 
 #: src/components/bottom-sheet/multi-step-detached.tsx
-msgid "Multi-step detached"
-msgstr "متعدد الخطوات منفصل"
+#~ msgid "Multi-step detached"
+#~ msgstr "متعدد الخطوات منفصل"
 
 #: src/app/(home)/components/field-error.tsx
 msgid "Multiple errors"
@@ -1840,6 +1898,10 @@ msgstr "يجب أن يكون الاسم مكوّنًا من حرفين على ا
 #: src/app/(home)/components/list-group.tsx
 msgid "Name, email, phone number"
 msgstr "الاسم، البريد الإلكتروني، رقم الهاتف"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "name@example.com"
+msgstr ""
 
 #: src/app/(home)/components/popover.tsx
 #: src/app/(home)/components/select.tsx
@@ -1955,8 +2017,8 @@ msgid "No team members"
 msgstr "لا يوجد أعضاء في الفريق"
 
 #: src/components/bottom-sheet/with-text-input.tsx
-msgid "No users found"
-msgstr "لم يتم العثور على مستخدمين"
+#~ msgid "No users found"
+#~ msgstr "لم يتم العثور على مستخدمين"
 
 #: src/app/(home)/components/menu.tsx
 msgid "Nobody"
@@ -2011,8 +2073,8 @@ msgid "OFF"
 msgstr "إيقاف"
 
 #: src/app/(home)/components/bottom-sheet.tsx
-msgid "Oh! Your wallet is empty"
-msgstr "عذرًا! محفظتك فارغة"
+#~ msgid "Oh! Your wallet is empty"
+#~ msgstr "عذرًا! محفظتك فارغة"
 
 #: src/app/(home)/components/switch.tsx
 msgid "ON"
@@ -2034,6 +2096,10 @@ msgstr "يُسمح بالأحرف الأبجدية فقط"
 msgid "Only check updates manually"
 msgstr "التحقق من التحديثات يدويًا فقط"
 
+#: src/components/bottom-sheet/overlay.tsx
+msgid "Open dialog"
+msgstr ""
+
 #: src/app/(home)/components/toast.tsx
 msgid "Open modal"
 msgstr "فتح النافذة المنبثقة"
@@ -2042,11 +2108,23 @@ msgstr "فتح النافذة المنبثقة"
 msgid "Open settings"
 msgstr "فتح الإعدادات"
 
+#: src/app/(home)/components/bottom-sheet-native-modal.tsx
+msgid "Open sheet"
+msgstr ""
+
+#: src/components/bottom-sheet/controlled-by-name.tsx
+msgid "Open sheet by name"
+msgstr ""
+
 #: src/app/(home)/components/slider.tsx
 msgid "Open slider settings"
 msgstr "فتح إعدادات شريط التمرير"
 
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/stacked.tsx
+msgid "Open the next sheet"
+msgstr ""
+
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "Order Premium now"
 msgstr "اطلب بريميوم الآن"
 
@@ -2125,13 +2203,17 @@ msgstr "PDF"
 msgid "Pending"
 msgstr "قيد الانتظار"
 
+#: src/components/bottom-sheet/with-legend-list.tsx
+msgid "People"
+msgstr ""
+
 #: src/app/(home)/components/radio-group.tsx
 msgid "Perfect for individuals - $9/month"
 msgstr "مثالية للأفراد - 9 دولارات شهريًا"
 
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
-msgid "Personal"
-msgstr "شخصي"
+#~ msgid "Personal"
+#~ msgstr "شخصي"
 
 #: src/app/(home)/components/list-group.tsx
 msgid "Personal Info"
@@ -2229,7 +2311,7 @@ msgstr "التفضيلات"
 #: src/app/(home)/components/chip.tsx
 #: src/app/(home)/components/chip.tsx
 #: src/app/(home)/components/label.tsx
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "Premium"
 msgstr "بريميوم"
 
@@ -2237,6 +2319,14 @@ msgstr "بريميوم"
 #: src/app/(home)/components/select.tsx
 msgid "Presentation variants"
 msgstr "أنماط العرض"
+
+#: src/app/(home)/components/bottom-sheet-native-modal.tsx
+msgid "Presented over a native modal"
+msgstr ""
+
+#: src/components/bottom-sheet/overlay.tsx
+msgid "Presented sheet"
+msgstr ""
 
 #: src/components/settings/settings-bottom-sheet.tsx
 msgid "Preview the component library in a different layout direction and language."
@@ -2463,8 +2553,8 @@ msgid "Role assignment"
 msgstr "تعيين الدور"
 
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
-msgid "Safety & Security"
-msgstr "السلامة والأمان"
+#~ msgid "Safety & Security"
+#~ msgstr "السلامة والأمان"
 
 #: src/app/(home)/components/toast.tsx
 msgid "Sarah sent you a message"
@@ -2479,18 +2569,23 @@ msgid "Scheduled maintenance"
 msgstr "صيانة مجدولة"
 
 #: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
+msgid "Scrollable with detents"
+msgstr ""
+
+#: src/app/(home)/components/bottom-sheet.tsx
 #: src/app/(home)/components/bottom-sheet.tsx
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
-msgid "Scrollable with snap points"
-msgstr "قابل للتمرير مع نقاط توقف"
+#~ msgid "Scrollable with snap points"
+#~ msgstr "قابل للتمرير مع نقاط توقف"
 
 #: src/app/(home)/components/search-field.tsx
 msgid "Search"
 msgstr "بحث"
 
 #: src/components/bottom-sheet/with-text-input.tsx
-msgid "Search by name or email..."
-msgstr "ابحث بالاسم أو البريد الإلكتروني..."
+#~ msgid "Search by name or email..."
+#~ msgstr "ابحث بالاسم أو البريد الإلكتروني..."
 
 #: src/app/(home)/components/search-field.tsx
 msgid "Search by name, category, or SKU"
@@ -2523,8 +2618,13 @@ msgstr "البحث عن مستخدمين"
 #: src/app/(home)/components/search-field.tsx
 #: src/app/(home)/components/search-field.tsx
 #: src/app/(home)/components/search-field.tsx
+#: src/app/(home)/components/search-field.tsx
 msgid "Search..."
 msgstr "ابحث..."
+
+#: src/components/bottom-sheet/stacked.tsx
+msgid "Second sheet"
+msgstr ""
 
 #: src/app/(home)/components/button.tsx
 #: src/app/(home)/components/card.tsx
@@ -2575,7 +2675,7 @@ msgstr "Select"
 msgid "Select a subscription plan to continue"
 msgstr "اختر خطة اشتراك للمتابعة"
 
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "Select a way to travel"
 msgstr "اختر وسيلة للتنقل"
 
@@ -2616,6 +2716,10 @@ msgstr "المحدد:"
 #: src/app/(home)/components/tag-group.tsx
 msgid "Selected: {selectedLabel}"
 msgstr "المحدد: {selectedLabel}"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Send code"
+msgstr ""
 
 #: src/app/(home)/components/popover.tsx
 msgid "Send via messaging app"
@@ -2661,12 +2765,21 @@ msgid "Share usage data"
 msgstr "مشاركة بيانات الاستخدام"
 
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
-msgid "Share your trip details with friends and family for added security."
-msgstr "شارك تفاصيل رحلتك مع الأصدقاء والعائلة لمزيد من الأمان."
+#~ msgid "Share your trip details with friends and family for added security."
+#~ msgstr "شارك تفاصيل رحلتك مع الأصدقاء والعائلة لمزيد من الأمان."
 
 #: src/app/(home)/components/select.tsx
 msgid "Sheet"
 msgstr "Sheet"
+
+#. placeholder {0}: index + 1
+#: src/components/bottom-sheet/stacked.tsx
+msgid "Sheet {0} of {SHEET_COUNT}. Closing this one brings the sheet underneath back."
+msgstr ""
+
+#: src/components/bottom-sheet/overlay.tsx
+msgid "Sheet with dialog and toast"
+msgstr ""
 
 #: src/app/(home)/components/skeleton.tsx
 msgid "Shimmer"
@@ -2694,6 +2807,7 @@ msgstr "إظهار شريط الحالة"
 
 #: src/app/(home)/components/toast-native-modal.tsx
 #: src/app/(home)/components/toast.tsx
+#: src/components/bottom-sheet/overlay.tsx
 msgid "Show toast"
 msgstr "إظهار الإشعار"
 
@@ -2796,6 +2910,11 @@ msgstr "ساوند إلكترو"
 msgid "Special offers and exclusive deals"
 msgstr "عروض خاصة وصفقات حصرية"
 
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/stacked.tsx
+msgid "Stacked bottom sheets"
+msgstr ""
+
 #: src/app/(home)/components/radio-group.tsx
 msgid "Standard - complete when possible"
 msgstr "عادي - يُنجَز عند الإمكان"
@@ -2861,8 +2980,8 @@ msgid "Submit"
 msgstr "إرسال"
 
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
-msgid "Subscribe for €6.99/month"
-msgstr "اشترك مقابل €6.99/شهر"
+#~ msgid "Subscribe for €6.99/month"
+#~ msgstr "اشترك مقابل €6.99/شهر"
 
 #: src/app/(home)/components/checkbox.tsx
 #: src/app/(home)/components/control-field.tsx
@@ -2937,15 +3056,15 @@ msgstr "اضغط على X لإزالة العلامات"
 msgid "Task List"
 msgstr "قائمة المهام"
 
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "Taxi Comfort"
 msgstr "تاكسي كومفورت"
 
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "Taxi Priority"
 msgstr "تاكسي الأولوية"
 
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "Taxi XL"
 msgstr "تاكسي XL"
 
@@ -3026,6 +3145,10 @@ msgstr "كان أول خلل حاسوبي عثةً حقيقية عُثر علي�
 msgid "The intersection of creative vision and technical implementation - empowering you to identify interface challenges and craft solutions from scratch."
 msgstr "تقاطع الرؤية الإبداعية والتنفيذ التقني - يمنحك القدرة على تحديد تحديات الواجهة وصياغة الحلول من الصفر."
 
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "The keyboard opens with the sheet. We'll send a verification code to this address."
+msgstr ""
+
 #: src/app/(home)/components/skeleton.tsx
 msgid "The new productivity dashboard makes it easy to track daily tasks and goals. You can customize widgets and set smart reminders."
 msgstr "تسهّل لوحة الإنتاجية الجديدة تتبع المهام والأهداف اليومية. يمكنك تخصيص الأدوات المصغّرة وضبط تذكيرات ذكية."
@@ -3033,6 +3156,10 @@ msgstr "تسهّل لوحة الإنتاجية الجديدة تتبع المه�
 #: src/app/(home)/components/control-field.tsx
 msgid "The privacy policy has been accepted"
 msgstr "تم قبول سياسة الخصوصية"
+
+#: src/app/(home)/components/bottom-sheet-native-modal.tsx
+msgid "The sheet is presented above this modal without an extra overlay."
+msgstr ""
 
 #: src/app/(home)/components/tabs.tsx
 msgid "Theme"
@@ -3049,6 +3176,10 @@ msgstr "المظهر وحجم الخط والعرض"
 msgid "Themes"
 msgstr "المظاهر"
 
+#: src/components/bottom-sheet/controlled-by-name.tsx
+msgid "These buttons call resize and dismiss with the sheet's name instead of a ref."
+msgstr ""
+
 #: src/app/(home)/components/separator.tsx
 msgid "Thick"
 msgstr "سميك"
@@ -3056,6 +3187,14 @@ msgstr "سميك"
 #: src/app/(home)/components/separator.tsx
 msgid "Thin (default)"
 msgstr "رقيق (الافتراضي)"
+
+#: src/components/bottom-sheet/stacked.tsx
+msgid "Third sheet"
+msgstr ""
+
+#: src/components/bottom-sheet/overlay.tsx
+msgid "This dialog stays above the presented sheet."
+msgstr ""
 
 #: src/app/(home)/components/switch.tsx
 msgid "This feature is currently unavailable"
@@ -3082,8 +3221,8 @@ msgid "This is a tertiary surface variant. It uses bg-surface-tertiary styling."
 msgstr "هذا شكل سطح ثالثي. يستخدم تنسيق bg-surface-tertiary."
 
 #: src/components/bottom-sheet/multi-step-detached.tsx
-msgid "This is a test title"
-msgstr "هذا عنوان تجريبي"
+#~ msgid "This is a test title"
+#~ msgstr "هذا عنوان تجريبي"
 
 #: src/app/(home)/components/surface.tsx
 msgid "This is a transparent surface variant. It uses bg-transparent styling."
@@ -3097,9 +3236,17 @@ msgstr "تظهر هذه النافذة المنبثقة على الجهة {place
 msgid "This promo code is invalid or has expired"
 msgstr "رمز العرض الترويجي غير صالح أو انتهت صلاحيته"
 
+#: src/components/bottom-sheet/stacked.tsx
+msgid "This sheet stays presented while another opens on top of it."
+msgstr ""
+
 #: src/app/(home)/components/card.tsx
 msgid "This sofa is perfect for modern tropical spaces, baroque inspired spaces."
 msgstr "هذه الأريكة مثالية للمساحات الاستوائية العصرية والمساحات المستوحاة من طراز الباروك."
+
+#: src/components/bottom-sheet/overlay.tsx
+msgid "This toast is rendered above the presented sheet."
+msgstr ""
 
 #: src/app/(home)/_layout.tsx
 msgid "Toast From Native Modal"
@@ -3175,13 +3322,13 @@ msgstr "الطبقات العالية"
 msgid "Trending & new releases"
 msgstr "الأكثر رواجًا والإصدارات الجديدة"
 
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "Trip Details"
 msgstr "تفاصيل الرحلة"
 
 #: src/components/bottom-sheet/with-text-input.tsx
-msgid "Try a different search term"
-msgstr "جرّب كلمة بحث مختلفة"
+#~ msgid "Try a different search term"
+#~ msgstr "جرّب كلمة بحث مختلفة"
 
 #: src/app/(home)/index.tsx
 msgid "Try different themes"
@@ -3230,7 +3377,7 @@ msgstr "تحديث"
 msgid "Update available"
 msgstr "يتوفر تحديث"
 
-#: src/components/bottom-sheet/basic.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
 msgid "Update Now"
 msgstr "التحديث الآن"
 
@@ -3247,7 +3394,7 @@ msgstr "تحديث الملف الشخصي"
 msgid "Update Ready"
 msgstr "التحديث جاهز"
 
-#: src/components/bottom-sheet/basic.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
 msgid "Update your software to the latest version for better security and performance."
 msgstr "حدّث برنامجك إلى أحدث إصدار للحصول على أمان وأداء أفضل."
 
@@ -3552,6 +3699,10 @@ msgstr "مع التحقق"
 msgid "With Validation"
 msgstr "مع التحقق"
 
+#: src/app/(home)/components/search-field.tsx
+msgid "Without search icon"
+msgstr ""
+
 #: src/app/(home)/components/accordion.tsx
 msgid "Without separators"
 msgstr "بدون فواصل"
@@ -3574,8 +3725,8 @@ msgid "You have 2 credits left"
 msgstr "لديك رصيدان متبقيان"
 
 #: src/app/(home)/components/bottom-sheet.tsx
-msgid "You'll need to top up to buy"
-msgstr "ستحتاج إلى إضافة رصيد لإتمام الشراء"
+#~ msgid "You'll need to top up to buy"
+#~ msgstr "ستحتاج إلى إضافة رصيد لإتمام الشراء"
 
 #: src/components/toast/achievement-toast.tsx
 msgid "You're on a 1-day study streak"
@@ -3585,9 +3736,13 @@ msgstr "لديك سلسلة دراسة متواصلة لمدة يوم واحد"
 msgid "Your code has been verified successfully. You can proceed."
 msgstr "تم التحقق من رمزك بنجاح. يمكنك المتابعة."
 
-#: src/components/bottom-sheet/scrollable-with-snap-points.tsx
+#: src/components/bottom-sheet/scrollable-with-detents.tsx
 msgid "Your driver will arrive at the pickup location shortly. Please be ready when they arrive."
 msgstr "سيصل السائق إلى موقع الاستلام قريبًا. يُرجى الاستعداد عند وصوله."
+
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Your email"
+msgstr ""
 
 #: src/app/(home)/components/popover.tsx
 msgid "Your payment of $49.99 has been processed successfully. Receipt sent to your email."

@@ -346,7 +346,7 @@ The provider automatically wraps your application with [`SafeAreaListener`](http
 Use `HeroUINativeProviderRaw` when you want full control over which dependencies are included in your bundle. With the raw provider imported from `heroui-native/provider-raw`, the following dependencies are optional and only required if you use the corresponding components:
 
 - **react-native-screens** -- required for overlay components (Popover, Dialog)
-- **@gorhom/bottom-sheet** -- required for BottomSheet component
+- **@lodev09/react-native-true-sheet** -- required for BottomSheet and the `presentation="bottom-sheet"` mode of Popover, Select, and Menu
 - **react-native-svg** -- required for components that use icons (Accordion, Alert, Checkbox, etc.)
 
 ### Setup

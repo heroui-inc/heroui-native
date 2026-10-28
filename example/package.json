@@ -22,7 +22,6 @@
     "@expo/vector-icons": "^15.1.1",
     "@formatjs/intl-locale": "^5.3.10",
     "@formatjs/intl-pluralrules": "^6.3.13",
-    "@gorhom/bottom-sheet": "^5.2.14",
     "@legendapp/list": "^3.7.0",
     "@lingui/core": "^5",
     "@lingui/react": "^5",

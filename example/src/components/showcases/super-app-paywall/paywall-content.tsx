@@ -1,9 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  BottomSheetFooter,
-  BottomSheetScrollView,
-  type BottomSheetFooterProps,
-} from '@gorhom/bottom-sheet';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -14,8 +9,14 @@ import {
   Tabs,
   useThemeColor,
 } from 'heroui-native';
-import { useState } from 'react';
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { useState, type RefObject } from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+  type ScrollViewInstance,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppTheme } from '../../../contexts/app-theme-context';
 import { simulatePress } from '../../../helpers/utils/simulate-press';
@@ -49,13 +50,13 @@ function PaywallTabTrigger({ value, label }: TabTriggerProps) {
   );
 }
 
-export function PaywallFooter(props: BottomSheetFooterProps) {
+export function PaywallFooter() {
   const themeColorBackground = useThemeColor('background');
 
   const { isDark } = useAppTheme();
 
   return (
-    <BottomSheetFooter {...props}>
+    <View>
       <LinearGradient
         colors={[
           colorKit.setAlpha(themeColorBackground, 0).hex(),
@@ -102,11 +103,15 @@ export function PaywallFooter(props: BottomSheetFooterProps) {
           </Button.Label>
         </Button>
       </View>
-    </BottomSheetFooter>
+    </View>
   );
 }
 
-export function SuperAppPaywallContent() {
+export function SuperAppPaywallContent({
+  scrollRef,
+}: {
+  scrollRef: RefObject<ScrollViewInstance | null>;
+}) {
   const [activeTab, setActiveTab] = useState<'app' | 'super'>('app');
   const insets = useSafeAreaInsets();
 
@@ -115,7 +120,8 @@ export function SuperAppPaywallContent() {
   const { isDark } = useAppTheme();
 
   return (
-    <BottomSheetScrollView
+    <ScrollView
+      ref={scrollRef}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
         paddingBottom: insets.bottom + 150,
@@ -168,6 +174,6 @@ export function SuperAppPaywallContent() {
           </View>
         </Tabs>
       </View>
-    </BottomSheetScrollView>
+    </ScrollView>
   );
 }

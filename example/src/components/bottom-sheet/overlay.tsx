@@ -1,10 +1,10 @@
 import { useLingui } from '@lingui/react/macro';
 import {
+  BottomSheet,
   Button,
   Dialog,
-  NativeBottomSheet,
   useToast,
-  type NativeBottomSheetRef,
+  type BottomSheetRef,
 } from 'heroui-native';
 import { useRef, useState } from 'react';
 import { View } from 'react-native';
@@ -12,10 +12,10 @@ import { View } from 'react-native';
 /**
  * Dialog and toast used as usual. Both render above the presented sheet.
  */
-export const OverlayNativeBottomSheetContent = () => {
+export const OverlayBottomSheetContent = () => {
   const { t } = useLingui();
   const { toast } = useToast();
-  const sheetRef = useRef<NativeBottomSheetRef>(null);
+  const sheetRef = useRef<BottomSheetRef>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
@@ -24,13 +24,13 @@ export const OverlayNativeBottomSheetContent = () => {
         <Button variant="secondary" onPress={() => sheetRef.current?.present()}>
           {t`Sheet with dialog and toast`}
         </Button>
-        <NativeBottomSheet ref={sheetRef}>
-          <NativeBottomSheet.Title className="mb-2">
+        <BottomSheet ref={sheetRef}>
+          <BottomSheet.Title className="mb-2">
             {t`Presented sheet`}
-          </NativeBottomSheet.Title>
-          <NativeBottomSheet.Description className="mb-6">
+          </BottomSheet.Title>
+          <BottomSheet.Description className="mb-6">
             {t`Dialog and toast stay above this sheet.`}
-          </NativeBottomSheet.Description>
+          </BottomSheet.Description>
           <View className="gap-3">
             <Button onPress={() => setIsDialogOpen(true)}>
               {t`Open dialog`}
@@ -47,7 +47,7 @@ export const OverlayNativeBottomSheetContent = () => {
               {t`Show toast`}
             </Button>
           </View>
-        </NativeBottomSheet>
+        </BottomSheet>
       </View>
       <Dialog isOpen={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <Dialog.Portal>

@@ -1,4 +1,3 @@
-import type BottomSheet from '@gorhom/bottom-sheet';
 import { createContext, forwardRef, use, useMemo } from 'react';
 import type { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
@@ -7,11 +6,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
 import {
-  BottomSheetContent,
   FullWindowOverlay,
   HeroText,
   ThemeBackground,
 } from '../../helpers/internal/components';
+import { PopupSheetContent } from '../../helpers/internal/components/popup-sheet-content';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
@@ -28,6 +27,7 @@ import type {
 } from '../../helpers/internal/types';
 import * as PopoverPrimitives from '../../primitives/popover';
 import * as PopoverPrimitivesTypes from '../../primitives/popover/popover.types';
+import type { BottomSheetRef } from '../bottom-sheet/bottom-sheet.types';
 import { CloseButton } from '../close-button';
 import { ArrowSvg } from './arrow-svg';
 import {
@@ -146,25 +146,38 @@ const PopoverPortal = ({
   unstable_accessibilityContainerViewIsModal,
   ...props
 }: PopoverPortalProps) => {
+  const { presentation } = usePopover();
   const animationSettingsContext = useAnimationSettings();
   const animationContext = usePopoverAnimation();
 
   const portalClassName = popoverClassNames.portal({ className });
 
+  /**
+   * The bottom sheet presents natively above everything, so it skips the
+   * full-window overlay layer that floating content needs.
+   */
+  const content = (
+    <View className={portalClassName} pointerEvents="box-none">
+      {children}
+    </View>
+  );
+
   return (
     <PopoverPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <PopoverAnimationProvider value={animationContext}>
-          <FullWindowOverlay
-            disableFullWindowOverlay={disableFullWindowOverlay}
-            unstable_accessibilityContainerViewIsModal={
-              unstable_accessibilityContainerViewIsModal
-            }
-          >
-            <View className={portalClassName} pointerEvents="box-none">
-              {children}
-            </View>
-          </FullWindowOverlay>
+          {presentation === 'bottom-sheet' ? (
+            content
+          ) : (
+            <FullWindowOverlay
+              disableFullWindowOverlay={disableFullWindowOverlay}
+              unstable_accessibilityContainerViewIsModal={
+                unstable_accessibilityContainerViewIsModal
+              }
+            >
+              {content}
+            </FullWindowOverlay>
+          )}
         </PopoverAnimationProvider>
       </AnimationSettingsProvider>
     </PopoverPrimitives.Portal>
@@ -182,19 +195,21 @@ const PopoverOverlay = forwardRef<
     ref
   ) => {
     const { isOpen, presentation } = usePopover();
-    const { progress, isDragging } = usePopoverAnimation();
 
     const overlayClassName = popoverClassNames.overlay({ className });
 
     const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
-      progress: presentation === 'bottom-sheet' ? progress : undefined,
-      isDragging: presentation === 'bottom-sheet' ? isDragging : undefined,
       animation,
     });
 
     const overlayStyle = isAnimatedStyleActive
       ? [rContainerStyle, style]
       : style;
+
+    // The bottom sheet dims the screen natively.
+    if (presentation === 'bottom-sheet') {
+      return null;
+    }
 
     return (
       <Animated.View
@@ -207,7 +222,6 @@ const PopoverOverlay = forwardRef<
           ref={ref}
           className={overlayClassName}
           style={overlayStyle}
-          forceMount={presentation === 'bottom-sheet' ? true : undefined}
           pointerEvents={isOpen ? 'auto' : 'none'}
           {...props}
         />
@@ -394,57 +408,29 @@ const PopoverContentPopover = forwardRef<
 // --------------------------------------------------
 
 const PopoverContentBottomSheet = forwardRef<
-  BottomSheet,
+  BottomSheetRef,
   PopoverContentBottomSheetProps
->(
-  (
-    {
-      children,
-      index: initialIndex,
-      backgroundClassName,
-      handleIndicatorClassName,
-      contentContainerClassName: contentContainerClassNameProp,
-      contentContainerProps,
-      animation,
-      animationConfigs,
-      ...restProps
-    },
-    ref
-  ) => {
-    const { isOpen, onOpenChange } = usePopover();
+>(({ children, presentation: _presentation, ...props }, ref) => {
+  const { isOpen, onOpenChange } = usePopover();
+  const { progress } = usePopoverAnimation();
 
-    const { progress, isDragging } = usePopoverAnimation();
-
-    return (
-      <BottomSheetContent
-        ref={ref}
-        index={initialIndex}
-        backgroundClassName={backgroundClassName}
-        handleIndicatorClassName={handleIndicatorClassName}
-        contentContainerClassName={contentContainerClassNameProp}
-        contentContainerProps={contentContainerProps}
-        animation={animation}
-        animationConfigs={animationConfigs}
-        backgroundStyle={[
-          popoverStyleSheet.contentContainer,
-          restProps.backgroundStyle,
-        ]}
-        isOpen={isOpen}
-        progress={progress}
-        isDragging={isDragging}
-        onOpenChange={onOpenChange}
-        {...restProps}
-      >
-        {children}
-      </BottomSheetContent>
-    );
-  }
-);
+  return (
+    <PopupSheetContent
+      ref={ref}
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      progress={progress}
+      {...props}
+    >
+      {children}
+    </PopupSheetContent>
+  );
+});
 
 // --------------------------------------------------
 
 const PopoverContent = forwardRef<
-  PopoverPrimitivesTypes.ContentRef | BottomSheet,
+  PopoverPrimitivesTypes.ContentRef | BottomSheetRef,
   PopoverContentProps
 >((props, ref) => {
   const { presentation: contextPresentation } = usePopover();
@@ -460,7 +446,7 @@ const PopoverContent = forwardRef<
   if (props.presentation === 'bottom-sheet') {
     return (
       <PopoverContentBottomSheet
-        ref={ref as React.Ref<BottomSheet>}
+        ref={ref as React.Ref<BottomSheetRef>}
         {...(props as PopoverContentBottomSheetProps)}
       />
     );

@@ -1,71 +1,29 @@
-import { StyleSheet } from 'react-native';
 import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 /**
- * Overlay style definition
+ * Wraps the sheet children. No `flex: 1`: the `auto` detent measures the
+ * wrapper's content height.
  *
- * @note ANIMATED PROPERTIES (cannot be set via className):
- * The following property is animated and cannot be overridden using Tailwind classes:
- * - `opacity` - Animated for overlay show/hide transitions (idle: 0, open: 1, close: 0)
+ * The bottom padding is a fixed inset only. The sheet already reserves the
+ * bottom safe area below the content (UIKit on iOS, the detent height on
+ * Android), so adding it here would count the home indicator twice.
  *
- * To customize this property, use the `animation` prop on `BottomSheet.Overlay`:
- * ```tsx
- * <BottomSheet.Overlay
- *   animation={{
- *     opacity: { value: [0, 1, 0] }
- *   }}
- * />
- * ```
- *
- * To completely disable animated styles and apply your own via className or style prop,
- * set `isAnimatedStyleActive={false}` on `BottomSheet.Overlay`.
+ * The grabber is drawn over the content, not above it. On iOS it ends 10pt
+ * from the top, so the default inset clears it. Android draws it 16dp down
+ * and it ends at 20dp, so `grabber` adds room for a similar gap below it.
  */
-const overlay = tv({
-  base: 'bottom-sheet__overlay',
+const contentContainer = tv({
+  base: 'px-5 pb-5',
   variants: {
-    variant: {
-      default: '',
-      blur: 'bottom-sheet__overlay--variant-blur',
+    topInset: {
+      default: 'pt-5',
+      grabber: 'pt-8',
     },
   },
   defaultVariants: {
-    variant: 'default',
+    topInset: 'default',
   },
-});
-
-/**
- * @note `pb-safe-offset-3` stays as a Tailwind utility because the uniwind
- * CSS parser has no safe-area equivalent for custom CSS classes.
- */
-const contentContainer = tv({
-  base: 'bottom-sheet__content-container pb-safe-offset-3',
-});
-
-/**
- * Sheet background surface style definition — applied to gorhom's background
- * node via `backgroundClassName` (surface color, top radius, shadow).
- */
-const contentBackground = tv({
-  base: 'bottom-sheet__content-background',
-});
-
-/**
- * Background style definition — absolute-fill container inside the sheet
- * background surface, clipped to the sheet's top radius, hosting
- * theme-specific layers (e.g. glass blur) or custom content (gradients,
- * images).
- */
-const background = tv({
-  base: 'bottom-sheet__background',
-});
-
-const contentHandleIndicator = tv({
-  base: 'bottom-sheet__content-handle-indicator',
-});
-
-const close = tv({
-  base: '',
 });
 
 const label = tv({
@@ -77,18 +35,7 @@ const description = tv({
 });
 
 export const bottomSheetClassNames = combineStyles({
-  overlay,
   contentContainer,
-  contentBackground,
-  background,
-  contentHandleIndicator,
-  close,
   label,
   description,
-});
-
-export const bottomSheetStyleSheet = StyleSheet.create({
-  contentContainer: {
-    borderCurve: 'continuous',
-  },
 });

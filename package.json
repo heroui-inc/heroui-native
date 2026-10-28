@@ -73,7 +73,6 @@
     "@eslint/eslintrc": "^3.3.0",
     "@eslint/js": "^9.22.0",
     "@evilmartians/lefthook": "^1.5.0",
-    "@gorhom/bottom-sheet": "^5.2.14",
     "@lodev09/react-native-true-sheet": "^4.0.0",
     "@react-native-community/cli": "latest",
     "@react-native/babel-preset": "0.88.0",
@@ -112,7 +111,6 @@
     "uniwind": "1.13.0"
   },
   "peerDependencies": {
-    "@gorhom/bottom-sheet": "^5.2.9",
     "@lodev09/react-native-true-sheet": "^4.0.0",
     "expo-blur": ">=14.0.0",
     "react": ">=19.0.0",
@@ -127,9 +125,6 @@
     "tailwind-variants": "^3.2.2"
   },
   "peerDependenciesMeta": {
-    "@gorhom/bottom-sheet": {
-      "optional": true
-    },
     "@lodev09/react-native-true-sheet": {
       "optional": true
     },

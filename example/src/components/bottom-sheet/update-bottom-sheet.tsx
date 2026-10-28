@@ -3,8 +3,8 @@ import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react/macro';
 import * as Linking from 'expo-linking';
 import * as Updates from 'expo-updates';
-import { BottomSheet, Button } from 'heroui-native';
-import type { FC } from 'react';
+import { BottomSheet, Button, type BottomSheetRef } from 'heroui-native';
+import { useEffect, useRef, type FC } from 'react';
 import { Platform, View } from 'react-native';
 import { APP_STORE_URL } from '../../helpers/utils/version-check';
 
@@ -64,31 +64,34 @@ export const UpdateBottomSheet: FC<UpdateBottomSheetProps> = ({
     }
   };
 
+  const sheetRef = useRef<BottomSheetRef>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      sheetRef.current?.present();
+    }
+  }, [isOpen]);
+
   const handleDismiss = () => {
-    onOpenChange(false);
+    sheetRef.current?.dismiss();
   };
 
   return (
-    <BottomSheet isOpen={isOpen} onOpenChange={onOpenChange}>
-      <BottomSheet.Portal>
-        <BottomSheet.Overlay className="bg-black/50" />
-        <BottomSheet.Content>
-          <View className="mb-8 gap-2 items-center">
-            <BottomSheet.Title className="text-center">
-              {t(title)}
-            </BottomSheet.Title>
-            <BottomSheet.Description className="text-center">
-              {t(description)}
-            </BottomSheet.Description>
-          </View>
-          <View className="gap-3">
-            <Button onPress={handlePrimaryPress}>{t(primaryLabel)}</Button>
-            <Button variant="tertiary" onPress={handleDismiss}>
-              {t`Later`}
-            </Button>
-          </View>
-        </BottomSheet.Content>
-      </BottomSheet.Portal>
+    <BottomSheet ref={sheetRef} onDidDismiss={() => onOpenChange(false)}>
+      <View className="mb-8 gap-2 items-center">
+        <BottomSheet.Title className="text-center">
+          {t(title)}
+        </BottomSheet.Title>
+        <BottomSheet.Description className="text-center">
+          {t(description)}
+        </BottomSheet.Description>
+      </View>
+      <View className="gap-3">
+        <Button onPress={handlePrimaryPress}>{t(primaryLabel)}</Button>
+        <Button variant="tertiary" onPress={handleDismiss}>
+          {t`Later`}
+        </Button>
+      </View>
     </BottomSheet>
   );
 };

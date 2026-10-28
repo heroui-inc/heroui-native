@@ -1,8 +1,8 @@
 import { useLingui } from '@lingui/react/macro';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
-import { useThemeColor, useToast } from 'heroui-native';
-import { useCallback, useEffect, useState } from 'react';
+import { useThemeColor, useToast, type BottomSheetRef } from 'heroui-native';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Image, Platform, StyleSheet, View } from 'react-native';
 import { useReducedMotion } from 'react-native-reanimated';
 import LogoDark from '../../../assets/logo-dark.png';
@@ -27,7 +27,7 @@ export default function Layout() {
   const reducedMotion = useReducedMotion();
   const { toast } = useToast();
 
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const settingsSheetRef = useRef<BottomSheetRef>(null);
 
   // -- Update management state --
   const [isVersionChecked, setIsVersionChecked] = useState(false);
@@ -86,7 +86,7 @@ export default function Layout() {
   const _renderThemeToggle = useCallback(() => <ThemeToggle />, []);
 
   const handleOpenSettings = useCallback(() => {
-    setIsSettingsOpen(true);
+    settingsSheetRef.current?.present();
   }, []);
 
   const _renderSettingsButton = useCallback(
@@ -157,13 +157,6 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
-          name="components/native-bottom-sheet-native-modal"
-          options={{
-            title: t`NativeBottomSheet Native Modal`,
-            presentation: 'formSheet',
-          }}
-        />
-        <Stack.Screen
           name="components/dialog-native-modal"
           options={{
             title: t`Dialog Native Modal`,
@@ -204,10 +197,7 @@ export default function Layout() {
           }}
         />
       </Stack>
-      <SettingsBottomSheet
-        isOpen={isSettingsOpen}
-        onOpenChange={setIsSettingsOpen}
-      />
+      <SettingsBottomSheet ref={settingsSheetRef} />
       {/* <UpdateBottomSheet
         isOpen={updateSheetOpen}
         onOpenChange={setUpdateSheetOpen}

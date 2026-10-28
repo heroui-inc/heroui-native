@@ -68,10 +68,10 @@ export function PortalHost({ name = DEFAULT_PORTAL_HOST }: { name?: string }) {
   if (portalMap.size === 0) return null;
   // Key each portal subtree by its unique portal name. Rendering the values
   // as an unkeyed array makes React reconcile portals by array index, so when
-  // a portal unregisters (e.g. a screen with an open bottom sheet unmounts)
+  // a portal unregisters (e.g. a screen with an open popup unmounts)
   // sibling portals shift index and inherit each other's component state,
-  // including gorhom bottom-sheet open positions. This causes unrelated
-  // sheets to appear open ("ghost sheets") or open sheets to stay invisible.
+  // such as presented sheets. This causes unrelated popups to appear open
+  // or open ones to stay invisible.
   return (
     <>
       {Array.from(portalMap.entries()).map(([portalName, portalChildren]) => (

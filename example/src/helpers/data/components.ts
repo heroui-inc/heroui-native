@@ -90,10 +90,6 @@ export const COMPONENTS: ComponentItem[] = [
     path: 'menu',
   },
   {
-    title: 'NativeBottomSheet',
-    path: 'native-bottom-sheet',
-  },
-  {
     title: 'Popover',
     path: 'popover',
   },

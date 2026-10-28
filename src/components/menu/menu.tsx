@@ -1,4 +1,3 @@
-import type BottomSheet from '@gorhom/bottom-sheet';
 import { createContext, forwardRef, useMemo } from 'react';
 import type { GestureResponderEvent } from 'react-native';
 import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
@@ -7,12 +6,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
 import {
-  BottomSheetContent,
   CheckIcon,
   FullWindowOverlay,
   HeroText,
   ThemeBackground,
 } from '../../helpers/internal/components';
+import { PopupSheetContent } from '../../helpers/internal/components/popup-sheet-content';
 import {
   AnimationSettingsProvider,
   useAnimationSettings,
@@ -30,6 +29,7 @@ import type {
 import { childrenToString } from '../../helpers/internal/utils';
 import * as MenuPrimitives from '../../primitives/menu';
 import * as MenuPrimitivesTypes from '../../primitives/menu/menu.types';
+import type { BottomSheetRef } from '../bottom-sheet/bottom-sheet.types';
 import { CloseButton } from '../close-button';
 import { useSubMenu } from '../sub-menu';
 import {
@@ -153,25 +153,38 @@ const MenuPortal = ({
   unstable_accessibilityContainerViewIsModal,
   ...props
 }: MenuPortalProps) => {
+  const { presentation } = useMenu();
   const animationSettingsContext = useAnimationSettings();
   const animationContext = useMenuAnimation();
 
   const portalClassName = menuClassNames.portal({ className });
 
+  /**
+   * The bottom sheet presents natively above everything, so it skips the
+   * full-window overlay layer that floating content needs.
+   */
+  const content = (
+    <View className={portalClassName} pointerEvents="box-none">
+      {children}
+    </View>
+  );
+
   return (
     <MenuPrimitives.Portal {...props}>
       <AnimationSettingsProvider value={animationSettingsContext}>
         <MenuAnimationProvider value={animationContext}>
-          <FullWindowOverlay
-            disableFullWindowOverlay={disableFullWindowOverlay}
-            unstable_accessibilityContainerViewIsModal={
-              unstable_accessibilityContainerViewIsModal
-            }
-          >
-            <View className={portalClassName} pointerEvents="box-none">
-              {children}
-            </View>
-          </FullWindowOverlay>
+          {presentation === 'bottom-sheet' ? (
+            content
+          ) : (
+            <FullWindowOverlay
+              disableFullWindowOverlay={disableFullWindowOverlay}
+              unstable_accessibilityContainerViewIsModal={
+                unstable_accessibilityContainerViewIsModal
+              }
+            >
+              {content}
+            </FullWindowOverlay>
+          )}
         </MenuAnimationProvider>
       </AnimationSettingsProvider>
     </MenuPrimitives.Portal>
@@ -189,19 +202,21 @@ const MenuOverlay = forwardRef<
     ref
   ) => {
     const { isOpen, presentation } = useMenu();
-    const { progress, isDragging } = useMenuAnimation();
 
     const overlayClassName = menuClassNames.overlay({ className });
 
     const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
-      progress: presentation === 'bottom-sheet' ? progress : undefined,
-      isDragging: presentation === 'bottom-sheet' ? isDragging : undefined,
       animation,
     });
 
     const overlayStyle = isAnimatedStyleActive
       ? [rContainerStyle, style]
       : style;
+
+    // The bottom sheet dims the screen natively.
+    if (presentation === 'bottom-sheet') {
+      return null;
+    }
 
     return (
       <Animated.View
@@ -214,7 +229,6 @@ const MenuOverlay = forwardRef<
           ref={ref}
           className={overlayClassName}
           style={overlayStyle}
-          forceMount={presentation === 'bottom-sheet' ? true : undefined}
           pointerEvents={isOpen ? 'auto' : 'none'}
           {...props}
         />
@@ -438,53 +452,36 @@ const MenuContentPopover = forwardRef<
 // --------------------------------------------------
 
 const MenuContentBottomSheet = forwardRef<
-  BottomSheet,
+  BottomSheetRef,
   MenuContentBottomSheetProps
 >(
   (
     {
       children,
-      index: initialIndex,
-      backgroundClassName,
-      handleIndicatorClassName,
+      presentation: _presentation,
       contentContainerClassName: contentContainerClassNameProp,
-      contentContainerProps,
-      animation,
-      animationConfigs,
-      ...restProps
+      ...props
     },
     ref
   ) => {
     const { isOpen, onOpenChange } = useMenu();
-
-    const { progress, isDragging } = useMenuAnimation();
+    const { progress } = useMenuAnimation();
 
     const contentContainerClassName = menuClassNames.contentBottomSheet({
       className: contentContainerClassNameProp,
     });
 
     return (
-      <BottomSheetContent
+      <PopupSheetContent
         ref={ref}
-        index={initialIndex}
-        backgroundClassName={backgroundClassName}
-        handleIndicatorClassName={handleIndicatorClassName}
-        contentContainerClassName={contentContainerClassName}
-        contentContainerProps={contentContainerProps}
-        animation={animation}
-        animationConfigs={animationConfigs}
-        backgroundStyle={[
-          menuStyleSheet.borderCurve,
-          restProps.backgroundStyle,
-        ]}
         isOpen={isOpen}
-        progress={progress}
-        isDragging={isDragging}
         onOpenChange={onOpenChange}
-        {...restProps}
+        progress={progress}
+        contentContainerClassName={contentContainerClassName}
+        {...props}
       >
         {children}
-      </BottomSheetContent>
+      </PopupSheetContent>
     );
   }
 );
@@ -492,7 +489,7 @@ const MenuContentBottomSheet = forwardRef<
 // --------------------------------------------------
 
 const MenuContent = forwardRef<
-  MenuPrimitivesTypes.ContentRef | BottomSheet,
+  MenuPrimitivesTypes.ContentRef | BottomSheetRef,
   MenuContentProps
 >((props, ref) => {
   const { presentation: contextPresentation } = useMenu();
@@ -508,7 +505,7 @@ const MenuContent = forwardRef<
   if (props.presentation === 'bottom-sheet') {
     return (
       <MenuContentBottomSheet
-        ref={ref as React.Ref<BottomSheet>}
+        ref={ref as React.Ref<BottomSheetRef>}
         {...(props as MenuContentBottomSheetProps)}
       />
     );

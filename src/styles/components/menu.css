@@ -61,7 +61,13 @@
   }
 
   .menu__item-title {
-    flex: 1;
+    /*
+     * Grows to fill the item row next to the indicator. Not `flex: 1`: its
+     * zero flex-basis collapses the title to no height when it sits in a
+     * column (title above description), e.g. inside a bottom sheet.
+     */
+    flex-grow: 1;
+    flex-shrink: 1;
     font-size: var(--text-base);
     line-height: var(--text-base--line-height);
     @apply font-medium;

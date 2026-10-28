@@ -3608,40 +3608,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gorhom/bottom-sheet@npm:^5.2.14":
-  version: 5.2.14
-  resolution: "@gorhom/bottom-sheet@npm:5.2.14"
-  dependencies:
-    "@gorhom/portal": 1.0.14
-    invariant: ^2.2.4
-  peerDependencies:
-    "@types/react": "*"
-    "@types/react-native": "*"
-    react: "*"
-    react-native: "*"
-    react-native-gesture-handler: ">=2.16.1"
-    react-native-reanimated: "*"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    "@types/react-native":
-      optional: true
-  checksum: c4387fa66b06e9c5dac713af7cdc9f9f5da42743f7dd6a2117d8c956e9410573c24e552fdb20232e251de5890ee83569894312eb5d4531f933f512b673ffeb53
-  languageName: node
-  linkType: hard
-
-"@gorhom/portal@npm:1.0.14":
-  version: 1.0.14
-  resolution: "@gorhom/portal@npm:1.0.14"
-  dependencies:
-    nanoid: ^3.3.1
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 227bb96a2db854ab29bb9da8d4f3823c7f7448358de459709dd1b78522110da564c9a8734c6bc7d7153ed7c99320e0fb5d60b420c2ebb75ecaf2f0d757f410f9
-  languageName: node
-  linkType: hard
-
 "@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -10140,7 +10106,6 @@ __metadata:
     "@expo/vector-icons": ^15.1.1
     "@formatjs/intl-locale": ^5.3.10
     "@formatjs/intl-pluralrules": ^6.3.13
-    "@gorhom/bottom-sheet": ^5.2.14
     "@legendapp/list": ^3.7.0
     "@lingui/babel-plugin-lingui-macro": ^5
     "@lingui/cli": ^5
@@ -10198,7 +10163,6 @@ __metadata:
     "@eslint/eslintrc": ^3.3.0
     "@eslint/js": ^9.22.0
     "@evilmartians/lefthook": ^1.5.0
-    "@gorhom/bottom-sheet": ^5.2.14
     "@lodev09/react-native-true-sheet": ^4.0.0
     "@react-native-community/cli": latest
     "@react-native/babel-preset": 0.88.0
@@ -10236,7 +10200,6 @@ __metadata:
     typescript: ^5.8.3
     uniwind: 1.13.0
   peerDependencies:
-    "@gorhom/bottom-sheet": ^5.2.9
     "@lodev09/react-native-true-sheet": ^4.0.0
     expo-blur: ">=14.0.0"
     react: ">=19.0.0"
@@ -10250,8 +10213,6 @@ __metadata:
     tailwind-merge: ^3.4.0
     tailwind-variants: ^3.2.2
   peerDependenciesMeta:
-    "@gorhom/bottom-sheet":
-      optional: true
     "@lodev09/react-native-true-sheet":
       optional: true
     expo-blur:
@@ -12768,15 +12729,6 @@ __metadata:
   version: 1.0.2
   resolution: "multitars@npm:1.0.2"
   checksum: d51e31f65c644c7cd47588c916e12e812738a6c2fb374279c5189bc04f87da20c11ae44ea3c647764002f49168883a47ff88fc540132e8cd1bfcd07dcd6fcb86
-  languageName: node
-  linkType: hard
-
-"nanoid@npm:^3.3.1":
-  version: 3.3.11
-  resolution: "nanoid@npm:3.3.11"
-  bin:
-    nanoid: bin/nanoid.cjs
-  checksum: 3be20d8866a57a6b6d218e82549711c8352ed969f9ab3c45379da28f405363ad4c9aeb0b39e9abc101a529ca65a72ff9502b00bf74a912c4b64a9d62dfd26c29
   languageName: node
   linkType: hard
 

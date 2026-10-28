@@ -386,16 +386,16 @@ Animation configuration for popover overlay component. Can be:
 
 ### Popover.Content (BottomSheet Presentation)
 
-| prop                        | type                   | default | description                                                                                    |
-| --------------------------- | ---------------------- | ------- | ---------------------------------------------------------------------------------------------- |
-| `children`                  | `ReactNode`            | -       | The bottom sheet content                                                                       |
-| `presentation`              | `'bottom-sheet'`       | -       | Presentation mode - must be 'bottom-sheet' and match Popover.Root presentation prop (required) |
-| `contentContainerClassName` | `string`               | -       | Additional CSS classes for the content container                                               |
-| `contentContainerProps`     | `BottomSheetViewProps` | -       | Props for the content container                                                                |
-| `enablePanDownToClose`      | `boolean`              | `true`  | Whether pan down gesture closes the sheet                                                      |
-| `backgroundStyle`           | `ViewStyle`            | -       | Style for the bottom sheet background                                                          |
-| `handleIndicatorStyle`      | `ViewStyle`            | -       | Style for the bottom sheet handle indicator                                                    |
-| `...BottomSheetProps`       | `BottomSheetProps`     | -       | All @gorhom/bottom-sheet props are supported                                                   |
+| prop                        | type                                 | default    | description                                                                                                 |
+| --------------------------- | ------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------- |
+| `children`                  | `ReactNode`                          | -          | The bottom sheet content                                                                                    |
+| `presentation`              | `'bottom-sheet'`                     | -          | Presentation mode - must be 'bottom-sheet' and match Popover.Root presentation prop (required)              |
+| `detents`                   | `('auto' \| 'peek' \| number)[]`     | `['auto']` | Sizes the sheet can rest at, smallest first, up to 3                                                        |
+| `contentContainerClassName` | `string`                             | -          | Additional CSS classes for the content container                                                            |
+| `scrollableRef`             | `RefObject<ScrollViewInstance \| …>` | -          | Ref of a scroll view inside the sheet                                                                       |
+| `...BottomSheetProps`       | `BottomSheetProps`                   | -          | All [`BottomSheet`](../bottom-sheet/bottom-sheet.md) props except `name` and TrueSheet's own `presentation` |
+
+The sheet is presented when the Popover opens and dismissed when it closes. Dismissing the sheet natively (dragging it down, tapping the dimmed area, Android back) closes the Popover. Requires `@lodev09/react-native-true-sheet`.
 
 #### PopupPopoverContentAnimation
 

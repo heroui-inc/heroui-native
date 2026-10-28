@@ -1,9 +1,5 @@
 import { useLingui } from '@lingui/react/macro';
-import {
-  Button,
-  NativeBottomSheet,
-  type NativeBottomSheetRef,
-} from 'heroui-native';
+import { BottomSheet, Button, type BottomSheetRef } from 'heroui-native';
 import { useRef } from 'react';
 import { View } from 'react-native';
 
@@ -26,9 +22,9 @@ const DETENTS: Array<Array<number> | undefined> = [
  * the next opens over it, and dismissing the top sheet reveals the one below.
  * Dismissing the first sheet dismisses the whole stack.
  */
-export const StackedNativeBottomSheetContent = () => {
+export const StackedBottomSheetContent = () => {
   const { t } = useLingui();
-  const sheetRefs = useRef<Array<NativeBottomSheetRef | null>>([]);
+  const sheetRefs = useRef<Array<BottomSheetRef | null>>([]);
 
   const titles = [
     t`First sheet`,
@@ -45,14 +41,14 @@ export const StackedNativeBottomSheetContent = () => {
           variant="secondary"
           onPress={() => sheetRefs.current[0]?.present()}
         >
-          {t`Stacked native bottom sheets`}
+          {t`Stacked bottom sheets`}
         </Button>
         {titles.map((title, index) => {
           const isFirst = index === 0;
           const isLast = index === titles.length - 1;
 
           return (
-            <NativeBottomSheet
+            <BottomSheet
               key={index}
               ref={(instance) => {
                 sheetRefs.current[index] = instance;
@@ -60,12 +56,12 @@ export const StackedNativeBottomSheetContent = () => {
               detents={DETENTS[index]}
             >
               <View className="mb-8 gap-2">
-                <NativeBottomSheet.Title>{title}</NativeBottomSheet.Title>
-                <NativeBottomSheet.Description>
+                <BottomSheet.Title>{title}</BottomSheet.Title>
+                <BottomSheet.Description>
                   {isFirst
                     ? t`This sheet stays presented while another opens on top of it.`
                     : t`Sheet ${index + 1} of ${SHEET_COUNT}. Closing this one brings the sheet underneath back.`}
-                </NativeBottomSheet.Description>
+                </BottomSheet.Description>
               </View>
               <View className="gap-3">
                 {isLast ? null : (
@@ -86,7 +82,7 @@ export const StackedNativeBottomSheetContent = () => {
                   {isFirst ? t`Close all` : t`Back`}
                 </Button>
               </View>
-            </NativeBottomSheet>
+            </BottomSheet>
           );
         })}
       </View>

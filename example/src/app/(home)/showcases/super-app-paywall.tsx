@@ -1,58 +1,40 @@
-import type { BottomSheetFooterProps } from '@gorhom/bottom-sheet';
 import { useRouter } from 'expo-router';
-import { BottomSheet } from 'heroui-native';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { SHOWCASE_PORTAL_HOST } from '../../../components/showcase-ltr-scope';
+import { BottomSheet, useThemeColor, type BottomSheetRef } from 'heroui-native';
+import { useEffect, useRef } from 'react';
+import { View, type ScrollViewInstance } from 'react-native';
 import {
   PaywallFooter,
   SuperAppPaywallContent,
 } from '../../../components/showcases/super-app-paywall/paywall-content';
 
 export default function SuperAppPaywall() {
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const router = useRouter();
-  const hasOpenedRef = useRef(false);
+  const sheetRef = useRef<BottomSheetRef>(null);
+  const scrollRef = useRef<ScrollViewInstance>(null);
+  const themeColorBackground = useThemeColor('background');
 
   useEffect(() => {
-    if (!hasOpenedRef.current) {
-      hasOpenedRef.current = true;
-      setTimeout(() => {
-        setIsBottomSheetOpen(true);
-      }, 250);
-    }
-  }, []);
+    const timeout = setTimeout(() => {
+      sheetRef.current?.present();
+    }, 250);
 
-  const renderFooter = useCallback(
-    (props: BottomSheetFooterProps) => <PaywallFooter {...props} />,
-    []
-  );
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <View className="flex-1 bg-background">
       <BottomSheet
-        isOpen={isBottomSheetOpen}
-        onOpenChange={(value) => {
-          setIsBottomSheetOpen(value);
-          if (!value) {
-            router.back();
-          }
-        }}
+        ref={sheetRef}
+        detents={[0.9]}
+        grabber={false}
+        backgroundColor={themeColorBackground}
+        scrollableRef={scrollRef}
+        footer={<PaywallFooter />}
+        footerOptions={{ position: 'absolute' }}
+        contentContainerClassName="h-full p-0 pb-0 rounded-t-3xl overflow-hidden"
+        onDidDismiss={() => router.back()}
       >
-        <BottomSheet.Portal hostName={SHOWCASE_PORTAL_HOST}>
-          <BottomSheet.Overlay />
-          <BottomSheet.Content
-            snapPoints={['90%']}
-            enableDynamicSizing={false}
-            enableOverDrag={false}
-            handleClassName="hidden"
-            backgroundClassName="bg-background"
-            contentContainerClassName="h-full rounded-t-3xl p-0 pb-0 overflow-hidden"
-            footerComponent={renderFooter}
-          >
-            <SuperAppPaywallContent />
-          </BottomSheet.Content>
-        </BottomSheet.Portal>
+        <SuperAppPaywallContent scrollRef={scrollRef} />
       </BottomSheet>
     </View>
   );

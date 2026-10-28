@@ -1,4 +1,3 @@
-import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react/macro';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,8 +9,13 @@ import {
   Separator,
   useThemeColor,
 } from 'heroui-native';
-import React, { useState } from 'react';
-import { Platform, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import {
+  Platform,
+  ScrollView as RNScrollView,
+  View,
+  type ScrollViewInstance,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
@@ -97,6 +101,7 @@ const PresentationContent = () => {
   const { t } = useLingui();
   const [popoverValue, setPopoverValue] = useState<CountryOption | undefined>();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const bottomSheetScrollRef = useRef<ScrollViewInstance>(null);
   const [bottomSheetValue, setBottomSheetValue] = useState<
     CountryOption | undefined
   >();
@@ -211,29 +216,20 @@ const PresentationContent = () => {
               )}
             </Button>
           </Select.Trigger>
-          <Select.Portal disableFullWindowOverlay>
-            <Select.Overlay className="bg-black/10" />
+          <Select.Portal>
+            <Select.Overlay />
             <Select.Content
               presentation="bottom-sheet"
-              snapPoints={['35%', '50%']}
-              detached
-              enableDynamicSizing={false}
-              enableOverDrag={false}
-              backgroundClassName="bg-transparent shadow-none"
-              handleClassName="h-1"
-              handleIndicatorClassName="w-12 h-[3px]"
-              contentContainerClassName="h-full pt-1 pb-1 mx-2.5 rounded-t-4xl border border-separator/20 bg-overlay overflow-hidden"
-              contentContainerProps={{
-                style: {
-                  borderCurve: 'continuous',
-                },
-              }}
+              detents={[0.35, 0.5]}
+              scrollableRef={bottomSheetScrollRef}
+              contentContainerClassName="h-full px-0 pb-0"
             >
               <ScrollShadow
                 LinearGradientComponent={LinearGradient}
                 color={themeColorOverlay}
               >
-                <BottomSheetScrollView
+                <RNScrollView
+                  ref={bottomSheetScrollRef}
                   contentContainerClassName="p-4"
                   showsVerticalScrollIndicator={false}
                 >
@@ -269,7 +265,7 @@ const PresentationContent = () => {
                       {index < COUNTRIES.length - 1 && <Separator />}
                     </React.Fragment>
                   ))}
-                </BottomSheetScrollView>
+                </RNScrollView>
               </ScrollShadow>
             </Select.Content>
           </Select.Portal>

@@ -1,15 +1,20 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useLingui } from '@lingui/react/macro';
 import {
+  BottomSheet,
   Button,
   Card,
   cn,
-  NativeBottomSheet,
   Separator,
-  type NativeBottomSheetRef,
+  type BottomSheetRef,
 } from 'heroui-native';
 import { useRef } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  type ScrollViewInstance,
+} from 'react-native';
 import { withUniwind } from 'uniwind';
 import { useAppTheme } from '../../contexts/app-theme-context';
 import { AppText } from '../app-text';
@@ -19,8 +24,8 @@ const StyledIonicons = withUniwind(Ionicons);
 export const ScrollableWithDetentsContent = () => {
   const { t } = useLingui();
   const { isDark } = useAppTheme();
-  const sheetRef = useRef<NativeBottomSheetRef>(null);
-  const scrollableRef = useRef<ScrollView>(null);
+  const sheetRef = useRef<BottomSheetRef>(null);
+  const scrollableRef = useRef<ScrollViewInstance>(null);
 
   /* eslint-disable lingui/no-unlocalized-strings -- `time` and `price` hold
      pre-formatted sample values. A real app would derive them from
@@ -83,7 +88,7 @@ export const ScrollableWithDetentsContent = () => {
             {t`Scrollable with detents`}
           </Button.Label>
         </Button>
-        <NativeBottomSheet
+        <BottomSheet
           ref={sheetRef}
           detents={[0.4, 0.8]}
           scrollableRef={scrollableRef}
@@ -102,14 +107,14 @@ export const ScrollableWithDetentsContent = () => {
           }
         >
           <View className="flex-row items-center justify-between ps-7 pe-5 pb-3 gap-4">
-            <NativeBottomSheet.Title
+            <BottomSheet.Title
               className="flex-1 text-xl font-bold"
               maxFontSizeMultiplier={1.2}
               numberOfLines={1}
             >
               {t`Select a way to travel`}
-            </NativeBottomSheet.Title>
-            <NativeBottomSheet.Close />
+            </BottomSheet.Title>
+            <BottomSheet.Close />
           </View>
           <Separator />
           <ScrollView
@@ -177,22 +182,22 @@ export const ScrollableWithDetentsContent = () => {
             </View>
             <View className="px-3">
               <View className="px-4 mb-6">
-                <NativeBottomSheet.Title className="font-semibold mb-3">
+                <BottomSheet.Title className="font-semibold mb-3">
                   {t`Trip Details`}
-                </NativeBottomSheet.Title>
-                <NativeBottomSheet.Description className="text-sm mb-2">
+                </BottomSheet.Title>
+                <BottomSheet.Description className="text-sm mb-2">
                   {t`Estimated arrival time: 10 minutes`}
-                </NativeBottomSheet.Description>
-                <NativeBottomSheet.Description className="text-sm mb-2">
+                </BottomSheet.Description>
+                <BottomSheet.Description className="text-sm mb-2">
                   {t`Distance: 4.2 km`}
-                </NativeBottomSheet.Description>
-                <NativeBottomSheet.Description className="text-sm">
+                </BottomSheet.Description>
+                <BottomSheet.Description className="text-sm">
                   {t`Your driver will arrive at the pickup location shortly. Please be ready when they arrive.`}
-                </NativeBottomSheet.Description>
+                </BottomSheet.Description>
               </View>
             </View>
           </ScrollView>
-        </NativeBottomSheet>
+        </BottomSheet>
       </View>
     </View>
   );

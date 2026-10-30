@@ -13,3 +13,4 @@ export * from './use-popup-popover-content-animation';
 export * from './use-popup-root-animation';
 export * from './use-relative-position';
 export * from './use-resolved-style-property';
+export * from './use-web-content-layout-sync';

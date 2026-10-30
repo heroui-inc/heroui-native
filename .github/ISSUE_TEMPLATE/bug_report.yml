@@ -11,6 +11,9 @@ body:
 
         **Please fill the following carefully before opening a new issue ❗**
         *(Your issue may be closed if it doesn't provide the required pieces of information)*
+
+        This is the open-source HeroUI Native repository. Do not report HeroUI Native Pro issues here.
+        Report Pro issues through the Pro dashboard using **Feedback** or **Contact support**, or in the private Discord channel.
   - type: checkboxes
     attributes:
       label: Before submitting a new issue
@@ -21,6 +24,8 @@ body:
         - label: I tested using a [supported version](https://github.com/reactwg/react-native-releases/blob/main/docs/support.md) of react native.
           required: true
         - label: I checked for possible duplicate issues, with possible answers.
+          required: true
+        - label: I confirm this issue affects the open-source HeroUI Native library, not HeroUI Native Pro.
           required: true
   - type: textarea
     id: summary

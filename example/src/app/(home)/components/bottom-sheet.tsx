@@ -204,6 +204,8 @@ const NativeModalBottomSheetContent = () => {
   );
 };
 
+// ------------------------------------------------------------------------------
+
 const BOTTOM_SHEET_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-bottom-sheet',

@@ -14,3 +14,9 @@ export const DISPLAY_NAME = {
  * Detents used when `BottomSheet` gets none: size the sheet to its content.
  */
 export const DEFAULT_DETENTS: SheetDetent[] = ['auto'];
+
+/**
+ * Thrown when `@lodev09/react-native-true-sheet` is not installed.
+ */
+export const MISSING_PACKAGE_ERROR =
+  'BottomSheet requires @lodev09/react-native-true-sheet. Install it to use BottomSheet or presentation="bottom-sheet".';

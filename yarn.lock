@@ -4209,7 +4209,7 @@ __metadata:
 
 "@lodev09/react-native-true-sheet@patch:@lodev09/react-native-true-sheet@npm%3A4.0.0#./.yarn/patches/@lodev09-react-native-true-sheet-npm-4.0.0-1dd25ebd5d.patch::locator=heroui-native%40workspace%3A.":
   version: 4.0.0
-  resolution: "@lodev09/react-native-true-sheet@patch:@lodev09/react-native-true-sheet@npm%3A4.0.0#./.yarn/patches/@lodev09-react-native-true-sheet-npm-4.0.0-1dd25ebd5d.patch::version=4.0.0&hash=f47ca4&locator=heroui-native%40workspace%3A."
+  resolution: "@lodev09/react-native-true-sheet@patch:@lodev09/react-native-true-sheet@npm%3A4.0.0#./.yarn/patches/@lodev09-react-native-true-sheet-npm-4.0.0-1dd25ebd5d.patch::version=4.0.0&hash=240567&locator=heroui-native%40workspace%3A."
   peerDependencies:
     "@radix-ui/react-dialog": ">=1"
     "@radix-ui/react-presence": ">=1"
@@ -4238,7 +4238,7 @@ __metadata:
       optional: true
     standard-navigation:
       optional: true
-  checksum: d0d446a905857d6a19e19b6a28c7b0a8edbb5cc0cc7a29931f1e0d8fbb9efd4f4b2df8dad624b4f523150ebab7cf5eac5c33a20cf06678d4a5b9cac228275624
+  checksum: 710838df050af03ea23b1be20a292edc25f9a028def7d276db72b02c9c8fceb9a012edd85d8a32632f16aabaa42e560f2bdff19fda4e5c6199bd8c149f0fa160
   languageName: node
   linkType: hard
 

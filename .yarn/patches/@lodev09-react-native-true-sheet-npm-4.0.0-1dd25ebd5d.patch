@@ -1,17 +1,24 @@
 diff --git a/android/src/main/java/com/lodev09/truesheet/TrueSheetView.kt b/android/src/main/java/com/lodev09/truesheet/TrueSheetView.kt
-index 4852ff16c3f706fd2da5f29aa0059b83e9250350..8b665efe988b567198a46373c2260c1999b6dabd 100644
+index 4852ff16c3f706fd2da5f29aa0059b83e9250350..84ebd4d222163f302775e2e7b5fad4a48a846a59 100644
 --- a/android/src/main/java/com/lodev09/truesheet/TrueSheetView.kt
 +++ b/android/src/main/java/com/lodev09/truesheet/TrueSheetView.kt
-@@ -285,6 +285,16 @@ class TrueSheetView(private val reactContext: ThemedReactContext) :
+@@ -19,6 +19,7 @@ import com.lodev09.truesheet.core.AccessibilityOptions
+ import com.lodev09.truesheet.core.GrabberOptions
+ import com.lodev09.truesheet.core.RNScreensEventObserver
+ import com.lodev09.truesheet.core.RNScreensEventObserverDelegate
++import com.lodev09.truesheet.core.TrueSheetBlurStyle
+ import com.lodev09.truesheet.core.TrueSheetDismissThreshold
+ import com.lodev09.truesheet.core.TrueSheetStackManager
+ import com.lodev09.truesheet.events.*
+@@ -285,6 +286,15 @@ class TrueSheetView(private val reactContext: ThemedReactContext) :
      }
    }
  
 +  fun setDimBlur(tint: String?) {
-+    val resolved = tint?.takeIf { it.isNotEmpty() && it != "none" }
++    val resolved = TrueSheetBlurStyle.fromString(tint)
 +    if (viewController.dimBlur == resolved) return
 +    viewController.dimBlur = resolved
 +    if (viewController.isPresented) {
-+      if (resolved == null) viewController.clearBackgroundBlur()
 +      viewController.updateDimAmount()
 +    }
 +  }
@@ -20,22 +27,10 @@ index 4852ff16c3f706fd2da5f29aa0059b83e9250350..8b665efe988b567198a46373c2260c19
      if (viewController.dimmedDetentIndex == index) return
      viewController.dimmedDetentIndex = index
 diff --git a/android/src/main/java/com/lodev09/truesheet/TrueSheetViewController.kt b/android/src/main/java/com/lodev09/truesheet/TrueSheetViewController.kt
-index a1f00ecb2662bf0753ea032483daec26f626fd32..b8edfbd39d243eb9186dfec5b26c6a46f896f058 100644
+index a1f00ecb2662bf0753ea032483daec26f626fd32..26bdad4214eb7d338af23e66b6518a05776661ca 100644
 --- a/android/src/main/java/com/lodev09/truesheet/TrueSheetViewController.kt
 +++ b/android/src/main/java/com/lodev09/truesheet/TrueSheetViewController.kt
-@@ -2,8 +2,11 @@ package com.lodev09.truesheet
- 
- import android.animation.ValueAnimator
- import android.annotation.SuppressLint
-+import android.content.res.Configuration
- import android.graphics.Canvas
- import android.graphics.Color
-+import android.graphics.RenderEffect
-+import android.graphics.Shader
- import android.os.Build
- import android.view.MotionEvent
- import android.view.View
-@@ -11,6 +14,7 @@ import android.view.ViewGroup
+@@ -11,6 +11,7 @@ import android.view.ViewGroup
  import android.view.accessibility.AccessibilityEvent
  import android.view.accessibility.AccessibilityNodeInfo
  import android.widget.ImageView
@@ -43,15 +38,23 @@ index a1f00ecb2662bf0753ea032483daec26f626fd32..b8edfbd39d243eb9186dfec5b26c6a46
  import androidx.coordinatorlayout.widget.CoordinatorLayout
  import androidx.core.graphics.ColorUtils
  import androidx.core.graphics.createBitmap
-@@ -40,6 +44,7 @@ import com.lodev09.truesheet.core.TrueSheetDimViewDelegate
- import com.lodev09.truesheet.core.TrueSheetDismissThreshold
- import com.lodev09.truesheet.core.TrueSheetKeyboardObserver
- import com.lodev09.truesheet.core.TrueSheetKeyboardObserverDelegate
-+import com.lodev09.truesheet.core.TrueSheetOverlayRootView
- import com.lodev09.truesheet.core.TrueSheetStackManager
- import com.lodev09.truesheet.utils.Insets
+@@ -28,6 +29,7 @@ import com.facebook.react.views.view.ReactViewGroup
+ import com.google.android.material.bottomsheet.BottomSheetBehavior
+ import com.lodev09.truesheet.core.AccessibilityOptions
+ import com.lodev09.truesheet.core.GrabberOptions
++import com.lodev09.truesheet.core.TrueSheetBlurStyle
+ import com.lodev09.truesheet.core.TrueSheetBottomSheetBehavior
+ import com.lodev09.truesheet.core.TrueSheetBottomSheetView
+ import com.lodev09.truesheet.core.TrueSheetBottomSheetViewDelegate
+@@ -45,6 +47,7 @@ import com.lodev09.truesheet.utils.Insets
  import com.lodev09.truesheet.utils.KeyboardUtils
-@@ -126,6 +131,7 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
+ import com.lodev09.truesheet.utils.ScreenUtils
+ import com.lodev09.truesheet.utils.TouchEventDeduper
++import com.lodev09.truesheet.utils.isDarkMode
+ import kotlin.math.roundToInt
+ 
+ // =============================================================================
+@@ -126,6 +129,7 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
  
    companion object {
      const val DEFAULT_DIM_OPACITY = 0.5f
@@ -59,132 +62,120 @@ index a1f00ecb2662bf0753ea032483daec26f626fd32..b8edfbd39d243eb9186dfec5b26c6a46
      private const val DEFAULT_MAX_WIDTH = 640 // dp
      private const val DEFAULT_CORNER_RADIUS = 16 // dp
      private const val DEFAULT_PLACEMENT_OFFSET = 16 // dp
-@@ -241,6 +247,12 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
+@@ -241,6 +245,12 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
    var dimmedDetentIndex = 0
    var dimColor: Int = Color.BLACK
    var dimOpacity: Float = DEFAULT_DIM_OPACITY
 +
-+  /** Blur style name shared with iOS. Non-null blurs the views behind the sheet instead of dimming them. */
-+  var dimBlur: String? = null
-+  private var dimBlurRadius = 0f
++  // Blur style name shared with iOS. Non-null blurs the views behind the sheet instead of tinting them.
++  var dimBlur: TrueSheetBlurStyle? = null
++  var dimBlurRadius = 0f
++    private set
 +  private var dimBlurAnimator: ValueAnimator? = null
-+  private val blurredBackgroundViews = mutableSetOf<View>()
    private var dimProgress = 0f
    override var grabber: Boolean = true
    override var grabberOptions: GrabberOptions? = null
-@@ -468,6 +480,7 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
+@@ -468,6 +478,7 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
      sheetView?.animate()?.cancel()
  
      // Cleanup dim views
-+    clearBackgroundBlur()
++    applyDimBlur(0f, animated = false)
      dimView?.detach()
      dimView = null
      parentDimView?.detach()
-@@ -1216,6 +1229,7 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
+@@ -844,6 +855,7 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
+     TrueSheetStackManager.updateBackgroundAccessibility()
+     delegate?.viewControllerDidChangeVisibility(false)
+     dimViews.forEach { it.animate().alpha(0f).setDuration(SCREEN_FADE_DURATION).start() }
++    applyDimBlur(0f, animated = true)
+     sheet.animate()
+       .alpha(0f)
+       .setDuration(SCREEN_FADE_DURATION)
+@@ -1216,6 +1228,7 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
          parentDimView?.attach(parentBottomSheet, parentController.sheetCornerRadius)
        }
      } else {
-+      clearBackgroundBlur()
++      applyDimBlur(0f, animated = false)
        dimView?.detach()
        dimView = null
        parentDimView?.detach()
-@@ -1257,6 +1271,15 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
-   private fun applyDimAmount(animated: Boolean) {
-     if (!dimmed) return
- 
-+    dimBlurTint()?.let { tint ->
-+      dimViews.forEach {
-+        it.setDimColor(tint)
-+        if (animated) it.animate().alpha(dimProgress).setDuration(200).start() else it.alpha = dimProgress
-+      }
-+      applyBackgroundBlur(dimProgress * dimOpacity * MAX_DIM_BLUR_RADIUS.dpToPx(), animated)
-+      return
-+    }
-+
-     var color = dimColor
-     var opacity = dimOpacity
-     (delegate as? TrueSheetView)?.let { hostView ->
-@@ -1278,6 +1301,81 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
+@@ -1250,22 +1263,27 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
      }
    }
  
-+  /**
-+   * Tint drawn by the dim views over the blur, light or dark like the iOS material.
-+   * Below Android 12 there is no blur, so the tint carries the whole dim.
-+   */
-+  private fun dimBlurTint(): Int? {
-+    val style = dimBlur ?: return null
-+    val isDark = when {
-+      style == "dark" || style.endsWith("-dark") -> true
-+      style == "light" || style.endsWith("-light") -> false
-+      else -> (reactContext.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
-+        Configuration.UI_MODE_NIGHT_YES
-+    }
-+    val materialAlpha = when {
-+      style.contains("ultra-thin") -> 0.15f
-+      style.contains("thin") -> 0.25f
-+      style.contains("thick") -> 0.5f
-+      style.contains("chrome") -> 0.6f
-+      style.contains("material") -> 0.35f
-+      else -> 0.25f
-+    }
-+    val alpha = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) materialAlpha else maxOf(materialAlpha, dimOpacity)
-+    return ColorUtils.setAlphaComponent(if (isDark) Color.BLACK else Color.WHITE, (alpha * 255).roundToInt())
++  /** Re-renders this sheet's blurs, e.g. after the system turns window blurs on or off. */
++  fun updateBlurs() {
++    if (dimBlur != null) updateDimAmount()
 +  }
 +
-+  private fun applyBackgroundBlur(radius: Float, animated: Boolean) {
+   /**
+    * Dims by this sheet's progress, blending in the dim of the sheets presented on top by theirs,
+-   * so everything below the topmost sheet dims with its color and opacity.
++   * so everything below the topmost sheet dims with its tint.
+    */
+   private fun applyDimAmount(animated: Boolean) {
+     if (!dimmed) return
+ 
+-    var color = dimColor
+-    var opacity = dimOpacity
++    var (color, opacity) = dimTint()
+     (delegate as? TrueSheetView)?.let { hostView ->
+       TrueSheetStackManager.getSheetsAbove(hostView).asReversed().forEach {
+         val child = it.viewController
+         if (!child.dimmed) return@forEach
++        val (childColor, childOpacity) = child.dimTint()
+         val below = (1f - child.dimProgress) * opacity
+-        val above = child.dimProgress * child.dimOpacity
+-        if (below + above > 0f) color = ColorUtils.blendARGB(color, child.dimColor, above / (below + above))
++        val above = child.dimProgress * childOpacity
++        if (below + above > 0f) color = ColorUtils.blendARGB(color, childColor, above / (below + above))
+         opacity = below + above
+       }
+     }
+@@ -1276,6 +1294,44 @@ class TrueSheetViewController(private val reactContext: ThemedReactContext) :
+       it.setDimColor(color)
+       if (animated) it.animate().alpha(dimProgress).setDuration(200).start() else it.alpha = dimProgress
+     }
++
++    // A sheet hidden by screen navigation stops blurring the screen that covers it
++    val isBlurring = dimBlur != null && isSheetVisible && TrueSheetStackManager.isBlurEnabled(reactContext)
++    applyDimBlur(if (isBlurring) dimProgress * dimOpacity * MAX_DIM_BLUR_RADIUS.dpToPx() else 0f, animated)
++  }
++
++  /**
++   * The dim's color and opacity. A dim blur draws its style's tint instead, scaled by `dimOpacity`
++   * like the iOS material. When the blur can't render, the tint's color dims like `dimColor`.
++   */
++  private fun dimTint(): Pair<Int, Float> {
++    val tint = dimBlur?.tint(reactContext.isDarkMode) ?: return dimColor to dimOpacity
++    if (TrueSheetStackManager.isBlurEnabled(reactContext)) return tint to dimOpacity
++    return ColorUtils.setAlphaComponent(tint, 255) to dimOpacity
++  }
++
++  private fun applyDimBlur(radius: Float, animated: Boolean) {
 +    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
 +
 +    dimBlurAnimator?.cancel()
 +    dimBlurAnimator = null
 +    if (!animated || radius == dimBlurRadius) {
-+      setBackgroundBlurRadius(radius)
++      setDimBlurRadius(radius)
 +      return
 +    }
 +
 +    dimBlurAnimator = ValueAnimator.ofFloat(dimBlurRadius, radius).apply {
 +      duration = 200
-+      addUpdateListener { setBackgroundBlurRadius(it.animatedValue as Float) }
++      addUpdateListener { setDimBlurRadius(it.animatedValue as Float) }
 +      start()
 +    }
 +  }
 +
-+  /**
-+   * Blurs the views below this sheet's coordinator in the root container: the app content
-+   * and any sheets underneath. Overlays render above every sheet and stay sharp.
-+   */
 +  @RequiresApi(Build.VERSION_CODES.S)
-+  private fun setBackgroundBlurRadius(radius: Float) {
++  private fun setDimBlurRadius(radius: Float) {
++    if (radius == dimBlurRadius) return
 +    dimBlurRadius = radius
-+    val coordinator = coordinatorLayout ?: return
-+    val root = coordinator.parent as? ViewGroup ?: return
-+    val effect = if (radius >= 0.5f) RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.CLAMP) else null
-+
-+    for (i in 0 until root.indexOfChild(coordinator)) {
-+      val child = root.getChildAt(i)
-+      if (child is TrueSheetOverlayRootView) continue
-+      child.setRenderEffect(effect)
-+      if (effect != null) blurredBackgroundViews.add(child) else blurredBackgroundViews.remove(child)
-+    }
-+  }
-+
-+  fun clearBackgroundBlur() {
-+    dimBlurAnimator?.cancel()
-+    dimBlurAnimator = null
-+    dimBlurRadius = 0f
-+    if (blurredBackgroundViews.isEmpty()) return
-+
-+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-+      blurredBackgroundViews.forEach { it.setRenderEffect(null) }
-+    }
-+    blurredBackgroundViews.clear()
-+
-+    // A blurred sheet below re-blurs the views this one just cleared
-+    parentSheetView?.viewController?.applyDimAmount(false)
-+  }
-+
-   // =============================================================================
-   // MARK: - Footer Positioning
++    TrueSheetStackManager.updateDimBlur()
+   }
+ 
    // =============================================================================
 diff --git a/android/src/main/java/com/lodev09/truesheet/TrueSheetViewManager.kt b/android/src/main/java/com/lodev09/truesheet/TrueSheetViewManager.kt
 index b997c9648b2f58b88c8fb48283fdfe9ceed4464c..d3b99273393b2913d7b45843c959c97b35e992cd 100644
@@ -202,6 +193,170 @@ index b997c9648b2f58b88c8fb48283fdfe9ceed4464c..d3b99273393b2913d7b45843c959c97b
    @ReactProp(name = "foldOptions")
    override fun setFoldOptions(view: TrueSheetView, options: ReadableMap?) {
      // iOS-specific prop - no-op on Android
+diff --git a/android/src/main/java/com/lodev09/truesheet/core/TrueSheetBlurStyle.kt b/android/src/main/java/com/lodev09/truesheet/core/TrueSheetBlurStyle.kt
+new file mode 100644
+index 0000000000000000000000000000000000000000..b2099335c9ae021009a1d47c27ac71b52d52b721
+--- /dev/null
++++ b/android/src/main/java/com/lodev09/truesheet/core/TrueSheetBlurStyle.kt
+@@ -0,0 +1,85 @@
++package com.lodev09.truesheet.core
++
++import android.graphics.Color
++import androidx.annotation.ColorInt
++
++/**
++ * Blur styles (`BackgroundBlur` in JS), shared with iOS. Like the iOS trait collection, the styles
++ * without a `-light` or `-dark` suffix (other than `default`, which is `light` on iOS) follow the
++ * system theme.
++ */
++enum class TrueSheetBlurStyle {
++  LIGHT,
++  EXTRA_LIGHT,
++  DARK,
++  REGULAR,
++  PROMINENT,
++  SYSTEM_ULTRA_THIN_MATERIAL,
++  SYSTEM_THIN_MATERIAL,
++  SYSTEM_MATERIAL,
++  SYSTEM_THICK_MATERIAL,
++  SYSTEM_CHROME_MATERIAL,
++  SYSTEM_ULTRA_THIN_MATERIAL_LIGHT,
++  SYSTEM_THIN_MATERIAL_LIGHT,
++  SYSTEM_MATERIAL_LIGHT,
++  SYSTEM_THICK_MATERIAL_LIGHT,
++  SYSTEM_CHROME_MATERIAL_LIGHT,
++  SYSTEM_ULTRA_THIN_MATERIAL_DARK,
++  SYSTEM_THIN_MATERIAL_DARK,
++  SYSTEM_MATERIAL_DARK,
++  SYSTEM_THICK_MATERIAL_DARK,
++  SYSTEM_CHROME_MATERIAL_DARK;
++
++  /** The iOS material's tint at full intensity, measured over black and white. */
++  @ColorInt
++  fun tint(isDark: Boolean): Int =
++    when (this) {
++      LIGHT -> Color.argb(78, 252, 252, 252)
++      EXTRA_LIGHT -> Color.argb(204, 246, 246, 246)
++      DARK -> Color.argb(187, 27, 27, 27)
++      REGULAR -> (if (isDark) DARK else LIGHT).tint(isDark)
++      PROMINENT -> (if (isDark) DARK else EXTRA_LIGHT).tint(isDark)
++      SYSTEM_ULTRA_THIN_MATERIAL -> (if (isDark) SYSTEM_ULTRA_THIN_MATERIAL_DARK else SYSTEM_ULTRA_THIN_MATERIAL_LIGHT).tint(isDark)
++      SYSTEM_THIN_MATERIAL -> (if (isDark) SYSTEM_THIN_MATERIAL_DARK else SYSTEM_THIN_MATERIAL_LIGHT).tint(isDark)
++      SYSTEM_MATERIAL -> (if (isDark) SYSTEM_MATERIAL_DARK else SYSTEM_MATERIAL_LIGHT).tint(isDark)
++      SYSTEM_THICK_MATERIAL -> (if (isDark) SYSTEM_THICK_MATERIAL_DARK else SYSTEM_THICK_MATERIAL_LIGHT).tint(isDark)
++      SYSTEM_CHROME_MATERIAL -> (if (isDark) SYSTEM_CHROME_MATERIAL_DARK else SYSTEM_CHROME_MATERIAL_LIGHT).tint(isDark)
++      SYSTEM_ULTRA_THIN_MATERIAL_LIGHT -> Color.argb(98, 229, 229, 229)
++      SYSTEM_THIN_MATERIAL_LIGHT -> Color.argb(151, 238, 238, 238)
++      SYSTEM_MATERIAL_LIGHT -> Color.argb(207, 243, 243, 243)
++      SYSTEM_THICK_MATERIAL_LIGHT -> Color.argb(243, 243, 243, 243)
++      SYSTEM_CHROME_MATERIAL_LIGHT -> Color.argb(186, 244, 244, 244)
++      SYSTEM_ULTRA_THIN_MATERIAL_DARK -> Color.argb(110, 72, 72, 72)
++      SYSTEM_THIN_MATERIAL_DARK -> Color.argb(161, 49, 49, 49)
++      SYSTEM_MATERIAL_DARK -> Color.argb(203, 39, 39, 39)
++      SYSTEM_THICK_MATERIAL_DARK -> Color.argb(249, 32, 32, 32)
++      SYSTEM_CHROME_MATERIAL_DARK -> Color.argb(187, 26, 26, 26)
++    }
++
++  companion object {
++    fun fromString(value: String?): TrueSheetBlurStyle? =
++      when (value) {
++        "light", "default" -> LIGHT
++        "extra-light" -> EXTRA_LIGHT
++        "dark" -> DARK
++        "regular" -> REGULAR
++        "prominent" -> PROMINENT
++        "system-ultra-thin-material" -> SYSTEM_ULTRA_THIN_MATERIAL
++        "system-thin-material" -> SYSTEM_THIN_MATERIAL
++        "system-material" -> SYSTEM_MATERIAL
++        "system-thick-material" -> SYSTEM_THICK_MATERIAL
++        "system-chrome-material" -> SYSTEM_CHROME_MATERIAL
++        "system-ultra-thin-material-light" -> SYSTEM_ULTRA_THIN_MATERIAL_LIGHT
++        "system-thin-material-light" -> SYSTEM_THIN_MATERIAL_LIGHT
++        "system-material-light" -> SYSTEM_MATERIAL_LIGHT
++        "system-thick-material-light" -> SYSTEM_THICK_MATERIAL_LIGHT
++        "system-chrome-material-light" -> SYSTEM_CHROME_MATERIAL_LIGHT
++        "system-ultra-thin-material-dark" -> SYSTEM_ULTRA_THIN_MATERIAL_DARK
++        "system-thin-material-dark" -> SYSTEM_THIN_MATERIAL_DARK
++        "system-material-dark" -> SYSTEM_MATERIAL_DARK
++        "system-thick-material-dark" -> SYSTEM_THICK_MATERIAL_DARK
++        "system-chrome-material-dark" -> SYSTEM_CHROME_MATERIAL_DARK
++        else -> null
++      }
++  }
++}
+diff --git a/android/src/main/java/com/lodev09/truesheet/core/TrueSheetStackManager.kt b/android/src/main/java/com/lodev09/truesheet/core/TrueSheetStackManager.kt
+index acf2c0a5d09207e9bfb460ded50f2a56d71c4b21..41d7bef42ebb11af43c8776267e01c18377912e8 100644
+--- a/android/src/main/java/com/lodev09/truesheet/core/TrueSheetStackManager.kt
++++ b/android/src/main/java/com/lodev09/truesheet/core/TrueSheetStackManager.kt
+@@ -1,7 +1,12 @@
+ package com.lodev09.truesheet.core
+ 
++import android.content.Context
++import android.graphics.RenderEffect
++import android.graphics.Shader
++import android.os.Build
+ import android.view.View
+ import android.view.ViewGroup
++import androidx.annotation.RequiresApi
+ import com.lodev09.truesheet.TrueSheetView
+ 
+ /**
+@@ -181,6 +186,55 @@ object TrueSheetStackManager {
+     }
+   }
+ 
++  private val blurredViews = HashMap<View, Float>()
++
++  /**
++   * Whether a blur can render: Android 12+. The blur is a `RenderEffect` on views inside the
++   * app's own window, so it doesn't depend on cross-window blur support, which many devices
++   * report as off.
++   */
++  @JvmStatic
++  @Suppress("UNUSED_PARAMETER")
++  fun isBlurEnabled(context: Context): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
++
++  /**
++   * Blurs every view behind a sheet with a dim blur by the strongest blur among the sheets
++   * above it: app content and lower sheets. Overlays render above every sheet and stay sharp.
++   *
++   * Derived from the current stack state and idempotent — call whenever a sheet's blur radius changes.
++   */
++  @RequiresApi(Build.VERSION_CODES.S)
++  @JvmStatic
++  fun updateDimBlur() {
++    synchronized(presentedSheetStack) {
++      val sheetRadii = presentedSheetStack
++        .mapNotNull { sheet -> sheet.viewController.run { coordinatorLayout?.let { it to dimBlurRadius } } }
++        .toMap()
++
++      val radii = HashMap<View, Float>()
++      sheetRadii.keys.mapNotNull { it.parent as? ViewGroup }.toSet().forEach { root ->
++        var radius = 0f
++        for (i in root.childCount - 1 downTo 0) {
++          val child = root.getChildAt(i)
++          if (child is TrueSheetOverlayRootView) continue
++          if (radius >= 0.5f) radii[child] = radius
++          sheetRadii[child]?.let { radius = maxOf(radius, it) }
++        }
++      }
++
++      // Includes views of a dismissed sheet's root that are no longer behind any blur
++      blurredViews.keys.filter { it !in radii }.forEach {
++        it.setRenderEffect(null)
++        blurredViews.remove(it)
++      }
++      radii.forEach { (view, radius) ->
++        if (blurredViews[view] == radius) return@forEach
++        view.setRenderEffect(RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.CLAMP))
++        blurredViews[view] = radius
++      }
++    }
++  }
++
+   private fun restoreBackgroundAccessibility() {
+     savedBackgroundImportance.forEach { (view, importance) ->
+       view.importantForAccessibility = importance
 diff --git a/ios/TrueSheetView.mm b/ios/TrueSheetView.mm
 index 64c0819a5c0959e1d499890c54fa859361148070..55c3ec7f0f351a97d82fcbe89c29170f071149e2 100644
 --- a/ios/TrueSheetView.mm
@@ -230,7 +385,7 @@ index a3210568332baa8ac29da4d908dcfa6bbe375c29..a4c7c22ee3adcc625f12937ef11262c9
  @property (nonatomic, assign) facebook::react::TrueSheetViewBackgroundBlur backgroundBlur;
  @property (nonatomic, assign) facebook::react::TrueSheetViewPresentation presentation;
 diff --git a/ios/TrueSheetViewController.mm b/ios/TrueSheetViewController.mm
-index 574193e94dd36c69073e185b2aac75e35542796c..39cfb50369ca0ddbe1ab970a1844b0ffaad0d0f9 100644
+index 574193e94dd36c69073e185b2aac75e35542796c..9c9c955ee3601ee7fa971502b15a5b1f97dd7fe0 100644
 --- a/ios/TrueSheetViewController.mm
 +++ b/ios/TrueSheetViewController.mm
 @@ -156,6 +156,7 @@ - (instancetype)init {
@@ -246,12 +401,12 @@ index 574193e94dd36c69073e185b2aac75e35542796c..39cfb50369ca0ddbe1ab970a1844b0ff
  // color/opacity turns the native dim off and fades in our own view behind the sheet.
  - (BOOL)useCustomDimming {
 -  return self.dimmed && (self.dimColor != nil || self.dimOpacity != nil);
-+  return self.dimmed && (self.dimColor != nil || self.dimOpacity != nil ||
-+                         self.dimBlur != TrueSheetViewBackgroundBlur::None);
++  return self.dimmed &&
++         (self.dimColor != nil || self.dimOpacity != nil || self.dimBlur != TrueSheetViewBackgroundBlur::None);
  }
  
  - (BOOL)isDimmedAtEveryDetent {
-@@ -554,10 +556,18 @@ - (void)setupDimView {
+@@ -554,10 +556,17 @@ - (void)setupDimView {
      };
    }
  
@@ -263,21 +418,37 @@ index 574193e94dd36c69073e185b2aac75e35542796c..39cfb50369ca0ddbe1ab970a1844b0ff
 +  if (self.dimBlur != TrueSheetViewBackgroundBlur::None) {
 +    _dimView.backgroundColor = [UIColor clearColor];
 +    _dimView.blurIntensity = opacity;
-+    _dimView.blurStyle = @([BlurUtil blurEffectStyleFromEnum:self.dimBlur]);
 +  } else {
 +    // Keep opacity in the color so a transparent dim still receives touches.
 +    UIColor *color = self.dimColor ?: [UIColor blackColor];
-+    _dimView.blurStyle = nil;
 +    _dimView.backgroundColor = [color colorWithAlphaComponent:CGColorGetAlpha(color.CGColor) * opacity];
 +  }
++  _dimView.blur = self.dimBlur;
    [_dimView addToView:container];
  }
  
+@@ -925,10 +934,7 @@ - (void)viewWillDisappear:(BOOL)animated {
+   // Dismissing with a child on top only animates the child out — this sheet
+   // doesn't move and isn't part of that transition, so fade its dim over it.
+   if (self.isBeingDismissed && self.presentedViewController) {
+-    [UIView animateWithDuration:self.transitionCoordinator.transitionDuration
+-                     animations:^{
+-                       self->_dimView.alpha = 0;
+-                     }];
++    [_dimView fadeOutWithDuration:self.transitionCoordinator.transitionDuration];
+   }
+ 
+   // A swipe can still be cancelled, so emit once it commits on release. Any
 diff --git a/ios/core/TrueSheetDimView.h b/ios/core/TrueSheetDimView.h
-index 3dfe36b543e07ef6823bff864f2c0396ecd691e3..9d6793107fca71ae546c0e8795dd76ea0c2c7b12 100644
+index 3dfe36b543e07ef6823bff864f2c0396ecd691e3..b35fae52473f1caf79edc35828eadc32105a5b88 100644
 --- a/ios/core/TrueSheetDimView.h
 +++ b/ios/core/TrueSheetDimView.h
-@@ -11,7 +11,7 @@
+@@ -7,11 +7,12 @@
+ //
+ 
+ #import <UIKit/UIKit.h>
++#import <react/renderer/components/TrueSheetSpec/Props.h>
+ 
  NS_ASSUME_NONNULL_BEGIN
  
  /**
@@ -286,12 +457,12 @@ index 3dfe36b543e07ef6823bff864f2c0396ecd691e3..9d6793107fca71ae546c0e8795dd76ea
   * UISheetPresentationController has no API for. Starts hidden.
   */
  @interface TrueSheetDimView : UIView
-@@ -19,6 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
+@@ -19,9 +20,18 @@ NS_ASSUME_NONNULL_BEGIN
  /// Called when the dim is tapped
  @property (nonatomic, copy, nullable) void (^onTap)(void);
  
-+/// `UIBlurEffectStyle` shown instead of the background color. `nil` dims with the color.
-+@property (nonatomic, strong, nullable) NSNumber *blurStyle;
++/// Blur shown instead of the background color. `None` dims with the color.
++@property (nonatomic, assign) facebook::react::TrueSheetViewBackgroundBlur blur;
 +
 +/// Blur strength at full dim, from 0 to 1. `alpha` scales it while the sheet moves.
 +@property (nonatomic, assign) CGFloat blurIntensity;
@@ -299,17 +470,27 @@ index 3dfe36b543e07ef6823bff864f2c0396ecd691e3..9d6793107fca71ae546c0e8795dd76ea
  /// Adds the dim view behind everything in the presentation container
  - (void)addToView:(UIView *)parentView;
  
++/// Fades the dim out. Use instead of animating `alpha`, which sets the blur without animating it.
++- (void)fadeOutWithDuration:(NSTimeInterval)duration;
++
+ @end
+ 
+ NS_ASSUME_NONNULL_END
 diff --git a/ios/core/TrueSheetDimView.mm b/ios/core/TrueSheetDimView.mm
-index 40d23b05a1df65e838e3ef2602628f47446c9baa..8857a9fb4a3798b45710cdd7891a9a25b5f9dcdc 100644
+index 40d23b05a1df65e838e3ef2602628f47446c9baa..51eb7843688eea702d3a38b3b0aa223fc2dc6ccc 100644
 --- a/ios/core/TrueSheetDimView.mm
 +++ b/ios/core/TrueSheetDimView.mm
-@@ -8,7 +8,12 @@
+@@ -7,8 +7,16 @@
+ //
  
  #import "TrueSheetDimView.h"
++#import "TrueSheetBlurView.h"
  
 -@implementation TrueSheetDimView
++using namespace facebook::react;
++
 +@implementation TrueSheetDimView {
-+  UIVisualEffectView *_blurView;
++  TrueSheetBlurView *_blurView;
 +  // Paused at `fractionComplete` so the blur radius follows the dim, like a blur intensity.
 +  UIViewPropertyAnimator *_blurAnimator;
 +  CGFloat _dimAlpha;
@@ -317,16 +498,16 @@ index 40d23b05a1df65e838e3ef2602628f47446c9baa..8857a9fb4a3798b45710cdd7891a9a25
  
  #pragma mark - Initialization
  
-@@ -16,13 +21,26 @@ - (instancetype)init {
+@@ -16,13 +24,26 @@ - (instancetype)init {
    if (self = [super init]) {
      self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
      self.alpha = 0;
++    _blur = TrueSheetViewBackgroundBlur::None;
 +    _blurIntensity = 1;
  
      UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
      [self addGestureRecognizer:tap];
 +
-+    // Backgrounding the app finishes paused animators, which would leave the blur at full strength.
 +    [[NSNotificationCenter defaultCenter] addObserver:self
 +                                             selector:@selector(rebuildBlur)
 +                                                 name:UIApplicationDidBecomeActiveNotification
@@ -337,23 +518,32 @@ index 40d23b05a1df65e838e3ef2602628f47446c9baa..8857a9fb4a3798b45710cdd7891a9a25
  
 +- (void)dealloc {
 +  [[NSNotificationCenter defaultCenter] removeObserver:self];
-+  // Releasing a paused property animator raises an exception.
++
 +  [_blurAnimator stopAnimation:YES];
 +}
 +
  #pragma mark - Public
  
  - (void)addToView:(UIView *)parentView {
-@@ -30,6 +48,83 @@ - (void)addToView:(UIView *)parentView {
+@@ -30,6 +51,88 @@ - (void)addToView:(UIView *)parentView {
    [parentView insertSubview:self atIndex:0];
  }
  
-+- (void)setBlurStyle:(NSNumber *)blurStyle {
-+  if (_blurStyle == blurStyle || (blurStyle && [_blurStyle isEqualToNumber:blurStyle])) {
++// Crossfades a blur out at its current strength.
++- (void)fadeOutWithDuration:(NSTimeInterval)duration {
++  _dimAlpha = 0;
++  [UIView animateWithDuration:duration
++                   animations:^{
++                     [super setAlpha:0];
++                   }];
++}
++
++- (void)setBlur:(TrueSheetViewBackgroundBlur)blur {
++  if (_blur == blur) {
 +    return;
 +  }
 +
-+  _blurStyle = blurStyle;
++  _blur = blur;
 +  [self rebuildBlur];
 +}
 +
@@ -373,7 +563,6 @@ index 40d23b05a1df65e838e3ef2602628f47446c9baa..8857a9fb4a3798b45710cdd7891a9a25
 +  }
 +}
 +
-+// A blurred dim stays opaque, so hide it from touches the way alpha 0 would.
 +- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 +  if (_dimAlpha <= 0.01) {
 +    return nil;
@@ -386,23 +575,20 @@ index 40d23b05a1df65e838e3ef2602628f47446c9baa..8857a9fb4a3798b45710cdd7891a9a25
 +- (void)rebuildBlur {
 +  [self teardownBlur];
 +
-+  if (!_blurStyle) {
++  if (_blur == TrueSheetViewBackgroundBlur::None) {
 +    [super setAlpha:_dimAlpha];
 +    return;
 +  }
 +
-+  _blurView = [[UIVisualEffectView alloc] initWithEffect:nil];
-+  _blurView.frame = self.bounds;
-+  _blurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-+  _blurView.userInteractionEnabled = NO;
-+  [self addSubview:_blurView];
++  _blurView = [[TrueSheetBlurView alloc] init];
++  _blurView.backgroundBlur = _blur;
++  [_blurView addToView:self];
 +
-+  UIBlurEffect *effect = [UIBlurEffect effectWithStyle:(UIBlurEffectStyle)[_blurStyle integerValue]];
-+  __weak UIVisualEffectView *blurView = _blurView;
++  __weak TrueSheetBlurView *blurView = _blurView;
 +  _blurAnimator = [[UIViewPropertyAnimator alloc] initWithDuration:1
 +                                                             curve:UIViewAnimationCurveLinear
 +                                                        animations:^{
-+                                                          blurView.effect = effect;
++                                                          [blurView applyBlurEffect];
 +                                                        }];
 +  _blurAnimator.pausesOnCompletion = YES;
 +
@@ -485,7 +671,7 @@ index 002ba5470dfef3915042677673c2e1ba407f42f2..7c85cf7d71edddd8cc0ec6409ed8a0d2
    // String properties - use empty string as default to avoid nil insertion
    backgroundBlur?: CodegenTypes.WithDefault<
 diff --git a/lib/typescript/src/TrueSheet.types.d.ts b/lib/typescript/src/TrueSheet.types.d.ts
-index 1beaec4dbc241c878dd3fc06227acb708a526cc5..0c188c7eff368254d96197427d2ed6dad1a370fc 100644
+index 1beaec4dbc241c878dd3fc06227acb708a526cc5..f2f9c8e3b37b3c96a65875aadd36a1cb15507cf2 100644
 --- a/lib/typescript/src/TrueSheet.types.d.ts
 +++ b/lib/typescript/src/TrueSheet.types.d.ts
 @@ -426,6 +426,13 @@ export interface TrueSheetProps extends ViewProps {
@@ -495,7 +681,7 @@ index 1beaec4dbc241c878dd3fc06227acb708a526cc5..0c188c7eff368254d96197427d2ed6da
 +    /**
 +     * Blurs the content behind the sheet instead of tinting it with `dimColor`.
 +     * `dimOpacity` sets the blur intensity at full dim (0 to 1).
-+     * Android 12+ blurs the app behind the sheet; earlier versions only tint it.
++     * Android 12+ blurs the app behind the sheet unless the system turns window blurs off; otherwise it only tints.
 +     * This is ignored if `dimmed` is set to `false`.
 +     */
 +    dimBlur?: BackgroundBlur;
@@ -535,7 +721,7 @@ index 734e7d3119c821842445415dc772f45ca9380771..3f89228a6e8cb74947e90c6cda88fbc6
          initialDetentIndex={gatedInitialDetentIndex}
          initialDetentAnimated={initialDetentAnimated}
 diff --git a/src/TrueSheet.types.ts b/src/TrueSheet.types.ts
-index 9d5e29c45e38014633e9bd96f7b1beb9c718d2da..364098c30963c3ee8a599a7073606567efb8bf9e 100644
+index 9d5e29c45e38014633e9bd96f7b1beb9c718d2da..5731ea0aafc65708b4bf7190ca78ddc4fc099a47 100644
 --- a/src/TrueSheet.types.ts
 +++ b/src/TrueSheet.types.ts
 @@ -482,6 +482,14 @@ export interface TrueSheetProps extends ViewProps {
@@ -545,7 +731,7 @@ index 9d5e29c45e38014633e9bd96f7b1beb9c718d2da..364098c30963c3ee8a599a7073606567
 +  /**
 +   * Blurs the content behind the sheet instead of tinting it with `dimColor`.
 +   * `dimOpacity` sets the blur intensity at full dim (0 to 1).
-+   * Android 12+ blurs the app behind the sheet; earlier versions only tint it.
++   * Android 12+ blurs the app behind the sheet unless the system turns window blurs off; otherwise it only tints.
 +   * This is ignored if `dimmed` is set to `false`.
 +   */
 +  dimBlur?: BackgroundBlur;

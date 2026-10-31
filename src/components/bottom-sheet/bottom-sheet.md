@@ -227,6 +227,7 @@ Forwards every [TrueSheet prop](https://sheet.lodev09.com/reference/configuratio
 | `scrollableRef`             | `RefObject<ScrollViewInstance \| …>` | -          | Ref of the scroll view inside the sheet                                                    |
 | `insetAdjustment`           | `'automatic' \| 'never'`             | -          | `'never'` stops the sheet from adding the bottom safe area                                 |
 | `contentContainerClassName` | `string`                             | -          | Additional CSS class for the view that wraps `children`                                    |
+| `animation`                 | `AnimationRootDisableAll`            | -          | `"disable-all"` disables animations in the sheet content, including children               |
 | `onWillPresent`             | `(event) => void`                    | -          | Called before the sheet is presented                                                       |
 | `onDidPresent`              | `(event) => void`                    | -          | Called after the sheet is presented                                                        |
 | `onDidDismiss`              | `(event) => void`                    | -          | Called after the sheet is dismissed, however it was dismissed                              |

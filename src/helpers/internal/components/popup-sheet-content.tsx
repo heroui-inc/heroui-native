@@ -4,13 +4,8 @@ import {
   useEffect,
   useImperativeHandle,
   useRef,
-  type ReactNode,
 } from 'react';
-import {
-  useAnimatedReaction,
-  useSharedValue,
-  type SharedValue,
-} from 'react-native-reanimated';
+import { useAnimatedReaction, useSharedValue } from 'react-native-reanimated';
 import BottomSheet, {
   useBottomSheetAnimation,
 } from '../../../components/bottom-sheet/bottom-sheet';
@@ -18,39 +13,22 @@ import type {
   BottomSheetProps,
   BottomSheetRef,
 } from '../../../components/bottom-sheet/bottom-sheet.types';
+import type {
+  PopupSheetContentProps,
+  PopupSheetProgressSyncProps,
+} from '../types/bottom-sheet';
 
-/**
- * Props for the sheet behind `presentation="bottom-sheet"` content.
+/*
+ * Not re-exported from the internal components barrel: this file imports
+ * `BottomSheet`, which imports that barrel, so Popover, Select, and Menu
+ * import it by path to avoid the cycle.
  */
-export interface PopupSheetContentProps extends BottomSheetProps {
-  /**
-   * Whether the owning popup is open. Presents the sheet when it turns
-   * `true` and dismisses it when it turns `false`.
-   */
-  isOpen: boolean;
-  /**
-   * Called with `false` when the sheet is dismissed natively (drag down,
-   * dimmed area tap, Android back).
-   */
-  onOpenChange: (open: boolean) => void;
-  /**
-   * Root animation progress of the popup (0=idle, 1=open, 2=close), kept in
-   * sync with the sheet position.
-   */
-  progress: SharedValue<number>;
-}
 
 /**
  * Writes the sheet position into the popup's `progress`: 0→1 while the
  * sheet presents, 1→2 while it dismisses, back to 0 once it is gone.
  */
-const ProgressSync = ({
-  isOpen,
-  progress,
-}: {
-  isOpen: boolean;
-  progress: SharedValue<number>;
-}) => {
+const ProgressSync = ({ isOpen, progress }: PopupSheetProgressSyncProps) => {
   const { progress: sheetProgress } = useBottomSheetAnimation();
   const isOpenValue = useSharedValue(isOpen);
 
@@ -72,13 +50,15 @@ const ProgressSync = ({
   return null;
 };
 
+// --------------------------------------------------
+
 /**
  * `BottomSheet` driven by a popup's open state. Used by Popover, Select, and
  * Menu for `presentation="bottom-sheet"`.
  */
 export const PopupSheetContent = forwardRef<
   BottomSheetRef,
-  PopupSheetContentProps & { children?: ReactNode }
+  PopupSheetContentProps
 >(
   (
     { children, isOpen, onOpenChange, progress, onDidDismiss, ...props },
@@ -88,34 +68,47 @@ export const PopupSheetContent = forwardRef<
     useImperativeHandle(ref, () => sheetRef.current as BottomSheetRef, []);
 
     const isPresentedRef = useRef(false);
+    /** Whether the in-flight dismiss was started here rather than natively */
+    const isClosingRef = useRef(false);
+
     const isOpenRef = useRef(isOpen);
     isOpenRef.current = isOpen;
+    const onOpenChangeRef = useRef(onOpenChange);
+    onOpenChangeRef.current = onOpenChange;
+    const onDidDismissRef = useRef(onDidDismiss);
+    onDidDismissRef.current = onDidDismiss;
 
     useEffect(() => {
       if (isOpen && !isPresentedRef.current) {
         isPresentedRef.current = true;
         sheetRef.current?.present();
-      } else if (!isOpen && isPresentedRef.current) {
+      } else if (!isOpen && isPresentedRef.current && !isClosingRef.current) {
+        isClosingRef.current = true;
         sheetRef.current?.dismiss();
       }
     }, [isOpen]);
 
     /**
-     * TrueSheet binds lifecycle handlers once, so the latest `onDidDismiss`
-     * and open state are read through refs.
+     * Reads the open state through refs so the callback stays stable. A
+     * dismiss started here that the popup reopened during re-presents the
+     * sheet; a native dismiss (drag, dimmed area, back) closes the popup.
      */
-    const onDidDismissRef = useRef(onDidDismiss);
-    onDidDismissRef.current = onDidDismiss;
-    const onOpenChangeRef = useRef(onOpenChange);
-    onOpenChangeRef.current = onOpenChange;
-
     const handleDidDismiss = useCallback<
       NonNullable<BottomSheetProps['onDidDismiss']>
     >((event) => {
+      const wasClosingHere = isClosingRef.current;
+      isClosingRef.current = false;
       isPresentedRef.current = false;
+
       if (isOpenRef.current) {
-        onOpenChangeRef.current(false);
+        if (wasClosingHere) {
+          isPresentedRef.current = true;
+          sheetRef.current?.present();
+        } else {
+          onOpenChangeRef.current(false);
+        }
       }
+
       onDidDismissRef.current?.(event);
     }, []);
 

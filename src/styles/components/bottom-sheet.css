@@ -1,4 +1,27 @@
 @layer components {
+  /*
+   * Wraps the sheet children. No `flex: 1`: the `auto` detent measures the
+   * wrapper's content height.
+   *
+   * The bottom padding is a fixed inset only. The sheet already reserves the
+   * bottom safe area below the content (UIKit on iOS, the detent height on
+   * Android), so adding it here would count the home indicator twice.
+   */
+  .bottom-sheet__content-container {
+    padding-inline: calc(var(--spacing) * 5);
+    padding-top: calc(var(--spacing) * 5);
+    padding-bottom: calc(var(--spacing) * 5);
+  }
+
+  /*
+   * The grabber is drawn over the content, not above it. On iOS it ends 10pt
+   * from the top, so the default inset clears it. Android draws it 16dp down
+   * and it ends at 20dp, so this adds room for a similar gap below it.
+   */
+  .bottom-sheet__content-container--top-inset-grabber {
+    padding-top: calc(var(--spacing) * 8);
+  }
+
   .bottom-sheet__label {
     font-size: var(--text-lg);
     line-height: var(--text-lg--line-height);

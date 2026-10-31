@@ -6,6 +6,7 @@ import type { ReanimatedTrueSheetContextValue } from '@lodev09/react-native-true
 import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import type { DerivedValue } from 'react-native-reanimated';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
 
 /**
@@ -49,9 +50,39 @@ export interface BottomSheetProps
    */
   detents?: TrueSheetProps['detents'];
   /**
+   * Sheet color. The glass theme keeps the platform's own sheet material
+   * (Liquid Glass on iOS 26+), and `background` / `backgroundBlur` leave the
+   * slot empty so they show through; otherwise the sheet uses the `overlay`
+   * theme color.
+   *
+   * @default the `overlay` theme color
+   */
+  backgroundColor?: TrueSheetProps['backgroundColor'];
+  /**
    * Additional CSS class for the view that wraps `children`.
    */
   contentContainerClassName?: string;
+  /**
+   * Animation configuration for the sheet content
+   * - `"disable-all"`: Disable all animations including children (cascades down)
+   * - `undefined`: Use default animations
+   */
+  animation?: AnimationRootDisableAll;
+}
+
+/**
+ * Context shared by `BottomSheet` with its compound parts.
+ */
+export interface BottomSheetContextValue {
+  /**
+   * Native ID of the sheet's dialog view, linking the title and description
+   */
+  nativeID: string;
+  /**
+   * Dismisses the sheet through its own ref (TrueSheet's static methods are
+   * not available on web)
+   */
+  dismiss: () => void;
 }
 
 /**

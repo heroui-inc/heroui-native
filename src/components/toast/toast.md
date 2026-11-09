@@ -416,6 +416,16 @@ Options for showing a toast. Can be either a config object with default styling 
 
 ## Special Notes
 
+### Showing Many Toasts
+
+Toasts that are pushed behind the visible stack (beyond `maxVisibleToasts`) are fully transparent, so only the visible stack and the one toast fading out behind it are mounted. The others stay queued with their auto-dismiss timers running and mount again, without an entering animation, once toasts in front of them are dismissed. Calling `toast.show()` many times in a row therefore keeps the rendering cost bounded by `maxVisibleToasts`.
+
+Stack positions and heights live in Reanimated shared values and are animated on the UI thread: showing or dismissing a toast mounts or unmounts only that toast, and the toasts already on screen do not re-render. Toasts built from a string or config object never re-render when their position changes; a custom `component` toast re-renders when its `index` changes, since it receives the live `index` in its props. Only the front toast lays out at its natural height; the toasts behind it spring to that height and their content is covered. While the front toast is dragged, the toast behind it shows its content, so it is readable as the front one is swiped away.
+
+The `toast` object returned by `useToast()` is referentially stable, so showing or hiding a toast does not re-render the components that call the hook. A component re-renders when the first toast appears or the last one leaves only if it reads `isToastVisible`.
+
+While a toast is being dragged, its auto-dismiss timer is paused and resumes with the time it had left when the toast is released. The toast overlay stays mounted for a moment after the last toast is hidden, so its exit animation can finish.
+
 ### Element Inspector (iOS)
 
 Toast uses FullWindowOverlay on iOS. To enable the React Native element inspector during development, set `disableFullWindowOverlay={true}` on `ToastProvider` (via `config.toast` when using HeroUINativeProvider). Tradeoff: toasts will not appear above native modals when disabled.

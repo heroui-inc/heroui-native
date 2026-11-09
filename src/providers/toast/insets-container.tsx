@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { useMemo } from 'react';
-import { Platform, View } from 'react-native';
+import { Platform, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   AboveNativeSheet,
@@ -63,6 +63,7 @@ export function InsetsContainer({
   unstable_accessibilityContainerViewIsModal,
 }: InsetsContainerProps) {
   const safeAreaInsets = useSafeAreaInsets();
+  const { width: windowWidth } = useWindowDimensions();
 
   const finalInsets = useMemo(() => {
     return {
@@ -79,6 +80,13 @@ export function InsetsContainer({
     <View
       className="absolute inset-0 pointer-events-box-none"
       style={{
+        /**
+         * Explicit width from the window instead of `inset-0` alone: the
+         * native overlay has no size yet in the commit where it mounts
+         * (Android), and toasts measured in that commit would wrap their text
+         * at zero width.
+         */
+        width: windowWidth,
         paddingTop: finalInsets.top,
         paddingBottom: finalInsets.bottom,
         paddingLeft: finalInsets.left,

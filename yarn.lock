@@ -4172,9 +4172,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lodev09/react-native-true-sheet@npm:4.0.0":
-  version: 4.0.0
-  resolution: "@lodev09/react-native-true-sheet@npm:4.0.0"
+"@lodev09/react-native-true-sheet@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "@lodev09/react-native-true-sheet@npm:4.1.0"
   peerDependencies:
     "@radix-ui/react-dialog": ">=1"
     "@radix-ui/react-presence": ">=1"
@@ -4203,42 +4203,7 @@ __metadata:
       optional: true
     standard-navigation:
       optional: true
-  checksum: 1edfb501882e4df9a1139648cd37be30ebf59950785f531edd52efe61868aa2124e142e5a143c06e03c7bb2be395d6dce6c958dfc2350fbceb588f9fd0ec85d0
-  languageName: node
-  linkType: hard
-
-"@lodev09/react-native-true-sheet@patch:@lodev09/react-native-true-sheet@npm%3A4.0.0#./.yarn/patches/@lodev09-react-native-true-sheet-npm-4.0.0-1dd25ebd5d.patch::locator=heroui-native%40workspace%3A.":
-  version: 4.0.0
-  resolution: "@lodev09/react-native-true-sheet@patch:@lodev09/react-native-true-sheet@npm%3A4.0.0#./.yarn/patches/@lodev09-react-native-true-sheet-npm-4.0.0-1dd25ebd5d.patch::version=4.0.0&hash=240567&locator=heroui-native%40workspace%3A."
-  peerDependencies:
-    "@radix-ui/react-dialog": ">=1"
-    "@radix-ui/react-presence": ">=1"
-    "@react-navigation/native": ">=7.3.0"
-    expo-router: ">=57.0.0"
-    react: "*"
-    react-dom: "*"
-    react-native: ">=0.82.0"
-    react-native-reanimated: ">=4.1.0"
-    react-native-worklets: ">=0.5.0"
-    standard-navigation: ">=0.0.9"
-  peerDependenciesMeta:
-    "@radix-ui/react-dialog":
-      optional: true
-    "@radix-ui/react-presence":
-      optional: true
-    "@react-navigation/native":
-      optional: true
-    expo-router:
-      optional: true
-    react-dom:
-      optional: true
-    react-native-reanimated:
-      optional: true
-    react-native-worklets:
-      optional: true
-    standard-navigation:
-      optional: true
-  checksum: 710838df050af03ea23b1be20a292edc25f9a028def7d276db72b02c9c8fceb9a012edd85d8a32632f16aabaa42e560f2bdff19fda4e5c6199bd8c149f0fa160
+  checksum: 5d4f1424f9fc61c79c8db75cac6b683b0dd8c4e30a65f24489d82e77dd28db8e668c6d5106ff1e4c0a8445c645713ae754c34ba90ce31f429650559292d84594
   languageName: node
   linkType: hard
 
@@ -10112,7 +10077,7 @@ __metadata:
     "@lingui/core": ^5
     "@lingui/format-po": ^5
     "@lingui/react": ^5
-    "@lodev09/react-native-true-sheet": ^4.0.0
+    "@lodev09/react-native-true-sheet": ^4.1.0
     "@react-native-masked-view/masked-view": 0.3.2
     "@shopify/flash-list": 2.3.2
     "@types/react": ~19.3.0
@@ -10163,7 +10128,7 @@ __metadata:
     "@eslint/eslintrc": ^3.3.0
     "@eslint/js": ^9.22.0
     "@evilmartians/lefthook": ^1.5.0
-    "@lodev09/react-native-true-sheet": ^4.0.0
+    "@lodev09/react-native-true-sheet": ^4.1.0
     "@react-native-community/cli": latest
     "@react-native/babel-preset": 0.88.0
     "@react-native/eslint-config": ^0.78.0
@@ -10200,7 +10165,7 @@ __metadata:
     typescript: ^5.8.3
     uniwind: 1.13.0
   peerDependencies:
-    "@lodev09/react-native-true-sheet": ^4.0.0
+    "@lodev09/react-native-true-sheet": ^4.1.0
     expo-blur: ">=14.0.0"
     react: ">=19.0.0"
     react-native: ">=0.81.0"

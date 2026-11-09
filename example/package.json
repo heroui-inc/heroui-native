@@ -25,7 +25,7 @@
     "@legendapp/list": "^3.7.0",
     "@lingui/core": "^5",
     "@lingui/react": "^5",
-    "@lodev09/react-native-true-sheet": "^4.0.0",
+    "@lodev09/react-native-true-sheet": "^4.1.0",
     "@react-native-masked-view/masked-view": "0.3.2",
     "@shopify/flash-list": "2.3.2",
     "clsx": "^2.1.1",

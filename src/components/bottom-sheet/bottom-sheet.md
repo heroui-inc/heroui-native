@@ -185,6 +185,49 @@ const handleWillPresent = useCallback(() => inputRef.current?.focus(), []);
 </BottomSheet>;
 ```
 
+### Animating With the Sheet
+
+`useBottomSheetAnimation()` returns the sheet's live Reanimated values. Call it inside the sheet content:
+
+```tsx
+function SheetIcon() {
+  const { progress } = useBottomSheetAnimation();
+  const style = useAnimatedStyle(() => ({
+    opacity: progress.get(),
+    transform: [{ scale: interpolate(progress.get(), [0, 1], [0.4, 1]) }],
+  }));
+
+  return <Animated.View style={style}>...</Animated.View>;
+}
+```
+
+The `presentation="bottom-sheet"` content of `Popover`, `Select`, and `Menu` renders inside a `BottomSheet` too, so the hook works there as well.
+
+### Sheets as Navigation Screens
+
+To open sheets as routes, use TrueSheet's own navigator. With Expo Router:
+
+```tsx
+// app/sheet/_layout.tsx
+import { Sheet } from '@lodev09/react-native-true-sheet/navigation/expo-router';
+
+export const unstable_settings = { anchor: 'index' };
+
+export default function SheetLayout() {
+  return (
+    <Sheet>
+      <Sheet.Screen name="index" />
+      <Sheet.Screen
+        name="details"
+        options={{ reanimated: true, detents: ['auto'] }}
+      />
+    </Sheet>
+  );
+}
+```
+
+`index` renders as a regular screen and every other route is presented as a sheet. Use `router.push()` to open one and `router.back()` (or a drag down) to close it. Its root view shouldn't use `flex: 1`; the sheet sizes itself from its content. On Android, wrap a sheet route that uses gesture-handler components (such as `Slider`) in `GestureHandlerRootView` with `flexGrow: 1`; `BottomSheet` adds one itself. Navigator sheets are TrueSheet's own, so `BottomSheet.Content`, `Title`, and the other parts can't be used inside them. See [TrueSheet's navigation guide](https://sheet.lodev09.com) for the React Navigation version.
+
 ### Stacked Sheets
 
 Presenting a sheet while another is open stacks it on top. `dismiss()` closes a sheet and every sheet stacked on it; `dismissStack()` closes only the sheets above it.

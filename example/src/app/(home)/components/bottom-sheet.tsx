@@ -13,6 +13,7 @@ import {
 import { useCallback, useRef } from 'react';
 import { Platform, View } from 'react-native';
 import { withUniwind } from 'uniwind';
+import { AnimatedValuesContent } from '../../../components/bottom-sheet/animated-values';
 import { ControlledByNameContent } from '../../../components/bottom-sheet/controlled-by-name';
 import { OverlayBottomSheetContent } from '../../../components/bottom-sheet/overlay';
 import { ScrollableWithDetentsContent } from '../../../components/bottom-sheet/scrollable-with-detents';
@@ -217,6 +218,28 @@ const NativeModalBottomSheetContent = () => {
 
 // ------------------------------------------------------------------------------
 
+const SheetNavigatorContent = () => {
+  const { t } = useLingui();
+  const router = useRouter();
+
+  return (
+    <View className="flex-1">
+      <View className="flex-1 items-center justify-center">
+        <Button
+          variant="secondary"
+          onPress={() => router.push('components/sheet-navigator')}
+        >
+          <Button.Label maxFontSizeMultiplier={1.2}>
+            {t`Sheets as navigation screens`}
+          </Button.Label>
+        </Button>
+      </View>
+    </View>
+  );
+};
+
+// ------------------------------------------------------------------------------
+
 const BOTTOM_SHEET_VARIANTS: UsageVariant[] = [
   {
     value: 'basic-bottom-sheet',
@@ -254,6 +277,11 @@ const BOTTOM_SHEET_VARIANTS: UsageVariant[] = [
     content: <StickyFooterContent />,
   },
   {
+    value: 'animated-values',
+    label: msg`Animated with the sheet`,
+    content: <AnimatedValuesContent />,
+  },
+  {
     value: 'legend-list',
     label: msg`List`,
     content: <WithLegendListContent />,
@@ -267,6 +295,11 @@ const BOTTOM_SHEET_VARIANTS: UsageVariant[] = [
     value: 'with-otp-input',
     label: msg`Bottom sheet with OTP input`,
     content: <WithOTPInputContent />,
+  },
+  {
+    value: 'sheet-navigator',
+    label: msg`Sheets as navigation screens`,
+    content: <SheetNavigatorContent />,
   },
   {
     value: 'native-modal',

@@ -130,6 +130,10 @@ msgstr "يتوفر إصدار جديد من التطبيق. يُرجى التح�
 msgid "A newer version is available on the App Store. Update to get the latest features and improvements."
 msgstr "يتوفر إصدار أحدث على App Store. حدِّث التطبيق للحصول على أحدث الميزات والتحسينات."
 
+#: src/app/(home)/components/sheet-navigator/filters.tsx
+msgid "A sheet route with two detents. The slider checks gestures inside a sheet screen."
+msgstr ""
+
 #: src/components/bottom-sheet/overlay.tsx
 #: src/components/bottom-sheet/overlay.tsx
 msgid "Above the sheet"
@@ -277,6 +281,11 @@ msgstr "تم نسخ جميع ملفاتك احتياطيًا إلى السحاب
 #: src/app/(home)/components/tag-group.tsx
 msgid "Amenities"
 msgstr "المرافق"
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/animated-values.tsx
+msgid "Animated with the sheet"
+msgstr ""
 
 #: src/app/(home)/components/spinner.tsx
 msgid "Animation speed"
@@ -616,6 +625,8 @@ msgstr "تصفية"
 #: src/app/(home)/_layout.tsx
 #: src/app/(home)/components/bottom-sheet-native-modal.tsx
 #: src/app/(home)/components/chip.tsx
+#: src/app/(home)/components/sheet-navigator/details.tsx
+#: src/app/(home)/components/sheet-navigator/filters.tsx
 #: src/app/(home)/components/toast-native-modal.tsx
 #: src/app/(home)/components/toast.tsx
 #: src/app/(home)/components/toast.tsx
@@ -1013,6 +1024,10 @@ msgstr "العمق"
 #~ msgid "Detached bottom sheet"
 #~ msgstr "ورقة سفلية منفصلة"
 
+#: src/app/(home)/components/sheet-navigator/details.tsx
+msgid "Details"
+msgstr ""
+
 #: src/components/select/searchable-dialog-select.tsx
 msgid "Dialog"
 msgstr "Dialog"
@@ -1148,6 +1163,14 @@ msgstr "تنزيل الآن"
 #: src/components/bottom-sheet/update-bottom-sheet.tsx
 msgid "Download Now"
 msgstr "تنزيل الآن"
+
+#: src/components/bottom-sheet/animated-values.tsx
+msgid "Drag the sheet between its three sizes."
+msgstr ""
+
+#: src/app/(home)/components/sheet-navigator/index.tsx
+msgid "Each button pushes a route that the TrueSheet navigator presents as a sheet."
+msgstr ""
 
 #: src/app/(home)/components/menu.tsx
 msgid "Edit file"
@@ -1303,6 +1326,7 @@ msgstr "الجميع"
 msgid "Examples"
 msgstr "أمثلة"
 
+#: src/app/(home)/components/sheet-navigator/filters.tsx
 #: src/components/bottom-sheet/controlled-by-name.tsx
 msgid "Expand"
 msgstr ""
@@ -1348,6 +1372,10 @@ msgstr "مميّز"
 
 #: src/components/bottom-sheet/stacked.tsx
 msgid "Fifth sheet"
+msgstr ""
+
+#: src/app/(home)/components/sheet-navigator/filters.tsx
+msgid "Filters"
 msgstr ""
 
 #: src/app/(home)/components/search-field.tsx
@@ -1776,6 +1804,10 @@ msgstr "قائمة"
 msgid "List skeleton"
 msgstr "هيكل قائمة"
 
+#: src/components/bottom-sheet/animated-values.tsx
+msgid "Live sheet values"
+msgstr ""
+
 #: src/app/(home)/components/card.tsx
 msgid "Living room Sofa"
 msgstr "أريكة غرفة المعيشة"
@@ -2128,8 +2160,20 @@ msgstr "يُسمح بالأحرف الأبجدية فقط"
 msgid "Only check updates manually"
 msgstr "التحقق من التحديثات يدويًا فقط"
 
+#: src/app/(home)/components/sheet-navigator/index.tsx
+msgid "Open details sheet"
+msgstr ""
+
 #: src/components/bottom-sheet/overlay.tsx
 msgid "Open dialog"
+msgstr ""
+
+#: src/app/(home)/components/sheet-navigator/details.tsx
+msgid "Open filters on top"
+msgstr ""
+
+#: src/app/(home)/components/sheet-navigator/index.tsx
+msgid "Open filters sheet"
 msgstr ""
 
 #: src/app/(home)/components/toast.tsx
@@ -2327,6 +2371,10 @@ msgstr "يرجى اختيار فئة واحدة على الأقل"
 #: src/app/(home)/components/alert.tsx
 msgid "Please wait while we sync your data. This may take a few moments."
 msgstr "يرجى الانتظار ريثما نزامن بياناتك. قد يستغرق ذلك بضع لحظات."
+
+#: src/components/bottom-sheet/animated-values.tsx
+msgid "Points right at the first detent and turns as you drag up."
+msgstr ""
 
 #: src/app/(home)/components/select.tsx
 msgid "Popover"
@@ -2817,8 +2865,21 @@ msgstr "Sheet"
 msgid "Sheet {0} of {SHEET_COUNT}. Closing this one brings the sheet underneath back."
 msgstr ""
 
+#: src/components/bottom-sheet/animated-values.tsx
+msgid "Sheet height"
+msgstr ""
+
+#: src/app/(home)/_layout.tsx
+msgid "Sheet Navigator"
+msgstr ""
+
 #: src/components/bottom-sheet/overlay.tsx
 msgid "Sheet with dialog and toast"
+msgstr ""
+
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/app/(home)/components/bottom-sheet.tsx
+msgid "Sheets as navigation screens"
 msgstr ""
 
 #: src/app/(home)/components/skeleton.tsx
@@ -3281,6 +3342,10 @@ msgstr "تظهر هذه النافذة المنبثقة على الجهة {place
 #: src/app/(home)/components/text-field.tsx
 msgid "This promo code is invalid or has expired"
 msgstr "رمز العرض الترويجي غير صالح أو انتهت صلاحيته"
+
+#: src/app/(home)/components/sheet-navigator/details.tsx
+msgid "This sheet is a route. Going back or dragging it down dismisses it and updates navigation."
+msgstr ""
 
 #: src/components/bottom-sheet/stacked.tsx
 msgid "This sheet stays presented while another opens on top of it."

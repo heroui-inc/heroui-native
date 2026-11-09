@@ -150,6 +150,10 @@ export default function Layout() {
           />
         ))}
         <Stack.Screen
+          name="components/sheet-navigator"
+          options={{ title: t`Sheet Navigator` }}
+        />
+        <Stack.Screen
           name="components/bottom-sheet-native-modal"
           options={{
             title: t`BottomSheet Native Modal`,

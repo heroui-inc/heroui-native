@@ -31,10 +31,11 @@ export default function SuperAppPaywall() {
         scrollableRef={scrollRef}
         footer={<PaywallFooter />}
         footerOptions={{ position: 'absolute' }}
-        contentContainerClassName="h-full p-0 pb-0 rounded-t-3xl overflow-hidden"
         onDidDismiss={() => router.back()}
       >
-        <SuperAppPaywallContent scrollRef={scrollRef} />
+        <BottomSheet.Content className="h-full p-0 rounded-t-3xl overflow-hidden">
+          <SuperAppPaywallContent scrollRef={scrollRef} />
+        </BottomSheet.Content>
       </BottomSheet>
     </View>
   );

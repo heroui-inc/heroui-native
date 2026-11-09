@@ -5,7 +5,7 @@ import * as Linking from 'expo-linking';
 import * as Updates from 'expo-updates';
 import { BottomSheet, Button, type BottomSheetRef } from 'heroui-native';
 import { useEffect, useRef, type FC } from 'react';
-import { Platform, View } from 'react-native';
+import { Platform } from 'react-native';
 import { APP_STORE_URL } from '../../helpers/utils/version-check';
 
 export type UpdateBottomSheetMode = 'new-version' | 'ota-update';
@@ -78,20 +78,22 @@ export const UpdateBottomSheet: FC<UpdateBottomSheetProps> = ({
 
   return (
     <BottomSheet ref={sheetRef} onDidDismiss={() => onOpenChange(false)}>
-      <View className="mb-8 gap-2 items-center">
-        <BottomSheet.Title className="text-center">
-          {t(title)}
-        </BottomSheet.Title>
-        <BottomSheet.Description className="text-center">
-          {t(description)}
-        </BottomSheet.Description>
-      </View>
-      <View className="gap-3">
-        <Button onPress={handlePrimaryPress}>{t(primaryLabel)}</Button>
-        <Button variant="tertiary" onPress={handleDismiss}>
-          {t`Later`}
-        </Button>
-      </View>
+      <BottomSheet.Content>
+        <BottomSheet.Header className="mb-8 gap-2 items-center">
+          <BottomSheet.Title className="text-center">
+            {t(title)}
+          </BottomSheet.Title>
+          <BottomSheet.Description className="text-center">
+            {t(description)}
+          </BottomSheet.Description>
+        </BottomSheet.Header>
+        <BottomSheet.Footer className="gap-3">
+          <Button onPress={handlePrimaryPress}>{t(primaryLabel)}</Button>
+          <Button variant="tertiary" onPress={handleDismiss}>
+            {t`Later`}
+          </Button>
+        </BottomSheet.Footer>
+      </BottomSheet.Content>
     </BottomSheet>
   );
 };

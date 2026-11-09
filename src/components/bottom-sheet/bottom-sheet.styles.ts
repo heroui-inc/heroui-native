@@ -3,19 +3,67 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 /**
- * Content container style definition — wraps the sheet children. The
- * `grabber` top inset clears the grabber Android draws over the content.
+ * Content style definition — pads the sheet. The `grabber` top inset clears
+ * the grabber Android draws over the content; a sticky header or footer takes
+ * over the inset on its side (`none`).
  */
-const contentContainer = tv({
-  base: 'bottom-sheet__content-container',
+const content = tv({
+  base: 'bottom-sheet__content',
   variants: {
     topInset: {
       default: '',
-      grabber: 'bottom-sheet__content-container--top-inset-grabber',
+      grabber: 'bottom-sheet__content--top-inset-grabber',
+      none: 'bottom-sheet__content--top-inset-none',
+    },
+    bottomInset: {
+      default: '',
+      none: 'bottom-sheet__content--bottom-inset-none',
     },
   },
   defaultVariants: {
     topInset: 'default',
+    bottomInset: 'default',
+  },
+});
+
+/**
+ * Header style definition — a sticky header sits outside the content, so it
+ * pads itself and clears the Android grabber.
+ */
+const header = tv({
+  base: 'bottom-sheet__header',
+  variants: {
+    isSticky: {
+      true: 'bottom-sheet__header--sticky',
+    },
+    topInset: {
+      default: '',
+      grabber: 'bottom-sheet__header--top-inset-grabber',
+    },
+  },
+  defaultVariants: {
+    isSticky: false,
+    topInset: 'default',
+  },
+});
+
+const body = tv({
+  base: '',
+});
+
+/**
+ * Footer style definition — a sticky footer sits outside the content, so it
+ * pads itself.
+ */
+const footer = tv({
+  base: 'bottom-sheet__footer',
+  variants: {
+    isSticky: {
+      true: 'bottom-sheet__footer--sticky',
+    },
+  },
+  defaultVariants: {
+    isSticky: false,
   },
 });
 
@@ -28,7 +76,10 @@ const description = tv({
 });
 
 export const bottomSheetClassNames = combineStyles({
-  contentContainer,
+  content,
+  header,
+  body,
+  footer,
   label,
   description,
 });

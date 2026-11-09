@@ -73,26 +73,32 @@ export const WithLegendListContent = () => {
           detents={[0.5, 1]}
           scrollableRef={listRef}
           style={styles.flex}
-          contentContainerClassName="h-full px-0"
         >
-          <View className="flex-row items-center justify-between px-5 pb-3 gap-4">
-            <BottomSheet.Title
-              className="flex-1 text-xl font-bold"
-              numberOfLines={1}
+          <BottomSheet.Content className="flex-1 px-0">
+            <BottomSheet.Header
+              isSticky
+              className="flex-row items-center justify-between pb-3 gap-4"
             >
-              {t`People`}
-            </BottomSheet.Title>
-            <BottomSheet.Close />
-          </View>
-          <LegendList
-            ref={listRef}
-            data={PEOPLE}
-            keyExtractor={(person) => person.id}
-            renderItem={renderPerson}
-            recycleItems
-            estimatedItemSize={56}
-            style={styles.flex}
-          />
+              <BottomSheet.Title
+                className="flex-1 text-xl font-bold"
+                numberOfLines={1}
+              >
+                {t`People`}
+              </BottomSheet.Title>
+              <BottomSheet.Close />
+            </BottomSheet.Header>
+            <BottomSheet.Body className="flex-1">
+              <LegendList
+                ref={listRef}
+                data={PEOPLE}
+                keyExtractor={(person) => person.id}
+                renderItem={renderPerson}
+                recycleItems
+                estimatedItemSize={56}
+                style={styles.flex}
+              />
+            </BottomSheet.Body>
+          </BottomSheet.Content>
         </BottomSheet>
       </View>
     </View>

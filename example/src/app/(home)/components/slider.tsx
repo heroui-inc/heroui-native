@@ -294,43 +294,47 @@ const InsideBottomSheetContent = () => {
           {t`Open slider settings`}
         </Button>
         <BottomSheet ref={sheetRef}>
-          <BottomSheet.Title className="text-xl font-semibold mb-4">
-            {t`Audio settings`}
-          </BottomSheet.Title>
-          <View className="gap-6">
-            <Slider defaultValue={70}>
-              <View className="flex-row items-center justify-between">
-                <Label>{t`Volume`}</Label>
-                <Slider.Output />
-              </View>
-              <Slider.Track>
-                <Slider.Fill />
-                <Slider.Thumb />
-              </Slider.Track>
-            </Slider>
+          <BottomSheet.Content>
+            <BottomSheet.Header className="mb-4">
+              <BottomSheet.Title className="text-xl font-semibold">
+                {t`Audio settings`}
+              </BottomSheet.Title>
+            </BottomSheet.Header>
+            <BottomSheet.Body className="gap-6">
+              <Slider defaultValue={70}>
+                <View className="flex-row items-center justify-between">
+                  <Label>{t`Volume`}</Label>
+                  <Slider.Output />
+                </View>
+                <Slider.Track>
+                  <Slider.Fill />
+                  <Slider.Thumb />
+                </Slider.Track>
+              </Slider>
 
-            <Slider defaultValue={50}>
-              <View className="flex-row items-center justify-between">
-                <Label>{t`Bass`}</Label>
-                <Slider.Output />
-              </View>
-              <Slider.Track>
-                <Slider.Fill />
-                <Slider.Thumb />
-              </Slider.Track>
-            </Slider>
+              <Slider defaultValue={50}>
+                <View className="flex-row items-center justify-between">
+                  <Label>{t`Bass`}</Label>
+                  <Slider.Output />
+                </View>
+                <Slider.Track>
+                  <Slider.Fill />
+                  <Slider.Thumb />
+                </Slider.Track>
+              </Slider>
 
-            <Slider defaultValue={40}>
-              <View className="flex-row items-center justify-between">
-                <Label>{t`Treble`}</Label>
-                <Slider.Output />
-              </View>
-              <Slider.Track>
-                <Slider.Fill />
-                <Slider.Thumb />
-              </Slider.Track>
-            </Slider>
-          </View>
+              <Slider defaultValue={40}>
+                <View className="flex-row items-center justify-between">
+                  <Label>{t`Treble`}</Label>
+                  <Slider.Output />
+                </View>
+                <Slider.Track>
+                  <Slider.Fill />
+                  <Slider.Thumb />
+                </Slider.Track>
+              </Slider>
+            </BottomSheet.Body>
+          </BottomSheet.Content>
         </BottomSheet>
       </View>
     </View>

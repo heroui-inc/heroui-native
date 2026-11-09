@@ -55,33 +55,35 @@ export const StackedBottomSheetContent = () => {
               }}
               detents={DETENTS[index]}
             >
-              <View className="mb-8 gap-2">
-                <BottomSheet.Title>{title}</BottomSheet.Title>
-                <BottomSheet.Description>
-                  {isFirst
-                    ? t`This sheet stays presented while another opens on top of it.`
-                    : t`Sheet ${index + 1} of ${SHEET_COUNT}. Closing this one brings the sheet underneath back.`}
-                </BottomSheet.Description>
-              </View>
-              <View className="gap-3">
-                {isLast ? null : (
+              <BottomSheet.Content>
+                <BottomSheet.Header className="mb-8 gap-2">
+                  <BottomSheet.Title>{title}</BottomSheet.Title>
+                  <BottomSheet.Description>
+                    {isFirst
+                      ? t`This sheet stays presented while another opens on top of it.`
+                      : t`Sheet ${index + 1} of ${SHEET_COUNT}. Closing this one brings the sheet underneath back.`}
+                  </BottomSheet.Description>
+                </BottomSheet.Header>
+                <BottomSheet.Footer className="gap-3">
+                  {isLast ? null : (
+                    <Button
+                      onPress={() => sheetRefs.current[index + 1]?.present()}
+                    >
+                      {t`Open the next sheet`}
+                    </Button>
+                  )}
                   <Button
-                    onPress={() => sheetRefs.current[index + 1]?.present()}
+                    variant="tertiary"
+                    onPress={() =>
+                      isFirst
+                        ? sheetRefs.current[0]?.dismiss()
+                        : sheetRefs.current[index]?.dismiss()
+                    }
                   >
-                    {t`Open the next sheet`}
+                    {isFirst ? t`Close all` : t`Back`}
                   </Button>
-                )}
-                <Button
-                  variant="tertiary"
-                  onPress={() =>
-                    isFirst
-                      ? sheetRefs.current[0]?.dismiss()
-                      : sheetRefs.current[index]?.dismiss()
-                  }
-                >
-                  {isFirst ? t`Close all` : t`Back`}
-                </Button>
-              </View>
+                </BottomSheet.Footer>
+              </BottomSheet.Content>
             </BottomSheet>
           );
         })}

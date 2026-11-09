@@ -57,6 +57,10 @@ msgstr "• אות גדולה אחת לפחות"
 #~ msgid "• Payment will be processed after trip completion"
 #~ msgstr "• התשלום ייגבה בתום הנסיעה"
 
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "1. Using the service"
+msgstr ""
+
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
 #~ msgid "10% off all trips with PLUS"
 #~ msgstr "10% הנחה על כל הנסיעות עם PLUS"
@@ -75,9 +79,17 @@ msgstr "לפני 2 דקות"
 msgid "2-3 business days"
 msgstr "2-3 ימי עסקים"
 
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "2. Your content"
+msgstr ""
+
 #: src/app/(home)/components/tabs.tsx
 msgid "3-20 characters, letters, numbers only"
 msgstr "3-20 תווים, אותיות וספרות בלבד"
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "3. Privacy"
+msgstr ""
 
 #: src/app/(home)/components/card.tsx
 #: src/app/(home)/components/pressable-feedback.tsx
@@ -85,9 +97,21 @@ msgstr "3-20 תווים, אותיות וספרות בלבד"
 msgid "362 members"
 msgstr "362 חברים"
 
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "4. Payments"
+msgstr ""
+
 #: src/app/(home)/components/radio-group.tsx
 msgid "5-7 business days"
 msgstr "5-7 ימי עסקים"
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "5. Termination"
+msgstr ""
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "6. Changes"
+msgstr ""
 
 #: src/app/(home)/components/separator.tsx
 msgid "A modern React Native component library."
@@ -121,6 +145,10 @@ msgstr "הדגשה"
 #: src/app/(home)/components/toast.tsx
 msgid "Accent toast"
 msgstr "טוסט הדגשה"
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "Accept"
+msgstr ""
 
 #: src/app/(home)/components/control-field.tsx
 msgid "Accept Privacy Policy"
@@ -873,6 +901,10 @@ msgstr "כהה"
 #: src/app/(home)/components/switch.tsx
 msgid "Dark mode"
 msgstr "מצב כהה"
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "Decline"
+msgstr ""
 
 #: src/app/(home)/components/card.tsx
 #: src/app/(home)/components/checkbox.tsx
@@ -2153,6 +2185,10 @@ msgstr "משלוח ליום המחרת"
 msgid "Page Title"
 msgstr "כותרת עמוד"
 
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "Paid plans renew automatically until you cancel. Fees are charged at the start of each billing period and are not refundable except where required by law."
+msgstr ""
+
 #: src/app/(home)/components/typography.tsx
 msgid "Paragraphs"
 msgstr "פסקאות"
@@ -2279,6 +2315,10 @@ msgstr "הזינו את כל 6 הספרות כדי להמשיך."
 #: src/app/(home)/components/text-area.tsx
 msgid "Please provide as much detail as possible."
 msgstr "ספקו כמה שיותר פרטים."
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "Please review before you continue."
+msgstr ""
 
 #: src/app/(home)/components/tag-group.tsx
 msgid "Please select at least one category"
@@ -2959,6 +2999,11 @@ msgstr "מדינה"
 msgid "States"
 msgstr "מצבים"
 
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "Sticky header and footer"
+msgstr ""
+
 #: src/app/(home)/components/toast.tsx
 msgid "Storage is full"
 msgstr "האחסון מלא"
@@ -3086,6 +3131,7 @@ msgid "Terms & Privacy"
 msgstr "תנאים ופרטיות"
 
 #: src/app/(home)/components/link-button.tsx
+#: src/components/bottom-sheet/sticky-footer.tsx
 msgid "Terms of Service"
 msgstr "תנאי השימוש"
 
@@ -3547,9 +3593,17 @@ msgstr "טוסט אזהרה"
 msgid "Warning: This will share your usage patterns"
 msgstr "אזהרה: הפעולה תשתף את דפוסי השימוש שלכם"
 
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "We collect the information needed to run the service and improve it. Read the Privacy Policy to learn what we collect and how we use it."
+msgstr ""
+
 #: src/app/(home)/components/accordion.tsx
 msgid "We deliver to more than 60 countries, usually within 7 to 14 business days. Any customs duties are calculated and shown at checkout before you pay."
 msgstr "אנחנו שולחים ליותר מ-60 ארצות, בדרך כלל בתוך 7 עד 14 ימי עסקים. מיסי יבוא מחושבים ומוצגים בעת התשלום לפני החיוב."
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "We may update these terms from time to time. When we do, we will let you know in the app before the changes take effect."
+msgstr ""
 
 #: src/components/bottom-sheet/with-otp-input.tsx
 msgid "We sent a verification code to"
@@ -3720,9 +3774,21 @@ msgstr "אפשר לשנות או לבטל הזמנה ללא עלות בתוך ש
 msgid "You can continue using HeroUI Chat and more"
 msgstr "תוכלו להמשיך להשתמש ב-HeroUI Chat ועוד"
 
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "You can stop using the service at any time. We may suspend or end access if these terms are broken or if required to protect other users."
+msgstr ""
+
 #: src/app/(home)/components/toast.tsx
 msgid "You have 2 credits left"
 msgstr "נותרו לכם 2 קרדיטים"
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "You keep ownership of the content you upload. You grant us a license to host and display it so the service can work as intended."
+msgstr ""
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "You may use the service only in compliance with these terms and all applicable laws. You are responsible for any activity that happens under your account."
+msgstr ""
 
 #: src/app/(home)/components/bottom-sheet.tsx
 #~ msgid "You'll need to top up to buy"

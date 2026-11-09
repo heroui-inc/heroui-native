@@ -25,28 +25,30 @@ export const OverlayBottomSheetContent = () => {
           {t`Sheet with dialog and toast`}
         </Button>
         <BottomSheet ref={sheetRef}>
-          <BottomSheet.Title className="mb-2">
-            {t`Presented sheet`}
-          </BottomSheet.Title>
-          <BottomSheet.Description className="mb-6">
-            {t`Dialog and toast stay above this sheet.`}
-          </BottomSheet.Description>
-          <View className="gap-3">
-            <Button onPress={() => setIsDialogOpen(true)}>
-              {t`Open dialog`}
-            </Button>
-            <Button
-              variant="secondary"
-              onPress={() =>
-                toast.show({
-                  label: t`Above the sheet`,
-                  description: t`This toast is rendered above the presented sheet.`,
-                })
-              }
-            >
-              {t`Show toast`}
-            </Button>
-          </View>
+          <BottomSheet.Content>
+            <BottomSheet.Header className="mb-6 gap-2">
+              <BottomSheet.Title>{t`Presented sheet`}</BottomSheet.Title>
+              <BottomSheet.Description>
+                {t`Dialog and toast stay above this sheet.`}
+              </BottomSheet.Description>
+            </BottomSheet.Header>
+            <BottomSheet.Footer className="gap-3">
+              <Button onPress={() => setIsDialogOpen(true)}>
+                {t`Open dialog`}
+              </Button>
+              <Button
+                variant="secondary"
+                onPress={() =>
+                  toast.show({
+                    label: t`Above the sheet`,
+                    description: t`This toast is rendered above the presented sheet.`,
+                  })
+                }
+              >
+                {t`Show toast`}
+              </Button>
+            </BottomSheet.Footer>
+          </BottomSheet.Content>
         </BottomSheet>
       </View>
       <Dialog isOpen={isDialogOpen} onOpenChange={setIsDialogOpen}>

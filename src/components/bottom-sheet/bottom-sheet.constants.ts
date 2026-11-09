@@ -5,6 +5,10 @@ import type { SheetDetent } from '@lodev09/react-native-true-sheet';
  */
 export const DISPLAY_NAME = {
   ROOT: 'HeroUINative.BottomSheet.Root',
+  CONTENT: 'HeroUINative.BottomSheet.Content',
+  HEADER: 'HeroUINative.BottomSheet.Header',
+  BODY: 'HeroUINative.BottomSheet.Body',
+  FOOTER: 'HeroUINative.BottomSheet.Footer',
   CLOSE: 'HeroUINative.BottomSheet.Close',
   TITLE: 'HeroUINative.BottomSheet.Title',
   DESCRIPTION: 'HeroUINative.BottomSheet.Description',

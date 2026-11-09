@@ -61,7 +61,15 @@ export const PopupSheetContent = forwardRef<
   PopupSheetContentProps
 >(
   (
-    { children, isOpen, onOpenChange, progress, onDidDismiss, ...props },
+    {
+      children,
+      isOpen,
+      onOpenChange,
+      progress,
+      contentContainerClassName,
+      onDidDismiss,
+      ...props
+    },
     ref
   ) => {
     const sheetRef = useRef<BottomSheetRef>(null);
@@ -114,8 +122,10 @@ export const PopupSheetContent = forwardRef<
 
     return (
       <BottomSheet ref={sheetRef} onDidDismiss={handleDidDismiss} {...props}>
-        <ProgressSync isOpen={isOpen} progress={progress} />
-        {children}
+        <BottomSheet.Content className={contentContainerClassName}>
+          <ProgressSync isOpen={isOpen} progress={progress} />
+          {children}
+        </BottomSheet.Content>
       </BottomSheet>
     );
   }

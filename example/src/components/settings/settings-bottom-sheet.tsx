@@ -48,39 +48,41 @@ export const SettingsBottomSheet = forwardRef<BottomSheetRef>((_props, ref) => {
 
   return (
     <BottomSheet ref={ref}>
-      <View className="mb-6 gap-1">
-        <BottomSheet.Title>{t`Settings`}</BottomSheet.Title>
-        <BottomSheet.Description>
-          {t`Preview the component library in a different layout direction and language.`}
-        </BottomSheet.Description>
-      </View>
+      <BottomSheet.Content>
+        <BottomSheet.Header className="mb-6 gap-1">
+          <BottomSheet.Title>{t`Settings`}</BottomSheet.Title>
+          <BottomSheet.Description>
+            {t`Preview the component library in a different layout direction and language.`}
+          </BottomSheet.Description>
+        </BottomSheet.Header>
 
-      <View className="gap-3">
-        <Label>{t`Language`}</Label>
-        <RadioGroup
-          value={locale}
-          onValueChange={handleLocaleChange}
-          variant="secondary"
-          className="gap-0"
-        >
-          {APP_LOCALES.map((item, index) => (
-            <Fragment key={item}>
-              {index > 0 && <Separator className="my-4" />}
-              <RadioGroup.Item value={item}>
-                <View className="flex-1">
-                  <Label>{APP_LOCALE_LABELS[item]}</Label>
-                  <Description>
-                    {isRtlLocale(item)
-                      ? t`Right-to-left layout`
-                      : t`Left-to-right layout`}
-                  </Description>
-                </View>
-                <Radio />
-              </RadioGroup.Item>
-            </Fragment>
-          ))}
-        </RadioGroup>
-      </View>
+        <BottomSheet.Body className="gap-3">
+          <Label>{t`Language`}</Label>
+          <RadioGroup
+            value={locale}
+            onValueChange={handleLocaleChange}
+            variant="secondary"
+            className="gap-0"
+          >
+            {APP_LOCALES.map((item, index) => (
+              <Fragment key={item}>
+                {index > 0 && <Separator className="my-4" />}
+                <RadioGroup.Item value={item}>
+                  <View className="flex-1">
+                    <Label>{APP_LOCALE_LABELS[item]}</Label>
+                    <Description>
+                      {isRtlLocale(item)
+                        ? t`Right-to-left layout`
+                        : t`Left-to-right layout`}
+                    </Description>
+                  </View>
+                  <Radio />
+                </RadioGroup.Item>
+              </Fragment>
+            ))}
+          </RadioGroup>
+        </BottomSheet.Body>
+      </BottomSheet.Content>
     </BottomSheet>
   );
 });

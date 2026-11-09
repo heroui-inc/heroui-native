@@ -177,43 +177,47 @@ export const WithOTPInputContent = () => {
             setResendTimer(0);
           }}
         >
-          <BottomSheet.Title className="sr-only">
-            {t`Phone Number Verification`}
-          </BottomSheet.Title>
-          <BottomSheetInputOTP
-            otpRef={otpRef}
-            value={otpValue}
-            onChange={setOtpValue}
-            onComplete={handleComplete}
-            phoneNumber={phoneNumber}
-          />
-          <View className="mt-8 gap-3">
-            <Button
-              variant="primary"
-              onPress={handleVerify}
-              isDisabled={isVerifying || otpValue.length !== 6}
-            >
-              {isVerifying ? t`Verifying...` : t`Verify Code`}
-            </Button>
-            <View className="flex-row items-center justify-center mt-2">
-              <AppText className="text-sm text-muted text-center">
-                {t`Didn't receive the code?`}
-              </AppText>
+          <BottomSheet.Content>
+            <BottomSheet.Body>
+              <BottomSheet.Title className="sr-only">
+                {t`Phone Number Verification`}
+              </BottomSheet.Title>
+              <BottomSheetInputOTP
+                otpRef={otpRef}
+                value={otpValue}
+                onChange={setOtpValue}
+                onComplete={handleComplete}
+                phoneNumber={phoneNumber}
+              />
+            </BottomSheet.Body>
+            <BottomSheet.Footer className="mt-8 gap-3">
               <Button
-                variant="ghost"
-                size="sm"
-                onPress={handleResend}
-                isDisabled={resendTimer > 0}
+                variant="primary"
+                onPress={handleVerify}
+                isDisabled={isVerifying || otpValue.length !== 6}
               >
-                {resendTimer > 0 ? t`Resend in ${resendTimer}s` : t`Resend`}
+                {isVerifying ? t`Verifying...` : t`Verify Code`}
               </Button>
-            </View>
-          </View>
-          <View className="mt-8 px-2">
-            <AppText className="text-xs text-muted text-center leading-5">
-              {t`By continuing, you agree to receive SMS messages for verification. Message and data rates may apply.`}
-            </AppText>
-          </View>
+              <View className="flex-row items-center justify-center mt-2">
+                <AppText className="text-sm text-muted text-center">
+                  {t`Didn't receive the code?`}
+                </AppText>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onPress={handleResend}
+                  isDisabled={resendTimer > 0}
+                >
+                  {resendTimer > 0 ? t`Resend in ${resendTimer}s` : t`Resend`}
+                </Button>
+              </View>
+              <View className="mt-6 px-2">
+                <AppText className="text-xs text-muted text-center leading-5">
+                  {t`By continuing, you agree to receive SMS messages for verification. Message and data rates may apply.`}
+                </AppText>
+              </View>
+            </BottomSheet.Footer>
+          </BottomSheet.Content>
         </BottomSheet>
       </View>
     </View>

@@ -11,15 +11,22 @@ import type { BottomSheetProps } from '../../../components/bottom-sheet/bottom-s
  * TrueSheet's own `presentation` (`'page' | 'form'`) is left out: the
  * components use `presentation` to pick the content mode.
  */
-export type BaseBottomSheetContentProps = Omit<
-  BottomSheetProps,
-  'name' | 'presentation'
->;
+export interface BaseBottomSheetContentProps
+  extends Omit<BottomSheetProps, 'name' | 'presentation'> {
+  /**
+   * Additional CSS class for the sheet's content container
+   */
+  contentContainerClassName?: string;
+}
 
 /**
  * Props for the sheet behind `presentation="bottom-sheet"` content.
  */
 export interface PopupSheetContentProps extends BottomSheetProps {
+  /**
+   * Additional CSS class for the sheet's content container
+   */
+  contentContainerClassName?: string;
   /**
    * Whether the owning popup is open. Presents the sheet when it turns
    * `true` and dismisses it when it turns `false`.

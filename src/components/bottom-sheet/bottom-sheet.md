@@ -22,13 +22,23 @@ import { BottomSheet, type BottomSheetRef } from 'heroui-native';
 
 ```tsx
 <BottomSheet ref={sheetRef}>
-  <BottomSheet.Close />
-  <BottomSheet.Title>...</BottomSheet.Title>
-  <BottomSheet.Description>...</BottomSheet.Description>
+  <BottomSheet.Content>
+    <BottomSheet.Header>
+      <BottomSheet.Title>...</BottomSheet.Title>
+      <BottomSheet.Description>...</BottomSheet.Description>
+      <BottomSheet.Close />
+    </BottomSheet.Header>
+    <BottomSheet.Body>...</BottomSheet.Body>
+    <BottomSheet.Footer>...</BottomSheet.Footer>
+  </BottomSheet.Content>
 </BottomSheet>
 ```
 
 - **BottomSheet**: The sheet. Renders nothing until presented through its ref; content mounts on the first presentation.
+- **BottomSheet.Content**: Dialog container that pads the sheet and holds its parts. Any content works inside it; Header, Body, and Footer are optional.
+- **BottomSheet.Header**: Top section, usually the title, description, and close button. `isSticky` pins it while the content below scrolls.
+- **BottomSheet.Body**: Main section.
+- **BottomSheet.Footer**: Bottom section, usually the actions. `isSticky` pins it while the content above scrolls.
 - **BottomSheet.Close**: Close button that dismisses the sheet. Accepts custom children or renders the default close icon.
 - **BottomSheet.Title**: Sheet title with a heading role, linked to the sheet for accessibility.
 - **BottomSheet.Description**: Sheet description, linked to the sheet for accessibility.
@@ -44,12 +54,17 @@ const sheetRef = useRef<BottomSheetRef>(null);
 
 <Button onPress={() => sheetRef.current?.present()}>Open</Button>
 <BottomSheet ref={sheetRef}>
-  <BottomSheet.Close />
-  <BottomSheet.Title>Keep yourself safe</BottomSheet.Title>
-  <BottomSheet.Description>
-    Update your software to the latest version.
-  </BottomSheet.Description>
-  <Button onPress={() => sheetRef.current?.dismiss()}>Later</Button>
+  <BottomSheet.Content>
+    <BottomSheet.Header className="mb-8 gap-2">
+      <BottomSheet.Title>Keep yourself safe</BottomSheet.Title>
+      <BottomSheet.Description>
+        Update your software to the latest version.
+      </BottomSheet.Description>
+    </BottomSheet.Header>
+    <BottomSheet.Footer>
+      <Button onPress={() => sheetRef.current?.dismiss()}>Later</Button>
+    </BottomSheet.Footer>
+  </BottomSheet.Content>
 </BottomSheet>
 ```
 
@@ -120,23 +135,38 @@ Every method returns a promise that resolves once the animation finishes, and th
 </BottomSheet>
 ```
 
-### Scrollable Content
+### Sticky Header and Footer
 
-Pass the scroll view's ref as `scrollableRef` so the sheet coordinates scrolling with dragging, insets, and the keyboard. Use `footer` for content pinned to the bottom.
+`isSticky` on `BottomSheet.Header` or `BottomSheet.Footer` pins it to the top or bottom of the sheet while the content in between scrolls. A sticky part renders in the sheet's native header / footer slot, and its height counts toward the `auto` detent. It must be a direct child of `BottomSheet.Content`; wrapped in another component it renders in place instead.
+
+Put the scroll view in `BottomSheet.Body` and pass its ref as `scrollableRef`, so the sheet coordinates scrolling with dragging, insets, and the keyboard:
 
 ```tsx
 const scrollRef = useRef<ScrollViewInstance>(null);
 
 <BottomSheet
   ref={sheetRef}
-  detents={[0.4, 0.8]}
+  detents={[0.6, 1]}
   scrollableRef={scrollRef}
-  contentContainerClassName="h-full px-0"
-  footer={<Button onPress={() => sheetRef.current?.dismiss()}>Done</Button>}
+  style={{ flex: 1 }}
 >
-  <ScrollView ref={scrollRef}>...</ScrollView>
+  <BottomSheet.Content className="flex-1 px-0">
+    <BottomSheet.Header isSticky className="pb-4">
+      <BottomSheet.Title>Terms of Service</BottomSheet.Title>
+    </BottomSheet.Header>
+    <BottomSheet.Body className="flex-1">
+      <ScrollView ref={scrollRef} contentContainerClassName="px-5">
+        ...
+      </ScrollView>
+    </BottomSheet.Body>
+    <BottomSheet.Footer isSticky>
+      <Button onPress={() => sheetRef.current?.dismiss()}>Accept</Button>
+    </BottomSheet.Footer>
+  </BottomSheet.Content>
 </BottomSheet>;
 ```
+
+A sticky part takes the place of the `header` / `footer` props. Use those props directly for anything else in the slots, such as a footer that floats over the content (`footerOptions={{ position: 'absolute' }}`).
 
 ### Text Input
 
@@ -147,9 +177,11 @@ const inputRef = useRef<InputRef>(null);
 const handleWillPresent = useCallback(() => inputRef.current?.focus(), []);
 
 <BottomSheet ref={sheetRef} onWillPresent={handleWillPresent}>
-  <TextField>
-    <Input ref={inputRef} placeholder="name@example.com" />
-  </TextField>
+  <BottomSheet.Content>
+    <TextField>
+      <Input ref={inputRef} placeholder="name@example.com" />
+    </TextField>
+  </BottomSheet.Content>
 </BottomSheet>;
 ```
 
@@ -180,23 +212,28 @@ export default function BottomSheetExample() {
         ref={sheetRef}
         onDidDismiss={() => console.log('sheet closed')}
       >
-        <View className="mb-8 gap-2">
-          <BottomSheet.Title>Delete account?</BottomSheet.Title>
-          <BottomSheet.Description>
-            You won't be able to restore it or receive support.
-          </BottomSheet.Description>
-        </View>
-        <View className="gap-3">
-          <Button variant="danger" onPress={() => sheetRef.current?.dismiss()}>
-            Delete forever
-          </Button>
-          <Button
-            variant="tertiary"
-            onPress={() => sheetRef.current?.dismiss()}
-          >
-            Cancel
-          </Button>
-        </View>
+        <BottomSheet.Content>
+          <BottomSheet.Header className="mb-8 gap-2">
+            <BottomSheet.Title>Delete account?</BottomSheet.Title>
+            <BottomSheet.Description>
+              You won't be able to restore it or receive support.
+            </BottomSheet.Description>
+          </BottomSheet.Header>
+          <BottomSheet.Footer className="gap-3">
+            <Button
+              variant="danger"
+              onPress={() => sheetRef.current?.dismiss()}
+            >
+              Delete forever
+            </Button>
+            <Button
+              variant="tertiary"
+              onPress={() => sheetRef.current?.dismiss()}
+            >
+              Cancel
+            </Button>
+          </BottomSheet.Footer>
+        </BottomSheet.Content>
       </BottomSheet>
     </View>
   );
@@ -209,29 +246,28 @@ export default function BottomSheetExample() {
 
 Forwards every [TrueSheet prop](https://sheet.lodev09.com/reference/configuration) except `onPositionChange` (use `useBottomSheetAnimation` instead). The most common ones:
 
-| prop                        | type                                 | default    | description                                                                                |
-| --------------------------- | ------------------------------------ | ---------- | ------------------------------------------------------------------------------------------ |
-| `children`                  | `React.ReactNode`                    | -          | Sheet content                                                                              |
-| `name`                      | `string`                             | auto id    | Unique name for controlling the sheet with `useTrueSheet()` / `TrueSheet.present(name)`    |
-| `detents`                   | `('auto' \| 'peek' \| number)[]`     | `['auto']` | Sizes the sheet can rest at, smallest first, up to 3                                       |
-| `dimmed`                    | `boolean`                            | `true`     | Whether the screen behind the sheet is dimmed                                              |
-| `dimOpacity`                | `number`                             | `0.5`      | Dim (or blur) strength                                                                     |
-| `dimBlur`                   | `BackgroundBlur`                     | -          | Blurs the screen behind the sheet instead of dimming it                                    |
-| `dismissible`               | `boolean`                            | `true`     | Whether the sheet can be dismissed by dragging, tapping the dimmed area, or Android back   |
-| `draggable`                 | `boolean`                            | `true`     | Whether the sheet can be dragged                                                           |
-| `grabber`                   | `boolean`                            | `true`     | Whether to show the grabber                                                                |
-| `backgroundColor`           | `ColorValue`                         | `overlay`  | Sheet color. Defaults to the `overlay` theme color (native material under the glass theme) |
-| `backgroundBlur`            | `BackgroundBlur`                     | -          | Blurred sheet material (iOS)                                                               |
-| `header`                    | `React.ReactNode`                    | -          | Content pinned to the top of the sheet                                                     |
-| `footer`                    | `React.ReactNode`                    | -          | Content pinned to the bottom of the sheet                                                  |
-| `scrollableRef`             | `RefObject<ScrollViewInstance \| …>` | -          | Ref of the scroll view inside the sheet                                                    |
-| `insetAdjustment`           | `'automatic' \| 'never'`             | -          | `'never'` stops the sheet from adding the bottom safe area                                 |
-| `contentContainerClassName` | `string`                             | -          | Additional CSS class for the view that wraps `children`                                    |
-| `animation`                 | `AnimationRootDisableAll`            | -          | `"disable-all"` disables animations in the sheet content, including children               |
-| `onWillPresent`             | `(event) => void`                    | -          | Called before the sheet is presented                                                       |
-| `onDidPresent`              | `(event) => void`                    | -          | Called after the sheet is presented                                                        |
-| `onDidDismiss`              | `(event) => void`                    | -          | Called after the sheet is dismissed, however it was dismissed                              |
-| `onDetentChange`            | `(event) => void`                    | -          | Called when the sheet settles at another detent                                            |
+| prop              | type                                 | default    | description                                                                                |
+| ----------------- | ------------------------------------ | ---------- | ------------------------------------------------------------------------------------------ |
+| `children`        | `React.ReactNode`                    | -          | Sheet content, usually a `BottomSheet.Content`                                             |
+| `name`            | `string`                             | auto id    | Unique name for controlling the sheet with `useTrueSheet()` / `TrueSheet.present(name)`    |
+| `detents`         | `('auto' \| 'peek' \| number)[]`     | `['auto']` | Sizes the sheet can rest at, smallest first, up to 3                                       |
+| `dimmed`          | `boolean`                            | `true`     | Whether the screen behind the sheet is dimmed                                              |
+| `dimOpacity`      | `number`                             | `0.5`      | Dim (or blur) strength                                                                     |
+| `dimBlur`         | `BackgroundBlur`                     | -          | Blurs the screen behind the sheet instead of dimming it                                    |
+| `dismissible`     | `boolean`                            | `true`     | Whether the sheet can be dismissed by dragging, tapping the dimmed area, or Android back   |
+| `draggable`       | `boolean`                            | `true`     | Whether the sheet can be dragged                                                           |
+| `grabber`         | `boolean`                            | `true`     | Whether to show the grabber                                                                |
+| `backgroundColor` | `ColorValue`                         | `overlay`  | Sheet color. Defaults to the `overlay` theme color (native material under the glass theme) |
+| `backgroundBlur`  | `BackgroundBlur`                     | -          | Blurred sheet material (iOS)                                                               |
+| `header`          | `React.ReactNode`                    | -          | Content pinned to the top of the sheet. A sticky `BottomSheet.Header` takes its place      |
+| `footer`          | `React.ReactNode`                    | -          | Content pinned to the bottom of the sheet. A sticky `BottomSheet.Footer` takes its place   |
+| `scrollableRef`   | `RefObject<ScrollViewInstance \| …>` | -          | Ref of the scroll view inside the sheet                                                    |
+| `insetAdjustment` | `'automatic' \| 'never'`             | -          | `'never'` stops the sheet from adding the bottom safe area                                 |
+| `animation`       | `AnimationRootDisableAll`            | -          | `"disable-all"` disables animations in the sheet content, including children               |
+| `onWillPresent`   | `(event) => void`                    | -          | Called before the sheet is presented                                                       |
+| `onDidPresent`    | `(event) => void`                    | -          | Called after the sheet is presented                                                        |
+| `onDidDismiss`    | `(event) => void`                    | -          | Called after the sheet is dismissed, however it was dismissed                              |
+| `onDetentChange`  | `(event) => void`                    | -          | Called when the sheet settles at another detent                                            |
 
 #### Ref methods (`BottomSheetRef`)
 
@@ -241,6 +277,40 @@ Forwards every [TrueSheet prop](https://sheet.lodev09.com/reference/configuratio
 | `resize(index)`              | Moves the presented sheet to the detent at `index`        |
 | `dismiss(animated?)`         | Dismisses the sheet and every sheet stacked on it         |
 | `dismissStack(animated?)`    | Dismisses only the sheets stacked on it                   |
+
+### BottomSheet.Content
+
+| prop           | type              | default | description                                        |
+| -------------- | ----------------- | ------- | -------------------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Sheet content                                      |
+| `className`    | `string`          | -       | Additional CSS classes                             |
+| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported |
+
+### BottomSheet.Header
+
+| prop           | type              | default | description                                                                                                              |
+| -------------- | ----------------- | ------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `children`     | `React.ReactNode` | -       | Header content                                                                                                           |
+| `isSticky`     | `boolean`         | `false` | Pins the header to the top of the sheet while the content below scrolls. Must be a direct child of `BottomSheet.Content` |
+| `className`    | `string`          | -       | Additional CSS classes                                                                                                   |
+| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported                                                                       |
+
+### BottomSheet.Body
+
+| prop           | type              | default | description                                        |
+| -------------- | ----------------- | ------- | -------------------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Body content                                       |
+| `className`    | `string`          | -       | Additional CSS classes                             |
+| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported |
+
+### BottomSheet.Footer
+
+| prop           | type              | default | description                                                                                                                 |
+| -------------- | ----------------- | ------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `children`     | `React.ReactNode` | -       | Footer content                                                                                                              |
+| `isSticky`     | `boolean`         | `false` | Pins the footer to the bottom of the sheet while the content above scrolls. Must be a direct child of `BottomSheet.Content` |
+| `className`    | `string`          | -       | Additional CSS classes                                                                                                      |
+| `...ViewProps` | `ViewProps`       | -       | All standard React Native View props are supported                                                                          |
 
 ### BottomSheet.Close
 
@@ -287,11 +357,11 @@ The previous `BottomSheet` was built on `@gorhom/bottom-sheet`, which is no long
 | ------------------------------------------------- | ------------------------------------------------------------------ |
 | `isOpen` / `onOpenChange` / `BottomSheet.Trigger` | `ref.present()` / `ref.dismiss()` and `onDidDismiss`               |
 | `BottomSheet.Portal`, `BottomSheet.Overlay`       | Not needed: the sheet presents natively and dims (or blurs) itself |
-| `BottomSheet.Content` props                       | Props on `BottomSheet` itself                                      |
+| `BottomSheet.Content` sheet props                 | Props on `BottomSheet` itself; `className` stays on `Content`      |
 | `snapPoints={['40%', '80%']}`                     | `detents={[0.4, 0.8]}`                                             |
 | `enableDynamicSizing`                             | `detents={['auto']}` (the default)                                 |
 | `enablePanDownToClose={false}`                    | `dismissible={false}`                                              |
 | `BottomSheetScrollView` / `BottomSheetFlatList`   | `ScrollView` / `FlatList` plus `scrollableRef`                     |
-| `BottomSheetFooter` / `footerComponent`           | `footer`                                                           |
+| `BottomSheetFooter` / `footerComponent`           | `<BottomSheet.Footer isSticky>` or the `footer` prop               |
 | `useBottomSheetAwareHandlers`                     | Removed: the sheet handles the keyboard natively                   |
 | `useBottomSheet()`                                | Removed: keep a ref to the sheet                                   |

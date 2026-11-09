@@ -48,25 +48,27 @@ export const ControlledByNameContent = () => {
           onDetentChange={(event) => setDetentIndex(event.nativeEvent.index)}
           onDidPresent={(event) => setDetentIndex(event.nativeEvent.index)}
         >
-          <View className="mb-6 gap-2">
-            <BottomSheet.Title>{t`Controlled by name`}</BottomSheet.Title>
-            <BottomSheet.Description>
-              {t`These buttons call resize and dismiss with the sheet's name instead of a ref.`}
-            </BottomSheet.Description>
-            <AppText className="text-sm text-muted">
-              {t`Current detent: ${detentIndex + 1} of 2`}
-            </AppText>
-          </View>
-          <View className="gap-3">
-            <Button
-              onPress={() => resize(SHEET_NAME, detentIndex === 0 ? 1 : 0)}
-            >
-              {detentIndex === 0 ? t`Expand` : t`Collapse`}
-            </Button>
-            <Button variant="tertiary" onPress={() => dismiss(SHEET_NAME)}>
-              {t`Close`}
-            </Button>
-          </View>
+          <BottomSheet.Content>
+            <BottomSheet.Header className="mb-6 gap-2">
+              <BottomSheet.Title>{t`Controlled by name`}</BottomSheet.Title>
+              <BottomSheet.Description>
+                {t`These buttons call resize and dismiss with the sheet's name instead of a ref.`}
+              </BottomSheet.Description>
+              <AppText className="text-sm text-muted">
+                {t`Current detent: ${detentIndex + 1} of 2`}
+              </AppText>
+            </BottomSheet.Header>
+            <BottomSheet.Footer className="gap-3">
+              <Button
+                onPress={() => resize(SHEET_NAME, detentIndex === 0 ? 1 : 0)}
+              >
+                {detentIndex === 0 ? t`Expand` : t`Collapse`}
+              </Button>
+              <Button variant="tertiary" onPress={() => dismiss(SHEET_NAME)}>
+                {t`Close`}
+              </Button>
+            </BottomSheet.Footer>
+          </BottomSheet.Content>
         </BottomSheet>
       </View>
     </View>

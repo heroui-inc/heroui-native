@@ -57,6 +57,10 @@ msgstr "• At least one uppercase letter"
 #~ msgid "• Payment will be processed after trip completion"
 #~ msgstr "• Payment will be processed after trip completion"
 
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "1. Using the service"
+msgstr "1. Using the service"
+
 #: src/components/bottom-sheet/scrollable-with-snap-points.tsx
 #~ msgid "10% off all trips with PLUS"
 #~ msgstr "10% off all trips with PLUS"
@@ -75,9 +79,17 @@ msgstr "2 minutes ago"
 msgid "2-3 business days"
 msgstr "2-3 business days"
 
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "2. Your content"
+msgstr "2. Your content"
+
 #: src/app/(home)/components/tabs.tsx
 msgid "3-20 characters, letters, numbers only"
 msgstr "3-20 characters, letters, numbers only"
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "3. Privacy"
+msgstr "3. Privacy"
 
 #: src/app/(home)/components/card.tsx
 #: src/app/(home)/components/pressable-feedback.tsx
@@ -85,9 +97,21 @@ msgstr "3-20 characters, letters, numbers only"
 msgid "362 members"
 msgstr "362 members"
 
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "4. Payments"
+msgstr "4. Payments"
+
 #: src/app/(home)/components/radio-group.tsx
 msgid "5-7 business days"
 msgstr "5-7 business days"
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "5. Termination"
+msgstr "5. Termination"
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "6. Changes"
+msgstr "6. Changes"
 
 #: src/app/(home)/components/separator.tsx
 msgid "A modern React Native component library."
@@ -121,6 +145,10 @@ msgstr "Accent"
 #: src/app/(home)/components/toast.tsx
 msgid "Accent toast"
 msgstr "Accent toast"
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "Accept"
+msgstr "Accept"
 
 #: src/app/(home)/components/control-field.tsx
 msgid "Accept Privacy Policy"
@@ -873,6 +901,10 @@ msgstr "Dark"
 #: src/app/(home)/components/switch.tsx
 msgid "Dark mode"
 msgstr "Dark mode"
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "Decline"
+msgstr "Decline"
 
 #: src/app/(home)/components/card.tsx
 #: src/app/(home)/components/checkbox.tsx
@@ -2153,6 +2185,10 @@ msgstr "Overnight Shipping"
 msgid "Page Title"
 msgstr "Page Title"
 
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "Paid plans renew automatically until you cancel. Fees are charged at the start of each billing period and are not refundable except where required by law."
+msgstr "Paid plans renew automatically until you cancel. Fees are charged at the start of each billing period and are not refundable except where required by law."
+
 #: src/app/(home)/components/typography.tsx
 msgid "Paragraphs"
 msgstr "Paragraphs"
@@ -2279,6 +2315,10 @@ msgstr "Please enter all 6 digits to continue."
 #: src/app/(home)/components/text-area.tsx
 msgid "Please provide as much detail as possible."
 msgstr "Please provide as much detail as possible."
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "Please review before you continue."
+msgstr "Please review before you continue."
 
 #: src/app/(home)/components/tag-group.tsx
 msgid "Please select at least one category"
@@ -2959,6 +2999,11 @@ msgstr "State"
 msgid "States"
 msgstr "States"
 
+#: src/app/(home)/components/bottom-sheet.tsx
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "Sticky header and footer"
+msgstr "Sticky header and footer"
+
 #: src/app/(home)/components/toast.tsx
 msgid "Storage is full"
 msgstr "Storage is full"
@@ -3086,6 +3131,7 @@ msgid "Terms & Privacy"
 msgstr "Terms & Privacy"
 
 #: src/app/(home)/components/link-button.tsx
+#: src/components/bottom-sheet/sticky-footer.tsx
 msgid "Terms of Service"
 msgstr "Terms of Service"
 
@@ -3547,9 +3593,17 @@ msgstr "Warning toast"
 msgid "Warning: This will share your usage patterns"
 msgstr "Warning: This will share your usage patterns"
 
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "We collect the information needed to run the service and improve it. Read the Privacy Policy to learn what we collect and how we use it."
+msgstr "We collect the information needed to run the service and improve it. Read the Privacy Policy to learn what we collect and how we use it."
+
 #: src/app/(home)/components/accordion.tsx
 msgid "We deliver to more than 60 countries, usually within 7 to 14 business days. Any customs duties are calculated and shown at checkout before you pay."
 msgstr "We deliver to more than 60 countries, usually within 7 to 14 business days. Any customs duties are calculated and shown at checkout before you pay."
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "We may update these terms from time to time. When we do, we will let you know in the app before the changes take effect."
+msgstr "We may update these terms from time to time. When we do, we will let you know in the app before the changes take effect."
 
 #: src/components/bottom-sheet/with-otp-input.tsx
 msgid "We sent a verification code to"
@@ -3720,9 +3774,21 @@ msgstr "You can change or cancel an order free of charge within two hours of pla
 msgid "You can continue using HeroUI Chat and more"
 msgstr "You can continue using HeroUI Chat and more"
 
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "You can stop using the service at any time. We may suspend or end access if these terms are broken or if required to protect other users."
+msgstr "You can stop using the service at any time. We may suspend or end access if these terms are broken or if required to protect other users."
+
 #: src/app/(home)/components/toast.tsx
 msgid "You have 2 credits left"
 msgstr "You have 2 credits left"
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "You keep ownership of the content you upload. You grant us a license to host and display it so the service can work as intended."
+msgstr "You keep ownership of the content you upload. You grant us a license to host and display it so the service can work as intended."
+
+#: src/components/bottom-sheet/sticky-footer.tsx
+msgid "You may use the service only in compliance with these terms and all applicable laws. You are responsible for any activity that happens under your account."
+msgstr "You may use the service only in compliance with these terms and all applicable laws. You are responsible for any activity that happens under your account."
 
 #: src/app/(home)/components/bottom-sheet.tsx
 #~ msgid "You'll need to top up to buy"

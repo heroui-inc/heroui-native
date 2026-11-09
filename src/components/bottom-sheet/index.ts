@@ -4,8 +4,12 @@ export {
 } from './bottom-sheet';
 export { bottomSheetClassNames } from './bottom-sheet.styles';
 export type {
+  BottomSheetBodyProps,
   BottomSheetCloseProps,
+  BottomSheetContentProps,
   BottomSheetDescriptionProps,
+  BottomSheetFooterProps,
+  BottomSheetHeaderProps,
   BottomSheetProps,
   BottomSheetRef,
   BottomSheetTitleProps,

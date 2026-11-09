@@ -4,7 +4,7 @@ import type {
 } from '@lodev09/react-native-true-sheet';
 import type { ReanimatedTrueSheetContextValue } from '@lodev09/react-native-true-sheet/reanimated';
 import type { ReactNode } from 'react';
-import type { TextProps } from 'react-native';
+import type { TextProps, ViewProps } from 'react-native';
 import type { DerivedValue } from 'react-native-reanimated';
 import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
@@ -30,15 +30,16 @@ export type BottomSheetRef = TrueSheetMethods;
  * presentation.
  *
  * Sheet options such as `detents`, `dimmed`, `background`, `backgroundBlur`,
- * `grabber`, `header`, `footer`, `scrollableRef`, and the presentation events
- * are forwarded to the native sheet.
+ * `grabber`, `scrollableRef`, and the presentation events are forwarded to
+ * the native sheet. A sticky `BottomSheet.Header` / `BottomSheet.Footer`
+ * fills the sheet's `header` / `footer` slot in place of those props.
  *
  * @see {@linkcode BottomSheetRef}
  */
 export interface BottomSheetProps
   extends Omit<TrueSheetProps, 'children' | 'onPositionChange'> {
   /**
-   * The sheet content.
+   * The sheet content, usually a `BottomSheet.Content`.
    */
   children?: ReactNode;
   /**
@@ -58,10 +59,6 @@ export interface BottomSheetProps
    * @default the `overlay` theme color
    */
   backgroundColor?: TrueSheetProps['backgroundColor'];
-  /**
-   * Additional CSS class for the view that wraps `children`.
-   */
-  contentContainerClassName?: string;
   /**
    * Animation configuration for the sheet content
    * - `"disable-all"`: Disable all animations including children (cascades down)
@@ -83,6 +80,78 @@ export interface BottomSheetContextValue {
    * not available on web)
    */
   dismiss: () => void;
+  /**
+   * Whether Android draws the grabber over the top of the sheet, which the
+   * topmost part clears with a larger top inset
+   */
+  hasGrabberInset: boolean;
+  /**
+   * Whether a sticky `BottomSheet.Header` renders above the content
+   */
+  hasStickyHeader: boolean;
+  /**
+   * Whether a sticky `BottomSheet.Footer` renders below the content
+   */
+  hasStickyFooter: boolean;
+}
+
+/**
+ * Props for `BottomSheet.Content`, the sheet's dialog container. It pads the
+ * sheet and hosts `BottomSheet.Header`, `BottomSheet.Body`, and
+ * `BottomSheet.Footer`, or any other content.
+ */
+export interface BottomSheetContentProps extends ViewProps {
+  /**
+   * Additional CSS class for the content container
+   */
+  className?: string;
+}
+
+/**
+ * Props for `BottomSheet.Header`, the top section of the sheet, usually
+ * holding `BottomSheet.Title`, `BottomSheet.Description`, and
+ * `BottomSheet.Close`.
+ */
+export interface BottomSheetHeaderProps extends ViewProps {
+  /**
+   * Pins the header to the top of the sheet while the content below it
+   * scrolls. A sticky header must be a direct child of `BottomSheet.Content`.
+   *
+   * @default false
+   */
+  isSticky?: boolean;
+  /**
+   * Additional CSS class for the header
+   */
+  className?: string;
+}
+
+/**
+ * Props for `BottomSheet.Body`, the main section of the sheet.
+ */
+export interface BottomSheetBodyProps extends ViewProps {
+  /**
+   * Additional CSS class for the body
+   */
+  className?: string;
+}
+
+/**
+ * Props for `BottomSheet.Footer`, the bottom section of the sheet, usually
+ * holding its actions.
+ */
+export interface BottomSheetFooterProps extends ViewProps {
+  /**
+   * Pins the footer to the bottom of the sheet while the content above it
+   * scrolls. A sticky footer must be a direct child of `BottomSheet.Content`.
+   *
+   * @default false
+   */
+  isSticky?: boolean;
+  /**
+   * Additional CSS class for the footer
+   */
+  className?: string;
 }
 
 /**

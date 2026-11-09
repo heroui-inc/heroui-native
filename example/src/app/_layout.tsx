@@ -112,7 +112,7 @@ function AppContent() {
 }
 
 export default function Layout() {
-  const fonts = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     Inter_400Regular,
     Inter_500Medium,
     Inter_600SemiBold,
@@ -131,7 +131,12 @@ export default function Layout() {
     SNPro_700Bold,
   });
 
-  if (!fonts) {
+  /**
+   * Render only once the fonts are registered. Text laid out before that is
+   * measured with the fallback font, which is narrower, so labels such as
+   * button titles end up clipped once the real font draws.
+   */
+  if (!fontsLoaded && !fontError) {
     return null;
   }
 

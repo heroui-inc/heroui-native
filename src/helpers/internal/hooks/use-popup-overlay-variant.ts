@@ -13,7 +13,7 @@ const IS_BLUR_SUPPORTED = Platform.OS === 'ios' && Boolean(ExpoBlur);
 
 /**
  * Resolves the effective overlay variant for the popup components whose
- * overlay paints a solid backdrop (Dialog, BottomSheet).
+ * overlay paints a solid backdrop (Dialog).
  *
  * When `variant` is omitted, the `glass` library theme defaults to `blur`;
  * every other theme defaults to `default`. A requested `blur` variant is

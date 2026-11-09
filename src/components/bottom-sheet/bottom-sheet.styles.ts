@@ -3,69 +3,68 @@ import { tv } from '../../helpers/external/utils/cn';
 import { combineStyles } from '../../helpers/internal/utils';
 
 /**
- * Overlay style definition
- *
- * @note ANIMATED PROPERTIES (cannot be set via className):
- * The following property is animated and cannot be overridden using Tailwind classes:
- * - `opacity` - Animated for overlay show/hide transitions (idle: 0, open: 1, close: 0)
- *
- * To customize this property, use the `animation` prop on `BottomSheet.Overlay`:
- * ```tsx
- * <BottomSheet.Overlay
- *   animation={{
- *     opacity: { value: [0, 1, 0] }
- *   }}
- * />
- * ```
- *
- * To completely disable animated styles and apply your own via className or style prop,
- * set `isAnimatedStyleActive={false}` on `BottomSheet.Overlay`.
+ * Content style definition — pads the sheet. The `grabber` top inset clears
+ * the grabber Android draws over the content; a sticky header or footer takes
+ * over the inset on its side (`none`).
  */
-const overlay = tv({
-  base: 'bottom-sheet__overlay',
+const content = tv({
+  base: 'bottom-sheet__content',
   variants: {
-    variant: {
+    topInset: {
       default: '',
-      blur: 'bottom-sheet__overlay--variant-blur',
+      grabber: 'bottom-sheet__content--top-inset-grabber',
+      none: 'bottom-sheet__content--top-inset-none',
+    },
+    bottomInset: {
+      default: '',
+      none: 'bottom-sheet__content--bottom-inset-none',
     },
   },
   defaultVariants: {
-    variant: 'default',
+    topInset: 'default',
+    bottomInset: 'default',
   },
 });
 
 /**
- * @note `pb-safe-offset-3` stays as a Tailwind utility because the uniwind
- * CSS parser has no safe-area equivalent for custom CSS classes.
+ * Header style definition — a sticky header sits outside the content, so it
+ * pads itself and clears the Android grabber.
  */
-const contentContainer = tv({
-  base: 'bottom-sheet__content-container pb-safe-offset-3',
+const header = tv({
+  base: 'bottom-sheet__header',
+  variants: {
+    isSticky: {
+      true: 'bottom-sheet__header--sticky',
+    },
+    topInset: {
+      default: '',
+      grabber: 'bottom-sheet__header--top-inset-grabber',
+    },
+  },
+  defaultVariants: {
+    isSticky: false,
+    topInset: 'default',
+  },
 });
 
-/**
- * Sheet background surface style definition — applied to gorhom's background
- * node via `backgroundClassName` (surface color, top radius, shadow).
- */
-const contentBackground = tv({
-  base: 'bottom-sheet__content-background',
-});
-
-/**
- * Background style definition — absolute-fill container inside the sheet
- * background surface, clipped to the sheet's top radius, hosting
- * theme-specific layers (e.g. glass blur) or custom content (gradients,
- * images).
- */
-const background = tv({
-  base: 'bottom-sheet__background',
-});
-
-const contentHandleIndicator = tv({
-  base: 'bottom-sheet__content-handle-indicator',
-});
-
-const close = tv({
+const body = tv({
   base: '',
+});
+
+/**
+ * Footer style definition — a sticky footer sits outside the content, so it
+ * pads itself.
+ */
+const footer = tv({
+  base: 'bottom-sheet__footer',
+  variants: {
+    isSticky: {
+      true: 'bottom-sheet__footer--sticky',
+    },
+  },
+  defaultVariants: {
+    isSticky: false,
+  },
 });
 
 const label = tv({
@@ -77,18 +76,22 @@ const description = tv({
 });
 
 export const bottomSheetClassNames = combineStyles({
-  overlay,
-  contentContainer,
-  contentBackground,
-  background,
-  contentHandleIndicator,
-  close,
+  content,
+  header,
+  body,
+  footer,
   label,
   description,
 });
 
 export const bottomSheetStyleSheet = StyleSheet.create({
-  contentContainer: {
-    borderCurve: 'continuous',
+  /**
+   * The sheet is presented outside the app's native root, so on Android
+   * gesture-handler gestures (Slider, swipeable content) need their own root
+   * inside it. `flexGrow`, not GH's default `flex: 1`: the content wraps its
+   * natural height for the `auto` detent, and `flex: 1` would collapse it.
+   */
+  gestureRoot: {
+    flexGrow: 1,
   },
 });

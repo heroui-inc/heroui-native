@@ -46,7 +46,7 @@ export interface PopupOverlayBlurProps {
 }
 
 /**
- * Blur backdrop layer rendered behind the Dialog and BottomSheet overlays
+ * Blur backdrop layer rendered behind the Dialog overlay
  * when the overlay `variant` resolves to `blur`.
  *
  * Blur intensity mirrors the overlay's progress-driven opacity animation:

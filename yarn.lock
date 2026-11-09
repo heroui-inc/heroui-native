@@ -3608,40 +3608,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gorhom/bottom-sheet@npm:^5.2.14":
-  version: 5.2.14
-  resolution: "@gorhom/bottom-sheet@npm:5.2.14"
-  dependencies:
-    "@gorhom/portal": 1.0.14
-    invariant: ^2.2.4
-  peerDependencies:
-    "@types/react": "*"
-    "@types/react-native": "*"
-    react: "*"
-    react-native: "*"
-    react-native-gesture-handler: ">=2.16.1"
-    react-native-reanimated: "*"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    "@types/react-native":
-      optional: true
-  checksum: c4387fa66b06e9c5dac713af7cdc9f9f5da42743f7dd6a2117d8c956e9410573c24e552fdb20232e251de5890ee83569894312eb5d4531f933f512b673ffeb53
-  languageName: node
-  linkType: hard
-
-"@gorhom/portal@npm:1.0.14":
-  version: 1.0.14
-  resolution: "@gorhom/portal@npm:1.0.14"
-  dependencies:
-    nanoid: ^3.3.1
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 227bb96a2db854ab29bb9da8d4f3823c7f7448358de459709dd1b78522110da564c9a8734c6bc7d7153ed7c99320e0fb5d60b420c2ebb75ecaf2f0d757f410f9
-  languageName: node
-  linkType: hard
-
 "@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -4055,6 +4021,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@legendapp/list@npm:^3.7.0":
+  version: 3.7.0
+  resolution: "@legendapp/list@npm:3.7.0"
+  dependencies:
+    use-sync-external-store: ^1.5.0
+  peerDependencies:
+    react: "*"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: b6810b41076939db5dad8eac78149a67809f145b8a7dad85a81bca37154bfcbe660f16980bc9070ac59b4f70ad6cd8545bafb06ff7974a2925fd818de8c438e2
+  languageName: node
+  linkType: hard
+
 "@lingui/babel-plugin-extract-messages@npm:5.9.5":
   version: 5.9.5
   resolution: "@lingui/babel-plugin-extract-messages@npm:5.9.5"
@@ -4187,6 +4169,41 @@ __metadata:
     babel-plugin-macros:
       optional: true
   checksum: 69bbd3b01f00fc476aca7f4f1e75080fd76e5f1232501488d6144a05a146f6ed7f732f7f7d6bda0581c86498a95985b1085626e4fd6d01acdfb6f4e55c051e96
+  languageName: node
+  linkType: hard
+
+"@lodev09/react-native-true-sheet@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "@lodev09/react-native-true-sheet@npm:4.1.0"
+  peerDependencies:
+    "@radix-ui/react-dialog": ">=1"
+    "@radix-ui/react-presence": ">=1"
+    "@react-navigation/native": ">=7.3.0"
+    expo-router: ">=57.0.0"
+    react: "*"
+    react-dom: "*"
+    react-native: ">=0.82.0"
+    react-native-reanimated: ">=4.1.0"
+    react-native-worklets: ">=0.5.0"
+    standard-navigation: ">=0.0.9"
+  peerDependenciesMeta:
+    "@radix-ui/react-dialog":
+      optional: true
+    "@radix-ui/react-presence":
+      optional: true
+    "@react-navigation/native":
+      optional: true
+    expo-router:
+      optional: true
+    react-dom:
+      optional: true
+    react-native-reanimated:
+      optional: true
+    react-native-worklets:
+      optional: true
+    standard-navigation:
+      optional: true
+  checksum: 5d4f1424f9fc61c79c8db75cac6b683b0dd8c4e30a65f24489d82e77dd28db8e668c6d5106ff1e4c0a8445c645713ae754c34ba90ce31f429650559292d84594
   languageName: node
   linkType: hard
 
@@ -10054,12 +10071,13 @@ __metadata:
     "@expo/vector-icons": ^15.1.1
     "@formatjs/intl-locale": ^5.3.10
     "@formatjs/intl-pluralrules": ^6.3.13
-    "@gorhom/bottom-sheet": ^5.2.14
+    "@legendapp/list": ^3.7.0
     "@lingui/babel-plugin-lingui-macro": ^5
     "@lingui/cli": ^5
     "@lingui/core": ^5
     "@lingui/format-po": ^5
     "@lingui/react": ^5
+    "@lodev09/react-native-true-sheet": ^4.1.0
     "@react-native-masked-view/masked-view": 0.3.2
     "@shopify/flash-list": 2.3.2
     "@types/react": ~19.3.0
@@ -10110,7 +10128,7 @@ __metadata:
     "@eslint/eslintrc": ^3.3.0
     "@eslint/js": ^9.22.0
     "@evilmartians/lefthook": ^1.5.0
-    "@gorhom/bottom-sheet": ^5.2.14
+    "@lodev09/react-native-true-sheet": ^4.1.0
     "@react-native-community/cli": latest
     "@react-native/babel-preset": 0.88.0
     "@react-native/eslint-config": ^0.78.0
@@ -10147,7 +10165,7 @@ __metadata:
     typescript: ^5.8.3
     uniwind: 1.13.0
   peerDependencies:
-    "@gorhom/bottom-sheet": ^5.2.9
+    "@lodev09/react-native-true-sheet": ^4.1.0
     expo-blur: ">=14.0.0"
     react: ">=19.0.0"
     react-native: ">=0.81.0"
@@ -10160,7 +10178,7 @@ __metadata:
     tailwind-merge: ^3.4.0
     tailwind-variants: ^3.2.2
   peerDependenciesMeta:
-    "@gorhom/bottom-sheet":
+    "@lodev09/react-native-true-sheet":
       optional: true
     expo-blur:
       optional: true
@@ -12676,15 +12694,6 @@ __metadata:
   version: 1.0.2
   resolution: "multitars@npm:1.0.2"
   checksum: d51e31f65c644c7cd47588c916e12e812738a6c2fb374279c5189bc04f87da20c11ae44ea3c647764002f49168883a47ff88fc540132e8cd1bfcd07dcd6fcb86
-  languageName: node
-  linkType: hard
-
-"nanoid@npm:^3.3.1":
-  version: 3.3.11
-  resolution: "nanoid@npm:3.3.11"
-  bin:
-    nanoid: bin/nanoid.cjs
-  checksum: 3be20d8866a57a6b6d218e82549711c8352ed969f9ab3c45379da28f405363ad4c9aeb0b39e9abc101a529ca65a72ff9502b00bf74a912c4b64a9d62dfd26c29
   languageName: node
   linkType: hard
 
@@ -16038,6 +16047,15 @@ __metadata:
   peerDependencies:
     react: ">=16.8"
   checksum: 60c3a6b1b6567e1794f9e48cd86b8cde8a149485cc2fed60570f69ec3b157f6812e0ff0a877f0b971592fb9254b1363cc21c120fd1fc993b1dad1406c69211df
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.5.0":
+  version: 1.7.0
+  resolution: "use-sync-external-store@npm:1.7.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 55e36d54531a778ec8521123ced6cec974dae28585bf2544429245025e989b3d63822f61a1fadc537d10976c0042f54f66c28de8216c2cde0edcbbe8abdf972f
   languageName: node
   linkType: hard
 

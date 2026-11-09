@@ -1,174 +1,167 @@
-import type { BottomSheetProps } from '@gorhom/bottom-sheet';
+import type {
+  TrueSheetMethods,
+  TrueSheetProps,
+} from '@lodev09/react-native-true-sheet';
+import type { ReanimatedTrueSheetContextValue } from '@lodev09/react-native-true-sheet/reanimated';
 import type { ReactNode } from 'react';
 import type { TextProps, ViewProps } from 'react-native';
-import type { SharedValue } from 'react-native-reanimated';
-import type {
-  AnimationRootDisableAll,
-  BaseBottomSheetContentProps,
-  PopupOverlayAnimation,
-  PopupOverlayBlurViewProps,
-  PopupOverlayVariant,
-} from '../../helpers/internal/types';
-import type * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
+import type { DerivedValue } from 'react-native-reanimated';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types';
 import type { CloseButtonProps } from '../close-button/close-button.types';
 
 /**
- * Props for the BottomSheet.Background sub-component.
- * Generic absolute-fill container inside the sheet background surface,
- * clipped to the sheet's top radius. When no `children` are given, the
- * active library theme decides the default content (e.g. a frosted-glass
- * blur layer when the theme is `glass`). Rendered automatically by the
- * default gorhom `backgroundComponent`; use it inside a custom
- * `backgroundComponent` to customize or replace the layer.
+ * Imperative handle of `BottomSheet`. The sheet is opened, moved, and
+ * closed through these methods.
+ *
+ * - `present(index?, animated?)`: presents the sheet at the detent at
+ *   `index` (default `0`)
+ * - `resize(index)`: moves the presented sheet to the detent at `index`
+ * - `dismiss(animated?)`: dismisses the sheet and every sheet stacked on it
+ * - `dismissStack(animated?)`: dismisses only the sheets stacked on it
+ *
+ * @see {@linkcode BottomSheetProps}
  */
-export type BottomSheetBackgroundProps = ViewProps & {
-  /** Additional CSS classes */
-  className?: string;
-};
+export type BottomSheetRef = TrueSheetMethods;
 
 /**
- * Context value for bottom sheet animation state
+ * Props for `BottomSheet`, a sheet presented natively above the app
+ * (including native modals). It renders nothing until presented through
+ * {@linkcode BottomSheetRef.present}; its content mounts on the first
+ * presentation.
+ *
+ * Sheet options such as `detents`, `dimmed`, `background`, `backgroundBlur`,
+ * `grabber`, `scrollableRef`, and the presentation events are forwarded to
+ * the native sheet. A sticky `BottomSheet.Header` / `BottomSheet.Footer`
+ * fills the sheet's `header` / `footer` slot in place of those props.
+ *
+ * @see {@linkcode BottomSheetRef}
  */
-export interface BottomSheetAnimationContextValue {
-  /** Animation progress shared value (0=idle, 1=open, 2=close) */
-  progress: SharedValue<number>;
-  /** Dragging state shared value */
-  isDragging: SharedValue<boolean>;
-}
-
-/**
- * BottomSheet Root component props
- */
-export interface BottomSheetRootProps
-  extends BottomSheetPrimitivesTypes.RootProps {
+export interface BottomSheetProps
+  extends Omit<TrueSheetProps, 'children' | 'onPositionChange'> {
   /**
-   * The content of the bottom sheet
+   * The sheet content, usually a `BottomSheet.Content`.
    */
   children?: ReactNode;
   /**
-   * Animation configuration for bottom sheet root
-   * - `"disable-all"`: Disable all animations including children
+   * Sizes the sheet can rest at, smallest first, up to 3. `'auto'` sizes the
+   * sheet to its content, `'peek'` to its header and footer, and a number is
+   * a fraction (`0`-`1`) of the available height.
+   *
+   * @default ['auto']
+   */
+  detents?: TrueSheetProps['detents'];
+  /**
+   * Sheet color. The glass theme keeps the platform's own sheet material
+   * (Liquid Glass on iOS 26+), and `background` / `backgroundBlur` leave the
+   * slot empty so they show through; otherwise the sheet uses the `overlay`
+   * theme color.
+   *
+   * @default the `overlay` theme color
+   */
+  backgroundColor?: TrueSheetProps['backgroundColor'];
+  /**
+   * Animation configuration for the sheet content
+   * - `"disable-all"`: Disable all animations including children (cascades down)
    * - `undefined`: Use default animations
    */
   animation?: AnimationRootDisableAll;
 }
 
 /**
- * BottomSheet Trigger component props
+ * Context shared by `BottomSheet` with its compound parts.
  */
-export interface BottomSheetTriggerProps
-  extends BottomSheetPrimitivesTypes.TriggerProps {
+export interface BottomSheetContextValue {
   /**
-   * The trigger element content
+   * Native ID of the sheet's dialog view, linking the title and description
    */
-  children?: ReactNode;
+  nativeID: string;
+  /**
+   * Dismisses the sheet through its own ref (TrueSheet's static methods are
+   * not available on web)
+   */
+  dismiss: () => void;
+  /**
+   * Whether Android draws the grabber over the top of the sheet, which the
+   * topmost part clears with a larger top inset
+   */
+  hasGrabberInset: boolean;
+  /**
+   * Whether a sticky `BottomSheet.Header` renders above the content
+   */
+  hasStickyHeader: boolean;
+  /**
+   * Whether a sticky `BottomSheet.Footer` renders below the content
+   */
+  hasStickyFooter: boolean;
 }
 
 /**
- * BottomSheet Portal component props
+ * Props for `BottomSheet.Content`, the sheet's dialog container. It pads the
+ * sheet and hosts `BottomSheet.Header`, `BottomSheet.Body`, and
+ * `BottomSheet.Footer`, or any other content.
  */
-export interface BottomSheetPortalProps
-  extends BottomSheetPrimitivesTypes.PortalProps {
+export interface BottomSheetContentProps extends ViewProps {
   /**
-   * When true, uses a regular View instead of FullWindowOverlay on iOS.
-   * Enables React Native element inspector but overlay won't appear above native modals.
-   * @default false
-   */
-  disableFullWindowOverlay?: boolean;
-  /**
-   * Controls whether VoiceOver treats the overlay window as a modal container.
-   * When `false`, VoiceOver can still access elements behind the overlay.
-   * When `true`, VoiceOver is restricted to elements inside the overlay.
-   * @default false
-   * @platform ios
-   * @unstable This prop maps directly to the native `accessibilityViewIsModal`
-   * on the container view and may change in a future react-native-screens release.
-   */
-  unstable_accessibilityContainerViewIsModal?: boolean;
-  /**
-   * The portal content
-   */
-  children: ReactNode;
-}
-
-/**
- * Visual variant of the BottomSheet Overlay component
- */
-export type BottomSheetOverlayVariant = PopupOverlayVariant;
-
-/**
- * Props forwarded to the BlurView rendered by the `blur` overlay variant
- */
-export type BottomSheetOverlayBlurViewProps = PopupOverlayBlurViewProps;
-
-/**
- * BottomSheet Overlay component props
- */
-export interface BottomSheetOverlayProps
-  extends BottomSheetPrimitivesTypes.OverlayProps {
-  /**
-   * Additional CSS class for the overlay
-   *
-   * @note The following style properties are occupied by animations and cannot be set via className:
-   * - `opacity` - Animated for overlay show/hide transitions (idle: 0, open: 1, close: 0)
-   *
-   * To customize this property, use the `animation` prop:
-   * ```tsx
-   * <BottomSheet.Overlay
-   *   animation={{
-   *     opacity: { value: [0, 1, 0] }
-   *   }}
-   * />
-   * ```
-   *
-   * To completely disable animated styles and use your own via className or style prop, set `isAnimatedStyleActive={false}`.
+   * Additional CSS class for the content container
    */
   className?: string;
-  /**
-   * Animation configuration for overlay
-   * - `false` or `"disabled"`: Disable all animations
-   * - `true` or `undefined`: Use default animations
-   * - `object`: Custom animation configuration
-   */
-  animation?: Omit<PopupOverlayAnimation, 'entering' | 'exiting'>;
-  /**
-   * Whether animated styles (react-native-reanimated) are active
-   * When `false`, the animated style is removed and you can implement custom logic
-   * This prop should only be used when you want to write custom styling logic instead of the default animated styles
-   * @default true for the `default` variant, false for the `blur` variant (the animated blur intensity replaces the opacity animation)
-   */
-  isAnimatedStyleActive?: boolean;
-  /**
-   * Visual variant of the overlay
-   * - `default`: solid backdrop colored by the `--color-backdrop` token
-   * - `blur`: blur backdrop (iOS only, requires expo-blur; falls back to `default` otherwise)
-   * @default 'blur' when the library theme is `glass`, otherwise 'default'
-   */
-  variant?: BottomSheetOverlayVariant;
-  /**
-   * Props forwarded to the BlurView rendered by the `blur` variant.
-   * `intensity` is treated as the maximum (animated) blur intensity.
-   */
-  blurViewProps?: BottomSheetOverlayBlurViewProps;
 }
 
 /**
- * BottomSheet Content component props
+ * Props for `BottomSheet.Header`, the top section of the sheet, usually
+ * holding `BottomSheet.Title`, `BottomSheet.Description`, and
+ * `BottomSheet.Close`.
  */
-export interface BottomSheetContentProps
-  extends Partial<BottomSheetProps>,
-    BaseBottomSheetContentProps {}
+export interface BottomSheetHeaderProps extends ViewProps {
+  /**
+   * Pins the header to the top of the sheet while the content below it
+   * scrolls. A sticky header must be a direct child of `BottomSheet.Content`.
+   *
+   * @default false
+   */
+  isSticky?: boolean;
+  /**
+   * Additional CSS class for the header
+   */
+  className?: string;
+}
 
 /**
- * BottomSheet Close component props
- *
- * Extends CloseButtonProps, allowing full override of all close button props.
- * Automatically handles bottom sheet close functionality when pressed.
+ * Props for `BottomSheet.Body`, the main section of the sheet.
+ */
+export interface BottomSheetBodyProps extends ViewProps {
+  /**
+   * Additional CSS class for the body
+   */
+  className?: string;
+}
+
+/**
+ * Props for `BottomSheet.Footer`, the bottom section of the sheet, usually
+ * holding its actions.
+ */
+export interface BottomSheetFooterProps extends ViewProps {
+  /**
+   * Pins the footer to the bottom of the sheet while the content above it
+   * scrolls. A sticky footer must be a direct child of `BottomSheet.Content`.
+   *
+   * @default false
+   */
+  isSticky?: boolean;
+  /**
+   * Additional CSS class for the footer
+   */
+  className?: string;
+}
+
+/**
+ * Props for `BottomSheet.Close`, a close button that dismisses the
+ * enclosing sheet.
  */
 export type BottomSheetCloseProps = CloseButtonProps;
 
 /**
- * BottomSheet Title component props
+ * Props for `BottomSheet.Title`, linked to the sheet for accessibility.
  */
 export interface BottomSheetTitleProps extends TextProps {
   /**
@@ -178,7 +171,8 @@ export interface BottomSheetTitleProps extends TextProps {
 }
 
 /**
- * BottomSheet Description component props
+ * Props for `BottomSheet.Description`, linked to the sheet for
+ * accessibility.
  */
 export interface BottomSheetDescriptionProps extends TextProps {
   /**
@@ -188,11 +182,20 @@ export interface BottomSheetDescriptionProps extends TextProps {
 }
 
 /**
- * Return type for the useBottomSheetAnimation hook
+ * Live sheet values returned by `useBottomSheetAnimation`, updated on
+ * the UI thread while the sheet is presented, dragged, resized, or
+ * dismissed. Use them to drive custom Reanimated animations from the sheet.
+ *
+ * `animatedPosition` is the Y offset of the sheet's top edge from the top of
+ * the screen, `animatedIndex` is the detent index as a continuous value
+ * (`-1` while off screen), and `animatedDetent` is the current detent as a
+ * fraction (`0`-`1`) of the available height.
  */
-export interface UseBottomSheetAnimationReturn {
+export interface UseBottomSheetAnimationReturn
+  extends ReanimatedTrueSheetContextValue {
   /**
-   * Animation progress shared value (0=idle, 1=open, 2=close)
+   * How far the sheet is presented: `0` while off screen, `1` once it rests
+   * at a detent, in between while it moves in or is dragged out.
    */
-  progress: SharedValue<number>;
+  progress: DerivedValue<number>;
 }

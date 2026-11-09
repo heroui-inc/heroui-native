@@ -497,19 +497,18 @@ Animation configuration for menu popover content component. Can be:
 
 ### Menu.Content (BottomSheet)
 
-Props when `presentation="bottom-sheet"`. Extends `@gorhom/bottom-sheet` BottomSheet props.
+Props when `presentation="bottom-sheet"`.
 
-| prop                        | type                                     | default | description                                          |
-| --------------------------- | ---------------------------------------- | ------- | ---------------------------------------------------- |
-| `children`                  | `React.ReactNode`                        | -       | The bottom sheet content                             |
-| `presentation`              | `'bottom-sheet'`                         | -       | Presentation mode (must match Menu root)             |
-| `className`                 | `string`                                 | -       | Additional CSS class for the bottom sheet            |
-| `backgroundClassName`       | `string`                                 | -       | Additional CSS class for the background              |
-| `handleIndicatorClassName`  | `string`                                 | -       | Additional CSS class for the handle indicator        |
-| `contentContainerClassName` | `string`                                 | -       | Additional CSS class for the content container       |
-| `contentContainerProps`     | `Omit<BottomSheetViewProps, 'children'>` | -       | Props for the content container                      |
-| `animation`                 | `AnimationDisabled`                      | -       | Set to `false` or `"disabled"` to disable animations |
-| `...BottomSheetProps`       | `Partial<BottomSheetProps>`              | -       | All `@gorhom/bottom-sheet` props are supported       |
+| prop                        | type                                 | default    | description                                                                                                 |
+| --------------------------- | ------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------- |
+| `children`                  | `ReactNode`                          | -          | The bottom sheet content                                                                                    |
+| `presentation`              | `'bottom-sheet'`                     | -          | Presentation mode - must be 'bottom-sheet' and match Menu.Root presentation prop (required)                 |
+| `detents`                   | `('auto' \| 'peek' \| number)[]`     | `['auto']` | Sizes the sheet can rest at, smallest first, up to 3                                                        |
+| `contentContainerClassName` | `string`                             | -          | Additional CSS classes for the content container                                                            |
+| `scrollableRef`             | `RefObject<ScrollViewInstance \| …>` | -          | Ref of a scroll view inside the sheet                                                                       |
+| `...BottomSheetProps`       | `BottomSheetProps`                   | -          | All [`BottomSheet`](../bottom-sheet/bottom-sheet.md) props except `name` and TrueSheet's own `presentation` |
+
+The sheet is presented when the Menu opens and dismissed when it closes. Dismissing the sheet natively (dragging it down, tapping the dimmed area, Android back) closes the Menu. Requires `@lodev09/react-native-true-sheet`.
 
 ### Menu.Close
 

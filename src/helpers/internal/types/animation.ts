@@ -68,7 +68,7 @@ export interface TimingAnimationConfig {
 }
 
 /**
- * Animation configuration for popup overlay components (Dialog, Select, BottomSheet, Popover, etc.)
+ * Animation configuration for popup overlay components (Dialog, Select, Popover, Menu)
  * Supports both progress-based opacity animation and entering/exiting animations
  */
 export type PopupOverlayAnimation = Animation<{

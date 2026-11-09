@@ -190,33 +190,7 @@ Use render props in Group to create custom slot layouts.
 
 ### Inside a BottomSheet
 
-When rendering an InputOTP inside a `BottomSheet`, use the `useBottomSheetAwareHandlers` hook to wire keyboard avoidance handlers. Pass the returned `onFocus` and `onBlur` to InputOTP.
-
-> **Note**: `useBottomSheetAwareHandlers` must be used inside a `BottomSheet`. Call it from a child component rendered inside `BottomSheet.Content` — outside of a `BottomSheet` context the returned handlers are no-ops.
-
-```tsx
-import { InputOTP, useBottomSheetAwareHandlers } from 'heroui-native';
-
-const BottomSheetOTPInput = () => {
-  const { onFocus, onBlur } = useBottomSheetAwareHandlers();
-
-  return (
-    <InputOTP maxLength={6} onFocus={onFocus} onBlur={onBlur}>
-      <InputOTP.Group>
-        <InputOTP.Slot index={0} />
-        <InputOTP.Slot index={1} />
-        <InputOTP.Slot index={2} />
-      </InputOTP.Group>
-      <InputOTP.Separator />
-      <InputOTP.Group>
-        <InputOTP.Slot index={3} />
-        <InputOTP.Slot index={4} />
-        <InputOTP.Slot index={5} />
-      </InputOTP.Group>
-    </InputOTP>
-  );
-};
-```
+`BottomSheet` moves with the keyboard natively, so a `InputOTP` inside it needs no extra handlers. If the sheet content scrolls, pass the scroll view's ref to the sheet's `scrollableRef` so the focused field is kept above the keyboard.
 
 ## Example
 

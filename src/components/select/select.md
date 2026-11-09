@@ -169,7 +169,7 @@ Use bottom sheet for mobile-optimized selection experience.
   <Select.Trigger>...</Select.Trigger>
   <Select.Portal>
     <Select.Overlay />
-    <Select.Content presentation="bottom-sheet" snapPoints={['35%']}>
+    <Select.Content presentation="bottom-sheet" detents={[0.35]}>
       <Select.Item value="1" label="Item 1" />
       <Select.Item value="2" label="Item 2" />
     </Select.Content>
@@ -595,12 +595,16 @@ Animation configuration for Select.Content component (popover presentation). Can
 
 ### Select.Content (BottomSheet Presentation)
 
-| prop                        | type               | default | description                                      |
-| --------------------------- | ------------------ | ------- | ------------------------------------------------ |
-| `children`                  | `ReactNode`        | -       | The bottom sheet content                         |
-| `presentation`              | `'bottom-sheet'`   | -       | Presentation mode for the select                 |
-| `contentContainerClassName` | `string`           | -       | Additional CSS classes for the content container |
-| `...BottomSheetProps`       | `BottomSheetProps` | -       | All @gorhom/bottom-sheet props are supported     |
+| prop                        | type                                 | default    | description                                                                                                 |
+| --------------------------- | ------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------- |
+| `children`                  | `ReactNode`                          | -          | The bottom sheet content                                                                                    |
+| `presentation`              | `'bottom-sheet'`                     | -          | Presentation mode - must be 'bottom-sheet' and match Select.Root presentation prop (required)               |
+| `detents`                   | `('auto' \| 'peek' \| number)[]`     | `['auto']` | Sizes the sheet can rest at, smallest first, up to 3                                                        |
+| `contentContainerClassName` | `string`                             | -          | Additional CSS classes for the content container                                                            |
+| `scrollableRef`             | `RefObject<ScrollViewInstance \| …>` | -          | Ref of a scroll view inside the sheet                                                                       |
+| `...BottomSheetProps`       | `BottomSheetProps`                   | -          | All [`BottomSheet`](../bottom-sheet/bottom-sheet.md) props except `name` and TrueSheet's own `presentation` |
+
+The sheet is presented when the Select opens and dismissed when it closes. Dismissing the sheet natively (dragging it down, tapping the dimmed area, Android back) closes the Select. Requires `@lodev09/react-native-true-sheet`.
 
 ### Select.Content (Dialog Presentation)
 

@@ -580,14 +580,12 @@ const SelectContentBottomSheet = forwardRef<
   SelectContentBottomSheetProps
 >(({ children, presentation: _presentation, ...props }, ref) => {
   const { isOpen, onOpenChange } = useSelect();
-  const { progress } = useSelectAnimation();
 
   return (
     <PopupSheetContent
       ref={ref}
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      progress={progress}
       {...props}
     >
       {children}

@@ -412,14 +412,12 @@ const PopoverContentBottomSheet = forwardRef<
   PopoverContentBottomSheetProps
 >(({ children, presentation: _presentation, ...props }, ref) => {
   const { isOpen, onOpenChange } = usePopover();
-  const { progress } = usePopoverAnimation();
 
   return (
     <PopupSheetContent
       ref={ref}
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      progress={progress}
       {...props}
     >
       {children}

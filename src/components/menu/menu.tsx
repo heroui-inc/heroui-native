@@ -465,7 +465,6 @@ const MenuContentBottomSheet = forwardRef<
     ref
   ) => {
     const { isOpen, onOpenChange } = useMenu();
-    const { progress } = useMenuAnimation();
 
     const contentContainerClassName = menuClassNames.contentBottomSheet({
       className: contentContainerClassNameProp,
@@ -476,7 +475,6 @@ const MenuContentBottomSheet = forwardRef<
         ref={ref}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        progress={progress}
         contentContainerClassName={contentContainerClassName}
         {...props}
       >

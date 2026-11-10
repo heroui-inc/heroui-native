@@ -31,6 +31,11 @@ export type ScrollShadowVisibility =
   | 'both'
   | 'none';
 
+/**
+ * Props passed to a custom `LinearGradientComponent`
+ * @deprecated ScrollShadow draws its gradient with the native `backgroundImage`
+ * style. This type will be removed in a future major release.
+ */
 export interface LinearGradientProps {
   colors: any;
   locations?: any;
@@ -39,6 +44,11 @@ export interface LinearGradientProps {
   style?: any;
 }
 
+/**
+ * LinearGradient component accepted by the `LinearGradientComponent` prop
+ * @deprecated ScrollShadow draws its gradient with the native `backgroundImage`
+ * style. This type will be removed in a future major release.
+ */
 export type LinearGradientComponent = ComponentType<LinearGradientProps>;
 
 /**
@@ -109,9 +119,15 @@ export interface ScrollShadowProps extends ViewProps {
   /**
    * LinearGradient component to use for rendering shadows
    * Compatible with expo-linear-gradient, react-native-linear-gradient, etc.
-   * Required for the component to render shadows
+   *
+   * Optional. When omitted, shadows are drawn with the native `backgroundImage`
+   * style (`linear-gradient`), so no gradient library is needed.
+   *
+   * @deprecated ScrollShadow no longer needs a gradient library. Remove this
+   * prop; it will be removed in a future major release.
+   * @see https://reactnative.dev/docs/view-style-props#backgroundimage
    */
-  LinearGradientComponent: LinearGradientComponent;
+  LinearGradientComponent?: LinearGradientComponent;
 
   /**
    * Animation configuration for scroll shadow

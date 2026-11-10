@@ -367,7 +367,7 @@ const SelectOverlay = forwardRef<
 
     const { rContainerStyle, entering, exiting } = usePopupOverlayAnimation({
       progress: presentation === 'dialog' ? progress : undefined,
-      isDragging: presentation === 'popover' ? isDragging : undefined,
+      isDragging: presentation === 'dialog' ? isDragging : undefined,
       isGestureReleaseAnimationRunning:
         presentation === 'dialog'
           ? isGestureReleaseAnimationRunning

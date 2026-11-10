@@ -190,12 +190,19 @@ export function ToastProvider({
   defaultProps,
   insets,
   maxVisibleToasts = 3,
+  maxToasts,
   contentWrapper,
   children,
   disableFullWindowOverlay = false,
   unstable_accessibilityContainerViewIsModal,
 }: ToastProviderProps) {
   const [store] = useState(() => new ToastStore());
+
+  /**
+   * Assigned during render (idempotent) so a `show()` from a child's mount
+   * effect already respects the limit
+   */
+  store.setMaxToasts(maxToasts);
 
   useEffect(() => store.dispose, [store]);
 

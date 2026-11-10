@@ -248,6 +248,24 @@ Set global defaults for variant, placement, animation, and swipe behavior:
 </HeroUINativeProvider>
 ```
 
+### Limiting the Number of Toasts
+
+By default every toast is kept until it is dismissed: `maxVisibleToasts` only controls how many are drawn, and the rest wait behind the stack and come back when the toasts in front of them are dismissed. Set `maxToasts` to drop the oldest toasts instead. With `maxToasts: 1`, every new toast replaces the previous one:
+
+```tsx
+<HeroUINativeProvider
+  config={{
+    toast: {
+      maxToasts: 1,
+    },
+  }}
+>
+  {children}
+</HeroUINativeProvider>
+```
+
+A toast dropped by the limit is dismissed as if `toast.hide(id)` had been called: it plays its exit animation, its auto-dismiss timer is cleared and its `onHide` callback runs.
+
 ## API Reference
 
 ### Toast
@@ -339,6 +357,7 @@ Props for configuring toast behavior globally via `HeroUINativeProvider` config 
 | `unstable_accessibilityContainerViewIsModal` | `boolean`                                           | `false` | Controls whether VoiceOver treats the overlay window as a modal container. When `true`, VoiceOver is restricted to elements inside the overlay. iOS only. Unstable: may change with react-native-screens updates |
 | `insets`                                     | `ToastInsets`                                       | -       | Insets for spacing from screen edges (added to safe area insets)                                                                                                                                                 |
 | `maxVisibleToasts`                           | `number`                                            | `3`     | Maximum number of visible toasts before opacity starts fading                                                                                                                                                    |
+| `maxToasts`                                  | `number`                                            | -       | Maximum number of toasts kept at once. A new toast past the limit dismisses the oldest ones, so `1` makes each toast replace the previous one                                                                    |
 | `contentWrapper`                             | `(children: React.ReactNode) => React.ReactElement` | -       | Custom wrapper function to wrap toast content                                                                                                                                                                    |
 | `children`                                   | `React.ReactNode`                                   | -       | Children to render                                                                                                                                                                                               |
 
@@ -419,6 +438,8 @@ Options for showing a toast. Can be either a config object with default styling 
 ### Showing Many Toasts
 
 Toasts that are pushed behind the visible stack (beyond `maxVisibleToasts`) are fully transparent, so only the visible stack and the one toast fading out behind it are mounted. The others stay queued with their auto-dismiss timers running and mount again, without an entering animation, once toasts in front of them are dismissed. Calling `toast.show()` many times in a row therefore keeps the rendering cost bounded by `maxVisibleToasts`.
+
+To drop older toasts instead of queueing them, set `maxToasts`. With `maxToasts={1}` every new toast replaces the previous one: the old toast plays its exit animation and its `onHide` runs, and it does not come back when the new toast is dismissed.
 
 Stack positions and heights live in Reanimated shared values and are animated on the UI thread: showing or dismissing a toast mounts or unmounts only that toast, and the toasts already on screen do not re-render. Toasts built from a string or config object never re-render when their position changes; a custom `component` toast re-renders when its `index` changes, since it receives the live `index` in its props. Only the front toast lays out at its natural height; the toasts behind it spring to that height and their content is covered. While the front toast is dragged, the toast behind it shows its content, so it is readable as the front one is swiped away.
 

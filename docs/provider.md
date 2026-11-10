@@ -173,6 +173,8 @@ const config: HeroUINativeConfig = {
     },
     // Maximum number of visible toasts before opacity starts fading
     maxVisibleToasts: 3,
+    // Optional: maximum number of toasts kept at once; older ones are dismissed
+    // maxToasts: 1,
     // Custom wrapper function to wrap the toast content
     contentWrapper: (children) => (
       <KeyboardAvoidingView
@@ -267,6 +269,7 @@ const config: HeroUINativeConfig = {
       right: 12,
     },
     maxVisibleToasts: 3,
+    // maxToasts: 1, // Optional: keep at most one toast; a new toast replaces the previous one
   },
   // Option 2: Disable toast entirely
   // toast: false,

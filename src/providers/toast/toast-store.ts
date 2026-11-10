@@ -88,6 +88,29 @@ export class ToastStore {
 
   private idCounter = 0;
 
+  /**
+   * Upper bound on queued toasts; `undefined` keeps every toast
+   */
+  private maxToasts: number | undefined;
+
+  // --------------------------------------------------
+  // Configuration
+
+  /**
+   * Sets how many toasts the queue keeps. When a new toast would exceed it,
+   * the oldest toasts are hidden as if `hide(id)` had been called for them.
+   * Values that are not a positive finite number turn the limit off.
+   * Applies from the next `add` onwards; already queued toasts are kept.
+   */
+  setMaxToasts = (maxToasts: number | undefined): void => {
+    this.maxToasts =
+      typeof maxToasts === 'number' &&
+      Number.isFinite(maxToasts) &&
+      maxToasts >= 1
+        ? Math.floor(maxToasts)
+        : undefined;
+  };
+
   // --------------------------------------------------
   // Subscription
 
@@ -144,6 +167,10 @@ export class ToastStore {
    * When `entry.id` matches a toast that is already shown, nothing is added
    * and the existing ID is returned.
    *
+   * When a `maxToasts` limit is set and the new toast exceeds it, the oldest
+   * toasts are removed in the same commit (so the stack never renders over
+   * the limit) and their `onHide` callbacks run before the new `onShow`.
+   *
    * @returns The ID of the shown (or already shown) toast
    */
   add = (entry: ToastStoreEntry): string => {
@@ -157,8 +184,16 @@ export class ToastStore {
     const id = entry.id ?? `toast-${Date.now()}-${this.idCounter++}`;
     const item: ToastItem = { ...entry, id };
 
-    this.commit([...this.snapshot.toasts, item]);
+    const next = [...this.snapshot.toasts, item];
+    const overflow =
+      this.maxToasts === undefined ? 0 : next.length - this.maxToasts;
+    const dropped = overflow > 0 ? next.slice(0, overflow) : [];
 
+    dropped.forEach((toast) => this.clearTimer(toast.id));
+
+    this.commit(overflow > 0 ? next.slice(overflow) : next);
+
+    dropped.forEach((toast) => toast.onHide?.());
     item.onShow?.();
 
     /**

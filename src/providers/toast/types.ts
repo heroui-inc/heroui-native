@@ -74,6 +74,17 @@ export interface ToastProviderProps {
    */
   maxVisibleToasts?: number;
   /**
+   * Maximum number of toasts kept at once. When a new toast would exceed it,
+   * the oldest toasts are dismissed (exit animation and `onHide` run as with
+   * `hide(id)`), so `maxToasts={1}` makes every new toast replace the previous one.
+   *
+   * Unlike `maxVisibleToasts`, which only controls how many toasts are drawn
+   * while the rest wait behind the stack, toasts dropped by this limit never
+   * come back when the front toast is dismissed.
+   * @default undefined (no limit)
+   */
+  maxToasts?: number;
+  /**
    * Custom wrapper function to wrap the toast content
    * Receives children and should return a component that wraps them
    * The wrapper should apply flex: 1 (via className or style) to ensure proper layout

@@ -196,8 +196,22 @@ Animation configuration for ScrollShadow component. Can be:
 
 ## Special Notes
 
-Shadows are drawn with the native `backgroundImage` style (`linear-gradient`), so no gradient library is needed. On React Native 0.81 - 0.86 the component falls back to `experimental_backgroundImage`.
+### React Native Version Support
 
-**Migration:** `LinearGradientComponent` is deprecated and no longer required. Remove it to use the built-in gradient. If you still pass it, ScrollShadow renders that component as before. It will be removed in a future major release.
+Shadows are drawn with the native `backgroundImage` style (`linear-gradient`), so no gradient library is needed. The style key depends on your React Native version and is picked automatically:
+
+| React Native     | Gradient style used            | Notes                                                    |
+| ---------------- | ------------------------------ | -------------------------------------------------------- |
+| `0.87` and newer | `backgroundImage`              | Stable API. Recommended                                  |
+| `0.81` - `0.86`  | `experimental_backgroundImage` | Uses the experimental API these versions provide         |
+| below `0.81`     | Not supported                  | Below the minimum React Native version for HeroUI Native |
+
+The version is read once from `Platform.constants.reactNativeVersion`, so no configuration is needed.
+
+### Migrating from `LinearGradientComponent`
+
+`LinearGradientComponent` is deprecated and no longer required. Remove it to use the built-in gradient. If you still pass it, ScrollShadow renders that component as before. It will be removed in a future major release.
+
+### Custom Scroll Handlers
 
 **Important:** ScrollShadow internally converts the child to a Reanimated animated component. If you need to use the `onScroll` prop on your scrollable component, you must use `useAnimatedScrollHandler` from react-native-reanimated instead of the standard `onScroll` prop.

@@ -3,7 +3,6 @@
    container; translating placeholder Latin is meaningless. */
 import { msg } from '@lingui/core/macro';
 import { FlashList } from '@shopify/flash-list';
-import { LinearGradient } from 'expo-linear-gradient';
 import { ScrollShadow, Surface } from 'heroui-native';
 import {
   ScrollView,
@@ -21,10 +20,7 @@ const VerticalContent = () => {
   return (
     <View className="flex-1 items-center justify-center px-8">
       <View className="w-full" style={{ height: height * 0.6 }}>
-        <ScrollShadow
-          size={height * 0.1}
-          LinearGradientComponent={LinearGradient}
-        >
+        <ScrollShadow size={height * 0.1}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <AppText className="mb-6 text-3xl font-bold text-foreground">
               Lorem Ipsum Dolor Sit Amet
@@ -182,7 +178,7 @@ const HorizontalContent = () => {
   return (
     <View className="flex-1 items-center justify-center">
       <View className="h-40 w-full">
-        <ScrollShadow LinearGradientComponent={LinearGradient}>
+        <ScrollShadow>
           <FlashList
             horizontal
             data={HORIZONTAL_ITEMS}

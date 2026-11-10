@@ -1,6 +1,5 @@
 import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react/macro';
-import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
   Label,
@@ -224,10 +223,7 @@ const PresentationContent = () => {
               scrollableRef={bottomSheetScrollRef}
               contentContainerClassName="h-full px-0 pb-0"
             >
-              <ScrollShadow
-                LinearGradientComponent={LinearGradient}
-                color={themeColorOverlay}
-              >
+              <ScrollShadow color={themeColorOverlay}>
                 <RNScrollView
                   ref={bottomSheetScrollRef}
                   contentContainerClassName="p-4"

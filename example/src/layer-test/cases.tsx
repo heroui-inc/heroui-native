@@ -2,7 +2,6 @@
 /* eslint-disable lingui/no-unlocalized-strings */
 // Renders every inline component across its variant matrix, each case twice:
 // plain and with distinctive className overrides on every slot.
-import { LinearGradient } from 'expo-linear-gradient';
 import {
   Accordion,
   Alert,
@@ -796,10 +795,7 @@ export const LayerCases = () => (
       <Pair
         id="scroll-shadow"
         render={(ov) => (
-          <ScrollShadow
-            LinearGradientComponent={LinearGradient}
-            className={o(ov, OV_VIEW)}
-          >
+          <ScrollShadow className={o(ov, OV_VIEW)}>
             <ScrollView horizontal>
               <Text>
                 Scrollable content that is wide enough to overflow the row

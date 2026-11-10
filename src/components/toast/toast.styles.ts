@@ -10,7 +10,11 @@ import { combineStyles } from '../../helpers/internal/utils';
  * - `opacity` - Animated for visibility transitions when toasts are pushed beyond visible stack limits
  * - `transform` (translateY) - Animated for vertical position transitions when toasts are stacked, and for swipe-to-dismiss gestures
  * - `transform` (scale) - Animated for size scaling transitions when toasts are stacked (toasts behind active one are scaled down)
- * - `height` - Animated for height transitions when toast content changes
+ * - `height` - Animated to the front toast's height while the toast is stacked behind it
+ *
+ * `opacity` and `transform` are animated on a wrapper view around the root, so
+ * an `opacity` or `transform` set on the root combines with the animation
+ * instead of replacing it. `height` is animated on the root itself.
  *
  * To customize these properties, use the `animation` prop on `Toast.Root`:
  * ```tsx
@@ -46,6 +50,23 @@ const root = tv({
  */
 const background = tv({
   base: 'toast__background',
+});
+
+/**
+ * Cover style definition — hides the content of toasts stacked behind the
+ * front toast, except while the front toast is dragged (opacity is animated
+ * on the UI thread).
+ */
+const cover = tv({
+  base: 'toast__cover',
+});
+
+/**
+ * Cover edge style definition — hides the cut-off bottom edge of toasts
+ * stacked behind the front toast, also while the front toast is dragged.
+ */
+const coverEdge = tv({
+  base: 'toast__cover-edge',
 });
 
 const label = tv({
@@ -87,6 +108,8 @@ const action = tv({
 export const toastClassNames = combineStyles({
   root,
   background,
+  cover,
+  coverEdge,
   label,
   description,
   action,

@@ -18,9 +18,14 @@
     overflow: hidden;
   }
 
+  /*
+   * No static inline offset here: the thumb's `start`/`end` are owned by
+   * `useSwitchThumbAnimation`. A static `inset-inline-start` would compile to
+   * `insetInlineStart` on Uniwind < 1.10, which React Native gives precedence
+   * over the animated `start`, pinning the thumb to the leading edge.
+   */
   .switch__thumb {
     position: absolute;
-    inset-inline-start: 2px;
     align-items: center;
     justify-content: center;
     width: 28px;

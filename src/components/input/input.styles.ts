@@ -78,4 +78,11 @@ export const inputStyleSheet = StyleSheet.create({
   borderCurve: {
     borderCurve: 'continuous',
   },
+  /**
+   * Over a background layer the text input is translucent, and Android
+   * draws an elevation shadow through it as a dark band behind the text.
+   */
+  noElevation: {
+    elevation: 0,
+  },
 });

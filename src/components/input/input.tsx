@@ -1,5 +1,6 @@
-import { forwardRef } from 'react';
-import { View } from 'react-native';
+import { forwardRef, useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useResolveClassNames } from 'uniwind';
 import { useIsOnSurface } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
 import {
@@ -12,6 +13,10 @@ import type { TextInputComponent, ViewRef } from '../../helpers/internal/types';
 import { DISPLAY_NAME } from './input.constants';
 import { inputClassNames, inputStyleSheet } from './input.styles';
 import type { InputBackgroundProps, InputProps, InputRef } from './input.types';
+import {
+  splitWrapperLayoutStyle,
+  WRAPPER_LAYOUT_PROPERTY_NAMES,
+} from './input.utils';
 
 // --------------------------------------------------
 
@@ -95,6 +100,29 @@ const InputRoot: TextInputComponent<InputProps> = forwardRef<
 
   const hasBackgroundLayer = backgroundElement != null;
 
+  /**
+   * With a background layer the text input sits inside a wrapper, so the
+   * layout it gets from `className`/`style` (flex sizing, self alignment,
+   * width, margins) has to move to the wrapper. Otherwise `flex-1` inside a
+   * `flex-row` would size the inner input while the wrapper shrinks to it.
+   */
+  const resolvedClassNameStyle = useResolveClassNames(
+    hasBackgroundLayer ? (className ?? '') : ''
+  );
+  const wrapperLayout = useMemo(() => {
+    if (!hasBackgroundLayer) {
+      return undefined;
+    }
+
+    const flatStyle = style ? StyleSheet.flatten(style) : undefined;
+    const values = WRAPPER_LAYOUT_PROPERTY_NAMES.map(
+      (propertyName) =>
+        flatStyle?.[propertyName] ?? resolvedClassNameStyle?.[propertyName]
+    );
+
+    return splitWrapperLayoutStyle(values);
+  }, [hasBackgroundLayer, resolvedClassNameStyle, style]);
+
   const containerClassName = inputClassNames.container({
     className: containerClassNameProp,
   });
@@ -127,7 +155,12 @@ const InputRoot: TextInputComponent<InputProps> = forwardRef<
     <HeroTextInput
       ref={ref}
       className={inputClassName}
-      style={[inputStyleSheet.borderCurve, style]}
+      style={[
+        inputStyleSheet.borderCurve,
+        hasBackgroundLayer && inputStyleSheet.noElevation,
+        style,
+        wrapperLayout?.inputStyle,
+      ]}
       placeholderTextColorClassName={placeholderColorClassName}
       selectionColorClassName={selectionColorClassName}
       editable={!isDisabled}
@@ -144,7 +177,7 @@ const InputRoot: TextInputComponent<InputProps> = forwardRef<
   }
 
   return (
-    <View className={containerClassName}>
+    <View className={containerClassName} style={wrapperLayout?.wrapperStyle}>
       {backgroundElement}
       {textInput}
     </View>

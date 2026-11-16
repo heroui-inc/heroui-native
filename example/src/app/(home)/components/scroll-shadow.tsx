@@ -1,8 +1,8 @@
 /* eslint-disable lingui/no-unlocalized-strings -- The long-form body copy on
    this screen is lorem ipsum filler that exists purely to overflow the scroll
    container; translating placeholder Latin is meaningless. */
+import { LegendList } from '@legendapp/list/react-native';
 import { msg } from '@lingui/core/macro';
-import { FlashList } from '@shopify/flash-list';
 import { ScrollShadow, Surface } from 'heroui-native';
 import {
   ScrollView,
@@ -13,6 +13,7 @@ import {
 import { AppText } from '../../../components/app-text';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
+import { useAppLocale } from '../../../contexts/app-locale-context';
 
 const VerticalContent = () => {
   const { height } = useWindowDimensions();
@@ -174,17 +175,38 @@ const HORIZONTAL_ITEMS = Array.from({ length: 10 }, (_, i) => ({
 
 const HorizontalSeparator = () => <View className="w-5" />;
 
+const HORIZONTAL_DRAW_DISTANCE = 3000;
+
+const keyExtractor = (item: (typeof HORIZONTAL_ITEMS)[number]) =>
+  String(item.id);
+
+const renderHorizontalItem = () => (
+  <Surface variant="tertiary" className="size-32" />
+);
+
 const HorizontalContent = () => {
+  const { isRTL } = useAppLocale();
+
   return (
     <View className="flex-1 items-center justify-center">
       <View className="h-40 w-full">
-        <ScrollShadow>
-          <FlashList
+        <ScrollShadow className="flex-1">
+          {/*
+           * `rtl` follows the app's scoped direction instead of
+           * `I18nManager`. Under a scoped direction LegendList's visible
+           * range lags near the far end, so the large `drawDistance` keeps
+           * this short demo list fully rendered.
+           */}
+          <LegendList
             horizontal
+            rtl={isRTL}
+            style={styles.flex}
             data={HORIZONTAL_ITEMS}
-            renderItem={({ item: _item }) => (
-              <Surface variant="tertiary" className="size-32" />
-            )}
+            keyExtractor={keyExtractor}
+            renderItem={renderHorizontalItem}
+            estimatedItemSize={148}
+            drawDistance={HORIZONTAL_DRAW_DISTANCE}
+            recycleItems
             ItemSeparatorComponent={HorizontalSeparator}
             contentContainerStyle={styles.horizontalContent}
             showsHorizontalScrollIndicator={false}
@@ -212,7 +234,11 @@ const SCROLL_SHADOW_VARIANTS: UsageVariant[] = [
 
 const styles = StyleSheet.create({
   horizontalContent: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+  },
+  flex: {
+    flex: 1,
   },
 });
 

@@ -23,6 +23,7 @@ import {
   useAugmentedRef,
   useControllableState,
   useRelativePosition,
+  useWebContentLayoutSync,
   type LayoutPosition,
 } from '../../helpers/internal/hooks';
 import { Portal as PrimitivePortal } from '../portal';
@@ -356,6 +357,15 @@ const Content = forwardRef<ContentRef, ContentProps>(
       disablePositioningStyle,
     });
 
+    const contentRef = React.useRef<ContentRef>(null);
+    React.useImperativeHandle(ref, () => contentRef.current!, [asChild]);
+    useWebContentLayoutSync({
+      contentLayout,
+      contentRef,
+      positionStyle,
+      setContentLayout,
+    });
+
     // Calculate content width based on width prop
     const widthStyle: { width?: number | `${number}%` } = {};
     if (width === 'trigger' && triggerPosition) {
@@ -382,7 +392,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
 
     return (
       <Component
-        ref={ref}
+        ref={contentRef}
         role="menu"
         nativeID={nativeID}
         aria-modal={true}

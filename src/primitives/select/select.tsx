@@ -23,6 +23,7 @@ import {
   useAugmentedRef,
   useControllableState,
   useRelativePosition,
+  useWebContentLayoutSync,
   type LayoutPosition,
 } from '../../helpers/internal/hooks';
 import { Portal as PrimitivePortal } from '../portal';
@@ -426,6 +427,15 @@ const PopoverContent = forwardRef<ContentRef, PopoverContentProps>(
       disablePositioningStyle,
     });
 
+    const contentRef = React.useRef<ContentRef>(null);
+    React.useImperativeHandle(ref, () => contentRef.current!, [asChild]);
+    useWebContentLayoutSync({
+      contentLayout,
+      contentRef,
+      positionStyle,
+      setContentLayout,
+    });
+
     // Calculate content width based on width prop
     const widthStyle: { width?: number | `${number}%` } = {};
     if (width === 'trigger' && triggerPosition) {
@@ -454,7 +464,7 @@ const PopoverContent = forwardRef<ContentRef, PopoverContentProps>(
 
     return (
       <Component
-        ref={ref}
+        ref={contentRef}
         role="dialog"
         nativeID={nativeID}
         aria-modal={true}

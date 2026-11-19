@@ -3,71 +3,28 @@ import type { StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useResolveClassNames } from 'uniwind';
 
-interface UseVerticalPlaceholderStylesParams {
+interface UseCoverBackgroundStyleParams {
   rootClassName?: string;
   style?: StyleProp<ViewStyle>;
 }
 
-export function useVerticalPlaceholderStyles({
+/**
+ * Background color for the covers that hide the content of stacked toasts.
+ * Follows a background color set on the toast root through `style` or
+ * `className`, so the covers match custom toast surfaces; `undefined` keeps
+ * the default color of the `toast__cover` / `toast__cover-edge` classes.
+ */
+export function useCoverBackgroundStyle({
   rootClassName,
   style,
-}: UseVerticalPlaceholderStylesParams) {
+}: UseCoverBackgroundStyleParams): ViewStyle | undefined {
   const resolvedRootClassName = useResolveClassNames(rootClassName ?? '');
 
   return useMemo(() => {
     const resolvedStyle = style ? StyleSheet.flatten(style) : undefined;
-
-    const stylePaddingTop =
-      resolvedStyle?.paddingTop ??
-      resolvedStyle?.paddingVertical ??
-      resolvedStyle?.padding;
-    const stylePaddingBottom =
-      resolvedStyle?.paddingBottom ??
-      resolvedStyle?.paddingVertical ??
-      resolvedStyle?.padding;
-
-    const classNamePaddingTop =
-      resolvedRootClassName?.paddingTop ??
-      resolvedRootClassName?.paddingVertical ??
-      resolvedRootClassName?.padding;
-    const classNamePaddingBottom =
-      resolvedRootClassName?.paddingBottom ??
-      resolvedRootClassName?.paddingVertical ??
-      resolvedRootClassName?.padding;
-
-    const paddingTopValue = stylePaddingTop ?? classNamePaddingTop;
-    const paddingBottomValue = stylePaddingBottom ?? classNamePaddingBottom;
-
-    const topHeight =
-      typeof paddingTopValue === 'number' && paddingTopValue >= 0
-        ? paddingTopValue
-        : 0;
-    const bottomHeight =
-      typeof paddingBottomValue === 'number' && paddingBottomValue >= 0
-        ? paddingBottomValue
-        : 0;
-
-    const styleBackgroundColor = resolvedStyle?.backgroundColor;
-    const classNameBackgroundColor = resolvedRootClassName?.backgroundColor;
     const backgroundColor =
-      styleBackgroundColor ?? classNameBackgroundColor ?? undefined;
+      resolvedStyle?.backgroundColor ?? resolvedRootClassName?.backgroundColor;
 
-    const backgroundStyle: ViewStyle | undefined =
-      backgroundColor !== undefined ? { backgroundColor } : undefined;
-
-    const topStyle: ViewStyle = {
-      height: topHeight,
-      ...backgroundStyle,
-    };
-
-    const bottomStyle: ViewStyle = {
-      height: bottomHeight,
-      ...backgroundStyle,
-    };
-
-    return {
-      topStyle,
-      bottomStyle,
-    };
+    return backgroundColor !== undefined ? { backgroundColor } : undefined;
   }, [resolvedRootClassName, style]);
 }

@@ -92,12 +92,13 @@ You can find more examples in the [GitHub repository](<https://github.com/heroui
 
 ### CloseButton
 
-CloseButton extends all props from [Button](../button/button.md) component. It defaults to `variant='tertiary'`, `size='sm'`, and `isIconOnly=true`.
+CloseButton extends all props from [Button](../button/button.md) component. It defaults to `variant='tertiary'`, `size='sm'`, `isIconOnly=true`, and `aria-label="Close"`.
 
-| prop        | type                   | default | description                                      |
-| ----------- | ---------------------- | ------- | ------------------------------------------------ |
-| `iconProps` | `CloseButtonIconProps` | -       | Props for customizing the close icon             |
-| `children`  | `React.ReactNode`      | -       | Custom content to replace the default close icon |
+| prop         | type                   | default   | description                                      |
+| ------------ | ---------------------- | --------- | ------------------------------------------------ |
+| `iconProps`  | `CloseButtonIconProps` | -         | Props for customizing the close icon             |
+| `children`   | `React.ReactNode`      | -         | Custom content to replace the default close icon |
+| `aria-label` | `string`               | `"Close"` | Label screen readers announce for the button     |
 
 For inherited props including `isDisabled`, `className`, `animation`, `feedbackVariant`, and all Pressable props, see [Button API Reference](../button/button.md#api-reference).
 

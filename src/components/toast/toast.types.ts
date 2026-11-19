@@ -1,9 +1,12 @@
 import type { ViewProps } from 'react-native';
+import type { SharedValue } from 'react-native-reanimated';
 import type { ViewRef } from '../../helpers/internal/types';
 import type * as ToastPrimitive from '../../primitives/toast';
+import type { ToastStackState } from '../../providers/toast/toast-store';
 import type {
   ToastComponentProps,
   ToastShowOptions,
+  ToastTimerControls,
 } from '../../providers/toast/types';
 import type {
   ButtonRootProps,
@@ -38,7 +41,11 @@ export interface ToastRootProps
    * - `opacity` - Animated for visibility transitions when toasts are pushed beyond visible stack limits
    * - `transform` (translateY) - Animated for vertical position transitions when toasts are stacked, and for swipe-to-dismiss gestures
    * - `transform` (scale) - Animated for size scaling transitions when toasts are stacked (toasts behind active one are scaled down)
-   * - `height` - Animated for height transitions when toast content changes
+   * - `height` - Animated to the front toast's height while the toast is stacked behind it
+   *
+   * `opacity` and `transform` are animated on a wrapper view around the root,
+   * so an `opacity` or `transform` set here combines with the animation
+   * instead of replacing it. `height` is animated on the root itself.
    *
    * To customize these properties, use the `animation` prop:
    * ```tsx
@@ -168,7 +175,29 @@ export type UseToastRootAnimationOptions = Pick<
   | 'isSwipeable'
   | 'maxVisibleToasts'
 > &
-  Pick<ToastComponentProps, 'id'>;
+  Pick<ToastComponentProps, 'id'> & {
+    /**
+     * Stack layout from the provider. When set, the live position, count
+     * and front toast come from it on the UI thread instead of the `index`
+     * and `total` props, so the toast does not re-render when it moves.
+     */
+    stack?: SharedValue<ToastStackState>;
+    /**
+     * Reads the stack layout on the JS thread. Used for the first run of the
+     * animated style at mount, where reading `stack` would block on a
+     * synchronous call to the UI thread.
+     */
+    getStack?: () => ToastStackState;
+    /**
+     * `1` while the front toast is dragged; set by the front toast's pan
+     * gesture and read by the covers of the toasts behind it
+     */
+    frontDrag?: SharedValue<number>;
+    /**
+     * Pauses / resumes the auto-dismiss timer while the toast is dragged
+     */
+    timers?: ToastTimerControls;
+  };
 
 /**
  * Props for the DefaultToast component

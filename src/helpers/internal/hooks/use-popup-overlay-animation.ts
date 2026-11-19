@@ -14,7 +14,7 @@ import {
 } from '../utils/animation';
 
 /**
- * Animation hook for popup overlay components (Dialog, Select, BottomSheet, Popover, etc.)
+ * Animation hook for popup overlay components (Dialog, Select, Popover, Menu)
  * Handles both progress-based opacity animation and entering/exiting animations
  */
 export function usePopupOverlayAnimation(options: {

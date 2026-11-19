@@ -54,6 +54,12 @@ export interface UsePopupDialogContentAnimationProps {
 }
 
 /**
+ * Drag `progress` past which releasing the content dismisses it. At or below
+ * it, the content springs back to rest.
+ */
+const DISMISS_PROGRESS_THRESHOLD = 1.1;
+
+/**
  * Default entering animation for dialog content
  * Dialog content animates with scale and opacity transitions
  */
@@ -180,7 +186,7 @@ export const usePopupDialogContentAnimation = ({
           contentTranslateYAnchor.set(contentTranslateY.get());
           contentScaleAnchor.set(contentScale.get());
 
-          if (progress.get() > 1.1) {
+          if (progress.get() > DISMISS_PROGRESS_THRESHOLD) {
             isGestureReleaseAnimationRunning.set(true);
             scheduleOnRN(dismissKeyboard);
             progress.set(
@@ -235,6 +241,34 @@ export const usePopupDialogContentAnimation = ({
   );
 
   const rDragContainerStyle = useAnimatedStyle(() => {
+    const releaseProgress = progressAnchor.get();
+
+    /**
+     * Released without dismissing (an upward drag, or a short downward one):
+     * `progress` springs from the release point back to 1, and the content
+     * eases from where it was let go back to rest. The fraction is computed
+     * directly because the release point can sit on either side of 1, which
+     * a single ascending `interpolate` input range cannot express.
+     */
+    if (
+      isGestureReleaseAnimationRunning.get() &&
+      releaseProgress <= DISMISS_PROGRESS_THRESHOLD
+    ) {
+      const releaseDistance = releaseProgress - 1;
+      const remaining =
+        releaseDistance === 0
+          ? 0
+          : Math.min(Math.max((progress.get() - 1) / releaseDistance, 0), 1);
+
+      return {
+        opacity: 1,
+        transform: [
+          { translateY: contentTranslateYAnchor.get() * remaining },
+          { scale: 1 + (contentScaleAnchor.get() - 1) * remaining },
+        ],
+      };
+    }
+
     if (isGestureReleaseAnimationRunning.get()) {
       return {
         opacity: interpolate(

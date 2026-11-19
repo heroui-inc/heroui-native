@@ -24,6 +24,7 @@ const CloseButtonRoot = forwardRef<PressableRef, CloseButtonProps>(
         variant="tertiary"
         size="sm"
         isIconOnly
+        aria-label="Close"
         className={rootClassName}
         hitSlop={12}
         {...restProps}
@@ -48,6 +49,7 @@ CloseButtonRoot.displayName = DISPLAY_NAME.CLOSE_BUTTON_ROOT;
  *
  * @component CloseButton - A specialized button component that renders a close icon by default.
  * It is a Button with default variant='tertiary', size='sm', and isIconOnly=true.
+ * Screen readers announce it as "Close"; pass `aria-label` to change that.
  * The close icon can be customized via the iconProps prop, or you can provide custom children.
  *
  * @see Full documentation: https://heroui.com/docs/native/components/close-button

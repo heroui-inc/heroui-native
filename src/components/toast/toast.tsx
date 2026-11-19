@@ -1,5 +1,11 @@
-import { forwardRef, useMemo } from 'react';
-import { View, type ViewStyle } from 'react-native';
+import {
+  forwardRef,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+} from 'react';
+import { View, type LayoutChangeEvent, type ViewStyle } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
@@ -7,20 +13,23 @@ import { cn, colorKit } from '../../helpers/external/utils';
 import {
   CloseIcon,
   HeroText,
+  PortalGestureRoot,
   ThemeBackground,
   useHasDefaultThemeBackground,
 } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
 import { createContext } from '../../helpers/internal/utils';
+import { composeRefs } from '../../primitives/slot/utils';
 import * as ToastPrimitive from '../../primitives/toast';
 import { useToastConfig } from '../../providers/toast/toast-config.context';
+import { useToastItem } from '../../providers/toast/toast-item.context';
 import type { ToastComponentProps } from '../../providers/toast/types';
 import { Button } from '../button';
 import { flattenColorOverBackground } from '../glass-view/glass-view.utils';
 import { useToastRootAnimation } from './toast.animation';
 import { DISPLAY_NAME } from './toast.constants';
-import { useVerticalPlaceholderStyles } from './toast.hooks';
+import { useCoverBackgroundStyle } from './toast.hooks';
 import { toastClassNames, toastStyleSheet } from './toast.styles';
 import type {
   DefaultToastProps,
@@ -34,6 +43,16 @@ import type {
 } from './toast.types';
 
 const AnimatedToastRoot = Animated.createAnimatedComponent(ToastPrimitive.Root);
+
+/**
+ * Layout getters of a host element ref (`ReactNativeElement`, React Native
+ * 0.83+). Read defensively: older versions do not provide them.
+ */
+type MeasurableElement = {
+  offsetHeight?: unknown;
+  offsetWidth?: unknown;
+  parentElement?: { offsetWidth?: unknown } | null;
+};
 
 const [ToastProvider, useToast] = createContext<ToastContextValue>({
   name: 'ToastContext',
@@ -86,6 +105,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     isSwipeable: localIsSwipeable,
     isAnimatedStyleActive = true,
     hide,
+    onLayout: onLayoutProp,
     ...restProps
   } = props;
 
@@ -105,8 +125,8 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     className,
   });
 
-  // Extract padding and backgroundColor for placeholder Views
-  const { topStyle, bottomStyle } = useVerticalPlaceholderStyles({
+  // Background color of the covers that hide the content of stacked toasts
+  const coverBackgroundStyle = useCoverBackgroundStyle({
     rootClassName,
     style,
   });
@@ -120,12 +140,12 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
 
   /**
    * On themes with default background content (e.g. glass) the root's
-   * `--color-overlay` is translucent, so the placeholder Views would let the
-   * stacked content behind the toast show through. Paint them with the same
-   * opaque color the toast background layer uses: the `overlay` token
-   * flattened over `--background`.
+   * `--color-overlay` is translucent, so the covers would let the content of
+   * a stacked toast show through. Paint them with the same opaque color the
+   * toast background layer uses: the `overlay` token flattened over
+   * `--background`.
    */
-  const placeholderFallbackStyle = useMemo<ViewStyle | undefined>(
+  const coverFallbackStyle = useMemo<ViewStyle | undefined>(
     () =>
       hasDefaultThemeBackground
         ? {
@@ -138,8 +158,15 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     [hasDefaultThemeBackground, themeColorOverlay, themeColorBackground]
   );
 
+  const { isBehindStack, stack, getStack, frontDrag, timers } = useToastItem();
+
   const {
     rContainerStyle,
+    rRootStyle,
+    rCoverStyle,
+    rCoverEdgeStyle,
+    onLayout: onLayoutHeight,
+    recordMountHeight,
     entering,
     exiting,
     panGesture,
@@ -154,10 +181,55 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
     id,
     isSwipeable,
     maxVisibleToasts,
+    stack,
+    getStack,
+    frontDrag,
+    timers,
   });
 
+  const rootRef = useRef<ViewRef>(null);
+  const composedRef = useMemo(() => composeRefs(ref, rootRef), [ref]);
+
+  /**
+   * Measures the natural height synchronously after mount, before the first
+   * frame is drawn, so the toasts behind it take the right height without
+   * waiting for the asynchronous `onLayout` event. `offsetHeight` (layout
+   * height, ignoring transforms) is available on host refs from React
+   * Native 0.83; on older versions `onLayout` records the height instead.
+   *
+   * The measurement is only trusted when the toast fits its container: the
+   * root stretches to its parent, so a root wider than its parent means the
+   * overlay has not been laid out yet (Android, first toast after the
+   * overlay mounts) and the text wrapped at the wrong width. `onLayout`
+   * records the height in that case.
+   */
+  useLayoutEffect(() => {
+    const node = rootRef.current as unknown as MeasurableElement | null;
+    const offsetHeight = node?.offsetHeight;
+    const offsetWidth = node?.offsetWidth;
+    const parentWidth = node?.parentElement?.offsetWidth;
+    if (
+      typeof offsetHeight === 'number' &&
+      typeof offsetWidth === 'number' &&
+      typeof parentWidth === 'number' &&
+      offsetHeight > 0 &&
+      parentWidth > 0 &&
+      offsetWidth <= parentWidth + 1
+    ) {
+      recordMountHeight(offsetHeight);
+    }
+  }, [recordMountHeight]);
+
+  const handleLayout = useCallback(
+    (event: LayoutChangeEvent) => {
+      onLayoutHeight(event);
+      onLayoutProp?.(event);
+    },
+    [onLayoutHeight, onLayoutProp]
+  );
+
   const rootStyle = isAnimatedStyleActive
-    ? [toastStyleSheet.root, rContainerStyle, style]
+    ? [toastStyleSheet.root, rRootStyle, style]
     : [toastStyleSheet.root, style];
 
   const animationSettingsContextValue = useMemo(
@@ -178,9 +250,7 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
 
   /**
    * Background layer rendered behind the toast surface. `undefined` falls
-   * back to the theme-aware default; `null` removes the layer. Only the
-   * visible instance gets the layer — the hidden measurement instance stays
-   * background-free.
+   * back to the theme-aware default; `null` removes the layer.
    */
   const backgroundElement =
     background === undefined ? <ToastBackground /> : background;
@@ -188,57 +258,106 @@ const ToastRoot = forwardRef<ViewRef, ToastRootProps>((props, ref) => {
   return (
     <AnimationSettingsProvider value={animationSettingsContextValue}>
       <ToastProvider value={contextValue}>
-        <GestureDetector gesture={panGesture}>
-          <Animated.View
-            className={cn(
-              'absolute left-0 right-0',
-              placement === 'top' ? 'top-0' : 'bottom-0'
-            )}
-            entering={entering}
-            exiting={exiting}
-          >
-            {/* Animated toast instance */}
-            <AnimatedToastRoot
-              ref={ref}
-              className={rootClassName}
-              style={rootStyle}
-              {...restProps}
-            >
-              {backgroundElement}
-              {children}
-              {/* 
-                When visible toasts have different heights, the toast adapts to the last visible toast height.
-                In cases where a toast originally has one height and gets smaller when a new toast comes to stack,
-                content might be visible behind the last toast without proper padding.
-                The placeholder Views ensure that the content under active toast is hidden.
+        {/*
+          Positions the toast at the top or bottom of the overlay and runs the
+          entering / exiting layout animations. A toast behind the visible
+          stack is fully transparent, so it mounts and unmounts without them
+          and never flashes into view.
+        */}
+        <Animated.View
+          className={cn(
+            'absolute left-0 right-0',
+            placement === 'top' ? 'top-0' : 'bottom-0'
+          )}
+          entering={isBehindStack ? undefined : entering}
+          exiting={isBehindStack ? undefined : exiting}
+        >
+          {/*
+            The overlay that hosts toasts is a separate native root, and
+            Gesture Handler only routes touches to detectors that have a
+            `GestureHandlerRootView` in their native ancestor chain. Without
+            this nested root the pan gesture never activates on Android. It
+            wraps only the toast, not the whole overlay, so touches outside
+            the toasts still reach the app.
+          */}
+          <PortalGestureRoot>
+            <GestureDetector gesture={panGesture}>
+              {/*
+                Static view the pan gesture is attached to. Gesture Handler
+                measures the drag relative to this view, so it must not be the
+                view that moves with the finger: the translation would shrink
+                as the toast follows it and the toast would trail the finger.
               */}
-              <View
-                className="absolute left-0 right-0 top-0"
-                style={[topStyle, placeholderFallbackStyle]}
-              />
-              <View
-                className="absolute left-0 right-0 bottom-0"
-                style={[bottomStyle, placeholderFallbackStyle]}
-              />
-            </AnimatedToastRoot>
-            {/* Hidden toast instance for height measurement */}
-            <AnimatedToastRoot
-              pointerEvents="none"
-              className={cn(rootClassName, 'absolute opacity-0')}
-              style={[toastStyleSheet.root, style]}
-              onLayout={(event) => {
-                const measuredHeight = event.nativeEvent.layout.height;
-                heights.modify((value) => {
-                  'worklet';
-                  return { ...value, [id]: measuredHeight };
-                });
-              }}
-              {...restProps}
-            >
-              {children}
-            </AnimatedToastRoot>
-          </Animated.View>
-        </GestureDetector>
+              <View collapsable={false}>
+                {/*
+                  Stack position (translateY, scale, opacity) is animated on
+                  this view rather than on the root. Android clips a scaled
+                  view against its unscaled bounds, so the root only animates
+                  its height and clips its content unscaled.
+                */}
+                <Animated.View
+                  style={isAnimatedStyleActive ? rContainerStyle : undefined}
+                >
+                  <AnimatedToastRoot
+                    ref={composedRef}
+                    className={rootClassName}
+                    style={rootStyle}
+                    onLayout={handleLayout}
+                    {...restProps}
+                  >
+                    {backgroundElement}
+                    {children}
+                  </AnimatedToastRoot>
+                  {/*
+                    Covers for toasts stacked behind the front one. Such a
+                    toast takes the front toast's height, so its content is
+                    cut off; the covers hide it. Both are siblings drawn over
+                    the root (not children) that reach 2px past its bottom
+                    edge: the stack scale puts the rounded edge on fractional
+                    pixels, and a cover clipped by the same edge would let the
+                    anti-aliased edge pixels of the text show through.
+
+                    - Full cover: hides all content. Fades out while the front
+                      toast is dragged, so the next toast is readable as the
+                      front one is swiped away.
+                    - Edge cover: hides the cut-off bottom line of content.
+                      Stays while the front toast is dragged.
+
+                    Both are transparent on the front toast.
+                  */}
+                  {isAnimatedStyleActive && (
+                    <Animated.View
+                      pointerEvents="none"
+                      aria-hidden
+                      accessibilityElementsHidden
+                      importantForAccessibility="no-hide-descendants"
+                      className={toastClassNames.cover()}
+                      style={[
+                        coverBackgroundStyle,
+                        coverFallbackStyle,
+                        rCoverStyle,
+                      ]}
+                    />
+                  )}
+                  {isAnimatedStyleActive && (
+                    <Animated.View
+                      pointerEvents="none"
+                      aria-hidden
+                      accessibilityElementsHidden
+                      importantForAccessibility="no-hide-descendants"
+                      className={toastClassNames.coverEdge()}
+                      style={[
+                        coverBackgroundStyle,
+                        coverFallbackStyle,
+                        rCoverEdgeStyle,
+                      ]}
+                    />
+                  )}
+                </Animated.View>
+              </View>
+            </GestureDetector>
+          </PortalGestureRoot>
+        </Animated.View>
       </ToastProvider>
     </AnimationSettingsProvider>
   );

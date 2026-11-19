@@ -5,7 +5,12 @@ import {
   isValidElement,
   type ComponentType,
 } from 'react';
-import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  type LayoutChangeEvent,
+  type ViewStyle,
+} from 'react-native';
 import Animated, { useComposedEventHandler } from 'react-native-reanimated';
 import { useThemeColor } from '../../helpers/external/hooks';
 import { colorKit } from '../../helpers/external/utils';
@@ -13,6 +18,7 @@ import type { ViewRef } from '../../helpers/internal/types';
 import { easeGradient } from '../../helpers/internal/utils';
 import { useScrollShadowRootAnimation } from './scroll-shadow.animation';
 import {
+  BACKGROUND_IMAGE_STYLE_KEY,
   DEFAULT_SCROLL_EVENT_THROTTLE,
   DEFAULT_SHADOW_SIZE,
   SCROLL_SHADOW_DISPLAY_NAME,
@@ -21,7 +27,10 @@ import {
   scrollShadowClassNames,
   scrollShadowStyleSheet,
 } from './scroll-shadow.styles';
-import type { ScrollShadowProps } from './scroll-shadow.types';
+import type {
+  ScrollShadowOrientation,
+  ScrollShadowProps,
+} from './scroll-shadow.types';
 
 /**
  * Cache for animated components to prevent remounting on every render.
@@ -55,6 +64,51 @@ function getAnimatedComponent(
     }
   }
   return cached;
+}
+
+type GradientDirection = 'to bottom' | 'to top' | 'to right' | 'to left';
+
+/**
+ * Builds a `linear-gradient` background image style from eased color stops.
+ * Uses `backgroundImage` on React Native 0.87+ and
+ * `experimental_backgroundImage` on older versions.
+ *
+ * @param direction - CSS gradient direction (from the opaque edge outward)
+ * @param colors - Gradient colors
+ * @param locations - Gradient stop locations in the 0-1 range
+ * @returns A view style that draws the gradient
+ * @see https://reactnative.dev/docs/view-style-props#backgroundimage
+ */
+function createGradientStyle(
+  direction: GradientDirection,
+  colors: readonly string[],
+  locations: readonly number[]
+): ViewStyle {
+  const colorStops = colors.map((stopColor, index) => ({
+    color: stopColor,
+    positions: [`${(locations[index] ?? 0) * 100}%`],
+  }));
+
+  return {
+    [BACKGROUND_IMAGE_STYLE_KEY]: [
+      { type: 'linear-gradient', direction, colorStops },
+    ],
+  } as ViewStyle;
+}
+
+/**
+ * Returns the gradient directions for the top/left and bottom/right shadows.
+ * Both shadows start opaque at the outer edge and fade toward the content.
+ *
+ * @param orientation - Scroll orientation
+ */
+function getGradientDirections(orientation: ScrollShadowOrientation): {
+  topLeft: GradientDirection;
+  bottomRight: GradientDirection;
+} {
+  return orientation === 'vertical'
+    ? { topLeft: 'to bottom', bottomRight: 'to top' }
+    : { topLeft: 'to right', bottomRight: 'to left' };
 }
 
 const ScrollShadowRoot = forwardRef<ViewRef, ScrollShadowProps>(
@@ -174,86 +228,81 @@ const ScrollShadowRoot = forwardRef<ViewRef, ScrollShadowProps>(
       }
     );
 
-    const { colors: bottomRightColors, locations: bottomRightLocations } =
-      easeGradient({
-        colorStops: {
-          0: {
-            color: colorKit.setAlpha(shadowColor, 0).hex(),
-          },
-          1: {
-            color: colorKit.setAlpha(shadowColor, 1).hex(),
-          },
-        },
-      });
+    // Native gradients reuse the top/left stops (opaque at the outer edge) and
+    // flip direction for the bottom/right edge.
+    const directions = getGradientDirections(orientation);
+    const topLeftGradientStyle = createGradientStyle(
+      directions.topLeft,
+      topLeftColors,
+      topLeftLocations
+    );
+    const bottomRightGradientStyle = createGradientStyle(
+      directions.bottomRight,
+      topLeftColors,
+      topLeftLocations
+    );
+
+    const isVertical = orientation === 'vertical';
+
+    const topLeftShadowStyle = isVertical
+      ? [scrollShadowStyleSheet.topShadow, { height: size }]
+      : [scrollShadowStyleSheet.leftShadow, { width: size }];
+
+    const bottomRightShadowStyle = isVertical
+      ? [scrollShadowStyleSheet.bottomShadow, { height: size }]
+      : [scrollShadowStyleSheet.rightShadow, { width: size }];
+
+    // Legacy gradient direction for the deprecated `LinearGradientComponent`
+    const legacyGradientDirection = isVertical
+      ? undefined
+      : { start: { x: 0, y: 0 }, end: { x: 1, y: 0 } };
 
     return (
       <View ref={ref} className={rootClassName} style={style} {...restProps}>
         {enhancedChild}
 
         {/* Top/Left Shadow */}
-        {orientation === 'vertical' ? (
-          <Animated.View
-            style={[
-              scrollShadowStyleSheet.topShadow,
-              { height: size },
-              topEdgeShadowStyle,
-            ]}
-          >
+        {LinearGradientComponent ? (
+          <Animated.View style={[topLeftShadowStyle, topEdgeShadowStyle]}>
             <LinearGradientComponent
               colors={topLeftColors}
               locations={topLeftLocations}
+              {...legacyGradientDirection}
               style={StyleSheet.absoluteFill}
             />
           </Animated.View>
         ) : (
           <Animated.View
             style={[
-              scrollShadowStyleSheet.leftShadow,
-              { width: size },
+              topLeftShadowStyle,
+              topLeftGradientStyle,
               topEdgeShadowStyle,
             ]}
-          >
-            <LinearGradientComponent
-              colors={topLeftColors}
-              locations={topLeftLocations}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={StyleSheet.absoluteFill}
-            />
-          </Animated.View>
+          />
         )}
 
         {/* Bottom/Right Shadow */}
-        {orientation === 'vertical' ? (
+        {LinearGradientComponent ? (
           <Animated.View
-            style={[
-              scrollShadowStyleSheet.bottomShadow,
-              { height: size },
-              bottomEdgeShadowStyle,
-            ]}
+            style={[bottomRightShadowStyle, bottomEdgeShadowStyle]}
           >
             <LinearGradientComponent
-              colors={bottomRightColors}
-              locations={bottomRightLocations}
+              colors={[...topLeftColors].reverse()}
+              locations={topLeftLocations
+                .map((location) => 1 - location)
+                .reverse()}
+              {...legacyGradientDirection}
               style={StyleSheet.absoluteFill}
             />
           </Animated.View>
         ) : (
           <Animated.View
             style={[
-              scrollShadowStyleSheet.rightShadow,
-              { width: size },
+              bottomRightShadowStyle,
+              bottomRightGradientStyle,
               bottomEdgeShadowStyle,
             ]}
-          >
-            <LinearGradientComponent
-              colors={bottomRightColors}
-              locations={bottomRightLocations}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={StyleSheet.absoluteFill}
-            />
-          </Animated.View>
+          />
         )}
       </View>
     );
@@ -272,6 +321,10 @@ ScrollShadowRoot.displayName = SCROLL_SHADOW_DISPLAY_NAME.ROOT;
  * The component intercepts scroll events from the child scrollable component and manages
  * shadow visibility based on scroll position and content size. Supports both vertical
  * and horizontal orientations.
+ *
+ * Shadows are drawn with the native `backgroundImage` style (`linear-gradient`),
+ * so no gradient library is required. Passing the deprecated
+ * `LinearGradientComponent` prop still renders that component instead.
  *
  * @see Full documentation: https://heroui.com/docs/native/components/scroll-shadow
  */

@@ -1,8 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react/macro';
-import { BottomSheet, Button, Label, Slider } from 'heroui-native';
-import { useState } from 'react';
+import {
+  BottomSheet,
+  Button,
+  Label,
+  Slider,
+  type BottomSheetRef,
+} from 'heroui-native';
+import { useRef } from 'react';
 import { View } from 'react-native';
 import type { UsageVariant } from '../../../components/component-presentation/types';
 import { UsageVariantFlatList } from '../../../components/component-presentation/usage-variant-flatlist';
@@ -279,59 +285,56 @@ const CustomStylesContent = () => {
 
 const InsideBottomSheetContent = () => {
   const { t } = useLingui();
-  const [isOpen, setIsOpen] = useState(false);
+  const sheetRef = useRef<BottomSheetRef>(null);
 
   return (
     <View className="flex-1">
       <View className="flex-1 items-center justify-center">
-        <BottomSheet isOpen={isOpen} onOpenChange={setIsOpen}>
-          <BottomSheet.Trigger asChild>
-            <Button variant="secondary" isDisabled={isOpen}>
-              {t`Open slider settings`}
-            </Button>
-          </BottomSheet.Trigger>
-          <BottomSheet.Portal>
-            <BottomSheet.Overlay />
-            <BottomSheet.Content>
-              <BottomSheet.Title className="text-xl font-semibold mb-4">
+        <Button variant="secondary" onPress={() => sheetRef.current?.present()}>
+          {t`Open slider settings`}
+        </Button>
+        <BottomSheet ref={sheetRef}>
+          <BottomSheet.Content>
+            <BottomSheet.Header className="mb-4">
+              <BottomSheet.Title className="text-xl font-semibold">
                 {t`Audio settings`}
               </BottomSheet.Title>
-              <View className="gap-6">
-                <Slider defaultValue={70}>
-                  <View className="flex-row items-center justify-between">
-                    <Label>{t`Volume`}</Label>
-                    <Slider.Output />
-                  </View>
-                  <Slider.Track>
-                    <Slider.Fill />
-                    <Slider.Thumb />
-                  </Slider.Track>
-                </Slider>
+            </BottomSheet.Header>
+            <BottomSheet.Body className="gap-6">
+              <Slider defaultValue={70}>
+                <View className="flex-row items-center justify-between">
+                  <Label>{t`Volume`}</Label>
+                  <Slider.Output />
+                </View>
+                <Slider.Track>
+                  <Slider.Fill />
+                  <Slider.Thumb />
+                </Slider.Track>
+              </Slider>
 
-                <Slider defaultValue={50}>
-                  <View className="flex-row items-center justify-between">
-                    <Label>{t`Bass`}</Label>
-                    <Slider.Output />
-                  </View>
-                  <Slider.Track>
-                    <Slider.Fill />
-                    <Slider.Thumb />
-                  </Slider.Track>
-                </Slider>
+              <Slider defaultValue={50}>
+                <View className="flex-row items-center justify-between">
+                  <Label>{t`Bass`}</Label>
+                  <Slider.Output />
+                </View>
+                <Slider.Track>
+                  <Slider.Fill />
+                  <Slider.Thumb />
+                </Slider.Track>
+              </Slider>
 
-                <Slider defaultValue={40}>
-                  <View className="flex-row items-center justify-between">
-                    <Label>{t`Treble`}</Label>
-                    <Slider.Output />
-                  </View>
-                  <Slider.Track>
-                    <Slider.Fill />
-                    <Slider.Thumb />
-                  </Slider.Track>
-                </Slider>
-              </View>
-            </BottomSheet.Content>
-          </BottomSheet.Portal>
+              <Slider defaultValue={40}>
+                <View className="flex-row items-center justify-between">
+                  <Label>{t`Treble`}</Label>
+                  <Slider.Output />
+                </View>
+                <Slider.Track>
+                  <Slider.Fill />
+                  <Slider.Thumb />
+                </Slider.Track>
+              </Slider>
+            </BottomSheet.Body>
+          </BottomSheet.Content>
         </BottomSheet>
       </View>
     </View>

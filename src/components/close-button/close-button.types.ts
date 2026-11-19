@@ -20,7 +20,8 @@ export interface CloseButtonIconProps {
  * Props for the CloseButton component
  *
  * Extends ButtonRootProps, allowing full override of all button props.
- * Defaults to variant='tertiary', size='sm', and isIconOnly=true.
+ * Defaults to variant='tertiary', size='sm', isIconOnly=true, and
+ * aria-label="Close", which screen readers announce for the icon-only button.
  */
 export type CloseButtonProps = ButtonRootProps & {
   /**

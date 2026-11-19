@@ -7,6 +7,40 @@
     overflow: hidden;
   }
 
+  /*
+    Full cover drawn over a toast stacked behind the front toast. Hides all
+    of its content; fades out while the front toast is dragged so the next
+    toast is readable (opacity animated on the UI thread). Matches the root
+    shape and reaches 2px past its bottom edge so the anti-aliased edge of the
+    scaled root is fully covered.
+  */
+  .toast__cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    border-radius: var(--radius-3xl);
+    background-color: var(--color-overlay);
+  }
+
+  /*
+    Bottom edge cover of a toast stacked behind the front toast. Hides the
+    cut-off line of content at its bottom and, unlike the full cover, stays
+    while the front toast is dragged. As tall as the corner radius (plus the
+    2px it reaches past the root) so its rounded corners match the root's.
+  */
+  .toast__cover-edge {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: calc(var(--radius-3xl) + 2px);
+    border-bottom-left-radius: var(--radius-3xl);
+    border-bottom-right-radius: var(--radius-3xl);
+    background-color: var(--color-overlay);
+  }
+
   .toast__background {
     position: absolute;
     inset: 0;

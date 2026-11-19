@@ -2,7 +2,10 @@ import type { ReactNode } from 'react';
 import { useMemo } from 'react';
 import { Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FullWindowOverlay } from '../../helpers/internal/components';
+import {
+  AboveNativeSheet,
+  FullWindowOverlay,
+} from '../../helpers/internal/components';
 import type { ToastInsets } from './types';
 
 interface InsetsContainerProps {
@@ -87,7 +90,7 @@ export function InsetsContainer({
   );
 
   if (Platform.OS !== 'ios') {
-    return content;
+    return <AboveNativeSheet>{content}</AboveNativeSheet>;
   }
 
   return (

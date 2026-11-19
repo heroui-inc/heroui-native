@@ -1,4 +1,3 @@
-import type { BottomSheetProps } from '@gorhom/bottom-sheet';
 import type { ReactNode } from 'react';
 import type { TextProps, ViewProps, ViewStyle } from 'react-native';
 import type {
@@ -328,8 +327,7 @@ export interface SelectContentPopoverProps
  * Select Content props for 'bottom-sheet' presentation
  */
 export interface SelectContentBottomSheetProps
-  extends Partial<BottomSheetProps>,
-    BaseBottomSheetContentProps {
+  extends BaseBottomSheetContentProps {
   /**
    * Presentation mode for the select
    */

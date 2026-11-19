@@ -1,42 +1,65 @@
-import { useAnimationSettings } from '../../helpers/internal/contexts';
-import type { AnimationDisabled } from '../../helpers/internal/types';
+import type { ReanimatedTrueSheetContextValue } from '@lodev09/react-native-true-sheet/reanimated';
 import {
-  createContext,
-  getAnimationState,
-  getIsAnimationDisabledValue,
-} from '../../helpers/internal/utils';
-import type { BottomSheetAnimationContextValue } from './bottom-sheet.types';
+  Extrapolation,
+  interpolate,
+  useDerivedValue,
+} from 'react-native-reanimated';
+import { useCombinedAnimationDisabledState } from '../../helpers/internal/hooks';
+import type { AnimationRootDisableAll } from '../../helpers/internal/types';
+import TrueSheetReanimatedPackage from '../../optional/true-sheet-reanimated';
+import { MISSING_PACKAGE_ERROR } from './bottom-sheet.constants';
+import type { UseBottomSheetAnimationReturn } from './bottom-sheet.types';
 
-const [BottomSheetAnimationProvider, useBottomSheetAnimation] =
-  createContext<BottomSheetAnimationContextValue>({
-    name: 'BottomSheetAnimationContext',
-  });
+/**
+ * Animation hook for BottomSheet root component. Resolves the `disable-all`
+ * cascade for the sheet's animated descendants.
+ */
+export function useBottomSheetRootAnimation(options: {
+  animation: AnimationRootDisableAll | undefined;
+}) {
+  const { animation } = options;
 
-export { BottomSheetAnimationProvider, useBottomSheetAnimation };
+  const isAllAnimationsDisabled = useCombinedAnimationDisabledState(animation);
+
+  return {
+    isAllAnimationsDisabled,
+  };
+}
+
+// --------------------------------------------------
+
+function useTrueSheetValues(): ReanimatedTrueSheetContextValue {
+  const useReanimatedTrueSheet =
+    TrueSheetReanimatedPackage?.useReanimatedTrueSheet;
+
+  if (!useReanimatedTrueSheet) {
+    throw new Error(MISSING_PACKAGE_ERROR);
+  }
+
+  return useReanimatedTrueSheet();
+}
 
 // --------------------------------------------------
 
 /**
- * Animation hook for BottomSheet Content component
- * Handles animation disabled state based on local and global animation settings
+ * Returns the live animation values of the enclosing `BottomSheet`.
+ * Must be called inside `BottomSheet`, which owns the sheet's values.
+ *
+ * @example
+ * ```tsx
+ * const { animatedPosition } = useBottomSheetAnimation();
+ * const style = useAnimatedStyle(() => ({
+ *   transform: [{ translateY: animatedPosition.get() - 40 }],
+ * }));
+ * ```
  */
-export function useBottomSheetContentAnimation(options: {
-  /** Animation configuration for bottom sheet content */
-  animation: AnimationDisabled | undefined;
-}) {
-  const { animation } = options;
+export function useBottomSheetAnimation(): UseBottomSheetAnimationReturn {
+  const trueSheetValues = useTrueSheetValues();
+  const { animatedIndex } = trueSheetValues;
 
-  // Read from global animation context (always available in compound parts)
-  const { isAllAnimationsDisabled } = useAnimationSettings();
+  const progress = useDerivedValue(() =>
+    interpolate(animatedIndex.get(), [-1, 0], [0, 1], Extrapolation.CLAMP)
+  );
 
-  const { isAnimationDisabled } = getAnimationState(animation);
-
-  const isAnimationDisabledValue = getIsAnimationDisabledValue({
-    isAnimationDisabled,
-    isAllAnimationsDisabled,
-  });
-
-  return {
-    isAnimationDisabledValue,
-  };
+  return { ...trueSheetValues, progress };
 }

@@ -93,6 +93,7 @@ export default defineConfig([
             { regex: { pattern: 'colors?$', flags: 'i' } },
             { regex: { pattern: 'Id$' } },
             { regex: { pattern: 'style$', flags: 'i' } },
+            { regex: { pattern: 'Blur$' } },
             { regex: { pattern: '^(keyboard|header|gesture)[A-Z]' } },
             { regex: { pattern: '^(light|dark)Variant$' } },
             { regex: { pattern: '^(primary|secondary|tertiary)$' } },

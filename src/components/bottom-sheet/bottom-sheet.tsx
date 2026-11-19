@@ -1,286 +1,289 @@
-import type GorhomBottomSheet from '@gorhom/bottom-sheet';
-import { forwardRef, useMemo } from 'react';
-import { StyleSheet, type GestureResponderEvent } from 'react-native';
-import Animated, { useSharedValue } from 'react-native-reanimated';
 import {
-  BottomSheetBackground,
-  FullWindowOverlay,
+  Children,
+  forwardRef,
+  useCallback,
+  useId,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+} from 'react';
+import { Platform, View, type GestureResponderEvent } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useThemeColor } from '../../helpers/external/hooks';
+import {
   HeroText,
-  BottomSheetContent as InternalBottomSheetContent,
-  PopupOverlayBlurView,
+  useHasDefaultThemeBackground,
 } from '../../helpers/internal/components';
-import {
-  AnimationSettingsProvider,
-  useAnimationSettings,
-} from '../../helpers/internal/contexts';
-import {
-  usePopupOverlayAnimation,
-  usePopupOverlayVariant,
-  usePopupRootAnimation,
-} from '../../helpers/internal/hooks';
-import type { PressableRef, TextRef } from '../../helpers/internal/types';
-import * as BottomSheetPrimitives from '../../primitives/bottom-sheet';
-import * as BottomSheetPrimitivesTypes from '../../primitives/bottom-sheet/bottom-sheet.types';
+import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
+import type {
+  PressableRef,
+  TextRef,
+  ViewRef,
+} from '../../helpers/internal/types';
+import { createContext } from '../../helpers/internal/utils';
+import TrueSheetReanimatedPackage from '../../optional/true-sheet-reanimated';
 import { CloseButton } from '../close-button';
 import {
-  BottomSheetAnimationProvider,
   useBottomSheetAnimation,
+  useBottomSheetRootAnimation,
 } from './bottom-sheet.animation';
-import { DISPLAY_NAME } from './bottom-sheet.constants';
+import {
+  DEFAULT_DETENTS,
+  DISPLAY_NAME,
+  MISSING_PACKAGE_ERROR,
+} from './bottom-sheet.constants';
 import {
   bottomSheetClassNames,
   bottomSheetStyleSheet,
 } from './bottom-sheet.styles';
 import type {
+  BottomSheetBodyProps,
   BottomSheetCloseProps,
   BottomSheetContentProps,
+  BottomSheetContextValue,
   BottomSheetDescriptionProps,
-  BottomSheetOverlayProps,
-  BottomSheetPortalProps,
-  BottomSheetRootProps,
+  BottomSheetFooterProps,
+  BottomSheetHeaderProps,
+  BottomSheetProps,
+  BottomSheetRef,
   BottomSheetTitleProps,
-  BottomSheetTriggerProps,
 } from './bottom-sheet.types';
+import { getStickyPart, isStickyPart } from './bottom-sheet.utils';
 
-const AnimatedOverlay = Animated.createAnimatedComponent(
-  BottomSheetPrimitives.Overlay
-);
+const ReanimatedTrueSheet = TrueSheetReanimatedPackage?.ReanimatedTrueSheet;
+const ReanimatedTrueSheetProvider =
+  TrueSheetReanimatedPackage?.ReanimatedTrueSheetProvider;
 
-const useBottomSheet = BottomSheetPrimitives.useRootContext;
-
-// --------------------------------------------------
-
-const BottomSheetRoot = forwardRef<
-  BottomSheetPrimitivesTypes.RootRef,
-  BottomSheetRootProps
->(
-  (
-    { children, isOpen, isDefaultOpen, onOpenChange, animation, ...props },
-    ref
-  ) => {
-    const { progress, isDragging, isAllAnimationsDisabled } =
-      usePopupRootAnimation({
-        animation,
-      });
-
-    const animationContextValue = useMemo(
-      () => ({
-        progress,
-        isDragging,
-      }),
-      [progress, isDragging]
-    );
-
-    const animationSettingsContextValue = useMemo(
-      () => ({
-        isAllAnimationsDisabled,
-      }),
-      [isAllAnimationsDisabled]
-    );
-
-    return (
-      <AnimationSettingsProvider value={animationSettingsContextValue}>
-        <BottomSheetAnimationProvider value={animationContextValue}>
-          <BottomSheetPrimitives.Root
-            ref={ref}
-            isOpen={isOpen}
-            isDefaultOpen={isDefaultOpen}
-            onOpenChange={onOpenChange}
-            {...props}
-          >
-            {children}
-          </BottomSheetPrimitives.Root>
-        </BottomSheetAnimationProvider>
-      </AnimationSettingsProvider>
-    );
-  }
-);
+const [BottomSheetProvider, useBottomSheetContext] =
+  createContext<BottomSheetContextValue>({
+    name: 'BottomSheetContext',
+    errorMessage:
+      'BottomSheet.Content, Header, Body, Footer, Close, Title, and Description cannot be rendered outside BottomSheet',
+  });
 
 // --------------------------------------------------
 
-const BottomSheetTrigger = forwardRef<
-  BottomSheetPrimitivesTypes.TriggerRef,
-  BottomSheetTriggerProps
->((props, ref) => {
-  return <BottomSheetPrimitives.Trigger ref={ref} {...props} />;
-});
-
-// --------------------------------------------------
-
-const BottomSheetPortal = ({
-  children,
-  disableFullWindowOverlay = false,
-  unstable_accessibilityContainerViewIsModal,
-  ...props
-}: BottomSheetPortalProps) => {
-  const animationSettingsContext = useAnimationSettings();
-  const animationContext = useBottomSheetAnimation();
-
-  return (
-    <BottomSheetPrimitives.Portal {...props}>
-      <AnimationSettingsProvider value={animationSettingsContext}>
-        <BottomSheetAnimationProvider value={animationContext}>
-          <FullWindowOverlay
-            disableFullWindowOverlay={disableFullWindowOverlay}
-            unstable_accessibilityContainerViewIsModal={
-              unstable_accessibilityContainerViewIsModal
-            }
-          >
-            <Animated.View
-              style={StyleSheet.absoluteFill}
-              pointerEvents="box-none"
-            >
-              {children}
-            </Animated.View>
-          </FullWindowOverlay>
-        </BottomSheetAnimationProvider>
-      </AnimationSettingsProvider>
-    </BottomSheetPrimitives.Portal>
-  );
-};
-
-// --------------------------------------------------
-
-const BottomSheetOverlay = forwardRef<
-  BottomSheetPrimitivesTypes.OverlayRef,
-  BottomSheetOverlayProps
->(
-  (
-    {
-      className,
-      style,
-      animation,
-      isAnimatedStyleActive,
-      variant,
-      blurViewProps,
-      ...props
-    },
-    ref
-  ) => {
-    const { isOpen } = useBottomSheet();
-    const { progress } = useBottomSheetAnimation();
-    const isDragging = useSharedValue(false);
-
-    const { resolvedVariant, isBlurVariant } = usePopupOverlayVariant(variant);
-
-    const overlayClassName = bottomSheetClassNames.overlay({
-      variant: resolvedVariant,
-      className,
-    });
-
-    const { rContainerStyle } = usePopupOverlayAnimation({
-      progress,
-      isDragging,
-      animation,
-    });
-
-    if (!isOpen) {
-      return null;
-    }
-
-    // The blur variant animates blur intensity instead of the overlay opacity
-    const isAnimatedStyleResolved = isAnimatedStyleActive ?? !isBlurVariant;
-
-    const overlayStyle = isAnimatedStyleResolved
-      ? [rContainerStyle, style]
-      : style;
-
-    return (
-      <>
-        {/* Rendered behind the pressable overlay so presses still hit the overlay */}
-        {isBlurVariant ? (
-          <PopupOverlayBlurView
-            progress={progress}
-            isDragging={isDragging}
-            blurViewProps={blurViewProps}
-          />
-        ) : null}
-        <AnimatedOverlay
-          ref={ref}
-          className={overlayClassName}
-          style={overlayStyle}
-          pointerEvents={isOpen ? 'auto' : 'none'}
-          {...props}
-        />
-      </>
-    );
-  }
-);
-
-// --------------------------------------------------
-
-const BottomSheetContent = forwardRef<
-  GorhomBottomSheet,
-  BottomSheetContentProps
->(
+const BottomSheetRoot = forwardRef<BottomSheetRef, BottomSheetProps>(
   (
     {
       children,
-      index: initialIndex,
-      backgroundClassName,
-      handleIndicatorClassName,
-      contentContainerClassName: contentContainerClassNameProp,
-      contentContainerProps,
-      animationConfigs,
+      name: nameProp,
+      detents = DEFAULT_DETENTS,
+      background,
+      backgroundColor,
+      backgroundBlur,
+      header,
+      footer,
+      grabber = true,
       animation,
       ...restProps
     },
     ref
   ) => {
-    const { isOpen, onOpenChange } = useBottomSheet();
+    const nativeID = useId();
+    const name = nameProp ?? nativeID;
 
-    const { progress, isDragging } = useBottomSheetAnimation();
+    const hasDefaultThemeBackground = useHasDefaultThemeBackground();
+    const themeColorOverlay = useThemeColor('overlay');
+
+    const { isAllAnimationsDisabled } = useBottomSheetRootAnimation({
+      animation,
+    });
+
+    /**
+     * A theme with its own background (glass) keeps the platform's sheet
+     * material (Liquid Glass on iOS 26+); other themes paint the sheet with
+     * the overlay token. `background` and `backgroundBlur` take that slot —
+     * an opaque color would cover them.
+     */
+    const resolvedBackgroundColor =
+      backgroundColor ??
+      (hasDefaultThemeBackground || background != null || backgroundBlur
+        ? undefined
+        : themeColorOverlay);
+
+    /**
+     * A sticky `BottomSheet.Header` / `BottomSheet.Footer` renders in the
+     * sheet's own header / footer slot, which stays in place while the
+     * content scrolls. Each gets its own gesture root, like the content.
+     */
+    const stickyHeader = getStickyPart(children, DISPLAY_NAME.HEADER);
+    const stickyFooter = getStickyPart(children, DISPLAY_NAME.FOOTER);
+
+    const hasGrabberInset = Platform.OS === 'android' && grabber;
+
+    const sheetRef = useRef<BottomSheetRef>(null);
+    useImperativeHandle(ref, () => sheetRef.current as BottomSheetRef, []);
+
+    const dismiss = useCallback(() => {
+      sheetRef.current?.dismiss();
+    }, []);
+
+    const hasStickyHeader = stickyHeader != null;
+    const hasStickyFooter = stickyFooter != null;
+
+    const contextValue = useMemo(
+      () => ({
+        nativeID,
+        dismiss,
+        hasGrabberInset,
+        hasStickyHeader,
+        hasStickyFooter,
+      }),
+      [nativeID, dismiss, hasGrabberInset, hasStickyHeader, hasStickyFooter]
+    );
+
+    const animationSettingsContextValue = useMemo(
+      () => ({ isAllAnimationsDisabled }),
+      [isAllAnimationsDisabled]
+    );
+
+    if (!ReanimatedTrueSheet || !ReanimatedTrueSheetProvider) {
+      throw new Error(MISSING_PACKAGE_ERROR);
+    }
 
     return (
-      <InternalBottomSheetContent
-        ref={ref}
-        index={initialIndex}
-        backgroundClassName={backgroundClassName}
-        handleIndicatorClassName={handleIndicatorClassName}
-        contentContainerClassName={contentContainerClassNameProp}
-        contentContainerProps={contentContainerProps}
-        animation={animation}
-        animationConfigs={animationConfigs}
-        backgroundStyle={[
-          bottomSheetStyleSheet.contentContainer,
-          restProps.backgroundStyle,
-        ]}
-        isOpen={isOpen}
-        progress={progress}
-        isDragging={isDragging}
-        onOpenChange={onOpenChange}
-        {...restProps}
-      >
-        {children}
-      </InternalBottomSheetContent>
+      <AnimationSettingsProvider value={animationSettingsContextValue}>
+        <BottomSheetProvider value={contextValue}>
+          <ReanimatedTrueSheetProvider>
+            <ReanimatedTrueSheet
+              ref={sheetRef}
+              name={name}
+              detents={detents}
+              background={background}
+              backgroundColor={resolvedBackgroundColor}
+              backgroundBlur={backgroundBlur}
+              header={
+                stickyHeader ? (
+                  <GestureHandlerRootView
+                    style={bottomSheetStyleSheet.gestureRoot}
+                  >
+                    {stickyHeader}
+                  </GestureHandlerRootView>
+                ) : (
+                  header
+                )
+              }
+              footer={
+                stickyFooter ? (
+                  <GestureHandlerRootView
+                    style={bottomSheetStyleSheet.gestureRoot}
+                  >
+                    {stickyFooter}
+                  </GestureHandlerRootView>
+                ) : (
+                  footer
+                )
+              }
+              grabber={grabber}
+              {...restProps}
+            >
+              {children}
+            </ReanimatedTrueSheet>
+          </ReanimatedTrueSheetProvider>
+        </BottomSheetProvider>
+      </AnimationSettingsProvider>
     );
+  }
+);
+
+// --------------------------------------------------
+
+const BottomSheetContent = forwardRef<ViewRef, BottomSheetContentProps>(
+  ({ children, className, ...props }, ref) => {
+    const { nativeID, hasGrabberInset, hasStickyHeader, hasStickyFooter } =
+      useBottomSheetContext();
+
+    const contentClassName = bottomSheetClassNames.content({
+      topInset: hasStickyHeader
+        ? 'none'
+        : hasGrabberInset
+          ? 'grabber'
+          : 'default',
+      bottomInset: hasStickyFooter ? 'none' : 'default',
+      className,
+    });
+
+    return (
+      <View
+        ref={ref}
+        role="dialog"
+        nativeID={nativeID}
+        aria-labelledby={`${nativeID}_label`}
+        aria-describedby={`${nativeID}_desc`}
+        aria-modal={true}
+        className={contentClassName}
+        {...props}
+      >
+        <GestureHandlerRootView style={bottomSheetStyleSheet.gestureRoot}>
+          {Children.toArray(children).filter((child) => !isStickyPart(child))}
+        </GestureHandlerRootView>
+      </View>
+    );
+  }
+);
+
+// --------------------------------------------------
+
+const BottomSheetHeader = forwardRef<ViewRef, BottomSheetHeaderProps>(
+  ({ isSticky = false, className, ...props }, ref) => {
+    const { hasGrabberInset } = useBottomSheetContext();
+
+    const headerClassName = bottomSheetClassNames.header({
+      isSticky,
+      topInset: isSticky && hasGrabberInset ? 'grabber' : 'default',
+      className,
+    });
+
+    return <View ref={ref} className={headerClassName} {...props} />;
+  }
+);
+
+// --------------------------------------------------
+
+const BottomSheetBody = forwardRef<ViewRef, BottomSheetBodyProps>(
+  ({ className, ...props }, ref) => {
+    const bodyClassName = bottomSheetClassNames.body({ className });
+
+    return <View ref={ref} className={bodyClassName} {...props} />;
+  }
+);
+
+// --------------------------------------------------
+
+const BottomSheetFooter = forwardRef<ViewRef, BottomSheetFooterProps>(
+  ({ isSticky = false, className, ...props }, ref) => {
+    const footerClassName = bottomSheetClassNames.footer({
+      isSticky,
+      className,
+    });
+
+    return <View ref={ref} className={footerClassName} {...props} />;
   }
 );
 
 // --------------------------------------------------
 
 const BottomSheetClose = forwardRef<PressableRef, BottomSheetCloseProps>(
-  (props, ref) => {
-    const { onPress: onPressProp, ...restProps } = props;
-    const { onOpenChange } = useBottomSheet();
+  ({ onPress: onPressProp, ...props }, ref) => {
+    const { dismiss } = useBottomSheetContext();
 
-    const onPress = (ev: GestureResponderEvent) => {
-      onOpenChange(false);
+    const onPress = (event: GestureResponderEvent) => {
+      dismiss();
       if (typeof onPressProp === 'function') {
-        onPressProp(ev);
+        onPressProp(event);
       }
     };
 
-    return <CloseButton ref={ref} onPress={onPress} {...restProps} />;
+    return <CloseButton ref={ref} onPress={onPress} {...props} />;
   }
 );
 
 // --------------------------------------------------
 
 const BottomSheetTitle = forwardRef<TextRef, BottomSheetTitleProps>(
-  ({ className, children, ...props }, ref) => {
-    const { nativeID } = useBottomSheet();
-    const titleClassName = bottomSheetClassNames.label({ className });
+  ({ className, ...props }, ref) => {
+    const { nativeID } = useBottomSheetContext();
 
     return (
       <HeroText
@@ -288,11 +291,9 @@ const BottomSheetTitle = forwardRef<TextRef, BottomSheetTitleProps>(
         role="heading"
         accessibilityRole="header"
         nativeID={`${nativeID}_label`}
-        className={titleClassName}
+        className={bottomSheetClassNames.label({ className })}
         {...props}
-      >
-        {children}
-      </HeroText>
+      />
     );
   }
 );
@@ -300,23 +301,17 @@ const BottomSheetTitle = forwardRef<TextRef, BottomSheetTitleProps>(
 // --------------------------------------------------
 
 const BottomSheetDescription = forwardRef<TextRef, BottomSheetDescriptionProps>(
-  ({ className, children, ...props }, ref) => {
-    const { nativeID } = useBottomSheet();
-
-    const descriptionClassName = bottomSheetClassNames.description({
-      className,
-    });
+  ({ className, ...props }, ref) => {
+    const { nativeID } = useBottomSheetContext();
 
     return (
       <HeroText
         ref={ref}
         accessibilityRole="text"
         nativeID={`${nativeID}_desc`}
-        className={descriptionClassName}
+        className={bottomSheetClassNames.description({ className })}
         {...props}
-      >
-        {children}
-      </HeroText>
+      />
     );
   }
 );
@@ -324,67 +319,60 @@ const BottomSheetDescription = forwardRef<TextRef, BottomSheetDescriptionProps>(
 // --------------------------------------------------
 
 BottomSheetRoot.displayName = DISPLAY_NAME.ROOT;
-BottomSheetTrigger.displayName = DISPLAY_NAME.TRIGGER;
-BottomSheetPortal.displayName = DISPLAY_NAME.PORTAL;
-BottomSheetOverlay.displayName = DISPLAY_NAME.OVERLAY;
 BottomSheetContent.displayName = DISPLAY_NAME.CONTENT;
+BottomSheetHeader.displayName = DISPLAY_NAME.HEADER;
+BottomSheetBody.displayName = DISPLAY_NAME.BODY;
+BottomSheetFooter.displayName = DISPLAY_NAME.FOOTER;
 BottomSheetClose.displayName = DISPLAY_NAME.CLOSE;
 BottomSheetTitle.displayName = DISPLAY_NAME.TITLE;
 BottomSheetDescription.displayName = DISPLAY_NAME.DESCRIPTION;
 
 /**
- * Compound BottomSheet component with sub-components
+ * Bottom sheet presented natively (sheet presentation controller on iOS,
+ * native bottom sheet on Android) through `@lodev09/react-native-true-sheet`.
+ * Control it through its ref: `present()`, `resize()`, `dismiss()`, and
+ * `dismissStack()`.
  *
- * @component BottomSheet.Root - Main container that manages open/close state.
- * Provides the bottom sheet context to child components.
+ * @component BottomSheet - The sheet. Forwards sheet options such as
+ * `detents`, `dimmed`, `dimColor`, `dimOpacity`, `dimBlur`, `background`,
+ * `backgroundBlur`, and `scrollableRef`.
  *
- * @component BottomSheet.Trigger - Button or element that opens the bottom sheet.
- * Accepts any pressable element as children.
+ * @component BottomSheet.Content - Dialog container that pads the sheet and
+ * holds its parts.
  *
- * @component BottomSheet.Portal - Portal container for bottom sheet overlay and content.
- * Renders children in a portal with full window overlay.
+ * @component BottomSheet.Header - Top section. `isSticky` pins it while the
+ * content scrolls.
  *
- * @component BottomSheet.Overlay - Background overlay that covers the screen.
- * Typically closes the bottom sheet when clicked.
+ * @component BottomSheet.Body - Main section.
  *
- * @component BottomSheet.Content - The bottom sheet content container.
- * Uses @gorhom/bottom-sheet for rendering. Contains the main bottom sheet UI elements.
+ * @component BottomSheet.Footer - Bottom section, usually the actions.
+ * `isSticky` pins it while the content scrolls.
  *
- * @component BottomSheet.Background - Absolute-fill background container inside
- * the sheet background surface, clipped to the sheet's top radius. With no
- * children, the active library theme decides the content (glass theme renders a
- * blur layer). Accepts children to host custom content such as gradients with
- * the container's positioning and clipping applied. Rendered automatically by
- * the default gorhom backgroundComponent; use it inside a custom
- * backgroundComponent to customize the layer.
+ * @component BottomSheet.Close - Close button that dismisses the sheet.
  *
- * @component BottomSheet.Close - Close button for the bottom sheet.
- * Can accept custom children or uses default close icon.
+ * @component BottomSheet.Title - Sheet title, linked for accessibility.
  *
- * @component BottomSheet.Title - The bottom sheet title text.
- * Automatically linked for accessibility.
+ * @component BottomSheet.Description - Sheet description, linked for
+ * accessibility.
  *
- * @component BottomSheet.Description - The bottom sheet description text.
- * Automatically linked for accessibility.
+ * @see Full documentation: https://heroui.com/docs/native/components/bottom-sheet
  */
 const BottomSheet = Object.assign(BottomSheetRoot, {
-  /** @optional Trigger element to open the bottom sheet */
-  Trigger: BottomSheetTrigger,
-  /** @optional Portal container for overlay and content */
-  Portal: BottomSheetPortal,
-  /** @optional Background overlay */
-  Overlay: BottomSheetOverlay,
-  /** @optional Main bottom sheet content container */
+  /** Dialog container that pads the sheet and holds its parts */
   Content: BottomSheetContent,
-  /** @optional Theme-aware background container inside the sheet background surface */
-  Background: BottomSheetBackground,
-  /** @optional Close button for the bottom sheet */
+  /** @optional Top section, sticky with `isSticky` */
+  Header: BottomSheetHeader,
+  /** @optional Main section */
+  Body: BottomSheetBody,
+  /** @optional Bottom section, sticky with `isSticky` */
+  Footer: BottomSheetFooter,
+  /** @optional Close button for the sheet */
   Close: BottomSheetClose,
-  /** @optional Bottom sheet title text */
+  /** @optional Sheet title text */
   Title: BottomSheetTitle,
-  /** @optional Bottom sheet description text */
+  /** @optional Sheet description text */
   Description: BottomSheetDescription,
 });
 
-export { useBottomSheet, useBottomSheetAnimation };
+export { useBottomSheetAnimation };
 export default BottomSheet;

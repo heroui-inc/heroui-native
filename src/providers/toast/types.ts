@@ -1,5 +1,6 @@
 import type { SharedValue } from 'react-native-reanimated';
 import type { ToastBaseConfig } from '../../components/toast/toast.base-types';
+import type { ToastStackState } from './toast-store';
 
 /**
  * Global toast configuration
@@ -72,6 +73,17 @@ export interface ToastProviderProps {
    * @default 3
    */
   maxVisibleToasts?: number;
+  /**
+   * Maximum number of toasts kept at once. When a new toast would exceed it,
+   * the oldest toasts are dismissed (exit animation and `onHide` run as with
+   * `hide(id)`), so `maxToasts={1}` makes every new toast replace the previous one.
+   *
+   * Unlike `maxVisibleToasts`, which only controls how many toasts are drawn
+   * while the rest wait behind the stack, toasts dropped by this limit never
+   * come back when the front toast is dismissed.
+   * @default undefined (no limit)
+   */
+  maxToasts?: number;
   /**
    * Custom wrapper function to wrap the toast content
    * Receives children and should return a component that wraps them
@@ -255,6 +267,15 @@ export interface ToastItem {
    * Callback function called when the toast is hidden
    */
   onHide?: () => void;
+  /**
+   * Set for toasts built by the library from a string or config object,
+   * whose component does not read `index`. Such toasts are not re-rendered
+   * when their position in the stack changes (the stack position is
+   * animated on the UI thread). Custom `component` toasts always receive
+   * the live `index`.
+   * @internal
+   */
+  isIndexIndependent?: boolean;
 }
 
 /**
@@ -361,6 +382,44 @@ export interface ToastItemRendererProps {
    * - Array of IDs: hides those toasts
    */
   hide: (ids?: string | string[] | 'all') => void;
+  /**
+   * Whether the toast sits behind the visible stack, where it is fully
+   * transparent and mounts / unmounts without layout animations
+   */
+  isBehindStack?: boolean;
+  /**
+   * Stack layout (count, positions, front toast) read on the UI thread
+   * @internal
+   */
+  stack?: SharedValue<ToastStackState>;
+  /**
+   * Reads the stack layout on the JS thread without a synchronous call to
+   * the UI thread
+   * @internal
+   */
+  getStack?: () => ToastStackState;
+  /**
+   * `1` while the front toast is dragged; the toasts behind it clear their
+   * full cover during the drag
+   * @internal
+   */
+  frontDrag?: SharedValue<number>;
+  /**
+   * Pauses / resumes the auto-dismiss timer of a toast
+   * @internal
+   */
+  timers?: ToastTimerControls;
+}
+
+/**
+ * Controls for the auto-dismiss timer of a toast
+ * @internal
+ */
+export interface ToastTimerControls {
+  /** Stops the auto-dismiss timer of the toast and keeps the time left */
+  pause: (id: string) => void;
+  /** Restarts a paused auto-dismiss timer with the time it had left */
+  resume: (id: string) => void;
 }
 
 /**

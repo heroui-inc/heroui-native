@@ -1,37 +1,54 @@
 @layer components {
-  .bottom-sheet__overlay {
-    position: absolute;
-    inset: 0;
-    background-color: var(--color-backdrop);
+  /*
+   * Pads the sheet. No `flex: 1`: the `auto` detent measures the content
+   * height.
+   *
+   * The bottom padding is a fixed inset only. The sheet already reserves the
+   * bottom safe area below the content (UIKit on iOS, the detent height on
+   * Android), so adding it here would count the home indicator twice.
+   */
+  .bottom-sheet__content {
+    padding-inline: calc(var(--spacing) * 5);
+    padding-top: calc(var(--spacing) * 5);
+    padding-bottom: calc(var(--spacing) * 5);
   }
 
-  .bottom-sheet__overlay--variant-blur {
-    background-color: transparent;
+  /*
+   * The grabber is drawn over the content, not above it. On iOS it ends 10pt
+   * from the top, so the default inset clears it. Android draws it 16dp down
+   * and it ends at 20dp, so this adds room for a similar gap below it.
+   */
+  .bottom-sheet__content--top-inset-grabber {
+    padding-top: calc(var(--spacing) * 8);
   }
 
-  .bottom-sheet__content-container {
-    flex: 1;
-    padding: calc(var(--spacing) * 5);
-    background-color: transparent;
+  /* A sticky header or footer pads that side of the sheet instead */
+  .bottom-sheet__content--top-inset-none {
+    padding-top: 0;
   }
 
-  .bottom-sheet__content-background {
-    background-color: var(--color-overlay);
-    border-top-left-radius: var(--radius-4xl);
-    border-top-right-radius: var(--radius-4xl);
-    box-shadow: var(--shadow-overlay);
+  .bottom-sheet__content--bottom-inset-none {
+    padding-bottom: 0;
   }
 
-  .bottom-sheet__background {
-    position: absolute;
-    inset: 0;
-    border-top-left-radius: var(--radius-4xl);
-    border-top-right-radius: var(--radius-4xl);
-    overflow: hidden;
+  /*
+   * A sticky header renders in the sheet's own header slot, outside the
+   * content, so it takes the content's horizontal and top insets. Spacing
+   * between the parts stays the same whether they are sticky or not.
+   */
+  .bottom-sheet__header--sticky {
+    padding-inline: calc(var(--spacing) * 5);
+    padding-top: calc(var(--spacing) * 5);
   }
 
-  .bottom-sheet__content-handle-indicator {
-    background-color: var(--color-separator);
+  .bottom-sheet__header--top-inset-grabber {
+    padding-top: calc(var(--spacing) * 8);
+  }
+
+  /* A sticky footer renders in the sheet's own footer slot, outside the content */
+  .bottom-sheet__footer--sticky {
+    padding-inline: calc(var(--spacing) * 5);
+    padding-bottom: calc(var(--spacing) * 5);
   }
 
   .bottom-sheet__label {

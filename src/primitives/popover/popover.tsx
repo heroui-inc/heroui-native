@@ -19,10 +19,12 @@ import {
   useAugmentedRef,
   useControllableState,
   useRelativePosition,
+  useWebContentLayoutSync,
   type LayoutPosition,
 } from '../../helpers/internal/hooks';
 import { Portal as PrimitivePortal } from '../portal';
 import * as Slot from '../slot';
+import { composeRefs } from '../slot/utils';
 import type {
   CloseProps,
   CloseRef,
@@ -322,6 +324,12 @@ const Content = forwardRef<ContentRef, ContentProps>(
       disablePositioningStyle,
     });
 
+    const contentRef = useWebContentLayoutSync({
+      positionStyle,
+      contentLayout,
+      setContentLayout,
+    });
+
     // Calculate content width based on width prop
     const widthStyle: { width?: number | `${number}%` } = {};
     if (width === 'trigger' && triggerPosition) {
@@ -348,7 +356,7 @@ const Content = forwardRef<ContentRef, ContentProps>(
 
     return (
       <Component
-        ref={ref}
+        ref={composeRefs(ref, contentRef)}
         role="dialog"
         nativeID={nativeID}
         aria-modal={true}

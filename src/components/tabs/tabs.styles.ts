@@ -127,6 +127,7 @@ const indicator = tv({
   ],
   defaultVariants: {
     variant: 'primary',
+    isScrollView: false,
   },
 });
 

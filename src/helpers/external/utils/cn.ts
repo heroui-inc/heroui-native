@@ -5,7 +5,7 @@ import {
   type CnOptions,
   type TV,
   type TVCustomConfig,
-  type TWMCustomConfig,
+  type TWMergeConfig,
 } from 'tailwind-variants/config';
 
 /**
@@ -13,18 +13,16 @@ import {
  *
  * @see https://www.tailwind-variants.org/docs/config
  */
-export const twMergeConfig: TWMCustomConfig['twMergeConfig'] = {
-  classGroups: {
-    'opacity': [{ opacity: ['disabled'] }],
-    'border-w': [{ border: ['field-width'] }],
+export const twMergeConfig: TWMergeConfig = {
+  extend: {
+    classGroups: {
+      'opacity': [{ opacity: ['disabled'] }],
+      'border-w': [{ border: ['field-width'] }],
+    },
   },
 };
 
-const twMerge = extendTailwindMerge({
-  extend: {
-    classGroups: twMergeConfig?.classGroups,
-  },
-});
+const twMerge = extendTailwindMerge(twMergeConfig);
 
 /**
  * Merges class names with `tailwind-merge`, honoring {@link twMergeConfig}.

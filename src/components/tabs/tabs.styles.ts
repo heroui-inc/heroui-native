@@ -16,7 +16,6 @@ const list = tv({
   },
   defaultVariants: {
     variant: 'primary',
-    isScrollView: false,
   },
 });
 
@@ -128,7 +127,6 @@ const indicator = tv({
   ],
   defaultVariants: {
     variant: 'primary',
-    isScrollView: false,
   },
 });
 

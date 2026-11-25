@@ -1,50 +1,33 @@
-import { extendTailwindMerge } from 'tailwind-merge';
 import {
+  createTV,
   cx,
-  defaultConfig,
-  tv as tvBase,
+  extendTailwindMerge,
   type CnOptions,
   type TV,
-  type TWMergeConfig,
-} from 'tailwind-variants';
+  type TVCustomConfig,
+  type TWMCustomConfig,
+} from 'tailwind-variants/config';
 
 /**
  * Shared `tailwind-merge` configuration for HeroUI Native.
  *
  * @see https://www.tailwind-variants.org/docs/config
  */
-export const twMergeConfig: TWMergeConfig = {
+export const twMergeConfig: TWMCustomConfig['twMergeConfig'] = {
   classGroups: {
     'opacity': [{ opacity: ['disabled'] }],
     'border-w': [{ border: ['field-width'] }],
   },
 };
 
-/**
- * Global config for all `tv` usage.
- *
- * @see https://www.tailwind-variants.org/docs/config#global-config
- */
-defaultConfig.twMergeConfig = {
-  ...defaultConfig.twMergeConfig,
-  classGroups: {
-    ...defaultConfig.twMergeConfig?.classGroups,
-    ...twMergeConfig.classGroups,
-  },
-};
-
 const twMerge = extendTailwindMerge({
   extend: {
-    classGroups: twMergeConfig.classGroups,
+    classGroups: twMergeConfig?.classGroups,
   },
 });
 
 /**
  * Merges class names with `tailwind-merge`, honoring {@link twMergeConfig}.
- *
- * Uses `cx` + `extendTailwindMerge` because `cnMerge(...)(config)` does not
- * apply `twMergeConfig` from the config argument (tailwind-variants reads
- * merge config from module-global state only).
  *
  * @param args - Class values to merge.
  * @returns The merged, de-conflicted class string.
@@ -60,19 +43,11 @@ export function cn(...args: CnOptions) {
 }
 
 /**
- * HeroUI Native `tv` with {@link twMergeConfig} merged on every call.
+ * HeroUI Native `tv` with {@link twMergeConfig} applied to every recipe.
+ *
+ * `twMergeConfig` is only supported by the `tailwind-variants/config` entry,
+ * and is passed per factory instead of mutating the global `defaultConfig`.
  *
  * @see https://www.tailwind-variants.org/docs/config#advanced-custom-tv-wrapper
  */
-export const tv: TV = (options, config) =>
-  tvBase(options, {
-    ...config,
-    twMerge: config?.twMerge ?? true,
-    twMergeConfig: {
-      ...config?.twMergeConfig,
-      classGroups: {
-        ...config?.twMergeConfig?.classGroups,
-        ...twMergeConfig.classGroups,
-      },
-    },
-  });
+export const tv: TV<TVCustomConfig> = createTV({ twMergeConfig });

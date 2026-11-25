@@ -16,7 +16,6 @@ const list = tv({
   },
   defaultVariants: {
     variant: 'primary',
-    isScrollView: false,
   },
 });
 

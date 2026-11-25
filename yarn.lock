@@ -10408,8 +10408,7 @@ __metadata:
     react-native-svg: 15.16.0
     react-native-web: ^0.21.4
     react-native-worklets: 0.13.0
-    tailwind-merge: ^3.6.0
-    tailwind-variants: ^3.2.2
+    tailwind-variants: ^4.0.2
     tailwindcss: ^4.3.2
     uniwind: 1.13.0
   languageName: unknown
@@ -10455,8 +10454,7 @@ __metadata:
     react-native-screens: ~4.30.0
     react-native-svg: 15.16.0
     react-native-worklets: 0.13.0
-    tailwind-merge: ^3.6.0
-    tailwind-variants: ^3.2.2
+    tailwind-variants: ^4.0.2
     tailwindcss: ^4.3.2
     typescript: ^5.8.3
     uniwind: 1.13.0
@@ -10471,8 +10469,7 @@ __metadata:
     react-native-screens: ">=4"
     react-native-svg: ^15.12.1
     react-native-worklets: ">=0.5.1"
-    tailwind-merge: ^3.4.0
-    tailwind-variants: ^3.2.2
+    tailwind-variants: ^4.0.2
   peerDependenciesMeta:
     "@lodev09/react-native-true-sheet":
       optional: true
@@ -15786,23 +15783,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwind-merge@npm:^3.6.0":
-  version: 3.6.0
-  resolution: "tailwind-merge@npm:3.6.0"
-  checksum: 617e86a01d99f17e02706cc2219bd203d1910b95a05f41fe1e5548b58a7975043ce5b6ef86d4cdcf10fa3c8362b796b9822de2f62024c69d5479e96d6e5be63f
-  languageName: node
-  linkType: hard
-
-"tailwind-variants@npm:^3.2.2":
-  version: 3.2.2
-  resolution: "tailwind-variants@npm:3.2.2"
-  peerDependencies:
-    tailwind-merge: ">=3.0.0"
-    tailwindcss: "*"
-  peerDependenciesMeta:
-    tailwind-merge:
-      optional: true
-  checksum: 6e694427c1bf9c6143936d959b60e8518d42c7ae36eb495024df411c0abc588f644f190a6e5af3e46a160b03a7dbd7cedb270a268adff339dabbffc0e5c30941
+"tailwind-variants@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "tailwind-variants@npm:4.0.2"
+  checksum: d546a1090c2af11b3f5234c1c73ad4a97531a5298ed9321c906a80c90f2ec00583cd73ad2817df368e79569cfbeb338975bc3ee3ae99263fa8f1068be7bc2367
   languageName: node
   linkType: hard
 

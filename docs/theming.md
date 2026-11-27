@@ -103,6 +103,10 @@ Create multiple themes using Uniwind's variant system. For complete custom theme
       --default: oklch(0.94 0.018 230);
       --default-foreground: oklch(0.4 0.05 230);
 
+      /* Fill: translucent inset for tab tracks and secondary fields */
+      --fill: color-mix(in oklab, var(--foreground) 4.5%, transparent);
+      --fill-hover: color-mix(in oklab, var(--foreground) 7%, transparent);
+
       /* Accent */
       --accent: oklch(0.6 0.2 230);
       --accent-foreground: oklch(0.98 0.005 230);
@@ -169,6 +173,10 @@ Create multiple themes using Uniwind's variant system. For complete custom theme
 
       --default: oklch(0.25 0.05 230);
       --default-foreground: oklch(0.88 0.018 230);
+
+      /* Fill: translucent inset for tab tracks and secondary fields */
+      --fill: color-mix(in oklab, var(--foreground) 9%, transparent);
+      --fill-hover: color-mix(in oklab, var(--foreground) 12%, transparent);
 
       /* Accent */
       --accent: oklch(0.72 0.21 230);
@@ -472,6 +480,10 @@ We use Tailwind's `@theme` directive to automatically create calculated variable
     var(--field-foreground, var(--foreground)) 22%
   );
 
+  /* Fill Colors */
+  --color-fill: var(--fill);
+  --color-fill-hover: var(--fill-hover);
+
   /* Soft Colors */
   --color-accent-soft: color-mix(in oklab, var(--accent) 15%, transparent);
   --color-accent-soft-foreground: var(--accent);
@@ -545,3 +557,5 @@ We use Tailwind's `@theme` directive to automatically create calculated variable
 > **Field border utilities:** Use `border-field-width` for the field border width and `border-field-border` for the field border color. Pair them together (`border-field-width border-field-border`) when you need both. The `border-field` class remains a border-color utility from `--color-field` only; do not use it for width. If you previously used `border-field` for width, migrate to `border-field-width`. Customize the width via the `--field-border-width` primitive.
 
 Form controls now rely on the `--field-*` variables and their calculated hover/focus variants. Update them in your theme to restyle inputs, checkboxes, radios, and OTP slots without impacting surfaces like buttons or cards.
+
+The `secondary` variant of Input and InputOTP (and fields built on Input, like TextArea and SearchField) and the Tabs track use `--fill` instead: `--foreground` at low opacity. Because it is translucent, it keeps the same contrast on `--background` and inside cards, so the same variant works in both places. Override `--fill` and `--fill-hover` to make these insets stronger or softer. Custom themes must define both, like every other theme variable.

@@ -11,10 +11,11 @@
     gap: calc(var(--spacing) * 1);
   }
 
+  /* Translucent fill keeps the same step on the page and inside surfaces */
   .tabs__list--variant-primary {
     padding: 3px;
     border-radius: var(--radius-3xl);
-    background-color: var(--color-default);
+    background-color: var(--color-fill);
   }
 
   .tabs__list--variant-secondary {

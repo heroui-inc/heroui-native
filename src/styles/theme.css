@@ -80,6 +80,10 @@
   --color-default-soft-foreground: var(--default-foreground);
   --color-default-soft-hover: color-mix(in oklab, var(--default) 60%, transparent);
 
+  /* Fill Colors */
+  --color-fill: var(--fill);
+  --color-fill-hover: var(--fill-hover);
+
   --color-accent-soft: color-mix(in oklab, var(--accent) 15%, transparent);
   --color-accent-soft-foreground: color-mix(in oklab, var(--accent) 80%, var(--foreground) 20%);
   --color-accent-soft-hover: color-mix(in oklab, var(--accent) 20%, transparent);

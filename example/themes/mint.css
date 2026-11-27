@@ -32,6 +32,9 @@
       --default: oklch(94.00% 0.0121 155.00);
       --default-foreground: oklch(21.03% 0.0059 155.00);
 
+      --fill: color-mix(in oklab, var(--foreground) 4.5%, transparent);
+      --fill-hover: color-mix(in oklab, var(--foreground) 7%, transparent);
+
       /* Accent: Vibrant teal-mint with modern energy */
       --accent: oklch(82.00% 0.1200 155.00);
       --accent-foreground: oklch(15% 0.0240 155.00);
@@ -105,6 +108,9 @@
 
       --default: oklch(27.40% 0.0121 155.00);
       --default-foreground: oklch(99.11% 0 0);
+
+      --fill: color-mix(in oklab, var(--foreground) 9%, transparent);
+      --fill-hover: color-mix(in oklab, var(--foreground) 12%, transparent);
 
       /* Accent: Glowing emerald-teal */
       --accent: oklch(82.00% 0.1200 155.00);

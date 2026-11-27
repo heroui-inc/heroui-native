@@ -84,6 +84,8 @@ const THEME_COLORS = [
   'default-soft',
   'default-soft-foreground',
   'default-soft-hover',
+  'fill',
+  'fill-hover',
   'accent-soft',
   'accent-soft-foreground',
   'accent-soft-hover',

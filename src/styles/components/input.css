@@ -22,7 +22,8 @@
     background-color: var(--color-field);
   }
 
+  /* Translucent fill keeps the same step on the page and inside surfaces */
   .input__input--variant-secondary {
-    background-color: var(--color-default);
+    background-color: var(--color-fill);
   }
 }

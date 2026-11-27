@@ -117,6 +117,20 @@ For consistent form field styling across input components:
 --field-border: transparent;
 ```
 
+### Fill Colors
+
+A translucent inset for the Tabs track and the `secondary` variant of Input (and fields built on it, like TextArea and SearchField) and InputOTP. It is `--foreground` at low opacity, so it keeps the same contrast on `--background` and inside surfaces like cards:
+
+```css
+/* Light theme */
+--fill: color-mix(in oklab, var(--foreground) 4.5%, transparent);
+--fill-hover: color-mix(in oklab, var(--foreground) 7%, transparent);
+
+/* Dark theme (higher, because near-black backgrounds swallow small additions) */
+--fill: color-mix(in oklab, var(--foreground) 9%, transparent);
+--fill-hover: color-mix(in oklab, var(--foreground) 12%, transparent);
+```
+
 ### Component Colors
 
 For component-specific styling:

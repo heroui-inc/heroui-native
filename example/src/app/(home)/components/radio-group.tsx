@@ -37,6 +37,7 @@ const BasicRadioGroupContent = () => {
         <RadioGroup
           value={withDescSelection}
           onValueChange={setWithDescSelection}
+          variant="secondary"
         >
           <RadioGroup.Item value="desc1">
             <View className="flex-1">
@@ -212,6 +213,7 @@ const InlineRadioOptionsContent = () => {
         <RadioGroup
           value={size}
           onValueChange={setSize}
+          variant="secondary"
           className="flex-row gap-3"
         >
           {sizes.map((sizeOption) => (
@@ -257,6 +259,7 @@ const RadioGroupStatesContent = () => {
           <RadioGroup
             value={plan}
             onValueChange={setPlan}
+            variant="secondary"
             isInvalid={plan === 'enterprise'}
           >
             <RadioGroup.Item value="basic" isInvalid={false}>

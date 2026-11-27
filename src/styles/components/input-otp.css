@@ -36,8 +36,9 @@
     box-shadow: var(--shadow-field);
   }
 
+  /* Translucent fill keeps the same step on the page and inside surfaces */
   .input-otp__slot--variant-secondary {
-    background-color: var(--color-default);
+    background-color: var(--color-fill);
   }
 
   /* Slot - booleans (invalid declared after active so it wins the cascade) */

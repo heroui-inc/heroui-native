@@ -47,6 +47,13 @@
       --default: oklch(94% 0.001 286.375);
       --default-foreground: var(--eclipse);
 
+      /*
+       * Fill: translucent inset for tab tracks and secondary fields. Because it is
+       * see-through, it keeps the same step on `--background` and on `--surface`.
+       */
+      --fill: color-mix(in oklab, var(--foreground) 4.5%, transparent);
+      --fill-hover: color-mix(in oklab, var(--foreground) 7%, transparent);
+
       --accent: oklch(0.6204 0.195 253.83);
       --accent-foreground: var(--snow);
 
@@ -112,6 +119,10 @@
 
       --default: oklch(27.4% 0.006 286.033);
       --default-foreground: var(--snow);
+
+      /* Fill: higher than light, because near-black backgrounds swallow small additions */
+      --fill: color-mix(in oklab, var(--foreground) 9%, transparent);
+      --fill-hover: color-mix(in oklab, var(--foreground) 12%, transparent);
 
       --accent: oklch(0.6204 0.195 253.83);
       --accent-foreground: var(--snow);

@@ -19,6 +19,7 @@ export const RadioGroupContent = () => {
       <RadioGroup
         value={frequency}
         onValueChange={setFrequency}
+        variant="secondary"
         className="gap-0"
       >
         <RadioGroup.Item value="instant">

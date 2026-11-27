@@ -32,6 +32,9 @@
       --default: var(--color-neutral-50);
       --default-foreground: var(--eclipse);
 
+      --fill: color-mix(in oklab, var(--foreground) 4.5%, transparent);
+      --fill-hover: color-mix(in oklab, var(--foreground) 7%, transparent);
+
       --accent: var(--color-neutral-950);
       --accent-foreground: var(--snow);
 
@@ -104,6 +107,9 @@
 
       --default: var(--color-neutral-900);
       --default-foreground: var(--snow);
+
+      --fill: color-mix(in oklab, var(--foreground) 9%, transparent);
+      --fill-hover: color-mix(in oklab, var(--foreground) 12%, transparent);
 
       --accent: var(--color-neutral-50);
       --accent-foreground: var(--eclipse);

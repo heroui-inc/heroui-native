@@ -32,6 +32,9 @@
       --default: oklch(94.00% 0.0048 225.00);
       --default-foreground: oklch(21.03% 0.0059 225.00);
 
+      --fill: color-mix(in oklab, var(--foreground) 4.5%, transparent);
+      --fill-hover: color-mix(in oklab, var(--foreground) 7%, transparent);
+
       /* Accent: Bright azure blue with clarity */
       --accent: oklch(78.00% 0.1600 225.00);
       --accent-foreground: oklch(15% 0.0300 225.00);
@@ -105,6 +108,9 @@
 
       --default: oklch(27.40% 0.0048 225.00);
       --default-foreground: oklch(99.11% 0 0);
+
+      --fill: color-mix(in oklab, var(--foreground) 9%, transparent);
+      --fill-hover: color-mix(in oklab, var(--foreground) 12%, transparent);
 
       /* Accent: Electric cyan-blue glow */
       --accent: oklch(78.00% 0.1600 225.00);

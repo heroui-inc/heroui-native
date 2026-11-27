@@ -7,7 +7,7 @@ import type { SurfaceContextValue } from './surface.types';
  * Context holding the active surface variant.
  *
  * Kept in a leaf module — free of component imports — so low-level consumers
- * such as `useIsOnSurface` can read the surface variant without pulling in the
+ * such as the public `useIsOnSurface` hook can read the surface variant without pulling in the
  * Surface component graph.
  */
 const [SurfaceProvider, useSurface] = createContext<SurfaceContextValue>({

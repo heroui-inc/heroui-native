@@ -1,7 +1,6 @@
 import { forwardRef, useMemo } from 'react';
 import Animated from 'react-native-reanimated';
 
-import { useIsOnSurface } from '../../helpers/external/hooks';
 import {
   ThemeBackground,
   useHasDefaultThemeBackground,
@@ -64,15 +63,8 @@ const RadioRoot = forwardRef<RadioPrimitives.RootRef, RadioProps>(
     const onSelectedChange =
       onSelectedChangeProp ?? radioGroupItemContext?.onSelectedChange;
 
-    const isOnSurfaceAutoDetected = useIsOnSurface();
     const finalVariant =
-      variantProp !== undefined
-        ? variantProp
-        : radioGroupItemContext?.variant !== undefined
-          ? radioGroupItemContext.variant
-          : isOnSurfaceAutoDetected
-            ? 'secondary'
-            : 'primary';
+      variantProp ?? radioGroupItemContext?.variant ?? 'primary';
 
     const rootClassName = radioClassNames.root({
       className,

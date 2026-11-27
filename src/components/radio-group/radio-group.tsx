@@ -1,6 +1,5 @@
 import { forwardRef, useCallback, useMemo } from 'react';
 
-import { useIsOnSurface } from '../../helpers/external/hooks';
 import {
   AnimationSettingsProvider,
   FormFieldProvider,
@@ -113,16 +112,7 @@ const RadioGroupItem = forwardRef<
     groupOnValueChange(value);
   }, [groupOnValueChange, value]);
 
-  const isOnSurfaceAutoDetected = useIsOnSurface();
-
-  const finalVariant =
-    variant !== undefined
-      ? variant
-      : groupVariant !== undefined
-        ? groupVariant
-        : isOnSurfaceAutoDetected
-          ? 'secondary'
-          : 'primary';
+  const finalVariant = variant ?? groupVariant ?? 'primary';
 
   const itemClassName = radioGroupClassNames.item({
     className,

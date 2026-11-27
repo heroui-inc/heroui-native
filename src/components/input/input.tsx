@@ -1,6 +1,5 @@
 import { forwardRef } from 'react';
 import { View } from 'react-native';
-import { useIsOnSurface } from '../../helpers/external/hooks';
 import { cn } from '../../helpers/external/utils';
 import {
   HeroTextInput,
@@ -68,13 +67,7 @@ const InputRoot: TextInputComponent<InputProps> = forwardRef<
       ? localIsDisabled
       : (formField?.isDisabled ?? false);
 
-  const isOnSurfaceAutoDetected = useIsOnSurface();
-  const finalVariant =
-    variant !== undefined
-      ? variant
-      : isOnSurfaceAutoDetected
-        ? 'secondary'
-        : 'primary';
+  const finalVariant = variant ?? 'primary';
 
   /**
    * Background layer rendered behind the text input.

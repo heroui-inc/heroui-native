@@ -163,7 +163,11 @@ export default function RadioGroupExample() {
 
   return (
     <Surface className="w-full">
-      <RadioGroup value={selection} onValueChange={setSelection}>
+      <RadioGroup
+        value={selection}
+        onValueChange={setSelection}
+        variant="secondary"
+      >
         <RadioGroup.Item value="desc1">
           <View>
             <Label>Standard Shipping</Label>

@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useMemo } from 'react';
 import { View, type GestureResponderEvent } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { useIsOnSurface, useThemeColor } from '../../helpers/external/hooks';
+import { useThemeColor } from '../../helpers/external/hooks';
 import {
   AnimatedCheckIcon,
   CheckIcon,
@@ -84,13 +84,7 @@ const CheckboxRoot = forwardRef<CheckboxPrimitivesTypes.RootRef, CheckboxProps>(
     } = props;
 
     const hasDefaultThemeBackground = useHasDefaultThemeBackground();
-    const isOnSurfaceAutoDetected = useIsOnSurface();
-    const finalVariant =
-      variant !== undefined
-        ? variant
-        : isOnSurfaceAutoDetected
-          ? 'secondary'
-          : 'primary';
+    const finalVariant = variant ?? 'primary';
 
     const rootClassName = checkboxClassNames.root({
       variant: finalVariant,

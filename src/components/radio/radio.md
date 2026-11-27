@@ -27,7 +27,7 @@ import { Radio } from 'heroui-native';
 
 ### Basic Usage
 
-The Radio component renders with a default indicator and thumb if no children are provided. It automatically detects whether it's on a surface background for proper variant styling.
+The Radio component renders with a default indicator and thumb if no children are provided. Inside a surface such as a Card, set `variant="secondary"` on the Radio or its RadioGroup.
 
 ```tsx
 <Radio isSelected={isSelected} onSelectedChange={setIsSelected} />
@@ -175,7 +175,11 @@ export default function RadioExample() {
           Set the priority for this task
         </Text>
       </View>
-      <RadioGroup value={priority} onValueChange={setPriority}>
+      <RadioGroup
+        value={priority}
+        onValueChange={setPriority}
+        variant="secondary"
+      >
         <RadioGroup.Item value="high">
           {({ isSelected }) => (
             <>

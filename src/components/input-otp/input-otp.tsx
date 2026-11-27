@@ -1,6 +1,5 @@
 import { forwardRef, useMemo } from 'react';
 import Animated from 'react-native-reanimated';
-import { useIsOnSurface } from '../../helpers/external/hooks';
 import { HeroText, ThemeBackground } from '../../helpers/internal/components';
 import { AnimationSettingsProvider } from '../../helpers/internal/contexts';
 import type { ViewRef } from '../../helpers/internal/types';
@@ -164,15 +163,7 @@ const InputOTPSlot = forwardRef<InputOTPSlotRef, InputOTPSlotProps>(
     const isActive = slot?.isActive ?? false;
     const isCaretVisible = slot?.isCaretVisible ?? false;
 
-    const isOnSurfaceAutoDetected = useIsOnSurface();
-    const finalVariant =
-      variant !== undefined
-        ? variant
-        : groupVariant !== undefined
-          ? groupVariant
-          : isOnSurfaceAutoDetected
-            ? 'secondary'
-            : 'primary';
+    const finalVariant = variant ?? groupVariant ?? 'primary';
 
     const slotClassName = inputOTPClassNames.slot({
       variant: finalVariant,

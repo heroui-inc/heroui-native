@@ -16,7 +16,7 @@ import { Checkbox } from 'heroui-native';
 </Checkbox>
 ```
 
-- **Checkbox**: Main container that handles selection state and user interaction. Renders default indicator with animated checkmark if no children provided. Automatically detects surface context for proper styling. Features press scale animation that can be customized or disabled. Supports render function children to access state (`isSelected`, `isInvalid`, `isDisabled`).
+- **Checkbox**: Main container that handles selection state and user interaction. Renders default indicator with animated checkmark if no children provided. Features press scale animation that can be customized or disabled. Supports render function children to access state (`isSelected`, `isInvalid`, `isDisabled`).
 - **Checkbox.Background**: Optional theme-aware background container rendered behind the checkbox content. Mounted automatically for the `secondary` variant while not invalid, when the active theme registers default background content (e.g. `glass`). Replace or remove it via the `background` prop.
 - **Checkbox.Indicator**: Optional checkmark container with default slide, scale, opacity, and border radius animations when selected. Renders animated check icon with SVG path drawing animation if no children provided. All animations can be individually customized or disabled. Supports render function children to access state.
 
@@ -24,7 +24,7 @@ import { Checkbox } from 'heroui-native';
 
 ### Basic Usage
 
-The Checkbox component renders with a default animated indicator if no children are provided. It automatically detects whether it's on a surface background for proper styling.
+The Checkbox component renders with a default animated indicator if no children are provided. Inside a surface such as a Card, set `variant="secondary"`.
 
 ```tsx
 <Checkbox isSelected={isSelected} onSelectedChange={setIsSelected} />
@@ -137,7 +137,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
   return (
     <ControlField isSelected={isSelected} onSelectedChange={onSelectedChange}>
       <ControlField.Indicator>
-        <Checkbox className="mt-0.5" />
+        <Checkbox variant="secondary" className="mt-0.5" />
       </ControlField.Indicator>
       <View className="flex-1">
         <Label className="text-lg">{title}</Label>

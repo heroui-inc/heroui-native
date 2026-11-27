@@ -113,7 +113,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({
       className="items-start"
     >
       <ControlField.Indicator>
-        <Checkbox className="size-5 rounded-md mt-0.5">
+        <Checkbox variant="secondary" className="size-5 rounded-md mt-0.5">
           <Checkbox.Indicator iconProps={{ size: 16 }} />
         </Checkbox>
       </ControlField.Indicator>
